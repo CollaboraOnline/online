@@ -16,37 +16,9 @@
 
 #ifdef MOBILEAPP
 
+#include "ClientSession.hpp"
+#include "DocumentBroker.hpp"
 #include "Socket.hpp"
-
-class JS2OnlineBridge
-{
-public:
-    void registerSocket(SocketPoll& socketPoll)
-    {
-        _SocketPoll = &socketPoll;
-    }
-
-    void registerJSSender(void (*function)(const char *, int, void *), void *data)
-    {
-        _JSCallbackFunction = function;
-        _JSCallbackData = data;
-    }
-
-    void sendToOnline(const std::string& payload)
-    {
-        _SocketPoll->feed(payload);
-    }
-
-    void sendToJS(const char *data, int length)
-    {
-        _JSCallbackFunction(data, length, _JSCallbackData);
-    }
-
-private:
-    SocketPoll *_SocketPoll;
-    void (*_JSCallbackFunction)(const char *, int, void *);
-    void *_JSCallbackData;
-};
 
 #endif
 
@@ -63,7 +35,7 @@ void lokit_main(
                 bool displayVersion
 #else
                 const std::string& documentUri,
-                JS2OnlineBridge& bridge
+                int docBrokerSocket
 #endif
                 );
 

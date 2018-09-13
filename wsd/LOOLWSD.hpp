@@ -28,7 +28,11 @@ class ChildProcess;
 class TraceFileWriter;
 class DocumentBroker;
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks();
+std::shared_ptr<ChildProcess> getNewChild_Blocks(
+#ifdef MOBILEAPP
+                                                 const std::string& uri
+#endif
+                                                 );
 
 /// The Server class which is responsible for all
 /// external interactions.
@@ -143,11 +147,12 @@ public:
     /// Autosave a given document
     static void autoSave(const std::string& docKey);
 
+    int innerMain();
+
 protected:
     void initialize(Poco::Util::Application& self) override;
     void defineOptions(Poco::Util::OptionSet& options) override;
     void handleOption(const std::string& name, const std::string& value) override;
-    int innerMain();
     int main(const std::vector<std::string>& args) override;
 
     /// Handle various global static destructors.
@@ -237,6 +242,11 @@ private:
 private:
     /// Settings passed from the command-line to override those in the config file.
     std::map<std::string, std::string> _overrideSettings;
+
+#ifdef MOBILEAPP
+public:
+    static int prisonerServerSocketFD;
+#endif
 };
 
 #endif

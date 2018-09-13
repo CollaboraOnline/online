@@ -24,8 +24,8 @@
 
 #include <SigUtil.hpp>
 #include "Socket.hpp"
-#ifndef MOBILEAPP
 #include "ServerSocket.hpp"
+#ifndef MOBILEAPP
 #include "SslSocket.hpp"
 #endif
 #include "WebSocketHandler.hpp"
@@ -34,12 +34,14 @@ int SocketPoll::DefaultPollTimeoutMs = 5000;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
-#ifndef MOBILEAPP
-
 int Socket::createSocket(Socket::Type type)
 {
+#ifndef MOBILEAPP
     int domain = type == Type::IPv4 ? AF_INET : AF_INET6;
     return socket(domain, SOCK_STREAM | SOCK_NONBLOCK, 0);
+#else
+    return fakeSocketSocket();
+#endif
 }
 
 // help with initialization order
@@ -56,8 +58,6 @@ namespace {
     }
 }
 
-#endif
-
 SocketPoll::SocketPoll(const std::string& threadName)
     : _name(threadName),
       _stop(false),
@@ -65,23 +65,24 @@ SocketPoll::SocketPoll(const std::string& threadName)
       _threadFinished(false),
       _owner(std::this_thread::get_id())
 {
-#ifndef MOBILEAPP
     // Create the wakeup fd.
-    if (::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1)
+    if (
+#ifndef MOBILEAPP
+        ::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1
+#else
+        fakeSocketPipe2(_wakeup) == -1
+#endif
+        )
     {
         throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + threadName + "] waking.");
     }
 
     std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
     getWakeupsArray().push_back(_wakeup[1]);
-#else
-    _bufferEmpty = true;
-#endif
 }
 
 SocketPoll::~SocketPoll()
 {
-#ifndef MOBILEAPP
     joinThread();
 
     {
@@ -94,11 +95,15 @@ SocketPoll::~SocketPoll()
             getWakeupsArray().erase(it);
     }
 
+#ifndef MOBILEAPP
     ::close(_wakeup[0]);
     ::close(_wakeup[1]);
+#else
+    fakeSocketClose(_wakeup[0]);
+    fakeSocketClose(_wakeup[1]);
+#endif
     _wakeup[0] = -1;
     _wakeup[1] = -1;
-#endif
 }
 
 void SocketPoll::startThread()
@@ -118,8 +123,6 @@ void SocketPoll::startThread()
     }
 }
 
-#ifndef MOBILEAPP
-
 void SocketPoll::joinThread()
 {
     addCallback([this](){ removeSockets(); });
@@ -135,23 +138,6 @@ void SocketPoll::joinThread()
         }
     }
 }
-
-#endif
-
-#ifdef MOBILEAPP
-
-void SocketPoll::feed(const std::string& payload)
-{
-    std::unique_lock<std::mutex> lock(_bufferMutex);
-    if (!_bufferEmpty)
-        _bufferCV.wait(lock, [&]{return _bufferEmpty;});
-    _buffer = payload;
-    _bufferEmpty = false;
-    lock.unlock();
-    _bufferCV.notify_one();
-}
-
-#endif
 
 void SocketPoll::pollingThreadEntry()
 {
@@ -181,13 +167,17 @@ void SocketPoll::pollingThreadEntry()
 
 void SocketPoll::wakeupWorld()
 {
-#ifndef MOBILEAPP
     for (const auto& fd : getWakeupsArray())
         wakeup(fd);
-#endif
 }
 
-void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
+void SocketPoll::insertNewWebSocketSync(
+#ifndef MOBILEAPP
+                                        const Poco::URI &uri,
+#else
+                                        int peerSocket,
+#endif
+                                        const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
 {
 #ifndef MOBILEAPP
     LOG_INF("Connecting to " << uri.getHost() << " : " << uri.getPort() << " : " << uri.getPath());
@@ -275,11 +265,32 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI &uri, const std::shared_
     else
         LOG_ERR("Failed to lookup client websocket host '" << uri.getHost() << "' skipping");
 #else
-    _socketHandler = websocketHandler;
+    LOG_INF("Connecting to " << peerSocket);
+    int fd = fakeSocketSocket();
+    int res = fakeSocketConnect(fd, peerSocket);
+    if (fd < 0 || (res < 0 && errno != EINPROGRESS))
+    {
+        LOG_ERR("Failed to connect to the 'wsd' socket");
+        fakeSocketClose(fd);
+    }
+    else
+    {
+        std::shared_ptr<StreamSocket> socket;
+        socket = StreamSocket::create<StreamSocket>(fd, true, websocketHandler);
+        if (socket)
+        {
+            LOG_TRC("Sending 'hello' instead of HTTP GET for now");
+            socket->send("hello");
+            insertNewSocket(socket);
+        }
+        else
+        {
+            LOG_ERR("Failed to allocate socket for client websocket");
+            fakeSocketClose(fd);
+        }
+    }
 #endif
 }
-
-#ifndef MOBILEAPP
 
 void ServerSocket::dumpState(std::ostream& os)
 {
@@ -293,13 +304,11 @@ void SocketDisposition::execute()
     if (_socketMove)
     {
         // Drop pretentions of ownership before _socketMove.
-        _socket->setThreadOwner(std::thread::id(0));
+        _socket->setThreadOwner(std::thread::id());
         _socketMove(_socket);
     }
     _socketMove = nullptr;
 }
-
-#endif
 
 const int WebSocketHandler::InitialPingDelayMs = 25;
 const int WebSocketHandler::PingFrequencyMs = 18 * 1000;
@@ -340,7 +349,6 @@ void StreamSocket::send(Poco::Net::HTTPResponse& response)
 
 void SocketPoll::dumpState(std::ostream& os)
 {
-#ifndef MOBILEAPP
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
     os << " Poll [" << _pollSockets.size() << "] - wakeup r: "
        << _wakeup[0] << " w: " << _wakeup[1] << "\n";
@@ -349,14 +357,12 @@ void SocketPoll::dumpState(std::ostream& os)
     os << "\tfd\tevents\trsize\twsize\n";
     for (auto &i : _pollSockets)
         i->dumpState(os);
-#endif
 }
-
-#ifndef MOBILEAPP
 
 /// Returns true on success only.
 bool ServerSocket::bind(Type type, int port)
 {
+#ifndef MOBILEAPP
     // Enable address reuse to avoid stalling after
     // recycling, when previous socket is TIME_WAIT.
     //TODO: Might be worth refactoring out.
@@ -401,9 +407,12 @@ bool ServerSocket::bind(Type type, int port)
         LOG_SYS("Failed to bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6") << " port: " << port);
 
     return rc == 0;
+#else
+    return true;
+#endif
 }
 
-#endif
+#ifndef MOBILEAPP
 
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,
@@ -476,7 +485,6 @@ bool StreamSocket::parseHeader(const char *clientName,
 
     return true;
 }
-
 
 namespace HttpHelper
 {
@@ -584,5 +592,7 @@ namespace HttpHelper
         }
     }
 }
+
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

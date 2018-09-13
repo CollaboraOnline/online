@@ -67,7 +67,7 @@
 #define HAVE_UNISTD_H 1
 
 /* Cache folder */
-#define LOOLWSD_CACHEDIR getCacheDir()
+#define LOOLWSD_CACHEDIR lo_ios_app_getCacheDir()
 
 /* LibreOffice Online WebSocket server version */
 #define LOOLWSD_VERSION "master" // ???
@@ -76,16 +76,16 @@
 #define LOOLWSD_VERSION_HASH "xxxxxx" // ???
 
 /* Path to LibreOffice installation */
-#undef LO_PATH
+#define LO_PATH "."
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
 /* Limit the maximum number of open connections */
-#undef MAX_CONNECTIONS
+#define MAX_CONNECTIONS 3
 
 /* Limit the maximum number of open documents */
-#undef MAX_DOCUMENTS
+#define MAX_DOCUMENTS 1
 
 /* Name of package */
 #undef PACKAGE

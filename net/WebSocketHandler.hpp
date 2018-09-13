@@ -112,6 +112,7 @@ public:
                 static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
         _shuttingDown = true;
 
+#ifndef MOBILEAPP
         const size_t len = statusMessage.size();
         std::vector<char> buf(2 + len);
         buf[0] = ((((int)statusCode) >> 8) & 0xff);
@@ -121,6 +122,7 @@ public:
                                   | static_cast<char>(WSOpCode::Close);
 
         sendFrame(socket, buf.data(), buf.size(), flags);
+#endif
     }
 
     bool handleOneIncomingMessage(const std::shared_ptr<StreamSocket>& socket)
@@ -306,13 +308,24 @@ public:
     /// Implementation of the SocketHandlerInterface.
     virtual void handleIncomingMessage(SocketDisposition&) override
     {
+        // LOG_TRC("***** WebSocketHandler::handleIncomingMessage()");
+
         std::shared_ptr<StreamSocket> socket = _socket.lock();
+
+#ifdef MOBILEAPP
+        // No separate "upgrade" is going on
+        if (socket != nullptr && !socket->isWebSocket())
+            socket->setWebSocket();
+#endif
+
         if (socket == nullptr)
         {
             LOG_ERR("No socket associated with WebSocketHandler " << this);
         }
+#ifndef MOBILEAPP
         else if (_isClient && !socket->isWebSocket())
             handleClientUpgrade();
+#endif
         else
         {
             while (handleOneIncomingMessage(socket))
@@ -332,6 +345,7 @@ public:
         return POLLIN;
     }
 
+#ifndef MOBILEAPP
     /// Send a ping message
     void sendPingOrPong(std::chrono::steady_clock::time_point now,
                         const char* data, const size_t len,
@@ -369,10 +383,12 @@ public:
         assert(_isClient);
         sendPingOrPong(now, data, len, WSOpCode::Pong, socket);
     }
+#endif
 
     /// Do we need to handle a timeout ?
     void checkTimeout(std::chrono::steady_clock::time_point now) override
     {
+#ifndef MOBILEAPP
         if (_isClient)
             return;
 
@@ -384,6 +400,7 @@ public:
             if (socket)
                 sendPing(now, socket);
         }
+#endif
     }
 
     /// By default rely on the socket buffer.
@@ -400,11 +417,9 @@ public:
     /// 0 for closed/invalid socket, and -1 for other errors.
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush = true) const
     {
-#ifndef MOBILEAPP
         int unitReturn = -1;
         if (UnitBase::get().filterSendMessage(data, len, code, flush, unitReturn))
             return unitReturn;
-#endif
 
         //TODO: Support fragmented messages.
 
@@ -430,6 +445,8 @@ private:
         socket->assertCorrectThread();
         std::vector<char>& out = socket->_outBuffer;
         const size_t oldSize = out.size();
+
+#ifndef MOBILEAPP
 
         out.push_back(flags);
 
@@ -479,7 +496,14 @@ private:
             out.insert(out.end(), data, data + len);
         }
         const size_t size = out.size() - oldSize;
+#else
+        LOG_TRC("WebSocketHandle::sendFrame: Writing to #" << socket->getFD() << " " << len << " bytes");
+        assert(flush);
+        assert(out.size() == 0);
 
+        out.insert(out.end(), data, data + len);
+        const size_t size = out.size();
+#endif
         if (flush)
             socket->writeOutgoingData();
 
@@ -517,6 +541,7 @@ protected:
         LOG_TRC("#" << socket->getFD() << ": Upgrading to WebSocket.");
         assert(!socket->isWebSocket());
 
+#ifndef MOBILEAPP
         // create our websocket goodness ...
         const int wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
@@ -540,9 +565,11 @@ protected:
         const std::string res = oss.str();
         LOG_TRC("#" << socket->getFD() << ": Sending WS Upgrade response: " << res);
         socket->send(res);
+#endif
         setWebSocket();
     }
 
+#ifndef MOBILEAPP
     // Handle incoming upgrade to full socket as client WS.
     void handleClientUpgrade()
     {
@@ -607,6 +634,7 @@ protected:
         setWebSocket();
         socket->eraseFirstInputBytes(responseSize);
     }
+#endif
 
     void setWebSocket()
     {

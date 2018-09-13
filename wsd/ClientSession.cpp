@@ -66,11 +66,11 @@ ClientSession::~ClientSession()
 
 void ClientSession::handleIncomingMessage(SocketDisposition &disposition)
 {
-#ifndef MOBILEAPP
+    // LOG_TRC("***** ClientSession::handleIncomingMessage()");
     if (UnitWSD::get().filterHandleRequest(
             UnitWSD::TestRequest::Client, disposition, *this))
         return;
-#endif
+
     Session::handleIncomingMessage(disposition);
 }
 
@@ -95,7 +95,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
     }
-#ifndef MOBILEAPP
     if (tokens[0] == "loolclient")
     {
         if (tokens.size() < 1)
@@ -125,8 +124,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return true;
     }
-#endif
-    if (tokens[0] == "load")
+    else if (tokens[0] == "load")
     {
         if (_docURL != "")
         {
@@ -761,6 +759,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 return false;
          }
     }
+#ifndef MOBILEAPP
     else if (tokens.size() == 3 && tokens[0] == "saveas:")
     {
         bool isConvertTo = static_cast<bool>(_saveAsSocket);
@@ -857,6 +856,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
         return true;
     }
+#endif
     else if (tokens.size() == 2 && tokens[0] == "statechanged:")
     {
         StringTokenizer stateTokens(tokens[1], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);

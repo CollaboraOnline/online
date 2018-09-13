@@ -8,50 +8,23 @@
 
 #import "config.h"
 
+#import <algorithm>
+
+#import "ios.h"
 #import "AppDelegate.h"
 #import "Document.h"
 #import "DocumentViewController.h"
 
+#import "ClientSession.hpp"
+#import "DocumentBroker.hpp"
+#import "FakeSocket.hpp"
 #import "Kit.hpp"
 #import "KitHelper.hpp"
 #import "Log.hpp"
+#import "LOOLWSD.hpp"
 #import "Protocol.hpp"
 
 @implementation Document
-
-// https://github.com/google/google-api-cpp-client/blob/master/src/googleapis/strings/memutil.cc,
-// Apache licensed
-
-static size_t memspn(const char* s, size_t slen, const char* accept) {
-  const char* p = s;
-  const char* spanp;
-  char c, sc;
-
-cont:
-  c = *p++;
-  if (slen-- == 0) return p - 1 - s;
-  for (spanp = accept; (sc = *spanp++) != '\0';)
-    if (sc == c) goto cont;
-  return p - 1 - s;
-}
-
-static const char* setupSafeNonBinaryCharSpan()
-{
-    static char result[256];
-
-    memset(result, 0, 256);
-    char *p = result;
-    for (char c = ' '; c <= '~'; c++)
-        if (c != '\'' && c != '\\')
-            *p++ = c;
-    return result;
-}
-
-static void send2JS(const char *buffer, int length, void *data)
-{
-    Document *doc = (__bridge Document*) data;
-    [doc send2JS:buffer length:length];
-}
 
 - (id)contentsForType:(NSString*)typeName error:(NSError **)errorPtr {
     // Encode your document with an instance of NSData or NSFileWrapper
@@ -59,14 +32,15 @@ static void send2JS(const char *buffer, int length, void *data)
 }
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
-    Log::initialize("", "trace", false, false, {});
+    fakeClientFd = fakeSocketSocket();
+    uri = [[[self fileURL] absoluteString] UTF8String];
 
-    bridge.registerJSSender(send2JS, (__bridge void*) self);
-
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                   ^{
-                       lokit_main(std::string([[[self fileURL] absoluteString] UTF8String]), self->bridge);
-                   });
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
+    NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+    components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[NSString stringWithUTF8String:uri.c_str()]],
+                               [NSURLQueryItem queryItemWithName:@"debug" value:@"true"]];
+    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];
+    [self.viewController.webView loadRequest:request];
 
     return YES;
 }
@@ -74,38 +48,61 @@ static void send2JS(const char *buffer, int length, void *data)
 - (void)send2JS:(const char *)buffer length:(int)length {
     NSLog(@"send to JS: %s", LOOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
-    static const char * const safeChar = setupSafeNonBinaryCharSpan();
-
     NSString *js;
-    // Check if the message is non-binary and doesn't contain any single quotes or backslashes either.
 
-    // Yes, this doesn't accept non-ASCII UTF-8 sequences even if they would be perfectly fine. I
-    // think we don't send any such to this, though?
+    // Check if the message is binary. We say that any message that isn't just a single line is
+    // "binary" even if that strictly speaking isn't the case; for instance the commandvalues:
+    // message has a long bunch of non-binary JSON on multiple lines. But _onMessage() in Socket.js
+    // handles it fine even if such a message, too, comes in as an ArrayBuffer. (Look for the
+    // "textMsg = String.fromCharCode.apply(null, imgBytes);".)
 
-    if (memspn(buffer, length, safeChar) == length) {
-        js = @"window.TheFakeWebSocket.onmessage({'data': '";
-        js = [js stringByAppendingString: [NSString stringWithCString:buffer encoding:NSASCIIStringEncoding]];
-        js = [js stringByAppendingString:@"'});"];
+    const char *newline = (const char *)memchr(buffer, '\n', length);
+    if (newline != nullptr) {
+        // The data needs to be an ArrayBuffer
+        js = @"window.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
+        js = [js stringByAppendingString: [[NSData dataWithBytes:buffer length:length] base64EncodedStringWithOptions:0]];
+        js = [js stringByAppendingString:@"')});"];
+        NSString *subjs = [js substringToIndex:std::min(40ul, js.length)];
+
+        // NSLog(@"Evaluating JavaScript: %@ (length %lu)", subjs, (unsigned long)js.length);
+
         dispatch_async(dispatch_get_main_queue(), ^{
                 [self.viewController.webView evaluateJavaScript:js
                                               completionHandler:^(id _Nullable obj, NSError * _Nullable error)
                      {
                          if (error) {
-                             NSLog(@"name = %@ error = %@",@"", error.localizedDescription);
+                             NSLog(@"error after %@ (length %lu): %@", subjs, (unsigned long)js.length, error.localizedDescription);
                          }
                      }
                  ];
-            });
+        });
     } else {
-        js = @"window.TheFakeWebSocket.onmessage({'data': atob('";
-        js = [js stringByAppendingString: [[NSData dataWithBytes:buffer length:length] base64EncodedStringWithOptions:0]];
-        js = [js stringByAppendingString:@"')});"];
+        const unsigned char *ubufp = (const unsigned char *)buffer;
+        std::vector<char> data;
+        for (int i = 0; i < length; i++) {
+            if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\') {
+                data.push_back('\\');
+                data.push_back('x');
+                data.push_back("0123456789abcdef"[(ubufp[i] >> 4) & 0x0F]);
+                data.push_back("0123456789abcdef"[ubufp[i] & 0x0F]);
+            } else {
+                data.push_back(ubufp[i]);
+            }
+        }
+        data.push_back(0);
+
+        js = @"window.TheFakeWebSocket.onmessage({'data': '";
+        js = [js stringByAppendingString:[NSString stringWithUTF8String:data.data()]];
+        js = [js stringByAppendingString:@"'});"];
+
+        // NSLog(@"Evaluating JavaScript: %@", js);
+
         dispatch_async(dispatch_get_main_queue(), ^{
                 [self.viewController.webView evaluateJavaScript:js
                                               completionHandler:^(id _Nullable obj, NSError * _Nullable error)
                      {
                          if (error) {
-                             NSLog(@"name = %@ error = %@",@"", error.localizedDescription);
+                             NSLog(@"error after %@: %@: %@", js, error.localizedDescription, error.userInfo[@"WKJavaScriptExceptionMessage"]);
                          }
                      }
                  ];

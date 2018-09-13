@@ -22,6 +22,7 @@
 #include <cassert>
 #include <cerrno>
 #include <chrono>
+#include <climits>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
@@ -33,8 +34,10 @@
 #include <thread>
 
 #include "Common.hpp"
+#include "FakeSocket.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
+#include "Protocol.hpp"
 #include "SigUtil.hpp"
 
 namespace Poco
@@ -114,7 +117,11 @@ public:
         LOG_TRC("#" << getFD() << " Socket dtor.");
 
         // Doesn't block on sockets; no error handling needed.
-        close(_fd);
+#ifndef MOBILEAPP
+        ::close(_fd);
+#else
+        fakeSocketClose(_fd);
+#endif
     }
 
     /// Create socket of the given type.
@@ -128,7 +135,11 @@ public:
     virtual void shutdown()
     {
         LOG_TRC("#" << _fd << ": socket shutdown RDWR.");
+#ifndef MOBILEAPP
         ::shutdown(_fd, SHUT_RDWR);
+#else
+        fakeSocketShutdown(_fd);
+#endif
     }
 
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
@@ -145,11 +156,14 @@ public:
     /// manage latency issues around packet aggregation
     void setNoDelay()
     {
+#ifndef MOBILEAPP
         const int val = 1;
         ::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY,
                      (char *) &val, sizeof(val));
+#endif
     }
 
+#ifndef MOBILEAPP
     /// Sets the kernel socket send buffer in size bytes.
     /// Note: TCP will allocate twice this size for admin purposes,
     /// so a subsequent call to getSendBufferSize will return
@@ -190,13 +204,19 @@ public:
         const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, &len);
         return rc == 0 ? size : -1;
     }
+#endif
 
     /// Gets our fast cache of the socket buffer size
     int getSendBufferSize() const
     {
+#ifndef MOBILEAPP
         return _sendBufferSize;
+#else
+        return INT_MAX; // We want to always send a single record in one go
+#endif
     }
 
+#ifndef MOBILEAPP
     /// Sets the receive buffer size in bytes.
     /// Note: TCP will allocate twice this size for admin purposes,
     /// so a subsequent call to getReceieveBufferSize will return
@@ -237,6 +257,7 @@ public:
 
         return rc;
     }
+#endif
 
     virtual void dumpState(std::ostream&) {}
 
@@ -288,6 +309,7 @@ protected:
         _owner = std::this_thread::get_id();
         LOG_DBG("#" << _fd << " Thread affinity set to " << Log::to_string(_owner) << ".");
 
+#ifndef MOBILEAPP
 #if ENABLE_DEBUG
         if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
         {
@@ -296,6 +318,7 @@ protected:
             LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() <<
                     " (was " << oldSize << ")");
         }
+#endif
 #endif
     }
 
@@ -428,7 +451,6 @@ public:
     /// Poll the sockets for available data to read or buffer to write.
     void poll(int timeoutMaxMs)
     {
-#ifndef MOBILEAPP
         assertCorrectThread();
 
         std::chrono::steady_clock::time_point now =
@@ -441,7 +463,12 @@ public:
         int rc;
         do
         {
+#ifndef MOBILEAPP
             rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
+#else
+            LOG_TRC("SocketPoll Poll");
+            rc = fakeSocketPoll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
+#endif
         }
         while (rc < 0 && errno == EINTR);
         LOG_TRC("Poll completed with " << rc << " live polls max (" <<
@@ -455,8 +482,12 @@ public:
                 std::lock_guard<std::mutex> lock(_mutex);
 
                 // Clear the data.
+#ifndef MOBILEAPP
                 int dump = ::read(_wakeup[0], &dump, sizeof(dump));
-
+#else
+                LOG_TRC("Wakeup pipe read");
+                int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
+#endif
                 // Copy the new sockets over and clear.
                 _pollSockets.insert(_pollSockets.end(),
                                     _newSockets.begin(), _newSockets.end());
@@ -527,42 +558,48 @@ public:
 
             disposition.execute();
         }
-#else
-        std::unique_lock<std::mutex> lock(_bufferMutex);
-        if (_bufferEmpty)
-            _bufferCV.wait(lock, [&]{return !_bufferEmpty;});
-        _socketHandler->handleMessage(_buffer);
-        _bufferEmpty = true;
-        lock.unlock();
-        _bufferCV.notify_one();
-#endif
     }
 
-#ifndef MOBILEAPP
     /// Write to a wakeup descriptor
     static void wakeup (int fd)
     {
         // wakeup the main-loop.
         int rc;
         do {
+#ifndef MOBILEAPP
             rc = ::write(fd, "w", 1);
+#else
+#if 0
+            // Our fake sockets are record-oriented with a single record buffer, so as we write one
+            // byte at a time to the wakeup pipe, we can't write another one before the previous one
+            // has been read.
+            //
+            // FIXME: Still, explicitly waiting here with fakeSocketPoll() for it to be writable
+            // doesn't seem to be any improvement. On the contrary, with this fakeSocketPoll(), we
+            // hang every time we run the app. Without it, we only hang occasionally.
+
+            LOG_TRC("Wakeup pipe write");
+            struct pollfd p;
+            p.fd = fd;
+            p.events = POLLOUT;
+            fakeSocketPoll(&p, 1, 0);
+#endif
+            rc = fakeSocketWrite(fd, "w", 1);
+#endif
         } while (rc == -1 && errno == EINTR);
 
         if (rc == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
             LOG_SYS("wakeup socket #" << fd << " is closed at wakeup?");
     }
-#endif
 
     /// Wakeup the main polling loop in another thread
     void wakeup()
     {
-#ifndef MOBILEAPP
         if (!isAlive())
             LOG_WRN("Waking up dead poll thread [" << _name << "], started: " <<
                     _threadStarted << ", finished: " << _threadFinished);
 
         wakeup(_wakeup[1]);
-#endif
     }
 
     /// Global wakeup - signal safe: wakeup all socket polls.
@@ -585,7 +622,13 @@ public:
 
     /// Inserts a new websocket to be polled.
     /// NOTE: The DNS lookup is synchronous.
-    void insertNewWebSocketSync(const Poco::URI &uri, const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
+    void insertNewWebSocketSync(
+#ifndef MOBILEAPP
+                                const Poco::URI &uri,
+#else
+                                int peerSocket,
+#endif
+                                const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
 
     typedef std::function<void()> CallbackFn;
 
@@ -629,15 +672,7 @@ public:
     /// Stop and join the polling thread before returning (if active)
     void joinThread();
 
-#ifdef MOBILEAPP
-    // In the mobile app(s), a SocketPoll doesn't actually "poll" any "sockets" but simply acts as a
-    // conduit for sending messages that correspond to what we would receive as WebSocket messages
-    // in the server online from the app code into the shared online code.
-    void feed(const std::string& payload);
-#endif
-
 private:
-#ifndef MOBILEAPP
     /// Initialize the poll fds array with the right events
     void setupPollFds(std::chrono::steady_clock::time_point now,
                       int &timeoutMaxMs)
@@ -667,7 +702,6 @@ private:
         _pollFds[size].events = POLLIN;
         _pollFds[size].revents = 0;
     }
-#endif
 
     /// The polling thread entry.
     /// Used to set the thread name and mark the thread as stopped when done.
@@ -677,10 +711,8 @@ private:
     /// Debug name used for logging.
     const std::string _name;
 
-#ifndef MOBILEAPP
     /// main-loop wakeup pipe
     int _wakeup[2];
-#endif
     /// The sockets we're controlling
     std::vector<std::shared_ptr<Socket>> _pollSockets;
     /// Protects _newSockets
@@ -698,14 +730,6 @@ protected:
     std::atomic<bool> _threadStarted;
     std::atomic<bool> _threadFinished;
     std::thread::id _owner;
-
-#ifdef MOBILEAPP
-    std::mutex _bufferMutex;
-    std::condition_variable _bufferCV;
-    bool _bufferEmpty;
-    std::string _buffer;
-    std::shared_ptr<SocketHandlerInterface> _socketHandler;
-#endif
 };
 
 /// A plain, non-blocking, data streaming socket.
@@ -803,6 +827,7 @@ public:
     {
         assertCorrectThread();
 
+#ifndef MOBILEAPP
         // SSL decodes blocks of 16Kb, so for efficiency we use the same.
         char buf[16 * 1024];
         ssize_t len;
@@ -825,6 +850,22 @@ public:
             // else poll will handle errors.
         }
         while (len == (sizeof(buf)));
+#else
+        LOG_TRC("readIncomingData #" << getFD());
+        ssize_t available = fakeSocketAvailableDataLength(getFD());
+        ssize_t len;
+        if (available == -1)
+            len = -1;
+        else
+        {
+            std::vector<char>buf(available);
+            len = readData(buf.data(), available);
+            assert(len == available);
+            _bytesRecvd += len;
+            assert(_inBuffer.size() == 0);
+            _inBuffer.insert(_inBuffer.end(), buf.data(), buf.data() + len);
+        }
+#endif
 
         return len != 0; // zero is eof / clean socket close.
     }
@@ -899,7 +940,7 @@ protected:
         if (log.trace()) {
             LOG_TRC("#" << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
                     " bytes, closeSocket? " << closed);
-            // log.dump("", &_inBuffer[0], _inBuffer.size());
+            log.dump("", &_inBuffer[0], _inBuffer.size());
         }
 
         // If we have data, allow the app to consume.
@@ -991,14 +1032,26 @@ protected:
     virtual int readData(char* buf, int len)
     {
         assertCorrectThread();
+#ifndef MOBILEAPP
         return ::read(getFD(), buf, len);
+#else
+        return fakeSocketRead(getFD(), buf, len);
+#endif
     }
 
     /// Override to handle writing data to socket differently.
     virtual int writeData(const char* buf, const int len)
     {
         assertCorrectThread();
+#ifndef MOBILEAPP
         return ::write(getFD(), buf, len);
+#else
+        struct pollfd p;
+        p.fd = getFD();
+        p.events = POLLOUT;
+        fakeSocketPoll(&p, 1, 0);
+        return fakeSocketWrite(getFD(), buf, len);
+#endif
     }
 
     void dumpState(std::ostream& os) override;

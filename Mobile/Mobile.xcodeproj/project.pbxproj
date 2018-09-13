@@ -57,6 +57,8 @@
 		BEA283582146945500848631 /* ChildSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA283572146945500848631 /* ChildSession.cpp */; };
 		BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2835921470A1C00848631 /* WebKit.framework */; };
 		BEA2835D21498AD400848631 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835C21498AD400848631 /* Socket.cpp */; };
+		BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835F214ACA8500848631 /* FakeSocket.cpp */; };
+		BEA28377214FFD8C00848631 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA28376214FFD8C00848631 /* Unit.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +86,7 @@
 		BE5EB5D521401E0F00E0826C /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
 		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
 		BE5EB5DB2140480B00E0826C /* icudt62l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt62l.dat; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/icudt62l.dat"; sourceTree = "<group>"; };
+		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8D772A2136762500AC58EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE8D772B2136762500AC58EA /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -116,6 +119,10 @@
 		BEA283572146945500848631 /* ChildSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChildSession.cpp; sourceTree = "<group>"; };
 		BEA2835921470A1C00848631 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		BEA2835C21498AD400848631 /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = ../net/Socket.cpp; sourceTree = "<group>"; };
+		BEA2835E214A8E2000848631 /* Socket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Socket.hpp; sourceTree = "<group>"; };
+		BEA2835F214ACA8500848631 /* FakeSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FakeSocket.cpp; sourceTree = "<group>"; };
+		BEA28376214FFD8C00848631 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
+		BEA283782150172600848631 /* Unit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Unit.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +192,8 @@
 		BE5EB5B6213FE21000E0826C /* common */ = {
 			isa = PBXGroup;
 			children = (
+				BEA283782150172600848631 /* Unit.hpp */,
+				BEA28376214FFD8C00848631 /* Unit.cpp */,
 				BE5EB5C0213FE29900E0826C /* FileUtil.cpp */,
 				BE5EB5B9213FE29900E0826C /* Log.cpp */,
 				BE5EB5BD213FE29900E0826C /* MessageQueue.cpp */,
@@ -264,7 +273,10 @@
 		BEA2835B21498ABF00848631 /* net */ = {
 			isa = PBXGroup;
 			children = (
+				BEA2835F214ACA8500848631 /* FakeSocket.cpp */,
+				BEA2835E214A8E2000848631 /* Socket.hpp */,
 				BEA2835C21498AD400848631 /* Socket.cpp */,
+				BE636210215101D000F4237E /* WebSocketHandler.hpp */,
 			);
 			name = net;
 			path = ../net;
@@ -371,10 +383,12 @@
 				BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */,
 				BE5EB5DA2140363100E0826C /* ios.mm in Sources */,
 				BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */,
+				BEA28377214FFD8C00848631 /* Unit.cpp in Sources */,
 				BE5EB5CF213FE2D000E0826C /* ClientSession.cpp in Sources */,
 				BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */,
 				BE8D77402136762600AC58EA /* main.m in Sources */,
 				BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */,
+				BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */,
 				BE8D77352136762500AC58EA /* Document.mm in Sources */,
 				BE5EB5C7213FE29900E0826C /* Protocol.cpp in Sources */,
 				BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */,
@@ -531,6 +545,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
 				ENABLE_BITCODE = NO;
@@ -539,7 +554,9 @@
 					"IOS=IOS",
 					"DISABLE_DYNLOADING=1",
 					"DEBUG=1",
+					"LOOLWSD_CONFIGDIR='\".\"'",
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SOURCE_ROOT)/..",
 					"$(SOURCE_ROOT)/../ios",
@@ -554,6 +571,7 @@
 					"$(POCOINSTDIR)/include",
 				);
 				INFOPLIST_FILE = Mobile/Info.plist;
+				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -570,11 +588,11 @@
 					"$(PNGINSTDIR)/lib",
 					"-L",
 					"$(POCOINSTDIR)/lib",
-					"-lPocoFoundation",
-					"-lPocoUtil",
-					"-lPocoXML",
-					"-lPocoJSON",
-					"-lPocoNet",
+					"-lPocoFoundationd",
+					"-lPocoUtild",
+					"-lPocoXMLd",
+					"-lPocoJSONd",
+					"-lPocoNetd",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.office.Mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -586,6 +604,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
 				ENABLE_BITCODE = NO;
@@ -594,6 +613,7 @@
 					"IOS=IOS",
 					"DISABLE_DYNLOADING=1",
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SOURCE_ROOT)/..",
 					"$(SOURCE_ROOT)/../ios",
@@ -608,6 +628,7 @@
 					"$(POCOINSTDIR)/include",
 				);
 				INFOPLIST_FILE = Mobile/Info.plist;
+				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -8,13 +8,20 @@
 
 #import "config.h"
 
-//#define LOK_USE_UNSTABLE_API
-//#import <LibreOfficeKit/LibreOfficeKitInit.h>
+#import <cassert>
+#import <cstring>
 
 #import "AppDelegate.h"
 #import "DocumentBrowserViewController.h"
 #import "DocumentViewController.h"
 #import "Document.h"
+
+#import "FakeSocket.hpp"
+#import "Log.hpp"
+#import "LOOLWSD.hpp"
+#import "Util.hpp"
+
+static LOOLWSD *loolwsd = nullptr;
 
 @interface AppDelegate ()
 
@@ -25,8 +32,25 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    _kit = lok_init_2(nullptr, nullptr);
+    Log::initialize("app", "trace", false, false, {});
+    fakeSocketSetLoggingCallback([](const std::string& line)
+                                 {
+                                     LOG_TRC_NOFILE(line);
+                                 });
 
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                   ^{
+                       if (loolwsd == nullptr)
+                       {
+                           loolwsd = new LOOLWSD();
+                           Util::setThreadName("app");
+                       }
+                       char *argv[2];
+                       argv[0] = strdup([[NSBundle mainBundle].executablePath UTF8String]);
+                       argv[1] = nullptr;
+                       loolwsd->run(1, argv);
+                       assert(false && "????? LOOLWSD::main() returned?");
+                   });
     return YES;
 }
 

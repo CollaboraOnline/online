@@ -194,9 +194,8 @@ void DocumentBroker::pollThread()
 
     _threadStart = std::chrono::steady_clock::now();
 
-#ifndef MOBILEAPP
-
     // Request a kit process for this doc.
+#ifndef MOBILEAPP
     do
     {
         static const int timeoutMs = COMMAND_TIMEOUT_MS * 5;
@@ -205,11 +204,13 @@ void DocumentBroker::pollThread()
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                   _threadStart).count() > timeoutMs)
             break;
-
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
         std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
     }
     while (!_stop && _poll->continuePolling() && !TerminationFlag && !ShutdownRequestFlag);
+#else
+    _childProcess = getNewChild_Blocks(getPublicUri().getPath());
+#endif
 
     if (!_childProcess)
     {
@@ -236,7 +237,6 @@ void DocumentBroker::pollThread()
         LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
         return;
     }
-#endif
 
     _childProcess->setDocumentBroker(shared_from_this());
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
@@ -258,9 +258,9 @@ void DocumentBroker::pollThread()
     {
         const auto now = std::chrono::steady_clock::now();
 
-#ifndef MOBILEAPP
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
+#ifndef MOBILEAPP
         if (std::chrono::duration_cast<std::chrono::milliseconds>
                     (now - lastBWUpdateTime).count() >= 5 * 1000)
         {
@@ -391,10 +391,8 @@ DocumentBroker::~DocumentBroker()
     LOG_INF("~DocumentBroker [" << _docKey <<
             "] destroyed with " << _sessions.size() << " sessions left.");
 
-#ifndef MOBILEAPP
     // Do this early - to avoid operating on _childProcess from two threads.
     _poll->joinThread();
-#endif
 
     if (!_sessions.empty())
     {
@@ -408,9 +406,7 @@ DocumentBroker::~DocumentBroker()
 
 void DocumentBroker::joinThread()
 {
-#ifndef MOBILEAPP
     _poll->joinThread();
-#endif
 }
 
 void DocumentBroker::stop(const std::string& reason)
@@ -429,13 +425,11 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
     LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] and jail [" << jailId << "].");
 
-#ifndef MOBILEAPP
     {
         bool result;
         if (UnitWSD::get().filterLoad(sessionId, jailId, result))
             return result;
     }
-#endif
 
     if (_markToDestroy)
     {
@@ -996,11 +990,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         oss << "}";
 
         assert(_storage);
-        _storage->setIsAutosave(isAutosave
-#ifndef MOBILEAPP
-                                || UnitWSD::get().isAutosave()
-#endif
-                                );
+        _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
 
         const std::string saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
@@ -1190,10 +1180,8 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     assertCorrectThread();
 
-#ifndef MOBILEAPP
     if (UnitWSD::get().filterAlertAllusers(msg))
         return;
-#endif
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 

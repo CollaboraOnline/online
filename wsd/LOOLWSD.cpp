@@ -62,8 +62,6 @@
 #include <Poco/Net/PartHandler.h>
 #include <Poco/Net/SocketAddress.h>
 
-#include <ServerSocket.hpp>
-
 using Poco::Net::HTMLForm;
 using Poco::Net::PartHandler;
 
@@ -111,7 +109,7 @@ using Poco::Net::PartHandler;
 #include "FileServer.hpp"
 #include <FileUtil.hpp>
 #include <IoUtil.hpp>
-#ifdef KIT_IN_PROCESS
+#if defined KIT_IN_PROCESS || defined MOBILEAPP
 #  include <Kit.hpp>
 #endif
 #include <Log.hpp>
@@ -132,6 +130,12 @@ using Poco::Net::PartHandler;
 #endif
 
 #include <common/SigUtil.hpp>
+
+#include <ServerSocket.hpp>
+
+#ifdef IOS
+#include "ios.h"
+#endif
 
 using namespace LOOLProtocol;
 
@@ -199,10 +203,6 @@ extern "C" { void dump_state(void); /* easy for gdb */ }
 static int careerSpanMs = 0;
 #endif
 
-#ifdef IOS
-#include "ios.h"
-#endif
-
 bool LOOLWSD::NoCapsForKit = false;
 bool LOOLWSD::TileCachePersistent = true;
 std::atomic<unsigned> LOOLWSD::NumConnections;
@@ -210,16 +210,9 @@ std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::set<std::string> LOOLWSD::EditFileExtensions;
 
 #ifdef MOBILEAPP
-
-// Some dummy versions of static ember functions
-
-void LOOLWSD::dumpIncomingTrace(const std::string& id, const std::string& sessionId, const std::string& data)
-{
-}
-
-#else
-
-// Most of this file is probably not used in a mobile app. Let's see.
+// Or can this be retreieved in some other way?
+int LOOLWSD::prisonerServerSocketFD;
+#endif
 
 namespace
 {
@@ -247,6 +240,8 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
 
 inline void checkSessionLimitsAndWarnClients()
 {
+#ifndef MOBILEAPP
+
     if (DocBrokers.size() > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
     {
         const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
@@ -261,12 +256,15 @@ inline void checkSessionLimitsAndWarnClients()
             LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
         }
     }
+#endif
 }
 
 /// Internal implementation to alert all clients
 /// connected to any document.
 void alertAllUsersInternal(const std::string& msg)
 {
+#ifndef MOBILEAPP
+
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
     LOG_INF("Alerting all users: [" << msg << "]");
@@ -279,10 +277,12 @@ void alertAllUsersInternal(const std::string& msg)
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
     }
+#endif
 }
 
 static void checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
 {
+#ifndef MOBILEAPP
     try
     {
         const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems(cacheLastCheck);
@@ -296,6 +296,7 @@ static void checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
     {
         LOG_WRN("Exception while checking disk-space and warning clients: " << exc.what());
     }
+#endif
 }
 
 }
@@ -338,6 +339,8 @@ void cleanupDocBrokers()
         }
     }
 }
+
+#ifndef MOBILEAPP
 
 /// Forks as many children as requested.
 /// Returns the number of children requested to spawn,
@@ -437,6 +440,8 @@ static bool prespawnChildren()
     return lock.try_lock() && (rebalanceChildren(LOOLWSD::NumPreSpawnedChildren) > 0);
 }
 
+#endif
+
 static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
 {
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
@@ -446,22 +451,29 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     if (OutstandingForks < 0)
         ++OutstandingForks;
 
+    LOG_TRC("Adding one child to NewChildren");
     NewChildren.emplace_back(child);
     const size_t count = NewChildren.size();
     LOG_INF("Have " << count << " spare " <<
             (count == 1 ? "child" : "children") << " after adding [" << child->getPid() << "].");
     lock.unlock();
 
+    LOG_TRC("Notifying NewChildrenCV");
     NewChildrenCV.notify_one();
     return count;
 }
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks()
+std::shared_ptr<ChildProcess> getNewChild_Blocks(
+#ifdef MOBILEAPP
+                                                 const std::string& uri
+#endif
+                                                 )
 {
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     const auto startTime = std::chrono::steady_clock::now();
 
+#ifndef MOBILEAPP
     LOG_DBG("getNewChild: Rebalancing children.");
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     ++numPreSpawn; // Replace the one we'll dispatch just now.
@@ -474,17 +486,33 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks()
         // Let the caller retry after a while.
         return nullptr;
     }
-
     // With valgrind we need extended time to spawn kits.
     const size_t timeoutMs = CHILD_TIMEOUT_MS / 2;
     LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
     const auto timeout = std::chrono::milliseconds(timeoutMs);
+#else
+    const auto timeout = std::chrono::hours(100);
+
+    std::thread([&]
+                {
+                    // Ugly to have that static global, otoh we know there is just one LOOLWSD
+                    // object. (Even in real Online.) I have no idea what I am doing here.
+                    lokit_main(uri, LOOLWSD::prisonerServerSocketFD);
+                }).detach();
+#endif
+
     // FIXME: blocks ...
     // Unfortunately we need to wait after spawning children to avoid bombing the system.
     // If we fail fast and return, the next document will spawn more children without knowing
     // there are some on the way already. And if the system is slow already, that wouldn't help.
-    if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
+    LOG_TRC("Waiting for NewChildrenCV");
+    if (NewChildrenCV.wait_for(lock, timeout, []()
+                               {
+                                   LOG_TRC("Predicate for NewChildrenCV wait: NewChildren.size()=" << NewChildren.size());
+                                   return !NewChildren.empty();
+                               }))
     {
+        LOG_TRC("NewChildrenCV wait successful");
         std::shared_ptr<ChildProcess> child = NewChildren.back();
         NewChildren.pop_back();
         const size_t available = NewChildren.size();
@@ -504,12 +532,15 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks()
     }
     else
     {
+        LOG_TRC("NewChildrenCV wait failed");
         LOG_WRN("getNewChild: No child available. Sending spawn request to forkit and failing.");
     }
 
     LOG_DBG("getNewChild: Timed out while waiting for new child.");
     return nullptr;
 }
+
+#ifndef MOBILEAPP
 
 /// Handles the filename part of the convert-to POST request payload.
 class ConvertToPartHandler : public PartHandler
@@ -605,6 +636,8 @@ inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 
 } // anonymous namespace
 
+#endif // MOBILEAPP
+
 std::atomic<unsigned> LOOLWSD::NextSessionId;
 #ifndef KIT_IN_PROCESS
 std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
@@ -678,10 +711,12 @@ LOOLWSD::~LOOLWSD()
 
 void LOOLWSD::initialize(Application& self)
 {
+#ifndef MOBILEAPP
     if (geteuid() == 0)
     {
         throw std::runtime_error("Do not run as root. Please run as lool user.");
     }
+#endif
 
     if (!UnitWSD::init(UnitWSD::UnitType::Wsd, UnitTestLibrary))
     {
@@ -761,6 +796,8 @@ void LOOLWSD::initialize(Application& self)
     AutoPtr<AppConfigMap> defConfig(new AppConfigMap(DefAppConfig));
     conf.addWriteable(defConfig, PRIO_SYSTEM); // Lowest priority
 
+#ifndef MOBILEAPP
+
     // Load default configuration files, if present.
     if (loadConfiguration(PRIO_DEFAULT) == 0)
     {
@@ -831,6 +868,7 @@ void LOOLWSD::initialize(Application& self)
         }
     }
 
+
     // Log at trace level until we complete the initialization.
     Log::initialize("wsd", "trace", withColor, logToFile, logProperties);
     if (LogLevel != "trace")
@@ -879,6 +917,8 @@ void LOOLWSD::initialize(Application& self)
     std::string allowedLanguages(config().getString("allowed_languages"));
     setenv("LOK_WHITELIST_LANGUAGES", allowedLanguages.c_str(), 1);
 
+#endif
+
     Cache = getPathFromConfig("tile_cache_path");
     SysTemplate = getPathFromConfig("sys_template_path");
     LoTemplate = getPathFromConfig("lo_template_path");
@@ -894,12 +934,14 @@ void LOOLWSD::initialize(Application& self)
     }
     LOG_INF("NumPreSpawnedChildren set to " << NumPreSpawnedChildren << ".");
 
+#ifndef MOBILEAPP
     const auto maxConcurrency = getConfigValue<int>(conf, "per_document.max_concurrency", 4);
     if (maxConcurrency > 0)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
     LOG_INF("MAX_CONCURRENCY set to " << maxConcurrency << ".");
+#endif
 
     // Otherwise we profile the soft-device at jail creation time.
     setenv("SAL_DISABLE_OPENCL", "true", 1);
@@ -995,10 +1037,13 @@ void LOOLWSD::initialize(Application& self)
         TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, compress, takeSnapshot, filters));
     }
 
+#ifndef MOBILEAPP
     FileServerRequestHandler::initialize();
+#endif
 
     StorageBase::initialize();
 
+#ifndef MOBILEAPP
     ServerApplication::initialize(self);
 
     DocProcSettings docProcSettings;
@@ -1007,6 +1052,7 @@ void LOOLWSD::initialize(Application& self)
     docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
     docProcSettings.LimitNumberOpenFiles = getConfigValue<int>("per_document.limit_num_open_files", 0);
     Admin::instance().setDefDocProcSettings(docProcSettings, false);
+#endif
 
 #if ENABLE_DEBUG
     std::cerr << "\nLaunch one of these in your browser:\n\n"
@@ -1024,6 +1070,7 @@ void LOOLWSD::initialize(Application& self)
 
 void LOOLWSD::initializeSSL()
 {
+#if ENABLE_SSL
     if (!LOOLWSD::isSSLEnabled())
         return;
 
@@ -1039,7 +1086,6 @@ void LOOLWSD::initializeSSL()
     const std::string ssl_cipher_list = config().getString("ssl.cipher_list", "");
     LOG_INF("SSL Cipher list: " << ssl_cipher_list);
 
-#if ENABLE_SSL
     // Initialize the non-blocking socket SSL.
     SslContext::initialize(ssl_cert_file_path,
                            ssl_key_file_path,
@@ -1104,6 +1150,7 @@ void LOOLWSD::dumpOutgoingTrace(const std::string& id, const std::string& sessio
 
 void LOOLWSD::defineOptions(OptionSet& optionSet)
 {
+#ifndef MOBILEAPP
     ServerApplication::defineOptions(optionSet);
 
     optionSet.addOption(Option("help", "", "Display help information on command line arguments.")
@@ -1161,11 +1208,13 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("trace_file_name"));
 #endif
+#endif
 }
 
 void LOOLWSD::handleOption(const std::string& optionName,
                            const std::string& value)
 {
+#ifndef MOBILEAPP
     ServerApplication::handleOption(optionName, value);
 
     if (optionName == "help")
@@ -1215,7 +1264,10 @@ void LOOLWSD::handleOption(const std::string& optionName,
     else if (optionName == "fuzz")
         FuzzFileName = value;
 #endif
+#endif
 }
+
+#ifndef MOBILEAPP
 
 void LOOLWSD::displayHelp()
 {
@@ -1312,6 +1364,8 @@ bool LOOLWSD::checkAndRestoreForKit()
 #endif
 }
 
+#endif
+
 void LOOLWSD::doHousekeeping()
 {
     PrisonerPoll.wakeup();
@@ -1346,6 +1400,7 @@ void LOOLWSD::autoSave(const std::string& docKey)
 /// Really do the house-keeping
 void PrisonerPoll::wakeupHook()
 {
+#ifndef MOBILEAPP
     if (!LOOLWSD::checkAndRestoreForKit())
     {
         // No children have died.
@@ -1375,15 +1430,17 @@ void PrisonerPoll::wakeupHook()
 #endif
         }
     }
-
+#endif
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
     if (docBrokersLock.try_lock())
         cleanupDocBrokers();
 }
 
+#ifndef MOBILEAPP
+
 bool LOOLWSD::createForKit()
 {
-#ifdef KIT_IN_PROCESS
+#if defined KIT_IN_PROCESS
     return true;
 #else
     LOG_INF("Creating new forkit process.");
@@ -1473,6 +1530,8 @@ bool LOOLWSD::createForKit()
     return ForKitProcId != -1;
 #endif
 }
+
+#endif
 
 #ifdef FUZZER
 std::mutex Connection::Mutex;
@@ -1639,6 +1698,8 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
+        // LOG_TRC("***** PrisonerRequestDispatcher::handleIncomingMessage()");
+
         if (UnitWSD::get().filterHandleRequest(
                 UnitWSD::TestRequest::Prisoner, disposition, *this))
             return;
@@ -1659,6 +1720,7 @@ private:
 
         try
         {
+#ifndef MOBILEAPP
             if (!socket->parseHeader("Prisoner", message, request, &requestSize))
                 return;
 
@@ -1707,6 +1769,12 @@ private:
             LOG_INF("New child [" << pid << "], jailId: " << jailId << ".");
 
             UnitWSD::get().newChild(*this);
+#else
+            Poco::Process::PID pid = 1;
+            std::string jailId = "jail";
+            socket->_inBuffer.clear();
+#endif
+            LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
 
             auto child = std::make_shared<ChildProcess>(pid, jailId, socket, request);
 
@@ -1716,6 +1784,7 @@ private:
             // until we attach the childProcess (with this socket)
             // to a docBroker, which will do the polling.
             disposition.setMove([child](const std::shared_ptr<Socket> &){
+                    LOG_TRC("Calling addNewChild in disposition's move thing to add to NewChildren");
                     addNewChild(child);
                 });
         }
@@ -1812,8 +1881,10 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
+        // LOG_TRC("***** ClientRequestDispatcher::handleIncomingMessage()");
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
+#ifndef MOBILEAPP
         Poco::MemoryInputStream message(&socket->_inBuffer[0],
                                         socket->_inBuffer.size());;
         Poco::Net::HTTPRequest request;
@@ -1927,6 +1998,11 @@ private:
         // if we succeeded - remove the request from our input buffer
         // we expect one request per socket
         socket->eraseFirstInputBytes(requestSize);
+#else
+        Poco::Net::HTTPRequest request;
+        handleClientWsUpgrade(request, std::string(socket->_inBuffer.data(), socket->_inBuffer.size()), disposition);
+        socket->_inBuffer.clear();
+#endif
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
@@ -1939,6 +2015,7 @@ private:
     {
     }
 
+#ifndef MOBILEAPP
     void handleFileServerRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -2305,6 +2382,7 @@ private:
 
         throw BadRequestException("Invalid or unknown request.");
     }
+#endif
 
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url,
                                SocketDisposition &disposition)
@@ -2373,7 +2451,7 @@ private:
                         docBroker->startThread();
 
                         // We no longer own this socket.
-                        moveSocket->setThreadOwner(std::thread::id(0));
+                        moveSocket->setThreadOwner(std::thread::id());
 
                         docBroker->addCallback([docBroker, moveSocket, clientSession]()
                         {
@@ -2504,10 +2582,10 @@ class PlainSocketFactory final : public SocketFactory
     std::shared_ptr<Socket> create(const int physicalFd) override
     {
         int fd = physicalFd;
-
+#ifndef MOBILEAPP
         if (SimulatedLatencyMs > 0)
             fd = Delay::create(SimulatedLatencyMs, physicalFd);
-
+#endif
         std::shared_ptr<Socket> socket =
             StreamSocket::create<StreamSocket>(
                 fd, false, std::make_shared<ClientRequestDispatcher>());
@@ -2574,9 +2652,18 @@ public:
     void start(const int port)
     {
         _acceptPoll.startThread();
-        _acceptPoll.insertNewSocket(findServerPort(port));
+        std::shared_ptr<ServerSocket> serverSocket(findServerPort(port));
+        _acceptPoll.insertNewSocket(serverSocket);
+
+#ifdef MOBILEAPP
+        loolwsd_server_socket_fd = serverSocket->getFD();
+#endif
+
         WebServerPoll.startThread();
+
+#ifndef MOBILEAPP
         Admin::instance().start();
+#endif
     }
 
     void stop()
@@ -2613,11 +2700,13 @@ public:
         os << "Prisoner poll:\n";
         PrisonerPoll.dumpState(os);
 
+#ifndef MOBILEAPP
         os << "Admin poll:\n";
         Admin::instance().dumpState(os);
 
         // If we have any delaying work going on.
         Delay::dumpState(os);
+#endif
 
         os << "Document Broker polls "
                   << "[ " << DocBrokers.size() << " ]:\n";
@@ -2694,6 +2783,9 @@ private:
 
         MasterPortNumber = port;
         LOG_INF("Listening to prisoner connections on port " << port);
+#ifdef MOBILEAPP
+        LOOLWSD::prisonerServerSocketFD = socket->getFD();
+#endif
         return socket;
     }
 
@@ -2709,9 +2801,9 @@ private:
 #endif
             factory = std::make_shared<PlainSocketFactory>();
 
-
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ServerSocket::Type::Public, port, WebServerPoll, factory);
+#ifdef MOBILEAPP
 #ifdef BUILDLING_TESTS
         while (!socket)
         {
@@ -2721,7 +2813,7 @@ private:
                 ServerSocket::Type::Public, port, WebServerPoll, factory);
         }
 #endif
-
+#endif
         if (!socket)
         {
             LOG_FTL("Failed to listen on Server port(s) (" <<
@@ -2735,7 +2827,7 @@ private:
     }
 };
 
-LOOLWSDServer srv;
+static LOOLWSDServer srv;
 
 bool LOOLWSD::handleShutdownRequest()
 {
@@ -2758,6 +2850,7 @@ int LOOLWSD::innerMain()
     SigUtil::setTerminationSignals();
 #endif
 
+#ifdef __linux
     // down-pay all the forkit linking cost once & early.
     Environment::set("LD_BIND_NOW", "1");
 
@@ -2767,6 +2860,7 @@ int LOOLWSD::innerMain()
         Util::getVersionInfo(version, hash);
         LOG_INF("Loolwsd version details: " << version << " - " << hash);
     }
+#endif
 
     initializeSSL();
 
@@ -2783,6 +2877,7 @@ int LOOLWSD::innerMain()
         return Application::EXIT_SOFTWARE;
     }
 
+#ifndef MOBILEAPP
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the parent (but not in the
     // child) separately now. Also check for options that are
@@ -2819,10 +2914,14 @@ int LOOLWSD::innerMain()
         throw IncompatibleOptionsException("port");
 
     ClientRequestDispatcher::InitStaticFileContentCache();
+#endif
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
     srv.startPrisoners(MasterPortNumber);
+
+// No need to "have at least one child" beforehand on mobile
+#ifndef MOBILEAPP
 
 #ifndef KIT_IN_PROCESS
     {
@@ -2862,6 +2961,8 @@ int LOOLWSD::innerMain()
         Log::logger().setLevel(LogLevel);
     }
 
+#endif
+
     // Start the server.
     srv.start(ClientPortNumber);
 
@@ -2886,6 +2987,7 @@ int LOOLWSD::innerMain()
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();
 
+#ifndef MOBILEAPP
         const std::chrono::milliseconds::rep timeSinceStartMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                                             std::chrono::steady_clock::now() - startStamp).count();
 
@@ -2900,8 +3002,12 @@ int LOOLWSD::innerMain()
             break;
         }
 #endif
+#endif
     }
 
+// No point in doing any orderly shutdown on mobile, we will never exit intentionally, the OS will
+// kill us.
+#ifndef MOBILEAPP
     // Stop the listening to new connections
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownFlag: " <<
@@ -2975,22 +3081,27 @@ int LOOLWSD::innerMain()
         LOG_INF("Removing jail [" << path << "].");
         FileUtil::removeFile(path, true);
     }
+#endif // !MOBILEAPP
+
     return Application::EXIT_OK;
 }
 
+
 void LOOLWSD::cleanup()
 {
+#ifndef MOBILEAPP
     FileServerRequestHandler::uninitialize();
 
+#if ENABLE_SSL
     // Finally, we no longer need SSL.
     if (LOOLWSD::isSSLEnabled())
     {
         Poco::Net::uninitializeSSL();
         Poco::Crypto::uninitializeCrypto();
-#if ENABLE_SSL
         SslContext::uninitialize();
-#endif
     }
+#endif
+#endif
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -3014,6 +3125,8 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     LOG_INF("Process [loolwsd] finished.");
     return returnValue;
 }
+
+#ifndef MOBILEAPP
 
 void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& /* request */, UnitHTTPServerResponse& /* response */)
 {
@@ -3060,6 +3173,8 @@ void alertAllUsers(const std::string& msg)
 }
 #endif
 
+#endif
+
 void dump_state()
 {
     std::ostringstream oss;
@@ -3070,8 +3185,10 @@ void dump_state()
     LOG_TRC(msg);
 }
 
+#ifndef MOBILEAPP
+
 POCO_SERVER_MAIN(LOOLWSD)
 
-#endif // !MOBILEAPP
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -56,6 +56,8 @@ bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
 Util::RegexListMatcher StorageBase::WopiHosts;
 
+#ifndef MOBILEAPP
+
 std::string StorageBase::getLocalRootPath() const
 {
     std::string localPath = _jailPath;
@@ -77,9 +79,12 @@ size_t StorageBase::getFileSize(const std::string& filename)
     return std::ifstream(filename, std::ifstream::ate | std::ifstream::binary).tellg();
 }
 
+#endif
+
 void StorageBase::initialize()
 {
     const auto& app = Poco::Util::Application::instance();
+#ifndef MOBILEAPP
     FilesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
 
     // Parse the WOPI settings.
@@ -127,6 +132,9 @@ void StorageBase::initialize()
 
     Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+#endif
+#else
+    FilesystemEnabled = true;
 #endif
 }
 
@@ -179,7 +187,6 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     // here much earlier. Also, using exceptions is lame and makes understanding the code harder,
     // but that is just my personal preference.
 
-#ifndef MOBILEAPP
     std::unique_ptr<StorageBase> storage;
 
     if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
@@ -190,10 +197,6 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             return storage;
         }
     }
-#else
-    if (false)
-        ;
-#endif
     else if (uri.isRelative() || uri.getScheme() == "file")
     {
         LOG_INF("Public URI [" << uri.toString() << "] is a file.");
@@ -263,6 +266,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 
 std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 {
+#ifndef MOBILEAPP
     // /chroot/jailId/user/doc/childId/file.ext
     const std::string filename = Poco::Path(_uri.getPath()).getFileName();
     _jailedFilePath = Poco::Path(getLocalRootPath(), filename).toString();
@@ -311,6 +315,16 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 #else
     return _jailedFilePath;
 #endif
+
+#else // MOBILEAPP
+
+    // In the mobile app we use no jail
+    _jailedFilePath = _uri.getPath();
+    _isLoaded = true;
+
+    return _jailedFilePath;
+#endif
+
 }
 
 StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/)

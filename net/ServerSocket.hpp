@@ -47,8 +47,11 @@ public:
     /// Returns true on success only.
     bool listen(const int backlog = 64)
     {
+#ifndef MOBILEAPP
         const int rc = ::listen(getFD(), backlog);
-
+#else
+        const int rc = fakeSocketListen(getFD());
+#endif
         if (rc)
             LOG_SYS("Failed to listen");
         return rc == 0;
@@ -61,15 +64,20 @@ public:
     {
         // Accept a connection (if any) and set it to non-blocking.
         // There still need the client's address to filter request from POST(call from REST) here.
+#ifndef MOBILEAPP
         struct sockaddr_in6 clientInfo;
         socklen_t addrlen = sizeof(clientInfo);
         const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK);
+#else
+        const int rc = fakeSocketAccept4(getFD(), SOCK_NONBLOCK);
+#endif
         LOG_DBG("Accepted socket #" << rc << ", creating socket object.");
         try
         {
             // Create a socket object using the factory.
             if (rc != -1)
             {
+#ifndef MOBILEAPP
                 char addrstr[INET6_ADDRSTRLEN];
 
                 const void *inAddr;
@@ -89,6 +97,10 @@ public:
                 _socket->_clientAddress = addrstr;
                 LOG_DBG("Accepted socket has family " << clientInfo.sin6_family <<
                         " address " << _socket->_clientAddress);
+#else
+                std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
+                _socket->_clientAddress = "dummy";
+#endif
                 return _socket;
             }
             return std::shared_ptr<Socket>(nullptr);

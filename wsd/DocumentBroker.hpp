@@ -57,7 +57,6 @@ public:
 class ChildProcess
 {
 public:
-#ifndef MOBILEAPP
     /// @param pid is the process ID of the child.
     /// @param socket is the underlying Sockeet to the child.
     ChildProcess(const Poco::Process::PID pid,
@@ -72,15 +71,6 @@ public:
     {
         LOG_INF("ChildProcess ctor [" << _pid << "].");
     }
-#else
-    ChildProcess(const std::shared_ptr<WebSocketHandler>& ws) :
-        _pid(0),
-        _jailId(""),
-        _ws(ws)
-    {
-        LOG_INF("ChildProcess ctor.");
-    }
-#endif
 
 
     ChildProcess(ChildProcess&& other) = delete;
@@ -89,7 +79,6 @@ public:
 
     ~ChildProcess()
     {
-#ifndef MOBILEAPP
         if (_pid <= 0)
             return;
 
@@ -99,7 +88,6 @@ public:
         // No need for the socket anymore.
         _ws.reset();
         _socket.reset();
-#endif
     }
 
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker);
@@ -108,7 +96,6 @@ public:
     /// Let the child close a nice way.
     void close()
     {
-#ifndef MOBILEAPP
         if (_pid < 0)
             return;
 
@@ -133,16 +120,15 @@ public:
         }
 
         _pid = -1;
-#endif
     }
 
     /// Kill or abandon the child.
     void terminate()
     {
-#ifndef MOBILEAPP
         if (_pid < 0)
             return;
 
+#ifndef MOBILEAPP
         if (::kill(_pid, 0) == 0)
         {
             LOG_INF("Killing child [" << _pid << "].");
@@ -151,9 +137,11 @@ public:
                 LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
             }
         }
-
-        _pid = -1;
+#else
+        // What to do? Throw some unique exception that the outermost call in the thread catches and
+        // exits from the thread?
 #endif
+        _pid = -1;
     }
 
     Poco::Process::PID getPid() const { return _pid; }
@@ -206,9 +194,7 @@ private:
     Poco::Process::PID _pid;
     const std::string _jailId;
     std::shared_ptr<WebSocketHandler> _ws;
-#ifndef MOBILEAP
     std::shared_ptr<Socket> _socket;
-#endif
     std::weak_ptr<DocumentBroker> _docBroker;
 };
 

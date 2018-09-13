@@ -78,6 +78,10 @@
 #include <wsd/LOOLWSD.hpp>
 #endif
 
+#ifdef MOBILEAPP
+#include "LOOLWSD.hpp"
+#endif
+
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_MERGED      "lib" "mergedlo" ".so"
 
@@ -103,10 +107,6 @@ using namespace LOOLProtocol;
 // We only host a single document in our lifetime.
 class Document;
 static std::shared_ptr<Document> document;
-
-#ifdef MOBILEAPP
-static JS2OnlineBridge *theBridge;
-#endif
 
 #if ENABLE_DEBUG
 #  define ADD_DEBUG_RENDERID(s) ((s)+ " renderid=" + Util::UniqueId())
@@ -1145,17 +1145,11 @@ public:
 
     bool sendTextFrame(const std::string& message)
     {
-#ifndef MOBILEAPP
         return sendFrame(message.data(), message.size());
-#else
-        theBridge->sendToJS(message.data(), message.size());
-        return true;
-#endif
     }
 
     bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) override
     {
-#ifndef MOBILEAPP
         try
         {
             std::shared_ptr<std::vector<char>> message = std::make_shared<std::vector<char>>();
@@ -1170,10 +1164,6 @@ public:
                     (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
         }
         return false;
-#else
-        theBridge->sendToJS(buffer, length);
-        return true;
-#endif
     }
 
     static void GlobalCallback(const int type, const char* p, void* data)
@@ -2152,7 +2142,7 @@ void lokit_main(
                 bool displayVersion
 #else
                 const std::string& documentUri,
-                JS2OnlineBridge& bridge
+                int docBrokerSocket
 #endif
                 )
 {
@@ -2409,6 +2399,8 @@ void lokit_main(
             std::_Exit(Application::EXIT_SOFTWARE);
         }
 
+        LOOLWSD::LOKitVersion = loKit->getVersionInfo();
+
         // Dummies
         Poco::URI uri;
         const std::string jailId;
@@ -2418,19 +2410,12 @@ void lokit_main(
 
         SocketPoll mainKit("kit");
 
-#ifdef MOBILEAPP
-        // Ugly, but not ay uglier than the singleton 'document' variable.
-        theBridge = &bridge;
-        theBridge->registerSocket(mainKit);
-        std::thread([&] {
-                theBridge->sendToOnline("session 0001 foo 0001");
-                // No jailing in the mobile app, just use the same URI for the "jail" parameter to
-                // the "load" command, too.
-                theBridge->sendToOnline("child-0001 load url=" + documentUri + " jail=" + documentUri);
-            }).detach();
+#ifndef MOBILEAPP
+        mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit));
+#else
+        mainKit.insertNewWebSocketSync(docBrokerSocket, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit));
 #endif
 
-        mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit));
         LOG_INF("New kit client websocket inserted.");
 
         while (!TerminationFlag)

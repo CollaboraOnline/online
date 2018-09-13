@@ -8,6 +8,14 @@
 
 #import "config.h"
 
+#import <string>
+#import <vector>
+
+#import <poll.h>
+
+#import "ios.h"
+#import "FakeSocket.hpp"
+
 #import "DocumentViewController.h"
 
 @interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler> {
@@ -47,11 +55,6 @@
                                                                       options:0
                                                                       metrics:nil
                                                                         views:views]];
-
-    NSURL *loleafletURL = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
-    NSURLRequest * myNSURLRequest = [[NSURLRequest alloc]initWithURL:loleafletURL];
-    waitingForInitialLoad = YES;
-    [self.webView loadRequest:myNSURLRequest];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,22 +91,6 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     NSLog(@"didFinishNavigation: %@", navigation);
-
-    // Huh, this is horrible.
-    if (waitingForInitialLoad) {
-        waitingForInitialLoad = NO;
-        NSString *js;
-
-        js = @"window.postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');";
-        [webView evaluateJavaScript:js
-                  completionHandler:^(id _Nullable obj, NSError * _Nullable error)
-                 {
-                     if (error) {
-                         NSLog(@"name = %@ error = %@",@"", error.localizedDescription);
-                     }
-                 }
-         ];
-    }
 }
 
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
@@ -151,13 +138,62 @@
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    int rc;
+    struct pollfd p;
+
     if ([message.name isEqualToString:@"error"]) {
         NSLog(@"Error from WebView: %@", message.body);
     } else if ([message.name isEqualToString:@"debug"]) {
         NSLog(@"===== %@", message.body);
     } else if ([message.name isEqualToString:@"lool"]) {
         NSLog(@"===== To Online: %@", message.body);
-        self.document->bridge.sendToOnline([[@"child-0001 " stringByAppendingString:(NSString*)message.body] UTF8String]);
+
+        if ([message.body isEqualToString:@"HULLO"]) {
+            // Now we know that the JS has started completely
+
+            // Contact the permanently (during app lifetime) listening LOOLWSD server
+            // "public" socket
+            assert(loolwsd_server_socket_fd != -1);
+            rc = fakeSocketConnect(self.document->fakeClientFd, loolwsd_server_socket_fd);
+            assert(rc != -1);
+
+            // Start another thread to read responses and forward them to the JavaScript
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                           ^{
+                               while (true) {
+                                   struct pollfd p;
+                                   p.fd = self.document->fakeClientFd;
+                                   p.events = POLLIN;
+                                   if (fakeSocketPoll(&p, 1, 0) == 1) {
+                                       int n = fakeSocketAvailableDataLength(self.document->fakeClientFd);
+                                       if (n == 0)
+                                           return;
+                                       std::vector<char> buf(n);
+                                       n = fakeSocketRead(self.document->fakeClientFd, buf.data(), n);
+                                       [self.document send2JS:buf.data() length:n];
+                                   }
+                                   else
+                                       break;
+                               }
+                               assert(false);
+                           });
+
+            // First we simply send it the URL. This corresponds to the GET request with Upgrade to
+            // WebSocket.
+            std::string url([[[self.document fileURL] absoluteString] UTF8String]);
+            p.fd = self.document->fakeClientFd;
+            p.events = POLLOUT;
+            fakeSocketPoll(&p, 1, 0);
+            fakeSocketWrite(self.document->fakeClientFd, url.c_str(), url.size());
+
+            return;
+        }
+
+        const char *buf = [message.body UTF8String];
+        p.fd = self.document->fakeClientFd;
+        p.events = POLLOUT;
+        fakeSocketPoll(&p, 1, 0);
+        fakeSocketWrite(self.document->fakeClientFd, buf, strlen(buf));
     } else {
         NSLog(@"Unrecognized kind of message received from WebView: %@: %@", message.name, message.body);
     }

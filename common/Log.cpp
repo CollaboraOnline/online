@@ -111,7 +111,10 @@ namespace Log
             osTid = Util::getThreadId();
             threadName = Util::getThreadName();
         }
-
+#elif defined IOS
+        const char *threadName = Util::getThreadName();
+        auto osTid = pthread_mach_thread_np(pthread_self());
+#endif
         Poco::DateTime time;
         snprintf(buffer, 1023, "%s-%.05lu %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
                     (Source.inited ? Source.id.c_str() : "<shutdown>"),
@@ -120,16 +123,6 @@ namespace Log
                     time.hour(), time.minute(), time.second(),
                     time.millisecond() * 1000 + time.microsecond(),
                     threadName, level);
-#else
-        Poco::DateTime time;
-        const char *threadName = Util::getThreadName();
-        snprintf(buffer, 1023, "%s %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
-                    (Source.inited ? Source.id.c_str() : "<shutdown>"),
-                    time.year(), time.month(), time.day(),
-                    time.hour(), time.minute(), time.second(),
-                    time.millisecond() * 1000 + time.microsecond(),
-                    threadName, level);
-#endif
         return buffer;
     }
 
@@ -148,8 +141,11 @@ namespace Log
     {
         Source.name = name;
         std::ostringstream oss;
-        oss << Source.name << '-'
+        oss << Source.name;
+#ifndef MOBILEAPP // Just one process in a mobile app, the pid is uninteresting.
+        oss << '-'
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
+#endif
         Source.id = oss.str();
 
         // Configure the logger.
