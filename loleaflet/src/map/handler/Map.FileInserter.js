@@ -16,6 +16,7 @@ L.Map.FileInserter = L.Handler.extend({
 		this._childId = null;
 		this._toInsert = {};
 		this._toInsertURL = {};
+		this._toInsertBackground = {};
 		var parser = document.createElement('a');
 		parser.href = map.options.server;
 	},
@@ -33,12 +34,14 @@ L.Map.FileInserter = L.Handler.extend({
 		this._map.on('insertfile', this._onInsertFile, this);
 		this._map.on('inserturl', this._onInsertURL, this);
 		this._map.on('childid', this._onChildIdMsg, this);
+		this._map.on('selectbackground', this._onSelectBackground, this);
 	},
 
 	removeHooks: function () {
 		this._map.off('insertfile', this._onInsertFile, this);
 		this._map.off('inserturl', this._onInsertURL, this);
 		this._map.off('childid', this._onChildIdMsg, this);
+		this._map.off('selectbackground', this._onSelectBackground, this);
 	},
 
 	_onInsertFile: function (e) {
@@ -58,6 +61,16 @@ L.Map.FileInserter = L.Handler.extend({
 		}
 		else {
 			this._sendURL(Date.now(), e.url);
+		}
+	},
+
+	_onSelectBackground: function (e) {
+		if (!this._childId) {
+			this._map._socket.sendMessage('getchildid');
+			this._toInsertBackground[Date.now()] = e.file;
+		}
+		else {
+			this._sendFile(Date.now(), e.file, 'selectbackground');
 		}
 	},
 
@@ -87,6 +100,8 @@ L.Map.FileInserter = L.Handler.extend({
 			map.fire('error', {msg: errMsg});
 			return;
 		}
+
+		this._toInsertBackground = {};
 
 		if (window.ThisIsAMobileApp) {
 			// Pass the file contents as a base64-encoded parameter in an insertfile message

@@ -1156,12 +1156,12 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
     }
 #endif
 
-    if (type == "graphic" || type == "graphicurl")
+    if (type == "graphic" || type == "graphicurl" || type == "selectbackground")
     {
         std::string url;
 
 #if !MOBILEAPP
-        if (type == "graphic")
+        if (type == "graphic" || type == "selectbackground")
             url = "file://" + std::string(JAILED_DOCUMENT_ROOT) + "insertfile/" + name;
         else if (type == "graphicurl")
             URI::decode(name, url);
@@ -1176,8 +1176,8 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
         url = "file://" + tempFile;
 #endif
 
-        std::string command = ".uno:InsertGraphic";
-        std::string arguments = "{"
+        const std::string command = (type == "selectbackground" ? ".uno:SelectBackground" : ".uno:InsertGraphic");
+        const std::string arguments = "{"
             "\"FileName\":{"
                 "\"type\":\"string\","
                 "\"value\":\"" + url + "\""
@@ -1185,7 +1185,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
 
         getLOKitDocument()->setView(_viewId);
 
-        LOG_TRC("Inserting graphic: '" << arguments.c_str() << "', '");
+        LOG_TRC("Inserting " << type << ": " << command << ' ' << arguments.c_str());
 
         getLOKitDocument()->postUnoCommand(command.c_str(), arguments.c_str(), false);
     }

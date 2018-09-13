@@ -2644,7 +2644,7 @@ private:
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
                         });
-                        });
+                    });
 
                     sent = true;
                 }
@@ -2691,11 +2691,11 @@ private:
                 // protect against attempts to inject something funny here
                 if (formChildid.find('/') == std::string::npos && formName.find('/') == std::string::npos)
                 {
-                    LOG_INF("Perform insertfile: " << formChildid << ", " << formName);
                     const std::string dirPath = LOOLWSD::ChildRoot + formChildid
                                               + JAILED_DOCUMENT_ROOT + "insertfile";
+                    const std::string fileName = dirPath + '/' + form.get("name");
+                    LOG_INF("Perform insertfile: " << formChildid << ", " << formName << ", filename: " << fileName);
                     File(dirPath).createDirectories();
-                    std::string fileName = dirPath + "/" + form.get("name");
                     File(handler.getFilename()).moveTo(fileName);
                     response.setContentLength(0);
                     socket->send(response);
@@ -3379,11 +3379,13 @@ int LOOLWSD::innerMain()
         LOG_FTL("Missing --systemplate option");
         throw MissingOptionException("systemplate");
     }
+
     if (LoTemplate.empty())
     {
         LOG_FTL("Missing --lotemplate option");
         throw MissingOptionException("lotemplate");
     }
+
     if (ChildRoot.empty())
     {
         LOG_FTL("Missing --childroot option");
@@ -3494,6 +3496,7 @@ int LOOLWSD::innerMain()
         }
 #endif
     }
+
     // Stop the listening to new connections
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownRequestFlag: " <<

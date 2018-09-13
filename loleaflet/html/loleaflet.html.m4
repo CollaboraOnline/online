@@ -159,6 +159,7 @@ ifelse(MOBILEAPP,[true],
     </script>
 
     <input id="insertgraphic" type="file" style="position: fixed; top: -100em">
+    <input id="selectbackground" type="file" style="position: fixed; top: -100em">
 
     <div id="closebuttonwrapper">
       <div class="closebuttonimage" id="closebutton"></div>

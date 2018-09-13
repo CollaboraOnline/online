@@ -70,6 +70,10 @@ insertfile name=<name> type=<type>
         type = 'graphicurl': The file is supposed to be downloaded by the core
 	                     itself; it does so from the URL provided in 'name'
 
+selectbackground name=<name>
+
+    Inserts a graphic file with the name <name> into the document as background.
+
 key type=<type> char=<charcode> key=<keycode>
 
     <type> is 'input' or 'up', <charcode> and <keycode> are numbers.

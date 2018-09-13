@@ -287,6 +287,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
+				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
@@ -1071,6 +1072,8 @@ L.Control.Menubar = L.Control.extend({
 			L.DomUtil.get('insertgraphic').click();
 		} else if (id === 'insertgraphicremote') {
 			this._map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
+		} else if (id === 'selectbackground') {
+			L.DomUtil.get('selectbackground').click();
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
 			this._map.zoomIn(1);
 		} else if (id === 'showresolved') {

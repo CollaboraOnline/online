@@ -179,6 +179,10 @@ L.Map.include({
 		this.fire('inserturl', {url: url});
 	},
 
+	selectBackground: function (file) {
+		this.fire('selectbackground', {file: file});
+	},
+
 	cellEnterString: function (string) {
 		var command = {
 			'StringName': {

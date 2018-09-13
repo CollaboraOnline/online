@@ -206,6 +206,7 @@ var unoCommandsArray = {
 	SaveAs:{global:{menu:_('Save ~As...'),},},
 	SearchDialog:{global:{menu:_('Find & Rep~lace...'),},},
 	SelectAll:{global:{menu:_('Select ~All'),},},
+	SelectBackground:{presentation:{menu:_('Set Background Image...'),},},
 	SelectTable:{presentation:{menu:_('~Select...'),},text:{menu:_('~Table'),},},
 	SendToBack:{global:{menu:_('~Send to Back'),},},
 	SetAnchorAtChar:{text:{menu:_('To ~Character'),},},

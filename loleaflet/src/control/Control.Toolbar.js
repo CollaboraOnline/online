@@ -1316,6 +1316,21 @@ function onInsertFile() {
 	return false;
 }
 
+function onInsertBackground() {
+	var selectBackground = L.DomUtil.get('selectbackground');
+	if ('files' in selectBackground) {
+		for (var i = 0; i < selectBackground.files.length; i++) {
+			var file = selectBackground.files[i];
+			map.selectBackground(file);
+		}
+	}
+
+	// Set the value to null everytime so that onchange event is triggered,
+	// even if the same file is selected
+	selectBackground.value = null;
+	return false;
+}
+
 function onAddressInput(e) {
 	if (e.keyCode === 13) {
 		// address control should not have focus anymore
@@ -2378,6 +2393,7 @@ $(window).resize(function() {
 $(document).ready(function() {
 	// Attach insert file action
 	$('#insertgraphic').on('change', onInsertFile);
+	$('#selectbackground').on('change', onInsertBackground);
 });
 
 function setupToolbar(e) {
