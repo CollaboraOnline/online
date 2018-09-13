@@ -40,21 +40,21 @@ namespace Log
     using namespace Poco;
 
     /// Helper to avoid destruction ordering issues.
-    struct StaticNames
+    struct StaticNameHelper
     {
         std::atomic<bool> inited;
         std::string name;
         std::string id;
-        StaticNames() :
+        StaticNameHelper() :
             inited(true)
         {
         }
-        ~StaticNames()
+        ~StaticNameHelper()
         {
             inited = false;
         }
     };
-    static StaticNames Source;
+    static StaticNameHelper Source;
 
     // We need a signal safe means of writing messages
     //   $ man 7 signal
