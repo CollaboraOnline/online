@@ -153,6 +153,32 @@ void SocketPoll::feed(const std::string& payload)
 
 #endif
 
+void SocketPoll::pollingThreadEntry()
+{
+    try
+    {
+        Util::setThreadName(_name);
+        LOG_INF("Starting polling thread [" << _name << "].");
+
+        _owner = std::this_thread::get_id();
+        LOG_DBG("Thread affinity of " << _name << " set to " <<
+                Log::to_string(_owner) << ".");
+
+        // Invoke the virtual implementation.
+        pollingThread();
+
+        // Release sockets.
+        _pollSockets.clear();
+        _newSockets.clear();
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Exception in polling thread [" << _name << "]: " << exc.what());
+    }
+
+    _threadFinished = true;
+}
+
 void SocketPoll::wakeupWorld()
 {
 #ifndef MOBILEAPP
