@@ -28,7 +28,6 @@ struct FakeSocketPair
     int connectingFd;
     bool nonblocking[2];
     std::vector<char> buffer[2];
-    int readp[2];
     std::mutex *mutex;
     std::condition_variable *cv;
 
@@ -37,7 +36,6 @@ struct FakeSocketPair
         fd[0] = -1;
         fd[1] = -1;
         listening = false;
-        readp[0] = readp[1] = 0;
         mutex = new std::mutex();
         cv = new std::condition_variable();
     }
@@ -223,6 +221,26 @@ int fakeSocketAccept4(int fd, struct sockaddr *addr, socklen_t *addrlen, int fla
     return pair1.fd[1];
 }
 
+ssize_t fakeSocketAvailableDataLength(int fd)
+{
+    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    if (fd < 0 || fd/2 >= fds.size())
+    {
+        errno = EBADF;
+        return -1;
+    }
+
+    FakeSocketPair& pair = fds[fd/2];
+
+    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
+    fdsLock.unlock();
+
+    // K: for this fd
+    const int K = (fd&1);
+
+    return pair.buffer[K].size();
+}
+
 ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
 {
     std::unique_lock<std::mutex> fdsLock(fdsMutex);
@@ -266,17 +284,20 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
         }
     }
 
-    ssize_t result = std::min(nbytes, pair.buffer[K].size() - pair.readp[K]);
+    // These sockets are record-oriented!
+    ssize_t result = pair.buffer[K].size();
+    if (nbytes < result)
+    {
+        errno = EAGAIN; // Not the right errno, but what would be?
+        return -1;
+    }
 
-    memmove(buf, pair.buffer[K].data() + pair.readp[K], result);
-    if (pair.readp[K] + result < pair.buffer[K].size())
-        pair.readp[K] += result;
-    else
-        pair.buffer[K].resize(0);
+    memmove(buf, pair.buffer[K].data(), result);
+    pair.buffer[K].resize(0);
 
     pair.cv->notify_one();
 
-    return nbytes;
+    return result;
 }
 
 ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
@@ -326,7 +347,6 @@ ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
 
     pair.buffer[N].resize(nbytes);
     memmove(pair.buffer[N].data(), buf, nbytes);
-    pair.readp[N] = 0;
 
     pair.cv->notify_one();
 

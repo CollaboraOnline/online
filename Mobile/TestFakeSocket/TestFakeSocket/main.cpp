@@ -61,16 +61,7 @@ int main(int argc, char **argv)
     std::cout << "wrote 'hello'\n";
 
     char buf[100];
-    rc = fakeSocketRead(s3, buf, 3);
-    if (rc == -1)
-    {
-        perror("read");
-        return 1;
-    }
-    buf[rc] = 0;
-    std::cout << "read " << buf << "\n";
-
-    rc = fakeSocketRead(s3, buf, 50);
+    rc = fakeSocketRead(s3, buf, 100);
     if (rc == -1)
     {
         perror("read");
@@ -87,7 +78,14 @@ int main(int argc, char **argv)
     }
     std::cout << "wrote 'goodbye'\n";
 
-    rc = fakeSocketRead(s3, buf, 50);
+    rc = fakeSocketRead(s3, buf, 4);
+    if (rc != -1)
+    {
+        std::cerr << "Tried partial read, and succeeded!?\n";
+        return 1;
+    }
+
+    rc = fakeSocketRead(s3, buf, 100);
     if (rc == -1)
     {
         perror("read");

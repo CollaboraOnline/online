@@ -33,6 +33,8 @@ int fakeSocketConnect(int fd1, int fd2);
 
 int fakeSocketAccept4(int fd, struct sockaddr *addr, socklen_t *addrlen, int flags);
 
+ssize_t fakeSocketAvailableDataLength(int fd);
+
 ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes);
 
 ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes);
