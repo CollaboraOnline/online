@@ -16,18 +16,18 @@
 
 int main(int argc, char **argv)
 {
-    int s0 = fakeSocketSocket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
-    int s1 = fakeSocketSocket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
-    int s2 = fakeSocketSocket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    int s0 = fakeSocketSocket();
+    int s1 = fakeSocketSocket();
+    int s2 = fakeSocketSocket();
 
     std::cout << "sockets: " << s0 << ", " << s1 << ", " << s2 << "\n";
 
     fakeSocketClose(s1);
 
-    s1 = fakeSocketSocket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    s1 = fakeSocketSocket();
     std::cout << "closed and created s1 again: " << s1 << "\n";
 
-    int rc = fakeSocketListen(s0, 10);
+    int rc = fakeSocketListen(s0);
     if (rc == -1)
     {
         perror("listen");
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
     int s3;
     std::thread t0([&] {
-            s3 = fakeSocketAccept4(s0, nullptr, nullptr, 0);
+            s3 = fakeSocketAccept4(s0, 0);
             if (s3 == -1)
                 perror("accept");
         });
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
     std::cout << "read " << buf << "\n";
 
     int pipe[2];
-    rc = fakeSocketPipe2(pipe, 0);
+    rc = fakeSocketPipe2(pipe);
     if (rc == -1)
     {
         perror("pipe2");

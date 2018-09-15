@@ -13,73 +13,34 @@
 #ifdef MOBILEAPP
 
 #include <poll.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 #ifndef SOCK_NONBLOCK
 #define SOCK_NONBLOCK 0x100
 #endif
 
-int fakeSocketSocket(int domain, int type, int protocol);
+int fakeSocketSocket();
 
-int fakeSocketPipe2(int pipefd[2], int flags);
+int fakeSocketPipe2(int pipefd[2]);
 
 int fakeSocketPoll(struct pollfd *fds, int nfds, int timeout);
 
-int fakeSocketListen(int fd, int backlog);
+int fakeSocketListen(int fd);
 
 int fakeSocketConnect(int fd1, int fd2);
 
-int fakeSocketAccept4(int fd, struct sockaddr *addr, socklen_t *addrlen, int flags);
+int fakeSocketAccept4(int fd, int flags);
+
+int fakeSocketPeer(int fd);
 
 ssize_t fakeSocketAvailableDataLength(int fd);
 
 ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes);
 
+ssize_t fakeSocketFeed(int fd, const void *buf, size_t nbytes);
+
 ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes);
 
 int fakeSocketClose(int fd);
-
-inline int socket(int domain, int type, int protocol)
-{
-    return fakeSocketSocket(domain, type, protocol);
-}
-
-inline int pipe2(int pipefd[2], int flags)
-{
-    return fakeSocketPipe2(pipefd, flags);
-}
-
-inline int poll(struct pollfd *fds, int nfds, int timeout)
-{
-    return fakeSocketPoll(fds, nfds, timeout);
-}
-
-inline int listen(int fd, int backlog)
-{
-    return fakeSocketListen(fd, backlog);
-}
-
-inline int accept4(int fd, struct sockaddr *addr, socklen_t *addrlen, int flags)
-{
-    return fakeSocketAccept4(fd, addr, addrlen, flags);
-}
-
-inline ssize_t read(int fd, void *buf, size_t nbytes)
-{
-    return fakeSocketRead(fd, buf, nbytes);
-}
-
-inline ssize_t write(int fd, const void *buf, size_t nbytes)
-{
-    return fakeSocketWrite(fd, buf, nbytes);
-}
-
-inline int close(int fd)
-{
-    return fakeSocketClose(fd);
-}
 
 #endif // MOBILEAPP
 
