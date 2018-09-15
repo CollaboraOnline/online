@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     int s1 = fakeSocketSocket();
     int s2 = fakeSocketSocket();
 
-    std::cout << "sockets: " << s0 << ", " << s1 << ", " << s2 << "\n";
+    std::cout << "sockets: s0=" << s0 << ", s1=" << s1 << ", s2=" << s2 << "\n";
 
     fakeSocketClose(s1);
 
@@ -30,15 +30,26 @@ int main(int argc, char **argv)
     int rc = fakeSocketListen(s0);
     if (rc == -1)
     {
-        perror("listen");
+        perror("listening on s0");
         return 1;
     }
 
-    int s3;
+    int s3, s4;
     std::thread t0([&] {
             s3 = fakeSocketAccept4(s0, 0);
             if (s3 == -1)
+            {
                 perror("accept");
+                return;
+            }
+            std::cout << "accepted s3=" << s3 << " from s0\n";
+            s4 = fakeSocketAccept4(s0, 0);
+            if (s4 == -1)
+            {
+                perror("accept");
+                return;
+            }
+            std::cout << "accepted s4=" << s4 << " from s0\n";
         });
 
     rc = fakeSocketConnect(s1, s0);
@@ -47,20 +58,38 @@ int main(int argc, char **argv)
         perror("connect");
         return 1;
     }
+    std::cout << "connected s1\n";
+
+    rc = fakeSocketConnect(s2, s0);
+    if (rc == -1)
+    {
+        perror("connect");
+        return 1;
+    }
+    std::cout << "connected s2\n";
     
     t0.join();
-    if (s3 == -1)
+    if (s3 == -1 || s4 == -1)
         return 1;
 
-    rc = fakeSocketWrite(s1, "hello", 6);
+    rc = fakeSocketWrite(s1, "hello", 5);
     if (rc == -1)
     {
         perror("write");
         return 1;
     }
-    std::cout << "wrote 'hello'\n";
+    std::cout << "wrote 'hello' to s1\n";
+
+    rc = fakeSocketWrite(s2, "moin", 4);
+    if (rc == -1)
+    {
+        perror("write");
+        return 1;
+    }
+    std::cout << "wrote 'moin' to s2\n";
 
     char buf[100];
+
     rc = fakeSocketRead(s3, buf, 100);
     if (rc == -1)
     {
@@ -68,31 +97,40 @@ int main(int argc, char **argv)
         return 1;
     }
     buf[rc] = 0;
-    std::cout << "read " << buf << "\n";
+    std::cout << "read " << buf << " from s3\n";
 
-    rc = fakeSocketWrite(s1, "goodbye", 7);
+    rc = fakeSocketRead(s4, buf, 100);
+    if (rc == -1)
+    {
+        perror("read");
+        return 1;
+    }
+    buf[rc] = 0;
+    std::cout << "read '" << buf << "' from s4\n";
+
+    rc = fakeSocketWrite(s3, "goodbye", 7);
     if (rc == -1)
     {
         perror("write");
         return 1;
     }
-    std::cout << "wrote 'goodbye'\n";
+    std::cout << "wrote 'goodbye' to s3\n";
 
-    rc = fakeSocketRead(s3, buf, 4);
+    rc = fakeSocketRead(s1, buf, 4);
     if (rc != -1)
     {
         std::cerr << "Tried partial read, and succeeded!?\n";
         return 1;
     }
 
-    rc = fakeSocketRead(s3, buf, 100);
+    rc = fakeSocketRead(s1, buf, 100);
     if (rc == -1)
     {
         perror("read");
         return 1;
     }
     buf[rc] = 0;
-    std::cout << "read " << buf << "\n";
+    std::cout << "read '" << buf << "' from s1\n";
 
     int pipe[2];
     rc = fakeSocketPipe2(pipe);
@@ -101,6 +139,35 @@ int main(int argc, char **argv)
         perror("pipe2");
         return 1;
     }
+
+    fakeSocketClose(s3);
+    std::cout << "closed s3\n";
+
+    rc = fakeSocketRead(s1, buf, 100);
+    if (rc == -1)
+    {
+        perror("read");
+        return 1;
+    }
+    if (rc != 0)
+    {
+        std::cerr << "read '" << buf << "' from s1 after peer s3 was closed!?\n";
+        return 1;
+    }
+    std::cout << "correctly got eof from s1\n";
+
+    rc = fakeSocketRead(s1, buf, 100);
+    if (rc == -1)
+    {
+        perror("read");
+        return 1;
+    }
+    if (rc != 0)
+    {
+        std::cerr << "read '" << buf << "' from s1 after peer s3 was closed!?\n";
+        return 1;
+    }
+    std::cout << "correctly got eof from s1\n";
 
     rc = fakeSocketWrite(pipe[0], "x", 1);
     if (rc == -1)
@@ -116,7 +183,25 @@ int main(int argc, char **argv)
     }
     if (buf[0] != 'x')
     {
-        std::cerr << "Wrote 'x' but read '" << buf[0] << "'\n";
+        std::cerr << "wrote 'x' to pipe but read '" << buf[0] << "'\n";
+        return 1;
+    }
+
+    rc = fakeSocketWrite(pipe[1], "y", 1);
+    if (rc == -1)
+    {
+        perror("write");
+        return 1;
+    }
+    rc = fakeSocketRead(pipe[0], buf, 1);
+    if (rc == -1)
+    {
+        perror("read");
+        return 1;
+    }
+    if (buf[0] != 'y')
+    {
+        std::cerr << "wrote 'y' to pipe but read '" << buf[0] << "'\n";
         return 1;
     }
         
