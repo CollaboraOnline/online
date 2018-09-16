@@ -240,6 +240,14 @@ L.Control.Sidebar = L.Control.extend({
 		var dlgInput = this._createDialogInput(strId);
 
 		L.DomEvent.on(panelCanvas, 'contextmenu', L.DomEvent.preventDefault);
+		L.DomEvent.on(panelContainer, 'mouseleave', function() {
+			// Move the mouse off-screen when we leave the sidebar
+			// so we don't leave edge-elements highlighted as if
+			// the mouse is still over them.
+			this._map.lastActiveTime = Date.now();
+			if (!this._currentDeck.title) // For context menu
+				this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
+		}, this);
 		L.DomEvent.on(panelCanvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
 			if (!this._currentDeck.title) // For context menu
