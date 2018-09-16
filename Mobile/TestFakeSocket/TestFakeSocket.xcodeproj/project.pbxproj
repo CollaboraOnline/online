@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BEA28375214AFFCA00848631 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA28374214AFFCA00848631 /* main.cpp */; };
+		BEA28375214AFFCA00848631 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEA28374214AFFCA00848631 /* main.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		BEA2836A214AFF9A00848631 /* TestFakeSocket */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestFakeSocket; sourceTree = BUILT_PRODUCTS_DIR; };
-		BEA28374214AFFCA00848631 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		BEA28374214AFFCA00848631 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 		BEA2836C214AFF9A00848631 /* TestFakeSocket */ = {
 			isa = PBXGroup;
 			children = (
-				BEA28374214AFFCA00848631 /* main.cpp */,
+				BEA28374214AFFCA00848631 /* main.mm */,
 			);
 			path = TestFakeSocket;
 			sourceTree = "<group>";
@@ -118,7 +118,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEA28375214AFFCA00848631 /* main.cpp in Sources */,
+				BEA28375214AFFCA00848631 /* main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

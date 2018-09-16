@@ -18,6 +18,8 @@
 #define SOCK_NONBLOCK 0x100
 #endif
 
+void fakeSocketSetLoggingCallback(void (*)(const std::string&));
+
 int fakeSocketSocket();
 
 int fakeSocketPipe2(int pipefd[2]);

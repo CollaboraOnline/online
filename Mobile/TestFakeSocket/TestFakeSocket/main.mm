@@ -10,12 +10,17 @@
 #include <iostream>
 #include <thread>
 
-#define MOBILEAPP
+#import <Foundation/Foundation.h>
 
 #include "FakeSocket.cpp"
 
 int main(int argc, char **argv)
 {
+    fakeSocketSetLoggingCallback([](const std::string& line)
+                                 {
+                                     NSLog([NSString stringWithUTF8String:line.c_str()]);
+                                 });
+
     int s0 = fakeSocketSocket();
     int s1 = fakeSocketSocket();
     int s2 = fakeSocketSocket();
