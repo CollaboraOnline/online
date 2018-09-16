@@ -253,6 +253,13 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
     while (!checkForPoll(fds, pollfds, nfds))
         cv.wait(cvLock);
 
+    int result = 0;
+    for (int i = 0; i < nfds; i++)
+    {
+        if (pollfds[i].revents != 0)
+            result++;
+    }
+
     loggingBuffer << "FakeSocket Poll result: ";
     for (int i = 0; i < nfds; i++)
     {
@@ -260,9 +267,9 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
             loggingBuffer << ",";
         loggingBuffer << pollfds[i].fd << ":" << pollBits(pollfds[i].revents);
     }
-    loggingBuffer << flush();
+    loggingBuffer << ": " << result << flush();
 
-    return 0;
+    return result;
 }
 
 int fakeSocketListen(int fd)
@@ -406,7 +413,7 @@ int fakeSocketAccept4(int fd, int flags)
 
     pair2.fd[1] = pair2.fd[0] + 1;
 
-    cv.notify_one();
+    cv.notify_all();
 
     loggingBuffer << "FakeSocket Accept fd " << fd << ": " << pair2.fd[1] << flush();
 
@@ -419,6 +426,7 @@ int fakeSocketPeer(int fd)
     std::unique_lock<std::mutex> fdsLock(fdsMutex);
     if (fd < 0 || fd/2 >= fds.size())
     {
+        loggingBuffer << "FakeSocket EBADF: Peer of fd " << fd << flush();
         errno = EBADF;
         return -1;
     }
@@ -430,6 +438,8 @@ int fakeSocketPeer(int fd)
 
     const int K = (fd&1);
     const int N = 1 - K;
+
+    loggingBuffer << "FakeSocket Peer of fd " << fd << ": " << pair.fd[N] << flush();
 
     return pair.fd[N];
 }
@@ -516,7 +526,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
     else
         pair.readable[K] = false;
 
-    cv.notify_one();
+    cv.notify_all();
 
     loggingBuffer << "FakeSocket Read from fd " << fd << ": " << result << (result == 1 ? " byte" : " bytes") << flush();
 
@@ -560,7 +570,7 @@ ssize_t fakeSocketFeed(int fd, const void *buf, size_t nbytes)
     memmove(pair.buffer[K].data(), buf, nbytes);
     pair.readable[K] = true;
 
-    cv.notify_one();
+    cv.notify_all();
 
     loggingBuffer << "FakeSocket Feed to fd " << fd << ": " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
 
@@ -606,7 +616,7 @@ ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
     memmove(pair.buffer[N].data(), buf, nbytes);
     pair.readable[N] = true;
 
-    cv.notify_one();
+    cv.notify_all();
 
     loggingBuffer << "FakeSocket Write to fd " << fd << ": " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
     return nbytes;
@@ -637,7 +647,7 @@ int fakeSocketClose(int fd)
     pair.buffer[K].resize(0);
     pair.readable[N] = true;
 
-    cv.notify_one();
+    cv.notify_all();
 
     loggingBuffer << "FakeSocket Close fd " << fd << flush();
 
