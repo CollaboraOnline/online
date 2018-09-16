@@ -64,32 +64,41 @@ namespace LOKitHelper
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION)
         {
-            if (type == LOK_DOCTYPE_SPREADSHEET)
+            std::ostringstream hposs;
+            std::ostringstream sposs;
+            for (int i = 0; i < parts; ++i)
             {
-                std::ostringstream hposs;
-                for (int i = 0; i < parts; ++i)
+                ptrValue = loKitDocument->pClass->getPartInfo(loKitDocument, i);
+                const std::string partinfo(ptrValue);
+                std::free(ptrValue);
+                for (const auto& prop : Util::JsonToMap(partinfo))
                 {
-
-                    ptrValue = loKitDocument->pClass->getPartInfo(loKitDocument, i);
-                    std::string partinfo(ptrValue);
-                    std::free(ptrValue);
-                    const auto aPartInfo = Util::JsonToMap(partinfo);
-                    for (const auto& prop: aPartInfo)
+                    const std::string& name = prop.first;
+                    if (name == "visible")
                     {
-                        const std::string& name = prop.first;
-                        if (name == "visible")
-                        {
-                            if (prop.second == "0")
-                                hposs << i << ",";
-                        }
+                        if (prop.second == "0")
+                            hposs << i << ',';
+                    }
+                    else if (name == "selected")
+                    {
+                        if (prop.second == "1")
+                            sposs << i << ',';
                     }
                 }
-                std::string hiddenparts = hposs.str();
-                if (!hiddenparts.empty())
-                {
-                    hiddenparts.pop_back();
-                    oss << " hiddenparts=" << hiddenparts;
-                }
+            }
+
+            std::string hiddenparts = hposs.str();
+            if (!hiddenparts.empty())
+            {
+                hiddenparts.pop_back(); // Remove last ','
+                oss << " hiddenparts=" << hiddenparts;
+            }
+
+            std::string selectedparts = sposs.str();
+            if (!selectedparts.empty())
+            {
+                selectedparts.pop_back(); // Remove last ','
+                oss << " selectedparts=" << selectedparts;
             }
 
             for (int i = 0; i < parts; ++i)

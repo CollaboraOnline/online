@@ -976,6 +976,13 @@ L.Socket = L.Class.extend({
 					command.hiddenparts.push(parseInt(item));
 				});
 			}
+			else if (tokens[i].startsWith('selectedparts=')) {
+				var selectedparts = tokens[i].substring(14).split(',');
+				command.selectedparts = [];
+				selectedparts.forEach(function (item) {
+					command.selectedparts.push(parseInt(item));
+				});
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
