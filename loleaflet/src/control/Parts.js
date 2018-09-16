@@ -57,6 +57,7 @@ L.Map.include({
 	// part is the part index/id
 	// how is 0 to deselect, 1 to select, and 2 to toggle selection
 	selectPart: function (part, how, external) {
+		//TODO: Update/track selected parts.
 		var docLayer = this._docLayer;
 		if (typeof (part) === 'number' && part >= 0 && part < docLayer._parts) {
 			var selectedPart = part;
