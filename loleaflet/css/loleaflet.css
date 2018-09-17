@@ -140,6 +140,13 @@ body {
 	overflow: auto;
 }
 
+.loleaflet-mobile-container {
+	top: 30px;
+	margin: 0;
+	width: 1px;
+	opacity: 0;
+}
+
 .loleaflet-mobile-table {
 	background-color: transparent;
 	border-collapse: separate;
@@ -154,8 +161,9 @@ body {
 }
 
 .loleaflet-mobile-input {
-	width: 100px;
-	height: 25px;
+	width: 1px;
+	padding: 0px;
+	border: 0px;
 }
 
 /* Important to override context-menu-icon's font-family here otherwise, jquery-contextmenu.css

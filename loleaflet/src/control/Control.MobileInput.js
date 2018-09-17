@@ -4,7 +4,7 @@
  */
 L.Control.MobileInput = L.Control.extend({
 	options: {
-		position: 'bottomleft'
+		position: 'topleft'
 	},
 
 	initialize: function (options) {
@@ -22,7 +22,6 @@ L.Control.MobileInput = L.Control.extend({
 
 	onLostFocus: function () {
 		this._textArea.value = '';
-		this._container.style.visibility = 'hidden';
 		this._map.removeLayer(this._map._docLayer._cursorMarker);
 	},
 
@@ -33,10 +32,7 @@ L.Control.MobileInput = L.Control.extend({
 
 		if (focus === false) {
 			this._textArea.blur();
-			this._container.style.visibility = 'hidden';
 		} else {
-			this._container.style.marginLeft = (this._map.getSize().x - this._container.offsetWidth) / 2 + 'px';
-			this._container.style.visibility = '';
 			this._textArea.focus();
 		}
 	},
@@ -64,16 +60,11 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	_initLayout: function () {
-		var tagTd = 'td',
-		constOff = 'off',
+		var constOff = 'off',
 		stopEvents = 'touchstart touchmove touchend mousedown mousemove mouseout mouseover mouseup mousewheel click scroll',
-		container = this._container = L.DomUtil.create('table', 'loleaflet-mobile-table');
-		container.style.visibility = 'hidden';
+		container = this._container = L.DomUtil.create('div', 'loleaflet-mobile-container');
 
-		var tbody = L.DomUtil.create('tbody', '', container),
-		tr = L.DomUtil.create('tr', '', tbody),
-		td = L.DomUtil.create(tagTd, '', tr);
-		this._textArea = L.DomUtil.create('input', 'loleaflet-mobile-input', td);
+		this._textArea = L.DomUtil.create('input', 'loleaflet-mobile-input', container);
 		this._textArea.setAttribute('type', 'text');
 		this._textArea.setAttribute('autocorrect', constOff);
 		this._textArea.setAttribute('autocapitalize', constOff);
@@ -81,30 +72,9 @@ L.Control.MobileInput = L.Control.extend({
 		this._textArea.setAttribute('spellcheck', 'false');
 		L.DomEvent.on(this._textArea, stopEvents, L.DomEvent.stopPropagation)
 			.on(this._textArea, 'keydown keypress keyup', this.onKeyEvents, this)
-			.on(this._textArea, 'compositionstart compositionupdate compositionend textInput', this.onIMEEvents, this)
-			.on(this._textArea, 'cut', this.onNativeCut, this)
-			.on(this._textArea, 'copy', this.onNativeCopy, this)
-			.on(this._textArea, 'paste', this.onNativePaste, this)
+			.on(this._textArea, 'compositionstart compositionupdate compositionend textInput', this.onCompEvents, this)
 			.on(this._textArea, 'focus', this.onGotFocus, this)
 			.on(this._textArea, 'blur', this.onLostFocus, this);
-
-		var cut = L.DomUtil.create(tagTd, 'loleaflet-mobile-button loleaflet-mobile-cut', tr);
-		L.DomEvent.on(cut, stopEvents,  L.DomEvent.stopPropagation)
-			.on(cut, 'mousedown', L.DomEvent.preventDefault)
-			.on(cut, 'mouseup', this.onInternalCut, this);
-		var copy = L.DomUtil.create(tagTd, 'loleaflet-mobile-button loleaflet-mobile-copy', tr);
-		L.DomEvent.on(copy, stopEvents,  L.DomEvent.stopPropagation)
-			.on(copy, 'mousedown', L.DomEvent.preventDefault)
-			.on(copy, 'mouseup', this.onInternalCopy, this);
-		var paste = L.DomUtil.create(tagTd, 'loleaflet-mobile-button loleaflet-mobile-paste', tr);
-		L.DomEvent.on(paste, stopEvents,  L.DomEvent.stopPropagation)
-			.on(paste, 'mousedown', L.DomEvent.preventDefault)
-			.on(paste, 'mouseup', this.onInternalPaste, this);
-		this._map.on('mousedown', this.onClick, this);
-	},
-
-	onClick: function () {
-		this._textArea.value = '';
 	},
 
 	onKeyEvents: function (e) {
@@ -143,7 +113,7 @@ L.Control.MobileInput = L.Control.extend({
 		L.DomEvent.stopPropagation(e);
 	},
 
-	onIMEEvents: function (e) {
+	onCompEvents: function (e) {
 		var map = this._map;
 		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
 			this._isComposing = true; // we are starting composing with IME
@@ -187,68 +157,6 @@ L.Control.MobileInput = L.Control.extend({
 				map._docLayer._postKeyboardEvent('input', data[idx].charCodeAt(), 0);
 			}
 		}
-		L.DomEvent.stopPropagation(e);
-	},
-
-	onNativeCut: function (e) {
-		this._map._socket.sendMessage('uno .uno:Cut');
-		L.DomEvent.stopPropagation(e);
-	},
-
-	onNativeCopy: function (e) {
-		this._map._socket.sendMessage('uno .uno:Copy');
-		L.DomEvent.stopPropagation(e);
-	},
-
-	onNativePaste: function (e) {
-		if (e.clipboardData) { // Standard
-			this._map._docLayer._dataTransferToDocument(e.clipboardData, /* preferInternal = */ true);
-		}
-		else if (window.clipboardData) { // IE 11
-			this._map._docLayer._dataTransferToDocument(window.clipboardData, /* preferInternal = */ true);
-		}
-		L.DomEvent.preventDefault(e);
-		L.DomEvent.stopPropagation(e);
-	},
-
-	onInternalCut: function (e) {
-		if (this._map._docLayer._selectionTextContent) {
-			this._textArea.value = this._map._docLayer._selectionTextContent;
-			this._textArea.select();
-			this._textArea.setSelectionRange(0, this._textArea.value.length);
-			try {
-				document.execCommand('cut');
-			}
-			catch (err) {
-				console.log(err);
-			}
-			this._textArea.value = '';
-		}
-		this._map._socket.sendMessage('uno .uno:Cut');
-		L.DomEvent.preventDefault(e);
-		L.DomEvent.stopPropagation(e);
-	},
-
-	onInternalCopy: function (e) {
-		if (this._map._docLayer._selectionTextContent) {
-			this._textArea.value = this._map._docLayer._selectionTextContent;
-			this._textArea.select();
-			this._textArea.setSelectionRange(0, this._textArea.value.length);
-			try {
-				document.execCommand('copy');
-			}
-			catch (err) {
-				console.log(err);
-			}
-		}
-		this._map._socket.sendMessage('uno .uno:Copy');
-		L.DomEvent.preventDefault(e);
-		L.DomEvent.stopPropagation(e);
-	},
-
-	onInternalPaste: function (e) {
-		this._map._socket.sendMessage('uno .uno:Paste');
-		L.DomEvent.preventDefault(e);
 		L.DomEvent.stopPropagation(e);
 	}
 });
