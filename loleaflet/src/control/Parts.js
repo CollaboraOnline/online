@@ -6,6 +6,7 @@ L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
 		var docLayer = this._docLayer;
 		docLayer._prevSelectedPart = docLayer._selectedPart;
+		docLayer._selectedParts = [];
 		if (part === 'prev') {
 			if (docLayer._selectedPart > 0) {
 				docLayer._selectedPart -= 1;
@@ -22,12 +23,17 @@ L.Map.include({
 		else {
 			return;
 		}
+
+		docLayer._selectedParts.push(docLayer._selectedPart);
+
 		if (docLayer.isCursorVisible()) {
 			// a click outside the slide to clear any selection
 			this._socket.sendMessage('resetselection');
 		}
+
 		this.fire('updateparts', {
 			selectedPart: docLayer._selectedPart,
+			selectedParts: docLayer._selectedParts,
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
@@ -57,16 +63,21 @@ L.Map.include({
 	// part is the part index/id
 	// how is 0 to deselect, 1 to select, and 2 to toggle selection
 	selectPart: function (part, how, external) {
-		//TODO: Update/track selected parts.
+		//TODO: Update/track selected parts(?).
 		var docLayer = this._docLayer;
-		if (typeof (part) === 'number' && part >= 0 && part < docLayer._parts) {
-			var selectedPart = part;
+		var index = docLayer._selectedParts.indexOf(part);
+		if (index >= 0 && how != 1) {
+			// Remove (i.e. deselect)
+			docLayer._selectedParts.splice(index, 1);
 		}
-		else {
-			return;
+		else if (how != 0) {
+			// Add (i.e. select)
+			docLayer._selectedParts.push(part);
 		}
+
 		this.fire('updateparts', {
 			selectedPart: docLayer._selectedPart,
+			selectedParts: docLayer._selectedParts,
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
@@ -74,7 +85,7 @@ L.Map.include({
 		// If this wasn't triggered from the server,
 		// then notify the server of the change.
 		if (!external) {
-			this._socket.sendMessage('selectclientpart part=' + selectedPart + ' how=' + how);
+			this._socket.sendMessage('selectclientpart part=' + part + ' how=' + how);
 		}
 	},
 
