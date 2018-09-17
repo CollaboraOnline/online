@@ -404,6 +404,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "selectclientpart" &&
              tokens[0] != "setpage" &&
              tokens[0] != "status" &&
+             tokens[0] != "statusupdate" &&
              tokens[0] != "tile" &&
              tokens[0] != "tilecombine" &&
              tokens[0] != "uno" &&
@@ -419,6 +420,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "removesession" &&
              tokens[0] != "renamefile")
     {
+        LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
     }
@@ -481,7 +483,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return sendFontRendering(buffer, length, tokens, docBroker);
     }
-    else if (tokens[0] == "status")
+    else if (tokens[0] == "status" || tokens[0] == "statusupdate")
     {
         assert(firstLine.size() == static_cast<size_t>(length));
         return forwardToChild(firstLine, docBroker);

@@ -452,7 +452,7 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('statechanged:')) {
 			this._onStateChangedMsg(textMsg);
 		}
-		else if (textMsg.startsWith('status:')) {
+		else if (textMsg.startsWith('status:') || textMsg.startsWith('statusupdate:')) {
 			this._onStatusMsg(textMsg);
 		}
 		else if (textMsg.startsWith('textselection:')) {

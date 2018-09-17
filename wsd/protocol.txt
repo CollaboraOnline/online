@@ -373,10 +373,15 @@ saveas: url=<url> name=<name>
     <name> is the resulting name (without path) that was created on the wopi
     host. It can differ from what was requested in case the file already existed.
 
-status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height> viewid=<viewId> [partNames]
+status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height> viewid=<viewId> hiddenparts=<part1,part2,...> selectedparts=<part1,part2,...> [partNames]
 
     <typeName> is 'text, 'spreadsheet', 'presentation', 'drawing' or 'other. Others are numbers.
     if the document has multiple parts and those have names, part names follow separated by '\n'
+
+statusupdate: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height> viewid=<viewId> hiddenparts=<part1,part2,...> selectedparts=<part1,part2,...> [partNames]
+
+    Same as status: but issued whenever the document parts have updated significantly.
+    status: implies document loading. statusupdate: is just an update.
 
 styles: {"styleFamily": ["styles in family"], etc. }
 
