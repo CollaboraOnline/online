@@ -340,10 +340,6 @@ public:
 
     /// Append pretty printed internal state to a line
     virtual void dumpState(std::ostream& os) { os << "\n"; }
-
-    virtual void handleMessage(const std::string& /*message*/)
-    {
-    }
 };
 
 /// Handles non-blocking socket event polling.

@@ -2054,12 +2054,6 @@ protected:
     {
         std::string message(data.data(), data.size());
 
-        handleMessage(message);
-    }
-
-    void handleMessage(const std::string& message) override
-    {
-
 #if 0 // FIXME might be needed for unit tests #ifndef KIT_IN_PROCESS
         if (UnitKit::get().filterKitMessage(ws, message))
         {
