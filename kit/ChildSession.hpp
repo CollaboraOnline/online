@@ -269,6 +269,7 @@ private:
     bool saveAs(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool setClientPart(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool selectClientPart(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool moveSelectedClientParts(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool setPage(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool sendWindowCommand(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool signDocumentContent(const char* buffer, int length, const std::vector<std::string>& tokens);

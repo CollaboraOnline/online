@@ -232,6 +232,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         return selectClientPart(buffer, length, tokens);
     }
+    else if (tokens[0] == "moveselectedclientparts")
+    {
+        return moveSelectedClientParts(buffer, length, tokens);
+    }
     else if (tokens[0] == "setpage")
     {
         return setPage(buffer, length, tokens);
@@ -1962,6 +1966,35 @@ bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, cons
     }
 
     return true;
+}
+
+bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    int nPosition;
+    if (tokens.size() < 2 ||
+        !getTokenInteger(tokens[1], "position", nPosition))
+    {
+        sendTextFrame("error: cmd=moveselectedclientparts kind=invalid");
+        return false;
+    }
+
+    getLOKitDocument()->setView(_viewId);
+
+    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+    {
+        getLOKitDocument()->moveSelectedParts(nPosition, false); // Move, don't duplicate.
+
+        // Get the status to recreate the previews and correctly order parts.
+        const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
+        if (!status.empty())
+            return sendTextFrame("statusupdate: " + status);
+    }
+    else
+    {
+        LOG_WRN("ChildSession::moveSelectedClientParts[" << getName() << "]: error moving parts on text documents.");
+    }
+
+    return true; // Non-fatal to fail.
 }
 
 bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)

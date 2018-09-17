@@ -85,6 +85,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_createPreview: function (i, hashCode, bottomBound) {
 		var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
+		this._addDnDHandlers(frame);
 		L.DomUtil.create('span', 'preview-helper', frame);
 
 		var imgClassName = 'preview-img';
@@ -209,6 +210,7 @@ L.Control.PartsPreview = L.Control.extend({
 			for (it = 0; it < parts; it++) {
 				if (this._previewTiles[it].hash !== e.partNames[it]) {
 					this._previewTiles[it].hash = e.partNames[it];
+					this._map.getPreview(it, it, 180, 180, {autoUpdate: this.options.autoUpdate});
 				}
 			}
 		}
@@ -276,7 +278,66 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 			}
 		}
+	},
+
+	_addDnDHandlers: function (elem) {
+		if (elem) {
+			elem.setAttribute('draggable', true);
+			elem.addEventListener('dragstart', this._handleDragStart, false);
+			elem.addEventListener('dragenter', this._handleDragEnter, false)
+			elem.addEventListener('dragover', this._handleDragOver, false);
+			elem.addEventListener('dragleave', this._handleDragLeave, false);
+			elem.addEventListener('drop', this._handleDrop, false);
+			elem.addEventListener('dragend', this._handleDragEnd, false);
+			elem.partsPreview = this;
+		}
+	},
+
+	_handleDragStart: function (e) {
+		// By default we move when dragging, but can
+		// support duplication with ctrl in the future.
+		e.dataTransfer.effectAllowed = 'move';
+	},
+
+	_handleDragOver: function (e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		}
+
+		// By default we move when dragging, but can
+		// support duplication with ctrl in the future.
+		e.dataTransfer.dropEffect = 'move';
+
+		this.classList.add('preview-img-dropsite');
+		return false;
+	},
+
+	_handleDragEnter: function () {
+	},
+
+	_handleDragLeave: function () {
+		this.classList.remove('preview-img-dropsite');
+	},
+
+	_handleDrop: function (e) {
+		if (e.stopPropagation) {
+			e.stopPropagation();
+		}
+
+		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
+		if (part !== null) {
+			var partId = parseInt(part);
+			this.partsPreview._map._socket.sendMessage('moveselectedclientparts position=' + partId);
+		}
+
+		this.classList.remove('preview-img-dropsite');
+		return false;
+	},
+
+	_handleDragEnd: function () {
+		this.classList.remove('preview-img-dropsite');
 	}
+
 });
 
 L.control.partsPreview = function (options) {

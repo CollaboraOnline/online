@@ -402,6 +402,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "selecttext" &&
              tokens[0] != "setclientpart" &&
              tokens[0] != "selectclientpart" &&
+             tokens[0] != "moveselectedclientparts" &&
              tokens[0] != "setpage" &&
              tokens[0] != "status" &&
              tokens[0] != "statusupdate" &&
@@ -572,6 +573,23 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 !getTokenInteger(tokens[2], "how", how))
             {
                 sendTextFrame("error: cmd=selectclientpart kind=syntax");
+                return false;
+            }
+            else
+            {
+                return forwardToChild(std::string(buffer, length), docBroker);
+            }
+        }
+    }
+    else if (tokens[0] == "moveselectedclientparts")
+    {
+        if(!_isTextDocument)
+        {
+            int nPosition;
+            if (tokens.size() != 2 ||
+                !getTokenInteger(tokens[1], "position", nPosition))
+            {
+                sendTextFrame("error: cmd=moveselectedclientparts kind=syntax");
                 return false;
             }
             else
