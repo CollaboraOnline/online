@@ -59,6 +59,9 @@ public:
     /// Access to the document instance.
     virtual std::shared_ptr<lok::Document> getLOKitDocument() = 0;
 
+    /// Send msg to all active sessions.
+    virtual bool notifyAll(const std::string& msg) = 0;
+
     /// Send updated view info to all active sessions.
     virtual void notifyViewInfo() = 0;
     virtual void updateEditorSpeeds(int id, int speed) = 0;

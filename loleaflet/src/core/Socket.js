@@ -977,10 +977,10 @@ L.Socket = L.Class.extend({
 				});
 			}
 			else if (tokens[i].startsWith('selectedparts=')) {
-				var selectedparts = tokens[i].substring(14).split(',');
-				command.selectedparts = [];
-				selectedparts.forEach(function (item) {
-					command.selectedparts.push(parseInt(item));
+				var selectedParts = tokens[i].substring(14).split(',');
+				command.selectedParts = [];
+				selectedParts.forEach(function (item) {
+					command.selectedParts.push(parseInt(item));
 				});
 			}
 		}

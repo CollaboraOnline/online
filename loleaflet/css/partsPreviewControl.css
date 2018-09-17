@@ -27,10 +27,19 @@
 	border: 2px solid #dfdfdf;
 	}
 
-.preview-img-selected {
-	border-color: #000000;
+/* The current part the user is on. */
+.preview-img-currentpart {
+    border-color: #000000;
+    border-style: solid;
 }
 
+/* One of (potentially many) selected parts, but not the current. */
+.preview-img-selectedpart {
+    border-color: #000000;
+    border-style: dotted;
+}
+
+/* Highlight where a slide can be dropped when reordering by drag-and-drop. */
 .preview-img-dropsite {
     border-bottom: 2px solid red;
 }

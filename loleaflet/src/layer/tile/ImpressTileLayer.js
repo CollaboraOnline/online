@@ -633,6 +633,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._parts = command.parts;
 			this._viewId = parseInt(command.viewid);
 			this._selectedPart = command.selectedPart;
+			this._selectedParts = command.selectedParts || [command.selectedPart];
 			this._resetPreFetching(true);
 			this._update();
 			if (this._preFetchPart !== this._selectedPart) {
@@ -644,6 +645,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._partHashes = partMatch.slice(partMatch.length - this._parts);
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
+				selectedParts: this._selectedParts,
 				parts: this._parts,
 				docType: this._docType,
 				partNames: this._partHashes

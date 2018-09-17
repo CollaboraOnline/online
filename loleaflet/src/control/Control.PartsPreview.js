@@ -25,6 +25,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_updateDisabled: function (e) {
 		var parts = e.parts;
 		var selectedPart = e.selectedPart;
+		var selectedParts = e.selectedParts;
 		var docType = e.docType;
 		if (docType === 'text') {
 			return;
@@ -65,7 +66,7 @@ L.Control.PartsPreview = L.Control.extend({
 				for (var i = 0; i < parts; i++) {
 					this._previewTiles.push(this._createPreview(i, e.partNames[i], bottomBound));
 				}
-				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-selected');
+				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
 				this._previewInitialized = true;
 			}
 			else
@@ -76,9 +77,13 @@ L.Control.PartsPreview = L.Control.extend({
 
 				// change the border style of the selected preview.
 				for (var j = 0; j < parts; j++) {
-					L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selected');
+					L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-currentpart');
+					L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selectedpart');
+					if (j === selectedPart)
+						L.DomUtil.addClass(this._previewTiles[j], 'preview-img-currentpart');
+					else if (selectedParts.indexOf(j) >= 0)
+						L.DomUtil.addClass(this._previewTiles[j], 'preview-img-selectedpart');
 				}
-				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-selected');
 			}
 		}
 	},
