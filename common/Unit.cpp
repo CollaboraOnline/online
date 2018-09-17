@@ -15,7 +15,6 @@
 #include <cassert>
 #include <dlfcn.h>
 #include <fstream>
-#include <ftw.h>
 
 #include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
