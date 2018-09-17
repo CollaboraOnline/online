@@ -521,6 +521,11 @@ public:
         return nullptr;
     }
 
+    bool notifyAll(const std::string&) override
+    {
+        return true;
+    }
+
     void notifyViewInfo() override
     {
     }
