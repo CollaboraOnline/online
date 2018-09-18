@@ -210,9 +210,65 @@ int main(int argc, char **argv)
         return 1;
     }
         
+    rc = fakeSocketWrite(pipe[0], "z", 1);
+    if (rc == -1)
+    {
+        perror("write");
+        return 1;
+    }
+    rc = fakeSocketShutdown(pipe[0]);
+    if (rc == -1)
+    {
+        perror("shutdown");
+        return 1;
+    }
+    rc = fakeSocketRead(pipe[1], buf, 1);
+    if (rc == -1)
+    {
+        perror("read");
+        return 1;
+    }
+    if (buf[0] != 'z')
+    {
+        std::cerr << "wrote 'z' to pipe but read '" << buf[0] << "'\n";
+        return 1;
+    }
+    rc = fakeSocketWrite(pipe[0], "a", 1);
+    if (rc != -1)
+    {
+        std::cerr << "could write to socket after shutdown\n";
+        return 1;
+    }
+    if (errno != EPIPE)
+    {
+        std::cerr << "write to socket after shutdown did not set errno to EPIPE\n";
+        return 1;
+    }
+    rc = fakeSocketRead(pipe[0], buf, 1);
+    if (rc == -1)
+    {
+        std::cerr << "read from socket after shutdown failed\n";
+        return 1;
+    }
+    if (rc > 0)
+    {
+        std::cerr << "could read something even if socket was shutdown\n";
+        return 1;
+    }
+
+    rc = fakeSocketRead(pipe[1], buf, 1);
+    if (rc == -1)
+    {
+        perror("read");
+        return 1;
+    }
+    if (rc != 0)
+    {
+        std::cerr << "read something even if peer was shutdown\n";
+        return 1;
+    }
+
     return 0;
 }
 
-
-    
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

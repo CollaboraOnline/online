@@ -497,9 +497,8 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
 
     if (pair.shutdown[K])
     {
-        loggingBuffer << "FakeSocket EBADF: Read from fd " << fd << " (shut down), " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
-        errno = EBADF;
-        return -1;
+        loggingBuffer << "FakeSocket Read from fd " << fd << " (shut down) got 0 bytes" << flush();
+        return 0;
     }
 
     if (!pair.readable[K])
@@ -528,7 +527,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
 
     cv.notify_all();
 
-    loggingBuffer << "FakeSocket Read from fd " << fd << ": " << result << (result == 1 ? " byte" : " bytes") << flush();
+    loggingBuffer << "FakeSocket Read from fd " << fd << " got " << result << (result == 1 ? " byte" : " bytes") << flush();
 
     return result;
 }
@@ -563,8 +562,9 @@ ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
 
     if (pair.shutdown[K])
     {
-        loggingBuffer << "FakeSocket EBADF: Write to fd " << fd << " (shut down), " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
-        errno = EBADF;
+        // Should we raise(SIGPIPE)? Probably not, Online code does not expect SIGPIPE at all...
+        loggingBuffer << "FakeSocket EPIPE: Write to fd " << fd << " (shut down), " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
+        errno = EPIPE;
         return -1;
     }
 
