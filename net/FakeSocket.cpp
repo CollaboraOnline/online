@@ -13,6 +13,8 @@
 
 #include <chrono>
 #include <condition_variable>
+#include <cstdlib>
+#include <iostream>
 #include <sstream>
 #include <mutex>
 #include <thread>
@@ -80,7 +82,10 @@ static std::vector<FakeSocketPair>& getFds()
 
 static std::string flush()
 {
-    if (loggingCallback != nullptr)
+    static bool alwaysStderr = std::getenv("FAKESOCKET_LOG_ALWAYS_STDERR") != nullptr;
+    if (alwaysStderr)
+        std::cerr << loggingBuffer.str() << std::endl;
+    else if (loggingCallback != nullptr)
         loggingCallback(loggingBuffer.str());
     loggingBuffer.str("");
     return "";
