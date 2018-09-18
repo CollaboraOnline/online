@@ -196,7 +196,9 @@ L.Socket = L.Class.extend({
 
 	_onSocketOpen: function () {
 		console.debug('_onSocketOpen:');
-		window.webkit.messageHandlers.debug.postMessage('>>>>>> _onSocketOpen');
+		if (window.ThisIsTheiOSApp) {
+			window.webkit.messageHandlers.debug.postMessage('>>>>>> _onSocketOpen');
+		}
 		this._map._serverRecycling = false;
 		this._map._documentIdle = false;
 
