@@ -11,8 +11,8 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-ifelse(IOSAPP,[],
 <script>
+ifelse(IOSAPP,[],
   // Start listening for Host_PostmessageReady message and save the
   // result for future
   window.WOPIpostMessageReady = false;
@@ -28,8 +28,18 @@ ifelse(IOSAPP,[],
     }
   };
   window.addEventListener('message', PostMessageReadyListener, false);
-</script>
 )dnl
+
+var Base64ToArrayBuffer = function(base64Str) {
+  var binStr = atob(base64Str);
+  var ab = new ArrayBuffer(binStr.length);
+  var bv = new Uint8Array(ab);
+  for (var i = 0, l = binStr.length; i < l; i++) {
+    bv[[i]] = binStr.charCodeAt(i);
+  }
+  return ab;
+}
+</script>
 
 ifelse(IOSAPP,[true],
   ifelse(DEBUG,[true],
