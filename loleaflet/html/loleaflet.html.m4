@@ -11,6 +11,7 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+ifelse(IOSAPP,[],
 <script>
   // Start listening for Host_PostmessageReady message and save the
   // result for future
@@ -28,6 +29,8 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
   };
   window.addEventListener('message', PostMessageReadyListener, false);
 </script>
+)dnl
+
 ifelse(IOSAPP,[true],
   ifelse(DEBUG,[true],
     foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="fileCSS" />
