@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * L.Socket contains methods for the communication with the server
  */
@@ -14,7 +14,7 @@ function FakeWebSocket() {
 	this.readyState = 1;
 	this.id = window.fakeWebSocketCounter++;
 	this.sendCounter = 0;
-	console.log('>>>>>> Created FakeWebSocket#' + this.id);
+	window.webkit.messageHandlers.debug.postMessage('>>>>> Created FakeWebSocket #' + this.id);
 	this.onclose = function() {
 	};
 	this.onerror = function() {
@@ -26,11 +26,11 @@ function FakeWebSocket() {
 }
 
 FakeWebSocket.prototype.close = function() {
-	console.log('>>>>>> Closing FakeWebSocket#' + this.id);
+	window.webkit.messageHandlers.debug.postMessage('>>>>>> Closing FakeWebSocket#' + this.id);
 }
 
 FakeWebSocket.prototype.send = function(data) {
-	console.log('>>>>>> Sending data on FakeWebSocket#' + this.id + ' (' + this.sendCounter + '): "' + data + '"');
+	window.webkit.messageHandlers.debug.postMessage('>>>>>> Sending data on FakeWebSocket#' + this.id + ' (' + this.sendCounter + '): "' + data + '"');
 	this.sendCounter++;
 	window.webkit.messageHandlers.lool.postMessage(data, '*');
 }
@@ -91,7 +91,17 @@ L.Socket = L.Class.extend({
 		this.socket.onopen = L.bind(this._onSocketOpen, this);
 		this.socket.onmessage = L.bind(this._onMessage, this);
 		this.socket.binaryType = 'arraybuffer';
-
+		if (window.ThisIsTheiOSApp) {
+			// This corresponds to the initial GET request when creating a WebSocket
+			// connection and tells the app's code that it is OK to start invoking
+			// TheFakeWebSocket's onmessage handler. Should we also include the
+			// map.options.doc, as in the websocketURI above? On the other hand, the app
+			// code that handles this special message knows the document to be edited
+			// anyway, and can send it on as necessary to the Online code.
+			window.webkit.messageHandlers.lool.postMessage('HULLO', '*');
+			// A FakeWebSocket is immediately open.
+			this.socket.onopen();
+		}
 		if (map.options.docParams.access_token && parseInt(map.options.docParams.access_token_ttl)) {
 			var tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
 			clearTimeout(this._accessTokenExpireTimeout);
@@ -186,6 +196,7 @@ L.Socket = L.Class.extend({
 
 	_onSocketOpen: function () {
 		console.debug('_onSocketOpen:');
+		window.webkit.messageHandlers.debug.postMessage('>>>>>> _onSocketOpen');
 		this._map._serverRecycling = false;
 		this._map._documentIdle = false;
 
