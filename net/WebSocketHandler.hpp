@@ -77,7 +77,7 @@ public:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
-        LOG_TRC("#" << socket->getFD() << " Connected to WS Handler 0x" << std::hex << this << std::dec);
+        LOG_TRC("#" << socket->getFD() << " Connected to WS Handler " << this);
     }
 
     /// Status codes sent to peer on shutdown.
@@ -104,7 +104,7 @@ public:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket == nullptr)
         {
-            LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
+            LOG_ERR("No socket associated with WebSocketHandler " << this);
             return;
         }
 
@@ -309,7 +309,7 @@ public:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket == nullptr)
         {
-            LOG_ERR("No socket associated with WebSocketHandler 0x" << std::hex << this << std::dec);
+            LOG_ERR("No socket associated with WebSocketHandler " << this);
         }
         else if (_isClient && !socket->isWebSocket())
             handleClientUpgrade();
