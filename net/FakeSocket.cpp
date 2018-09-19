@@ -398,6 +398,8 @@ int fakeSocketAccept4(int fd, int flags)
     while (pair.connectingFd == -1)
         cv.wait(cvLock);
     
+    cvLock.unlock();
+
     assert(pair.connectingFd >= 0 && pair.connectingFd/2 < fds.size());
 
     FakeSocketPair& pair2 = fds[pair.connectingFd/2];
