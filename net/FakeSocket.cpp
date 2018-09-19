@@ -389,11 +389,9 @@ int fakeSocketAccept4(int fd, int flags)
         return -1;
     }
 
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
     fdsLock.unlock();
 
     std::unique_lock<std::mutex> cvLock(cvMutex);
-    fdLock.unlock();
 
     while (pair.connectingFd == -1)
         cv.wait(cvLock);
