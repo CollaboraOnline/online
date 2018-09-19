@@ -17,12 +17,16 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onGotFocus: function () {
-		this._map.addLayer(this._map._docLayer._cursorMarker);
+		if (this._map._docLayer._cursorMarker) {
+			this._map.addLayer(this._map._docLayer._cursorMarker);
+		}
 	},
 
 	onLostFocus: function () {
-		this._textArea.value = '';
-		this._map.removeLayer(this._map._docLayer._cursorMarker);
+		if (this._map._docLayer._cursorMarker) {
+			this._textArea.value = '';
+			this._map.removeLayer(this._map._docLayer._cursorMarker);
+		}
 	},
 
 	focus: function(focus) {
