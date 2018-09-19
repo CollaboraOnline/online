@@ -77,6 +77,7 @@ L.Control.MobileInput = L.Control.extend({
 		L.DomEvent.on(this._textArea, stopEvents, L.DomEvent.stopPropagation)
 			.on(this._textArea, 'keydown keypress keyup', this.onKeyEvents, this)
 			.on(this._textArea, 'compositionstart compositionupdate compositionend textInput', this.onCompEvents, this)
+			.on(this._textArea, 'input', this.onInput, this)
 			.on(this._textArea, 'focus', this.onGotFocus, this)
 			.on(this._textArea, 'blur', this.onLostFocus, this);
 	},
@@ -89,6 +90,10 @@ L.Control.MobileInput = L.Control.extend({
 		    unoKeyCode = handler._toUNOKeyCode(keyCode);
 
 		this._keyHandled = this._keyHandled || false;
+		if (this._isComposing) {
+			return;
+		}
+
 		docLayer._resetPreFetching();
 		if (handler._ignoreKeyEvent({originalEvent: e})) {
 			// key ignored
@@ -132,11 +137,6 @@ L.Control.MobileInput = L.Control.extend({
 
 		if (e.type === 'compositionend') {
 			this._isComposing = false; // stop of composing with IME
-			// get the composited char codes
-			// clear the input now - best to do this ASAP so the input
-			// is clear for the next word
-			//map._clipboardContainer.setValue('');
-			// Set all keycodes to zero
 			map._docLayer._postCompositionEvent(0, 'end', '');
 		}
 
@@ -160,6 +160,14 @@ L.Control.MobileInput = L.Control.extend({
 			for (var idx = 0; idx < data.length; idx++) {
 				map._docLayer._postKeyboardEvent('input', data[idx].charCodeAt(), 0);
 			}
+			this._textArea.value = '';
+		}
+		L.DomEvent.stopPropagation(e);
+	},
+
+	onInput: function (e) {
+		if (e.inputType && e.inputType === 'deleteContentBackward' && !this._keyHandled) {
+			this._map._docLayer._postKeyboardEvent('input', 0, this._map.keyboard._toUNOKeyCode(8));
 		}
 		L.DomEvent.stopPropagation(e);
 	}
