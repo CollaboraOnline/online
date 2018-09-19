@@ -91,17 +91,20 @@ L.Control.MobileInput = L.Control.extend({
 
 		this._keyHandled = this._keyHandled || false;
 		if (this._isComposing) {
+			this._lastInput = null;
 			return;
 		}
 
 		docLayer._resetPreFetching();
 		if (handler._ignoreKeyEvent({originalEvent: e})) {
+			this._lastInput = null;
 			// key ignored
 		}
 		else if (e.type === 'keydown') {
 			this._keyHandled = false;
 			if (handler.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+				this._lastInput = unoKeyCode;
 			}
 		}
 		else if ((e.type === 'keypress') && (!handler.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
@@ -113,10 +116,12 @@ L.Control.MobileInput = L.Control.extend({
 			}
 
 			docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+			this._lastInput = unoKeyCode;
 			this._keyHandled = true;
 		}
 		else if (e.type === 'keyup') {
 			docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
+			this._lastInput = null;
 			this._keyHandled = true;
 		}
 		L.DomEvent.stopPropagation(e);
@@ -166,8 +171,9 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onInput: function (e) {
-		if (e.inputType && e.inputType === 'deleteContentBackward' && !this._keyHandled) {
-			this._map._docLayer._postKeyboardEvent('input', 0, this._map.keyboard._toUNOKeyCode(8));
+		var backSpace = this._map.keyboard._toUNOKeyCode(8);
+		if (e.inputType && e.inputType === 'deleteContentBackward' && this._lastInput !== backSpace) {
+			this._map._docLayer._postKeyboardEvent('input', 0, backSpace);
 		}
 		L.DomEvent.stopPropagation(e);
 	}
