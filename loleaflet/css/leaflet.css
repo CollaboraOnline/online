@@ -784,6 +784,14 @@ input.clipboard {
 @media screen and (max-height: 400px) {
 	.loleaflet-ruler {
 		height: 0px;
+		display: none;
+	}
+}
+
+@media (max-width: 767px) {
+	.loleaflet-ruler {
+		height: 0px;
+		display: none;
 	}
 }
 
