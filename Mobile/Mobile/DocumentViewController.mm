@@ -164,7 +164,7 @@
                                    struct pollfd p;
                                    p.fd = self.document->fakeClientFd;
                                    p.events = POLLIN;
-                                   if (fakeSocketPoll(&p, 1, 0) == 1) {
+                                   if (fakeSocketPoll(&p, 1, -1) == 1) {
                                        int n = fakeSocketAvailableDataLength(self.document->fakeClientFd);
                                        if (n == 0)
                                            return;
@@ -183,7 +183,7 @@
             std::string url([[[self.document fileURL] absoluteString] UTF8String]);
             p.fd = self.document->fakeClientFd;
             p.events = POLLOUT;
-            fakeSocketPoll(&p, 1, 0);
+            fakeSocketPoll(&p, 1, -1);
             fakeSocketWrite(self.document->fakeClientFd, url.c_str(), url.size());
 
             return;
@@ -192,7 +192,7 @@
         const char *buf = [message.body UTF8String];
         p.fd = self.document->fakeClientFd;
         p.events = POLLOUT;
-        fakeSocketPoll(&p, 1, 0);
+        fakeSocketPoll(&p, 1, -1);
         fakeSocketWrite(self.document->fakeClientFd, buf, strlen(buf));
     } else {
         NSLog(@"Unrecognized kind of message received from WebView: %@: %@", message.name, message.body);

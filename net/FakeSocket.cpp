@@ -245,15 +245,34 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
             loggingBuffer << ",";
         loggingBuffer << "#" << pollfds[i].fd << ":" << pollBits(pollfds[i].events);
     }
-    loggingBuffer << flush();
+    loggingBuffer << ", timeout:" << timeout << flush();
 
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> fdsLock(fdsMutex);
     std::unique_lock<std::mutex> cvLock(cvMutex);
     fdsLock.unlock();
 
-    while (!checkForPoll(fds, pollfds, nfds))
-        cv.wait(cvLock);
+    if (timeout > 0)
+    {
+        auto const now = std::chrono::steady_clock::now();
+        auto const end = now + std::chrono::milliseconds(timeout);
+
+        while (!checkForPoll(fds, pollfds, nfds))
+            if (cv.wait_until(cvLock, end) == std::cv_status::timeout)
+            {
+                loggingBuffer << "FakeSocket Poll timeout: 0" << flush();
+                return 0;
+            }
+    }
+    else if (timeout == 0)
+    {
+        checkForPoll(fds, pollfds, nfds);
+    }
+    else // timeout < 0
+    {
+        while (!checkForPoll(fds, pollfds, nfds))
+            cv.wait(cvLock);
+    }
 
     int result = 0;
     for (int i = 0; i < nfds; i++)

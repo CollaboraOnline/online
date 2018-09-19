@@ -582,7 +582,7 @@ public:
             struct pollfd p;
             p.fd = fd;
             p.events = POLLOUT;
-            fakeSocketPoll(&p, 1, 0);
+            fakeSocketPoll(&p, 1, -1);
 #endif
             rc = fakeSocketWrite(fd, "w", 1);
 #endif
@@ -1049,7 +1049,7 @@ protected:
         struct pollfd p;
         p.fd = getFD();
         p.events = POLLOUT;
-        fakeSocketPoll(&p, 1, 0);
+        fakeSocketPoll(&p, 1, -1);
         return fakeSocketWrite(getFD(), buf, len);
 #endif
     }
