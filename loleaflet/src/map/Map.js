@@ -662,11 +662,7 @@ L.Map = L.Evented.extend({
 	},
 
 	focus: function () {
-		console.debug('focus:');
-		if (this._docLayer) {
-			console.debug('focus: focussing');
-			this._clipboardContainer.focus();
-		}
+		this._clipboardContainer.focus();
 	},
 
 	_fireInitComplete: function (condition) {
