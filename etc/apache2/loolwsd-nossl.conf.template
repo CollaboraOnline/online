@@ -1,0 +1,34 @@
+# Apache2 reverse proxy configuration for Collabora Online / LibreOffice Online
+# Internet <-- SSL --> Reverse Proxy <-- No SSL --> loolwsd
+# Make sure that you enable the following Apache2 modules: proxy, proxy_wstunnel, and proxy_http.
+# Create a virtual host for Collabora Online / LibreOffice Online and include this configuration file.
+
+# loolwsd_service_root (introduced in Collabora Online 3.4 and LibreOffce Online 6.2)
+# Prefix all the pages, websockets, etc. with this path.
+
+  Options -Indexes
+
+  # Encoded slashes need to be allowed
+  AllowEncodedSlashes NoDecode
+
+  # keep the host
+  ProxyPreserveHost On
+
+  # static html, js, images, etc. served from loolwsd
+  # loleaflet is the client part of LibreOffice Online
+  ProxyPass           ${loolwsd_service_root}/loleaflet http://127.0.0.1:9980${loolwsd_service_root}/loleaflet retry=0
+  ProxyPassReverse    ${loolwsd_service_root}/loleaflet http://127.0.0.1:9980${loolwsd_service_root}/loleaflet
+
+  # WOPI discovery URL
+  ProxyPass           ${loolwsd_service_root}/hosting/discovery http://127.0.0.1:9980${loolwsd_service_root}/hosting/discovery retry=0
+  ProxyPassReverse    ${loolwsd_service_root}/hosting/discovery http://127.0.0.1:9980${loolwsd_service_root}/hosting/discovery
+
+  # Main websocket
+  ProxyPassMatch "${loolwsd_service_root}/lool/(.*)/ws$" ws://127.0.0.1:9980${loolwsd_service_root}/lool/$1/ws nocanon
+
+  # Admin Console websocket
+  ProxyPass   ${loolwsd_service_root}/lool/adminws ws://127.0.0.1:9980${loolwsd_service_root}/lool/adminws
+
+  # Download as, Fullscreen presentation and Image upload operations
+  ProxyPass           ${loolwsd_service_root}/lool http://127.0.0.1:9980${loolwsd_service_root}/lool
+  ProxyPassReverse    ${loolwsd_service_root}/lool http://127.0.0.1:9980${loolwsd_service_root}/lool

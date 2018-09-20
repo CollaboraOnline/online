@@ -1,0 +1,35 @@
+    # static files
+    location ^~ ${loolwsd_service_root}/loleaflet {
+        proxy_pass http://localhost:9980;
+        proxy_set_header Host $http_host;
+    }
+
+    # WOPI discovery URL
+    location ^~ ${loolwsd_service_root}/hosting/discovery {
+        proxy_pass http://localhost:9980;
+        proxy_set_header Host $http_host;
+    }
+
+    # main websocket
+    location ~ ^${loolwsd_service_root}/lool/(.*)/ws$ {
+        proxy_pass http://localhost:9980;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $http_host;
+        proxy_read_timeout 36000s;
+    }
+
+    # download, presentation and image upload
+    location ~ ^${loolwsd_service_root}/lool {
+        proxy_pass http://localhost:9980;
+        proxy_set_header Host $http_host;
+    }
+
+    # Admin Console websocket
+    location ^~ ${loolwsd_service_root}/lool/adminws {
+        proxy_pass http://localhost:9980;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $http_host;
+        proxy_read_timeout 36000s;
+    }
