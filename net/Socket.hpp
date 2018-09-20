@@ -940,7 +940,7 @@ protected:
         if (log.trace()) {
             LOG_TRC("#" << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
                     " bytes, closeSocket? " << closed);
-            log.dump("", &_inBuffer[0], _inBuffer.size());
+            // log.dump("", &_inBuffer[0], _inBuffer.size());
         }
 
         // If we have data, allow the app to consume.
