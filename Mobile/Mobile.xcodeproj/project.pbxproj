@@ -31,6 +31,7 @@
 		BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D521401E0F00E0826C /* Storage.cpp */; };
 		BE5EB5DA2140363100E0826C /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D92140363100E0826C /* ios.mm */; };
 		BE5EB5DC2140480B00E0826C /* icudt62l.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* icudt62l.dat */; };
+		BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* MobileCoreServices.framework */; };
 		BE8D772C2136762500AC58EA /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D772B2136762500AC58EA /* AppDelegate.mm */; };
 		BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D772E2136762500AC58EA /* DocumentBrowserViewController.mm */; };
 		BE8D77322136762500AC58EA /* DocumentViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D77312136762500AC58EA /* DocumentViewController.mm */; };
@@ -87,6 +88,15 @@
 		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
 		BE5EB5DB2140480B00E0826C /* icudt62l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt62l.dat; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/icudt62l.dat"; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
+		BE6362C02153A7B500F4237E /* init.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = init.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/desktop/source/lib/init.cxx"; sourceTree = "<group>"; };
+		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE6362D22154479000F4237E /* ctfonts.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ctfonts.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/vcl/quartz/ctfonts.cxx"; sourceTree = "<group>"; };
+		BE6362D32154479000F4237E /* salvd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salvd.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/vcl/quartz/salvd.cxx"; sourceTree = "<group>"; };
+		BE6362D42154479000F4237E /* salbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salbmp.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/vcl/quartz/salbmp.cxx"; sourceTree = "<group>"; };
+		BE6362D52154479000F4237E /* utils.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = utils.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/vcl/quartz/utils.cxx"; sourceTree = "<group>"; };
+		BE6362D62154479000F4237E /* salgdi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdi.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/vcl/quartz/salgdi.cxx"; sourceTree = "<group>"; };
+		BE6362D72154479000F4237E /* salgdicommon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdicommon.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/vcl/quartz/salgdicommon.cxx"; sourceTree = "<group>"; };
+		BE6362D82154479000F4237E /* salgdiutils.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdiutils.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/vcl/quartz/salgdiutils.cxx"; sourceTree = "<group>"; };
 		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8D772A2136762500AC58EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE8D772B2136762500AC58EA /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -130,6 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */,
 				BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */,
 				BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */,
 				BE00F8B5213ED543001CE2D4 /* libiconv.tbd in Frameworks */,
@@ -171,6 +182,7 @@
 		BE00F8B3213ED542001CE2D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE6362C12153B5B500F4237E /* MobileCoreServices.framework */,
 				BEA2835921470A1C00848631 /* WebKit.framework */,
 				BE00F8B6213ED573001CE2D4 /* libz.tbd */,
 				BE00F8B4213ED543001CE2D4 /* libiconv.tbd */,
@@ -186,8 +198,9 @@
 				BEA2835B21498ABF00848631 /* net */,
 				BE5EB5B7213FE21600E0826C /* wsd */,
 			);
-			path = Online;
-			sourceTree = "<group>";
+			name = Online;
+			path = ..;
+			sourceTree = SOURCE_ROOT;
 		};
 		BE5EB5B6213FE21000E0826C /* common */ = {
 			isa = PBXGroup;
@@ -203,9 +216,8 @@
 				BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */,
 				BE5EB5BC213FE29900E0826C /* Util.cpp */,
 			);
-			name = common;
-			path = ../common;
-			sourceTree = SOURCE_ROOT;
+			path = common;
+			sourceTree = "<group>";
 		};
 		BE5EB5B7213FE21600E0826C /* wsd */ = {
 			isa = PBXGroup;
@@ -220,9 +232,41 @@
 			path = ../wsd;
 			sourceTree = SOURCE_ROOT;
 		};
+		BE6362BE2153A79200F4237E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				BE6362BF2153A7A200F4237E /* desktop */,
+				BE6362C32154473C00F4237E /* vcl */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		BE6362BF2153A7A200F4237E /* desktop */ = {
+			isa = PBXGroup;
+			children = (
+				BE6362C02153A7B500F4237E /* init.cxx */,
+			);
+			name = desktop;
+			sourceTree = "<group>";
+		};
+		BE6362C32154473C00F4237E /* vcl */ = {
+			isa = PBXGroup;
+			children = (
+				BE6362D22154479000F4237E /* ctfonts.cxx */,
+				BE6362D42154479000F4237E /* salbmp.cxx */,
+				BE6362D62154479000F4237E /* salgdi.cxx */,
+				BE6362D72154479000F4237E /* salgdicommon.cxx */,
+				BE6362D82154479000F4237E /* salgdiutils.cxx */,
+				BE6362D32154479000F4237E /* salvd.cxx */,
+				BE6362D52154479000F4237E /* utils.cxx */,
+			);
+			name = vcl;
+			sourceTree = "<group>";
+		};
 		BE8D771E2136762500AC58EA = {
 			isa = PBXGroup;
 			children = (
+				BE6362BE2153A79200F4237E /* Core */,
 				BE5EB5B5213FE1F900E0826C /* Online */,
 				BE8D77292136762500AC58EA /* Mobile */,
 				BE8D77282136762500AC58EA /* Products */,
