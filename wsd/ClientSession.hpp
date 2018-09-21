@@ -150,6 +150,8 @@ public:
 
     /// Clear wireId map anytime when client visible area changes (visible area, zoom, part number)
     void resetWireIdMap();
+
+    bool isTextDocument() const { return _isTextDocument; }
 private:
 
     /// SocketHandler: disconnection event.
