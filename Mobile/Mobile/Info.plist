@@ -2,10 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
+		<dict>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.collabora.office.uti.fodt</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>OpenDocument Flat Text</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+		</dict>
 		<dict>
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
@@ -21,12 +33,8 @@
 			</array>
 		</dict>
 		<dict>
-			<key>CFBundleTypeIconFiles</key>
-			<array/>
 			<key>CFBundleTypeName</key>
 			<string>OpenDocument Text</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
@@ -109,6 +117,19 @@
 			<array>
 				<string>public.data</string>
 			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.collabora.office.uti.fodt</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>fodt</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
 			<key>UTTypeDescription</key>
 			<string>OpenDocument Text</string>
 			<key>UTTypeIconFiles</key>
@@ -140,8 +161,6 @@
 		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
-	<array>
-		<dict/>
-	</array>
+	<array/>
 </dict>
 </plist>
