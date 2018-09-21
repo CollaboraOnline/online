@@ -82,6 +82,10 @@
 #include "LOOLWSD.hpp"
 #endif
 
+#ifdef IOS
+#include "ios.h"
+#endif
+
 #define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
 #define LIB_MERGED      "lib" "mergedlo" ".so"
 
@@ -963,10 +967,19 @@ public:
 
         const double area = tile.getWidth() * tile.getHeight();
         Timestamp timestamp;
-        _loKitDocument->paintPartTile(pixmap.data(), tile.getPart(),
+        _loKitDocument->paintPartTile(
+#ifndef IOS
+                                      pixmap.data(),
+#else
+                                      lo_ios_app_get_cgcontext_for_buffer(pixmap.data(), tile.getWidth(), tile.getHeight()),
+#endif
+                                      tile.getPart(),
                                       tile.getWidth(), tile.getHeight(),
                                       tile.getTilePosX(), tile.getTilePosY(),
                                       tile.getTileWidth(), tile.getTileHeight());
+#ifdef IOS
+        lo_ios_app_release_cgcontext_for_buffer();
+#endif
         const Poco::Timestamp::TimeDiff elapsed = timestamp.elapsed();
         LOG_TRC("paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() <<
                 ") " << "ver: " << tile.getVersion() << " rendered in " << (elapsed/1000.) <<
@@ -1061,14 +1074,31 @@ public:
 
         const double area = pixmapWidth * pixmapHeight;
         Timestamp timestamp;
-        _loKitDocument->paintPartTile(pixmap.data(), tileCombined.getPart(),
+        LOG_TRC("Calling paintPartTile(" << (void*)pixmap.data() << ")");
+        _loKitDocument->paintPartTile(
+#ifndef IOS
+                                      pixmap.data(),
+#else
+                                      lo_ios_app_get_cgcontext_for_buffer(pixmap.data(), pixmapWidth, pixmapHeight),
+#endif
+                                      tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
+#ifdef IOS
+        lo_ios_app_release_cgcontext_for_buffer();
+#endif
         Timestamp::TimeDiff elapsed = timestamp.elapsed();
         LOG_DBG("paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
                 " rendered in " << (elapsed/1000.) << " ms (" << area / elapsed << " MP/s).");
+
+        auto& log = Log::logger();
+        if (log.trace()) {
+            LOG_TRC("Dump of middle of rendered tile");
+            log.dump("", pixmap.data() + pixmapSize/2 - 32, 64);
+        }
+
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         std::vector<char> output;
