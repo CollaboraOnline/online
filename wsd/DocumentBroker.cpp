@@ -1357,13 +1357,14 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
         for (const auto& newTile : tileCombined.getTiles())
         {
             const TileDesc& firstOldTile = *(requestedTiles.begin());
-            if(newTile.getPart() != firstOldTile.getPart() ||
-               newTile.getWidth() != firstOldTile.getWidth() ||
-               newTile.getHeight() != firstOldTile.getHeight() ||
-               newTile.getTileWidth() != firstOldTile.getTileWidth() ||
-               newTile.getTileHeight() != firstOldTile.getTileHeight() )
+            if(!session->isTextDocument() && newTile.getPart() != firstOldTile.getPart())
             {
-                LOG_WRN("Different visible area information in tile requests");
+                LOG_WRN("Different part numbers in tile requests");
+            }
+            else if (newTile.getTileWidth() != firstOldTile.getTileWidth() ||
+                     newTile.getTileHeight() != firstOldTile.getTileHeight() )
+            {
+                LOG_WRN("Different tile sizes in tile requests");
             }
 
             bool tileFound = false;
