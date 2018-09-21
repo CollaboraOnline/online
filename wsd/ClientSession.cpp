@@ -1066,7 +1066,7 @@ void ClientSession::removeOutdatedTilesOnFly()
     {
         auto tileIter = _tilesOnFly.begin();
         double elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - tileIter->second).count();
-        if(elapsedTimeMs > 3000)
+        if(elapsedTimeMs > 5000.0)
         {
             LOG_WRN("Tracker tileID was dropped because of time out. Tileprocessed message did not arrive");
             _tilesOnFly.erase(tileIter);
