@@ -351,7 +351,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if(iter != _tilesOnFly.end())
             _tilesOnFly.erase(iter);
         else
-            LOG_WRN("Tileprocessed message with an unknown tile ID");
+            LOG_INF("Tileprocessed message with an unknown tile ID");
 
         docBroker->sendRequestedTiles(shared_from_this());
         return true;
