@@ -84,6 +84,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTileWireIDHandling);
     CPPUNIT_TEST(testTileProcessed);
     CPPUNIT_TEST(testTileInvalidatedOutside);
+    CPPUNIT_TEST(testTileBeingRenderedHandling);
 
 
     CPPUNIT_TEST_SUITE_END();
@@ -112,6 +113,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testTileWireIDHandling();
     void testTileProcessed();
     void testTileInvalidatedOutside();
+    void testTileBeingRenderedHandling();
 
     void checkTiles(std::shared_ptr<LOOLWebSocket>& socket,
                     const std::string& type,
@@ -1230,19 +1232,18 @@ void TileCacheTests::testTileWireIDHandling()
     sendChar(socket, 'x', skNone, testname);
     assertResponseString(socket, "invalidatetiles:", testname);
 
-    // For the second input wsd will send less tiles, since some of them are indentical
-    int arrivedTiles2 = 0;
+    // For the second input wsd will send one tile, since some of them are indentical
+    arrivedTiles = 0;
     gotTile = false;
     do
     {
         std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
         gotTile = !tile.empty();
         if(gotTile)
-            ++arrivedTiles2;
+            ++arrivedTiles;
     } while(gotTile);
 
-    CPPUNIT_ASSERT_MESSAGE("We expect one tile at least!", arrivedTiles2 >= 1);
-    CPPUNIT_ASSERT_MESSAGE("We expect less tile for the second input (wireID)!", arrivedTiles > arrivedTiles2);
+    CPPUNIT_ASSERT_EQUAL(1, arrivedTiles);
 }
 
 void TileCacheTests::testTileProcessed()
@@ -1340,6 +1341,62 @@ void TileCacheTests::testTileInvalidatedOutside()
 
     // Then sends the new tile which was invalidated inside the visible area
     assertResponseString(socket, "tile:", testname);
+}
+
+void TileCacheTests::testTileBeingRenderedHandling()
+{
+    // The issue here was that we requested the tile of the same tile twice
+    // and so sometimes we got the same tile message twice from wsd.
+    const char* testname = "testTileBeingRenderedHandling ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // Set the client visible area
+    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
+    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+
+    // Type one character to trigger invalidation
+    sendChar(socket, 'x', skNone, testname);
+
+    // First wsd forwards the invalidation
+    assertResponseString(socket, "invalidatetiles:", testname);
+
+    // For the first input wsd will send all invalidated tiles
+    int arrivedTiles = 0;
+    bool gotTile = false;
+    do
+    {
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        gotTile = !tile.empty();
+        if(gotTile)
+            ++arrivedTiles;
+    } while(gotTile);
+
+    CPPUNIT_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTiles > 1);
+
+    // For the later inputs wsd will send one tile, since other ones are indentical
+    for(int i = 0; i < 10; ++i)
+    {
+        // Type an other character
+        sendChar(socket, 'x', skNone, testname);
+        assertResponseString(socket, "invalidatetiles:", testname);
+
+        arrivedTiles = 0;
+        gotTile = false;
+        do
+        {
+            std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 1000);
+            gotTile = !tile.empty();
+            if(gotTile)
+                ++arrivedTiles;
+        } while(gotTile);
+
+        CPPUNIT_ASSERT_EQUAL(1, arrivedTiles);
+
+        sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200");
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileCacheTests);

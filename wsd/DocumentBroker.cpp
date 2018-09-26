@@ -1322,15 +1322,16 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     std::vector<TileDesc> tilesNeedsRendering;
     for (auto& tile : tileCombined.getTiles())
     {
+        tile.setVersion(++_tileVersion);
         std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
         if(cachedTile)
             cachedTile->close();
         else
         {
             // Not cached, needs rendering.
-            tile.setVersion(++_tileVersion);
             tilesNeedsRendering.push_back(tile);
             _debugRenderedTileCount++;
+            tileCache().registerTileBeingRendered(tile);
         }
     }
 
@@ -1461,9 +1462,13 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             else
             {
                 // Not cached, needs rendering.
-                tile.setVersion(++_tileVersion);
-                tilesNeedsRendering.push_back(tile);
-                _debugRenderedTileCount++;
+                if (!tileCache().hasTileBeingRendered(tile) || // There is no in progress rendering of the given tile
+                    tileCache().getTileBeingRenderedVersion(tile) < tile.getVersion()) // We need a newer version
+                {
+                    tile.setVersion(++_tileVersion);
+                    tilesNeedsRendering.push_back(tile);
+                    _debugRenderedTileCount++;
+                }
                 tileCache().subscribeToTileRendering(tile, session);
             }
             requestedTiles.pop_front();
