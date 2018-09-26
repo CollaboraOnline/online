@@ -50,8 +50,7 @@ ClientSession::ClientSession(const std::string& id,
     _tileHeightPixel(0),
     _tileWidthTwips(0),
     _tileHeightTwips(0),
-    _isTextDocument(false),
-    _tilesBeingRendered(0)
+    _isTextDocument(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
@@ -1275,9 +1274,9 @@ void ClientSession::removeOutdatedTileSubscriptions()
     while(iterator != _tilesBeingRendered.end())
     {
         double elapsedTime = docBroker->tileCache().getTileBeingRenderedElapsedTimeMs(*iterator);
-        if(elapsedTime < 0.0 && elapsedTime > 5000.0)
+        if(elapsedTime < 0.0 && elapsedTime > 200.0)
         {
-            LOG_WRN("Tracked TileBeingRendered was dropped because of time out.");
+            LOG_INF("Tracked TileBeingRendered was dropped because of time out.");
             _tilesBeingRendered.erase(iterator);
         }
         else
