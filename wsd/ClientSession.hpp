@@ -78,25 +78,7 @@ public:
         return true;
     }
 
-    void enqueueSendMessage(const std::shared_ptr<Message>& data)
-    {
-        const auto docBroker = _docBroker.lock();
-        // If in the correct thread - no need for wakeups.
-        if (docBroker)
-            docBroker->assertCorrectThread();
-
-        LOG_TRC(getName() << " enqueueing client message " << data->id());
-        size_t sizeBefore = _senderQueue.size();
-        size_t newSize = _senderQueue.enqueue(data);
-
-        // Track sent tile
-        const std::string command = data->firstToken();
-        if (command == "tile:")
-        {
-            const TileDesc tile = TileDesc::parse(data->firstLine());
-            traceTileBySend(tile, sizeBefore == newSize);
-        }
-    }
+    void enqueueSendMessage(const std::shared_ptr<Message>& data);
 
     /// Set the save-as socket which is used to send convert-to results.
     void setSaveAsSocket(const std::shared_ptr<StreamSocket>& socket)
