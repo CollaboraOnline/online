@@ -28,4 +28,6 @@ void ClientSession::traceUnSubscribeToTile(const std::string& /*tileCacheName*/)
 
 void ClientSession::clearTileSubscription() {};
 
+void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& /*data*/) {};
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

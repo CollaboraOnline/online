@@ -1026,6 +1026,41 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
     return true;
 }
 
+void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
+{
+    const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
+    // If in the correct thread - no need for wakeups.
+    if (docBroker)
+        docBroker->assertCorrectThread();
+
+    const std::string command = data->firstToken();
+    if (command == "tile:")
+    {
+        // Avoid sending tile if it has the same wireID as the previously sent tile
+        const TileDesc tile = TileDesc::parse(data->firstLine());
+        const std::string tileID = generateTileID(tile);
+        auto iter = _oldWireIds.find(tileID);
+        if(iter != _oldWireIds.end() && tile.getWireId() != 0 && tile.getWireId() == iter->second)
+        {
+            LOG_INF("WSD filters out a tile with the same wireID: " <<  tile.serialize("tile:"));
+            return;
+        }
+    }
+
+    LOG_TRC(getName() << " enqueueing client message " << data->id());
+    size_t sizeBefore = _senderQueue.size();
+    size_t newSize = _senderQueue.enqueue(data);
+
+    // Track sent tile
+    if (command == "tile:")
+    {
+        const TileDesc tile = TileDesc::parse(data->firstLine());
+        traceTileBySend(tile, sizeBefore == newSize);
+        if (sizeBefore != newSize)
+            LOG_INF("Sending new tile to client: " <<  tile.serialize("tile:"));
+    }
+}
+
 Authorization ClientSession::getAuthorization() const
 {
     Poco::URI::QueryParameters queryParams = _uriPublic.getQueryParameters();
