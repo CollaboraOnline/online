@@ -544,6 +544,9 @@ L.GridLayer = L.Layer.extend({
 				if (tile && tile.loaded && !invalid) {
 					tile.current = true;
 					newView = false;
+				} else if (invalid) {
+					tile._invalidCount = 1;
+					queue.push(coords);
 				} else {
 					queue.push(coords);
 				}
