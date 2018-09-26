@@ -1192,8 +1192,13 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     int part = result.first;
     Util::Rectangle& invalidateRect = result.second;
 
+    // We can ignore the invalidation if it's outside of the visible area
+    if(!normalizedVisArea.intersects(invalidateRect))
+        return;
+
     if( part == -1 ) // If no part is specifed we use the part used by the client
         part = _clientSelectedPart;
+
 
     std::vector<TileDesc> invalidTiles;
     if(part == _clientSelectedPart || _isTextDocument)

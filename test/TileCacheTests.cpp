@@ -1339,8 +1339,11 @@ void TileCacheTests::testTileInvalidatedOutside()
     // First wsd forwards the invalidation
     assertResponseString(socket, "invalidatetiles:", testname);
 
-    // Then sends the new tile which was invalidated inside the visible area
-    assertResponseString(socket, "tile:", testname);
+    // Since the invalidation rectangle is outside the visible area
+    // wsd does not send a new tile even if some of the invalidated tiles
+    // are partly visible.
+    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+    CPPUNIT_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
 }
 
 void TileCacheTests::testTileBeingRenderedHandling()
