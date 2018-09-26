@@ -151,6 +151,20 @@ double TileCache::getTileBeingRenderedElapsedTimeMs(const std::string& tileCache
     return iterator->second->getElapsedTimeMs();
 }
 
+bool TileCache::hasTileBeingRendered(const TileDesc& tile)
+{
+    return (findTileBeingRendered(tile) != nullptr);
+}
+
+int TileCache::getTileBeingRenderedVersion(const TileDesc& tile)
+{
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
+    if (tileBeingRendered)
+        return tileBeingRendered->getVersion();
+    else
+        return 0;
+}
+
 std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
 {
     if (!_tileCachePersistent)
@@ -531,6 +545,29 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
         tileBeingRendered->_subscribers.push_back(subscriber);
         if(tile.getId() == -1)
             subscriber->traceSubscribeToTile(tileBeingRendered->getCacheName());
+        _tilesBeingRendered[cachedName] = tileBeingRendered;
+    }
+}
+
+void TileCache::registerTileBeingRendered(const TileDesc& tile)
+{
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
+    if (tileBeingRendered)
+    {
+        const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
+        {
+            // Tile painting has stalled. Reissue.
+            tileBeingRendered->setVersion(tile.getVersion());
+        }
+    }
+    else
+    {
+        const std::string cachedName = cacheFileName(tile);
+
+        assert(_tilesBeingRendered.find(cachedName) == _tilesBeingRendered.end());
+
+        tileBeingRendered = std::make_shared<TileBeingRendered>(cachedName, tile);
         _tilesBeingRendered[cachedName] = tileBeingRendered;
     }
 }
