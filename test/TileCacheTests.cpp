@@ -1189,10 +1189,10 @@ void TileCacheTests::testTileRequestByZoom()
     sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
 
     // Request all tile of the visible area (it happens by zoom)
-    sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,12800,12800,12800,12800,12800 tilewidth=3200 tileheight=3200");
+    sendTextFrame(socket, "tilecombine part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600 tilewidth=3200 tileheight=3200");
 
     // Check that we get all the tiles without we send back the tileprocessed message
-    for (int i = 0; i < 25; ++i)
+    for (int i = 0; i < 20; ++i)
     {
         std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
         CPPUNIT_ASSERT_MESSAGE("Did not get tile as expected!", !tile.empty());

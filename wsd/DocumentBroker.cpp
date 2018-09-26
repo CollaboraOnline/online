@@ -1408,7 +1408,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                                      std::ceil(normalizedVisArea._y1 / session->getTileHeightInTwips()) + 1;
         const int tilesInVisArea = tilesFitOnWidth * tilesFitOnHeight;
 
-        tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.5f);
+        tilesOnFlyUpperLimit = std::max(TILES_ON_FLY_MIN_UPPER_LIMIT, tilesInVisArea * 1.1f);
     }
     else
     {
