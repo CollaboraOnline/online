@@ -183,17 +183,6 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
 
-    // Kit did not send image data, because tile has the same wireID as the previously sent tile
-    // We need to remove only the subscriptions
-    if(size == 0)
-    {
-        if(tileBeingRendered && tileBeingRendered->getVersion() <= tile.getVersion())
-        {
-            forgetTileBeingRendered(tileBeingRendered, tile);
-        }
-        return;
-    }
-
     // Save to disk.
     const std::string cachedName = (tileBeingRendered ? tileBeingRendered->getCacheName()
                                                : cacheFileName(tile));

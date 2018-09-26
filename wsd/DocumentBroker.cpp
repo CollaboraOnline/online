@@ -1545,16 +1545,25 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
 
     try
     {
-        const TileCombined tileCombined = TileCombined::parse(firstLine);
-        const char* buffer = payload.data();
-        size_t offset = firstLine.size() + 1;
-
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        for (const auto& tile : tileCombined.getTiles())
+        const size_t length = payload.size();
+        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
-            tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
-            offset += tile.getImgSize();
+            const TileCombined tileCombined = TileCombined::parse(firstLine);
+            const char* buffer = payload.data();
+            size_t offset = firstLine.size() + 1;
+
+            std::unique_lock<std::mutex> lock(_mutex);
+
+            for (const auto& tile : tileCombined.getTiles())
+            {
+                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
+                offset += tile.getImgSize();
+            }
+        }
+        else
+        {
+            LOG_WRN("Dropping empty tilecombine response: " << firstLine);
+            // They will get re-issued if we don't forget them.
         }
     }
     catch (const std::exception& exc)

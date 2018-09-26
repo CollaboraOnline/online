@@ -1127,9 +1127,7 @@ public:
                 // The tile content is identical to what the client already has, so skip it
                 LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << "," <<
                         positionY << ") oldhash==hash (" << hash << "), wireId: " << wireId << " skipping");
-                tiles[tileIndex].setWireId(wireId);
-                tiles[tileIndex].setImgSize(0);
-                tileIndex++;
+                tiles.erase(tiles.begin() + tileIndex);
                 continue;
             }
 
