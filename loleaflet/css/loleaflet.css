@@ -91,14 +91,12 @@ body {
     }
     #document-container.spreadsheet-document {
 	top: 93px !important;
-	bottom: 36px !important;
     }
     #document-container.spreadsheet-document.readonly {
 	top: 50px !important;
     }
     #document-container {
 	top: 40px;
-	bottom: 0;
     }
     #spreadsheet-row-column-frame {
 	top: 73px !important;
