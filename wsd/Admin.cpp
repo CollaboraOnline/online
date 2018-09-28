@@ -76,11 +76,9 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         }
         std::string jwtToken;
         LOOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
-        const auto& config = Application::instance().config();
-        const std::string sslKeyPath = config.getString("ssl.key_file_path", "");
 
         LOG_INF("Verifying JWT token: " << jwtToken);
-        JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
+        JWTAuth authAgent("admin", "admin", "admin");
         if (authAgent.verify(jwtToken))
         {
             LOG_TRC("JWT token is valid");

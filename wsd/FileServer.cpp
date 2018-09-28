@@ -196,7 +196,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     assert(LOOLWSD::AdminEnabled);
 
     const auto& config = Application::instance().config();
-    const std::string& sslKeyPath = config.getString("ssl.key_file_path", "");
 
     NameValueCollection cookies;
     request.getCookies(cookies);
@@ -204,7 +203,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     {
         const std::string jwtToken = cookies.get("jwt");
         LOG_INF("Verifying JWT token: " << jwtToken);
-        JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
+        JWTAuth authAgent("admin", "admin", "admin");
         if (authAgent.verify(jwtToken))
         {
             LOG_TRC("JWT token is valid");
@@ -247,7 +246,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     }
 
     // authentication passed, generate and set the cookie
-    JWTAuth authAgent(sslKeyPath, "admin", "admin", "admin");
+    JWTAuth authAgent("admin", "admin", "admin");
     const std::string jwtToken = authAgent.getAccessToken();
 
     Poco::Net::HTTPCookie cookie("jwt", jwtToken);
