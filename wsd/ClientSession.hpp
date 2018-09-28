@@ -110,6 +110,7 @@ public:
     void clearTilesOnFly();
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
     void removeOutdatedTilesOnFly();
+    size_t countIdenticalTilesOnFly(const TileDesc& tile) const;
 
     Util::Rectangle getVisibleArea() const { return _clientVisibleArea; }
     /// Visible area can have negative value as position, but we have tiles only in the positive range
@@ -176,7 +177,7 @@ private:
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
     /// Generate a unique id for a tile
-    std::string generateTileID(const TileDesc& tile);
+    std::string generateTileID(const TileDesc& tile) const;
 
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
