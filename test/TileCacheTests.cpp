@@ -81,6 +81,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     //CPPUNIT_TEST(testTileInvalidatePartImpress);
     CPPUNIT_TEST(testTileBeingRenderedHandling);
     CPPUNIT_TEST(testWireIDFilteringOnWSDSide);
+    CPPUNIT_TEST(testLimitTileVersionsOnFly);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -106,6 +107,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testTileInvalidatePartImpress();
     void testTileBeingRenderedHandling();
     void testWireIDFilteringOnWSDSide();
+    void testLimitTileVersionsOnFly();
 
     void checkTiles(std::shared_ptr<LOOLWebSocket>& socket,
                     const std::string& type,
@@ -1280,6 +1282,66 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     // wsd should not send tiles messages for the first client
     std::vector<char> tile = getResponseMessage(socket1, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
+}
+
+void TileCacheTests::testLimitTileVersionsOnFly()
+{
+    // We have an upper limit (2) for the versions of the same tile wsd send out
+    // without getting the tileprocessed message for the first tile message.
+    const char* testname = "testLimitTileVersionsOnFly ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    // Set the client visible area
+    sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
+    sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+
+    // Type one character to trigger sending tiles
+    sendChar(socket, 'x', skNone, testname);
+
+    // Handle all tiles send by wsd
+    bool getTileResp = false;
+    do
+    {
+        std::string tile = getResponseString(socket, "tile:", testname, 1000);
+        getTileResp = !tile.empty();
+    } while(getTileResp);
+
+    // Type an other character to trigger sending tiles
+    sendChar(socket, 'x', skNone, testname);
+
+    // Handle all tiles sent by wsd
+    getTileResp = false;
+    do
+    {
+        std::string tile = getResponseString(socket, "tile:", testname, 1000);
+        getTileResp = !tile.empty();
+    } while(getTileResp);
+
+    // For the third invalidation wsd does not send the new tile since
+    // two versions of the same tile were already sent.
+    sendChar(socket, 'x', skNone, testname);
+
+    std::vector<char> tile1 = getResponseMessage(socket, "tile:", testname, 1000);
+    CPPUNIT_ASSERT_MESSAGE("Not expected tile message arrived!", tile1.empty());
+
+    // When the next tileprocessed message arrive with correct tileID
+    // wsd sends the delayed tile
+    sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200");
+
+    int arrivedTiles = 0;
+    bool gotTile = false;
+    do
+    {
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 1000);
+        gotTile = !tile.empty();
+        if(gotTile)
+            ++arrivedTiles;
+    } while(gotTile);
+
+    CPPUNIT_ASSERT_EQUAL(1, arrivedTiles);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileCacheTests);
