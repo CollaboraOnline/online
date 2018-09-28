@@ -37,6 +37,8 @@ using Poco::Base64Decoder;
 using Poco::Base64Encoder;
 using Poco::OutputLineEndingConverter;
 
+const Poco::Crypto::RSAKey JWTAuth::_key(Poco::Crypto::RSAKey(Poco::Crypto::RSAKey::KL_2048, Poco::Crypto::RSAKey::EXP_LARGE));
+
 void Authorization::authorizeURI(Poco::URI& uri) const
 {
     if (_type == Authorization::Type::Token)
