@@ -1100,7 +1100,7 @@ void ClientSession::removeOutdatedTilesOnFly()
     {
         auto tileIter = _tilesOnFly.begin();
         double elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - tileIter->second).count();
-        if(elapsedTimeMs > 5000.0)
+        if(elapsedTimeMs > TILE_ROUNDTRIP_TIMEOUT_MS)
         {
             LOG_WRN("Tracker tileID was dropped because of time out. Tileprocessed message did not arrive");
             _tilesOnFly.erase(tileIter);
@@ -1108,6 +1108,18 @@ void ClientSession::removeOutdatedTilesOnFly()
         else
             continueLoop = false;
     }
+}
+
+size_t ClientSession::countIdenticalTilesOnFly(const TileDesc& tile) const
+{
+    size_t count = 0;
+    std::string tileID = generateTileID(tile);
+    for(auto& tileItem : _tilesOnFly)
+    {
+        if(tileItem.first == tileID)
+            ++count;
+    }
+    return count;
 }
 
 Util::Rectangle ClientSession::getNormalizedVisibleArea() const
@@ -1242,7 +1254,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                 Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
                 if(invalidateRect.intersects(tileRect))
                 {
-                    invalidTiles.emplace_back(TileDesc(part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false));
+                    invalidTiles.emplace_back(part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
 
                     TileWireId oldWireId = 0;
                     auto iter = _oldWireIds.find(generateTileID(invalidTiles.back()));
@@ -1329,7 +1341,7 @@ void ClientSession::clearTileSubscription()
     _tilesBeingRendered.clear();
 }
 
-std::string ClientSession::generateTileID(const TileDesc& tile)
+std::string ClientSession::generateTileID(const TileDesc& tile) const
 {
     std::ostringstream tileID;
     tileID << tile.getPart() << ":" << tile.getTilePosX() << ":" << tile.getTilePosY() << ":"
