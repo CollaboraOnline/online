@@ -69,11 +69,10 @@ public:
 class JWTAuth : public AuthBase
 {
 public:
-    JWTAuth(const std::string& keyPath, const std::string& name, const std::string& sub, const std::string& aud)
+    JWTAuth(const std::string& name, const std::string& sub, const std::string& aud)
         : _name(name),
           _sub(sub),
           _aud(aud),
-          _key(Poco::Crypto::RSAKey("", keyPath)),
           _digestEngine(_key, "SHA256")
     {
     }
@@ -96,7 +95,7 @@ private:
     const std::string _sub;
     const std::string _aud;
 
-    const Poco::Crypto::RSAKey _key;
+    static const Poco::Crypto::RSAKey _key;
     Poco::Crypto::RSADigestEngine _digestEngine;
 };
 
