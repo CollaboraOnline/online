@@ -183,8 +183,7 @@ there is a less verbose way, but this worked for me:
     openssl ca -keyfile private/ca.key.pem -cert ca.cert.pem -extensions usr_cert -notext -md sha256 -in csr.pem -out cert.pem
 
 HTTPS is the default. HTTP-only mode can be enabled with --disable-ssl
-configure option. key.pem is required even in HTTP-only mode, because it is
-used to generate the secure token for the admin console.
+configure option.
 
 If you plan to hack on loolwsd, you probably want to familiarize
 yourself with loolwsd's --numprespawns switch, and the 'connect'
