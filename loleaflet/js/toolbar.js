@@ -793,7 +793,16 @@ function initMobileToolbar(toolItems) {
 			onClick(e, e.target);
 			hideTooltip(this, e.target);
 		},
-		onRefresh: function() {
+		onRefresh: function(edata) {
+			if (edata.item && (edata.item.id === 'styles' || edata.item.id === 'fonts' || edata.item.id === 'fontsizes')) {
+				var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(edata.item.id));
+				if (edata.item.hidden) {
+					toolItem.css('display', 'none');
+				} else {
+					toolItem.css('display', '');
+				}
+			}
+
 			if (map.getDocType() === 'presentation') {
 				// Fill the style select box if not yet filled
 				if ($('.styles-select')[0] && $('.styles-select')[0].length === 0) {
