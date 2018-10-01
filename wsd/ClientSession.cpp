@@ -1056,8 +1056,6 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     {
         const TileDesc tile = TileDesc::parse(data->firstLine());
         traceTileBySend(tile, sizeBefore == newSize);
-        if (sizeBefore != newSize)
-            LOG_INF("Sending new tile to client: " <<  tile.serialize("tile:"));
     }
 }
 
