@@ -2804,7 +2804,7 @@ private:
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ServerSocket::Type::Public, port, WebServerPoll, factory);
 #ifdef MOBILEAPP
-#ifdef BUILDLING_TESTS
+#ifdef BUILDING_TESTS
         while (!socket)
         {
             ++port;
