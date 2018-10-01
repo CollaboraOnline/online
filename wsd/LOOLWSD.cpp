@@ -177,6 +177,9 @@ int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 /// Protocols to listen on
 Socket::Type ClientPortProto = Socket::Type::All;
 
+/// INET address to listen on
+ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
+
 /// Port for prisoners to connect to
 int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 
@@ -752,6 +755,7 @@ void LOOLWSD::initialize(Application& self)
             { "logging.level", "trace" },
             { "loleaflet_logging", "false" },
             { "net.proto", "all" },
+            { "net.listen", "any" },
             { "net.service_root", "" },
             { "ssl.enable", "true" },
             { "ssl.termination", "true" },
@@ -886,6 +890,16 @@ void LOOLWSD::initialize(Application& self)
             ClientPortProto = Socket::Type::All;
         else
             LOG_WRN("Invalid protocol: " << proto);
+    }
+
+    {
+        std::string listen = getConfigValue<std::string>(conf, "net.listen", "");
+        if (!Poco::icompare(listen, "any"))
+            ClientListenAddr = ServerSocket::Type::Public;
+        else if (!Poco::icompare(listen, "loopback"))
+            ClientListenAddr = ServerSocket::Type::Local;
+        else
+            LOG_WRN("Invalid listen address: " << listen << ". Falling back to default: 'any'" );
     }
 
     // Prefix for the loolwsd pages; should not end with a '/'
@@ -2802,7 +2816,7 @@ private:
             factory = std::make_shared<PlainSocketFactory>();
 
         std::shared_ptr<ServerSocket> socket = getServerSocket(
-            ServerSocket::Type::Public, port, WebServerPoll, factory);
+            ClientListenAddr, port, WebServerPoll, factory);
 #ifdef MOBILEAPP
 #ifdef BUILDING_TESTS
         while (!socket)
