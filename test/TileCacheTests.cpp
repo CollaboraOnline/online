@@ -1435,7 +1435,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     bool gotTile = false;
     do
     {
-        std::vector<char> tile = getResponseMessage(socket1, "tile:", testname);
+        std::vector<char> tile = getResponseMessage(socket1, "tile:", testname, 5000);
         gotTile = !tile.empty();
         if(gotTile)
             ++arrivedTiles;
@@ -1452,7 +1452,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     gotTile = false;
     do
     {
-        std::vector<char> tile = getResponseMessage(socket1, "tile:", testname);
+        std::vector<char> tile = getResponseMessage(socket1, "tile:", testname, 1000);
         gotTile = !tile.empty();
         if(gotTile)
             ++arrivedTiles;
@@ -1469,7 +1469,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     gotTile = false;
     do
     {
-        std::vector<char> tile = getResponseMessage(socket2, "tile:", testname);
+        std::vector<char> tile = getResponseMessage(socket2, "tile:", testname, 1000);
         gotTile = !tile.empty();
         if(gotTile)
             ++arrivedTiles;
@@ -1478,7 +1478,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     CPPUNIT_ASSERT_EQUAL(3, arrivedTiles);
 
     // wsd should not send tiles messages for the first client
-    std::vector<char> tile = getResponseMessage(socket1, "tile:", testname);
+    std::vector<char> tile = getResponseMessage(socket1, "tile:", testname, 1000);
     CPPUNIT_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
 }
 
