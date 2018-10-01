@@ -1384,7 +1384,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
     CPPUNIT_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTiles > 1);
 
     // For the later inputs wsd will send one tile, since other ones are indentical
-    for(int i = 0; i < 10; ++i)
+    for(int i = 0; i < 5; ++i)
     {
         // Type an other character
         sendChar(socket, 'x', skNone, testname);
@@ -1394,7 +1394,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
         gotTile = false;
         do
         {
-            std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 1000);
+            std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
             gotTile = !tile.empty();
             if(gotTile)
                 ++arrivedTiles;
