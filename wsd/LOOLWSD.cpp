@@ -168,6 +168,9 @@ int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 /// Protocols to listen on
 Socket::Type ClientPortProto = Socket::Type::All;
 
+/// INET address to listen on
+ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
+
 /// Port for prisoners to connect to
 int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 
@@ -698,6 +701,7 @@ void LOOLWSD::initialize(Application& self)
             { "loleaflet_html", "loleaflet.html" },
             { "loleaflet_logging", "false" },
             { "net.proto", "all" },
+            { "net.listen", "INADDR_ANY" },
             { "net.service_root", "" },
             { "num_prespawn_children", "1" },
             { "per_document.autosave_duration_secs", "300" },
@@ -872,6 +876,16 @@ void LOOLWSD::initialize(Application& self)
             ClientPortProto = Socket::Type::All;
         else
             LOG_WRN("Invalid protocol: " << proto);
+    }
+
+    {
+        std::string listen = getConfigValue<std::string>(conf, "net.listen", "");
+        if (!Poco::icompare(listen, "INADDR_ANY"))
+            ClientListenAddr = ServerSocket::Type::Public;
+        else if (!Poco::icompare(listen, "INADDR_LOOPBACK"))
+            ClientListenAddr = ServerSocket::Type::Local;
+        else
+            LOG_WRN("Invalid listen address: " << listen);
     }
 
     // Prefix for the loolwsd pages; should not end with a '/'
@@ -2734,7 +2748,7 @@ private:
             factory = std::make_shared<PlainSocketFactory>();
 
         std::shared_ptr<ServerSocket> socket = getServerSocket(
-            ServerSocket::Type::Public, port, WebServerPoll, factory);
+            ClientListenAddr, port, WebServerPoll, factory);
         while (!socket)
         {
             ++port;
