@@ -13,6 +13,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <memory>
 
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
@@ -1034,15 +1035,16 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
         docBroker->assertCorrectThread();
 
     const std::string command = data->firstToken();
+    std::unique_ptr<TileDesc> tile;
     if (command == "tile:")
     {
         // Avoid sending tile if it has the same wireID as the previously sent tile
-        const TileDesc tile = TileDesc::parse(data->firstLine());
-        const std::string tileID = generateTileID(tile);
+        tile.reset(new TileDesc(TileDesc::parse(data->firstLine())));
+        const std::string tileID = generateTileID(*tile);
         auto iter = _oldWireIds.find(tileID);
-        if(iter != _oldWireIds.end() && tile.getWireId() != 0 && tile.getWireId() == iter->second)
+        if(iter != _oldWireIds.end() && tile->getWireId() != 0 && tile->getWireId() == iter->second)
         {
-            LOG_INF("WSD filters out a tile with the same wireID: " <<  tile.serialize("tile:"));
+            LOG_INF("WSD filters out a tile with the same wireID: " <<  tile->serialize("tile:"));
             return;
         }
     }
@@ -1052,10 +1054,9 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     size_t newSize = _senderQueue.enqueue(data);
 
     // Track sent tile
-    if (command == "tile:")
+    if (tile)
     {
-        const TileDesc tile = TileDesc::parse(data->firstLine());
-        traceTileBySend(tile, sizeBefore == newSize);
+        traceTileBySend(*tile, sizeBefore == newSize);
     }
 }
 
