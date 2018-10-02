@@ -34,9 +34,8 @@ L.Control.MobileInput = L.Control.extend({
 			return;
 		}
 
-		if (focus === false) {
-			this._textArea.blur();
-		} else {
+		this._textArea.blur();
+		if (focus !== false) {
 			this._textArea.focus();
 		}
 	},
