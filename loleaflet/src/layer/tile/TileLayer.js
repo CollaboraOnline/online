@@ -2106,12 +2106,22 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		// now try various mime types
-		var mimeTypes = [
-			['text/rtf', 'text/rtf'],
-			['text/html', 'text/html'],
-			['text/plain', 'text/plain;charset=utf-8'],
-			['Text', 'text/plain;charset=utf-8']
-		];
+		var mimeTypes;
+		if (this._docType === 'spreadsheet') {
+			// FIXME apparently we cannot paste the text/html or text/rtf as
+			// produced by LibreOffice in Calc from some reason
+			mimeTypes = [
+				['text/plain', 'text/plain;charset=utf-8'],
+				['Text', 'text/plain;charset=utf-8']
+			];
+		} else {
+			mimeTypes = [
+				['text/rtf', 'text/rtf'],
+				['text/html', 'text/html'],
+				['text/plain', 'text/plain;charset=utf-8'],
+				['Text', 'text/plain;charset=utf-8']
+			];
+		}
 
 		for (var i = 0; i < mimeTypes.length; ++i) {
 			for (t = 0; t < types.length; ++t) {
