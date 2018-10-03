@@ -145,24 +145,21 @@ L.Control.MobileInput = L.Control.extend({
 		}
 
 		if (e.type === 'textInput' && !this._keyHandled) {
-			// Hack for making space and spell-check text insert work
-			// in Chrome (on Andorid) or Chrome with IME.
+			// Hack for making space in combination with autocompletion text
+			// input work in Chrome on Andorid.
 			//
 			// Chrome (Android) IME triggers keyup/keydown input with
 			// code 229 when hitting space (as with all composiiton events)
 			// with addition to 'textinput' event, in which we only see that
-			// space was entered. Similar situation is also when inserting
-			// a soft-keyboard spell-check item - it is visible only with
-			// 'textinput' event (no composition event is fired).
-			// To make this work we need to insert textinput.data here..
+			// space was entered.
 			//
 			// TODO: Maybe make sure this is only triggered when keydown has
 			// 229 code. Also we need to detect that composition was overriden
 			// (part or whole word deleted) with the spell-checked word. (for
 			// example: enter 'tar' and with spell-check correct that to 'rat')
 			var data = e.data;
-			for (var idx = 0; idx < data.length; idx++) {
-				map._docLayer._postKeyboardEvent('input', data[idx].charCodeAt(), 0);
+			if (data.length == 1 && data[0] === ' ') {
+				map._docLayer._postKeyboardEvent('input', data[0].charCodeAt(), 0);
 			}
 			this._textArea.value = '';
 		}
