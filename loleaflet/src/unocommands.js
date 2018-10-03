@@ -87,6 +87,7 @@ var unoCommandsArray = {
 	FormatTextMenu:{global:{menu:_('Te~xt'),},},
 	FormattingMarkMenu:{global:{menu:_('Formatting Mark'),},},
 	FullScreen:{global:{menu:_('F~ull Screen'),},},
+	FunctionDialog:{spreadsheet:{menu:_('~Function...'),},},
 	GoalSeekDialog:{spreadsheet:{menu:_('~Goal Seek...'),},},
 	Group:{global:{menu:_('~Group...'),},},
 	GroupOutlineMenu:{spreadsheet:{menu:_('~Group and Outline'),},},
