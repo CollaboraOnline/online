@@ -89,9 +89,6 @@ L.Control.MobileInput = L.Control.extend({
 		    docLayer = this._map._docLayer,
 		    unoKeyCode = handler._toUNOKeyCode(keyCode);
 
-		console.log('onKeyEvent: e.type === ' + e.type);
-		console.log('onKeyEvent: e.keyCode === "' + e.keyCode + '"');
-		console.log('onKeyEvent: e.charCode === "' + e.charCode + '"');
 		this._keyHandled = this._keyHandled || false;
 		if (this._isComposing) {
 			if (keyCode === 229 && charCode === 0) {
@@ -138,8 +135,7 @@ L.Control.MobileInput = L.Control.extend({
 
 	onCompEvents: function (e) {
 		var map = this._map;
-		console.log('onCompEvents: e.type === ' + e.type);
-		console.log('onCompEvents: e.data === "' + e.data + '"');
+
 		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
 			this._isComposing = true; // we are starting composing with IME
 			this._composingData = e.data; // cache what we have composed so far
@@ -154,9 +150,6 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onTextInput: function (e) {
-		console.log('onTextInput: e.type === ' + e.type);
-		console.log('onTextInput: e.data === "' + e.data + '"');
-
 		if (!this._keyHandled) {
 			this._textData = e.data;
 			this._textArea.value = '';
@@ -166,9 +159,8 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onInput: function (e) {
-		console.log('onInput: e.inputType === ' + e.inputType);
-
 		var backSpace = this._map.keyboard._toUNOKeyCode(8);
+
 		// deferred processing of composition text or normal text; we can get
 		// both in some cases, and based on the input event we need to decide
 		// which one we actually need to use
