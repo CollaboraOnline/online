@@ -191,7 +191,7 @@
 }
 
 /* desktop mode */
-@media (min-width: 769px) {
+@media (min-width: 769px) and (orientation: portrait),(min-height: 769px) and (orientation: landscape) {
     /* hide the button in desktop view */
     .main-menu-btn {
 	position: absolute;
