@@ -19,6 +19,7 @@ L.Map.include({
 		}
 		else if (typeof (part) === 'number' && part >= 0 && part < docLayer._parts) {
 			docLayer._selectedPart = part;
+			docLayer._updateReferenceMarks();
 		}
 		else {
 			return;

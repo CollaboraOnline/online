@@ -25,6 +25,24 @@ function hex2string(inData)
 	return hexified.join('');
 }
 
+function marksAreEqual(mark1, mark2)
+{
+	return mark1._bounds._northEast.lat == mark2._bounds._northEast.lat
+		&& mark1._bounds._northEast.lng == mark2._bounds._northEast.lng
+		&& mark1._bounds._southWest.lat == mark2._bounds._southWest.lat
+		&& mark1._bounds._southWest.lng == mark2._bounds._southWest.lng;
+}
+
+function hasMark(collection, mark)
+{
+	for (var i = 0; i < collection.length; i++) {
+		if (marksAreEqual(mark, collection[i])) {
+			return true;
+		}
+	}
+	return false;
+}
+
 L.TileLayer = L.GridLayer.extend({
 
 	options: {
@@ -179,8 +197,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._initContainer();
 		this._getToolbarCommandsValues();
 		this._selections = new L.LayerGroup();
+		this._references = new L.LayerGroup();
 		if (this.options.permission !== 'readonly') {
 			map.addLayer(this._selections);
+			map.addLayer(this._references);
 		}
 
 		// This layergroup contains all the layers corresponding to other's view
@@ -414,6 +434,12 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('cellformula:')) {
 			this._onCellFormulaMsg(textMsg);
+		}
+		else if (textMsg.startsWith('referencemarks:')) {
+			this._onReferencesMsg(textMsg);
+		}
+		else if (textMsg.startsWith('referenceclear:')) {
+			this._clearReferences();
 		}
 		else if (textMsg.startsWith('hyperlinkclicked:')) {
 			this._onHyperlinkClickedMsg(textMsg);
@@ -1348,6 +1374,59 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateTextViewSelection(viewId);
 	},
 
+	_updateReferenceMarks: function() {
+		this._clearReferences();
+		for (var i = 0; i < this._referencesAll.length; i++) {
+			// Avoid doubed marks, add only marks for current sheet
+			if ((this._references == null || !hasMark(this._references.getLayers(), this._referencesAll[i].mark))
+				&& this._selectedPart === this._referencesAll[i].part) {
+				this._references.addLayer(this._referencesAll[i].mark);
+			}
+		}
+	},
+
+	_onReferencesMsg: function (textMsg) {
+		textMsg = textMsg.substr(textMsg.indexOf(' ') + 1);
+		var marks = JSON.parse(textMsg);
+		marks = marks.marks;
+		var references = [];
+		this._referencesAll = [];
+
+		for (var mark = 0; mark < marks.length; mark++) {
+			var strTwips = marks[mark].rectangle.match(/\d+/g);
+			var strColor = marks[mark].color;
+			var part = parseInt(marks[mark].part);
+
+			if (strTwips != null) {
+				var rectangles = [];
+				for (var i = 0; i < strTwips.length; i += 4) {
+					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
+					var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
+					var topRightTwips = topLeftTwips.add(new L.Point(offset.x, 0));
+					var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
+					var bottomRightTwips = topLeftTwips.add(offset);
+					rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
+				}
+
+				var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
+				var reference = new L.Polygon(polygons, {
+					pointerEvents: 'none',
+					fillColor: '#' + strColor,
+					fillOpacity: 0.25,
+					weight: 2,
+					opacity: 0.25});
+
+				references.push({mark: reference, part: part});
+			}
+		}
+
+		for (i = 0; i < references.length; i++) {
+			this._referencesAll.push(references[i]);
+		}
+
+		this._updateReferenceMarks();
+	},
+
 	_onTextSelectionContentMsg: function (textMsg) {
 		this._selectionTextContent = textMsg.substr(22);
 		this._map._clipboardContainer.setValue(this._selectionTextContent);
@@ -1669,6 +1748,10 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		return ret;
+	},
+
+	_clearReferences: function () {
+		this._references.clearLayers();
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {

@@ -2111,7 +2111,8 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_GRAPHIC_SELECTION ||
              type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
              type == LOK_CALLBACK_INVALIDATE_HEADER ||
-             type == LOK_CALLBACK_CELL_ADDRESS)
+             type == LOK_CALLBACK_CELL_ADDRESS ||
+             type == LOK_CALLBACK_REFERENCE_MARKS)
     {
         std::unique_lock<std::mutex> lock(getLock());
         _stateRecorder.recordEvent(type, payload);
@@ -2400,7 +2401,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("tableselected: " + payload);
         break;
     case LOK_CALLBACK_REFERENCE_MARKS:
-        // TODO
+        sendTextFrame("referencemarks: " + payload);
         break;
     case LOK_CALLBACK_JSDIALOG:
         sendTextFrame("jsdialog: " + payload);
