@@ -191,7 +191,7 @@
     top: 3px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px),(max-height: 768px) {
     #document-logo {
         display: none;
     }
@@ -207,28 +207,14 @@
 
     .main-menu-btn {
         display: inline-block;
+        position: relative;
+        top: 0px;
     }
 
     .main-nav {
         position: absolute;
         width: 100%;
         margin: 0;
-    }
-
-    #main-menu {
-	top: 39px;
-	bottom: 0;
-    }
-}
-
-@media (max-device-height: 768px) {
-    .main-menu-btn {
-	position: relative;
-	top: 0px;
-    }
-
-    #main-menu-state:not(:checked) ~ #main-menu {
-	display: none;
     }
 
     #main-menu {
