@@ -266,6 +266,10 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
     try
     {
         bool noCache = false;
+#if ENABLE_DEBUG
+        if (std::getenv("LOOL_SERVE_FROM_FS"))
+            noCache = true;
+#endif
         Poco::Net::HTTPResponse response;
         Poco::URI requestUri(request.getURI());
         LOG_TRC("Fileserver request: " << requestUri.toString());
