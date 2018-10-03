@@ -77,7 +77,7 @@ w2ui-toolbar {
     width: 700px;
 }
 
-@media (max-width: 768px), (max-height: 768px) {
+@media (max-width: 768px),(max-device-height: 768px) {
      #formulaInput {
 	width: 500px;
      }

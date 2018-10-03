@@ -191,7 +191,7 @@
     top: 3px;
 }
 
-@media (max-width: 768px),(max-height: 768px) {
+@media (max-width: 768px),(max-device-height: 768px) {
     #document-logo {
         display: none;
     }
