@@ -128,14 +128,13 @@ L.Control.MobileInput = L.Control.extend({
 
 	onCompEvents: function (e) {
 		var map = this._map;
+		console.log('onCompEvents: e.type === ' + e.type);
+		console.log('onCompEvents: e.data === "' + e.data + '"');
 		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
 			this._isComposing = true; // we are starting composing with IME
-			var txt = '';
-			for (var i = 0; i < e.data.length; i++) {
-				txt += e.data[i];
-			}
-			if (txt) {
-				map._docLayer._postCompositionEvent(0, 'input', txt);
+			this._composingData = e.data; // cache what we have composed so far
+			if (e.data) {
+				map._docLayer._postCompositionEvent(0, 'input', e.data);
 			}
 		}
 
@@ -152,11 +151,6 @@ L.Control.MobileInput = L.Control.extend({
 			// code 229 when hitting space (as with all composiiton events)
 			// with addition to 'textinput' event, in which we only see that
 			// space was entered.
-			//
-			// TODO: Maybe make sure this is only triggered when keydown has
-			// 229 code. Also we need to detect that composition was overriden
-			// (part or whole word deleted) with the spell-checked word. (for
-			// example: enter 'tar' and with spell-check correct that to 'rat')
 			var data = e.data;
 			if (data.length == 1 && data[0] === ' ') {
 				map._docLayer._postKeyboardEvent('input', data[0].charCodeAt(), 0);
@@ -169,7 +163,13 @@ L.Control.MobileInput = L.Control.extend({
 	onInput: function (e) {
 		var backSpace = this._map.keyboard._toUNOKeyCode(8);
 		if (e.inputType && e.inputType === 'deleteContentBackward' && this._lastInput !== backSpace) {
-			this._map._docLayer._postKeyboardEvent('input', 0, backSpace);
+			// this means we need to delete the entire interim composition;
+			// let's issue backspace that many times
+			if (this._composingData) {
+				for (var i = 0; i < this._composingData.length; ++i) {
+					this._map._docLayer._postKeyboardEvent('input', 0, backSpace);
+				}
+			}
 		}
 		L.DomEvent.stopPropagation(e);
 	}
