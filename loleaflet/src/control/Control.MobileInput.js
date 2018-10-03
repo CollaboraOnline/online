@@ -75,7 +75,8 @@ L.Control.MobileInput = L.Control.extend({
 		this._textArea.setAttribute('spellcheck', 'false');
 		L.DomEvent.on(this._textArea, stopEvents, L.DomEvent.stopPropagation)
 			.on(this._textArea, 'keydown keypress keyup', this.onKeyEvents, this)
-			.on(this._textArea, 'compositionstart compositionupdate compositionend textInput', this.onCompEvents, this)
+			.on(this._textArea, 'compositionstart compositionupdate compositionend', this.onCompEvents, this)
+			.on(this._textArea, 'textInput', this.onTextInput, this)
 			.on(this._textArea, 'input', this.onInput, this)
 			.on(this._textArea, 'focus', this.onGotFocus, this)
 			.on(this._textArea, 'blur', this.onLostFocus, this);
@@ -152,7 +153,14 @@ L.Control.MobileInput = L.Control.extend({
 			map._docLayer._postCompositionEvent(0, 'end', '');
 		}
 
-		if (e.type === 'textInput' && !this._keyHandled) {
+		L.DomEvent.stopPropagation(e);
+	},
+
+	onTextInput: function (e) {
+		console.log('onTextInput: e.type === ' + e.type);
+		console.log('onTextInput: e.data === "' + e.data + '"');
+
+		if (!this._keyHandled) {
 			// Hack for making space in combination with autocompletion text
 			// input work in Chrome on Andorid.
 			//
@@ -166,6 +174,7 @@ L.Control.MobileInput = L.Control.extend({
 			}
 			this._textArea.value = '';
 		}
+
 		L.DomEvent.stopPropagation(e);
 	},
 
