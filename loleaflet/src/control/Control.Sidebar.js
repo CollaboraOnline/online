@@ -197,6 +197,8 @@ L.Control.Sidebar = L.Control.extend({
 		L.DomUtil.setStyle(panelContainer, 'padding', '0px');
 		L.DomUtil.setStyle(panelContainer, 'margin', '0px');
 		L.DomUtil.setStyle(panelContainer, 'position', 'relative');
+		panelContainer.width = width;
+		panelContainer.height = height;
 		panelContainer.id = strId;
 
 		// Create the panel canvas.
@@ -366,10 +368,13 @@ L.Control.Sidebar = L.Control.extend({
 		if (!canvas)
 			return; // no window to paint to
 
-		var ctx = canvas.getContext('2d');
-
 		// The actual image of the window may be larger/smaller than the dimension we get on size_changed.
 		var width = this._currentDeck.width;
+		var height = this._currentDeck.height;
+
+		canvas.width = width;
+		canvas.height = height;
+		var ctx = canvas.getContext('2d');
 
 		var docContainer = this._map.options.documentContainer;
 		var img = new Image();
@@ -382,8 +387,6 @@ L.Control.Sidebar = L.Control.extend({
 				y = parseInt(rectangle[1]);
 			}
 
-			ctx.drawImage(img, x, y);
-
 			var sidebar = L.DomUtil.get(strId);
 			sidebar.style.width = width.toString() + 'px';
 			docContainer.style.right = sidebar.style.width;
@@ -391,10 +394,13 @@ L.Control.Sidebar = L.Control.extend({
 			if (spreadsheetRowColumnFrame)
 				spreadsheetRowColumnFrame.style.right = sidebar.style.width;
 
-			// if dialog is hidden, show it
-			var dialogContainer = L.DomUtil.get(strId);
-			$(dialogContainer).parent().show();
-			// that.focus(parentId);
+			// Render.
+			ctx.drawImage(img, x, y);
+
+			// If sidebar panel is hidden, show it.
+			var sidebarContainer = L.DomUtil.get(strId);
+			if (sidebarContainer)
+				$(sidebarContainer).parent().show();
 		};
 		img.src = imgData;
 	},
