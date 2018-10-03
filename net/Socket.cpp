@@ -304,9 +304,9 @@ bool ServerSocket::bind(Type type, int port)
         addrv4.sin_family = AF_INET;
         addrv4.sin_port = htons(port);
         if (type == Type::Public)
-            addrv4.sin_addr.s_addr = type == htonl(INADDR_ANY);
+            addrv4.sin_addr.s_addr = htonl(INADDR_ANY);
         else
-            addrv4.sin_addr.s_addr = type == htonl(INADDR_LOOPBACK);
+            addrv4.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 
         rc = ::bind(getFD(), (const sockaddr *)&addrv4, sizeof(addrv4));
     }
