@@ -88,10 +88,19 @@ L.Control.MobileInput = L.Control.extend({
 		    docLayer = this._map._docLayer,
 		    unoKeyCode = handler._toUNOKeyCode(keyCode);
 
+		console.log('onKeyEvent: e.type === ' + e.type);
+		console.log('onKeyEvent: e.keyCode === "' + e.keyCode + '"');
+		console.log('onKeyEvent: e.charCode === "' + e.charCode + '"');
 		this._keyHandled = this._keyHandled || false;
 		if (this._isComposing) {
+			if (keyCode === 229 && charCode === 0) {
+				return;
+			}
+			// stop the composing - so that we handle eg. Enter even during
+			// composition
+			this._isComposing = false;
 			this._lastInput = null;
-			return;
+			this._textArea.value = '';
 		}
 
 		docLayer._resetPreFetching();
