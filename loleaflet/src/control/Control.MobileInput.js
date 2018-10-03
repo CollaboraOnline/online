@@ -143,9 +143,6 @@ L.Control.MobileInput = L.Control.extend({
 		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
 			this._isComposing = true; // we are starting composing with IME
 			this._composingData = e.data; // cache what we have composed so far
-			if (e.data) {
-				map._docLayer._postCompositionEvent(0, 'input', e.data);
-			}
 		}
 
 		if (e.type === 'compositionend') {
@@ -161,17 +158,7 @@ L.Control.MobileInput = L.Control.extend({
 		console.log('onTextInput: e.data === "' + e.data + '"');
 
 		if (!this._keyHandled) {
-			// Hack for making space in combination with autocompletion text
-			// input work in Chrome on Andorid.
-			//
-			// Chrome (Android) IME triggers keyup/keydown input with
-			// code 229 when hitting space (as with all composiiton events)
-			// with addition to 'textinput' event, in which we only see that
-			// space was entered.
-			var data = e.data;
-			if (data.length == 1 && data[0] === ' ') {
-				map._docLayer._postKeyboardEvent('input', data[0].charCodeAt(), 0);
-			}
+			this._textData = e.data;
 			this._textArea.value = '';
 		}
 
@@ -179,8 +166,25 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onInput: function (e) {
+		console.log('onInput: e.inputType === ' + e.inputType);
+
 		var backSpace = this._map.keyboard._toUNOKeyCode(8);
-		if (e.inputType && e.inputType === 'deleteContentBackward' && this._lastInput !== backSpace) {
+		// deferred processing of composition text or normal text; we can get
+		// both in some cases, and based on the input event we need to decide
+		// which one we actually need to use
+		if (e.inputType === 'insertText') {
+			if (this._textData) {
+				for (var i = 0; i < this._textData.length; ++i) {
+					map._docLayer._postKeyboardEvent('input', this._textData[i].charCodeAt(), 0);
+				}
+			}
+		}
+		else if (e.inputType === 'insertCompositionText') {
+			if (this._composingData) {
+				map._docLayer._postCompositionEvent(0, 'input', this._composingData);
+			}
+		}
+		else if (e.inputType === 'deleteContentBackward' && this._lastInput !== backSpace) {
 			// this means we need to delete the entire interim composition;
 			// let's issue backspace that many times
 			if (this._composingData) {
@@ -189,6 +193,7 @@ L.Control.MobileInput = L.Control.extend({
 				}
 			}
 		}
+
 		L.DomEvent.stopPropagation(e);
 	}
 });
