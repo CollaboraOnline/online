@@ -191,7 +191,7 @@
 }
 
 /* desktop mode */
-@media (min-width: 769px) and (orientation: portrait),(min-height: 769px) and (orientation: landscape) {
+@media (min-width: 769px) {
     /* hide the button in desktop view */
     .main-menu-btn {
 	position: absolute;
@@ -217,6 +217,26 @@
 
     .readonly {
 	top: 3px;
+    }
+}
+
+@media (max-device-height: 768px) {
+    .main-menu-btn {
+	position: relative;
+	top: 5px;
+    }
+
+    #main-menu-state:not(:checked) ~ #main-menu {
+	display: none;
+    }
+
+    #main-menu {
+	top: 39px !important;
+    }
+
+    .main-nav {
+	position: absolute;
+	width: 100%;
     }
 }
 
