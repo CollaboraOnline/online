@@ -81,7 +81,7 @@ body {
     width: 0;
 }
 
-@media (max-width: 768px),(max-height: 768px) {
+@media (max-width: 768px), (max-device-height: 768px) {
     /* Show slidesorter beyond 768px only */
     #presentation-controls-wrapper {
 	display: none;
