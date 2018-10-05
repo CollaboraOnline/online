@@ -193,6 +193,26 @@ test program.
 For interactive testing, you can use the 'connect' program. It accepts
 "commands" from the protocol on standard input.
 
+
+Test running with integration for developers
+--------------------------------------------
+
+Unless you want to test SSL itself, it is easier to go for the non-SSL option.
+
+Setup Nextcloud or ownCloud on localhost, and install the richdocuments app.
+Good tutorials exist how to install ownCloud or Nextcloud, we don't repeat
+them here. richdocuments is called Collabora Online in the respective app
+stores / marketplaces / whatever.
+
+When you have a running Nextcloud or ownCloud instance at
+http://localhost/nextcloud or at http://localhost/owncloud
+go to Collabora Online settings, and set the WOPI URL to
+http://localhost:9980
+
+Then in the build tree, edit the generated loolwsd.xml and set ssl setting to
+false. You can run make run, and test loolwsd with the ownCloud or Nextcloud
+integration.
+
 Admin Panel
 -----------
 
