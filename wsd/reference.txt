@@ -27,18 +27,49 @@ Document conversion:
 WOPI Extensions
 ===============
 
-LibreOffice Online uses WOPI protocol to interact with hosts who wants to
-integrate LibreOffice Online in them.
+LibreOffice Online uses a WOPI-like protocol to interact with hosts who
+want to integrate LibreOffice Online in them.
 
-Refer to WOPI docs[https://wopi.readthedocs.io/en/latest/] for detailed
-information. This documentation only mentions extensions to upstream WOPI protocol,
-WOPI extensions, that are implemented by LibreOffice Online backend in addition to
-upstream WOPI protocol.
-
-(Please note that upstream WOPI implementation is also not 100% complete)
+Refer to WOPI docs[https://wopi.readthedocs.io/en/latest/] for further
+details on the protocol's inspiration.
 
 CheckFileInfo response properties
 ----------------------------------
+
+BaseFileName
+	A string containing the basename of the file, omitting its path.
+
+DisablePrint
+	Disables print functionality in libreoffice online backend. If
+	true, HidePrintOption is assumed to be true
+
+OwnerID
+	A programmatic string identifier for the owner of the file.
+
+PostMessageOrigin
+	A string for the domain the host page sends/receives
+	PostMessages from, we only listen to messages from this domain.
+
+Size
+	Size of the file in bytes (64bit)
+
+UserCanWrite
+	A boolean flag, indicating whether the user has permission
+	to edit and/or over-write the file. If not set PutFile will fail.
+
+UserCanNotWriteRelative
+	A boolean flag indiciating that the user cannot Save-As on
+	this server, so PutFileRelative will fail.
+
+UserId
+	A programmatic string identifier of the user.
+
+UserFriendlyName
+	A string representing the name of the user for display in the UI.
+
+
+CheckFileInfo extended response properties
+------------------------------------------
 
 HidePrintOption
 	If set to true, hides the print option from the filemenu bar in the UI
@@ -49,10 +80,6 @@ HideSaveOption
 
 HideExportOption
 	Hides 'Download as' option in the file menubar
-
-DisablePrint
-	Disables print functionality in libreoffice online backend. If true,
-	HidePrintOption is assumed to be true
 
 DisableExport
 	Disables export functionality in backend. If set to true,
@@ -87,8 +114,9 @@ WatermarkText
 	If set to a non-empty string, is used for rendering a watermark-like
 	text on each tile of the document
 
-Note that it is possible to just hide print,save,export options while still
-being able to access them from WOPI hosts using PostMessage API (see loleaflet/reference.html)
+Note that it is possible to just hide print, save, export options
+while still being able to access them from other hosts using
+PostMessage API (see loleaflet/reference.html)
 
 Alternative authentication possibility
 --------------------------------------
@@ -100,8 +128,8 @@ The 'access_header' can be eg. of a form
 
     Authorization: Basic abcd1234==
 
-This header is then used in all the WOPI calls like PutFile, GetFile or
-CheckFileInfo, allowing Basic authentication to work.
+This header is then used in all the protocol calls like PutFile,
+GetFile or CheckFileInfo, allowing Basic authentication to work.
 
 PutFile headers
 ---------------
@@ -125,22 +153,22 @@ will have the value 'true' when the PutFile is triggered by autosave, and
 Detecting external document change
 ----------------------------------
 
-The locking part of the WOPI protocol is left out, because it goes against how
-the files are being used in many EFSS solutions.  Instead, LibreOffice Online
-uses timestamps to detect document changes.
+Locking is omitted from our WOPI-like protocol since it goes against
+common EFSS solutions usage. Instead, LibreOffice Online uses
+timestamps to detect document changes.
 
-When the document is updated in your storage while being edited in LibreOffice
-Online and there are unsaved changes, we detect it as soon as possible and ask
-the user if he/she would like to overwrite the changes or reload the new
-document from the storage.
+When the document is updated in your storage while being edited in
+LibreOffice Online and there are unsaved changes, we detect it as soon
+as possible and ask the user if he/she would like to overwrite the
+changes or reload the new document from the storage.
 
 In case there are no unsaved changes, we reload the new document without
 asking the user.
 
-To support this feature, wopi host implementation has to specify
+To support this feature, the host implementation has to specify
 LastModifiedTime field in both CheckFileInfo and PutFile calls.
 
-Additionally, WOPI hosts must check for a header in PutFile response:
+Additionally, hosts must check for a header in PutFile response:
 
     X-LOOL-WOPI-Timestamp
 
@@ -150,7 +178,7 @@ is present and its value does not match the file’s modified time in storage,
 it indicates that document being edited is not the one that is present in the
 storage.
 
-WOPI hosts should not save the file to storage in such cases and respond with
+Hosts should not save the file to storage in such cases and respond with
 HTTP 409 along with LibreOffice Online specific status code:
 
     HTTP 409 with JSON:
