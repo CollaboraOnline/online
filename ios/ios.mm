@@ -31,15 +31,10 @@ extern unsigned char *lo_ios_app_get_cgcontext_for_buffer(unsigned char *buffer,
 {
     assert(cgc == nullptr);
 
-    cgc = CGBitmapContextCreate(buffer, width, height, 8, width*4, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaNoneSkipFirst);
+    cgc = CGBitmapContextCreate(buffer, width, height, 8, width*4, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaNoneSkipFirst | kCGImageByteOrder32Little);
 
-#if 0
-    // Do we need to turn the coordinate system upside down, or not? Unclear yet whether this is
-    // taken care of in LO core or not. Anyway, with or without this, I still at the moment get no
-    // contents rendered in the tiles.
     CGContextTranslateCTM(cgc, 0, height);
     CGContextScaleCTM(cgc, 1, -1);
-#endif
 
     return (unsigned char*)cgc;
 }
