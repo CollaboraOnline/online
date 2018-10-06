@@ -84,9 +84,15 @@ L.Map.Drag = L.Handler.extend({
 
 	_onPreDrag: function () {
 		var org = this._map.getPixelOrigin();
+		var pos = this._map._getMapPanePos();
 		var size = this._map.getLayerMaxBounds().getSize().subtract(this._map.getSize());
-		this._draggable._newPos.x = Math.max(Math.min(org.x, this._draggable._newPos.x), org.x - size.x);
-		this._draggable._newPos.y = Math.max(Math.min(org.y, this._draggable._newPos.y), org.y - size.y);
+		if (this._draggable._newPos.x !== pos.x) {
+			this._draggable._newPos.x = Math.max(Math.min(org.x, this._draggable._newPos.x), org.x - Math.max(size.x, 0));
+		}
+
+		if (this._draggable._newPos.y !== pos.y) {
+			this._draggable._newPos.y = Math.max(Math.min(org.y, this._draggable._newPos.y), org.y - Math.max(size.y, 0));
+		}
 	},
 
 	_onDragEnd: function (e) {
