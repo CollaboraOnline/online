@@ -1523,12 +1523,14 @@ L.TileLayer = L.GridLayer.extend({
 	_onZoomStart: function () {
 		this._isZooming = true;
 		this._onUpdateCursor();
+		this.updateAllViewCursors();
 	},
 
 
 	_onZoomEnd: function () {
 		this._isZooming = false;
 		this._onUpdateCursor();
+		this.updateAllViewCursors();
 	},
 
 	_updateCursorPos: function () {
@@ -1604,8 +1606,11 @@ L.TileLayer = L.GridLayer.extend({
 		var viewCursorVisible = this._viewCursors[viewId].visible;
 		var viewPart = this._viewCursors[viewId].part;
 
-		if (!this._map.isViewReadOnly(viewId) && viewCursorVisible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds) &&
-		   (this._docType === 'text' || this._selectedPart === viewPart)) {
+		if (!this._map.isViewReadOnly(viewId) &&
+		    viewCursorVisible &&
+		    !this._isZooming &&
+		    !this._isEmptyRectangle(this._viewCursors[viewId].bounds) &&
+		    (this._docType === 'text' || this._selectedPart === viewPart)) {
 			if (!viewCursorMarker) {
 				var viewCursorOptions = {
 					color: L.LOUtil.rgbToHex(this._map.getViewColor(viewId)),
@@ -1626,6 +1631,12 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (viewCursorMarker) {
 			this._viewLayerGroup.removeLayer(viewCursorMarker);
+		}
+	},
+
+	updateAllViewCursors : function() {
+		for (var key in this._viewCursors) {
+			this._onUpdateViewCursor(key);
 		}
 	},
 
