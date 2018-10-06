@@ -89,8 +89,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Cursor overlay is visible or hidden (for blinking).
 		this._isCursorOverlayVisible = false;
-		// Cursor overlay visibility flag to store last state during zooming
-		this._oldCursorOverlayVisibility = false;
+		// Do we have focus - ie. should we render a cursor
+		this._isFocused = true;
+		// Are we zooming currently ? - if so, no cursor.
+		this._isZooming = false;
 		// Cursor is visible or hidden (e.g. for graphic selection).
 		this._isCursorVisible = true;
 		// Original rectangle graphic selection in twips
@@ -757,7 +759,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursor = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
-		this._visibleCursorOnLostFocus = this._visibleCursor;
+                this._visibleCursorOnLostFocus = this._visibleCursor;
 		this._isCursorOverlayVisible = true;
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
 			this._map.fire('setFollowOff');
@@ -1525,14 +1527,13 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onZoomStart: function () {
-		this._oldCursorOverlayVisibility = this._isCursorOverlayVisible;
-		this._isCursorOverlayVisible = false;
+		this._isZooming = true;
 		this._onUpdateCursor();
 	},
 
 
 	_onZoomEnd: function () {
-		this._isCursorOverlayVisible = this._oldCursorOverlayVisibility;
+		this._isZooming = false;
 		this._onUpdateCursor();
 	},
 
@@ -1583,8 +1584,11 @@ L.TileLayer = L.GridLayer.extend({
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (/*update*/) {
 		if (this._map._permission === 'edit'
-		&& this._isCursorVisible
+		&& this._isCursorVisible        // only when LOK has told us it is ok
 		&& this._isCursorOverlayVisible
+		&& this._isFocused              // not when document is not focused
+		&& !this._isZooming             // not when zooming
+		&& !this._graphicMarker._bounds // not when sizing / positioning graphics
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
 			this._updateCursorPos();
 		}
@@ -1814,6 +1818,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._graphicMarker);
 			this._graphicMarker.isDragged = false;
 		}
+		_updateCursorAndOverlay();
 	},
 
 	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn) {
