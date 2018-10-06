@@ -22,7 +22,7 @@ L.Map.include({
 		else {
 			return;
 		}
-		if (docLayer._isCursorOverlayVisible) {
+		if (docLayer.isCursorVisible()) {
 			// a click outside the slide to clear any selection
 			this._socket.sendMessage('resetselection');
 		}

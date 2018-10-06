@@ -87,8 +87,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._documentInfo = '';
 		// Position and size of the visible cursor.
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
-		// Cursor overlay is visible or hidden (for blinking).
-		this._isCursorOverlayVisible = false;
 		// Do we have focus - ie. should we render a cursor
 		this._isFocused = true;
 		// Are we zooming currently ? - if so, no cursor.
@@ -545,7 +543,6 @@ L.TileLayer = L.GridLayer.extend({
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
 		this._isCursorVisible = command ? true : false;
-		this._isCursorOverlayVisible = true;
 		this._onUpdateCursor();
 	},
 
@@ -759,8 +756,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursor = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
-                this._visibleCursorOnLostFocus = this._visibleCursor;
-		this._isCursorOverlayVisible = true;
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
 			this._map.fire('setFollowOff');
 		}
@@ -1449,8 +1444,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_clearSelections: function () {
-		// hide the cursor
-		this._isCursorOverlayVisible = false;
+		// hide the cursor if not editable
 		this._onUpdateCursor();
 		// hide the text selection
 		this._selections.clearLayers();
@@ -1575,7 +1569,7 @@ L.TileLayer = L.GridLayer.extend({
 		this.eachView(this._viewCursors, function (item) {
 			var viewCursorMarker = item.marker;
 			if (viewCursorMarker) {
-				viewCursorMarker.setOpacity(this._map.hasLayer(this._cursorMarker) && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
+				viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
 			}
 		}, this, true);
 	},
@@ -1585,16 +1579,14 @@ L.TileLayer = L.GridLayer.extend({
 	_updateCursorAndOverlay: function (/*update*/) {
 		if (this._map._permission === 'edit'
 		&& this._isCursorVisible        // only when LOK has told us it is ok
-		&& this._isCursorOverlayVisible
 		&& this._isFocused              // not when document is not focused
 		&& !this._isZooming             // not when zooming
-		&& !this._graphicMarker._bounds // not when sizing / positioning graphics
+		&& !this.isGraphicVisible()     // not when sizing / positioning graphics
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
 			this._updateCursorPos();
 		}
 		else if (this._cursorMarker) {
 			this._map.removeLayer(this._cursorMarker);
-			this._isCursorOverlayVisible = false;
 		}
 	},
 
@@ -1629,12 +1621,20 @@ L.TileLayer = L.GridLayer.extend({
 			else {
 				viewCursorMarker.setLatLng(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			}
-			viewCursorMarker.setOpacity(this._map.hasLayer(this._cursorMarker) && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
+			viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
 			this._viewLayerGroup.addLayer(viewCursorMarker);
 		}
 		else if (viewCursorMarker) {
 			this._viewLayerGroup.removeLayer(viewCursorMarker);
 		}
+	},
+
+	isCursorVisible: function() {
+		return this._map.hasLayer(this._cursorMarker);
+	},
+
+	isGraphicVisible: function() {
+		return this._graphicMarker && this._map.hasLayer(this._graphicMarker);
 	},
 
 	goToViewCursor: function(viewId) {
@@ -1803,7 +1803,6 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker = L.rectangle(this._graphicSelection, {
 				pointerEvents: 'none',
 				fill: false});
-			this._visibleCursor = this._visibleCursorOnLostFocus = this._graphicMarker._bounds;
 			if (!this._graphicMarker) {
 				this._map.fire('error', {msg: 'Graphic marker initialization', cmd: 'marker', kind: 'failed', id: 1});
 				return;
@@ -1818,7 +1817,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._graphicMarker);
 			this._graphicMarker.isDragged = false;
 		}
-		_updateCursorAndOverlay();
+		this._updateCursorAndOverlay();
 	},
 
 	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn) {
