@@ -53,6 +53,7 @@
 		BE8D85D4214055F3009F1860 /* fundamentalrc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C6214055F3009F1860 /* fundamentalrc */; };
 		BE8D85D5214055F3009F1860 /* unorc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C7214055F3009F1860 /* unorc */; };
 		BE8D85D6214055F3009F1860 /* rc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C8214055F3009F1860 /* rc */; };
+		BE93D41F216B93D8007A39F4 /* discovery.xml in Resources */ = {isa = PBXBuildFile; fileRef = BE93D41E216B93D8007A39F4 /* discovery.xml */; };
 		BEA2835621467FDD00848631 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835521467FDD00848631 /* Kit.cpp */; };
 		BEA283582146945500848631 /* ChildSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA283572146945500848631 /* ChildSession.cpp */; };
 		BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2835921470A1C00848631 /* WebKit.framework */; };
@@ -116,6 +117,7 @@
 		BE8D85C6214055F3009F1860 /* fundamentalrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fundamentalrc; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/fundamentalrc"; sourceTree = "<group>"; };
 		BE8D85C7214055F3009F1860 /* unorc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unorc; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/unorc"; sourceTree = "<group>"; };
 		BE8D85C8214055F3009F1860 /* rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rc; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/rc"; sourceTree = "<group>"; };
+		BE93D41E216B93D8007A39F4 /* discovery.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = discovery.xml; path = ../../../discovery.xml; sourceTree = "<group>"; };
 		BEA20D5721663BB60032F67B /* salgdiutils.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdiutils.cxx; path = "$(LOSRCDIR)/vcl/quartz/salgdiutils.cxx"; sourceTree = "<group>"; };
 		BEA20D5821663BB70032F67B /* ctfonts.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ctfonts.cxx; path = "$(LOSRCDIR)/vcl/quartz/ctfonts.cxx"; sourceTree = "<group>"; };
 		BEA20D5921663BB70032F67B /* utils.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = utils.cxx; path = "$(LOSRCDIR)/vcl/quartz/utils.cxx"; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				BE00F89C21396585001CE2D4 /* loading.html */,
 				BE00F89D21396585001CE2D4 /* loleaflet-help.html */,
 				BE00F89621396585001CE2D4 /* loleaflet.html */,
+				BE93D41E216B93D8007A39F4 /* discovery.xml */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -584,6 +587,7 @@
 				BE8D85CF214055F3009F1860 /* udkapi.rdb in Resources */,
 				BE8D85D5214055F3009F1860 /* unorc in Resources */,
 				BE8D85D1214055F3009F1860 /* services.rdb in Resources */,
+				BE93D41F216B93D8007A39F4 /* discovery.xml in Resources */,
 				BE00F8A021396585001CE2D4 /* loleaflet.html in Resources */,
 				BE8D85CA214055F3009F1860 /* offapi.rdb in Resources */,
 				BE8D773A2136762600AC58EA /* Assets.xcassets in Resources */,

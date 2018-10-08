@@ -2554,10 +2554,15 @@ private:
         const std::string urlsrc = "urlsrc";
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
-                                   + std::string("%SERVER_HOST%")
-                                   + LOOLWSD::ServiceRoot
-                                   + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
+        const std::string uriValue =
+#if ENABLE_SSL
+            ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
+#else
+            "http://"
+#endif
+            + std::string("%SERVER_HOST%")
+            + LOOLWSD::ServiceRoot
+            + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;
@@ -2926,9 +2931,9 @@ int LOOLWSD::innerMain()
 
     if (ClientPortNumber == MasterPortNumber)
         throw IncompatibleOptionsException("port");
+#endif
 
     ClientRequestDispatcher::InitStaticFileContentCache();
-#endif
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
