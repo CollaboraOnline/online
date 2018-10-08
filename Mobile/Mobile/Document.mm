@@ -38,6 +38,7 @@
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[NSString stringWithUTF8String:uri.c_str()]],
+                               [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
                                [NSURLQueryItem queryItemWithName:@"debug" value:@"true"]];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];
     [self.viewController.webView loadRequest:request];
