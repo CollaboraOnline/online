@@ -86,9 +86,8 @@
 		BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentBroker.cpp; sourceTree = "<group>"; };
 		BE5EB5D521401E0F00E0826C /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
 		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
-		BE5EB5DB2140480B00E0826C /* icudt62l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt62l.dat; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/icudt62l.dat"; sourceTree = "<group>"; };
+		BE5EB5DB2140480B00E0826C /* icudt62l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt62l.dat; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/icudt62l.dat"; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
-		BE6362C02153A7B500F4237E /* init.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = init.cxx; path = "$(LOSRCDIR)/desktop/source/lib/init.cxx"; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8D772A2136762500AC58EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -104,106 +103,46 @@
 		BE8D773C2136762600AC58EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE8D773E2136762600AC58EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE8D773F2136762600AC58EA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		BE8D85BB214055F2009F1860 /* filter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = filter; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/filter"; sourceTree = "<group>"; };
-		BE8D85BC214055F2009F1860 /* offapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = offapi.rdb; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/offapi.rdb"; sourceTree = "<group>"; };
-		BE8D85BD214055F2009F1860 /* share */ = {isa = PBXFileReference; lastKnownFileType = folder; name = share; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/share"; sourceTree = "<group>"; };
-		BE8D85BE214055F2009F1860 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/config"; sourceTree = "<group>"; };
-		BE8D85BF214055F2009F1860 /* registry */ = {isa = PBXFileReference; lastKnownFileType = folder; name = registry; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/registry"; sourceTree = "<group>"; };
-		BE8D85C0214055F2009F1860 /* oovbaapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = oovbaapi.rdb; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/oovbaapi.rdb"; sourceTree = "<group>"; };
-		BE8D85C1214055F2009F1860 /* udkapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = udkapi.rdb; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/udkapi.rdb"; sourceTree = "<group>"; };
-		BE8D85C2214055F2009F1860 /* services */ = {isa = PBXFileReference; lastKnownFileType = folder; name = services; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/services"; sourceTree = "<group>"; };
-		BE8D85C3214055F2009F1860 /* services.rdb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = services.rdb; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/services.rdb"; sourceTree = "<group>"; };
-		BE8D85C4214055F3009F1860 /* program */ = {isa = PBXFileReference; lastKnownFileType = folder; name = program; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/program"; sourceTree = "<group>"; };
-		BE8D85C6214055F3009F1860 /* fundamentalrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fundamentalrc; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/fundamentalrc"; sourceTree = "<group>"; };
-		BE8D85C7214055F3009F1860 /* unorc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unorc; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/unorc"; sourceTree = "<group>"; };
-		BE8D85C8214055F3009F1860 /* rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rc; path = "$(LOBUILDDIR)/workdir/CustomTarget/ios/resources/rc"; sourceTree = "<group>"; };
+		BE8D85BB214055F2009F1860 /* filter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = filter; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/filter"; sourceTree = "<group>"; };
+		BE8D85BC214055F2009F1860 /* offapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = offapi.rdb; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/offapi.rdb"; sourceTree = "<group>"; };
+		BE8D85BD214055F2009F1860 /* share */ = {isa = PBXFileReference; lastKnownFileType = folder; name = share; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/share"; sourceTree = "<group>"; };
+		BE8D85BE214055F2009F1860 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/config"; sourceTree = "<group>"; };
+		BE8D85BF214055F2009F1860 /* registry */ = {isa = PBXFileReference; lastKnownFileType = folder; name = registry; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/registry"; sourceTree = "<group>"; };
+		BE8D85C0214055F2009F1860 /* oovbaapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = oovbaapi.rdb; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/oovbaapi.rdb"; sourceTree = "<group>"; };
+		BE8D85C1214055F2009F1860 /* udkapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = udkapi.rdb; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/udkapi.rdb"; sourceTree = "<group>"; };
+		BE8D85C2214055F2009F1860 /* services */ = {isa = PBXFileReference; lastKnownFileType = folder; name = services; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/services"; sourceTree = "<group>"; };
+		BE8D85C3214055F2009F1860 /* services.rdb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = services.rdb; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/services.rdb"; sourceTree = "<group>"; };
+		BE8D85C4214055F3009F1860 /* program */ = {isa = PBXFileReference; lastKnownFileType = folder; name = program; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/program"; sourceTree = "<group>"; };
+		BE8D85C6214055F3009F1860 /* fundamentalrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fundamentalrc; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/fundamentalrc"; sourceTree = "<group>"; };
+		BE8D85C7214055F3009F1860 /* unorc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unorc; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/unorc"; sourceTree = "<group>"; };
+		BE8D85C8214055F3009F1860 /* rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rc; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/rc"; sourceTree = "<group>"; };
 		BE93D41E216B93D8007A39F4 /* discovery.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = discovery.xml; path = ../../../discovery.xml; sourceTree = "<group>"; };
-		BEA20D5721663BB60032F67B /* salgdiutils.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdiutils.cxx; path = "$(LOSRCDIR)/vcl/quartz/salgdiutils.cxx"; sourceTree = "<group>"; };
-		BEA20D5821663BB70032F67B /* ctfonts.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ctfonts.cxx; path = "$(LOSRCDIR)/vcl/quartz/ctfonts.cxx"; sourceTree = "<group>"; };
-		BEA20D5921663BB70032F67B /* utils.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = utils.cxx; path = "$(LOSRCDIR)/vcl/quartz/utils.cxx"; sourceTree = "<group>"; };
-		BEA20D5A21663BB70032F67B /* salvd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salvd.cxx; path = "$(LOSRCDIR)/vcl/quartz/salvd.cxx"; sourceTree = "<group>"; };
-		BEA20D5B21663BB70032F67B /* salgdicommon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdicommon.cxx; path = "$(LOSRCDIR)/vcl/quartz/salgdicommon.cxx"; sourceTree = "<group>"; };
-		BEA20D5C21663BB70032F67B /* salbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salbmp.cxx; path = "$(LOSRCDIR)/vcl/quartz/salbmp.cxx"; sourceTree = "<group>"; };
-		BEA20D5D21663BB70032F67B /* salgdi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdi.cxx; path = "$(LOSRCDIR)/vcl/quartz/salgdi.cxx"; sourceTree = "<group>"; };
-		BEA20D6221663C080032F67B /* iosinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iosinst.cxx; path = "$(LOSRCDIR)/vcl/ios/iosinst.cxx"; sourceTree = "<group>"; };
-		BEA20D6321663C080032F67B /* dummies.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dummies.cxx; path = "$(LOSRCDIR)/vcl/ios/dummies.cxx"; sourceTree = "<group>"; };
-		BEA20D72216663DA0032F67B /* builder.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = builder.cxx; path = "$(LOSRCDIR)/vcl/source/window/builder.cxx"; sourceTree = "<group>"; };
-		BEA20D73216663DA0032F67B /* splitwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = splitwin.cxx; path = "$(LOSRCDIR)/vcl/source/window/splitwin.cxx"; sourceTree = "<group>"; };
-		BEA20D74216663DA0032F67B /* printdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printdlg.cxx; path = "$(LOSRCDIR)/vcl/source/window/printdlg.cxx"; sourceTree = "<group>"; };
-		BEA20D75216663DA0032F67B /* keyevent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = keyevent.cxx; path = "$(LOSRCDIR)/vcl/source/window/keyevent.cxx"; sourceTree = "<group>"; };
-		BEA20D76216663DA0032F67B /* menuwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menuwindow.cxx; path = "$(LOSRCDIR)/vcl/source/window/menuwindow.cxx"; sourceTree = "<group>"; };
-		BEA20D77216663DA0032F67B /* msgbox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = msgbox.cxx; path = "$(LOSRCDIR)/vcl/source/window/msgbox.cxx"; sourceTree = "<group>"; };
-		BEA20D78216663DA0032F67B /* menuwindow.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = menuwindow.hxx; path = "$(LOSRCDIR)/vcl/source/window/menuwindow.hxx"; sourceTree = "<group>"; };
-		BEA20D79216663DA0032F67B /* clipping.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clipping.cxx; path = "$(LOSRCDIR)/vcl/source/window/clipping.cxx"; sourceTree = "<group>"; };
-		BEA20D7A216663DA0032F67B /* seleng.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = seleng.cxx; path = "$(LOSRCDIR)/vcl/source/window/seleng.cxx"; sourceTree = "<group>"; };
-		BEA20D7B216663DA0032F67B /* event.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = event.cxx; path = "$(LOSRCDIR)/vcl/source/window/event.cxx"; sourceTree = "<group>"; };
-		BEA20D7C216663DA0032F67B /* debugevent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = debugevent.cxx; path = "$(LOSRCDIR)/vcl/source/window/debugevent.cxx"; sourceTree = "<group>"; };
-		BEA20D7D216663DB0032F67B /* stacking.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stacking.cxx; path = "$(LOSRCDIR)/vcl/source/window/stacking.cxx"; sourceTree = "<group>"; };
-		BEA20D7E216663DB0032F67B /* taskpanelist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = taskpanelist.cxx; path = "$(LOSRCDIR)/vcl/source/window/taskpanelist.cxx"; sourceTree = "<group>"; };
-		BEA20D7F216663DB0032F67B /* introwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = introwin.cxx; path = "$(LOSRCDIR)/vcl/source/window/introwin.cxx"; sourceTree = "<group>"; };
-		BEA20D80216663DB0032F67B /* accel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accel.cxx; path = "$(LOSRCDIR)/vcl/source/window/accel.cxx"; sourceTree = "<group>"; };
-		BEA20D81216663DB0032F67B /* debug.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = debug.cxx; path = "$(LOSRCDIR)/vcl/source/window/debug.cxx"; sourceTree = "<group>"; };
-		BEA20D82216663DB0032F67B /* floatwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = floatwin.cxx; path = "$(LOSRCDIR)/vcl/source/window/floatwin.cxx"; sourceTree = "<group>"; };
-		BEA20D83216663DB0032F67B /* dialog.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dialog.cxx; path = "$(LOSRCDIR)/vcl/source/window/dialog.cxx"; sourceTree = "<group>"; };
-		BEA20D84216663DB0032F67B /* tabpage.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabpage.cxx; path = "$(LOSRCDIR)/vcl/source/window/tabpage.cxx"; sourceTree = "<group>"; };
-		BEA20D85216663DB0032F67B /* dndlistenercontainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dndlistenercontainer.cxx; path = "$(LOSRCDIR)/vcl/source/window/dndlistenercontainer.cxx"; sourceTree = "<group>"; };
-		BEA20D86216663DB0032F67B /* syschild.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = syschild.cxx; path = "$(LOSRCDIR)/vcl/source/window/syschild.cxx"; sourceTree = "<group>"; };
-		BEA20D87216663DB0032F67B /* dockwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dockwin.cxx; path = "$(LOSRCDIR)/vcl/source/window/dockwin.cxx"; sourceTree = "<group>"; };
-		BEA20D88216663DB0032F67B /* globalization.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = globalization.cxx; path = "$(LOSRCDIR)/vcl/source/window/globalization.cxx"; sourceTree = "<group>"; };
-		BEA20D89216663DB0032F67B /* mnemonic.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mnemonic.cxx; path = "$(LOSRCDIR)/vcl/source/window/mnemonic.cxx"; sourceTree = "<group>"; };
-		BEA20D8A216663DB0032F67B /* menuitemlist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menuitemlist.cxx; path = "$(LOSRCDIR)/vcl/source/window/menuitemlist.cxx"; sourceTree = "<group>"; };
-		BEA20D8B216663DB0032F67B /* tabdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabdlg.cxx; path = "$(LOSRCDIR)/vcl/source/window/tabdlg.cxx"; sourceTree = "<group>"; };
-		BEA20D8C216663DB0032F67B /* wrkwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wrkwin.cxx; path = "$(LOSRCDIR)/vcl/source/window/wrkwin.cxx"; sourceTree = "<group>"; };
-		BEA20D8D216663DB0032F67B /* menuitemlist.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = menuitemlist.hxx; path = "$(LOSRCDIR)/vcl/source/window/menuitemlist.hxx"; sourceTree = "<group>"; };
-		BEA20D8E216663DB0032F67B /* paint.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = paint.cxx; path = "$(LOSRCDIR)/vcl/source/window/paint.cxx"; sourceTree = "<group>"; };
-		BEA20D8F216663DB0032F67B /* commandevent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = commandevent.cxx; path = "$(LOSRCDIR)/vcl/source/window/commandevent.cxx"; sourceTree = "<group>"; };
-		BEA20D90216663DB0032F67B /* legacyaccessibility.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = legacyaccessibility.cxx; path = "$(LOSRCDIR)/vcl/source/window/legacyaccessibility.cxx"; sourceTree = "<group>"; };
-		BEA20D91216663DB0032F67B /* window2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = window2.cxx; path = "$(LOSRCDIR)/vcl/source/window/window2.cxx"; sourceTree = "<group>"; };
-		BEA20D92216663DB0032F67B /* menufloatingwindow.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = menufloatingwindow.hxx; path = "$(LOSRCDIR)/vcl/source/window/menufloatingwindow.hxx"; sourceTree = "<group>"; };
-		BEA20D93216663DB0032F67B /* split.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = split.cxx; path = "$(LOSRCDIR)/vcl/source/window/split.cxx"; sourceTree = "<group>"; };
-		BEA20D94216663DB0032F67B /* window.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = window.cxx; path = "$(LOSRCDIR)/vcl/source/window/window.cxx"; sourceTree = "<group>"; };
-		BEA20D95216663DB0032F67B /* menubarwindow.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = menubarwindow.hxx; path = "$(LOSRCDIR)/vcl/source/window/menubarwindow.hxx"; sourceTree = "<group>"; };
-		BEA20D96216663DB0032F67B /* accmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accmgr.cxx; path = "$(LOSRCDIR)/vcl/source/window/accmgr.cxx"; sourceTree = "<group>"; };
-		BEA20D97216663DB0032F67B /* abstdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = abstdlg.cxx; path = "$(LOSRCDIR)/vcl/source/window/abstdlg.cxx"; sourceTree = "<group>"; };
-		BEA20D98216663DC0032F67B /* keycod.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = keycod.cxx; path = "$(LOSRCDIR)/vcl/source/window/keycod.cxx"; sourceTree = "<group>"; };
-		BEA20D99216663DC0032F67B /* layout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = layout.cxx; path = "$(LOSRCDIR)/vcl/source/window/layout.cxx"; sourceTree = "<group>"; };
-		BEA20D9A216663DC0032F67B /* toolbox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbox.cxx; path = "$(LOSRCDIR)/vcl/source/window/toolbox.cxx"; sourceTree = "<group>"; };
-		BEA20D9B216663DC0032F67B /* dockmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dockmgr.cxx; path = "$(LOSRCDIR)/vcl/source/window/dockmgr.cxx"; sourceTree = "<group>"; };
-		BEA20D9C216663DC0032F67B /* syswin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = syswin.cxx; path = "$(LOSRCDIR)/vcl/source/window/syswin.cxx"; sourceTree = "<group>"; };
-		BEA20D9D216663DC0032F67B /* dlgctrl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = dlgctrl.hxx; path = "$(LOSRCDIR)/vcl/source/window/dlgctrl.hxx"; sourceTree = "<group>"; };
-		BEA20D9E216663DC0032F67B /* menufloatingwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menufloatingwindow.cxx; path = "$(LOSRCDIR)/vcl/source/window/menufloatingwindow.cxx"; sourceTree = "<group>"; };
-		BEA20D9F216663DC0032F67B /* window3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = window3.cxx; path = "$(LOSRCDIR)/vcl/source/window/window3.cxx"; sourceTree = "<group>"; };
-		BEA20DA0216663DC0032F67B /* cursor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cursor.cxx; path = "$(LOSRCDIR)/vcl/source/window/cursor.cxx"; sourceTree = "<group>"; };
-		BEA20DA1216663DC0032F67B /* toolbox2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbox2.cxx; path = "$(LOSRCDIR)/vcl/source/window/toolbox2.cxx"; sourceTree = "<group>"; };
-		BEA20DA2216663DC0032F67B /* winproc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = winproc.cxx; path = "$(LOSRCDIR)/vcl/source/window/winproc.cxx"; sourceTree = "<group>"; };
-		BEA20DA3216663DC0032F67B /* dndeventdispatcher.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dndeventdispatcher.cxx; path = "$(LOSRCDIR)/vcl/source/window/dndeventdispatcher.cxx"; sourceTree = "<group>"; };
-		BEA20DA4216663DC0032F67B /* EnumContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EnumContext.cxx; path = "$(LOSRCDIR)/vcl/source/window/EnumContext.cxx"; sourceTree = "<group>"; };
-		BEA20DA5216663DC0032F67B /* decoview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = decoview.cxx; path = "$(LOSRCDIR)/vcl/source/window/decoview.cxx"; sourceTree = "<group>"; };
-		BEA20DA6216663DC0032F67B /* dlgctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dlgctrl.cxx; path = "$(LOSRCDIR)/vcl/source/window/dlgctrl.cxx"; sourceTree = "<group>"; };
-		BEA20DA7216663DC0032F67B /* scrwnd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scrwnd.cxx; path = "$(LOSRCDIR)/vcl/source/window/scrwnd.cxx"; sourceTree = "<group>"; };
-		BEA20DA8216663DC0032F67B /* mnemonicengine.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mnemonicengine.cxx; path = "$(LOSRCDIR)/vcl/source/window/mnemonicengine.cxx"; sourceTree = "<group>"; };
-		BEA20DA9216663DC0032F67B /* menu.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menu.cxx; path = "$(LOSRCDIR)/vcl/source/window/menu.cxx"; sourceTree = "<group>"; };
-		BEA20DAA216663DC0032F67B /* menubarwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menubarwindow.cxx; path = "$(LOSRCDIR)/vcl/source/window/menubarwindow.cxx"; sourceTree = "<group>"; };
-		BEA20DAB216663DD0032F67B /* mouse.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mouse.cxx; path = "$(LOSRCDIR)/vcl/source/window/mouse.cxx"; sourceTree = "<group>"; };
-		BEA20DAC216663DD0032F67B /* brdwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = brdwin.cxx; path = "$(LOSRCDIR)/vcl/source/window/brdwin.cxx"; sourceTree = "<group>"; };
-		BEA20DAD216663DD0032F67B /* status.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = status.cxx; path = "$(LOSRCDIR)/vcl/source/window/status.cxx"; sourceTree = "<group>"; };
-		BEA20DAE216663DD0032F67B /* dockingarea.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dockingarea.cxx; path = "$(LOSRCDIR)/vcl/source/window/dockingarea.cxx"; sourceTree = "<group>"; };
-		BEA20DAF216663DD0032F67B /* popupmenuwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = popupmenuwindow.cxx; path = "$(LOSRCDIR)/vcl/source/window/popupmenuwindow.cxx"; sourceTree = "<group>"; };
-		BEA20DB0216663DD0032F67B /* settings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = settings.cxx; path = "$(LOSRCDIR)/vcl/source/window/settings.cxx"; sourceTree = "<group>"; };
-		BEA20DB1216663DD0032F67B /* accessibility.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessibility.cxx; path = "$(LOSRCDIR)/vcl/source/window/accessibility.cxx"; sourceTree = "<group>"; };
-		BEA20DB2216663DD0032F67B /* errinf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = errinf.cxx; path = "$(LOSRCDIR)/vcl/source/window/errinf.cxx"; sourceTree = "<group>"; };
-		BEA20DB421668F550032F67B /* svpvd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpvd.cxx; path = "$(LOSRCDIR)/vcl/headless/svpvd.cxx"; sourceTree = "<group>"; };
-		BEA20DB521668F550032F67B /* svpframe.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpframe.cxx; path = "$(LOSRCDIR)/vcl/headless/svpframe.cxx"; sourceTree = "<group>"; };
-		BEA20DB621668F550032F67B /* svpbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpbmp.cxx; path = "$(LOSRCDIR)/vcl/headless/svpbmp.cxx"; sourceTree = "<group>"; };
-		BEA20DB721668F550032F67B /* svpcairotextrender.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpcairotextrender.cxx; path = "$(LOSRCDIR)/vcl/headless/svpcairotextrender.cxx"; sourceTree = "<group>"; };
-		BEA20DB821668F550032F67B /* svpgdi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpgdi.cxx; path = "$(LOSRCDIR)/vcl/headless/svpgdi.cxx"; sourceTree = "<group>"; };
-		BEA20DB921668F550032F67B /* svpglyphcache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpglyphcache.cxx; path = "$(LOSRCDIR)/vcl/headless/svpglyphcache.cxx"; sourceTree = "<group>"; };
-		BEA20DBA21668F550032F67B /* svpinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpinst.cxx; path = "$(LOSRCDIR)/vcl/headless/svpinst.cxx"; sourceTree = "<group>"; };
-		BEA20DBB21668F550032F67B /* svptext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svptext.cxx; path = "$(LOSRCDIR)/vcl/headless/svptext.cxx"; sourceTree = "<group>"; };
-		BEA20DBC21668F550032F67B /* headlessinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = headlessinst.cxx; path = "$(LOSRCDIR)/vcl/headless/headlessinst.cxx"; sourceTree = "<group>"; };
-		BEA20DBD21668F550032F67B /* svpdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpdata.cxx; path = "$(LOSRCDIR)/vcl/headless/svpdata.cxx"; sourceTree = "<group>"; };
-		BEA20DBE21668F560032F67B /* svpdummies.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpdummies.cxx; path = "$(LOSRCDIR)/vcl/headless/svpdummies.cxx"; sourceTree = "<group>"; };
-		BEA20DBF21668F560032F67B /* svpprn.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpprn.cxx; path = "$(LOSRCDIR)/vcl/headless/svpprn.cxx"; sourceTree = "<group>"; };
+		BE93D422216CAA7A007A39F4 /* unohelp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unohelp.cxx; path = "../../ios-device/vcl/source/app/unohelp.cxx"; sourceTree = "<group>"; };
+		BE93D423216CAA7A007A39F4 /* stdtext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stdtext.cxx; path = "../../ios-device/vcl/source/app/stdtext.cxx"; sourceTree = "<group>"; };
+		BE93D424216CAA7A007A39F4 /* session.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = session.cxx; path = "../..//ios-device/vcl/source/app/session.cxx"; sourceTree = "<group>"; };
+		BE93D425216CAA7A007A39F4 /* svmain.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svmain.cxx; path = "../../ios-device/vcl/source/app/svmain.cxx"; sourceTree = "<group>"; };
+		BE93D426216CAA7A007A39F4 /* help.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = help.cxx; path = "../../ios-device/vcl/source/app/help.cxx"; sourceTree = "<group>"; };
+		BE93D427216CAA7A007A39F4 /* i18nhelp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = i18nhelp.cxx; path = "../../ios-device/vcl/source/app/i18nhelp.cxx"; sourceTree = "<group>"; };
+		BE93D428216CAA7A007A39F4 /* vclevent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclevent.cxx; path = "../../ios-device/vcl/source/app/vclevent.cxx"; sourceTree = "<group>"; };
+		BE93D429216CAA7A007A39F4 /* brand.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = brand.cxx; path = "../../ios-device/vcl/source/app/brand.cxx"; sourceTree = "<group>"; };
+		BE93D42A216CAA7A007A39F4 /* IconThemeInfo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IconThemeInfo.cxx; path = "../../ios-device/vcl/source/app/IconThemeInfo.cxx"; sourceTree = "<group>"; };
+		BE93D42B216CAA7A007A39F4 /* salusereventlist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salusereventlist.cxx; path = "../../ios-device/vcl/source/app/salusereventlist.cxx"; sourceTree = "<group>"; };
+		BE93D42C216CAA7A007A39F4 /* salplug.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salplug.cxx; path = "../../ios-device/vcl/source/app/salplug.cxx"; sourceTree = "<group>"; };
+		BE93D42D216CAA7A007A39F4 /* unohelp2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unohelp2.cxx; path = "../../ios-device/vcl/source/app/unohelp2.cxx"; sourceTree = "<group>"; };
+		BE93D42E216CAA7A007A39F4 /* IconThemeSelector.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IconThemeSelector.cxx; path = "../../ios-device/vcl/source/app/IconThemeSelector.cxx"; sourceTree = "<group>"; };
+		BE93D42F216CAA7A007A39F4 /* settings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = settings.cxx; path = "../../ios-device/vcl/source/app/settings.cxx"; sourceTree = "<group>"; };
+		BE93D430216CAA7A007A39F4 /* svapp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svapp.cxx; path = "../../ios-device/vcl/source/app/svapp.cxx"; sourceTree = "<group>"; };
+		BE93D431216CAA7A007A39F4 /* customweld.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = customweld.cxx; path = "../../ios-device/vcl/source/app/customweld.cxx"; sourceTree = "<group>"; };
+		BE93D432216CAA7A007A39F4 /* ITiledRenderable.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ITiledRenderable.cxx; path = "../../ios-device/vcl/source/app/ITiledRenderable.cxx"; sourceTree = "<group>"; };
+		BE93D433216CAA7A007A39F4 /* timer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = timer.cxx; path = "../../ios-device/vcl/source/app/timer.cxx"; sourceTree = "<group>"; };
+		BE93D434216CAA7A007A39F4 /* sound.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sound.cxx; path = "../../ios-device/vcl/source/app/sound.cxx"; sourceTree = "<group>"; };
+		BE93D435216CAA7A007A39F4 /* dbggui.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbggui.cxx; path = "../../ios-device/vcl/source/app/dbggui.cxx"; sourceTree = "<group>"; };
+		BE93D436216CAA7A007A39F4 /* idle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = idle.cxx; path = "../../ios-device/vcl/source/app/idle.cxx"; sourceTree = "<group>"; };
+		BE93D437216CAA7A007A39F4 /* scheduler.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scheduler.cxx; path = "../../ios-device/vcl/source/app/scheduler.cxx"; sourceTree = "<group>"; };
+		BE93D438216CAA7A007A39F4 /* dndhelp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dndhelp.cxx; path = "../../ios-device/vcl/source/app/dndhelp.cxx"; sourceTree = "<group>"; };
+		BE93D439216CAA7B007A39F4 /* salvtables.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salvtables.cxx; path = "../../ios-device/vcl/source/app/salvtables.cxx"; sourceTree = "<group>"; };
+		BE93D43A216CAA7B007A39F4 /* IconThemeScanner.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IconThemeScanner.cxx; path = "../../ios-device/vcl/source/app/IconThemeScanner.cxx"; sourceTree = "<group>"; };
+		BE93D43B216CAA7B007A39F4 /* svdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdata.cxx; path = "../../ios-device/vcl/source/app/svdata.cxx"; sourceTree = "<group>"; };
 		BEA2835521467FDD00848631 /* Kit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kit.cpp; sourceTree = "<group>"; };
 		BEA283572146945500848631 /* ChildSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChildSession.cpp; sourceTree = "<group>"; };
 		BEA2835921470A1C00848631 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -314,29 +253,9 @@
 		BE6362BE2153A79200F4237E /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				BE6362BF2153A7A200F4237E /* desktop */,
-				BE6362C32154473C00F4237E /* vcl */,
+				BE93D420216CAA52007A39F4 /* vcl */,
 			);
 			name = Core;
-			sourceTree = "<group>";
-		};
-		BE6362BF2153A7A200F4237E /* desktop */ = {
-			isa = PBXGroup;
-			children = (
-				BE6362C02153A7B500F4237E /* init.cxx */,
-			);
-			name = desktop;
-			sourceTree = "<group>";
-		};
-		BE6362C32154473C00F4237E /* vcl */ = {
-			isa = PBXGroup;
-			children = (
-				BEA20DB321668F3E0032F67B /* headless */,
-				BEA20D5E21663BBD0032F67B /* ios */,
-				BEA20D71216663AD0032F67B /* window */,
-				BEA20D5621663B990032F67B /* quartz */,
-			);
-			name = vcl;
 			sourceTree = "<group>";
 		};
 		BE8D771E2136762500AC58EA = {
@@ -380,118 +299,45 @@
 			path = Mobile;
 			sourceTree = "<group>";
 		};
-		BEA20D5621663B990032F67B /* quartz */ = {
+		BE93D420216CAA52007A39F4 /* vcl */ = {
 			isa = PBXGroup;
 			children = (
-				BEA20D5821663BB70032F67B /* ctfonts.cxx */,
-				BEA20D5C21663BB70032F67B /* salbmp.cxx */,
-				BEA20D5D21663BB70032F67B /* salgdi.cxx */,
-				BEA20D5B21663BB70032F67B /* salgdicommon.cxx */,
-				BEA20D5721663BB60032F67B /* salgdiutils.cxx */,
-				BEA20D5A21663BB70032F67B /* salvd.cxx */,
-				BEA20D5921663BB70032F67B /* utils.cxx */,
+				BE93D421216CAA59007A39F4 /* app */,
 			);
-			name = quartz;
+			name = vcl;
 			sourceTree = "<group>";
 		};
-		BEA20D5E21663BBD0032F67B /* ios */ = {
+		BE93D421216CAA59007A39F4 /* app */ = {
 			isa = PBXGroup;
 			children = (
-				BEA20D6321663C080032F67B /* dummies.cxx */,
-				BEA20D6221663C080032F67B /* iosinst.cxx */,
+				BE93D429216CAA7A007A39F4 /* brand.cxx */,
+				BE93D431216CAA7A007A39F4 /* customweld.cxx */,
+				BE93D435216CAA7A007A39F4 /* dbggui.cxx */,
+				BE93D438216CAA7A007A39F4 /* dndhelp.cxx */,
+				BE93D426216CAA7A007A39F4 /* help.cxx */,
+				BE93D427216CAA7A007A39F4 /* i18nhelp.cxx */,
+				BE93D42A216CAA7A007A39F4 /* IconThemeInfo.cxx */,
+				BE93D43A216CAA7B007A39F4 /* IconThemeScanner.cxx */,
+				BE93D42E216CAA7A007A39F4 /* IconThemeSelector.cxx */,
+				BE93D436216CAA7A007A39F4 /* idle.cxx */,
+				BE93D432216CAA7A007A39F4 /* ITiledRenderable.cxx */,
+				BE93D42C216CAA7A007A39F4 /* salplug.cxx */,
+				BE93D42B216CAA7A007A39F4 /* salusereventlist.cxx */,
+				BE93D439216CAA7B007A39F4 /* salvtables.cxx */,
+				BE93D437216CAA7A007A39F4 /* scheduler.cxx */,
+				BE93D424216CAA7A007A39F4 /* session.cxx */,
+				BE93D42F216CAA7A007A39F4 /* settings.cxx */,
+				BE93D434216CAA7A007A39F4 /* sound.cxx */,
+				BE93D423216CAA7A007A39F4 /* stdtext.cxx */,
+				BE93D430216CAA7A007A39F4 /* svapp.cxx */,
+				BE93D43B216CAA7B007A39F4 /* svdata.cxx */,
+				BE93D425216CAA7A007A39F4 /* svmain.cxx */,
+				BE93D433216CAA7A007A39F4 /* timer.cxx */,
+				BE93D422216CAA7A007A39F4 /* unohelp.cxx */,
+				BE93D42D216CAA7A007A39F4 /* unohelp2.cxx */,
+				BE93D428216CAA7A007A39F4 /* vclevent.cxx */,
 			);
-			name = ios;
-			sourceTree = "<group>";
-		};
-		BEA20D71216663AD0032F67B /* window */ = {
-			isa = PBXGroup;
-			children = (
-				BEA20D97216663DB0032F67B /* abstdlg.cxx */,
-				BEA20D80216663DB0032F67B /* accel.cxx */,
-				BEA20DB1216663DD0032F67B /* accessibility.cxx */,
-				BEA20D96216663DB0032F67B /* accmgr.cxx */,
-				BEA20DAC216663DD0032F67B /* brdwin.cxx */,
-				BEA20D72216663DA0032F67B /* builder.cxx */,
-				BEA20D79216663DA0032F67B /* clipping.cxx */,
-				BEA20D8F216663DB0032F67B /* commandevent.cxx */,
-				BEA20DA0216663DC0032F67B /* cursor.cxx */,
-				BEA20D81216663DB0032F67B /* debug.cxx */,
-				BEA20D7C216663DA0032F67B /* debugevent.cxx */,
-				BEA20DA5216663DC0032F67B /* decoview.cxx */,
-				BEA20D83216663DB0032F67B /* dialog.cxx */,
-				BEA20DA6216663DC0032F67B /* dlgctrl.cxx */,
-				BEA20D9D216663DC0032F67B /* dlgctrl.hxx */,
-				BEA20DA3216663DC0032F67B /* dndeventdispatcher.cxx */,
-				BEA20D85216663DB0032F67B /* dndlistenercontainer.cxx */,
-				BEA20DAE216663DD0032F67B /* dockingarea.cxx */,
-				BEA20D9B216663DC0032F67B /* dockmgr.cxx */,
-				BEA20D87216663DB0032F67B /* dockwin.cxx */,
-				BEA20DA4216663DC0032F67B /* EnumContext.cxx */,
-				BEA20DB2216663DD0032F67B /* errinf.cxx */,
-				BEA20D7B216663DA0032F67B /* event.cxx */,
-				BEA20D82216663DB0032F67B /* floatwin.cxx */,
-				BEA20D88216663DB0032F67B /* globalization.cxx */,
-				BEA20D7F216663DB0032F67B /* introwin.cxx */,
-				BEA20D98216663DC0032F67B /* keycod.cxx */,
-				BEA20D75216663DA0032F67B /* keyevent.cxx */,
-				BEA20D99216663DC0032F67B /* layout.cxx */,
-				BEA20D90216663DB0032F67B /* legacyaccessibility.cxx */,
-				BEA20DA9216663DC0032F67B /* menu.cxx */,
-				BEA20DAA216663DC0032F67B /* menubarwindow.cxx */,
-				BEA20D95216663DB0032F67B /* menubarwindow.hxx */,
-				BEA20D9E216663DC0032F67B /* menufloatingwindow.cxx */,
-				BEA20D92216663DB0032F67B /* menufloatingwindow.hxx */,
-				BEA20D8A216663DB0032F67B /* menuitemlist.cxx */,
-				BEA20D8D216663DB0032F67B /* menuitemlist.hxx */,
-				BEA20D76216663DA0032F67B /* menuwindow.cxx */,
-				BEA20D78216663DA0032F67B /* menuwindow.hxx */,
-				BEA20D89216663DB0032F67B /* mnemonic.cxx */,
-				BEA20DA8216663DC0032F67B /* mnemonicengine.cxx */,
-				BEA20DAB216663DD0032F67B /* mouse.cxx */,
-				BEA20D77216663DA0032F67B /* msgbox.cxx */,
-				BEA20D8E216663DB0032F67B /* paint.cxx */,
-				BEA20DAF216663DD0032F67B /* popupmenuwindow.cxx */,
-				BEA20D74216663DA0032F67B /* printdlg.cxx */,
-				BEA20DA7216663DC0032F67B /* scrwnd.cxx */,
-				BEA20D7A216663DA0032F67B /* seleng.cxx */,
-				BEA20DB0216663DD0032F67B /* settings.cxx */,
-				BEA20D93216663DB0032F67B /* split.cxx */,
-				BEA20D73216663DA0032F67B /* splitwin.cxx */,
-				BEA20D7D216663DB0032F67B /* stacking.cxx */,
-				BEA20DAD216663DD0032F67B /* status.cxx */,
-				BEA20D86216663DB0032F67B /* syschild.cxx */,
-				BEA20D9C216663DC0032F67B /* syswin.cxx */,
-				BEA20D8B216663DB0032F67B /* tabdlg.cxx */,
-				BEA20D84216663DB0032F67B /* tabpage.cxx */,
-				BEA20D7E216663DB0032F67B /* taskpanelist.cxx */,
-				BEA20D9A216663DC0032F67B /* toolbox.cxx */,
-				BEA20DA1216663DC0032F67B /* toolbox2.cxx */,
-				BEA20D94216663DB0032F67B /* window.cxx */,
-				BEA20D91216663DB0032F67B /* window2.cxx */,
-				BEA20D9F216663DC0032F67B /* window3.cxx */,
-				BEA20DA2216663DC0032F67B /* winproc.cxx */,
-				BEA20D8C216663DB0032F67B /* wrkwin.cxx */,
-			);
-			name = window;
-			sourceTree = "<group>";
-		};
-		BEA20DB321668F3E0032F67B /* headless */ = {
-			isa = PBXGroup;
-			children = (
-				BEA20DBC21668F550032F67B /* headlessinst.cxx */,
-				BEA20DB621668F550032F67B /* svpbmp.cxx */,
-				BEA20DB721668F550032F67B /* svpcairotextrender.cxx */,
-				BEA20DBD21668F550032F67B /* svpdata.cxx */,
-				BEA20DBE21668F560032F67B /* svpdummies.cxx */,
-				BEA20DB521668F550032F67B /* svpframe.cxx */,
-				BEA20DB821668F550032F67B /* svpgdi.cxx */,
-				BEA20DB921668F550032F67B /* svpglyphcache.cxx */,
-				BEA20DBA21668F550032F67B /* svpinst.cxx */,
-				BEA20DBF21668F560032F67B /* svpprn.cxx */,
-				BEA20DBB21668F550032F67B /* svptext.cxx */,
-				BEA20DB421668F550032F67B /* svpvd.cxx */,
-			);
-			name = headless;
+			name = app;
 			sourceTree = "<group>";
 		};
 		BEA2835421467F8200848631 /* kit */ = {
