@@ -1093,12 +1093,6 @@ public:
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
                 " rendered in " << (elapsed/1000.) << " ms (" << area / elapsed << " MP/s).");
 
-        auto& log = Log::logger();
-        if (log.trace()) {
-            LOG_TRC("Dump of middle of rendered tile");
-            log.dump("", pixmap.data() + pixmapSize/2 - 32, 64);
-        }
-
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
 
         std::vector<char> output;
