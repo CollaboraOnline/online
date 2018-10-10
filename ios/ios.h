@@ -11,8 +11,4 @@ extern const char *lo_ios_app_getCacheDir();
 
 extern int loolwsd_server_socket_fd;
 
-extern unsigned char *lo_ios_app_get_cgcontext_for_buffer(unsigned char *buffer, int width, int height);
-
-extern void lo_ios_app_release_cgcontext_for_buffer();
-
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

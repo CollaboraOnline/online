@@ -967,19 +967,11 @@ public:
 
         const double area = tile.getWidth() * tile.getHeight();
         Timestamp timestamp;
-        _loKitDocument->paintPartTile(
-#ifndef IOS
-                                      pixmap.data(),
-#else
-                                      lo_ios_app_get_cgcontext_for_buffer(pixmap.data(), tile.getWidth(), tile.getHeight()),
-#endif
+        _loKitDocument->paintPartTile(pixmap.data(),
                                       tile.getPart(),
                                       tile.getWidth(), tile.getHeight(),
                                       tile.getTilePosX(), tile.getTilePosY(),
                                       tile.getTileWidth(), tile.getTileHeight());
-#ifdef IOS
-        lo_ios_app_release_cgcontext_for_buffer();
-#endif
         const Poco::Timestamp::TimeDiff elapsed = timestamp.elapsed();
         LOG_TRC("paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() <<
                 ") " << "ver: " << tile.getVersion() << " rendered in " << (elapsed/1000.) <<
@@ -1075,19 +1067,11 @@ public:
         const double area = pixmapWidth * pixmapHeight;
         Timestamp timestamp;
         LOG_TRC("Calling paintPartTile(" << (void*)pixmap.data() << ")");
-        _loKitDocument->paintPartTile(
-#ifndef IOS
-                                      pixmap.data(),
-#else
-                                      lo_ios_app_get_cgcontext_for_buffer(pixmap.data(), pixmapWidth, pixmapHeight),
-#endif
+        _loKitDocument->paintPartTile(pixmap.data(),
                                       tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,
                                       renderArea.getLeft(), renderArea.getTop(),
                                       renderArea.getWidth(), renderArea.getHeight());
-#ifdef IOS
-        lo_ios_app_release_cgcontext_for_buffer();
-#endif
         Timestamp::TimeDiff elapsed = timestamp.elapsed();
         LOG_DBG("paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
