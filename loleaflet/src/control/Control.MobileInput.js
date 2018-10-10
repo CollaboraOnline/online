@@ -160,13 +160,14 @@ L.Control.MobileInput = L.Control.extend({
 
 	onInput: function (e) {
 		var backSpace = this._map.keyboard._toUNOKeyCode(8);
+		var i;
 
 		// deferred processing of composition text or normal text; we can get
 		// both in some cases, and based on the input event we need to decide
 		// which one we actually need to use
 		if (e.inputType === 'insertText') {
 			if (this._textData) {
-				for (var i = 0; i < this._textData.length; ++i) {
+				for (i = 0; i < this._textData.length; ++i) {
 					this._map._docLayer._postKeyboardEvent('input', this._textData[i].charCodeAt(), 0);
 				}
 			}
@@ -180,7 +181,7 @@ L.Control.MobileInput = L.Control.extend({
 			// this means we need to delete the entire interim composition;
 			// let's issue backspace that many times
 			if (this._composingData) {
-				for (var i = 0; i < this._composingData.length; ++i) {
+				for (i = 0; i < this._composingData.length; ++i) {
 					this._map._docLayer._postKeyboardEvent('input', 0, backSpace);
 				}
 			}
