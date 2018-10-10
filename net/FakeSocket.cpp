@@ -200,7 +200,6 @@ static bool checkForPoll(std::vector<FakeSocketPair>& fds, struct pollfd *pollfd
         }
         else
         {
-            const int K = ((pollfds[i].fd)&1);
             if (fds[pollfds[i].fd/2].fd[K] == -1)
             {
                 pollfds[i].revents = POLLNVAL;
