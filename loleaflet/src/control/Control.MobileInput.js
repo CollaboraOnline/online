@@ -167,13 +167,13 @@ L.Control.MobileInput = L.Control.extend({
 		if (e.inputType === 'insertText') {
 			if (this._textData) {
 				for (var i = 0; i < this._textData.length; ++i) {
-					map._docLayer._postKeyboardEvent('input', this._textData[i].charCodeAt(), 0);
+					this._map._docLayer._postKeyboardEvent('input', this._textData[i].charCodeAt(), 0);
 				}
 			}
 		}
 		else if (e.inputType === 'insertCompositionText') {
 			if (this._composingData) {
-				map._docLayer._postCompositionEvent(0, 'input', this._composingData);
+				this._map._docLayer._postCompositionEvent(0, 'input', this._composingData);
 			}
 		}
 		else if (e.inputType === 'deleteContentBackward' && this._lastInput !== backSpace) {
