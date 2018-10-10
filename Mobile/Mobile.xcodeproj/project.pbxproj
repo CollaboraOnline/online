@@ -86,7 +86,7 @@
 		BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentBroker.cpp; sourceTree = "<group>"; };
 		BE5EB5D521401E0F00E0826C /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
 		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
-		BE5EB5DB2140480B00E0826C /* icudt62l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt62l.dat; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/icudt62l.dat"; sourceTree = "<group>"; };
+		BE5EB5DB2140480B00E0826C /* icudt62l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt62l.dat; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/icudt62l.dat"; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,19 +103,19 @@
 		BE8D773C2136762600AC58EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE8D773E2136762600AC58EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE8D773F2136762600AC58EA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		BE8D85BB214055F2009F1860 /* filter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = filter; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/filter"; sourceTree = "<group>"; };
-		BE8D85BC214055F2009F1860 /* offapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = offapi.rdb; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/offapi.rdb"; sourceTree = "<group>"; };
-		BE8D85BD214055F2009F1860 /* share */ = {isa = PBXFileReference; lastKnownFileType = folder; name = share; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/share"; sourceTree = "<group>"; };
-		BE8D85BE214055F2009F1860 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/config"; sourceTree = "<group>"; };
-		BE8D85BF214055F2009F1860 /* registry */ = {isa = PBXFileReference; lastKnownFileType = folder; name = registry; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/registry"; sourceTree = "<group>"; };
-		BE8D85C0214055F2009F1860 /* oovbaapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = oovbaapi.rdb; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/oovbaapi.rdb"; sourceTree = "<group>"; };
-		BE8D85C1214055F2009F1860 /* udkapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = udkapi.rdb; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/udkapi.rdb"; sourceTree = "<group>"; };
-		BE8D85C2214055F2009F1860 /* services */ = {isa = PBXFileReference; lastKnownFileType = folder; name = services; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/services"; sourceTree = "<group>"; };
-		BE8D85C3214055F2009F1860 /* services.rdb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = services.rdb; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/services.rdb"; sourceTree = "<group>"; };
-		BE8D85C4214055F3009F1860 /* program */ = {isa = PBXFileReference; lastKnownFileType = folder; name = program; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/program"; sourceTree = "<group>"; };
-		BE8D85C6214055F3009F1860 /* fundamentalrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fundamentalrc; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/fundamentalrc"; sourceTree = "<group>"; };
-		BE8D85C7214055F3009F1860 /* unorc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unorc; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/unorc"; sourceTree = "<group>"; };
-		BE8D85C8214055F3009F1860 /* rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rc; path= "../../../../ios-device/workdir/CustomTarget/ios/resources/rc"; sourceTree = "<group>"; };
+		BE8D85BB214055F2009F1860 /* filter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = filter; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/filter"; sourceTree = "<group>"; };
+		BE8D85BC214055F2009F1860 /* offapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = offapi.rdb; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/offapi.rdb"; sourceTree = "<group>"; };
+		BE8D85BD214055F2009F1860 /* share */ = {isa = PBXFileReference; lastKnownFileType = folder; name = share; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/share"; sourceTree = "<group>"; };
+		BE8D85BE214055F2009F1860 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/config"; sourceTree = "<group>"; };
+		BE8D85BF214055F2009F1860 /* registry */ = {isa = PBXFileReference; lastKnownFileType = folder; name = registry; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/registry"; sourceTree = "<group>"; };
+		BE8D85C0214055F2009F1860 /* oovbaapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = oovbaapi.rdb; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/oovbaapi.rdb"; sourceTree = "<group>"; };
+		BE8D85C1214055F2009F1860 /* udkapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = udkapi.rdb; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/udkapi.rdb"; sourceTree = "<group>"; };
+		BE8D85C2214055F2009F1860 /* services */ = {isa = PBXFileReference; lastKnownFileType = folder; name = services; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/services"; sourceTree = "<group>"; };
+		BE8D85C3214055F2009F1860 /* services.rdb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = services.rdb; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/services.rdb"; sourceTree = "<group>"; };
+		BE8D85C4214055F3009F1860 /* program */ = {isa = PBXFileReference; lastKnownFileType = folder; name = program; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/program"; sourceTree = "<group>"; };
+		BE8D85C6214055F3009F1860 /* fundamentalrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fundamentalrc; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/fundamentalrc"; sourceTree = "<group>"; };
+		BE8D85C7214055F3009F1860 /* unorc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unorc; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/unorc"; sourceTree = "<group>"; };
+		BE8D85C8214055F3009F1860 /* rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rc; path = "../../../../ios-device/workdir/CustomTarget/ios/resources/rc"; sourceTree = "<group>"; };
 		BE93D41E216B93D8007A39F4 /* discovery.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = discovery.xml; path = ../../../discovery.xml; sourceTree = "<group>"; };
 		BE93D422216CAA7A007A39F4 /* unohelp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unohelp.cxx; path = "../../ios-device/vcl/source/app/unohelp.cxx"; sourceTree = "<group>"; };
 		BE93D423216CAA7A007A39F4 /* stdtext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stdtext.cxx; path = "../../ios-device/vcl/source/app/stdtext.cxx"; sourceTree = "<group>"; };
@@ -143,6 +143,53 @@
 		BE93D439216CAA7B007A39F4 /* salvtables.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salvtables.cxx; path = "../../ios-device/vcl/source/app/salvtables.cxx"; sourceTree = "<group>"; };
 		BE93D43A216CAA7B007A39F4 /* IconThemeScanner.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IconThemeScanner.cxx; path = "../../ios-device/vcl/source/app/IconThemeScanner.cxx"; sourceTree = "<group>"; };
 		BE93D43B216CAA7B007A39F4 /* svdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdata.cxx; path = "../../ios-device/vcl/source/app/svdata.cxx"; sourceTree = "<group>"; };
+		BE93D43E216D5580007A39F4 /* zoomitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = zoomitem.cxx; path = "../../ios-device/sfx2/source/doc/zoomitem.cxx"; sourceTree = "<group>"; };
+		BE93D43F216D5580007A39F4 /* printhelper.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = printhelper.hxx; path = "../../ios-device/sfx2/source/doc/printhelper.hxx"; sourceTree = "<group>"; };
+		BE93D440216D5580007A39F4 /* Metadatable.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Metadatable.cxx; path = "../../ios-device/sfx2/source/doc/Metadatable.cxx"; sourceTree = "<group>"; };
+		BE93D441216D5580007A39F4 /* docfilt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docfilt.cxx; path = "../../ios-device/sfx2/source/doc/docfilt.cxx"; sourceTree = "<group>"; };
+		BE93D442216D5580007A39F4 /* docfile.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docfile.cxx; path = "../../ios-device/sfx2/source/doc/docfile.cxx"; sourceTree = "<group>"; };
+		BE93D443216D5580007A39F4 /* oleprops.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = oleprops.hxx; path = "../../ios-device/sfx2/source/doc/oleprops.hxx"; sourceTree = "<group>"; };
+		BE93D444216D5580007A39F4 /* graphhelp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphhelp.cxx; path = "../../ios-device/sfx2/source/doc/graphhelp.cxx"; sourceTree = "<group>"; };
+		BE93D445216D5580007A39F4 /* saveastemplatedlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = saveastemplatedlg.cxx; path = "../../ios-device/sfx2/source/doc/saveastemplatedlg.cxx"; sourceTree = "<group>"; };
+		BE93D446216D5580007A39F4 /* objstor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objstor.cxx; path = "../../ios-device/sfx2/source/doc/objstor.cxx"; sourceTree = "<group>"; };
+		BE93D447216D5580007A39F4 /* docmacromode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docmacromode.cxx; path = "../../ios-device/sfx2/source/doc/docmacromode.cxx"; sourceTree = "<group>"; };
+		BE93D448216D5580007A39F4 /* sfxbasemodel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sfxbasemodel.cxx; path = "../../ios-device/sfx2/source/doc/sfxbasemodel.cxx"; sourceTree = "<group>"; };
+		BE93D449216D5580007A39F4 /* doctemplateslocal.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = doctemplateslocal.hxx; path = "../../ios-device/sfx2/source/doc/doctemplateslocal.hxx"; sourceTree = "<group>"; };
+		BE93D44A216D5580007A39F4 /* SfxDocumentMetaData.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SfxDocumentMetaData.cxx; path = "../../ios-device/sfx2/source/doc/SfxDocumentMetaData.cxx"; sourceTree = "<group>"; };
+		BE93D44B216D5580007A39F4 /* templatedlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = templatedlg.cxx; path = "../../ios-device/sfx2/source/doc/templatedlg.cxx"; sourceTree = "<group>"; };
+		BE93D44C216D5580007A39F4 /* docinsert.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docinsert.cxx; path = "../../ios-device/sfx2/source/doc/docinsert.cxx"; sourceTree = "<group>"; };
+		BE93D44D216D5580007A39F4 /* syspathw32.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = syspathw32.hxx; path = "../../ios-device/sfx2/source/doc/syspathw32.hxx"; sourceTree = "<group>"; };
+		BE93D44E216D5580007A39F4 /* exoticfileloadexception.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = exoticfileloadexception.hxx; path = "../../ios-device/sfx2/source/doc/exoticfileloadexception.hxx"; sourceTree = "<group>"; };
+		BE93D44F216D5580007A39F4 /* syspath.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = syspath.cxx; path = "../../ios-device/sfx2/source/doc/syspath.cxx"; sourceTree = "<group>"; };
+		BE93D450216D5580007A39F4 /* exoticfileloadexception.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = exoticfileloadexception.cxx; path = "../../ios-device/sfx2/source/doc/exoticfileloadexception.cxx"; sourceTree = "<group>"; };
+		BE93D451216D5580007A39F4 /* docfac.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docfac.cxx; path = "../../ios-device/sfx2/source/doc/docfac.cxx"; sourceTree = "<group>"; };
+		BE93D452216D5580007A39F4 /* doctempl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = doctempl.cxx; path = "../../ios-device/sfx2/source/doc/doctempl.cxx"; sourceTree = "<group>"; };
+		BE93D453216D5580007A39F4 /* docinf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docinf.cxx; path = "../../ios-device/sfx2/source/doc/docinf.cxx"; sourceTree = "<group>"; };
+		BE93D454216D5580007A39F4 /* ownsubfilterservice.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ownsubfilterservice.cxx; path = "../../ios-device/sfx2/source/doc/ownsubfilterservice.cxx"; sourceTree = "<group>"; };
+		BE93D455216D5580007A39F4 /* objmisc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objmisc.cxx; path = "../../ios-device/sfx2/source/doc/objmisc.cxx"; sourceTree = "<group>"; };
+		BE93D456216D5581007A39F4 /* DocumentMetadataAccess.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentMetadataAccess.cxx; path = "../../ios-device/sfx2/source/doc/DocumentMetadataAccess.cxx"; sourceTree = "<group>"; };
+		BE93D457216D5581007A39F4 /* frmdescr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frmdescr.cxx; path = "../../ios-device/sfx2/source/doc/frmdescr.cxx"; sourceTree = "<group>"; };
+		BE93D458216D5581007A39F4 /* docstoragemodifylistener.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docstoragemodifylistener.cxx; path = "../../ios-device/sfx2/source/doc/docstoragemodifylistener.cxx"; sourceTree = "<group>"; };
+		BE93D459216D5581007A39F4 /* objcont.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objcont.cxx; path = "../../ios-device/sfx2/source/doc/objcont.cxx"; sourceTree = "<group>"; };
+		BE93D45A216D5581007A39F4 /* guisaveas.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = guisaveas.cxx; path = "../../ios-device/sfx2/source/doc/guisaveas.cxx"; sourceTree = "<group>"; };
+		BE93D45B216D5581007A39F4 /* doctemplateslocal.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = doctemplateslocal.cxx; path = "../../ios-device/sfx2/source/doc/doctemplateslocal.cxx"; sourceTree = "<group>"; };
+		BE93D45C216D5581007A39F4 /* objserv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objserv.cxx; path = "../../ios-device/sfx2/source/doc/objserv.cxx"; sourceTree = "<group>"; };
+		BE93D45D216D5581007A39F4 /* objxtor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objxtor.cxx; path = "../../ios-device/sfx2/source/doc/objxtor.cxx"; sourceTree = "<group>"; };
+		BE93D45E216D5581007A39F4 /* QuerySaveDocument.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = QuerySaveDocument.cxx; path = "../../ios-device/sfx2/source/doc/QuerySaveDocument.cxx"; sourceTree = "<group>"; };
+		BE93D45F216D5581007A39F4 /* docundomanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docundomanager.cxx; path = "../../ios-device/sfx2/source/doc/docundomanager.cxx"; sourceTree = "<group>"; };
+		BE93D460216D5581007A39F4 /* objstor.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = objstor.hxx; path = "../../ios-device/sfx2/source/doc/objstor.hxx"; sourceTree = "<group>"; };
+		BE93D461216D5581007A39F4 /* sfxmodelfactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sfxmodelfactory.cxx; path = "../../ios-device/sfx2/source/doc/sfxmodelfactory.cxx"; sourceTree = "<group>"; };
+		BE93D462216D5581007A39F4 /* graphhelp.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = graphhelp.hxx; path = "../../ios-device/sfx2/source/doc/graphhelp.hxx"; sourceTree = "<group>"; };
+		BE93D463216D5581007A39F4 /* syspath.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = syspath.hxx; path = "../../ios-device/sfx2/source/doc/syspath.hxx"; sourceTree = "<group>"; };
+		BE93D464216D5581007A39F4 /* doctemplates.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = doctemplates.cxx; path = "../../ios-device/sfx2/source/doc/doctemplates.cxx"; sourceTree = "<group>"; };
+		BE93D465216D5581007A39F4 /* syspathw32.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = syspathw32.cxx; path = "../../ios-device/sfx2/source/doc/syspathw32.cxx"; sourceTree = "<group>"; };
+		BE93D466216D5581007A39F4 /* oleprops.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = oleprops.cxx; path = "../../ios-device/sfx2/source/doc/oleprops.cxx"; sourceTree = "<group>"; };
+		BE93D467216D5581007A39F4 /* iframe.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iframe.cxx; path = "../../ios-device/sfx2/source/doc/iframe.cxx"; sourceTree = "<group>"; };
+		BE93D468216D5581007A39F4 /* objitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objitem.cxx; path = "../../ios-device/sfx2/source/doc/objitem.cxx"; sourceTree = "<group>"; };
+		BE93D469216D5582007A39F4 /* printhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printhelper.cxx; path = "../../ios-device/sfx2/source/doc/printhelper.cxx"; sourceTree = "<group>"; };
+		BE93D46A216D5582007A39F4 /* watermarkitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = watermarkitem.cxx; path = "../../ios-device/sfx2/source/doc/watermarkitem.cxx"; sourceTree = "<group>"; };
+		BE93D46B216D5582007A39F4 /* new.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = new.cxx; path = "../../ios-device/sfx2/source/doc/new.cxx"; sourceTree = "<group>"; };
+		BE93D46C216D5582007A39F4 /* objembed.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objembed.cxx; path = "../../ios-device/sfx2/source/doc/objembed.cxx"; sourceTree = "<group>"; };
 		BEA2835521467FDD00848631 /* Kit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kit.cpp; sourceTree = "<group>"; };
 		BEA283572146945500848631 /* ChildSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChildSession.cpp; sourceTree = "<group>"; };
 		BEA2835921470A1C00848631 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -253,6 +300,7 @@
 		BE6362BE2153A79200F4237E /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BE93D43C216D555C007A39F4 /* sfx2 */,
 				BE93D420216CAA52007A39F4 /* vcl */,
 			);
 			name = Core;
@@ -338,6 +386,68 @@
 				BE93D428216CAA7A007A39F4 /* vclevent.cxx */,
 			);
 			name = app;
+			sourceTree = "<group>";
+		};
+		BE93D43C216D555C007A39F4 /* sfx2 */ = {
+			isa = PBXGroup;
+			children = (
+				BE93D43D216D5568007A39F4 /* doc */,
+			);
+			name = sfx2;
+			sourceTree = "<group>";
+		};
+		BE93D43D216D5568007A39F4 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				BE93D451216D5580007A39F4 /* docfac.cxx */,
+				BE93D442216D5580007A39F4 /* docfile.cxx */,
+				BE93D441216D5580007A39F4 /* docfilt.cxx */,
+				BE93D453216D5580007A39F4 /* docinf.cxx */,
+				BE93D44C216D5580007A39F4 /* docinsert.cxx */,
+				BE93D447216D5580007A39F4 /* docmacromode.cxx */,
+				BE93D458216D5581007A39F4 /* docstoragemodifylistener.cxx */,
+				BE93D452216D5580007A39F4 /* doctempl.cxx */,
+				BE93D464216D5581007A39F4 /* doctemplates.cxx */,
+				BE93D45B216D5581007A39F4 /* doctemplateslocal.cxx */,
+				BE93D449216D5580007A39F4 /* doctemplateslocal.hxx */,
+				BE93D456216D5581007A39F4 /* DocumentMetadataAccess.cxx */,
+				BE93D45F216D5581007A39F4 /* docundomanager.cxx */,
+				BE93D450216D5580007A39F4 /* exoticfileloadexception.cxx */,
+				BE93D44E216D5580007A39F4 /* exoticfileloadexception.hxx */,
+				BE93D457216D5581007A39F4 /* frmdescr.cxx */,
+				BE93D444216D5580007A39F4 /* graphhelp.cxx */,
+				BE93D462216D5581007A39F4 /* graphhelp.hxx */,
+				BE93D45A216D5581007A39F4 /* guisaveas.cxx */,
+				BE93D467216D5581007A39F4 /* iframe.cxx */,
+				BE93D440216D5580007A39F4 /* Metadatable.cxx */,
+				BE93D46B216D5582007A39F4 /* new.cxx */,
+				BE93D459216D5581007A39F4 /* objcont.cxx */,
+				BE93D46C216D5582007A39F4 /* objembed.cxx */,
+				BE93D468216D5581007A39F4 /* objitem.cxx */,
+				BE93D455216D5580007A39F4 /* objmisc.cxx */,
+				BE93D45C216D5581007A39F4 /* objserv.cxx */,
+				BE93D446216D5580007A39F4 /* objstor.cxx */,
+				BE93D460216D5581007A39F4 /* objstor.hxx */,
+				BE93D45D216D5581007A39F4 /* objxtor.cxx */,
+				BE93D466216D5581007A39F4 /* oleprops.cxx */,
+				BE93D443216D5580007A39F4 /* oleprops.hxx */,
+				BE93D454216D5580007A39F4 /* ownsubfilterservice.cxx */,
+				BE93D469216D5582007A39F4 /* printhelper.cxx */,
+				BE93D43F216D5580007A39F4 /* printhelper.hxx */,
+				BE93D45E216D5581007A39F4 /* QuerySaveDocument.cxx */,
+				BE93D445216D5580007A39F4 /* saveastemplatedlg.cxx */,
+				BE93D448216D5580007A39F4 /* sfxbasemodel.cxx */,
+				BE93D44A216D5580007A39F4 /* SfxDocumentMetaData.cxx */,
+				BE93D461216D5581007A39F4 /* sfxmodelfactory.cxx */,
+				BE93D44F216D5580007A39F4 /* syspath.cxx */,
+				BE93D463216D5581007A39F4 /* syspath.hxx */,
+				BE93D465216D5581007A39F4 /* syspathw32.cxx */,
+				BE93D44D216D5580007A39F4 /* syspathw32.hxx */,
+				BE93D44B216D5580007A39F4 /* templatedlg.cxx */,
+				BE93D46A216D5582007A39F4 /* watermarkitem.cxx */,
+				BE93D43E216D5580007A39F4 /* zoomitem.cxx */,
+			);
+			name = doc;
 			sourceTree = "<group>";
 		};
 		BEA2835421467F8200848631 /* kit */ = {
