@@ -149,23 +149,35 @@ body {
 	opacity: 0;
 }
 
-.loleaflet-mobile-table {
-	background-color: transparent;
+.loleaflet-context-table {
+	table-layout: fixed;
+	background-color: #efefef;
 	border-collapse: separate;
 	border-spacing: 0;
 	border: none;
+	width: 100%;
 }
 
-.loleaflet-mobile-button {
+.loleaflet-context-button {
 	width: 40px;
 	height: 40px;
-	display: inline-block;
+}
+
+.loleaflet-context-down {
+  border: 1px solid #aaaaaa;
+  background-color: #dddddd;
 }
 
 .loleaflet-mobile-input {
 	width: 1px;
 	padding: 0px;
 	border: 0px;
+}
+
+.loleaflet-context-toolbar {
+	position: absolute;
+	float: none;
+	border: 1px solid #999;
 }
 
 /* Important to override context-menu-icon's font-family here otherwise, jquery-contextmenu.css
@@ -287,16 +299,16 @@ body {
         background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
 }
 
-.loleaflet-mobile-copy {
-        background: url('images/copy.svg') no-repeat center !important;
+.loleaflet-context-copy {
+        background: url('images/lc_copy.svg') no-repeat center !important;
 }
 
-.loleaflet-mobile-cut {
-        background: url('images/cut.svg') no-repeat center !important;
+.loleaflet-context-cut {
+        background: url('images/lc_cut.svg') no-repeat center !important;
 }
 
-.loleaflet-mobile-paste {
-        background: url('images/paste.svg') no-repeat center !important;
+.loleaflet-context-paste {
+        background: url('images/lc_paste.svg') no-repeat center !important;
 }
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {

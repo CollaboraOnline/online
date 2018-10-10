@@ -10,6 +10,9 @@ L.Map.mergeOptions({
 
 L.Map.Tap = L.Handler.extend({
 	addHooks: function () {
+		if (!this._toolbar) {
+			this._toolbar = L.control.contextToolbar();
+		}
 		L.DomEvent.on(this._map._container, 'touchstart', this._onDown, this);
 	},
 
@@ -18,7 +21,7 @@ L.Map.Tap = L.Handler.extend({
 	},
 
 	_onDown: function (e) {
-		if (!e.touches) { return; }
+		if (!e.touches || !this._map._docLayer) { return; }
 
 		// console.log('=========> _onDown, e.touches.length=' + e.touches.length);
 
@@ -41,10 +44,19 @@ L.Map.Tap = L.Handler.extend({
 			return;
 		}
 
-		var first = e.touches[0];
-
+		var first = e.touches[0],
+		    containerPoint = this._map.mouseEventToContainerPoint(first),
+		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
+		    latlng = this._map.layerPointToLatLng(layerPoint);
 		this._startPos = this._newPos = new L.Point(first.clientX, first.clientY);
 
+		if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
+			this._toolbar._pos = containerPoint;
+			this._toolbar.addTo(this._map);
+			return;
+		}
+
+		this._toolbar.remove();
 		// simulate long hold but setting a timeout
 		this._holdTimeout = setTimeout(L.bind(function () {
 			if (this._isTapValid()) {

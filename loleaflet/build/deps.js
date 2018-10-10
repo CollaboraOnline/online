@@ -301,6 +301,13 @@ var deps = {
 		desc: 'Mobile Input'
 	},
 
+	ControlContextToolbar: {
+		src: ['control/Control.js',
+		      'control/Control.ContextToolbar.js'],
+		heading: 'Controls',
+		desc: 'Context Toolbar'
+	},
+
 	ControlRowHeader: {
 		src: ['control/Control.js',
 		      'control/Control.RowHeader.js'],

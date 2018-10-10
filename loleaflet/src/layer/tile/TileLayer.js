@@ -1491,6 +1491,18 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateCellCursor();
 	},
 
+	containsSelection: function (latlng) {
+		var ret = false;
+		var selections = this._selections.getLayers();
+		for (var sel in selections) {
+			if (selections[sel].getBounds().contains(latlng)) {
+				ret = true;
+				break;
+			}
+		}
+		return ret;
+	},
+
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
 
 		this._sendClientZoom();
