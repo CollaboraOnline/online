@@ -1084,7 +1084,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
-    optionSet.addOption(Option("override", "o", "Override any setting by providing fullxmlpath=value.")
+    optionSet.addOption(Option("override", "o", "Override any setting by providing full xmlpath=value.")
                         .required(false)
                         .repeatable(true)
                         .argument("xmlpath"));
