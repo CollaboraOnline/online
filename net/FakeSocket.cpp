@@ -49,7 +49,6 @@ struct FakeSocketPair
     bool shutdown[2];
     bool readable[2];
     std::vector<char> buffer[2];
-    std::mutex *mutex;
 
     FakeSocketPair()
     {
@@ -61,16 +60,14 @@ struct FakeSocketPair
         shutdown[1] = false;
         readable[0] = false;
         readable[1] = false;
-        mutex = new std::mutex();
     }
 };
 
 static thread_local std::ostringstream loggingBuffer;
 static void (*loggingCallback)(const std::string&) = nullptr;
 
-static std::mutex fdsMutex;
-static std::mutex cvMutex;
-static std::condition_variable cv;
+static std::mutex theMutex;
+static std::condition_variable theCV;
 
 // Avoid problems with order of initialisation of static globals.
 static std::vector<FakeSocketPair>& getFds()
@@ -100,7 +97,7 @@ int fakeSocketSocket()
 {
     std::vector<FakeSocketPair>& fds = getFds();
 
-    std::lock_guard<std::mutex> fdsLock(fdsMutex);
+    std::lock_guard<std::mutex> lock(theMutex);
 
     // We always allocate a new FakeSocketPair struct. Let's not bother with potential issues with
     // reusing them. It isn't like we would be allocating thousands anyway during the typical
@@ -126,7 +123,7 @@ int fakeSocketPipe2(int pipefd[2])
     std::vector<FakeSocketPair>& fds = getFds();
     FakeSocketPair& pair = fds[pipefd[0]/2];
 
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
+    std::unique_lock<std::mutex> lock(theMutex);
 
     assert(pair.fd[0] == pipefd[0]);
 
@@ -247,9 +244,7 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
     loggingBuffer << ", timeout:" << timeout << flush();
 
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
-    std::unique_lock<std::mutex> cvLock(cvMutex);
-    fdsLock.unlock();
+    std::unique_lock<std::mutex> lock(theMutex);
 
     if (timeout > 0)
     {
@@ -257,7 +252,7 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
         auto const end = now + std::chrono::milliseconds(timeout);
 
         while (!checkForPoll(fds, pollfds, nfds))
-            if (cv.wait_until(cvLock, end) == std::cv_status::timeout)
+            if (theCV.wait_until(lock, end) == std::cv_status::timeout)
             {
                 loggingBuffer << "FakeSocket Poll timeout: 0" << flush();
                 return 0;
@@ -270,7 +265,7 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
     else // timeout < 0
     {
         while (!checkForPoll(fds, pollfds, nfds))
-            cv.wait(cvLock);
+            theCV.wait(lock);
     }
 
     int result = 0;
@@ -295,7 +290,7 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
 int fakeSocketListen(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd < 0 || fd/2 >= fds.size() || fds[fd/2].fd[fd&1] == -1)
     {
         loggingBuffer << "FakeSocket EBADF: Listening on #" << fd << flush();
@@ -304,8 +299,6 @@ int fakeSocketListen(int fd)
     }
     
     FakeSocketPair& pair = fds[fd/2];
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
-    fdsLock.unlock();
 
     if (fd&1 || pair.fd[1] != -1)
     {
@@ -332,7 +325,7 @@ int fakeSocketListen(int fd)
 int fakeSocketConnect(int fd1, int fd2)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd1 < 0 || fd2 < 0 || fd1/2 >= fds.size() || fd2/2 >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Connect #" << fd1 << " to #" << fd2 << flush();
@@ -349,10 +342,6 @@ int fakeSocketConnect(int fd1, int fd2)
     FakeSocketPair& pair1 = fds[fd1/2];
     FakeSocketPair& pair2 = fds[fd2/2];
 
-    std::unique_lock<std::mutex> fdLock1(pair1.mutex[0]);
-    std::unique_lock<std::mutex> fdLock2(pair2.mutex[0]);
-    fdsLock.unlock();
-
     if ((fd1&1) || (fd2&1))
     {
         loggingBuffer << "FakeSocket EISCONN: Connect #" << fd1 << " to #" << fd2 << flush();
@@ -368,14 +357,10 @@ int fakeSocketConnect(int fd1, int fd2)
     }
 
     pair2.connectingFd = fd1;
-    cv.notify_all();
-
-    std::unique_lock<std::mutex> cvLock(cvMutex);
-    fdLock2.unlock();
-    fdLock1.unlock();
+    theCV.notify_all();
 
     while (pair1.fd[1] == -1)
-        cv.wait(cvLock);
+        theCV.wait(lock);
 
     assert(pair1.fd[1] == pair1.fd[0] + 1);
 
@@ -387,7 +372,7 @@ int fakeSocketConnect(int fd1, int fd2)
 int fakeSocketAccept4(int fd, int flags)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd < 0 || fd/2 >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Accept #" << fd << flush();
@@ -411,21 +396,15 @@ int fakeSocketAccept4(int fd, int flags)
         return -1;
     }
 
-    fdsLock.unlock();
-
-    std::unique_lock<std::mutex> cvLock(cvMutex);
-
     while (pair.connectingFd == -1)
-        cv.wait(cvLock);
+        theCV.wait(lock);
     
-    cvLock.unlock();
-
-    assert(pair.connectingFd >= 0 && pair.connectingFd/2 < fds.size());
+    assert(pair.connectingFd >= 0);
+    assert(pair.connectingFd/2 < fds.size());
+    assert((pair.connectingFd&1) == 0);
 
     FakeSocketPair& pair2 = fds[pair.connectingFd/2];
     
-    std::unique_lock<std::mutex> fdLock1(pair2.mutex[0]);
-
     assert(pair2.fd[1] == -1);
     assert(pair2.fd[0] == pair.connectingFd);
 
@@ -433,7 +412,7 @@ int fakeSocketAccept4(int fd, int flags)
 
     pair2.fd[1] = pair2.fd[0] + 1;
 
-    cv.notify_all();
+    theCV.notify_all();
 
     loggingBuffer << "FakeSocket Accept #" << fd << ": #" << pair2.fd[1] << flush();
 
@@ -443,7 +422,7 @@ int fakeSocketAccept4(int fd, int flags)
 int fakeSocketPeer(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd < 0 || fd/2 >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Peer of #" << fd << flush();
@@ -452,9 +431,6 @@ int fakeSocketPeer(int fd)
     }
 
     FakeSocketPair& pair = fds[fd/2];
-
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
-    fdsLock.unlock();
 
     const int K = (fd&1);
     const int N = 1 - K;
@@ -467,7 +443,7 @@ int fakeSocketPeer(int fd)
 ssize_t fakeSocketAvailableDataLength(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd < 0 || fd/2 >= fds.size())
     {
         errno = EBADF;
@@ -475,9 +451,6 @@ ssize_t fakeSocketAvailableDataLength(int fd)
     }
 
     FakeSocketPair& pair = fds[fd/2];
-
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
-    fdsLock.unlock();
 
     // K: for this fd
     const int K = (fd&1);
@@ -497,7 +470,7 @@ ssize_t fakeSocketAvailableDataLength(int fd)
 ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd < 0 || fd/2 >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Read from #" << fd << ", " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
@@ -506,9 +479,6 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
     }
 
     FakeSocketPair& pair = fds[fd/2];
-
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
-    fdsLock.unlock();
 
     // K: for this fd
     const int K = (fd&1);
@@ -552,7 +522,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
     else
         pair.readable[K] = false;
 
-    cv.notify_all();
+    theCV.notify_all();
 
     loggingBuffer << "FakeSocket Read from #" << fd << " got " << result << (result == 1 ? " byte" : " bytes") << flush();
 
@@ -562,7 +532,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
 ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd < 0 || fd/2 >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Write to #" << fd << ", " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
@@ -571,9 +541,6 @@ ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
     }
 
     FakeSocketPair& pair = fds[fd/2];
-
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
-    fdsLock.unlock();
 
     // K: for this fd
     // N: for its peer, whose read buffer we want to write into
@@ -606,7 +573,7 @@ ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
     memmove(pair.buffer[N].data(), buf, nbytes);
     pair.readable[N] = true;
 
-    cv.notify_all();
+    theCV.notify_all();
 
     loggingBuffer << "FakeSocket Write to #" << fd << ": " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
     return nbytes;
@@ -615,7 +582,7 @@ ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
 int fakeSocketShutdown(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd < 0 || fd/2 >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Shutdown #" << fd << flush();
@@ -624,9 +591,6 @@ int fakeSocketShutdown(int fd)
     }
 
     FakeSocketPair& pair = fds[fd/2];
-
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
-    fdsLock.unlock();
 
     const int K = (fd&1);
     const int N = 1 - K;
@@ -656,7 +620,7 @@ int fakeSocketShutdown(int fd)
 int fakeSocketClose(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
-    std::unique_lock<std::mutex> fdsLock(fdsMutex);
+    std::unique_lock<std::mutex> lock(theMutex);
     if (fd < 0 || fd/2 >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Close #" << fd << flush();
@@ -665,9 +629,6 @@ int fakeSocketClose(int fd)
     }
 
     FakeSocketPair& pair = fds[fd/2];
-
-    std::unique_lock<std::mutex> fdLock(pair.mutex[0]);
-    fdsLock.unlock();
 
     const int K = (fd&1);
     const int N = 1 - K;
@@ -685,7 +646,7 @@ int fakeSocketClose(int fd)
     pair.buffer[K].resize(0);
     pair.readable[N] = true;
 
-    cv.notify_all();
+    theCV.notify_all();
 
     loggingBuffer << "FakeSocket Close #" << fd << flush();
 
