@@ -200,6 +200,10 @@
         display: none;
     }
 
+    .document-title {
+	display: none;
+    }
+
     /* hide the menu in mobile view */
     #main-menu-state:not(:checked) ~ #main-menu {
         display: none;
