@@ -1869,8 +1869,12 @@ $(document).ready(function() {
 		$('#closebuttonwrapper').hide();
 	} else {
 		$('#closebutton').click(function() {
-			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+			if (window.ThisIsTheiOSApp) {
+				window.webkit.messageHandlers.lool.postMessage('BYE', '*');
+			} else {
+				map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
+				map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+			}
 			map.remove();
 		});
 	}

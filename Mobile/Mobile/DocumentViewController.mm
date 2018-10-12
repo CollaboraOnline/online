@@ -19,7 +19,7 @@
 #import "DocumentViewController.h"
 
 @interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler> {
-    BOOL waitingForInitialLoad;
+    int closeNotificationPipeForForwardingThread[2];
 }
 
 @end
@@ -157,20 +157,42 @@
             rc = fakeSocketConnect(self.document->fakeClientFd, loolwsd_server_socket_fd);
             assert(rc != -1);
 
+            // Create a socket pair to notify the below thread when the document has been closed
+            fakeSocketPipe2(closeNotificationPipeForForwardingThread);
+
             // Start another thread to read responses and forward them to the JavaScript
             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                            ^{
                                while (true) {
-                                   struct pollfd p;
-                                   p.fd = self.document->fakeClientFd;
-                                   p.events = POLLIN;
-                                   if (fakeSocketPoll(&p, 1, -1) == 1) {
-                                       int n = fakeSocketAvailableDataLength(self.document->fakeClientFd);
-                                       if (n == 0)
+                                   struct pollfd p[2];
+                                   p[0].fd = self.document->fakeClientFd;
+                                   p[0].events = POLLIN;
+                                   p[1].fd = self->closeNotificationPipeForForwardingThread[1];
+                                   p[1].events = POLLIN;
+                                   if (fakeSocketPoll(p, 2, -1) > 0) {
+                                       if (p[1].revents == POLLIN) {
+                                           // The code below handling the "BYE" fake Websocket
+                                           // message has closed the other end of the
+                                           // closeNotificationPipeForForwardingThread. Let's close
+                                           // the other end too just for cleanliness, even if a
+                                           // FakeSocket as such is not a system resource so nothing
+                                           // is saved by closing it.
+                                           fakeSocketClose(self->closeNotificationPipeForForwardingThread[0]);
+
+                                           // Close our end of the fake socket connection to the
+                                           // ClientSession thread, so that it terminates
+                                           fakeSocketClose(self.document->fakeClientFd);
+
                                            return;
-                                       std::vector<char> buf(n);
-                                       n = fakeSocketRead(self.document->fakeClientFd, buf.data(), n);
-                                       [self.document send2JS:buf.data() length:n];
+                                       }
+                                       if (p[0].revents == POLLIN) {
+                                           int n = fakeSocketAvailableDataLength(self.document->fakeClientFd);
+                                           if (n == 0)
+                                               return;
+                                           std::vector<char> buf(n);
+                                           n = fakeSocketRead(self.document->fakeClientFd, buf.data(), n);
+                                           [self.document send2JS:buf.data() length:n];
+                                       }
                                    }
                                    else
                                        break;
@@ -185,6 +207,13 @@
             p.events = POLLOUT;
             fakeSocketPoll(&p, 1, -1);
             fakeSocketWrite(self.document->fakeClientFd, url.c_str(), url.size());
+
+            return;
+        } else if ([message.body isEqualToString:@"BYE"]) {
+            NSLog(@"document window closed! Closing our end of the socket?");
+
+            // Close one end of the socket pair, that will wake up the forwarding thread above
+            fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
             return;
         }

@@ -735,8 +735,12 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
 			this._map.fire('postMessage', {msgId: 'UI_FileVersions'});
 		} else if (id === 'closedocument') {
-			this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
-			this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
+			if (window.ThisIsTheiOSApp) {
+				window.webkit.messageHandlers.lool.postMessage('BYE', '*');
+			} else {
+				this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
+				this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
+			}
 			this._map.remove();
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
