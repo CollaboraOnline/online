@@ -11,14 +11,10 @@
     top: 30px;
 }
 
-.header-wrapper {
-    background: #efefef; /* Fill up white areas with grey */
-    min-height: 70px; /* Map starts from 70px onwards in case of writer, calc */
-}
 .main-nav {
     height: 30px; /* on mouseover menubar items, border emerges */
-    position: absolute;
-    width: 100%;
+    width: auto;
+    background: #efefef;
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
@@ -231,13 +227,21 @@
     }
 
     #main-menu {
-	top: 39px !important;
+	position: relative;
+	top: 40px;
     }
 
     .main-nav {
-	position: absolute;
-	width: 100%;
+        position: absolute;
+        height: initial;
+        width: 100%;
+        top: 0;
+        bottom: 33px;
+        margin: 0;
+        -webkit-overflow-scrolling: touch;
+        overflow: scroll;
     }
+
 }
 
 /* Some more lo-menu specific customizations */

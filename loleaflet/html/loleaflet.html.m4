@@ -78,37 +78,34 @@ ifelse(IOSAPP,[true],
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
 
-    <div class="header-wrapper">
-      <div id="logo" class="logo"></div>
-      <nav class="main-nav" role="navigation">
-	<!-- Mobile menu toggle button (hamburger/x icon) -->
-	<input id="main-menu-state" type="checkbox" />
-	<label class="main-menu-btn" for="main-menu-state">
-	  <span class="main-menu-btn-icon"></span>
-	</label>
-	<ul id="main-menu" class="sm sm-simple lo-menu"></ul>
-      </nav>
-      <table id="toolbar-wrapper">
-	<tr>
-	  <td id="toolbar-logo"></td>
-	  <td id="toolbar-up"</td>
-	  <td id="toolbar-hamburger"></td>
-	</tr>
-	<tr>
-	  <td colspan="3" id="formulabar"></td>
-	</tr>
-      </table>
-      <input id="insertgraphic" type="file" style="position: fixed; top: -100em">
-    </div>
+    <div id="logo" class="logo"></div>
+    <nav class="main-nav" role="navigation">
+      <!-- Mobile menu toggle button (hamburger/x icon) -->
+      <input id="main-menu-state" type="checkbox" />
+      <label class="main-menu-btn" for="main-menu-state">
+       <span class="main-menu-btn-icon"></span>
+      </label>
+      <ul id="main-menu" class="sm sm-simple lo-menu"></ul>
+    </nav>
+    <table id="toolbar-wrapper">
+    <tr>
+      <td id="toolbar-logo"></td>
+      <td id="toolbar-up"</td>
+      <td id="toolbar-hamburger"></td>
+    </tr>
+    <tr>
+      <td colspan="3" id="formulabar"></td>
+    </tr>
+    </table>
 
+    <input id="insertgraphic" type="file" style="position: fixed; top: -100em">
     <input id="document-name-input" type="text" disabled="true"/>
 
     <div id="closebuttonwrapper">
       <div class="closebuttonimage" id="closebutton"></div>
     </div>
 
-    <div id="spreadsheet-row-column-frame">
-    </div>
+    <div id="spreadsheet-row-column-frame"></div>
 
     <div id="document-container">
       <div id="map"></div>
