@@ -3010,6 +3010,7 @@ int LOOLWSD::innerMain()
 #endif
 #endif
     }
+    LOG_TRC("Loop finished. TerminationFlag=" << TerminationFlag);
 
 // No point in doing any orderly shutdown on mobile, we will never exit intentionally, the OS will
 // kill us.
