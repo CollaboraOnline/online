@@ -633,7 +633,7 @@ public:
     typedef std::function<void()> CallbackFn;
 
     /// Add a callback to be invoked in the polling thread
-    void addCallback(CallbackFn fn)
+    void addCallback(const CallbackFn& fn)
     {
         std::lock_guard<std::mutex> lock(_mutex);
         _newCallbacks.emplace_back(fn);
