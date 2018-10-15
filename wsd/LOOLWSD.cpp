@@ -3010,9 +3010,6 @@ int LOOLWSD::innerMain()
     }
     LOG_TRC("Loop finished. TerminationFlag=" << TerminationFlag);
 
-// No point in doing any orderly shutdown on mobile, we will never exit intentionally, the OS will
-// kill us.
-#ifndef MOBILEAPP
     // Stop the listening to new connections
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownRequestFlag: " <<
@@ -3053,7 +3050,7 @@ int LOOLWSD::innerMain()
 
     DocBrokers.clear();
 
-#ifndef KIT_IN_PROCESS
+#if !defined(KIT_IN_PROCESS) && !defined(MOBILEAPP)
     // Terminate child processes
     LOG_INF("Requesting forkit process " << ForKitProcId << " to terminate.");
     SigUtil::killChild(ForKitProcId);
@@ -3068,6 +3065,7 @@ int LOOLWSD::innerMain()
         child->terminate();
     }
 
+#ifndef MOBILEAPP
 #ifndef KIT_IN_PROCESS
     // Wait for forkit process finish.
     LOG_INF("Waiting for forkit process to exit");
@@ -3111,6 +3109,10 @@ void LOOLWSD::cleanup()
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
+#ifdef MOBILEAPP
+    TerminationFlag = false;
+#endif
+
     int returnValue;
 
     try {
