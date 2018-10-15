@@ -897,11 +897,13 @@ public:
             }
 
             num_sessions = _sessions.size();
+#ifndef MOBILEAPP
             if (num_sessions == 0)
             {
                 LOG_INF("Document [" << _url << "] has no more views, exiting bluntly.");
                 std::_Exit(Application::EXIT_OK);
             }
+#endif
         }
 
         // Don't destroy sessions while holding our lock.
@@ -1375,12 +1377,13 @@ private:
         if (viewCount == 1)
         {
             std::unique_lock<std::mutex> lock(_mutex);
+#ifndef MOBILEAPP
             if (_sessions.empty())
             {
                 LOG_INF("Document [" << _url << "] has no more views, exiting bluntly.");
                 std::_Exit(Application::EXIT_OK);
             }
-
+#endif
             LOG_INF("Document [" << _url << "] has no more views, but has " <<
                     _sessions.size() << " sessions still. Destroying the document.");
             _loKitDocument.reset();
