@@ -3130,6 +3130,11 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     UnitWSD::get().returnValue(returnValue);
 
     LOG_INF("Process [loolwsd] finished.");
+
+#ifdef MOBILEAPP
+    fakeSocketDumpState();
+#endif
+
     return returnValue;
 }
 
