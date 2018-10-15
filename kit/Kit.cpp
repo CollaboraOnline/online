@@ -2433,12 +2433,12 @@ void lokit_main(
 
             if (document && document->purgeSessions() == 0)
             {
-                LOG_INF("Last session discarded. Setting TerminationFlag");
-                TerminationFlag = true;
+                LOG_INF("Last session discarded. Breaking out of loop");
+                break;
             }
         }
 
-        LOG_INF("Kit poll terminated.");
+        LOG_INF("Kit poll finished.");
 
         // Let forkit handle the jail cleanup.
     }
