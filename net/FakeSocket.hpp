@@ -44,6 +44,8 @@ int fakeSocketShutdown(int fd);
 
 int fakeSocketClose(int fd);
 
+void fakeSocketDumpState();
+
 #endif // MOBILEAPP
 
 #endif // INCLUDED_FAKESOCKET_H
