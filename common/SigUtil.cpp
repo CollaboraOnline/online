@@ -36,13 +36,10 @@
 #include "Common.hpp"
 #include "Log.hpp"
 
-/// Flag to request hard termination.
 std::atomic<bool> TerminationFlag(false);
-/// Flag to request dumping of all internal state
 std::atomic<bool> DumpGlobalState(false);
 
 #ifndef MOBILEAPP
-/// Flag to request WSD to notify clients and shutdown.
 std::atomic<bool> ShutdownRequestFlag(false);
 
 std::mutex SigHandlerTrap;
