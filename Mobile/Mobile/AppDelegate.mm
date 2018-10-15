@@ -40,16 +40,17 @@ static LOOLWSD *loolwsd = nullptr;
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^{
-                       if (loolwsd == nullptr)
-                       {
-                           loolwsd = new LOOLWSD();
-                           Util::setThreadName("app");
-                       }
+                       assert(loolwsd == nullptr);
                        char *argv[2];
                        argv[0] = strdup([[NSBundle mainBundle].executablePath UTF8String]);
                        argv[1] = nullptr;
-                       loolwsd->run(1, argv);
-                       assert(false && "????? LOOLWSD::main() returned?");
+                       Util::setThreadName("app");
+                       while (true) {
+                           loolwsd = new LOOLWSD();
+                           loolwsd->run(1, argv);
+                           delete loolwsd;
+                           NSLog(@"One run of LOOLWSD completed");
+                       }
                    });
     return YES;
 }

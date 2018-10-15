@@ -177,7 +177,7 @@
                                            // the other end too just for cleanliness, even if a
                                            // FakeSocket as such is not a system resource so nothing
                                            // is saved by closing it.
-                                           fakeSocketClose(self->closeNotificationPipeForForwardingThread[0]);
+                                           fakeSocketClose(self->closeNotificationPipeForForwardingThread[1]);
 
                                            // Close our end of the fake socket connection to the
                                            // ClientSession thread, so that it terminates
@@ -210,11 +210,12 @@
 
             return;
         } else if ([message.body isEqualToString:@"BYE"]) {
-            NSLog(@"document window closed! Closing our end of the socket?");
+            NSLog(@"document window terminating on JavaScript side. Closing our end of the socket.");
 
             // Close one end of the socket pair, that will wake up the forwarding thread above
             fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
+            [self dismissDocumentViewController];
             return;
         }
 
