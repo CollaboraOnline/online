@@ -2863,7 +2863,7 @@ bool LOOLWSD::handleShutdownRequest()
 
 int LOOLWSD::innerMain()
 {
-#ifndef FUZZER
+#if !defined FUZZER && !defined MOBILEAPP
     SigUtil::setUserSignals();
     SigUtil::setFatalSignals();
     SigUtil::setTerminationSignals();

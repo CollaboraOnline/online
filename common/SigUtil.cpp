@@ -40,6 +40,8 @@
 std::atomic<bool> TerminationFlag(false);
 /// Flag to request dumping of all internal state
 std::atomic<bool> DumpGlobalState(false);
+
+#ifndef MOBILEAPP
 /// Flag to request WSD to notify clients and shutdown.
 std::atomic<bool> ShutdownRequestFlag(false);
 
@@ -310,5 +312,7 @@ namespace SigUtil
         return false;
     }
 }
+
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
