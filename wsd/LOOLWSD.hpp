@@ -78,11 +78,6 @@ public:
     /// Flag to shutdown the server.
     std::atomic<bool> ShutdownFlag;
 
-    bool isShuttingDown()
-    {
-        return ShutdownFlag;
-    }
-
     bool handleShutdownRequest();
 
     static std::string GenSessionId()
