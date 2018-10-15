@@ -2854,7 +2854,6 @@ bool LOOLWSD::handleShutdownRequest()
     {
         LOG_INF("Shutdown requested. Initiating WSD shutdown.");
         Util::alertAllUsers("close: shuttingdown");
-        ShutdownFlag = true;
         return true;
     }
 
@@ -3029,7 +3028,7 @@ int LOOLWSD::innerMain()
 #ifndef MOBILEAPP
     // Stop the listening to new connections
     // and wait until sockets close.
-    LOG_INF("Stopping server socket listening. ShutdownFlag: " <<
+    LOG_INF("Stopping server socket listening. ShutdownRequestFlag: " <<
             ShutdownRequestFlag << ", TerminationFlag: " << TerminationFlag);
 
     // Wait until documents are saved and sessions closed.

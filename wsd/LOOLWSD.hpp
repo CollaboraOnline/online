@@ -75,9 +75,6 @@ public:
 
     static std::vector<int> getKitPids();
 
-    /// Flag to shutdown the server.
-    std::atomic<bool> ShutdownFlag;
-
     bool handleShutdownRequest();
 
     static std::string GenSessionId()
