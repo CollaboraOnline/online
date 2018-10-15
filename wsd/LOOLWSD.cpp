@@ -2822,7 +2822,6 @@ private:
 
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ClientListenAddr, port, WebServerPoll, factory);
-#ifdef MOBILEAPP
 #ifdef BUILDING_TESTS
         while (!socket)
         {
@@ -2831,7 +2830,6 @@ private:
             socket = getServerSocket(
                 ServerSocket::Type::Public, port, WebServerPoll, factory);
         }
-#endif
 #endif
         if (!socket)
         {
