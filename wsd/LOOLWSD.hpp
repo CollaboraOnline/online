@@ -75,8 +75,6 @@ public:
 
     static std::vector<int> getKitPids();
 
-    bool handleShutdownRequest();
-
     static std::string GenSessionId()
     {
         return Util::encodeId(++NextSessionId, 4);

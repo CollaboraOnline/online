@@ -2848,18 +2848,6 @@ private:
 
 static LOOLWSDServer srv;
 
-bool LOOLWSD::handleShutdownRequest()
-{
-    if (ShutdownRequestFlag)
-    {
-        LOG_INF("Shutdown requested. Initiating WSD shutdown.");
-        Util::alertAllUsers("close: shuttingdown");
-        return true;
-    }
-
-    return false;
-}
-
 int LOOLWSD::innerMain()
 {
 #if !defined FUZZER && !defined MOBILEAPP
