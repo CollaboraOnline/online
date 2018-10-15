@@ -36,13 +36,11 @@ public:
     {
     }
 
-    bool stopping() const { return TerminationFlag; }
-
     size_t enqueue(const Item& item)
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        if (!stopping() && deduplicate(item))
+        if (!TerminationFlag && deduplicate(item))
             _queue.push_back(item);
 
         return _queue.size();
@@ -53,7 +51,7 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        if (!_queue.empty() && !stopping())
+        if (!_queue.empty() && !TerminationFlag)
         {
             item = _queue.front();
             _queue.pop_front();
@@ -61,8 +59,8 @@ public:
         }
         else
         {
-            if (stopping())
-                LOG_DBG("SenderQueue: stopping");
+            if (TerminationFlag)
+                LOG_DBG("SenderQueue: TerminationFlag is set");
             return false;
         }
     }
