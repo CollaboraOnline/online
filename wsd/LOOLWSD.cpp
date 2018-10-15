@@ -1570,7 +1570,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
 
     if (TerminationFlag)
     {
-        LOG_ERR("Termination flag set. No loading new session [" << id << "]");
+        LOG_ERR("TerminationFlag set. Not loading new session [" << id << "]");
         return nullptr;
     }
 
@@ -1600,7 +1600,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
 
     if (TerminationFlag)
     {
-        LOG_ERR("Termination flag set. No loading new session [" << id << "]");
+        LOG_ERR("TerminationFlag is set. Not loading new session [" << id << "]");
         return nullptr;
     }
 

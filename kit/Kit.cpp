@@ -2126,7 +2126,7 @@ protected:
 
     void onDisconnect() override
     {
-        LOG_WRN("Kit connection lost without exit arriving from wsd");
+        LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
         TerminationFlag = true;
     }
 };
@@ -2433,7 +2433,7 @@ void lokit_main(
 
             if (document && document->purgeSessions() == 0)
             {
-                LOG_INF("Last session discarded. Terminating.");
+                LOG_INF("Last session discarded. Setting TerminationFlag");
                 TerminationFlag = true;
             }
         }

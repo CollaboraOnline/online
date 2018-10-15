@@ -85,7 +85,7 @@ public:
             {
                 if (TerminationFlag)
                 {
-                    LOG_INF("Poll interrupted in " << getName() << " and Termination flag set.");
+                    LOG_INF("Poll interrupted in " << getName() << " and TerminationFlag is set.");
                 }
 
                 // Break.
