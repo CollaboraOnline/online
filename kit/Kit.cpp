@@ -1851,7 +1851,7 @@ private:
 
                 if (_stop || TerminationFlag)
                 {
-                    LOG_INF("Kit: Stop flagged.");
+                    LOG_INF("_stop or TerminationFlag is set, breaking out of loop");
                     break;
                 }
 
@@ -2066,7 +2066,7 @@ protected:
         // Note: Syntax or parsing errors here are unexpected and fatal.
         if (TerminationFlag)
         {
-            LOG_DBG("Too late, we're going down");
+            LOG_DBG("Too late, TerminationFlag is set, we're going down");
         }
         else if (tokens[0] == "session")
         {
