@@ -42,6 +42,39 @@ static gboolean closeWebViewCb(WebKitWebView* webView, GtkWidget* window);
 
 int loolwsd_server_socket_fd;
 
+static void handle_debug_message(WebKitUserContentManager *manager,
+                                 WebKitJavascriptResult   *js_result,
+                                 gpointer                  user_data)
+{
+    JSCValue *value = webkit_javascript_result_get_js_value(js_result);
+    if (jsc_value_is_string(value))
+        std::cout << "From JS: debug: " << jsc_value_to_string(value) << std::endl;
+    else
+        std::cout << "From JS: debug: some object" << std::endl;
+}
+
+static void handle_lool_message(WebKitUserContentManager *manager,
+                                WebKitJavascriptResult   *js_result,
+                                gpointer                  user_data)
+{
+    JSCValue *value = webkit_javascript_result_get_js_value(js_result);
+    if (jsc_value_is_string(value))
+        std::cout << "From JS: lool: " << jsc_value_to_string(value) << std::endl;
+    else
+        std::cout << "From JS: lool: some object" << std::endl;
+}
+
+static void handle_error_message(WebKitUserContentManager *manager,
+                                 WebKitJavascriptResult   *js_result,
+                                 gpointer                  user_data)
+{
+    JSCValue *value = webkit_javascript_result_get_js_value(js_result);
+    if (jsc_value_is_string(value))
+        std::cout << "From JS: error: " << jsc_value_to_string(value) << std::endl;
+    else
+        std::cout << "From JS: error: some object" << std::endl;
+}
+
 int main(int argc, char* argv[])
 {
     Log::initialize("Mobile", "trace", false, false, {});
@@ -60,6 +93,14 @@ int main(int argc, char* argv[])
 
     // Create a "user content manager"
     WebKitUserContentManager *userContentManager = WEBKIT_USER_CONTENT_MANAGER(webkit_user_content_manager_new());
+
+    g_signal_connect(userContentManager, "script-message-received::debug", G_CALLBACK(handle_debug_message), NULL);
+    g_signal_connect(userContentManager, "script-message-received::lool", G_CALLBACK(handle_lool_message), NULL);
+    g_signal_connect(userContentManager, "script-message-received::error", G_CALLBACK(handle_error_message), NULL);
+
+    webkit_user_content_manager_register_script_message_handler(userContentManager, "debug");
+    webkit_user_content_manager_register_script_message_handler(userContentManager, "lool");
+    webkit_user_content_manager_register_script_message_handler(userContentManager, "error");
 
     // Create a browser instance
     WebKitWebView *webView = WEBKIT_WEB_VIEW(webkit_web_view_new_with_user_content_manager(userContentManager));
