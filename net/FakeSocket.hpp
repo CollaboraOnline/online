@@ -12,6 +12,8 @@
 
 #ifdef MOBILEAPP
 
+#include <string>
+
 #include <poll.h>
 
 #ifndef SOCK_NONBLOCK

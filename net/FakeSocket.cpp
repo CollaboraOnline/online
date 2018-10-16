@@ -11,9 +11,11 @@
 #include <fcntl.h>
 #include <poll.h>
 
+#include <cassert>
 #include <chrono>
 #include <condition_variable>
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <sstream>
 #include <mutex>
