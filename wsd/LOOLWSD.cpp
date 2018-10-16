@@ -2758,7 +2758,7 @@ private:
     /// to the @clientSockets' poll when created with @factory.
     std::shared_ptr<ServerSocket> getServerSocket(ServerSocket::Type type, int port,
                                                   SocketPoll &clientSocket,
-                                                  std::shared_ptr<SocketFactory> factory)
+                                                  const std::shared_ptr<SocketFactory>& factory)
     {
         auto serverSocket = std::make_shared<ServerSocket>(
             type == ServerSocket::Type::Local ? Socket::Type::IPv4 : ClientPortProto,
