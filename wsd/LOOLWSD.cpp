@@ -3008,8 +3008,6 @@ int LOOLWSD::innerMain()
 #endif
 #endif
     }
-    LOG_TRC("Loop finished. TerminationFlag=" << TerminationFlag);
-
     // Stop the listening to new connections
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownRequestFlag: " <<
