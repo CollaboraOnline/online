@@ -29,9 +29,9 @@ global.getParameterByName = function (name) {
 };
 
 global._ = function (string) {
-	// In the iOS case we can't use the stuff from l10n-for-node, as that assumes HTTP.
+	// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
 	// So bail out for now.
-	if (window.ThisIsTheiOSApp) {
+	if (window.ThisIsaMobileApp) {
 		return string;
 	} else {
 		return string.toLocaleString();

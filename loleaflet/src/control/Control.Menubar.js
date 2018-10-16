@@ -735,7 +735,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
 			this._map.fire('postMessage', {msgId: 'UI_FileVersions'});
 		} else if (id === 'closedocument') {
-			if (window.ThisIsTheiOSApp) {
+			if (window.ThisIsAMobileApp) {
 				window.webkit.messageHandlers.lool.postMessage('BYE', '*');
 			} else {
 				this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});

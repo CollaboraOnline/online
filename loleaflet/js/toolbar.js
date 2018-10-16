@@ -1869,7 +1869,7 @@ $(document).ready(function() {
 		$('#closebuttonwrapper').hide();
 	} else {
 		$('#closebutton').click(function() {
-			if (window.ThisIsTheiOSApp) {
+			if (window.ThisIsAMobileApp) {
 				window.webkit.messageHandlers.lool.postMessage('BYE', '*');
 			} else {
 				map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});

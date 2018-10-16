@@ -12,7 +12,11 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script>
-ifelse(IOSAPP,[],
+dnl# Define MOBILEAPP as true if this is either for the iOS aoo or for the gtk+ "app" testbed
+ifelse(IOSAPP,[true],[define([MOBILEAPP],[true])])
+ifelse(GTKAPP,[true],[define([MOBILEAPP],[true])])
+
+ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
   // result for future
   window.WOPIpostMessageReady = false;
@@ -41,7 +45,7 @@ var Base64ToArrayBuffer = function(base64Str) {
 }
 </script>
 
-ifelse(IOSAPP,[true],
+ifelse(MOBILEAPP,[true],
   ifelse(DEBUG,[true],
     foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="fileCSS" />
   ]),
@@ -54,7 +58,7 @@ ifelse(IOSAPP,[true],
   ])dnl
 )dnl
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
-ifelse(IOSAPP,[true],
+ifelse(MOBILEAPP,[true],
   [<link rel="localizations" href="l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
@@ -131,7 +135,7 @@ ifelse(IOSAPP,[true],
     </div>
 
     <script>
-ifelse(IOSAPP,[true],
+ifelse(MOBILEAPP,[true],
      [window.host = '';
       window.serviceRoot = '';
       window.accessToken = '';
@@ -150,13 +154,24 @@ ifelse(IOSAPP,[true],
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;])
     </script>
   <script>
+
+dnl# For use in conditionals in JS: window.ThisIsAMobileApp, window.ThisIsTheiOSApp,
+dnl# and window.ThisIsTheGtkApp
+ifelse(MOBILEAPP,[true],
+  [window.ThisIsAMobileApp = true;],
+  [window.ThisIsAMobileApp = false;]
+)
 ifelse(IOSAPP,[true],
   [window.ThisIsTheiOSApp = true;],
   [window.ThisIsTheiOSApp = false;]
 )
+ifelse(GTKAPP,[true],
+  [window.ThisIsTheGtkApp = true;],
+  [window.ThisIsTheGtkApp = false;]
+)
   </script>
 
-ifelse(IOSAPP,[true],
+ifelse(MOBILEAPP,[true],
   ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
   [    <script src="fileJS"></script>
   ]),

@@ -61,7 +61,7 @@ L.Socket = L.Class.extend({
 		if (this.socket) {
 			this.close();
 		}
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsAMobileApp) {
 			this.socket = new FakeWebSocket();
 			window.TheFakeWebSocket = this.socket;
 		} else {
@@ -91,7 +91,7 @@ L.Socket = L.Class.extend({
 		this.socket.onopen = L.bind(this._onSocketOpen, this);
 		this.socket.onmessage = L.bind(this._onMessage, this);
 		this.socket.binaryType = 'arraybuffer';
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsAMobileApp) {
 			// This corresponds to the initial GET request when creating a WebSocket
 			// connection and tells the app's code that it is OK to start invoking
 			// TheFakeWebSocket's onmessage handler. Should we also include the
@@ -196,7 +196,7 @@ L.Socket = L.Class.extend({
 
 	_onSocketOpen: function () {
 		console.debug('_onSocketOpen:');
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsAMobileApp) {
 			window.webkit.messageHandlers.debug.postMessage('>>>>>> _onSocketOpen');
 		}
 		this._map._serverRecycling = false;
