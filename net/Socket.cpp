@@ -111,6 +111,8 @@ void SocketPoll::startThread()
     if (!_threadStarted)
     {
         _threadStarted = true;
+        _threadFinished = false;
+        _stop = false;
         try
         {
             _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
@@ -125,7 +127,10 @@ void SocketPoll::startThread()
 
 void SocketPoll::joinThread()
 {
-    addCallback([this](){ removeSockets(); });
+    addCallback([this]()
+                {
+                    removeSockets();
+                });
     stop();
     if (_threadStarted && _thread.joinable())
     {
