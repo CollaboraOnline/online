@@ -4,6 +4,12 @@ SUBDIRS = loleaflet
 
 else
 
+if ENABLE_GTKAPP
+
+SUBDIRS = loleaflet
+
+else
+
 SUBDIRS = . test loleaflet
 
 export ENABLE_DEBUG
@@ -364,4 +370,5 @@ endif
 # just run the build without any tests
 build-nocheck: all-am
 
+endif
 endif
