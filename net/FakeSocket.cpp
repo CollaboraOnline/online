@@ -658,13 +658,13 @@ void fakeSocketDumpState()
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
 
-    loggingBuffer << "FakeSocket open sockets:";
+    loggingBuffer << "FakeSocket open sockets:" << flush();
     for (int i = 0; i < fds.size(); i++)
     {
         if (fds[i].fd[0] != -1)
         {
             assert(fds[i].fd[0] == i*2);
-            loggingBuffer << "\n  #" << fds[i].fd[0];
+            loggingBuffer << "  #" << fds[i].fd[0];
             if (fds[i].fd[1] != -1)
             {
                 assert(fds[i].fd[1] == i*2+1);
@@ -675,15 +675,15 @@ void fakeSocketDumpState()
             {
                 loggingBuffer << " listening";
             }
+            loggingBuffer << flush();
         }
         else if (fds[i].fd[1] != -1)
         {
             assert(fds[i].fd[1] == i*2+1);
             assert(!fds[i].listening);
-            loggingBuffer << "\n  #" << fds[i].fd[1];
+            loggingBuffer << "  #" << fds[i].fd[1] << flush();
         }
     }
-    loggingBuffer << flush();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
