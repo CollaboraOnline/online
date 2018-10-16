@@ -292,6 +292,8 @@ namespace Util
         return std::getenv("DISPLAY") != nullptr;
     }
 
+#ifndef MOBILEAPP
+
     static const char *startsWith(const char *line, const char *tag)
     {
         size_t len = strlen(tag);
@@ -306,7 +308,6 @@ namespace Util
         return nullptr;
     }
 
-#ifndef MOBILEAPP
     std::string getHumanizedBytes(unsigned long nBytes)
     {
         constexpr unsigned factor = 1024;

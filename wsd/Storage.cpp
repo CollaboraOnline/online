@@ -354,10 +354,10 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
     return StorageBase::SaveResult(StorageBase::SaveResult::OK);
 }
 
+#ifndef MOBILEAPP
+
 namespace
 {
-
-#ifndef MOBILEAPP
 
 inline
 Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
@@ -369,8 +369,6 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
                                             Poco::Net::SSLManager::instance().defaultClientContext())
         : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
-
-#endif
 
 void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 {
@@ -410,8 +408,6 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::st
 }
 
 } // anonymous namespace
-
-#ifndef MOBILEAPP
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
 {

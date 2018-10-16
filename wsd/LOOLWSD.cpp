@@ -133,8 +133,12 @@ using Poco::Net::PartHandler;
 
 #include <ServerSocket.hpp>
 
+#ifdef MOBILEAPP
 #ifdef IOS
 #include "ios.h"
+#else
+#include "gtk.h"
+#endif
 #endif
 
 using namespace LOOLProtocol;
@@ -262,11 +266,11 @@ inline void checkSessionLimitsAndWarnClients()
 #endif
 }
 
+#ifndef MOBILEAPP
 /// Internal implementation to alert all clients
 /// connected to any document.
 void alertAllUsersInternal(const std::string& msg)
 {
-#ifndef MOBILEAPP
 
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -280,8 +284,8 @@ void alertAllUsersInternal(const std::string& msg)
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
         docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
     }
-#endif
 }
+#endif
 
 static void checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
 {
@@ -1068,7 +1072,6 @@ void LOOLWSD::initialize(Application& self)
     docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
     docProcSettings.LimitNumberOpenFiles = getConfigValue<int>("per_document.limit_num_open_files", 0);
     Admin::instance().setDefDocProcSettings(docProcSettings, false);
-#endif
 
 #if ENABLE_DEBUG
     std::cerr << "\nLaunch one of these in your browser:\n\n"
@@ -1081,6 +1084,8 @@ void LOOLWSD::initialize(Application& self)
     if (!adminURI.empty())
         std::cerr << "\nOr for the Admin Console:\n\n"
                   << adminURI << '\n' << std::endl;
+#endif
+
 #endif
 }
 
@@ -2991,7 +2996,9 @@ int LOOLWSD::innerMain()
     std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
 #endif
 
+#ifndef MOBILEAPP
     const auto startStamp = std::chrono::steady_clock::now();
+#endif
 
     while (!TerminationFlag && !ShutdownRequestFlag)
     {
