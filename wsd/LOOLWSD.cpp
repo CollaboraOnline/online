@@ -2780,7 +2780,9 @@ private:
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
 
+#ifndef MOBILEAPP
         LOG_INF("Trying to listen on prisoner port " << port << ".");
+#endif
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ServerSocket::Type::Local, port, PrisonerPoll, factory);
 
@@ -2803,9 +2805,11 @@ private:
         }
 
         MasterPortNumber = port;
+#ifndef MOBILEAPP
         LOG_INF("Listening to prisoner connections on port " << port);
-#ifdef MOBILEAPP
+#else
         LOOLWSD::prisonerServerSocketFD = socket->getFD();
+        LOG_INF("Listening to prisoner connections on #" << LOOLWSD::prisonerServerSocketFD);
 #endif
         return socket;
     }
@@ -2813,8 +2817,12 @@ private:
     /// Create the externally listening public socket
     std::shared_ptr<ServerSocket> findServerPort(int port)
     {
+#ifndef MOBILEAPP
         LOG_INF("Trying to listen on client port " << port << ".");
+#endif
+
         std::shared_ptr<SocketFactory> factory;
+
 #if ENABLE_SSL
         if (LOOLWSD::isSSLEnabled())
             factory = std::make_shared<SslSocketFactory>();
@@ -2841,7 +2849,12 @@ private:
         }
 
         ClientPortNumber = port;
+
+#ifndef MOBILEAPP
         LOG_INF("Listening to client connections on port " << port);
+#else
+        LOG_INF("Listening to client connections on #" << socket->getFD());
+#endif
         return socket;
     }
 };
