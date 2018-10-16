@@ -32,7 +32,8 @@ static LOOLWSD *loolwsd = nullptr;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    Log::initialize("app", "trace", false, false, {});
+    Log::initialize("Mobile", "trace", false, false, {});
+    Util::setThreadName("main");
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
                                      LOG_TRC_NOFILE(line);
