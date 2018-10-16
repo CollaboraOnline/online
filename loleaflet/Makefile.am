@@ -13,7 +13,9 @@ L10N_PO = $(wildcard $(srcdir)/po/*.po)
 # HTTP to load the message catalog .json files.
 
 if !ENABLE_IOSAPP
+if !ENABLE_GTKAPP
 L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
+endif
 endif
 
 JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
@@ -93,8 +95,10 @@ NODE_MODULES_JS =\
 	node_modules/vex-js/js/vex.dialog.js
 
 if !ENABLE_IOSAPP
+if !ENABLE_GTKAPP
 NODE_MODULES_JS +=\
 	node_modules/l10n-for-node/l10n.js
+endif
 endif
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
@@ -202,6 +206,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 	@echo "Generating loleaflet.html..."
 	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
+		-DGTKAPP=$(ENABLE_GTKAPP) \
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(GLOBAL_JS) $(NODE_MODULES_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \

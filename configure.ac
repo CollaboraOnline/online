@@ -57,6 +57,12 @@ AC_ARG_ENABLE([iosapp],
                              [Use in a tree where the only purpose is to build the HTML and CSS stuff
                               to be copied to a Mac where the iOS app is being built.]))
 
+AC_ARG_ENABLE([gtkapp],
+              AS_HELP_STRING([--enable-gtkapp],
+                             [Use in a tree where the only purpose is to build the gtk+ "app" that is supposed
+                              to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
+                              message plumbing point of view.]))
+
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
                              [Disable use of linux/seccomp.h header when kernel on target system does not support it.
@@ -164,6 +170,13 @@ if test "$enable_iosapp" = "yes"; then
 fi
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
+
+ENABLE_GTKAPP=
+if test "$enable_gtkapp" = "yes"; then
+   ENABLE_GTKAPP=true
+fi
+AC_SUBST(ENABLE_GTKAPP)
+AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
 
 MAX_CONNECTIONS=20
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
