@@ -510,8 +510,7 @@ namespace Util
                     ") is now called [" << s << "].");
 #elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
-        LOG_INF("Thread " << getThreadId() << " (" <<
-                std::this_thread::get_id() <<
+        LOG_INF("Thread " << getThreadId() <<
                 ") is now called [" << s << "].");
 #endif
     }
