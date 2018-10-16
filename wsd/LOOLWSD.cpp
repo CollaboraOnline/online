@@ -501,7 +501,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
                     Util::setThreadName("lokit_main");
 
                     // Ugly to have that static global, otoh we know there is just one LOOLWSD
-                    // object. (Even in real Online.) I have no idea what I am doing here.
+                    // object. (Even in real Online.)
                     lokit_main(uri, LOOLWSD::prisonerServerSocketFD);
                 }).detach();
 #endif
