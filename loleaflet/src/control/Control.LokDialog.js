@@ -251,10 +251,13 @@ L.Control.LokDialog = L.Control.extend({
 		if (!title)
 			dialogClass += ' lokdialog_notitle';
 
-		var that = this;
+		var that = this,
+		    size = this._map.getSize();
 		$(dialogContainer).dialog({
-			minWidth: width,
-			width: width,
+			minWidth: size.x,
+			width: Math.min(width, size.x),
+			maxHeight: $(window).height(),
+			height: 'auto',
 			title: title ? title : '',
 			modal: false,
 			closeOnEscape: true,
