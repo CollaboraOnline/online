@@ -2492,11 +2492,13 @@ void lokit_main(
         {
             mainKit.poll(SocketPoll::DefaultPollTimeoutMs);
 
+#ifndef MOBILEAPP
             if (document && document->purgeSessions() == 0)
             {
                 LOG_INF("Last session discarded. Setting TerminationFlag");
                 TerminationFlag = true;
             }
+#endif
         }
 
         LOG_INF("Kit poll terminated.");
