@@ -2247,7 +2247,9 @@ void lokit_main(
     std::shared_ptr<lok::Office> loKit;
     Path jailPath;
     bool bRunInsideJail = !noCapabilities;
-
+#else
+    AnonymizeFilenames = false;
+    AnonymizeUsernames = false;
 #endif // MOBILEAPP
 
     try
@@ -2524,6 +2526,15 @@ void lokit_main(
 }
 #endif
 
+std::string anonymizeUrl(const std::string& url)
+{
+#ifndef BUILDING_TESTS
+    return AnonymizeFilenames ? Util::anonymizeUrl(url) : url;
+#else
+    return url;
+#endif
+}
+
 #ifndef MOBILEAPP
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
@@ -2594,15 +2605,6 @@ bool globalPreinit(const std::string &loTemplate)
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() <<
             " ms.");
     return true;
-}
-
-std::string anonymizeUrl(const std::string& url)
-{
-#ifndef BUILDING_TESTS
-    return AnonymizeFilenames ? Util::anonymizeUrl(url) : url;
-#else
-    return url;
-#endif
 }
 
 /// Anonymize usernames.
