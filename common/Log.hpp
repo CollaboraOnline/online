@@ -249,14 +249,14 @@ namespace Log
         }                                           \
     } while (false)
 
-#define LOG_TRC_NOFILE(X)                      \
-    do                                         \
-    {                                          \
-        auto &l_ = Log::logger();              \
-        if (l_.trace())                        \
-        {                                      \
-            LOG_BODY_(TRACE, "TRC", X, false); \
-        }                                      \
+#define LOG_TRC_NOFILE(X)                           \
+    do                                              \
+    {                                               \
+        auto &log_ = Log::logger();                 \
+        if (log_.trace())                           \
+        {                                           \
+            LOG_BODY_(log_, TRACE, "TRC", X, false);\
+        }                                           \
     } while (false)
 
 #define LOG_DBG(X)                                  \
