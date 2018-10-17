@@ -2135,6 +2135,7 @@ protected:
         {
             LOG_TRC("Setting TerminationFlag due to 'exit' command from parent.");
             TerminationFlag = true;
+            document.reset();
         }
         else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
                 tokens[0] == "paintwindow" ||
