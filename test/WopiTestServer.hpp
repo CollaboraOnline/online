@@ -57,7 +57,7 @@ public:
     {
     }
 
-    void initWebsocket(std::string wopiName)
+    void initWebsocket(const std::string& wopiName)
     {
         Poco::URI wopiURL(helpers::getTestServerURI() + wopiName);
 

@@ -32,7 +32,7 @@
 
 class HTTPGetTest;
 
-bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry, const std::string testName)
+bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry, const std::string& testName)
 {
     Poco::RegularExpression re(testName, Poco::RegularExpression::RE_CASELESS);
     Poco::RegularExpression::Match reMatch;

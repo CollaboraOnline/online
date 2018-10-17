@@ -189,12 +189,12 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
                    int& cursorWidth,
                    int& cursorHeight);
 
-    void limitCursor(std::function<void(const std::shared_ptr<LOOLWebSocket>& socket,
+    void limitCursor(const std::function<void(const std::shared_ptr<LOOLWebSocket>& socket,
                                         int cursorX, int cursorY,
                                         int cursorWidth, int cursorHeight,
-                                        int docWidth, int docHeight)> keyhandler,
-                     std::function<void(int docWidth, int docHeight,
-                                        int newWidth, int newHeight)> checkhandler,
+                                        int docWidth, int docHeight)>& keyhandler,
+                     const std::function<void(int docWidth, int docHeight,
+                                        int newWidth, int newHeight)>& checkhandler,
                      const std::string& testname);
 
     std::string getFontList(const std::string& message);
@@ -1513,12 +1513,12 @@ void HTTPWSTest::getCursor(const std::string& message,
     CPPUNIT_ASSERT(cursorHeight >= 0);
 }
 
-void HTTPWSTest::limitCursor(std::function<void(const std::shared_ptr<LOOLWebSocket>& socket,
+void HTTPWSTest::limitCursor(const std::function<void(const std::shared_ptr<LOOLWebSocket>& socket,
                                                 int cursorX, int cursorY,
                                                 int cursorWidth, int cursorHeight,
-                                                int docWidth, int docHeight)> keyhandler,
-                             std::function<void(int docWidth, int docHeight,
-                                                int newWidth, int newHeight)> checkhandler,
+                                                int docWidth, int docHeight)>& keyhandler,
+                             const std::function<void(int docWidth, int docHeight,
+                                                int newWidth, int newHeight)>& checkhandler,
                              const std::string& testname)
 {
     int docSheet = -1;
