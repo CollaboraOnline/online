@@ -2167,8 +2167,10 @@ protected:
 
     void onDisconnect() override
     {
+#ifndef MOBILEAPP
         LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
         TerminationFlag = true;
+#endif
     }
 };
 
