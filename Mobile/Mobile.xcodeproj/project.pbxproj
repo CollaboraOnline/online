@@ -321,8 +321,6 @@
 		BE5EB5B6213FE21000E0826C /* common */ = {
 			isa = PBXGroup;
 			children = (
-				BEA283782150172600848631 /* Unit.hpp */,
-				BEA28376214FFD8C00848631 /* Unit.cpp */,
 				BE5EB5C0213FE29900E0826C /* FileUtil.cpp */,
 				BE5EB5B9213FE29900E0826C /* Log.cpp */,
 				BE5EB5BD213FE29900E0826C /* MessageQueue.cpp */,
@@ -330,6 +328,8 @@
 				BE5EB5BB213FE29900E0826C /* Session.cpp */,
 				BE5EB5BE213FE29900E0826C /* SigUtil.cpp */,
 				BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */,
+				BEA28376214FFD8C00848631 /* Unit.cpp */,
+				BEA283782150172600848631 /* Unit.hpp */,
 				BE5EB5BC213FE29900E0826C /* Util.cpp */,
 			);
 			path = common;
@@ -517,8 +517,8 @@
 			isa = PBXGroup;
 			children = (
 				BEA2835F214ACA8500848631 /* FakeSocket.cpp */,
-				BEA2835E214A8E2000848631 /* Socket.hpp */,
 				BEA2835C21498AD400848631 /* Socket.cpp */,
+				BEA2835E214A8E2000848631 /* Socket.hpp */,
 				BE636210215101D000F4237E /* WebSocketHandler.hpp */,
 			);
 			name = net;
