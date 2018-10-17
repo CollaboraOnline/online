@@ -382,6 +382,10 @@ int main(int argc, char**argv)
   TEST("abc", 'b', 1, NULL);
   TEST("abc", 'b', 2, s+1);
   TEST("abc", 'b', 3, s+1);
+  TEST("abc", 'c', 0, NULL);
+  TEST("abc", 'c', 1, NULL);
+  TEST("abc", 'c', 2, NULL);
+  TEST("abc", 'c', 3, s+2);
 
   if (success)
     return 0;
