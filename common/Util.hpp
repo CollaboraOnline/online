@@ -334,7 +334,7 @@ namespace Util
 
 #ifdef IOS
 
-    void *memrchr(const void *s, int c, size_t n)
+    inline void *memrchr(const void *s, int c, size_t n)
     {
         char *p = (char*)s + n - 1;
         while (p >= (char*)s)
