@@ -228,8 +228,10 @@ AC_SUBST(MAX_DOCUMENTS)
 
 # Test for build environment
 
-CXXFLAGS="$CXXFLAGS -std=c++11"
-CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow"
+AS_IF([test "$ENABLE_GTKAPP" != true],
+[CXXFLAGS="$CXXFLAGS -std=c++11"
+CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow"])
+
 CFLAGS="$CFLAGS -Wall -Wextra"
 
 AC_MSG_CHECKING([whether to turn warnings to errors])
@@ -351,6 +353,9 @@ AS_IF([test `uname -s` = Linux],
 PKG_CHECK_MODULES([ZLIB], [zlib])
 
 PKG_CHECK_MODULES([CPPUNIT], [cppunit])
+
+AS_IF([test "$ENABLE_GTKAPP" = true],
+      [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
 
 AS_IF([test "$enable_ssl" != "no"],
       [AC_DEFINE([ENABLE_SSL],1,[Whether to enable SSL])],
@@ -507,6 +512,7 @@ AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
 AC_LINK_FILES([loleaflet/node_shrinkwrap], [loleaflet/node_shrinkwrap])
 
 AC_CONFIG_FILES([Makefile
+                 gtk/Makefile
                  test/Makefile
                  loleaflet/Makefile
                  loleaflet/npm-shrinkwrap.json

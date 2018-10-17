@@ -6,7 +6,7 @@ else
 
 if ENABLE_GTKAPP
 
-SUBDIRS = loleaflet
+SUBDIRS = gtk loleaflet
 
 else
 

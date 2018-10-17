@@ -137,7 +137,7 @@ using Poco::Net::PartHandler;
 #ifdef IOS
 #include "ios.h"
 #else
-#include "gtk.h"
+#include "gtk.hpp"
 #endif
 #endif
 
