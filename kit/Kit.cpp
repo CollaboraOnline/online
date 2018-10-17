@@ -2478,11 +2478,13 @@ void lokit_main(
 
         LOG_INF("New kit client websocket inserted.");
 
+#ifndef MOBILEAPP
         if (bTraceStartup && LogLevel != "trace")
         {
             LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
             Log::logger().setLevel(LogLevel);
         }
+#endif
 
         while (!TerminationFlag)
         {
