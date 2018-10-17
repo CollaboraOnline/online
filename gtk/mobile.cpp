@@ -113,7 +113,12 @@ static void send2JS(const std::vector<char>& buffer)
     LOG_TRC_NOFILE( "Evaluating JavaScript: " << subjs);
 
     char *jscopy = strdup(js.c_str());
-    webkit_web_view_run_javascript(webView, jscopy, NULL, send2JS_ready_callback, jscopy);
+    g_idle_add([](gpointer data)
+               {
+                   char *jscopy = (char*) data;
+                   webkit_web_view_run_javascript(webView, jscopy, NULL, send2JS_ready_callback, jscopy);
+                   return FALSE;
+               }, jscopy);
 }
 
 static void handle_debug_message(WebKitUserContentManager *manager,
@@ -201,11 +206,15 @@ static void handle_lool_message(WebKitUserContentManager *manager,
             // WebSocket.
             LOG_TRC_NOFILE("Actually sending to Online:" << fileURL);
 
-            struct pollfd pollfd;
-            pollfd.fd = fakeClientFd;
-            pollfd.events = POLLOUT;
-            fakeSocketPoll(&pollfd, 1, -1);
-            fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+            // Must do this in a thread, too, so that we can return to the GTK+ main loop
+            std::thread([]
+                        {
+                            struct pollfd pollfd;
+                            pollfd.fd = fakeClientFd;
+                            pollfd.events = POLLOUT;
+                            fakeSocketPoll(&pollfd, 1, -1);
+                            fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+                        }).detach();
         }
         else if (strcmp(string_value, "BYE") == 0)
         {
@@ -218,11 +227,15 @@ static void handle_lool_message(WebKitUserContentManager *manager,
         }
         else
         {
-            struct pollfd pollfd;
-            pollfd.fd = fakeClientFd;
-            pollfd.events = POLLOUT;
-            fakeSocketPoll(&pollfd, 1, -1);
-            fakeSocketWrite(fakeClientFd, string_value, strlen(string_value));
+            // As above
+            std::thread([&]
+                        {
+                            struct pollfd pollfd;
+                            pollfd.fd = fakeClientFd;
+                            pollfd.events = POLLOUT;
+                            fakeSocketPoll(&pollfd, 1, -1);
+                            fakeSocketWrite(fakeClientFd, string_value, strlen(string_value));
+                        }).detach();
         }
         g_free(string_value);
     }

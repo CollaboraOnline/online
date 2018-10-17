@@ -2454,14 +2454,16 @@ void lokit_main(
 
 #else // MOBILEAPP
 
+#ifdef __linux
+        LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", LO_PATH "/user");
+#else
         LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
+#endif
+
+        assert(kit);
 
         std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
-        if (!loKit)
-        {
-            LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
-            std::_Exit(Application::EXIT_SOFTWARE);
-        }
+        assert(loKit);
 
         LOOLWSD::LOKitVersion = loKit->getVersionInfo();
 
