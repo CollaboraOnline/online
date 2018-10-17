@@ -223,11 +223,19 @@ namespace Log
 
 }
 
+#ifndef IOS
+#define LOG_FILE_NAME(f) f
+#else
+// We know that when building with Xcode, __FILE__ will always be a full path, with several slashes,
+// so this will always work. We want just the file name, they are unique anyway.
+#define LOG_FILE_NAME(f) (strrchr(f, '/')+1)
+#endif
+
 #define LOG_END(LOG, FILEP)                             \
     do                                                  \
     {                                                   \
         if (FILEP)                                      \
-            LOG << "| " << __FILE__ << ':' << __LINE__; \
+            LOG << "| " << LOG_FILE_NAME(__FILE__) << ':' << __LINE__; \
     } while (false)
 
 #define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                 \
