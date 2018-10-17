@@ -2844,10 +2844,6 @@ private:
     std::shared_ptr<ServerSocket> findPrisonerServerPort(int& port)
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
-
-#ifndef MOBILEAPP
-        LOG_INF("Trying to listen on prisoner port " << port << ".");
-#endif
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ServerSocket::Type::Local, port, PrisonerPoll, factory);
 
@@ -2883,10 +2879,6 @@ private:
     /// Create the externally listening public socket
     std::shared_ptr<ServerSocket> findServerPort(int port)
     {
-#ifndef MOBILEAPP
-        LOG_INF("Trying to listen on client port " << port << ".");
-#endif
-
         std::shared_ptr<SocketFactory> factory;
 
 #if ENABLE_SSL
