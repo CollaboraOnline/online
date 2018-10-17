@@ -12,7 +12,7 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script>
-dnl# Define MOBILEAPP as true if this is either for the iOS aoo or for the gtk+ "app" testbed
+dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed
 ifelse(IOSAPP,[true],[define([MOBILEAPP],[true])])
 ifelse(GTKAPP,[true],[define([MOBILEAPP],[true])])
 
