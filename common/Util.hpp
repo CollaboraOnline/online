@@ -332,6 +332,67 @@ namespace Util
         return false;
     }
 
+#ifdef IOS
+
+    void *memrchr(const void *s, int c, size_t n)
+    {
+        char *p = (char*)s + n - 1;
+        while (p >= (char*)s)
+        {
+            if (*p == c)
+                return p;
+            p--;
+        }
+        return nullptr;
+    }
+
+#if 0
+
+// Unit test for the above memrchr()
+
+int main(int argc, char**argv)
+{
+  int success = 1;
+  char *s;
+  char *p;
+
+#define TEST(s_,c,n,e) \
+  s = s_; \
+  printf("memrchr(\"%s\",'%c',%d)=",s,c,n); \
+  p = memrchr(s, c, n); \
+  if (p) \
+    printf("\"%s\"", p); \
+  else \
+    printf("NULL"); \
+  if (p == e) \
+    printf(" OK\n"); \
+  else \
+    { \
+      printf(" FAIL\n"); \
+      success = 0; \
+    }
+
+  TEST("abc", 'x', 0, NULL);
+  TEST("abc", 'x', 1, NULL);
+  TEST("abc", 'x', 3, NULL);
+  TEST("abc", 'a', 0, NULL);
+  TEST("abc", 'a', 1, s);
+  TEST("abc", 'a', 3, s);
+  TEST("abc", 'b', 0, NULL);
+  TEST("abc", 'b', 1, NULL);
+  TEST("abc", 'b', 2, s+1);
+  TEST("abc", 'b', 3, s+1);
+
+  if (success)
+    return 0;
+  else
+    return 1;
+}
+
+#endif
+
+#endif
+
     inline size_t getLastDelimiterPosition(const char* message, const int length, const char delim)
     {
         if (message && length > 0)
