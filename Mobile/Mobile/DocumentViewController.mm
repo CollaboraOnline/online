@@ -74,7 +74,9 @@
 
 - (IBAction)dismissDocumentViewController {
     [self dismissViewControllerAnimated:YES completion:^ {
-        [self.document closeWithCompletionHandler:nil];
+            [self.document closeWithCompletionHandler:^(BOOL success){
+                    NSLog(@"close completion handler gets %s", (success?"YES":"NO"));
+                    }];
     }];
 }
 
