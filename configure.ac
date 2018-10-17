@@ -69,7 +69,7 @@ AC_ARG_ENABLE([gtkapp],
               AS_HELP_STRING([--enable-gtkapp],
                              [Use in a tree where the only purpose is to build the gtk+ "app" that is supposed
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
-                              message plumbing point of view.]))
+                              message plumbing point of view. See gtk/README.]))
 
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
