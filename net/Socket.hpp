@@ -391,6 +391,18 @@ public:
     {
         LOG_DBG("Stopping " << _name << ".");
         _stop = true;
+#ifdef MOBILEAPP
+        {
+            // We don't want to risk some callbacks in _newCallbacks being invoked when we start
+            // running a thread for this SocketPoll again.
+            std::lock_guard<std::mutex> lock(_mutex);
+            if (_newCallbacks.size() > 0)
+            {
+                LOG_TRC("_newCallbacks is non-empty, clearing it");
+                _newCallbacks.clear();
+            }
+        }
+#endif
         wakeup();
     }
 
