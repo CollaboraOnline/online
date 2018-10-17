@@ -16,8 +16,10 @@
 
 #include <poll.h>
 
+#ifndef __linux
 #ifndef SOCK_NONBLOCK
 #define SOCK_NONBLOCK 0x100
+#endif
 #endif
 
 void fakeSocketSetLoggingCallback(void (*)(const std::string&));

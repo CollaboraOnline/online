@@ -2610,10 +2610,15 @@ private:
     /// Process the discovery.xml file and return as string.
     static std::string getDiscoveryXML()
     {
-        // http://server/hosting/discovery
+#if defined __linux && defined MOBILEAPP
+        // discovery.xml is in the top directory
+        std::string discoveryPath = Path(Application::instance().commandPath()).parent().parent().toString() + "discovery.xml";
+#else
         std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
+#endif
         if (!File(discoveryPath).exists())
         {
+            // http://server/hosting/discovery.xml
             discoveryPath = LOOLWSD::FileServerRoot + "/discovery.xml";
         }
 
