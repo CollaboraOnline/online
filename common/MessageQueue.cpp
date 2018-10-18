@@ -197,6 +197,8 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
     // the message is "callback <view> <id> ..."
     const std::string& callbackType = tokens[2];
 
+    // FIXME: Good grief, why don't we use the symbolic LOK_CALLBACK_FOO names here? Doing it this
+    // way is somewhat fragile and certainly bad style.
     if (callbackType == "0")        // invalidation
     {
         int msgX, msgY, msgW, msgH, msgPart;
