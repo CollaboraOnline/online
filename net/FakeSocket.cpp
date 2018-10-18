@@ -366,7 +366,7 @@ int fakeSocketConnect(int fd1, int fd2)
 
     assert(pair1.fd[1] == pair1.fd[0] + 1);
 
-    loggingBuffer << "FakeSocket Connect #" << fd1 << " to #" << fd2 << flush();
+    loggingBuffer << "FakeSocket Connect #" << fd1 << " to #" << fd2 << ": #" << pair1.fd[1] << flush();
 
     return 0;
 }
