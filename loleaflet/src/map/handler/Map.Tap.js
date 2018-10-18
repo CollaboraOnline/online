@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * L.Map.Tap is used to enable mobile hacks like quick taps and long hold.
  */
@@ -19,6 +19,19 @@ L.Map.Tap = L.Handler.extend({
 
 	_onDown: function (e) {
 		if (!e.touches) { return; }
+
+		// console.log('=========> _onDown, e.touches.length=' + e.touches.length);
+
+		// The start of a two-finger gesture comes in as first _onDown with e.touches.length
+		// == 1, then _onDown with e.touches.length == 2.
+
+		// The _wasSingleTap flag is supposed to mean "we got a single-finger quick tap with
+		// no movement".
+
+		// FIXME: Is there some saner place to store this _wasSingleTap flag than in
+		// this._map._container? It needs to be readily available over in _handleDOMEvent in
+		// Map.js.
+		this._map._container._wasSingleTap = (e.touches.length === 1);
 
 		L.DomEvent.preventDefault(e);
 
@@ -49,6 +62,7 @@ L.Map.Tap = L.Handler.extend({
 	},
 
 	_onUp: function (e) {
+		// console.log('=========> _onUp, e.touches.length=' + e.touches.length + ', e.changedTouches.length=' + e.changedTouches.length);
 		clearTimeout(this._holdTimeout);
 
 		L.DomEvent.off(document, {
@@ -74,6 +88,7 @@ L.Map.Tap = L.Handler.extend({
 		var newPos = new L.Point(first.clientX, first.clientY);
 		if (newPos.distanceTo(this._startPos) > this._map.options.tapTolerance) {
 			this._newPos = newPos;
+			this._map._container._wasSingleTap = false;
 			this._simulateEvent('mousemove', first);
 		}
 	},
