@@ -68,7 +68,7 @@ if __name__ == "__main__":
         poFile = dir + lang + '/svtools/messages.po'
         extractFromPo(poFile, ["STR_ARR_SVT_LANGUAGE_TABLE"], translations)
 
-        f = open(onlineDir + '/loleaflet/dist/l10n/locore/' + lang + '.json', 'w')
+        f = open(onlineDir + '/loleaflet/l10n/locore/' + lang + '.json', 'w')
         f.write('{\n')
 
         writeComma = False
