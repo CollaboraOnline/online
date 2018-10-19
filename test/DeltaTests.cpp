@@ -70,8 +70,6 @@ std::vector<char> DeltaTests::applyDelta(
     CPPUNIT_ASSERT(delta.size() >= 4);
     CPPUNIT_ASSERT(delta[0] == 'D');
 
-    std::cout << "apply delta of size " << delta.size() << "\n";
-
     // start with the same state.
     std::vector<char> output = pixmap;
     CPPUNIT_ASSERT_EQUAL(output.size(), size_t(pixmap.size()));
