@@ -173,6 +173,7 @@ void HTTPServerTest::testCapabilities()
 
         Poco::JSON::Object::Ptr convert_to = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
         CPPUNIT_ASSERT(convert_to->has("available"));
+        CPPUNIT_ASSERT(convert_to->get("available"));
     }
 }
 
