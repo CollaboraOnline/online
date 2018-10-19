@@ -339,5 +339,9 @@
         <app name="application/pdf">
             <action name="view" ext="pdf"/>
         </app>
+
+        <app name="Capabilities">
+            <action name="getinfo" ext=""/>
+        </app>
     </net-zone>
 </wopi-discovery>
