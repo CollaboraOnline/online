@@ -36,6 +36,8 @@ constexpr const char CHILD_URI[] = "/loolws/child?";
 constexpr const char NEW_CHILD_URI[] = "/loolws/newchild";
 constexpr const char LO_JAIL_SUBPATH[] = "lo";
 
+constexpr const char CAPABILITIES_END_POINT[] = "/hosting/capabilities";
+
 /// The HTTP response User-Agent.
 constexpr const char* HTTP_AGENT_STRING = "LOOLWSD HTTP Agent " LOOLWSD_VERSION;
 
