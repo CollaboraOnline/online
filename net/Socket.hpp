@@ -713,16 +713,9 @@ private:
         for (size_t i = 0; i < size; ++i)
         {
             int events = _pollSockets[i]->getPollEvents(now, timeoutMaxMs);
-            if (events < 0) // timeout on dead socket
-            {
-                _pollFds[i].fd = _wakeup[0];
-                _pollFds[i].events = 0;
-            }
-            else
-            {
-                _pollFds[i].fd = _pollSockets[i]->getFD();
-                _pollFds[i].events = events;
-            }
+            assert(events >= 0); // Or > 0 even?
+            _pollFds[i].fd = _pollSockets[i]->getFD();
+            _pollFds[i].events = events;
             _pollFds[i].revents = 0;
         }
 
