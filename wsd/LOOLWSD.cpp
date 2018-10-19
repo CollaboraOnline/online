@@ -1901,6 +1901,10 @@ private:
             {
                 handleWopiDiscoveryRequest(request);
             }
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == CAPABILITIES_END_POINT)
+            {
+                handleCapabilitiesRequest(request);
+            }
             else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/robots.txt")
             {
                 handleRobotsTxtRequest(request);
@@ -2040,6 +2044,28 @@ private:
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
+    }
+
+    void handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request)
+    {
+        LOG_DBG("Wopi capabilities request: " << request.getURI());
+
+        std::string capabilities = getCapabilitiesJson();
+
+        std::ostringstream oss;
+        oss << "HTTP/1.1 200 OK\r\n"
+            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+            << "Content-Length: " << capabilities.size() << "\r\n"
+            << "Content-Type: application/json\r\n"
+            << "X-Content-Type-Options: nosniff\r\n"
+            << "\r\n"
+            << capabilities;
+
+        auto socket = _socket.lock();
+        socket->send(oss.str());
+        socket->shutdown();
+        LOG_INF("Sent cpabilities.json successfully.");
     }
 
     void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request)
@@ -2502,10 +2528,11 @@ private:
         const std::string urlsrc = "urlsrc";
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string uriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
+        const std::string rootUriValue = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
                                    + std::string("%SERVER_HOST%")
-                                   + LOOLWSD::ServiceRoot
-                                   + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
+                                   + LOOLWSD::ServiceRoot;
+        const std::string uriValue = rootUriValue
+                                     + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;
@@ -2515,7 +2542,15 @@ private:
         for (unsigned long it = 0; it < listNodes->length(); ++it)
         {
             Element* elem = static_cast<Element*>(listNodes->item(it));
-            elem->setAttribute(urlsrc, uriValue);
+            Element* parent = elem->parentNode() ? static_cast<Element*>(elem->parentNode()) : nullptr;
+            if(parent && parent->getAttribute("name") == "Capabilities")
+            {
+                elem->setAttribute(urlsrc, rootUriValue + CAPABILITIES_END_POINT);
+            }
+            else
+            {
+                elem->setAttribute(urlsrc, uriValue);
+            }
 
             // Set the View extensions cache as well.
             if (elem->getAttribute("name") == "edit")
@@ -2526,6 +2561,39 @@ private:
         DOMWriter writer;
         writer.writeNode(ostrXML, docXML);
         return ostrXML.str();
+    }
+
+    /// Process the capabilities.json file and return as string.
+    std::string getCapabilitiesJson()
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+
+        // http://server/hosting/capabilities
+#if defined __linux && defined MOBILEAPP
+        std::string capabilitiesPath = Path(Application::instance().commandPath()).parent().parent().toString() + "capabilities.json";
+#else
+        std::string capabilitiesPath = Path(Application::instance().commandPath()).parent().toString() + "capabilities.json";
+#endif
+        if (!File(capabilitiesPath).exists())
+        {
+            capabilitiesPath = LOOLWSD::FileServerRoot + "/capabilities.json";
+        }
+        std::ifstream ifs (capabilitiesPath.c_str(), std::ifstream::in);
+
+        if(!ifs.is_open())
+            return "";
+
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var jsonFile = parser.parse(ifs);
+        Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
+        Poco::JSON::Object::Ptr convert_to = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
+
+        Poco::Dynamic::Var available = allowPostFrom(socket->clientAddress());
+        convert_to->set("available", available);
+
+        std::ostringstream ostrJSON;
+        features->stringify(ostrJSON);
+        return ostrJSON.str();
     }
 
 private:

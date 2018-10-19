@@ -9,6 +9,11 @@
 
 #include "config.h"
 
+#include <Poco/DOM/AutoPtr.h>
+#include <Poco/DOM/DOMParser.h>
+#include <Poco/DOM/Document.h>
+#include <Poco/DOM/Element.h>
+#include <Poco/DOM/NodeList.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/FilePartSource.h>
 #include <Poco/Net/HTMLForm.h>
@@ -40,6 +45,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPServerTest);
 
     CPPUNIT_TEST(testDiscovery);
+    CPPUNIT_TEST(testCapabilities);
     CPPUNIT_TEST(testLoleafletGet);
     CPPUNIT_TEST(testLoleafletPost);
     CPPUNIT_TEST(testScriptsAndLinksGet);
@@ -49,6 +55,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testDiscovery();
+    void testCapabilities();
     void testLoleafletGet();
     void testLoleafletPost();
     void testScriptsAndLinksGet();
@@ -99,6 +106,72 @@ void HTTPServerTest::testDiscovery()
     CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
     CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
 }
+
+
+void HTTPServerTest::testCapabilities()
+{
+    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+
+    // Get discovery first and extract the urlsrc of the capabilities end point
+    std::string capabiltiesURI;
+    {
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/hosting/discovery");
+        session->sendRequest(request);
+
+        Poco::Net::HTTPResponse response;
+        std::istream& rs = session->receiveResponse(response);
+        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+        CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
+
+        std::string discoveryXML;
+        Poco::StreamCopier::copyToString(rs, discoveryXML);
+
+        Poco::XML::DOMParser parser;
+        Poco::XML::AutoPtr<Poco::XML::Document> docXML = parser.parseString(discoveryXML);
+        Poco::XML::AutoPtr<Poco::XML::NodeList> listNodes = docXML->getElementsByTagName("action");
+        bool foundCapabilities = false;
+        for (unsigned long index = 0; index < listNodes->length(); ++index)
+        {
+            Poco::XML::Element* elem = static_cast<Poco::XML::Element*>(listNodes->item(index));
+            Poco::XML::Element* parent = elem->parentNode() ? static_cast<Poco::XML::Element*>(elem->parentNode()) : nullptr;
+            if(parent && parent->getAttribute("name") == "Capabilities")
+            {
+                foundCapabilities = true;
+                capabiltiesURI = elem->getAttribute("urlsrc");
+                break;
+            }
+        }
+
+        CPPUNIT_ASSERT(foundCapabilities);
+        CPPUNIT_ASSERT_EQUAL(_uri.toString() + CAPABILITIES_END_POINT, capabiltiesURI);
+    }
+
+    // Then get the capabilities json
+    {
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, CAPABILITIES_END_POINT);
+        session->sendRequest(request);
+
+        Poco::Net::HTTPResponse response;
+        std::istream& rs = session->receiveResponse(response);
+        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+        CPPUNIT_ASSERT_EQUAL(std::string("application/json"), response.getContentType());
+
+        std::ostringstream oss;
+        Poco::StreamCopier::copyStream(rs, oss);
+        std::string responseString = oss.str();
+
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var jsonFile = parser.parse(responseString);
+        Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
+        CPPUNIT_ASSERT(features);
+        CPPUNIT_ASSERT(features->has("convert-to"));
+
+        Poco::JSON::Object::Ptr convert_to = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
+        CPPUNIT_ASSERT(convert_to->has("available"));
+    }
+}
+
 
 void HTTPServerTest::testLoleafletGet()
 {
