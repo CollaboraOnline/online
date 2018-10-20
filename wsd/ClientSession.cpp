@@ -411,12 +411,14 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             std::string encodedUserId;
             Poco::URI::encode(getUserId(), "", encodedUserId);
             oss << " authorid=" << encodedUserId;
-            oss << " xauthorid=" << LOOLWSD::anonymizeUsername(getUserId());
+            Poco::URI::encode(LOOLWSD::anonymizeUsername(getUserId()), "", encodedUserId);
+            oss << " xauthorid=" << encodedUserId;
 
             std::string encodedUserName;
             Poco::URI::encode(getUserName(), "", encodedUserName);
             oss << " author=" << encodedUserName;
-            oss << " xauthor=" << LOOLWSD::anonymizeUsername(getUserName());
+            Poco::URI::encode(LOOLWSD::anonymizeUsername(getUserName()), "", encodedUserName);
+            oss << " xauthor=" << encodedUserName;
         }
 
         if (!getUserExtraInfo().empty())
