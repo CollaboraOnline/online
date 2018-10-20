@@ -174,6 +174,8 @@ public:
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri,
                                                const std::string& jailRoot,
                                                const std::string& jailPath);
+
+    static bool allowedWopiHost(const std::string& host);
 protected:
 
     /// Returns the root path of the jail directory of docs.
