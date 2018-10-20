@@ -175,7 +175,7 @@ public:
                                                const std::string& jailRoot,
                                                const std::string& jailPath);
 
-    static bool alowedWopiHost(const std::string& uri);
+    static bool allowedWopiHost(const std::string& host);
 protected:
 
     /// Returns the root path of the jail directory of docs.

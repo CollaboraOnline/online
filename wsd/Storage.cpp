@@ -141,9 +141,9 @@ void StorageBase::initialize()
 #endif
 }
 
-bool StorageBase::alowedWopiHost(const std::string& uri)
+bool StorageBase::allowedWopiHost(const std::string& host)
 {
-    return WopiEnabled && WopiHosts.match(Poco::URI(uri).getHost());
+    return WopiEnabled && WopiHosts.match(host);
 }
 
 #ifndef MOBILEAPP
