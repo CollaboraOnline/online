@@ -50,7 +50,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLoleafletPost);
     CPPUNIT_TEST(testScriptsAndLinksGet);
     CPPUNIT_TEST(testScriptsAndLinksPost);
-    // FIXME CPPUNIT_TEST(testConvertTo);
+    CPPUNIT_TEST(testConvertTo);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -317,16 +317,10 @@ void HTTPServerTest::testConvertTo()
     form.set("format", "txt");
     form.addPart("data", new Poco::Net::FilePartSource(srcPath));
     form.prepareSubmit(request);
-
-    // FIXME From some reason we are getting Poco::Net::ConnectionRefusedException
-    // What happens is that the file is just partially transferred -
-    // ConvertToPartHandler::handlePart() gets just some 3.6k bytes; no idea
-    // why yet
     form.write(session->sendRequest(request));
 
     Poco::Net::HTTPResponse response;
     std::stringstream actualStream;
-    // receiveResponse() resulted in a Poco::Net::NoMessageException.
     std::istream& responseStream = session->receiveResponse(response);
     Poco::StreamCopier::copyStream(responseStream, actualStream);
 
