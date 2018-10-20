@@ -131,6 +131,11 @@ void StorageBase::initialize()
 #endif
 }
 
+bool StorageBase::allowedWopiHost(const std::string& host)
+{
+    return WopiEnabled && WopiHosts.match(host);
+}
+
 bool isLocalhost(const std::string& targetHost)
 {
     std::string targetAddress;

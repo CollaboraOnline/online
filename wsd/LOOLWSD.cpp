@@ -2053,7 +2053,7 @@ private:
     {
         LOG_DBG("Wopi capabilities request: " << request.getURI());
 
-        std::string capabilities = getCapabilitiesJson();
+        std::string capabilities = getCapabilitiesJson(request.getHost());
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
@@ -2139,7 +2139,7 @@ private:
 
             std::string format = (form.has("format") ? form.get("format") : "");
 
-            if (!allowPostFrom(socket->clientAddress()))
+            if (!allowPostFrom(socket->clientAddress()) && !StorageBase::allowedWopiHost(request.getHost()) )
             {
                 LOG_ERR("client address DENY: " << socket->clientAddress().c_str());
                 std::ostringstream oss;
@@ -2567,7 +2567,7 @@ private:
     }
 
     /// Process the capabilities.json file and return as string.
-    std::string getCapabilitiesJson()
+    std::string getCapabilitiesJson(const std::string& host)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
@@ -2591,7 +2591,7 @@ private:
         Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
         Poco::JSON::Object::Ptr convert_to = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
 
-        Poco::Dynamic::Var available = allowPostFrom(socket->clientAddress());
+        Poco::Dynamic::Var available = allowPostFrom(socket->clientAddress()) || StorageBase::allowedWopiHost(host);
         convert_to->set("available", available);
 
         std::ostringstream ostrJSON;
