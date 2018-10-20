@@ -2256,7 +2256,7 @@ private:
 
             std::string format = (form.has("format") ? form.get("format") : "");
 
-            if (!allowPostFrom(socket->clientAddress()) || StorageBase::alowedWopiHost(socket->clientAddress()) )
+            if (!allowPostFrom(socket->clientAddress()))
             {
                 LOG_ERR("client address DENY: " << socket->clientAddress());
 
@@ -2717,7 +2717,7 @@ private:
         Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
         Poco::JSON::Object::Ptr convert_to = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
 
-        Poco::Dynamic::Var available = allowPostFrom(socket->clientAddress()) || StorageBase::alowedWopiHost(socket->clientAddress());
+        Poco::Dynamic::Var available = allowPostFrom(socket->clientAddress());
         convert_to->set("available", available);
 
         std::ostringstream ostrJSON;
