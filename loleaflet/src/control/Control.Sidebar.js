@@ -246,6 +246,14 @@ L.Control.Sidebar = L.Control.extend({
 		this._createDialogCursor(strId);
 		var dlgInput = this._createDialogInput(strId);
 
+		// var resizedetector = L.DomUtil.get('resize-detector');
+		L.DomEvent.on(panelCanvas, 'resize', function() {
+			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelCanvas.width + ',' + panelCanvas.height);
+		}, this);
+		L.DomEvent.on(panelContainer, 'resize', function() {
+			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelContainer.width + ',' + panelContainer.height);
+		}, this);
+
 		L.DomEvent.on(panelCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(panelContainer, 'mouseleave', function() {
 			// Move the mouse off-screen when we leave the sidebar
