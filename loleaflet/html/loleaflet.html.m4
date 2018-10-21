@@ -86,16 +86,17 @@ ifelse(MOBILEAPP,[true],
     <nav class="main-nav" role="navigation">
       <!-- Mobile menu toggle button (hamburger/x icon) -->
       <input id="main-menu-state" type="checkbox" />
-      <label class="main-menu-btn" for="main-menu-state">
-       <span class="main-menu-btn-icon"></span>
-      </label>
       <ul id="main-menu" class="sm sm-simple lo-menu"></ul>
     </nav>
     <table id="toolbar-wrapper">
     <tr>
       <td id="toolbar-logo"></td>
       <td id="toolbar-up"</td>
-      <td id="toolbar-hamburger"></td>
+      <td id="toolbar-hamburger">
+        <label class="main-menu-btn" for="main-menu-state">
+          <span class="main-menu-btn-icon"></span>
+        </label>
+      </td>
     </tr>
     <tr>
       <td colspan="3" id="formulabar"></td>

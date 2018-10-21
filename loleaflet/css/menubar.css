@@ -119,9 +119,6 @@
 /* Mobile menu toggle button */
 
 .main-menu-btn {
-    z-index: 2000;
-    float: right;
-    top: 5px;
     margin: 2px 10px;
     position: relative;
     display: inline-block;
@@ -228,18 +225,18 @@
 
     #main-menu {
 	position: relative;
-	top: 40px;
+	top: 0;
     }
 
     .main-nav {
         position: absolute;
-        height: initial;
+        height: 0;
         width: 100%;
-        top: 0;
-        bottom: 33px;
+        top: 41px;
         margin: 0;
         -webkit-overflow-scrolling: touch;
         overflow: scroll;
+        z-index: 1000;
     }
 
 }

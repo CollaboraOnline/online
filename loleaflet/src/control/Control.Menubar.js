@@ -546,10 +546,13 @@ L.Control.Menubar = L.Control.extend({
 				// animate mobile menu
 				$mainMenuState.change(function() {
 					var $menu = $('#main-menu');
+					var $nav = $menu.parent();
 					if (this.checked) {
+						$nav.css({height: 'initial', bottom: 33});
 						$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
 					} else {
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
+						$nav.css({height:0, bottom: ''});
 					}
 				});
 				// hide mobile menu beforeunload
