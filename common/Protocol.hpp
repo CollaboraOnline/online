@@ -11,6 +11,7 @@
 #define INCLUDED_LOOLPROTOCOL_HPP
 
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <iomanip>
 #include <map>
@@ -140,6 +141,40 @@ namespace LOOLProtocol
     std::vector<std::string> tokenize(const std::string& s, const char delimeter = ' ')
     {
         return tokenize(s.data(), s.size(), delimeter);
+    }
+
+    inline
+    std::vector<int> tokenizeInts(const char* data, const size_t size, const char delimeter = ',')
+    {
+        std::vector<int> tokens;
+        if (size == 0 || data == nullptr)
+            return tokens;
+
+        const char* start = data;
+        const char* end = data;
+        for (size_t i = 0; i < size && data[i] != '\n'; ++i, ++end)
+        {
+            if (data[i] == delimeter)
+            {
+                if (start != end && *start != delimeter)
+                    tokens.emplace_back(std::atoi(start));
+
+                start = end;
+            }
+            else if (*start == delimeter)
+                ++start;
+        }
+
+        if (start != end && *start != delimeter && *start != '\n')
+            tokens.emplace_back(std::atoi(start));
+
+        return tokens;
+    }
+
+    inline
+    std::vector<int> tokenizeInts(const std::string& s, const char delimeter = ',')
+    {
+        return tokenizeInts(s.data(), s.size(), delimeter);
     }
 
     inline bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value)
