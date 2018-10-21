@@ -961,6 +961,33 @@ L.Map = L.Evented.extend({
 		L.Util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = L.Util.requestAnimFrame(
 			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
+		var sidebarpanel = L.DomUtil.get('sidebar-panel');
+		if (sidebarpanel) {
+			var sidebar = sidebarpanel.children[0];
+			if (sidebar) {
+				var newSize = this.getSize();
+				sidebar.height = newSize.y;
+				L.DomUtil.setStyle(sidebar, 'height', newSize.y + 'px');
+
+				// Fire the resize event to propagate the size change to WSD.
+				// .trigger isn't working, so doing it manually.
+				var event;
+				if (document.createEvent) {
+					event = document.createEvent('HTMLEvents');
+					event.initEvent('resize', true, true);
+				} else {
+					event = document.createEventObject();
+					event.eventType = 'resize';
+				}
+
+				event.eventName = 'resize';
+				if (document.createEvent) {
+					sidebar.dispatchEvent(event);
+				} else {
+					sidebar.fireEvent('on' + event.eventType, event);
+				}
+			}
+		}
 	},
 
 	_activate: function () {
