@@ -113,8 +113,7 @@ L.Control.Sidebar = L.Control.extend({
 
 		if (e.action === 'invalidate') {
 			var rectangle = e.rectangle;
-			var fullRepaint = true;
-			if (!rectangle || !this._isRectangleValid(rectangle) || fullRepaint)
+			if (!rectangle || !this._isRectangleValid(rectangle))
 			{
 				if (this._isChild(e.id))
 					rectangle = '0,0,' + this._currentDeck.child.width + ',' + this._currentDeck.child.height;
@@ -184,13 +183,19 @@ L.Control.Sidebar = L.Control.extend({
 		if (!top)
 			top = 0;
 
-		// First, remove existing.
-		// FIXME: we don't really have to destroy and launch the sidebar again but do it for
-		// now because the size sent to us previously in 'created' cb is not correct
-		if (this._currentDeck)
-			$('#' + this._currentDeck.strId).remove();
-
 		var strId = this._toStrId(id);
+
+		if (this._currentDeck)
+		{
+			if (width > 0)
+			{
+				this._resizeSidebar(strId, width);
+			}
+
+			// Render window.
+			this._sendPaintWindow(id);
+			return;
+		}
 
 		var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('sidebar-panel'));
 		// var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('slide-sorter'));
@@ -360,8 +365,6 @@ L.Control.Sidebar = L.Control.extend({
 
 	/// Rendered image sent from Core.
 	_paintPanel: function (parentId, rectangle, imgData) {
-		// if (!this._isOpen(parentId))
-		// 	return;
 
 		var strId = this._toStrId(parentId);
 		var canvas = document.getElementById(strId + '-canvas');
@@ -370,13 +373,10 @@ L.Control.Sidebar = L.Control.extend({
 
 		// The actual image of the window may be larger/smaller than the dimension we get on size_changed.
 		var width = this._currentDeck.width;
-		var height = this._currentDeck.height;
 
-		canvas.width = width;
-		canvas.height = height;
 		var ctx = canvas.getContext('2d');
 
-		var docContainer = this._map.options.documentContainer;
+		var that = this;
 		var img = new Image();
 		img.onload = function() {
 			var x = 0;
@@ -387,12 +387,7 @@ L.Control.Sidebar = L.Control.extend({
 				y = parseInt(rectangle[1]);
 			}
 
-			var sidebar = L.DomUtil.get(strId);
-			sidebar.style.width = width.toString() + 'px';
-			docContainer.style.right = sidebar.style.width;
-			var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
-			if (spreadsheetRowColumnFrame)
-				spreadsheetRowColumnFrame.style.right = sidebar.style.width;
+			that._resizeSidebar(strId, width);
 
 			// Render.
 			ctx.drawImage(img, x, y);
@@ -421,6 +416,16 @@ L.Control.Sidebar = L.Control.extend({
 			ctx.drawImage(img, 0, 0);
 		};
 		img.src = imgData;
+	},
+
+	_resizeSidebar: function(strId, width) {
+		this._currentDeck.width = width;
+		var sidebar = L.DomUtil.get(strId);
+		sidebar.style.width = width.toString() + 'px';
+		this._map.options.documentContainer.style.right = sidebar.style.width;
+		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
+		if (spreadsheetRowColumnFrame)
+			spreadsheetRowColumnFrame.style.right = sidebar.style.width;
 	},
 
 	_onPanelChildClose: function(parentId) {
