@@ -374,6 +374,26 @@ void WhiteBoxTests::testTokenizer()
     CPPUNIT_ASSERT_EQUAL(std::string("ABC"), tokens[0]);
     CPPUNIT_ASSERT_EQUAL(std::string("DEF"), tokens[1]);
     CPPUNIT_ASSERT_EQUAL(std::string("XYZ"), tokens[2]);
+
+    // Integer lists.
+    std::vector<int> ints;
+
+    ints = LOOLProtocol::tokenizeInts(std::string("-1"));
+    CPPUNIT_ASSERT_EQUAL(1UL, ints.size());
+    CPPUNIT_ASSERT_EQUAL(-1, ints[0]);
+
+    ints = LOOLProtocol::tokenizeInts(std::string("1,2,3,4"));
+    CPPUNIT_ASSERT_EQUAL(4UL, ints.size());
+    CPPUNIT_ASSERT_EQUAL(1, ints[0]);
+    CPPUNIT_ASSERT_EQUAL(2, ints[1]);
+    CPPUNIT_ASSERT_EQUAL(3, ints[2]);
+    CPPUNIT_ASSERT_EQUAL(4, ints[3]);
+
+    ints = LOOLProtocol::tokenizeInts("");
+    CPPUNIT_ASSERT_EQUAL(0UL, ints.size());
+
+    ints = LOOLProtocol::tokenizeInts(std::string(",,,"));
+    CPPUNIT_ASSERT_EQUAL(0UL, ints.size());
 }
 
 void WhiteBoxTests::testReplace()
