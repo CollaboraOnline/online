@@ -39,7 +39,7 @@ def extractFromPo(poFile, stringIds, untranslated):
 def parseUnocommandsJS(onlineDir):
     strings = {}
 
-    f = open(onlineDir + '/loleaflet/unocommands.js', 'r')
+    f = open(onlineDir + '/loleaflet/src/unocommands.js', 'r')
     readingCommands = False
     for line in f:
         line = line.decode('utf-8')
@@ -73,45 +73,25 @@ if __name__ == "__main__":
 
 # LO Core strings
 
-    # extract 'Clear formatting'
-    poFile = dir + lang + '/svx/source/tbxctrls.po'
-    extractFromPo(poFile, ["RID_SVXSTR_CLEARFORM"], untranslated)
+    # extract 'Clear formatting' and some status bar strings
+    poFile = dir + lang + '/svx/messages.po'
+    extractFromPo(poFile, ["RID_SVXSTR_CLEARFORM", "RID_SVXSTR_OVERWRITE_TEXT", "selectionmenu|"], untranslated)
 
-    # extract some status bar strings
-    poFile = dir + lang + '/svx/source/stbctrls.po'
-    stringIds = ["RID_SVXMENU_SELECTION", "RID_SVXSTR_OVERWRITE_TEXT"]
-    extractFromPo(poFile, stringIds, untranslated)
-    poFile = dir + lang + '/sw/source/ui/shells.po'
-    extractFromPo(poFile, ["STR_PAGE_COUNT"], untranslated)
-    poFile = dir + lang + '/sw/source/ui/app.po'
-    extractFromPo(poFile, ["STR_STATUSBAR_WORDCOUNT_NO_SELECTION"], untranslated)
+    # extract Writer style names and status bar strings
+    poFile = dir + lang + '/sw/messages.po'
+    extractFromPo(poFile, ["STR_POOL", "STR_PAGE_COUNT", "STR_STATUSBAR_WORDCOUNT_NO_SELECTION", "STR_LANGSTATUS_NONE"], untranslated)
 
-    # extract Writer style names
-    poFile = dir + lang + '/sw/source/ui/utlui.po'
-    extractFromPo(poFile, ["STR_POOL"], untranslated)
-
-    # extract Impress/Draw style names
-    poFile = dir + lang + '/sd/source/core.po'
-    strengIds = ["STR_STANDARD_STYLESHEET_NAME", "STR_POOL", "STR_PSEUDOSHEET"]
-    extractFromPo(poFile, stringIds, untranslated)
-
-    # extract Impress layout names and 'Slide %1 of %2'
-    poFile = dir + lang + '/sd/source/ui/app.po'
-    stringIds = ["STR_AUTOLAYOUT", "STR_AL_", "STR_SD_PAGE_COUNT"]
-    extractFromPo(poFile, stringIds, untranslated)
+    # extract Impress/Draw style names, layout names and 'Slide %1 of %2'
+    poFile = dir + lang + '/sd/messages.po'
+    extractFromPo(poFile,  ["STR_STANDARD_STYLESHEET_NAME", "STR_POOL", "STR_PSEUDOSHEET", "STR_AUTOLAYOUT", "STR_AL_", "STR_SD_PAGE_COUNT"], untranslated)
 
     # extract Calc style names and strings for status bar
-    poFile = dir + lang + '/sc/source/ui/src.po'
-    stringIds = ["STR_STYLENAME_", "STR_FILTER_SELCOUNT", "STR_ROWCOL_SELCOUNT", "STR_FUN_TEXT_", "STR_UNDO_INSERTCELLS", "STR_TABLE_COUNT"]
-    extractFromPo(poFile, stringIds, untranslated)
+    poFile = dir + lang + '/sc/messages.po'
+    extractFromPo(poFile, ["STR_STYLENAME_", "STR_FILTER_SELCOUNT", "STR_ROWCOL_SELCOUNT", "STR_FUN_TEXT_", "STR_UNDO_INSERTCELLS", "STR_TABLE_COUNT"], untranslated)
 
     # extract language names
-    poFile = dir + lang + '/svtools/source/misc.po'
+    poFile = dir + lang + '/svtools/messages.po'
     extractFromPo(poFile, ["STR_ARR_SVT_LANGUAGE_TABLE"], untranslated)
-
-    # extract 'None (Do not check spelling)'
-    poFile = dir + lang + '/framework/source/classes.po'
-    extractFromPo(poFile, ["STR_LANGSTATUS_NONE"], untranslated)
 
 # UNO command strings
 
