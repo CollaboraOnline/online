@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     # extract Impress/Draw style names
     poFile = dir + lang + '/sd/source/core.po'
-    strengIds = ["STR_STANDARD_STYLESHEET_NAME", "STR_POOL", "STR_PSEUDOSHEET"]
+    stringIds = ["STR_STANDARD_STYLESHEET_NAME", "STR_POOL", "STR_PSEUDOSHEET"]
     extractFromPo(poFile, stringIds, untranslated)
 
     # extract Impress layout names and 'Slide %1 of %2'
