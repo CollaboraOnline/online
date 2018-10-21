@@ -296,7 +296,7 @@ def writeTranslations(onlineDir, translationsDir, strings):
                         if text == entry.msgid:
                             translations[entry.msgid] = entry.msgstr
 
-        f = open(onlineDir + '/loleaflet/dist/l10n/uno/' + lang + '.json', 'w')
+        f = open(onlineDir + '/loleaflet/l10n/uno/' + lang + '.json', 'w')
         f.write('{\n')
 
         writeComma = False
