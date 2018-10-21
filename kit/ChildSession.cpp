@@ -1222,15 +1222,10 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, const std:
 
 bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
+    const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1]) : 0);
+
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
     getLOKitDocument()->setView(_viewId);
-
-    unsigned winId = 0;
-    if (tokens.size() > 1)
-    {
-        std::istringstream reader(tokens[1]);
-        reader >> winId;
-    }
 
     int startX = 0, startY = 0;
     int bufferWidth = 800, bufferHeight = 600;
@@ -1298,16 +1293,9 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
 
 bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
+    const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1]) : 0);
+
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
-    getLOKitDocument()->setView(_viewId);
-
-    unsigned winId = 0;
-    if (tokens.size() > 1)
-    {
-        std::istringstream reader(tokens[1]);
-        reader >> winId;
-    }
-
     getLOKitDocument()->setView(_viewId);
 
     if (tokens.size() > 2 && tokens[2] == "close")
