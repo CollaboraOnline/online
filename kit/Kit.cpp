@@ -2118,7 +2118,7 @@ protected:
             document.reset();
         }
         else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
-                tokens[0] == "paintwindow" ||
+                tokens[0] == "paintwindow" || tokens[0] == "resizewindow" ||
                 LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
         {
             if (document)

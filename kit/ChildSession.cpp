@@ -243,6 +243,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         return renderWindow(buffer, length, tokens);
     }
+    else if (tokens[0] == "resizewindow")
+    {
+        return resizeWindow(buffer, length, tokens);
+    }
     else if (tokens[0] == "tile" || tokens[0] == "tilecombine")
     {
         assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
@@ -1354,6 +1358,27 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
     return true;
 }
 
+bool ChildSession::resizeWindow(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1].c_str(), nullptr, 10) : 0);
+
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+    getLOKitDocument()->setView(_viewId);
+
+    std::string size;
+    if (tokens.size() > 2 && getTokenString(tokens[2], "size", size))
+    {
+        const std::vector<int> sizeParts = LOOLProtocol::tokenizeInts(size, ',');
+        if (sizeParts.size() == 2)
+        {
+            getLOKitDocument()->resizeWindow(winId, sizeParts[0], sizeParts[1]);
+            return true;
+        }
+    }
+
+    LOG_WRN("resizewindow command doesn't specify sensible size= attribute.");
+    return true;
+}
 
 bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {

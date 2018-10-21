@@ -181,7 +181,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "uploadsigneddocument" &&
              tokens[0] != "exportsignanduploaddocument" &&
              tokens[0] != "rendershapeselection" &&
-             tokens[0] != "removesession")
+             tokens[0] != "removesession" &&
+             tokens[0] != "resizewindow")
     {
         LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
