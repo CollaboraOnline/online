@@ -73,7 +73,9 @@ L.Control.LokDialog = L.Control.extend({
 		if (rectangle)
 			rectangle = rectangle.replace(/ /g, '');
 
-		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle : ''));
+		var dpiscale = 2.0; //window.devicePixelRatio;
+		console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
+		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle + ' dpiscale=' + dpiscale : ''));
 	},
 
 	_sendCloseWindow: function(id) {

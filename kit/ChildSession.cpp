@@ -1045,6 +1045,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
 
     int startX = 0, startY = 0;
     int bufferWidth = 800, bufferHeight = 600;
+    double dpiScale = 1.0;
     std::string paintRectangle;
     if (tokens.size() > 2 && getTokenString(tokens[2], "rectangle", paintRectangle))
     {
@@ -1053,6 +1054,14 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
         startY = std::atoi(rectParts[1].c_str());
         bufferWidth = std::atoi(rectParts[2].c_str());
         bufferHeight = std::atoi(rectParts[3].c_str());
+
+        std::string dpiScaleString;
+        if (tokens.size() > 3 && getTokenString(tokens[3], "dpiscale", dpiScaleString))
+        {
+            dpiScale = std::stod(dpiScaleString);
+            if (dpiScale < 0.001)
+                dpiScale = 1.0;
+        }
     }
     else
         LOG_WRN("windowpaint command doesn't specify a rectangle= attribute.");
@@ -1062,11 +1071,12 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
     int width = bufferWidth, height = bufferHeight;
     std::string response;
     Timestamp timestamp;
-    getLOKitDocument()->paintWindow(winId, pixmap.data(), startX, startY, width, height);
+    getLOKitDocument()->paintWindow(winId, pixmap.data(), startX, startY, width, height, dpiScale);
     const double area = width * height;
     LOG_TRC("paintWindow for " << winId << " returned " << width << "X" << height
             << "@(" << startX << "," << startY << ")"
-            << "and rendered in " << (timestamp.elapsed()/1000.)
+            << " with dpi scale: " << dpiScale
+            << " and rendered in " << (timestamp.elapsed()/1000.)
             << "ms (" << area / (timestamp.elapsed()) << " MP/s).");
 
     response = "windowpaint: id=" + tokens[1] +
