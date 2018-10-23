@@ -1307,7 +1307,6 @@ private:
     /// Helper method to broadcast callback and its payload to all clients
     void broadcastCallbackToClients(const int type, const std::string& payload)
     {
-        // "-1" means broadcast
         _tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
     }
 
