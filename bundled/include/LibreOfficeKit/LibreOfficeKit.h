@@ -347,6 +347,15 @@ struct _LibreOfficeKitDocumentClass
     /// @see lok::Document::getSignatureState().
     int (*getSignatureState) (LibreOfficeKitDocument* pThis);
 
+    /// Paints window with given id to the buffer with the give DPI scale
+    /// (every pixel is dpiscale-times larger).
+    /// @see lok::Document::paintWindow().
+    void (*paintWindowDPI) (LibreOfficeKitDocument* pThis, unsigned nWindowId,
+                            unsigned char* pBuffer,
+                            const int x, const int y,
+                            const int width, const int height,
+                            const double dpiscale);
+
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
 
