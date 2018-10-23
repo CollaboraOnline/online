@@ -72,6 +72,13 @@
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
+		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
+		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
+		BE58E12C217F295B00249358 /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
+		BE58E12D217F295B00249358 /* MessageQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MessageQueue.hpp; sourceTree = "<group>"; };
+		BE58E12E217F295B00249358 /* Protocol.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Protocol.hpp; sourceTree = "<group>"; };
+		BE58E12F217F295B00249358 /* Session.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Session.hpp; sourceTree = "<group>"; };
 		BE5EB5B9213FE29900E0826C /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpookyV2.cpp; sourceTree = "<group>"; };
 		BE5EB5BB213FE29900E0826C /* Session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
@@ -323,14 +330,21 @@
 			children = (
 				BE5EB5C0213FE29900E0826C /* FileUtil.cpp */,
 				BE5EB5B9213FE29900E0826C /* Log.cpp */,
+				BE58E129217F295B00249358 /* Log.hpp */,
 				BE5EB5BD213FE29900E0826C /* MessageQueue.cpp */,
+				BE58E12D217F295B00249358 /* MessageQueue.hpp */,
+				BE58E12A217F295B00249358 /* Png.hpp */,
 				BE5EB5BF213FE29900E0826C /* Protocol.cpp */,
+				BE58E12E217F295B00249358 /* Protocol.hpp */,
 				BE5EB5BB213FE29900E0826C /* Session.cpp */,
+				BE58E12F217F295B00249358 /* Session.hpp */,
 				BE5EB5BE213FE29900E0826C /* SigUtil.cpp */,
+				BE58E12B217F295B00249358 /* SigUtil.hpp */,
 				BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */,
 				BEA28376214FFD8C00848631 /* Unit.cpp */,
 				BEA283782150172600848631 /* Unit.hpp */,
 				BE5EB5BC213FE29900E0826C /* Util.cpp */,
+				BE58E12C217F295B00249358 /* Util.hpp */,
 			);
 			path = common;
 			sourceTree = "<group>";
