@@ -1,6 +1,7 @@
 This is a GTK+ Webkit app that is intended to work similarly enough to
-the iOS app that problems in that also show up in this app, and can be
-fixed by people with no Mac or iOS device.
+the iOS app being developed in the "Mobile" folder that (some kinds
+of) problems in that also show up in this app, and can be investigated
+by people with no Mac or iOS device.
 
 How to build this:
 
@@ -9,7 +10,7 @@ normal Online.
 
 Run autogen.sh, then configure:
 
-./configure --disable-ssl --enable-gtkapp --with-lo-path=/home/tml/lo/cp-6.0/instdir --with-lokit-path=/home/tml/lo/cp-6.0/include
+./configure --disable-ssl --enable-gtkapp --with-lo-path=/home/tml/lo/master/instdir --with-lokit-path=/home/tml/lo/master/include
 
 Obviously, adjust the path to your LibreOffice build tree as necessary.
 
