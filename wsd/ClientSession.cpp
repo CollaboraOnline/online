@@ -1206,7 +1206,7 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tisAttached: " << _isAttached
        << "\n\t\tkeyEvents: " << _keyEvents;
 
-    std::shared_ptr<StreamSocket> socket = _socket.lock();
+    std::shared_ptr<StreamSocket> socket = getSocket().lock();
     if (socket)
     {
         uint64_t sent, recv;

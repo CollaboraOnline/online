@@ -26,7 +26,7 @@
 
 class WebSocketHandler : public SocketHandlerInterface
 {
-protected:
+private:
     /// The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
 
@@ -38,6 +38,7 @@ protected:
     bool _isClient;
     bool _isMasking;
 
+protected:
     struct WSFrameMask
     {
         static const unsigned char Fin = 0x80;
@@ -515,6 +516,16 @@ protected:
     /// To be overriden to handle the websocket messages the way you need.
     virtual void handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &/*data*/)
     {
+    }
+
+    std::weak_ptr<StreamSocket>& getSocket()
+    {
+        return _socket;
+    }
+
+    void setSocket(const std::weak_ptr<StreamSocket>& socket)
+    {
+        _socket = socket;
     }
 
     void dumpState(std::ostream& os) override;

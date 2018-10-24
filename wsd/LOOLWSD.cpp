@@ -1743,13 +1743,13 @@ private:
     /// Keep our socket around ...
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
-        _socket = socket;
+        setSocket(socket);
         LOG_TRC("#" << socket->getFD() << " Prisoner connected.");
     }
 
     void onDisconnect() override
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = getSocket().lock();
         if (socket)
             LOG_TRC("#" << socket->getFD() << " Prisoner connection disconnected.");
         else
@@ -1782,7 +1782,7 @@ private:
             return;
         }
 
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = getSocket().lock();
 
         Poco::MemoryInputStream message(&socket->_inBuffer[0],
                                         socket->_inBuffer.size());;
@@ -1873,7 +1873,7 @@ private:
             return;
 
         const std::string abbr = getAbbreviatedMessage(data);
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        std::shared_ptr<StreamSocket> socket = getSocket().lock();
         if (socket)
             LOG_TRC("#" << socket->getFD() << " Prisoner message [" << abbr << "].");
         else
