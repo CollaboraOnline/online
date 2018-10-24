@@ -302,6 +302,12 @@ L.Map.Keyboard = L.Handler.extend({
 			inputEle.value = '';
 		}
 
+		if (this.modifier == this.keyModifier.alt || this.modifier == this.keyModifier.shift + this.keyModifier.alt) {
+			// Presumably a Mac or iOS client accessing a "special character". Just ignore the alt modifier.
+			this.modifier -= alt;
+			alt = 0;
+		}
+
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
 
 		if (this.modifier) {
