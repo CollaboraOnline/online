@@ -1058,10 +1058,8 @@ L.Map = L.Evented.extend({
 
 		// For touch devices, to pop-up the keyboard, it is required to call
 		// .focus() method on hidden input within actual 'click' event here
-		// Calling from some other place with no real 'click' event doesn't work.
-		// (tml: For me, for this to work with a mobile device, we need to
-		// accept 'mousedown', too. At least with an an iPad, iOS 12.)
-		if (type === 'click' || type === 'mousedown') {
+		// Calling from some other place with no real 'click' event doesn't work
+		if (type === 'click') {
 			if (this._permission === 'edit') {
 				this.focus();
 			}
