@@ -1,0 +1,49 @@
+How to build the iOS app:
+
+1) First you need to build the LibreOffice core code for iOS. Put in
+your autogen.input something like this:
+
+--enable-debug
+--enable-dbgutil
+--enable-werror
+--without-parallelism
+--disable-ccache
+--with-distro=LibreOfficeiOS
+
+and build "normally". (Naturally, no unit tests will be run when
+cross-compiling LibreOffice.)
+
+This will produce a large number of static archives (.a) here and
+there in instdir and workdir, but no app that can be run as such. (You
+can see a list of them in
+workdir/CustomTarget/ios/ios-all-static-libs.list)
+
+2) Do a separate clone of the online repo on macOS, but don't run any
+make or open the Mobile project there yet.
+
+3) Then, in a separate clone of the online repo on Linux, configure it with the --enable-iosapp option:
+
+./configure --disable-ssl --enable-iosapp --with-lo-path=/home/tml/lo/fedora/instdir --with-lokit-path=/home/tml/lo/fedora/include
+
+(The --with-lo-path and --with-lokit-path options are actually
+irrelevant, but needed anyway.)
+
+Then run make. That will produce files in loleaflet/dist, nothing
+else. Copy those to the corresponding directory in the online close
+from step 2. This is what I do:
+
+make clean && make && tar cf - loleaflet/dist | ssh misan.local 'cd lo/online-ios-device && tar xvf -'
+
+where misan.local is the macOS machine where I build the app, in the
+lo/online-ios-device folder.
+
+4) In the online folder form step 2, edit the
+Mobile/Mobile.xcodeproj/project.pbxproj file in your favourite text
+editor.
+
+Change all instances of ../../../../ios-device to the path to where
+you build LibreOffice core for iOS from step 1. Change the value of
+PNGINSTDIR to where you have installed libpng compiled for iOS. Change
+POCOINSTDIR to where you have installed Poco compiled for iOS.
+
+4) Now you can open the Mobile Xcode project, build it, and run it.
