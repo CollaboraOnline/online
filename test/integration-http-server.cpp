@@ -51,6 +51,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testScriptsAndLinksGet);
     CPPUNIT_TEST(testScriptsAndLinksPost);
     CPPUNIT_TEST(testConvertTo);
+    CPPUNIT_TEST(testConvertToWithForwardedClientIP);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -61,6 +62,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     void testScriptsAndLinksGet();
     void testScriptsAndLinksPost();
     void testConvertTo();
+    void testConvertToWithForwardedClientIP();
 
 public:
     HTTPServerTest()
@@ -96,7 +98,24 @@ public:
         testNoExtraLoolKitsLeft();
         helpers::resetTestStartTime();
     }
+
+    // A server URI which was not added to loolwsd.xml as post_allow IP or a wopi storage host
+    Poco::URI getNotAllowedTestServerURI()
+    {
+        static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
+
+        static std::string serverURI(
+#if ENABLE_SSL
+        "https://165.227.162.232:"
+#else
+        "http://165.227.162.232:"
+#endif
+            + (clientPort? std::string(clientPort) : std::to_string(DEFAULT_CLIENT_PORT_NUMBER)));
+
+        return Poco::URI(serverURI);
+    }
 };
+
 
 void HTTPServerTest::testDiscovery()
 {
@@ -337,6 +356,74 @@ void HTTPServerTest::testConvertTo()
     if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
         actualString = actualString.substr(3);
     CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualString);
+}
+
+
+void HTTPServerTest::testConvertToWithForwardedClientIP()
+{
+    // Test a forwarded IP which is not allowed to use convert-to feature
+    {
+        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", "testConvertToWithForwardedClientIP_");
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+        session->setTimeout(Poco::Timespan(2, 0)); // 2 seconds.
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+        CPPUNIT_ASSERT(!request.has("X-Forwarded-For"));
+        request.add("X-Forwarded-For", getNotAllowedTestServerURI().getHost() + ", " + _uri.getHost());
+        Poco::Net::HTMLForm form;
+        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+        form.set("format", "txt");
+        form.addPart("data", new Poco::Net::FilePartSource(srcPath));
+        form.prepareSubmit(request);
+        form.write(session->sendRequest(request));
+
+        Poco::Net::HTTPResponse response;
+        std::stringstream actualStream;
+        std::istream& responseStream = session->receiveResponse(response);
+        Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+        // Remove the temp files.
+        FileUtil::removeFile(srcPath);
+
+        std::string actualString = actualStream.str();
+        CPPUNIT_ASSERT(actualString.empty()); // <- we did not get the converted file
+    }
+
+    // Test a forwarded IP which is allowed to use convert-to feature
+    {
+        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", "testConvertToWithForwardedClientIP_");
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+        session->setTimeout(Poco::Timespan(2, 0)); // 2 seconds.
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+        CPPUNIT_ASSERT(!request.has("X-Forwarded-For"));
+        request.add("X-Forwarded-For", _uri.getHost() + ", " + _uri.getHost());
+        Poco::Net::HTMLForm form;
+        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+        form.set("format", "txt");
+        form.addPart("data", new Poco::Net::FilePartSource(srcPath));
+        form.prepareSubmit(request);
+        form.write(session->sendRequest(request));
+
+        Poco::Net::HTTPResponse response;
+        std::stringstream actualStream;
+        std::istream& responseStream = session->receiveResponse(response);
+        Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+        std::ifstream fileStream(TDOC "/hello.txt");
+        std::stringstream expectedStream;
+        expectedStream << fileStream.rdbuf();
+
+        // Remove the temp files.
+        FileUtil::removeFile(srcPath);
+
+        // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
+        // (U+FEFF). Skip that.
+        std::string actualString = actualStream.str();
+        if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
+            actualString = actualString.substr(3);
+        CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualString); // <- we got the converted file
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPServerTest);

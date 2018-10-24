@@ -80,6 +80,8 @@ using Poco::Net::PartHandler;
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
 #include <Poco/MemoryStream.h>
+#include <Poco/Net/DNS.h>
+#include <Poco/Net/HostEntry.h>
 #include <Poco/Path.h>
 #include <Poco/Pipe.h>
 #include <Poco/Process.h>
@@ -1938,6 +1940,29 @@ public:
         }
         return hosts.match(address);
     }
+    bool allowConvertTo(const std::string &address, const Poco::Net::HTTPRequest& request)
+    {
+        std::string clientAddress = address;
+        std::string clientHost = request.getHost();
+        if(request.has("X-Forwarded-For"))
+        {
+            std::string fowardedData = request.get("X-Forwarded-For");
+            size_t sepPos = fowardedData.find_first_of(',');
+            if(sepPos != std::string::npos)
+            {
+                clientAddress = fowardedData.substr(0, sepPos);
+                try
+                {
+                    clientHost = Poco::Net::DNS::resolve(clientAddress).name();
+                }
+                catch (const Poco::Exception& exc)
+                {
+                    LOG_WRN("Poco::Net::DNS::resolve(\"" << clientAddress << "\") failed: " << exc.displayText());
+                }
+            }
+        }
+        return allowPostFrom(clientAddress) || StorageBase::allowedWopiHost(request.getHost());
+    }
 
 private:
 
@@ -2170,7 +2195,7 @@ private:
     {
         LOG_DBG("Wopi capabilities request: " << request.getURI());
 
-        std::string capabilities = getCapabilitiesJson(request.getHost());
+        std::string capabilities = getCapabilitiesJson(request);
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
@@ -2256,7 +2281,7 @@ private:
 
             std::string format = (form.has("format") ? form.get("format") : "");
 
-            if (!allowPostFrom(socket->clientAddress()) && !StorageBase::allowedWopiHost(request.getHost()) )
+            if (!allowConvertTo(socket->clientAddress(), request))
             {
                 LOG_ERR("client address DENY: " << socket->clientAddress());
 
@@ -2693,7 +2718,7 @@ private:
     }
 
     /// Process the capabilities.json file and return as string.
-    std::string getCapabilitiesJson(const std::string& host)
+    std::string getCapabilitiesJson(const Poco::Net::HTTPRequest& request)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
@@ -2717,7 +2742,7 @@ private:
         Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
         Poco::JSON::Object::Ptr convert_to = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
 
-        Poco::Dynamic::Var available = allowPostFrom(socket->clientAddress()) || StorageBase::allowedWopiHost(host);
+        Poco::Dynamic::Var available = allowConvertTo(socket->clientAddress(), request);
         convert_to->set("available", available);
 
         std::ostringstream ostrJSON;
