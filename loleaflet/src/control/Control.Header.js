@@ -14,6 +14,8 @@ L.Control.Header = L.Control.extend({
 		this.converter = null;
 
 		this._canvas = null;
+		this._canvasWidth = 0;
+		this._canvasHeight = 0;
 		this._clicks = 0;
 		this._current = -1;
 		this._selection = {start: -1, end: -1};
@@ -469,7 +471,16 @@ L.Control.Header = L.Control.extend({
 		else {
 			L.DomUtil.setStyle(container, property, value + 'px');
 		}
-		canvas[property] = value;
+
+		var scale = L.getDpiScaleFactor();
+		if (property === 'width') {
+			canvas.width = value * scale;
+			this._canvasWidth = value;
+		}
+		else if (property === 'height') {
+			canvas.height = value * scale;
+			this._canvasHeight = value;
+		}
 	},
 
 	_setCanvasWidth: function (width) {
@@ -514,9 +525,9 @@ L.Control.Header = L.Control.extend({
 
 	getOutlineWidth: function () {
 		if (this._isColumn)
-			return this._canvas.height - this._borderWidth - this._headerHeight;
+			return this._canvasHeight - this._borderWidth - this._headerHeight;
 		else
-			return this._canvas.width - this._borderWidth - this._headerWidth;
+			return this._canvasWidth - this._borderWidth - this._headerWidth;
 	},
 
 	_collectGroupsData: function(groups) {
@@ -588,6 +599,9 @@ L.Control.Header = L.Control.extend({
 			return;
 
 		ctx.save();
+		var scale = L.getDpiScaleFactor();
+		ctx.scale(scale, scale);
+
 		ctx.fillStyle = this._borderColor;
 		if (this._isColumn) {
 			var startY = this._cornerCanvas.height - (L.Control.Header.colHeaderHeight + this._borderWidth);

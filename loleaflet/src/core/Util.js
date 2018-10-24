@@ -157,7 +157,11 @@ L.Util = {
 	},
 
 	// minimal image URI, set to an image when disposing to flush memory
-	emptyImageUrl: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+	emptyImageUrl: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
+
+	getDpiScaleFactor: function() {
+		return window.devicePixelRatio ? Math.ceil(window.devicePixelRatio) : 1;
+	}
 };
 
 (function () {
@@ -204,3 +208,4 @@ L.bind = L.Util.bind;
 L.stamp = L.Util.stamp;
 L.setOptions = L.Util.setOptions;
 L.round = L.Util.round;
+L.getDpiScaleFactor = L.Util.getDpiScaleFactor;

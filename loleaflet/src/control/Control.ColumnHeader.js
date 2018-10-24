@@ -36,8 +36,12 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._canvasContext = this._canvas.getContext('2d');
 		this._setCanvasWidth();
 		this._setCanvasHeight();
-		this._headerHeight = this._canvas.height;
-		L.Control.Header.colHeaderHeight = this._canvas.height;
+
+		var scale = L.getDpiScaleFactor();
+		this._canvasContext.scale(scale, scale);
+
+		this._headerHeight = this._canvasHeight;
+		L.Control.Header.colHeaderHeight = this._canvasHeight;
 
 		L.DomUtil.setStyle(this._canvas, 'cursor', this._cursor);
 
@@ -194,7 +198,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		var ctx = this._canvasContext;
 		var content = this._colIndexToAlpha(entry.index + this._startHeaderIndex);
-		var startOrt = this._canvas.height - this._headerHeight;
+		var startOrt = this._canvasHeight - this._headerHeight;
 		var startPar = entry.pos - entry.size - this._startOffset;
 		var endPar = entry.pos - this._startOffset;
 		var width = endPar - startPar;
@@ -208,6 +212,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		ctx.save();
+		var scale = L.getDpiScaleFactor();
+		ctx.scale(scale, scale);
 		ctx.translate(this._position + this._startOffset, 0);
 		// background gradient
 		var selectionBackgroundGradient = null;
@@ -219,7 +225,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 
 		// draw header/outline border separator
-		if (this._headerHeight !== this._canvas.height) {
+		if (this._headerHeight !== this._canvasHeight) {
 			ctx.fillStyle = this._borderColor;
 			ctx.fillRect(startPar, startOrt - this._borderWidth, width, this._borderWidth);
 		}
@@ -261,6 +267,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var height = group.endPos - group.startPos;
 
 		ctx.save();
+		var scale = L.getDpiScaleFactor();
+		ctx.scale(scale, scale);
+
 		ctx.translate(this._position + this._startOffset, 0);
 		// clip mask
 		ctx.beginPath();
@@ -415,7 +424,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (this._groups) {
 			this.resize(this._computeOutlineWidth() + this._borderWidth + this._headerHeight);
 		}
-		else if (this._canvas.height !== this._headerHeight) {
+		else if (this._canvasHeight !== this._headerHeight) {
 			this.resize(this._headerHeight);
 		}
 
@@ -645,7 +654,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var document = L.DomUtil.get('document-container');
 
 		this._setCornerCanvasHeight(height);
-		var deltaTop = height - this._canvas.height;
+		var deltaTop = height - this._canvasHeight;
 		var rowHdrTop = parseInt(L.DomUtil.getStyle(rowHeader, 'top')) + deltaTop;
 		var docTop = parseInt(L.DomUtil.getStyle(document, 'top')) + deltaTop;
 		L.DomUtil.setStyle(rowHeader, 'top', rowHdrTop + 'px');
