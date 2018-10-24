@@ -1961,7 +1961,7 @@ public:
                 }
             }
         }
-        return allowPostFrom(clientAddress) || StorageBase::allowedWopiHost(request.getHost());
+        return allowPostFrom(clientAddress) || StorageBase::allowedWopiHost(clientHost);
     }
 
 private:
