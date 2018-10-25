@@ -316,6 +316,8 @@ int main(int argc, char* argv[])
     g_signal_connect(main_window, "destroy", G_CALLBACK(destroyWindowCb), NULL);
     g_signal_connect(webView, "close", G_CALLBACK(closeWebViewCb), main_window);
 
+    system("cp " TOPSRCDIR "/test/data/hello.odt" " " TOPSRCDIR "/test/data/hello-world.odt");
+
     fileURL = "file://" TOPSRCDIR "/test/data/hello-world.odt";
 
     std::string urlAndQuery =
