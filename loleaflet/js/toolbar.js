@@ -1374,7 +1374,6 @@ function onDocLayerInit() {
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
-		statusbar.disable('zoomreset', 'zoomout', 'zoomin', 'zoomlevel');
 		statusbar.insert('left', [
 			{type: 'break', id:'break1'},
 			{type: 'html',  id: 'StatusDocPos',
