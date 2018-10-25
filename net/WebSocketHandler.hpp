@@ -205,7 +205,7 @@ public:
         } else
             _wsPayload.insert(_wsPayload.end(), data, data + payloadLen);
 #else
-        unsigned char * const p = reinterpret_cast<unsigned char*>(&socket->_inBuffer[0]);
+        unsigned char * const p = reinterpret_cast<unsigned char*>(&socket->getInBuffer()[0]);
         _wsPayload.insert(_wsPayload.end(), p, p + len);
         const size_t headerLen = 0;
         const size_t payloadLen = len;

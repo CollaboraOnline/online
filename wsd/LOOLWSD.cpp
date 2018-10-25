@@ -1845,7 +1845,7 @@ private:
 #else
             Poco::Process::PID pid = 1;
             std::string jailId = "jail";
-            socket->_inBuffer.clear();
+            socket->getInBuffer().clear();
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
 
@@ -2108,8 +2108,8 @@ private:
         socket->eraseFirstInputBytes(requestSize);
 #else
         Poco::Net::HTTPRequest request;
-        handleClientWsUpgrade(request, std::string(socket->_inBuffer.data(), socket->_inBuffer.size()), disposition);
-        socket->_inBuffer.clear();
+        handleClientWsUpgrade(request, std::string(socket->getInBuffer().data(), socket->getInBuffer().size()), disposition);
+        socket->getInBuffer().clear();
 #endif
     }
 
