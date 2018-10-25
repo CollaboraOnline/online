@@ -1940,11 +1940,18 @@ public:
         }
         return hosts.match(address);
     }
-    bool allowConvertTo(const std::string &address, const Poco::Net::HTTPRequest& request)
+    bool allowConvertTo(const std::string &address, const Poco::Net::HTTPRequest& request, bool report = false)
     {
         std::string addressToCheck = address;
         std::string hostToCheck = request.getHost();
         bool allow = allowPostFrom(addressToCheck) || StorageBase::allowedWopiHost(hostToCheck);
+
+        if(!allow)
+        {
+            if(report)
+                LOG_ERR("Requesting address is denied: " << addressToCheck);
+            return false;
+        }
 
         // Handle forwarded header and make sure all participating IPs are allowed
         if(request.has("X-Forwarded-For"))
@@ -1964,6 +1971,12 @@ public:
                     LOG_WRN("Poco::Net::DNS::resolve(\"" << addressToCheck << "\") failed: " << exc.displayText());
                     // We can't find out the hostname, check the IP only
                     allow &= allowPostFrom(addressToCheck);
+                }
+                if(!allow)
+                {
+                    if(report)
+                        LOG_ERR("Requesting address is denied: " << addressToCheck);
+                    return false;
                 }
             }
         }
@@ -2287,10 +2300,8 @@ private:
 
             std::string format = (form.has("format") ? form.get("format") : "");
 
-            if (!allowConvertTo(socket->clientAddress(), request))
+            if (!allowConvertTo(socket->clientAddress(), request, true))
             {
-                LOG_ERR("client address DENY: " << socket->clientAddress());
-
                 std::ostringstream oss;
                 oss << "HTTP/1.1 403\r\n"
                     << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
