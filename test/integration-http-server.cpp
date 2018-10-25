@@ -424,6 +424,36 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
             actualString = actualString.substr(3);
         CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualString); // <- we got the converted file
     }
+
+    // Test a forwarded header with three IPs, one is not allowed -> request is denied.
+    {
+        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", "testConvertToWithForwardedClientIP_");
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+        session->setTimeout(Poco::Timespan(2, 0)); // 2 seconds.
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+        CPPUNIT_ASSERT(!request.has("X-Forwarded-For"));
+        request.add("X-Forwarded-For", _uri.getHost() + ", "
+                                       + getNotAllowedTestServerURI().getHost() + ", "
+                                       + _uri.getHost());
+        Poco::Net::HTMLForm form;
+        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+        form.set("format", "txt");
+        form.addPart("data", new Poco::Net::FilePartSource(srcPath));
+        form.prepareSubmit(request);
+        form.write(session->sendRequest(request));
+
+        Poco::Net::HTTPResponse response;
+        std::stringstream actualStream;
+        std::istream& responseStream = session->receiveResponse(response);
+        Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+        // Remove the temp files.
+        FileUtil::removeFile(srcPath);
+
+        std::string actualString = actualStream.str();
+        CPPUNIT_ASSERT(actualString.empty()); // <- we did not get the converted file
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPServerTest);

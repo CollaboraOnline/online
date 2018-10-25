@@ -1942,26 +1942,32 @@ public:
     }
     bool allowConvertTo(const std::string &address, const Poco::Net::HTTPRequest& request)
     {
-        std::string clientAddress = address;
-        std::string clientHost = request.getHost();
+        std::string addressToCheck = address;
+        std::string hostToCheck = request.getHost();
+        bool allow = allowPostFrom(addressToCheck) || StorageBase::allowedWopiHost(hostToCheck);
+
+        // Handle forwarded header and make sure all participating IPs are allowed
         if(request.has("X-Forwarded-For"))
         {
             std::string fowardedData = request.get("X-Forwarded-For");
-            size_t sepPos = fowardedData.find_first_of(',');
-            if(sepPos != std::string::npos)
+            std::vector<std::string> tokens = LOOLProtocol::tokenize(fowardedData, ',');
+            for(std::string& token : tokens)
             {
-                clientAddress = fowardedData.substr(0, sepPos);
+                addressToCheck = Util::trim(token);
                 try
                 {
-                    clientHost = Poco::Net::DNS::resolve(clientAddress).name();
+                    hostToCheck = Poco::Net::DNS::resolve(addressToCheck).name();
+                    allow &= allowPostFrom(addressToCheck) || StorageBase::allowedWopiHost(hostToCheck);
                 }
                 catch (const Poco::Exception& exc)
                 {
-                    LOG_WRN("Poco::Net::DNS::resolve(\"" << clientAddress << "\") failed: " << exc.displayText());
+                    LOG_WRN("Poco::Net::DNS::resolve(\"" << addressToCheck << "\") failed: " << exc.displayText());
+                    // We can't find out the hostname, check the IP only
+                    allow &= allowPostFrom(addressToCheck);
                 }
             }
         }
-        return allowPostFrom(clientAddress) || StorageBase::allowedWopiHost(clientHost);
+        return allow;
     }
 
 private:
