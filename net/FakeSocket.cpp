@@ -463,9 +463,13 @@ ssize_t fakeSocketAvailableDataLength(int fd)
         return -1;
     }
 
-    loggingBuffer << "FakeSocket Available data on #" << fd << ": " << pair.buffer[K][0].size() << flush();
+    ssize_t result = 0;
+    if (pair.buffer[K].size() > 0)
+        result = pair.buffer[K][0].size();
 
-    return pair.buffer[K][0].size();
+    loggingBuffer << "FakeSocket Available data on #" << fd << ": " << result << flush();
+
+    return result;
 }
 
 ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
@@ -515,9 +519,6 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
         errno = EAGAIN; // Not the right errno, but what would be?q
         return -1;
     }
-
-    if (pair.buffer[K].size() == 0)
-        return 0;
 
     memmove(buf, pair.buffer[K][0].data(), result);
     pair.buffer[K].erase(pair.buffer[K].begin());
