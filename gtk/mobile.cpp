@@ -27,8 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <thread>
+
+#include <string.h>
 
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
@@ -56,7 +60,7 @@ static void send2JS_ready_callback(GObject      *source_object,
                                    GAsyncResult *res,
                                    gpointer     user_data)
 {
-    g_free(user_data);
+    free(user_data);
 }
 
 static void send2JS(const std::vector<char>& buffer)
@@ -102,7 +106,7 @@ static void send2JS(const std::vector<char>& buffer)
         data.push_back(0);
 
         js = "window.TheFakeWebSocket.onmessage({'data': '";
-        js = js + std::string(buffer.data());
+        js = js + std::string(buffer.data(), buffer.size());
         js = js + "'});";
     }
 
@@ -228,13 +232,15 @@ static void handle_lool_message(WebKitUserContentManager *manager,
         else
         {
             // As above
-            std::thread([&]
+            char *string_copy = strdup(string_value);
+            std::thread([=]
                         {
                             struct pollfd pollfd;
                             pollfd.fd = fakeClientFd;
                             pollfd.events = POLLOUT;
                             fakeSocketPoll(&pollfd, 1, -1);
-                            fakeSocketWrite(fakeClientFd, string_value, strlen(string_value));
+                            fakeSocketWrite(fakeClientFd, string_copy, strlen(string_copy));
+                            free(string_copy);
                         }).detach();
         }
         g_free(string_value);
