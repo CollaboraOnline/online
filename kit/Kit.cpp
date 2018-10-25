@@ -2454,7 +2454,7 @@ void lokit_main(
 #else // MOBILEAPP
 
 #ifdef __linux
-        LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", "file://" LO_PATH "/user");
+        LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", "file://" LO_PATH);
 #else
         LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
 #endif
