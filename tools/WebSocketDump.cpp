@@ -71,7 +71,7 @@ private:
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
-        std::vector<char>& in = socket->_inBuffer;
+        std::vector<char>& in = socket->getInBuffer();
         LOG_TRC("#" << socket->getFD() << " handling incoming " << in.size() << " bytes.");
 
         // Find the end of the header, if any.

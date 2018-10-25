@@ -938,6 +938,16 @@ public:
         return _clientAddress;
     }
 
+    std::vector<char>& getInBuffer()
+    {
+        return _inBuffer;
+    }
+
+    std::vector<char>& getOutBuffer()
+    {
+        return _outBuffer;
+    }
+
 protected:
 
     /// Called when a polling event is received.
@@ -1012,6 +1022,7 @@ protected:
             disposition.setClosed();
     }
 
+public:
     /// Override to write data out to socket.
     virtual void writeOutgoingData()
     {
@@ -1051,6 +1062,7 @@ protected:
         while (!_outBuffer.empty());
     }
 
+protected:
     /// Override to handle reading of socket data differently.
     virtual int readData(char* buf, int len)
     {
@@ -1096,14 +1108,6 @@ protected:
 
     /// True when shutdown was requested via shutdown().
     bool _shutdownSignalled;
-
-    // To be able to access _inBuffer and _outBuffer.
-    // TODO we probably need accessors to the _inBuffer & _outBuffer
-    // instead of this many friends...
-    friend class WebSocketHandler;
-    friend class ClientRequestDispatcher;
-    friend class PrisonerRequestDispatcher;
-    friend class SimpleResponseClient;
 };
 
 enum class WSOpCode : unsigned char {

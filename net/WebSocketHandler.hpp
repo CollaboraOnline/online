@@ -131,7 +131,7 @@ public:
         assert(socket && "Expected a valid socket instance.");
 
         // websocket fun !
-        const size_t len = socket->_inBuffer.size();
+        const size_t len = socket->getInBuffer().size();
 
         if (len == 0)
             return false; // avoid logging.
@@ -143,7 +143,7 @@ public:
             return false;
         }
 
-        unsigned char *p = reinterpret_cast<unsigned char*>(&socket->_inBuffer[0]);
+        unsigned char *p = reinterpret_cast<unsigned char*>(&socket->getInBuffer()[0]);
         const bool fin = p[0] & 0x80;
         const WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
         const bool hasMask = p[1] & 0x80;
@@ -191,7 +191,7 @@ public:
             return false;
         }
 
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: " << Util::stringifyHexLine(socket->_inBuffer, 0, std::min((size_t)32, len)));
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: " << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
 
         data = p + headerLen;
 
@@ -214,14 +214,14 @@ public:
 
         assert(_wsPayload.size() >= payloadLen);
 
-        socket->_inBuffer.erase(socket->_inBuffer.begin(), socket->_inBuffer.begin() + headerLen + payloadLen);
+        socket->getInBuffer().erase(socket->getInBuffer().begin(), socket->getInBuffer().begin() + headerLen + payloadLen);
 
 #ifndef MOBILEAPP
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << static_cast<unsigned>(code) <<
                 ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << _wsPayload.size() <<
-                ", residual socket data: " << socket->_inBuffer.size() << " bytes.");
+                ", residual socket data: " << socket->getInBuffer().size() << " bytes.");
 
         bool doClose = false;
 
@@ -444,7 +444,7 @@ private:
             return 0;
 
         socket->assertCorrectThread();
-        std::vector<char>& out = socket->_outBuffer;
+        std::vector<char>& out = socket->getOutBuffer();
         const size_t oldSize = out.size();
 
 #ifndef MOBILEAPP
@@ -586,26 +586,26 @@ protected:
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-        LOG_TRC("Incoming client websocket upgrade response: " << std::string(&socket->_inBuffer[0], socket->_inBuffer.size()));
+        LOG_TRC("Incoming client websocket upgrade response: " << std::string(&socket->getInBuffer()[0], socket->getInBuffer().size()));
 
         bool bOk = false;
         size_t responseSize = 0;
 
         try
         {
-            Poco::MemoryInputStream message(&socket->_inBuffer[0], socket->_inBuffer.size());;
+            Poco::MemoryInputStream message(&socket->getInBuffer()[0], socket->getInBuffer().size());;
             Poco::Net::HTTPResponse response;
 
             response.read(message);
 
             {
                 static const std::string marker("\r\n\r\n");
-                auto itBody = std::search(socket->_inBuffer.begin(),
-                                          socket->_inBuffer.end(),
+                auto itBody = std::search(socket->getInBuffer().begin(),
+                                          socket->getInBuffer().end(),
                                           marker.begin(), marker.end());
 
-                if (itBody != socket->_inBuffer.end())
-                    responseSize = itBody - socket->_inBuffer.begin() + marker.size();
+                if (itBody != socket->getInBuffer().end())
+                    responseSize = itBody - socket->getInBuffer().begin() + marker.size();
             }
 
             if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS &&

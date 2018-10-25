@@ -1786,8 +1786,8 @@ private:
 
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
 
-        Poco::MemoryInputStream message(&socket->_inBuffer[0],
-                                        socket->_inBuffer.size());;
+        Poco::MemoryInputStream message(&socket->getInBuffer()[0],
+                                        socket->getInBuffer().size());;
         Poco::Net::HTTPRequest request;
         size_t requestSize = 0;
 
@@ -1837,7 +1837,7 @@ private:
                 return;
             }
 
-            socket->_inBuffer.clear();
+            socket->getInBuffer().clear();
 
             LOG_INF("New child [" << pid << "], jailId: " << jailId << ".");
 
@@ -1987,8 +1987,8 @@ private:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
 #ifndef MOBILEAPP
-        Poco::MemoryInputStream message(&socket->_inBuffer[0],
-                                        socket->_inBuffer.size());;
+        Poco::MemoryInputStream message(&socket->getInBuffer()[0],
+                                        socket->getInBuffer().size());;
         Poco::Net::HTTPRequest request;
         size_t requestSize = 0;
 
@@ -2100,7 +2100,7 @@ private:
 
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
             LOG_INF("#" << socket->getFD() << " Exception while processing incoming request: [" <<
-                    LOOLProtocol::getAbbreviatedMessage(socket->_inBuffer) << "]: " << exc.what());
+                    LOOLProtocol::getAbbreviatedMessage(socket->getInBuffer()) << "]: " << exc.what());
         }
 
         // if we succeeded - remove the request from our input buffer
