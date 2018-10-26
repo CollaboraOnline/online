@@ -1091,7 +1091,22 @@ protected:
 
     void dumpState(std::ostream& os) override;
 
-protected:
+    void setShutdownSignalled(bool shutdownSignalled)
+    {
+        _shutdownSignalled = shutdownSignalled;
+    }
+
+    bool isShutdownSignalled() const
+    {
+        return _shutdownSignalled;
+    }
+
+    const std::shared_ptr<SocketHandlerInterface>& getSocketHandler() const
+    {
+        return _socketHandler;
+    }
+
+  private:
     /// Client handling the actual data.
     std::shared_ptr<SocketHandlerInterface> _socketHandler;
 

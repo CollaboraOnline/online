@@ -60,9 +60,9 @@ public:
     {
         LOG_DBG("SslStreamSocket dtor #" << getFD());
 
-        if (!_shutdownSignalled)
+        if (!isShutdownSignalled())
         {
-            _shutdownSignalled = true;
+            setShutdownSignalled(true);
             SslStreamSocket::closeConnection();
         }
 
@@ -128,7 +128,7 @@ public:
                       int & timeoutMaxMs) override
     {
         assertCorrectThread();
-        int events = _socketHandler->getPollEvents(now, timeoutMaxMs);
+        int events = getSocketHandler()->getPollEvents(now, timeoutMaxMs);
 
         if (_sslWantsTo == SslWantsTo::Read)
         {
@@ -141,7 +141,7 @@ public:
             return POLLOUT;
         }
 
-        if (!_outBuffer.empty() || _shutdownSignalled)
+        if (!getOutBuffer().empty() || isShutdownSignalled())
             events |= POLLOUT;
 
         return events;
