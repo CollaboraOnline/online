@@ -150,8 +150,6 @@ L.Control.Sidebar = L.Control.extend({
 
 				// Relative x to the sidebar.
 				x -= this._currentDeck.left;
-				// We have 25 pixel top margin.
-				y -= 25;
 
 				this._updateDialogCursor(e.id, x, y, height);
 			}
