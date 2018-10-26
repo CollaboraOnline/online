@@ -43,9 +43,6 @@
 #include "Protocol.hpp"
 #include "Util.hpp"
 
-static void destroyWindowCb(GtkWidget* widget, GtkWidget* window);
-static gboolean closeWebViewCb(WebKitWebView* webView, GtkWidget* window);
-
 const int SHOW_JS_MAXLEN = 70;
 
 int loolwsd_server_socket_fd = -1;
@@ -55,6 +52,17 @@ static LOOLWSD *loolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
 static WebKitWebView *webView;
+
+static void destroyWindowCb(GtkWidget* widget, GtkWidget* window)
+{
+    gtk_main_quit();
+}
+
+static gboolean closeWebViewCb(WebKitWebView* webView, GtkWidget* window)
+{
+    gtk_widget_destroy(window);
+    return TRUE;
+}
 
 static void send2JS_ready_callback(GObject      *source_object,
                                    GAsyncResult *res,
@@ -341,15 +349,4 @@ int main(int argc, char* argv[])
     gtk_main();
 
     return 0;
-}
-
-static void destroyWindowCb(GtkWidget* widget, GtkWidget* window)
-{
-    gtk_main_quit();
-}
-
-static gboolean closeWebViewCb(WebKitWebView* webView, GtkWidget* window)
-{
-    gtk_widget_destroy(window);
-    return TRUE;
 }
