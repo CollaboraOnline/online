@@ -984,11 +984,11 @@
 					"$(PNGINSTDIR)/lib",
 					"-L",
 					"$(POCOINSTDIR)/lib",
-					"-lPocoFoundation",
-					"-lPocoUtil",
-					"-lPocoXML",
-					"-lPocoJSON",
-					"-lPocoNet",
+					"-lPocoFoundationd",
+					"-lPocoUtild",
+					"-lPocoXMLd",
+					"-lPocoJSONd",
+					"-lPocoNetd",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.office.Mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
