@@ -66,14 +66,16 @@ L.Control.LokDialog = L.Control.extend({
 		if (!y)
 			y = 0;
 
-		return [x, y, width, height].join(',');
+		// pre-multiplied by the scale factor
+		var dpiscale = L.getDpiScaleFactor();
+		return [x * dpiscale, y * dpiscale, width * dpiscale, height * dpiscale].join(',');
 	},
 
 	_sendPaintWindow: function(id, rectangle) {
 		if (rectangle)
 			rectangle = rectangle.replace(/ /g, '');
 
-		var dpiscale = 2.0; //window.devicePixelRatio;
+		var dpiscale = L.getDpiScaleFactor();
 		console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
 		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle + ' dpiscale=' + dpiscale : ''));
 	},
@@ -131,13 +133,21 @@ L.Control.LokDialog = L.Control.extend({
 			var parent = this._getParentDialog(e.id);
 			var rectangle = e.rectangle;
 			if (parent) { // this is a floating window
-				rectangle = '0,0,' + this._dialogs[parent].childwidth + ',' + this._dialogs[parent].childheight;
-			} else { // this is the actual dialog
-				if (rectangle && !this._isRectangleValid(rectangle))
-					return;
+				rectangle = this._createRectStr(null, 0, 0, this._dialogs[parent].childwidth, this._dialogs[parent].childheight);
+			} else if (rectangle) { // this is the actual dialog
+				if (this._isRectangleValid(rectangle)) {
+					rectangle = e.rectangle.split(',');
+					x = parseInt(rectangle[0]);
+					y = parseInt(rectangle[1]);
+					width = parseInt(rectangle[2]);
+					height = parseInt(rectangle[3]);
 
-				if (!rectangle)
-					rectangle = '0,0,' + this._dialogs[e.id].width + ',' + this._dialogs[e.id].height;
+					rectangle = this._createRectStr(null, x, y, width, height);
+				} else {
+					return;
+				}
+			} else {
+				rectangle = this._createRectStr(e.id);
 			}
 			this._sendPaintWindow(e.id, rectangle);
 		} else if (e.action === 'size_changed') {
@@ -235,6 +245,15 @@ L.Control.LokDialog = L.Control.extend({
 		this._dialogs[dlgId].input.focus();
 	},
 
+	_setCanvasWidthHeight: function(canvas, width, height) {
+		L.DomUtil.setStyle(canvas, 'width', width + 'px');
+		L.DomUtil.setStyle(canvas, 'height', height + 'px');
+
+		var scale = L.getDpiScaleFactor();
+		canvas.width = width * scale;
+		canvas.height = height * scale;
+	},
+
 	_launchDialog: function(strDlgId, leftTwips, topTwips, width, height, title) {
 		this.onCloseCurrentPopUp();
 		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
@@ -243,8 +262,7 @@ L.Control.LokDialog = L.Control.extend({
 		dialogContainer.id = strDlgId;
 
 		var dialogCanvas = L.DomUtil.create('canvas', 'lokdialog_canvas', dialogContainer);
-		dialogCanvas.width = width;
-		dialogCanvas.height = height;
+		this._setCanvasWidthHeight(dialogCanvas, width, height);
 		dialogCanvas.id = strDlgId + '-canvas';
 
 		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
@@ -419,10 +437,8 @@ L.Control.LokDialog = L.Control.extend({
 		if (!canvas)
 			return; // no floating window to paint to
 
-		if (width !== canvas.width)
-			canvas.width = width;
-		if (height !== canvas.height)
-			canvas.height = height;
+		this._setCanvasWidthHeight(canvas, width, height);
+
 		var ctx = canvas.getContext('2d');
 		img.onload = function() {
 			ctx.drawImage(img, 0, 0);
