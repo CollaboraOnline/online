@@ -2454,7 +2454,8 @@ void lokit_main(
 #else // MOBILEAPP
 
 #ifdef __linux
-        LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", "file://" LO_PATH);
+        Poco::URI userInstallationURI("file", LO_PATH);
+        LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #else
         LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
 #endif
