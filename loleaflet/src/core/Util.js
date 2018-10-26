@@ -160,7 +160,12 @@ L.Util = {
 	emptyImageUrl: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
 
 	getDpiScaleFactor: function() {
-		return window.devicePixelRatio ? Math.ceil(window.devicePixelRatio) : 1;
+		var dpiScale = window.devicePixelRatio ? Math.ceil(window.devicePixelRatio) : 1;
+		if (dpiScale == 1 && L.Browser.retina) {
+			dpiScale = 2;
+		}
+
+		return dpiScale;
 	}
 };
 
