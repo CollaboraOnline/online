@@ -41,6 +41,14 @@ loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
 loolwsdconfig_DATA = loolwsd.xml \
 		     loolkitconfig.xcu
 
+apache2configdir = ${sysconfdir}/apache2/conf-available
+
+apache2config_DATA = etc/apache2/loolwsd.conf
+
+nginxconfigdir = ${sysconfdir}/nginx/snippets
+
+nginxconfig_DATA = etc/nginx/loolwsd.conf
+
 ACLOCAL_AMFLAGS = -I m4
 
 # quick and easy for now.
@@ -244,6 +252,8 @@ EXTRA_DIST = discovery.xml \
              etc/key.pem \
              etc/cert.pem \
              etc/ca-chain.cert.pem \
+             etc/apache2/loolwsd.conf \
+             etc/nginx/loolwsd.conf \
              scripts/unocommands.py \
              $(man_MANS)
 
