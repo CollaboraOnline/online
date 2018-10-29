@@ -45,6 +45,7 @@
 body {
     margin: 0;
     overflow: hidden;
+    overscroll-behavior-y: none; /* disable the pull to reload gesture */
 }
 
 #presentation-controls-wrapper {
