@@ -77,7 +77,7 @@ L.Control.Sidebar = L.Control.extend({
 			}
 
 			if (e.winType === 'deck') {
-				this._launchSidebar(e.id, left, top, width, height, e.title);
+				this._launchSidebar(e.id, left, top, width, height);
 			} else if (e.winType === 'child') {
 				var parentId = parseInt(e.parentId);
 				if (!this._isOpen(parentId))
@@ -153,11 +153,6 @@ L.Control.Sidebar = L.Control.extend({
 
 				this._updateDialogCursor(e.id, x, y, height);
 			}
-		} else if (e.action === 'title_changed') {
-			if (e.title && this._currentDeck.cursor) {
-				this._currentDeck.cursor.title = e.title;
-				$('#' + strId).dialog('option', 'title', e.title);
-			}
 		} else if (e.action === 'cursor_visible') {
 			this._currentDeck.cursor.cursorVisible = e.visible === 'true';
 			if (this._currentDeck.cursor.cursorVisible)
@@ -173,9 +168,8 @@ L.Control.Sidebar = L.Control.extend({
 		}
 	},
 
-	_launchSidebar: function(id, left, top, width, height, title) {
+	_launchSidebar: function(id, left, top, width, height) {
 
-		title; // unsed for now.
 		if (!left)
 			left = 0;
 		if (!top)
@@ -232,7 +226,6 @@ L.Control.Sidebar = L.Control.extend({
 			top: top,
 			width: width,
 			height: height,
-			title: title,
 			cursor: null,
 			input: null,
 			child: null // One child, typically drop-down list
@@ -258,13 +251,11 @@ L.Control.Sidebar = L.Control.extend({
 			// so we don't leave edge-elements highlighted as if
 			// the mouse is still over them.
 			this._map.lastActiveTime = Date.now();
-			if (!this._currentDeck.title) // For context menu
-				this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
+			this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
 		}, this);
 		L.DomEvent.on(panelCanvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
-			if (!this._currentDeck.title) // For context menu
-				this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
+			this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
 		L.DomEvent.on(panelCanvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
