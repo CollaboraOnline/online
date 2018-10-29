@@ -230,6 +230,8 @@ private:
     bool setClientPart(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool setPage(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool sendWindowCommand(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool signDocumentContent(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool askSignatureStatus(const char* buffer, int length, const std::vector<std::string>& tokens);
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
 

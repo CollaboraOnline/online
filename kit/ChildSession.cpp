@@ -331,6 +331,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         {
             sendWindowCommand(buffer, length, tokens);
         }
+        else if (tokens[0] == "signdocument")
+        {
+            signDocumentContent(buffer, length, tokens);
+        }
+        else if (tokens[0] == "asksignaturestatus")
+        {
+            askSignatureStatus(buffer, length, tokens);
+        }
         else
         {
             assert(false && "Unknown command token.");
@@ -1104,6 +1112,21 @@ bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, con
     return true;
 }
 
+bool ChildSession::signDocumentContent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /*tokens*/)
+{
+    return true;
+}
+
+bool ChildSession::askSignatureStatus(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /*tokens*/)
+{
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+    int nStatus = getLOKitDocument()->getSignatureState();
+
+    sendTextFrame("signaturestatus: " + nStatus);
+    return true;
+}
+
 bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     int type, x, y;
@@ -1586,6 +1609,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("clipboardchanged: " + selection);
         break;
     }
+    case LOK_CALLBACK_SIGNATURE_STATUS:
+        sendTextFrame("signaturestatus: " + payload);
+        break;
     default:
         LOG_ERR("Unknown callback event (" << type << "): " << payload);
     }

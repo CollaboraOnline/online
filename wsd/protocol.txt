@@ -223,6 +223,15 @@ versionrestore <action>
     - prerestore: The storage is about restore the document to an earlier
     revision.
 
+asksignaturestatus
+
+    Requests a signing status of the document.
+
+signdocument
+
+    Sign the current document with the input cetificate and private key.
+
+
 server -> client
 ================
 
@@ -473,6 +482,16 @@ versionrestore: <action>
 
      - prerestore_ack: The host can go ahead with restoring the document to an
        earlier revision.
+
+signaturestatus: <sign status>
+    Possible values:
+        0xffff - Unknown
+        0 - NOSIGNATURES
+        1 - OK
+        2 - BROKEN
+        3 - INVALID (signature is OK, but doc is modified now)
+        4 - NOTVALIDATED (signature is OK, but certificate could not be validated)
+        5 - PARTIAL_OK (signature and certificate are ok, but not all files are signed - old documents only)
 
 child -> parent
 ===============
