@@ -574,6 +574,7 @@ typedef enum
      * - "close" - window is closed
      */
     LOK_CALLBACK_WINDOW = 36,
+
     /**
      * When for the current cell is defined a validity list we need to show
      * a drop down button in the form of a marker.
