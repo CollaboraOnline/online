@@ -291,6 +291,12 @@ body {
 	content: '\2713';
 }
 
+.context-menu-hover
+{
+    background-color: #0b87e7 !important;
+    color: #fff !important;
+}
+
 .loleaflet-annotation {
 	position: absolute;
 	text-align: center;
