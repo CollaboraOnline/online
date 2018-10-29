@@ -80,6 +80,18 @@
 		BE58E12E217F295B00249358 /* Protocol.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Protocol.hpp; sourceTree = "<group>"; };
 		BE58E12F217F295B00249358 /* Session.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Session.hpp; sourceTree = "<group>"; };
 		BE58E13021874A2E00249358 /* Mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mobile.entitlements; sourceTree = "<group>"; };
+		BE58E132218793B500249358 /* svpbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpbmp.cxx; path = "../../ios-device/vcl/headless/svpbmp.cxx"; sourceTree = "<group>"; };
+		BE58E133218793B500249358 /* svpglyphcache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpglyphcache.cxx; path = "../../ios-device/vcl/headless/svpglyphcache.cxx"; sourceTree = "<group>"; };
+		BE58E134218793B600249358 /* svpgdi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpgdi.cxx; path = "../../ios-device/vcl/headless/svpgdi.cxx"; sourceTree = "<group>"; };
+		BE58E135218793B600249358 /* headlessinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = headlessinst.cxx; path = "../../ios-device/vcl/headless/headlessinst.cxx"; sourceTree = "<group>"; };
+		BE58E136218793B600249358 /* svpcairotextrender.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpcairotextrender.cxx; path = "../../ios-device/vcl/headless/svpcairotextrender.cxx"; sourceTree = "<group>"; };
+		BE58E137218793B600249358 /* svpprn.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpprn.cxx; path = "../../ios-device/vcl/headless/svpprn.cxx"; sourceTree = "<group>"; };
+		BE58E138218793B600249358 /* svpdummies.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpdummies.cxx; path = "../../ios-device/vcl/headless/svpdummies.cxx"; sourceTree = "<group>"; };
+		BE58E139218793B600249358 /* svpinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpinst.cxx; path = "../../ios-device/vcl/headless/svpinst.cxx"; sourceTree = "<group>"; };
+		BE58E13A218793B600249358 /* svpdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpdata.cxx; path = "../../ios-device/vcl/headless/svpdata.cxx"; sourceTree = "<group>"; };
+		BE58E13B218793B600249358 /* svptext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svptext.cxx; path = "../../ios-device/vcl/headless/svptext.cxx"; sourceTree = "<group>"; };
+		BE58E13C218793B600249358 /* svpvd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpvd.cxx; path = "../../ios-device/vcl/headless/svpvd.cxx"; sourceTree = "<group>"; };
+		BE58E13D218793B600249358 /* svpframe.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpframe.cxx; path = "../../ios-device/vcl/headless/svpframe.cxx"; sourceTree = "<group>"; };
 		BE5EB5B9213FE29900E0826C /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpookyV2.cpp; sourceTree = "<group>"; };
 		BE5EB5BB213FE29900E0826C /* Session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
@@ -314,6 +326,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE58E1312187938700249358 /* headless */ = {
+			isa = PBXGroup;
+			children = (
+				BE58E135218793B600249358 /* headlessinst.cxx */,
+				BE58E132218793B500249358 /* svpbmp.cxx */,
+				BE58E136218793B600249358 /* svpcairotextrender.cxx */,
+				BE58E13A218793B600249358 /* svpdata.cxx */,
+				BE58E138218793B600249358 /* svpdummies.cxx */,
+				BE58E13D218793B600249358 /* svpframe.cxx */,
+				BE58E134218793B600249358 /* svpgdi.cxx */,
+				BE58E133218793B500249358 /* svpglyphcache.cxx */,
+				BE58E139218793B600249358 /* svpinst.cxx */,
+				BE58E137218793B600249358 /* svpprn.cxx */,
+				BE58E13B218793B600249358 /* svptext.cxx */,
+				BE58E13C218793B600249358 /* svpvd.cxx */,
+			);
+			name = headless;
+			sourceTree = "<group>";
+		};
 		BE5EB5B5213FE1F900E0826C /* Online */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,6 +401,7 @@
 				BE93D43C216D555C007A39F4 /* sfx2 */,
 				BEB6524B216FD09400B8C09A /* tools */,
 				BE93D420216CAA52007A39F4 /* vcl */,
+				BE58E1312187938700249358 /* headless */,
 			);
 			name = Core;
 			sourceTree = "<group>";
