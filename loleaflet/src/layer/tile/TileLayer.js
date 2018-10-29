@@ -482,6 +482,40 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('validitylistbutton:')) {
 			this._onValidityListButtonMsg(textMsg);
 		}
+		else if (textMsg.startsWith('signaturestatus:')) {
+			var signstatus = textMsg.substring('signaturestatus:'.length + 1);
+
+			if (signstatus == '1') {
+				this._map.fire('infobar',
+					{
+						msg: 'Document signed and validated.', action: null, actionLabel: null
+					});
+			}
+			else if (signstatus == '2') {
+				this._map.fire('infobar',
+					{
+						msg: 'Document signed but signatue is broken.', action: null, actionLabel: null
+					});
+			}
+			else if (signstatus == '3') {
+				this._map.fire('infobar',
+					{
+						msg: 'Document signed but the document is already modified.', action: null, actionLabel: null
+					});
+			}
+			else if (signstatus == '4') {
+				this._map.fire('infobar',
+					{
+						msg: 'Document signed but can not be validated.', action: null, actionLabel: null
+					});
+			}
+			else if (signstatus == '5') {
+				this._map.fire('infobar',
+					{
+						msg: 'Document signed but not all files are signed.', action: null, actionLabel: null
+					});
+			}
+		}
 	},
 
 	toggleTileDebugModeImpl: function() {
