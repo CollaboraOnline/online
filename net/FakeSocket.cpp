@@ -510,18 +510,22 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
         return -1;
     }
 
-    // These sockets are record-oriented. It won't work to read less than the whole record in turn
-    // to be read.
-    ssize_t result = pair.buffer[K][0].size();
-    if (nbytes < result)
+    ssize_t result = 0;
+    if (pair.buffer[K].size() > 0)
     {
-        loggingBuffer << "FakeSocket EAGAIN: Read from #" << fd << ", " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
-        errno = EAGAIN; // Not the right errno, but what would be?q
-        return -1;
-    }
+        // These sockets are record-oriented. It won't work to read less than the whole record in
+        // turn to be read.
+        result = pair.buffer[K][0].size();
+        if (nbytes < result)
+        {
+            loggingBuffer << "FakeSocket EAGAIN: Read from #" << fd << ", " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
+            errno = EAGAIN; // Not the right errno, but what would be?
+            return -1;
+        }
 
-    memmove(buf, pair.buffer[K][0].data(), result);
-    pair.buffer[K].erase(pair.buffer[K].begin());
+        memmove(buf, pair.buffer[K][0].data(), result);
+        pair.buffer[K].erase(pair.buffer[K].begin());
+    }
 
     // If peer is closed or shut down, we continue to be readable
     if (pair.fd[N] == -1 || pair.shutdown[N])
