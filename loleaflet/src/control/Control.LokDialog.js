@@ -322,8 +322,7 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(dialogCanvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
-			if (!this._dialogs[this._currentId].title) // For context menu
-				this._postWindowMouseEvent('move', this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, 0, 0);
+			this._postWindowMouseEvent('move', this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
