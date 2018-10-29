@@ -1,8 +1,3 @@
-# Version number of loleaflet, no need to be in sync with the loolwsd
-# one, but do please follow the same even/odd convention for the third
-# ("micro") part: Between releases odd, even for releases (no other
-# changes inbetween).
-
 # Version number of the bundled 'draw' thing
 DRAW_VERSION=0.2.4
 
