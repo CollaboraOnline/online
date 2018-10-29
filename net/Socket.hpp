@@ -893,6 +893,8 @@ public:
         ssize_t len;
         if (available == -1)
             len = -1;
+        else if (available == 0)
+            len = 0;
         else
         {
             std::vector<char>buf(available);
