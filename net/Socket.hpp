@@ -100,7 +100,6 @@ public:
     static const int DefaultSendBufferSize = 16 * 1024;
     static const int MaximumSendBufferSize = 128 * 1024;
     static std::atomic<bool> InhibitThreadChecks;
-    std::string _clientAddress;
 
     enum Type { IPv4, IPv6, All };
 
@@ -126,6 +125,16 @@ public:
 
     /// Create socket of the given type.
     static int createSocket(Type type);
+
+    void setClientAddress(const std::string& clientAddress)
+    {
+        _clientAddress = clientAddress;
+    }
+
+    const std::string& clientAddress() const
+    {
+        return _clientAddress;
+    }
 
     /// Returns the OS native socket fd.
     int getFD() const { return _fd; }
@@ -323,6 +332,7 @@ protected:
     }
 
 private:
+    std::string _clientAddress;
     const int _fd;
     int _sendBufferSize;
 
@@ -701,6 +711,12 @@ public:
         return false;
     }
 
+protected:
+    bool isStop() const
+    {
+        return _stop;
+    }
+
 private:
     /// Initialize the poll fds array with the right events
     void setupPollFds(std::chrono::steady_clock::time_point now,
@@ -729,7 +745,6 @@ private:
     /// Used to set the thread name and mark the thread as stopped when done.
     void pollingThreadEntry();
 
-private:
     /// Debug name used for logging.
     const std::string _name;
 
@@ -744,7 +759,6 @@ private:
     /// The fds to poll.
     std::vector<pollfd> _pollFds;
 
-protected:
     /// Flag the thread to stop.
     std::atomic<bool> _stop;
     /// The polling thread.
@@ -931,11 +945,6 @@ public:
     {
         sent = _bytesSent;
         recv = _bytesRecvd;
-    }
-
-    const std::string clientAddress()
-    {
-        return _clientAddress;
     }
 
     std::vector<char>& getInBuffer()

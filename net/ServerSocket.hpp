@@ -94,12 +94,12 @@ public:
 
                 inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
                 std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
-                _socket->_clientAddress = addrstr;
+                _socket->setClientAddress(addrstr);
                 LOG_DBG("Accepted socket has family " << clientInfo.sin6_family <<
-                        " address " << _socket->_clientAddress);
+                        " address " << _socket->clientAddress());
 #else
                 std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
-                _socket->_clientAddress = "dummy";
+                _socket->setClientAddress("dummy");
 #endif
                 return _socket;
             }
