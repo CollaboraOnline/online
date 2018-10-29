@@ -326,7 +326,14 @@ struct _LibreOfficeKitDocumentClass
     /// @see lok::Document::insertCertificate().
     bool (*insertCertificate) (LibreOfficeKitDocument* pThis,
                                 const unsigned char* pCertificateBinary,
-                                const int pCertificateBinarySize);
+                                const int nCertificateBinarySize,
+                                const unsigned char* pPrivateKeyBinary,
+                                const int nPrivateKeyBinarySize);
+
+    /// @see lok::Document::addCertificate().
+    bool (*addCertificate) (LibreOfficeKitDocument* pThis,
+                                const unsigned char* pCertificateBinary,
+                                const int nCertificateBinarySize);
 
     /// @see lok::Document::getSignatureState().
     int (*getSignatureState) (LibreOfficeKitDocument* pThis);

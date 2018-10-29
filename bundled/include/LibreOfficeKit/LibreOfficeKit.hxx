@@ -582,9 +582,23 @@ public:
      *  Insert certificate (in binary form) to the certificate store.
      */
     bool insertCertificate(const unsigned char* pCertificateBinary,
-                           const int pCertificateBinarySize)
+                           const int nCertificateBinarySize,
+                           const unsigned char* pPrivateKeyBinary,
+                           const int nPrivateKeyBinarySize)
     {
-        return mpDoc->pClass->insertCertificate(mpDoc, pCertificateBinary, pCertificateBinarySize);
+        return mpDoc->pClass->insertCertificate(mpDoc,
+                        pCertificateBinary, nCertificateBinarySize,
+                        pPrivateKeyBinary, nPrivateKeyBinarySize);
+    }
+
+    /**
+     *  Add the certificate (in binary form) to the certificate store.
+     *
+     */
+    bool addCertificate(const unsigned char* pCertificateBinary,
+                        const int pCertificateBinarySize)
+    {
+        return mpDoc->pClass->addCertificate(mpDoc, pCertificateBinary, pCertificateBinarySize);
     }
 
     /**
