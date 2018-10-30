@@ -39,6 +39,9 @@ endif
 LOLEAFLET_DRAW_JS_SRC = $(shell find $(srcdir)/plugins/draw-$(DRAW_VERSION)/src -name '*.js')
 LOLEAFLET_DRAW_JS_DST = $(patsubst $(srcdir)/plugins/%.js,$(builddir)/dist/plugins/%.js,$(LOLEAFLET_DRAW_JS_SRC))
 
+LOLEAFLET_PATH_JS_SRC = $(shell find $(srcdir)/plugins/path-transform/src -name '*.js')
+LOLEAFLET_PATH_JS_DST = $(patsubst $(srcdir)/plugins/%.js,$(builddir)/dist/plugins/%.js,$(LOLEAFLET_PATH_JS_SRC))
+
 LOLEAFLET_DRAW_CSS_SRC = $(shell find $(srcdir)/plugins/draw-$(DRAW_VERSION)/dist -name '*.css')
 
 LOLEAFLET_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
@@ -115,6 +118,7 @@ GLOBAL_JS =\
 	global.js
 
 LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
+LOPLUGIN_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').deps.join(' '))} catch(e) {}"))
 
 PLUGINS_JS =\
 	jquery.mCustomScrollbar.js \
@@ -167,9 +171,12 @@ $(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call LOLEAFLET_JS,$(srcdir)/admin/build/build.js)) > $@
 
 if ENABLE_DEBUG
-$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST) $(PLUGINS_JS_DST)
+$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST) $(LOLEAFLET_DRAW_JS_DST) $(LOLEAFLET_PATH_JS_DST) $(PLUGINS_JS_DST)
 	@echo "Checking for loleaflet JS errors..."
-	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src $(srcdir)/plugins/draw-$(DRAW_VERSION)/src  $(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
+		$(srcdir)/plugins/draw-$(DRAW_VERSION)/src \
+		$(srcdir)/plugins/path-transform/src \
+		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@touch $@
 
 $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
@@ -186,12 +193,16 @@ else
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
 	@mkdir -p $(dir $@)
 	@echo "Checking for loleaflet JS errors..."
-	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src $(srcdir)/plugins/draw-$(DRAW_VERSION)/src  $(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
+		$(srcdir)/plugins/draw-$(DRAW_VERSION)/src \
+		$(srcdir)/plugins/path-transform/src \
+		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@(cat $(srcdir)/src/copyright.js | sed 's/{VERSION}/$(LOLEAFLET_VERSION)/' - \
 		&& echo "(function (window, document, undefined) {" \
 		&& awk 'FNR == 1 {print ""} 1' \
 		$(patsubst %.js,$(srcdir)/%.js,$(call LOLEAFLET_JS,$(srcdir)/build/build.js)) \
 		$(patsubst %.js,$(srcdir)/plugins/draw-$(DRAW_VERSION)/%.js,$(call LOLEAFLET_JS,$(srcdir)/plugins/draw-$(DRAW_VERSION)/build/build.js)) \
+		$(patsubst %.js,$(srcdir)/plugins/path-transform/%.js,$(call LOPLUGIN_JS,$(srcdir)/plugins/path-transform/build/deps.js)) \
 		&& echo "}(window, document));") > $@
 
 $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
@@ -229,6 +240,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(GLOBAL_JS) $(NODE_MODULES_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \
 		$(patsubst %.js,plugins/draw-$(DRAW_VERSION)/%.js,$(call LOLEAFLET_JS,$(srcdir)/plugins/draw-$(DRAW_VERSION)/build/build.js)) \
+		$(patsubst %.js,plugins/path-transform/%.js,$(call LOPLUGIN_JS,$(srcdir)/plugins/path-transform/build/deps.js)) \
 		$(PLUGINS_JS))" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
