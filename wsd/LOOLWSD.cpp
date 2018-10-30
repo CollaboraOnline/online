@@ -3171,9 +3171,7 @@ int LOOLWSD::innerMain()
     std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
 #endif
 
-#ifndef MOBILEAPP
     const auto startStamp = std::chrono::steady_clock::now();
-#endif
 
     while (!TerminationFlag && !ShutdownRequestFlag)
     {
@@ -3188,7 +3186,6 @@ int LOOLWSD::innerMain()
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();
 
-#ifndef MOBILEAPP
         const std::chrono::milliseconds::rep timeSinceStartMs = std::chrono::duration_cast<std::chrono::milliseconds>(
                                             std::chrono::steady_clock::now() - startStamp).count();
 
@@ -3202,7 +3199,6 @@ int LOOLWSD::innerMain()
             LOG_INF(timeSinceStartMs << " milliseconds gone, finishing as requested.");
             break;
         }
-#endif
 #endif
     }
     // Stop the listening to new connections
