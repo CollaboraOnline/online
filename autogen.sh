@@ -16,7 +16,9 @@ EOF
     exit 1
 }
 
-libtoolize || failed "libtool"
+if test `uname -s` = Linux; then
+    libtoolize || failed "libtool"
+fi
 
 aclocal || failed "aclocal"
 

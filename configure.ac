@@ -63,7 +63,13 @@ AC_ARG_ENABLE([anonymize-filenames],
 AC_ARG_ENABLE([iosapp],
               AS_HELP_STRING([--enable-iosapp],
                              [Use in a tree where the only purpose is to build the HTML and CSS stuff
-                              to be copied to a Mac where the iOS app is being built.]))
+                              to be copied to a Mac where the iOS app is being built, *or* in a tree where
+                              you will build the iOS app. In the latter case the only purpose of running
+                              configure is to put the app name in the Info.plist file.]))
+
+AC_ARG_WITH([iosapp-name],
+              AS_HELP_STRING([--with-iosapp-name],
+                             [Set the user-visible name of the iOS app you build. Default "Mobile".]))
 
 AC_ARG_ENABLE([gtkapp],
               AS_HELP_STRING([--enable-gtkapp],
@@ -195,11 +201,17 @@ if "x$anonym_msg" = "x";  then
   anonym_msg="no anonymization of usernames or filenames"
 fi
 ENABLE_IOSAPP=
+IOSAPP_NAME="Mobile"
 if test "$enable_iosapp" = "yes"; then
    ENABLE_IOSAPP=true
+   m4_define([PKG_CHECK_MODULES],[])
+   if test -n "$with_iosapp_name"; then
+      IOSAPP_NAME="$with_iosapp_name"
+   fi
 fi
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
+AC_SUBST(IOSAPP_NAME)
 
 ENABLE_GTKAPP=
 if test "$enable_gtkapp" = "yes"; then
@@ -339,20 +351,21 @@ AS_IF([test `uname -s` != Darwin],
                       [],
                       [AC_MSG_ERROR([dlopen not found])])])
 
-AC_SEARCH_LIBS([png_create_write_struct],
-               [png],
-               [],
-               [AC_MSG_ERROR([libpng not available?])])
+AS_IF([test "$ENABLE_IOSAPP" != "true"],
+      [AC_SEARCH_LIBS([png_create_write_struct],
+                      [png],
+                      [],
+                      [AC_MSG_ERROR([libpng not available?])])
+       PKG_CHECK_MODULES([ZLIB], [zlib])
+
+       PKG_CHECK_MODULES([CPPUNIT], [cppunit])
+       ])
 
 AS_IF([test `uname -s` = Linux],
       [AC_SEARCH_LIBS([cap_get_proc],
                       [cap],
                       [],
                       [AC_MSG_ERROR([libcap not available?])])])
-
-PKG_CHECK_MODULES([ZLIB], [zlib])
-
-PKG_CHECK_MODULES([CPPUNIT], [cppunit])
 
 AS_IF([test "$ENABLE_GTKAPP" = true],
       [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
@@ -395,87 +408,97 @@ AC_SUBST(ENABLE_SUPPORT_KEY)
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
-AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
-                 [],
-                 [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
-AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
-                 [],
-                 [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
-DISABLE_SECCOMP=
-if test "$enable_seccomp" != "no"; then
-    AC_CHECK_HEADERS([linux/seccomp.h],
-                     [],
-                     [AC_MSG_ERROR([critical security header linux/seccomp.h not found. If kernel on target system does not support SECCOMP, you can use --disable-seccomp, but mind the security consequences.])])
-    AC_DEFINE([DISABLE_SECCOMP],0,[Whether to disable SECCOMP])
-else
-    AC_DEFINE([DISABLE_SECCOMP],1,[Whether to disable SECCOMP])
-fi
+AS_IF([test "$ENABLE_IOSAPP" != "true"],
+      [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
+                        [],
+                        [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
+       AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
+                        [],
+                        [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
+       DISABLE_SECCOMP=
+       if test "$enable_seccomp" != "no"; then
+           AC_CHECK_HEADERS([linux/seccomp.h],
+                            [],
+                            [AC_MSG_ERROR([critical security header linux/seccomp.h not found. If kernel on target system does not support SECCOMP, you can use --disable-seccomp, but mind the security consequences.])])
+           AC_DEFINE([DISABLE_SECCOMP],0,[Whether to disable SECCOMP])
+       else
+           AC_DEFINE([DISABLE_SECCOMP],1,[Whether to disable SECCOMP])
+       fi
 
-AC_MSG_CHECKING([Whether OpenSSL has PKCS5_PBKDF2_HMAC()])
-AC_COMPILE_IFELSE([AC_LANG_SOURCE([
-#include <openssl/opensslv.h>
-#if OPENSSL_VERSION_NUMBER < 0x10001000L
-#error PKCS5_PBKDF2_HMAC() is in OpenSSL 1.0.1 or newer
-#endif
-])],
-                  [AC_MSG_RESULT([yes])
-                   AC_DEFINE([HAVE_PKCS5_PBKDF2_HMAC],1,[whether OpenSSL has PKCS5_PBKDF2_HMAC()])],
-                  [AC_MSG_RESULT([no])
-                   AC_MSG_WARN([OpenSSL is too old. Secure password storage for Admin Console is not supported.])
-                   AC_DEFINE([HAVE_PKCS5_PBKDF2_HMAC],0,[Whether OpenSSL has PKCS5_PBKDF2_HMAC()])])
+       AC_MSG_CHECKING([Whether OpenSSL has PKCS5_PBKDF2_HMAC()])
+       AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+       #include <openssl/opensslv.h>
+       #if OPENSSL_VERSION_NUMBER < 0x10001000L
+       #error PKCS5_PBKDF2_HMAC() is in OpenSSL 1.0.1 or newer
+       #endif
+       ])],
+                         [AC_MSG_RESULT([yes])
+                          AC_DEFINE([HAVE_PKCS5_PBKDF2_HMAC],1,[whether OpenSSL has PKCS5_PBKDF2_HMAC()])],
+                         [AC_MSG_RESULT([no])
+                          AC_MSG_WARN([OpenSSL is too old. Secure password storage for Admin Console is not supported.])
+                          AC_DEFINE([HAVE_PKCS5_PBKDF2_HMAC],0,[Whether OpenSSL has PKCS5_PBKDF2_HMAC()])])
 
-AC_MSG_CHECKING([POCO version])
-AC_COMPILE_IFELSE([AC_LANG_SOURCE([
-#include <Poco/Version.h>
-#if POCO_VERSION < 0x01070100
-#error Require Poco 1.7.1 or newer
-#endif
-])],
-                  [AC_MSG_RESULT([OK])],
-                  [AC_MSG_ERROR([The POCO version is too old])])
+       AC_MSG_CHECKING([POCO version])
+       AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+       #include <Poco/Version.h>
+       #if POCO_VERSION < 0x01070100
+       #error Require Poco 1.7.1 or newer
+       #endif
+       ])],
+                         [AC_MSG_RESULT([OK])],
+                         [AC_MSG_ERROR([The POCO version is too old])])
 
-# If poco is built with --unbundled, it uses the system pcre library
-AC_MSG_CHECKING([If we need to link with -lpcre])
-AC_LINK_IFELSE([AC_LANG_SOURCE([
-#include <Poco/RegularExpression.h>
-int main(int argc, char **argv)
-{
-    Poco::RegularExpression e("abc.[def]");
-    Poco::RegularExpression::Match m;
-    return e.match(argv[[1]], m);
-}
-])],
-               [AC_MSG_RESULT([No])],
-               [AC_MSG_RESULT([Yes])
-                LIBS="$LIBS -lpcre"])
+       # If poco is built with --unbundled, it uses the system pcre library
+       AC_MSG_CHECKING([If we need to link with -lpcre])
+       AC_LINK_IFELSE([AC_LANG_SOURCE([
+       #include <Poco/RegularExpression.h>
+       int main(int argc, char **argv)
+       {
+           Poco::RegularExpression e("abc.[def]");
+           Poco::RegularExpression::Match m;
+           return e.match(argv[[1]], m);
+       }
+       ])],
+                      [AC_MSG_RESULT([No])],
+                      [AC_MSG_RESULT([Yes])
+                       LIBS="$LIBS -lpcre"])
 
-AC_PATH_PROG(NPM, npm, no)
-if test "$NPM" = "no"; then
-    AC_MSG_ERROR([npm required to build loleaflet, but not installed])
-else
-    NPM_VER=`npm -v | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-    if test "$NPM_VER" -ge 30900 -a "$NPM_VER" -lt 31004; then
-        AC_MSG_ERROR([This npm version is buggy, either upgrade to >= 3.10.4 or downgrade to < 3.9.0])
-    fi
-fi
+       ])
 
-AC_PATH_PROG(NODE, node, no)
-if test "$NODE" = "no"; then
-    AC_MSG_ERROR([node required to build loleaflet, but not installed])
-else
-    NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-    if test "$NODE_VER" -lt 60000; then
-        AC_MSG_ERROR([This node version is old, upgrade to >= 6.0.0])
-    fi
-fi
+AS_IF([test `uname -s` = "Linux"],
+      # We need npm and node only on Linux, both in the normal Online case,
+      # and when only building JS for the iOS app. When building the iOS app itself on macOS,
+      # don't do this.
+      [AC_PATH_PROG(NPM, npm, no)
+       if test "$NPM" = "no"; then
+           AC_MSG_ERROR([npm required to build loleaflet, but not installed])
+       else
+           NPM_VER=`npm -v | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
+           if test "$NPM_VER" -ge 30900 -a "$NPM_VER" -lt 31004; then
+               AC_MSG_ERROR([This npm version is buggy, either upgrade to >= 3.10.4 or downgrade to < 3.9.0])
+           fi
+       fi
 
-test "$prefix" = NONE && prefix=$ac_default_prefix
-LOOLWSD_CACHEDIR=${localstatedir}/cache/${PACKAGE}
-while :; do
-    oldvalue=$LOOLWSD_CACHEDIR
-    LOOLWSD_CACHEDIR=`eval echo $LOOLWSD_CACHEDIR`
-    test $LOOLWSD_CACHEDIR = $oldvalue && break
-done
+       AC_PATH_PROG(NODE, node, no)
+       if test "$NODE" = "no"; then
+           AC_MSG_ERROR([node required to build loleaflet, but not installed])
+       else
+           NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
+           if test "$NODE_VER" -lt 60000; then
+               AC_MSG_ERROR([This node version is old, upgrade to >= 6.0.0])
+           fi
+       fi
+       ])
+
+AS_IF([test "$ENABLE_IOSAPP" != "true"],
+      [test "$prefix" = NONE && prefix=$ac_default_prefix
+       LOOLWSD_CACHEDIR=${localstatedir}/cache/${PACKAGE}
+       while :; do
+           oldvalue=$LOOLWSD_CACHEDIR
+           LOOLWSD_CACHEDIR=`eval echo $LOOLWSD_CACHEDIR`
+           test $LOOLWSD_CACHEDIR = $oldvalue && break
+       done
+       ])
 
 # need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
 AS_IF([test -n "$with_compiler_plugins"],
@@ -513,6 +536,7 @@ AC_LINK_FILES([loleaflet/node_shrinkwrap], [loleaflet/node_shrinkwrap])
 
 AC_CONFIG_FILES([Makefile
                  gtk/Makefile
+                 Mobile/Mobile/Info.plist
                  test/Makefile
                  loleaflet/Makefile
                  loleaflet/npm-shrinkwrap.json
