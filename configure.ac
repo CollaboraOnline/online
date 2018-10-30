@@ -10,6 +10,9 @@ AM_INIT_AUTOMAKE([1.10 subdir-objects tar-pax -Wno-portability])
 
 AC_CONFIG_MACRO_DIR([m4])
 
+# We don't want to require pkg-config and PKG_CHECK_MODULES on macOS
+m4_if(m4_esyscmd_s([uname -s]),Linux,[],[m4_define([PKG_CHECK_MODULES],[])])
+
 LOOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
 LOOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
 LOOLWSD_VERSION_MICRO=`echo $VERSION | awk -F. '{print $3}'`
@@ -204,7 +207,6 @@ ENABLE_IOSAPP=
 IOSAPP_NAME="Mobile"
 if test "$enable_iosapp" = "yes"; then
    ENABLE_IOSAPP=true
-   m4_define([PKG_CHECK_MODULES],[])
    if test -n "$with_iosapp_name"; then
       IOSAPP_NAME="$with_iosapp_name"
    fi
