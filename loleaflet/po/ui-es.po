@@ -262,7 +262,7 @@ msgstr "Más..."
 
 #: dist/toolbar/toolbar.js:476 src/control/Control.Menubar.js:66
 msgid "Remote Image..."
-msgstr ""
+msgstr "Imagen remota..."
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -552,7 +552,7 @@ msgstr "Saltar al estado"
 
 #: src/control/Control.Menubar.js:20
 msgid "Share..."
-msgstr ""
+msgstr "Compartir..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:309
