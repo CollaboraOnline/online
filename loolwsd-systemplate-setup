@@ -42,6 +42,7 @@ find etc/passwd etc/group etc/hosts \
 	 -type f
 
 find etc/fonts \
+     etc/resolv.conf \
      lib/ld-* lib64/ld-* \
      lib/libnss_* lib64/libnss_* lib/*-linux-gnu/libnss*\
      lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
