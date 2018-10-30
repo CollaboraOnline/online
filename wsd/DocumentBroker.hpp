@@ -186,7 +186,7 @@ public:
 
         return false;
 #else
-        return true;
+        return _pid > 1;
 #endif
     }
 
