@@ -2508,6 +2508,10 @@ void lokit_main(
 
         LOG_INF("Kit poll terminated.");
 
+#ifdef MOBILEAPP
+        SocketPoll::wakeupWorld();
+#endif
+
         // Let forkit handle the jail cleanup.
     }
     catch (const Exception& exc)
