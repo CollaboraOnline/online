@@ -197,7 +197,7 @@ fi
 AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_USERNAMES],[$LOOLWSD_ANONYMIZE_USERNAMES],[Enable permanent usernames anonymization in logs])
 AC_SUBST(LOOLWSD_ANONYMIZE_USERNAMES)
 
-if "x$anonym_msg" = "x";  then
+if test -z "$anonym_msg";  then
   anonym_msg="no anonymization of usernames or filenames"
 fi
 ENABLE_IOSAPP=
