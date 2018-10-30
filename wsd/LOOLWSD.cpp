@@ -189,13 +189,6 @@ ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 /// Port for prisoners to connect to
 int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
 
-/// New LOK child processes ready to host documents.
-//TODO: Move to a more sensible namespace.
-static bool DisplayVersion = false;
-
-/// Funky latency simulation basic delay (ms)
-static int SimulatedLatencyMs = 0;
-
 // Tracks the set of prisoners / children waiting to be used.
 static std::mutex NewChildrenMutex;
 static std::condition_variable NewChildrenCV;
@@ -219,8 +212,19 @@ std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::set<std::string> LOOLWSD::EditFileExtensions;
 
 #ifdef MOBILEAPP
+
 // Or can this be retreieved in some other way?
 int LOOLWSD::prisonerServerSocketFD;
+
+#else
+
+/// New LOK child processes ready to host documents.
+//TODO: Move to a more sensible namespace.
+static bool DisplayVersion = false;
+
+/// Funky latency simulation basic delay (ms)
+static int SimulatedLatencyMs = 0;
+
 #endif
 
 namespace
@@ -1789,11 +1793,12 @@ private:
         Poco::MemoryInputStream message(&socket->getInBuffer()[0],
                                         socket->getInBuffer().size());;
         Poco::Net::HTTPRequest request;
-        size_t requestSize = 0;
 
         try
         {
 #ifndef MOBILEAPP
+            size_t requestSize = 0;
+
             if (!socket->parseHeader("Prisoner", message, request, &requestSize))
                 return;
 

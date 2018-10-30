@@ -86,8 +86,8 @@ size_t StorageBase::getFileSize(const std::string& filename)
 
 void StorageBase::initialize()
 {
-    const auto& app = Poco::Util::Application::instance();
 #ifndef MOBILEAPP
+    const auto& app = Poco::Util::Application::instance();
     FilesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
 
     // Parse the WOPI settings.

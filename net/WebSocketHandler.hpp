@@ -209,7 +209,6 @@ public:
         _wsPayload.insert(_wsPayload.end(), p, p + len);
         const size_t headerLen = 0;
         const size_t payloadLen = len;
-        const bool hasMask = false;
 #endif
 
         assert(_wsPayload.size() >= payloadLen);
@@ -445,9 +444,9 @@ private:
 
         socket->assertCorrectThread();
         std::vector<char>& out = socket->getOutBuffer();
-        const size_t oldSize = out.size();
 
 #ifndef MOBILEAPP
+        const size_t oldSize = out.size();
 
         out.push_back(flags);
 

@@ -473,9 +473,10 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     std::string userId, username;
     std::string userExtraInfo;
     std::string watermarkText;
-    std::chrono::duration<double> getInfoCallDuration(0);
 
 #ifndef MOBILEAPP
+    std::chrono::duration<double> getInfoCallDuration(0);
+
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {

@@ -757,7 +757,9 @@ private:
     std::vector<unsigned char> _pixmap;
 };
 
+#ifndef MOBILEAPP
 static FILE* ProcSMapsFile = nullptr;
+#endif
 
 /// A document container.
 /// Owns LOKitDocument instance and connections.
