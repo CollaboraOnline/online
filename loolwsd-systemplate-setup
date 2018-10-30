@@ -36,6 +36,7 @@ find etc/ld.so.* \
 	 -type f 2>/dev/null
 
 find etc/fonts \
+     etc/resolv.conf \
      lib/ld-* lib64/ld-* \
      lib64/libnss_* \
 	-type l 2>/dev/null
