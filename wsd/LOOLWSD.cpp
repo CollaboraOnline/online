@@ -1843,7 +1843,7 @@ private:
 
             UnitWSD::get().newChild(*this);
 #else
-            Poco::Process::PID pid = 1;
+            Poco::Process::PID pid = 100;
             std::string jailId = "jail";
             socket->getInBuffer().clear();
 #endif
