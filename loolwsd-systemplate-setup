@@ -37,6 +37,7 @@ find etc/passwd etc/group etc/hosts \
 	 -type f
 
 find etc/fonts \
+     etc/resolv.conf \
      lib/ld-* lib64/ld-* \
 	-type l
 
