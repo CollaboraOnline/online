@@ -63,20 +63,41 @@ struct UserInfo
     }
 
     UserInfo(const std::string& userId,
-             const std::string& username,
+             const std::string& userName,
              const std::string& userExtraInfo,
-             const bool readonly) :
-        UserId(userId),
-        Username(username),
-        UserExtraInfo(userExtraInfo),
-        IsReadOnly(readonly)
+             bool readOnly) :
+        _userId(userId),
+        _userName(userName),
+        _userExtraInfo(userExtraInfo),
+        _readOnly(readOnly)
     {
     }
 
-    std::string UserId;
-    std::string Username;
-    std::string UserExtraInfo;
-    bool IsReadOnly;
+    const std::string& getUserId() const
+    {
+        return _userId;
+    }
+
+    const std::string& getUserName() const
+    {
+        return _userName;
+    }
+
+    const std::string& getUserExtraInfo() const
+    {
+        return _userExtraInfo;
+    }
+
+    bool isReadOnly() const
+    {
+        return _readOnly;
+    }
+
+private:
+    std::string _userId;
+    std::string _userName;
+    std::string _userExtraInfo;
+    bool _readOnly;
 };
 
 /// Check the ForkCounter, and if non-zero, fork more of them accordingly.

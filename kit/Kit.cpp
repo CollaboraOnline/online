@@ -1477,12 +1477,12 @@ private:
             }
             else
             {
-                oss << "\"userid\":\"" << itView->second.UserId << "\",";
-                const std::string username = itView->second.Username;
+                oss << "\"userid\":\"" << itView->second.getUserId() << "\",";
+                const std::string username = itView->second.getUserName();
                 oss << "\"username\":\"" << username << "\",";
-                if (!itView->second.UserExtraInfo.empty())
-                    oss << "\"userextrainfo\":" << itView->second.UserExtraInfo << ",";
-                const bool readonly = itView->second.IsReadOnly;
+                if (!itView->second.getUserExtraInfo().empty())
+                    oss << "\"userextrainfo\":" << itView->second.getUserExtraInfo() << ",";
+                const bool readonly = itView->second.isReadOnly();
                 oss << "\"readonly\":\"" << readonly << "\",";
                 const auto it = viewColorsMap.find(username);
                 if (it != viewColorsMap.end())
