@@ -936,8 +936,8 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(SOURCE_ROOT)/..",
 					"$(SOURCE_ROOT)/../ios",
+					"$(SOURCE_ROOT)/..",
 					"$(SOURCE_ROOT)/../kit",
 					"$(SOURCE_ROOT)/../common",
 					"$(SOURCE_ROOT)/../wsd",
@@ -995,8 +995,8 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(SOURCE_ROOT)/..",
 					"$(SOURCE_ROOT)/../ios",
+					"$(SOURCE_ROOT)/..",
 					"$(SOURCE_ROOT)/../kit",
 					"$(SOURCE_ROOT)/../common",
 					"$(SOURCE_ROOT)/../wsd",
