@@ -1,3 +1,5 @@
+ETAGS=ctags -e
+
 if ENABLE_IOSAPP
 
 SUBDIRS = loleaflet
@@ -75,7 +77,6 @@ endif
 
 loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
 
-ETAGS=ctags -e
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=loleaflet *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
