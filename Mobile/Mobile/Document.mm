@@ -39,8 +39,7 @@
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[NSString stringWithUTF8String:uri.c_str()]],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
-                               [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
-                               [NSURLQueryItem queryItemWithName:@"debug" value:@"true"]];
+                               [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"]];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];
     [self.viewController.webView loadRequest:request];
 
