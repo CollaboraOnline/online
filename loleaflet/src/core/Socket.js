@@ -14,7 +14,6 @@ function FakeWebSocket() {
 	this.readyState = 1;
 	this.id = window.fakeWebSocketCounter++;
 	this.sendCounter = 0;
-	window.webkit.messageHandlers.debug.postMessage('>>>>> Created FakeWebSocket #' + this.id);
 	this.onclose = function() {
 	};
 	this.onerror = function() {
@@ -26,11 +25,9 @@ function FakeWebSocket() {
 }
 
 FakeWebSocket.prototype.close = function() {
-	window.webkit.messageHandlers.debug.postMessage('>>>>>> Closing FakeWebSocket#' + this.id);
 }
 
 FakeWebSocket.prototype.send = function(data) {
-	window.webkit.messageHandlers.debug.postMessage('>>>>>> Sending data on FakeWebSocket#' + this.id + ' (' + this.sendCounter + '): "' + data + '"');
 	this.sendCounter++;
 	window.webkit.messageHandlers.lool.postMessage(data, '*');
 }
@@ -196,9 +193,6 @@ L.Socket = L.Class.extend({
 
 	_onSocketOpen: function () {
 		console.debug('_onSocketOpen:');
-		if (window.ThisIsAMobileApp) {
-			window.webkit.messageHandlers.debug.postMessage('>>>>>> _onSocketOpen');
-		}
 		this._map._serverRecycling = false;
 		this._map._documentIdle = false;
 
