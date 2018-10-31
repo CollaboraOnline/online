@@ -235,7 +235,7 @@ button.leaflet-control-search-next
     width: 150px;
 }
 .fontsizes-select {
-    width: 70px;
+    width: 70px !important;
 }
 .evo-cp-wrap {
     /* hide the color pick div */
