@@ -73,27 +73,31 @@ L.Map.FileInserter = L.Handler.extend({
 
 	_sendFile: function (name, file) {
 		var url = this._url;
-		var xmlHttp = new XMLHttpRequest();
 		var socket = this._map._socket;
 		var map = this._map;
-		this._map.showBusy(_('Uploading...'), false);
-		xmlHttp.onreadystatechange = function () {
-			if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-				map.hideBusy();
-				socket.sendMessage('insertfile name=' + name + ' type=graphic');
-			}
-		};
-		xmlHttp.open('POST', url, true);
-		var formData = new FormData();
-		formData.append('name', name);
-		formData.append('childid', this._childId);
-		if (file.filename && file.url) {
-			formData.append('url', file.url);
-			formData.append('filename', file.filename);
+		if (window.ThisIsAMobileApp) {
+			console.log('FIXME: image insertion in mobile app');
 		} else {
-			formData.append('file', file);
+			var xmlHttp = new XMLHttpRequest();
+			this._map.showBusy(_('Uploading...'), false);
+			xmlHttp.onreadystatechange = function () {
+				if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+					map.hideBusy();
+					socket.sendMessage('insertfile name=' + name + ' type=graphic');
+				}
+			};
+			xmlHttp.open('POST', url, true);
+			var formData = new FormData();
+			formData.append('name', name);
+			formData.append('childid', this._childId);
+			if (file.filename && file.url) {
+				formData.append('url', file.url);
+				formData.append('filename', file.filename);
+			} else {
+				formData.append('file', file);
+			}
+			xmlHttp.send(formData);
 		}
-		xmlHttp.send(formData);
 	},
 
 	_sendURL: function (name, url) {
