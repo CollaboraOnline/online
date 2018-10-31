@@ -164,5 +164,7 @@
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array/>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) camera use</string>
 </dict>
 </plist>
