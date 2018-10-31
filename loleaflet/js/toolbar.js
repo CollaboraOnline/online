@@ -9,6 +9,10 @@
 
 var map;
 
+function _useSimpleUI() {
+	return L.Browser.mobile && $('#main-menu').css('display') === 'none';
+}
+
 function onDelete(e) {
 	if (e !== false) {
 		map.deletePage();
@@ -238,6 +242,15 @@ function onClick(e, id, item, subItem) {
 	}
 	else if (id === 'sign') {
 		map.signDocument();
+	}
+	else if (id === 'fullscreen') {
+		if (item.checked) {
+			toolbar.uncheck(id);
+		}
+		else {
+			toolbar.check(id);
+		}
+		L.toggleFullScreen();
 	}
 }
 
@@ -594,7 +607,7 @@ function hideTooltip(toolbar, id) {
 	if (toolbar.touchStarted) {
 		setTimeout(function() {
 			toolbar.tooltipHide(id, {});
-		}, 5000)
+		}, 5000);
 		toolbar.touchStarted = false;
 	}
 }
@@ -616,10 +629,10 @@ function createToolbar() {
 		]},
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
 		{type: 'break', id: 'savebreak'},
-		{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
-		{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
-		{type: 'button',  id: 'repair', img: 'repair', hint: _('Document repair'), disabled: true},
-		{type: 'break'},
+		{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
+		{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
+		{type: 'button',  id: 'repair', img: 'repair', hint: _('Document repair'), disabled: true, mobile: false},
+		{type: 'break', mobile: false},
 		{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>', mobile: false},
 		{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>', mobile: false},
 		{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>', mobile: false},
@@ -693,7 +706,7 @@ function createToolbar() {
 		{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'}
 	];
 
-	if (L.Browser.mobile && $('#main-menu').css('display') === 'none') {
+	if (_useSimpleUI()) {
 		initMobileToolbar(toolItems);
 	} else {
 		initNormalToolbar(toolItems);
@@ -707,9 +720,11 @@ function initMobileToolbar(toolItems) {
 		tooltip: 'bottom',
 		items: [
 			{type: 'button',  id: 'doclogo', img: 'doclogo'},
+			{type: 'button',  id: 'close',  img: 'closemobile'},
 			{type: 'spacer'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
+			{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
 			{type: 'button',  id: 'users',  img: 'users'},
 			{type: 'button',  id: 'callout',  img: 'callout'},
 		],
@@ -757,7 +772,7 @@ function initMobileToolbar(toolItems) {
 		e.isCancelled = true;
 	});
 
-	toolbar = $('#spreadsheet-toolbar')
+	toolbar = $('#spreadsheet-toolbar');
 	toolbar.w2toolbar({
 		name: 'spreadsheet-toolbar',
 		tooltip: 'bottom',
@@ -1374,36 +1389,38 @@ function onDocLayerInit() {
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
-		statusbar.insert('left', [
-			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'StatusDocPos',
-				html: '<div id="StatusDocPos" class="loleaflet-font" title="'+_('Number of Sheets')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'RowColSelCount',
-				html: '<div id="RowColSelCount" class="loleaflet-font" title="'+_('Selected range of cells')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break3'},
-			{type: 'html',  id: 'InsertMode', mobile: false,
-				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break4'},
-			{type: 'html',  id: 'LanguageStatus', mobile: false,
-				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break5'},
-			{type: 'html',  id: 'StatusSelectionMode', mobile: false,
-				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break8', mobile: false},
-			{type: 'html',  id: 'StateTableCell', mobile:false,
-			 html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'menu-check', id: 'StateTableCellMenu', caption: '', selected: ['2', '512'], items: [
-				{ id: '2', text: _('Average')},
-				{ id: '8', text: _('CountA')},
-				{ id: '4', text: _('Count')},
-				{ id: '16', text: _('Maximum')},
-				{ id: '32', text: _('Minimum')},
-				{ id: '512', text: _('Sum')},
-				{ id: '8192', text: _('Selection count')},
-				{ id: '1', text: _('None')}
-			]}
-		]);
+		if (!_useSimpleUI()) {
+			statusbar.insert('left', [
+				{type: 'break', id:'break1'},
+				{type: 'html',  id: 'StatusDocPos',
+					html: '<div id="StatusDocPos" class="loleaflet-font" title="'+_('Number of Sheets')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break2'},
+				{type: 'html',  id: 'RowColSelCount',
+					html: '<div id="RowColSelCount" class="loleaflet-font" title="'+_('Selected range of cells')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break3'},
+				{type: 'html',  id: 'InsertMode', mobile: false,
+					html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break4'},
+				{type: 'html',  id: 'LanguageStatus', mobile: false,
+					html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break5'},
+				{type: 'html',  id: 'StatusSelectionMode', mobile: false,
+					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break8', mobile: false},
+				{type: 'html',  id: 'StateTableCell', mobile:false,
+				 html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'menu-check', id: 'StateTableCellMenu', caption: '', selected: ['2', '512'], items: [
+					{ id: '2', text: _('Average')},
+					{ id: '8', text: _('CountA')},
+					{ id: '4', text: _('Count')},
+					{ id: '16', text: _('Maximum')},
+					{ id: '32', text: _('Minimum')},
+					{ id: '512', text: _('Sum')},
+					{ id: '8192', text: _('Selection count')},
+					{ id: '1', text: _('None')}
+				]}
+			]);
+		}
 
 		// Remove irrelevant toolbars
 		$('#presentation-toolbar').hide();
@@ -1411,23 +1428,25 @@ function onDocLayerInit() {
 		break;
 	case 'text':
 		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
-		statusbar.insert('left', [
-			{type: 'break', id: 'break1'},
-			{type: 'html',  id: 'StatePageNumber',
-				html: '<div id="StatePageNumber" class="loleaflet-font" title="'+_('Number of Pages')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break2'},
-			{type: 'html',  id: 'StateWordCount', mobile: false,
-				html: '<div id="StateWordCount" class="loleaflet-font" title="'+_('Word Counter')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break5', mobile: false},
-			{type: 'html',  id: 'InsertMode', mobile: false,
-				html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break6', mobile:false},
-			{type: 'html',  id: 'StatusSelectionMode', mobile: false,
-				html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break7', mobile:false},
-			{type: 'html',  id: 'LanguageStatus', mobile: false,
-				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
-		]);
+		if (!_useSimpleUI()) {
+			statusbar.insert('left', [
+				{type: 'break', id: 'break1'},
+				{type: 'html',  id: 'StatePageNumber',
+					html: '<div id="StatePageNumber" class="loleaflet-font" title="'+_('Number of Pages')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break2'},
+				{type: 'html',  id: 'StateWordCount', mobile: false,
+					html: '<div id="StateWordCount" class="loleaflet-font" title="'+_('Word Counter')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break5', mobile: false},
+				{type: 'html',  id: 'InsertMode', mobile: false,
+					html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break6', mobile:false},
+				{type: 'html',  id: 'StatusSelectionMode', mobile: false,
+					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
+				{type: 'break', id:'break7', mobile:false},
+				{type: 'html',  id: 'LanguageStatus', mobile: false,
+					html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
+			]);
+		}
 
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
@@ -1442,14 +1461,20 @@ function onDocLayerInit() {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
-		statusbar.insert('left', [
-			{type: 'break', id:'break1'},
-			{type: 'html',  id: 'PageStatus',
-				html: '<div id="PageStatus" class="loleaflet-font" title="'+_('Number of Slides')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-			{type: 'break', id:'break2', mobile:false},
-			{type: 'html',  id: 'LanguageStatus', mobile: false,
-				html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
-		]);
+		if (!_useSimpleUI()) {
+			statusbar.insert('left', [
+				{type: 'break', id: 'break1'},
+				{
+					type: 'html', id: 'PageStatus',
+					html: '<div id="PageStatus" class="loleaflet-font" title="' + _('Number of Slides') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break2', mobile: false},
+				{
+					type: 'html', id: 'LanguageStatus', mobile: false,
+					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				}
+			]);
+		}
 
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
@@ -1676,11 +1701,15 @@ function onCommandStateChanged(e) {
 	// Change the toolbar button states if we are in editmode
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
 	else if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
+		var toolbarUp = toolbar;
+		if (_useSimpleUI()) {
+			toolbarUp = statusbar;
+		}
 		if (state === 'enabled') {
-			toolbar.enable(id);
+			toolbarUp.enable(id);
 		} else {
-			toolbar.uncheck(id);
-			toolbar.disable(id);
+			toolbarUp.uncheck(id);
+			toolbarUp.disable(id);
 		}
 	}
 }

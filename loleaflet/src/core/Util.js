@@ -166,6 +166,31 @@ L.Util = {
 		}
 
 		return dpiScale;
+	},
+
+	toggleFullScreen: function() {
+		if (!document.fullscreenElement &&
+			!document.mozFullscreenElement &&
+			!document.msFullscreenElement &&
+			!document.webkitFullscreenElement) {
+			if (document.documentElement.requestFullscreen) {
+				document.documentElement.requestFullscreen();
+			} else if (document.documentElement.msRequestFullscreen) {
+				document.documentElement.msRequestFullscreen();
+			} else if (document.documentElement.mozRequestFullScreen) {
+				document.documentElement.mozRequestFullScreen();
+			} else if (document.documentElement.webkitRequestFullscreen) {
+				document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+			}
+		} else if (document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if (document.msExitFullscreen) {
+			document.msExitFullscreen();
+		} else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else if (document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		}
 	}
 };
 
@@ -214,3 +239,4 @@ L.stamp = L.Util.stamp;
 L.setOptions = L.Util.setOptions;
 L.round = L.Util.round;
 L.getDpiScaleFactor = L.Util.getDpiScaleFactor;
+L.toggleFullScreen = L.Util.toggleFullScreen;

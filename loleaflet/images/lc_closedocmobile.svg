@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="20px" viewBox="0 0 12 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>icon / angle left</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M18.0051546,9.00257732 C18.0051546,9.15893549 17.9450178,9.29725026 17.8247423,9.41752577 L16.9226804,10.3195876 C16.8024049,10.4398631 16.6640901,10.5 16.507732,10.5 C16.3513738,10.5 16.213059,10.4398631 16.0927835,10.3195876 L9.00257732,3.22938144 L1.91237113,10.3195876 C1.79209562,10.4398631 1.65378085,10.5 1.49742268,10.5 C1.34106451,10.5 1.20274974,10.4398631 1.08247423,10.3195876 L0.180412371,9.41752577 C0.0601368557,9.29725026 0,9.15893549 0,9.00257732 C0,8.84621915 0.0601368557,8.70790438 0.180412371,8.58762887 L8.58762887,0.180412371 C8.70790438,0.0601368557 8.84621915,0 9.00257732,0 C9.15893549,0 9.29725026,0.0601368557 9.41752577,0.180412371 L17.8247423,8.58762887 C17.9450178,8.70790438 18.0051546,8.84621915 18.0051546,9.00257732 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons-Docs-" transform="translate(-1414.000000, -84.000000)">
+            <g id="icon-/-angle-up" transform="translate(1415.000000, 103.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="angle-up" fill="#0078BF" xlink:href="#path-1" transform="rotate(-90)"></use>
+                <g id="Color/gray-1" mask="url(#mask-2)" fill="#333333" transform="rotate(-90)">
+                    <g transform="translate(-3.000000, -7.000000)" id="Gray-1">
+                        <rect x="0" y="0" width="24" height="24"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

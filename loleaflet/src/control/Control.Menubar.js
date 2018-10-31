@@ -706,28 +706,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'zoomreset') {
 			this._map.setZoom(this._map.options.zoom);
 		} else if (id === 'fullscreen') {
-			if (!document.fullscreenElement &&
-				!document.mozFullscreenElement &&
-				!document.msFullscreenElement &&
-				!document.webkitFullscreenElement) {
-				if (document.documentElement.requestFullscreen) {
-					document.documentElement.requestFullscreen();
-				} else if (document.documentElement.msRequestFullscreen) {
-					document.documentElement.msRequestFullscreen();
-				} else if (document.documentElement.mozRequestFullScreen) {
-					document.documentElement.mozRequestFullScreen();
-				} else if (document.documentElement.webkitRequestFullscreen) {
-					document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-				}
-			} else if (document.exitFullscreen) {
-				document.exitFullscreen();
-			} else if (document.msExitFullscreen) {
-				document.msExitFullscreen();
-			} else if (document.mozCancelFullScreen) {
-				document.mozCancelFullScreen();
-			} else if (document.webkitExitFullscreen) {
-				document.webkitExitFullscreen();
-			}
+			L.toggleFullScreen();
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
 			this._map.fire('fullscreen');
 		} else if (id === 'insertpage') {
