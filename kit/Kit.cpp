@@ -1219,13 +1219,13 @@ public:
 
         CallbackDescriptor* descriptor = static_cast<CallbackDescriptor*>(data);
         assert(descriptor && "Null callback data.");
-        assert(descriptor->Doc && "Null Document instance.");
+        assert(descriptor->getDoc() && "Null Document instance.");
 
-        std::shared_ptr<TileQueue> tileQueue = descriptor->Doc->getTileQueue();
+        std::shared_ptr<TileQueue> tileQueue = descriptor->getDoc()->getTileQueue();
         assert(tileQueue && "Null TileQueue.");
 
         const std::string payload = p ? p : "(nil)";
-        LOG_TRC("Document::ViewCallback [" << descriptor->ViewId <<
+        LOG_TRC("Document::ViewCallback [" << descriptor->getViewId() <<
                 "] [" << LOKitHelper::kitCallbackTypeToString(type) <<
                 "] [" << payload << "].");
 
@@ -1301,7 +1301,7 @@ public:
             tileQueue->put("callback except-" + targetViewId + ' ' + std::to_string(type) + ' ' + payload);
         }
         else
-            tileQueue->put("callback " + std::to_string(descriptor->ViewId) + ' ' + std::to_string(type) + ' ' + payload);
+            tileQueue->put("callback " + std::to_string(descriptor->getViewId()) + ' ' + std::to_string(type) + ' ' + payload);
     }
 
 private:

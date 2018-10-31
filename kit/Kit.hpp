@@ -49,8 +49,26 @@ class DocumentManagerInterface;
 /// callback to a specific view.
 struct CallbackDescriptor
 {
-    DocumentManagerInterface* const Doc;
-    const int ViewId;
+    CallbackDescriptor(DocumentManagerInterface* const doc,
+                       const int viewId) :
+        _doc(doc),
+        _viewId(viewId)
+    {
+    }
+
+    DocumentManagerInterface* getDoc() const
+    {
+        return _doc;
+    }
+
+    int getViewId() const
+    {
+        return _viewId;
+    }
+
+private:
+    DocumentManagerInterface* const _doc;
+    const int _viewId;
 };
 
 /// User Info container used to store user information
