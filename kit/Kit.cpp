@@ -2470,9 +2470,8 @@ void lokit_main(
         LOOLWSD::LOKitVersion = loKit->getVersionInfo();
 
         // Dummies
-        Poco::URI uri;
-        const std::string jailId;
-        const std::string pid;
+        const std::string jailId = "jailid";
+        const std::string pid = "101";
 
 #endif // MOBILEAPP
 
