@@ -372,22 +372,28 @@ AS_IF([test `uname -s` = Linux],
 AS_IF([test "$ENABLE_GTKAPP" = true],
       [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
 
-AS_IF([test "$enable_ssl" != "no"],
-      [AC_DEFINE([ENABLE_SSL],1,[Whether to enable SSL])],
-      [AC_DEFINE([ENABLE_SSL],0,[Whether to enable SSL])])
-
-AM_CONDITIONAL([ENABLE_SSL], [test "$enable_ssl" != "no"])
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 
+mobile_app=
+AC_MSG_CHECKING([Is this a mobile app])
+if test "$enable_gtkapp" != "no" -o "$enable_iosapp" != "no"; then
+     AC_MSG_RESULT([Yes])
+     mobile_app=true;
+else
+     AC_MSG_RESULT([No])
+fi
+
 ENABLE_SSL=true
-if test "$enable_ssl" != "no"; then
+if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then
    ssl_msg="ssl enabled"
    ENABLE_SSL=true
+   AC_DEFINE([ENABLE_SSL],1,[Whether to enable SSL])
 else
    ssl_msg="insecure: ssl disabled"
    ENABLE_SSL=false
+   AC_DEFINE([ENABLE_SSL],0,[Whether to enable SSL])
 fi
-
+AM_CONDITIONAL([ENABLE_SSL], [$ENABLE_SSL])
 AC_SUBST(ENABLE_SSL)
 
 AC_CHECK_HEADERS([security/pam_appl.h],

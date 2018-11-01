@@ -10,7 +10,7 @@ normal Online.
 
 Run autogen.sh, then configure:
 
-./configure --disable-ssl --enable-gtkapp --with-lo-path=/home/tml/lo/master/instdir --with-lokit-path=/home/tml/lo/master/include
+./configure --enable-gtkapp --with-lo-path=/home/tml/lo/master/instdir --with-lokit-path=/home/tml/lo/master/include
 
 Obviously, adjust the path to your LibreOffice build tree as necessary.
 
