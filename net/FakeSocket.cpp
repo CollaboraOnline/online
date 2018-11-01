@@ -192,7 +192,7 @@ static bool checkForPoll(std::vector<FakeSocketPair>& fds, struct pollfd *pollfd
         const int K = ((pollfds[i].fd)&1);
         const int N = 1 - K;
 
-        if (pollfds[i].fd < 0 || pollfds[i].fd/2 >= fds.size())
+        if (pollfds[i].fd < 0 || static_cast<unsigned>(pollfds[i].fd/2) >= fds.size())
         {
             pollfds[i].revents = POLLNVAL;
             retval = true;
@@ -292,7 +292,7 @@ int fakeSocketListen(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd < 0 || fd/2 >= fds.size() || fds[fd/2].fd[fd&1] == -1)
+    if (fd < 0 || static_cast<unsigned>(fd/2) >= fds.size() || fds[fd/2].fd[fd&1] == -1)
     {
         loggingBuffer << "FakeSocket EBADF: Listening on #" << fd << flush();
         errno = EBADF;
@@ -327,7 +327,7 @@ int fakeSocketConnect(int fd1, int fd2)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd1 < 0 || fd2 < 0 || fd1/2 >= fds.size() || fd2/2 >= fds.size())
+    if (fd1 < 0 || fd2 < 0 || static_cast<unsigned>(fd1/2) >= fds.size() || static_cast<unsigned>(fd2/2) >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Connect #" << fd1 << " to #" << fd2 << flush();
         errno = EBADF;
@@ -374,7 +374,7 @@ int fakeSocketAccept4(int fd, int flags)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd < 0 || fd/2 >= fds.size())
+    if (fd < 0 || static_cast<unsigned>(fd/2) >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Accept #" << fd << flush();
         errno = EBADF;
@@ -401,7 +401,7 @@ int fakeSocketAccept4(int fd, int flags)
         theCV.wait(lock);
     
     assert(pair.connectingFd >= 0);
-    assert(pair.connectingFd/2 < fds.size());
+    assert(static_cast<unsigned>(pair.connectingFd/2) < fds.size());
     assert((pair.connectingFd&1) == 0);
 
     FakeSocketPair& pair2 = fds[pair.connectingFd/2];
@@ -424,7 +424,7 @@ int fakeSocketPeer(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd < 0 || fd/2 >= fds.size())
+    if (fd < 0 || static_cast<unsigned>(fd/2) >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Peer of #" << fd << flush();
         errno = EBADF;
@@ -445,7 +445,7 @@ ssize_t fakeSocketAvailableDataLength(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd < 0 || fd/2 >= fds.size())
+    if (fd < 0 || static_cast<unsigned>(fd/2) >= fds.size())
     {
         errno = EBADF;
         return -1;
@@ -476,7 +476,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd < 0 || fd/2 >= fds.size())
+    if (fd < 0 || static_cast<unsigned>(fd/2) >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Read from #" << fd << ", " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
         errno = EBADF;
@@ -516,7 +516,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
         // These sockets are record-oriented. It won't work to read less than the whole record in
         // turn to be read.
         result = pair.buffer[K][0].size();
-        if (nbytes < result)
+        if (nbytes < static_cast<unsigned>(result))
         {
             loggingBuffer << "FakeSocket EAGAIN: Read from #" << fd << ", " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
             errno = EAGAIN; // Not the right errno, but what would be?
@@ -544,7 +544,7 @@ ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd < 0 || fd/2 >= fds.size())
+    if (fd < 0 || static_cast<unsigned>(fd/2) >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Write to #" << fd << ", " << nbytes << (nbytes == 1 ? " byte" : " bytes") << flush();
         errno = EBADF;
@@ -587,7 +587,7 @@ int fakeSocketShutdown(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd < 0 || fd/2 >= fds.size())
+    if (fd < 0 || static_cast<unsigned>(fd/2) >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Shutdown #" << fd << flush();
         errno = EBADF;
@@ -625,7 +625,7 @@ int fakeSocketClose(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
-    if (fd < 0 || fd/2 >= fds.size())
+    if (fd < 0 || static_cast<unsigned>(fd/2) >= fds.size())
     {
         loggingBuffer << "FakeSocket EBADF: Close #" << fd << flush();
         errno = EBADF;
@@ -663,7 +663,7 @@ void fakeSocketDumpState()
     std::unique_lock<std::mutex> lock(theMutex);
 
     loggingBuffer << "FakeSocket open sockets:" << flush();
-    for (int i = 0; i < fds.size(); i++)
+    for (int i = 0; i < static_cast<int>(fds.size()); i++)
     {
         if (fds[i].fd[0] != -1)
         {
