@@ -67,12 +67,15 @@ AC_ARG_ENABLE([iosapp],
               AS_HELP_STRING([--enable-iosapp],
                              [Use in a tree where the only purpose is to build the HTML and CSS stuff
                               to be copied to a Mac where the iOS app is being built, *or* in a tree where
-                              you will build the iOS app. In the latter case the only purpose of running
-                              configure is to put the app name in the Info.plist file.]))
+                              you will build the iOS app.]))
 
 AC_ARG_WITH([iosapp-name],
-              AS_HELP_STRING([--with-iosapp-name],
+              AS_HELP_STRING([--with-iosapp-name=<name>],
                              [Set the user-visible name of the iOS app you build. Default "Mobile".]))
+
+AC_ARG_WITH([iosapp-appicon],
+              AS_HELP_STRING([--with-iosapp-appicon=<path>],
+                             [Point to a directory containing an icon set to use instead of the default empty one.]))
 
 AC_ARG_ENABLE([gtkapp],
               AS_HELP_STRING([--enable-gtkapp],
@@ -91,6 +94,17 @@ AC_ARG_WITH([lokit-path],
 AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
                            [Path to a working installation directory or instdir of LibreOffice]))
+
+AC_ARG_WITH([lo-srcdir],
+            AS_HELP_STRING([--with-lo-srcdir=<path>],
+                           [Mandatory, and relevant, only in a tree where building the iOS app.
+                            Path to a the source directory of the LibreOffice core tree you want to use.]))
+
+AC_ARG_WITH([lo-builddir],
+            AS_HELP_STRING([--with-lo-builddir=<path>],
+                           [Relevant only in a tree where building the iOS app.
+                            Path to a the build directory of the LibreOffice core tree you want to use.
+                            Defaults to the --with-lo-srcdir value.]))
 
 AC_ARG_WITH([logfile],
             AS_HELP_STRING([--with-logfile=<path>],
@@ -203,13 +217,68 @@ AC_SUBST(LOOLWSD_ANONYMIZE_USERNAMES)
 if test -z "$anonym_msg";  then
   anonym_msg="no anonymization of usernames or filenames"
 fi
+
 ENABLE_IOSAPP=
 IOSAPP_NAME="Mobile"
+
 if test "$enable_iosapp" = "yes"; then
    ENABLE_IOSAPP=true
    if test -n "$with_iosapp_name"; then
       IOSAPP_NAME="$with_iosapp_name"
    fi
+
+   AC_MSG_CHECKING([for LibreOffice source tree to build against])
+   if test -z "$with_lo_srcdir"; then
+      AC_MSG_ERROR([You MUST use the --with-lo-srcdir option when configuring the iOS app build tree.])
+   fi
+
+   LOSRCDIR="$with_lo_srcdir"
+   # Sanity check, just a random source file in the LibreOffice core tree
+   if test -f "$LOSRCDIR/vcl/ios/iosinst.cxx"; then
+       AC_MSG_RESULT([$LOSRCDIR])
+   else
+       AC_MSG_ERROR([This is not a LibreOffice core source directory: $LOSRCDIR])
+   fi
+
+   AC_MSG_CHECKING([for LibreOffice build tree to build against])
+   if test -z "$with_lo_builddir"; then
+      AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the iOS app build tree.])
+   fi
+
+   LOBUILDDIR="$with_lo_builddir"
+   # Sanity check, just a random object file in the LibreOffice build tree
+   if test -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o"; then
+       AC_MSG_RESULT([$LOBUILDDIR])
+   else
+       AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
+   fi
+
+   AC_MSG_CHECKING([for Poco include directory to build against])
+   if test -z "$with_poco_includes"; then
+      AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the iOS app build tree.])
+   fi
+
+   POCOINCLUDE="$with_poco_includes"
+   # Sanity check
+   if test -f "$POCOINCLUDE/Poco/Poco.h"; then
+       AC_MSG_RESULT([$POCOINCLUDE])
+   else
+       AC_MSG_ERROR([This is not a Poco include directory: $POCOINCLUDE])
+   fi
+
+   AC_MSG_CHECKING([for Poco lib directory to build against])
+   if test -z "$with_poco_libs"; then
+      AC_MSG_ERROR([You MUST use the --with-poco-libs option when configuring the iOS app build tree.])
+   fi
+
+   POCOLIB="$with_poco_libs"
+   # Sanity check
+   if test -f "$POCOLIB/libPocoFoundation.a"; then
+       AC_MSG_RESULT([$POCOLIB])
+   else
+       AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
+   fi
+
 fi
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
@@ -557,7 +626,65 @@ AC_OUTPUT
 
 AC_LANG_POP
 
-echo "
+AS_IF([test "$ENABLE_IOSAPP" = "true"],
+      [
+       # Sadly I can't figure out any better way to avoid having to
+       # edit the Xcode project file manually. Create symlinks to the
+       # LibreOffice core source and build trees, and to the Poco
+       # installation.
+
+       AC_MSG_NOTICE([creating symbolic links for the Xcode project to use])
+
+       if test -L losrcdir-symlink; then
+          rm -f losrcdir-symlink
+       elif test -f losrcdir-symlink; then
+          AC_MSG_ERROR([losrcdir-symlink exists and is not a symbolic link])
+       fi
+       ln -s "$LOSRCDIR" losrcdir-symlink
+
+       if test -L lobuilddir-symlink; then
+          rm -f lobuilddir-symlink
+       elif test -f lobuilddir-symlink; then
+          AC_MSG_ERROR([lobuilddir-symlink exists and is not a symbolic link])
+       fi
+       ln -s "$LOBUILDDIR" lobuilddir-symlink
+
+       if test -L pocoinclude-symlink; then
+          rm -f pocoinclude-symlink
+       elif test -f pocoinclude-symlink; then
+          AC_MSG_ERROR([pocoinclude-symlink exists and is not a symbolic link])
+       fi
+       ln -s "$POCOINCLUDE" pocoinclude-symlink
+
+       if test -L pocolib-symlink; then
+          rm -f pocolib-symlink
+       elif test -f pocolib-symlink; then
+          AC_MSG_ERROR([pocolib-symlink exists and is not a symbolic link])
+       fi
+       ln -s "$POCOLIB" pocolib-symlink
+
+       eval `grep 'export ICU_MAJOR=' "$LOBUILDDIR/config_host.mk"`
+       if test -L ICU.dat; then
+          rm -f ICU.dat
+       elif test -f ICU.dat; then
+          AC_MSG_ERROR([ICU.dat exists and is not a symbolic link])
+       fi
+       ln -s "$LOBUILDDIR/workdir/CustomTarget/ios/resources/icudt${ICU_MAJOR}l.dat" ICU.dat
+
+       # Sadly Xcode doesn't like it if AppIcon.appiconset is a
+       # symlink, so make it a directory of symlinks to the actual png
+       # and json files.
+       rm -rf Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+       mkdir Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+       if test -n "$with_iosapp_appicon"; then
+          ln -s "$with_iosapp_appicon"/* Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+       else
+          ln -s Mobile/Mobile/Assets.xcassets/Empty.appiconset/* Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+       fi
+
+      ],
+      [
+       echo "
 Configuration:
     LOKit path              ${lokit_msg}
     LO path                 $LO_PATH
@@ -572,5 +699,6 @@ if test -n "$with_lo_path"; then
 echo "    \$ make run # to start loolwsd
 "
 fi
+      ])
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:

@@ -81,3 +81,11 @@ docker/instdir
 docker/builddir
 
 Mobile/Mobile/Info.plist
+
+# symlinks created by configure for the iOS app Xcode project
+losrcdir-symlink
+lobuilddir-symlink
+pocoinclude-symlink
+pocolib-symlink
+ICU.dat
+Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
