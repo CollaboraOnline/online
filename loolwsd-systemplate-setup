@@ -22,7 +22,7 @@ cd / || exit 1
 
 # First essential files and shared objects
 find etc/passwd etc/group etc/hosts \
-     etc/resolv.conf \
+     etc/resolv.conf etc/nsswitch.conf \
      lib/ld-* lib64/ld-* \
      lib/libcap* lib64/libcap* lib/*-linux-gnu/libcap* \
      lib/libattr* lib/*-linux-gnu/libattr* \
