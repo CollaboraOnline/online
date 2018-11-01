@@ -49,6 +49,13 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		L.DomEvent.on(this._canvas, 'mouseout', this._onMouseOut, this);
 		L.DomEvent.on(this._canvas, 'click', this._onClick, this);
 		L.DomEvent.on(this._canvas, 'dblclick', this._onDoubleClick, this);
+		L.DomEvent.on(this._canvas, 'touchstart',
+			function (e) {
+				if (e && e.touches.length > 1) {
+					L.DomEvent.preventDefault(e);
+				}
+			},
+			this);
 
 		this._startHeaderIndex = 0;
 		this._startOffset = 0;
@@ -56,7 +63,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		L.DomEvent.on(this._cornerCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.addListener(this._cornerCanvas, 'click', this._onCornerHeaderClick, this);
-
 
 		var colHeaderObj = this;
 		$.contextMenu({
