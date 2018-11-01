@@ -102,8 +102,8 @@ void FakeSocketTest::testBasic()
     std::thread t0([&] {
             // Cannot use CPPUNIT_ASSERT here as that throws and this thread has no Cppunit
             // exception handler. We check below after joining this thread.
-            s3 = fakeSocketAccept4(s0, 0);
-            s4 = fakeSocketAccept4(s0, 0);
+            s3 = fakeSocketAccept4(s0);
+            s4 = fakeSocketAccept4(s0);
         });
 
     // Connect s1 and s2 to s0 (that is, to the sockets produced by accepting connections to

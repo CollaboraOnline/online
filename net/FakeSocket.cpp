@@ -370,7 +370,7 @@ int fakeSocketConnect(int fd1, int fd2)
     return 0;
 }
 
-int fakeSocketAccept4(int fd, int flags)
+int fakeSocketAccept4(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);

@@ -34,7 +34,7 @@ int fakeSocketListen(int fd);
 
 int fakeSocketConnect(int fd1, int fd2);
 
-int fakeSocketAccept4(int fd, int flags);
+int fakeSocketAccept4(int fd);
 
 int fakeSocketPeer(int fd);
 

@@ -69,7 +69,7 @@ public:
         socklen_t addrlen = sizeof(clientInfo);
         const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK);
 #else
-        const int rc = fakeSocketAccept4(getFD(), SOCK_NONBLOCK);
+        const int rc = fakeSocketAccept4(getFD());
 #endif
         LOG_DBG("Accepted socket #" << rc << ", creating socket object.");
         try
