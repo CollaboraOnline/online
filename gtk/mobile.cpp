@@ -36,6 +36,9 @@
 
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
+#if !WEBKIT_CHECK_VERSION(2,22,0)
+#  include<JavaScriptCore/JavaScript.h>
+#endif
 
 #include "FakeSocket.hpp"
 #include "Log.hpp"
@@ -133,27 +136,55 @@ static void send2JS(const std::vector<char>& buffer)
                }, jscopy);
 }
 
-static void handle_debug_message(WebKitUserContentManager *manager,
-                                 WebKitJavascriptResult   *js_result,
-                                 gpointer                  user_data)
+static char *js_result_as_gstring(WebKitJavascriptResult *js_result)
 {
+#if WEBKIT_CHECK_VERSION(2,22,0) // unclear when this API changed ...
     JSCValue *value = webkit_javascript_result_get_js_value(js_result);
     if (jsc_value_is_string(value))
-        LOG_TRC_NOFILE("From JS: debug: " << jsc_value_to_string(value));
+        return jsc_value_to_string(value);
     else
-        LOG_TRC_NOFILE("From JS: debug: some object");
+        return nullptr;
+#else // older Webkits
+    JSValueRef value = webkit_javascript_result_get_value(js_result);
+    JSContextRef ctx = webkit_javascript_result_get_global_context(js_result);
+    if (JSValueIsString(ctx, value))
+    {
+        const JSStringRef js_str = JSValueToStringCopy(ctx, value, nullptr);
+        size_t gstring_max = JSStringGetMaximumUTF8CStringSize(js_str);
+        char *gstring = (char *)g_malloc(gstring_max);
+        if (gstring)
+            JSStringGetUTF8CString(js_str, gstring, gstring_max);
+        else
+            LOG_TRC_NOFILE("No string");
+        JSStringRelease(js_str);
+        return gstring;
+    }
+    else
+        LOG_TRC_NOFILE("Unexpected object type " << JSValueGetType(ctx, value));
+    return nullptr;
+#endif
+}
+
+static void handle_message(const char * type, WebKitJavascriptResult *js_result)
+{
+    gchar *string_value = js_result_as_gstring(js_result);
+
+    if (string_value)
+        LOG_TRC_NOFILE("From JS: " << type << ": " << string_value);
+    else
+        LOG_TRC_NOFILE("From JS: " << type << ": some object");
+
+    g_free(string_value);
 }
 
 static void handle_lool_message(WebKitUserContentManager *manager,
                                 WebKitJavascriptResult   *js_result,
                                 gpointer                  user_data)
 {
-    JSCValue *value = webkit_javascript_result_get_js_value(js_result);
+    gchar *string_value = js_result_as_gstring(js_result);
 
-    if (jsc_value_is_string(value))
+    if (string_value)
     {
-        gchar *string_value = jsc_value_to_string(value);
-
         LOG_TRC_NOFILE("From JS: lool: " << string_value);
 
         if (strcmp(string_value, "HULLO") == 0)
@@ -257,15 +288,18 @@ static void handle_lool_message(WebKitUserContentManager *manager,
         LOG_TRC_NOFILE("From JS: lool: some object");
 }
 
+static void handle_debug_message(WebKitUserContentManager *manager,
+                                 WebKitJavascriptResult   *js_result,
+                                 gpointer                  user_data)
+{
+    handle_message("debug", js_result);
+}
+
 static void handle_error_message(WebKitUserContentManager *manager,
                                  WebKitJavascriptResult   *js_result,
                                  gpointer                  user_data)
 {
-    JSCValue *value = webkit_javascript_result_get_js_value(js_result);
-    if (jsc_value_is_string(value))
-        LOG_TRC_NOFILE("From JS: error: " << jsc_value_to_string(value));
-    else
-        LOG_TRC_NOFILE("From JS: error: some object");
+    handle_message("error", js_result);
 }
 
 int main(int argc, char* argv[])
