@@ -59,6 +59,23 @@ public:
 
 void FakeSocketTest::testBasic()
 {
+    int rc;
+    char buf[100];
+
+    // First check invalid fds.
+
+    rc = fakeSocketListen(10);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EBADF);
+
+    rc = fakeSocketWrite(20, "hah", 3);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EBADF);
+
+    rc = fakeSocketRead(30, buf, 3);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EBADF);
+
     // Create three sockets: s0, s1 and s2.
     int s0 = fakeSocketSocket();
     CPPUNIT_ASSERT(s0 >= 0);
@@ -77,17 +94,16 @@ void FakeSocketTest::testBasic()
     CPPUNIT_ASSERT(s1 >= 0);
 
     // Listen on s0
-    int rc = fakeSocketListen(s0);
+    rc = fakeSocketListen(s0);
     CPPUNIT_ASSERT(rc != -1);
 
     // Start a thread that accepts two connections to s0, producing sockets s3 and s4.
     int s3 = -1, s4 = -1;
     std::thread t0([&] {
+            // Cannot use CPPUNIT_ASSERT here as that throws and this thread has no Cppunit
+            // exception handler. We check below after joining this thread.
             s3 = fakeSocketAccept4(s0, 0);
-            CPPUNIT_ASSERT(s3 >= 0);
-
             s4 = fakeSocketAccept4(s0, 0);
-            CPPUNIT_ASSERT(s4 >= 0);
         });
 
     // Connect s1 and s2 to s0 (that is, to the sockets produced by accepting connections to
@@ -118,8 +134,6 @@ void FakeSocketTest::testBasic()
 
     rc = fakeSocketWrite(s2, "moin", 4);
     CPPUNIT_ASSERT(rc != -1);
-
-    char buf[100];
 
     rc = fakeSocketAvailableDataLength(s3);
     CPPUNIT_ASSERT(rc == 5);
@@ -201,6 +215,55 @@ void FakeSocketTest::testBasic()
 
     rc = fakeSocketRead(pipe[0], buf, 1);
     CPPUNIT_ASSERT(rc == 0);
+
+    rc = fakeSocketClose(pipe[0]);
+    CPPUNIT_ASSERT(rc == 0);
+
+    rc = fakeSocketClose(pipe[0]);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EBADF);
+
+    rc = fakeSocketClose(pipe[1]);
+    CPPUNIT_ASSERT(rc == 0);
+
+    rc = fakeSocketClose(pipe[1]);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EBADF);
+
+    // Create a pipe again.
+
+    rc = fakeSocketPipe2(pipe);
+    CPPUNIT_ASSERT(rc == 0);
+
+    rc = fakeSocketAvailableDataLength(pipe[0]);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EAGAIN);
+
+    rc = fakeSocketAvailableDataLength(pipe[1]);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EAGAIN);
+
+    // Test poll functionality.
+
+    struct pollfd pollfds[4];
+
+    pollfds[0].fd = s0;
+    pollfds[0].events = POLLIN | POLLOUT;
+    pollfds[1].fd = s1;
+    pollfds[1].events = POLLIN | POLLOUT;
+    pollfds[2].fd = s2;
+    pollfds[2].events = POLLIN | POLLOUT;
+    pollfds[3].fd = 40;
+    pollfds[3].events = POLLIN | POLLOUT;
+
+    rc = fakeSocketPoll(pollfds, 4, -1);
+    // Hmm, does a real poll() set POLLIN for a listening socket? Probably only if there is a
+    // connection in progress, and that is not the case here for s0.
+    CPPUNIT_ASSERT(rc == 3);
+    CPPUNIT_ASSERT(pollfds[0].revents == 0);
+    CPPUNIT_ASSERT(pollfds[1].revents == POLLIN);
+    CPPUNIT_ASSERT(pollfds[2].revents == POLLOUT);
+    CPPUNIT_ASSERT(pollfds[3].revents == POLLNVAL);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(FakeSocketTest);
