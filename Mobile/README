@@ -50,20 +50,11 @@ Then run:
 
 and
 
-./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice"
+./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice" --with-lo-srcdir=$HOME/lo/ios --with-lo-builddir=$HOME/lo/ios --with-poco-includes=/opt/ios-poco/include --with-poco-libs=/opt/ios-poco/lib
 
-The only purpose of running the configure script in this tree is to
-get the app name as the CFBundleDisplayName property into the
-Mobile/Mobile/Info.plist file.
-
-Sure, as we require editing the project.pbxproj file anyway, we could
-as well also require editing the Info.plist file and avoid having to
-run the configure script.
-
-Or maybe the other way around, should we also have the configure
-script expand the project.pbxproj file, passing the configure script
-pointers to the LibreOffice source and build directories, and POCO and
-PNG install directories. Those would then expaned in project.pbxproj,
-and it wouldn't need to be hand-edited.
+The configure script puts the app name as the CFBundleDisplayName
+property into the Mobile/Mobile/Info.plist file, and set up some
+symbolic links that point to the LIbreOffice core source and build
+directories (which can be the same, of course).
 
 4) Now you can open the Mobile Xcode project, build it, and run it.
