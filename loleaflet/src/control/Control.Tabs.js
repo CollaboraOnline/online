@@ -65,7 +65,7 @@ L.Control.Tabs = L.Control.extend({
 								var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
 								vex.dialog.open({
 									message: _('Enter new sheet name'),
-									input: '<input name="sheetname" type="text" required />',
+									input: '<input name="sheetname" type="text" value="' + options.$trigger.text() + '" required />',
 									callback: function(data) {
 										map.renamePage(data.sheetname, nPos);
 									}
