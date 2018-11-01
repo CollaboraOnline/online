@@ -72,6 +72,52 @@
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BE34D10F218B66B600815297 /* docsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh.cxx; path = "../../ios-device/sw/source/uibase/app/docsh.cxx"; sourceTree = "<group>"; };
+		BE34D110218B66B600815297 /* docstyle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docstyle.cxx; path = "../../ios-device/sw/source/uibase/app/docstyle.cxx"; sourceTree = "<group>"; };
+		BE34D111218B66B600815297 /* docshdrw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docshdrw.cxx; path = "../../ios-device/sw/source/uibase/app/docshdrw.cxx"; sourceTree = "<group>"; };
+		BE34D112218B66B600815297 /* docshini.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docshini.cxx; path = "../../ios-device/sw/source/uibase/app/docshini.cxx"; sourceTree = "<group>"; };
+		BE34D113218B66B600815297 /* swmodul1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swmodul1.cxx; path = "../../ios-device/sw/source/uibase/app/swmodul1.cxx"; sourceTree = "<group>"; };
+		BE34D114218B66B600815297 /* swdllimpl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = swdllimpl.hxx; path = "../../ios-device/sw/source/uibase/app/swdllimpl.hxx"; sourceTree = "<group>"; };
+		BE34D115218B66B600815297 /* swwait.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swwait.cxx; path = "../../ios-device/sw/source/uibase/app/swwait.cxx"; sourceTree = "<group>"; };
+		BE34D116218B66B600815297 /* swdll.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swdll.cxx; path = "../../ios-device/sw/source/uibase/app/swdll.cxx"; sourceTree = "<group>"; };
+		BE34D117218B66B600815297 /* apphdl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = apphdl.cxx; path = "../../ios-device/sw/source/uibase/app/apphdl.cxx"; sourceTree = "<group>"; };
+		BE34D118218B66B600815297 /* appenv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = appenv.cxx; path = "../../ios-device/sw/source/uibase/app/appenv.cxx"; sourceTree = "<group>"; };
+		BE34D119218B66B600815297 /* appenv.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = appenv.hxx; path = "../../ios-device/sw/source/uibase/app/appenv.hxx"; sourceTree = "<group>"; };
+		BE34D11A218B66B600815297 /* swmodule.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swmodule.cxx; path = "../../ios-device/sw/source/uibase/app/swmodule.cxx"; sourceTree = "<group>"; };
+		BE34D11B218B66B600815297 /* docst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docst.cxx; path = "../../ios-device/sw/source/uibase/app/docst.cxx"; sourceTree = "<group>"; };
+		BE34D11C218B66B600815297 /* applab.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = applab.cxx; path = "../../ios-device/sw/source/uibase/app/applab.cxx"; sourceTree = "<group>"; };
+		BE34D11D218B66B600815297 /* docsh2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh2.cxx; path = "../../ios-device/sw/source/uibase/app/docsh2.cxx"; sourceTree = "<group>"; };
+		BE34D11E218B66B600815297 /* mainwn.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mainwn.cxx; path = "../../ios-device/sw/source/uibase/app/mainwn.cxx"; sourceTree = "<group>"; };
+		BE34D11F218B66B600815297 /* appopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = appopt.cxx; path = "../../ios-device/sw/source/uibase/app/appopt.cxx"; sourceTree = "<group>"; };
+		BE34D121218B678F00815297 /* annotsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = annotsh.cxx; path = "../../ios-device/sw/source/uibase/shells/annotsh.cxx"; sourceTree = "<group>"; };
+		BE34D122218B678F00815297 /* beziersh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = beziersh.cxx; path = "../../ios-device/sw/source/uibase/shells/beziersh.cxx"; sourceTree = "<group>"; };
+		BE34D123218B678F00815297 /* olesh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olesh.cxx; path = "../../ios-device/sw/source/uibase/shells/olesh.cxx"; sourceTree = "<group>"; };
+		BE34D124218B678F00815297 /* drwtxtex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drwtxtex.cxx; path = "../../ios-device/sw/source/uibase/shells/drwtxtex.cxx"; sourceTree = "<group>"; };
+		BE34D125218B678F00815297 /* textsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textsh.cxx; path = "../../ios-device/sw/source/uibase/shells/textsh.cxx"; sourceTree = "<group>"; };
+		BE34D126218B678F00815297 /* textfld.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textfld.cxx; path = "../../ios-device/sw/source/uibase/shells/textfld.cxx"; sourceTree = "<group>"; };
+		BE34D127218B678F00815297 /* slotadd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = slotadd.cxx; path = "../../ios-device/sw/source/uibase/shells/slotadd.cxx"; sourceTree = "<group>"; };
+		BE34D128218B678F00815297 /* listsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = listsh.cxx; path = "../../ios-device/sw/source/uibase/shells/listsh.cxx"; sourceTree = "<group>"; };
+		BE34D129218B678F00815297 /* grfshex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grfshex.cxx; path = "../../ios-device/sw/source/uibase/shells/grfshex.cxx"; sourceTree = "<group>"; };
+		BE34D12A218B679000815297 /* frmsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frmsh.cxx; path = "../../ios-device/sw/source/uibase/shells/frmsh.cxx"; sourceTree = "<group>"; };
+		BE34D12B218B679000815297 /* basesh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = basesh.cxx; path = "../../ios-device/sw/source/uibase/shells/basesh.cxx"; sourceTree = "<group>"; };
+		BE34D12C218B679000815297 /* textidx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textidx.cxx; path = "../../ios-device/sw/source/uibase/shells/textidx.cxx"; sourceTree = "<group>"; };
+		BE34D12D218B679000815297 /* txtattr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = txtattr.cxx; path = "../../ios-device/sw/source/uibase/shells/txtattr.cxx"; sourceTree = "<group>"; };
+		BE34D12E218B679000815297 /* txtcrsr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = txtcrsr.cxx; path = "../../ios-device/sw/source/uibase/shells/txtcrsr.cxx"; sourceTree = "<group>"; };
+		BE34D12F218B679000815297 /* txtnum.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = txtnum.cxx; path = "../../ios-device/sw/source/uibase/shells/txtnum.cxx"; sourceTree = "<group>"; };
+		BE34D130218B679000815297 /* drwbassh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drwbassh.cxx; path = "../../ios-device/sw/source/uibase/shells/drwbassh.cxx"; sourceTree = "<group>"; };
+		BE34D131218B679000815297 /* mediash.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mediash.cxx; path = "../../ios-device/sw/source/uibase/shells/mediash.cxx"; sourceTree = "<group>"; };
+		BE34D132218B679000815297 /* textdrw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textdrw.cxx; path = "../../ios-device/sw/source/uibase/shells/textdrw.cxx"; sourceTree = "<group>"; };
+		BE34D133218B679000815297 /* drawsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawsh.cxx; path = "../../ios-device/sw/source/uibase/shells/drawsh.cxx"; sourceTree = "<group>"; };
+		BE34D134218B679000815297 /* drformsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drformsh.cxx; path = "../../ios-device/sw/source/uibase/shells/drformsh.cxx"; sourceTree = "<group>"; };
+		BE34D135218B679000815297 /* navsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = navsh.cxx; path = "../../ios-device/sw/source/uibase/shells/navsh.cxx"; sourceTree = "<group>"; };
+		BE34D136218B679000815297 /* textglos.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textglos.cxx; path = "../../ios-device/sw/source/uibase/shells/textglos.cxx"; sourceTree = "<group>"; };
+		BE34D137218B679000815297 /* drawdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdlg.cxx; path = "../../ios-device/sw/source/uibase/shells/drawdlg.cxx"; sourceTree = "<group>"; };
+		BE34D138218B679000815297 /* tabsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabsh.cxx; path = "../../ios-device/sw/source/uibase/shells/tabsh.cxx"; sourceTree = "<group>"; };
+		BE34D139218B679000815297 /* grfsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grfsh.cxx; path = "../../ios-device/sw/source/uibase/shells/grfsh.cxx"; sourceTree = "<group>"; };
+		BE34D13A218B679000815297 /* langhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = langhelper.cxx; path = "../../ios-device/sw/source/uibase/shells/langhelper.cxx"; sourceTree = "<group>"; };
+		BE34D13B218B679000815297 /* textsh2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textsh2.cxx; path = "../../ios-device/sw/source/uibase/shells/textsh2.cxx"; sourceTree = "<group>"; };
+		BE34D13C218B679000815297 /* textsh1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textsh1.cxx; path = "../../ios-device/sw/source/uibase/shells/textsh1.cxx"; sourceTree = "<group>"; };
+		BE34D13D218B679000815297 /* drwtxtsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drwtxtsh.cxx; path = "../../ios-device/sw/source/uibase/shells/drwtxtsh.cxx"; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -326,6 +372,83 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE34D10C218B667400815297 /* sw */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D10D218B668100815297 /* uibase */,
+			);
+			name = sw;
+			sourceTree = "<group>";
+		};
+		BE34D10D218B668100815297 /* uibase */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D10E218B669000815297 /* app */,
+				BE34D120218B674400815297 /* shells */,
+			);
+			name = uibase;
+			sourceTree = "<group>";
+		};
+		BE34D10E218B669000815297 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D118218B66B600815297 /* appenv.cxx */,
+				BE34D119218B66B600815297 /* appenv.hxx */,
+				BE34D117218B66B600815297 /* apphdl.cxx */,
+				BE34D11C218B66B600815297 /* applab.cxx */,
+				BE34D11F218B66B600815297 /* appopt.cxx */,
+				BE34D10F218B66B600815297 /* docsh.cxx */,
+				BE34D11D218B66B600815297 /* docsh2.cxx */,
+				BE34D111218B66B600815297 /* docshdrw.cxx */,
+				BE34D112218B66B600815297 /* docshini.cxx */,
+				BE34D11B218B66B600815297 /* docst.cxx */,
+				BE34D110218B66B600815297 /* docstyle.cxx */,
+				BE34D11E218B66B600815297 /* mainwn.cxx */,
+				BE34D116218B66B600815297 /* swdll.cxx */,
+				BE34D114218B66B600815297 /* swdllimpl.hxx */,
+				BE34D113218B66B600815297 /* swmodul1.cxx */,
+				BE34D11A218B66B600815297 /* swmodule.cxx */,
+				BE34D115218B66B600815297 /* swwait.cxx */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
+		BE34D120218B674400815297 /* shells */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D121218B678F00815297 /* annotsh.cxx */,
+				BE34D12B218B679000815297 /* basesh.cxx */,
+				BE34D122218B678F00815297 /* beziersh.cxx */,
+				BE34D137218B679000815297 /* drawdlg.cxx */,
+				BE34D133218B679000815297 /* drawsh.cxx */,
+				BE34D134218B679000815297 /* drformsh.cxx */,
+				BE34D130218B679000815297 /* drwbassh.cxx */,
+				BE34D124218B678F00815297 /* drwtxtex.cxx */,
+				BE34D13D218B679000815297 /* drwtxtsh.cxx */,
+				BE34D12A218B679000815297 /* frmsh.cxx */,
+				BE34D139218B679000815297 /* grfsh.cxx */,
+				BE34D129218B678F00815297 /* grfshex.cxx */,
+				BE34D13A218B679000815297 /* langhelper.cxx */,
+				BE34D128218B678F00815297 /* listsh.cxx */,
+				BE34D131218B679000815297 /* mediash.cxx */,
+				BE34D135218B679000815297 /* navsh.cxx */,
+				BE34D123218B678F00815297 /* olesh.cxx */,
+				BE34D127218B678F00815297 /* slotadd.cxx */,
+				BE34D138218B679000815297 /* tabsh.cxx */,
+				BE34D132218B679000815297 /* textdrw.cxx */,
+				BE34D126218B678F00815297 /* textfld.cxx */,
+				BE34D136218B679000815297 /* textglos.cxx */,
+				BE34D12C218B679000815297 /* textidx.cxx */,
+				BE34D125218B678F00815297 /* textsh.cxx */,
+				BE34D13C218B679000815297 /* textsh1.cxx */,
+				BE34D13B218B679000815297 /* textsh2.cxx */,
+				BE34D12D218B679000815297 /* txtattr.cxx */,
+				BE34D12E218B679000815297 /* txtcrsr.cxx */,
+				BE34D12F218B679000815297 /* txtnum.cxx */,
+			);
+			name = shells;
+			sourceTree = "<group>";
+		};
 		BE58E1312187938700249358 /* headless */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +522,7 @@
 			children = (
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
+				BE34D10C218B667400815297 /* sw */,
 				BEB6524B216FD09400B8C09A /* tools */,
 				BE93D420216CAA52007A39F4 /* vcl */,
 				BE58E1312187938700249358 /* headless */,
