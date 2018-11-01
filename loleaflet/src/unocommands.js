@@ -4,6 +4,10 @@
 var unoCommandsArray = {
 	AcceptAllTrackedChanges:{text:{menu:_('Accept All'),},},
 	AcceptTrackedChanges:{text:{menu:_('~Manage...'),},},
+	AlignBlock:{spreadsheet:{menu:_('Justified'),},},
+	AlignHorizontalCenter:{spreadsheet:{menu:_('Center Horizontally'),},text:{menu:_('Center Horizontal'),},},
+	AlignLeft:{spreadsheet:{menu:_('Align Left'),},text:{menu:_('Align Left'),},},
+	AlignRight:{spreadsheet:{menu:_('Align Right'),},text:{menu:_('Align Right'),},},
 	AnchorMenu:{global:{menu:_('Anc~hor'),},},
 	ArrangeFrameMenu:{text:{menu:_('Arrange'),},},
 	ArrangeMenu:{global:{menu:_('A~rrange'),},presentation:{menu:_('~Arrange'),},},
