@@ -220,7 +220,7 @@ int main(int, char**)
 
     fakeSocketDumpState();
 
-    return result.wasSuccessful();
+    return result.wasSuccessful() ? 0 : 1;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
