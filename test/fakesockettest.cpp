@@ -59,143 +59,149 @@ public:
 
 void FakeSocketTest::testBasic()
 {
-    try
-    {
-        // Create three sockets: s0, s1 and s2.
-        int s0 = fakeSocketSocket();
-        CPPUNIT_ASSERT(s0 >= 0);
-        int s1 = fakeSocketSocket();
-        CPPUNIT_ASSERT(s1 >= 0);
-        int s2 = fakeSocketSocket();
-        CPPUNIT_ASSERT(s2 >= 0);
+    // Create three sockets: s0, s1 and s2.
+    int s0 = fakeSocketSocket();
+    CPPUNIT_ASSERT(s0 >= 0);
+    int s1 = fakeSocketSocket();
+    CPPUNIT_ASSERT(s1 >= 0);
+    int s2 = fakeSocketSocket();
+    CPPUNIT_ASSERT(s2 >= 0);
 
-        CPPUNIT_ASSERT(s0 != s1);
-        CPPUNIT_ASSERT(s1 != s2);
+    CPPUNIT_ASSERT(s0 != s1);
+    CPPUNIT_ASSERT(s1 != s2);
 
-        // Close s1 and create it anew
-        fakeSocketClose(s1);
+    // Close s1 and create it anew
+    fakeSocketClose(s1);
 
-        s1 = fakeSocketSocket();
-        CPPUNIT_ASSERT(s1 >= 0);
+    s1 = fakeSocketSocket();
+    CPPUNIT_ASSERT(s1 >= 0);
 
-        // Listen on s0
-        int rc = fakeSocketListen(s0);
-        CPPUNIT_ASSERT(rc != -1);
+    // Listen on s0
+    int rc = fakeSocketListen(s0);
+    CPPUNIT_ASSERT(rc != -1);
 
-        // Start a thread that accepts two connections to s0, producing sockets s3 and s4.
-        int s3 = -1, s4 = -1;
-        std::thread t0([&] {
-                s3 = fakeSocketAccept4(s0, 0);
-                CPPUNIT_ASSERT(s3 >= 0);
+    // Start a thread that accepts two connections to s0, producing sockets s3 and s4.
+    int s3 = -1, s4 = -1;
+    std::thread t0([&] {
+            s3 = fakeSocketAccept4(s0, 0);
+            CPPUNIT_ASSERT(s3 >= 0);
 
-                s4 = fakeSocketAccept4(s0, 0);
-                CPPUNIT_ASSERT(s4 >= 0);
-            });
+            s4 = fakeSocketAccept4(s0, 0);
+            CPPUNIT_ASSERT(s4 >= 0);
+        });
 
-        // Connect s1 and s2 to s0 (that is, to the sockets produced by accepting connections to
-        // s0).
-        rc = fakeSocketConnect(s1, s0);
-        CPPUNIT_ASSERT(rc != -1);
+    // Connect s1 and s2 to s0 (that is, to the sockets produced by accepting connections to
+    // s0).
+    rc = fakeSocketConnect(s1, s0);
+    CPPUNIT_ASSERT(rc != -1);
 
-        rc = fakeSocketConnect(s2, s0);
-        CPPUNIT_ASSERT(rc != -1);
+    rc = fakeSocketConnect(s2, s0);
+    CPPUNIT_ASSERT(rc != -1);
 
-        // Verify that we got the accepts.
-        t0.join();
-        CPPUNIT_ASSERT(s3 != -1);
-        CPPUNIT_ASSERT(s4 != -1);
+    // Verify that we got the accepts.
+    t0.join();
+    CPPUNIT_ASSERT(s3 != -1);
+    CPPUNIT_ASSERT(s4 != -1);
 
-        // s1 should now be connected to s3, and s2 to s4.
-        CPPUNIT_ASSERT(fakeSocketPeer(s1) == s3);
-        CPPUNIT_ASSERT(fakeSocketPeer(s3) == s1);
-        CPPUNIT_ASSERT(fakeSocketPeer(s2) == s4);
-        CPPUNIT_ASSERT(fakeSocketPeer(s4) == s2);
+    // s1 should now be connected to s3, and s2 to s4.
+    CPPUNIT_ASSERT(fakeSocketPeer(s1) == s3);
+    CPPUNIT_ASSERT(fakeSocketPeer(s3) == s1);
+    CPPUNIT_ASSERT(fakeSocketPeer(s2) == s4);
+    CPPUNIT_ASSERT(fakeSocketPeer(s4) == s2);
 
-        // Some writing and reading
-        rc = fakeSocketWrite(s1, "hello", 5);
-        CPPUNIT_ASSERT(rc != -1);
+    // Some writing and reading
+    rc = fakeSocketWrite(s1, "hello", 5);
+    CPPUNIT_ASSERT(rc != -1);
 
-        rc = fakeSocketWrite(s1, "there", 5);
-        CPPUNIT_ASSERT(rc != -1);
+    rc = fakeSocketWrite(s1, "greetings", 9);
+    CPPUNIT_ASSERT(rc != -1);
 
-        rc = fakeSocketWrite(s2, "moin", 4);
-        CPPUNIT_ASSERT(rc != -1);
+    rc = fakeSocketWrite(s2, "moin", 4);
+    CPPUNIT_ASSERT(rc != -1);
 
-        char buf[100];
+    char buf[100];
 
-        rc = fakeSocketRead(s3, buf, 100);
-        CPPUNIT_ASSERT(rc != -1);
-        CPPUNIT_ASSERT(rc > 0);
+    rc = fakeSocketAvailableDataLength(s3);
+    CPPUNIT_ASSERT(rc == 5);
 
-        rc = fakeSocketRead(s4, buf, 100);
-        CPPUNIT_ASSERT(rc != -1);
-        CPPUNIT_ASSERT(rc > 0);
+    rc = fakeSocketRead(s3, buf, 100);
+    CPPUNIT_ASSERT(rc == 5);
 
-        rc = fakeSocketWrite(s3, "goodbye", 7);
-        CPPUNIT_ASSERT(rc != -1);
-        CPPUNIT_ASSERT(rc > 0);
+    rc = fakeSocketAvailableDataLength(s3);
+    CPPUNIT_ASSERT(rc == 9);
 
-        rc = fakeSocketRead(s1, buf, 4);
-        CPPUNIT_ASSERT(rc == -1);
+    rc = fakeSocketRead(s4, buf, 100);
+    CPPUNIT_ASSERT(rc == 4);
 
-        rc = fakeSocketRead(s1, buf, 100);
-        CPPUNIT_ASSERT(rc != -1);
-        CPPUNIT_ASSERT(rc > 0);
+    rc = fakeSocketWrite(s3, "goodbye", 7);
+    CPPUNIT_ASSERT(rc > 0);
 
-        // Close s3. Reading from s1 should then return an EOF indication (0). 
-        fakeSocketClose(s3);
-        rc = fakeSocketRead(s1, buf, 100);
-        CPPUNIT_ASSERT(rc == 0);
+    rc = fakeSocketRead(s1, buf, 4);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EAGAIN); // Note: not really the right errno, but what else? See
+                                     // FakeSocket.cpp.
 
-        rc = fakeSocketRead(s1, buf, 100);
-        CPPUNIT_ASSERT(rc == 0);
+    rc = fakeSocketRead(s1, buf, 100);
+    CPPUNIT_ASSERT(rc > 0);
 
-        // Test the "pipe" functionality, that creates an already connected socket pair.
-        int pipe[2];
-        rc = fakeSocketPipe2(pipe);
-        CPPUNIT_ASSERT(rc == 0);
+    // Close s3. Reading from s1 should then return an EOF indication (0).
+    fakeSocketClose(s3);
 
-        rc = fakeSocketWrite(pipe[0], "x", 1);
-        CPPUNIT_ASSERT(rc == 1);
+    rc = fakeSocketAvailableDataLength(s1);
+    CPPUNIT_ASSERT(rc == 0);
 
-        rc = fakeSocketRead(pipe[1], buf, 1);
-        CPPUNIT_ASSERT(rc == 1);
+    rc = fakeSocketRead(s1, buf, 100);
+    CPPUNIT_ASSERT(rc == 0);
 
-        CPPUNIT_ASSERT(buf[0] == 'x');
+    rc = fakeSocketAvailableDataLength(s1);
+    CPPUNIT_ASSERT(rc == 0);
 
-        rc = fakeSocketWrite(pipe[1], "y", 1);
-        CPPUNIT_ASSERT(rc == 1);
+    rc = fakeSocketRead(s1, buf, 100);
+    CPPUNIT_ASSERT(rc == 0);
 
-        rc = fakeSocketRead(pipe[0], buf, 1);
-        CPPUNIT_ASSERT(rc == 1);
-        CPPUNIT_ASSERT(buf[0] == 'y');
+    // Test the "pipe" functionality, that creates an already connected socket pair.
+    int pipe[2];
+    rc = fakeSocketPipe2(pipe);
+    CPPUNIT_ASSERT(rc == 0);
 
-        rc = fakeSocketWrite(pipe[0], "z", 1);
-        CPPUNIT_ASSERT(rc == 1);
+    rc = fakeSocketWrite(pipe[0], "x", 1);
+    CPPUNIT_ASSERT(rc == 1);
 
-        rc = fakeSocketShutdown(pipe[0]);
-        CPPUNIT_ASSERT(rc == 0);
+    rc = fakeSocketAvailableDataLength(pipe[1]);
+    CPPUNIT_ASSERT(rc == 1);
 
-        rc = fakeSocketRead(pipe[1], buf, 1);
-        CPPUNIT_ASSERT(rc == 1);
-        CPPUNIT_ASSERT(buf[0] == 'z');
+    rc = fakeSocketRead(pipe[1], buf, 1);
+    CPPUNIT_ASSERT(rc == 1);
 
-        rc = fakeSocketWrite(pipe[0], "a", 1);
-        CPPUNIT_ASSERT(rc == -1);
-        CPPUNIT_ASSERT(errno == EPIPE);
+    CPPUNIT_ASSERT(buf[0] == 'x');
 
-        rc = fakeSocketRead(pipe[0], buf, 1);
-        CPPUNIT_ASSERT(rc == 0);
+    rc = fakeSocketWrite(pipe[1], "y", 1);
+    CPPUNIT_ASSERT(rc == 1);
 
-        rc = fakeSocketRead(pipe[0], buf, 1);
-        CPPUNIT_ASSERT(rc == 0);
-    }
-    catch (const std::exception& exception)
-    {
-        CPPUNIT_FAIL(exception.what());
-    }
+    rc = fakeSocketRead(pipe[0], buf, 1);
+    CPPUNIT_ASSERT(rc == 1);
+    CPPUNIT_ASSERT(buf[0] == 'y');
+
+    rc = fakeSocketWrite(pipe[0], "z", 1);
+    CPPUNIT_ASSERT(rc == 1);
+
+    rc = fakeSocketShutdown(pipe[0]);
+    CPPUNIT_ASSERT(rc == 0);
+
+    rc = fakeSocketRead(pipe[1], buf, 1);
+    CPPUNIT_ASSERT(rc == 1);
+    CPPUNIT_ASSERT(buf[0] == 'z');
+
+    rc = fakeSocketWrite(pipe[0], "a", 1);
+    CPPUNIT_ASSERT(rc == -1);
+    CPPUNIT_ASSERT(errno == EPIPE);
+
+    rc = fakeSocketRead(pipe[0], buf, 1);
+    CPPUNIT_ASSERT(rc == 0);
+
+    rc = fakeSocketRead(pipe[0], buf, 1);
+    CPPUNIT_ASSERT(rc == 0);
 }
-
 
 CPPUNIT_TEST_SUITE_REGISTRATION(FakeSocketTest);
 
