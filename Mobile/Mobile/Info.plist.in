@@ -70,6 +70,20 @@
                 <string>org.oasis-open.opendocument.spreadsheet</string>
             </array>
         </dict>
+        <dict>
+            <key>CFBundleTypeIconFiles</key>
+            <array/>
+            <key>CFBundleTypeName</key>
+            <string>Office Open XML spreadsheet</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>org.openxmlformats.spreadsheetml.sheet</string>
+            </array>
+        </dict>
     </array>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
@@ -163,7 +177,30 @@
         </dict>
     </array>
     <key>UTImportedTypeDeclarations</key>
-    <array/>
+    <array>
+        <dict>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>org.openxmlformats.openxml</string>
+                <string>public.composite-content</string>
+            </array>
+            <key>UTTypeDescription</key>
+            <string>Office Open XML spreadsheet</string>
+            <key>UTTypeIdentifier</key>
+            <string>org.openxmlformats.spreadsheetml.sheet</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <array>
+                    <string>xlsx</string>
+                </array>
+                <key>public.mime-type</key>
+                <array>
+                    <string>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
     <key>NSCameraUsageDescription</key>
     <string>$(PRODUCT_NAME) camera use</string>
 </dict>
