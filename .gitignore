@@ -51,8 +51,9 @@ loolwsd.log
 *.log.*.gz
 *.lo
 
-# lolefalet
+# loleaflet
 loleaflet/dist
+loleaflet/npm-shrinkwrap.json
 
 connect
 lokitclient
@@ -78,3 +79,5 @@ test/TAGS
 
 docker/instdir
 docker/builddir
+
+Mobile/Mobile/Info.plist
