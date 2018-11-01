@@ -1013,7 +1013,7 @@ function updateFontSizeList(font) {
 	data = data.concat(map.getToolbarCommandValues('.uno:CharFontName')[font]);
 	$('.fontsizes-select').select2({
 		data: data,
-		placeholder: _('Size'),
+		placeholder: ' ',
 		//Allow manually entered font size.
 		createTag: function(query) {
 			return {
@@ -1586,7 +1586,7 @@ function updateCommandValues() {
 
 	if ($('.fontsizes-select option').length === 0) {
 		$('.fontsizes-select').select2({
-			placeholder: _('Size'),
+			placeholder: ' ',
 			data: []
 		});
 
