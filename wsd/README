@@ -186,7 +186,7 @@ HTTPS is the default. HTTP-only mode can be enabled with --disable-ssl
 configure option.
 
 If you plan to hack on loolwsd, you probably want to familiarize
-yourself with loolwsd's --numprespawns switch, and the 'connect'
+yourself with loolwsd's --o:num_prespawn_children switch, and the 'connect'
 test program.
 
 For interactive testing, you can use the 'connect' program. It accepts
@@ -234,7 +234,7 @@ be obtained as described above.
 Debugging
 ---------
 
-When debugging, you want to add --numprespawns=1 to the loolwsd parameters to
+When debugging, you want to add --o:num_prespawn_children=1 to the loolwsd parameters to
 limit the amount of concurrently running processes.
 
 When the crash happens too early, you also want to
