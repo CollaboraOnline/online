@@ -1330,9 +1330,11 @@ void LOOLWSD::handleOption(const std::string& optionName,
     if (masterPort)
         MasterPortNumber = std::stoi(masterPort);
 
+#ifndef MOBILEAPP
     static const char* latencyMs = std::getenv("LOOL_DELAY_SOCKET_MS");
     if (latencyMs)
         SimulatedLatencyMs = std::stoi(latencyMs);
+#endif
 #endif
 
 #ifdef FUZZER
@@ -1553,8 +1555,10 @@ bool LOOLWSD::createForKit()
     if (UnitWSD::get().hasKitHooks())
         args.push_back("--unitlib=" + UnitTestLibrary);
 
+#ifndef MOBILEAPP
     if (DisplayVersion)
         args.push_back("--version");
+#endif
 
     if (NoCapsForKit)
         args.push_back("--nocaps");
@@ -2807,8 +2811,10 @@ class SslSocketFactory final : public SocketFactory
     {
         int fd = physicalFd;
 
+#ifndef MOBILEAPP
         if (SimulatedLatencyMs > 0)
             fd = Delay::create(SimulatedLatencyMs, physicalFd);
+#endif
 
         return StreamSocket::create<SslStreamSocket>(
             fd, false, std::make_shared<ClientRequestDispatcher>());
@@ -3052,12 +3058,14 @@ int LOOLWSD::innerMain()
     // down-pay all the forkit linking cost once & early.
     Environment::set("LD_BIND_NOW", "1");
 
+#ifndef MOBILEAPP
     if (DisplayVersion)
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
         LOG_INF("Loolwsd version details: " << version << " - " << hash);
     }
+#endif
 #endif
 
     initializeSSL();
