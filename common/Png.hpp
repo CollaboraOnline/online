@@ -47,9 +47,12 @@
 
 #define PNG_SKIP_SETJMP_CHECK
 #include <png.h>
+#include <zlib.h>
 
 #include <cassert>
+#include <chrono>
 
+#include "Log.hpp"
 #include "SpookyV2.h"
 
 namespace Png
@@ -127,6 +130,10 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
         return false;
     }
 
+#ifdef MOBILEAPP
+    png_set_compression_level(png_ptr, Z_BEST_SPEED);
+#endif
+
     png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
     png_set_write_fn(png_ptr, &output, user_write_fn, user_flush_fn);
@@ -139,6 +146,8 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
         png_set_write_user_transform_fn (png_ptr, unpremultiply_data);
     }
 
+    auto a = std::chrono::steady_clock::now();
+
     for (int y = 0; y < height; ++y)
     {
         size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
@@ -146,6 +155,17 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
     }
 
     png_write_end(png_ptr, info_ptr);
+
+    auto b = std::chrono::steady_clock::now();
+
+    std::chrono::milliseconds::rep duration = std::chrono::duration_cast<std::chrono::milliseconds>(b-a).count();
+
+    static std::chrono::milliseconds::rep totalDuration = 0;
+    static int nCalls = 0;
+
+    totalDuration += duration;
+    nCalls += 1;
+    LOG_TRC("Average PNG compression time after " << std::to_string(nCalls) << " calls: " << (totalDuration / static_cast<double>(nCalls)));
 
     png_destroy_write_struct(&png_ptr, &info_ptr);
 
