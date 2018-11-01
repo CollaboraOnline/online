@@ -37,6 +37,14 @@ L.Control.Header = L.Control.extend({
 		if (cornerHeader) {
 			this._cornerHeaderContainer = cornerHeader;
 			this._cornerCanvas = L.DomUtil.get('spreadsheet-header-corner');
+			L.DomEvent.on(this._cornerHeaderContainer, 'touchstart',
+				function (e) {
+					if (e && e.touches.length > 1) {
+						L.DomEvent.preventDefault(e);
+					}
+				},
+				this);
+
 		}
 		else {
 			var rowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');

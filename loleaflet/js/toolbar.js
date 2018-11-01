@@ -719,7 +719,6 @@ function initMobileToolbar(toolItems) {
 		name: 'toolbar-down',
 		tooltip: 'bottom',
 		items: [
-			{type: 'button',  id: 'doclogo', img: 'doclogo'},
 			{type: 'button',  id: 'close',  img: 'closemobile'},
 			{type: 'spacer'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
@@ -733,8 +732,12 @@ function initMobileToolbar(toolItems) {
 			hideTooltip(this, e.target);
 		}
 	});
-	toolbar.bind('touchstart', function() {
+	toolbar.bind('touchstart', function(e) {
 		w2ui['toolbar-down'].touchStarted = true;
+		var touchEvent = e.originalEvent;
+		if (touchEvent && touchEvent.touches.length > 1) {
+			L.DomEvent.preventDefault(e);
+		}
 	});
 
 	toolbar = $('#formulabar');
@@ -763,8 +766,12 @@ function initMobileToolbar(toolItems) {
 			$('#formulaInput').off('focus', onFormulaBarFocus).on('focus', onFormulaBarFocus);
 		}
 	});
-	toolbar.bind('touchstart', function() {
+	toolbar.bind('touchstart', function(e) {
 		w2ui['formulabar'].touchStarted = true;
+		var touchEvent = e.originalEvent;
+		if (touchEvent && touchEvent.touches.length > 1) {
+			L.DomEvent.preventDefault(e);
+		}
 	});
 
 	$(w2ui.formulabar.box).find('.w2ui-scroll-left, .w2ui-scroll-right').hide();
@@ -788,8 +795,12 @@ function initMobileToolbar(toolItems) {
 			hideTooltip(this, e.target);
 		}
 	});
-	toolbar.bind('touchstart', function() {
+	toolbar.bind('touchstart', function(e) {
 		w2ui['spreadsheet-toolbar'].touchStarted = true;
+		var touchEvent = e.originalEvent;
+		if (touchEvent && touchEvent.touches.length > 1) {
+			L.DomEvent.preventDefault(e);
+		}
 	});
 
 	toolbar = $('#presentation-toolbar');
@@ -845,8 +856,12 @@ function initMobileToolbar(toolItems) {
 		}
 	});
 
-	toolbar.bind('touchstart', function() {
+	toolbar.bind('touchstart', function(e) {
 		w2ui['toolbar-up'].touchStarted = true;
+		var touchEvent = e.originalEvent;
+		if (touchEvent && touchEvent.touches.length > 1) {
+			L.DomEvent.preventDefault(e);
+		}
 	});
 }
 

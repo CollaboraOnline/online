@@ -30,6 +30,13 @@ L.Control.Tabs = L.Control.extend({
 		var map = this._map;
 		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
+		L.DomEvent.on(this._tabsCont, 'touchstart',
+			function (e) {
+				if (e && e.touches.length > 1) {
+					L.DomEvent.preventDefault(e);
+				}
+			},
+			this);
 
 		$.contextMenu({
 			selector: '.spreadsheet-tab',
