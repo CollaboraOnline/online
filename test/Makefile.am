@@ -112,6 +112,7 @@ endif
 
 if HAVE_LO_PATH
 check-local:
+	./fakesockettest
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
