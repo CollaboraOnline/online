@@ -105,9 +105,6 @@ body {
     #spreadsheet-row-column-frame.readonly {
 	top: 30px !important;
     }
-    #toolbar-logo {
-	width: 32px;
-    }
     #toolbar-hamburger {
 	width: 41px;
     }
