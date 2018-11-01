@@ -5,9 +5,9 @@ AUTOMAKE_OPTION = serial-tests
 # unittest: tests that do not need loolwsd running, and that are run during a
 # normal build
 # test: tests that need loolwsd running, and that are run via 'make check'
-check_PROGRAMS = test
+check_PROGRAMS = test fakesockettest
 
-noinst_PROGRAMS = test unittest
+noinst_PROGRAMS = test fakesockettest unittest
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
@@ -76,6 +76,9 @@ unittest_LDADD = $(CPPUNIT_LIBS)
 test_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 test_SOURCES = $(test_all_source) test.cpp
 test_LDADD = $(CPPUNIT_LIBS)
+
+fakesockettest_SOURCES = fakesockettest.cpp ../net/FakeSocket.cpp
+fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
 unit_oob_la_SOURCES = UnitOOB.cpp
