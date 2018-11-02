@@ -625,8 +625,8 @@ var fontsizesSelectValue;
 function createToolbar() {
 	var toolItems = [
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
-		{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text')},
-		{type: 'break', id: 'savebreak'},
+		{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false},
+		{type: 'break', id: 'savebreak', mobile: false},
 		{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 		{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
 		{type: 'button',  id: 'copy',  img: 'copy', hint: _UNO('.uno:Copy'), uno: 'Copy', disabled: true},
