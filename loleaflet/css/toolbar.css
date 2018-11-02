@@ -519,8 +519,8 @@ button.leaflet-control-search-next
 .w2ui-icon.print{ background: url('images/lc_print.svg') no-repeat center !important; }
 .w2ui-icon.undo{ background: url('images/lc_undo.svg') no-repeat center !important; }
 .w2ui-icon.redo{ background: url('images/lc_redo.svg') no-repeat center !important; }
-.w2ui-icon.copy{ background: url('images/lc_formatpaintbrush.svg') no-repeat center !important; }
-.w2ui-icon.delete{ background: url('images/lc_resetattributes.svg') no-repeat center !important; }
+.w2ui-icon.copyformat{ background: url('images/lc_formatpaintbrush.svg') no-repeat center !important; }
+.w2ui-icon.deleteformat{ background: url('images/lc_resetattributes.svg') no-repeat center !important; }
 .w2ui-icon.bold{ background: url('images/lc_bold.svg') no-repeat center !important; }
 .w2ui-icon.italic{ background: url('images/lc_italic.svg') no-repeat center !important; }
 .w2ui-icon.underline{ background: url('images/lc_underline.svg') no-repeat center !important; }
