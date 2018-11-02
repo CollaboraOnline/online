@@ -1555,10 +1555,8 @@ bool LOOLWSD::createForKit()
     if (UnitWSD::get().hasKitHooks())
         args.push_back("--unitlib=" + UnitTestLibrary);
 
-#ifndef MOBILEAPP
     if (DisplayVersion)
         args.push_back("--version");
-#endif
 
     if (NoCapsForKit)
         args.push_back("--nocaps");
@@ -1612,7 +1610,7 @@ bool LOOLWSD::createForKit()
 #endif
 }
 
-#endif
+#endif // !MOBILEAPP
 
 #ifdef FUZZER
 std::mutex Connection::Mutex;
