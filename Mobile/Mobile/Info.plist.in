@@ -99,6 +99,20 @@
             </array>
         </dict>
         <dict>
+            <key>CFBundleTypeIconFiles</key>
+            <array/>
+            <key>CFBundleTypeName</key>
+            <string>Microsoft Excel Spreadsheet</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.microsoft.excel.xls</string>
+            </array>
+        </dict>
+        <dict>
             <key>CFBundleTypeName</key>
             <string>OpenDocument Presentation</string>
             <key>LSHandlerRank</key>
