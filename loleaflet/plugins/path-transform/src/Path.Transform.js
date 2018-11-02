@@ -613,6 +613,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._initialMatrix = this._matrix.clone();
 		this._cachePoints();
 
+		this._activeMarker.addEventParent(this._map);
 		this._map
 			.on('mousemove', this._onScale,    this)
 			.on('mouseup',   this._onScaleEnd, this);
@@ -663,6 +664,7 @@ L.Handler.PathTransform = L.Handler.extend({
 	* @param  {Event} evt
 	*/
 	_onScaleEnd: function(/*evt*/) {
+		this._activeMarker.removeEventParent(this._map);
 		this._map
 			.off('mousemove', this._onScale,    this)
 			.off('mouseup',   this._onScaleEnd, this);
