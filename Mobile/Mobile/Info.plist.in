@@ -8,30 +8,8 @@
     <string>@IOSAPP_NAME@</string>
     <key>CFBundleDocumentTypes</key>
     <array>
-        <dict>
-            <key>CFBundleTypeName</key>
-            <string>OpenDocument Flat Text</string>
-            <key>LSHandlerRank</key>
-            <string>Default</string>
-            <key>LSItemContentTypes</key>
-            <array>
-                <string>com.collabora.office.uti.fodt</string>
-            </array>
-        </dict>
-        <dict>
-            <key>CFBundleTypeIconFiles</key>
-            <array/>
-            <key>CFBundleTypeName</key>
-            <string>Plain Text</string>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>LSHandlerRank</key>
-            <string>Alternate</string>
-            <key>LSItemContentTypes</key>
-            <array>
-                <string>public.text</string>
-            </array>
-        </dict>
+       <!-- Document sub-types are listed in order ODF, OOXML, MSO, other -->
+       <!-- Writer document types -->
         <dict>
             <key>CFBundleTypeName</key>
             <string>OpenDocument Text</string>
@@ -40,6 +18,16 @@
             <key>LSItemContentTypes</key>
             <array>
                 <string>org.oasis-open.opendocument.text</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>OpenDocument Flat Text</string>
+            <key>LSHandlerRank</key>
+            <string>Default</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.collabora.office.uti.fodt</string>
             </array>
         </dict>
         <dict>
@@ -70,6 +58,21 @@
                 <string>com.microsoft.word.doc</string>
             </array>
         </dict>
+       <dict>
+            <key>CFBundleTypeIconFiles</key>
+            <array/>
+            <key>CFBundleTypeName</key>
+            <string>Plain Text</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>public.text</string>
+            </array>
+        </dict>
+       <!-- Calc document types -->
         <dict>
             <key>CFBundleTypeIconFiles</key>
             <array/>
@@ -112,6 +115,7 @@
                 <string>com.microsoft.excel.xls</string>
             </array>
         </dict>
+       <!-- Impress document types -->
         <dict>
             <key>CFBundleTypeName</key>
             <string>OpenDocument Presentation</string>
@@ -199,19 +203,6 @@
             <array>
                 <string>public.data</string>
             </array>
-            <key>UTTypeIdentifier</key>
-            <string>com.collabora.office.uti.fodt</string>
-            <key>UTTypeTagSpecification</key>
-            <dict>
-                <key>public.filename-extension</key>
-                <string>fodt</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>UTTypeConformsTo</key>
-            <array>
-                <string>public.data</string>
-            </array>
             <key>UTTypeDescription</key>
             <string>OpenDocument Text</string>
             <key>UTTypeIconFiles</key>
@@ -222,6 +213,19 @@
             <dict>
                 <key>public.filename-extension</key>
                 <string>odt</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>public.data</string>
+            </array>
+            <key>UTTypeIdentifier</key>
+            <string>com.collabora.office.uti.fodt</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <string>fodt</string>
             </dict>
         </dict>
         <dict>
