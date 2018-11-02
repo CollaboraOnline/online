@@ -747,7 +747,7 @@ function createToolbar() {
 				{id: 'localgraphic', text: _('Insert Local Image'), icon: 'insertgraphic'},
 				{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true), icon: 'insertgraphic'},
 			]},
-		{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), uno: 'NumberFormatPercent', disabled: true},
+		{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog'), uno: 'HyperlinkDialog', disabled: true},
 		{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
@@ -1471,7 +1471,8 @@ function onDocLayerInit() {
 		toolbarUp.remove('styles', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara',
 			'linespacing', 'defaultbullet', 'defaultnumbering', 'breakbullet',
 			'incrementindent', 'decrementindent', 'breakindent', 'inserttable');
-		w2ui['toolbar-up'].show('textalign');
+		toolbarUp.show('textalign');
+		statusbar.remove('prev', 'next', 'prevnextbreak');
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id:'break1'},
