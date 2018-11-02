@@ -118,6 +118,71 @@
 		BE34D13B218B679000815297 /* textsh2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textsh2.cxx; path = "../losrcdir-symlink/sw/source/uibase/shells/textsh2.cxx"; sourceTree = "<group>"; };
 		BE34D13C218B679000815297 /* textsh1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textsh1.cxx; path = "../losrcdir-symlink/sw/source/uibase/shells/textsh1.cxx"; sourceTree = "<group>"; };
 		BE34D13D218B679000815297 /* drwtxtsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drwtxtsh.cxx; path = "../losrcdir-symlink/sw/source/uibase/shells/drwtxtsh.cxx"; sourceTree = "<group>"; };
+		BE34D141218CF8AD00815297 /* menuwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menuwindow.cxx; path = "../losrcdir-symlink/vcl/source/window/menuwindow.cxx"; sourceTree = "<group>"; };
+		BE34D142218CF8AD00815297 /* syschild.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = syschild.cxx; path = "../losrcdir-symlink/vcl/source/window/syschild.cxx"; sourceTree = "<group>"; };
+		BE34D143218CF8AD00815297 /* accessibility.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessibility.cxx; path = "../losrcdir-symlink/vcl/source/window/accessibility.cxx"; sourceTree = "<group>"; };
+		BE34D144218CF8AD00815297 /* debugevent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = debugevent.cxx; path = "../losrcdir-symlink/vcl/source/window/debugevent.cxx"; sourceTree = "<group>"; };
+		BE34D145218CF8AD00815297 /* globalization.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = globalization.cxx; path = "../losrcdir-symlink/vcl/source/window/globalization.cxx"; sourceTree = "<group>"; };
+		BE34D146218CF8AD00815297 /* popupmenuwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = popupmenuwindow.cxx; path = "../losrcdir-symlink/vcl/source/window/popupmenuwindow.cxx"; sourceTree = "<group>"; };
+		BE34D147218CF8AD00815297 /* accel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accel.cxx; path = "../losrcdir-symlink/vcl/source/window/accel.cxx"; sourceTree = "<group>"; };
+		BE34D148218CF8AD00815297 /* floatwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = floatwin.cxx; path = "../losrcdir-symlink/vcl/source/window/floatwin.cxx"; sourceTree = "<group>"; };
+		BE34D149218CF8AD00815297 /* dndeventdispatcher.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dndeventdispatcher.cxx; path = "../losrcdir-symlink/vcl/source/window/dndeventdispatcher.cxx"; sourceTree = "<group>"; };
+		BE34D14A218CF8AD00815297 /* window3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = window3.cxx; path = "../losrcdir-symlink/vcl/source/window/window3.cxx"; sourceTree = "<group>"; };
+		BE34D14B218CF8AD00815297 /* toolbox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbox.cxx; path = "../losrcdir-symlink/vcl/source/window/toolbox.cxx"; sourceTree = "<group>"; };
+		BE34D14C218CF8AD00815297 /* syswin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = syswin.cxx; path = "../losrcdir-symlink/vcl/source/window/syswin.cxx"; sourceTree = "<group>"; };
+		BE34D14D218CF8AD00815297 /* menufloatingwindow.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = menufloatingwindow.hxx; path = "../losrcdir-symlink/vcl/source/window/menufloatingwindow.hxx"; sourceTree = "<group>"; };
+		BE34D14E218CF8AD00815297 /* menu.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menu.cxx; path = "../losrcdir-symlink/vcl/source/window/menu.cxx"; sourceTree = "<group>"; };
+		BE34D14F218CF8AE00815297 /* cursor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cursor.cxx; path = "../losrcdir-symlink/vcl/source/window/cursor.cxx"; sourceTree = "<group>"; };
+		BE34D150218CF8AE00815297 /* taskpanelist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = taskpanelist.cxx; path = "../losrcdir-symlink/vcl/source/window/taskpanelist.cxx"; sourceTree = "<group>"; };
+		BE34D151218CF8AE00815297 /* window2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = window2.cxx; path = "../losrcdir-symlink/vcl/source/window/window2.cxx"; sourceTree = "<group>"; };
+		BE34D152218CF8AE00815297 /* splitwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = splitwin.cxx; path = "../losrcdir-symlink/vcl/source/window/splitwin.cxx"; sourceTree = "<group>"; };
+		BE34D153218CF8AE00815297 /* clipping.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clipping.cxx; path = "../losrcdir-symlink/vcl/source/window/clipping.cxx"; sourceTree = "<group>"; };
+		BE34D154218CF8AE00815297 /* window.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = window.cxx; path = "../losrcdir-symlink/vcl/source/window/window.cxx"; sourceTree = "<group>"; };
+		BE34D155218CF8AE00815297 /* dialog.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dialog.cxx; path = "../losrcdir-symlink/vcl/source/window/dialog.cxx"; sourceTree = "<group>"; };
+		BE34D156218CF8AE00815297 /* menuwindow.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = menuwindow.hxx; path = "../losrcdir-symlink/vcl/source/window/menuwindow.hxx"; sourceTree = "<group>"; };
+		BE34D157218CF8AE00815297 /* split.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = split.cxx; path = "../losrcdir-symlink/vcl/source/window/split.cxx"; sourceTree = "<group>"; };
+		BE34D158218CF8AE00815297 /* stacking.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stacking.cxx; path = "../losrcdir-symlink/vcl/source/window/stacking.cxx"; sourceTree = "<group>"; };
+		BE34D159218CF8AE00815297 /* dndlistenercontainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dndlistenercontainer.cxx; path = "../losrcdir-symlink/vcl/source/window/dndlistenercontainer.cxx"; sourceTree = "<group>"; };
+		BE34D15A218CF8AE00815297 /* legacyaccessibility.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = legacyaccessibility.cxx; path = "../losrcdir-symlink/vcl/source/window/legacyaccessibility.cxx"; sourceTree = "<group>"; };
+		BE34D15B218CF8AE00815297 /* mnemonicengine.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mnemonicengine.cxx; path = "../losrcdir-symlink/vcl/source/window/mnemonicengine.cxx"; sourceTree = "<group>"; };
+		BE34D15C218CF8AE00815297 /* paint.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = paint.cxx; path = "../losrcdir-symlink/vcl/source/window/paint.cxx"; sourceTree = "<group>"; };
+		BE34D15D218CF8AE00815297 /* menufloatingwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menufloatingwindow.cxx; path = "../losrcdir-symlink/vcl/source/window/menufloatingwindow.cxx"; sourceTree = "<group>"; };
+		BE34D15E218CF8AE00815297 /* builder.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = builder.cxx; path = "../losrcdir-symlink/vcl/source/window/builder.cxx"; sourceTree = "<group>"; };
+		BE34D15F218CF8AE00815297 /* abstdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = abstdlg.cxx; path = "../losrcdir-symlink/vcl/source/window/abstdlg.cxx"; sourceTree = "<group>"; };
+		BE34D160218CF8AE00815297 /* dockwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dockwin.cxx; path = "../losrcdir-symlink/vcl/source/window/dockwin.cxx"; sourceTree = "<group>"; };
+		BE34D161218CF8AE00815297 /* introwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = introwin.cxx; path = "../losrcdir-symlink/vcl/source/window/introwin.cxx"; sourceTree = "<group>"; };
+		BE34D162218CF8AE00815297 /* menubarwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menubarwindow.cxx; path = "../losrcdir-symlink/vcl/source/window/menubarwindow.cxx"; sourceTree = "<group>"; };
+		BE34D163218CF8AE00815297 /* settings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = settings.cxx; path = "../losrcdir-symlink/vcl/source/window/settings.cxx"; sourceTree = "<group>"; };
+		BE34D164218CF8AF00815297 /* menubarwindow.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = menubarwindow.hxx; path = "../losrcdir-symlink/vcl/source/window/menubarwindow.hxx"; sourceTree = "<group>"; };
+		BE34D165218CF8AF00815297 /* layout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = layout.cxx; path = "../losrcdir-symlink/vcl/source/window/layout.cxx"; sourceTree = "<group>"; };
+		BE34D166218CF8AF00815297 /* wrkwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wrkwin.cxx; path = "../losrcdir-symlink/vcl/source/window/wrkwin.cxx"; sourceTree = "<group>"; };
+		BE34D167218CF8AF00815297 /* tabpage.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabpage.cxx; path = "../losrcdir-symlink/vcl/source/window/tabpage.cxx"; sourceTree = "<group>"; };
+		BE34D168218CF8AF00815297 /* mnemonic.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mnemonic.cxx; path = "../losrcdir-symlink/vcl/source/window/mnemonic.cxx"; sourceTree = "<group>"; };
+		BE34D169218CF8AF00815297 /* tabdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabdlg.cxx; path = "../losrcdir-symlink/vcl/source/window/tabdlg.cxx"; sourceTree = "<group>"; };
+		BE34D16A218CF8AF00815297 /* errinf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = errinf.cxx; path = "../losrcdir-symlink/vcl/source/window/errinf.cxx"; sourceTree = "<group>"; };
+		BE34D16B218CF8AF00815297 /* toolbox2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbox2.cxx; path = "../losrcdir-symlink/vcl/source/window/toolbox2.cxx"; sourceTree = "<group>"; };
+		BE34D16C218CF8AF00815297 /* dlgctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dlgctrl.cxx; path = "../losrcdir-symlink/vcl/source/window/dlgctrl.cxx"; sourceTree = "<group>"; };
+		BE34D16D218CF8AF00815297 /* keyevent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = keyevent.cxx; path = "../losrcdir-symlink/vcl/source/window/keyevent.cxx"; sourceTree = "<group>"; };
+		BE34D16E218CF8AF00815297 /* msgbox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = msgbox.cxx; path = "../losrcdir-symlink/vcl/source/window/msgbox.cxx"; sourceTree = "<group>"; };
+		BE34D16F218CF8AF00815297 /* keycod.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = keycod.cxx; path = "../losrcdir-symlink/vcl/source/window/keycod.cxx"; sourceTree = "<group>"; };
+		BE34D170218CF8AF00815297 /* EnumContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EnumContext.cxx; path = "../losrcdir-symlink/vcl/source/window/EnumContext.cxx"; sourceTree = "<group>"; };
+		BE34D171218CF8AF00815297 /* seleng.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = seleng.cxx; path = "../losrcdir-symlink/vcl/source/window/seleng.cxx"; sourceTree = "<group>"; };
+		BE34D172218CF8AF00815297 /* event.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = event.cxx; path = "../losrcdir-symlink/vcl/source/window/event.cxx"; sourceTree = "<group>"; };
+		BE34D173218CF8B000815297 /* menuitemlist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menuitemlist.cxx; path = "../losrcdir-symlink/vcl/source/window/menuitemlist.cxx"; sourceTree = "<group>"; };
+		BE34D174218CF8B000815297 /* scrwnd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scrwnd.cxx; path = "../losrcdir-symlink/vcl/source/window/scrwnd.cxx"; sourceTree = "<group>"; };
+		BE34D175218CF8B000815297 /* brdwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = brdwin.cxx; path = "../losrcdir-symlink/vcl/source/window/brdwin.cxx"; sourceTree = "<group>"; };
+		BE34D176218CF8B000815297 /* mouse.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mouse.cxx; path = "../losrcdir-symlink/vcl/source/window/mouse.cxx"; sourceTree = "<group>"; };
+		BE34D177218CF8B000815297 /* accmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accmgr.cxx; path = "../losrcdir-symlink/vcl/source/window/accmgr.cxx"; sourceTree = "<group>"; };
+		BE34D178218CF8B000815297 /* decoview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = decoview.cxx; path = "../losrcdir-symlink/vcl/source/window/decoview.cxx"; sourceTree = "<group>"; };
+		BE34D179218CF8B000815297 /* winproc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = winproc.cxx; path = "../losrcdir-symlink/vcl/source/window/winproc.cxx"; sourceTree = "<group>"; };
+		BE34D17A218CF8B000815297 /* dockmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dockmgr.cxx; path = "../losrcdir-symlink/vcl/source/window/dockmgr.cxx"; sourceTree = "<group>"; };
+		BE34D17B218CF8B000815297 /* dlgctrl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = dlgctrl.hxx; path = "../losrcdir-symlink/vcl/source/window/dlgctrl.hxx"; sourceTree = "<group>"; };
+		BE34D17C218CF8B000815297 /* commandevent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = commandevent.cxx; path = "../losrcdir-symlink/vcl/source/window/commandevent.cxx"; sourceTree = "<group>"; };
+		BE34D17D218CF8B000815297 /* menuitemlist.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = menuitemlist.hxx; path = "../losrcdir-symlink/vcl/source/window/menuitemlist.hxx"; sourceTree = "<group>"; };
+		BE34D17E218CF8B000815297 /* status.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = status.cxx; path = "../losrcdir-symlink/vcl/source/window/status.cxx"; sourceTree = "<group>"; };
+		BE34D17F218CF8B000815297 /* debug.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = debug.cxx; path = "../losrcdir-symlink/vcl/source/window/debug.cxx"; sourceTree = "<group>"; };
+		BE34D180218CF8B100815297 /* dockingarea.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dockingarea.cxx; path = "../losrcdir-symlink/vcl/source/window/dockingarea.cxx"; sourceTree = "<group>"; };
+		BE34D181218CF8B100815297 /* printdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printdlg.cxx; path = "../losrcdir-symlink/vcl/source/window/printdlg.cxx"; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -449,6 +514,93 @@
 			name = shells;
 			sourceTree = "<group>";
 		};
+		BE34D140218CF87D00815297 /* window */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D15F218CF8AE00815297 /* abstdlg.cxx */,
+				BE34D147218CF8AD00815297 /* accel.cxx */,
+				BE34D143218CF8AD00815297 /* accessibility.cxx */,
+				BE34D177218CF8B000815297 /* accmgr.cxx */,
+				BE34D175218CF8B000815297 /* brdwin.cxx */,
+				BE34D15E218CF8AE00815297 /* builder.cxx */,
+				BE34D153218CF8AE00815297 /* clipping.cxx */,
+				BE34D17C218CF8B000815297 /* commandevent.cxx */,
+				BE34D14F218CF8AE00815297 /* cursor.cxx */,
+				BE34D17F218CF8B000815297 /* debug.cxx */,
+				BE34D144218CF8AD00815297 /* debugevent.cxx */,
+				BE34D178218CF8B000815297 /* decoview.cxx */,
+				BE34D155218CF8AE00815297 /* dialog.cxx */,
+				BE34D16C218CF8AF00815297 /* dlgctrl.cxx */,
+				BE34D17B218CF8B000815297 /* dlgctrl.hxx */,
+				BE34D149218CF8AD00815297 /* dndeventdispatcher.cxx */,
+				BE34D159218CF8AE00815297 /* dndlistenercontainer.cxx */,
+				BE34D180218CF8B100815297 /* dockingarea.cxx */,
+				BE34D17A218CF8B000815297 /* dockmgr.cxx */,
+				BE34D160218CF8AE00815297 /* dockwin.cxx */,
+				BE34D170218CF8AF00815297 /* EnumContext.cxx */,
+				BE34D16A218CF8AF00815297 /* errinf.cxx */,
+				BE34D172218CF8AF00815297 /* event.cxx */,
+				BE34D148218CF8AD00815297 /* floatwin.cxx */,
+				BE34D145218CF8AD00815297 /* globalization.cxx */,
+				BE34D161218CF8AE00815297 /* introwin.cxx */,
+				BE34D16F218CF8AF00815297 /* keycod.cxx */,
+				BE34D16D218CF8AF00815297 /* keyevent.cxx */,
+				BE34D165218CF8AF00815297 /* layout.cxx */,
+				BE34D15A218CF8AE00815297 /* legacyaccessibility.cxx */,
+				BE34D14E218CF8AD00815297 /* menu.cxx */,
+				BE34D162218CF8AE00815297 /* menubarwindow.cxx */,
+				BE34D164218CF8AF00815297 /* menubarwindow.hxx */,
+				BE34D15D218CF8AE00815297 /* menufloatingwindow.cxx */,
+				BE34D14D218CF8AD00815297 /* menufloatingwindow.hxx */,
+				BE34D173218CF8B000815297 /* menuitemlist.cxx */,
+				BE34D17D218CF8B000815297 /* menuitemlist.hxx */,
+				BE34D141218CF8AD00815297 /* menuwindow.cxx */,
+				BE34D156218CF8AE00815297 /* menuwindow.hxx */,
+				BE34D168218CF8AF00815297 /* mnemonic.cxx */,
+				BE34D15B218CF8AE00815297 /* mnemonicengine.cxx */,
+				BE34D176218CF8B000815297 /* mouse.cxx */,
+				BE34D16E218CF8AF00815297 /* msgbox.cxx */,
+				BE34D15C218CF8AE00815297 /* paint.cxx */,
+				BE34D146218CF8AD00815297 /* popupmenuwindow.cxx */,
+				BE34D181218CF8B100815297 /* printdlg.cxx */,
+				BE34D174218CF8B000815297 /* scrwnd.cxx */,
+				BE34D171218CF8AF00815297 /* seleng.cxx */,
+				BE34D163218CF8AE00815297 /* settings.cxx */,
+				BE34D157218CF8AE00815297 /* split.cxx */,
+				BE34D152218CF8AE00815297 /* splitwin.cxx */,
+				BE34D158218CF8AE00815297 /* stacking.cxx */,
+				BE34D17E218CF8B000815297 /* status.cxx */,
+				BE34D142218CF8AD00815297 /* syschild.cxx */,
+				BE34D14C218CF8AD00815297 /* syswin.cxx */,
+				BE34D169218CF8AF00815297 /* tabdlg.cxx */,
+				BE34D167218CF8AF00815297 /* tabpage.cxx */,
+				BE34D150218CF8AE00815297 /* taskpanelist.cxx */,
+				BE34D14B218CF8AD00815297 /* toolbox.cxx */,
+				BE34D16B218CF8AF00815297 /* toolbox2.cxx */,
+				BE34D154218CF8AE00815297 /* window.cxx */,
+				BE34D151218CF8AE00815297 /* window2.cxx */,
+				BE34D14A218CF8AD00815297 /* window3.cxx */,
+				BE34D179218CF8B000815297 /* winproc.cxx */,
+				BE34D166218CF8AF00815297 /* wrkwin.cxx */,
+			);
+			name = window;
+			sourceTree = "<group>";
+		};
+		BE34D182218CFC6C00815297 /* desktop */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D183218CFC7200815297 /* lib */,
+			);
+			name = desktop;
+			sourceTree = "<group>";
+		};
+		BE34D183218CFC7200815297 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
 		BE58E1312187938700249358 /* headless */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,12 +672,12 @@
 		BE6362BE2153A79200F4237E /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BE34D182218CFC6C00815297 /* desktop */,
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
 				BE34D10C218B667400815297 /* sw */,
 				BEB6524B216FD09400B8C09A /* tools */,
 				BE93D420216CAA52007A39F4 /* vcl */,
-				BE58E1312187938700249358 /* headless */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -576,6 +728,8 @@
 			isa = PBXGroup;
 			children = (
 				BE93D421216CAA59007A39F4 /* app */,
+				BE58E1312187938700249358 /* headless */,
+				BE34D140218CF87D00815297 /* window */,
 			);
 			name = vcl;
 			sourceTree = "<group>";
