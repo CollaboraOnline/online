@@ -46,6 +46,20 @@
             <key>CFBundleTypeIconFiles</key>
             <array/>
             <key>CFBundleTypeName</key>
+            <string>Office Open XML text</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>org.openxmlformats.wordprocessingml.document</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeIconFiles</key>
+            <array/>
+            <key>CFBundleTypeName</key>
             <string>Microsoft Word Document</string>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
@@ -205,6 +219,28 @@
     </array>
     <key>UTImportedTypeDeclarations</key>
     <array>
+        <dict>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>org.openxmlformats.openxml</string>
+                <string>public.composite-content</string>
+            </array>
+            <key>UTTypeDescription</key>
+            <string>Office Open XML text</string>
+            <key>UTTypeIdentifier</key>
+            <string>org.openxmlformats.wordprocessingml.document</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <array>
+                    <string>docx</string>
+                </array>
+                <key>public.mime-type</key>
+                <array>
+                    <string>application/vnd.openxmlformats-officedocument.wordprocessingml.document</string>
+                </array>
+            </dict>
+        </dict>
         <dict>
             <key>UTTypeConformsTo</key>
             <array>
