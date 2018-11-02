@@ -84,6 +84,16 @@
                 <string>org.openxmlformats.spreadsheetml.sheet</string>
             </array>
         </dict>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>OpenDocument Presentation</string>
+            <key>LSHandlerRank</key>
+            <string>Owner</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>org.oasis-open.opendocument.presentation</string>
+            </array>
+        </dict>
     </array>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
@@ -173,6 +183,23 @@
             <dict>
                 <key>public.filename-extension</key>
                 <string>ods</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>public.data</string>
+            </array>
+            <key>UTTypeDescription</key>
+            <string>OpenDocument Presentation</string>
+            <key>UTTypeIconFiles</key>
+            <array/>
+            <key>UTTypeIdentifier</key>
+            <string>org.oasis-open.opendocument.presentation</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <string>odp</string>
             </dict>
         </dict>
     </array>
