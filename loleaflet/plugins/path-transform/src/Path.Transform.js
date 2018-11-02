@@ -452,6 +452,20 @@ L.Handler.PathTransform = L.Handler.extend({
 		//console.timeEnd('transform');
 	},
 
+	_getPoints: function () {
+		var bounds = this._rect.getBounds(),
+		sw = bounds.getSouthWest(),
+		nw = bounds.getNorthWest(),
+		ne = bounds.getNorthEast(),
+		se = bounds.getSouthEast(),
+		center = bounds.getCenter(),
+		west   = L.latLng(center.lat, nw.lng),
+		north  = L.latLng(nw.lat, center.lng),
+		east   = L.latLng(center.lat, ne.lng),
+		south  = L.latLng(sw.lat, center.lng);
+
+		return [sw, west, nw, north, ne, east, se, south];
+	},
 
 	/**
 	* Creates markers and handles
@@ -465,10 +479,10 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		if (this.options.scaling) {
 			this._handlers = [];
-			for (var i = 0; i < this.options.edgesCount; i++) {
-				// TODO: add stretching
+			var points = this._getPoints();
+			for (var i = 0; i < points.length; i++) {
 				this._handlers.push(
-					this._createHandler(this._rect._latlngs[i], i * 2, i)
+					this._createHandler(points[i], i * 2, i)
 						.addTo(this._handlersGroup));
 			}
 		}
@@ -607,7 +621,7 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		this._activeMarker = marker;
 
-		this._originMarker = this._handlers[(marker.options.index + 2) % 4];
+		this._originMarker = this._handlers[(marker.options.index + 4) % 8];
 		this._scaleOrigin  = this._originMarker.getLatLng();
 
 		this._initialMatrix = this._matrix.clone();
@@ -642,8 +656,10 @@ L.Handler.PathTransform = L.Handler.extend({
 			ratioX = originPoint.distanceTo(evt.layerPoint) / this._initialDist;
 			ratioY = ratioX;
 		} else {
-			ratioX = (originPoint.x - evt.layerPoint.x) / this._initialDistX;
-			ratioY = (originPoint.y - evt.layerPoint.y) / this._initialDistY;
+			ratioX = this._initialDistX !== 0 ?
+				(originPoint.x - evt.layerPoint.x) / this._initialDistX : 1;
+			ratioY = this._initialDistY !== 0 ?
+				(originPoint.y - evt.layerPoint.y) / this._initialDistY : 1;
 		}
 
 		this._scale = new L.Point(ratioX, ratioY);
