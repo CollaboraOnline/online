@@ -227,58 +227,62 @@ if test "$enable_iosapp" = "yes"; then
       IOSAPP_NAME="$with_iosapp_name"
    fi
 
-   AC_MSG_CHECKING([for LibreOffice source tree to build against])
-   if test -z "$with_lo_srcdir"; then
-      AC_MSG_ERROR([You MUST use the --with-lo-srcdir option when configuring the iOS app build tree.])
-   fi
+   # When configuring for building the app itself, on macOS, we need
+   # these. But not when just configuring for building the JS on
+   # Linux, for copying over to the Mac.
+   if test `uname -s` = "Darwin"; then
+      AC_MSG_CHECKING([for LibreOffice source tree to build against])
+      if test -z "$with_lo_srcdir"; then
+         AC_MSG_ERROR([You MUST use the --with-lo-srcdir option when configuring the iOS app build tree.])
+      fi
 
-   LOSRCDIR="$with_lo_srcdir"
-   # Sanity check, just a random source file in the LibreOffice core tree
-   if test -f "$LOSRCDIR/vcl/ios/iosinst.cxx"; then
-       AC_MSG_RESULT([$LOSRCDIR])
-   else
-       AC_MSG_ERROR([This is not a LibreOffice core source directory: $LOSRCDIR])
-   fi
+      LOSRCDIR="$with_lo_srcdir"
+      # Sanity check, just a random source file in the LibreOffice core tree
+      if test -f "$LOSRCDIR/vcl/ios/iosinst.cxx"; then
+          AC_MSG_RESULT([$LOSRCDIR])
+      else
+          AC_MSG_ERROR([This is not a LibreOffice core source directory: $LOSRCDIR])
+      fi
 
-   AC_MSG_CHECKING([for LibreOffice build tree to build against])
-   if test -z "$with_lo_builddir"; then
-      AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the iOS app build tree.])
-   fi
+      AC_MSG_CHECKING([for LibreOffice build tree to build against])
+      if test -z "$with_lo_builddir"; then
+         AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the iOS app build tree.])
+      fi
 
-   LOBUILDDIR="$with_lo_builddir"
-   # Sanity check, just a random object file in the LibreOffice build tree
-   if test -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o"; then
-       AC_MSG_RESULT([$LOBUILDDIR])
-   else
-       AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
-   fi
+      LOBUILDDIR="$with_lo_builddir"
+      # Sanity check, just a random object file in the LibreOffice build tree
+      if test -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o"; then
+          AC_MSG_RESULT([$LOBUILDDIR])
+      else
+          AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
+      fi
 
-   AC_MSG_CHECKING([for Poco include directory to build against])
-   if test -z "$with_poco_includes"; then
-      AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the iOS app build tree.])
-   fi
+      AC_MSG_CHECKING([for Poco include directory to build against])
+      if test -z "$with_poco_includes"; then
+         AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the iOS app build tree.])
+      fi
 
-   POCOINCLUDE="$with_poco_includes"
-   # Sanity check
-   if test -f "$POCOINCLUDE/Poco/Poco.h"; then
-       AC_MSG_RESULT([$POCOINCLUDE])
-   else
-       AC_MSG_ERROR([This is not a Poco include directory: $POCOINCLUDE])
-   fi
+      POCOINCLUDE="$with_poco_includes"
+      # Sanity check
+      if test -f "$POCOINCLUDE/Poco/Poco.h"; then
+          AC_MSG_RESULT([$POCOINCLUDE])
+      else
+          AC_MSG_ERROR([This is not a Poco include directory: $POCOINCLUDE])
+      fi
 
-   AC_MSG_CHECKING([for Poco lib directory to build against])
-   if test -z "$with_poco_libs"; then
-      AC_MSG_ERROR([You MUST use the --with-poco-libs option when configuring the iOS app build tree.])
-   fi
+      AC_MSG_CHECKING([for Poco lib directory to build against])
+      if test -z "$with_poco_libs"; then
+         AC_MSG_ERROR([You MUST use the --with-poco-libs option when configuring the iOS app build tree.])
+      fi
 
-   POCOLIB="$with_poco_libs"
-   # Sanity check
-   if test -f "$POCOLIB/libPocoFoundation.a"; then
-       AC_MSG_RESULT([$POCOLIB])
-   else
-       AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
+      POCOLIB="$with_poco_libs"
+      # Sanity check
+      if test -f "$POCOLIB/libPocoFoundation.a"; then
+          AC_MSG_RESULT([$POCOLIB])
+      else
+          AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
+      fi
    fi
-
 fi
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
@@ -628,60 +632,61 @@ AC_LANG_POP
 
 AS_IF([test "$ENABLE_IOSAPP" = "true"],
       [
-       # Sadly I can't figure out any better way to avoid having to
-       # edit the Xcode project file manually. Create symlinks to the
-       # LibreOffice core source and build trees, and to the Poco
-       # installation.
+       if test `uname -s` = "Darwin"; then
+          # Sadly I can't figure out any better way to avoid having to
+          # edit the Xcode project file manually. Create symlinks to the
+          # LibreOffice core source and build trees, and to the Poco
+          # installation.
 
-       AC_MSG_NOTICE([creating symbolic links for the Xcode project to use])
+          AC_MSG_NOTICE([creating symbolic links for the Xcode project to use])
 
-       if test -L losrcdir-symlink; then
-          rm -f losrcdir-symlink
-       elif test -f losrcdir-symlink; then
-          AC_MSG_ERROR([losrcdir-symlink exists and is not a symbolic link])
+          if test -L losrcdir-symlink; then
+             rm -f losrcdir-symlink
+          elif test -f losrcdir-symlink; then
+             AC_MSG_ERROR([losrcdir-symlink exists and is not a symbolic link])
+          fi
+          ln -s "$LOSRCDIR" losrcdir-symlink
+
+          if test -L lobuilddir-symlink; then
+             rm -f lobuilddir-symlink
+          elif test -f lobuilddir-symlink; then
+             AC_MSG_ERROR([lobuilddir-symlink exists and is not a symbolic link])
+          fi
+          ln -s "$LOBUILDDIR" lobuilddir-symlink
+
+          if test -L pocoinclude-symlink; then
+             rm -f pocoinclude-symlink
+          elif test -f pocoinclude-symlink; then
+             AC_MSG_ERROR([pocoinclude-symlink exists and is not a symbolic link])
+          fi
+          ln -s "$POCOINCLUDE" pocoinclude-symlink
+
+          if test -L pocolib-symlink; then
+             rm -f pocolib-symlink
+          elif test -f pocolib-symlink; then
+             AC_MSG_ERROR([pocolib-symlink exists and is not a symbolic link])
+          fi
+          ln -s "$POCOLIB" pocolib-symlink
+
+          eval `grep 'export ICU_MAJOR=' "$LOBUILDDIR/config_host.mk"`
+          if test -L ICU.dat; then
+             rm -f ICU.dat
+          elif test -f ICU.dat; then
+             AC_MSG_ERROR([ICU.dat exists and is not a symbolic link])
+          fi
+          ln -s "$LOBUILDDIR/workdir/CustomTarget/ios/resources/icudt${ICU_MAJOR}l.dat" ICU.dat
+
+          # Sadly Xcode doesn't like it if AppIcon.appiconset is a
+          # symlink, so make it a directory of symlinks to the actual png
+          # and json files.
+          rm -rf Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+          mkdir Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+          if test -n "$with_iosapp_appicon"; then
+             ln -s "$with_iosapp_appicon"/* Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+          else
+             ln -s Mobile/Mobile/Assets.xcassets/Empty.appiconset/* Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+          fi
        fi
-       ln -s "$LOSRCDIR" losrcdir-symlink
-
-       if test -L lobuilddir-symlink; then
-          rm -f lobuilddir-symlink
-       elif test -f lobuilddir-symlink; then
-          AC_MSG_ERROR([lobuilddir-symlink exists and is not a symbolic link])
-       fi
-       ln -s "$LOBUILDDIR" lobuilddir-symlink
-
-       if test -L pocoinclude-symlink; then
-          rm -f pocoinclude-symlink
-       elif test -f pocoinclude-symlink; then
-          AC_MSG_ERROR([pocoinclude-symlink exists and is not a symbolic link])
-       fi
-       ln -s "$POCOINCLUDE" pocoinclude-symlink
-
-       if test -L pocolib-symlink; then
-          rm -f pocolib-symlink
-       elif test -f pocolib-symlink; then
-          AC_MSG_ERROR([pocolib-symlink exists and is not a symbolic link])
-       fi
-       ln -s "$POCOLIB" pocolib-symlink
-
-       eval `grep 'export ICU_MAJOR=' "$LOBUILDDIR/config_host.mk"`
-       if test -L ICU.dat; then
-          rm -f ICU.dat
-       elif test -f ICU.dat; then
-          AC_MSG_ERROR([ICU.dat exists and is not a symbolic link])
-       fi
-       ln -s "$LOBUILDDIR/workdir/CustomTarget/ios/resources/icudt${ICU_MAJOR}l.dat" ICU.dat
-
-       # Sadly Xcode doesn't like it if AppIcon.appiconset is a
-       # symlink, so make it a directory of symlinks to the actual png
-       # and json files.
-       rm -rf Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
-       mkdir Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
-       if test -n "$with_iosapp_appicon"; then
-          ln -s "$with_iosapp_appicon"/* Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
-       else
-          ln -s Mobile/Mobile/Assets.xcassets/Empty.appiconset/* Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
-       fi
-
       ],
       [
        echo "
