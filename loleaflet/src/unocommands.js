@@ -76,6 +76,7 @@ var unoCommandsArray = {
 	FormatLine:{global:{menu:_('L~ine...'),},},
 	FormatMenu:{global:{menu:_('F~ormat'),},},
 	FormatObjectMenu:{global:{menu:_('~Object and Shape'),},text:{menu:_('Text Box and Shap~e'),},},
+	FormatPaintbrush:{global:{context:_('Clone Formatting (double click for multi-selection)'),menu:_('Clone'),},},
 	FormatSpacingMenu:{global:{menu:_('~Spacing'),},},
 	FormatTextMenu:{global:{menu:_('Te~xt'),},},
 	FormattingMarkMenu:{global:{menu:_('Formatting Mark'),},},

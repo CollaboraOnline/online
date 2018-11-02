@@ -629,11 +629,12 @@ function createToolbar() {
 		{type: 'break', id: 'savebreak', mobile: false},
 		{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 		{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
-		{type: 'button',  id: 'copy',  img: 'copy', hint: _UNO('.uno:Copy'), uno: 'Copy', disabled: true},
-		{type: 'button',  id: 'reset',  img: 'delete', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes'},
+		{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: 'FormatPaintbrush', mobile: false},
+		{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes', mobile: false},
 		{type: 'break', mobile: false},
 		{type: 'menu-radio', id: 'zoom', text: '100%',
 			selected: 'id100',
+			mobile: false,
 			items: [
 				{ id: 'id30', text: '30%', scale: 0.3},
 				{ id: 'id50', text: '50%', scale: 0.5},
@@ -645,7 +646,7 @@ function createToolbar() {
 				{ id: 'id200', text: '200%', scale: 2.0}
 			]
 		},
-		{type: 'break'},
+		{type: 'break', mobile: false},
 		{type: 'html',   id: 'styles',
 			html: '<select class="styles-select"><option>Default Style</option></select>',
 			onRefresh: function (edata) {
