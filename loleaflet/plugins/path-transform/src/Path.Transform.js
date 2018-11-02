@@ -25,7 +25,7 @@ L.PathTransform.Handle = L.CircleMarker.extend({
  * @type {Array}
  */
 L.PathTransform.Handle.CursorsByType = [
-	'nesw-resize', 'nwse-resize', 'nesw-resize', 'nwse-resize'
+	'nesw-resize', 'ew-resize', 'nwse-resize', 'ns-resize','nesw-resize', 'ew-resize', 'nwse-resize', 'ns-resize'
 ];
 
 
