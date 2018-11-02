@@ -1,37 +1,16 @@
-// -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*-
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * Copyright (C) 2006, 2007 Apple Inc.
- * Copyright (C) 2007 Alp Toker <alp@atoker.com>
- * Copyright (C) 2011 Lukasz Slachciak
- * Copyright (C) 2011 Bob Murphy
+ * This file is part of the LibreOffice project.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
- * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <thread>
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -56,20 +35,9 @@ static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
 static WebKitWebView *webView;
 
-static void destroyWindowCb(GtkWidget* widget, GtkWidget* window)
-{
-    gtk_main_quit();
-}
-
-static gboolean closeWebViewCb(WebKitWebView* webView, GtkWidget* window)
-{
-    gtk_widget_destroy(window);
-    return TRUE;
-}
-
 static void send2JS_ready_callback(GObject      *source_object,
                                    GAsyncResult *res,
-                                   gpointer     user_data)
+                                   gpointer      user_data)
 {
     free(user_data);
 }
@@ -131,7 +99,7 @@ static void send2JS(const std::vector<char>& buffer)
     g_idle_add([](gpointer data)
                {
                    char *jscopy = (char*) data;
-                   webkit_web_view_run_javascript(webView, jscopy, NULL, send2JS_ready_callback, jscopy);
+                   webkit_web_view_run_javascript(webView, jscopy, nullptr, send2JS_ready_callback, jscopy);
                    return FALSE;
                }, jscopy);
 }
@@ -307,11 +275,12 @@ int main(int argc, char* argv[])
     if (argc != 2)
     {
         fprintf(stderr, "Usage: %s document\n", argv[0]);
-        exit(1);
+        _exit(1); // avoid log cleanup
     }
 
     Log::initialize("Mobile", "trace", false, false, {});
     Util::setThreadName("main");
+
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
                                      LOG_TRC_NOFILE(line);
@@ -335,36 +304,27 @@ int main(int argc, char* argv[])
 
     fakeClientFd = fakeSocketSocket();
 
-    // Initialize GTK+
     gtk_init(&argc, &argv);
 
-    // Create an 800x600 window that will contain the browser instance
-    GtkWidget *main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_default_size(GTK_WINDOW(main_window), 800, 600);
+    GtkWidget *mainWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(mainWindow), 1000, 800);
+    g_signal_connect(mainWindow, "destroy", G_CALLBACK(gtk_main_quit), nullptr);
 
-    // Create a "user content manager"
     WebKitUserContentManager *userContentManager = WEBKIT_USER_CONTENT_MANAGER(webkit_user_content_manager_new());
 
-    g_signal_connect(userContentManager, "script-message-received::debug", G_CALLBACK(handle_debug_message), NULL);
-    g_signal_connect(userContentManager, "script-message-received::lool", G_CALLBACK(handle_lool_message), NULL);
-    g_signal_connect(userContentManager, "script-message-received::error", G_CALLBACK(handle_error_message), NULL);
+    g_signal_connect(userContentManager, "script-message-received::debug", G_CALLBACK(handle_debug_message), nullptr);
+    g_signal_connect(userContentManager, "script-message-received::lool",  G_CALLBACK(handle_lool_message), nullptr);
+    g_signal_connect(userContentManager, "script-message-received::error", G_CALLBACK(handle_error_message), nullptr);
 
     webkit_user_content_manager_register_script_message_handler(userContentManager, "debug");
     webkit_user_content_manager_register_script_message_handler(userContentManager, "lool");
     webkit_user_content_manager_register_script_message_handler(userContentManager, "error");
 
-    // Create a browser instance
     webView = WEBKIT_WEB_VIEW(webkit_web_view_new_with_user_content_manager(userContentManager));
 
-    // Put the browser area into the main window
-    gtk_container_add(GTK_CONTAINER(main_window), GTK_WIDGET(webView));
+    gtk_container_add(GTK_CONTAINER(mainWindow), GTK_WIDGET(webView));
 
-    // Set up callbacks so that if either the main window or the browser instance is
-    // closed, the program will exit
-    g_signal_connect(main_window, "destroy", G_CALLBACK(destroyWindowCb), NULL);
-    g_signal_connect(webView, "close", G_CALLBACK(closeWebViewCb), main_window);
-
-    fileURL = "file://" + std::string(realpath(argv[1], NULL));
+    fileURL = "file://" + std::string(realpath(argv[1], nullptr));
 
     std::string urlAndQuery =
         "file://" TOPSRCDIR "/loleaflet/dist/loleaflet.html"
@@ -373,17 +333,10 @@ int main(int argc, char* argv[])
         "&permission=edit"
         "&debug=true";
 
-    // Load a web page into the browser instance
     webkit_web_view_load_uri(webView, urlAndQuery.c_str());
 
-    // Make sure that when the browser area becomes visible, it will get mouse
-    // and keyboard events
     gtk_widget_grab_focus(GTK_WIDGET(webView));
-
-    // Make sure the main window and all its contents are visible
-    gtk_widget_show_all(main_window);
-
-    // Run the main GTK+ event loop
+    gtk_widget_show_all(mainWindow);
     gtk_main();
 
     return 0;
