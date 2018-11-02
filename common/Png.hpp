@@ -91,7 +91,7 @@ unpremultiply_data (png_structp /*png*/, png_row_infop row_info, png_bytep data)
         uint32_t pixel;
         uint8_t  alpha;
 
-        memcpy (&pixel, b, sizeof (uint32_t));
+        std::memcpy (&pixel, b, sizeof (uint32_t));
         alpha = (pixel & 0xff000000) >> 24;
         if (alpha == 0)
         {
