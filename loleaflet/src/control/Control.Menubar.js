@@ -510,6 +510,12 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
+	_createDocument: function(e) {
+		var self = e.data.self;
+		var docType = self._map.getDocType();
+		self._map.fire('postMessage', {msgId: 'UI_CreateFile', args: {DocumentType: docType}});
+	},
+
 	_onDocLayerInit: function() {
 		// clear initial menu
 		while (this._menubarCont.hasChildNodes()) {
@@ -519,6 +525,7 @@ L.Control.Menubar = L.Control.extend({
 		// Add document specific menu
 		var docType = this._map.getDocType();
 		var $docLogo = $('#document-logo');
+		$docLogo.bind('click', {self: this}, this._createDocument);
 		if (docType === 'text') {
 			$docLogo.addClass('writer-icon-img');
 			this._initializeMenu(this.options.text);
