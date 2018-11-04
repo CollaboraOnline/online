@@ -95,16 +95,14 @@ AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
                            [Path to a working installation directory or instdir of LibreOffice]))
 
-AC_ARG_WITH([lo-srcdir],
-            AS_HELP_STRING([--with-lo-srcdir=<path>],
-                           [Mandatory, and relevant, only in a tree where building the iOS app.
-                            Path to a the source directory of the LibreOffice core tree you want to use.]))
-
 AC_ARG_WITH([lo-builddir],
             AS_HELP_STRING([--with-lo-builddir=<path>],
-                           [Relevant only in a tree where building the iOS app.
-                            Path to a the build directory of the LibreOffice core tree you want to use.
-                            Defaults to the --with-lo-srcdir value.]))
+                           [Mandatory, and relevant, in a tree where building the iOS app.
+                            Path to a the build directory of the LibreOffice core source tree you want to use.
+                            In addition you MUST manually edit the Mobile/Mobile.xcodeproj/project.pbxproj
+                            file and change the references to "../ios-device" to refer to the corresponding
+                            LibreOffice core source directory (which typically would be the same as the build
+                            directory you specify with this option).]))
 
 AC_ARG_WITH([logfile],
             AS_HELP_STRING([--with-logfile=<path>],
@@ -231,19 +229,6 @@ if test "$enable_iosapp" = "yes"; then
    # these. But not when just configuring for building the JS on
    # Linux, for copying over to the Mac.
    if test `uname -s` = "Darwin"; then
-      AC_MSG_CHECKING([for LibreOffice source tree to build against])
-      if test -z "$with_lo_srcdir"; then
-         AC_MSG_ERROR([You MUST use the --with-lo-srcdir option when configuring the iOS app build tree.])
-      fi
-
-      LOSRCDIR="$with_lo_srcdir"
-      # Sanity check, just a random source file in the LibreOffice core tree
-      if test -f "$LOSRCDIR/vcl/ios/iosinst.cxx"; then
-          AC_MSG_RESULT([$LOSRCDIR])
-      else
-          AC_MSG_ERROR([This is not a LibreOffice core source directory: $LOSRCDIR])
-      fi
-
       AC_MSG_CHECKING([for LibreOffice build tree to build against])
       if test -z "$with_lo_builddir"; then
          AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the iOS app build tree.])
@@ -639,13 +624,6 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
           # installation.
 
           AC_MSG_NOTICE([creating symbolic links for the Xcode project to use])
-
-          if test -L losrcdir-symlink; then
-             rm -f losrcdir-symlink
-          elif test -f losrcdir-symlink; then
-             AC_MSG_ERROR([losrcdir-symlink exists and is not a symbolic link])
-          fi
-          ln -s "$LOSRCDIR" losrcdir-symlink
 
           if test -L lobuilddir-symlink; then
              rm -f lobuilddir-symlink

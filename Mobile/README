@@ -39,10 +39,8 @@ where misan.local is the macOS machine where I build the app, in the
 Mobile/Mobile.xcodeproj/project.pbxproj file in your favourite text
 editor.
 
-Change all instances of ../../../../ios-device to the path to where
-you built LibreOffice core for iOS in step 1. Change the value of
-PNGINSTDIR to where you have installed libpng compiled for iOS. Change
-POCOINSTDIR to where you have installed Poco compiled for iOS.
+Change LOSRCDIR and all instances of "../ios-device" to refer the the
+LibreOffice core source directory from step 1.
 
 Then run:
 
@@ -50,7 +48,7 @@ Then run:
 
 and
 
-./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice" --with-lo-srcdir=$HOME/lo/ios --with-lo-builddir=$HOME/lo/ios --with-poco-includes=/opt/ios-poco/include --with-poco-libs=/opt/ios-poco/lib
+./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice" --with-lo-builddir=$HOME/lo/ios --with-poco-includes=/opt/ios-poco/include --with-poco-libs=/opt/ios-poco/lib
 
 The configure script puts the app name as the CFBundleDisplayName
 property into the Mobile/Mobile/Info.plist file, and set up some
