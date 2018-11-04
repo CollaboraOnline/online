@@ -237,12 +237,17 @@ L.Control.Sidebar = L.Control.extend({
 		this._createDialogCursor(strId);
 		var dlgInput = this._createDialogInput(strId);
 
-		// var resizedetector = L.DomUtil.get('resize-detector');
 		L.DomEvent.on(panelCanvas, 'resize', function() {
 			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelCanvas.width + ',' + panelCanvas.height);
 		}, this);
 		L.DomEvent.on(panelContainer, 'resize', function() {
-			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelContainer.width + ',' + panelContainer.height);
+			var sidebarpanel = L.DomUtil.get('sidebar-panel');
+			if (sidebarpanel) {
+				var sidebar = sidebarpanel.children[0];
+				if (sidebar) {
+					this._map._socket.sendMessage('resizewindow ' + id + ' size=' + sidebar.width + ',' + sidebar.height);
+				}
+			}
 		}, this);
 
 		L.DomEvent.on(panelCanvas, 'contextmenu', L.DomEvent.preventDefault);
@@ -418,6 +423,7 @@ L.Control.Sidebar = L.Control.extend({
 	_resizeSidebar: function(strId, width) {
 		this._currentDeck.width = width;
 		var sidebar = L.DomUtil.get(strId);
+		sidebar.width = width;
 		sidebar.style.width = width.toString() + 'px';
 		this._map.options.documentContainer.style.right = sidebar.style.width;
 		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
