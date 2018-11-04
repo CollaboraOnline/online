@@ -637,7 +637,11 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		this._path
 			.fire('transformstart', { layer: this._path })
-			.fire('scalestart', { layer: this._path, scale: L.point(1, 1) });
+			.fire('scalestart', {
+				layer: this._path,
+				scale: L.point(1, 1),
+				pos: this._getPoints()[this._activeMarker.options.index]
+			});
 
 		this._map.removeLayer(this._handleLine);
 		this._map.removeLayer(this._rotationMarker);
@@ -690,7 +694,10 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		this._apply();
 		this._path.fire('scaleend', {
-			layer: this._path, scale: this._scale.clone() });
+			layer: this._path,
+			scale: this._scale.clone(),
+			pos: this._getPoints()[this._activeMarker.options.index]
+		});
 	},
 
 
