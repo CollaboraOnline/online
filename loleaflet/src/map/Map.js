@@ -967,7 +967,7 @@ L.Map = L.Evented.extend({
 			if (sidebar) {
 				var newSize = this.getSize();
 				sidebar.height = newSize.y;
-				L.DomUtil.setStyle(sidebar, 'height', newSize.y + 'px');
+				sidebar.style.height = newSize.y + 'px';
 
 				// Fire the resize event to propagate the size change to WSD.
 				// .trigger isn't working, so doing it manually.
