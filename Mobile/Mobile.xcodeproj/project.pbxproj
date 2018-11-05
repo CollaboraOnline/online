@@ -183,6 +183,122 @@
 		BE34D17F218CF8B000815297 /* debug.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = debug.cxx; path = "../../ios-device/vcl/source/window/debug.cxx"; sourceTree = "<group>"; };
 		BE34D180218CF8B100815297 /* dockingarea.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dockingarea.cxx; path = "../../ios-device/vcl/source/window/dockingarea.cxx"; sourceTree = "<group>"; };
 		BE34D181218CF8B100815297 /* printdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printdlg.cxx; path = "../../ios-device/vcl/source/window/printdlg.cxx"; sourceTree = "<group>"; };
+		BE34D18C2190718100815297 /* PivotLayoutTreeList.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PivotLayoutTreeList.cxx; path = "../../ios-device/sc/source/ui/dbgui/PivotLayoutTreeList.cxx"; sourceTree = "<group>"; };
+		BE34D18D2190718100815297 /* sortdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sortdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/sortdlg.cxx"; sourceTree = "<group>"; };
+		BE34D18E2190718100815297 /* PivotLayoutDialog.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PivotLayoutDialog.cxx; path = "../../ios-device/sc/source/ui/dbgui/PivotLayoutDialog.cxx"; sourceTree = "<group>"; };
+		BE34D18F2190718100815297 /* subtdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = subtdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/subtdlg.cxx"; sourceTree = "<group>"; };
+		BE34D1902190718100815297 /* csvsplits.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = csvsplits.cxx; path = "../../ios-device/sc/source/ui/dbgui/csvsplits.cxx"; sourceTree = "<group>"; };
+		BE34D1912190718100815297 /* csvtablebox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = csvtablebox.cxx; path = "../../ios-device/sc/source/ui/dbgui/csvtablebox.cxx"; sourceTree = "<group>"; };
+		BE34D1922190718100815297 /* dapitype.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dapitype.cxx; path = "../../ios-device/sc/source/ui/dbgui/dapitype.cxx"; sourceTree = "<group>"; };
+		BE34D1932190718100815297 /* scuiimoptdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scuiimoptdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/scuiimoptdlg.cxx"; sourceTree = "<group>"; };
+		BE34D1942190718200815297 /* scendlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scendlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/scendlg.cxx"; sourceTree = "<group>"; };
+		BE34D1952190718200815297 /* consdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = consdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/consdlg.cxx"; sourceTree = "<group>"; };
+		BE34D1962190718200815297 /* foptmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = foptmgr.cxx; path = "../../ios-device/sc/source/ui/dbgui/foptmgr.cxx"; sourceTree = "<group>"; };
+		BE34D1972190718200815297 /* asciiopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = asciiopt.cxx; path = "../../ios-device/sc/source/ui/dbgui/asciiopt.cxx"; sourceTree = "<group>"; };
+		BE34D1982190718200815297 /* filtdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = filtdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/filtdlg.cxx"; sourceTree = "<group>"; };
+		BE34D1992190718200815297 /* PivotLayoutTreeListData.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PivotLayoutTreeListData.cxx; path = "../../ios-device/sc/source/ui/dbgui/PivotLayoutTreeListData.cxx"; sourceTree = "<group>"; };
+		BE34D19A2190718200815297 /* dbnamdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbnamdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/dbnamdlg.cxx"; sourceTree = "<group>"; };
+		BE34D19B2190718200815297 /* tpsort.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tpsort.cxx; path = "../../ios-device/sc/source/ui/dbgui/tpsort.cxx"; sourceTree = "<group>"; };
+		BE34D19C2190718200815297 /* dpgroupdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dpgroupdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/dpgroupdlg.cxx"; sourceTree = "<group>"; };
+		BE34D19D2190718200815297 /* PivotLayoutTreeListBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PivotLayoutTreeListBase.cxx; path = "../../ios-device/sc/source/ui/dbgui/PivotLayoutTreeListBase.cxx"; sourceTree = "<group>"; };
+		BE34D19E2190718200815297 /* scuiasciiopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scuiasciiopt.cxx; path = "../../ios-device/sc/source/ui/dbgui/scuiasciiopt.cxx"; sourceTree = "<group>"; };
+		BE34D19F2190718200815297 /* dapidata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dapidata.cxx; path = "../../ios-device/sc/source/ui/dbgui/dapidata.cxx"; sourceTree = "<group>"; };
+		BE34D1A02190718200815297 /* pfiltdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pfiltdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/pfiltdlg.cxx"; sourceTree = "<group>"; };
+		BE34D1A12190718200815297 /* csvruler.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = csvruler.cxx; path = "../../ios-device/sc/source/ui/dbgui/csvruler.cxx"; sourceTree = "<group>"; };
+		BE34D1A22190718200815297 /* PivotLayoutTreeListLabel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PivotLayoutTreeListLabel.cxx; path = "../../ios-device/sc/source/ui/dbgui/PivotLayoutTreeListLabel.cxx"; sourceTree = "<group>"; };
+		BE34D1A32190718200815297 /* validate.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = validate.cxx; path = "../../ios-device/sc/source/ui/dbgui/validate.cxx"; sourceTree = "<group>"; };
+		BE34D1A42190718200815297 /* tpsubt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tpsubt.cxx; path = "../../ios-device/sc/source/ui/dbgui/tpsubt.cxx"; sourceTree = "<group>"; };
+		BE34D1A52190718200815297 /* textimportoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textimportoptions.cxx; path = "../../ios-device/sc/source/ui/dbgui/textimportoptions.cxx"; sourceTree = "<group>"; };
+		BE34D1A62190718200815297 /* pvfundlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pvfundlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/pvfundlg.cxx"; sourceTree = "<group>"; };
+		BE34D1A72190718200815297 /* csvgrid.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = csvgrid.cxx; path = "../../ios-device/sc/source/ui/dbgui/csvgrid.cxx"; sourceTree = "<group>"; };
+		BE34D1A82190718200815297 /* imoptdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imoptdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/imoptdlg.cxx"; sourceTree = "<group>"; };
+		BE34D1A92190718200815297 /* csvcontrol.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = csvcontrol.cxx; path = "../../ios-device/sc/source/ui/dbgui/csvcontrol.cxx"; sourceTree = "<group>"; };
+		BE34D1AA2190718200815297 /* sortkeydlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sortkeydlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/sortkeydlg.cxx"; sourceTree = "<group>"; };
+		BE34D1AB2190718300815297 /* sfiltdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sfiltdlg.cxx; path = "../../ios-device/sc/source/ui/dbgui/sfiltdlg.cxx"; sourceTree = "<group>"; };
+		BE34D1AD219076CA00815297 /* tabvwsh2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwsh2.cxx; path = "../../ios-device/sc/source/ui/view/tabvwsh2.cxx"; sourceTree = "<group>"; };
+		BE34D1AE219076CA00815297 /* cellsh4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cellsh4.cxx; path = "../../ios-device/sc/source/ui/view/cellsh4.cxx"; sourceTree = "<group>"; };
+		BE34D1AF219076CA00815297 /* tabvwsha.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwsha.cxx; path = "../../ios-device/sc/source/ui/view/tabvwsha.cxx"; sourceTree = "<group>"; };
+		BE34D1B0219076CA00815297 /* tabvwshd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwshd.cxx; path = "../../ios-device/sc/source/ui/view/tabvwshd.cxx"; sourceTree = "<group>"; };
+		BE34D1B1219076CA00815297 /* notemark.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = notemark.cxx; path = "../../ios-device/sc/source/ui/view/notemark.cxx"; sourceTree = "<group>"; };
+		BE34D1B2219076CA00815297 /* tabvwshf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwshf.cxx; path = "../../ios-device/sc/source/ui/view/tabvwshf.cxx"; sourceTree = "<group>"; };
+		BE34D1B3219076CA00815297 /* tabview3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabview3.cxx; path = "../../ios-device/sc/source/ui/view/tabview3.cxx"; sourceTree = "<group>"; };
+		BE34D1B4219076CA00815297 /* tabview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabview.cxx; path = "../../ios-device/sc/source/ui/view/tabview.cxx"; sourceTree = "<group>"; };
+		BE34D1B5219076CA00815297 /* tabview2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabview2.cxx; path = "../../ios-device/sc/source/ui/view/tabview2.cxx"; sourceTree = "<group>"; };
+		BE34D1B6219076CA00815297 /* tabvwshg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwshg.cxx; path = "../../ios-device/sc/source/ui/view/tabvwshg.cxx"; sourceTree = "<group>"; };
+		BE34D1B7219076CA00815297 /* waitoff.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = waitoff.cxx; path = "../../ios-device/sc/source/ui/view/waitoff.cxx"; sourceTree = "<group>"; };
+		BE34D1B8219076CA00815297 /* select.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = select.cxx; path = "../../ios-device/sc/source/ui/view/select.cxx"; sourceTree = "<group>"; };
+		BE34D1B9219076CA00815297 /* viewfun4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfun4.cxx; path = "../../ios-device/sc/source/ui/view/viewfun4.cxx"; sourceTree = "<group>"; };
+		BE34D1BA219076CA00815297 /* viewfun3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfun3.cxx; path = "../../ios-device/sc/source/ui/view/viewfun3.cxx"; sourceTree = "<group>"; };
+		BE34D1BB219076CA00815297 /* pgbrksh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgbrksh.cxx; path = "../../ios-device/sc/source/ui/view/pgbrksh.cxx"; sourceTree = "<group>"; };
+		BE34D1BC219076CA00815297 /* cliputil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cliputil.cxx; path = "../../ios-device/sc/source/ui/view/cliputil.cxx"; sourceTree = "<group>"; };
+		BE34D1BD219076CA00815297 /* gridwin4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gridwin4.cxx; path = "../../ios-device/sc/source/ui/view/gridwin4.cxx"; sourceTree = "<group>"; };
+		BE34D1BE219076CA00815297 /* drawvie3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawvie3.cxx; path = "../../ios-device/sc/source/ui/view/drawvie3.cxx"; sourceTree = "<group>"; };
+		BE34D1BF219076CA00815297 /* viewfun6.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfun6.cxx; path = "../../ios-device/sc/source/ui/view/viewfun6.cxx"; sourceTree = "<group>"; };
+		BE34D1C0219076CA00815297 /* drawutil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawutil.cxx; path = "../../ios-device/sc/source/ui/view/drawutil.cxx"; sourceTree = "<group>"; };
+		BE34D1C1219076CB00815297 /* cellsh3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cellsh3.cxx; path = "../../ios-device/sc/source/ui/view/cellsh3.cxx"; sourceTree = "<group>"; };
+		BE34D1C2219076CB00815297 /* dbfunc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbfunc.cxx; path = "../../ios-device/sc/source/ui/view/dbfunc.cxx"; sourceTree = "<group>"; };
+		BE34D1C3219076CB00815297 /* selectionstate.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = selectionstate.cxx; path = "../../ios-device/sc/source/ui/view/selectionstate.cxx"; sourceTree = "<group>"; };
+		BE34D1C4219076CB00815297 /* hintwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hintwin.cxx; path = "../../ios-device/sc/source/ui/view/hintwin.cxx"; sourceTree = "<group>"; };
+		BE34D1C5219076CB00815297 /* tabvwsh3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwsh3.cxx; path = "../../ios-device/sc/source/ui/view/tabvwsh3.cxx"; sourceTree = "<group>"; };
+		BE34D1C6219076CB00815297 /* tabvwshb.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwshb.cxx; path = "../../ios-device/sc/source/ui/view/tabvwshb.cxx"; sourceTree = "<group>"; };
+		BE34D1C7219076CB00815297 /* tabcont.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabcont.cxx; path = "../../ios-device/sc/source/ui/view/tabcont.cxx"; sourceTree = "<group>"; };
+		BE34D1C8219076CB00815297 /* auditsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = auditsh.cxx; path = "../../ios-device/sc/source/ui/view/auditsh.cxx"; sourceTree = "<group>"; };
+		BE34D1C9219076CB00815297 /* viewfunc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfunc.cxx; path = "../../ios-device/sc/source/ui/view/viewfunc.cxx"; sourceTree = "<group>"; };
+		BE34D1CA219076CB00815297 /* dbfunc4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbfunc4.cxx; path = "../../ios-device/sc/source/ui/view/dbfunc4.cxx"; sourceTree = "<group>"; };
+		BE34D1CB219076CB00815297 /* tabvwsh8.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwsh8.cxx; path = "../../ios-device/sc/source/ui/view/tabvwsh8.cxx"; sourceTree = "<group>"; };
+		BE34D1CC219076CB00815297 /* dbfunc2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbfunc2.cxx; path = "../../ios-device/sc/source/ui/view/dbfunc2.cxx"; sourceTree = "<group>"; };
+		BE34D1CD219076CB00815297 /* pfuncache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pfuncache.cxx; path = "../../ios-device/sc/source/ui/view/pfuncache.cxx"; sourceTree = "<group>"; };
+		BE34D1CE219076CB00815297 /* invmerge.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = invmerge.cxx; path = "../../ios-device/sc/source/ui/view/invmerge.cxx"; sourceTree = "<group>"; };
+		BE34D1CF219076CB00815297 /* cellmergeoption.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cellmergeoption.cxx; path = "../../ios-device/sc/source/ui/view/cellmergeoption.cxx"; sourceTree = "<group>"; };
+		BE34D1D0219076CB00815297 /* cellsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cellsh.cxx; path = "../../ios-device/sc/source/ui/view/cellsh.cxx"; sourceTree = "<group>"; };
+		BE34D1D1219076CB00815297 /* cellsh1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cellsh1.cxx; path = "../../ios-device/sc/source/ui/view/cellsh1.cxx"; sourceTree = "<group>"; };
+		BE34D1D2219076CC00815297 /* gridwin3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gridwin3.cxx; path = "../../ios-device/sc/source/ui/view/gridwin3.cxx"; sourceTree = "<group>"; };
+		BE34D1D3219076CC00815297 /* reffact.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = reffact.cxx; path = "../../ios-device/sc/source/ui/view/reffact.cxx"; sourceTree = "<group>"; };
+		BE34D1D4219076CC00815297 /* editsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editsh.cxx; path = "../../ios-device/sc/source/ui/view/editsh.cxx"; sourceTree = "<group>"; };
+		BE34D1D5219076CC00815297 /* tabvwsh9.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwsh9.cxx; path = "../../ios-device/sc/source/ui/view/tabvwsh9.cxx"; sourceTree = "<group>"; };
+		BE34D1D6219076CC00815297 /* tabview4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabview4.cxx; path = "../../ios-device/sc/source/ui/view/tabview4.cxx"; sourceTree = "<group>"; };
+		BE34D1D7219076CC00815297 /* tabvwshc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwshc.cxx; path = "../../ios-device/sc/source/ui/view/tabvwshc.cxx"; sourceTree = "<group>"; };
+		BE34D1D8219076CC00815297 /* drawview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawview.cxx; path = "../../ios-device/sc/source/ui/view/drawview.cxx"; sourceTree = "<group>"; };
+		BE34D1D9219076CC00815297 /* cellsh2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cellsh2.cxx; path = "../../ios-device/sc/source/ui/view/cellsh2.cxx"; sourceTree = "<group>"; };
+		BE34D1DA219076CC00815297 /* spelldialog.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = spelldialog.cxx; path = "../../ios-device/sc/source/ui/view/spelldialog.cxx"; sourceTree = "<group>"; };
+		BE34D1DB219076CC00815297 /* hdrcont.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hdrcont.cxx; path = "../../ios-device/sc/source/ui/view/hdrcont.cxx"; sourceTree = "<group>"; };
+		BE34D1DC219076CC00815297 /* gridwin_dbgutil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gridwin_dbgutil.cxx; path = "../../ios-device/sc/source/ui/view/gridwin_dbgutil.cxx"; sourceTree = "<group>"; };
+		BE34D1DD219076CC00815297 /* preview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = preview.cxx; path = "../../ios-device/sc/source/ui/view/preview.cxx"; sourceTree = "<group>"; };
+		BE34D1DE219076CC00815297 /* prevwsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = prevwsh.cxx; path = "../../ios-device/sc/source/ui/view/prevwsh.cxx"; sourceTree = "<group>"; };
+		BE34D1DF219076CC00815297 /* printfun.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printfun.cxx; path = "../../ios-device/sc/source/ui/view/printfun.cxx"; sourceTree = "<group>"; };
+		BE34D1E0219076CD00815297 /* pivotsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pivotsh.cxx; path = "../../ios-device/sc/source/ui/view/pivotsh.cxx"; sourceTree = "<group>"; };
+		BE34D1E1219076CD00815297 /* gridwin5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gridwin5.cxx; path = "../../ios-device/sc/source/ui/view/gridwin5.cxx"; sourceTree = "<group>"; };
+		BE34D1E2219076CD00815297 /* imapwrap.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = imapwrap.hxx; path = "../../ios-device/sc/source/ui/view/imapwrap.hxx"; sourceTree = "<group>"; };
+		BE34D1E3219076CD00815297 /* tabsplit.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabsplit.cxx; path = "../../ios-device/sc/source/ui/view/tabsplit.cxx"; sourceTree = "<group>"; };
+		BE34D1E4219076CD00815297 /* tabvwsh5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwsh5.cxx; path = "../../ios-device/sc/source/ui/view/tabvwsh5.cxx"; sourceTree = "<group>"; };
+		BE34D1E5219076CD00815297 /* tabvwshe.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwshe.cxx; path = "../../ios-device/sc/source/ui/view/tabvwshe.cxx"; sourceTree = "<group>"; };
+		BE34D1E6219076CD00815297 /* tabvwshh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwshh.cxx; path = "../../ios-device/sc/source/ui/view/tabvwshh.cxx"; sourceTree = "<group>"; };
+		BE34D1E7219076CD00815297 /* tabview5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabview5.cxx; path = "../../ios-device/sc/source/ui/view/tabview5.cxx"; sourceTree = "<group>"; };
+		BE34D1E8219076CD00815297 /* viewfun2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfun2.cxx; path = "../../ios-device/sc/source/ui/view/viewfun2.cxx"; sourceTree = "<group>"; };
+		BE34D1E9219076CD00815297 /* output3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = output3.cxx; path = "../../ios-device/sc/source/ui/view/output3.cxx"; sourceTree = "<group>"; };
+		BE34D1EA219076CD00815297 /* viewfun7.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfun7.cxx; path = "../../ios-device/sc/source/ui/view/viewfun7.cxx"; sourceTree = "<group>"; };
+		BE34D1EB219076CD00815297 /* drawvie4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawvie4.cxx; path = "../../ios-device/sc/source/ui/view/drawvie4.cxx"; sourceTree = "<group>"; };
+		BE34D1EC219076CD00815297 /* gridwin2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gridwin2.cxx; path = "../../ios-device/sc/source/ui/view/gridwin2.cxx"; sourceTree = "<group>"; };
+		BE34D1ED219076CE00815297 /* tabvwsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwsh.cxx; path = "../../ios-device/sc/source/ui/view/tabvwsh.cxx"; sourceTree = "<group>"; };
+		BE34D1EE219076CE00815297 /* overlayobject.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayobject.cxx; path = "../../ios-device/sc/source/ui/view/overlayobject.cxx"; sourceTree = "<group>"; };
+		BE34D1EF219076CE00815297 /* prevloc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = prevloc.cxx; path = "../../ios-device/sc/source/ui/view/prevloc.cxx"; sourceTree = "<group>"; };
+		BE34D1F0219076CE00815297 /* spellcheckcontext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = spellcheckcontext.cxx; path = "../../ios-device/sc/source/ui/view/spellcheckcontext.cxx"; sourceTree = "<group>"; };
+		BE34D1F1219076CE00815297 /* tabvwsh4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabvwsh4.cxx; path = "../../ios-device/sc/source/ui/view/tabvwsh4.cxx"; sourceTree = "<group>"; };
+		BE34D1F2219076CE00815297 /* output.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = output.cxx; path = "../../ios-device/sc/source/ui/view/output.cxx"; sourceTree = "<group>"; };
+		BE34D1F3219076CE00815297 /* colrowba.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = colrowba.cxx; path = "../../ios-device/sc/source/ui/view/colrowba.cxx"; sourceTree = "<group>"; };
+		BE34D1F4219076CE00815297 /* gridmerg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gridmerg.cxx; path = "../../ios-device/sc/source/ui/view/gridmerg.cxx"; sourceTree = "<group>"; };
+		BE34D1F5219076CE00815297 /* spelleng.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = spelleng.cxx; path = "../../ios-device/sc/source/ui/view/spelleng.cxx"; sourceTree = "<group>"; };
+		BE34D1F6219076CE00815297 /* viewfun5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfun5.cxx; path = "../../ios-device/sc/source/ui/view/viewfun5.cxx"; sourceTree = "<group>"; };
+		BE34D1F7219076CE00815297 /* gridwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gridwin.cxx; path = "../../ios-device/sc/source/ui/view/gridwin.cxx"; sourceTree = "<group>"; };
+		BE34D1F8219076CE00815297 /* viewutil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewutil.cxx; path = "../../ios-device/sc/source/ui/view/viewutil.cxx"; sourceTree = "<group>"; };
+		BE34D1F9219076CF00815297 /* viewdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewdata.cxx; path = "../../ios-device/sc/source/ui/view/viewdata.cxx"; sourceTree = "<group>"; };
+		BE34D1FA219076CF00815297 /* imapwrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imapwrap.cxx; path = "../../ios-device/sc/source/ui/view/imapwrap.cxx"; sourceTree = "<group>"; };
+		BE34D1FB219076CF00815297 /* scextopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scextopt.cxx; path = "../../ios-device/sc/source/ui/view/scextopt.cxx"; sourceTree = "<group>"; };
+		BE34D1FC219076CF00815297 /* olinewin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olinewin.cxx; path = "../../ios-device/sc/source/ui/view/olinewin.cxx"; sourceTree = "<group>"; };
+		BE34D1FD219076CF00815297 /* prevwsh2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = prevwsh2.cxx; path = "../../ios-device/sc/source/ui/view/prevwsh2.cxx"; sourceTree = "<group>"; };
+		BE34D1FE219076CF00815297 /* output2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = output2.cxx; path = "../../ios-device/sc/source/ui/view/output2.cxx"; sourceTree = "<group>"; };
+		BE34D1FF219076CF00815297 /* formatsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formatsh.cxx; path = "../../ios-device/sc/source/ui/view/formatsh.cxx"; sourceTree = "<group>"; };
+		BE34D200219076CF00815297 /* dbfunc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbfunc3.cxx; path = "../../ios-device/sc/source/ui/view/dbfunc3.cxx"; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -601,6 +717,153 @@
 			name = lib;
 			sourceTree = "<group>";
 		};
+		BE34D1892190712C00815297 /* sc */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D18B2190715400815297 /* ui */,
+			);
+			name = sc;
+			sourceTree = "<group>";
+		};
+		BE34D18A2190713900815297 /* dbgui */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D1972190718200815297 /* asciiopt.cxx */,
+				BE34D1952190718200815297 /* consdlg.cxx */,
+				BE34D1A92190718200815297 /* csvcontrol.cxx */,
+				BE34D1A72190718200815297 /* csvgrid.cxx */,
+				BE34D1A12190718200815297 /* csvruler.cxx */,
+				BE34D1902190718100815297 /* csvsplits.cxx */,
+				BE34D1912190718100815297 /* csvtablebox.cxx */,
+				BE34D19F2190718200815297 /* dapidata.cxx */,
+				BE34D1922190718100815297 /* dapitype.cxx */,
+				BE34D19A2190718200815297 /* dbnamdlg.cxx */,
+				BE34D19C2190718200815297 /* dpgroupdlg.cxx */,
+				BE34D1982190718200815297 /* filtdlg.cxx */,
+				BE34D1962190718200815297 /* foptmgr.cxx */,
+				BE34D1A82190718200815297 /* imoptdlg.cxx */,
+				BE34D1A02190718200815297 /* pfiltdlg.cxx */,
+				BE34D18E2190718100815297 /* PivotLayoutDialog.cxx */,
+				BE34D18C2190718100815297 /* PivotLayoutTreeList.cxx */,
+				BE34D19D2190718200815297 /* PivotLayoutTreeListBase.cxx */,
+				BE34D1992190718200815297 /* PivotLayoutTreeListData.cxx */,
+				BE34D1A22190718200815297 /* PivotLayoutTreeListLabel.cxx */,
+				BE34D1A62190718200815297 /* pvfundlg.cxx */,
+				BE34D1942190718200815297 /* scendlg.cxx */,
+				BE34D19E2190718200815297 /* scuiasciiopt.cxx */,
+				BE34D1932190718100815297 /* scuiimoptdlg.cxx */,
+				BE34D1AB2190718300815297 /* sfiltdlg.cxx */,
+				BE34D18D2190718100815297 /* sortdlg.cxx */,
+				BE34D1AA2190718200815297 /* sortkeydlg.cxx */,
+				BE34D18F2190718100815297 /* subtdlg.cxx */,
+				BE34D1A52190718200815297 /* textimportoptions.cxx */,
+				BE34D19B2190718200815297 /* tpsort.cxx */,
+				BE34D1A42190718200815297 /* tpsubt.cxx */,
+				BE34D1A32190718200815297 /* validate.cxx */,
+			);
+			name = dbgui;
+			sourceTree = "<group>";
+		};
+		BE34D18B2190715400815297 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D18A2190713900815297 /* dbgui */,
+				BE34D1AC2190769E00815297 /* view */,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		BE34D1AC2190769E00815297 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				BE34D1C8219076CB00815297 /* auditsh.cxx */,
+				BE34D1CF219076CB00815297 /* cellmergeoption.cxx */,
+				BE34D1D0219076CB00815297 /* cellsh.cxx */,
+				BE34D1D1219076CB00815297 /* cellsh1.cxx */,
+				BE34D1D9219076CC00815297 /* cellsh2.cxx */,
+				BE34D1C1219076CB00815297 /* cellsh3.cxx */,
+				BE34D1AE219076CA00815297 /* cellsh4.cxx */,
+				BE34D1BC219076CA00815297 /* cliputil.cxx */,
+				BE34D1F3219076CE00815297 /* colrowba.cxx */,
+				BE34D1C2219076CB00815297 /* dbfunc.cxx */,
+				BE34D1CC219076CB00815297 /* dbfunc2.cxx */,
+				BE34D200219076CF00815297 /* dbfunc3.cxx */,
+				BE34D1CA219076CB00815297 /* dbfunc4.cxx */,
+				BE34D1C0219076CA00815297 /* drawutil.cxx */,
+				BE34D1BE219076CA00815297 /* drawvie3.cxx */,
+				BE34D1EB219076CD00815297 /* drawvie4.cxx */,
+				BE34D1D8219076CC00815297 /* drawview.cxx */,
+				BE34D1D4219076CC00815297 /* editsh.cxx */,
+				BE34D1FF219076CF00815297 /* formatsh.cxx */,
+				BE34D1F4219076CE00815297 /* gridmerg.cxx */,
+				BE34D1DC219076CC00815297 /* gridwin_dbgutil.cxx */,
+				BE34D1F7219076CE00815297 /* gridwin.cxx */,
+				BE34D1EC219076CD00815297 /* gridwin2.cxx */,
+				BE34D1D2219076CC00815297 /* gridwin3.cxx */,
+				BE34D1BD219076CA00815297 /* gridwin4.cxx */,
+				BE34D1E1219076CD00815297 /* gridwin5.cxx */,
+				BE34D1DB219076CC00815297 /* hdrcont.cxx */,
+				BE34D1C4219076CB00815297 /* hintwin.cxx */,
+				BE34D1FA219076CF00815297 /* imapwrap.cxx */,
+				BE34D1E2219076CD00815297 /* imapwrap.hxx */,
+				BE34D1CE219076CB00815297 /* invmerge.cxx */,
+				BE34D1B1219076CA00815297 /* notemark.cxx */,
+				BE34D1FC219076CF00815297 /* olinewin.cxx */,
+				BE34D1F2219076CE00815297 /* output.cxx */,
+				BE34D1FE219076CF00815297 /* output2.cxx */,
+				BE34D1E9219076CD00815297 /* output3.cxx */,
+				BE34D1EE219076CE00815297 /* overlayobject.cxx */,
+				BE34D1CD219076CB00815297 /* pfuncache.cxx */,
+				BE34D1BB219076CA00815297 /* pgbrksh.cxx */,
+				BE34D1E0219076CD00815297 /* pivotsh.cxx */,
+				BE34D1DD219076CC00815297 /* preview.cxx */,
+				BE34D1EF219076CE00815297 /* prevloc.cxx */,
+				BE34D1DE219076CC00815297 /* prevwsh.cxx */,
+				BE34D1FD219076CF00815297 /* prevwsh2.cxx */,
+				BE34D1DF219076CC00815297 /* printfun.cxx */,
+				BE34D1D3219076CC00815297 /* reffact.cxx */,
+				BE34D1FB219076CF00815297 /* scextopt.cxx */,
+				BE34D1B8219076CA00815297 /* select.cxx */,
+				BE34D1C3219076CB00815297 /* selectionstate.cxx */,
+				BE34D1F0219076CE00815297 /* spellcheckcontext.cxx */,
+				BE34D1DA219076CC00815297 /* spelldialog.cxx */,
+				BE34D1F5219076CE00815297 /* spelleng.cxx */,
+				BE34D1C7219076CB00815297 /* tabcont.cxx */,
+				BE34D1E3219076CD00815297 /* tabsplit.cxx */,
+				BE34D1B4219076CA00815297 /* tabview.cxx */,
+				BE34D1B5219076CA00815297 /* tabview2.cxx */,
+				BE34D1B3219076CA00815297 /* tabview3.cxx */,
+				BE34D1D6219076CC00815297 /* tabview4.cxx */,
+				BE34D1E7219076CD00815297 /* tabview5.cxx */,
+				BE34D1ED219076CE00815297 /* tabvwsh.cxx */,
+				BE34D1AD219076CA00815297 /* tabvwsh2.cxx */,
+				BE34D1C5219076CB00815297 /* tabvwsh3.cxx */,
+				BE34D1F1219076CE00815297 /* tabvwsh4.cxx */,
+				BE34D1E4219076CD00815297 /* tabvwsh5.cxx */,
+				BE34D1CB219076CB00815297 /* tabvwsh8.cxx */,
+				BE34D1D5219076CC00815297 /* tabvwsh9.cxx */,
+				BE34D1AF219076CA00815297 /* tabvwsha.cxx */,
+				BE34D1C6219076CB00815297 /* tabvwshb.cxx */,
+				BE34D1D7219076CC00815297 /* tabvwshc.cxx */,
+				BE34D1B0219076CA00815297 /* tabvwshd.cxx */,
+				BE34D1E5219076CD00815297 /* tabvwshe.cxx */,
+				BE34D1B2219076CA00815297 /* tabvwshf.cxx */,
+				BE34D1B6219076CA00815297 /* tabvwshg.cxx */,
+				BE34D1E6219076CD00815297 /* tabvwshh.cxx */,
+				BE34D1F9219076CF00815297 /* viewdata.cxx */,
+				BE34D1E8219076CD00815297 /* viewfun2.cxx */,
+				BE34D1BA219076CA00815297 /* viewfun3.cxx */,
+				BE34D1B9219076CA00815297 /* viewfun4.cxx */,
+				BE34D1F6219076CE00815297 /* viewfun5.cxx */,
+				BE34D1BF219076CA00815297 /* viewfun6.cxx */,
+				BE34D1EA219076CD00815297 /* viewfun7.cxx */,
+				BE34D1C9219076CB00815297 /* viewfunc.cxx */,
+				BE34D1F8219076CE00815297 /* viewutil.cxx */,
+				BE34D1B7219076CA00815297 /* waitoff.cxx */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
 		BE58E1312187938700249358 /* headless */ = {
 			isa = PBXGroup;
 			children = (
@@ -675,6 +938,7 @@
 				BE34D182218CFC6C00815297 /* desktop */,
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
+				BE34D1892190712C00815297 /* sc */,
 				BE34D10C218B667400815297 /* sw */,
 				BEB6524B216FD09400B8C09A /* tools */,
 				BE93D420216CAA52007A39F4 /* vcl */,
