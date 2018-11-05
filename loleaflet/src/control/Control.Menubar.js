@@ -27,6 +27,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
 					{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
 					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}]},
+				{name: _('Sign document'), id: 'signdocument', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:SetDocumentProperties'}
 			]},
@@ -690,6 +691,8 @@ L.Control.Menubar = L.Control.extend({
 			fileName = fileName.substr(0, fileName.lastIndexOf('.'));
 			fileName = fileName === '' ? 'document' : fileName;
 			this._map.downloadAs(fileName + '.' + format, format);
+		} else if (id === 'signdocument') {
+			this._map.showSignDocument();
 		} else if (id === 'insertcomment') {
 			this._map.insertComment();
 		} else if (id === 'insertgraphic') {
