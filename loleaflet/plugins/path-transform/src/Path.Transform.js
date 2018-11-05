@@ -150,6 +150,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._createHandlers();
 		this._path
 			.on('dragstart', this._onDragStart, this)
+			.on('drag',      this._onDrag, this)
 			.on('dragend',   this._onDragEnd,   this);
 	},
 
@@ -161,6 +162,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._hideHandlers();
 		this._path
 			.off('dragstart', this._onDragStart, this)
+			.off('drag',      this._onDrag, this)
 			.off('dragend',   this._onDragEnd,   this);
 		this._handlersGroup = null;
 		this._rect = null;
@@ -766,6 +768,16 @@ L.Handler.PathTransform = L.Handler.extend({
 	*/
 	_onDragStart: function() {
 		this._hideHandlers();
+		this._map.addLayer(this._rect);
+	},
+
+	_onDrag: function(evt) {
+		var rect = this._rect;
+		var matrix = (evt.layer ? evt.layer : this._path).dragging._matrix.slice();
+
+		this._rect._transform(matrix);
+		rect._updatePath();
+		rect._project();
 	},
 
 
