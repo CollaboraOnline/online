@@ -72,7 +72,7 @@
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		BE34D10F218B66B600815297 /* docsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh.cxx; path = "../../ios-device/Sw/source/uibase/app/docsh.cxx"; sourceTree = "<group>"; };
+		BE34D10F218B66B600815297 /* docsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh.cxx; path = "../../ios-device/sw/source/uibase/app/docsh.cxx"; sourceTree = "<group>"; };
 		BE34D110218B66B600815297 /* docstyle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docstyle.cxx; path = "../../ios-device/sw/source/uibase/app/docstyle.cxx"; sourceTree = "<group>"; };
 		BE34D111218B66B600815297 /* docshdrw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docshdrw.cxx; path = "../../ios-device/sw/source/uibase/app/docshdrw.cxx"; sourceTree = "<group>"; };
 		BE34D112218B66B600815297 /* docshini.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docshini.cxx; path = "../../ios-device/sw/source/uibase/app/docshini.cxx"; sourceTree = "<group>"; };
