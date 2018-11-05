@@ -395,15 +395,42 @@ class PngCache
     typedef std::shared_ptr< std::vector< char > > CacheData;
 
     struct CacheEntry {
+    private:
         size_t    _hitCount;
         TileWireId _wireId;
         CacheData _data;
+    public:
         CacheEntry(size_t defaultSize, TileWireId id) :
             _hitCount(1),   // Every entry is used at least once; prevent removal at birth.
             _wireId(id),
             _data( new std::vector< char >() )
         {
             _data->reserve( defaultSize );
+        }
+
+        size_t getHitCount() const
+        {
+            return _hitCount;
+        }
+
+        void incrementHitCount()
+        {
+            ++_hitCount;
+        }
+
+        void decrementHitCount()
+        {
+            --_hitCount;
+        }
+
+        const CacheData& getData() const
+        {
+            return _data;
+        }
+
+        TileWireId getWireId() const
+        {
+            return _wireId;
         }
     } ;
     size_t _cacheSize;
@@ -447,7 +474,7 @@ class PngCache
         {
             size_t avgHits = 0;
             for (auto it = _cache.begin(); it != _cache.end(); ++it)
-                avgHits += it->second._hitCount;
+                avgHits += it->second.getHitCount();
 
             LOG_DBG("cache " << _cache.size() << " items total size " <<
                     _cacheSize << " current hits " << avgHits << ", total hit rate " <<
@@ -456,14 +483,14 @@ class PngCache
 
             for (auto it = _cache.begin(); it != _cache.end();)
             {
-                if ((_cacheSize > CacheSizeSoftLimit && it->second._hitCount == 0) ||
-                    (_cacheSize > CacheSizeHardLimit && it->second._hitCount > 0 && it->second._hitCount <= avgHits))
+                if ((_cacheSize > CacheSizeSoftLimit && it->second.getHitCount() == 0) ||
+                    (_cacheSize > CacheSizeHardLimit && it->second.getHitCount() > 0 && it->second.getHitCount() <= avgHits))
                 {
                     // Shrink cache when we exceed the size to maximize
                     // the chance of hitting these entries in the future.
-                    _cacheSize -= it->second._data->size();
+                    _cacheSize -= it->second.getData()->size();
 
-                    auto wIt = _wireToHash.find(it->second._wireId);
+                    auto wIt = _wireToHash.find(it->second.getWireId());
                     assert(wIt != _wireToHash.end());
                     _wireToHash.erase(wIt);
 
@@ -471,8 +498,8 @@ class PngCache
                 }
                 else
                 {
-                    if (it->second._hitCount > 0)
-                        it->second._hitCount--;
+                    if (it->second.getHitCount() > 0)
+                        it->second.decrementHitCount();
                     ++it;
                 }
             }
@@ -495,9 +522,9 @@ class PngCache
                 ++_cacheHits;
                 LOG_DBG("PNG cache with hash " << hash << " hit.");
                 output.insert(output.end(),
-                              it->second._data->begin(),
-                              it->second._data->end());
-                it->second._hitCount++;
+                              it->second.getData()->begin(),
+                              it->second.getData()->end());
+                it->second.incrementHitCount();
                 return true;
             }
         }
@@ -525,18 +552,18 @@ class PngCache
         CacheEntry newEntry(bufferWidth * bufferHeight * 1, wid);
         if (Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
                                       bufferWidth, bufferHeight,
-                                      *newEntry._data, mode))
+                                      *newEntry.getData(), mode))
         {
             if (hash)
             {
-                newEntry._data->shrink_to_fit();
+                newEntry.getData()->shrink_to_fit();
                 _cache.emplace(hash, newEntry);
-                _cacheSize += newEntry._data->size();
+                _cacheSize += newEntry.getData()->size();
             }
 
             output.insert(output.end(),
-                          newEntry._data->begin(),
-                          newEntry._data->end());
+                          newEntry.getData()->begin(),
+                          newEntry.getData()->end());
             balanceCache();
             return true;
         }
@@ -557,7 +584,7 @@ public:
             return 0;
         auto it = _cache.find(id);
         if (it != _cache.end())
-            wid = it->second._wireId;
+            wid = it->second.getWireId();
         else
         {
             wid = createNewWireId();
