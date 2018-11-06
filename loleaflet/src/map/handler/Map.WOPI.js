@@ -278,6 +278,14 @@ L.Map.WOPI = L.Handler.extend({
 				}
 			}
 		}
+		else if (msg.MessageId === 'Action_FollowUser') {
+			if (msg.Values) {
+				this._map._setFollowing(msg.Values.Follow, msg.Values.ViewId);
+			}
+			else {
+				this._map._setFollowing(true, null);
+			}
+		}
 		else if (msg.MessageId === 'Host_VersionRestore') {
 			if (msg.Values.Status === 'Pre_Restore') {
 				this._map._socket.sendMessage('versionrestore prerestore');
