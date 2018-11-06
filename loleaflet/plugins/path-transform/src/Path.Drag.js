@@ -209,7 +209,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			var contains = this._path._containsPoint;
 			this._path._containsPoint = L.Util.falseFn;
 			L.Util.requestAnimFrame(function() {
-				L.DomEvent.skipped({ type: 'click' });
+				L.DomEvent._skipped({ type: 'click' });
 				this._path._containsPoint = contains;
 			}, this);
 		}
