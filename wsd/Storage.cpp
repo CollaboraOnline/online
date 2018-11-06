@@ -269,7 +269,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     _fileInfo = FileInfo({filename, "localhost", lastModified, size});
 
     // Set automatic userid and username
-    return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), "Local Host #" + std::to_string(LastLocalStorageId++)}));
+    return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), "LocalHost#" + std::to_string(LastLocalStorageId++)}));
 }
 
 std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
