@@ -120,11 +120,7 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 });
 
 L.Rectangle.addInitHook(function () {
-	if (L.Edit.Rectangle) {
+	if (this.options.editable) {
 		this.editing = new L.Edit.Rectangle(this);
-
-		if (this.options.editable) {
-			this.editing.enable();
-		}
 	}
 });
