@@ -55,7 +55,7 @@ static LOOLWSD *loolwsd = nullptr;
                            loolwsd = new LOOLWSD();
                            loolwsd->run(1, argv);
                            delete loolwsd;
-                           NSLog(@"One run of LOOLWSD completed");
+                           LOG_TRC("One run of LOOLWSD completed");
                        }
                    });
     return YES;
@@ -94,7 +94,7 @@ static LOOLWSD *loolwsd = nullptr;
     [documentBrowserViewController revealDocumentAtURL:inputURL importIfNeeded:YES completion:^(NSURL * _Nullable revealedDocumentURL, NSError * _Nullable error) {
         if (error) {
             // Handle the error appropriately
-            NSLog(@"Failed to reveal the document at URL %@ with error: '%@'", inputURL, error);
+            LOG_ERR("Failed to reveal the document at URL " << [[inputURL description] UTF8String] << " with error: " << [[error description] UTF8String]);
             return;
         }
 

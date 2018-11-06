@@ -15,6 +15,7 @@
 
 #import "ios.h"
 #import "FakeSocket.hpp"
+#import "Log.hpp"
 #import "Util.hpp"
 
 #import "DocumentViewController.h"
@@ -75,52 +76,52 @@
 - (IBAction)dismissDocumentViewController {
     [self dismissViewControllerAnimated:YES completion:^ {
             [self.document closeWithCompletionHandler:^(BOOL success){
-                    NSLog(@"close completion handler gets %s", (success?"YES":"NO"));
+                    LOG_TRC("close completion handler gets " << (success?"YES":"NO"));
                     }];
     }];
 }
 
 - (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    NSLog(@"didCommitNavigation: %@", navigation);
+    LOG_TRC("didCommitNavigation: " << [[navigation description] UTF8String]);
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"didFailNavigation: %@", navigation);
+    LOG_TRC("didFailNavigation: " << [[navigation description] UTF8String]);
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"didFailProvisionalNavigation: %@", navigation);
+    LOG_TRC("didFailProvisionalNavigation: " << [[navigation description] UTF8String]);
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    NSLog(@"didFinishNavigation: %@", navigation);
+    LOG_TRC("didFinishNavigation: " << [[navigation description] UTF8String]);
 }
 
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
-    NSLog(@"didReceiveServerRedirectForProvisionalNavigation: %@", navigation);
+    LOG_TRC("didReceiveServerRedirectForProvisionalNavigation: " << [[navigation description] UTF8String]);
 }
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
-    NSLog(@"didStartProvisionalNavigation: %@", navigation);
+    LOG_TRC("didStartProvisionalNavigation: " << [[navigation description] UTF8String]);
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSLog(@"decidePolicyForNavigationAction: %@", navigationAction);
+    LOG_TRC("decidePolicyForNavigationAction: " << [[navigationAction description] UTF8String]);
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    NSLog(@"decidePolicyForNavigationResponse: %@", navigationResponse);
+    LOG_TRC("decidePolicyForNavigationResponse: " << [[navigationResponse description] UTF8String]);
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
 - (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
-    NSLog(@"createWebViewWithConfiguration");
+    LOG_TRC("createWebViewWithConfiguration");
     return webView;
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
-    NSLog(@"runJavaScriptAlertPanelWithMessage: %@", message);
+    LOG_TRC("runJavaScriptAlertPanelWithMessage: " << [message UTF8String]);
     //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
     //                                                    message:message
     //                                                   delegate:nil
@@ -131,12 +132,12 @@
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
-    NSLog(@"runJavaScriptConfirmPanelWithMessage: %@", message);
+    LOG_TRC("runJavaScriptConfirmPanelWithMessage: " << [message UTF8String]);
     completionHandler(YES);
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString *result))completionHandler {
-    NSLog(@"runJavaScriptTextInputPanelWithPrompt: %@", prompt);
+    LOG_TRC("runJavaScriptTextInputPanelWithPrompt: " << [prompt UTF8String]);
     completionHandler(@"Something happened.");
 }
 
@@ -145,11 +146,11 @@
     struct pollfd p;
 
     if ([message.name isEqualToString:@"error"]) {
-        NSLog(@"Error from WebView: %@", message.body);
+        LOG_ERR("Error from WebView: " << [message.body UTF8String]);
     } else if ([message.name isEqualToString:@"debug"]) {
-        NSLog(@"===== %@", message.body);
+        LOG_DBG([message.body UTF8String]);
     } else if ([message.name isEqualToString:@"lool"]) {
-        NSLog(@"===== To Online: %@", message.body);
+        LOG_TRC("To Online: " << [message.body UTF8String]);
 
         if ([message.body isEqualToString:@"HULLO"]) {
             // Now we know that the JS has started completely
@@ -214,7 +215,7 @@
 
             return;
         } else if ([message.body isEqualToString:@"BYE"]) {
-            NSLog(@"document window terminating on JavaScript side. Closing our end of the socket.");
+            LOG_TRC("Document window terminating on JavaScript side. Closing our end of the socket.");
 
             // Close one end of the socket pair, that will wake up the forwarding thread above
             fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
@@ -229,7 +230,7 @@
         fakeSocketPoll(&p, 1, -1);
         fakeSocketWrite(self.document->fakeClientFd, buf, strlen(buf));
     } else {
-        NSLog(@"Unrecognized kind of message received from WebView: %@: %@", message.name, message.body);
+        LOG_ERR("Unrecognized kind of message received from WebView: " << [message.name UTF8String] << ":" << [message.body UTF8String]);
     }
 }
 

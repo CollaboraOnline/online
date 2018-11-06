@@ -47,7 +47,7 @@
 }
 
 - (void)send2JS:(const char *)buffer length:(int)length {
-    NSLog(@"send to JS: %s", LOOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
+    LOG_TRC("To JS: " << LOOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
     NSString *js;
 
@@ -65,14 +65,14 @@
         js = [js stringByAppendingString:@"')});"];
         NSString *subjs = [js substringToIndex:std::min(40ul, js.length)];
 
-        // NSLog(@"Evaluating JavaScript: %@ (length %lu)", subjs, (unsigned long)js.length);
+        // LOG_TRC("Evaluating JavaScript: " << [subjs UTF8String]);
 
         dispatch_async(dispatch_get_main_queue(), ^{
                 [self.viewController.webView evaluateJavaScript:js
                                               completionHandler:^(id _Nullable obj, NSError * _Nullable error)
                      {
                          if (error) {
-                             NSLog(@"error after %@ (length %lu): %@", subjs, (unsigned long)js.length, error.localizedDescription);
+                             LOG_ERR("Error after " << [subjs UTF8String] << ": " << [error.localizedDescription UTF8String]);
                          }
                      }
                  ];
@@ -96,14 +96,14 @@
         js = [js stringByAppendingString:[NSString stringWithUTF8String:data.data()]];
         js = [js stringByAppendingString:@"'});"];
 
-        // NSLog(@"Evaluating JavaScript: %@", js);
+        // LOG_TRC("Evaluating JavaScript: " << [js UTF8String]);
 
         dispatch_async(dispatch_get_main_queue(), ^{
                 [self.viewController.webView evaluateJavaScript:js
                                               completionHandler:^(id _Nullable obj, NSError * _Nullable error)
                      {
                          if (error) {
-                             NSLog(@"error after %@: %@: %@", js, error.localizedDescription, error.userInfo[@"WKJavaScriptExceptionMessage"]);
+                             LOG_ERR("Error after " << [js UTF8String] << ": " << [error.userInfo[@"WKJavaScriptExceptionMessage"] UTF8String]);
                          }
                      }
                  ];
