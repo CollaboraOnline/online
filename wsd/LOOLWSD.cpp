@@ -1330,11 +1330,9 @@ void LOOLWSD::handleOption(const std::string& optionName,
     if (masterPort)
         MasterPortNumber = std::stoi(masterPort);
 
-#ifndef MOBILEAPP
     static const char* latencyMs = std::getenv("LOOL_DELAY_SOCKET_MS");
     if (latencyMs)
         SimulatedLatencyMs = std::stoi(latencyMs);
-#endif
 #endif
 
 #ifdef FUZZER
