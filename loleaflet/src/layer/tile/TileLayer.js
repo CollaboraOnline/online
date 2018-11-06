@@ -761,7 +761,7 @@ L.TileLayer = L.GridLayer.extend({
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
-			this._map.fire('setFollowOff');
+			this._map._setFollowing(false, null);
 		}
 		this._map.lastActionByUser = false;
 		this._onUpdateCursor(this._viewId === modifierViewId);

@@ -2085,30 +2085,19 @@ function onUpdatePermission(e) {
 	}
 }
 
-function goToViewId(id) {
-	var docLayer = map._docLayer;
 
-	if (id === -1)
-		return;
-
-	if (map.getDocType() === 'spreadsheet') {
-		docLayer.goToCellViewCursor(id);
-	} else if (map.getDocType() === 'text' || map.getDocType() === 'presentation') {
-		docLayer.goToViewCursor(id);
-	}
-}
 
 function onUseritemClicked(e) { // eslint-disable-line no-unused-vars
 	var docLayer = map._docLayer;
 	var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
 
-	goToViewId(viewId);
+	map._goToViewId(viewId);
 
 	if (viewId === map._docLayer._viewId) {
 		$('#tb_toolbar-down_item_userlist').w2overlay('');
 		return;
 	} else if (docLayer._followThis !== -1) {
-		map.fire('setFollowOff');
+		map._setFollowing(false, null);
 	}
 
 	docLayer._followThis = viewId;
@@ -2129,7 +2118,7 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 		docLayer._followUser = false;
 		docLayer._followEditor = true;
 		if (editorId !== -1 && editorId !== docLayer.viewId) {
-			goToViewId(editorId);
+			map._goToViewId(editorId);
 			docLayer._followThis = editorId;
 		}
 
@@ -2157,15 +2146,6 @@ function selectUser(viewId) {
 
 	userlistItem.html = $(userlistItem.html).find('#user-' + viewId).addClass('selected-user').parent().parent().parent()[0].outerHTML;
 	$('#tb_toolbar-down_item_userlist').w2overlay('');
-}
-
-function deselectUser(viewId) {
-	var userlistItem = w2ui['toolbar-down'].get('userlist');
-	if (userlistItem === null) {
-		return;
-	}
-
-	userlistItem.html = $(userlistItem.html).find('#user-' + viewId).removeClass('selected-user').parent().parent().parent()[0].outerHTML;
 }
 
 function getUserItem(viewId, userName, extraInfo, color) {
@@ -2279,17 +2259,6 @@ function setupToolbar(e) {
 	map.on('updateEditorName', function(e) {
 		$('#currently-msg').show();
 		$('#current-editor').text(e.username);
-	});
-
-	map.on('setFollowOff', function() {
-		var docLayer = map._docLayer;
-		var viewId = docLayer._followThis;
-		if (viewId !== -1 && map._viewInfo[viewId]) {
-			deselectUser(viewId);
-		}
-		docLayer._followThis = -1;
-		docLayer._followUser = false;
-		docLayer._followEditor = false;
 	});
 
 	map.on('keydown', function (e) {

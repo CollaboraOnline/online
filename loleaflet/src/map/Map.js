@@ -1290,6 +1290,53 @@ L.Map = L.Evented.extend({
 		else {
 			$('.scroll-container').mCustomScrollbar('disable');
 		}
+	},
+
+	_goToViewId: function(id) {
+		if (id === -1)
+			return;
+
+		if (this.getDocType() === 'spreadsheet') {
+			this._docLayer.goToCellViewCursor(id);
+		} else if (this.getDocType() === 'text' || this.getDocType() === 'presentation') {
+			this._docLayer.goToViewCursor(id);
+		}
+	},
+
+	_setFollowing: function(followingState, viewId) {
+		var userDefined = viewId !== null && viewId !== undefined;
+		var followDefined = followingState !== null && followingState !== undefined;
+
+		var followEditor = true;
+		var followUser = false;
+
+		if (userDefined && viewId !== -1 && viewId !== this._docLayer.viewId) {
+			followUser = true;
+			followEditor = false;
+		}
+
+		if (followDefined && followingState === false) {
+			followEditor = false;
+			followUser = false;
+		}
+
+		this._docLayer._followUser = followUser;
+		this._docLayer._followEditor = followEditor;
+
+		if (followUser) {
+			this._goToViewId(viewId);
+			this._docLayer._followThis = viewId;
+		}
+		else if (followEditor) {
+			var editorId = this._docLayer._editorId;
+			if (editorId !== -1 && editorId !== this._docLayer.viewId) {
+				this._goToViewId(editorId);
+				this._docLayer._followThis = editorId;
+			}
+		}
+		else {
+			this._docLayer._followThis = -1;
+		}
 	}
 });
 
