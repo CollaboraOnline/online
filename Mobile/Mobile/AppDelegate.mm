@@ -9,6 +9,7 @@
 #import "config.h"
 
 #import <cassert>
+#import <cstdlib>
 #import <cstring>
 
 #import "AppDelegate.h"
@@ -32,7 +33,11 @@ static LOOLWSD *loolwsd = nullptr;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    Log::initialize("Mobile", "trace", false, false, {});
+    auto trace = std::getenv("LOOL_LOGLEVEL");
+    if (!trace)
+        trace = strdup("warning");
+
+    Log::initialize("Mobile", trace, false, false, {});
     Util::setThreadName("main");
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
