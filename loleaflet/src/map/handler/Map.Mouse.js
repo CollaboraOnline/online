@@ -59,14 +59,7 @@ L.Map.Mouse = L.Handler.extend({
 						this._prevMousePos = e.latlng;
 					}
 					else {
-						// we have a graphic selection and the user started to drag it
-						var delta = L.latLng(e.latlng.lat - this._prevMousePos.lat, e.latlng.lng - this._prevMousePos.lng);
 						this._prevMousePos = e.latlng;
-						var oldSelectionCenter = docLayer._graphicMarker.getBounds().getCenter();
-						var newSelectionCenter = L.latLng(oldSelectionCenter.lat + delta.lat, oldSelectionCenter.lng + delta.lng);
-						if (docLayer._graphicMarker.editing) {
-							docLayer._graphicMarker.editing._move(newSelectionCenter);
-						}
 					}
 				}
 				else if (e.type === 'mouseup') {

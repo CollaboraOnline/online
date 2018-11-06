@@ -1750,16 +1750,16 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update dragged graphics selection resize.
 	_onGraphicEdit: function (e) {
-		if (!e.handle) { return; }
+		if (!e.pos) { return; }
 
-		var aPos = this._latLngToTwips(e.handle.getLatLng());
-		if (e.type === 'editstart') {
+		var aPos = this._latLngToTwips(e.pos);
+		if (e.type === 'scalestart') {
 			this._graphicMarker.isDragged = true;
 			this._postSelectGraphicEvent('start',
 						Math.min(aPos.x, this._graphicSelectionTwips.max.x - 1),
 						Math.min(aPos.y, this._graphicSelectionTwips.max.y - 1));
 		}
-		else if (e.type === 'editend') {
+		else if (e.type == 'scaleend') {
 			this._postSelectGraphicEvent('end', aPos.x, aPos.y);
 			this._graphicMarker.isDragged = false;
 		}
@@ -1819,7 +1819,10 @@ L.TileLayer = L.GridLayer.extend({
 	_onUpdateGraphicSelection: function () {
 		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
 			if (this._graphicMarker) {
-				this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
+				this._graphicMarker.addEventParent(this._map);
+				this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
+				this._graphicMarker.dragging.disable();
+				this._graphicMarker.transform.disable();
 				this._map.removeLayer(this._graphicMarker);
 			}
 
@@ -1828,19 +1831,27 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			this._graphicMarker = L.rectangle(this._graphicSelection, {
-				pointerEvents: 'none',
-				fill: false});
+				draggable: true,
+				transform: true,
+				stroke: false,
+				fillOpacity: 0,
+				fill: true});
 			if (!this._graphicMarker) {
 				this._map.fire('error', {msg: 'Graphic marker initialization', cmd: 'marker', kind: 'failed', id: 1});
 				return;
 			}
 
-			this._graphicMarker.editing.enable();
-			this._graphicMarker.on('editstart editend', this._onGraphicEdit, this);
+			this._graphicMarker.addEventParent(this._map);
+			this._graphicMarker.on('scalestart scaleend', this._onGraphicEdit, this);
 			this._map.addLayer(this._graphicMarker);
+			this._graphicMarker.dragging.enable();
+			this._graphicMarker.transform.enable({uniformScaling: false});
 		}
 		else if (this._graphicMarker) {
-			this._graphicMarker.off('editstart editend', this._onGraphicEdit, this);
+			this._graphicMarker.removeEventParent(this._map);
+			this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
+			this._graphicMarker.dragging.disable();
+			this._graphicMarker.transform.disable();
 			this._map.removeLayer(this._graphicMarker);
 			this._graphicMarker.isDragged = false;
 		}
