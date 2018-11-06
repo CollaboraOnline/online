@@ -47,7 +47,7 @@ namespace LOKitHelper
     inline std::string kitCallbackTypeToString(const int type)
     {
         // Keep in the same order as in LibreOfficeKitEnums.h
-        switch (type)
+        switch (static_cast<LibreOfficeKitCallbackType>(type))
         {
         case LOK_CALLBACK_INVALIDATE_TILES:
             return "INVALIDATE_TILES";
@@ -109,6 +109,10 @@ namespace LOKitHelper
             return "VIEW_CURSOR_VISIBLE";
         case LOK_CALLBACK_VIEW_LOCK:
             return "VIEW_LOCK";
+        case LOK_CALLBACK_REDLINE_TABLE_SIZE_CHANGED:
+            return "REDLINE_TABLE_SIZE_CHANGED";
+        case LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED:
+            return "REDLINE_TABLE_ENTRY_MODIFIED";
         case LOK_CALLBACK_COMMENT:
             return "COMMENT";
         case LOK_CALLBACK_INVALIDATE_HEADER:
@@ -123,6 +127,10 @@ namespace LOKitHelper
             return "VALIDITY_LIST_BUTTON";
         case LOK_CALLBACK_CLIPBOARD_CHANGED:
             return "CLIPBOARD_CHANGED";
+        case LOK_CALLBACK_CONTEXT_CHANGED:
+            return "CONTEXT_CHANGED";
+        case LOK_CALLBACK_SIGNATURE_STATUS:
+            return "SIGNATURE_STATUS";
        }
 
         return std::to_string(type);

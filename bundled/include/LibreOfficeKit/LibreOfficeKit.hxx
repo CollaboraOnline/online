@@ -164,16 +164,23 @@ public:
      * @param y y-coordinate from where the dialog should start painting
      * @param width The width of the dialog image to be painted
      * @param height The height of the dialog image to be painted
+     * @param dpiscale The dpi scale value used by the client.  Please note
+     *                 that the x, y, width, height are supposed to be the
+     *                 values with dpiscale applied (ie. dialog covering
+     *                 100x100 "normal" pixels with dpiscale '2' will have
+     *                 200x200 width x height), so that it is easy to compute
+     *                 the buffer sizes etc.
      */
     void paintWindow(unsigned nWindowId,
                      unsigned char* pBuffer,
                      const int x,
                      const int y,
                      const int width,
-                     const int height)
+                     const int height,
+                     const double dpiscale = 1.0)
     {
-        return mpDoc->pClass->paintWindow(mpDoc, nWindowId, pBuffer,
-                                          x, y, width, height);
+        return mpDoc->pClass->paintWindowDPI(mpDoc, nWindowId, pBuffer,
+                                             x, y, width, height, dpiscale);
     }
 
     /**
@@ -582,13 +589,13 @@ public:
      *  Insert certificate (in binary form) to the certificate store.
      */
     bool insertCertificate(const unsigned char* pCertificateBinary,
-                           const int nCertificateBinarySize,
+                           const int pCertificateBinarySize,
                            const unsigned char* pPrivateKeyBinary,
                            const int nPrivateKeyBinarySize)
     {
         return mpDoc->pClass->insertCertificate(mpDoc,
-                        pCertificateBinary, nCertificateBinarySize,
-                        pPrivateKeyBinary, nPrivateKeyBinarySize);
+                                                pCertificateBinary, pCertificateBinarySize,
+                                                pPrivateKeyBinary, nPrivateKeyBinarySize);
     }
 
     /**
@@ -596,9 +603,10 @@ public:
      *
      */
     bool addCertificate(const unsigned char* pCertificateBinary,
-                        const int pCertificateBinarySize)
+                         const int pCertificateBinarySize)
     {
-        return mpDoc->pClass->addCertificate(mpDoc, pCertificateBinary, pCertificateBinarySize);
+        return mpDoc->pClass->addCertificate(mpDoc,
+                                             pCertificateBinary, pCertificateBinarySize);
     }
 
     /**

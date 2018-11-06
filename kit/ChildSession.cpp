@@ -1514,7 +1514,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         }
     }
 
-    switch (type)
+    switch (static_cast<LibreOfficeKitCallbackType>(type))
     {
     case LOK_CALLBACK_INVALIDATE_TILES:
         {
@@ -1703,11 +1703,24 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("clipboardchanged: " + selection);
         break;
     }
+    case LOK_CALLBACK_CONTEXT_CHANGED:
+        sendTextFrame("context: " + payload);
+        break;
     case LOK_CALLBACK_SIGNATURE_STATUS:
         sendTextFrame("signaturestatus: " + payload);
         break;
+
+    case LOK_CALLBACK_DOCUMENT_PASSWORD:
+    case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+        // these are not handled here.
+        break;
+
+#if !ENABLE_DEBUG
+    // we want a compilation-time failure in the debug builds; but ERR in the
+    // log in the release ones
     default:
         LOG_ERR("Unknown callback event (" << type << "): " << payload);
+#endif
     }
 }
 

@@ -483,6 +483,16 @@ versionrestore: <action>
      - prerestore_ack: The host can go ahead with restoring the document to an
        earlier revision.
 
+clipboardchanged: <selection>
+
+    Sent when the content of the internal clipboard has changed.
+
+context: <applicationId> <context>
+
+    Sent when the editing context changes in the application; like when the
+    user switches from editing a textframe to editing a graphic object, etc.
+    Can be used eg. for contextual change of the toolbars.
+
 signaturestatus: <sign status>
     Possible values:
         0xffff - Unknown
