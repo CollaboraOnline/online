@@ -275,8 +275,7 @@ public:
     virtual void postFork() {}
 
     /// Kit got a message
-    virtual bool filterKitMessage(const std::shared_ptr<LOOLWebSocket>& /* ws */,
-                                  std::string& /* message */)
+    virtual bool filterKitMessage(WebSocketHandler *, std::string &/* message */ )
     {
         return false;
     }

@@ -2109,12 +2109,8 @@ protected:
     {
         std::string message(data.data(), data.size());
 
-#if 0 // FIXME might be needed for unit tests #ifndef KIT_IN_PROCESS
-        if (UnitKit::get().filterKitMessage(ws, message))
-        {
+        if (UnitKit::get().filterKitMessage(this, message))
             return;
-        }
-#endif
 
         std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
         Log::StreamLogger logger = Log::debug();
@@ -2295,6 +2291,7 @@ void lokit_main(
         jailPath = Path::forDirectory(childRoot + "/" + jailId);
         LOG_INF("Jail path: " << jailPath.toString());
         File(jailPath).createDirectories();
+        chmod(jailPath.toString().c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
 
         if (bRunInsideJail)
         {

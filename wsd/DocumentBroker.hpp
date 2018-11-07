@@ -79,10 +79,11 @@ public:
 
     ~ChildProcess()
     {
+        LOG_DBG("~ChildProcess dtor [" << _pid << "].");
+
         if (_pid <= 0)
             return;
 
-        LOG_DBG("~ChildProcess dtor [" << _pid << "].");
         terminate();
 
         // No need for the socket anymore.

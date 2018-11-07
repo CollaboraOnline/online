@@ -253,6 +253,9 @@ void DocumentBroker::pollThread()
 #endif
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
+    int limit_load_secs = LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
+    auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
+
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
     {
@@ -261,6 +264,15 @@ void DocumentBroker::pollThread()
         const auto now = std::chrono::steady_clock::now();
 
 #ifndef MOBILEAPP
+        if (!_isLoaded && (limit_load_secs > 0) && (now > loadDeadline))
+        {
+            // Brutal but effective.
+            if (_childProcess)
+                _childProcess->terminate();
+            stop("Load timed out");
+            continue;
+        }
+
         if (std::chrono::duration_cast<std::chrono::milliseconds>
                     (now - lastBWUpdateTime).count() >= 5 * 1000)
         {
@@ -1852,6 +1864,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     uint64_t sent, recv;
     getIOStats(sent, recv);
 
+    auto now = std::chrono::steady_clock::now();
+
     os << " Broker: " << LOOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
     if (_markToDestroy)
         os << " *** Marked to destroy ***";
@@ -1860,7 +1874,9 @@ void DocumentBroker::dumpState(std::ostream& os)
     if (_isLoaded)
         os << "\n  loaded in: " << _loadDuration.count() << "ms";
     else
-        os << "\n  still loading...";
+        os << "\n  still loading... " <<
+            std::chrono::duration_cast<std::chrono::seconds>(
+                now - _threadStart).count() << "s";
     os << "\n  sent: " << sent;
     os << "\n  recv: " << recv;
     os << "\n  modified?: " << _isModified;
@@ -1871,9 +1887,9 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
-    const std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::time_point_cast<std::chrono::seconds>(
-        std::chrono::system_clock::now()
-        + (_lastSaveTime - std::chrono::steady_clock::now())));
+    const std::time_t t = std::chrono::system_clock::to_time_t(
+        std::chrono::time_point_cast<std::chrono::seconds>(
+            std::chrono::system_clock::now() + (_lastSaveTime - now)));
     os << "\n  last saved: " << std::ctime(&t);
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
