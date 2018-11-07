@@ -105,7 +105,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/share/doc/loolwsd/README
 /usr/share/doc/loolwsd/README.vars
 /usr/share/doc/loolwsd/protocol.txt
-/usr/share/doc/loolwsd/reference.txt
+/usr/share/doc/loolwsd/reference.md
 /usr/share/man/man1/loolwsd.1
 /usr/share/man/man1/loolforkit.1
 /usr/share/man/man1/loolconvert.1

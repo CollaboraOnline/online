@@ -129,10 +129,10 @@ src/control/Toolbar.js . Any new test file needs also to be added in spec/leafle
 API & events
 ------------
 
-######################################################################
-# See /loleaflet/reference.html for a better formated documentation. #
-# See /wsd/reference.txt for the HTTP API documentation.         #
-######################################################################
+#######################################################################
+# See /loleaflet/reference.html for a better formatted documentation. #
+# See /wsd/reference.md for the HTTP API documentation.               #
+#######################################################################
 
 Search:
     - API:
