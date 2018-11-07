@@ -248,12 +248,24 @@ void DocumentBroker::pollThread()
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
+    int limit_load_secs = LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
+    auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
+
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
     {
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
         const auto now = std::chrono::steady_clock::now();
+
+        if (!_isLoaded && (limit_load_secs > 0) && (now > loadDeadline))
+        {
+            // Brutal but effective.
+            if (_childProcess)
+                _childProcess->terminate();
+            stop("Load timed out");
+            continue;
+        }
 
         if (std::chrono::duration_cast<std::chrono::milliseconds>
                     (now - lastBWUpdateTime).count() >= 5 * 1000)
@@ -1821,6 +1833,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     uint64_t sent, recv;
     getIOStats(sent, recv);
 
+    auto now = std::chrono::steady_clock::now();
+
     os << " Broker: " << LOOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
     if (_markToDestroy)
         os << " *** Marked to destroy ***";
@@ -1829,7 +1843,9 @@ void DocumentBroker::dumpState(std::ostream& os)
     if (_isLoaded)
         os << "\n  loaded in: " << _loadDuration.count() << "ms";
     else
-        os << "\n  still loading...";
+        os << "\n  still loading... " <<
+            std::chrono::duration_cast<std::chrono::seconds>(
+                now - _threadStart).count() << "s";
     os << "\n  sent: " << sent;
     os << "\n  recv: " << recv;
     os << "\n  modified?: " << _isModified;
