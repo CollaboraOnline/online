@@ -256,9 +256,9 @@ void DocumentBroker::pollThread()
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
     {
-        const auto now = std::chrono::steady_clock::now();
-
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
+
+        const auto now = std::chrono::steady_clock::now();
 
 #ifndef MOBILEAPP
         if (std::chrono::duration_cast<std::chrono::milliseconds>
