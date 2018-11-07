@@ -1179,6 +1179,12 @@ public:
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
                 " took " << (elapsed/1000.) << " ms (including the paintTile).");
 
+        if (tileIndex == 0)
+        {
+            LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
+            return;
+        }
+
         const auto tileMsg = ADD_DEBUG_RENDERID(tileCombined.serialize("tilecombine:")) + "\n";
         LOG_TRC("Sending back painted tiles for " << tileMsg);
 
