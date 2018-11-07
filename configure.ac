@@ -434,7 +434,7 @@ AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 
 mobile_app=
 AC_MSG_CHECKING([Is this a mobile app])
-if test "$enable_gtkapp" != "no" -o "$enable_iosapp" != "no"; then
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes"; then
      AC_MSG_RESULT([Yes])
      mobile_app=true;
 else
