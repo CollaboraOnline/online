@@ -270,7 +270,17 @@ L.Map = L.Evented.extend({
 			// we want it to be glued to the row/column headers instead of being centered
 			this._docLayer._checkSpreadSheetBounds(zoom);
 		}
-		return this.setView(this.getCenter(), zoom, {zoom: options});
+		var curCenter = this.getCenter();
+		if (this._docLayer && this._docLayer._visibleCursor && this.getBounds().contains(this._docLayer._visibleCursor.getCenter())) {
+			// Calculate new center after zoom. The intent is that the caret
+			// position stays the same.
+			var zoomScale = 1.0 / this.getZoomScale(zoom, this._zoom);
+			var caretPos = this._docLayer._visibleCursor.getCenter();
+			var newCenter = new L.LatLng(curCenter.lat + (caretPos.lat - curCenter.lat) * (1.0 - zoomScale),
+						     curCenter.lng + (caretPos.lng - curCenter.lng) * (1.0 - zoomScale));
+			return this.setView(newCenter, zoom, {zoom: options});
+		}
+		return this.setView(curCenter, zoom, {zoom: options});
 	},
 
 	zoomIn: function (delta, options) {

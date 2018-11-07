@@ -13526,6 +13526,9 @@ var w2prompt = function (label, title, callBack) {
                 // event before
                 var edata = this.trigger({ phase: 'before', type: 'click', target: (id != null ? id : this.name),
                     item: it, object: it, originalEvent: event });
+                if (tmp[0] === 'zoomin' || tmp[0] === 'zoomout') {
+                    return;
+                }
                 if (edata.isCancelled === true) return;
 
                 var btn = '#tb_'+ this.name +'_item_'+ w2utils.escapeId(it.id) +' table.w2ui-button';

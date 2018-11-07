@@ -82,7 +82,9 @@ function onClick(e, id, item, subItem) {
 		throw new Error('unknown id: ' + id);
 	}
 	var docLayer = map._docLayer;
-	map.focus();
+	if (id !== 'zoomin' && id !== 'zoomout') {
+		map.focus();
+	}
 	if (item.disabled) {
 		return;
 	}
