@@ -126,9 +126,9 @@ public:
     /// Create socket of the given type.
     static int createSocket(Type type);
 
-    void setClientAddress(const std::string& clientAddress)
+    void setClientAddress(const std::string& address)
     {
-        _clientAddress = clientAddress;
+        _clientAddress = address;
     }
 
     const std::string& clientAddress() const
