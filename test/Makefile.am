@@ -13,6 +13,7 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
 noinst_LTLIBRARIES = \
+	unit-convert.la \
 	unit-timeout.la unit-prefork.la \
 	unit-storage.la unit-client.la \
 	unit-admin.la unit-tilecache.la \
@@ -83,6 +84,7 @@ unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
 unit_client_la_SOURCES = UnitClient.cpp ${test_all_source}
 unit_client_la_LIBADD = $(CPPUNIT_LIBS)
+unit_convert_la_SOURCES = UnitConvert.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
@@ -112,7 +114,7 @@ check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
-TESTS = unit-prefork.la unit-tilecache.la unit-timeout.la \
+TESTS = unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
         unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
         unit-wopi-documentconflict.la

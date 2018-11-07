@@ -520,6 +520,8 @@ public:
         Path tempPath = _convertTo? Path::forDirectory(Poco::TemporaryFile::tempName("/tmp/convert-to") + "/") :
                                     Path::forDirectory(Poco::TemporaryFile::tempName() + "/");
         File(tempPath).createDirectories();
+        chmod(tempPath.toString().c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
+
         // Prevent user inputting anything funny here.
         // A "filename" should always be a filename, not a path
         const Path filenameParam(params.get("filename"));
@@ -709,6 +711,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.idlesave_duration_secs", "30" },
             { "per_document.limit_file_size_mb", "0" },
             { "per_document.limit_num_open_files", "0" },
+            { "per_document.limit_load_secs", "100" },
             { "per_document.limit_stack_mem_kb", "8000" },
             { "per_document.limit_virt_mem_mb", "0" },
             { "per_document.max_concurrency", "4" },
@@ -2139,7 +2142,6 @@ private:
             if (!allowPostFrom(socket->clientAddress()))
             {
                 LOG_ERR("client address DENY: " << socket->clientAddress().c_str());
-
                 std::ostringstream oss;
                 oss << "HTTP/1.1 403\r\n"
                     << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
@@ -2156,6 +2158,7 @@ private:
                 format = tokens[3];
 
             bool sent = false;
+            LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
             if (!fromPath.empty())
             {
                 if (!format.empty())
