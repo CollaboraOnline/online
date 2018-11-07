@@ -34,6 +34,47 @@ class DeltaGenerator {
     };
 
     struct DeltaData {
+        void setWid(TileWireId wid)
+        {
+            _wid = wid;
+        }
+
+        TileWireId getWid() const
+        {
+            return _wid;
+        }
+
+        void setWidth(int width)
+        {
+            _width = width;
+        }
+
+        int getWidth() const
+        {
+            return _width;
+        }
+
+        void setHeight(int height)
+        {
+            _height = height;
+        }
+
+        int getHeight() const
+        {
+            return _height;
+        }
+
+        const std::vector<DeltaBitmapRow>& getRows() const
+        {
+            return _rows;
+        }
+
+        std::vector<DeltaBitmapRow>& getRows()
+        {
+            return _rows;
+        }
+
+    private:
         TileWireId _wid;
         int _width;
         int _height;
@@ -47,36 +88,36 @@ class DeltaGenerator {
         std::vector<char>& output)
     {
         // TODO: should we split and compress alpha separately ?
-        if (prev._width != cur._width || prev._height != cur._height)
+        if (prev.getWidth() != cur.getWidth() || prev.getHeight() != cur.getHeight())
         {
-            LOG_ERR("mis-sized delta: " << prev._width << "x" << prev._height << " vs "
-                    << cur._width << "x" << cur._height);
+            LOG_ERR("mis-sized delta: " << prev.getWidth() << "x" << prev.getHeight() << " vs "
+                    << cur.getWidth() << "x" << cur.getHeight());
             return false;
         }
 
         output.push_back('D');
-        LOG_TRC("building delta of a " << cur._width << "x" << cur._height << " bitmap");
+        LOG_TRC("building delta of a " << cur.getWidth() << "x" << cur.getHeight() << " bitmap");
 
         // row move/copy src/dest is a byte.
-        assert (prev._height <= 256);
+        assert (prev.getHeight() <= 256);
         // column position is a byte.
-        assert (prev._width <= 256);
+        assert (prev.getWidth() <= 256);
 
         // How do the rows look against each other ?
         size_t lastMatchOffset = 0;
         size_t lastCopy = 0;
-        for (int y = 0; y < prev._height; ++y)
+        for (int y = 0; y < prev.getHeight(); ++y)
         {
             // Life is good where rows match:
-            if (prev._rows[y].identical(cur._rows[y]))
+            if (prev.getRows()[y].identical(cur.getRows()[y]))
                 continue;
 
             // Hunt for other rows
             bool matched = false;
-            for (int yn = 0; yn < prev._height && !matched; ++yn)
+            for (int yn = 0; yn < prev.getHeight() && !matched; ++yn)
             {
-                size_t match = (y + lastMatchOffset + yn) % prev._height;
-                if (prev._rows[match].identical(cur._rows[y]))
+                size_t match = (y + lastMatchOffset + yn) % prev.getHeight();
+                if (prev.getRows()[match].identical(cur.getRows()[y]))
                 {
                     // TODO: if offsets are >256 - use 16bits?
                     if (lastCopy > 0)
@@ -106,19 +147,19 @@ class DeltaGenerator {
                 continue;
 
             // Our row is just that different:
-            const DeltaBitmapRow &curRow = cur._rows[y];
-            const DeltaBitmapRow &prevRow = prev._rows[y];
-            for (int x = 0; x < prev._width;)
+            const DeltaBitmapRow &curRow = cur.getRows()[y];
+            const DeltaBitmapRow &prevRow = prev.getRows()[y];
+            for (int x = 0; x < prev.getWidth();)
             {
                 int same;
-                for (same = 0; same + x < prev._width &&
+                for (same = 0; same + x < prev.getWidth() &&
                          prevRow._pixels[x+same] == curRow._pixels[x+same];)
                     ++same;
 
                 x += same;
 
                 int diff;
-                for (diff = 0; diff + x < prev._width &&
+                for (diff = 0; diff + x < prev.getWidth() &&
                          (prevRow._pixels[x+diff] == curRow._pixels[x+diff] || diff < 2) &&
                          diff < 254;)
                     ++diff;
@@ -149,7 +190,7 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight)
     {
         auto data = std::make_shared<DeltaData>();
-        data->_wid = wid;
+        data->setWid(wid);
 
         assert (startX + width <= (size_t)bufferWidth);
         assert (startY + height <= (size_t)bufferHeight);
@@ -160,12 +201,12 @@ class DeltaGenerator {
                 << (width * height * 4) << " width " << width
                 << " height " << height);
 
-        data->_width = width;
-        data->_height = height;
-        data->_rows.resize(height);
+        data->setWidth(width);
+        data->setHeight(height);
+        data->getRows().resize(height);
         for (int y = 0; y < height; ++y)
         {
-            DeltaBitmapRow &row = data->_rows[y];
+            DeltaBitmapRow &row = data->getRows()[y];
             size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
             int32_t *src = reinterpret_cast<int32_t *>(pixmap + position);
 
@@ -209,7 +250,7 @@ class DeltaGenerator {
 
         for (auto &old : _deltaEntries)
         {
-            if (oldWid == old->_wid)
+            if (oldWid == old->getWid())
                 return makeDelta(*old, *update, output);
         }
         return false;
