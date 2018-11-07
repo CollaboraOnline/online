@@ -220,7 +220,8 @@ L.Map.WOPI = L.Handler.extend({
 					UserName: this._map._viewInfo[viewInfoIdx].username,
 					UserId: this._map._viewInfo[viewInfoIdx].userid,
 					UserExtraInfo: this._map._viewInfo[viewInfoIdx].userextrainfo,
-					Color: this._map._viewInfo[viewInfoIdx].color
+					Color: this._map._viewInfo[viewInfoIdx].color,
+					ReadOnly: this._map._viewInfo[viewInfoIdx].readonly
 				});
 			}
 
