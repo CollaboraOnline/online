@@ -330,7 +330,7 @@ L.AnnotationManager = L.Class.extend({
 		}
 	},
 
-	layout: function (zoom) {
+	doLayout: function (zoom) {
 		var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
 		var topRight = docRight.add(L.point(this.options.marginX, this.options.marginY));
 		var latlng, layoutBounds, point, idx;
@@ -414,6 +414,19 @@ L.AnnotationManager = L.Class.extend({
 				idx = idx + commentThread.length;
 			}
 		}
+	},
+
+	layout: function (zoom) {
+		if (zoom)
+			this.doLayout(zoom);
+		else if (!this._layoutTimer) {
+			var me = this;
+			me._layoutTimer = setTimeout(function() {
+				delete me._layoutTimer;
+				me.doLayout(zoom);
+			}, 250 /* ms */);
+		} // else - avoid excessive re-layout
+
 	},
 
 	add: function (comment) {
