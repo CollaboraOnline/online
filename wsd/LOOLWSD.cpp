@@ -2005,6 +2005,20 @@ private:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
 #ifndef MOBILEAPP
+        if (socket->sniffSSL())
+        {
+            LOG_ERR("Looks like SSL/TLS traffic on plain http port");
+            std::ostringstream oss;
+            oss << "HTTP/1.1 400\r\n"
+                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n";
+            socket->send(oss.str());
+            socket->shutdown();
+            return;
+        }
+
         Poco::MemoryInputStream message(&socket->getInBuffer()[0],
                                         socket->getInBuffer().size());;
         Poco::Net::HTTPRequest request;

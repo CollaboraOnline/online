@@ -607,6 +607,18 @@ namespace HttpHelper
     }
 }
 
+bool StreamSocket::sniffSSL() const
+{
+    // Only sniffing the first bytes of a sockte.
+    if (_bytesSent > 0 || _bytesRecvd != _inBuffer.size() || _bytesRecvd < 6)
+        return false;
+
+    // 0x0000  16 03 01 02 00 01 00 01
+    return (_inBuffer[0] == 0x16 && // HANDSHAKE
+            _inBuffer[1] == 0x03 && // SSL 3.0 / TLS 1.x
+            _inBuffer[5] == 0x01);  // Handshake: CLIENT_HELLO
+}
+
 #endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

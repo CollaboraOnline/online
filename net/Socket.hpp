@@ -1073,6 +1073,9 @@ public:
         while (!_outBuffer.empty());
     }
 
+    /// Does it look like we have some TLS / SSL where we don't expect it ?
+    bool sniffSSL() const;
+
 protected:
     /// Override to handle reading of socket data differently.
     virtual int readData(char* buf, int len)
