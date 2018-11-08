@@ -17,6 +17,7 @@
     <num_prespawn_children desc="Number of child processes to keep started in advance and waiting for new clients." type="uint" default="1">1</num_prespawn_children>
     <per_document desc="Document-specific settings, including LO Core settings.">
         <max_concurrency desc="The maximum number of threads to use while processing a document." type="uint" default="4">4</max_concurrency>
+	<redlining_as_comments desc="If true show red-lines as comments" type="bool" default="true">true</redlining_as_comments>
         <idle_timeout_secs desc="The maximum number of seconds before unloading an idle document. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
         <!-- Idle save and auto save are checked every 30 seconds -->
         <idlesave_duration_secs desc="The number of idle seconds after which document, if modified, should be saved. Defaults to 30 seconds." type="uint" default="30">30</idlesave_duration_secs>

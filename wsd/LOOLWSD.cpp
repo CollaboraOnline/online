@@ -717,6 +717,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.limit_stack_mem_kb", "8000" },
             { "per_document.limit_virt_mem_mb", "0" },
             { "per_document.max_concurrency", "4" },
+            { "per_document.redlining_as_comments", "true" },
             { "per_view.idle_timeout_secs", "900" },
             { "per_view.out_of_focus_timeout_secs", "60" },
             { "security.capabilities", "true" },
@@ -940,6 +941,13 @@ void LOOLWSD::initialize(Application& self)
     if (maxConcurrency > 0)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
+    }
+
+    const auto redlining = getConfigValue<bool>(conf, "per_document.redlining_as_comments", true);
+    if (!redlining)
+    {
+        setenv("DISABLE_REDLINE", "1", 1);
+        LOG_INF("DISABLE_REDLINE set");
     }
 
     // Otherwise we profile the soft-device at jail creation time.
