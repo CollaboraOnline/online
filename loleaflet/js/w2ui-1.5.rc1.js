@@ -2094,7 +2094,7 @@ w2utils.event = {
                     hideTag();
                     return;
                 }
-                if (!instant) setTimeout(checkIfMoved, 100);
+                if (!instant) setTimeout(checkIfMoved, 200);
                 // monitor if moved
                 var posClass = 'w2ui-tag-right';
                 var posLeft  = parseInt(offset.left + el.offsetWidth + (options.left ? options.left : 0));
