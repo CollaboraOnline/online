@@ -40,7 +40,7 @@ L.PosAnimation = L.Class.extend({
 
 	_onStep: function () {
 		var stepPos = this._getPos();
-		if (!stepPos) {
+		if (!stepPos || (this._el._leaflet_pos.x == stepPos.x && this._el._leaflet_pos.y == stepPos.y)) {
 			this._onTransitionEnd();
 			return;
 		}
