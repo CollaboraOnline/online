@@ -58,7 +58,9 @@ L.Map.Tap = L.Handler.extend({
 
 		this._toolbar.remove();
 		// simulate long hold but setting a timeout
+		this._fireClick = true;
 		this._holdTimeout = setTimeout(L.bind(function () {
+			this._fireClick = false;
 			if (this._isTapValid()) {
 				this._fireDblClick = true;
 				this._onUp(e);
@@ -85,6 +87,12 @@ L.Map.Tap = L.Handler.extend({
 		var first = e.changedTouches[0];
 		this._simulateEvent('mouseup', first);
 
+		if (this._fireClick) {
+			this._fireClick = false;
+			if (this._isTapValid()) {
+				this._simulateEvent('click', first);
+			}
+		}
 		if (this._fireDblClick) {
 			this._simulateEvent('dblclick', first);
 			this._fireDblClick = false;

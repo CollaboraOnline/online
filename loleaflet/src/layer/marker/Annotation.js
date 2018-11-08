@@ -233,12 +233,21 @@ L.Annotation = L.Layer.extend({
 		this._nodeModify.style.display = 'none';
 		this._nodeReply.style.display = 'none';
 
-		var events = [click, 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup'];
+		var events = [click, 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
 		L.DomEvent.on(container, click, this._onMouseClick, this);
 		L.DomEvent.on(container, 'mouseleave', this._onMouseLeave, this);
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(container, events[it], L.DomEvent.stopPropagation, this);
 		}
+
+		L.DomEvent.on(container, 'touchstart',
+			function (e) {
+				if (e && e.touches.length > 1) {
+					L.DomEvent.preventDefault(e);
+				}
+			},
+			this);
+
 	},
 
 	_onCancelClick: function (e) {
