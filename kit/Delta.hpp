@@ -22,14 +22,26 @@
 class DeltaGenerator {
 
     struct DeltaBitmapRow {
+    private:
         uint64_t _crc;
         std::vector<uint32_t> _pixels;
 
+    public:
         bool identical(const DeltaBitmapRow &other) const
         {
             if (_crc != other._crc)
                 return false;
             return _pixels == other._pixels;
+        }
+
+        const std::vector<uint32_t>& getPixels() const
+        {
+            return _pixels;
+        }
+
+        std::vector<uint32_t>& getPixels()
+        {
+            return _pixels;
         }
     };
 
@@ -153,14 +165,14 @@ class DeltaGenerator {
             {
                 int same;
                 for (same = 0; same + x < prev.getWidth() &&
-                         prevRow._pixels[x+same] == curRow._pixels[x+same];)
+                         prevRow.getPixels()[x+same] == curRow.getPixels()[x+same];)
                     ++same;
 
                 x += same;
 
                 int diff;
                 for (diff = 0; diff + x < prev.getWidth() &&
-                         (prevRow._pixels[x+diff] == curRow._pixels[x+diff] || diff < 2) &&
+                         (prevRow.getPixels()[x+diff] == curRow.getPixels()[x+diff] || diff < 2) &&
                          diff < 254;)
                     ++diff;
                 if (diff > 0)
@@ -172,7 +184,7 @@ class DeltaGenerator {
 
                     size_t dest = output.size();
                     output.resize(dest + diff * 4);
-                    memcpy(&output[dest], &curRow._pixels[x], diff * 4);
+                    memcpy(&output[dest], &curRow.getPixels()[x], diff * 4);
 
                     LOG_TRC("different " << diff << "pixels");
                     x += diff;
@@ -212,11 +224,11 @@ class DeltaGenerator {
 
             // We get the hash ~for free as we copy - with a cheap hash.
             uint64_t crc = 0x7fffffff - 1;
-            row._pixels.resize(width);
+            row.getPixels().resize(width);
             for (int x = 0; x < width; ++x)
             {
                 crc = (crc << 7) + crc + src[x];
-                row._pixels[x] = src[x];
+                row.getPixels()[x] = src[x];
             }
         }
 
