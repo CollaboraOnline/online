@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-06 22:00+0100\n"
+"POT-Creation-Date: 2018-11-08 15:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -306,8 +306,8 @@ msgstr ""
 msgid "Insert shapes"
 msgstr ""
 
-#: js/toolbar.js:683 src/control/Control.Menubar.js:69
-msgid "Remote Image..."
+#: js/toolbar.js:682
+msgid "Insert Local Image"
 msgstr ""
 
 #: js/toolbar.js:730 js/toolbar.js:1209
@@ -626,6 +626,10 @@ msgstr ""
 #: src/control/Control.Menubar.js:36 src/control/Control.Menubar.js:246
 #: src/control/Control.Menubar.js:326
 msgid "Repair"
+msgstr ""
+
+#: src/control/Control.Menubar.js:68
+msgid "Local Image..."
 msgstr ""
 
 #: src/control/Control.Menubar.js:84 src/control/Control.Menubar.js:86

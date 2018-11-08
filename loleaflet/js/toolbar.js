@@ -679,8 +679,8 @@ function createToolbar() {
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
 			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true,
 				items: [
-					{id: 'localgraphic', text: _UNO('.uno:InsertGraphic', '', true), icon: 'insertgraphic'},
-					{id: 'remotegraphic', text: _('Remote Image...'), icon: 'insertgraphic'}
+					{id: 'localgraphic', text: _('Insert Local Image'), icon: 'insertgraphic'},
+					{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true), icon: 'insertgraphic'},
 				]},
 			{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'}
 		],
