@@ -70,6 +70,8 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
 #include <Poco/Net/SocketAddress.h>
+#include <Poco/Net/DNS.h>
+#include <Poco/Net/HostEntry.h>
 #include <Poco/Path.h>
 #include <Poco/Pipe.h>
 #include <Poco/Process.h>
@@ -1829,6 +1831,48 @@ public:
         }
         return hosts.match(address);
     }
+    bool allowConvertTo(const std::string &address, const Poco::Net::HTTPRequest& request, bool report = false)
+    {
+        std::string addressToCheck = address;
+        std::string hostToCheck = request.getHost();
+        bool allow = allowPostFrom(addressToCheck) || StorageBase::allowedWopiHost(hostToCheck);
+
+        if(!allow)
+        {
+            if(report)
+                LOG_ERR("Requesting address is denied: " << addressToCheck);
+            return false;
+        }
+
+        // Handle forwarded header and make sure all participating IPs are allowed
+        if(request.has("X-Forwarded-For"))
+        {
+            std::string fowardedData = request.get("X-Forwarded-For");
+            std::vector<std::string> tokens = LOOLProtocol::tokenize(fowardedData, ',');
+            for(std::string& token : tokens)
+            {
+                addressToCheck = Util::trim(token);
+                try
+                {
+                    hostToCheck = Poco::Net::DNS::resolve(addressToCheck).name();
+                    allow &= allowPostFrom(addressToCheck) || StorageBase::allowedWopiHost(hostToCheck);
+                }
+                catch (const Poco::Exception& exc)
+                {
+                    LOG_WRN("Poco::Net::DNS::resolve(\"" << addressToCheck << "\") failed: " << exc.displayText());
+                    // We can't find out the hostname, check the IP only
+                    allow &= allowPostFrom(addressToCheck);
+                }
+                if(!allow)
+                {
+                    if(report)
+                        LOG_ERR("Requesting address is denied: " << addressToCheck);
+                    return false;
+                }
+            }
+        }
+        return allow;
+    }
 
 private:
 
@@ -2053,7 +2097,7 @@ private:
     {
         LOG_DBG("Wopi capabilities request: " << request.getURI());
 
-        std::string capabilities = getCapabilitiesJson(request.getHost());
+        std::string capabilities = getCapabilitiesJson(request);
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
@@ -2139,9 +2183,8 @@ private:
 
             std::string format = (form.has("format") ? form.get("format") : "");
 
-            if (!allowPostFrom(socket->clientAddress()) && !StorageBase::allowedWopiHost(request.getHost()) )
+            if (!allowConvertTo(socket->clientAddress(), request, true))
             {
-                LOG_ERR("client address DENY: " << socket->clientAddress().c_str());
                 std::ostringstream oss;
                 oss << "HTTP/1.1 403\r\n"
                     << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
@@ -2567,7 +2610,7 @@ private:
     }
 
     /// Process the capabilities.json file and return as string.
-    std::string getCapabilitiesJson(const std::string& host)
+    std::string getCapabilitiesJson(const Poco::Net::HTTPRequest& request)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
@@ -2591,7 +2634,7 @@ private:
         Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
         Poco::JSON::Object::Ptr convert_to = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
 
-        Poco::Dynamic::Var available = allowPostFrom(socket->clientAddress()) || StorageBase::allowedWopiHost(host);
+        Poco::Dynamic::Var available = allowConvertTo(socket->clientAddress(), request);
         convert_to->set("available", available);
 
         std::ostringstream ostrJSON;
