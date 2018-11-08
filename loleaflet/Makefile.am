@@ -127,12 +127,18 @@ all-local:
 	@$(MAKE) node_modules
 	@$(MAKE) build-loleaflet
 
+if !ENABLE_IOSAPP
+if !ENABLE_GTKAPP
+ADMIN_BUNDLE = $(builddir)/dist/admin-bundle.js
+endif
+endif
+
 build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(JQUERY_UI_DIST_IMAGES) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(builddir)/dist/admin-bundle.js \
+	$(ADMIN_BUNDLE) \
 	$(builddir)/dist/bundle.css \
 	$(builddir)/dist/bundle.js \
 	$(builddir)/dist/loleaflet.html
