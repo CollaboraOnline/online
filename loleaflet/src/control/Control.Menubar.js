@@ -255,7 +255,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
 			},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), type: 'menu', menu: [
-				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphic', type: 'action'},
+				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
+				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
@@ -329,7 +330,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'}
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), type: 'menu', menu: [
-				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphic', type: 'action'},
+				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
+				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
