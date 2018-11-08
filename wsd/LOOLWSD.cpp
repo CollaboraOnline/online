@@ -2008,7 +2008,7 @@ private:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
 #ifndef MOBILEAPP
-        if (socket->sniffSSL())
+        if (!LOOLWSD::isSSLEnabled() && socket->sniffSSL())
         {
             LOG_ERR("Looks like SSL/TLS traffic on plain http port");
             std::ostringstream oss;
