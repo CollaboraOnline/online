@@ -5,7 +5,7 @@
 L.ProgressOverlay = L.Layer.extend({
 
 	options: {
-		spinnerSpeed: 1.5
+		spinnerSpeed: 15
 	},
 
 	initialize: function (latlng, size) {
