@@ -2109,9 +2109,10 @@ protected:
     {
         std::string message(data.data(), data.size());
 
+#ifndef MOBILEAPP
         if (UnitKit::get().filterKitMessage(this, message))
             return;
-
+#endif
         std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
         Log::StreamLogger logger = Log::debug();
         if (logger.enabled())
