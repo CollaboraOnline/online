@@ -588,7 +588,7 @@ msgstr "Reparieren"
 
 #: src/control/Control.Menubar.js:65
 msgid "Local Image..."
-msgstr "Locales Bild..."
+msgstr "Lokales Bild..."
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
