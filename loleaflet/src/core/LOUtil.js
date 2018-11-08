@@ -38,7 +38,7 @@ L.LOUtil = {
 			context.beginPath();
 			context.arc(x, y, radius, 0, Math.PI * 1.3);
 			context.stroke();
-		}, 1);
+		}, 30);
 
 		return spinnerInterval;
 	},
