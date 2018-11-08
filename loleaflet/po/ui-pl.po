@@ -527,8 +527,12 @@ msgstr "Przejście do stanu"
 msgid "Share..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
-#: src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:226
+msgid "Last modification"
+msgstr "Ostatnia modyfikacja"
+
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:323
 msgid "See revision history"
 msgstr "Obejrzyj historię zmian"
 

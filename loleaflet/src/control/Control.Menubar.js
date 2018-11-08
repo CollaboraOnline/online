@@ -224,6 +224,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
+			{name: _('Last modification'), id: 'last-mod', type: 'action'},
 			{name: _('Close document'), id: 'closedocument', type: 'action'}
 		],
 
@@ -305,6 +306,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
+			{name: _('Last modification'), id: 'last-mod', type: 'action'},
 			{name: _('Close document'), id: 'closedocument', type: 'action'}
 		],
 
@@ -399,6 +401,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
+			{name: _('Last modification'), id: 'last-mod', type: 'action'},
 			{name: _('Close document'), id: 'closedocument', type: 'action'}
 		],
 
@@ -738,7 +741,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.showLOAboutDialog();
 		} else if (id === 'keyboard-shortcuts') {
 			this._map.showLOKeyboardHelp();
-		} else if (id === 'rev-history') {
+		} else if (id === 'rev-history' || id === 'last-mod') {
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode
 			this._map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});

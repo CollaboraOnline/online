@@ -303,3 +303,20 @@
 	background-repeat: no-repeat;
 	background-position: bottom;
 }
+
+#menu-last-mod a {
+    color: grey;
+    text-decoration: underline;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    z-index: 500;
+}
+
+#menu-last-mod a:hover {
+    background: #fff;
+    border-color: #bbbbbb;
+    padding-left: 14px;
+    padding-top: 7px;
+    border: 1px solid #bbb;
+}

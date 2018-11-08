@@ -307,6 +307,11 @@ L.Socket = L.Class.extend({
 			this._map.fire('wopiprops', wopiInfo);
 			return;
 		}
+		else if (textMsg.startsWith('lastmodtime: ')) {
+			var time = textMsg.substring(textMsg.indexOf(' '));
+			this._map.updateModificationIndicator(time);
+			return;
+		}
 		else if (textMsg.startsWith('commandresult: ')) {
 			var commandresult = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			if (commandresult['command'] === 'savetostorage' && commandresult['success']) {

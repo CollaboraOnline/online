@@ -98,6 +98,8 @@ NODE_MODULES_JS =\
 	node_modules/jquery-ui/jquery-ui.js \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
 	node_modules/timeago/jquery.timeago.js \
+	node_modules/timeago.js/dist/timeago.min.js \
+	node_modules/timeago.js/dist/timeago.locales.min.js \
 	node_modules/autolinker/dist/Autolinker.js \
 	node_modules/json-js/json2.js \
 	node_modules/select2/dist/js/select2.js \

@@ -2927,6 +2927,12 @@
         "jquery": "2.2.4"
       }
     },
+    "timeago.js": {
+      "version": "4.0.0-beta.1",
+      "from": "timeago.js@4.0.0-beta.1",
+      "resolved": "https://registry.npmjs.org/timeago.js/-/timeago.js-4.0.0-beta.1.tgz",
+      "dev": true
+    },
     "timers-browserify": {
       "version": "1.4.2",
       "resolved": "file:node_shrinkwrap/timers-browserify-1.4.2.tgz",
