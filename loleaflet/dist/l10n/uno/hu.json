@@ -1,4 +1,5 @@
 {
+"Accept All":"Összes elfogadása",
 "Add Decimal Place":"Tizedesjegy hozzáadása",
 "Align Left":"Balra igazítás",
 "Align Right":"Jobbra igazítás",
@@ -142,6 +143,7 @@
 "Promote One Level With Subpoints":"Szint előléptetése eggyel az alpontokkal együtt",
 "Pr~evious":"Elő~ző",
 "P~aragraph...":"~Bekezdés...",
+"Reject All":"Összes elvetése",
 "Remove Link":"Hivatkozás eltávolítása",
 "Reply Comment":"Válasz a megjegyzésre",
 "Restart Numbering":"Számozás újraindítása",

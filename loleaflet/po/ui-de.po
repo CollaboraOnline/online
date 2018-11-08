@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-11 21:36+0200\n"
+"POT-Creation-Date: 2018-11-08 22:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -260,9 +260,9 @@ msgstr "Umrandung"
 msgid "More..."
 msgstr "Mehr..."
 
-#: dist/toolbar/toolbar.js:476 src/control/Control.Menubar.js:66
-msgid "Remote Image..."
-msgstr ""
+#: dist/toolbar/toolbar.js:475
+msgid "Insert Local Image"
+msgstr "Lokales Bild einfügen"
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -336,10 +336,6 @@ msgstr "%user ist beigetreten"
 #: dist/toolbar/toolbar.js:659
 msgid "%user has left"
 msgstr "%user hat verlassen"
-
-#: dist/toolbar/toolbar.js:808 dist/toolbar/toolbar.js:1408
-msgid "Size"
-msgstr "Größe"
 
 #: dist/toolbar/toolbar.js:988
 msgid "Number of Sheets"
@@ -552,7 +548,7 @@ msgstr "Zum Status springen"
 
 #: src/control/Control.Menubar.js:20
 msgid "Share..."
-msgstr ""
+msgstr "Freigeben..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:309
@@ -590,6 +586,10 @@ msgstr "Rich Text (.rtf)"
 msgid "Repair"
 msgstr "Reparieren"
 
+#: src/control/Control.Menubar.js:65
+msgid "Local Image..."
+msgstr "Locales Bild..."
+
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
 msgstr "Alle"
@@ -600,22 +600,22 @@ msgstr "Textausrichtung"
 
 #: src/control/Control.Menubar.js:208 src/control/Control.Menubar.js:210
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:295
-#: src/control/Control.Menubar.js:385
+#: src/control/Control.Menubar.js:386
 msgid "None (Do not check spelling)"
 msgstr "Keine (Rechtschreibung nicht prüfen)"
 
 #: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:298
-#: src/control/Control.Menubar.js:388
+#: src/control/Control.Menubar.js:389
 msgid "Keyboard shortcuts"
 msgstr "Tastenkombinationen"
 
 #: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:299
-#: src/control/Control.Menubar.js:389
+#: src/control/Control.Menubar.js:390
 msgid "About"
 msgstr "Über"
 
 #: src/control/Control.Menubar.js:223 src/control/Control.Menubar.js:301
-#: src/control/Control.Menubar.js:391
+#: src/control/Control.Menubar.js:392
 msgid "Close document"
 msgstr "Dokument schließen"
 
@@ -643,11 +643,11 @@ msgstr "Microsoft Excel 2003 (.xls)"
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:456
+#: src/control/Control.Menubar.js:457
 msgid "Reset to Default Language"
 msgstr "Auf Standardsprache zurücksetzen"
 
-#: src/control/Control.Menubar.js:723
+#: src/control/Control.Menubar.js:724
 msgid "Are you sure you want to delete this slide?"
 msgstr "Sind Sie sicher, dass Sie diese Folie löschen möchten?"
 
@@ -807,7 +807,7 @@ msgstr "Ändern"
 msgid "Remove"
 msgstr "Entfernen"
 
-#: src/map/Map.js:138
+#: src/map/Map.js:142
 msgid "Initializing..."
 msgstr "Initialisierung..."
 

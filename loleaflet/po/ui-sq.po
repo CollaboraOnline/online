@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-11 21:36+0200\n"
+"POT-Creation-Date: 2018-11-08 22:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,8 +261,8 @@ msgstr ""
 msgid "More..."
 msgstr ""
 
-#: dist/toolbar/toolbar.js:476 src/control/Control.Menubar.js:66
-msgid "Remote Image..."
+#: dist/toolbar/toolbar.js:475
+msgid "Insert Local Image"
 msgstr ""
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
@@ -337,10 +337,6 @@ msgstr ""
 #: dist/toolbar/toolbar.js:659
 msgid "%user has left"
 msgstr ""
-
-#: dist/toolbar/toolbar.js:808 dist/toolbar/toolbar.js:1408
-msgid "Size"
-msgstr "Përmasa"
 
 #: dist/toolbar/toolbar.js:988
 msgid "Number of Sheets"
@@ -594,6 +590,10 @@ msgstr ""
 msgid "Repair"
 msgstr ""
 
+#: src/control/Control.Menubar.js:65
+msgid "Local Image..."
+msgstr ""
+
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
 msgstr ""
@@ -604,22 +604,22 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:208 src/control/Control.Menubar.js:210
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:295
-#: src/control/Control.Menubar.js:385
+#: src/control/Control.Menubar.js:386
 msgid "None (Do not check spelling)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:298
-#: src/control/Control.Menubar.js:388
+#: src/control/Control.Menubar.js:389
 msgid "Keyboard shortcuts"
 msgstr ""
 
 #: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:299
-#: src/control/Control.Menubar.js:389
+#: src/control/Control.Menubar.js:390
 msgid "About"
 msgstr ""
 
 #: src/control/Control.Menubar.js:223 src/control/Control.Menubar.js:301
-#: src/control/Control.Menubar.js:391
+#: src/control/Control.Menubar.js:392
 msgid "Close document"
 msgstr "Mbyll dokumentin"
 
@@ -647,11 +647,11 @@ msgstr "Microsoft Excel 2003 (.xls)"
 msgid "Microsoft Excel (.xlsx)"
 msgstr "Microsoft Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:456
+#: src/control/Control.Menubar.js:457
 msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:723
+#: src/control/Control.Menubar.js:724
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 
@@ -811,7 +811,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: src/map/Map.js:138
+#: src/map/Map.js:142
 msgid "Initializing..."
 msgstr ""
 
