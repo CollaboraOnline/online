@@ -59,6 +59,21 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
 namespace
 {
 
+void sendLastModificationTime(const std::shared_ptr<Session>& session,
+                              DocumentBroker* documentBroker,
+                              Poco::Timestamp documentLastModifiedTime)
+{
+    if (!session)
+        return;
+
+    std::stringstream stream;
+    stream << "lastmodtime: " << documentLastModifiedTime;
+    std::string message = stream.str();
+    session->sendTextFrame(message);
+    if (documentBroker)
+        documentBroker->broadcastMessage(message);
+}
+
 /// Returns the cache path for a given document URI.
 std::string getCachePath(const std::string& uri)
 {
@@ -630,6 +645,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         }
     }
 
+    sendLastModificationTime(session, this, _documentLastModifiedTime);
+
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
@@ -871,6 +888,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url) <<
                     "] with name [" << filenameAnonym << "] successfully.");
         }
+
+        sendLastModificationTime(it->second, this, _documentLastModifiedTime);
 
         return true;
     }

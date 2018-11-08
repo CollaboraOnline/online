@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global vex $ _ */
+/* global timeago vex $ _ */
 L.Map = L.Evented.extend({
 
 	options: {
@@ -179,6 +179,8 @@ L.Map = L.Evented.extend({
 				// remove the comments and changes
 				this._docLayer.clearAnnotations();
 			}
+
+			this.initializeModificationIndicator();
 		}, this);
 	},
 
@@ -236,6 +238,46 @@ L.Map = L.Evented.extend({
 					$(this._docLayer._annotations._items[idxAnno]._authorAvatarImg).attr('src', this._viewInfoByUserName[username].userextrainfo.avatar);
 				}
 			}
+		}
+	},
+
+	initializeModificationIndicator: function() {
+		var lastModButton = L.DomUtil.get('menu-last-mod');
+		if (lastModButton !== null && lastModButton !== undefined
+			&& lastModButton.firstChild.innerHTML !== null
+			&& lastModButton.firstChild.childElementCount == 0) {
+			var mainSpan = document.createElement('span');
+			var label = document.createTextNode(_('Last modification'));
+			var separator = document.createTextNode(': ');
+			this.lastModIndicator = document.createElement('span');
+			mainSpan.appendChild(label);
+			mainSpan.appendChild(separator);
+			mainSpan.appendChild(this.lastModIndicator);
+
+			this.updateModificationIndicator(this._lastmodtime);
+
+			// Replace menu button body with new content
+			lastModButton.firstChild.innerHTML = null;
+			lastModButton.firstChild.appendChild(mainSpan);
+		}
+	},
+
+	updateModificationIndicator: function(newModificationTime) {
+		this._lastmodtime = newModificationTime;
+		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
+			// Get locale
+			var special = [ 'bn_IN', 'hi_IN', 'id_ID', 'nb_NO', 'nn_NO', 'pt-BR', 'zh_CN', 'zh_TW'];
+			var locale = String.locale;
+			locale = locale.replace('-', '_');
+			if (!special.includes(locale)) {
+				if (locale.indexOf('_') > 0) {
+					locale = locale.substring(0, locale.indexOf('_') - 1);
+				}
+			}
+
+			// Real-time auto update
+			this.lastModIndicator.setAttribute('datetime', newModificationTime);
+			timeago().render(this.lastModIndicator, locale);
 		}
 	},
 
