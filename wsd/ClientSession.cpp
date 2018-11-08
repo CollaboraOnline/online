@@ -846,6 +846,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
             // Now terminate.
             docBroker->stop("Finished saveas handler.");
+
+            // Remove file and directory
+            Poco::Path path = docBroker->getDocKey();
+            Poco::File(path).remove();
+            Poco::File(path.makeParent()).remove();
         }
 
         return true;
