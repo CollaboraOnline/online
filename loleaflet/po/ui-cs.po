@@ -548,7 +548,7 @@ msgstr "Přejít na stav"
 
 #: src/control/Control.Menubar.js:20
 msgid "Share..."
-msgstr ""
+msgstr "Sdílet..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:309

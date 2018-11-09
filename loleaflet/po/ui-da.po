@@ -548,7 +548,7 @@ msgstr "Hop til tilstand"
 
 #: src/control/Control.Menubar.js:20
 msgid "Share..."
-msgstr ""
+msgstr "Del..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:309

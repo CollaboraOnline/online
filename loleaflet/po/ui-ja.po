@@ -548,7 +548,7 @@ msgstr "選択された状態に戻る"
 
 #: src/control/Control.Menubar.js:20
 msgid "Share..."
-msgstr ""
+msgstr "共有..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:309
