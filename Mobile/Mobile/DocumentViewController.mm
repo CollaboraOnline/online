@@ -148,7 +148,7 @@
     if ([message.name isEqualToString:@"error"]) {
         LOG_ERR("Error from WebView: " << [message.body UTF8String]);
     } else if ([message.name isEqualToString:@"debug"]) {
-        LOG_DBG([message.body UTF8String]);
+        LOG_TRC_NOFILE("==> " << [message.body UTF8String]);
     } else if ([message.name isEqualToString:@"lool"]) {
         LOG_TRC("To Online: " << [message.body UTF8String]);
 
