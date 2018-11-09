@@ -110,7 +110,8 @@ ifelse(MOBILEAPP,[true],
 
     <div id="spreadsheet-row-column-frame"></div>
 
-    <div id="document-container" style="top: <!--%DOCUMENT_CONTAINER_TOP%-->;">
+    <div id="document-container" style="top: ifelse(MOBILEAPP,[true],[70px],[<!--%DOCUMENT_CONTAINER_TOP%-->]);">
+
       <div id="map"></div>
     </div>
     <div id="spreadsheet-toolbar"></div>
