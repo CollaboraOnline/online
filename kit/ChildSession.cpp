@@ -1217,7 +1217,7 @@ bool ChildSession::askSignatureStatus(const char* /*buffer*/, int /*length*/, co
 
     int nStatus = getLOKitDocument()->getSignatureState();
 
-    sendTextFrame("signaturestatus: " + nStatus);
+    sendTextFrame("signaturestatus: " + std::to_string(nStatus));
     return true;
 }
 
