@@ -2142,7 +2142,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     // we want a compilation-time failure in the debug builds; but ERR in the
     // log in the release ones
     default:
-        LOG_ERR("Unknown callback event (" << type << "): " << payload);
+        LOG_ERR("Unknown callback event (" << LOKitHelper::kitCallbackTypeToString(type) << "): " << payload);
 #endif
     }
 }

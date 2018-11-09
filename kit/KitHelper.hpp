@@ -133,6 +133,7 @@ namespace LOKitHelper
             return "SIGNATURE_STATUS";
        }
 
+        assert(!"Missing LOK_CALLBACK type");
         return std::to_string(type);
     }
 
