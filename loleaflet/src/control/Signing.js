@@ -34,6 +34,23 @@ L.Map.include({
 	showSignDocument: function() {
 		this.signingLogin();
 	},
+	signDocument: function() {
+		if (library) {
+			var map = this;
+			library.getCurrentlyLoggedInUUID().then(function(result) {
+				if (isSuccess(result)) {
+					var UUID = result.data;
+					library.getOneTimeCertificateByPassport(UUID).then(function(result) {
+						if (isSuccess(result)) {
+							var otp = result.data;
+							var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
+							map._socket.sendMessage(blob);
+						}
+					});
+				}
+			});
+		}
+	},
 	signingLogout: function() {
 		if (library) {
 			library.logout().then(function(result) {

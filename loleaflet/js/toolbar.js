@@ -234,6 +234,9 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'logout') {
 		map.signingLogout();
 	}
+	else if (id === 'sign') {
+		map.signDocument();
+	}
 }
 
 function setBorders(left, right, bottom, top, horiz, vert) {
@@ -767,6 +770,7 @@ function createToolbar() {
 		items: [
 			{type: 'html',  id: 'left'},
 			{type: 'html', id: 'logo', html: '<p><b>Vereign</b></p>'},
+			{type: 'button',  id: 'sign',  caption: 'Sign', img: '', hint: _('Sign document')},
 			{type: 'break' },
 			{type: 'html', id: 'user-label', html: '<p>User:</p>'},
 			{type: 'html', id: 'user', html: '<none>'},

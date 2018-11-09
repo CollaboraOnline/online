@@ -21,8 +21,11 @@
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
+#include <Poco/BinaryReader.h>
+#include <Poco/Base64Decoder.h>
 
 #include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
 #include "KitHelper.hpp"
 #include <Log.hpp>
 #include <Png.hpp>
@@ -245,7 +248,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "saveas" ||
                tokens[0] == "useractive" ||
                tokens[0] == "userinactive" ||
-               tokens[0] == "windowcommand");
+               tokens[0] == "windowcommand" ||
+               tokens[0] == "asksignaturestatus" ||
+               tokens[0] == "signdocument");
 
         if (tokens[0] == "clientzoom")
         {
@@ -1112,9 +1117,98 @@ bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, con
     return true;
 }
 
-bool ChildSession::signDocumentContent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /*tokens*/)
+namespace
 {
-    return true;
+
+std::string extractCertificate(const std::string & certificate)
+{
+    const std::string header("-----BEGIN CERTIFICATE-----");
+    const std::string footer("-----END CERTIFICATE-----");
+
+    std::string result;
+
+    size_t pos1 = certificate.find(header);
+    if (pos1 == std::string::npos)
+        return result;
+
+    size_t pos2 = certificate.find(footer, pos1 + 1);
+    if (pos2 == std::string::npos)
+        return result;
+
+    pos1 = pos1 + std::string(header).length();
+    pos2 = pos2 - pos1;
+
+    return certificate.substr(pos1, pos2);
+}
+
+std::string extractPrivateKey(const std::string & privateKey)
+{
+    const std::string header("-----BEGIN PRIVATE KEY-----");
+    const std::string footer("-----END PRIVATE KEY-----");
+
+    std::string result;
+
+    size_t pos1 = privateKey.find(header);
+    if (pos1 == std::string::npos)
+        return result;
+
+    size_t pos2 = privateKey.find(footer, pos1 + 1);
+    if (pos2 == std::string::npos)
+        return result;
+
+    pos1 = pos1 + std::string(header).length();
+    pos2 = pos2 - pos1;
+
+    return privateKey.substr(pos1, pos2);
+}
+
+std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
+{
+    std::istringstream stream(inputBase64);
+    Poco::Base64Decoder base64Decoder(stream);
+    std::istreambuf_iterator<char> eos;
+    return std::vector<unsigned char>(std::istreambuf_iterator<char>(base64Decoder), eos);
+}
+
+}
+
+bool ChildSession::signDocumentContent(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
+{
+    bool bResult = true;
+
+    const std::string firstLine = getFirstLine(buffer, length);
+    const char* data = buffer + firstLine.size() + 1;
+    const int size = length - firstLine.size() - 1;
+    std::string json(data, size);
+
+    Poco::JSON::Parser parser;
+    Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+
+    for (auto& chainPtr : *root->getArray("chain"))
+    {
+        assert(chainPtr.isString());
+        std::string chainCertificate = chainPtr;
+        std::vector<unsigned char> binaryChainCertificate = decodeBase64(extractCertificate(chainCertificate));
+
+        bResult = getLOKitDocument()->addCertificate(
+            binaryChainCertificate.data(),
+            binaryChainCertificate.size());
+
+        if (!bResult)
+            return false;
+    }
+
+    std::string x509Certificate = JsonUtil::getJSONValue<std::string>(root, "x509Certificate");
+    std::vector<unsigned char> binaryCertificate = decodeBase64(extractCertificate(x509Certificate));
+
+    std::string privateKey = JsonUtil::getJSONValue<std::string>(root, "privateKey");
+    std::vector<unsigned char> binaryPrivateKey = decodeBase64(extractPrivateKey(privateKey));
+
+    bResult = getLOKitDocument()->insertCertificate(
+                    binaryCertificate.data(), binaryCertificate.size(),
+                    binaryPrivateKey.data(), binaryPrivateKey.size());
+
+    return bResult;
 }
 
 bool ChildSession::askSignatureStatus(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /*tokens*/)
