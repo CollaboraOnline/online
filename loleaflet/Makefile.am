@@ -3,8 +3,25 @@ DRAW_VERSION=0.2.4
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 
+if !ENABLE_IOSAPP
 if !ENABLE_GTKAPP
 L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
+endif
+endif
+
+if ENABLE_IOSAPP
+L10N_IOS_ALL_JS = $(builddir)/dist/l10n-all.js
+L10N_JSON = $(L10N_IOS_ALL_JS)
+
+$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10n -name '*.*')
+	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
+		$(srcdir)/util/po2json.py $$F -o $$F.json; \
+	done
+	@mkdir -p $(dir $@)
+	perl $(srcdir)/util/create-l10n-all-js.pl >$@
+	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
+		rm $$F.json; \
+	done
 endif
 
 JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
@@ -15,7 +32,9 @@ LOLEAFLET_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
 LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(builddir)/dist/%,$(LOLEAFLET_IMAGES_SRC))
 
 LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
+if !ENABLE_IOSAPP
 LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(builddir)/dist/l10n/%,$(LOLEAFLET_L10N_SRC))
+endif
 
 LOLEAFLET_DRAW_JS_SRC = $(shell find $(srcdir)/plugins/draw-$(DRAW_VERSION)/src -name '*.js')
 LOLEAFLET_DRAW_JS_DST = $(patsubst $(srcdir)/plugins/%.js,$(builddir)/dist/plugins/%.js,$(LOLEAFLET_DRAW_JS_SRC))
@@ -186,8 +205,9 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(srcdir)/js/toolbar.js \
 	$(srcdir)/js/main.js
 	@echo "Uglify loleaflet js files..."
-	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
+	NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
 		$(srcdir)/js/global.js \
+		$(L10N_IOS_ALL_JS) \
 		$(NODE_MODULES_JS) \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
 		$(builddir)/build/dist/loleaflet-src.js \
