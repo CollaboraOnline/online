@@ -445,6 +445,17 @@
 		BEA2835F214ACA8500848631 /* FakeSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FakeSocket.cpp; sourceTree = "<group>"; };
 		BEA28376214FFD8C00848631 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
 		BEA283782150172600848631 /* Unit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Unit.hpp; sourceTree = "<group>"; };
+		BEA8CD7421959342009FE17E /* caserotate.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = caserotate.cxx; path = "../../ios-device/unotools/source/i18n/caserotate.cxx"; sourceTree = "<group>"; };
+		BEA8CD7521959342009FE17E /* intlwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = intlwrapper.cxx; path = "../../ios-device/unotools/source/i18n/intlwrapper.cxx"; sourceTree = "<group>"; };
+		BEA8CD7621959342009FE17E /* transliterationwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transliterationwrapper.cxx; path = "../../ios-device/unotools/source/i18n/transliterationwrapper.cxx"; sourceTree = "<group>"; };
+		BEA8CD7721959342009FE17E /* charclass.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = charclass.cxx; path = "../../ios-device/unotools/source/i18n/charclass.cxx"; sourceTree = "<group>"; };
+		BEA8CD7821959342009FE17E /* calendarwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = calendarwrapper.cxx; path = "../../ios-device/unotools/source/i18n/calendarwrapper.cxx"; sourceTree = "<group>"; };
+		BEA8CD7921959342009FE17E /* textsearch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textsearch.cxx; path = "../../ios-device/unotools/source/i18n/textsearch.cxx"; sourceTree = "<group>"; };
+		BEA8CD7A21959342009FE17E /* nativenumberwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = nativenumberwrapper.cxx; path = "../../ios-device/unotools/source/i18n/nativenumberwrapper.cxx"; sourceTree = "<group>"; };
+		BEA8CD7B21959343009FE17E /* collatorwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = collatorwrapper.cxx; path = "../../ios-device/unotools/source/i18n/collatorwrapper.cxx"; sourceTree = "<group>"; };
+		BEA8CD7C21959343009FE17E /* readwritemutexguard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = readwritemutexguard.cxx; path = "../../ios-device/unotools/source/i18n/readwritemutexguard.cxx"; sourceTree = "<group>"; };
+		BEA8CD7D21959343009FE17E /* localedatawrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = localedatawrapper.cxx; path = "../../ios-device/unotools/source/i18n/localedatawrapper.cxx"; sourceTree = "<group>"; };
+		BEA8CD7E21959343009FE17E /* resmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = resmgr.cxx; path = "../../ios-device/unotools/source/i18n/resmgr.cxx"; sourceTree = "<group>"; };
 		BEB6521C216F5D8B00B8C09A /* file_path_helper.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = file_path_helper.hxx; path = "../../ios-device/sal/osl/unx/file_path_helper.hxx"; sourceTree = "<group>"; };
 		BEB6521D216F5D8B00B8C09A /* file_error_transl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = file_error_transl.hxx; path = "../../ios-device/sal/osl/unx/file_error_transl.hxx"; sourceTree = "<group>"; };
 		BEB6521E216F5D8B00B8C09A /* nlsupport.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = nlsupport.hxx; path = "../../ios-device/sal/osl/unx/nlsupport.hxx"; sourceTree = "<group>"; };
@@ -941,6 +952,7 @@
 				BE34D1892190712C00815297 /* sc */,
 				BE34D10C218B667400815297 /* sw */,
 				BEB6524B216FD09400B8C09A /* tools */,
+				BEA8CD7221959315009FE17E /* unotools */,
 				BE93D420216CAA52007A39F4 /* vcl */,
 			);
 			name = Core;
@@ -1114,6 +1126,32 @@
 			name = net;
 			path = ../net;
 			sourceTree = SOURCE_ROOT;
+		};
+		BEA8CD7221959315009FE17E /* unotools */ = {
+			isa = PBXGroup;
+			children = (
+				BEA8CD7321959321009FE17E /* i18n */,
+			);
+			name = unotools;
+			sourceTree = "<group>";
+		};
+		BEA8CD7321959321009FE17E /* i18n */ = {
+			isa = PBXGroup;
+			children = (
+				BEA8CD7821959342009FE17E /* calendarwrapper.cxx */,
+				BEA8CD7421959342009FE17E /* caserotate.cxx */,
+				BEA8CD7721959342009FE17E /* charclass.cxx */,
+				BEA8CD7B21959343009FE17E /* collatorwrapper.cxx */,
+				BEA8CD7521959342009FE17E /* intlwrapper.cxx */,
+				BEA8CD7D21959343009FE17E /* localedatawrapper.cxx */,
+				BEA8CD7A21959342009FE17E /* nativenumberwrapper.cxx */,
+				BEA8CD7C21959343009FE17E /* readwritemutexguard.cxx */,
+				BEA8CD7E21959343009FE17E /* resmgr.cxx */,
+				BEA8CD7921959342009FE17E /* textsearch.cxx */,
+				BEA8CD7621959342009FE17E /* transliterationwrapper.cxx */,
+			);
+			name = i18n;
+			sourceTree = "<group>";
 		};
 		BEB6521A216F5D4600B8C09A /* sal */ = {
 			isa = PBXGroup;
