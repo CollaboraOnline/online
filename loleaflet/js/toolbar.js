@@ -768,6 +768,9 @@ function createToolbar() {
 			{type: 'html',  id: 'left'},
 			{type: 'html', id: 'logo', html: '<p><b>Vereign</b></p>'},
 			{type: 'break' },
+			{type: 'html', id: 'user-label', html: '<p>User:</p>'},
+			{type: 'html', id: 'user', html: '<none>'},
+			{type: 'break' },
 			{type: 'button',  id: 'logout',  caption: 'Logout', img: '', hint: _('Logout')},
 		],
 		onClick: function (e) {
