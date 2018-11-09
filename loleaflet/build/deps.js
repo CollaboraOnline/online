@@ -4,6 +4,7 @@ var deps = {
 		src: ['Leaflet.js',
 		      'errormessages.js',
 		      'unocommands.js',
+		      'vcl.js',
 		      'core/Log.js',
 		      'core/Util.js',
 		      'core/LOUtil.js',
