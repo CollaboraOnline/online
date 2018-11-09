@@ -262,7 +262,7 @@ msgstr "Más..."
 
 #: dist/toolbar/toolbar.js:475
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Insertar imágenes locales"
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -588,7 +588,7 @@ msgstr "Reparar"
 
 #: src/control/Control.Menubar.js:65
 msgid "Local Image..."
-msgstr ""
+msgstr "Imágenes locales..."
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"

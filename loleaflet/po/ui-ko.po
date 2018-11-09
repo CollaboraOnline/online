@@ -262,7 +262,7 @@ msgstr "자세히..."
 
 #: dist/toolbar/toolbar.js:475
 msgid "Insert Local Image"
-msgstr ""
+msgstr "로컬 이미지 삽입"
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -588,7 +588,7 @@ msgstr "복구"
 
 #: src/control/Control.Menubar.js:65
 msgid "Local Image..."
-msgstr ""
+msgstr "로컬 이미지..."
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
