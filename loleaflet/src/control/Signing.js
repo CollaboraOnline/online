@@ -57,6 +57,8 @@ L.Map.include({
 				if (isSuccess(result)) {
 					identity = null;
 					updateIndentity();
+					w2ui['document-signing-bar'].show('login');
+					w2ui['document-signing-bar'].hide('logout');
 				}
 			});
 		}
@@ -71,6 +73,8 @@ L.Map.include({
 						library.getCurrentlyAuthenticatedIdentity().then(function(result) {
 							identity = result.data;
 							updateIndentity();
+							w2ui['document-signing-bar'].hide('login');
+							w2ui['document-signing-bar'].show('logout');
 						});
 						break;
 					default:
