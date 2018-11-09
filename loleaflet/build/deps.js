@@ -399,6 +399,11 @@ var deps = {
 		desc: 'Toolbar handler.'
 	},
 
+	Signing: {
+		src: ['control/Signing.js'],
+		desc: 'Document signing.'
+	},
+
 	Parts: {
 		src: ['control/Parts.js'],
 		desc: 'Parts change handler.'
