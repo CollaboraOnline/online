@@ -305,7 +305,7 @@ def writeTranslations(onlineDir, translationsDir, strings):
                 f.write(',\n')
             else:
                 writeComma = True
-            f.write(('"' + key + '":"' + translations[key] + '"').encode('utf-8'))
+            f.write(('"' + key.replace('"','\\\"') + '":"' + translations[key].replace('"','\\\"') + '"').encode('utf-8'))
 
         f.write('\n}\n')
 
