@@ -17,7 +17,6 @@
 
 @interface Document : UIDocument {
 @public
-    std::string uri;
     int fakeClientFd;
 }
 

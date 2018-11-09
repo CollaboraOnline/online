@@ -33,13 +33,24 @@
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
     fakeClientFd = fakeSocketSocket();
-    uri = [[[self fileURL] absoluteString] UTF8String];
+    NSString *uri = [[self fileURL] absoluteString];
+
+    // Having LANG in the environment is expected to happen only when debugging from Xcode
+    char *lang = std::getenv("LANG");
+    NSString *locale;
+    if (lang != nullptr)
+        locale = [NSString stringWithUTF8String:lang];
+    else
+        locale = [NSLocale currentLocale].languageCode;
 
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-    components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[NSString stringWithUTF8String:uri.c_str()]],
+    components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:uri],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
-                               [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"]];
+                               [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
+                               [NSURLQueryItem queryItemWithName:@"lang" value:locale]
+                             ];
+
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];
     [self.viewController.webView loadRequest:request];
 
