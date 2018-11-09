@@ -103,7 +103,7 @@ ifelse(MOBILEAPP,[true],
     </tr>
     </table>
 
-    <div id="document-signing-bar"></div>
+    <!--%DOCUMENT_SIGNING_DIV%-->
 
     <input id="insertgraphic" type="file" style="position: fixed; top: -100em">
     <input id="document-name-input" type="text" disabled="true"/>
@@ -114,7 +114,7 @@ ifelse(MOBILEAPP,[true],
 
     <div id="spreadsheet-row-column-frame"></div>
 
-    <div id="document-container">
+    <div id="document-container" style="top: <!--%DOCUMENT_CONTAINER_TOP%-->;">
       <div id="map"></div>
     </div>
     <div id="spreadsheet-toolbar"></div>

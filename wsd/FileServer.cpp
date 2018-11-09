@@ -638,6 +638,18 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_JS%-->"), brandJS);
 
+    // Customization related to document signing.
+    std::string documentSigningDiv;
+    std::string documentContainerTop("70px");
+    const auto documentSigning = config.getBool("per_document.document_signing", false);
+    if (documentSigning)
+    {
+        documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
+        documentContainerTop = "100px";
+    }
+    Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
+    Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_CONTAINER_TOP%-->"), documentContainerTop);
+
     const auto loleafletLogging = config.getString("loleaflet_logging", "false");
     Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
     const std::string outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");

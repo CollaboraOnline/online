@@ -799,6 +799,9 @@ L.Control.Menubar = L.Control.extend({
 			if (menu[i].id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
 				continue;
 			}
+			if (menu[i].id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
+				continue;
+			}
 
 			if (this._map._permission === 'readonly' && menu[i].type === 'menu') {
 				var found = false;
