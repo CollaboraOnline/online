@@ -103,6 +103,8 @@ ifelse(MOBILEAPP,[true],
     </tr>
     </table>
 
+    <div id="document-signing-bar"></div>
+
     <input id="insertgraphic" type="file" style="position: fixed; top: -100em">
     <input id="document-name-input" type="text" disabled="true"/>
 

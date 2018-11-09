@@ -17,6 +17,10 @@
     z-index: 1000;
 }
 
+#document-signing-bar {
+    background-color: #dd000088;
+}
+
 w2ui-toolbar {
     position: absolute;
     right: 10px;

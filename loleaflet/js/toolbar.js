@@ -62,6 +62,10 @@ function onClick(e, id, item, subItem) {
 		toolbar = w2ui.formulabar;
 		item = toolbar.get(id);
 	}
+	else if (w2ui['document-signing-bar'].get(id) !== null) {
+		toolbar = w2ui['document-signing-bar'];
+		item = toolbar.get(id);
+	}
 	else if (w2ui['toolbar-down'].get(id) !== null) {
 		toolbar = w2ui['toolbar-down'];
 		item = toolbar.get(id);
@@ -751,6 +755,27 @@ function createToolbar() {
 	$(w2ui.formulabar.box).find('.w2ui-scroll-left, .w2ui-scroll-right').hide();
 	w2ui.formulabar.on('resize', function(target, e) {
 		e.isCancelled = true;
+	});
+
+	toolbar = $('#document-signing-bar');
+	toolbar.w2toolbar({
+		name: 'document-signing-bar',
+		tooltip: 'bottom',
+		items: [
+			{type: 'html',  id: 'left'},
+			{type: 'html', id: 'logo', html: '<p><b>Vereign</b></p>'},
+			{type: 'break' },
+			{type: 'button',  id: 'logout',  caption: 'Logout', img: '', hint: _('Logout')},
+		],
+		onClick: function (e) {
+			onClick(e, e.target);
+			hideTooltip(this, e.target);
+		},
+		onRefresh: function() {
+		}
+	});
+	toolbar.bind('touchstart', function() {
+		w2ui['document-signing-bar'].touchStarted = true;
 	});
 
 	toolbar = $('#spreadsheet-toolbar')
