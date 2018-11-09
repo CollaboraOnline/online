@@ -23,10 +23,6 @@ ifelse(MOBILEAPP,[],
   var PostMessageReadyListener = function(e) {
     var msg = JSON.parse(e.data);
     if (msg.MessageId === 'Host_PostmessageReady') {
-      if (window.ThisIsTheiOSApp) {
-        // Just for debugging to see that we got it
-        window.webkit.messageHandlers.debug.postMessage('got Host_PostmessageReady!');
-      }
       window.WOPIPostmessageReady = true;
       window.removeEventListener('message', PostMessageReadyListener, false);
     }
