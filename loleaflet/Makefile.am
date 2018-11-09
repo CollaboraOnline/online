@@ -3,14 +3,8 @@ DRAW_VERSION=0.2.4
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 
-# It would be nice to have l10n also in the iOS app, but have to
-# skip for now as that l10n-for-node code seems to always want to use
-# HTTP to load the message catalog .json files.
-
-if !ENABLE_IOSAPP
 if !ENABLE_GTKAPP
 L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
-endif
 endif
 
 JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
