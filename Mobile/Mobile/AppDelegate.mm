@@ -28,9 +28,7 @@ static LOOLWSD *loolwsd = nullptr;
 
 @end
 
-@implementation AppDelegate {
-    LibreOfficeKit *_kit;
-}
+@implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     auto trace = std::getenv("LOOL_LOGLEVEL");
