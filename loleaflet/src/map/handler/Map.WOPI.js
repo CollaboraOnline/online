@@ -221,7 +221,8 @@ L.Map.WOPI = L.Handler.extend({
 					UserId: this._map._viewInfo[viewInfoIdx].userid,
 					UserExtraInfo: this._map._viewInfo[viewInfoIdx].userextrainfo,
 					Color: this._map._viewInfo[viewInfoIdx].color,
-					ReadOnly: this._map._viewInfo[viewInfoIdx].readonly
+					ReadOnly: this._map._viewInfo[viewInfoIdx].readonly,
+					IsCurrentView: this._map._docLayer._viewId === parseInt(viewInfoIdx, 10)
 				});
 			}
 
