@@ -119,13 +119,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // Invalidate if we have to
         // TODO instead just a "_invalidate" flag, we should remember / grow
         // the rectangle to invalidate; invalidating everything is sub-optimal
-        if (_stateRecorder._invalidate)
+        if (_stateRecorder.isInvalidate())
         {
             std::string payload = "0, 0, " + std::to_string(INT_MAX) + ", " + std::to_string(INT_MAX) + ", " + std::to_string(curPart);
             loKitCallback(LOK_CALLBACK_INVALIDATE_TILES, payload);
         }
 
-        for (const auto& viewPair : _stateRecorder._recordedViewEvents)
+        for (const auto& viewPair : _stateRecorder.getRecordedViewEvents())
         {
             for (const auto& eventPair : viewPair.second)
             {
@@ -136,20 +136,20 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             }
         }
 
-        for (const auto& eventPair : _stateRecorder._recordedEvents)
+        for (const auto& eventPair : _stateRecorder.getRecordedEvents())
         {
             const RecordedEvent& event = eventPair.second;
             LOG_TRC("Replaying missed event: " << LOKitHelper::kitCallbackTypeToString(event._type) << ": " << event._payload);
             loKitCallback(event._type, event._payload);
         }
 
-        for (const auto& pair : _stateRecorder._recordedStates)
+        for (const auto& pair : _stateRecorder.getRecordedStates())
         {
             LOG_TRC("Replaying missed state-change: " << pair.second);
             loKitCallback(LOK_CALLBACK_STATE_CHANGED, pair.second);
         }
 
-        for (const auto& event : _stateRecorder._recordedEventsVector)
+        for (const auto& event : _stateRecorder.getRecordedEventsVector())
         {
             LOG_TRC("Replaying missed event (part of sequence): " << LOKitHelper::kitCallbackTypeToString(event._type) << ": " << event._payload);
             loKitCallback(event._type, event._payload);

@@ -85,19 +85,45 @@ struct RecordedEvent
 /// When the session is inactive, we need to record its state for a replay.
 class StateRecorder
 {
-public:
+private:
     bool _invalidate;
     std::unordered_map<std::string, std::string> _recordedStates;
     std::unordered_map<int, std::unordered_map<int, RecordedEvent>> _recordedViewEvents;
     std::unordered_map<int, RecordedEvent> _recordedEvents;
     std::vector<RecordedEvent> _recordedEventsVector;
 
+public:
     StateRecorder() : _invalidate(false) {}
 
     // TODO Remember the maximal area we need to invalidate - grow it step by step.
     void recordInvalidate()
     {
         _invalidate = true;
+    }
+
+    bool isInvalidate() const
+    {
+        return _invalidate;
+    }
+
+    const std::unordered_map<std::string, std::string>& getRecordedStates() const
+    {
+        return _recordedStates;
+    }
+
+    const std::unordered_map<int, std::unordered_map<int, RecordedEvent>>& getRecordedViewEvents() const
+    {
+        return _recordedViewEvents;
+    }
+
+    const std::unordered_map<int, RecordedEvent>& getRecordedEvents() const
+    {
+        return _recordedEvents;
+    }
+
+    const std::vector<RecordedEvent>& getRecordedEventsVector() const
+    {
+        return _recordedEventsVector;
     }
 
     void recordEvent(const int type, const std::string& payload)
