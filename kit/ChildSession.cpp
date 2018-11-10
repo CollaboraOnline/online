@@ -273,7 +273,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "windowcommand" ||
                tokens[0] == "asksignaturestatus" ||
                tokens[0] == "signdocument" ||
-               tokens[0] == "uploadsigneddocument");
+               tokens[0] == "uploadsigneddocument" ||
+               tokens[0] == "rendershapeselection");
 
         if (tokens[0] == "clientzoom")
         {
@@ -373,6 +374,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             return uploadSignedDocument(buffer, length, tokens);
         }
 #endif
+        else if (tokens[0] == "rendershapeselection")
+        {
+            return renderShapeSelection(buffer, length, tokens);
+        }
         else
         {
             assert(false && "Unknown command token.");
@@ -1610,6 +1615,34 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const std::ve
     getLOKitDocument()->setView(_viewId);
 
     getLOKitDocument()->setPart(page);
+    return true;
+}
+
+bool ChildSession::renderShapeSelection(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    std::string mimeType;
+    if (tokens.size() != 2 ||
+        !getTokenString(tokens[1], "mimetype", mimeType) ||
+        mimeType != "image/svg+xml")
+    {
+        sendTextFrame("error: cmd=rendershapeselection kind=syntax");
+        return false;
+    }
+
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+    getLOKitDocument()->setView(_viewId);
+
+    std::string response = "shapeselectioncontent:\n";
+
+    size_t nOutputSize = response.size();
+    char* pOutput = new char[nOutputSize];
+    std::memcpy(pOutput, response.data(), response.size());
+
+    getLOKitDocument()->renderShapeSelection(pOutput, nOutputSize);
+
+    LOG_TRC("Sending response (" << nOutputSize << " bytes) for: " << response);
+    sendBinaryFrame(pOutput, nOutputSize);
     return true;
 }
 

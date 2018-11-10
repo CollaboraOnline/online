@@ -174,7 +174,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "windowcommand" &&
              tokens[0] != "signdocument" &&
              tokens[0] != "asksignaturestatus" &&
-             tokens[0] != "uploadsigneddocument")
+             tokens[0] != "uploadsigneddocument" &&
+             tokens[0] != "rendershapeselection")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;

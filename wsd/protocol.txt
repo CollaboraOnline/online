@@ -231,6 +231,11 @@ signdocument
 
     Sign the current document with the input cetificate and private key.
 
+rendershapeselection mimetype=<mimeType>
+
+    Request rendering of selected shapes into an SVG format.
+    By now only SVG mimetype is handled (image/svg+xml)
+
 
 server -> client
 ================
@@ -502,6 +507,11 @@ signaturestatus: <sign status>
         3 - INVALID (signature is OK, but doc is modified now)
         4 - NOTVALIDATED (signature is OK, but certificate could not be validated)
         5 - PARTIAL_OK (signature and certificate are ok, but not all files are signed - old documents only)
+
+shapeselectioncontent: <content>
+
+    Current selection's content
+
 
 child -> parent
 ===============
