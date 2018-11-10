@@ -114,6 +114,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAlertAllUsers);
     CPPUNIT_TEST(testViewInfoMsg);
     CPPUNIT_TEST(testUndoConflict);
+    CPPUNIT_TEST(testRenderShapeSelection);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -171,6 +172,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testAlertAllUsers();
     void testViewInfoMsg();
     void testUndoConflict();
+    void testRenderShapeSelection();
 
     void loadDoc(const std::string& documentURL, const std::string& testname);
 
@@ -2704,6 +2706,33 @@ void HTTPWSTest::testUndoConflict()
         CPPUNIT_ASSERT(conflict > 0); /*UNDO_CONFLICT*/
     }
     catch(const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+#include <fstream>
+void HTTPWSTest::testRenderShapeSelection()
+{
+    const char* testname = "testRenderShapeSelection ";
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("shapes.odp", documentPath, documentURL, testname);
+
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket, "mouse type=buttondown x=4825 y=5002 count=1 buttons=1 modifier=0", testname);
+        sendTextFrame(socket, "mouse type=buttonup x=4825 y=5002 count=1 buttons=1 modifier=0", testname);
+        sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
+        std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
+        CPPUNIT_ASSERT(!responseSVG.empty());
+        responseSVG.erase(responseSVG.begin(), ++std::find(responseSVG.begin(), responseSVG.end(),'\n'));
+
+        std::vector<char> expectedSVG = helpers::readDataFromFile("shapes.svg");
+        CPPUNIT_ASSERT_EQUAL(std::string(expectedSVG.data(), expectedSVG.size()), std::string(responseSVG.data(), responseSVG.size()));
+    }
+    catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
     }

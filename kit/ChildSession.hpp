@@ -264,6 +264,7 @@ private:
     bool signDocumentContent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool askSignatureStatus(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool uploadSignedDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool renderShapeSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
 
