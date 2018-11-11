@@ -1765,6 +1765,25 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_onGraphicRotate: function (e) {
+		var center = this._graphicSelectionTwips.getCenter().add(this._graphicSelectionTwips.min);
+		var param = {
+			TransformRotationAngle: {
+				type: 'long',
+				value: (((e.rotation * 18000) / Math.PI))
+			},
+			TransformRotationX: {
+				type: 'long',
+				value: center.x
+			},
+			TransformRotationY: {
+				type: 'long',
+				value: center.y
+			}
+		};
+		this._map.sendUnoCommand('.uno:TransformDialog ', param);
+	},
+
 	// Update dragged text selection.
 	_onSelectionHandleDrag: function (e) {
 		if (e.type === 'drag') {
@@ -1821,6 +1840,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._graphicMarker) {
 				this._graphicMarker.addEventParent(this._map);
 				this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
+				this._graphicMarker.off('rotateend', this._onGraphicRotate, this);
 				this._graphicMarker.dragging.disable();
 				this._graphicMarker.transform.disable();
 				this._map.removeLayer(this._graphicMarker);
@@ -1843,6 +1863,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._graphicMarker.addEventParent(this._map);
 			this._graphicMarker.on('scalestart scaleend', this._onGraphicEdit, this);
+			this._graphicMarker.on('rotateend', this._onGraphicRotate, this);
 			this._map.addLayer(this._graphicMarker);
 			this._graphicMarker.dragging.enable();
 			this._graphicMarker.transform.enable({uniformScaling: false});
@@ -1850,6 +1871,7 @@ L.TileLayer = L.GridLayer.extend({
 		else if (this._graphicMarker) {
 			this._graphicMarker.removeEventParent(this._map);
 			this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
+			this._graphicMarker.off('rotateend', this._onGraphicRotate, this);
 			this._graphicMarker.dragging.disable();
 			this._graphicMarker.transform.disable();
 			this._map.removeLayer(this._graphicMarker);
