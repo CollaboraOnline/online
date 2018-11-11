@@ -602,13 +602,19 @@ L.Handler.PathTransform = L.Handler.extend({
 	/**
 	* @param  {Event} evt
 	*/
-	_onRotateEnd: function(/*evt*/) {
+	_onRotateEnd: function(evt) {
+		var pos = evt.layerPoint;
+		var origin = this._rotationOriginPt;
+		var angle = Math.atan2(-(pos.y - origin.y), pos.x - origin.x);
+		if (angle < 0) {
+			angle += (2 * Math.PI);
+		}
 		this._path._map
 			.off('mousemove', this._onRotate, this)
 			.off('mouseup',   this._onRotateEnd, this);
 
 		this._apply();
-		this._path.fire('rotateend', { layer: this._path, rotation: this._angle });
+		this._path.fire('rotateend', { layer: this._path, rotation: angle });
 	},
 
 
