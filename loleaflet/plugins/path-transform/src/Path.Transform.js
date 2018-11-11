@@ -505,12 +505,12 @@ L.Handler.PathTransform = L.Handler.extend({
 		var latlngs = this._rect._latlngs;
 
 		var bottom   = new L.LatLng(
-			(latlngs[0].lat + latlngs[3].lat) / 2,
-			(latlngs[0].lng + latlngs[3].lng) / 2);
+			(latlngs[0].lat + latlngs[1].lat) / 2,
+			(latlngs[0].lng + latlngs[1].lng) / 2);
 		// hehe, top is a reserved word
 		var topPoint = new L.LatLng(
-			(latlngs[1].lat + latlngs[2].lat) / 2,
-			(latlngs[1].lng + latlngs[2].lng) / 2);
+			(latlngs[2].lat + latlngs[3].lat) / 2,
+			(latlngs[2].lng + latlngs[3].lng) / 2);
 
 		var handlerPosition = map.layerPointToLatLng(
 		L.PathTransform.pointOnLine(
