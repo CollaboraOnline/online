@@ -220,7 +220,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		this._path._dragMoved = false;
 
 		if (this._mapDraggingWasEnabled) {
-			if (moved) L.DomEvent.fakeStop({ type: 'click' });
+			if (moved) L.DomEvent._fakeStop({ type: 'click' });
 			this._path._map.dragging.enable();
 		}
 	},
