@@ -2710,7 +2710,7 @@ void HTTPWSTest::testUndoConflict()
         CPPUNIT_FAIL(exc.displayText());
     }
 }
-#include <fstream>
+
 void HTTPWSTest::testRenderShapeSelection()
 {
     const char* testname = "testRenderShapeSelection ";
