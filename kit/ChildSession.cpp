@@ -133,17 +133,17 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             for (const auto& eventPair : viewPair.second)
             {
                 const RecordedEvent& event = eventPair.second;
-                LOG_TRC("Replaying missed view event: " <<  viewPair.first << " " << LOKitHelper::kitCallbackTypeToString(event._type)
-                                                        << ": " << event._payload);
-                loKitCallback(event._type, event._payload);
+                LOG_TRC("Replaying missed view event: " <<  viewPair.first << " " << LOKitHelper::kitCallbackTypeToString(event.getType())
+                                                        << ": " << event.getPayload());
+                loKitCallback(event.getType(), event.getPayload());
             }
         }
 
         for (const auto& eventPair : _stateRecorder.getRecordedEvents())
         {
             const RecordedEvent& event = eventPair.second;
-            LOG_TRC("Replaying missed event: " << LOKitHelper::kitCallbackTypeToString(event._type) << ": " << event._payload);
-            loKitCallback(event._type, event._payload);
+            LOG_TRC("Replaying missed event: " << LOKitHelper::kitCallbackTypeToString(event.getType()) << ": " << event.getPayload());
+            loKitCallback(event.getType(), event.getPayload());
         }
 
         for (const auto& pair : _stateRecorder.getRecordedStates())
@@ -154,8 +154,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         for (const auto& event : _stateRecorder.getRecordedEventsVector())
         {
-            LOG_TRC("Replaying missed event (part of sequence): " << LOKitHelper::kitCallbackTypeToString(event._type) << ": " << event._payload);
-            loKitCallback(event._type, event._payload);
+            LOG_TRC("Replaying missed event (part of sequence): " << LOKitHelper::kitCallbackTypeToString(event.getType()) << ": " << event.getPayload());
+            loKitCallback(event.getType(), event.getPayload());
         }
 
         _stateRecorder.clear();

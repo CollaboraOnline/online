@@ -78,8 +78,40 @@ public:
 
 struct RecordedEvent
 {
-    int _type;
+private:
+    int _type = 0;
     std::string _payload;
+
+public:
+    RecordedEvent()
+    {
+    }
+
+    RecordedEvent(int type, const std::string& payload)
+        : _type(type),
+        _payload(payload)
+    {
+    }
+
+    void setType(int type)
+    {
+        _type = type;
+    }
+
+    int getType() const
+    {
+        return _type;
+    }
+
+    void setPayload(const std::string& payload)
+    {
+        _payload = payload;
+    }
+
+    const std::string& getPayload() const
+    {
+        return _payload;
+    }
 };
 
 /// When the session is inactive, we need to record its state for a replay.
@@ -128,7 +160,7 @@ public:
 
     void recordEvent(const int type, const std::string& payload)
     {
-        _recordedEvents[type] = {type, payload};
+        _recordedEvents[type] = RecordedEvent(type, payload);
     }
 
     void recordViewEvent(const int viewId, const int type, const std::string& payload)
@@ -145,7 +177,7 @@ public:
     /// the final state.
     void recordEventSequence(const int type, const std::string& payload)
     {
-        _recordedEventsVector.push_back({type, payload});
+        _recordedEventsVector.emplace_back(type, payload);
     }
 
     void clear()
