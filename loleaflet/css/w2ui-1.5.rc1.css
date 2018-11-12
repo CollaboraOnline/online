@@ -1259,7 +1259,7 @@ button.w2ui-btn-small:focus:before {
 .w2ui-calendar .w2ui-calendar-jump .w2ui-jump-year:hover {
   border: 1px solid #cccccc;
   color: #000000;
-  background-color: #efefef;
+  background-color: #ffffff;
 }
 .w2ui-calendar .w2ui-calendar-jump .w2ui-jump-month.selected,
 .w2ui-calendar .w2ui-calendar-jump .w2ui-jump-year.selected {
@@ -1281,7 +1281,7 @@ button.w2ui-btn-small:focus:before {
 .w2ui-calendar .w2ui-calendar-previous:hover,
 .w2ui-calendar .w2ui-calendar-next:hover {
   border: 1px solid #c0c0c0;
-  background-color: #efefef;
+  background-color: #ffffff;
 }
 .w2ui-calendar .w2ui-calendar-previous > div,
 .w2ui-calendar .w2ui-calendar-next > div {
@@ -2214,7 +2214,7 @@ button.w2ui-btn-small:focus:before {
 }
 .w2ui-ss .w2ui-grid-body .w2ui-grid-records table td {
   border-right-width: 1px;
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid #ffffff;
 }
 .w2ui-ss .w2ui-grid-body .w2ui-grid-records table tr.w2ui-odd,
 .w2ui-ss .w2ui-grid-body .w2ui-grid-records table tr.w2ui-even,
@@ -2234,7 +2234,7 @@ button.w2ui-btn-small:focus:before {
 }
 .w2ui-ss .w2ui-grid-body .w2ui-grid-frecords table td {
   border-right-width: 1px;
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid #ffffff;
 }
 .w2ui-ss .w2ui-grid-body .w2ui-grid-frecords table tr.w2ui-odd,
 .w2ui-ss .w2ui-grid-body .w2ui-grid-frecords table tr.w2ui-even,
@@ -2914,7 +2914,7 @@ button.w2ui-btn-small:focus:before {
   padding: 2px;
   outline: 0px;
   position: relative;
-  background-color: #efefef;
+  background-color: #ffffff;
   overflow: hidden !important;
   -webkit-user-select: none;
   -moz-user-select: none;
