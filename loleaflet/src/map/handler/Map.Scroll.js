@@ -58,7 +58,7 @@ L.Map.Scroll = L.Handler.extend({
 	_performScroll: function () {
 		var map = this._map,
 		    delta = -this._delta,
-		    scrollAmount = Math.round(map.getSize().y / 4);
+		    scrollAmount = Math.round(map.getSize().y / 20);
 
 		this._delta = 0;
 		this._startTime = null;
