@@ -15,6 +15,7 @@
 
 #define LIBO_INTERNAL_ONLY
 #include <sal/config.h>
+#include <sal/log.hxx>
 #include <rtl/ustring.hxx>
 #include <comphelper/lok.hxx>
 #include <i18nlangtag/languagetag.hxx>
@@ -50,7 +51,7 @@
     if (lang != nullptr)
         locale = [NSString stringWithUTF8String:lang];
     else
-        locale = [NSLocale currentLocale].languageCode;
+        locale = [[NSLocale preferredLanguages] firstObject];
 
     comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([locale UTF8String])), true));
 
