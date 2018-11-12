@@ -168,7 +168,7 @@ L.Control.Scroll = L.Control.extend({
 		if (e.x < 0) {
 			x = '-=' + Math.abs(e.x);
 		}
-		$('.scroll-container').mCustomScrollbar('scrollTo', [y, x]);
+		$('.scroll-container').mCustomScrollbar('scrollTo', [y, x], { timeout: 1 });
 	},
 
 	_onScrollVelocity: function (e) {
