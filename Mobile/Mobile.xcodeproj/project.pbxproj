@@ -1534,6 +1534,7 @@
 					"$(LOSRCDIR)/include",
 					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/CustomTarget/ios",
 					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/UnpackedTarball/libpng",
+					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/UnoApiHeadersTarget/udkapi/comprehensive",
 					"$(SOURCE_ROOT)/../pocoinclude-symlink",
 				);
 				INFOPLIST_FILE = Mobile/Info.plist;
@@ -1591,6 +1592,7 @@
 					"$(LOSRCDIR)/include",
 					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/CustomTarget/ios",
 					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/UnpackedTarball/libpng",
+					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/UnoApiHeadersTarget/udkapi/comprehensive",
 					"$(SOURCE_ROOT)/../pocoinclude-symlink",
 				);
 				INFOPLIST_FILE = Mobile/Info.plist;

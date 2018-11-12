@@ -10,6 +10,15 @@
 
 #import <algorithm>
 
+// This is not "external" code in the UNO-based extensions sense. To be able to include
+// <comphelper/lok.hxx>, we must #define LIBO_INTERNAL_ONLY.
+
+#define LIBO_INTERNAL_ONLY
+#include <sal/config.h>
+#include <rtl/ustring.hxx>
+#include <comphelper/lok.hxx>
+#include <i18nlangtag/languagetag.hxx>
+
 #import "ios.h"
 #import "AppDelegate.h"
 #import "Document.h"
@@ -42,6 +51,8 @@
         locale = [NSString stringWithUTF8String:lang];
     else
         locale = [NSLocale currentLocale].languageCode;
+
+    comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([locale UTF8String])), true));
 
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
