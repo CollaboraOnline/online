@@ -454,6 +454,7 @@
 		BEA8CD7C21959343009FE17E /* readwritemutexguard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = readwritemutexguard.cxx; path = "../../ios-device/unotools/source/i18n/readwritemutexguard.cxx"; sourceTree = "<group>"; };
 		BEA8CD7D21959343009FE17E /* localedatawrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = localedatawrapper.cxx; path = "../../ios-device/unotools/source/i18n/localedatawrapper.cxx"; sourceTree = "<group>"; };
 		BEA8CD7E21959343009FE17E /* resmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = resmgr.cxx; path = "../../ios-device/unotools/source/i18n/resmgr.cxx"; sourceTree = "<group>"; };
+		BEA8CDC32199AC9D009FE17E /* lok.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lok.cxx; path = "../../ios-device/comphelper/source/misc/lok.cxx"; sourceTree = "<group>"; };
 		BEB6521C216F5D8B00B8C09A /* file_path_helper.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = file_path_helper.hxx; path = "../../ios-device/sal/osl/unx/file_path_helper.hxx"; sourceTree = "<group>"; };
 		BEB6521D216F5D8B00B8C09A /* file_error_transl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = file_error_transl.hxx; path = "../../ios-device/sal/osl/unx/file_error_transl.hxx"; sourceTree = "<group>"; };
 		BEB6521E216F5D8B00B8C09A /* nlsupport.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = nlsupport.hxx; path = "../../ios-device/sal/osl/unx/nlsupport.hxx"; sourceTree = "<group>"; };
@@ -943,6 +944,7 @@
 		BE6362BE2153A79200F4237E /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BEA8CDC12199AC7A009FE17E /* comphelper */,
 				BE34D182218CFC6C00815297 /* desktop */,
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
@@ -1148,6 +1150,22 @@
 				BEA8CD7621959342009FE17E /* transliterationwrapper.cxx */,
 			);
 			name = i18n;
+			sourceTree = "<group>";
+		};
+		BEA8CDC12199AC7A009FE17E /* comphelper */ = {
+			isa = PBXGroup;
+			children = (
+				BEA8CDC22199AC80009FE17E /* misc */,
+			);
+			name = comphelper;
+			sourceTree = "<group>";
+		};
+		BEA8CDC22199AC80009FE17E /* misc */ = {
+			isa = PBXGroup;
+			children = (
+				BEA8CDC32199AC9D009FE17E /* lok.cxx */,
+			);
+			name = misc;
 			sourceTree = "<group>";
 		};
 		BEB6521A216F5D4600B8C09A /* sal */ = {
