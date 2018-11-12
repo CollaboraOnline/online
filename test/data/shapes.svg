@@ -5,17 +5,7 @@
   <clipPath id="presentation_clip_path" clipPathUnits="userSpaceOnUse">
    <rect x="3302" y="4572" width="20830" height="8384"/>
   </clipPath>
-  <clipPath id="presentation_clip_path_shrink" clipPathUnits="userSpaceOnUse">
-   <rect x="3322" y="4580" width="20789" height="8368"/>
-  </clipPath>
  </defs>
- <defs>
-  <g id="ooo:meta_slides" ooo:number-of-slides="1" ooo:start-slide-number="0">
-   <g id="ooo:meta_dummy_slide" ooo:slide="dummy-slide" ooo:master="dummy-master-page" ooo:background-visibility="hidden" ooo:master-objects-visibility="hidden" ooo:has-transition="false"/>
-   <g id="ooo:meta_slide_0" ooo:slide="id1" ooo:master="id2" ooo:has-transition="true"/>
-  </g>
- </defs>
- <defs id="presentation-animations"/>
  <defs class="TextShapeIndex">
   <g ooo:slide="id1" ooo:id-list="id3 id4"/>
  </defs>
@@ -51,14 +41,6 @@
    <path d="M 173,740 C 173,903 231,1043 346,1159 462,1274 601,1332 765,1332 928,1332 1067,1274 1183,1159 1299,1043 1357,903 1357,740 1357,577 1299,437 1183,322 1067,206 928,148 765,148 601,148 462,206 346,322 231,437 173,577 173,740 Z"/>
   </g>
  </defs>
- <defs class="TextEmbeddedBitmaps"/>
- <g class="DummySlide">
-  <g>
-   <g id="dummy-slide" class="Slide" clip-path="url(#presentation_clip_path)">
-    <g ooo:name="dummy-page" class="Page"/>
-   </g>
-  </g>
- </g>
  <g class="SlideGroup">
   <g visibility="hidden">
    <g id="container-id1">
