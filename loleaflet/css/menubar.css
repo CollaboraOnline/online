@@ -1,51 +1,51 @@
 #main-menu {
     top: 0;
     height: 25px;
-    padding-left: 125px;
     z-index: 1000;
     outline: none;
+    float: left;
     background-color: transparent;
+    margin-left: 5px;
 }
 
 #main-menu.readonly {
-    top: 30px;
-}
-
-.header-wrapper {
-    background: #efefef; /* Fill up white areas with grey */
-    min-height: 70px; /* Map starts from 70px onwards in case of writer, calc */
+    top: 0px;
 }
 
 #document-header {
     position: relative;
+    background: #ffffff;
+    margin-left: 5px;
+    float: left;
 }
 
 #document-logo {
-	position: absolute;
-	width: 50px;
-	height: 69px;
+	position: relative;
+	width: 22px;
+	height: 30px;
 }
 
 .document-title {
-	display: table-cell;
-	height: 39px;
-	vertical-align: bottom;
+    display: table-cell;
+    vertical-align: middle;
+    height: 30px;
+    white-space: nowrap;
 }
 
 #document-titlebar {
-	display: table;
-	table-layout: fixed;
-	border-spacing: 15px 0px;
-	margin-left: 50px;
-	max-height: 39px;
+    position: relative;
+    display: inline-block;
+    table-layout: fixed;
+    border-spacing: 5px 0px;
+    max-height: 39px;
 }
 
 .main-nav {
     height: 30px; /* on mouseover menubar items, border emerges */
-    background: #efefef;
-    position: static;
-    margin-left: 10px;
     width: auto;
+    background: #ffffff;
+    margin: 3px;
+    white-space: nowrap;
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
@@ -69,18 +69,19 @@
 .lo-menu a.disabled {
     cursor: default;
 }
-.lo-menu > li > a.has-submenu {
+
+.lo-menu > li > a, .lo-menu > li > a.has-submenu {
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 8px;
     z-index: 500;
-    border-left: 1px solid #efefef;
-    border-right: 1px solid #efefef;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
     border-top: 1px solid transparent;
 }
 
 .lo-menu {
-    background: #efefef;
+    background: #ffffff;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
     -khtml-user-select: none;    /* Konqueror */
@@ -94,11 +95,12 @@
     color: #000;
 }
 .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
-    background: #538ecd;
+    background: #0b87e7;
     color: #fff;
 }
 .lo-menu > li, .lo-menu > li > a.disabled {
-    background: #efefef; /* top-level menus remain greyish */
+    background: #ffffff; /* top-level menus remain greyish */
+    border-left-color: transparent;
 }
 .lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
     background: #fff;
@@ -135,7 +137,7 @@
     overflow: hidden;
     padding-top: 0;
     padding-bottom: 0;
-    background-color: #efefef;
+    background-color: #ffffff;
 }
 /* lo-menu customizations end */
 
@@ -151,9 +153,6 @@
 /* Mobile menu toggle button */
 
 .main-menu-btn {
-    z-index: 2000;
-    float: right;
-    top: 5px;
     margin: 2px 10px;
     position: relative;
     display: none;
@@ -221,9 +220,45 @@
     top: 3px;
 }
 
-@media (max-width: 768px),(max-device-height: 768px) {
+/* Some more lo-menu specific customizations */
+
+/* The smartmenus plugin doesn't seem to have support for icons, so implement our own pseudo-elements */
+.lo-menu-item-checked::before {
+    position: absolute;
+    content: '\2713';
+    left: 5px;
+    top: 5px;
+}
+
+.lo-menu-item-checked:hover::before {
+    color: #fff;
+}
+
+.writer-icon-img {
+	background-image: url('images/x-office-document.svg');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
+.calc-icon-img {
+	background-image: url('images/x-office-spreadsheet.svg');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
+.impress-icon-img {
+	background-image: url('images/x-office-presentation.svg');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
+@media (max-width: 767px),(max-device-height: 767px) {
     #document-logo {
-        display: none;
+        width: 35px;
+        height: 38px;
     }
 
     #document-titlebar {
@@ -241,19 +276,6 @@
 
     .main-menu-btn {
         display: inline-block;
-        position: relative;
-        top: 0px;
-    }
-
-    .main-nav {
-        position: absolute;
-        width: 100%;
-        margin: 0;
-    }
-
-    #main-menu {
-	position: relative;
-	top: 0;
     }
 
     .main-nav {
@@ -267,56 +289,33 @@
         z-index: 1010;
     }
 
-}
+    #main-menu {
+       position: relative;
+	top: 0;
+    }
 
-/* Some more lo-menu specific customizations */
+    .writer-icon-img {
+	background-size: 35px 35px;
+    }
 
-/* The smartmenus plugin doesn't seem to have support for icons, so implement our own pseudo-elements */
-.lo-menu-item-checked::before {
-    position: absolute;
-    content: '\2713';
-    left: 5px;
-    top: 5px;
-}
+    .calc-icon-img {
+	background-size: 35px 35px;
+    }
 
-.lo-menu-item-checked:hover::before {
-    color: #fff;
-}
+    .impress-icon-img {
+	background-size: 35px 35px;
+    }
 
-.writer-icon-img {
-	background-image: url('images/x-office-document.svg');
-	background-size: 50px 50px;
-	background-repeat: no-repeat;
-	background-position: bottom;
-}
-
-.calc-icon-img {
-	background-image: url('images/x-office-spreadsheet.svg');
-	background-size: 50px 50px;
-	background-repeat: no-repeat;
-	background-position: bottom;
-}
-
-.impress-icon-img {
-	background-image: url('images/x-office-presentation.svg');
-	background-size: 50px 50px;
-	background-repeat: no-repeat;
-	background-position: bottom;
+    #document-name-input {
+        display: none;
+    }
 }
 
 #menu-last-mod a {
     color: grey;
     text-decoration: underline;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 8px;
+    padding: 8px 15px 7px 15px;
     z-index: 500;
-}
-
-#menu-last-mod a:hover {
-    background: #fff;
-    border-color: #bbbbbb;
-    padding-left: 14px;
-    padding-top: 7px;
-    border: 1px solid #bbb;
+    border: 1px solid transparent;
+    cursor: pointer;
 }

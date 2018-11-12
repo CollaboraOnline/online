@@ -15,6 +15,7 @@
     position: fixed;
     bottom: 0;
     z-index: 1000;
+    border-top: 1px solid #bbbbbb;
 }
 
 #document-signing-bar {

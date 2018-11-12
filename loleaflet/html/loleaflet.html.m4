@@ -79,39 +79,33 @@ ifelse(MOBILEAPP,[true],
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
 
-    <div class="header-wrapper">
-      <div id="document-header">
-	<div id="document-logo"></div>
-	<div id="document-titlebar">
-	  <div id="logo" class="logo"></div>
-          <div class="document-title">
-            <input id="document-name-input" type="text" disabled="true"/>
-          </div>
-	</div>
-        <nav class="main-nav" role="navigation">
-	  <!-- Mobile menu toggle button (hamburger/x icon) -->
-	  <input id="main-menu-state" type="checkbox" />
-	  <label class="main-menu-btn" for="main-menu-state">
-	    <span class="main-menu-btn-icon"></span>
-	  </label>
-	  <ul id="main-menu" class="sm sm-simple lo-menu"></ul>
-        </nav>
-      </div>
-    </div>
+     <nav class="main-nav" role="navigation">
+       <div id="document-header">
+        <div id="document-logo"></div>
+       </div>
+       <!-- Mobile menu toggle button (hamburger/x icon) -->
+       <input id="main-menu-state" type="checkbox" />
+       <ul id="main-menu" class="sm sm-simple lo-menu"></ul>
+       <div id="document-titlebar">
+         <div class="document-title">
+           <input id="document-name-input" type="text" disabled="true"/>
+         </div>
+       </div>
+     </nav>
 
-    <table id="toolbar-wrapper">
-    <tr>
-      <td id="toolbar-logo"></td>
-      <td id="toolbar-up"</td>
-      <td id="toolbar-hamburger">
-        <label class="main-menu-btn" for="main-menu-state">
-          <span class="main-menu-btn-icon"></span>
-        </label>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3" id="formulabar"></td>
-    </tr>
+     <table id="toolbar-wrapper">
+     <tr>
+       <td id="toolbar-logo"></td>
+       <td id="toolbar-up"></td>
+       <td id="toolbar-hamburger">
+         <label class="main-menu-btn" for="main-menu-state">
+           <span class="main-menu-btn-icon"></span>
+         </label>
+       </td>
+     </tr>
+     <tr>
+       <td colspan="3" id="formulabar" style="display: none"></td>
+     </tr>
     </table>
 
     <!--%DOCUMENT_SIGNING_DIV%-->

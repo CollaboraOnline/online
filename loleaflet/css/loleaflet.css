@@ -2,7 +2,7 @@
 	border-top: 1px solid #B6B6B6;
 	background: #DFDFDF;
 	position: absolute;
-	top: 70px;
+	top: 74px;
 	bottom: 33px;
 	right: 0px;
 	left: 0px;
@@ -14,11 +14,6 @@
 
 #toolbar-wrapper.readonly {
     display: none;
-}
-
-#logo.readonly {
-    background-size: 100px;
-    top: -5px;
 }
 
 #map {
@@ -46,13 +41,13 @@ body {
     margin: 0;
     overflow: hidden;
     overscroll-behavior-y: none; /* disable the pull to reload gesture */
-    background: #efefef;
+    background: #ffffff;
 }
 
 #presentation-controls-wrapper {
     background: #dfdfdf;
     position: absolute;
-    top: 110px;
+    top: 74px;
     left: 0px;
     bottom: 66px;
     max-width: 218px;
