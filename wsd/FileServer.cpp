@@ -640,15 +640,15 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     // Customization related to document signing.
     std::string documentSigningDiv;
-    std::string documentContainerTop("70px");
+    std::string documentContainerTop("<div id=\"document-container\">");
     const auto documentSigning = config.getBool("per_document.document_signing", false);
     if (documentSigning)
     {
         documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
-        documentContainerTop = "100px";
+        documentContainerTop = "<div id=\"document-container\" style=\"top: 100px;\">";
     }
     Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
-    Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_CONTAINER_TOP%-->"), documentContainerTop);
+    Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_CONTAINER%-->"), documentContainerTop);
 
     const auto loleafletLogging = config.getString("loleaflet_logging", "false");
     Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
