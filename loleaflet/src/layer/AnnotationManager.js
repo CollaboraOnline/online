@@ -3,6 +3,8 @@
  *  L.AnnotationManager
  */
 
+/* global $ */
+
 L.AnnotationManager = L.Class.extend({
 	options: {
 		marginX: 40,
@@ -24,6 +26,8 @@ L.AnnotationManager = L.Class.extend({
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
 		this._map.on('RedlineAccept', this._onRedlineAccept, this);
 		this._map.on('RedlineReject', this._onRedlineReject, this);
+
+		this._scaleFactor = 1;
 	},
 
 	// Remove only text comments from the document (excluding change tracking comments)
@@ -240,13 +244,7 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	update: function () {
-		if (this._selected) {
-			var point;
-			var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
-			point = this._map._docLayer._twipsToPixels(this._selected._data.anchorPos.min);
-			this._arrow.setLatLngs([this._map.unproject(point), this._map.unproject(L.point(docRight.x, point.y))]);
-			this._map.addLayer(this._arrow);
-		} else {
+		if (!this._selected) {
 			this._map.removeLayer(this._arrow);
 		}
 		this.layout();
@@ -329,6 +327,7 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	doLayout: function (zoom) {
+		this._updateScaling();
 		var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
 		var topRight = docRight.add(L.point(this.options.marginX, this.options.marginY));
 		var latlng, layoutBounds, point, idx;
@@ -338,7 +337,53 @@ L.AnnotationManager = L.Class.extend({
 			if (zoom) {
 				this._items[selectIndexFirst]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.min);
 			}
-			latlng = this._map.unproject(L.point(docRight.x, this._items[selectIndexFirst]._data.anchorPix.y));
+
+			var posX = topRight.x;
+			var posY = this._items[selectIndexFirst]._data.anchorPix.y;
+			point = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.min);
+
+			if (L.Browser.mobile) {
+				var mapBoundsPx = this._map.getPixelBounds();
+				var annotationBoundsPx = this._items[selectIndexFirst].getBounds();
+				var annotationSize = annotationBoundsPx.getSize();
+				var topLeftPoint = L.point(posX, posY);
+				annotationBoundsPx = L.bounds(topLeftPoint, topLeftPoint.add(annotationSize));
+
+				if (!mapBoundsPx.contains(annotationBoundsPx)) {
+					var scrollX = 0, scrollY = 0, spacing = 16;
+
+					if (annotationBoundsPx.min.x < mapBoundsPx.min.x) {
+						scrollX = annotationBoundsPx.min.x - mapBoundsPx.min.x - spacing;
+					} else if (annotationBoundsPx.max.x > mapBoundsPx.max.x) {
+						scrollX = annotationBoundsPx.max.x - mapBoundsPx.max.x + spacing;
+					}
+					if (annotationBoundsPx.min.y < mapBoundsPx.min.y) {
+						scrollY = annotationBoundsPx.min.y - mapBoundsPx.min.y + spacing;
+					} else if (annotationBoundsPx.max.y > mapBoundsPx.max.y) {
+						scrollY = annotationBoundsPx.max.y - mapBoundsPx.max.y - spacing;
+					}
+					scrollX = Math.round(scrollX);
+					scrollY = Math.round(scrollY);
+					posX -= scrollX;
+					if (posX < mapBoundsPx.min.x)
+						posX = Math.round(mapBoundsPx.min.x + spacing);
+					posY -= scrollY;
+					if (posY < mapBoundsPx.min.y)
+						posY = Math.round(mapBoundsPx.min.y + spacing);
+					if (posX < this._items[selectIndexFirst]._data.anchorPix.x + spacing) {
+						var anchorPosMax = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.max);
+						var lineHeight = Math.round(anchorPosMax.y - this._items[selectIndexFirst]._data.anchorPix.y);
+						posY += 2 * lineHeight;
+						point.y += lineHeight;
+					}
+				}
+			}
+
+			// Draw arrow
+			this._arrow.setLatLngs([this._map.unproject(point), this._map.unproject(L.point(posX, posY))]);
+			this._map.addLayer(this._arrow);
+
+			latlng = this._map.unproject(L.point(posX, posY));
 			(new L.PosAnimation()).run(this._items[selectIndexFirst]._container, this._map.latLngToLayerPoint(latlng));
 			this._items[selectIndexFirst].setLatLng(latlng);
 			layoutBounds = this._items[selectIndexFirst].getBounds();
@@ -668,6 +713,72 @@ L.AnnotationManager = L.Class.extend({
 	_onAnnotationZoom: function () {
 		this._map.fire('updatemaxbounds', {sizeChanged: true});
 		this.layout(true);
+	},
+
+	_getScaleFactor: function () {
+		var scaleFactor = 1.0 / this._map.getZoomScale(this._map.options.zoom, this._map._zoom);
+		if (scaleFactor < 0.4)
+			scaleFactor = 0.4;
+		else if (scaleFactor < 0.6)
+			scaleFactor = 0.6 - (0.6 - scaleFactor) / 2.0;
+		else if (scaleFactor < 0.8)
+			scaleFactor = 0.8;
+		else if (scaleFactor <= 2)
+			scaleFactor = 1;
+		else if (scaleFactor > 2) {
+			scaleFactor = 1 + (scaleFactor - 1) / 10.0;
+			if (scaleFactor > 1.5)
+				scaleFactor = 1.5;
+		}
+		return scaleFactor;
+	},
+
+	_updateScaling: function () {
+		if (!L.Browser.mobile || this._items.length === 0)
+			return;
+
+		var initNeeded = (this._initialLayoutData === undefined);
+		var contentWrapperClass = $('.loleaflet-annotation-content-wrapper');
+		if (initNeeded && contentWrapperClass.length > 0) {
+			var userlineClass = $('.loleaflet-annotation-userline');
+			var contentAuthor = $('.loleaflet-annotation-content-author');
+			var dateClass = $('.loleaflet-annotation-date');
+
+			this._initialLayoutData = {
+				wrapperWidth: parseInt(contentWrapperClass.css('width')),
+				wrapperFontSize: parseInt(contentWrapperClass.css('font-size')),
+				authorLineWidth: parseInt(userlineClass.css('width')),
+				authorLineHeight: parseInt(userlineClass.css('height')),
+				authorContentHeight: parseInt(contentAuthor.css('height')),
+				dateFontSize: parseInt(dateClass.css('font-size')),
+			};
+		}
+
+		var menuClass = $('.loleaflet-annotation-menu');
+		if ((this._initialLayoutData.menuWidth === undefined) && menuClass.length > 0) {
+			this._initialLayoutData.menuWidth = parseInt(menuClass.css('width'));
+			this._initialLayoutData.menuHeight = parseInt(menuClass.css('height'));
+		}
+
+		var scaleFactor = this._getScaleFactor();
+		var idx;
+		if (this._selected) {
+			var selectIndexFirst = this.getRootIndexOf(this._selected._data.id);
+			var selectIndexLast = this.getLastChildIndexOf(this._selected._data.id);
+			for (idx = 0; idx < this._items.length; idx++) {
+				if (idx < selectIndexFirst || idx >  selectIndexLast) {
+					this._items[idx]._updateScaling(scaleFactor, this._initialLayoutData);
+				}
+				else {
+					this._items[idx]._updateScaling(1, this._initialLayoutData);
+				}
+			}
+		}
+		else {
+			for (idx = 0; idx < this._items.length; idx++) {
+				this._items[idx]._updateScaling(scaleFactor, this._initialLayoutData);
+			}
+		}
 	}
 });
 
