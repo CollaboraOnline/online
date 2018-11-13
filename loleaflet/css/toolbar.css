@@ -5,6 +5,7 @@
     text-align: center;
     z-index: 999;
     overflow: visible !important;
+    background-color: transparent;
 }
 
 #toolbar-down {
@@ -38,6 +39,11 @@ w2ui-toolbar {
     bottom: 33px;
     padding: 0;
     position: absolute;
+}
+
+#formulabar {
+    border-top: 1px solid #bbbbbb;
+    height: 30px;
 }
 
 #presentation-toolbar {

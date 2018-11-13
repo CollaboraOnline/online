@@ -1,18 +1,18 @@
 #document-container.spreadsheet-document {
         border-top: 1px solid #B6B6B6;
-        top: 135px;
+        top: 136px;
         left: 50px;
         bottom: 65px;
 }
 
 #document-container.spreadsheet-document.readonly {
-        top: 50px;
+        top: 56px;
 }
 
 .spreadsheet-tabs-container {
 	margin: 0;
 	padding: 0;
-	left: 162px;
+	left: 142px;
 	right: 0;
 	bottom: 33px;
 	position: absolute;
@@ -62,12 +62,12 @@
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 115px;
+	top: 116px;
 	bottom: 65px;
 }
 
 #spreadsheet-row-column-frame.readonly {
-        top: 30px;
+        top: 36px;
 }
 
 #spreadsheet-header-corner-container {

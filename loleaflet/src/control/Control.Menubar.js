@@ -576,7 +576,7 @@ L.Control.Menubar = L.Control.extend({
 						$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
 					} else {
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
-						$nav.css({height:0, bottom: ''});
+						$nav.css({height:'', bottom: ''});
 					}
 				});
 				// hide mobile menu beforeunload

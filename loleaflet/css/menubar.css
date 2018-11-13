@@ -34,7 +34,7 @@
 
 #document-titlebar {
     position: relative;
-    display: inline-block;
+    display: table;
     table-layout: fixed;
     border-spacing: 5px 0px;
     max-height: 39px;
@@ -318,4 +318,11 @@
     z-index: 500;
     border: 1px solid transparent;
     cursor: pointer;
+}
+
+#menu-last-mod a:hover {
+    background: #fff;
+    border-color: #bbbbbb;
+    padding: 7px 14px 6px 14px;
+    border: 1px solid #bbb;
 }
