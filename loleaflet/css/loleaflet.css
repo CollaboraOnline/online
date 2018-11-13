@@ -201,7 +201,6 @@ body {
 	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
 	font-size: 13px;
 	text-align: left;
-	border-radius: 5px;
 	background-color: #efefef;
 	box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
 	color: #222;
@@ -310,7 +309,7 @@ body {
 }
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {
-	background: url('images/submenu.svg') no-repeat center !important;
+	background: url('images/submenu.svg') no-repeat center/contain !important;
 }
 
 .loleaflet-annotation-menu:hover, .loleaflet-annotation-menu-redline:hover, .loleaflet-redline-accept-button:hover, .loleaflet-redline-reject-button:hover {

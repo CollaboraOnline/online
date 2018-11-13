@@ -124,6 +124,13 @@ L.Annotation = L.Layer.extend({
 		return this._data.id === comment._data.parent;
 	},
 
+	onZoom: function(scaleFactor) {
+		var authorImageWidth = Math.round(this.options.imgSize.x * scaleFactor);
+		var authorImageHeight = Math.round(this.options.imgSize.y * scaleFactor);
+		this._authorAvatarImg.setAttribute('width', authorImageWidth);
+		this._authorAvatarImg.setAttribute('height', authorImageHeight);
+	},
+
 	_checkBounds: function () {
 		if (!this._map || this._map.animatingZoom || !this._container.style || this._container.style.visibility !== '') {
 			return;
@@ -181,7 +188,7 @@ L.Annotation = L.Layer.extend({
 		imgAuthor.setAttribute('width', this.options.imgSize.x);
 		imgAuthor.setAttribute('height', this.options.imgSize.y);
 		this._authorAvatarImg = imgAuthor;
-		L.DomUtil.create(tagDiv, 'loleaflet-annotation-userline', tdImg);
+		this._authorUserLine = L.DomUtil.create(tagDiv, 'loleaflet-annotation-userline', tdImg);
 		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
 
@@ -204,7 +211,7 @@ L.Annotation = L.Layer.extend({
 
 		if (this.options.noMenu !== true && this._map._permission !== 'readonly') {
 			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
-			var divMenu = L.DomUtil.create(tagDiv, this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
+			var divMenu = this._menu = L.DomUtil.create(tagDiv, this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 			divMenu.title = _('Open menu');
 			divMenu.annotation = this;
 		}
@@ -358,6 +365,35 @@ L.Annotation = L.Layer.extend({
 			L.DomUtil.setPosition(this._container, pos);
 		}
 		this._checkBounds();
+	},
+
+	_updateScaling: function (scaleFactor, initialLayoutData) {
+		if (!L.Browser.mobile)
+			return;
+
+		var wrapperWidth = Math.round(initialLayoutData.wrapperWidth * scaleFactor);
+		this._wrapper.style.width = wrapperWidth + 'px';
+		var wrapperFontSize = Math.round(initialLayoutData.wrapperFontSize * scaleFactor);
+		this._wrapper.style.fontSize = wrapperFontSize + 'px';
+		var authorLineWidth = Math.round(initialLayoutData.authorLineWidth * scaleFactor);
+		this._authorUserLine.style.width = authorLineWidth + 'px';
+		var authorLineHeight = Math.round(initialLayoutData.authorLineHeight * scaleFactor);
+		this._authorUserLine.style.height = authorLineHeight + 'px';
+		var contentAuthorHeight = Math.round(initialLayoutData.authorContentHeight * scaleFactor);
+		this._contentAuthor.style.height = contentAuthorHeight + 'px';
+		var dateFontSize = Math.round(initialLayoutData.dateFontSize * scaleFactor);
+		this._contentDate.style.fontSize = dateFontSize + 'px';
+		if (this._menu) {
+			var menuWidth = Math.round(initialLayoutData.menuWidth * scaleFactor);
+			this._menu.style.width = menuWidth + 'px';
+			var menuHeight = Math.round(initialLayoutData.menuHeight * scaleFactor);
+			this._menu.style.height = menuHeight + 'px';
+		}
+
+		var authorImageWidth = Math.round(this.options.imgSize.x * scaleFactor);
+		var authorImageHeight = Math.round(this.options.imgSize.y * scaleFactor);
+		this._authorAvatarImg.setAttribute('width', authorImageWidth);
+		this._authorAvatarImg.setAttribute('height', authorImageHeight);
 	}
 });
 
