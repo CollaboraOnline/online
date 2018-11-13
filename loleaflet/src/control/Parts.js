@@ -82,10 +82,16 @@ L.Map.include({
 		else {
 			maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
 		}
+
+		var dpiscale = L.getDpiScaleFactor();
+		if (forAllClients) {
+			dpiscale = 2; // some may be hidpi, and it is fine to send the hi-dpi slide preview to non-hpi clients
+		}
+
 		this._socket.sendMessage('tile ' +
 							'part=' + part + ' ' +
-							'width=' + maxWidth + ' ' +
-							'height=' + maxHeight + ' ' +
+							'width=' + maxWidth * dpiscale + ' ' +
+							'height=' + maxHeight * dpiscale + ' ' +
 							'tileposx=' + tilePosX + ' ' +
 							'tileposy=' + tilePosY + ' ' +
 							'tilewidth=' + tileWidth + ' ' +
@@ -103,10 +109,13 @@ L.Map.include({
 		var autoUpdate = options ? options.autoUpdate : false;
 		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
 			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate};
+
+		var dpiscale = L.getDpiScaleFactor();
+
 		this._socket.sendMessage('tile ' +
 							'part=' + part + ' ' +
-							'width=' + width + ' ' +
-							'height=' + height + ' ' +
+							'width=' + width * dpiscale + ' ' +
+							'height=' + height * dpiscale + ' ' +
 							'tileposx=' + tilePosX + ' ' +
 							'tileposy=' + tilePosY + ' ' +
 							'tilewidth=' + tileWidth + ' ' +
