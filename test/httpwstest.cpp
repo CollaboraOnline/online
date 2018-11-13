@@ -2727,10 +2727,12 @@ void HTTPWSTest::testRenderShapeSelection()
         sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
         CPPUNIT_ASSERT(!responseSVG.empty());
-        responseSVG.erase(responseSVG.begin(), ++std::find(responseSVG.begin(), responseSVG.end(),'\n'));
+        auto it = std::find(responseSVG.begin(), responseSVG.end(),'\n');
+        if (it != responseSVG.end())
+            responseSVG.erase(responseSVG.begin(), ++it);
 
-        std::vector<char> expectedSVG = helpers::readDataFromFile("shapes.svg");
-        CPPUNIT_ASSERT_EQUAL(std::string(expectedSVG.data(), expectedSVG.size()), std::string(responseSVG.data(), responseSVG.size()));
+        const std::vector<char> expectedSVG = helpers::readDataFromFile("shapes.svg");
+        CPPUNIT_ASSERT(expectedSVG == responseSVG);
     }
     catch (const Poco::Exception& exc)
     {

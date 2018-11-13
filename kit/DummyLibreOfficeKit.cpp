@@ -120,7 +120,7 @@ static unsigned char* doc_renderFont(LibreOfficeKitDocument* pThis,
                           int* pFontHeight);
 static char* doc_getPartHash(LibreOfficeKitDocument* pThis, int nPart);
 
-static void doc_renderShapeSelection(LibreOfficeKitDocument* pThis, char*& pOutput, size_t& nOutputsize);
+static size_t doc_renderShapeSelection(LibreOfficeKitDocument* pThis, char** pOutput);
 
 LibLODocument_Impl::LibLODocument_Impl()
 {
@@ -523,11 +523,11 @@ unsigned char* doc_renderFont(LibreOfficeKitDocument* /*pThis*/,
     return nullptr;
 }
 
-static void doc_renderShapeSelection(LibreOfficeKitDocument* pThis, char*& pOutput, size_t& nOutputsize)
+static size_t doc_renderShapeSelection(LibreOfficeKitDocument* pThis, char** pOutput)
 {
     (void) pThis;
     (void) pOutput;
-    (void) nOutputsize;
+    return 0;
 }
 
 static char* lo_getError (LibreOfficeKit *pThis)
