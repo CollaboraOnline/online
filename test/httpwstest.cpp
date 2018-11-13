@@ -2722,8 +2722,6 @@ void HTTPWSTest::testRenderShapeSelection()
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "mouse type=buttondown x=4825 y=5002 count=1 buttons=1 modifier=0", testname);
-        sendTextFrame(socket, "mouse type=buttonup x=4825 y=5002 count=1 buttons=1 modifier=0", testname);
         sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
         CPPUNIT_ASSERT(!responseSVG.empty());
