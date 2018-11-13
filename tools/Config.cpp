@@ -209,6 +209,15 @@ int Config::main(const std::vector<std::string>& args)
         RAND_bytes(salt, _adminConfig.pwdSaltLength);
         std::stringstream stream;
 
+        // Ask for admin username
+        std::string adminUser;
+        std::cout << "Enter admin username [admin]: ";
+        std::getline(std::cin, adminUser);
+        if (adminUser.empty())
+        {
+            adminUser = "admin";
+        }
+
         // Ask for user password
         termios oldTermios;
         tcgetattr(STDIN_FILENO, &oldTermios);
@@ -255,6 +264,7 @@ int Config::main(const std::vector<std::string>& args)
         std::stringstream pwdConfigValue("pbkdf2.sha512.", std::ios_base::in | std::ios_base::out | std::ios_base::ate);
         pwdConfigValue << std::to_string(_adminConfig.pwdIterations) << ".";
         pwdConfigValue << saltHash << "." << passwordHash;
+        _loolConfig.setString("admin_console.username", adminUser);
         _loolConfig.setString("admin_console.secure_password[@desc]",
                               "Salt and password hash combination generated using PBKDF2 with SHA512 digest.");
         _loolConfig.setString("admin_console.secure_password", pwdConfigValue.str());
