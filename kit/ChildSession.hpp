@@ -209,10 +209,9 @@ public:
     bool getStatus(const char* buffer, int length);
     int getViewId() const { return _viewId; }
     void setViewId(const int viewId) { _viewId = viewId; }
-    const std::string& getViewUserId() const { return _userId; }
-    const std::string& getViewUserName() const { return _userName; }
-    const std::string& getViewUserExtraInfo() const { return _userExtraInfo; }
-    const std::string& getWatermarkText() const { return _watermarkText; }
+    const std::string& getViewUserId() const { return getUserId(); }
+    const std::string& getViewUserName() const { return getUserName(); }
+    const std::string& getViewUserExtraInfo() const { return getUserExtraInfo(); }
     void updateSpeed();
     int getSpeed();
 

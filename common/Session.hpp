@@ -84,6 +84,40 @@ public:
 
     void getIOStats(uint64_t &sent, uint64_t &recv);
 
+    void setUserId(const std::string& userId) { _userId = userId; }
+
+    const std::string& getUserId() const { return _userId; }
+
+    void setWatermarkText(const std::string& watermarkText) { _watermarkText = watermarkText; }
+
+    void setUserExtraInfo(const std::string& userExtraInfo) { _userExtraInfo = userExtraInfo; }
+
+    void setUserName(const std::string& userName) { _userName = userName; }
+
+    const std::string& getUserName() const {return _userName; }
+
+    const std::string& getUserNameAnonym() const { return _userNameAnonym; }
+
+    bool isDocPasswordProtected() const { return _isDocPasswordProtected; }
+
+    const std::string& getDocOptions() const { return _docOptions; }
+
+    const std::string& getWatermarkText() const { return _watermarkText; }
+
+    const std::string& getLang() const { return _lang; }
+
+    bool getHaveDocPassword() const { return _haveDocPassword; }
+
+    const std::string& getDocPassword() const { return _docPassword; }
+
+    const std::string& getUserExtraInfo() const { return _userExtraInfo; }
+
+    const std::string& getDocURL() const { return  _docURL; }
+
+    const std::string& getJailedFilePath() const { return _jailedFilePath; }
+
+    const std::string& getJailedFilePathAnonym() const { return _jailedFilePathAnonym; }
+
 protected:
     Session(const std::string& name, const std::string& id, bool readonly);
     virtual ~Session();
@@ -108,7 +142,6 @@ protected:
 private:
     virtual bool _handleInput(const char* buffer, int length) = 0;
 
-private:
     /// A session ID specific to an end-to-end connection (from user to lokit).
     const std::string _id;
 
@@ -131,7 +164,6 @@ private:
     /// Whether the session is opened as readonly
     bool _isReadOnly;
 
-protected:
     /// The actual URL, also in the child, even if the child never accesses that.
     std::string _docURL;
 

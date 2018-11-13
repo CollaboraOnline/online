@@ -126,7 +126,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens[0] == "load")
     {
-        if (_docURL != "")
+        if (getDocURL() != "")
         {
             sendTextFrame("error: cmd=load kind=docalreadyloaded");
             return false;
@@ -178,7 +178,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
     }
-    else if (_docURL == "")
+    else if (getDocURL() == "")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
@@ -405,23 +405,23 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         oss << "load";
         oss << " url=" << docBroker->getPublicUri().toString();;
 
-        if (!_userId.empty() && !_userName.empty())
+        if (!getUserId().empty() && !getUserName().empty())
         {
             std::string encodedUserId;
-            Poco::URI::encode(_userId, "", encodedUserId);
+            Poco::URI::encode(getUserId(), "", encodedUserId);
             oss << " authorid=" << encodedUserId;
-            oss << " xauthorid=" << LOOLWSD::anonymizeUsername(_userId);
+            oss << " xauthorid=" << LOOLWSD::anonymizeUsername(getUserId());
 
             std::string encodedUserName;
-            Poco::URI::encode(_userName, "", encodedUserName);
+            Poco::URI::encode(getUserName(), "", encodedUserName);
             oss << " author=" << encodedUserName;
-            oss << " xauthor=" << LOOLWSD::anonymizeUsername(_userName);
+            oss << " xauthor=" << LOOLWSD::anonymizeUsername(getUserName());
         }
 
-        if (!_userExtraInfo.empty())
+        if (!getUserExtraInfo().empty())
         {
             std::string encodedUserExtraInfo;
-            Poco::URI::encode(_userExtraInfo, "", encodedUserExtraInfo);
+            Poco::URI::encode(getUserExtraInfo(), "", encodedUserExtraInfo);
             oss << " authorextrainfo=" << encodedUserExtraInfo; //TODO: could this include PII?
         }
 
@@ -432,26 +432,26 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " part=" << loadPart;
         }
 
-        if (_haveDocPassword)
+        if (getHaveDocPassword())
         {
-            oss << " password=" << _docPassword;
+            oss << " password=" << getDocPassword();
         }
 
-        if (!_lang.empty())
+        if (!getLang().empty())
         {
-            oss << " lang=" << _lang;
+            oss << " lang=" << getLang();
         }
 
-        if (!_watermarkText.empty())
+        if (!getWatermarkText().empty())
         {
             std::string encodedWatermarkText;
-            Poco::URI::encode(_watermarkText, "", encodedWatermarkText);
+            Poco::URI::encode(getWatermarkText(), "", encodedWatermarkText);
             oss << " watermarkText=" << encodedWatermarkText;
         }
 
-        if (!_docOptions.empty())
+        if (!getDocOptions().empty())
         {
-            oss << " options=" << _docOptions;
+            oss << " options=" << getDocOptions();
         }
 
         return forwardToChild(oss.str(), docBroker);
@@ -909,7 +909,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
     }
 
-    if (!_isDocPasswordProtected)
+    if (!isDocPasswordProtected())
     {
         if (tokens[0] == "tile:")
         {

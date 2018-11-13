@@ -366,33 +366,33 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
     parseDocOptions(tokens, part, timestamp);
 
     std::string renderOpts;
-    if (!_docOptions.empty())
+    if (!getDocOptions().empty())
     {
         Parser parser;
-        Poco::Dynamic::Var var = parser.parse(_docOptions);
+        Poco::Dynamic::Var var = parser.parse(getDocOptions());
         Object::Ptr object = var.extract<Object::Ptr>();
         Poco::Dynamic::Var rendering = object->get("rendering");
         if (!rendering.isEmpty())
             renderOpts = rendering.toString();
     }
 
-    assert(!_docURL.empty());
-    assert(!_jailedFilePath.empty());
+    assert(!getDocURL().empty());
+    assert(!getJailedFilePath().empty());
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    const bool loaded = _docManager.onLoad(getId(), _jailedFilePath, _jailedFilePathAnonym,
-                                           _userName, _userNameAnonym,
-                                           _docPassword, renderOpts, _haveDocPassword,
-                                           _lang, _watermarkText);
+    const bool loaded = _docManager.onLoad(getId(), getJailedFilePath(), getJailedFilePathAnonym(),
+                                           getUserName(), getUserNameAnonym(),
+                                           getDocPassword(), renderOpts, getHaveDocPassword(),
+                                           getLang(), getWatermarkText());
     if (!loaded || _viewId < 0)
     {
-        LOG_ERR("Failed to get LoKitDocument instance for [" << _jailedFilePathAnonym << "].");
+        LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << "].");
         return false;
     }
 
     LOG_INF("Created new view with viewid: [" << _viewId << "] for username: [" <<
-            _userNameAnonym << "] in session: [" << getId() << "].");
+            getUserNameAnonym() << "] in session: [" << getId() << "].");
 
     std::unique_lock<std::mutex> lockLokDoc(_docManager.getDocumentMutex());
 
