@@ -109,6 +109,7 @@ L.Map = L.Evented.extend({
 		this._helpTarget = null; // help page that fits best the current context
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
 		this._winId = 0;
+		this._activeDialog = null;
 
 		vex.dialogID = -1;
 

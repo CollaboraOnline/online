@@ -199,6 +199,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._getToolbarCommandsValues();
 		this._selections = new L.LayerGroup();
 		this._references = new L.LayerGroup();
+		this._referencesAll = [];
 		if (this.options.permission !== 'readonly') {
 			map.addLayer(this._selections);
 			map.addLayer(this._references);
