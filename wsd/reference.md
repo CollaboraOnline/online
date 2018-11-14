@@ -59,6 +59,11 @@ A string for the domain the host page sends/receives PostMessages from, we only 
 ### Size
 Size of the file in bytes (64bit)
 
+### TemplateSaveAs
+In case this file should be treated as a template, the file name (potentially including a suitable path - that the WOPI host has to interpret) will be used as the real name under which the resulting file will be stored.
+
+Storing the file resulting from a template uses the normal PutRelativeFile workflow, which means a new CheckFileInfo will have to be sent upon load of the resulting file.
+
 ### UserCanWrite
 A boolean flag, indicating whether the user has permission to edit and/or over-write the file. If not set PutFile will fail.
 

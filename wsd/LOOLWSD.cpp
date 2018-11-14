@@ -2781,7 +2781,7 @@ private:
         capabilities->set("convert-to", convert_to);
 
         // Supports the TemplateSaveAs in CheckFileInfo?
-        capabilities->set("hasTemplateSaveAs", false);
+        capabilities->set("hasTemplateSaveAs", true);
 
         // Version
         capabilities->set("version", LOOLWSD_VERSION);
