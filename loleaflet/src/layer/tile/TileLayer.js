@@ -1768,7 +1768,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onGraphicRotate: function (e) {
 		var center = this._graphicSelectionTwips.getCenter().add(this._graphicSelectionTwips.min);
 		var param = {
-			TransformRotationAngle: {
+			TransformRotationDeltaAngle: {
 				type: 'long',
 				value: (((e.rotation * 18000) / Math.PI))
 			},
