@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-06 22:00+0100\n"
-"PO-Revision-Date: 2018-11-06 22:22+0100\n"
+"POT-Creation-Date: 2018-11-08 15:46+0100\n"
+"PO-Revision-Date: 2018-11-10 11:59+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
 "Language: sl\n"
@@ -277,9 +277,9 @@ msgstr "Dodatno ..."
 msgid "Insert shapes"
 msgstr "Vstavi like"
 
-#: js/toolbar.js:683 src/control/Control.Menubar.js:69
-msgid "Remote Image..."
-msgstr "Oddaljena slika …"
+#: js/toolbar.js:682
+msgid "Insert Local Image"
+msgstr "Vstavi krajevno sliko"
 
 #: js/toolbar.js:730 js/toolbar.js:1209
 msgid "Sum"
@@ -597,6 +597,10 @@ msgstr "Obogateno besedilo (.rtf)"
 #: src/control/Control.Menubar.js:326
 msgid "Repair"
 msgstr "Popravi"
+
+#: src/control/Control.Menubar.js:68
+msgid "Local Image..."
+msgstr "Krajevna slika …"
 
 #: src/control/Control.Menubar.js:84 src/control/Control.Menubar.js:86
 msgid "All"
