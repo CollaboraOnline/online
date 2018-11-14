@@ -1140,10 +1140,10 @@ size_t ClientSession::countIdenticalTilesOnFly(const TileDesc& tile) const
 Util::Rectangle ClientSession::getNormalizedVisibleArea() const
 {
     Util::Rectangle normalizedVisArea;
-    normalizedVisArea._x1 = std::max(_clientVisibleArea._x1, 0);
-    normalizedVisArea._y1 = std::max(_clientVisibleArea._y1, 0);
-    normalizedVisArea._x2 = _clientVisibleArea._x2;
-    normalizedVisArea._y2 = _clientVisibleArea._y2;
+    normalizedVisArea.setLeft(std::max(_clientVisibleArea.getLeft(), 0));
+    normalizedVisArea.setTop(std::max(_clientVisibleArea.getTop(), 0));
+    normalizedVisArea.setRight(_clientVisibleArea.getRight());
+    normalizedVisArea.setBottom(_clientVisibleArea.getBottom());
     return normalizedVisArea;
 }
 
@@ -1259,11 +1259,11 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if(part == _clientSelectedPart || _isTextDocument)
     {
         // Iterate through visible tiles
-        for(int i = std::ceil(normalizedVisArea._y1 / _tileHeightTwips);
-                    i <= std::ceil(normalizedVisArea._y2 / _tileHeightTwips); ++i)
+        for(int i = std::ceil(normalizedVisArea.getTop() / _tileHeightTwips);
+                    i <= std::ceil(normalizedVisArea.getBottom() / _tileHeightTwips); ++i)
         {
-            for(int j = std::ceil(normalizedVisArea._x1 / _tileWidthTwips);
-                j <= std::ceil(normalizedVisArea._x2 / _tileWidthTwips); ++j)
+            for(int j = std::ceil(normalizedVisArea.getLeft() / _tileWidthTwips);
+                j <= std::ceil(normalizedVisArea.getRight() / _tileWidthTwips); ++j)
             {
                 // Find tiles affected by invalidation
                 Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
@@ -1309,8 +1309,8 @@ void ClientSession::traceTileBySend(const TileDesc& tile, bool deduplicated)
     {
         // Track only tile inside the visible area
         if(_clientVisibleArea.hasSurface() &&
-           tile.getTilePosX() >= _clientVisibleArea._x1 && tile.getTilePosX() <= _clientVisibleArea._x2 &&
-           tile.getTilePosY() >= _clientVisibleArea._y1 && tile.getTilePosY() <= _clientVisibleArea._y2)
+           tile.getTilePosX() >= _clientVisibleArea.getLeft() && tile.getTilePosX() <= _clientVisibleArea.getRight() &&
+           tile.getTilePosY() >= _clientVisibleArea.getTop() && tile.getTilePosY() <= _clientVisibleArea.getBottom())
         {
             _oldWireIds.insert(std::pair<std::string, TileWireId>(tileID, tile.getWireId()));
         }

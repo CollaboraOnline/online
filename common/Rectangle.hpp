@@ -18,11 +18,13 @@ namespace Util
 /// Holds the position and size of a rectangle.
 struct Rectangle
 {
+private:
     int _x1;
     int _y1;
     int _x2;
     int _y2;
 
+public:
     Rectangle()
         : _x1(std::numeric_limits<int>::max())
         , _y1(std::numeric_limits<int>::max())
@@ -49,14 +51,44 @@ struct Rectangle
             _y2 = rectangle._y2;
     }
 
-    int getLeft()
+    void setLeft(int x1)
+    {
+        _x1 = x1;
+    }
+
+    int getLeft() const
     {
         return _x1;
     }
 
-    int getTop()
+    void setRight(int x2)
+    {
+        _x2 = x2;
+    }
+
+    int getRight() const
+    {
+        return _x2;
+    }
+
+    void setTop(int y1)
+    {
+        _y1 = y1;
+    }
+
+    int getTop() const
     {
         return _y1;
+    }
+
+    void setBottom(int y2)
+    {
+        _y2 = y2;
+    }
+
+    int getBottom() const
+    {
+        return _y2;
     }
 
     int getWidth()
