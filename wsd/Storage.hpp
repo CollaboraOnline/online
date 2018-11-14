@@ -311,6 +311,7 @@ public:
                      const std::string& username,
                      const std::string& userExtraInfo,
                      const std::string& watermarkText,
+                     const std::string& templateSaveAs,
                      const bool userCanWrite,
                      const std::string& postMessageOrigin,
                      const bool hidePrintOption,
@@ -333,6 +334,7 @@ public:
               _obfuscatedUserId(obfuscatedUserId),
               _username(username),
               _watermarkText(watermarkText),
+              _templateSaveAs(templateSaveAs),
               _userCanWrite(userCanWrite),
               _postMessageOrigin(postMessageOrigin),
               _hidePrintOption(hidePrintOption),
@@ -362,6 +364,8 @@ public:
         const std::string& getUserExtraInfo() const { return _userExtraInfo; }
 
         const std::string& getWatermarkText() const { return _watermarkText; }
+
+        const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
 
@@ -414,6 +418,8 @@ public:
         std::string _userExtraInfo;
         /// In case a watermark has to be rendered on each tile.
         std::string _watermarkText;
+        /// In case we want to use this file as a template, it should be first re-saved under this name (using PutRelativeFile).
+        std::string _templateSaveAs;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property

@@ -92,6 +92,11 @@ L.Map.WOPI = L.Handler.extend({
 				}
 			}
 		});
+
+		if ('TemplateSaveAs' in wopiInfo) {
+			this._map.showBusy(_('Creating new file from template...'), false);
+			this._map.saveAs(wopiInfo['TemplateSaveAs']);
+		}
 	},
 
 	resetAppLoaded: function() {

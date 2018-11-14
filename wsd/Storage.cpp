@@ -484,6 +484,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     std::string obfuscatedUserId;
     std::string userExtraInfo;
     std::string watermarkText;
+    std::string templateSaveAs;
     bool canWrite = false;
     bool enableOwnerTermination = false;
     std::string postMessageOrigin;
@@ -515,6 +516,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "OwnerId", ownerId);
         JsonUtil::findJSONValue(object, "UserId", userId);
         JsonUtil::findJSONValue(object, "UserFriendlyName", userName);
+        JsonUtil::findJSONValue(object, "TemplateSaveAs", templateSaveAs);
 
         // Anonymize key values.
         if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
@@ -550,7 +552,10 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             object->remove("ObfuscatedUserId");
 
             if (LOOLWSD::AnonymizeFilenames)
+            {
                 object->remove("BaseFileName");
+                object->remove("TemplateSaveAs");
+            }
 
             if (LOOLWSD::AnonymizeUsernames)
             {
@@ -604,7 +609,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     setFileInfo(FileInfo({filename, ownerId, modifiedTime, size}));
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
-        {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, canWrite,
+        {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, canWrite,
          postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
          enableOwnerTermination, disablePrint, disableExport, disableCopy,
          disableInactiveMessages, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,
