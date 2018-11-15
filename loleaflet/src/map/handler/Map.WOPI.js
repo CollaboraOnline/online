@@ -1,8 +1,9 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * L.WOPI contains WOPI related logic
  */
 
-/* global w2ui toolbarUpMobileItems resizeToolbar */
+/* global $ w2ui toolbarUpMobileItems resizeToolbar _ */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -62,7 +63,7 @@ L.Map.WOPI = L.Handler.extend({
 
 	_setWopiProps: function(wopiInfo) {
 		// Store postmessageorigin property, if it exists
-		if (!!wopiInfo['PostMessageOrigin']) {
+		if (wopiInfo['PostMessageOrigin']) {
 			this.PostMessageOrigin = wopiInfo['PostMessageOrigin'];
 		}
 
@@ -216,7 +217,7 @@ L.Map.WOPI = L.Handler.extend({
 				var fileName = this._map['wopi'].BaseFileName;
 				fileName = fileName.substr(0, fileName.lastIndexOf('.'));
 				fileName = fileName === '' ? 'document' : fileName;
-				this._map.downloadAs(filename + '.' + format, format);
+				this._map.downloadAs(fileName + '.' + format, format);
 			}
 		}
 		else if (msg.MessageId == 'Action_InsertGraphic') {
@@ -234,10 +235,10 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Get_Export_Formats') {
 			var exportFormatsResp = [];
-			for (var idx in this._map._docLayer._exportFormats) {
+			for (var index in this._map._docLayer._exportFormats) {
 				exportFormatsResp.push({
-					Label: this._map._docLayer._exportFormats[idx].label,
-					Format: this._map._docLayer._exportFormats[idx].format
+					Label: this._map._docLayer._exportFormats[index].label,
+					Format: this._map._docLayer._exportFormats[index].format
 				});
 			}
 
@@ -247,7 +248,7 @@ L.Map.WOPI = L.Handler.extend({
 			if (msg.Values) {
 				if (msg.Values.Filename !== null && msg.Values.Filename !== undefined) {
 					this._map.showBusy(_('Creating copy...'), false);
-					map.saveAs(msg.Values.Filename);
+					this._map.saveAs(msg.Values.Filename);
 				}
 			}
 		}
