@@ -7,9 +7,14 @@
 
 var library = null;
 var identity = null;
+var currentPassport = null;
 
 function isSuccess(result) {
 	return result.code == '200';
+}
+
+function haveIdentity() {
+	return identity != null;
 }
 
 function updateIndentity() {
@@ -28,13 +33,63 @@ function updateIndentity() {
 	}
 }
 
+function addPassportToToolbar(passport, i) {
+	var name = null;
+	try {
+		name = passport['claims']['passportName']['tags']['notag']['value']['value'];
+	}
+	catch (exception) {
+		console.log(exception);
+		name = 'Unknown ' + (i+1);
+	}
+
+	w2ui['document-signing-bar'].get('passport').items.push(
+		{ text: name, id: 'item ' + (i+1), value: passport.uuid }
+	);
+}
+
+function updatePassportList() {
+	if (library) {
+		library.passportListPassports().then(function(result) {
+			if (isSuccess(result))
+			{
+				w2ui['document-signing-bar'].get('passport').items = [];
+				var passports = result.data;
+				for (var i = 0; i < passports.length; i++) {
+					addPassportToToolbar(passports[i], i);
+				}
+				updateCurrentPassport();
+				adjustUIState();
+			}
+		});
+	}
+}
+
+function updateCurrentPassport() {
+	if (!haveIdentity())
+		return;
+	if (currentPassport) {
+		w2ui['document-signing-bar'].get('current-passport').html = '<p>' + currentPassport.text + '</p>';
+	}
+	adjustUIState();
+}
+
 function adjustUIState() {
 	if (library && identity) {
 		w2ui['document-signing-bar'].hide('login');
 		w2ui['document-signing-bar'].show('logout');
 		w2ui['document-signing-bar'].show('identity-label');
 		w2ui['document-signing-bar'].show('identity');
-		w2ui['document-signing-bar'].show('sign');
+		if (currentPassport) {
+			w2ui['document-signing-bar'].show('passport');
+			w2ui['document-signing-bar'].show('current-passport');
+			w2ui['document-signing-bar'].show('sign');
+		}
+		else {
+			w2ui['document-signing-bar'].show('passport');
+			w2ui['document-signing-bar'].hide('current-passport');
+			w2ui['document-signing-bar'].hide('sign');
+		}
 	}
 	else {
 		if (library)
@@ -46,6 +101,8 @@ function adjustUIState() {
 		w2ui['document-signing-bar'].hide('identity-label');
 		w2ui['document-signing-bar'].hide('identity');
 		w2ui['document-signing-bar'].hide('sign');
+		w2ui['document-signing-bar'].hide('passport');
+		w2ui['document-signing-bar'].hide('current-passport');
 	}
 	w2ui['document-signing-bar'].refresh();
 }
@@ -60,18 +117,15 @@ L.Map.include({
 	signDocument: function() {
 		if (library) {
 			var map = this;
-			library.getCurrentlyLoggedInUUID().then(function(result) {
-				if (isSuccess(result)) {
-					var UUID = result.data;
-					library.getOneTimeCertificateByPassport(UUID).then(function(result) {
-						if (isSuccess(result)) {
-							var otp = result.data;
-							var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
-							map._socket.sendMessage(blob);
-						}
-					});
-				}
-			});
+			if (currentPassport) {
+				library.getOneTimeCertificateByPassport(currentPassport.uuid).then(function(result) {
+					if (isSuccess(result)) {
+						var otp = result.data;
+						var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
+						map._socket.sendMessage(blob);
+					}
+				});
+			}
 		}
 	},
 	signingLogout: function() {
@@ -79,6 +133,7 @@ L.Map.include({
 			library.logout().then(function(result) {
 				if (isSuccess(result)) {
 					identity = null;
+					currentPassport = null;
 					updateIndentity();
 					adjustUIState();
 				}
@@ -98,6 +153,7 @@ L.Map.include({
 							if (isSuccess(result)) {
 								identity = result.data;
 								updateIndentity();
+								updatePassportList();
 								adjustUIState();
 							}
 						});
@@ -108,11 +164,21 @@ L.Map.include({
 					}
 				}
 			},
-			'https://dev.vereign.com/api/js/iframe'
+			'https://integration1.vereign.com/api/js/iframe'
 		).then(function(lib)
 		{
 			library = lib;
 			adjustUIState();
 		});
+	},
+	setCurrentPassport: function(uuid, text) {
+		if (library && identity && uuid) {
+			currentPassport = { uuid: uuid, text: text };
+			updateCurrentPassport();
+			library.passportGetAvatarByPassport(uuid).then(function(result) {
+				console.log(result);
+			});
+			adjustUIState();
+		}
 	}
 });
