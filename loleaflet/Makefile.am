@@ -71,8 +71,8 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/searchControl.css \
 	$(srcdir)/css/spreadsheet.css \
 	$(srcdir)/css/editor.css \
+	$(srcdir)/css/jquery.mCustomScrollbar.css \
 	$(srcdir)/plugins/draw-$(DRAW_VERSION)/dist/leaflet.draw.css \
-	$(builddir)/node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
 	$(builddir)/node_modules/vex-js/css/vex.css \
 	$(builddir)/node_modules/vex-js/css/vex-theme-plain.css \
@@ -98,7 +98,6 @@ NODE_MODULES_JS =\
 	node_modules/autolinker/dist/Autolinker.js \
 	node_modules/json-js/json2.js \
 	node_modules/select2/dist/js/select2.js \
-	node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js \
 	node_modules/vex-js/js/vex.js \
 	node_modules/vex-js/js/vex.dialog.js
 
@@ -118,6 +117,7 @@ GLOBAL_JS =\
 LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
 
 PLUGINS_JS =\
+	jquery.mCustomScrollbar.js \
 	w2ui-1.5.rc1.js \
 	toolbar.js \
 	main.js
@@ -201,6 +201,7 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(srcdir)/js/global.js \
+	$(srcdir)/js/jquery.mCustomScrollbar.js \
 	$(srcdir)/js/w2ui-1.5.rc1.js \
 	$(srcdir)/js/toolbar.js \
 	$(srcdir)/js/main.js
@@ -209,6 +210,7 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 		$(srcdir)/js/global.js \
 		$(L10N_IOS_ALL_JS) \
 		$(NODE_MODULES_JS) \
+		$(srcdir)/js/jquery.mCustomScrollbar.js \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
 		$(builddir)/build/dist/loleaflet-src.js \
 		$(srcdir)/js/toolbar.js \

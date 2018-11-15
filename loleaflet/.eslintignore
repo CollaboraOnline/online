@@ -2,3 +2,6 @@
 **/js/w2ui-1.5.rc1.js
 **/src/unocommands.js
 **/src/vcl.js
+#
+# This is way too ugly for eslint...
+**/js/jquery.mCustomScrollbar.js
