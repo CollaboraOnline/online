@@ -402,7 +402,8 @@ int TileQueue::priority(const std::string& tileMsg)
     for (int i = static_cast<int>(_viewOrder.size()) - 1; i >= 0; --i)
     {
         auto& cursor = _cursorPositions[_viewOrder[i]];
-        if (tile.intersectsWithRect(cursor.X, cursor.Y, cursor.Width, cursor.Height))
+        if (tile.intersectsWithRect(cursor.getX(), cursor.getY(), cursor.getWidth(),
+                                    cursor.getHeight()))
             return i;
     }
 
