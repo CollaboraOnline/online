@@ -17,22 +17,45 @@ function updateIndentity() {
 		if (identity) {
 			library.getIdentityProfile(identity.authentication.publicKey).then(function(result) {
 				var initials = result.data.initials;
-				var color = result.data.identityColor;
-				console.log(initials + ' ' + color);
-				w2ui['document-signing-bar'].get('user').html = '<p>' + initials + '</p>';
+				w2ui['document-signing-bar'].get('identity').html = '<p>' + initials + '</p>';
 				w2ui['document-signing-bar'].refresh();
 			});
 		}
 		else {
-			w2ui['document-signing-bar'].get('user').html = '';
+			w2ui['document-signing-bar'].get('identity').html = '';
 			w2ui['document-signing-bar'].refresh();
 		}
 	}
 }
 
+function adjustUIState() {
+	if (library && identity) {
+		w2ui['document-signing-bar'].hide('login');
+		w2ui['document-signing-bar'].show('logout');
+		w2ui['document-signing-bar'].show('identity-label');
+		w2ui['document-signing-bar'].show('identity');
+		w2ui['document-signing-bar'].show('sign');
+	}
+	else {
+		if (library)
+			w2ui['document-signing-bar'].show('login');
+		else
+			w2ui['document-signing-bar'].hide('login');
+
+		w2ui['document-signing-bar'].hide('logout');
+		w2ui['document-signing-bar'].hide('identity-label');
+		w2ui['document-signing-bar'].hide('identity');
+		w2ui['document-signing-bar'].hide('sign');
+	}
+	w2ui['document-signing-bar'].refresh();
+}
+
 L.Map.include({
 	showSignDocument: function() {
-		this.signingLogin();
+		this.initializeLibrary();
+	},
+	signingInitializeBar: function() {
+		adjustUIState();
 	},
 	signDocument: function() {
 		if (library) {
@@ -57,13 +80,14 @@ L.Map.include({
 				if (isSuccess(result)) {
 					identity = null;
 					updateIndentity();
-					w2ui['document-signing-bar'].show('login');
-					w2ui['document-signing-bar'].hide('logout');
+					adjustUIState();
 				}
 			});
 		}
 	},
 	signingLogin: function() {
+	},
+	initializeLibrary: function() {
 		setupViamAPI(
 			'signdocument-iframe-content',
 			{
@@ -71,14 +95,15 @@ L.Map.include({
 					switch (event.type) {
 					case 'Authenticated':
 						library.getCurrentlyAuthenticatedIdentity().then(function(result) {
-							identity = result.data;
-							updateIndentity();
-							w2ui['document-signing-bar'].hide('login');
-							w2ui['document-signing-bar'].show('logout');
+							if (isSuccess(result)) {
+								identity = result.data;
+								updateIndentity();
+								adjustUIState();
+							}
 						});
 						break;
 					default:
-						alert(event.type);
+						console.log('UNKNOWN EVENT: ' + event.type);
 						break;
 					}
 				}
@@ -87,6 +112,7 @@ L.Map.include({
 		).then(function(lib)
 		{
 			library = lib;
+			adjustUIState();
 		});
 	}
 });
