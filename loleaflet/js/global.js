@@ -34,7 +34,11 @@ global._ = function (string) {
 		// We use another approach just for iOS for now.
 		if (window.LOCALIZATIONS.hasOwnProperty(string)) {
 			// window.webkit.messageHandlers.debug.postMessage('_(' + string + '): YES: ' + window.LOCALIZATIONS[string]);
-			return window.LOCALIZATIONS[string];
+			var result = window.LOCALIZATIONS[string];
+			if (window.LANG === 'de-CH') {
+				result = result.replace(/ß/g, 'ss');
+			}
+			return result;
 		} else {
 			// window.webkit.messageHandlers.debug.postMessage('_(' + string + '): NO');
 			return string;
