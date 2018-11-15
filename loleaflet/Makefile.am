@@ -47,24 +47,23 @@ pot:
 		src/admin/AdminSocketAnalytics.js \
 		src/admin/AdminSocketBase.js \
 		src/admin/AdminSocketOverview.js \
-		src/admin/AdminSocketHistory.js \
 		src/admin/AdminSocketSettings.js \
 		src/admin/Util.js \
 		src/control/Control.AlertDialog.js \
-		src/control/Control.ColumnHeader.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.MetricInput.js \
-		src/control/Control.RowHeader.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.Tabs.js \
+		src/control/Ruler.js \
 		src/control/Toolbar.js \
 		src/core/Socket.js \
 		src/layer/marker/Annotation.js \
 		src/layer/tile/TileLayer.js \
 		src/map/Map.js \
-		src/map/handler/Map.FileInserter.js
+		src/map/handler/Map.FileInserter.js \
+		src/map/handler/Map.WOPI.js
 
 	html2po --pot --input=dist/loleaflet-help.html --output=po/templates/loleaflet-help.pot --duplicates=merge
 
