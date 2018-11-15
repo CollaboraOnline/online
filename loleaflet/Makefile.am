@@ -283,28 +283,27 @@ install-data-hook:
 pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
 		admin/admin.strings.js \
-		src/errormessages.js \
-		js/toolbar.js \
 		admin/src/AdminSocketAnalytics.js \
 		admin/src/AdminSocketBase.js \
 		admin/src/AdminSocketOverview.js \
-		admin/src/AdminSocketHistory.js \
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
+		js/toolbar.js \
 		src/control/Control.AlertDialog.js \
-		src/control/Control.ColumnHeader.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.Menubar.js \
-		src/control/Control.RowHeader.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.Tabs.js \
+		src/control/Ruler.js \
 		src/control/Toolbar.js \
 		src/core/Socket.js \
+		src/errormessages.js \
 		src/layer/marker/Annotation.js \
 		src/layer/tile/TileLayer.js \
 		src/map/Map.js \
-		src/map/handler/Map.FileInserter.js
+		src/map/handler/Map.FileInserter.js \
+		src/map/handler/Map.WOPI.js
 
 	html2po --pot --input=html/loleaflet-help.html --output=po/templates/loleaflet-help.pot --duplicates=merge
 
