@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8; indent-tabs-mode: t -*- */
 /*
 == malihu jquery custom scrollbar plugin == 
 Version: 3.1.3 
