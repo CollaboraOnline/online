@@ -921,12 +921,13 @@ L.GridLayer = L.Layer.extend({
 						tile: tile,
 						coords: coords
 					});
+
+					if (this._tileCache[key]) {
+						tile.src = this._tileCache[key];
+					}
 				}
 			}
 
-			if (this._tileCache[key]) {
-				tile.src = this._tileCache[key];
-			}
 		}
 
 		// sort the tiles by the rows
