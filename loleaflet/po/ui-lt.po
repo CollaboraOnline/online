@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-08 22:33+0100\n"
+"POT-Creation-Date: 2018-11-15 11:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -302,7 +302,7 @@ msgstr "Paskutinis lakštas"
 msgid "Insert sheet"
 msgstr ""
 
-#: dist/toolbar/toolbar.js:573 src/control/Control.Menubar.js:290
+#: dist/toolbar/toolbar.js:573 src/control/Control.Menubar.js:291
 msgid "Fullscreen presentation"
 msgstr "Visaekranė pateiktis"
 
@@ -554,17 +554,17 @@ msgid "Share..."
 msgstr "Dalintis..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:231
-#: src/control/Control.Menubar.js:309
+#: src/control/Control.Menubar.js:310
 msgid "See revision history"
 msgstr ""
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:232
-#: src/control/Control.Menubar.js:310
+#: src/control/Control.Menubar.js:311
 msgid "Download as"
 msgstr "Atsisiųsti šiuo formatu"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:233
-#: src/control/Control.Menubar.js:311
+#: src/control/Control.Menubar.js:312
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokumentas (.pdf)"
 
@@ -585,11 +585,12 @@ msgid "Rich Text (.rtf)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:241
-#: src/control/Control.Menubar.js:319
+#: src/control/Control.Menubar.js:320
 msgid "Repair"
 msgstr ""
 
-#: src/control/Control.Menubar.js:65
+#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:258
+#: src/control/Control.Menubar.js:333
 msgid "Local Image..."
 msgstr ""
 
@@ -602,23 +603,23 @@ msgid "Text orientation"
 msgstr ""
 
 #: src/control/Control.Menubar.js:208 src/control/Control.Menubar.js:210
-#: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:295
-#: src/control/Control.Menubar.js:386
+#: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:296
+#: src/control/Control.Menubar.js:388
 msgid "None (Do not check spelling)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:298
-#: src/control/Control.Menubar.js:389
+#: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:299
+#: src/control/Control.Menubar.js:391
 msgid "Keyboard shortcuts"
 msgstr "Spartieji klavišai"
 
-#: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:299
-#: src/control/Control.Menubar.js:390
+#: src/control/Control.Menubar.js:221 src/control/Control.Menubar.js:300
+#: src/control/Control.Menubar.js:392
 msgid "About"
 msgstr "Apie"
 
-#: src/control/Control.Menubar.js:223 src/control/Control.Menubar.js:301
-#: src/control/Control.Menubar.js:392
+#: src/control/Control.Menubar.js:223 src/control/Control.Menubar.js:302
+#: src/control/Control.Menubar.js:394
 msgid "Close document"
 msgstr "Užverti dokumentą"
 
@@ -634,23 +635,23 @@ msgstr "„Microsoft Powerpoint 2003“ pateiktis (.ppt)"
 msgid "Microsoft Powerpoint (.pptx)"
 msgstr "„Microsoft Powerpoint“ pateiktis (.pptx)"
 
-#: src/control/Control.Menubar.js:312
+#: src/control/Control.Menubar.js:313
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF skaičiuoklės dokumentas (.ods)"
 
-#: src/control/Control.Menubar.js:313
+#: src/control/Control.Menubar.js:314
 msgid "Microsoft Excel 2003 (.xls)"
 msgstr "„Microsoft Excel 2003“ skaičiuoklės dokumentas (.xls)"
 
-#: src/control/Control.Menubar.js:314
+#: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel (.xlsx)"
 msgstr "„Microsoft Excel“ skaičiuoklės dokumentas (.xlsx)"
 
-#: src/control/Control.Menubar.js:457
+#: src/control/Control.Menubar.js:459
 msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:724
+#: src/control/Control.Menubar.js:726
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ar tikrai šalinti šią skaidrę?"
 
@@ -694,11 +695,19 @@ msgstr "Ar tikrai šalinti lakštą „%sheet%“?"
 msgid "Enter new sheet name"
 msgstr "Įveskite naują lakšto pavadinimą"
 
+#: src/control/Ruler.js:94
+msgid "Left Margin"
+msgstr ""
+
+#: src/control/Ruler.js:95
+msgid "Right Margin"
+msgstr ""
+
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
 msgstr "Siunčiama…"
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1032
+#: src/control/Toolbar.js:99 src/map/Map.js:1024
 msgid "Saving..."
 msgstr "Įrašoma…"
 
@@ -818,7 +827,7 @@ msgstr "Paleidžiama…"
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
-#: src/map/Map.js:1035
+#: src/map/Map.js:1027
 msgid "Loading..."
 msgstr "Įkeliama…"
 
@@ -826,3 +835,7 @@ msgstr "Įkeliama…"
 #, fuzzy
 msgid "Uploading..."
 msgstr "Įkeliama…"
+
+#: src/map/handler/Map.WOPI.js:250
+msgid "Creating copy..."
+msgstr ""
