@@ -29,7 +29,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}]},
 				{name: _('Sign document'), id: 'signdocument', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:SetDocumentProperties'}
+				{uno: '.uno:SetDocumentProperties'},
+				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), type: 'menu', menu: [
 				{uno: '.uno:Undo'},
@@ -224,8 +225,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action'},
-			{name: _('Close document'), id: 'closedocument', type: 'action'}
+			{name: _('Last modification'), id: 'last-mod', type: 'action'}
 		],
 
 		presentation: [
@@ -240,7 +240,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
 					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'}]},
 				{type: 'separator'},
-				{uno: '.uno:SetDocumentProperties'}
+				{uno: '.uno:SetDocumentProperties'},
+				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'presentation'), type: 'menu', menu: [
 				{uno: '.uno:Undo'},
@@ -306,8 +307,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action'},
-			{name: _('Close document'), id: 'closedocument', type: 'action'}
+			{name: _('Last modification'), id: 'last-mod', type: 'action'}
 		],
 
 		spreadsheet: [
@@ -322,7 +322,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action'},
 					{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]},
 				{type: 'separator'},
-				{uno: '.uno:SetDocumentProperties'}
+				{uno: '.uno:SetDocumentProperties'},
+				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:Undo'},
@@ -401,8 +402,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action'},
-			{name: _('Close document'), id: 'closedocument', type: 'action'}
+			{name: _('Last modification'), id: 'last-mod', type: 'action'}
 		],
 
 		commandStates: {},
