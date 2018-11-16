@@ -105,9 +105,13 @@ body {
     #toolbar-hamburger {
 	width: 41px;
     }
-    #closebutton {
+    #closebuttonwrapper {
 	display: none;
-    }
+	}
+	/* Show menubar even if folded */
+	.main-nav {
+	display: block !important;
+	}
 }
 
 .loleaflet-font {
