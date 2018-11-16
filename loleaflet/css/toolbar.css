@@ -83,13 +83,15 @@ w2ui-toolbar {
 
 #formulaInput {
     height: 29px;
-    width: 700px;
+    width: 100%;
 }
 
-@media (max-width: 768px),(max-device-height: 768px) {
-     #formulaInput {
-	width: 500px;
-     }
+#tb_formulabar_item_formula {
+    width: 100%;
+}
+
+#tb_formulabar_item_formula div table {
+    width: 100%;
 }
 
 #document-name-input {
