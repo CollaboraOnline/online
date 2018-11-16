@@ -12,7 +12,8 @@ RUN apt-get update && apt-get upgrade -y
 # install LibreOffice run-time dependencies
 # install apt-transport-https in order to set up repo for Poco
 # install adduser, findutils and cpio that we need later
-RUN apt-get -y install apt-transport-https locales-all libpng12-0 libxinerama1 libgl1-mesa-glx libfontconfig1 libfreetype6 libxrender1 libxcb-shm0 libxcb-render0 adduser cpio findutils
+# install an editor
+RUN apt-get -y install apt-transport-https locales-all libpng12-0 libxinerama1 libgl1-mesa-glx libfontconfig1 libfreetype6 libxrender1 libxcb-shm0 libxcb-render0 adduser cpio findutils nano
 
 # set up 3rd party repo of Poco, dependency of loolwsd
 RUN echo "deb https://collaboraoffice.com/repos/Poco/ /" >> /etc/apt/sources.list.d/poco.list
