@@ -1556,7 +1556,7 @@ function onDocLayerInit() {
 		if (!map['wopi'].HideExportOption) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'fitcell', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'fitcell', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset', 'sum');
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
