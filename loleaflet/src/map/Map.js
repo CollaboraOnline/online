@@ -3,7 +3,15 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global timeago vex $ _ */
+function moveObjectVertically(obj, diff) {
+	if (obj) {
+		var prevTop = obj.css('top');
+		prevTop = parseInt(prevTop.slice(0, -2)) + diff;
+		obj.css({'top': String(prevTop) + 'px'});
+	}
+}
+
+/* global timeago closebutton vex $ _ */
 L.Map = L.Evented.extend({
 
 	options: {
@@ -1377,6 +1385,27 @@ L.Map = L.Evented.extend({
 		}
 		else {
 			this._docLayer._followThis = -1;
+		}
+	},
+
+	toggleMenubar: function() {
+		if ($('.main-nav').css('display') === 'none') {
+			$('.main-nav').css({'display': ''});
+			if (closebutton) {
+				$('#closebuttonwrapper').css({'display': ''});
+			}
+
+			moveObjectVertically($('#spreadsheet-row-column-frame'), 35);
+			moveObjectVertically($('#document-container'), 35);
+			moveObjectVertically($('#presentation-controls-wrapper'), 35);
+		}
+		else {
+			$('.main-nav').css({'display': 'none'});
+			$('#closebuttonwrapper').css({'display': 'none'});
+
+			moveObjectVertically($('#spreadsheet-row-column-frame'), -35);
+			moveObjectVertically($('#document-container'), -35);
+			moveObjectVertically($('#presentation-controls-wrapper'), -35);
 		}
 	}
 });

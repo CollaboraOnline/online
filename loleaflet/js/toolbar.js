@@ -239,6 +239,9 @@ function onClick(e, id, item, subItem) {
 			map.sendUnoCommand('.uno:StatusBarFunc', command);
 		});
 	}
+	else if (id === 'fold') {
+		map.toggleMenubar();
+	}
 	else if (id === 'fullscreen') {
 		if (item.checked) {
 			toolbar.uncheck(id);
@@ -759,7 +762,7 @@ function createToolbar() {
 		{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
-		{type: 'button',  id: 'close',  img: 'close'}
+		{type: 'button',  id: 'fold',  img: 'close'}
 	];
 
 	if (_useSimpleUI()) {
