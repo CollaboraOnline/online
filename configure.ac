@@ -217,12 +217,12 @@ if test -z "$anonym_msg";  then
 fi
 
 ENABLE_IOSAPP=
-IOSAPP_NAME="Mobile"
+MOBILE_APP_NAME="Mobile"
 
 if test "$enable_iosapp" = "yes"; then
    ENABLE_IOSAPP=true
    if test -n "$with_iosapp_name"; then
-      IOSAPP_NAME="$with_iosapp_name"
+      MOBILE_APP_NAME="$with_iosapp_name"
    fi
 
    # When configuring for building the app itself, on macOS, we need
@@ -271,7 +271,7 @@ if test "$enable_iosapp" = "yes"; then
 fi
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
-AC_SUBST(IOSAPP_NAME)
+AC_SUBST(MOBILE_APP_NAME)
 
 ENABLE_GTKAPP=
 if test "$enable_gtkapp" = "yes"; then

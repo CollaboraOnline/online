@@ -14,7 +14,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>@IOSAPP_NAME@</string>
+    <string>@MOBILE_APP_NAME@</string>
     <key>CFBundleDocumentTypes</key>
     <array>
        <!-- Document sub-types are listed in order ODF, OOXML, MSO, other -->
