@@ -724,7 +724,16 @@ function initMobileToolbar(toolItems) {
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 			{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
-			{type: 'button',  id: 'users',  img: 'users'},
+			{type: 'drop', id: 'userlist', img: 'users', html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
+				'<hr><table class="loleaflet-font" id="editor-btn">' +
+				'<tr>' +
+				'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
+				'<td>' + _('Always follow the editor') + '</td>' +
+				'</tr>' +
+				'</table>' +
+				'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
+				'</div>'
+			},
 		],
 		onClick: function (e) {
 			onClick(e, e.target);
@@ -1088,6 +1097,7 @@ function initNormalToolbar(toolItems) {
 }
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
+var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
 var userPopupTimeout = null;
 
 function localizeStateTableCell (text) {
@@ -2033,12 +2043,13 @@ function onUseritemClicked(e) { // eslint-disable-line no-unused-vars
 	selectUser(viewId);
 }
 
+global.onUseritemClicked = onUseritemClicked;
+
 function editorUpdate(e) { // eslint-disable-line no-unused-vars
 	var docLayer = map._docLayer;
 
 	if (e.target.checked) {
 		var editorId = docLayer._editorId;
-		var userlistItem = w2ui['toolbar-down'].get('userlist');
 
 		docLayer._followUser = false;
 		docLayer._followEditor = true;
@@ -2047,9 +2058,12 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 			docLayer._followThis = editorId;
 		}
 
-		$('.selected-user').removeClass('selected-user');
-		if ($(userlistItem.html).find('.selected-user').length !== 0)
-			userlistItem.html = $(userlistItem.html).find('.selected-user').removeClass('selected-user').parent().parent().parent()[0].outerHTML;
+		var userlistItem = w2ui['toolbar-down'].get('userlist');
+		if (userlistItem !== null) {
+			$('.selected-user').removeClass('selected-user');
+			if ($(userlistItem.html).find('.selected-user').length !== 0)
+				userlistItem.html = $(userlistItem.html).find('.selected-user').removeClass('selected-user').parent().parent().parent()[0].outerHTML;
+		}
 	}
 	else {
 		docLayer._followEditor = false;
@@ -2058,14 +2072,24 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 	$('#tb_toolbar-down_item_userlist').w2overlay('');
 }
 
+global.editorUpdate = editorUpdate;
+
 function selectUser(viewId) {
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	if (userlistItem === null) {
+		return;
+	}
+
 	userlistItem.html = $(userlistItem.html).find('#user-' + viewId).addClass('selected-user').parent().parent().parent()[0].outerHTML;
 	$('#tb_toolbar-down_item_userlist').w2overlay('');
 }
 
 function deselectUser(viewId) {
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	if (userlistItem === null) {
+		return;
+	}
+
 	userlistItem.html = $(userlistItem.html).find('#user-' + viewId).removeClass('selected-user').parent().parent().parent()[0].outerHTML;
 }
 
@@ -2091,6 +2115,10 @@ function getUserItem(viewId, userName, extraInfo, color) {
 
 function updateUserListCount() {
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	if (userlistItem === null) {
+		return;
+	}
+
 	var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
 	if (count > 1) {
 		userlistItem.text = nUsers.replace('%n', count);
@@ -2132,9 +2160,11 @@ function onAddView(e) {
 	}
 
 	var userlistItem = w2ui['toolbar-down'].get('userlist');
-	var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
-	userlistItem.html = newhtml;
-	updateUserListCount();
+	if (userlistItem !== null) {
+		var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
+		userlistItem.html = newhtml;
+		updateUserListCount();
+	}
 }
 
 $(window).resize(function() {
@@ -2244,6 +2274,32 @@ function setupToolbar(e) {
 		// If locked, unlock
 		if (w2ui['toolbar-down'].box.firstChild.className === 'w2ui-lock') {
 			w2utils.unlock(w2ui['toolbar-down'].box);
+		}
+	});
+
+	map.on('removeview', function(e) {
+		$('#tb_toolbar-down_item_userlist')
+			.w2overlay({
+				class: 'loleaflet-font',
+				html: userLeftPopupMessage.replace('%user', e.username),
+				style: 'padding: 5px'
+			});
+		clearTimeout(userPopupTimeout);
+		userPopupTimeout = setTimeout(function() {
+			$('#tb_toolbar-down_item_userlist').w2overlay('');
+			clearTimeout(userPopupTimeout);
+			userPopupTimeout = null;
+		}, 3000);
+
+		if (e.viewId === map._docLayer._followThis) {
+			map._docLayer._followThis = -1;
+			map._docLayer._followUser = false;
+		}
+
+		var userlistItem = w2ui['toolbar-down'].get('userlist');
+		if (userlistItem !== null) {
+			userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
+			updateUserListCount();
 		}
 	});
 
