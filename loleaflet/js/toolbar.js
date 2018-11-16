@@ -725,7 +725,6 @@ function initMobileToolbar(toolItems) {
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 			{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
 			{type: 'button',  id: 'users',  img: 'users'},
-			{type: 'button',  id: 'callout',  img: 'callout'},
 		],
 		onClick: function (e) {
 			onClick(e, e.target);
