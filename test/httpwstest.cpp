@@ -114,7 +114,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAlertAllUsers);
     CPPUNIT_TEST(testViewInfoMsg);
     CPPUNIT_TEST(testUndoConflict);
-    CPPUNIT_TEST(testRenderShapeSelection);
+    CPPUNIT_TEST(testRenderShapeSelectionImpress);
+    CPPUNIT_TEST(testRenderShapeSelectionWriter);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -172,7 +173,8 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testAlertAllUsers();
     void testViewInfoMsg();
     void testUndoConflict();
-    void testRenderShapeSelection();
+    void testRenderShapeSelectionImpress();
+    void testRenderShapeSelectionWriter();
 
     void loadDoc(const std::string& documentURL, const std::string& testname);
 
@@ -2712,9 +2714,9 @@ void HTTPWSTest::testUndoConflict()
     }
 }
 
-void HTTPWSTest::testRenderShapeSelection()
+void HTTPWSTest::testRenderShapeSelectionImpress()
 {
-    const char* testname = "testRenderShapeSelection ";
+    const char* testname = "testRenderShapeSelectionImpress ";
     try
     {
         std::string documentPath, documentURL;
@@ -2740,7 +2742,35 @@ void HTTPWSTest::testRenderShapeSelection()
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
-        const std::vector<char> expectedSVG = helpers::readDataFromFile("shapes.svg");
+        const std::vector<char> expectedSVG = helpers::readDataFromFile("shapes_impress.svg");
+        CPPUNIT_ASSERT(expectedSVG == responseSVG);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testRenderShapeSelectionWriter()
+{
+    const char* testname = "testRenderShapeSelectionWriter ";
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("shape.odt", documentPath, documentURL, testname);
+
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+        // Select the shape with SHIFT + F4
+        sendKeyPress(socket, 0, 771 | skShift, testname);
+        sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
+        std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
+        CPPUNIT_ASSERT(!responseSVG.empty());
+        auto it = std::find(responseSVG.begin(), responseSVG.end(),'\n');
+        if (it != responseSVG.end())
+            responseSVG.erase(responseSVG.begin(), ++it);
+
+        const std::vector<char> expectedSVG = helpers::readDataFromFile("shape_writer.svg");
         CPPUNIT_ASSERT(expectedSVG == responseSVG);
     }
     catch (const Poco::Exception& exc)
