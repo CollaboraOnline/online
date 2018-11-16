@@ -121,13 +121,15 @@ w2ui-toolbar {
     top: 3px;
     width: 28px;
     height: 28px;
+    background-color: white;
 }
 #closebutton {
-    width: 28px;
-    height: 28px;
+    width: 18px;
+    height: 18px;
     border: 1px solid;
     border-color: transparent;
     border-radius: 5px;
+    margin: 5px;
 }
 #closebutton:hover {
     border-color: #ccc;
