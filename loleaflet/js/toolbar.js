@@ -762,7 +762,7 @@ function createToolbar() {
 		{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
-		{type: 'button',  id: 'fold',  img: 'close'}
+		{type: 'button',  id: 'fold',  img: 'fold', mobile: false}
 	];
 
 	if (_useSimpleUI()) {
