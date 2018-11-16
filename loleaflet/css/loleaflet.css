@@ -108,9 +108,6 @@ body {
     #closebutton {
 	display: none;
     }
-    #document-name-input {
-	display: none;
-    }
 }
 
 .loleaflet-font {
