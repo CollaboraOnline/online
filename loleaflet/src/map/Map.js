@@ -1399,6 +1399,7 @@ L.Map = L.Evented.extend({
 			}
 		}
 		else {
+			this.fire('deselectuser', {viewId: this._docLayer._followThis});
 			this._docLayer._followThis = -1;
 		}
 	},

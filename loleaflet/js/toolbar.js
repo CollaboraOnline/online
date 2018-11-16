@@ -1028,6 +1028,10 @@ function initMobileToolbar(toolItems) {
 			L.DomEvent.preventDefault(e);
 		}
 	});
+
+	map.on('deselectuser', deselectUser);
+	map.on('addview', onAddView);
+	map.on('removeview', onRemoveView);
 }
 
 function initNormalToolbar(toolItems) {
@@ -2272,8 +2276,6 @@ function onUpdatePermission(e) {
 		}
 	}
 }
-
-
 
 function onUseritemClicked(e) { // eslint-disable-line no-unused-vars
 	var docLayer = map._docLayer;
