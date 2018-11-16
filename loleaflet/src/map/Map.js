@@ -1389,11 +1389,16 @@ L.Map = L.Evented.extend({
 	},
 
 	toggleMenubar: function() {
+		var obj = null;
 		if ($('.main-nav').css('display') === 'none') {
 			$('.main-nav').css({'display': ''});
 			if (closebutton) {
 				$('#closebuttonwrapper').css({'display': ''});
 			}
+
+			obj = $('.unfold');
+			obj.removeClass('w2ui-icon unfold');
+			obj.addClass('w2ui-icon fold');
 
 			moveObjectVertically($('#spreadsheet-row-column-frame'), 35);
 			moveObjectVertically($('#document-container'), 35);
@@ -1402,6 +1407,10 @@ L.Map = L.Evented.extend({
 		else {
 			$('.main-nav').css({'display': 'none'});
 			$('#closebuttonwrapper').css({'display': 'none'});
+
+			obj = $('.fold');
+			obj.removeClass('w2ui-icon fold');
+			obj.addClass('w2ui-icon unfold');
 
 			moveObjectVertically($('#spreadsheet-row-column-frame'), -35);
 			moveObjectVertically($('#document-container'), -35);

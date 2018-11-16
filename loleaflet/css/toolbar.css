@@ -114,6 +114,10 @@ w2ui-toolbar {
     padding-right: 20px;
 }
 
+#tb_toolbar-up_item_edit {
+    display: none;
+}
+
 #closebuttonwrapper {
     position: fixed;
     z-index: 1050;
@@ -123,6 +127,7 @@ w2ui-toolbar {
     height: 28px;
     background-color: white;
 }
+
 #closebutton {
     width: 18px;
     height: 18px;
@@ -131,10 +136,12 @@ w2ui-toolbar {
     border-radius: 5px;
     margin: 5px;
 }
+
 #closebutton:hover {
     border-color: #ccc;
     background-color: #eee;
 }
+
 .closebuttonimage{ background: url('images/lc_closedoc.svg') no-repeat center !important; }
 
 #tb_toolbar-down_item_left {
@@ -553,7 +560,8 @@ button.leaflet-control-search-next
 .w2ui-icon.link{ background: url('images/lc_inserthyperlink.svg') no-repeat center !important; }
 .w2ui-icon.specialcharacter{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
 .w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; }
-.w2ui-icon.close{ background: url('images/lc_closedoc.svg') no-repeat center !important; }
+.w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center !important; }
+.w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center !important; }
 .w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
 .w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
 .w2ui-icon.wraptext{ background: url('images/lc_wraptext.svg') no-repeat center !important; }
