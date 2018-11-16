@@ -119,10 +119,10 @@ protected:
     /// Get the queue lock when accessing members of derived classes.
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
 
-protected:
-    std::vector<Payload> _queue;
+    std::vector<Payload>& getQueue() { return _queue; }
 
 private:
+    std::vector<Payload> _queue;
     mutable std::mutex _mutex;
     std::condition_variable _cv;
 

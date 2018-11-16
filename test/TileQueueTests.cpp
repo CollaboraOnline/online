@@ -163,7 +163,7 @@ void TileQueueTests::testTileRecombining()
     queue.put("tilecombine part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
     // the tilecombine's get merged, resulting in 3 "tile" messages
-    CPPUNIT_ASSERT_EQUAL(3, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(3, static_cast<int>(queue.getQueue().size()));
 
     // but when we later extract that, it is just one "tilecombine" message
     std::string message(payloadAsString(queue.get()));
@@ -171,7 +171,7 @@ void TileQueueTests::testTileRecombining()
     CPPUNIT_ASSERT_EQUAL(std::string("tilecombine part=0 width=256 height=256 tileposx=7680,0,3840 tileposy=0,0,0 imgsize=0,0,0 tilewidth=3840 tileheight=3840 ver=-1,-1,-1 oldwid=0,0,0 wid=0,0,0"), message);
 
     // and nothing remains in the queue
-    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
 }
 
 void TileQueueTests::testViewOrder()
@@ -197,7 +197,7 @@ void TileQueueTests::testViewOrder()
     for (auto &tile : tiles)
         queue.put(tile);
 
-    CPPUNIT_ASSERT_EQUAL(4, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(4, static_cast<int>(queue.getQueue().size()));
 
     // should result in the 3, 2, 1, 0 order of the tiles thanks to the cursor
     // positions
@@ -229,7 +229,7 @@ void TileQueueTests::testPreviewsDeprioritization()
     }
 
     // stays empty after all is done
-    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
 
     // re-ordering case - put previews and normal tiles to the queue and get
     // everything back again but this time the tiles have to interleave with
@@ -256,7 +256,7 @@ void TileQueueTests::testPreviewsDeprioritization()
     CPPUNIT_ASSERT_EQUAL(previews[3], payloadAsString(queue.get()));
 
     // stays empty after all is done
-    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
 
     // cursor positioning case - the cursor position should not prioritize the
     // previews
@@ -269,7 +269,7 @@ void TileQueueTests::testPreviewsDeprioritization()
     CPPUNIT_ASSERT_EQUAL(previews[0], payloadAsString(queue.get()));
 
     // stays empty after all is done
-    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(0, static_cast<int>(queue.getQueue().size()));
 }
 
 void TileQueueTests::testSenderQueue()
@@ -428,7 +428,7 @@ void TileQueueTests::testCallbackInvalidation()
     queue.put("callback all 0 284, 1418, 11105, 275, 0");
     queue.put("callback all 0 4299, 1418, 7090, 275, 0");
 
-    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue.getQueue().size()));
 
     CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 284, 1418, 11105, 275, 0"), payloadAsString(queue.get()));
 
@@ -438,11 +438,11 @@ void TileQueueTests::testCallbackInvalidation()
     queue.put("callback all 0 4299, 10418, 7090, 275, 0");
     queue.put("callback all 0 4299, 20418, 7090, 275, 0");
 
-    CPPUNIT_ASSERT_EQUAL(4, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(4, static_cast<int>(queue.getQueue().size()));
 
     queue.put("callback all 0 EMPTY, 0");
 
-    CPPUNIT_ASSERT_EQUAL(2, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(2, static_cast<int>(queue.getQueue().size()));
     CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 4299, 1418, 7090, 275, 1"), payloadAsString(queue.get()));
     CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 EMPTY, 0"), payloadAsString(queue.get()));
 }
@@ -455,7 +455,7 @@ void TileQueueTests::testCallbackIndicatorValue()
     queue.put("callback all 10 25");
     queue.put("callback all 10 50");
 
-    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue.getQueue().size()));
     CPPUNIT_ASSERT_EQUAL(std::string("callback all 10 50"), payloadAsString(queue.get()));
 }
 
@@ -467,7 +467,7 @@ void TileQueueTests::testCallbackPageSize()
     queue.put("callback all 13 12474, 188626");
     queue.put("callback all 13 12474, 205748");
 
-    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue._queue.size()));
+    CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(queue.getQueue().size()));
     CPPUNIT_ASSERT_EQUAL(std::string("callback all 13 12474, 205748"), payloadAsString(queue.get()));
 }
 

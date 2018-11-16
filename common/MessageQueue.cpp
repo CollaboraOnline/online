@@ -31,10 +31,10 @@ void TileQueue::put_impl(const Payload& value)
 
     if (firstToken == "canceltiles")
     {
-        LOG_TRC("Processing [" << msg << "]. Before canceltiles have " << _queue.size() << " in queue.");
+        LOG_TRC("Processing [" << msg << "]. Before canceltiles have " << getQueue().size() << " in queue.");
         const std::string seqs = msg.substr(12);
         StringTokenizer tokens(seqs, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        _queue.erase(std::remove_if(_queue.begin(), _queue.end(),
+        getQueue().erase(std::remove_if(getQueue().begin(), getQueue().end(),
                 [&tokens](const Payload& v)
                 {
                     const std::string s(v.data(), v.size());
@@ -52,10 +52,10 @@ void TileQueue::put_impl(const Payload& value)
 
                     return false;
 
-                }), _queue.end());
+                }), getQueue().end());
 
         // Don't push canceltiles into the queue.
-        LOG_TRC("After canceltiles have " << _queue.size() << " in queue.");
+        LOG_TRC("After canceltiles have " << getQueue().size() << " in queue.");
         return;
     }
     else if (firstToken == "tilecombine")
@@ -113,14 +113,14 @@ void TileQueue::removeTileDuplicate(const std::string& tileMsg)
         newMsgPos = tileMsg.size() - 1;
     }
 
-    for (size_t i = 0; i < _queue.size(); ++i)
+    for (size_t i = 0; i < getQueue().size(); ++i)
     {
-        auto& it = _queue[i];
+        auto& it = getQueue()[i];
         if (it.size() > newMsgPos &&
             strncmp(tileMsg.data(), it.data(), newMsgPos) == 0)
         {
             LOG_TRC("Remove duplicate tile request: " << std::string(it.data(), it.size()) << " -> " << tileMsg);
-            _queue.erase(_queue.begin() + i);
+            getQueue().erase(getQueue().begin() + i);
             break;
         }
     }
@@ -210,9 +210,9 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
         // we always travel the entire queue
         size_t i = 0;
-        while (i < _queue.size())
+        while (i < getQueue().size())
         {
-            auto& it = _queue[i];
+            auto& it = getQueue()[i];
 
             std::vector<std::string> queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
             if (queuedTokens.size() < 3)
@@ -250,7 +250,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                         tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << msgX << " " << msgY << " " << msgW << " " << msgH << " " << msgPart);
 
                 // remove from the queue
-                _queue.erase(_queue.begin() + i);
+                getQueue().erase(getQueue().begin() + i);
                 continue;
             }
 
@@ -282,7 +282,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                 performedMerge = true;
 
                 // remove from the queue
-                _queue.erase(_queue.begin() + i);
+                getQueue().erase(getQueue().begin() + i);
                 continue;
             }
 
@@ -315,9 +315,9 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             return std::string();
 
         // remove obsolete states of the same .uno: command
-        for (size_t i = 0; i < _queue.size(); ++i)
+        for (size_t i = 0; i < getQueue().size(); ++i)
         {
-            auto& it = _queue[i];
+            auto& it = getQueue()[i];
 
             std::vector<std::string> queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
             if (queuedTokens.size() < 4)
@@ -335,7 +335,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             if (unoCommand == queuedUnoCommand)
             {
                 LOG_TRC("Remove obsolete uno command: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
-                _queue.erase(_queue.begin() + i);
+                getQueue().erase(getQueue().begin() + i);
                 break;
             }
         }
@@ -357,9 +357,9 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             viewId = extractViewId(callbackMsg, tokens);
         }
 
-        for (size_t i = 0; i < _queue.size(); ++i)
+        for (size_t i = 0; i < getQueue().size(); ++i)
         {
-            auto& it = _queue[i];
+            auto& it = getQueue()[i];
 
             // skip non-callbacks quickly
             if (!LOOLProtocol::matchPrefix("callback", it))
@@ -372,7 +372,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             if (!isViewCallback && (queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2]))
             {
                 LOG_TRC("Remove obsolete callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
-                _queue.erase(_queue.begin() + i);
+                getQueue().erase(getQueue().begin() + i);
                 break;
             }
             else if (isViewCallback && (queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2]))
@@ -385,7 +385,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                 if (viewId == queuedViewId)
                 {
                     LOG_TRC("Remove obsolete view callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
-                    _queue.erase(_queue.begin() + i);
+                    getQueue().erase(getQueue().begin() + i);
                     break;
                 }
             }
@@ -412,9 +412,9 @@ int TileQueue::priority(const std::string& tileMsg)
 
 void TileQueue::deprioritizePreviews()
 {
-    for (size_t i = 0; i < _queue.size(); ++i)
+    for (size_t i = 0; i < getQueue().size(); ++i)
     {
-        const Payload front = _queue.front();
+        const Payload front = getQueue().front();
         const std::string message(front.data(), front.size());
 
         // stop at the first non-tile or non-'id' (preview) message
@@ -425,16 +425,16 @@ void TileQueue::deprioritizePreviews()
             break;
         }
 
-        _queue.erase(_queue.begin());
-        _queue.push_back(front);
+        getQueue().erase(getQueue().begin());
+        getQueue().push_back(front);
     }
 }
 
 TileQueue::Payload TileQueue::get_impl()
 {
-    LOG_TRC("MessageQueue depth: " << _queue.size());
+    LOG_TRC("MessageQueue depth: " << getQueue().size());
 
-    const Payload front = _queue.front();
+    const Payload front = getQueue().front();
 
     std::string msg(front.data(), front.size());
 
@@ -445,7 +445,7 @@ TileQueue::Payload TileQueue::get_impl()
     {
         // Don't combine non-tiles or tiles with id.
         LOG_TRC("MessageQueue res: " << msg);
-        _queue.erase(_queue.begin());
+        getQueue().erase(getQueue().begin());
 
         // de-prioritize the other tiles with id - usually the previews in
         // Impress
@@ -459,9 +459,9 @@ TileQueue::Payload TileQueue::get_impl()
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
     int prioritySoFar = -1;
-    for (size_t i = 0; i < _queue.size(); ++i)
+    for (size_t i = 0; i < getQueue().size(); ++i)
     {
-        auto& it = _queue[i];
+        auto& it = getQueue()[i];
         const std::string prio(it.data(), it.size());
 
         // avoid starving - stop the search when we reach a non-tile,
@@ -488,15 +488,15 @@ TileQueue::Payload TileQueue::get_impl()
         }
     }
 
-    _queue.erase(_queue.begin() + prioritized);
+    getQueue().erase(getQueue().begin() + prioritized);
 
     std::vector<TileDesc> tiles;
     tiles.emplace_back(TileDesc::parse(msg));
 
     // Combine as many tiles as possible with the top one.
-    for (size_t i = 0; i < _queue.size(); )
+    for (size_t i = 0; i < getQueue().size(); )
     {
-        auto& it = _queue[i];
+        auto& it = getQueue()[i];
         msg = std::string(it.data(), it.size());
         if (!LOOLProtocol::matchPrefix("tile", msg) ||
             LOOLProtocol::getTokenStringFromMessage(msg, "id", id))
@@ -513,7 +513,7 @@ TileQueue::Payload TileQueue::get_impl()
         if (tiles[0].onSameRow(tile2))
         {
             tiles.emplace_back(tile2);
-            _queue.erase(_queue.begin() + i);
+            getQueue().erase(getQueue().begin() + i);
         }
         else
         {
@@ -521,7 +521,7 @@ TileQueue::Payload TileQueue::get_impl()
         }
     }
 
-    LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << _queue.size() << " in queue.");
+    LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << getQueue().size() << " in queue.");
 
     if (tiles.size() == 1)
     {
