@@ -34,7 +34,7 @@
 
 #document-titlebar {
     position: relative;
-    display: table;
+    display: inline-block;
     table-layout: fixed;
     border-spacing: 5px 0px;
     max-height: 39px;
