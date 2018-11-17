@@ -5,23 +5,11 @@
 
 /* global $ */
 L.Control.Sidebar = L.Control.extend({
-	options: {
-		autoUpdate: true
-	},
-
 	panelIdPrefix: 'sidebarpanel-',
 
 	onAdd: function (map) {
 		map.on('window', this._onWindowMsg, this);
 		map.on('windowpaint', this._onWindowPaint, this);
-		map.on('docloaded', this._docLoaded, this);
-	},
-
-	_docLoaded: function(e) {
-		if (!e.status) {
-			// $('.lokdialog_container').remove();
-			// $('.lokdialogchild-canvas').remove();
-		}
 	},
 
 	// Converts an string Id to its raw integer Id.
@@ -287,7 +275,6 @@ L.Control.Sidebar = L.Control.extend({
 		}
 
 		var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('sidebar-panel'));
-		// var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('slide-sorter'));
 		L.DomUtil.setStyle(panelContainer, 'padding', '0px');
 		L.DomUtil.setStyle(panelContainer, 'margin', '0px');
 		L.DomUtil.setStyle(panelContainer, 'position', 'relative');
@@ -498,7 +485,7 @@ L.Control.Sidebar = L.Control.extend({
 
 	_onPanelChildClose: function(parentId) {
 		this._removeChild(parentId);
-		// $('#' + parentId + '-floating').remove();
+
 		// remove any extra height allocated for the parent container
 		var canvasHeight = document.getElementById(parentId + '-canvas').height;
 		$('#' + parentId).height(canvasHeight + 'px');
@@ -510,7 +497,6 @@ L.Control.Sidebar = L.Control.extend({
 		var floatingCanvas = L.DomUtil.get(parentId + '-floating');
 		floatingCanvas.width = 0;
 		floatingCanvas.height = 0;
-		// $('#' + parentId + '-floating').remove();
 	},
 
 	_createChild: function(childId, parentId, top, left) {
