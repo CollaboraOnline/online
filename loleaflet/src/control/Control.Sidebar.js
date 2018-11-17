@@ -59,13 +59,6 @@ L.Control.Sidebar = L.Control.extend({
 		return null;
 	},
 
-	_sendPaintWindow: function(id, rectangle) {
-		if (rectangle)
-			rectangle = rectangle.replace(/ /g, '');
-
-		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle : ''));
-	},
-
 	_sendPaintWindowRect: function(id, x, y, width, height) {
 		if (!width)
 			width = this._currentDeck.width;
@@ -79,6 +72,13 @@ L.Control.Sidebar = L.Control.extend({
 		// Don't request empty area rendering.
 		if (width > 0 && height > 0)
 			this._sendPaintWindow(id, [x, y, width, height].join(','));
+	},
+
+	_sendPaintWindow: function(id, rectangle) {
+		if (rectangle)
+			rectangle = rectangle.replace(/ /g, '');
+
+		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle : ''));
 	},
 
 	_isRectangleValid: function(rect) {
