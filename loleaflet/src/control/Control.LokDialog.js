@@ -86,33 +86,30 @@ L.Control.LokDialog = L.Control.extend({
 
 	_isRectangleValid: function(rect) {
 		rect = rect.split(',');
-		if (parseInt(rect[0]) < 0 || parseInt(rect[1]) < 0 || parseInt(rect[2]) < 0 || parseInt(rect[3]) < 0)
-			return false;
-		return true;
+		return (parseInt(rect[0]) >= 0 && parseInt(rect[1]) >= 0 &&
+				parseInt(rect[2]) >= 0 && parseInt(rect[3]) >= 0);
 	},
 
 	_onDialogMsg: function(e) {
 		e.id = parseInt(e.id);
-		var left, top;
 		var strDlgId = this._toDlgPrefix(e.id);
 
 		if (e.action === 'created') {
 			var width = parseInt(e.size.split(',')[0]);
 			var height = parseInt(e.size.split(',')[1]);
 
-			if (e.winType === 'dialog') {
-				left = (e.position != null)? parseInt(e.position.split(',')[0]): null;
-				top = (e.position != null)? parseInt(e.position.split(',')[1]): null;
+			if (e.position) {
+				var left = parseInt(e.position.split(',')[0]);
+				var top = parseInt(e.position.split(',')[1]);
+			}
 
+			if (e.winType === 'dialog') {
 				this._launchDialog(this._toDlgPrefix(e.id), left, top, width, height, e.title);
 				this._sendPaintWindow(e.id, this._createRectStr(e.id));
 			} else if (e.winType === 'child') {
-				if (!this._isOpen(e.parentId))
-					return;
-
 				var parentId = parseInt(e.parentId);
-				left = parseInt(e.position.split(',')[0]);
-				top = parseInt(e.position.split(',')[1]);
+				if (!this._isOpen(parentId))
+					return;
 
 				this._removeDialogChild(parentId);
 				this._dialogs[parentId].childid = e.id;
