@@ -66,7 +66,7 @@ L.Control.Sidebar = L.Control.extend({
 		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle : ''));
 	},
 
-	_sendPaintWindow: function(id, x, y, width, height) {
+	_sendPaintWindowRect: function(id, x, y, width, height) {
 		if (!width)
 			width = this._currentDeck.width;
 		if (!height)
@@ -123,7 +123,7 @@ L.Control.Sidebar = L.Control.extend({
 				};
 
 				this._createChild(e.id, parentId, top, left);
-				this._sendPaintWindow(e.id, 0, 0, width, height);
+				this._sendPaintWindowRect(e.id, 0, 0, width, height);
 			}
 			else {
 				// We only handle sidebar panels here (see Control.LokDialog.js)
@@ -157,7 +157,7 @@ L.Control.Sidebar = L.Control.extend({
 				rectangle = rectangle.split(',');
 				rectangle[0] = parseInt(rectangle[0]) - this._currentDeck.left;
 				rectangle[1] = parseInt(rectangle[1]) - this._currentDeck.top;
-				this._sendPaintWindow(e.id, rectangle[0], rectangle[1], rectangle[2], rectangle[3]);
+				this._sendPaintWindowRect(e.id, rectangle[0], rectangle[1], rectangle[2], rectangle[3]);
 			}
 		} else if (e.action === 'size_changed') {
 			width = parseInt(e.size.split(',')[0]);
@@ -261,7 +261,7 @@ L.Control.Sidebar = L.Control.extend({
 			}
 
 			// Render window.
-			this._sendPaintWindow(id);
+			this._sendPaintWindowRect(id);
 			return;
 		}
 
@@ -371,7 +371,7 @@ L.Control.Sidebar = L.Control.extend({
 		});
 
 		// Render window.
-		this._sendPaintWindow(id);
+		this._sendPaintWindowRect(id);
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
