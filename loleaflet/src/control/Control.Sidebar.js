@@ -59,7 +59,7 @@ L.Control.Sidebar = L.Control.extend({
 		return null;
 	},
 
-	_sendPaintWindowStr: function(id, rectangle) {
+	_sendPaintWindow: function(id, rectangle) {
 		if (rectangle)
 			rectangle = rectangle.replace(/ /g, '');
 
@@ -78,7 +78,7 @@ L.Control.Sidebar = L.Control.extend({
 
 		// Don't request empty area rendering.
 		if (width > 0 && height > 0)
-			this._sendPaintWindowStr(id, [x, y, width, height].join(','));
+			this._sendPaintWindow(id, [x, y, width, height].join(','));
 	},
 
 	_isRectangleValid: function(rect) {
@@ -144,12 +144,12 @@ L.Control.Sidebar = L.Control.extend({
 				else
 					rectangle = '0,0,' + this._currentDeck.width + ',' + this._currentDeck.height;
 
-				this._sendPaintWindowStr(e.id, rectangle);
+				this._sendPaintWindow(e.id, rectangle);
 			}
 			else if (this._isChild(e.id))
 			{
 				// Child windows are given relative coordinates.
-				this._sendPaintWindowStr(e.id, rectangle);
+				this._sendPaintWindow(e.id, rectangle);
 			}
 			else
 			{
