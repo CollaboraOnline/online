@@ -63,6 +63,12 @@ L.Control.Sidebar = L.Control.extend({
 		return null;
 	},
 
+	_isRectangleValid: function(rect) {
+		rect = rect.split(',');
+		return (parseInt(rect[0]) >= 0 && parseInt(rect[1]) >= 0 &&
+				parseInt(rect[2]) >= 0 && parseInt(rect[3]) >= 0);
+	},
+
 	_onWindowMsg: function(e) {
 		e.id = parseInt(e.id);
 		var strId = this._toStrId(e.id);
@@ -166,6 +172,58 @@ L.Control.Sidebar = L.Control.extend({
 			else
 				this._onPanelClose(e.id, false);
 		}
+	},
+
+	_updateDialogCursor: function(dlgId, x, y, height) {
+		var strDlgId = this._toStrId(dlgId);
+		var dialogCursor = L.DomUtil.get(strDlgId + '-cursor');
+		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
+		L.DomUtil.setStyle(dialogCursor, 'display', this._currentDeck.cursor.cursorVisible ? 'block' : 'none');
+		// set the position of the cursor container element
+		L.DomUtil.setStyle(this._currentDeck.cursor, 'left', x + 'px');
+		L.DomUtil.setStyle(this._currentDeck.cursor, 'top', y + 'px');
+
+		// update the input as well
+		this._updateDialogInput(dlgId);
+	},
+
+	_createDialogCursor: function(dialogId) {
+		this._currentDeck.cursor = L.DomUtil.create('div', 'sidebar-cursor-container', L.DomUtil.get(dialogId));
+		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._currentDeck.cursor);
+		cursor.id = dialogId + '-cursor';
+		L.DomUtil.addClass(cursor, 'blinking-cursor');
+	},
+
+	_createDialogInput: function(dialogId) {
+		var clipDlgContainer = L.DomUtil.create('div', 'clipboard-container', L.DomUtil.get(dialogId));
+		clipDlgContainer.id = dialogId + '-clipboard-container';
+		var dlgTextArea = L.DomUtil.create('input', 'clipboard', clipDlgContainer);
+		dlgTextArea.setAttribute('type', 'text');
+		dlgTextArea.setAttribute('autocorrect', 'off');
+		dlgTextArea.setAttribute('autocapitalize', 'off');
+		dlgTextArea.setAttribute('autocomplete', 'off');
+		dlgTextArea.setAttribute('spellcheck', 'false');
+		this._currentDeck.input = dlgTextArea;
+
+		return dlgTextArea;
+	},
+
+	_updateDialogInput: function(dlgId) {
+		if (!this._currentDeck.input)
+			return;
+
+		var strDlgId = this._toStrId(dlgId);
+		var left = parseInt(L.DomUtil.getStyle(this._currentDeck.cursor, 'left'));
+		var top = parseInt(L.DomUtil.getStyle(this._currentDeck.cursor, 'top'));
+		var dlgContainer = L.DomUtil.get(strDlgId + '-clipboard-container');
+		L.DomUtil.setPosition(dlgContainer, new L.Point(left, top));
+	},
+
+	focus: function(dlgId) {
+		if (!this._isOpen(dlgId) || !this._currentDeck.input)
+			return;
+
+		this._currentDeck.input.focus();
 	},
 
 	_launchSidebar: function(id, left, top, width, height) {
@@ -298,39 +356,35 @@ L.Control.Sidebar = L.Control.extend({
 		this._sendPaintWindow(id);
 	},
 
-	_removeChild: function(parentId) {
-		if (typeof parentId === 'number')
-			parentId = this._toStrId(parentId);
-		var floatingCanvas = L.DomUtil.get(parentId + '-floating');
-		floatingCanvas.width = 0;
-		floatingCanvas.height = 0;
-		// $('#' + parentId + '-floating').remove();
+	_postWindowCompositionEvent: function(winid, type, text) {
+		this._map._docLayer._postCompositionEvent(winid, type, text);
 	},
 
-	_createChild: function(childId, parentId, top, left) {
-		var strId = this._toStrId(parentId);
-		var floatingCanvas = L.DomUtil.get(strId + '-floating');
-		L.DomUtil.setStyle(floatingCanvas, 'position', 'relative'); // Relative to the sidebar
-		L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px'); // yes, it's necessary to append 'px'
-		L.DomUtil.setStyle(floatingCanvas, 'top', top + 'px');
+	_postWindowMouseEvent: function(type, winid, x, y, count, buttons, modifier) {
+		this._map._socket.sendMessage('windowmouse id=' + winid +  ' type=' + type +
+		                              ' x=' + x + ' y=' + y + ' count=' + count +
+		                              ' buttons=' + buttons + ' modifier=' + modifier);
+	},
 
-		L.DomEvent.on(floatingCanvas, 'contextmenu', L.DomEvent.preventDefault);
+	_postWindowKeyboardEvent: function(winid, type, charcode, keycode) {
+		this._map._socket.sendMessage('windowkey id=' + winid + ' type=' + type +
+		                              ' char=' + charcode + ' key=' + keycode);
+	},
 
-		// attach events
-		L.DomEvent.on(floatingCanvas, 'mousedown mouseup', function(e) {
-			var buttons = 0;
-			buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
-			buttons |= e.button === this._map['mouse'].JSButtons.middle ? this._map['mouse'].LOButtons.middle : 0;
-			buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
-			var lokEventType = e.type.replace('mouse', 'button');
-			this._postWindowMouseEvent(lokEventType, childId, e.offsetX, e.offsetY, 1, buttons, 0);
-		}, this);
-		L.DomEvent.on(floatingCanvas, 'mousemove', function(e) {
-			this._postWindowMouseEvent('move', childId, e.offsetX, e.offsetY, 1, 0, 0);
-		}, this);
-		L.DomEvent.on(floatingCanvas, 'contextmenu', function() {
-			return false;
-		});
+	_onPanelClose: function(id, notifyBackend) {
+		if (notifyBackend)
+			this._sendCloseWindow(id);
+		$('#' + this._toStrId(id)).remove();
+		var sidebar = L.DomUtil.get(this._currentDeck.strId);
+		if (sidebar)
+			sidebar.style.width = '0px';
+		var docContainer = this._map.options.documentContainer;
+		docContainer.style.right = '0px';
+		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
+		if (spreadsheetRowColumnFrame)
+			spreadsheetRowColumnFrame.style.right = '0px';
+		this._map.focus();
+		this._currentDeck = null;
 	},
 
 	_sendPaintWindowStr: function(id, rectangle) {
@@ -353,16 +407,6 @@ L.Control.Sidebar = L.Control.extend({
 		// Don't request empty area rendering.
 		if (width > 0 && height > 0)
 			this._sendPaintWindowStr(id, [x, y, width, height].join(','));
-	},
-
-	/// Rendered image sent from Core.
-	_onWindowPaint: function (e) {
-		var parent = this._getParentId(e.id);
-		if (parent) {
-			this._paintPanelChild(parent, e.width, e.height, e.rectangle, e.img);
-		} else {
-			this._paintPanel(e.id, e.rectangle, e.img);
-		}
 	},
 
 	/// Rendered image sent from Core.
@@ -402,6 +446,16 @@ L.Control.Sidebar = L.Control.extend({
 		img.src = imgData;
 	},
 
+	/// Rendered image sent from Core.
+	_onWindowPaint: function (e) {
+		var parent = this._getParentId(e.id);
+		if (parent) {
+			this._paintPanelChild(parent, e.width, e.height, e.rectangle, e.img);
+		} else {
+			this._paintPanel(e.id, e.rectangle, e.img);
+		}
+	},
+
 	_paintPanelChild: function(parentId, width, height, rectangle, imgData) {
 		var strId = this._toStrId(parentId);
 		var img = new Image();
@@ -439,94 +493,40 @@ L.Control.Sidebar = L.Control.extend({
 		$('#' + parentId).height(canvasHeight + 'px');
 	},
 
-	_onPanelClose: function(id, notifyBackend) {
-		if (notifyBackend)
-			this._sendCloseWindow(id);
-		$('#' + this._toStrId(id)).remove();
-		var sidebar = L.DomUtil.get(this._currentDeck.strId);
-		if (sidebar)
-			sidebar.style.width = '0px';
-		var docContainer = this._map.options.documentContainer;
-		docContainer.style.right = '0px';
-		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
-		if (spreadsheetRowColumnFrame)
-			spreadsheetRowColumnFrame.style.right = '0px';
-		this._map.focus();
-		this._currentDeck = null;
+	_removeChild: function(parentId) {
+		if (typeof parentId === 'number')
+			parentId = this._toStrId(parentId);
+		var floatingCanvas = L.DomUtil.get(parentId + '-floating');
+		floatingCanvas.width = 0;
+		floatingCanvas.height = 0;
+		// $('#' + parentId + '-floating').remove();
 	},
 
-	_postWindowMouseEvent: function(type, winid, x, y, count, buttons, modifier) {
-		this._map._socket.sendMessage('windowmouse id=' + winid +  ' type=' + type +
-		                              ' x=' + x + ' y=' + y + ' count=' + count +
-		                              ' buttons=' + buttons + ' modifier=' + modifier);
-	},
+	_createChild: function(childId, parentId, top, left) {
+		var strId = this._toStrId(parentId);
+		var floatingCanvas = L.DomUtil.get(strId + '-floating');
+		L.DomUtil.setStyle(floatingCanvas, 'position', 'relative'); // Relative to the sidebar
+		L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px'); // yes, it's necessary to append 'px'
+		L.DomUtil.setStyle(floatingCanvas, 'top', top + 'px');
 
-	_postWindowCompositionEvent: function(winid, type, text) {
-		this._map._docLayer._postCompositionEvent(winid, type, text);
-	},
+		L.DomEvent.on(floatingCanvas, 'contextmenu', L.DomEvent.preventDefault);
 
-	_postWindowKeyboardEvent: function(winid, type, charcode, keycode) {
-		this._map._socket.sendMessage('windowkey id=' + winid + ' type=' + type +
-		                              ' char=' + charcode + ' key=' + keycode);
-	},
-
-	_updateDialogCursor: function(dlgId, x, y, height) {
-		var strDlgId = this._toStrId(dlgId);
-		var dialogCursor = L.DomUtil.get(strDlgId + '-cursor');
-		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
-		L.DomUtil.setStyle(dialogCursor, 'display', this._currentDeck.cursor.cursorVisible ? 'block' : 'none');
-		// set the position of the cursor container element
-		L.DomUtil.setStyle(this._currentDeck.cursor, 'left', x + 'px');
-		L.DomUtil.setStyle(this._currentDeck.cursor, 'top', y + 'px');
-
-		// update the input as well
-		this._updateDialogInput(dlgId);
-	},
-
-	_createDialogCursor: function(dialogId) {
-		this._currentDeck.cursor = L.DomUtil.create('div', 'sidebar-cursor-container', L.DomUtil.get(dialogId));
-		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._currentDeck.cursor);
-		cursor.id = dialogId + '-cursor';
-		L.DomUtil.addClass(cursor, 'blinking-cursor');
-	},
-
-	_createDialogInput: function(dialogId) {
-		var clipDlgContainer = L.DomUtil.create('div', 'clipboard-container', L.DomUtil.get(dialogId));
-		clipDlgContainer.id = dialogId + '-clipboard-container';
-		var dlgTextArea = L.DomUtil.create('input', 'clipboard', clipDlgContainer);
-		dlgTextArea.setAttribute('type', 'text');
-		dlgTextArea.setAttribute('autocorrect', 'off');
-		dlgTextArea.setAttribute('autocapitalize', 'off');
-		dlgTextArea.setAttribute('autocomplete', 'off');
-		dlgTextArea.setAttribute('spellcheck', 'false');
-		this._currentDeck.input = dlgTextArea;
-
-		return dlgTextArea;
-	},
-
-	_updateDialogInput: function(dlgId) {
-		if (!this._currentDeck.input)
-			return;
-
-		var strDlgId = this._toStrId(dlgId);
-		var left = parseInt(L.DomUtil.getStyle(this._currentDeck.cursor, 'left'));
-		var top = parseInt(L.DomUtil.getStyle(this._currentDeck.cursor, 'top'));
-		var dlgContainer = L.DomUtil.get(strDlgId + '-clipboard-container');
-		L.DomUtil.setPosition(dlgContainer, new L.Point(left, top));
-	},
-
-	focus: function(dlgId) {
-		if (!this._isOpen(dlgId) || !this._currentDeck.input)
-			return;
-
-		this._currentDeck.input.focus();
-	},
-
-	_isRectangleValid: function(rect) {
-		rect = rect.split(',');
-		return (parseInt(rect[0]) >= 0 && parseInt(rect[1]) >= 0 &&
-				parseInt(rect[2]) >= 0 && parseInt(rect[3]) >= 0);
-	},
+		// attach events
+		L.DomEvent.on(floatingCanvas, 'mousedown mouseup', function(e) {
+			var buttons = 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.middle ? this._map['mouse'].LOButtons.middle : 0;
+			buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
+			var lokEventType = e.type.replace('mouse', 'button');
+			this._postWindowMouseEvent(lokEventType, childId, e.offsetX, e.offsetY, 1, buttons, 0);
+		}, this);
+		L.DomEvent.on(floatingCanvas, 'mousemove', function(e) {
+			this._postWindowMouseEvent('move', childId, e.offsetX, e.offsetY, 1, 0, 0);
+		}, this);
+		L.DomEvent.on(floatingCanvas, 'contextmenu', function() {
+			return false;
+		});
+	}
 });
 
 L.control.sidebar = function (options) {
