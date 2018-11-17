@@ -92,7 +92,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogMsg: function(e) {
 		e.id = parseInt(e.id);
-		var strDlgId = this._toStrId(e.id);
+		var strId = this._toStrId(e.id);
 
 		if (e.action === 'created') {
 			var width = parseInt(e.size.split(',')[0]);
@@ -152,8 +152,8 @@ L.Control.LokDialog = L.Control.extend({
 			height = parseInt(e.size.split(',')[1]);
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
-			$('#' + strDlgId).remove();
-			this._launchDialog(strDlgId, null, null, width, height, this._dialogs[parseInt(e.id)].title);
+			$('#' + strId).remove();
+			this._launchDialog(strId, null, null, width, height, this._dialogs[parseInt(e.id)].title);
 			this._sendPaintWindow(e.id, this._createRectStr(e.id));
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
@@ -167,14 +167,14 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'title_changed') {
 			if (e.title && this._dialogs[parseInt(e.id)]) {
 				this._dialogs[parseInt(e.id)].title = e.title;
-				$('#' + strDlgId).dialog('option', 'title', e.title);
+				$('#' + strId).dialog('option', 'title', e.title);
 			}
 		} else if (e.action === 'cursor_visible') {
 			this._dialogs[e.id].cursorVisible = e.visible === 'true';
 			if (this._dialogs[e.id].cursorVisible)
-				$('#' + strDlgId + '-cursor').css({display: 'block'});
+				$('#' + strId + '-cursor').css({display: 'block'});
 			else
-				$('#' + strDlgId + '-cursor').css({display: 'none'});
+				$('#' + strId + '-cursor').css({display: 'none'});
 		} else if (e.action === 'close') {
 			parent = this._getParentId(e.id);
 			if (parent)
@@ -189,8 +189,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_updateDialogCursor: function(dlgId, x, y, height) {
-		var strDlgId = this._toStrId(dlgId);
-		var dialogCursor = L.DomUtil.get(strDlgId + '-cursor');
+		var strId = this._toStrId(dlgId);
+		var dialogCursor = L.DomUtil.get(strId + '-cursor');
 		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
 		L.DomUtil.setStyle(dialogCursor, 'display', this._dialogs[dlgId].cursorVisible ? 'block' : 'none');
 		// set the position of the cursor container element
@@ -228,10 +228,10 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._dialogs[dlgId].input)
 			return;
 
-		var strDlgId = this._toStrId(dlgId);
+		var strId = this._toStrId(dlgId);
 		var left = parseInt(L.DomUtil.getStyle(this._dialogs[dlgId].cursor, 'left'));
 		var top = parseInt(L.DomUtil.getStyle(this._dialogs[dlgId].cursor, 'top'));
-		var dlgContainer = L.DomUtil.get(strDlgId + '-clipboard-container');
+		var dlgContainer = L.DomUtil.get(strId + '-clipboard-container');
 		L.DomUtil.setPosition(dlgContainer, new L.Point(left, top));
 	},
 
@@ -251,16 +251,16 @@ L.Control.LokDialog = L.Control.extend({
 		canvas.height = height * scale;
 	},
 
-	_launchDialog: function(strDlgId, leftTwips, topTwips, width, height, title) {
+	_launchDialog: function(strId, leftTwips, topTwips, width, height, title) {
 		this.onCloseCurrentPopUp();
 		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
 		L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
 		L.DomUtil.setStyle(dialogContainer, 'margin', '0px');
-		dialogContainer.id = strDlgId;
+		dialogContainer.id = strId;
 
 		var dialogCanvas = L.DomUtil.create('canvas', 'lokdialog_canvas', dialogContainer);
 		this._setCanvasWidthHeight(dialogCanvas, width, height);
-		dialogCanvas.id = strDlgId + '-canvas';
+		dialogCanvas.id = strId + '-canvas';
 
 		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
 
@@ -281,7 +281,7 @@ L.Control.LokDialog = L.Control.extend({
 			resizable: false,
 			dialogClass: dialogClass,
 			close: function() {
-				that._onDialogClose(that._toIntId(strDlgId), true);
+				that._onDialogClose(that._toIntId(strId), true);
 			}
 		});
 
@@ -303,7 +303,7 @@ L.Control.LokDialog = L.Control.extend({
 		// don't show the dialog surround until we have the dialog content
 		$(dialogContainer).parent().hide();
 
-		this._dialogs[this._toIntId(strDlgId)] = {
+		this._dialogs[this._toIntId(strId)] = {
 			open: true,
 			width: width,
 			height: height,
@@ -313,13 +313,13 @@ L.Control.LokDialog = L.Control.extend({
 		// don't make 'TAB' focus on this button; we want to cycle focus in the lok dialog with each TAB
 		$('.lokdialog_container button.ui-dialog-titlebar-close').attr('tabindex', '-1').blur();
 
-		this._createDialogCursor(strDlgId);
-		var dlgInput = this._createDialogInput(strDlgId);
+		this._createDialogCursor(strId);
+		var dlgInput = this._createDialogInput(strId);
 
 		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(dialogCanvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
-			this._postWindowMouseEvent('move', this._toIntId(strDlgId), e.offsetX, e.offsetY, 1, 0, 0);
+			this._postWindowMouseEvent('move', this._toIntId(strId), e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
@@ -329,7 +329,7 @@ L.Control.LokDialog = L.Control.extend({
 			buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
-			this._postWindowMouseEvent(lokEventType, this._toIntId(strDlgId), e.offsetX, e.offsetY, 1, buttons, 0);
+			this._postWindowMouseEvent(lokEventType, this._toIntId(strId), e.offsetX, e.offsetY, 1, buttons, 0);
 			dlgInput.focus();
 		}, this);
 		L.DomEvent.on(dlgInput,
@@ -339,10 +339,10 @@ L.Control.LokDialog = L.Control.extend({
 			              this._map['keyboard']._onKeyDown(e,
 			                                         L.bind(this._postWindowKeyboardEvent,
 			                                                this,
-			                                                this._toIntId(strDlgId)),
+			                                                this._toIntId(strId)),
 			                                         L.bind(this._postWindowCompositionEvent,
 			                                                this,
-			                                                this._toIntId(strDlgId)),
+			                                                this._toIntId(strId)),
 			                                         dlgInput);
 
 			              // keep map active while user is playing with dialog
@@ -352,7 +352,7 @@ L.Control.LokDialog = L.Control.extend({
 			return false;
 		});
 
-		this._currentId = this._toIntId(strDlgId);
+		this._currentId = this._toIntId(strId);
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
@@ -390,9 +390,9 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._isOpen(dialogId))
 			return;
 
-		var strDlgId = this._toStrId(dialogId);
+		var strId = this._toStrId(dialogId);
 		var img = new Image();
-		var canvas = document.getElementById(strDlgId + '-canvas');
+		var canvas = document.getElementById(strId + '-canvas');
 		var ctx = canvas.getContext('2d');
 		var that = this;
 		img.onload = function() {
@@ -407,7 +407,7 @@ L.Control.LokDialog = L.Control.extend({
 			ctx.drawImage(img, x, y);
 
 			// if dialog is hidden, show it
-			var dialogContainer = L.DomUtil.get(strDlgId);
+			var dialogContainer = L.DomUtil.get(strId);
 			$(dialogContainer).parent().show();
 			that.focus(dialogId);
 		};
@@ -427,9 +427,9 @@ L.Control.LokDialog = L.Control.extend({
 	// Dialog Child Methods
 
 	_paintDialogChild: function(dialogId, width, height, rectangle, imgData) {
-		var strDlgId = this._toStrId(dialogId);
+		var strId = this._toStrId(dialogId);
 		var img = new Image();
-		var canvas = L.DomUtil.get(strDlgId + '-floating');
+		var canvas = L.DomUtil.get(strId + '-floating');
 		if (!canvas)
 			return; // no floating window to paint to
 
@@ -456,10 +456,10 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_createDialogChild: function(childId, dialogId, top, left) {
-		var strDlgId = this._toStrId(dialogId);
-		var dialogContainer = L.DomUtil.get(strDlgId);
+		var strId = this._toStrId(dialogId);
+		var dialogContainer = L.DomUtil.get(strId);
 		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', dialogContainer);
-		floatingCanvas.id = strDlgId + '-floating';
+		floatingCanvas.id = strId + '-floating';
 		L.DomUtil.setStyle(floatingCanvas, 'position', 'absolute');
 		L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px'); // yes, it's necessary to append 'px'
 		L.DomUtil.setStyle(floatingCanvas, 'top', top + 'px');
