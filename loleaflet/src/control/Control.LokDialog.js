@@ -36,17 +36,17 @@ L.Control.LokDialog = L.Control.extend({
 		return null;
 	},
 
-	_isOpen: function(dialogId) {
-		return this._dialogs[dialogId] &&
-			this._dialogs[dialogId].open &&
-			$('#' + this._toStrId(dialogId)).length > 0;
+	_isOpen: function(id) {
+		return this._dialogs[id] &&
+			this._dialogs[id].open &&
+			$('#' + this._toStrId(id)).length > 0;
 	},
 
 	// Given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323.
-	_toIntId: function(dialogId) {
-		if (typeof(dialogId) === 'string')
-			return parseInt(dialogId.replace(this.dialogIdPrefix, ''));
-		return dialogId;
+	_toIntId: function(id) {
+		if (typeof(id) === 'string')
+			return parseInt(id.replace(this.dialogIdPrefix, ''));
+		return id;
 	},
 
 	// Converts a raw dialog id like 432, to 'lokdialog-432'.
