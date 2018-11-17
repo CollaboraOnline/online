@@ -18,6 +18,7 @@ L.Annotation = L.Layer.extend({
 		L.setOptions(this, options);
 		this._latlng = L.latLng(latlng);
 		this._data = data;
+		this._skipCheckBounds = false;
 	},
 
 	onAdd: function (map) {
@@ -60,10 +61,12 @@ L.Annotation = L.Layer.extend({
 		this._data = data;
 	},
 
-	setLatLng: function (latlng) {
+	setLatLng: function (latlng, skipCheckBounds) {
 		if (this._latlng != latlng) {
+			this._skipCheckBounds = !!skipCheckBounds;
 			this._latlng = latlng;
 			this._updatePosition();
+			this._skipCheckBounds = false;
 		}
 		return this;
 	},
@@ -73,6 +76,9 @@ L.Annotation = L.Layer.extend({
 		return L.bounds(point, point.add(L.point(this._container.offsetWidth, this._container.offsetHeight)));
 	},
 
+	getMargin: function () {
+		return this.options.margin;
+	},
 
 	show: function () {
 		this._container.style.visibility = '';
@@ -92,6 +98,10 @@ L.Annotation = L.Layer.extend({
 		if (this._data.textSelected && this._map.hasLayer(this._data.textSelected)) {
 			this._map.removeLayer(this._data.textSelected);
 		}
+	},
+
+	isVisible: function () {
+		return (this._container.style && this._container.style.visibility === '');
 	},
 
 	edit: function () {
@@ -132,7 +142,7 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_checkBounds: function () {
-		if (!this._map || this._map.animatingZoom || !this._container.style || this._container.style.visibility !== '') {
+		if (this._skipCheckBounds || !this._map || this._map.animatingZoom || !this.isVisible()) {
 			return;
 		}
 		var maxBounds = this._map.getLayerMaxBounds();
