@@ -113,7 +113,6 @@ L.Control.LokDialog = L.Control.extend({
 
 			if (e.winType === 'dialog') {
 				this._launchDialog(e.id, left, top, width, height, e.title);
-				this._sendPaintWindowRect(e.id);
 			} else if (e.winType === 'child') {
 				var parentId = parseInt(e.parentId);
 				if (!this._isOpen(parentId))
@@ -162,7 +161,6 @@ L.Control.LokDialog = L.Control.extend({
 			// now because the size sent to us previously in 'created' cb is not correct
 			$('#' + strId).remove();
 			this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
-			this._sendPaintWindow(e.id, this._createRectStr(e.id));
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
 				rectangle = e.rectangle.split(',');
@@ -361,6 +359,7 @@ L.Control.LokDialog = L.Control.extend({
 		});
 
 		this._currentId = id;
+		this._sendPaintWindow(id, this._createRectStr(id));
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
