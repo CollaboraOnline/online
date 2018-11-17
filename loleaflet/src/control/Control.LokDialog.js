@@ -26,7 +26,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 	},
 
-	_getParentDialog: function(id) {
+	_getParentId: function(id) {
 		id = parseInt(id);
 		for (var winId in this._dialogs) {
 			if (this._dialogs[winId].childid && this._dialogs[winId].childid === id) {
@@ -123,11 +123,11 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		// all other callbacks doens't make sense without an active dialog
-		if (!(this._isOpen(e.id) || this._getParentDialog(e.id)))
+		if (!(this._isOpen(e.id) || this._getParentId(e.id)))
 			return;
 
 		if (e.action === 'invalidate') {
-			var parent = this._getParentDialog(e.id);
+			var parent = this._getParentId(e.id);
 			var rectangle = e.rectangle;
 			if (parent) { // this is a floating window
 				rectangle = this._createRectStr(null, 0, 0, this._dialogs[parent].childwidth, this._dialogs[parent].childheight);
@@ -176,7 +176,7 @@ L.Control.LokDialog = L.Control.extend({
 			else
 				$('#' + strDlgId + '-cursor').css({display: 'none'});
 		} else if (e.action === 'close') {
-			parent = this._getParentDialog(e.id);
+			parent = this._getParentId(e.id);
 			if (parent)
 				this._onDialogChildClose(this._toDlgPrefix(parent));
 			else
@@ -416,7 +416,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	// Binary dialog msg recvd from core
 	_onDialogPaint: function (e) {
-		var parent = this._getParentDialog(e.id);
+		var parent = this._getParentId(e.id);
 		if (parent) {
 			this._paintDialogChild(parent, e.width, e.height, e.rectangle, e.img);
 		} else {
