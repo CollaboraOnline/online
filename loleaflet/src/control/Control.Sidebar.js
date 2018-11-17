@@ -16,6 +16,13 @@ L.Control.Sidebar = L.Control.extend({
 		return this._currentDeck != null && this._currentDeck.id === id;
 	},
 
+	// If returns non-null, then id is that of a panels and we have a parent (with the returned id).
+	_getParentId: function(id) {
+		if (this._isChild(parseInt(id)))
+			return this._currentDeck.id;
+		return null;
+	},
+
 	_isOpen: function(id) {
 		return this._isParent(id) && $('#' + this._toStrId(id)).length > 0;
 	},
@@ -38,13 +45,6 @@ L.Control.Sidebar = L.Control.extend({
 
 	_isChildOpen: function(id) {
 		return this._isChild(id) && $('#' + this._currentDeck.strId + '-floating').length > 0;
-	},
-
-	// If returns non-null, then id is that of a panels and we have a parent (with the returned id).
-	_getParentId: function(id) {
-		if (this._isChild(parseInt(id)))
-			return this._currentDeck.id;
-		return null;
 	},
 
 	_sendPaintWindowRect: function(id, x, y, width, height) {
