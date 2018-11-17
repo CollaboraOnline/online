@@ -12,6 +12,14 @@ L.Control.Sidebar = L.Control.extend({
 		map.on('windowpaint', this._onWindowPaint, this);
 	},
 
+	_isParent: function(id) {
+		return this._currentDeck != null && this._currentDeck.id === id;
+	},
+
+	_isOpen: function(id) {
+		return this._isParent(id) && $('#' + this._toStrId(id)).length > 0;
+	},
+
 	// Converts an string Id to its raw integer Id.
 	_toIntId: function(id) {
 		if (typeof(id) === 'string')
@@ -22,14 +30,6 @@ L.Control.Sidebar = L.Control.extend({
 	// Converts an integer Id to string, such as 'sidebarpanel-123'.
 	_toStrId: function(id) {
 		return this.panelIdPrefix + id;
-	},
-
-	_isParent: function(id) {
-		return this._currentDeck != null && this._currentDeck.id === id;
-	},
-
-	_isOpen: function(id) {
-		return this._isParent(id) && $('#' + this._toStrId(id)).length > 0;
 	},
 
 	_isChild: function(id) {
