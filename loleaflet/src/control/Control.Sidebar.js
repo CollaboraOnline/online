@@ -73,7 +73,10 @@ L.Control.Sidebar = L.Control.extend({
 		if (!y)
 			y = 0;
 
-		this._sendPaintWindow(id, [x, y, width, height].join(','));
+		// pre-multiplied by the scale factor
+		var dpiscale = L.getDpiScaleFactor();
+		var rect = [x * dpiscale, y * dpiscale, width * dpiscale, height * dpiscale].join(',');
+		this._sendPaintWindow(id, rect);
 	},
 
 	_sendPaintWindow: function(id, rectangle) {
@@ -84,7 +87,9 @@ L.Control.Sidebar = L.Control.extend({
 		if (!rectangle)
 			return; // Don't request rendering an empty area.
 
-		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle : ''));
+		var dpiscale = L.getDpiScaleFactor();
+		console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
+		this._map._socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
 	},
 
 	_isRectangleValid: function(rect) {
@@ -250,6 +255,16 @@ L.Control.Sidebar = L.Control.extend({
 		this._currentDeck.input.focus();
 	},
 
+	_setCanvasWidthHeight: function(canvas, width, height) {
+		// FIXME: Setting the style width/height is messing up the cursor.
+		// L.DomUtil.setStyle(canvas, 'width', width + 'px');
+		// L.DomUtil.setStyle(canvas, 'height', height + 'px');
+
+		var scale = L.getDpiScaleFactor();
+		canvas.width = width * scale;
+		canvas.height = height * scale;
+	},
+
 	_launchSidebar: function(id, left, top, width, height) {
 
 		if (!left)
@@ -283,8 +298,7 @@ L.Control.Sidebar = L.Control.extend({
 		// Create the panel canvas.
 		var panelCanvas = L.DomUtil.create('canvas', 'panel_canvas', panelContainer);
 		L.DomUtil.setStyle(panelCanvas, 'position', 'absolute');
-		panelCanvas.width = width;
-		panelCanvas.height = height;
+		this._setCanvasWidthHeight(panelCanvas, width, height);
 		panelCanvas.id = strId + '-canvas';
 
 		// Create the child canvas now, to make it on top of the main panel canvas.
@@ -293,9 +307,6 @@ L.Control.Sidebar = L.Control.extend({
 		floatingCanvas.width = 0;
 		floatingCanvas.height = 0;
 		floatingCanvas.id = strId + '-floating';
-
-
-		L.DomEvent.on(panelCanvas, 'contextmenu', L.DomEvent.preventDefault);
 
 		// Don't show the sidebar until we get the contents.
 		$(panelContainer).parent().hide();
@@ -465,10 +476,8 @@ L.Control.Sidebar = L.Control.extend({
 		if (!canvas)
 			return; // no floating window to paint to
 
-		if (width !== canvas.width)
-			canvas.width = width;
-		if (height !== canvas.height)
-			canvas.height = height;
+		this._setCanvasWidthHeight(canvas, width, height);
+
 		var ctx = canvas.getContext('2d');
 		img.onload = function() {
 			ctx.drawImage(img, 0, 0);
