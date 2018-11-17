@@ -59,8 +59,12 @@ L.Control.LokDialog = L.Control.extend({
 	_createRectStr: function(id, x, y, width, height) {
 		if (!width)
 			width = this._dialogs[parseInt(id)].width;
+		if (width <= 0)
+			return null;
 		if (!height)
 			height = this._dialogs[parseInt(id)].height;
+		if (height <= 0)
+			return null;
 		if (!x)
 			x = 0;
 		if (!y)
@@ -72,12 +76,16 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_sendPaintWindow: function(id, rectangle) {
-		if (rectangle)
-			rectangle = rectangle.replace(/ /g, '');
+		if (!rectangle)
+			return; // Don't request rendering an empty area.
+
+		rectangle = rectangle.replace(/ /g, '');
+		if (!rectangle)
+			return; // Don't request rendering an empty area.
 
 		var dpiscale = L.getDpiScaleFactor();
 		console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
-		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle + ' dpiscale=' + dpiscale : ''));
+		this._map._socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
 	},
 
 	_sendCloseWindow: function(id) {
