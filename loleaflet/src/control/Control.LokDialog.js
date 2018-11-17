@@ -42,8 +42,8 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + this._toStrId(dialogId)).length > 0;
 	},
 
-	// given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323
-	_toRawDlgId: function(dialogId) {
+	// Given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323.
+	_toIntId: function(dialogId) {
 		if (typeof(dialogId) === 'string')
 			return parseInt(dialogId.replace(this.dialogIdPrefix, ''));
 		return dialogId;
@@ -202,7 +202,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_createDialogCursor: function(dialogId) {
-		var id = this._toRawDlgId(dialogId);
+		var id = this._toIntId(dialogId);
 		this._dialogs[id].cursor = L.DomUtil.create('div', 'leaflet-cursor-container', L.DomUtil.get(dialogId));
 		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._dialogs[id].cursor);
 		cursor.id = dialogId + '-cursor';
@@ -210,7 +210,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_createDialogInput: function(dialogId) {
-		var id = this._toRawDlgId(dialogId);
+		var id = this._toIntId(dialogId);
 		var clipDlgContainer = L.DomUtil.create('div', 'clipboard-container', L.DomUtil.get(dialogId));
 		clipDlgContainer.id = dialogId + '-clipboard-container';
 		var dlgTextArea = L.DomUtil.create('input', 'clipboard', clipDlgContainer);
@@ -281,7 +281,7 @@ L.Control.LokDialog = L.Control.extend({
 			resizable: false,
 			dialogClass: dialogClass,
 			close: function() {
-				that._onDialogClose(that._toRawDlgId(strDlgId), true);
+				that._onDialogClose(that._toIntId(strDlgId), true);
 			}
 		});
 
@@ -303,7 +303,7 @@ L.Control.LokDialog = L.Control.extend({
 		// don't show the dialog surround until we have the dialog content
 		$(dialogContainer).parent().hide();
 
-		this._dialogs[this._toRawDlgId(strDlgId)] = {
+		this._dialogs[this._toIntId(strDlgId)] = {
 			open: true,
 			width: width,
 			height: height,
@@ -319,7 +319,7 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(dialogCanvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
-			this._postWindowMouseEvent('move', this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, 0, 0);
+			this._postWindowMouseEvent('move', this._toIntId(strDlgId), e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
@@ -329,7 +329,7 @@ L.Control.LokDialog = L.Control.extend({
 			buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
-			this._postWindowMouseEvent(lokEventType, this._toRawDlgId(strDlgId), e.offsetX, e.offsetY, 1, buttons, 0);
+			this._postWindowMouseEvent(lokEventType, this._toIntId(strDlgId), e.offsetX, e.offsetY, 1, buttons, 0);
 			dlgInput.focus();
 		}, this);
 		L.DomEvent.on(dlgInput,
@@ -339,10 +339,10 @@ L.Control.LokDialog = L.Control.extend({
 			              this._map['keyboard']._onKeyDown(e,
 			                                         L.bind(this._postWindowKeyboardEvent,
 			                                                this,
-			                                                this._toRawDlgId(strDlgId)),
+			                                                this._toIntId(strDlgId)),
 			                                         L.bind(this._postWindowCompositionEvent,
 			                                                this,
-			                                                this._toRawDlgId(strDlgId)),
+			                                                this._toIntId(strDlgId)),
 			                                         dlgInput);
 
 			              // keep map active while user is playing with dialog
@@ -352,7 +352,7 @@ L.Control.LokDialog = L.Control.extend({
 			return false;
 		});
 
-		this._currentId = this._toRawDlgId(strDlgId);
+		this._currentId = this._toIntId(strDlgId);
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
