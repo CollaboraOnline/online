@@ -11,23 +11,7 @@ L.Control.Sidebar = L.Control.extend({
 
 	panelIdPrefix: 'sidebarpanel-',
 
-	// Converts an string Id to its raw integer Id.
-	_toIntId: function(id) {
-		if (typeof(id) === 'string')
-			return parseInt(id.replace(this.panelIdPrefix, ''));
-		return id;
-	},
-
-	// Converts an integer Id to string, such as 'sidebarpanel-123'.
-	_toStrId: function(id) {
-		return this.panelIdPrefix + id;
-	},
-
 	onAdd: function (map) {
-		this._previewInitialized = false;
-		this._sidebarCont = L.DomUtil.get('slide-sorter');
-		this._scrollY = 0;
-
 		map.on('window', this._onWindowMsg, this);
 		map.on('windowpaint', this._onWindowPaint, this);
 		map.on('docloaded', this._docLoaded, this);
@@ -38,6 +22,18 @@ L.Control.Sidebar = L.Control.extend({
 			// $('.lokdialog_container').remove();
 			// $('.lokdialogchild-canvas').remove();
 		}
+	},
+
+	// Converts an string Id to its raw integer Id.
+	_toIntId: function(id) {
+		if (typeof(id) === 'string')
+			return parseInt(id.replace(this.panelIdPrefix, ''));
+		return id;
+	},
+
+	// Converts an integer Id to string, such as 'sidebarpanel-123'.
+	_toStrId: function(id) {
+		return this.panelIdPrefix + id;
 	},
 
 	_isParent: function(id) {
@@ -61,6 +57,28 @@ L.Control.Sidebar = L.Control.extend({
 		if (this._isChild(parseInt(id)))
 			return this._currentDeck.id;
 		return null;
+	},
+
+	_sendPaintWindowStr: function(id, rectangle) {
+		if (rectangle)
+			rectangle = rectangle.replace(/ /g, '');
+
+		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle : ''));
+	},
+
+	_sendPaintWindow: function(id, x, y, width, height) {
+		if (!width)
+			width = this._currentDeck.width;
+		if (!height)
+			height = this._currentDeck.height;
+		if (!x)
+			x = 0;
+		if (!y)
+			y = 0;
+
+		// Don't request empty area rendering.
+		if (width > 0 && height > 0)
+			this._sendPaintWindowStr(id, [x, y, width, height].join(','));
 	},
 
 	_isRectangleValid: function(rect) {
@@ -385,28 +403,6 @@ L.Control.Sidebar = L.Control.extend({
 			spreadsheetRowColumnFrame.style.right = '0px';
 		this._map.focus();
 		this._currentDeck = null;
-	},
-
-	_sendPaintWindowStr: function(id, rectangle) {
-		if (rectangle)
-			rectangle = rectangle.replace(/ /g, '');
-
-		this._map._socket.sendMessage('paintwindow ' + id + (rectangle ? ' rectangle=' + rectangle : ''));
-	},
-
-	_sendPaintWindow: function(id, x, y, width, height) {
-		if (!width)
-			width = this._currentDeck.width;
-		if (!height)
-			height = this._currentDeck.height;
-		if (!x)
-			x = 0;
-		if (!y)
-			y = 0;
-
-		// Don't request empty area rendering.
-		if (width > 0 && height > 0)
-			this._sendPaintWindowStr(id, [x, y, width, height].join(','));
 	},
 
 	/// Rendered image sent from Core.
