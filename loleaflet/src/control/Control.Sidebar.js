@@ -193,8 +193,8 @@ L.Control.Sidebar = L.Control.extend({
 	},
 
 	_updateDialogCursor: function(dlgId, x, y, height) {
-		var strDlgId = this._toStrId(dlgId);
-		var dialogCursor = L.DomUtil.get(strDlgId + '-cursor');
+		var strId = this._toStrId(dlgId);
+		var dialogCursor = L.DomUtil.get(strId + '-cursor');
 		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
 		L.DomUtil.setStyle(dialogCursor, 'display', this._currentDeck.cursor.cursorVisible ? 'block' : 'none');
 		// set the position of the cursor container element
@@ -230,10 +230,10 @@ L.Control.Sidebar = L.Control.extend({
 		if (!this._currentDeck.input)
 			return;
 
-		var strDlgId = this._toStrId(dlgId);
+		var strId = this._toStrId(dlgId);
 		var left = parseInt(L.DomUtil.getStyle(this._currentDeck.cursor, 'left'));
 		var top = parseInt(L.DomUtil.getStyle(this._currentDeck.cursor, 'top'));
-		var dlgContainer = L.DomUtil.get(strDlgId + '-clipboard-container');
+		var dlgContainer = L.DomUtil.get(strId + '-clipboard-container');
 		L.DomUtil.setPosition(dlgContainer, new L.Point(left, top));
 	},
 
