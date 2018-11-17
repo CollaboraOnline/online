@@ -104,7 +104,7 @@ L.Control.LokDialog = L.Control.extend({
 			}
 
 			if (e.winType === 'dialog') {
-				this._launchDialog(this._toStrId(e.id), left, top, width, height, e.title);
+				this._launchDialog(e.id, left, top, width, height, e.title);
 				this._sendPaintWindow(e.id, this._createRectStr(e.id));
 			} else if (e.winType === 'child') {
 				var parentId = parseInt(e.parentId);
@@ -153,7 +153,7 @@ L.Control.LokDialog = L.Control.extend({
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
 			$('#' + strId).remove();
-			this._launchDialog(strId, null, null, width, height, this._dialogs[parseInt(e.id)].title);
+			this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
 			this._sendPaintWindow(e.id, this._createRectStr(e.id));
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
@@ -251,11 +251,13 @@ L.Control.LokDialog = L.Control.extend({
 		canvas.height = height * scale;
 	},
 
-	_launchDialog: function(strId, leftTwips, topTwips, width, height, title) {
+	_launchDialog: function(id, leftTwips, topTwips, width, height, title) {
 		this.onCloseCurrentPopUp();
 		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
 		L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
 		L.DomUtil.setStyle(dialogContainer, 'margin', '0px');
+
+		var strId = this._toStrId(id);
 		dialogContainer.id = strId;
 
 		var dialogCanvas = L.DomUtil.create('canvas', 'lokdialog_canvas', dialogContainer);
@@ -281,7 +283,7 @@ L.Control.LokDialog = L.Control.extend({
 			resizable: false,
 			dialogClass: dialogClass,
 			close: function() {
-				that._onDialogClose(that._toIntId(strId), true);
+				that._onDialogClose(id, true);
 			}
 		});
 
@@ -303,7 +305,7 @@ L.Control.LokDialog = L.Control.extend({
 		// don't show the dialog surround until we have the dialog content
 		$(dialogContainer).parent().hide();
 
-		this._dialogs[this._toIntId(strId)] = {
+		this._dialogs[id] = {
 			open: true,
 			width: width,
 			height: height,
@@ -319,7 +321,7 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(dialogCanvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
-			this._postWindowMouseEvent('move', this._toIntId(strId), e.offsetX, e.offsetY, 1, 0, 0);
+			this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
 		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
@@ -329,7 +331,7 @@ L.Control.LokDialog = L.Control.extend({
 			buttons |= e.button === this._map['mouse'].JSButtons.right ? this._map['mouse'].LOButtons.right : 0;
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
-			this._postWindowMouseEvent(lokEventType, this._toIntId(strId), e.offsetX, e.offsetY, 1, buttons, 0);
+			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
 			dlgInput.focus();
 		}, this);
 		L.DomEvent.on(dlgInput,
@@ -339,10 +341,10 @@ L.Control.LokDialog = L.Control.extend({
 			              this._map['keyboard']._onKeyDown(e,
 			                                         L.bind(this._postWindowKeyboardEvent,
 			                                                this,
-			                                                this._toIntId(strId)),
+			                                                id),
 			                                         L.bind(this._postWindowCompositionEvent,
 			                                                this,
-			                                                this._toIntId(strId)),
+			                                                id),
 			                                         dlgInput);
 
 			              // keep map active while user is playing with dialog
@@ -352,7 +354,7 @@ L.Control.LokDialog = L.Control.extend({
 			return false;
 		});
 
-		this._currentId = this._toIntId(strId);
+		this._currentId = id;
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
