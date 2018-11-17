@@ -210,6 +210,28 @@ L.AnnotationManager = L.Class.extend({
 		return index;
 	},
 
+	getBounds: function () {
+		if (this._items.length <= 0)
+			return null;
+
+		var allCommentsBounds;
+		var idx = 0;
+		while (!allCommentsBounds) {
+			if (this._items[idx].isVisible())
+				allCommentsBounds = this._items[0].getBounds();
+			idx++;
+		}
+
+		for (; idx < this._items.length; idx++) {
+			if (!this._items[idx].isVisible())
+				continue;
+			var bounds = this._items[idx].getBounds();
+			allCommentsBounds.extend(bounds.min);
+			allCommentsBounds.extend(bounds.max);
+		}
+		return allCommentsBounds
+	},
+
 	removeItem: function (id) {
 		var annotation;
 		for (var iterator in this._items) {
@@ -256,12 +278,37 @@ L.AnnotationManager = L.Class.extend({
 		}
 	},
 
+	_checkBounds: function () {
+		if (!this._map || this._map.animatingZoom || this._items.length === 0) {
+			return;
+		}
+		var maxBounds = this._map.getLayerMaxBounds();
+		var thisBounds = this.getBounds();
+		if (!thisBounds)
+			return;
+		var margin = this._items[0].getMargin();
+		if (!maxBounds.contains(thisBounds)) {
+			var docBounds = this._map.getLayerDocBounds();
+			var delta = L.point(Math.max(thisBounds.max.x - docBounds.max.x, 0), Math.max(thisBounds.max.y - docBounds.max.y, 0));
+			if (delta.x > 0) {
+				delta.x += margin.x;
+			}
+			if (delta.y > 0) {
+				delta.y += margin.y;
+			}
+			this._map.fire('updatemaxbounds', {
+				sizeChanged: true,
+				extraSize: delta
+			});
+		}
+	},
+
 	layoutUp: function (commentThread, latLng, layoutBounds) {
 		if (commentThread.length <= 0)
 			return;
 
 		(new L.PosAnimation()).run(commentThread[0]._container, this._map.latLngToLayerPoint(latLng));
-		commentThread[0].setLatLng(latLng);
+		commentThread[0].setLatLng(latLng, /*skip check bounds*/ true);
 		var bounds = commentThread[0].getBounds();
 		var idx = 1;
 		while (idx < commentThread.length) {
@@ -283,7 +330,7 @@ L.AnnotationManager = L.Class.extend({
 		for (idx = 0; idx < commentThread.length; ++idx) {
 			latLng = this._map.layerPointToLatLng(pt);
 			(new L.PosAnimation()).run(commentThread[idx]._container, this._map.latLngToLayerPoint(latLng));
-			commentThread[idx].setLatLng(latLng);
+			commentThread[idx].setLatLng(latLng, /*skip check bounds*/ true);
 			commentThread[idx].show();
 
 			var commentBounds = commentThread[idx].getBounds();
@@ -296,7 +343,7 @@ L.AnnotationManager = L.Class.extend({
 			return;
 
 		(new L.PosAnimation()).run(commentThread[0]._container, this._map.latLngToLayerPoint(latLng));
-		commentThread[0].setLatLng(latLng);
+		commentThread[0].setLatLng(latLng, /*skip check bounds*/ true);
 		var bounds = commentThread[0].getBounds();
 		var idx = 1;
 		while (idx < commentThread.length) {
@@ -318,7 +365,7 @@ L.AnnotationManager = L.Class.extend({
 		for (idx = 0; idx < commentThread.length; ++idx) {
 			latLng = this._map.layerPointToLatLng(pt);
 			(new L.PosAnimation()).run(commentThread[idx]._container, this._map.latLngToLayerPoint(latLng));
-			commentThread[idx].setLatLng(latLng);
+			commentThread[idx].setLatLng(latLng, /*skip check bounds*/ true);
 			commentThread[idx].show();
 
 			var commentBounds = commentThread[idx].getBounds();
@@ -385,7 +432,7 @@ L.AnnotationManager = L.Class.extend({
 
 			latlng = this._map.unproject(L.point(posX, posY));
 			(new L.PosAnimation()).run(this._items[selectIndexFirst]._container, this._map.latLngToLayerPoint(latlng));
-			this._items[selectIndexFirst].setLatLng(latlng);
+			this._items[selectIndexFirst].setLatLng(latlng, /*skip check bounds*/ true);
 			layoutBounds = this._items[selectIndexFirst].getBounds();
 
 			// Adjust child comments too, if any
@@ -395,7 +442,7 @@ L.AnnotationManager = L.Class.extend({
 				}
 				latlng = this._map.layerPointToLatLng(layoutBounds.getBottomLeft());
 				(new L.PosAnimation()).run(this._items[idx]._container, layoutBounds.getBottomLeft());
-				this._items[idx].setLatLng(latlng);
+				this._items[idx].setLatLng(latlng, /*skip check bounds*/ true);
 
 				var commentBounds = this._items[idx].getBounds();
 				layoutBounds.extend(layoutBounds.max.add([0, commentBounds.getSize().y]));
@@ -457,6 +504,7 @@ L.AnnotationManager = L.Class.extend({
 				idx = idx + commentThread.length;
 			}
 		}
+		this._checkBounds();
 	},
 
 	layout: function (zoom) {
