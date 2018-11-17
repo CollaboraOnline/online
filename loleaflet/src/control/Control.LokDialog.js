@@ -39,7 +39,7 @@ L.Control.LokDialog = L.Control.extend({
 	_isOpen: function(dialogId) {
 		return this._dialogs[dialogId] &&
 			this._dialogs[dialogId].open &&
-			$('#' + this._toDlgPrefix(dialogId)).length > 0;
+			$('#' + this._toStrId(dialogId)).length > 0;
 	},
 
 	// given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323
@@ -49,8 +49,8 @@ L.Control.LokDialog = L.Control.extend({
 		return dialogId;
 	},
 
-	// converts a raw dialog id like 432, to 'lokdialog-432'
-	_toDlgPrefix: function(id) {
+	// Converts a raw dialog id like 432, to 'lokdialog-432'.
+	_toStrId: function(id) {
 		return this.dialogIdPrefix + id;
 	},
 
@@ -92,7 +92,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogMsg: function(e) {
 		e.id = parseInt(e.id);
-		var strDlgId = this._toDlgPrefix(e.id);
+		var strDlgId = this._toStrId(e.id);
 
 		if (e.action === 'created') {
 			var width = parseInt(e.size.split(',')[0]);
@@ -104,7 +104,7 @@ L.Control.LokDialog = L.Control.extend({
 			}
 
 			if (e.winType === 'dialog') {
-				this._launchDialog(this._toDlgPrefix(e.id), left, top, width, height, e.title);
+				this._launchDialog(this._toStrId(e.id), left, top, width, height, e.title);
 				this._sendPaintWindow(e.id, this._createRectStr(e.id));
 			} else if (e.winType === 'child') {
 				var parentId = parseInt(e.parentId);
@@ -178,7 +178,7 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'close') {
 			parent = this._getParentId(e.id);
 			if (parent)
-				this._onDialogChildClose(this._toDlgPrefix(parent));
+				this._onDialogChildClose(this._toStrId(parent));
 			else
 				this._onDialogClose(e.id, false);
 		}
@@ -189,7 +189,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_updateDialogCursor: function(dlgId, x, y, height) {
-		var strDlgId = this._toDlgPrefix(dlgId);
+		var strDlgId = this._toStrId(dlgId);
 		var dialogCursor = L.DomUtil.get(strDlgId + '-cursor');
 		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
 		L.DomUtil.setStyle(dialogCursor, 'display', this._dialogs[dlgId].cursorVisible ? 'block' : 'none');
@@ -228,7 +228,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._dialogs[dlgId].input)
 			return;
 
-		var strDlgId = this._toDlgPrefix(dlgId);
+		var strDlgId = this._toStrId(dlgId);
 		var left = parseInt(L.DomUtil.getStyle(this._dialogs[dlgId].cursor, 'left'));
 		var top = parseInt(L.DomUtil.getStyle(this._dialogs[dlgId].cursor, 'top'));
 		var dlgContainer = L.DomUtil.get(strDlgId + '-clipboard-container');
@@ -373,7 +373,7 @@ L.Control.LokDialog = L.Control.extend({
 	_onDialogClose: function(dialogId, notifyBackend) {
 		if (notifyBackend)
 			this._sendCloseWindow(dialogId);
-		$('#' + this._toDlgPrefix(dialogId)).remove();
+		$('#' + this._toStrId(dialogId)).remove();
 		this._map.focus();
 		delete this._dialogs[dialogId];
 		this._currentId = null;
@@ -390,7 +390,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._isOpen(dialogId))
 			return;
 
-		var strDlgId = this._toDlgPrefix(dialogId);
+		var strDlgId = this._toStrId(dialogId);
 		var img = new Image();
 		var canvas = document.getElementById(strDlgId + '-canvas');
 		var ctx = canvas.getContext('2d');
@@ -427,7 +427,7 @@ L.Control.LokDialog = L.Control.extend({
 	// Dialog Child Methods
 
 	_paintDialogChild: function(dialogId, width, height, rectangle, imgData) {
-		var strDlgId = this._toDlgPrefix(dialogId);
+		var strDlgId = this._toStrId(dialogId);
 		var img = new Image();
 		var canvas = L.DomUtil.get(strDlgId + '-floating');
 		if (!canvas)
@@ -451,12 +451,12 @@ L.Control.LokDialog = L.Control.extend({
 
 	_removeDialogChild: function(id) {
 		if (typeof id === 'number')
-			id = this._toDlgPrefix(id);
+			id = this._toStrId(id);
 		$('#' + id + '-floating').remove();
 	},
 
 	_createDialogChild: function(childId, dialogId, top, left) {
-		var strDlgId = this._toDlgPrefix(dialogId);
+		var strDlgId = this._toStrId(dialogId);
 		var dialogContainer = L.DomUtil.get(strDlgId);
 		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', dialogContainer);
 		floatingCanvas.id = strDlgId + '-floating';
