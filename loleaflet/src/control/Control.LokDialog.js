@@ -272,8 +272,6 @@ L.Control.LokDialog = L.Control.extend({
 		this._setCanvasWidthHeight(dialogCanvas, width, height);
 		dialogCanvas.id = strId + '-canvas';
 
-		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
-
 		var dialogClass = 'lokdialog_container';
 		if (!title)
 			dialogClass += ' lokdialog_notitle';
@@ -436,8 +434,8 @@ L.Control.LokDialog = L.Control.extend({
 
 	// Dialog Child Methods
 
-	_paintDialogChild: function(dialogId, width, height, rectangle, imgData) {
-		var strId = this._toStrId(dialogId);
+	_paintDialogChild: function(parentId, width, height, rectangle, imgData) {
+		var strId = this._toStrId(parentId);
 		var img = new Image();
 		var canvas = L.DomUtil.get(strId + '-floating');
 		if (!canvas)
@@ -465,8 +463,8 @@ L.Control.LokDialog = L.Control.extend({
 		$('#' + id + '-floating').remove();
 	},
 
-	_createDialogChild: function(childId, dialogId, top, left) {
-		var strId = this._toStrId(dialogId);
+	_createDialogChild: function(childId, parentId, top, left) {
+		var strId = this._toStrId(parentId);
 		var dialogContainer = L.DomUtil.get(strId);
 		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', dialogContainer);
 		floatingCanvas.id = strId + '-floating';
