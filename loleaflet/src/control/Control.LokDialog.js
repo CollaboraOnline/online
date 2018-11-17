@@ -105,7 +105,7 @@ L.Control.LokDialog = L.Control.extend({
 
 			if (e.winType === 'dialog') {
 				this._launchDialog(e.id, left, top, width, height, e.title);
-				this._sendPaintWindow(e.id, this._createRectStr(e.id));
+				this._sendPaintWindowRect(e.id);
 			} else if (e.winType === 'child') {
 				var parentId = parseInt(e.parentId);
 				if (!this._isOpen(parentId))
