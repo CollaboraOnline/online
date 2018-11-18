@@ -396,15 +396,17 @@ L.Control.LokDialog = L.Control.extend({
 		this._onDialogClose(this._currentId, true);
 	},
 
-	_paintDialog: function(dialogId, rectangle, imgData) {
-		if (!this._isOpen(dialogId))
-			return;
+	_paintDialog: function(parentId, rectangle, imgData) {
 
-		var strId = this._toStrId(dialogId);
-		var img = new Image();
+		var strId = this._toStrId(parentId);
 		var canvas = document.getElementById(strId + '-canvas');
+		if (!canvas)
+			return; // no window to paint to
+
 		var ctx = canvas.getContext('2d');
+
 		var that = this;
+		var img = new Image();
 		img.onload = function() {
 			var x = 0;
 			var y = 0;
@@ -417,9 +419,10 @@ L.Control.LokDialog = L.Control.extend({
 			ctx.drawImage(img, x, y);
 
 			// if dialog is hidden, show it
-			var dialogContainer = L.DomUtil.get(strId);
-			$(dialogContainer).parent().show();
-			that.focus(dialogId);
+			var container = L.DomUtil.get(strId);
+			if (container)
+				$(container).parent().show();
+			that.focus(parentId);
 		};
 		img.src = imgData;
 	},
