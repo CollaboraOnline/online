@@ -152,6 +152,10 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + this._toStrId(id)).length > 0;
 	},
 
+	_isSidebar: function(id) {
+		return this._dialogs[id].isSidebar;
+	},
+
 	// Given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323.
 	_toIntId: function(id) {
 		if (typeof(id) === 'string')
@@ -185,6 +189,26 @@ L.Control.LokDialog = L.Control.extend({
 		return [x * dpiscale, y * dpiscale, width * dpiscale, height * dpiscale].join(',');
 	},
 
+	_sendPaintWindowRect: function(id, x, y, width, height) {
+		if (!width)
+			width = this._dialogs[id].width;
+		if (width <= 0)
+			return;	// Don't request rendering an empty area.
+		if (!height)
+			height = this._dialogs[id].height;
+		if (height <= 0)
+			return;	// Don't request rendering an empty area.
+		if (!x)
+			x = 0;
+		if (!y)
+			y = 0;
+
+		// pre-multiplied by the scale factor
+		var dpiscale = L.getDpiScaleFactor();
+		var rect = [x * dpiscale, y * dpiscale, width * dpiscale, height * dpiscale].join(',');
+		this._sendPaintWindow(id, rect);
+	},
+
 	_sendPaintWindow: function(id, rectangle) {
 		if (!rectangle)
 			return; // Don't request rendering an empty area.
@@ -209,8 +233,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
-		if (e.winType != undefined && e.winType !== 'dialog' && e.winType !== 'child') {
-			// We only handle pop-up dialogs here (see Control.Sidebar.js)
+		if (e.winType != undefined && e.winType !== 'dialog' && e.winType !== 'child' && e.winType !== 'deck') {
 			return;
 		}
 
@@ -234,6 +257,8 @@ L.Control.LokDialog = L.Control.extend({
 		if (e.action === 'created') {
 			if (e.winType === 'dialog') {
 				this._launchDialog(e.id, left, top, width, height, e.title);
+			} else if (e.winType === 'deck') {
+				this._launchSidebar(e.id, left, top, width, height);
 			} else if (e.winType === 'child') {
 				var parentId = parseInt(e.parentId);
 				if (!this._isOpen(parentId))
@@ -451,8 +476,13 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setStyle(dialogContainer, 'minHeight', height + 'px');
 
 		this._dialogs[id] = {
+			id: id,
+			strId: strId,
+			isSidebar: false,
 			width: width,
 			height: height,
+			cursor: null,
+			input: null,
 			title: title
 		};
 
@@ -466,6 +496,96 @@ L.Control.LokDialog = L.Control.extend({
 
 		this._currentId = id;
 		this._sendPaintWindow(id, this._createRectStr(id));
+	},
+
+	_launchSidebar: function(id, left, top, width, height) {
+
+		if (!left)
+			left = 0;
+		if (!top)
+			top = 0;
+
+		var strId = this._toStrId(id);
+
+		if (this._currentDeck)
+		{
+			if (width > 0)
+			{
+				this._resizeSidebar(strId, width);
+			}
+
+			// Render window.
+			this._sendPaintWindowRect(id);
+			return;
+		}
+
+		var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('sidebar-panel'));
+		L.DomUtil.setStyle(panelContainer, 'padding', '0px');
+		L.DomUtil.setStyle(panelContainer, 'margin', '0px');
+		L.DomUtil.setStyle(panelContainer, 'position', 'relative');
+		panelContainer.width = width;
+		panelContainer.height = height;
+		panelContainer.id = strId;
+
+		// Create the panel canvas.
+		var panelCanvas = L.DomUtil.create('canvas', 'panel_canvas', panelContainer);
+		L.DomUtil.setStyle(panelCanvas, 'position', 'absolute');
+		this._setCanvasWidthHeight(panelCanvas, width, height);
+		panelCanvas.id = strId + '-canvas';
+
+		// Create the child canvas now, to make it on top of the main panel canvas.
+		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', panelContainer);
+		L.DomUtil.setStyle(floatingCanvas, 'position', 'absolute');
+		floatingCanvas.width = 0;
+		floatingCanvas.height = 0;
+		floatingCanvas.id = strId + '-floating';
+
+		// Don't show the sidebar until we get the contents.
+		$(panelContainer).parent().hide();
+
+		this._dialogs[id] = {
+			open: true,
+			id: id,
+			strId: strId,
+			isSidebar: true,
+			left: left,
+			top: top,
+			width: width,
+			height: height,
+			cursor: null,
+			input: null,
+			child: null, // One child, typically drop-down list
+			title: null  // Never used for sidebars
+		};
+
+		this._currentDeck = this._dialogs[id];
+
+		this._createDialogCursor(strId);
+		var dlgInput = this._createDialogInput(strId);
+		this._setupWindowEvents(id, panelCanvas, dlgInput);
+
+		L.DomEvent.on(panelCanvas, 'resize', function() {
+			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelCanvas.width + ',' + panelCanvas.height);
+		}, this);
+		L.DomEvent.on(panelContainer, 'resize', function() {
+			var sidebarpanel = L.DomUtil.get('sidebar-panel');
+			if (sidebarpanel) {
+				var sidebar = sidebarpanel.children[0];
+				if (sidebar) {
+					this._map._socket.sendMessage('resizewindow ' + id + ' size=' + sidebar.width + ',' + sidebar.height);
+				}
+			}
+		}, this);
+		L.DomEvent.on(panelContainer, 'mouseleave', function() {
+			// Move the mouse off-screen when we leave the sidebar
+			// so we don't leave edge-elements highlighted as if
+			// the mouse is still over them.
+			this._map.lastActiveTime = Date.now();
+			this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
+		}, this);
+
+		// Render window.
+		this._sendPaintWindowRect(id);
 	},
 
 	_setupWindowEvents: function(id, canvas, dlgInput) {
@@ -678,6 +798,10 @@ L.Control.LokDialog = L.Control.extend({
 				y = parseInt(rectangle[1]);
 			}
 
+			// Sidebars find out their size and become visible on first paint.
+			if (that._isSidebar(parentId))
+				that._resizeSidebar(strId, that._currentDeck.width);
+
 			ctx.drawImage(img, x, y);
 
 			// if dialog is hidden, show it
@@ -721,6 +845,17 @@ L.Control.LokDialog = L.Control.extend({
 			$(canvas).show();
 		};
 		img.src = imgData;
+	},
+
+	_resizeSidebar: function(strId, width) {
+		this._currentDeck.width = width;
+		var sidebar = L.DomUtil.get(strId);
+		sidebar.width = width;
+		sidebar.style.width = width.toString() + 'px';
+		this._map.options.documentContainer.style.right = sidebar.style.width;
+		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
+		if (spreadsheetRowColumnFrame)
+			spreadsheetRowColumnFrame.style.right = sidebar.style.width;
 	},
 
 	_onDialogChildClose: function(dialogId) {

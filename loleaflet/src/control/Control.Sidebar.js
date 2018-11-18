@@ -8,8 +8,9 @@ L.Control.Sidebar = L.Control.extend({
 	panelIdPrefix: 'sidebarpanel-',
 
 	onAdd: function (map) {
-		map.on('window', this._onWindowMsg, this);
-		map.on('windowpaint', this._onWindowPaint, this);
+		map;
+		// map.on('window', this._onWindowMsg, this);
+		// map.on('windowpaint', this._onWindowPaint, this);
 	},
 
 	_isParent: function(id) {
