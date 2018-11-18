@@ -38,7 +38,6 @@ L.Control.LokDialog = L.Control.extend({
 
 	_isOpen: function(id) {
 		return this._dialogs[id] &&
-			this._dialogs[id].open &&
 			$('#' + this._toStrId(id)).length > 0;
 	},
 
@@ -314,7 +313,6 @@ L.Control.LokDialog = L.Control.extend({
 		$(dialogContainer).parent().hide();
 
 		this._dialogs[id] = {
-			open: true,
 			width: width,
 			height: height,
 			title: title
