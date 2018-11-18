@@ -321,13 +321,19 @@ L.Control.LokDialog = L.Control.extend({
 
 		this._createDialogCursor(strId);
 		var dlgInput = this._createDialogInput(strId);
+		this._setupWindowEvents(id, dialogCanvas, dlgInput);
 
-		L.DomEvent.on(dialogCanvas, 'contextmenu', L.DomEvent.preventDefault);
-		L.DomEvent.on(dialogCanvas, 'mousemove', function(e) {
+		this._currentId = id;
+		this._sendPaintWindow(id, this._createRectStr(id));
+	},
+
+	_setupWindowEvents: function(id, canvas, dlgInput) {
+		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
+		L.DomEvent.on(canvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
 			this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
-		L.DomEvent.on(dialogCanvas, 'mousedown mouseup', function(e) {
+		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
 			var buttons = 0;
 			buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
@@ -351,15 +357,12 @@ L.Control.LokDialog = L.Control.extend({
 			                                                id),
 			                                         dlgInput);
 
-			              // keep map active while user is playing with dialog
+			              // Keep map active while user is playing with window.
 			              this._map.lastActiveTime = Date.now();
 		              }, this);
 		L.DomEvent.on(dlgInput, 'contextmenu', function() {
 			return false;
 		});
-
-		this._currentId = id;
-		this._sendPaintWindow(id, this._createRectStr(id));
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
