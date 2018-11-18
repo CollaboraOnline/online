@@ -471,10 +471,14 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px'); // yes, it's necessary to append 'px'
 		L.DomUtil.setStyle(floatingCanvas, 'top', top + 'px');
 
-		L.DomEvent.on(floatingCanvas, 'contextmenu', L.DomEvent.preventDefault);
-
 		// attach events
-		L.DomEvent.on(floatingCanvas, 'mousedown mouseup', function(e) {
+		this._setupChildEvents(childId, floatingCanvas);
+	},
+
+	_setupChildEvents: function(childId, canvas) {
+		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
+
+		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
 			buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
 			buttons |= e.button === this._map['mouse'].JSButtons.middle ? this._map['mouse'].LOButtons.middle : 0;
@@ -482,13 +486,14 @@ L.Control.LokDialog = L.Control.extend({
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, childId, e.offsetX, e.offsetY, 1, buttons, 0);
 		}, this);
-		L.DomEvent.on(floatingCanvas, 'mousemove', function(e) {
+		L.DomEvent.on(canvas, 'mousemove', function(e) {
 			this._postWindowMouseEvent('move', childId, e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
-		L.DomEvent.on(floatingCanvas, 'contextmenu', function() {
+		L.DomEvent.on(canvas, 'contextmenu', function() {
 			return false;
 		});
 	}
+
 });
 
 L.control.lokDialog = function (options) {
