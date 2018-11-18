@@ -566,6 +566,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._initialMatrix    = this._matrix.clone();
 
 		this._angle = 0;
+		this._rotationMarker.addEventParent(this._map);
 		this._path._map
 			.on('mousemove', this._onRotate,     this)
 			.on('mouseup',   this._onRotateEnd, this);
@@ -608,9 +609,12 @@ L.Handler.PathTransform = L.Handler.extend({
 		var origin = this._rotationOriginPt;
 		var angle = Math.atan2(-(pos.y - origin.y), pos.x - origin.x) -
 			Math.atan2(-(previous.y - origin.y), previous.x - origin.x);
+
 		if (angle < 0) {
 			angle += (2 * Math.PI);
 		}
+
+		this._rotationMarker.removeEventParent(this._map);
 		this._path._map
 			.off('mousemove', this._onRotate, this)
 			.off('mouseup',   this._onRotateEnd, this);
