@@ -117,7 +117,6 @@ L.Control.Sidebar = L.Control.extend({
 
 				this._removeChild(parentId);
 				this._currentDeck.child = {
-					open: true,
 					id: e.id,
 					strId: strId,
 					left: left,
@@ -301,7 +300,6 @@ L.Control.Sidebar = L.Control.extend({
 		$(panelContainer).parent().hide();
 
 		this._currentDeck = {
-			open: true,
 			id: id,
 			strId: strId,
 			left: left,
