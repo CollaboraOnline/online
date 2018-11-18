@@ -90,15 +90,21 @@ L.Control.Sidebar = L.Control.extend({
 		e.id = parseInt(e.id);
 		var strId = this._toStrId(e.id);
 
+		var width = 0;
+		var height = 0;
+		if (e.size) {
+			width = parseInt(e.size.split(',')[0]);
+			height = parseInt(e.size.split(',')[1]);
+		}
+
+		var left = 0;
+		var top = 0;
+		if (e.position) {
+			left = parseInt(e.position.split(',')[0]);
+			top = parseInt(e.position.split(',')[1]);
+		}
+
 		if (e.action === 'created') {
-			var width = parseInt(e.size.split(',')[0]);
-			var height = parseInt(e.size.split(',')[1]);
-
-			if (e.position) {
-				var left = parseInt(e.position.split(',')[0]);
-				var top = parseInt(e.position.split(',')[1]);
-			}
-
 			if (e.winType === 'deck') {
 				this._launchSidebar(e.id, left, top, width, height);
 			} else if (e.winType === 'child') {
@@ -159,10 +165,6 @@ L.Control.Sidebar = L.Control.extend({
 				this._sendPaintWindowRect(e.id, rectangle[0], rectangle[1], rectangle[2], rectangle[3]);
 			}
 		} else if (e.action === 'size_changed') {
-			width = parseInt(e.size.split(',')[0]);
-			height = parseInt(e.size.split(',')[1]);
-			left = parseInt(e.position.split(',')[0]);
-			top = parseInt(e.position.split(',')[1]);
 			this._launchSidebar(e.id, left, top, width, height);
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
