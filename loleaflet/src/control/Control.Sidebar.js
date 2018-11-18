@@ -316,6 +316,7 @@ L.Control.Sidebar = L.Control.extend({
 
 		this._createDialogCursor(strId);
 		var dlgInput = this._createDialogInput(strId);
+		this._setupWindowEvents(id, panelCanvas, dlgInput);
 
 		L.DomEvent.on(panelCanvas, 'resize', function() {
 			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelCanvas.width + ',' + panelCanvas.height);
@@ -329,8 +330,6 @@ L.Control.Sidebar = L.Control.extend({
 				}
 			}
 		}, this);
-
-		L.DomEvent.on(panelCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(panelContainer, 'mouseleave', function() {
 			// Move the mouse off-screen when we leave the sidebar
 			// so we don't leave edge-elements highlighted as if
@@ -338,11 +337,18 @@ L.Control.Sidebar = L.Control.extend({
 			this._map.lastActiveTime = Date.now();
 			this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
 		}, this);
-		L.DomEvent.on(panelCanvas, 'mousemove', function(e) {
+
+		// Render window.
+		this._sendPaintWindowRect(id);
+	},
+
+	_setupWindowEvents: function(id, canvas, dlgInput) {
+		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
+		L.DomEvent.on(canvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
 			this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
 		}, this);
-		L.DomEvent.on(panelCanvas, 'mousedown mouseup', function(e) {
+		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
 			var buttons = 0;
 			buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
@@ -367,15 +373,12 @@ L.Control.Sidebar = L.Control.extend({
 			                                                id),
 			                                         dlgInput);
 
-			              // keep map active while user is playing with panel
+			              // Keep map active while user is playing with window.
 			              this._map.lastActiveTime = Date.now();
 		              }, this);
 		L.DomEvent.on(dlgInput, 'contextmenu', function() {
 			return false;
 		});
-
-		// Render window.
-		this._sendPaintWindowRect(id);
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
