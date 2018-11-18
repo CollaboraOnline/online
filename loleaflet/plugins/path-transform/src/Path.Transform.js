@@ -604,8 +604,10 @@ L.Handler.PathTransform = L.Handler.extend({
 	*/
 	_onRotateEnd: function(evt) {
 		var pos = evt.layerPoint;
+		var previous = this._rotationStart;
 		var origin = this._rotationOriginPt;
-		var angle = Math.atan2(-(pos.y - origin.y), pos.x - origin.x);
+		var angle = Math.atan2(-(pos.y - origin.y), pos.x - origin.x) -
+			Math.atan2(-(previous.y - origin.y), previous.x - origin.x);
 		if (angle < 0) {
 			angle += (2 * Math.PI);
 		}
