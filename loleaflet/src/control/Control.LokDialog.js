@@ -102,15 +102,21 @@ L.Control.LokDialog = L.Control.extend({
 		e.id = parseInt(e.id);
 		var strId = this._toStrId(e.id);
 
+		var width = 0;
+		var height = 0;
+		if (e.size) {
+			width = parseInt(e.size.split(',')[0]);
+			height = parseInt(e.size.split(',')[1]);
+		}
+
+		var left = 0;
+		var top = 0;
+		if (e.position) {
+			left = parseInt(e.position.split(',')[0]);
+			top = parseInt(e.position.split(',')[1]);
+		}
+
 		if (e.action === 'created') {
-			var width = parseInt(e.size.split(',')[0]);
-			var height = parseInt(e.size.split(',')[1]);
-
-			if (e.position) {
-				var left = parseInt(e.position.split(',')[0]);
-				var top = parseInt(e.position.split(',')[1]);
-			}
-
 			if (e.winType === 'dialog') {
 				this._launchDialog(e.id, left, top, width, height, e.title);
 			} else if (e.winType === 'child') {
@@ -155,8 +161,6 @@ L.Control.LokDialog = L.Control.extend({
 			}
 			this._sendPaintWindow(e.id, rectangle);
 		} else if (e.action === 'size_changed') {
-			width = parseInt(e.size.split(',')[0]);
-			height = parseInt(e.size.split(',')[1]);
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
 			$('#' + strId).remove();
