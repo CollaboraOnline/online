@@ -442,9 +442,10 @@ L.Control.Sidebar = L.Control.extend({
 			ctx.drawImage(img, x, y);
 
 			// If sidebar panel is hidden, show it.
-			var sidebarContainer = L.DomUtil.get(strId);
-			if (sidebarContainer)
-				$(sidebarContainer).parent().show();
+			var container = L.DomUtil.get(strId);
+			if (container)
+				$(container).parent().show();
+			that.focus(parentId);
 		};
 		img.src = imgData;
 	},
