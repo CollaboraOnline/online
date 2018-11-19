@@ -518,17 +518,8 @@ L.Control.LokDialog = L.Control.extend({
 		var dlgInput = this._createDialogInput(strId);
 		this._setupWindowEvents(id, panelCanvas, dlgInput);
 
-		L.DomEvent.on(panelCanvas, 'resize', function() {
-			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelCanvas.width + ',' + panelCanvas.height);
-		}, this);
 		L.DomEvent.on(panelContainer, 'resize', function() {
-			var sidebarpanel = L.DomUtil.get('sidebar-panel');
-			if (sidebarpanel) {
-				var sidebar = sidebarpanel.children[0];
-				if (sidebar) {
-					this._map._socket.sendMessage('resizewindow ' + id + ' size=' + sidebar.width + ',' + sidebar.height);
-				}
-			}
+			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelContainer.width + ',' + panelContainer.height);
 		}, this);
 		L.DomEvent.on(panelContainer, 'mouseleave', function() {
 			// Move the mouse off-screen when we leave the sidebar
