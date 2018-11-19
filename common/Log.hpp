@@ -110,9 +110,11 @@ namespace Log
             }
         }
 
-        std::ostringstream _stream;
+        std::ostringstream& getStream() { return _stream; }
 
     private:
+        std::ostringstream _stream;
+
         std::function<void(const std::string&)> _func;
         const bool _enabled;
     };
@@ -164,7 +166,7 @@ namespace Log
     {
         if (lhs.enabled())
         {
-            lhs._stream << rhs;
+            lhs.getStream() << rhs;
         }
 
         return lhs;
@@ -175,7 +177,7 @@ namespace Log
     {
         if (lhs.enabled())
         {
-            lhs._stream << rhs;
+            lhs.getStream() << rhs;
         }
 
         return lhs;
@@ -185,7 +187,7 @@ namespace Log
     {
         if (lhs.enabled())
         {
-            lhs._stream << Poco::DateTimeFormatter::format(Poco::DateTime(rhs),
+            lhs.getStream() << Poco::DateTimeFormatter::format(Poco::DateTime(rhs),
                                                            Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
         }
 
@@ -215,7 +217,7 @@ namespace Log
     {
         if (lhs.enabled())
         {
-            lhs._stream << Log::to_string(rhs);
+            lhs.getStream() << Log::to_string(rhs);
         }
 
         return lhs;
