@@ -26,8 +26,6 @@ L.AnnotationManager = L.Class.extend({
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
 		this._map.on('RedlineAccept', this._onRedlineAccept, this);
 		this._map.on('RedlineReject', this._onRedlineReject, this);
-
-		this._scaleFactor = 1;
 	},
 
 	// Remove only text comments from the document (excluding change tracking comments)
@@ -316,14 +314,12 @@ L.AnnotationManager = L.Class.extend({
 			idx++;
 		}
 
-		var pt;
-		if (layoutBounds.intersects(bounds)) {
-			layoutBounds.extend(layoutBounds.min.subtract([0, bounds.getSize().y]));
-			pt = layoutBounds.min;
-		} else {
-			pt = bounds.min;
-			layoutBounds.extend(bounds.min);
-		}
+		var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
+		var posX = docRight.x + this.options.marginX;
+		posX = this._map.latLngToLayerPoint(this._map.unproject(L.point(posX, 0))).x;
+		layoutBounds.extend(layoutBounds.min.subtract([0, bounds.getSize().y]));
+		var posY = layoutBounds.min.y;
+		var pt = L.point(posX, posY);
 		layoutBounds.extend(layoutBounds.min.subtract([0, this.options.marginY]));
 
 		idx = 0;
@@ -351,14 +347,13 @@ L.AnnotationManager = L.Class.extend({
 			idx++;
 		}
 
-		var pt;
-		if (layoutBounds.intersects(bounds)) {
-			pt = layoutBounds.getBottomLeft();
-			layoutBounds.extend(layoutBounds.max.add([0, bounds.getSize().y]));
-		} else {
-			pt = bounds.min;
-			layoutBounds.extend(bounds.max);
-		}
+		var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
+		var posX = docRight.x + this.options.marginX;
+		posX = this._map.latLngToLayerPoint(this._map.unproject(L.point(posX, 0))).x;
+		var posY = layoutBounds.getBottomLeft().y;
+		layoutBounds.extend(layoutBounds.max.add([0, bounds.getSize().y]));
+		var pt = L.point(posX, posY);
+		console.log('layoutDown: posY: ' + posY);
 		layoutBounds.extend(layoutBounds.max.add([0, this.options.marginY]));
 
 		idx = 0;
@@ -385,7 +380,7 @@ L.AnnotationManager = L.Class.extend({
 				this._items[selectIndexFirst]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.min);
 			}
 
-			var posX = topRight.x;
+			var posX = docRight.x;
 			var posY = this._items[selectIndexFirst]._data.anchorPix.y;
 			point = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.min);
 
@@ -486,8 +481,8 @@ L.AnnotationManager = L.Class.extend({
 			if (!this._selected.isEdit()) {
 				this._selected.show();
 			}
-		} else {
-			point = this._map.latLngToLayerPoint(this._map.unproject(topRight));
+		} else if (this._items.length > 0) {
+			point = this._map.latLngToLayerPoint(this._map.unproject(L.point(topRight.x, this._items[0]._data.anchorPix.y)));
 			layoutBounds = L.bounds(point, point);
 			for (idx = 0; idx < this._items.length;) {
 				commentThread = [];
