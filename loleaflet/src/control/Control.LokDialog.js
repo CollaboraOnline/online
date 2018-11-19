@@ -520,11 +520,6 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('sidebar-panel'));
-		L.DomUtil.setStyle(panelContainer, 'padding', '0px');
-		L.DomUtil.setStyle(panelContainer, 'margin', '0px');
-		L.DomUtil.setStyle(panelContainer, 'position', 'relative');
-		panelContainer.width = width;
-		panelContainer.height = height;
 		panelContainer.id = strId;
 
 		// Create the panel canvas.
@@ -852,7 +847,7 @@ L.Control.LokDialog = L.Control.extend({
 		var sidebar = L.DomUtil.get(strId);
 		sidebar.width = width;
 		sidebar.style.width = width.toString() + 'px';
-		this._map.options.documentContainer.style.right = sidebar.style.width;
+		this._map.options.documentContainer.style.right = (width + 1).toString() + 'px';
 		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 		if (spreadsheetRowColumnFrame)
 			spreadsheetRowColumnFrame.style.right = sidebar.style.width;
