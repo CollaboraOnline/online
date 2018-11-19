@@ -286,13 +286,6 @@ var deps = {
 		desc: 'Parts preview sidebar'
 	},
 
-	ControlSidebar: {
-		src: ['control/Control.js',
-		      'control/Control.Sidebar.js'],
-		heading: 'Controls',
-		desc: 'Sidebar panels deck'
-	},
-
 	ControlHeader: {
 		src: ['control/Control.js',
 		      'control/Control.Header.js'],
