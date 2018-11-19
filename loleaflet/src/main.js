@@ -77,7 +77,6 @@ setupToolbar(map);
 map.addControl(L.control.scroll());
 map.addControl(L.control.alertDialog());
 map.addControl(L.control.lokDialog());
-map.addControl(L.control.sidebar());
 map.addControl(L.control.contextMenu());
 map.addControl(L.control.infobar());
 map.loadDocument(global.socket);
