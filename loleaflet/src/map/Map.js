@@ -1498,6 +1498,7 @@ L.Map = L.Evented.extend({
 			moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
 			moveObjectVertically($('#document-container'), 36);
 			moveObjectVertically($('#presentation-controls-wrapper'), 36);
+			moveObjectVertically($('#sidebar-dock-wrapper'), 36);
 		}
 		else {
 			$('.main-nav').css({'display': 'none'});
@@ -1512,6 +1513,7 @@ L.Map = L.Evented.extend({
 			moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
 			moveObjectVertically($('#document-container'), -36);
 			moveObjectVertically($('#presentation-controls-wrapper'), -36);
+			moveObjectVertically($('#sidebar-dock-wrapper'), -36);
 		}
 	}
 });

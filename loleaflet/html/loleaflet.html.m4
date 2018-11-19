@@ -139,7 +139,6 @@ ifelse(MOBILEAPP,[true],
 
     <div id="sidebar-dock-wrapper">
       <div id="sidebar-panel"></div>
-      <div id="sidebar-toolbar"></div>
     </div>
 
     <div id="mobile-edit-button" style="display: none">

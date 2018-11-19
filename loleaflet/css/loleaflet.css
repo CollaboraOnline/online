@@ -69,14 +69,22 @@ body {
 }
 
 #sidebar-dock-wrapper {
-    background: #dfdfdf;
-    float: right;
-    /* position: absolute; */
-    top: 70px;
-    /* left: 0px; */
-    bottom: 66px;
+    background: #fff;
+    position: absolute;
+    top: 77px;
+    right: 0px;
+    bottom: 36px;
     border-top: 1px solid #b6b6b6;
+    border-left: 1px solid #b6b6b6;
     display: block;
+}
+
+#sidebar-panel {
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 #toolbar-wrapper {
