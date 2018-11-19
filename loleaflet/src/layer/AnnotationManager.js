@@ -353,7 +353,6 @@ L.AnnotationManager = L.Class.extend({
 		var posY = layoutBounds.getBottomLeft().y;
 		layoutBounds.extend(layoutBounds.max.add([0, bounds.getSize().y]));
 		var pt = L.point(posX, posY);
-		console.log('layoutDown: posY: ' + posY);
 		layoutBounds.extend(layoutBounds.max.add([0, this.options.marginY]));
 
 		idx = 0;
