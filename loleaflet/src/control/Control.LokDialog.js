@@ -507,12 +507,14 @@ L.Control.LokDialog = L.Control.extend({
 
 		var strId = this._toStrId(id);
 
-		if (this._currentDeck)
-		{
-			if (width > 0)
-			{
+		if (this._currentDeck) {
+			if (width > 0) {
 				this._resizeSidebar(strId, width);
 			}
+
+			// update the underlying canvas
+			var panelCanvas = L.DomUtil.get(this._currentDeck.strId + '-canvas');
+			this._setCanvasWidthHeight(panelCanvas, width, height);
 
 			// Render window.
 			this._sendPaintWindowRect(id);
@@ -523,7 +525,7 @@ L.Control.LokDialog = L.Control.extend({
 		panelContainer.id = strId;
 
 		// Create the panel canvas.
-		var panelCanvas = L.DomUtil.create('canvas', 'panel_canvas', panelContainer);
+		panelCanvas = L.DomUtil.create('canvas', 'panel_canvas', panelContainer);
 		L.DomUtil.setStyle(panelCanvas, 'position', 'absolute');
 		this._setCanvasWidthHeight(panelCanvas, width, height);
 		panelCanvas.id = strId + '-canvas';

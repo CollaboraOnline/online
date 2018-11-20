@@ -117,10 +117,10 @@ body {
     position: absolute;
     top: 77px;
     right: 0px;
-    bottom: 36px;
+    bottom: 37px;
     border-top: 1px solid #b6b6b6;
     border-left: 1px solid #b6b6b6;
-    display: block;
+    overflow: hidden; /* FIXME we want scrollbars here to handle overflows client-side */
     z-index: 1100;
 }
 
