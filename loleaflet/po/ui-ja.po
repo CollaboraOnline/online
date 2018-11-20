@@ -897,5 +897,3 @@ msgstr "アップロード中..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "サイズ"

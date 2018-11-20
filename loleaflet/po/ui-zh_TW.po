@@ -893,5 +893,3 @@ msgstr "上傳中..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "大小"

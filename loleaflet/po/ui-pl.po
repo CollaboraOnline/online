@@ -931,5 +931,3 @@ msgstr "Wysyłanie..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Rozmiar"

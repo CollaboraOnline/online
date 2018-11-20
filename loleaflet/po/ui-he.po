@@ -897,5 +897,3 @@ msgstr ""
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "גודל"

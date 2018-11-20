@@ -944,5 +944,3 @@ msgstr "Ανεβαίνει..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Μέγεθος"

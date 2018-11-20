@@ -896,5 +896,3 @@ msgstr "Yukanmoqda..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Hajmi"

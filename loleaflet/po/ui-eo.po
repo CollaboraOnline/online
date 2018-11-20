@@ -923,5 +923,3 @@ msgstr "Alŝutas..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Grando"

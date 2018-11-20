@@ -894,5 +894,3 @@ msgstr "Įkeliama…"
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Dydis"

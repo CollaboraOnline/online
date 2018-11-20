@@ -904,5 +904,3 @@ msgstr "በ መጫን ላይ..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "መጠን"

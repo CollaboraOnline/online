@@ -936,5 +936,3 @@ msgstr "Igotzen..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Tamaina"

@@ -942,5 +942,3 @@ msgstr "Chargement…"
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Taille"

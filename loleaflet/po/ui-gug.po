@@ -892,5 +892,3 @@ msgstr "Ojehupi hína..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Tamaño"

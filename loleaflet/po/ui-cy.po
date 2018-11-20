@@ -928,5 +928,3 @@ msgstr "Yn llwytho..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Maint"

@@ -929,5 +929,3 @@ msgstr "Nahrávání..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Velikost"

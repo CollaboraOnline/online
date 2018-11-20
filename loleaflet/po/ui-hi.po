@@ -923,5 +923,3 @@ msgstr "अपलोडिंग ..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "आकार"

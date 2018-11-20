@@ -939,5 +939,3 @@ msgstr "S'està carregant..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Mida"

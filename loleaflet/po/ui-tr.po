@@ -932,5 +932,3 @@ msgstr "Yükleniyor..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Boyut"

@@ -895,5 +895,3 @@ msgstr "ஏற்றப்படுகிறது..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "அளவு"

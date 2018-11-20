@@ -931,5 +931,3 @@ msgstr "Lastar opp ..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Storleik"

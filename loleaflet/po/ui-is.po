@@ -931,5 +931,3 @@ msgstr "Sendi inn ..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Stærð"

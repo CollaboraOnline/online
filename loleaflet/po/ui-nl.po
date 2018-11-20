@@ -940,5 +940,3 @@ msgstr "Bezig met laden…"
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Grootte"

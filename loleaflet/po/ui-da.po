@@ -929,5 +929,3 @@ msgstr "Indlæser..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Størrelse"

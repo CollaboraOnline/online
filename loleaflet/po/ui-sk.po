@@ -931,5 +931,3 @@ msgstr "Načítava sa…"
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Veľkosť"

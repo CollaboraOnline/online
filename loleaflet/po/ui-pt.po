@@ -936,5 +936,3 @@ msgstr "A enviar..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Tamanho"

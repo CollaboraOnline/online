@@ -894,5 +894,3 @@ msgstr "يۈكلەۋاتىدۇ…"
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "چوڭلۇقى"

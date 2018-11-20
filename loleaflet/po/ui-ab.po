@@ -889,5 +889,3 @@ msgstr "Аҭыгара..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Ашәагаа"

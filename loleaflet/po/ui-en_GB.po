@@ -928,5 +928,3 @@ msgstr "Uploading..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Size"

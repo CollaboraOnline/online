@@ -888,5 +888,3 @@ msgstr ""
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "File"
-#~ msgstr "Triem"

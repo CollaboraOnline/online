@@ -924,5 +924,3 @@ msgstr "Prenošenje  na poslužitelj..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Veličina"

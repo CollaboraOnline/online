@@ -938,5 +938,3 @@ msgstr "Caricamento..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Dimensione"

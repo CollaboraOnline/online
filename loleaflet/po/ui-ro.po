@@ -897,5 +897,3 @@ msgstr "Se încarcă..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Dimensiune"

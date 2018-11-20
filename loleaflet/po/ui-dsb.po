@@ -936,5 +936,3 @@ msgstr "Nagrawa se..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Wjelikosć"

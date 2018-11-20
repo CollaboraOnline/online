@@ -935,5 +935,3 @@ msgstr "Вивантаження…"
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Розмір"

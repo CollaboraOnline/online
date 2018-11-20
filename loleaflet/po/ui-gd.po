@@ -942,5 +942,3 @@ msgstr "’Ga luchdadh suas..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Meud"

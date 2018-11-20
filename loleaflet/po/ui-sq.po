@@ -893,5 +893,3 @@ msgstr "Po ngarkohet..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Përmasa"

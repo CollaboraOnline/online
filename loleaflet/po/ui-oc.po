@@ -888,5 +888,3 @@ msgstr "Cargament…"
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Talha"

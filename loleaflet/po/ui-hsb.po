@@ -937,5 +937,3 @@ msgstr "Nahrawa so..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Size"
-#~ msgstr "Wulkosć"
