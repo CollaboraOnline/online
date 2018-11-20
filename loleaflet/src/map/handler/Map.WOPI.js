@@ -298,6 +298,11 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.CallPythonScriptSource = e.source;
 			this._map.sendUnoCommand('vnd.sun.star.script:' + msg.ScriptFile + '$' + msg.Function + '?language=Python&location=share', msg.Values);
 		}
+		else if (msg.MessageId === 'Remove_View') {
+			this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
+			this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
+			this._map.remove();
+		}
 	},
 
 	_postMessage: function(e) {
