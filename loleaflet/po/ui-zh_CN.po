@@ -1,2731 +1,897 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:02+0000\n"
+"POT-Creation-Date: 2018-11-20 16:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: zh_CN\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.3\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 2776740\n"
+"X-Pootle-Revision: 3516697\n"
 
-#: admin.strings.js:5
+#: admin/admin.strings.js:6
 msgid "Admin console"
 msgstr "管理员控制台"
 
-#: admin.strings.js:7
+#: admin/admin.strings.js:7
 msgid "Settings"
 msgstr "设置"
 
-#: admin.strings.js:8
+#: admin/admin.strings.js:8
 msgid "Overview"
 msgstr "预览"
 
-#: admin.strings.js:9
+#: admin/admin.strings.js:9
 msgid "(current)"
 msgstr "(当前)"
 
-#: admin.strings.js:10
+#: admin/admin.strings.js:10
 msgid "Analytics"
 msgstr "分析"
 
-#: evol.colorpicker.strings.js:6
+#: admin/admin.strings.js:11
 msgid "History"
 msgstr "历史"
 
-#: admin.strings.js:11
+#: admin/admin.strings.js:12
 msgid "Dashboard"
 msgstr "控制台"
 
-#: admin.strings.js:12
+#: admin/admin.strings.js:13
 msgid "Users online"
 msgstr "在线的用户"
 
-#: admin.strings.js:13
-#, fuzzy
+#: admin/admin.strings.js:14
 msgid "User Name"
-msgstr "用户名"
+msgstr "用户名称"
 
-#: admin.strings.js:13
+#: admin/admin.strings.js:15
 msgid "Documents opened"
 msgstr "打开的文档"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:16
 msgid "Number of Documents"
-msgstr ""
+msgstr "文件数"
 
-#: admin.strings.js:14
+#: admin/admin.strings.js:17
 msgid "Memory consumed"
 msgstr "消耗的内存"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:18
 msgid "Bytes sent"
-msgstr ""
+msgstr "已发送的字节数"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:19
 msgid "Bytes received"
-msgstr ""
+msgstr "已接收的字节数"
 
-#: admin.strings.js:15
+#: admin/admin.strings.js:20
 msgid "PID"
 msgstr "PID"
 
-#: admin.strings.js:16
+#: admin/admin.strings.js:21
 msgid "Document"
 msgstr "文档"
 
-#: admin.strings.js:17
+#: admin/admin.strings.js:22
 msgid "Number of views"
 msgstr "视图数"
 
-#: admin.strings.js:18
+#: admin/admin.strings.js:23
 msgid "Elapsed time"
 msgstr "已用时间"
 
-#: admin.strings.js:19
+#: admin/admin.strings.js:24
 msgid "Idle time"
 msgstr "空闲时间"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "已修改"
 
-#: admin.strings.js:20
+#: admin/admin.strings.js:26
 msgid "Kill"
 msgstr "杀死"
 
-#: admin.strings.js:21
+#: admin/admin.strings.js:27
 msgid "Graphs"
 msgstr "图表"
 
-#: admin.strings.js:27
+#: admin/admin.strings.js:28
 msgid "Memory Graph"
-msgstr ""
+msgstr "内存图"
 
-#: admin.strings.js:28
+#: admin/admin.strings.js:29
 msgid "CPU Graph"
-msgstr ""
+msgstr "CPU图"
 
-#: admin.strings.js:29
+#: admin/admin.strings.js:30
 msgid "Network Graph"
-msgstr ""
+msgstr "网络图"
 
-#: admin.strings.js:22
-#: dist/toolbar/toolbar.js:470
-#: src/control/Control.Menubar.js:11
-#: src/control/Control.Menubar.js:164
-#: src/control/Control.Menubar.js:223
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:232
 msgid "Save"
 msgstr "保存"
 
-#: admin.strings.js:23
+#: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"
 msgstr "内存统计的缓存大小"
 
-#: admin.strings.js:24
+#: admin/admin.strings.js:33
 msgid "Time interval of memory statistics (in ms)"
 msgstr "内存统计的时间间隔（毫秒）"
 
-#: admin.strings.js:25
+#: admin/admin.strings.js:34
 msgid "Cache size of CPU statistics"
 msgstr "CPU统计的缓存大小"
 
-#: admin.strings.js:26
+#: admin/admin.strings.js:35
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "CPU统计的时间间隔（毫秒）"
 
-#: admin.strings.js:35
+#: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "最大文档处理虚拟内存 (MB) - 仅降低"
 
-#: admin.strings.js:36
+#: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "最大文档处理栈内存 (KB) - 仅降低"
 
-#: admin.strings.js:37
+#: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "最大允许写入磁盘的文件大小 (MB) - 仅降低"
 
-#: evol.colorpicker.strings.js:2
-msgid "Theme Colors"
-msgstr "主题颜色"
+#: admin/admin.strings.js:39
+msgid "Documents:"
+msgstr "文档:"
 
-#: evol.colorpicker.strings.js:3
-msgid "Standard Colors"
-msgstr "标准颜色"
+#: admin/admin.strings.js:40
+msgid "Expired:"
+msgstr "失效："
 
-#: evol.colorpicker.strings.js:4
-msgid "Web Colors"
-msgstr "网页颜色"
-
-#: evol.colorpicker.strings.js:5
-msgid "Back to Palette"
-msgstr "返回调色板"
-
-#: evol.colorpicker.strings.js:7
-msgid "No history yet."
-msgstr "还没有历史。"
-
-#: unocommands.js:1
-msgid "Copy Hyperlink"
-msgstr "复制超链接"
-
-#: unocommands.js:2
-msgid "Down One Level"
-msgstr "向下一级"
-
-#: unocommands.js:3
-msgid "Up One Level"
-msgstr "向上一级"
-
-#: unocommands.js:4
-msgid "Edit Comment"
-msgstr "编辑批注"
-
-#: unocommands.js:5
-msgid "Insert Comment"
-msgstr "插入批注"
-
-#: unocommands.js:6
-msgid "Merge"
-msgstr "合并"
-
-#: unocommands.js:7
-msgid "Merge Cells..."
-msgstr "合并单元格..."
-
-#: unocommands.js:8
-msgid "Bring Forward"
-msgstr "上移一层"
-
-#: unocommands.js:9
-msgid "Send Backward"
-msgstr "下移一层"
-
-#: unocommands.js:10
-msgid "Paste Special"
-msgstr "选择性粘贴"
-
-#: unocommands.js:11
-msgid "Unformatted Text"
-msgstr "未格式化的文本"
-
-#: unocommands.js:12
-msgid "No Wrap"
-msgstr "无环绕"
-
-#: unocommands.js:13
-msgid "Wrap Before"
-msgstr "之前环绕"
-
-#: unocommands.js:14
-msgid "Wrap After"
-msgstr "之后环绕"
-
-#: unocommands.js:15
-msgid "Enable Contour"
-msgstr "启用轮廓"
-
-#: unocommands.js:16
-msgid "Update Index or Table of Contents"
-msgstr "更新索引或内容目录"
-
-#: unocommands.js:17
-msgid "Delete Index or Table of Contents"
-msgstr "删除索引或内容目录"
-
-#: unocommands.js:18
-msgid "Reply"
-msgstr "回复"
-
-#: unocommands.js:19
+#: admin/admin.strings.js:41
 msgid "Refresh"
 msgstr "刷新"
 
-#: dist/errormessages.js:1
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr "服务器磁盘空间不足，请联系服务器管理员。"
+#: admin/src/AdminSocketAnalytics.js:219
+msgid "Received"
+msgstr "已接收"
 
-#: dist/errormessages.js:2
-msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
-"contact the administrator."
-msgstr "主机URL为空。loolwsd服务器的配置可能不正确，请联系管理员。"
+#: admin/src/AdminSocketAnalytics.js:223
+msgid "Sent"
+msgstr "已发送"
 
-#: dist/errormessages.js:3
-msgid ""
-"This development build is limited to %0 documents, and %1 connections - to "
-"avoid the impression that it is suitable for deployment in large "
-"enterprises. To find out more about deploying and scaling %2 check out: "
-"<br/><a href=\"%3\">%3</a>."
-msgstr ""
-"为避免误认为本版本已经适应大型企业部署，本开发版限制为 %0 份文档、%1 个连接。若想了解更多关于部署和缩放 %2 的内容请访问下面的链接：<br/><"
-"a href=\"%3\">%3</a>。"
+#: admin/src/AdminSocketBase.js:46
+msgid "Connection error"
+msgstr "连接错误"
 
-#: dist/errormessages.js:4
-msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
-"admin. This limit has been reached. Please try again later."
-msgstr "本服务经管理员限制为 %0 份文档、%1 个连接。目前已经到达上限，请稍后重试。"
+#: admin/src/AdminSocketOverview.js:101
+msgid "Are you sure you want to terminate this session?"
+msgstr "您确定要停止此次会话吗？"
 
-#: dist/errormessages.js:5
-msgid ""
-"Service is unavailable. Please try again later and report to your "
-"administrator if the issue persists."
-msgstr "服务无法使用，请稍后重试，若问题持续存在请反馈给您的管理员。"
+#: admin/src/AdminSocketOverview.js:182 admin/src/AdminSocketOverview.js:284
+msgid "Documents"
+msgstr "文档"
 
-#: dist/errormessages.js:6
-msgid ""
-"Unauthorized WOPI host. Please try again later and report to your "
-"administrator if the issue persists."
-msgstr "未授权的WOPI主机。请稍后重试，若问题持续存在请反馈给您的管理员。"
+#: admin/src/AdminSocketSettings.js:34
+msgid "Are you sure you want to shut down the server?"
+msgstr "您确定要关闭服务器吗？"
 
-#: dist/errormessages.js:7
-msgid ""
-"Wrong WOPISrc, usage: WOPISrc=valid encoded URI, or file_path, usage: "
-"file_path=/path/to/doc/"
-msgstr ""
-"错误的WOPISrc, 用法：WOPISrc=合法的已编码的URI；或者错误的file_path, 用法：file_path=/path/to/doc/"
+#: admin/src/Util.js:14
+msgid "kB"
+msgstr "KB"
 
-#: dist/errormessages.js:8
-msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
-"session (or webpage) to continue."
-msgstr "您的会话将在 %time 内过期，请保存您的工作并刷新会话（或页面）来继续。"
+#: admin/src/Util.js:14
+msgid "MB"
+msgstr "MB"
 
-#: dist/errormessages.js:9
-msgid ""
-"Your session has been expired. Further changes to document might not be "
-"saved. Please refresh the session (or webpage) to continue."
-msgstr "您的会话已过期，文档后续变更可能无法保存，请刷新会话（或页面）来继续。"
+#: admin/src/Util.js:14
+msgid "GB"
+msgstr "GB"
 
-#: dist/errormessages.js:10
-msgid ""
-"Failed to load the document. Please ensure the file type is supported and "
-"not corrupted, and try again."
-msgstr "无法载入文件，请确认文件类型正确且文件并未受损，请重试。"
+#: admin/src/Util.js:14
+msgid "TB"
+msgstr "TB"
 
-#: dist/errormessages.js:13
-msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
-msgstr ""
+#: admin/src/Util.js:43 admin/src/Util.js:45
+msgid " hrs"
+msgstr " hrs"
 
-#: dist/errormessages.js:14
-#, fuzzy
-msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server (%storageserver) administrator to "
-"continue editing."
-msgstr "服务器上的存储空间不足，保存失败。文档现在将被设定为只读。要继续编辑，请联系服务器管理员。"
+#: admin/src/Util.js:49 admin/src/Util.js:51
+msgid " mins"
+msgstr " mins"
 
-#: dist/errormessages.js:15
-msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+#: admin/src/Util.js:54
+msgid " s"
+msgstr " s"
 
-#: dist/errormessages.js:16
-#, fuzzy
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
-msgstr "无法将文档保存到存储服务器。请检查您的权限，或者联系存储服务器的管理员。"
-
-#: dist/toolbar/toolbar.js:105
-msgid "%n users"
-msgstr "%n 位用户"
-
-#: dist/toolbar/toolbar.js:106
-msgid "1 user"
-msgstr "1 位用户"
-
-#: dist/toolbar/toolbar.js:107
-msgid "0 users"
-msgstr "0 位用户"
-
-#: dist/toolbar/toolbar.js:261
+#: js/toolbar.js:153
 msgid "Are you sure you want to delete this page?"
 msgstr "您确定要删除该页面吗？"
 
-#: dist/toolbar/toolbar.js:461
+#: js/toolbar.js:621
 msgid "Textwrap"
 msgstr "文字环绕"
 
-#: dist/toolbar/toolbar.js:462
+#: js/toolbar.js:622
 msgid "No wrap"
 msgstr "无环绕"
 
-#: dist/toolbar/toolbar.js:463
+#: js/toolbar.js:623
 msgid "Page wrap"
 msgstr "页面环绕"
 
-#: dist/toolbar/toolbar.js:464
+#: js/toolbar.js:624
 msgid "Wrap anchor only"
 msgstr "仅环绕锚定"
 
-#: dist/toolbar/toolbar.js:465
+#: js/toolbar.js:625
 msgid "Ideal wrap"
 msgstr "最佳环绕"
 
-#: dist/toolbar/toolbar.js:466
+#: js/toolbar.js:626
 msgid "Left wrap"
 msgstr "左环绕"
 
-#: dist/toolbar/toolbar.js:467
+#: js/toolbar.js:627
 msgid "Right wrap"
 msgstr "右环绕"
 
-#: dist/toolbar/toolbar.js:468
+#: js/toolbar.js:628
 msgid "Wrap through"
 msgstr "贯穿环绕"
 
-#: dist/toolbar/toolbar.js:472
-#: src/control/Control.Menubar.js:22
-#: src/control/Control.Menubar.js:174
-#: src/control/Control.Menubar.js:233
-msgid "Undo"
-msgstr "撤销"
-
-#: dist/toolbar/toolbar.js:473
-#: src/control/Control.Menubar.js:23
-#: src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:234
-msgid "Redo"
-msgstr "重做"
-
-#: dist/toolbar/toolbar.js:474
+#: js/toolbar.js:634
 msgid "Document repair"
 msgstr "文档修复"
 
-#: dist/toolbar/toolbar.js:480
-#: src/control/Control.Menubar.js:60
-msgid "Bold"
-msgstr "加粗"
-
-#: dist/toolbar/toolbar.js:481
-#: src/control/Control.Menubar.js:61
-msgid "Italic"
-msgstr "斜体"
-
-#: dist/toolbar/toolbar.js:482
-#: src/control/Control.Menubar.js:62
-msgid "Underline"
-msgstr "下划线"
-
-#: dist/toolbar/toolbar.js:483
-msgid "Strikeout"
-msgstr "删除线"
-
-#: dist/toolbar/toolbar.js:485
-msgid "Insert Footnote"
-msgstr "插入脚注"
-
-#: dist/toolbar/toolbar.js:488
-msgid "Font color"
-msgstr "文字颜色"
-
-#: dist/toolbar/toolbar.js:490
-msgid "Highlighting"
-msgstr "高亮"
-
-#: dist/toolbar/toolbar.js:492
-msgid "Align left"
-msgstr "左对齐"
-
-#: dist/toolbar/toolbar.js:493
-msgid "Center horizontally"
-msgstr "水平居中"
-
-#: dist/toolbar/toolbar.js:494
-msgid "Align right"
-msgstr "右对齐"
-
-#: dist/toolbar/toolbar.js:495
-#: src/control/Control.Menubar.js:101
-msgid "Justified"
-msgstr "两端对齐"
-
-#: dist/toolbar/toolbar.js:497
-msgid "Wrap Text"
-msgstr "文本换行"
-
-#: dist/toolbar/toolbar.js:498
-msgid "Merge and Center Cells"
-msgstr "合并居中单元格"
-
-#: dist/toolbar/toolbar.js:500
-msgid "Format as Currency"
-msgstr "格式化为货币"
-
-#: dist/toolbar/toolbar.js:501
-msgid "Format as Percent"
-msgstr "格式化为百分比"
-
-#: dist/toolbar/toolbar.js:502
-msgid "Format as Number"
-msgstr "格式化为数字"
-
-#: dist/toolbar/toolbar.js:503
-msgid "Format as Date"
-msgstr "格式化为日期"
-
-#: dist/toolbar/toolbar.js:504
-msgid "Add Decimal Place"
-msgstr "添加小数位"
-
-#: dist/toolbar/toolbar.js:505
-msgid "Delete Decimal Place"
-msgstr "删除小数位"
-
-#: dist/toolbar/toolbar.js:507
-msgid "Sort Ascending"
-msgstr "升序"
-
-#: dist/toolbar/toolbar.js:508
-msgid "Sort Descending"
-msgstr "降序"
-
-#: dist/toolbar/toolbar.js:510
-#: src/control/Control.Menubar.js:107
-msgid "Bullets on/off"
-msgstr "打开/关闭项目符号"
-
-#: dist/toolbar/toolbar.js:511
-#: src/control/Control.Menubar.js:108
-msgid "Numbering on/off"
-msgstr "打开/关闭编号"
-
-#: dist/toolbar/toolbar.js:513
-#: src/control/Control.Menubar.js:95
-msgid "Increase indent"
-msgstr "增大缩进"
-
-#: dist/toolbar/toolbar.js:514
-#: src/control/Control.Menubar.js:96
-msgid "Decrease indent"
-msgstr "减少缩进"
-
-#: dist/toolbar/toolbar.js:517
+#: js/toolbar.js:674
 msgid "Insert table"
 msgstr "插入表格"
 
-#: dist/toolbar/toolbar.js:518
-msgid "Insert comment"
-msgstr "插入批注"
+#: js/toolbar.js:676
+msgid "Borders"
+msgstr "边框"
 
-#: dist/toolbar/toolbar.js:519
-msgid "Insert graphic"
-msgstr "插入图形"
+#: js/toolbar.js:684
+msgid "More..."
+msgstr "更多..."
 
-#: dist/toolbar/toolbar.js:520
-msgid "Special Character"
-msgstr "特殊字符"
+#: js/toolbar.js:696
+msgid "Insert shapes"
+msgstr "插入形状"
 
-#: dist/toolbar/toolbar.js:522
-msgid "More"
-msgstr "更多"
+#: js/toolbar.js:703
+msgid "Insert Local Image"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:603
-msgid "Layout"
-msgstr "布局"
+#: js/toolbar.js:731 js/toolbar.js:1045
+msgid "Always follow the editor"
+msgstr "总是跟随编辑器"
 
-#: dist/toolbar/toolbar.js:628
-#: dist/toolbar/toolbar.js:975
+#: js/toolbar.js:734 js/toolbar.js:1048
+msgid "Current"
+msgstr "当前"
+
+#: js/toolbar.js:759 js/toolbar.js:926 js/toolbar.js:1442
 msgid "Sum"
 msgstr "求和"
 
-#: dist/toolbar/toolbar.js:629
+#: js/toolbar.js:760 js/toolbar.js:927
 msgid "Function"
 msgstr "函数"
 
-#: dist/toolbar/toolbar.js:630
-#: src/control/Control.CharacterMap.js:428
+#: js/toolbar.js:761 js/toolbar.js:928 src/layer/marker/Annotation.js:171
 msgid "Cancel"
 msgstr "取消"
 
-#: dist/toolbar/toolbar.js:631
+#: js/toolbar.js:762 js/toolbar.js:929
 msgid "Accept"
 msgstr "接受"
 
-#: dist/toolbar/toolbar.js:642
+#: js/toolbar.js:795 js/toolbar.js:984
 msgid "First sheet"
 msgstr "第一个工作表"
 
-#: dist/toolbar/toolbar.js:643
+#: js/toolbar.js:796 js/toolbar.js:985
 msgid "Previous sheet"
 msgstr "上一个工作表"
 
-#: dist/toolbar/toolbar.js:644
+#: js/toolbar.js:797 js/toolbar.js:986
 msgid "Next sheet"
 msgstr "下一个工作表"
 
-#: dist/toolbar/toolbar.js:645
+#: js/toolbar.js:798 js/toolbar.js:987
 msgid "Last sheet"
 msgstr "最后一个工作表"
 
-#: dist/toolbar/toolbar.js:655
-#: src/control/Control.Menubar.js:212
+#: js/toolbar.js:799 js/toolbar.js:988
+msgid "Insert sheet"
+msgstr "插入工作表"
+
+#: js/toolbar.js:960 src/control/Control.Menubar.js:30
+msgid "Sign document"
+msgstr ""
+
+#: js/toolbar.js:965
+msgid "Logout"
+msgstr ""
+
+#: js/toolbar.js:1005 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
 msgstr "全屏演示"
 
-#: dist/toolbar/toolbar.js:657
-msgid "Insert slide"
-msgstr "插入幻灯片"
-
-#: dist/toolbar/toolbar.js:658
-#: src/control/Control.Menubar.js:209
-msgid "Duplicate slide"
-msgstr "复制幻灯片"
-
-#: dist/toolbar/toolbar.js:659
-#: src/control/Control.Menubar.js:210
-msgid "Delete slide"
-msgstr "删除幻灯片"
-
-#: dist/toolbar/toolbar.js:672
+#: js/toolbar.js:1029
 msgid "Search:"
 msgstr "搜索："
 
-#: dist/toolbar/toolbar.js:677
-msgid "Search backwards"
-msgstr "反向搜索"
-
-#: dist/toolbar/toolbar.js:678
-msgid "Search forward"
-msgstr "向前搜索"
-
-#: dist/toolbar/toolbar.js:679
+#: js/toolbar.js:1036
 msgid "Cancel the search"
 msgstr "取消搜索"
 
-#: dist/toolbar/toolbar.js:680
-msgid "Text Language"
-msgstr ""
-
-#: dist/toolbar/toolbar.js:684
+#: js/toolbar.js:1041
 msgid "No users"
 msgstr "无用户"
 
-#: dist/toolbar/toolbar.js:686
-msgid "Previous page"
-msgstr "上一页"
-
-#: dist/toolbar/toolbar.js:687
-msgid "Next page"
-msgstr "下一页"
-
-#: dist/toolbar/toolbar.js:689
-#: src/control/Control.Menubar.js:36
-#: src/control/Control.Menubar.js:188
+#: js/toolbar.js:1055 src/control/Control.Menubar.js:63
+#: src/control/Control.Menubar.js:261
 msgid "Reset zoom"
 msgstr "重置缩放"
 
-#: dist/toolbar/toolbar.js:690
-#: src/control/Control.Menubar.js:35
-#: src/control/Control.Menubar.js:187
-msgid "Zoom out"
-msgstr "缩小"
-
-#: dist/toolbar/toolbar.js:692
-#: src/control/Control.Menubar.js:34
-#: src/control/Control.Menubar.js:186
-msgid "Zoom in"
-msgstr "放大"
-
-#: dist/toolbar/toolbar.js:706
+#: js/toolbar.js:1099
 msgid "%user has joined"
 msgstr "用户 %user 已加入"
 
-#: dist/toolbar/toolbar.js:707
+#: js/toolbar.js:1100
 msgid "%user has left"
-msgstr "用户 %user 已离开"
+msgstr ""
 
-#: dist/toolbar/toolbar.js:824
-#: dist/toolbar/toolbar.js:1349
-msgid "Size"
-msgstr "大小"
-
-#: dist/toolbar/toolbar.js:956
+#: js/toolbar.js:1420
 msgid "Number of Sheets"
 msgstr "工作表数"
 
-#: dist/toolbar/toolbar.js:959
+#: js/toolbar.js:1423
 msgid "Selected range of cells"
 msgstr "选定的单元格区域"
 
-#: dist/toolbar/toolbar.js:962
-#: dist/toolbar/toolbar.js:997
+#: js/toolbar.js:1426 js/toolbar.js:1465
 msgid "Entering text mode"
 msgstr "正在进入文本模式"
 
-#: dist/toolbar/toolbar.js:965
-#: dist/toolbar/toolbar.js:1000
+#: js/toolbar.js:1429 js/toolbar.js:1471 js/toolbar.js:1498
+msgid "Text Language"
+msgstr "文本语言"
+
+#: js/toolbar.js:1432 js/toolbar.js:1468
 msgid "Selection Mode"
 msgstr "选择模式"
 
-#: dist/toolbar/toolbar.js:968
+#: js/toolbar.js:1435
 msgid "Choice of functions"
 msgstr "函数选择"
 
-#: dist/toolbar/toolbar.js:970
+#: js/toolbar.js:1437
 msgid "Average"
 msgstr "平均值"
 
-#: dist/toolbar/toolbar.js:971
+#: js/toolbar.js:1438
 msgid "CountA"
 msgstr "计数 A"
 
-#: dist/toolbar/toolbar.js:972
+#: js/toolbar.js:1439
 msgid "Count"
 msgstr "计数"
 
-#: dist/toolbar/toolbar.js:973
+#: js/toolbar.js:1440
 msgid "Maximum"
 msgstr "最大值"
 
-#: dist/toolbar/toolbar.js:974
+#: js/toolbar.js:1441
 msgid "Minimum"
 msgstr "最小值"
 
-#: dist/toolbar/toolbar.js:976
+#: js/toolbar.js:1443
 msgid "Selection count"
 msgstr "选择计数"
 
-#: dist/toolbar/toolbar.js:977
-#: src/control/Control.CharacterMap.js:11
+#: js/toolbar.js:1444
 msgid "None"
 msgstr "无"
 
-#: dist/toolbar/toolbar.js:991
+#: js/toolbar.js:1459
 msgid "Number of Pages"
 msgstr "页数"
 
-#: dist/toolbar/toolbar.js:994
+#: js/toolbar.js:1462
 msgid "Word Counter"
 msgstr "单词计数"
 
-#: dist/toolbar/toolbar.js:1017
+#: js/toolbar.js:1493
 msgid "Number of Slides"
 msgstr "幻灯片数"
 
-#: dist/toolbar/toolbar.js:1159
+#: js/toolbar.js:1525
+msgid "%n users"
+msgstr "%n 位用户"
+
+#: js/toolbar.js:1526
+msgid "1 user"
+msgstr "1 位用户"
+
+#: js/toolbar.js:1527
+msgid "0 users"
+msgstr "0 位用户"
+
+#: js/toolbar.js:1657
 msgid "Document saved"
 msgstr "文档已保存"
 
-#: dist/toolbar/toolbar.js:1322
+#: js/toolbar.js:1807
 msgid "Style"
 msgstr "样式"
 
-#: dist/toolbar/toolbar.js:1341
+#: js/toolbar.js:1829
 msgid "Font"
 msgstr "字体"
 
-#: dist/toolbar/toolbar.js:1377
+#: js/toolbar.js:1862
 msgid "Previous slide"
 msgstr "上一张幻灯片"
 
-#: dist/toolbar/toolbar.js:1378
+#: js/toolbar.js:1863
 msgid "Next slide"
 msgstr "下一张幻灯片"
 
-#: dist/toolbar/toolbar.js:1431
+#: js/toolbar.js:1925
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多个用户之间的撤销/重做发生了冲突。请使用文档恢复来解决冲突。"
 
-#: dist/toolbar/toolbar.js:1595
-#: src/control/Control.DocumentRepair.js:87
+#: js/toolbar.js:2153 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "您"
 
-#: dist/toolbar/toolbar.js:1604
+#: js/toolbar.js:2159
 msgid "Readonly"
 msgstr "只读"
 
-#: src/admin/AdminSocketBase.js:45
-msgid "Connection error"
-msgstr "连接错误"
-
-#: src/admin/AdminSocketOverview.js:66
-msgid "Are you sure you want to terminate this session?"
-msgstr "您确定要停止此次会话吗？"
-
-#: src/admin/AdminSocketOverview.js:152
-#: src/admin/AdminSocketOverview.js:311
-#, fuzzy
-msgid "Documents"
-msgstr "文档"
-
-#: src/admin/AdminSocketSettings.js:34
-#, fuzzy
-msgid "Are you sure you want to shut down the server?"
-msgstr "您确定要关闭服务器吗？"
-
-#: src/admin/Util.js:13
-msgid "kB"
-msgstr "KB"
-
-#: src/admin/Util.js:13
-msgid "MB"
-msgstr "MB"
-
-#: src/admin/Util.js:13
-msgid "GB"
-msgstr "GB"
-
-#: src/admin/Util.js:13
-msgid "TB"
-msgstr "TB"
-
-#: src/admin/Util.js:42
-#: src/admin/Util.js:44
-msgid " hrs"
-msgstr " hrs"
-
-#: src/admin/Util.js:48
-#: src/admin/Util.js:50
-msgid " mins"
-msgstr " mins"
-
-#: src/admin/Util.js:53
-msgid " s"
-msgstr " s"
-
-#: src/control/Control.CharacterMap.js:12
-msgid "Basic Latin"
-msgstr "基本拉丁字母"
-
-#: src/control/Control.CharacterMap.js:13
-msgid "Latin-1"
-msgstr "拉丁字母-1"
-
-#: src/control/Control.CharacterMap.js:14
-msgid "Latin Extended-A"
-msgstr "拉丁文扩充-A"
-
-#: src/control/Control.CharacterMap.js:15
-msgid "Latin Extended-B"
-msgstr "拉丁文扩充-B"
-
-#: src/control/Control.CharacterMap.js:16
-msgid "IPA Extensions"
-msgstr "国际音标扩充"
-
-#: src/control/Control.CharacterMap.js:17
-msgid "Spacing Modifier Letters"
-msgstr "占位修饰字符"
-
-#: src/control/Control.CharacterMap.js:18
-msgid "Combining Diacritical Marks"
-msgstr "组合变音标记"
-
-#: src/control/Control.CharacterMap.js:19
-msgid "Basic Greek"
-msgstr "基本希腊字母"
-
-#: src/control/Control.CharacterMap.js:20
-msgid "Cyrillic"
-msgstr "西里尔字母"
-
-#: src/control/Control.CharacterMap.js:21
-msgid "Armenian"
-msgstr "亚美尼亚文"
-
-#: src/control/Control.CharacterMap.js:22
-msgid "Basic Hebrew"
-msgstr "基本希伯来文"
-
-#: src/control/Control.CharacterMap.js:23
-msgid "Basic Arabic"
-msgstr "基本阿拉伯文"
-
-#: src/control/Control.CharacterMap.js:24
-msgid "Syriac"
-msgstr "古代叙利亚语"
-
-#: src/control/Control.CharacterMap.js:25
-msgid "Thaana"
-msgstr "塔纳文"
-
-#: src/control/Control.CharacterMap.js:26
-msgid "Devanagari"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:27
-msgid "Bengali"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:28
-msgid "Gurmukhi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:29
-msgid "Gujarati"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:30
-msgid "Odia"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:31
-msgid "Tamil"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:32
-msgid "Telugu"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:33
-msgid "Kannada"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:34
-msgid "Malayalam"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:35
-msgid "Sinhala"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:36
-msgid "Thai"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:37
-msgid "Lao"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:38
-msgid "Tibetan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:39
-msgid "Myanmar"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:40
-msgid "Basic Georgian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:41
-msgid "Hangul Jamo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:43
-msgid "Ethiopic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:44
-msgid "Cherokee"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:46
-msgid "Canadian Aboriginal Syllables"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:47
-msgid "Ogham"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:48
-msgid "Runic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:49
-msgid "Khmer"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:50
-msgid "Mongolian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:51
-msgid "Latin Extended Additional"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:52
-msgid "Greek Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:53
-msgid "General Punctuation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:54
-msgid "Superscripts and Subscripts"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:55
-msgid "Currency Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:56
-#, fuzzy
-msgid "Combining Diacritical Symbols"
-msgstr "组合变音标记"
-
-#: src/control/Control.CharacterMap.js:57
-msgid "Letterlike Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:58
-msgid "Number Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:59
-msgid "Arrows"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:60
-msgid "Mathematical Operators"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:61
-msgid "Miscellaneous Technical"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:62
-msgid "Control Pictures"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:63
-msgid "Optical Character Recognition"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:64
-msgid "Enclosed Alphanumerics"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:65
-msgid "Box Drawing"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:66
-msgid "Block Elements"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:67
-msgid "Geometric Shapes"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:68
-msgid "Miscellaneous Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:69
-msgid "Dingbats"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:70
-msgid "Braille Patterns"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:71
-msgid "CJK Radicals Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:72
-msgid "Kangxi Radicals"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:73
-msgid "Ideographic Description Characters"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:74
-msgid "CJK Symbols and Punctuation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:75
-msgid "Hiragana"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:76
-msgid "Katakana"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:77
-msgid "Bopomofo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:78
-msgid "Hangul Compatibility Jamo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:79
-msgid "Kanbun"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:80
-msgid "Bopomofo Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:81
-msgid "Enclosed CJK Letters and Months"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:82
-msgid "CJK Compatibility"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:84
-msgid "CJK Unified Ideographs Extension A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:86
-msgid "CJK Unified Ideographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:88
-msgid "Yi Syllables"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:90
-msgid "Yi Radicals"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:92
-msgid "Hangul"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:94
-msgid "High Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:95
-msgid "High Private Use Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:97
-msgid "Low Surrogates"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:99
-msgid "Private Use Area"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:101
-msgid "CJK Compatibility Ideographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:102
-msgid "Alphabetic Presentation Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:104
-msgid "Arabic Presentation Forms-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:105
-msgid "Combining Half Marks"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:106
-msgid "CJK Compatibility Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:107
-msgid "Small Form Variants"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:108
-msgid "Arabic Presentation Forms-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:109
-msgid "Specials"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:110
-msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:111
-msgid "Old Italic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:112
-msgid "Gothic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:113
-msgid "Deseret"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:114
-msgid "Byzantine Musical Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:115
-#: src/control/Control.CharacterMap.js:116
-msgid "Musical Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:118
-msgid "CJK Unified Ideographs Extension B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:121
-msgid "CJK Compatibility Ideographs Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:122
-msgid "Tags"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:123
-msgid "Cyrillic Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:124
-msgid "Tagalog"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:125
-msgid "Hanunoo"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:126
-msgid "Buhid"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:127
-msgid "Tagbanwa"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:128
-msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:129
-msgid "Supplemental Arrows-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:130
-msgid "Supplemental Arrows-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:131
-msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:132
-msgid "Supplemental Mathematical Operators"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:133
-msgid "Katakana Phonetics Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:134
-msgid "Variation Selectors"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:136
-msgid "Supplementary Private Use Area-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:139
-msgid "Supplementary Private Use Area-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:140
-msgid "Limbu"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:141
-msgid "Tai Le"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:142
-msgid "Khmer Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:143
-msgid "Phonetic Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:144
-msgid "Miscellaneous Symbols And Arrows"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:145
-msgid "Yijing Hexagram Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:146
-msgid "Linear B Syllabary"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:147
-msgid "Linear B Ideograms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:148
-msgid "Aegean Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:149
-msgid "Ugaritic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:150
-msgid "Shavian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:151
-msgid "Osmanya"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:152
-msgid "Cypriot Syllabary"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:153
-msgid "Tai Xuan Jing Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:154
-msgid "Variation Selectors Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:155
-msgid "Ancient Greek Musical Notation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:156
-msgid "Ancient Greek Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:157
-msgid "Arabic Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:158
-msgid "Buginese"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:159
-msgid "CJK Strokes"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:160
-#, fuzzy
-msgid "Combining Diacritical Marks Supplement"
-msgstr "组合变音标记"
-
-#: src/control/Control.CharacterMap.js:161
-msgid "Coptic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:162
-msgid "Ethiopic Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:163
-msgid "Ethiopic Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:164
-msgid "Georgian Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:165
-msgid "Glagolitic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:166
-msgid "Kharoshthi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:167
-msgid "Modifier Tone Letters"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:168
-msgid "New Tai Lue"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:169
-msgid "Old Persian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:170
-msgid "Phonetic Extensions Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:171
-msgid "Supplemental Punctuation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:172
-msgid "Syloti Nagri"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:173
-msgid "Tifinagh"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:174
-msgid "Vertical Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:175
-msgid "Nko"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:176
-msgid "Balinese"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:177
-#, fuzzy
-msgid "Latin Extended-C"
-msgstr "拉丁文扩充-A"
-
-#: src/control/Control.CharacterMap.js:178
-#, fuzzy
-msgid "Latin Extended-D"
-msgstr "拉丁文扩充-A"
-
-#: src/control/Control.CharacterMap.js:179
-msgid "Phags-Pa"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:180
-msgid "Phoenician"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:182
-msgid "Cuneiform"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:183
-msgid "Cuneiform Numbers And Punctuation"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:184
-msgid "Counting Rod Numerals"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:185
-msgid "Sundanese"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:186
-msgid "Lepcha"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:187
-msgid "Ol Chiki"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:188
-msgid "Cyrillic Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:190
-msgid "Vai"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:191
-msgid "Cyrillic Extended-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:192
-msgid "Saurashtra"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:193
-msgid "Kayah Li"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:194
-msgid "Rejang"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:195
-msgid "Cham"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:196
-msgid "Ancient Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:197
-msgid "Phaistos Disc"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:198
-msgid "Lycian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:199
-msgid "Carian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:200
-msgid "Lydian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:201
-msgid "Mahjong Tiles"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:202
-msgid "Domino Tiles"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:203
-msgid "Samaritan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:204
-msgid "Canadian Aboriginal Syllabics Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:205
-msgid "Tai Tham"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:206
-msgid "Vedic Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:207
-msgid "Lisu"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:208
-msgid "Bamum"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:209
-msgid "Common Indic Number Forms"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:210
-msgid "Devanagari Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:211
-msgid "Hangul Jamo Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:212
-msgid "Javanese"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:213
-msgid "Myanmar Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:214
-msgid "Tai Viet"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:215
-msgid "Meetei Mayek"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:216
-msgid "Hangul Jamo Extended-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:217
-msgid "Imperial Aramaic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:218
-msgid "Old South Arabian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:219
-msgid "Avestan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:220
-msgid "Inscriptional Parthian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:221
-msgid "Inscriptional Pahlavi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:222
-msgid "Old Turkic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:223
-msgid "Rumi Numeral Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:224
-msgid "Kaithi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:226
-msgid "Egyptian Hieroglyphs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:227
-msgid "Enclosed Alphanumeric Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:228
-msgid "Enclosed Ideographic Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:230
-msgid "CJK Unified Ideographs Extension C"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:231
-msgid "Mandaic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:232
-msgid "Batak"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:233
-msgid "Ethiopic Extended-A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:234
-msgid "Brahmi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:236
-msgid "Bamum Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:237
-msgid "Kana Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:238
-msgid "Playing Cards"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:240
-msgid "Miscellaneous Symbols And Pictographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:241
-msgid "Emoticons"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:242
-msgid "Transport And Map Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:243
-msgid "Alchemical Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:245
-msgid "CJK Unified Ideographs Extension D"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:247
-#, fuzzy
-msgid "Arabic Extended-A"
-msgstr "拉丁文扩充-A"
-
-#: src/control/Control.CharacterMap.js:248
-msgid "Arabic Mathematical Alphabetic Symbols"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:249
-msgid "Chakma"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:250
-msgid "Meetei Mayek Extensions"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:251
-msgid "Meroitic Cursive"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:252
-msgid "Meroitic Hieroglyphs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:253
-msgid "Miao"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:254
-msgid "Sharada"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:255
-msgid "Sora Sompeng"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:256
-msgid "Sundanese Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:257
-msgid "Takri"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:258
-msgid "Bassa Vah"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:259
-msgid "Caucasian Albanian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:260
-msgid "Coptic Epact Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:261
-#, fuzzy
-msgid "Combining Diacritical Marks Extended"
-msgstr "组合变音标记"
-
-#: src/control/Control.CharacterMap.js:262
-msgid "Duployan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:263
-msgid "Elbasan"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:264
-msgid "Geometric Shapes Extended"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:265
-msgid "Grantha"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:266
-msgid "Khojki"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:267
-msgid "Khudawadi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:268
-#, fuzzy
-msgid "Latin Extended-E"
-msgstr "拉丁文扩充-A"
-
-#: src/control/Control.CharacterMap.js:270
-msgid "Linear A"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:271
-msgid "Mahajani"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:272
-msgid "Manichaean"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:273
-msgid "Mende Kikakui"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:274
-msgid "Modi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:275
-msgid "Mro"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:276
-msgid "Myanmar Extended-B"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:277
-msgid "Nabataean"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:278
-msgid "Old North Arabian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:279
-msgid "Old Permic"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:280
-msgid "Ornamental Dingbats"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:281
-msgid "Pahawh Hmong"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:282
-msgid "Palmyrene"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:283
-msgid "Pau Cin Hau"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:284
-msgid "Psalter Pahlavi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:285
-msgid "Shorthand Format Controls"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:286
-msgid "Siddham"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:287
-msgid "Sinhala Archaic Numbers"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:288
-msgid "Supplemental Arrows-C"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:289
-msgid "Tirhuta"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:290
-msgid "Warang Citi"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:291
-msgid "Ahom"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:293
-msgid "Anatolian Hieroglyphs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:294
-msgid "Cherokee Supplement"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:295
-#: src/control/Control.CharacterMap.js:296
-msgid "CJK Unified Ideographs Extension E"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:298
-msgid "Early Dynastic Cuneiform"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:299
-msgid "Hatran"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:300
-msgid "Multani"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:301
-msgid "Old Hungarian"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:302
-msgid "Supplemental Symbols And Pictographs"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:304
-msgid "Sutton Signwriting"
-msgstr ""
-
-#: src/control/Control.CharacterMap.js:390
-msgid "Special Characters"
-msgstr "特殊字符"
-
-#: src/control/Control.CharacterMap.js:395
-msgid "Font Name:"
-msgstr "字体名称："
-
-#: src/control/Control.CharacterMap.js:402
-msgid "Subset:"
-msgstr "子集："
-
-#: src/control/Control.CharacterMap.js:413
-msgid "Selected Character:"
-msgstr "选择的字符："
-
-#: src/control/Control.CharacterMap.js:418
-msgid "Hexadecimal:"
-msgstr "十六进制："
-
-#: src/control/Control.CharacterMap.js:424
-#: src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:138
-#: src/control/Control.Menubar.js:190
-#: src/control/Control.Menubar.js:196
-#: src/control/Control.Menubar.js:245
-msgid "Insert"
-msgstr "插入"
-
-#: src/control/Control.ColumnHeader.js:41
-msgid "Insert column before"
-msgstr "在之前插入列"
-
-#: src/control/Control.ColumnHeader.js:48
-#: src/control/Control.Menubar.js:259
-msgid "Delete column"
-msgstr "删除列"
-
-#: src/control/Control.ColumnHeader.js:55
-msgid "Optimal Width"
-msgstr "最佳宽度"
-
-#: src/control/Control.ColumnHeader.js:62
-msgid "Hide Columns"
-msgstr "隐藏列"
-
-#: src/control/Control.ColumnHeader.js:69
-msgid "Show Columns"
-msgstr "显示列"
-
-#: src/control/Control.ColumnHeader.js:84
-msgid "Optimal Column Width"
-msgstr "最佳列宽"
-
-#: src/control/Control.ContextMenu.js:135
+#: src/control/Control.AlertDialog.js:28
+msgid "The server encountered a %0 error while parsing the %1 command."
+msgstr "服务器在处理 %1 命令时遇到了 %0 错误。"
+
+#: src/control/Control.ContextMenu.js:131
 msgid "Internal Cut"
 msgstr "内部剪切"
 
-#: src/control/Control.ContextMenu.js:138
+#: src/control/Control.ContextMenu.js:134
 msgid "Internal Copy"
 msgstr "内部复制"
 
-#: src/control/Control.ContextMenu.js:141
+#: src/control/Control.ContextMenu.js:137
 msgid "Internal Paste"
 msgstr "内部粘贴"
 
-#: src/control/Control.ContextMenu.js:163
+#: src/control/Control.ContextMenu.js:159
 msgid "Internal Paste Special"
 msgstr "内部选择性粘贴"
 
-#: src/control/Control.DocumentRepair.js:32
+#: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
 msgstr "修复文档"
 
-#: src/control/Control.DocumentRepair.js:40
+#: src/control/Control.DocumentRepair.js:44
 msgid "Type"
 msgstr "类型"
 
-#: src/control/Control.DocumentRepair.js:42
+#: src/control/Control.DocumentRepair.js:46
 msgid "Index"
 msgstr "索引"
 
-#: src/control/Control.DocumentRepair.js:44
-#: src/control/Control.Menubar.js:40
-#: src/control/Control.Menubar.js:247
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:226
 msgid "Comment"
 msgstr "批注"
 
-#: src/control/Control.DocumentRepair.js:46
+#: src/control/Control.DocumentRepair.js:50
 msgid "User name"
 msgstr "用户名"
 
-#: src/control/Control.DocumentRepair.js:48
+#: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
 msgstr "时间戳"
 
-#: src/control/Control.DocumentRepair.js:52
+#: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
 msgstr "跳转到状态"
 
-#: src/control/Control.Menubar.js:10
-#: src/control/Control.Menubar.js:163
-#: src/control/Control.Menubar.js:222
-msgid "File"
-msgstr "文件"
-
-#: src/control/Control.Menubar.js:20
-#: src/control/Control.Menubar.js:173
-#: src/control/Control.Menubar.js:232
-msgid "Edit"
-msgstr "编辑"
-
-#: src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:183
-#: src/control/Control.Menubar.js:242
-msgid "View"
-msgstr "查看"
-
-#: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:175
-#: src/control/Control.Menubar.js:241
-#: src/control/Control.Menubar.js:292
-msgid "Tools"
+#: src/control/Control.Menubar.js:21
+msgid "Share..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:19
-msgid "Save As"
-msgstr ""
-
-#: src/control/Control.Menubar.js:12
-#: src/control/Control.Menubar.js:165
-#: src/control/Control.Menubar.js:224
-msgid "Print"
-msgstr "打印"
-
-#: src/control/Control.Menubar.js:13
-#: src/control/Control.Menubar.js:166
-#: src/control/Control.Menubar.js:225
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
+#: src/control/Control.Menubar.js:316
 msgid "See revision history"
 msgstr "查看修订历史"
 
-#: src/control/Control.Menubar.js:14
-#: src/control/Control.Menubar.js:167
-#: src/control/Control.Menubar.js:226
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:236
+#: src/control/Control.Menubar.js:317
 msgid "Download as"
 msgstr "下载为"
 
-#: src/control/Control.Menubar.js:15
-#: src/control/Control.Menubar.js:168
-#: src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:237
+#: src/control/Control.Menubar.js:318
 msgid "PDF Document (.pdf)"
 msgstr "PDF文档 (.pdf)"
 
-#: src/control/Control.Menubar.js:16
+#: src/control/Control.Menubar.js:26
 msgid "ODF text document (.odt)"
 msgstr "ODF文本文档 (.odt)"
 
-#: src/control/Control.Menubar.js:17
-msgid "Microsoft Word 2003 (.doc)"
-msgstr "Microsoft Word 2003 (.doc)"
+#: src/control/Control.Menubar.js:27
+msgid "Word 2003 Document (.doc)"
+msgstr "Word 2003 文件 (.doc)"
 
-#: src/control/Control.Menubar.js:18
-msgid "Microsoft Word (.docx)"
-msgstr "Microsoft Word (.docx)"
+#: src/control/Control.Menubar.js:28
+msgid "Word Document (.docx)"
+msgstr "Word 文档(.docx)"
 
-#: src/control/Control.Menubar.js:21
+#: src/control/Control.Menubar.js:29
+msgid "Rich Text (.rtf)"
+msgstr "富文本 (.rtf)"
+
+#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:247
+#: src/control/Control.Menubar.js:328
 msgid "Repair"
 msgstr "修复"
 
-#: src/control/Control.Menubar.js:25
-#: src/control/Control.Menubar.js:177
-#: src/control/Control.Menubar.js:236
-msgid "Cut"
-msgstr "剪切"
-
-#: src/control/Control.Menubar.js:26
-#: src/control/Control.Menubar.js:178
-#: src/control/Control.Menubar.js:237
-msgid "Copy"
-msgstr "复制"
-
-#: src/control/Control.Menubar.js:27
-#: src/control/Control.Menubar.js:179
-#: src/control/Control.Menubar.js:238
-msgid "Paste"
-msgstr "粘贴"
-
-#: src/control/Control.Menubar.js:29
-#: src/control/Control.Menubar.js:181
-#: src/control/Control.Menubar.js:240
-msgid "Select all"
-msgstr "全选"
-
-#: src/control/Control.Menubar.js:38
-#: src/control/Control.Menubar.js:207
-#: src/control/Control.Menubar.js:271
-#: src/control/Control.Menubar.js:518
-msgid "Find & Replace"
+#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:341
+msgid "Local Image..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:31
-msgid "Track Changes"
-msgstr "追踪修订"
+#: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
+msgid "All"
+msgstr "所有"
 
-#: src/control/Control.Menubar.js:32
-msgid "Record"
-msgstr "记录"
-
-#: src/control/Control.Menubar.js:33
-msgid "Show"
-msgstr "显示"
-
-#: src/control/Control.Menubar.js:35
-msgid "Previous"
-msgstr "上一个"
-
-#: src/control/Control.Menubar.js:36
-msgid "Next"
-msgstr "下一个"
-
-#: src/control/Control.Menubar.js:32
-#: src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:243
-msgid "Full screen"
-msgstr "全屏"
-
-#: src/control/Control.Menubar.js:46
-msgid "Formatting Marks"
-msgstr "格式标记"
-
-#: src/control/Control.Menubar.js:39
-#: src/control/Control.Menubar.js:191
-#: src/control/Control.Menubar.js:246
-msgid "Image"
-msgstr "图像"
-
-#: src/control/Control.Menubar.js:51
-#: src/control/Control.Menubar.js:203
-#: src/control/Control.Menubar.js:259
-msgid "Comment..."
-msgstr "批注..."
-
-#: src/control/Control.Menubar.js:42
-msgid "Footnote"
-msgstr "脚注"
-
-#: src/control/Control.Menubar.js:43
-msgid "Endnote"
-msgstr "尾注"
-
-#: src/control/Control.Menubar.js:45
-msgid "Page break"
-msgstr "换页符"
-
-#: src/control/Control.Menubar.js:46
-msgid "Column break"
-msgstr "分栏符"
-
-#: src/control/Control.Menubar.js:48
-#: src/control/Control.Menubar.js:193
-#: src/control/Control.Menubar.js:252
-msgid "Special character..."
-msgstr "特殊字符..."
-
-#: src/control/Control.Menubar.js:49
-msgid "Formatting mark"
-msgstr "格式标记"
-
-#: src/control/Control.Menubar.js:50
-msgid "Non-breaking space"
-msgstr "不间断空格"
-
-#: src/control/Control.Menubar.js:51
-msgid "Non-breaking hyphen"
-msgstr "不间断连字符"
-
-#: src/control/Control.Menubar.js:52
-msgid "Soft hyphen"
-msgstr "软连字符"
-
-#: src/control/Control.Menubar.js:53
-msgid "No-width optional break"
-msgstr "无宽度可选间断符"
-
-#: src/control/Control.Menubar.js:54
-msgid "No-width no break"
-msgstr "无宽度不间断符"
-
-#: src/control/Control.Menubar.js:55
-msgid "Left-to-right mark"
-msgstr "从左到右标记"
-
-#: src/control/Control.Menubar.js:56
-msgid "Right-to-left mark"
-msgstr "从右到左标记"
-
-#: src/control/Control.Menubar.js:58
-msgid "Format"
-msgstr ""
-
-#: src/control/Control.Menubar.js:79
-#, fuzzy
-msgid "Text"
-msgstr "下一个"
-
-#: src/control/Control.Menubar.js:63
-msgid "Double underline"
-msgstr ""
-
-#: src/control/Control.Menubar.js:64
-msgid "Strikethrough"
-msgstr ""
-
-#: src/control/Control.Menubar.js:65
-msgid "Overline"
-msgstr ""
-
-#: src/control/Control.Menubar.js:67
-msgid "Superscript"
-msgstr ""
-
-#: src/control/Control.Menubar.js:68
-msgid "Subscript"
-msgstr ""
-
-#: src/control/Control.Menubar.js:69
-msgid "ꜱᴍᴀʟʟ ᴄᴀᴘꜱ"
-msgstr ""
-
-#: src/control/Control.Menubar.js:71
-msgid "Shadow"
-msgstr ""
-
-#: src/control/Control.Menubar.js:72
-msgid "Outline"
-msgstr ""
-
-#: src/control/Control.Menubar.js:74
-msgid "Increase size"
-msgstr ""
-
-#: src/control/Control.Menubar.js:75
-msgid "Decrease size"
-msgstr ""
-
-#: src/control/Control.Menubar.js:77
-msgid "UPPERCASE"
-msgstr ""
-
-#: src/control/Control.Menubar.js:78
-msgid "lowercase"
-msgstr ""
-
-#: src/control/Control.Menubar.js:79
-msgid "Cycle case"
-msgstr ""
-
-#: src/control/Control.Menubar.js:81
-msgid "Sentence case"
-msgstr ""
-
-#: src/control/Control.Menubar.js:82
-msgid "Capitalize Every Word"
-msgstr ""
-
-#: src/control/Control.Menubar.js:83
-msgid "tOGGLE cASE"
-msgstr ""
-
-#: src/control/Control.Menubar.js:84
-msgid "Text orientation"
-msgstr ""
-
-#: src/control/Control.Menubar.js:85
-msgid "Set paragraph left-to-right"
-msgstr ""
-
-#: src/control/Control.Menubar.js:86
-msgid "Set paragraph right-to-left"
-msgstr ""
-
-#: src/control/Control.Menubar.js:87
-msgid "Spacing"
-msgstr ""
-
-#: src/control/Control.Menubar.js:88
-msgid "Line spacing: 1"
-msgstr ""
-
-#: src/control/Control.Menubar.js:89
-msgid "Line spacing: 1.5"
-msgstr ""
-
-#: src/control/Control.Menubar.js:90
-msgid "Line spacing: 2"
-msgstr ""
-
-#: src/control/Control.Menubar.js:92
-msgid "Increase paragraph spacing"
-msgstr ""
-
-#: src/control/Control.Menubar.js:93
-msgid "Decrease paragraph spacing"
-msgstr ""
-
-#: src/control/Control.Menubar.js:97
-msgid "Align"
-msgstr ""
-
-#: src/control/Control.Menubar.js:98
-msgid "Left"
-msgstr ""
-
-#: src/control/Control.Menubar.js:99
-msgid "Centered"
-msgstr ""
-
-#: src/control/Control.Menubar.js:100
-msgid "Right"
-msgstr ""
-
-#: src/control/Control.Menubar.js:103
-msgid "Top"
-msgstr ""
-
-#: src/control/Control.Menubar.js:104
-msgid "Center"
-msgstr ""
-
-#: src/control/Control.Menubar.js:105
-msgid "Bottom"
-msgstr ""
-
-#: src/control/Control.Menubar.js:106
-msgid "Lists"
-msgstr ""
-
-#: src/control/Control.Menubar.js:110
-msgid "Demote one level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:111
-msgid "Promote one level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:112
-msgid "Demote one level with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:113
-msgid "Promote one level with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:115
-msgid "Move down"
-msgstr ""
-
-#: src/control/Control.Menubar.js:116
-msgid "Move up"
-msgstr ""
-
-#: src/control/Control.Menubar.js:117
-msgid "Move down with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:118
-msgid "Move up with subpoints"
-msgstr ""
-
-#: src/control/Control.Menubar.js:120
-msgid "Insert unnumbered entry"
-msgstr ""
-
-#: src/control/Control.Menubar.js:121
-msgid "Restart numbering"
-msgstr ""
-
-#: src/control/Control.Menubar.js:123
-msgid "To next paragraph in level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:124
-msgid "To previous paragraph in level"
-msgstr ""
-
-#: src/control/Control.Menubar.js:125
-msgid "Continue previous numbering"
-msgstr ""
-
-#: src/control/Control.Menubar.js:126
-msgid "Clear direct formatting"
-msgstr ""
-
-#: src/control/Control.Menubar.js:127
-msgid "Page"
-msgstr ""
-
-#: src/control/Control.Menubar.js:128
-#: src/control/Control.Menubar.js:130
-#: src/control/Control.Menubar.js:132
 #: src/control/Control.Menubar.js:134
-msgid "Portrait"
-msgstr ""
+msgid "Text orientation"
+msgstr "文本方向"
 
-#: src/control/Control.Menubar.js:129
-#: src/control/Control.Menubar.js:131
-#: src/control/Control.Menubar.js:133
-#: src/control/Control.Menubar.js:135
-msgid "Landscape"
-msgstr ""
+#: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
+#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:302
+#: src/control/Control.Menubar.js:396
+msgid "None (Do not check spelling)"
+msgstr "无 (不检查拼写)"
 
-#: src/control/Control.Menubar.js:137
-#: src/control/Control.Menubar.js:195
-msgid "Tables"
-msgstr "表格"
-
-#: src/control/Control.Menubar.js:139
-#: src/control/Control.Menubar.js:197
-msgid "Rows before"
-msgstr "在上方插入行"
-
-#: src/control/Control.Menubar.js:140
-#: src/control/Control.Menubar.js:198
-msgid "Rows after"
-msgstr "在下方插入行"
-
-#: src/control/Control.Menubar.js:142
-#: src/control/Control.Menubar.js:200
-msgid "Columns left"
-msgstr "在左侧插入列"
-
-#: src/control/Control.Menubar.js:143
-#: src/control/Control.Menubar.js:201
-msgid "Columns right"
-msgstr "在右侧插入列"
-
-#: src/control/Control.Menubar.js:144
-#: src/control/Control.Menubar.js:202
-msgid "Delete"
-msgstr "删除"
-
-#: src/control/Control.Menubar.js:145
-#: src/control/Control.Menubar.js:203
-msgid "Rows"
-msgstr "行"
-
-#: src/control/Control.Menubar.js:146
-#: src/control/Control.Menubar.js:204
-msgid "Columns"
-msgstr "列"
-
-#: src/control/Control.Menubar.js:147
-#: src/control/Control.Menubar.js:149
-msgid "Table"
-msgstr "表格"
-
-#: src/control/Control.Menubar.js:148
-msgid "Select"
-msgstr "选择"
-
-#: src/control/Control.Menubar.js:150
-#: src/control/Control.Menubar.js:249
-msgid "Row"
-msgstr "行"
-
-#: src/control/Control.Menubar.js:151
-#: src/control/Control.Menubar.js:250
-msgid "Column"
-msgstr "列"
-
-#: src/control/Control.Menubar.js:152
-msgid "Cell"
-msgstr "单元格"
-
-#: src/control/Control.Menubar.js:153
-#: src/control/Control.Menubar.js:205
-msgid "Merge cells"
-msgstr "合并单元格"
-
-#: src/control/Control.Menubar.js:176
-#: src/control/Control.Menubar.js:242
-#: src/control/Control.Menubar.js:293
-msgid "Automatic Spell Checking"
-msgstr ""
-
-#: src/control/Control.Menubar.js:177
-msgid "Language"
-msgstr ""
-
-#: src/control/Control.Menubar.js:178
-msgid "Reset to Default Language"
-msgstr ""
-
-#: src/control/Control.Menubar.js:155
-#: src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:261
-msgid "Help"
-msgstr "帮助"
-
-#: src/control/Control.Menubar.js:156
-#: src/control/Control.Menubar.js:215
-#: src/control/Control.Menubar.js:262
+#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:305
+#: src/control/Control.Menubar.js:399
 msgid "Keyboard shortcuts"
 msgstr "键盘快捷键"
 
-#: src/control/Control.Menubar.js:157
-#: src/control/Control.Menubar.js:216
-#: src/control/Control.Menubar.js:263
+#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:306
+#: src/control/Control.Menubar.js:400
 msgid "About"
 msgstr "关于"
 
-#: dist/toolbar/toolbar.js:524
-#: src/control/Control.Menubar.js:159
-#: src/control/Control.Menubar.js:218
-#: src/control/Control.Menubar.js:265
+#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:308
+#: src/control/Control.Menubar.js:402
 msgid "Close document"
 msgstr "关闭文档"
 
-#: src/control/Control.Menubar.js:169
+#: src/control/Control.Menubar.js:238
 msgid "ODF presentation (.odp)"
 msgstr "ODF演示文稿 (.odp)"
 
-#: src/control/Control.Menubar.js:170
-msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr "Microsoft Powerpoint 2003 (.ppt)"
+#: src/control/Control.Menubar.js:239
+msgid "PowerPoint 2003 Presentation (.ppt)"
+msgstr "PowerPoint 2003 演示 (.ppt)"
 
-#: src/control/Control.Menubar.js:171
-msgid "Microsoft Powerpoint (.pptx)"
-msgstr "Microsoft Powerpoint (.pptx)"
+#: src/control/Control.Menubar.js:240
+msgid "PowerPoint Presentation (.pptx)"
+msgstr "PowerPoint 演示 (.pptx)"
 
-#: src/control/Control.Menubar.js:207
-msgid "Slide"
-msgstr "幻灯片"
-
-#: src/control/Control.Menubar.js:208
-msgid "New slide"
-msgstr "新建幻灯片"
-
-#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:319
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF电子表格 (.ods)"
 
-#: src/control/Control.Menubar.js:229
-msgid "Microsoft Excel 2003 (.xls)"
-msgstr "Microsoft Excel 2003 (.xls)"
+#: src/control/Control.Menubar.js:320
+msgid "Excel 2003 Spreadsheet (.xls)"
+msgstr "Excel 2003 表格 (.xls)"
 
-#: src/control/Control.Menubar.js:230
-msgid "Microsoft Excel (.xlsx)"
-msgstr "Microsoft Excel (.xlsx)"
+#: src/control/Control.Menubar.js:321
+msgid "Excel Spreadsheet (.xlsx)"
+msgstr "Excel 表格 (.xlsx)"
 
-#: src/control/Control.Menubar.js:254
-msgid "Cells"
-msgstr "单元格"
+#: src/control/Control.Menubar.js:467
+msgid "Reset to Default Language"
+msgstr "重设为默认语言"
 
-#: src/control/Control.Menubar.js:255
-msgid "Insert row"
-msgstr "插入行"
-
-#: src/control/Control.Menubar.js:256
-msgid "Insert column"
-msgstr "插入列"
-
-#: src/control/Control.Menubar.js:258
-#: src/control/Control.RowHeader.js:46
-msgid "Delete row"
-msgstr "删除行"
-
-#: src/control/Control.Menubar.js:497
-msgid "Find"
-msgstr ""
-
-#: src/control/Control.Menubar.js:505
-msgid "Replace with"
-msgstr ""
-
-#: src/control/Control.Menubar.js:522
-msgid "Replace"
-msgstr ""
-
-#: src/control/Control.Menubar.js:527
-msgid "Replace All"
-msgstr ""
-
-#: src/control/Control.Menubar.js:457
+#: src/control/Control.Menubar.js:718
 msgid "Are you sure you want to delete this slide?"
 msgstr "您确定要删除这张幻灯片吗？"
 
-#: src/control/Control.MetricInput.js:38
-msgid "(100th/mm)"
-msgstr ""
-
-#: src/control/Control.MetricInput.js:44
-msgid "Add: "
-msgstr ""
-
-#: src/control/Control.MetricInput.js:61
-msgid "Default value"
-msgstr ""
-
-#: src/control/Control.MetricInput.js:68
-msgid "Submit"
-msgstr ""
-
-#: src/control/Control.RowHeader.js:39
-msgid "Insert row above"
-msgstr "在上方插入行"
-
-#: src/control/Control.RowHeader.js:53
-msgid "Optimal Height"
-msgstr ""
-
-#: src/control/Control.RowHeader.js:60
-msgid "Hide Rows"
-msgstr ""
-
-#: src/control/Control.RowHeader.js:67
-msgid "Show Rows"
-msgstr ""
-
-#: src/control/Control.RowHeader.js:80
-msgid "Optimal Row Height"
-msgstr ""
-
-#: src/control/Control.Scroll.Annotation.js:9
+#: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "向上滚动注释"
 
-#: src/control/Control.Scroll.Annotation.js:11
+#: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "向下滚动注释"
 
-#: src/control/Control.Tabs.js:46
+#: src/control/Control.Tabs.js:55
 msgid "Insert sheet before this"
 msgstr "在前面插入工作表"
 
-#: src/control/Control.Tabs.js:47
+#: src/control/Control.Tabs.js:56
 msgid "Insert sheet after this"
 msgstr "在后面插入工作表"
 
-#: src/control/Control.Tabs.js:48
-msgid "Delete sheet"
-msgstr "删除工作表"
-
-#: src/control/Control.Tabs.js:52
+#: src/control/Control.Tabs.js:61
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "您确定要删除此工作表 %sheet% 吗？"
 
-#: src/control/Control.Tabs.js:61
-msgid "Rename sheet"
-msgstr "重命名工作表"
-
-#: src/control/Control.Tabs.js:65
+#: src/control/Control.Tabs.js:74
 msgid "Enter new sheet name"
 msgstr "输入新的工作表名"
 
-#: src/control/Toolbar.js:74
-#: src/control/Toolbar.js:83
+#: src/control/Ruler.js:95
+msgid "Left Margin"
+msgstr ""
+
+#: src/control/Ruler.js:96
+msgid "Right Margin"
+msgstr ""
+
+#: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
 msgstr "正在下载..."
 
-#: src/control/Toolbar.js:246
+#: src/control/Toolbar.js:99 src/map/Map.js:1036
+msgid "Saving..."
+msgstr "正在保存..."
+
+#: src/control/Toolbar.js:250
 msgid "This version of %productName is powered by"
 msgstr "当前版本 %productName 的提供者为"
 
-#: src/core/Socket.js:30
+#: src/core/Socket.js:79
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document "
+"to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
+"versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"IE11 已超过了其最大连接数限制。若需要增加连接数限制，请参考这个文档：https://docs.microsoft.com/en-us/"
+"previous-versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
+
+#: src/core/Socket.js:81
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "糟糕，连接到LibreOffice Online时出现了问题："
 
-#: src/core/Socket.js:186
+#: src/core/Socket.js:276
 msgid "Unsupported server version."
 msgstr "不被支持的服务器版本。"
 
-#: src/core/Socket.js:224
+#: src/core/Socket.js:327
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "会话已被文档所有者终止"
 
-#: src/core/Socket.js:261
+#: src/core/Socket.js:331
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "文档已暂停，请单击以重新加载并继续编辑"
 
-#: src/core/Socket.js:227
+#: src/core/Socket.js:338
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "服务器将关闭以维护（自动保存中）"
 
-#: src/core/Socket.js:272
+#: src/core/Socket.js:342
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "糟糕，连接到文件时出错"
 
-#: src/core/Socket.js:230
+#: src/core/Socket.js:346
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "服务器正在恢复，稍后即将可用"
 
-#: src/core/Socket.js:306
+#: src/core/Socket.js:377
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
-msgstr ""
+msgstr "文档已在服务器上被更改。正在加载新的文件，您编辑将作为更改历史保存。"
 
-#: src/core/Socket.js:418
+#: src/core/Socket.js:383
 msgid ""
-"Document has been changed in storage. Do you want to discard your changes, "
-"and load the document from the storage?"
-msgstr ""
+"Restoring older revision. Any unsaved changes will be available in version "
+"history"
+msgstr "恢复老版本。任何未保存的更改将会在版本历史中可用。"
 
-#: src/core/Socket.js:420
-msgid "Discard changes"
-msgstr ""
+#: src/core/Socket.js:501
+msgid ""
+"Document has been changed in storage. What would you like to do with your "
+"unsaved changes?"
+msgstr "文档已在存储位置被更改。对于您尚未保存更改的文档，您打算怎么做？"
 
-#: src/core/Socket.js:421
-msgid "Overwrite document"
-msgstr ""
+#: src/core/Socket.js:506
+msgid "Discard"
+msgstr "丢弃"
 
-#: src/core/Socket.js:342
+#: src/core/Socket.js:511
+msgid "Overwrite"
+msgstr "覆盖"
+
+#: src/core/Socket.js:516
+msgid "Save to new file"
+msgstr "保存为新文档"
+
+#: src/core/Socket.js:584
 msgid "Document requires password to view."
 msgstr "文档需要密码才能查看。"
 
-#: src/core/Socket.js:345
+#: src/core/Socket.js:587
 msgid "Document requires password to modify."
 msgstr "文档需要密码才能修改。"
 
-#: src/core/Socket.js:347
+#: src/core/Socket.js:589
 msgid "Hit Cancel to open in view-only mode."
 msgstr "点击“取消”在只读模式下打开。"
 
-#: src/core/Socket.js:351
+#: src/core/Socket.js:593
 msgid "Wrong password provided. Please try again."
 msgstr "密码错误。请重试。"
 
-#: src/core/Socket.js:414
+#: src/core/Socket.js:706
 msgid "Connecting..."
-msgstr ""
+msgstr "正在连接..."
 
-#: src/core/Socket.js:535
+#: src/core/Socket.js:857
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "很抱歉，无法连接到您的文档。请重试。"
 
-#: src/layer/marker/Annotation.js:156
+#: src/errormessages.js:13
+msgid ""
+"No disk space left on server, please contact the server administrator to "
+"continue."
+msgstr "服务器磁盘空间不足，请联系服务器管理员。"
+
+#: src/errormessages.js:14
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr "主机URL为空。loolwsd服务器的配置可能不正确，请联系管理员。"
+
+#: src/errormessages.js:15
+msgid ""
+"This is an unsupported version of {productname}. To avoid the impression "
+"that it is suitable for deployment in enterprises, this message appears when "
+"more than {docs} documents or {connections} connections are in use "
+"concurrently"
+msgstr ""
+"这是{productname}受不支持的版本。为了避免让人觉得它适合在企业中部署，当超过{docs}个文档或超过{connections}个连接同时使用时"
+"，就会出现这个消息。"
+
+#: src/errormessages.js:16
+msgid "More information and support"
+msgstr "更多信息和支持"
+
+#: src/errormessages.js:17
+msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr "本服务经管理员限制为 %0 份文档、%1 个连接。目前已经到达上限，请稍后重试。"
+
+#: src/errormessages.js:18
+msgid ""
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr "服务无法使用，请稍后重试，若问题持续存在请反馈给您的管理员。"
+
+#: src/errormessages.js:19
+msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr "未授权的WOPI主机。请稍后重试，若问题持续存在请反馈给您的管理员。"
+
+#: src/errormessages.js:20
+msgid "Wrong or missing WOPISrc parameter, please contact support."
+msgstr "错误或缺少WOPISrc参数，请联系支持。"
+
+#: src/errormessages.js:21
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr "您的会话将在 %time 内过期，请保存您的工作并刷新会话（或页面）来继续。"
+
+#: src/errormessages.js:22
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr "您的会话已过期，文档后续变更可能无法保存，请刷新会话（或页面）来继续。"
+
+#: src/errormessages.js:23
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr "无法载入文件，请确认文件类型正确且文件并未受损，请重试。"
+
+#: src/errormessages.js:26
+#, javascript-format
+msgid ""
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr "从存储位置读取文件错误。请联系存储服务器 (%storageserver) 的管理员。"
+
+#: src/errormessages.js:27
+#, javascript-format
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr "存储服务器上的磁盘空间不足，保存失败。文档现将是只读模式。要继续编辑，请联系服务器(%storageserver) 管理员。"
+
+#: src/errormessages.js:28
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr "无法保存文件，访问令牌失效或无效。"
+
+#: src/errormessages.js:29
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
+msgstr "文档无法保存，请检查权限设置，或联系存储服务器管理员。"
+
+#: src/layer/marker/Annotation.js:201
 msgid "Accept change"
-msgstr ""
+msgstr "接受更改"
 
-#: src/layer/marker/Annotation.js:161
+#: src/layer/marker/Annotation.js:206
 msgid "Reject change"
-msgstr ""
+msgstr "拒绝更改"
 
-#: src/layer/marker/Annotation.js:169
+#: src/layer/marker/Annotation.js:215
 msgid "Open menu"
-msgstr ""
+msgstr "打开菜单"
 
-#: src/layer/tile/TileLayer.js:182
+#: src/layer/marker/Annotation.js:235 src/layer/tile/TileLayer.js:199
+msgid "Reply"
+msgstr "回复"
+
+#: src/layer/tile/TileLayer.js:193
 msgid "Modify"
-msgstr ""
+msgstr "修改"
 
-#: src/layer/tile/TileLayer.js:194
+#: src/layer/tile/TileLayer.js:205
 msgid "Remove"
-msgstr ""
+msgstr "删除"
 
-#: src/map/Map.js:122
+#: src/map/Map.js:143
 msgid "Initializing..."
 msgstr "正在初始化..."
 
-#: src/map/Map.js:794
+#: src/map/Map.js:908
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "文档已暂停，单击以继续编辑"
 
-#: src/control/Toolbar.js:95
-#: src/map/Map.js:913
-msgid "Saving..."
-msgstr "正在保存..."
-
-#: src/map/Map.js:916
+#: src/map/Map.js:1039
 msgid "Loading..."
 msgstr "正在载入..."
 
-#: src/map/handler/Map.FileInserter.js:54
-#, fuzzy
+#: src/map/handler/Map.FileInserter.js:82
 msgid "Uploading..."
-msgstr "正在载入..."
+msgstr "正在上传..."
+
+#: src/map/handler/Map.WOPI.js:250
+msgid "Creating copy..."
+msgstr ""
+
+#~ msgid "Size"
+#~ msgstr "大小"
