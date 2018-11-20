@@ -1,7 +1,6 @@
 {
 "Albanian":"Албан",
 "Arabic":"Гарәп",
-"Armenian":"Әрмән",
 "Asturian":"Австрия",
 "Background":"Җирлек",
 "Basque":"Баск",
@@ -20,7 +19,6 @@
 "Croatian":"Хорват",
 "Czech":"Чех",
 "Default":"Үрнәкле",
-"Dimension Line":"Салмак сызык",
 "Drawing":"Рәсем",
 "English (South Africa)":"Инглиз (Көньяк Африка)",
 "Esperanto":"Эсперанто",
@@ -75,6 +73,7 @@
 "Sinhala":"Синһала",
 "Slovak":"Словак",
 "Slovenian":"Словен",
+"Sum":"Сумма",
 "Table":"Җәдвәл",
 "Tajik":"Таҗык",
 "Tamil":"Тамил",
