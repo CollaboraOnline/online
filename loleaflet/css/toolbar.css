@@ -671,6 +671,7 @@ button.leaflet-control-search-next
     padding: 2px;
     display: block;
     overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
+    width: 344px;
 }
 
 .insertshape-grid .row {
@@ -683,14 +684,15 @@ button.leaflet-control-search-next
     padding: 2px;
     width: 30px;
     border: 1px solid transparent;
-    background: rgba(255, 255, 255, 1);
 }
 
 .insertshape-grid .row-header {
     height: 30px;
     text-align: center;
     padding: 5px;
+    padding-top: 10px;
     clear: both;
+    background-color: rgba(128, 128, 128, 0.1);
 }
 
 .insertshape-grid .col:hover {

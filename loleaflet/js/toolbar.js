@@ -289,6 +289,14 @@ function setBorders(left, right, bottom, top, horiz, vert) {
 	map.sendUnoCommand('.uno:SetBorderStyle', params);
 }
 
+// close the popup
+function closePopup() {
+	if ($('#w2ui-overlay-toolbar-up').length > 0) {
+		$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
+	}
+	map.focus();
+}
+
 function setBorderStyle(num) {
 	switch (num) {
 	case 0: map.sendUnoCommand('.uno:FormatCellBorders'); break;
@@ -311,13 +319,9 @@ function setBorderStyle(num) {
 	default: console.log('ignored border: ' + num);
 	}
 
-	// close the popup
 	// TODO we may consider keeping it open in the future if we add border color
 	// and style to this popup too
-	if ($('#w2ui-overlay-toolbar-up').length > 0) {
-		$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
-	}
-	map.focus();
+	closePopup();
 }
 
 global.setBorderStyle = setBorderStyle;
@@ -330,11 +334,7 @@ function setConditionalFormatIconSet(num) {
 		}};
 	map.sendUnoCommand('.uno:IconSetFormatDialog', params);
 
-	// close the popup
-	if ($('#w2ui-overlay-toolbar-up').length > 0) {
-		$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
-	}
-	map.focus();
+	closePopup();
 }
 
 global.setConditionalFormatIconSet = setConditionalFormatIconSet;
@@ -377,13 +377,9 @@ function insertTable() {
 				' }, "Rows": { "type": "long","value": '
 				+ row + ' }}';
 
-			if ($('#w2ui-overlay-toolbar-up').length > 0) {
-				$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
-			}
-
 			map._socket.sendMessage(msg);
-			// refocus map due popup
-			map.focus();
+
+			closePopup()
 		}
 	}, '.col');
 }
@@ -569,6 +565,7 @@ function insertShapes() {
 	$grid.on({
 		click: function(e) {
 			map.sendUnoCommand('.uno:' + $(e.target).data().uno);
+			closePopup();
 		}
 	});
 }
@@ -752,12 +749,17 @@ function createToolbar() {
 		{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), uno: 'NumberFormatIncDecimals', disabled: true},
 		{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 		{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
+		{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), overlay: {onShow: insertTable},
+		 html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div></div>'},
 		{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
 		{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true,
 			items: [
 				{id: 'localgraphic', text: _('Insert Local Image'), icon: 'insertgraphic'},
 				{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true), icon: 'insertgraphic'},
 			]},
+		{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: insertShapes},
+			html: '<div id="insertshape-wrapper"><div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all"><div class="insertshape-grid"></div></div></div>'},
+
 		{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog'), uno: 'HyperlinkDialog', disabled: true},
 		{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
 		{type: 'spacer'},
