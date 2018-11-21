@@ -317,6 +317,53 @@ public:
                 _userExtraInfo = userExtraInfo;
             }
 
+        const std::string& getUserId() const { return _userId; }
+
+        const std::string& getUsername() const { return _username; }
+
+        const std::string& getUserExtraInfo() const { return _userExtraInfo; }
+
+        const std::string& getWatermarkText() const { return _watermarkText; }
+
+        bool getUserCanWrite() const { return _userCanWrite; }
+
+        std::string& getPostMessageOrigin() { return _postMessageOrigin; }
+
+        void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
+
+        bool getHidePrintOption() const { return _hidePrintOption; }
+
+        bool getHideSaveOption() const { return _hideSaveOption; }
+
+        void setHideExportOption(bool hideExportOption) { _hideExportOption = hideExportOption; }
+
+        bool getHideExportOption() const { return _hideExportOption; }
+
+        bool getEnableOwnerTermination() const { return _enableOwnerTermination; }
+
+        bool getDisablePrint() const { return _disablePrint; }
+
+        bool getDisableExport() const { return _disableExport; }
+
+        bool getDisableCopy() const { return _disableCopy; }
+
+        bool getDisableInactiveMessages() const { return _disableInactiveMessages; }
+
+        bool getUserCanNotWriteRelative() const { return _userCanNotWriteRelative; }
+
+        bool getEnableInsertRemoteImage() const { return _enableInsertRemoteImage; }
+
+        bool getEnableShare() const { return _enableShare; }
+
+        TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
+
+        TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
+
+        TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
+
+        std::chrono::duration<double> getCallDuration() const { return _callDuration; }
+
+    private:
         /// User id of the user accessing the file
         std::string _userId;
         /// Obfuscated User id used for logging the UserId.
