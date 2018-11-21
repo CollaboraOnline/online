@@ -143,7 +143,8 @@ ifelse(MOBILEAPP,[true],
       window.accessHeader = '';
       window.loleafletLogging = 'true';
       window.outOfFocusTimeoutSecs = 1000000;
-      window.idleTimeoutSecs = 1000000;],
+      window.idleTimeoutSecs = 1000000;
+      window.tileSize = 256;],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
       window.accessToken = '%ACCESS_TOKEN%';
@@ -151,7 +152,8 @@ ifelse(MOBILEAPP,[true],
       window.accessHeader = '%ACCESS_HEADER%';
       window.loleafletLogging = '%LOLEAFLET_LOGGING%';
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
-      window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;])
+      window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
+      window.tileSize = 256;])
     </script>
   <script>
 
