@@ -1358,8 +1358,8 @@ L.TileLayer = L.GridLayer.extend({
 		else if (tile && typeof(img) == 'object') {
 			// 'Uint8Array' delta
 			var canvas = document.createElement('canvas');
-			canvas.width = 256;
-			canvas.height = 256;
+			canvas.width = window.tileSize;
+			canvas.height = window.tileSize;
 			var ctx = canvas.getContext('2d');
 
 			var oldImg = new Image();

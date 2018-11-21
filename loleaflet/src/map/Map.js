@@ -17,8 +17,11 @@ L.Map = L.Evented.extend({
 		trackResize: true,
 		markerZoomAnimation: true,
 		defaultZoom: 10,
-		tileWidthTwips: 3840,
-		tileHeightTwips: 3840,
+		// 15 = 1440 twips-per-inch / 96 dpi.
+		// Chosen to match previous hardcoded value of 3840 for
+		// the current tile pixel size of 256.
+		tileWidthTwips: window.tileSize * 15,
+		tileHeightTwips: window.tileSize * 15,
 		urlPrefix: 'lool',
 		wopiSrc: '',
 		cursorURL: 'images/cursors'

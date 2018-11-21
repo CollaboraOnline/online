@@ -785,7 +785,8 @@ L.Socket = L.Class.extend({
 					if (command.type === 'presentation' &&
 					    this._map.options.defaultZoom === this._map.options.zoom) {
 						// If we have a presentation document and the zoom level has not been set
-						// in the options, resize the document so that it fits the viewing area
+						// in the options, resize the document so that it fits the viewing area.
+						// FIXME: Should this 256 be window.tileSize? Unclear to me.
 						var verticalTiles = this._map.getSize().y / 256;
 						tileWidthTwips = Math.round(command.height / verticalTiles);
 						tileHeightTwips = Math.round(command.height / verticalTiles);

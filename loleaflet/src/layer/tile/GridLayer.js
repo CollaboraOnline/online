@@ -8,7 +8,7 @@ L.GridLayer = L.Layer.extend({
 	options: {
 		pane: 'tilePane',
 
-		tileSize: 256,
+		tileSize: window.tileSize,
 		opacity: 1,
 
 		updateWhenIdle: L.Browser.mobile,
