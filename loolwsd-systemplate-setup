@@ -31,6 +31,8 @@ find etc/passwd etc/group etc/hosts \
      usr/lib/locale/en_US.utf8 \
      usr/lib/locale/C.UTF-8 \
      usr/lib/locale/locale_archive \
+     usr/lib/*/nss/*.so \
+     usr/lib/*/libsqlite* \
      usr/share/zoneinfo/* \
      usr/share/liblangtag \
      usr/share/hyphen \
@@ -39,6 +41,7 @@ find etc/passwd etc/group etc/hosts \
 find etc/fonts \
      etc/resolv.conf \
      lib/ld-* lib64/ld-* \
+     usr/lib/*/libsqlite* \
 	-type l
 
 # Go through the LO shared objects and check what system libraries
