@@ -2120,7 +2120,7 @@ and dependencies (minified).
 					}
 				},onUpdate:function(){
 					if(options.callbacks && options.onUpdate){
-						if (options.drag) {
+						if (!window.ThisIsAMobileApp || options.drag) {
 							/* callbacks: whileScrolling */
 							if(_cb("whileScrolling")){_mcs(); o.callbacks.whileScrolling.call(el[0]);}
 						}
