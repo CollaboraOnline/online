@@ -2014,6 +2014,7 @@ and dependencies (minified).
 		This is where the actual scrolling happens
 		*/
 		_scrollTo=function(el,to,options){
+			// console.log('malihu _scrollTo: options=' + (options==undefined?'UNDEF':JSON.stringify(options)));
 			var d=el.data(pluginPfx),o=d.opt,
 				defaults={
 					trigger:"internal",
@@ -2119,8 +2120,10 @@ and dependencies (minified).
 					}
 				},onUpdate:function(){
 					if(options.callbacks && options.onUpdate){
-						/* callbacks: whileScrolling */
-						if(_cb("whileScrolling")){_mcs(); o.callbacks.whileScrolling.call(el[0]);}
+						if (options.drag) {
+							/* callbacks: whileScrolling */
+							if(_cb("whileScrolling")){_mcs(); o.callbacks.whileScrolling.call(el[0]);}
+						}
 					}
 				},onComplete:function(){
 					if(options.callbacks && options.onComplete){
