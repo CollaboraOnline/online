@@ -895,7 +895,7 @@ function initMobileToolbar(toolItems) {
 				} else {
 					toolItem.css('display', '');
 				}
-				updateCommandValues(event.target);
+				updateCommandValues(edata.target);
 			}
 
 			if (edata.target === 'toolbar-up' && map.getDocType() === 'presentation') {
