@@ -31,6 +31,8 @@ find etc/hosts etc/nsswitch.conf etc/resolv.conf \
      usr/lib/locale/en_US.utf8 \
      usr/lib/locale/C.UTF-8 \
      usr/lib/locale/locale_archive \
+     usr/lib/*/nss/*.so \
+     usr/lib/*/libsqlite* \
      usr/share/zoneinfo/* \
      usr/share/liblangtag \
      usr/share/hyphen \
@@ -40,6 +42,7 @@ find etc/fonts \
      etc/resolv.conf \
      lib/ld-* lib64/ld-* \
      lib64/libnss_* \
+     usr/lib/*/libsqlite* \
 	-type l 2>/dev/null
 
 # Go through the LO shared objects and check what system libraries
