@@ -1237,6 +1237,21 @@ public:
             self->setDocumentPassword(type);
             return;
         }
+        else if(type == LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE)
+        {
+            for (auto& it : self->_sessions)
+            {
+                std::shared_ptr<ChildSession> session = it.second;
+                if (session)
+                {
+                    if (!it.second->isCloseFrame())
+                    {
+                        session->loKitCallback(type, payload);
+                    }
+                }
+            }
+            return;
+        }
 
         // Broadcast leftover status indicator callbacks to all clients
         self->broadcastCallbackToClients(type, payload);
