@@ -204,6 +204,7 @@ shared_headers = common/Common.hpp \
                  common/security.h \
                  common/SpookyV2.h \
                  net/DelaySocket.hpp \
+                 net/FakeSocket.hpp \
                  net/ServerSocket.hpp \
                  net/Socket.hpp \
                  net/WebSocketHandler.hpp \
