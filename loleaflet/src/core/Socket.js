@@ -710,7 +710,7 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
-			this._map.showBusy(_('Connecting...'), false);
+			this._map.showBusy(_('Connecting...'), true);
 			if (textMsg.startsWith('statusindicator: ready')) {
 				// We're connected: cancel timer and dialog.
 				this.ReconnectCount = 0;
