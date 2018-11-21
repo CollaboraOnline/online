@@ -888,16 +888,17 @@ function initMobileToolbar(toolItems) {
 			hideTooltip(this, e.target);
 		},
 		onRefresh: function(edata) {
-			if (edata.item && (edata.item.id === 'styles' || edata.item.id === 'fonts' || edata.item.id === 'fontsizes')) {
+			if (edata.target === 'styles' || edata.target === 'fonts' || edata.target === 'fontsizes') {
 				var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(edata.item.id));
 				if (edata.item.hidden) {
 					toolItem.css('display', 'none');
 				} else {
 					toolItem.css('display', '');
 				}
+				updateCommandValues(event.target);
 			}
 
-			if (map.getDocType() === 'presentation') {
+			if (edata.target === 'toolbar-up' && map.getDocType() === 'presentation') {
 				// Fill the style select box if not yet filled
 				if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
 					var data = [''];
@@ -916,11 +917,11 @@ function initMobileToolbar(toolItems) {
 				}
 			}
 
-			updateCommandValues();
+			if (edata.target === 'inserttable')
+				insertTable();
 
-			insertTable();
-
-			insertShapes();
+			if (edata.target === 'insertshapes')
+				insertShapes();
 		}
 	});
 
@@ -943,8 +944,8 @@ function initNormalToolbar(toolItems) {
 			onClick(e, e.target);
 			hideTooltip(this, e.target);
 		},
-		onRefresh: function() {
-			if (map.getDocType() === 'presentation') {
+		onRefresh: function(event) {
+			if (event.target === 'toolbar-up' && map.getDocType() === 'presentation') {
 				// Fill the style select box if not yet filled
 				if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
 					var data = [''];
@@ -963,11 +964,14 @@ function initNormalToolbar(toolItems) {
 				}
 			}
 
-			updateCommandValues();
+			if (event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes')
+				updateCommandValues(event.target);
 
-			insertTable();
+			if (event.target === 'inserttable')
+				insertTable();
 
-			insertShapes();
+			if (event.target === 'insertshapes')
+				insertShapes();
 		}
 	});
 
@@ -1818,11 +1822,11 @@ function onCommandStateChanged(e) {
 	}
 }
 
-function updateCommandValues() {
+function updateCommandValues(targetName) {
 	var data = [];
 	// 1) For .uno:StyleApply
 	// we need an empty option for the place holder to work
-	if ($('.styles-select option').length === 1) {
+	if (targetName === 'styles' && $('.styles-select option').length === 1) {
 		var styles = [];
 		var topStyles = [];
 		var commandValues = map.getToolbarCommandValues('.uno:StyleApply');
@@ -1890,7 +1894,7 @@ function updateCommandValues() {
 		$('.styles-select').on('select2:select', onStyleSelect);
 	}
 
-	if ($('.fonts-select option').length === 1) {
+	if (targetName === 'fonts' && $('.fonts-select option').length === 1) {
 		// 2) For .uno:CharFontName
 		commandValues = map.getToolbarCommandValues('.uno:CharFontName');
 		if (typeof commandValues === 'undefined') {
@@ -1912,7 +1916,7 @@ function updateCommandValues() {
 		$('.fonts-select').val(fontsSelectValue).trigger('change');
 	}
 
-	if ($('.fontsizes-select option').length === 1) {
+	if (targetName === 'fontsizes' && $('.fontsizes-select option').length === 1) {
 		$('.fontsizes-select').select2({
 			placeholder: ' ',
 			data: []
