@@ -31,6 +31,8 @@ find etc/hosts etc/nsswitch.conf etc/resolv.conf \
      usr/lib/locale/en_US.utf8 \
      usr/lib/locale/C.UTF-8 \
      usr/lib/locale/locale_archive \
+     usr/lib/x86_64-linux-gnu/nss/*.so \
+     usr/lib/x86_64-linux-gnu/libsqlite3.so.* \
      usr/share/zoneinfo/* \
      usr/share/liblangtag \
      usr/share/hyphen \
