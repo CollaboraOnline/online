@@ -754,8 +754,8 @@ function createToolbar() {
 		{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
 		{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true,
 			items: [
-				{id: 'localgraphic', text: _('Insert Local Image'), icon: 'insertgraphic'},
-				{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true), icon: 'insertgraphic'},
+				{id: 'localgraphic', text: _('Insert Local Image')},
+				{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)},
 			]},
 		{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: insertShapes},
 			html: '<div id="insertshape-wrapper"><div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all"><div class="insertshape-grid"></div></div></div>'},
