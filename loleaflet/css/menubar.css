@@ -234,7 +234,7 @@
         margin: 0;
         -webkit-overflow-scrolling: touch;
         overflow: scroll;
-        z-index: 1000;
+        z-index: 1010;
     }
 
 }

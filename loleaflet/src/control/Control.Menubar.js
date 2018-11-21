@@ -553,7 +553,7 @@ L.Control.Menubar = L.Control.extend({
 					var $menu = $('#main-menu');
 					var $nav = $menu.parent();
 					if (this.checked) {
-						$nav.css({height: 'initial', bottom: 33});
+						$nav.css({height: 'initial', bottom: '38px'});
 						$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
 					} else {
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
