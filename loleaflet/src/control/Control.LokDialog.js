@@ -272,7 +272,7 @@ L.Control.LokDialog = L.Control.extend({
 			dialogClass += ' lokdialog_notitle';
 
 		var that = this;
-		var size = this._map.getSize();
+		var size = $(window).width();
 		$(dialogContainer).dialog({
 			minWidth: Math.min(width, size.x),
 			width: Math.min(width, size.x),
