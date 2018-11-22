@@ -115,10 +115,20 @@ function onClick(e, id, item, subItem) {
 		map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 	}
 	else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
-		map.zoomIn(1);
+		if (map.getDocType() === 'spreadsheet') {
+			map.setZoom(14); // 200%
+		}
+		else {
+			map.zoomIn(1);
+		}
 	}
 	else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {
-		map.zoomOut(1);
+		if (map.getDocType() === 'spreadsheet') {
+			map.setZoom(10); // 100%
+		}
+		else {
+			map.zoomOut(1);
+		}
 	}
 	else if (item.scale) {
 		map.setZoom(item.scale);
@@ -1491,6 +1501,14 @@ function onDocLayerInit() {
 			'incrementindent', 'decrementindent', 'breakindent', 'inserttable');
 		toolbarUp.show('textalign');
 		statusbar.remove('prev', 'next', 'prevnextbreak');
+
+		toolbarUp.set('zoom', {
+			items: [
+				{ id: 'zoom100', text: '100%', scale: 10},
+				{ id: 'zoom200', text: '200%', scale: 14}
+			]
+		});
+
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id:'break1'},
