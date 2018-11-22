@@ -252,12 +252,18 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_setCanvasWidthHeight: function(canvas, width, height) {
-		L.DomUtil.setStyle(canvas, 'width', width + 'px');
-		L.DomUtil.setStyle(canvas, 'height', height + 'px');
-
 		var scale = L.getDpiScaleFactor();
-		canvas.width = width * scale;
-		canvas.height = height * scale;
+		var newWidth = width * scale;
+		if (canvas.width != newWidth) {
+			L.DomUtil.setStyle(canvas, 'width', width + 'px');
+			canvas.width = newWidth;
+		}
+
+		var newHeight = height * scale;
+		if (canvas.height != newHeight) {
+			L.DomUtil.setStyle(canvas, 'height', height + 'px');
+			canvas.height = newHeight;
+		}
 	},
 
 	_launchDialog: function(id, leftTwips, topTwips, width, height, title) {
@@ -446,7 +452,6 @@ L.Control.LokDialog = L.Control.extend({
 
 	_paintDialogChild: function(parentId, width, height, rectangle, imgData) {
 		var strId = this._toStrId(parentId);
-		var img = new Image();
 		var canvas = L.DomUtil.get(strId + '-floating');
 		if (!canvas)
 			return; // no floating window to paint to
@@ -454,6 +459,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._setCanvasWidthHeight(canvas, width, height);
 
 		var ctx = canvas.getContext('2d');
+		var img = new Image();
 		img.onload = function() {
 			ctx.drawImage(img, 0, 0);
 		};
