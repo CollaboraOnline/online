@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8; indent-tabs-mode: t -*- */
+/* -*- js-indent-level: 8; indent-tabs-mode: t; fill-column: 120 -*- */
 /*
 == malihu jquery custom scrollbar plugin == 
 Version: 3.1.3 
@@ -2120,7 +2120,14 @@ and dependencies (minified).
 					}
 				},onUpdate:function(){
 					if(options.callbacks && options.onUpdate){
-						if (!window.ThisIsAMobileApp || options.drag) {
+						// This condition is intended to filter out the case when this gets
+						// invoked from a touch pinch gesture, but let through the cases of
+						// scrolling with mouse-wheel or touchpad, dragging the scrollbar
+						// slider, or implicit scrolling because of editing in a previously
+						// hidden part of the document (for instance when pressing enter on the
+						// last visible line). The options.timeout==1 is a silly way to detect
+						// the mouse-wheel scrolling.
+						if(options.drag || options.timeout===1 || options.calledFromInvalidateCursorMsg==true){
 							/* callbacks: whileScrolling */
 							if(_cb("whileScrolling")){_mcs(); o.callbacks.whileScrolling.call(el[0]);}
 						}
