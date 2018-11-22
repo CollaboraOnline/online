@@ -45,6 +45,7 @@ wsd_sources = \
             ../common/Session.cpp \
             ../common/Util.cpp \
             ../common/MessageQueue.cpp \
+            ../common/Authorization.cpp \
             ../kit/Kit.cpp \
             ../wsd/Auth.cpp \
             ../wsd/TileCache.cpp \

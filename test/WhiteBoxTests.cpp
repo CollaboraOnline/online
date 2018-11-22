@@ -21,6 +21,8 @@
 #include <Util.hpp>
 #include <JsonUtil.hpp>
 
+#include <common/Authorization.hpp>
+
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 {

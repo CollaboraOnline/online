@@ -91,6 +91,7 @@ shared_sources = common/FileUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
                  common/Util.cpp \
+                 common/Authorization.cpp \
                  net/DelaySocket.cpp \
                  net/Socket.cpp
 if ENABLE_SSL
@@ -196,6 +197,7 @@ shared_headers = common/Common.hpp \
                  common/Unit.hpp \
                  common/UnitHTTP.hpp \
                  common/Util.hpp \
+                 common/Authorization.hpp \
                  common/MessageQueue.hpp \
                  common/Message.hpp \
                  common/Png.hpp \

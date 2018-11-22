@@ -21,6 +21,7 @@
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
+#include <common/Authorization.hpp>
 
 /// Base class of all Storage abstractions.
 class StorageBase

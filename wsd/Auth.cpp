@@ -39,62 +39,6 @@ using Poco::OutputLineEndingConverter;
 
 const Poco::Crypto::RSAKey JWTAuth::_key(Poco::Crypto::RSAKey(Poco::Crypto::RSAKey::KL_2048, Poco::Crypto::RSAKey::EXP_LARGE));
 
-void Authorization::authorizeURI(Poco::URI& uri) const
-{
-    if (_type == Authorization::Type::Token)
-    {
-        static const std::string key("access_token");
-
-        Poco::URI::QueryParameters queryParams = uri.getQueryParameters();
-        for (auto& param: queryParams)
-        {
-            if (param.first == key)
-            {
-                param.second = _data;
-                uri.setQueryParameters(queryParams);
-                return;
-            }
-        }
-
-        // it did not exist yet
-        uri.addQueryParameter(key, _data);
-    }
-}
-
-void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
-{
-    switch (_type)
-    {
-        case Type::Token:
-            request.set("Authorization", "Bearer " + _data);
-            break;
-        case Type::Header:
-        {
-            // there might be more headers in here; like
-            //   Authorization: Basic ....
-            //   X-Something-Custom: Huh
-            Poco::StringTokenizer tokens(_data, "\n\r", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-            for (const auto& token : tokens)
-            {
-                size_t i = token.find_first_of(':');
-                if (i != std::string::npos)
-                {
-                    size_t separator = i;
-                    for (++i; i < token.length() && token[i] == ' ';)
-                        ++i;
-
-                    // set the header
-                    if (i < token.length())
-                        request.set(token.substr(0, separator), token.substr(i));
-                }
-            }
-            break;
-        }
-        default:
-            assert(false);
-    }
-}
-
 const std::string JWTAuth::getAccessToken()
 {
     std::string encodedHeader = createHeader();
