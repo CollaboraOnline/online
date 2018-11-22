@@ -3,7 +3,7 @@
  * Document Signing
  */
 
-/* global window setupViamAPI w2ui */
+/* global window setupViamAPI w2ui vex $ */
 
 var library = null;
 var identity = null;
@@ -107,6 +107,120 @@ function adjustUIState() {
 	w2ui['document-signing-bar'].refresh();
 }
 
+function vereignPinCodeDialog(selectedIdentityKey) {
+	vex.dialog.open({
+		message: 'PIN Code',
+		input: '<input name="pincode" type="text" value="" required />',
+		callback: function(data) {
+			console.log(data.pincode);
+			if (data.pincode) {
+				if (library) {
+					return library.loadIdentity(selectedIdentityKey, data.pincode).then(function(result) {
+						if (isSuccess(result)) {
+							identity = result.data;
+							vereignLogin();
+						}
+						else {
+							identity = null;
+						}
+					});
+				}
+			}
+		}
+	});
+}
+
+function vereignLogin() {
+	if (library && identity) {
+		library.login(identity, 'previousaddeddevice').then(function(result) {
+			console.log(result);
+			if (isSuccess(result)) {
+				updateIndentity();
+				updatePassportList();
+				adjustUIState();
+			}
+		});
+	}
+}
+
+function verignQrDialog() {
+	if (library) {
+		library.createIdentity('00000000').then(function(result) {
+			if (isSuccess(result)) {
+				library.login(result.data, 'newdevice').then(function(result) {
+					vex.open({
+						content: '<div id="image-container"></div>',
+						showCloseButton: true,
+						escapeButtonCloses: true,
+						overlayClosesOnClick: true,
+						buttons: {},
+						afterOpen: function($vexContent) {
+							var container = $vexContent.find('#image-container');
+							var image = $('<img style="display: block; margin-left: auto; margin-right: auto"/>');
+							image.attr('src', result.data.image);
+							container.append(image);
+						},
+					});
+				});
+			}
+		});
+	}
+}
+
+function vereignRecoverFromEmail() {
+	if (library == null) {
+		return;
+	}
+	vex.dialog.open({
+		message: 'Login from email or mobile number',
+		input: '<input name="emailOrMobileNumber" type="text" value="" required />',
+		callback: function(data) {
+			if (data.emailOrMobileNumber) {
+				library.createIdentity('00000000').then(function(result) {
+					if (isSuccess(result)) {
+						var createdIdentity = result.data;
+						library.identityRestoreAccess(result.data, data.emailOrMobileNumber).then(function(result) {
+							if (isSuccess(result)) {
+								vex.dialog.open({
+									message: 'PIN Code',
+									input: '<p>Check your email</p><input name="pincode" type="text" value="" required />',
+									callback: function(data) {
+										console.log(data.pincode);
+										if (data.pincode) {
+											if (library) {
+												library.login(createdIdentity, 'sms', data.pincode).then(function(result) {
+													if (isSuccess(result)) {
+														vereignRestoreIdentity();
+													}
+												});
+											}
+										}
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		}
+	});
+}
+
+function vereignRestoreIdentity() {
+	if (library == null) {
+		return;
+	}
+	library.getCurrentlyAuthenticatedIdentity().then(function(result) {
+		if (isSuccess(result)) {
+			vex.closeAll();
+			identity = result.data;
+			updateIndentity();
+			updatePassportList();
+			adjustUIState();
+		}
+	});
+}
+
 L.Map.include({
 	showSignDocument: function() {
 		this.initializeLibrary();
@@ -141,6 +255,57 @@ L.Map.include({
 		}
 	},
 	signingLogin: function() {
+		var w = window.innerWidth / 2;
+
+		var loginWithQR = false;
+		var recoverFromEmail = false;
+		var selectedIdentityKey = null;
+
+		$.get('signing-identities.html', function(data) {
+			vex.open({
+				content: data,
+				showCloseButton: true,
+				escapeButtonCloses: true,
+				overlayClosesOnClick: true,
+				contentCSS: { width: w + 'px' },
+				buttons: {},
+				afterOpen: function($vexContent) {
+					library.listIdentities().then(function(response) {
+						var identities = response.data;
+						var identitiesDiv = $vexContent.find('#identites');
+						for (var key in identities) {
+							var button = $('<input class="identity-button" type="button"/>');
+							button.attr('value', identities[key].initials);
+							button.css('background-color', identities[key].identityColor);
+							button.click({ key: key }, function(current) {
+								selectedIdentityKey = current.data.key;
+								vex.close($vexContent.data().vex.id);
+							});
+							identitiesDiv.append(button);
+						}
+					});
+					$('#login-qr').click(function() {
+						loginWithQR = true;
+						vex.close($vexContent.data().vex.id);
+					});
+					$('#recover-from-email').click(function() {
+						recoverFromEmail = true;
+						vex.close($vexContent.data().vex.id);
+					});
+				},
+				afterClose: function () {
+					if (loginWithQR) {
+						verignQrDialog();
+					}
+					else if (recoverFromEmail) {
+						vereignRecoverFromEmail();
+					}
+					else if (selectedIdentityKey) {
+						vereignPinCodeDialog(selectedIdentityKey);
+					}
+				}
+			});
+		});
 	},
 	initializeLibrary: function() {
 		setupViamAPI(
@@ -148,15 +313,11 @@ L.Map.include({
 			{
 				onEvent: function(event) {
 					switch (event.type) {
+					case 'ActionConfirmedAndExecuted':
+						console.log('ActionConfirmedAndExecuted');
+						break;
 					case 'Authenticated':
-						library.getCurrentlyAuthenticatedIdentity().then(function(result) {
-							if (isSuccess(result)) {
-								identity = result.data;
-								updateIndentity();
-								updatePassportList();
-								adjustUIState();
-							}
-						});
+						vereignRestoreIdentity();
 						break;
 					default:
 						console.log('UNKNOWN EVENT: ' + event.type);
@@ -164,7 +325,7 @@ L.Map.include({
 					}
 				}
 			},
-			'https://integration1.vereign.com/api/js/iframe'
+			'https://integration2.vereign.com/api/js/iframe'
 		).then(function(lib)
 		{
 			library = lib;
