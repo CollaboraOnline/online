@@ -633,17 +633,18 @@ function createToolbar() {
 		{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes', mobile: false},
 		{type: 'break', mobile: false},
 		{type: 'menu-radio', id: 'zoom', text: '100%',
-			selected: 'id100',
+			selected: 'zoom100',
 			mobile: false,
 			items: [
-				{ id: 'id50', text: '50%', scale: 6},
-				{ id: 'id70', text: '70%', scale: 8},
-				{ id: 'id85', text: '85%', scale: 9},
-				{ id: 'id100', text: '100%', scale: 10},
-				{ id: 'id120', text: '120%', scale: 11},
-				{ id: 'id150', text: '150%', scale: 12},
-				{ id: 'id175', text: '175%', scale: 13},
-				{ id: 'id200', text: '200%', scale: 14}
+				{ id: 'zoom50', text: '50%', scale: 6},
+				{ id: 'zoom60', text: '60%', scale: 7},
+				{ id: 'zoom70', text: '70%', scale: 8},
+				{ id: 'zoom85', text: '85%', scale: 9},
+				{ id: 'zoom100', text: '100%', scale: 10},
+				{ id: 'zoom120', text: '120%', scale: 11},
+				{ id: 'zoom150', text: '150%', scale: 12},
+				{ id: 'zoom175', text: '175%', scale: 13},
+				{ id: 'zoom200', text: '200%', scale: 14}
 			]
 		},
 		{type: 'break', mobile: false},
@@ -2293,23 +2294,24 @@ function setupToolbar(e) {
 
 	map.on('zoomend', function () {
 		var zoomPercent = 100;
+		var zoomSelected = null;
 		switch (map.getZoom()) {
-		case 6:  zoomPercent =  50; break;
-		case 7:  zoomPercent =  60; break;
-		case 8:  zoomPercent =  70; break;
-		case 9:  zoomPercent =  85; break;
-		case 10: zoomPercent = 100; break;
-		case 11: zoomPercent = 120; break;
-		case 12: zoomPercent = 150; break;
-		case 13: zoomPercent = 175; break;
-		case 14: zoomPercent = 200; break;
+		case 6:  zoomPercent =  50; zoomSelected = 'zoom50'; break;
+		case 7:  zoomPercent =  60; zoomSelected = 'zoom60'; break;
+		case 8:  zoomPercent =  70; zoomSelected = 'zoom70'; break;
+		case 9:  zoomPercent =  85; zoomSelected = 'zoom85'; break;
+		case 10: zoomPercent = 100; zoomSelected = 'zoom100'; break;
+		case 11: zoomPercent = 120; zoomSelected = 'zoom120'; break;
+		case 12: zoomPercent = 150; zoomSelected = 'zoom150'; break;
+		case 13: zoomPercent = 175; zoomSelected = 'zoom175'; break;
+		case 14: zoomPercent = 200; zoomSelected = 'zoom200'; break;
 		default:
 			var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
 			zoomPercent = Math.round(zoomRatio * 100) + '%';
 			break;
 		}
 		$('#zoomlevel').html(zoomPercent);
-		w2ui['toolbar-up'].set('zoom', {text: zoomPercent});
+		w2ui['toolbar-up'].set('zoom', {text: zoomPercent, selected: zoomSelected});
 	});
 
 	map.on('celladdress', function (e) {
