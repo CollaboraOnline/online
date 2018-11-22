@@ -121,7 +121,7 @@ function onClick(e, id, item, subItem) {
 		map.zoomOut(1);
 	}
 	else if (item.scale) {
-		map.setZoom(map.getScaleZoom(item.scale, 10));
+		map.setZoom(item.scale);
 	}
 	else if (id === 'zoomreset') {
 		map.setZoom(map.options.zoom);
@@ -636,14 +636,14 @@ function createToolbar() {
 			selected: 'id100',
 			mobile: false,
 			items: [
-				{ id: 'id30', text: '30%', scale: 0.3},
-				{ id: 'id50', text: '50%', scale: 0.5},
-				{ id: 'id70', text: '70%', scale: 0.7},
-				{ id: 'id100', text: '100%', scale: 1.0},
-				{ id: 'id130', text: '130%', scale: 1.3},
-				{ id: 'id150', text: '150%', scale: 1.5},
-				{ id: 'id170', text: '170%', scale: 1.7},
-				{ id: 'id200', text: '200%', scale: 2.0}
+				{ id: 'id50', text: '50%', scale: 6},
+				{ id: 'id70', text: '70%', scale: 8},
+				{ id: 'id85', text: '85%', scale: 9},
+				{ id: 'id100', text: '100%', scale: 10},
+				{ id: 'id120', text: '120%', scale: 11},
+				{ id: 'id150', text: '150%', scale: 12},
+				{ id: 'id175', text: '175%', scale: 13},
+				{ id: 'id200', text: '200%', scale: 14}
 			]
 		},
 		{type: 'break', mobile: false},
@@ -2292,8 +2292,22 @@ function setupToolbar(e) {
 	});
 
 	map.on('zoomend', function () {
-		var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
-		var zoomPercent = Math.round(zoomRatio * 100) + '%';
+		var zoomPercent = 100;
+		switch (map.getZoom()) {
+		case 6:  zoomPercent =  50; break;
+		case 7:  zoomPercent =  60; break;
+		case 8:  zoomPercent =  70; break;
+		case 9:  zoomPercent =  85; break;
+		case 10: zoomPercent = 100; break;
+		case 11: zoomPercent = 120; break;
+		case 12: zoomPercent = 150; break;
+		case 13: zoomPercent = 175; break;
+		case 14: zoomPercent = 200; break;
+		default:
+			var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
+			zoomPercent = Math.round(zoomRatio * 100) + '%';
+			break;
+		}
 		$('#zoomlevel').html(zoomPercent);
 		w2ui['toolbar-up'].set('zoom', {text: zoomPercent});
 	});
