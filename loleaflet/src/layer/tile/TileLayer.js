@@ -1770,7 +1770,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.isDragged = true;
 		}
 		else if (e.type === 'rotateend') {
-			var center = this._graphicSelectionTwips.getCenter().add(this._graphicSelectionTwips.min);
+			var center = this._graphicSelectionTwips.getCenter();
 			var param = {
 				TransformRotationDeltaAngle: {
 					type: 'long',
