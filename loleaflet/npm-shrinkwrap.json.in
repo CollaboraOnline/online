@@ -4,6 +4,11 @@
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
+    "@types/jquery": {
+      "version": "2.0.40",
+      "resolved": "file:node_shrinkwrap/@types-jquery-2.0.40.tgz",
+      "dev": true
+    },
     "acorn": {
       "version": "4.0.13",
       "resolved": "file:node_shrinkwrap/acorn-4.0.13.tgz",
@@ -1475,6 +1480,11 @@
       "integrity": "sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=",
       "dev": true
     },
+    "hammerjs": {
+      "version": "2.0.8",
+      "resolved": "file:node_shrinkwrap/hammerjs-2.0.8.tgz",
+      "dev": true
+    },
     "has": {
       "version": "1.0.1",
       "resolved": "file:node_shrinkwrap/has-1.0.1.tgz",
@@ -2929,8 +2939,7 @@
     },
     "timeago.js": {
       "version": "4.0.0-beta.1",
-      "from": "timeago.js@4.0.0-beta.1",
-      "resolved": "https://registry.npmjs.org/timeago.js/-/timeago.js-4.0.0-beta.1.tgz",
+      "resolved": "file:node_shrinkwrap/timeago.js-4.0.0-beta.1.tgz",
       "dev": true
     },
     "timers-browserify": {

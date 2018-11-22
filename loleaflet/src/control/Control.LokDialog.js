@@ -3,10 +3,62 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global $ L */
+/* global $ L Hammer */
+L.WinUtil = {
+
+};
+
+function updateTransformation() {
+	var value = [
+		'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
+		'scale(' + transform.scale + ', ' + transform.scale + ')'
+	];
+
+	value = value.join(' ');
+	zoomTarget.style.webkitTransform = value;
+	zoomTarget.style.mozTransform = value;
+	zoomTarget.style.transform = value;
+}
+
+// Zooming dialogs
+var startX = 0;
+var startY = 0;
+var hammer = null;
+var zoomTarget = null;
+var initScale = 1;
+var transform = {
+	translate: { x: 0, y: 0 },
+	scale: 1,
+	angle: 0,
+	rx: 0,
+	ry: 0,
+	rz: 0
+};
+
 L.Control.LokDialog = L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
+
+	onPan: function (ev) {
+		transform.translate = {
+			x: startX + ev.deltaX,
+			y: startY + ev.deltaY
+		};
+
+		updateTransformation();
+	},
+
+	onPinch: function (ev) {
+		if (ev.type == 'pinchstart') {
+			initScale = transform.scale || 1;
+		}
+
+		if (initScale * ev.scale > 0.4) {
+			transform.scale = initScale * ev.scale;
+		}
+
+		updateTransformation();
+	},
 
 	onAdd: function (map) {
 		map.on('window', this._onDialogMsg, this);
@@ -271,6 +323,7 @@ L.Control.LokDialog = L.Control.extend({
 		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
 		L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
 		L.DomUtil.setStyle(dialogContainer, 'margin', '0px');
+		L.DomUtil.setStyle(dialogContainer, 'touch-action', 'manipulate');
 
 		var strId = this._toStrId(id);
 		dialogContainer.id = strId;
@@ -374,6 +427,25 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(dlgInput, 'contextmenu', function() {
 			return false;
 		});
+
+		// Zooming dialogs
+		zoomTarget = $('.ui-dialog').get(0);
+
+		if (hammer === null) {
+			hammer = new Hammer(canvas);
+		}
+
+		hammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+		hammer.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammer.get('pan')]);
+
+		hammer.on('panstart panmove', this.onPan);
+		hammer.on('pinchstart pinchmove', this.onPinch);
+		hammer.on('hammer.input', function(ev) {
+			if (ev.isFinal) {
+				startX = transform.translate.x;
+				startY = transform.translate.y;
+			}
+		});
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
@@ -398,6 +470,20 @@ L.Control.LokDialog = L.Control.extend({
 		this._map.focus();
 		delete this._dialogs[dialogId];
 		this._currentId = null;
+
+		startX = 0;
+		startY = 0;
+		hammer = null;
+		zoomTarget = null;
+		initScale = 1;
+		transform = {
+			translate: { x: 0, y: 0 },
+			scale: 1,
+			angle: 0,
+			rx: 0,
+			ry: 0,
+			rz: 0
+		};
 	},
 
 	onCloseCurrentPopUp: function() {
