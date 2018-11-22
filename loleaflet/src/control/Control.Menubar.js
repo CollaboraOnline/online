@@ -271,12 +271,10 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertSymbol'}]
 			},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), type: 'menu', menu: [
-				{name: _UNO('.uno:FormatObjectMenu', 'presentation'), type: 'menu', menu: [
-					{uno: '.uno:TransformDialog'},
-					{uno: '.uno:FormatLine'},
-					{uno: '.uno:FormatArea'}
-				]}
-			]},
+				{uno: '.uno:TransformDialog'},
+				{uno: '.uno:FormatLine'},
+				{uno: '.uno:FormatArea'}]
+			},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 				{name: _UNO('.uno:TableInsertMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
