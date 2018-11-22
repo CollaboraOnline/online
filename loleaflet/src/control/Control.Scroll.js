@@ -155,7 +155,7 @@ L.Control.Scroll = L.Control.extend({
 
 	_onScrollTo: function (e) {
 		// triggered by the document (e.g. search result out of the viewing area)
-		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x]);
+		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {calledFromInvalidateCursorMsg: e.calledFromInvalidateCursorMsg});
 	},
 
 	_onScrollBy: function (e) {
@@ -169,6 +169,7 @@ L.Control.Scroll = L.Control.extend({
 		if (e.x < 0) {
 			x = '-=' + Math.abs(e.x);
 		}
+		// Note: timeout===1 is checked in my extremely ugly hack in jquery.mCustomScrollbar.js.
 		$('.scroll-container').mCustomScrollbar('scrollTo', [y, x], { timeout: 1 });
 	},
 
