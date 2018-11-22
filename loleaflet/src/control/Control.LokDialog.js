@@ -312,6 +312,9 @@ L.Control.LokDialog = L.Control.extend({
 		// don't show the dialog surround until we have the dialog content
 		$(dialogContainer).parent().hide();
 
+		// Override default minHeight, which can be too large for thin dialogs.
+		L.DomUtil.setStyle(dialogContainer, 'minHeight', height + 'px');
+
 		this._dialogs[id] = {
 			width: width,
 			height: height,
