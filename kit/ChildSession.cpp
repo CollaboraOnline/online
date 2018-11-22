@@ -21,12 +21,19 @@
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/WebSocket.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/BinaryReader.h>
 #include <Poco/Base64Decoder.h>
+#include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/SSLManager.h>
+#include <Poco/Net/KeyConsoleHandler.h>
+#include <Poco/Net/AcceptCertificateHandler.h>
 
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Authorization.hpp>
 #include "KitHelper.hpp"
 #include <Log.hpp>
 #include <Png.hpp>
@@ -263,7 +270,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "userinactive" ||
                tokens[0] == "windowcommand" ||
                tokens[0] == "asksignaturestatus" ||
-               tokens[0] == "signdocument");
+               tokens[0] == "signdocument" ||
+               tokens[0] == "uploadsigneddocument");
 
         if (tokens[0] == "clientzoom")
         {
@@ -357,10 +365,145 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         {
             askSignatureStatus(buffer, length, tokens);
         }
+        else if (tokens[0] == "uploadsigneddocument")
+        {
+            return uploadSignedDocument(buffer, length, tokens);
+        }
         else
         {
             assert(false && "Unknown command token.");
         }
+    }
+
+    return true;
+}
+
+// add to common / tools
+size_t getFileSize(const std::string& filename)
+{
+    return std::ifstream(filename, std::ifstream::ate | std::ifstream::binary).tellg();
+}
+
+std::string getMimeFromFileType(const std::string & fileType)
+{
+    if (fileType == "pdf")
+        return "application/pdf";
+    else if (fileType == "odt")
+        return "application/vnd.oasis.opendocument.text";
+    else if (fileType == "docx")
+        return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+    return std::string();
+}
+
+bool ChildSession::uploadSignedDocument(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
+{
+    std::string filename;
+    std::string wopiUrl;
+    std::string token;
+    std::string filetype;
+
+    { // parse JSON
+        const std::string firstLine = getFirstLine(buffer, length);
+
+        const char* data = buffer + firstLine.size() + 1;
+        const int size = length - firstLine.size() - 1;
+        std::string json(data, size);
+
+        Poco::JSON::Parser parser;
+        Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+
+        filename = JsonUtil::getJSONValue<std::string>(root, "filename");
+        wopiUrl = JsonUtil::getJSONValue<std::string>(root, "wopiUrl");
+        token = JsonUtil::getJSONValue<std::string>(root, "token");
+        filetype = JsonUtil::getJSONValue<std::string>(root, "type");
+    }
+
+    if (filetype.empty() || filename.empty() || wopiUrl.empty() || token.empty())
+    {
+        sendTextFrame("error: cmd=uploadsigneddocument kind=syntax");
+        return false;
+    }
+
+    std::string mimetype = getMimeFromFileType(filetype);
+    if (mimetype.empty())
+    {
+        sendTextFrame("error: cmd=uploadsigneddocument kind=syntax");
+        return false;
+    }
+    const std::string tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
+    const Poco::Path filenameParam(filename);
+    const std::string url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + filenameParam.getFileName();
+
+    {
+        std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+        getLOKitDocument()->saveAs(url.c_str(),
+                                   filetype.empty() ? nullptr : filetype.c_str(),
+                                   nullptr);
+    }
+
+    Authorization authorization(Authorization::Type::Token, token);
+    Poco::URI uriObject(wopiUrl + "/" + filename + "/contents");
+
+    authorization.authorizeURI(uriObject);
+
+    try
+    {
+        Poco::Net::initializeSSL();
+        Poco::Net::Context::Params sslClientParams;
+        sslClientParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
+        Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler = new Poco::Net::KeyConsoleHandler(false);
+        Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler = new Poco::Net::AcceptCertificateHandler(false);
+        Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
+        Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession;
+        psession.reset(new Poco::Net::HTTPSClientSession(
+                        uriObject.getHost(),
+                        uriObject.getPort(),
+                        Poco::Net::SSLManager::instance().defaultClientContext()));
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        authorization.authorizeRequest(request);
+
+        request.set("X-WOPI-Override", "PUT");
+
+        const size_t filesize = getFileSize(url);
+
+        request.setContentType(mimetype);
+        request.setContentLength(filesize);
+
+        std::ostream& httpOutputStream = psession->sendRequest(request);
+
+        std::ifstream inputFileStream(url);
+        Poco::StreamCopier::copyStream(inputFileStream, httpOutputStream);
+
+        Poco::Net::HTTPResponse response;
+        std::istream& responseStream = psession->receiveResponse(response);
+
+        std::ostringstream outputStringStream;
+        Poco::StreamCopier::copyStream(responseStream, outputStringStream);
+        std::string responseString = outputStringStream.str();
+
+        if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK &&
+            response.getStatus() != Poco::Net::HTTPResponse::HTTP_CREATED)
+        {
+            LOG_ERR("Upload signed document HTTP Response Error: " << response.getStatus() << ' ' << response.getReason());
+
+            sendTextFrame("error: cmd=uploadsigneddocument kind=httpresponse");
+
+            return false;
+        }
+    }
+    catch (const Poco::Exception& pocoException)
+    {
+        LOG_ERR("Upload signed document Exception: " + pocoException.displayText());
+
+        sendTextFrame("error: cmd=uploadsigneddocument kind=failure");
+
+        return false;
     }
 
     return true;

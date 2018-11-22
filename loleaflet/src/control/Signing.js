@@ -86,11 +86,13 @@ function adjustUIState() {
 			w2ui['document-signing-bar'].show('passport');
 			w2ui['document-signing-bar'].show('current-passport');
 			w2ui['document-signing-bar'].show('sign');
+			w2ui['document-signing-bar'].show('upload');
 		}
 		else {
 			w2ui['document-signing-bar'].show('passport');
 			w2ui['document-signing-bar'].hide('current-passport');
 			w2ui['document-signing-bar'].hide('sign');
+			w2ui['document-signing-bar'].hide('upload');
 		}
 	}
 	else {
@@ -103,6 +105,7 @@ function adjustUIState() {
 		w2ui['document-signing-bar'].hide('identity-label');
 		w2ui['document-signing-bar'].hide('identity');
 		w2ui['document-signing-bar'].hide('sign');
+		w2ui['document-signing-bar'].hide('upload');
 		w2ui['document-signing-bar'].hide('passport');
 		w2ui['document-signing-bar'].hide('current-passport');
 	}
@@ -243,6 +246,31 @@ L.Map.include({
 				});
 			}
 		}
+	},
+	uploadToVereign: function() {
+		if (library == null) {
+			return;
+		}
+		var map = this;
+		var filename = 'fileId'; // need to read the filename
+
+		library.getPassports(filename).then(function(result) {
+			if (isSuccess(result)) {
+				var resultArray = result.data;
+				for (var i = 0; i < resultArray.length; i++) {
+					if (currentPassport.uuid == resultArray[i].PassportUUID) {
+						var jsonRequest = {
+							filename: filename,
+							wopiUrl: vereignURL + '/wopi/files',
+							token: resultArray[i].AccessToken,
+							type: 'pdf'
+						};
+						var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
+						map._socket.sendMessage(blob);
+					}
+				}
+			}
+		});
 	},
 	signingLogout: function() {
 		if (library) {
