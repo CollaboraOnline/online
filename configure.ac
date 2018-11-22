@@ -602,7 +602,7 @@ AC_LINK_FILES([loleaflet/node_shrinkwrap], [loleaflet/node_shrinkwrap])
 
 AC_CONFIG_FILES([Makefile
                  gtk/Makefile
-                 Mobile/Mobile/Info.plist
+                 ios/Mobile/Info.plist
                  test/Makefile
                  loleaflet/Makefile
                  loleaflet/npm-shrinkwrap.json
@@ -657,12 +657,12 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
           # Sadly Xcode doesn't like it if AppIcon.appiconset is a
           # symlink, so make it a directory of symlinks to the actual png
           # and json files.
-          rm -rf Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
-          mkdir Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+          rm -rf ios/Mobile/Assets.xcassets/AppIcon.appiconset
+          mkdir ios/Mobile/Assets.xcassets/AppIcon.appiconset
           if test -n "$with_iosapp_appicon"; then
-             ln -s "$with_iosapp_appicon"/* Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+             ln -s "$with_iosapp_appicon"/* ios/Mobile/Assets.xcassets/AppIcon.appiconset
           else
-             ln -s Mobile/Mobile/Assets.xcassets/Empty.appiconset/* Mobile/Mobile/Assets.xcassets/AppIcon.appiconset
+             ln -s ios/Mobile/Assets.xcassets/Empty.appiconset/* ios/Mobile/Assets.xcassets/AppIcon.appiconset
           fi
        fi
       ],
