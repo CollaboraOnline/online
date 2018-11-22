@@ -9,6 +9,8 @@ var library = null;
 var identity = null;
 var currentPassport = null;
 
+var vereignURL = 'https://integration2.vereign.com';
+
 function isSuccess(result) {
 	return result.code == '200';
 }
@@ -325,9 +327,8 @@ L.Map.include({
 					}
 				}
 			},
-			'https://integration2.vereign.com/api/js/iframe'
-		).then(function(lib)
-		{
+			vereignURL + '/api/js/iframe'
+		).then(function(lib) {
 			library = lib;
 			adjustUIState();
 		});
