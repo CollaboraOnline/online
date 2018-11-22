@@ -8,56 +8,76 @@ L.WinUtil = {
 
 };
 
-function updateTransformation() {
-	var value = [
-		'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
-		'scale(' + transform.scale + ', ' + transform.scale + ')'
-	];
+function updateTransformation(target) {
+	if (target !== null && target !== undefined) {
+		var value = [
+			'translate3d(' + target.transformation.translate.x + 'px, ' + target.transformation.translate.y + 'px, 0)',
+			'scale(' + target.transformation.scale + ', ' + target.transformation.scale + ')'
+		];
 
-	value = value.join(' ');
-	zoomTarget.style.webkitTransform = value;
-	zoomTarget.style.mozTransform = value;
-	zoomTarget.style.transform = value;
+		value = value.join(' ');
+		target.value.style.webkitTransform = value;
+		target.value.style.mozTransform = value;
+		target.value.style.transform = value;
+	}
 }
 
-// Zooming dialogs
-var startX = 0;
-var startY = 0;
-var hammer = null;
-var zoomTarget = null;
-var initScale = 1;
-var transform = {
-	translate: { x: 0, y: 0 },
-	scale: 1,
-	angle: 0,
-	rx: 0,
-	ry: 0,
-	rz: 0
-};
+var zoomTargets = [];
+
+function findZoomTarget(id) {
+	for (var item in zoomTargets) {
+		if (zoomTargets[item].key === id) {
+			return zoomTargets[item];
+		}
+	}
+	return null;
+}
+
+function removeZoomTarget(id) {
+	for (var item in zoomTargets) {
+		if (zoomTargets[item].key === id) {
+			delete zoomTargets[item];
+		}
+	}
+}
+
+function toZoomTargetId(id) {
+	return id.replace('-canvas', '');
+}
 
 L.Control.LokDialog = L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
 
 	onPan: function (ev) {
-		transform.translate = {
-			x: startX + ev.deltaX,
-			y: startY + ev.deltaY
-		};
+		var id = toZoomTargetId(ev.target.id);
+		var target = findZoomTarget(id);
 
-		updateTransformation();
+		if (target) {
+			target.transformation.translate = {
+				x: target.initialState.startX + ev.deltaX,
+				y: target.initialState.startY + ev.deltaY
+			};
+
+			updateTransformation(target);
+		}
 	},
 
 	onPinch: function (ev) {
-		if (ev.type == 'pinchstart') {
-			initScale = transform.scale || 1;
-		}
+		var id = toZoomTargetId(ev.target.id);
+		var target = findZoomTarget(id);
 
-		if (initScale * ev.scale > 0.4) {
-			transform.scale = initScale * ev.scale;
-		}
+		if (target) {
+			if (ev.type == 'pinchstart') {
+				target.initialState.initScale = target.transformation.scale || 1;
+			}
 
-		updateTransformation();
+			if (target.initialState.initScale * ev.scale > 0.4) {
+				target.transformation.scale = target.initialState.initScale * ev.scale;
+			}
+
+			updateTransformation(target);
+		}
 	},
 
 	onAdd: function (map) {
@@ -429,21 +449,42 @@ L.Control.LokDialog = L.Control.extend({
 		});
 
 		// Zooming dialogs
-		zoomTarget = $('.ui-dialog').get(0);
-
-		if (hammer === null) {
-			hammer = new Hammer(canvas);
+		var targetId = toZoomTargetId(canvas.id);
+		var zoomTarget = $('#' + targetId).parent().get(0);
+		var state = {
+			startX: 0,
+			startY: 0,
+			initScale: 1
 		}
+		var transformation = {
+			translate: { x: 0, y: 0 },
+			scale: 1,
+			angle: 0,
+			rx: 0,
+			ry: 0,
+			rz: 0
+		};
 
-		hammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-		hammer.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammer.get('pan')]);
+		zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state});
 
-		hammer.on('panstart panmove', this.onPan);
-		hammer.on('pinchstart pinchmove', this.onPinch);
-		hammer.on('hammer.input', function(ev) {
+		var hammerContent = new Hammer(canvas);
+		var hammerAll = new Hammer(zoomTarget);
+
+		hammerContent.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+		hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+		hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
+
+		hammerContent.on('panstart panmove', this.onPan);
+		hammerAll.on('panstart panmove', this.onPan);
+		hammerAll.on('pinchstart pinchmove', this.onPinch);
+		hammerAll.on('hammer.input', function(ev) {
 			if (ev.isFinal) {
-				startX = transform.translate.x;
-				startY = transform.translate.y;
+				var id = toZoomTargetId(ev.target.id);
+				var target = findZoomTarget(id);
+				if (target) {
+					target.initialState.startX = target.transformation.translate.x;
+					target.initialState.startY = target.transformation.translate.y;
+				}
 			}
 		});
 	},
@@ -471,19 +512,7 @@ L.Control.LokDialog = L.Control.extend({
 		delete this._dialogs[dialogId];
 		this._currentId = null;
 
-		startX = 0;
-		startY = 0;
-		hammer = null;
-		zoomTarget = null;
-		initScale = 1;
-		transform = {
-			translate: { x: 0, y: 0 },
-			scale: 1,
-			angle: 0,
-			rx: 0,
-			ry: 0,
-			rz: 0
-		};
+		removeZoomTarget(this._toStrId(dialogId));
 	},
 
 	onCloseCurrentPopUp: function() {
