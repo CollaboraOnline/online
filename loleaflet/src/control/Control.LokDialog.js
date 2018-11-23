@@ -771,6 +771,12 @@ L.Control.LokDialog = L.Control.extend({
 		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 		if (spreadsheetRowColumnFrame)
 			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
+
+		// If we didn't have the focus, don't steal it form the editor.
+		if ($('#' + this._currentDeck.strId + '-cursor').css('display') === 'none') {
+			this._map.fire('editorgotfocus');
+			this._map.focus();
+		}
 	},
 
 	_onDialogChildClose: function(dialogId) {
