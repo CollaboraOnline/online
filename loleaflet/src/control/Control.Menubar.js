@@ -236,6 +236,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:OnlineAutoFormat'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
+				{name: _('Online Help'), id: 'online-help', type: 'action'},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -327,6 +328,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
+				{name: _('Online Help'), id: 'online-help', type: 'action'},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -441,6 +443,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:GoalSeekDialog'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
+				{name: _('Online Help'), id: 'online-help', type: 'action'},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
@@ -677,7 +680,7 @@ L.Control.Menubar = L.Control.extend({
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'print', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showresolved', // view menu
-			'about', 'keyboard-shortcuts' // help menu
+			'about', 'keyboard-shortcuts', 'online-help' // help menu
 		]
 	},
 
@@ -1094,8 +1097,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.showLOAboutDialog();
 		} else if (id === 'inserthyperlink') {
 			this._map.showHyperlinkDialog();
-		} else if (id === 'keyboard-shortcuts') {
-			this._map.showLOKeyboardHelp();
+		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
+			this._map.showHelp(id);
 		} else if (revHistoryEnabled && (id === 'rev-history' || id === 'last-mod')) {
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode

@@ -60,7 +60,7 @@ L.Map.include({
 		id = id || 'export'; // not any special download, simple export
 
 		if ((id === 'print' && this['wopi'].DisablePrint) ||
-		    (id === 'export' && this['wopi'].DisableExport)) {
+			(id === 'export' && this['wopi'].DisableExport)) {
 			this.hideBusy();
 			return;
 		}
@@ -198,7 +198,7 @@ L.Map.include({
 		this._socket.sendMessage('renderfont font=' + window.encodeURIComponent(fontName));
 	},
 
-	showLOKeyboardHelp: function() {
+	showHelp: function(id) {
 		var w;
 		var iw = window.innerWidth;
 		if (iw < 768) {
@@ -212,6 +212,12 @@ L.Map.include({
 		}
 		var map = this;
 		$.get('loleaflet-help.html', function(data) {
+			var productName;
+			if (window.ThisIsAMobileApp) {
+				productName = window.MobileAppName;
+			} else {
+				productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
+			}
 			vex.open({
 				unsafeContent: data,
 				showCloseButton: true,
@@ -223,34 +229,76 @@ L.Map.include({
 					var $vexContent = $(this.contentEl);
 					this.contentEl.style.width = w + 'px'
 					map.enable(false);
-					// Display help according to document opened
-					if (map.getDocType() === 'text') {
-						document.getElementById('text-shortcuts').style.display='block';
-					}
-					else if (map.getDocType() === 'spreadsheet') {
-						document.getElementById('spreadsheet-shortcuts').style.display='block';
-					}
-					else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
-						document.getElementById('presentation-shortcuts').style.display='block';
+					var i;
+					// Display keyboard shortcut or online help
+					if (id === 'keyboard-shortcuts') {
+						document.getElementById('online-help').style.display='none';
+						// Display help according to document opened
+						if (map.getDocType() === 'text') {
+							document.getElementById('text-shortcuts').style.display='block';
+						}
+						else if (map.getDocType() === 'spreadsheet') {
+							document.getElementById('spreadsheet-shortcuts').style.display='block';
+						}
+						else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
+							document.getElementById('presentation-shortcuts').style.display='block';
+						}
+					} else /* id === 'online-help' */ {
+						document.getElementById('keyboard-shortcuts').style.display='none';
+						// Display help according to document opened
+						if (map.getDocType() === 'text') {
+							var x = document.getElementsByClassName('text');
+							for (i = 0; i < x.length; i++) {
+								x[i].style.display = 'block';
+							}
+						}
+						else if (map.getDocType() === 'spreadsheet') {
+							x = document.getElementsByClassName('spreadsheet');
+							for (i = 0; i < x.length; i++) {
+								x[i].style.display = 'block';
+							}
+						}
+						else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
+							x = document.getElementsByClassName('presentation');
+							for (i = 0; i < x.length; i++) {
+								x[i].style.display = 'block';
+							}
+						}
 					}
 
-					// Lets translate
-					var i, max;
+					// Let's translate
+					var max;
 					var translatableContent = $vexContent.find('h1');
 					for (i = 0, max = translatableContent.length; i < max; i++) {
-						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
 					}
 					translatableContent = $vexContent.find('h2');
 					for (i = 0, max = translatableContent.length; i < max; i++) {
-						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+					}
+					translatableContent = $vexContent.find('h3');
+					for (i = 0, max = translatableContent.length; i < max; i++) {
+						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+					}
+					translatableContent = $vexContent.find('h4');
+					for (i = 0, max = translatableContent.length; i < max; i++) {
+						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
 					}
 					translatableContent = $vexContent.find('td');
 					for (i = 0, max = translatableContent.length; i < max; i++) {
-						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
 					}
 					translatableContent = $vexContent.find('p');
 					for (i = 0, max = translatableContent.length; i < max; i++) {
-						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
+						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+					}
+
+					// Substitute %productName in Online Help
+					if (id === 'online-help') {
+						var productNameContent = $vexContent.find('span.productname');
+						for (i = 0, max = productNameContent.length; i < max; i++) {
+							productNameContent[i].innerHTML = productNameContent[i].innerHTML.replace(/%productName/g, productName);
+						}
 					}
 
 					$vexContent.attr('tabindex', -1);

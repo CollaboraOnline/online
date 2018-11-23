@@ -1,11 +1,11 @@
 #. /* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
-#. extracted from /home/timar/online/ios/Mobile/Resources/Settings.bundle/en.lproj/Root.strings
+#. extracted from /home/timar/AMX-help/online/ios/Mobile/Resources/Settings.bundle/en.lproj/Root.strings
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-29 11:14+0200\n"
+"POT-Creation-Date: 2019-11-02 22:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

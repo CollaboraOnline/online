@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-29 11:14+0100\n"
+"POT-Creation-Date: 2019-11-02 22:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,7 +118,7 @@ msgid "Network Graph"
 msgstr ""
 
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:249
-#: src/layer/tile/TileLayer.js:366
+#: src/layer/tile/TileLayer.js:377
 msgid "Save"
 msgstr ""
 
@@ -290,109 +290,109 @@ msgstr ""
 msgid "No color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "\""
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:415
+#: src/control/Control.JSDialogBuilder.js:417
 msgid "%"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:533
+#: src/control/Control.JSDialogBuilder.js:535
 msgid "Font Name"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:535
+#: src/control/Control.JSDialogBuilder.js:537
 msgid "Font Size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:839
+#: src/control/Control.JSDialogBuilder.js:841
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:840
+#: src/control/Control.JSDialogBuilder.js:842
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:860
-#: src/control/Control.Menubar.js:611 src/control/Control.Menubar.js:662
+#: src/control/Control.JSDialogBuilder.js:862
+#: src/control/Control.Menubar.js:614 src/control/Control.Menubar.js:665
 #: src/control/Control.Toolbar.js:882 src/layer/tile/WriterTileLayer.js:86
 msgid "Insert table"
 msgstr ""
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:249
-#: src/control/Control.Menubar.js:340 src/control/Control.Menubar.js:454
-#: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:546
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:250
+#: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:457
+#: src/control/Control.Menubar.js:503 src/control/Control.Menubar.js:549
 msgid "Share..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:251
-#: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:456
-#: src/control/Control.Menubar.js:502 src/control/Control.Menubar.js:548
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:459
+#: src/control/Control.Menubar.js:505 src/control/Control.Menubar.js:551
 msgid "See revision history"
 msgstr ""
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:252
-#: src/control/Control.Menubar.js:343 src/control/Control.Menubar.js:459
-#: src/control/Control.Menubar.js:504 src/control/Control.Menubar.js:550
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:253
+#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:462
+#: src/control/Control.Menubar.js:507 src/control/Control.Menubar.js:553
 msgid "Download as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:253
-#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:460
-#: src/control/Control.Menubar.js:505 src/control/Control.Menubar.js:551
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:254
+#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:463
+#: src/control/Control.Menubar.js:508 src/control/Control.Menubar.js:554
 msgid "PDF Document (.pdf)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:461
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:464
 msgid "ODF text document (.odt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:462
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:465
 msgid "Word 2003 Document (.doc)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:463
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:466
 msgid "Word Document (.docx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:464
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:467
 msgid "Rich Text (.rtf)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:457
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:460
 #: src/control/Signing.js:601
 msgid "Sign document"
 msgstr ""
 
-#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:258
-#: src/control/Control.Menubar.js:349
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:351
 msgid "Close document"
 msgstr ""
 
-#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:263
-#: src/control/Control.Menubar.js:354 src/control/Control.Menubar.js:469
-#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:559
+#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:472
+#: src/control/Control.Menubar.js:516 src/control/Control.Menubar.js:562
 msgid "Repair"
 msgstr ""
 
-#: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:277
+#: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:278
 #: src/control/Control.Toolbar.js:1085
 msgid "Reset zoom"
 msgstr ""
 
-#: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:488
+#: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:491
 msgid "Show Ruler"
 msgstr ""
 
-#: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:281
-#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:608
-#: src/control/Control.Menubar.js:648 src/control/Control.Menubar.js:659
+#: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:282
+#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:611
+#: src/control/Control.Menubar.js:651 src/control/Control.Menubar.js:662
 msgid "Local Image..."
 msgstr ""
 
 #: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:93
-#: src/control/Control.Menubar.js:624 src/control/Control.Menubar.js:626
+#: src/control/Control.Menubar.js:627 src/control/Control.Menubar.js:629
 msgid "All"
 msgstr ""
 
@@ -401,82 +401,87 @@ msgid "Text orientation"
 msgstr ""
 
 #: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:229
-#: src/control/Control.Menubar.js:231 src/control/Control.Menubar.js:327
-#: src/control/Control.Menubar.js:440 src/control/Control.Toolbar.js:1850
+#: src/control/Control.Menubar.js:231 src/control/Control.Menubar.js:328
+#: src/control/Control.Menubar.js:442 src/control/Control.Toolbar.js:1850
 msgid "None (Do not check spelling)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:330
-#: src/control/Control.Menubar.js:444
+#: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:331
+#: src/control/Control.Menubar.js:446
+msgid "Online Help"
+msgstr ""
+
+#: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:332
+#: src/control/Control.Menubar.js:447
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:331
-#: src/control/Control.Menubar.js:445 src/control/Control.Menubar.js:493
-#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:602
+#: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:333
+#: src/control/Control.Menubar.js:448 src/control/Control.Menubar.js:496
+#: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:605
 msgid "About"
 msgstr ""
 
-#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:333
-#: src/control/Control.Menubar.js:447 src/map/Map.js:392
+#: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:335
+#: src/control/Control.Menubar.js:450 src/map/Map.js:392
 msgid "Last modification"
 msgstr ""
 
-#: src/control/Control.Menubar.js:254 src/control/Control.Menubar.js:506
+#: src/control/Control.Menubar.js:255 src/control/Control.Menubar.js:509
 msgid "ODF presentation (.odp)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:255 src/control/Control.Menubar.js:507
+#: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:510
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:508
+#: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:511
 msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:321 src/control/Control.Menubar.js:538
+#: src/control/Control.Menubar.js:322 src/control/Control.Menubar.js:541
 #: src/control/Control.Toolbar.js:1038
 msgid "Fullscreen presentation"
 msgstr ""
 
-#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:552
+#: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:555
 msgid "ODF spreadsheet (.ods)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:553
+#: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:556
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:554
+#: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:557
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:504
-#: src/control/Control.Menubar.js:550
+#: src/control/Control.Menubar.js:462 src/control/Control.Menubar.js:507
+#: src/control/Control.Menubar.js:553
 msgid "Export as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:635 src/control/Control.Menubar.js:654
-#: src/control/Control.Menubar.js:664
+#: src/control/Control.Menubar.js:638 src/control/Control.Menubar.js:657
+#: src/control/Control.Menubar.js:667
 msgid "Insert Shape"
 msgstr ""
 
-#: src/control/Control.Menubar.js:734 src/control/Control.Toolbar.js:1849
+#: src/control/Control.Menubar.js:737 src/control/Control.Toolbar.js:1849
 msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1086
+#: src/control/Control.Menubar.js:1089
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1119 src/map/Clipboard.js:751
+#: src/control/Control.Menubar.js:1122 src/map/Clipboard.js:751
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
 
-#: src/control/Control.MobileWizard.js:264
+#: src/control/Control.MobileWizard.js:269
 msgid "Chart type"
 msgstr ""
 
@@ -533,9 +538,9 @@ msgstr ""
 msgid "Function"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:968 src/control/Toolbar.js:362
+#: src/control/Control.Toolbar.js:968 src/control/Toolbar.js:410
 #: src/layer/marker/Annotation.js:182 src/layer/tile/CalcTileLayer.js:166
-#: src/layer/tile/TileLayer.js:367
+#: src/layer/tile/TileLayer.js:378
 msgid "Cancel"
 msgstr ""
 
@@ -572,12 +577,12 @@ msgid "Cancel the search"
 msgstr ""
 
 #: src/control/Control.Toolbar.js:1075 src/layer/tile/CalcTileLayer.js:122
-#: src/layer/tile/ImpressTileLayer.js:153 src/layer/tile/WriterTileLayer.js:107
+#: src/layer/tile/ImpressTileLayer.js:158 src/layer/tile/WriterTileLayer.js:107
 msgid "Always follow the editor"
 msgstr ""
 
 #: src/control/Control.Toolbar.js:1078 src/layer/tile/CalcTileLayer.js:125
-#: src/layer/tile/ImpressTileLayer.js:156 src/layer/tile/WriterTileLayer.js:110
+#: src/layer/tile/ImpressTileLayer.js:161 src/layer/tile/WriterTileLayer.js:110
 msgid "Current"
 msgstr ""
 
@@ -834,23 +839,23 @@ msgstr ""
 msgid "Renaming..."
 msgstr ""
 
-#: src/control/Toolbar.js:285
+#: src/control/Toolbar.js:333
 msgid "This version of %productName is powered by"
 msgstr ""
 
-#: src/control/Toolbar.js:355
+#: src/control/Toolbar.js:403
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:357
+#: src/control/Toolbar.js:405
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:358
+#: src/control/Toolbar.js:406
 msgid "Link"
 msgstr ""
 
-#: src/control/Toolbar.js:361
+#: src/control/Toolbar.js:409
 msgid "OK"
 msgstr ""
 
@@ -1095,22 +1100,22 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: src/layer/tile/CalcTileLayer.js:76 src/layer/tile/ImpressTileLayer.js:107
+#: src/layer/tile/CalcTileLayer.js:76 src/layer/tile/ImpressTileLayer.js:114
 #: src/layer/tile/WriterTileLayer.js:56
 msgid "Show the search bar"
 msgstr ""
 
-#: src/layer/tile/CalcTileLayer.js:249 src/layer/tile/ImpressTileLayer.js:228
+#: src/layer/tile/CalcTileLayer.js:249 src/layer/tile/ImpressTileLayer.js:233
 #: src/layer/tile/WriterTileLayer.js:174
 msgid "Search:"
 msgstr ""
 
-#: src/layer/tile/CalcTileLayer.js:256 src/layer/tile/ImpressTileLayer.js:235
+#: src/layer/tile/CalcTileLayer.js:256 src/layer/tile/ImpressTileLayer.js:240
 #: src/layer/tile/WriterTileLayer.js:181
 msgid "Clear the search field"
 msgstr ""
 
-#: src/layer/tile/CalcTileLayer.js:258 src/layer/tile/ImpressTileLayer.js:237
+#: src/layer/tile/CalcTileLayer.js:258 src/layer/tile/ImpressTileLayer.js:242
 #: src/layer/tile/WriterTileLayer.js:183
 msgid "Hide the search bar"
 msgstr ""

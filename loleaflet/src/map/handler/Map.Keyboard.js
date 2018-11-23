@@ -414,7 +414,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (e.ctrlKey && e.shiftKey && e.key === '?') {
-			this._map.showLOKeyboardHelp();
+			this._map.showHelp('online-help');
 			e.preventDefault();
 			return true;
 		}
