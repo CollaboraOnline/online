@@ -1490,7 +1490,7 @@ L.TileLayer = L.GridLayer.extend({
 		&& this._isCursorVisible        // only when LOK has told us it is ok
 		&& this._isFocused              // not when document is not focused
 		&& !this._isZooming             // not when zooming
-		&& !this.isGraphicVisible()     // not when sizing / positioning graphics
+//		&& !this.isGraphicVisible()     // not when sizing / positioning graphics
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
 			this._updateCursorPos();
 		}
