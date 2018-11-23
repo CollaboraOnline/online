@@ -67,7 +67,8 @@ L.Control.PartsPreview = L.Control.extend({
 				var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
 				this._addDnDHandlers(frame);
 				frame.setAttribute('draggable', false);
-				L.DomUtil.setStyle(frame, 'height', '12px');
+				L.DomUtil.setStyle(frame, 'height', '20px');
+				L.DomUtil.setStyle(frame, 'margin', '0em');
 
 				// Create the preview parts
 				for (var i = 0; i < parts; i++) {
