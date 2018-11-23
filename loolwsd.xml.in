@@ -79,6 +79,7 @@
         <host desc="Ditto, but as IPv4-mapped IPv6 address">::ffff:127\.0\.0\.1</host>
         <host desc="The IPv6 loopback (localhost) address.">::1</host>
       </post_allow>
+      <frame_ancestors desc="Specify who is allowed to embed the LO Online iframe (loolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
     </net>
 
     <ssl desc="SSL settings">
