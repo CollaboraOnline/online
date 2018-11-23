@@ -609,6 +609,7 @@ public:
 namespace
 {
 
+#if ENABLE_DEBUG
 inline std::string getLaunchBase(const std::string &credentials)
 {
     std::ostringstream oss;
@@ -651,6 +652,7 @@ inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 
     return oss.str();
 }
+#endif
 
 } // anonymous namespace
 
