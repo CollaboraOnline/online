@@ -1916,7 +1916,7 @@ L.TileLayer = L.GridLayer.extend({
 					center = center.subtract(this._map.getSize().divideBy(2));
 					center.x = Math.round(center.x < 0 ? 0 : center.x);
 					center.y = Math.round(center.y < 0 ? 0 : center.y);
-					this._map.fire('scrollto', {x: center.x, y: center.y});
+					this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: true});
 				}
 				this._prevCellCursorXY = this._cellCursorXY;
 			}
