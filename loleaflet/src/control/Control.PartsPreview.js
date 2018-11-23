@@ -66,7 +66,7 @@ L.Control.PartsPreview = L.Control.extend({
 				this._map.on('click', function() {
 					this.partsFocused = false;
 				}, this);
-				
+
 				this._map.on('keydown', function(e) {
 					if (this.partsFocused === true) {
 						switch (e.originalEvent.keyCode) {
@@ -81,6 +81,12 @@ L.Control.PartsPreview = L.Control.extend({
 				}, this);
 
 				this._scrollContainer = $('#slide-sorter .mCSB_container').get(0);
+
+				// Add a special frame just as a drop-site for reordering.
+				var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
+				this._addDnDHandlers(frame);
+				frame.setAttribute('draggable', false);
+				L.DomUtil.setStyle(frame, 'height', '12px');
 
 				// Create the preview parts
 				for (var i = 0; i < parts; i++) {
@@ -189,12 +195,12 @@ L.Control.PartsPreview = L.Control.extend({
 						$('#slide-sorter').mCustomScrollbar('scrollTo', nodePos-(sliderHeight-nodeHeight-nodeHeight/2));
 					}, 50);
 				}
-			} 
+			}
 			return;
 		}
 		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
-			var partId = parseInt(part);
+			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 
 			if (e.ctrlKey) {
 				this._map.selectPart(partId, 2, false); // Toggle selection on ctrl+click.
@@ -381,7 +387,9 @@ L.Control.PartsPreview = L.Control.extend({
 
 		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
-			var partId = parseInt(part);
+			var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
+			if (partId < 0)
+				partId = -1; // First item is -1.
 			this.partsPreview._map._socket.sendMessage('moveselectedclientparts position=' + partId);
 		}
 
