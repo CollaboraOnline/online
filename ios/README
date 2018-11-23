@@ -36,7 +36,7 @@ where misan.local is the macOS machine where I build the app, in the
 ~lo/online-ios-device folder.
 
 4) In the online folder form step 2, edit the
-Mobile/Mobile.xcodeproj/project.pbxproj file in your favourite text
+ios/Mobile.xcodeproj/project.pbxproj file in your favourite text
 editor.
 
 Change LOSRCDIR and all instances of "../ios-device" to refer the the
@@ -51,7 +51,7 @@ and
 ./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice" --with-lo-builddir=$HOME/lo/ios --with-poco-includes=/opt/ios-poco/include --with-poco-libs=/opt/ios-poco/lib
 
 The configure script puts the app name as the CFBundleDisplayName
-property into the Mobile/Mobile/Info.plist file, and set up some
+property into the ios/Mobile/Info.plist file, and set up some
 symbolic links that point to the LIbreOffice core source and build
 directories (which can be the same, of course).
 

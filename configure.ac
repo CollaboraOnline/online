@@ -99,7 +99,7 @@ AC_ARG_WITH([lo-builddir],
             AS_HELP_STRING([--with-lo-builddir=<path>],
                            [Mandatory, and relevant, in a tree where building the iOS app.
                             Path to a the build directory of the LibreOffice core source tree you want to use.
-                            In addition you MUST manually edit the Mobile/Mobile.xcodeproj/project.pbxproj
+                            In addition you MUST manually edit the ios/Mobile.xcodeproj/project.pbxproj
                             file and change the references to "../ios-device" to refer to the corresponding
                             LibreOffice core source directory (which typically would be the same as the build
                             directory you specify with this option).]))
