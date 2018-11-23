@@ -1509,6 +1509,9 @@ function onDocLayerInit() {
 			]
 		});
 
+		var spreadsheetToolbar = w2ui['spreadsheet-toolbar'];
+		spreadsheetToolbar.show('firstrecord', 'nextrecord', 'prevrecord', 'lastrecord', 'insertsheet');
+
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id:'break1'},
@@ -1581,7 +1584,10 @@ function onDocLayerInit() {
 		if (!map['wopi'].HideExportOption) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'fitcell', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset', 'sum');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'fitcell', 'togglemergecells', 'breakmergecells',
+			'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals',
+			'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset',
+			'sum', 'incrementindent', 'decrementindent', 'breakindent');
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
@@ -1604,7 +1610,10 @@ function onDocLayerInit() {
 
 		break;
 	case 'drawing':
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'fitcell', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'fitcell', 'togglemergecells', 'breakmergecells',
+			'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals',
+			'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset',
+			'sum', 'incrementindent', 'decrementindent', 'breakindent');
 
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
@@ -1986,22 +1995,6 @@ function onUpdateParts(e) {
 		else {
 			toolbar.enable('next');
 		}
-	}
-
-	toolbar = w2ui['toolbar-up'];
-	if (e.docType !== 'text' && e.docType !== 'spreadsheet') {
-		toolbar.hide('incrementindent');
-		toolbar.hide('decrementindent');
-		toolbar.hide('incdecindent');
-	}
-
-	toolbar = w2ui['spreadsheet-toolbar'];
-	if (e.docType === 'spreadsheet') {
-		toolbar.show('firstrecord');
-		toolbar.show('nextrecord');
-		toolbar.show('prevrecord');
-		toolbar.show('lastrecord');
-		toolbar.show('insertsheet');
 	}
 }
 
