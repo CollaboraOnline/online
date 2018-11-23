@@ -681,50 +681,41 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
            << "font-src 'self' data:; "
            << "object-src blob:; ";
 
-    std::string frameAncestor;
-    const auto it = request.find("Referer"); // Referer[sic]
-    if (it != request.end())
+    // Frame ancestors: Allow loolwsd host, wopi host and anything configured.
+    std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
+    std::string frameAncestors = configFrameAncestor;
+    Poco::URI uriHost(host);
+    if (uriHost.getHost() != configFrameAncestor)
+        frameAncestors += " " + uriHost.getHost();
+
+    for (const auto& param : params)
     {
-        frameAncestor = it->second;
-        LOG_TRC("Picking frame ancestor from HTTP Referer header: " << frameAncestor);
-    }
-    else // Use WOPISrc value if Referer is absent
-    {
-        for (const auto& param : params)
+        if (param.first == "WOPISrc")
         {
-            if (param.first == "WOPISrc")
+            std::string wopiFrameAncestor;
+            Poco::URI::decode(param.second, wopiFrameAncestor);
+            if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
             {
-                Poco::URI::decode(param.second, frameAncestor);
-                LOG_TRC("Picking frame ancestor from WOPISrc: " << frameAncestor);
-                break;
+                frameAncestors += " " + wopiFrameAncestor;
+                LOG_TRC("Picking frame ancestor from WOPISrc: " << wopiFrameAncestor);
             }
+            break;
         }
     }
 
-    // Keep only the origin, reject everything else
-    Poco::URI uriFrameAncestor(frameAncestor);
-    const std::string& frameAncestorScheme = uriFrameAncestor.getScheme();
-    const std::string& frameAncestorHost = uriFrameAncestor.getHost();
-
-    if (!frameAncestor.empty() && Util::isValidURIScheme(frameAncestorScheme) && Util::isValidURIHost(frameAncestorHost))
+    if (!frameAncestors.empty())
     {
-        frameAncestor = frameAncestorScheme + "://" + frameAncestorHost + ":" + std::to_string(uriFrameAncestor.getPort());
-
-        LOG_TRC("Final frame ancestor: " << frameAncestor);
-
-        // Replaced by frame-ancestors in CSP but some oldies don't know about that
-        oss << "X-Frame-Options: allow-from " << frameAncestor << "\r\n";
-        cspOss << "img-src 'self' data: " << frameAncestor << "; "
-               << "frame-ancestors " << frameAncestor;
+        LOG_TRC("Allowed frame ancestors: " << frameAncestors);
+        // X-Frame-Options supports only one ancestor, ignore that
+        //(it's deprecated anyway and CSP works in all major browsers)
+        cspOss << "img-src 'self' data: " << frameAncestors << "; "
+                << "frame-ancestors " << frameAncestors;
     }
     else
     {
-        LOG_TRC("Denied frame ancestor: " << frameAncestor);
-
-        cspOss << "img-src 'self' data: ;";
-        oss << "X-Frame-Options: deny\r\n";
+        LOG_TRC("Denied all frame ancestors");
+        cspOss << "img-src 'self' data: none;";
     }
-
     cspOss << "\r\n";
     // Append CSP to response headers too
     oss << cspOss.str();
