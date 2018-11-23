@@ -1239,10 +1239,11 @@ L.Map = L.Evented.extend({
 
 		// (tml: For me, for this to work with a mobile device, we need to
 		// accept 'mouseup', too, and check the _wasSingleTap flag set over in Map.Tap.js.)
-		if (type === 'click' || (type === 'mouseup' &&
+		if (type === 'click' || type === 'dblclick' || (type === 'mouseup' &&
 					 typeof this._container._wasSingleTap !== 'undefined' &&
 					 this._container._wasSingleTap)) {
 			if (this._permission === 'edit') {
+				this.fire('editorgotfocus');
 				this.focus();
 			}
 
