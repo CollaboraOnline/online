@@ -298,6 +298,8 @@ L.Control.LokDialog = L.Control.extend({
 			parent = this._getParentId(e.id);
 			if (parent)
 				this._onDialogChildClose(parent);
+			else if (this._isSidebar(e.id))
+				this._onSidebarClose(e.id);
 			else
 				this._onDialogClose(e.id, false);
 		}
@@ -652,6 +654,14 @@ L.Control.LokDialog = L.Control.extend({
 		                              ' char=' + charcode + ' key=' + keycode);
 	},
 
+	_onSidebarClose: function(dialogId) {
+		this._resizeSidebar(dialogId, 0);
+		$('#' + this._currentDeck.strId).remove();
+		this._map.focus();
+		delete this._dialogs[dialogId];
+		this._currentDeck = null;
+	},
+
 	_onDialogClose: function(dialogId, notifyBackend) {
 		if (window.ThisIsTheiOSApp)
 			w2ui['editbar'].enable('closemobile');
@@ -751,12 +761,16 @@ L.Control.LokDialog = L.Control.extend({
 	_resizeSidebar: function(strId, width) {
 		this._currentDeck.width = width;
 		var sidebar = L.DomUtil.get(strId);
-		sidebar.width = width;
-		sidebar.style.width = width.toString() + 'px';
+		if (sidebar) {
+			sidebar.width = width;
+			if (sidebar.style)
+				sidebar.style.width = width.toString() + 'px';
+		}
+
 		this._map.options.documentContainer.style.right = (width + 1).toString() + 'px';
 		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 		if (spreadsheetRowColumnFrame)
-			spreadsheetRowColumnFrame.style.right = sidebar.style.width;
+			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
 	},
 
 	_onDialogChildClose: function(dialogId) {
