@@ -86,6 +86,7 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('opendialog', this._openDialog, this);
 		map.on('docloaded', this._docLoaded, this);
 		map.on('closepopup', this.onCloseCurrentPopUp, this);
+		map.on('editorgotfocus', this._onEditorGotFocus, this);
 		L.DomEvent.on(document, 'mouseup', this.onCloseCurrentPopUp, this);
 	},
 
@@ -252,10 +253,13 @@ L.Control.LokDialog = L.Control.extend({
 			}
 		} else if (e.action === 'cursor_visible') {
 			this._dialogs[e.id].cursorVisible = e.visible === 'true';
-			if (this._dialogs[e.id].cursorVisible)
+			if (this._dialogs[e.id].cursorVisible) {
 				$('#' + strId + '-cursor').css({display: 'block'});
-			else
+				this._map._onLostFocus();
+			}
+			else {
 				$('#' + strId + '-cursor').css({display: 'none'});
+			}
 		} else if (e.action === 'close') {
 			parent = this._getParentId(e.id);
 			if (parent)
@@ -539,6 +543,13 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._currentId || !this._isOpen(this._currentId) || this._dialogs[this._currentId].title)
 			return;
 		this._onDialogClose(this._currentId, true);
+	},
+
+	_onEditorGotFocus: function() {
+		// We need to lose focus on any dialogs/sidebars currently with focus.
+		for (var winId in this._dialogs) {
+			$('#' + this._dialogs[winId].strId + '-cursor').css({display: 'none'});
+		}
 	},
 
 	_paintDialog: function(parentId, rectangle, imgData) {

@@ -170,6 +170,8 @@ L.Map = L.Evented.extend({
 		this.showBusy(_('Initializing...'), false);
 		this.on('statusindicator', this._onUpdateProgress, this);
 
+		this.on('editorgotfocus', this._onEditorGotFocus, this);
+
 		// View info (user names and view ids)
 		this._viewInfo = {};
 		this._viewInfoByUserName = {};
@@ -1077,22 +1079,26 @@ L.Map = L.Evented.extend({
 		}, map.options.outOfFocusTimeoutSecs * 1000);
 	},
 
-	_onLostFocus: function () {
+	// The editor got focus (probably a dialog closed or user clicked to edit).
+	_onEditorLostFocus: function() {
 		if (!this._loaded) { return; }
 
-		console.debug('_onLostFocus: ');
 		var doclayer = this._docLayer;
 		if (doclayer)
 		{
 			doclayer._isFocused = false;
 			doclayer._updateCursorAndOverlay();
 		}
+	},
 
+	// Our browser tab lost focus.
+	_onLostFocus: function () {
+		this._onEditorLostFocus();
 		this._deactivate();
 	},
 
-	_onGotFocus: function () {
-		console.debug('_onGotFocus:');
+	// The editor got focus (probably a dialog closed or user clicked to edit).
+	_onEditorGotFocus: function() {
 		if (!this._loaded) { return; }
 
 		var doclayer = this._docLayer;
@@ -1108,6 +1114,11 @@ L.Map = L.Evented.extend({
 			}, 300);
 		}
 
+	},
+
+	// Our browser tab lost focus.
+	_onGotFocus: function () {
+		this._onEditorGotFocus();
 		this._activate();
 	},
 

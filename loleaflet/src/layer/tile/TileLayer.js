@@ -796,6 +796,12 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._setFollowing(false, null);
 		}
 		this._map.lastActionByUser = false;
+
+		if (!this._map._isFocused && this._map._permission === 'edit') {
+			// Regain cursor if we had been out of focus and now have input.
+			this._map.fire('editorgotfocus');
+		}
+
 		this._onUpdateCursor(this._viewId === modifierViewId);
 	},
 
@@ -1594,6 +1600,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._map._clipboardContainer.showCursor();
+		this._map.focus();
 	},
 
 	// Update cursor layer (blinking cursor).
