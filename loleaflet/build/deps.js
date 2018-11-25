@@ -155,6 +155,12 @@ var deps = {
 		desc: ['Rectangle overlays.']
 	},
 
+	SVGGroup: {
+		src: ['layer/vector/SVGGroup.js'],
+		deps: ['Path'],
+		desc: 'SVG group element.'
+	},
+
 	CircleMarker: {
 		src: ['layer/vector/CircleMarker.js'],
 		deps: ['Path'],
