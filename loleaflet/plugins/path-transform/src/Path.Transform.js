@@ -448,10 +448,12 @@ L.Handler.PathTransform = L.Handler.extend({
 					path._bounds.extend(latlngs[i][j]);
 				}
 			}
+		} else if (path instanceof L.SVGGroup) {
+			path._bounds._southWest = this._transformPoint(path._bounds._southWest, projectedMatrix, map, zoom);
+			path._bounds._northEast = this._transformPoint(path._bounds._northEast, projectedMatrix, map, zoom);
 		}
 
 		path._reset();
-		//console.timeEnd('transform');
 	},
 
 	_getPoints: function () {
