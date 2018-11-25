@@ -340,8 +340,7 @@ L.Path.prototype.makeDraggable = function() {
 	return L.Handler.PathDrag.makeDraggable(this);
 };
 
-
-L.Path.addInitHook(function() {
+var fnInitHook = function() {
 	if (this.options.draggable) {
 		// ensure interactive
 		this.options.interactive = true;
@@ -355,4 +354,7 @@ L.Path.addInitHook(function() {
 	} else if (this.dragging) {
 		this.dragging.disable();
 	}
-});
+}
+
+L.Path.addInitHook(fnInitHook);
+L.SVGGroup.addInitHook(fnInitHook);
