@@ -249,6 +249,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		var diff = transformation.untransform(px, scale)
 		.subtract(transformation.untransform(L.point(0, 0), scale));
 		var applyTransform = !dest;
+		var bounds = path._bounds;
 
 		path._bounds = new L.LatLngBounds();
 
@@ -281,7 +282,14 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 					}
 				}
 			}
+		} else if (path instanceof L.SVGGroup) {
+			if (applyTransform) {
+				bounds._southWest = projection.unproject(projection.project(bounds._southWest)._add(diff));
+				bounds._northEast = projection.unproject(projection.project(bounds._northEast)._add(diff));
+				path._bounds = bounds;
+			}
 		}
+
 		return dest;
 		// console.timeEnd('transform');
 	},
