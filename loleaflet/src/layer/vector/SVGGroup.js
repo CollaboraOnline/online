@@ -11,7 +11,7 @@ L.SVGGroup = L.Layer.extend({
 		this._rect = L.rectangle(bounds, options);
 	},
 
-	addFromString: function (svgString) {
+	addEmbeddedSVG: function (svgString) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(svgString, 'image/svg+xml');
 		var size = L.bounds(this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
@@ -64,6 +64,14 @@ L.SVGGroup = L.Layer.extend({
 		this._rect._map = this._rect._renderer = null;
 		this._path.removeChild(this._rect._path);
 		this._renderer._removeGroup(this);
+	},
+
+	removeEmbeddedSVG: function () {
+		if (this._svg) {
+			L.DomUtil.remove(this._svg);
+			delete this._svg;
+			this._update();
+		}
 	},
 
 	_transform: function(matrix) {
