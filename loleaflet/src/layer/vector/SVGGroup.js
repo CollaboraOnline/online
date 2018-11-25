@@ -62,7 +62,8 @@ L.SVGGroup = L.Layer.extend({
 
 	onRemove: function () {
 		this._rect._map = this._rect._renderer = null;
-		this._path.removeChild(this._rect._path);
+		this.removeInteractiveTarget(this._rect._path);
+		L.DomUtil.remove(this._rect._path);
 		this._renderer._removeGroup(this);
 	},
 
