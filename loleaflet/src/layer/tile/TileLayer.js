@@ -1844,7 +1844,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onUpdateGraphicSelection: function () {
 		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
 			if (this._graphicMarker) {
-				this._graphicMarker.addEventParent(this._map);
+				this._graphicMarker.removeEventParent(this._map);
 				this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
 				this._graphicMarker.off('rotatestart rotateend', this._onGraphicRotate, this);
 				this._graphicMarker.dragging.disable();
