@@ -370,6 +370,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('getchildid:')) {
 			this._onGetChildIdMsg(textMsg);
 		}
+		else if (textMsg.startsWith('shapeselectioncontent:')) {
+			this._onShapeSelectionContent(textMsg);
+		}
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
 		}
@@ -610,7 +613,16 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('childid', {id: command.id});
 	},
 
+	_onShapeSelectionContent: function (textMsg) {
+		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
+		if (this._graphicMarker) {
+			this._graphicMarker.removeEmbeddedSVG();
+			this._graphicMarker.addEmbeddedSVG(textMsg);
+		}
+	},
+
 	_onGraphicSelectionMsg: function (textMsg) {
+
 		if (textMsg.match('EMPTY')) {
 			this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
@@ -624,6 +636,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicSelection = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+
+			this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 		}
 
 		this._onUpdateGraphicSelection();
@@ -1856,12 +1870,14 @@ L.TileLayer = L.GridLayer.extend({
 				return;
 			}
 
-			this._graphicMarker = L.rectangle(this._graphicSelection, {
+			this._graphicMarker = L.svgGroup(this._graphicSelection, {
 				draggable: true,
 				transform: true,
 				stroke: false,
 				fillOpacity: 0,
-				fill: true});
+				fill: true
+			});
+
 			if (!this._graphicMarker) {
 				this._map.fire('error', {msg: 'Graphic marker initialization', cmd: 'marker', kind: 'failed', id: 1});
 				return;
