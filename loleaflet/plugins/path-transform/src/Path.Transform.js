@@ -829,3 +829,9 @@ L.Path.addInitHook(function() {
 		this.transform = new L.Handler.PathTransform(this, this.options.transform);
 	}
 });
+
+L.SVGGroup.addInitHook(function() {
+	if (this.options.transform) {
+		this.transform = new L.Handler.PathTransform(this, this.options.transform);
+	}
+});
