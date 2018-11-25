@@ -56,6 +56,10 @@ L.SVG = L.Renderer.extend({
 		this._updateStyle(layer);
 	},
 
+	_initGroup: function (layer) {
+		layer._path = L.SVG.create('g');
+	},
+
 	_fireMouseEvent: function (e) {
 		if (!this._map || !this.hasEventListeners(e.type)) { return; }
 
@@ -72,9 +76,17 @@ L.SVG = L.Renderer.extend({
 		});
 	},
 
+	_addGroup: function (layer) {
+		this._container.appendChild(layer._path);
+	},
+
 	_addPath: function (layer) {
 		this._container.appendChild(layer._path);
 		layer.addInteractiveTarget(layer._path);
+	},
+
+	_removeGroup: function (layer) {
+		L.DomUtil.remove(layer._path);
 	},
 
 	_removePath: function (layer) {
