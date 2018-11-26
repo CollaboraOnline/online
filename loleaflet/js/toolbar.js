@@ -824,6 +824,7 @@ function initMobileToolbar(toolItems) {
 	toolbar.w2toolbar({
 		name: 'formulabar',
 		tooltip: 'bottom',
+		hidden: true,
 		items: [
 			{type: 'html',  id: 'left'},
 			{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
@@ -862,12 +863,13 @@ function initMobileToolbar(toolItems) {
 	toolbar.w2toolbar({
 		name: 'spreadsheet-toolbar',
 		tooltip: 'bottom',
+		hidden: true,
 		items: [
-			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _('First sheet')},
-			{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _('Previous sheet')},
-			{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hidden: true, hint: _('Next sheet')},
-			{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _('Last sheet')},
-			{type: 'button',  id: 'insertsheet', img: 'insertsheet', hidden:true, hint: _('Insert sheet')}
+			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hint: _('First sheet')},
+			{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hint: _('Previous sheet')},
+			{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hint: _('Next sheet')},
+			{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hint: _('Last sheet')},
+			{type: 'button',  id: 'insertsheet', img: 'insertsheet', hint: _('Insert sheet')}
 		],
 		onClick: function (e) {
 			onClick(e, e.target);
@@ -886,6 +888,7 @@ function initMobileToolbar(toolItems) {
 	toolbar.w2toolbar({
 		name: 'presentation-toolbar',
 		tooltip: 'bottom',
+		hidden: true,
 		items: []
 	});
 
@@ -994,6 +997,7 @@ function initNormalToolbar(toolItems) {
 	toolbar.w2toolbar({
 		name: 'formulabar',
 		tooltip: 'bottom',
+		hidden: true,
 		items: [
 			{type: 'html',  id: 'left'},
 			{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
@@ -1064,12 +1068,13 @@ function initNormalToolbar(toolItems) {
 	toolbar.w2toolbar({
 		name: 'spreadsheet-toolbar',
 		tooltip: 'bottom',
+		hidden: true,
 		items: [
-			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hidden: true, hint: _('First sheet')},
-			{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hidden: true, hint: _('Previous sheet')},
-			{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hidden: true, hint: _('Next sheet')},
-			{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hidden: true, hint: _('Last sheet')},
-			{type: 'button',  id: 'insertsheet', img: 'insertsheet', hidden:true, hint: _('Insert sheet')}
+			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hint: _('First sheet')},
+			{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hint: _('Previous sheet')},
+			{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hint: _('Next sheet')},
+			{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hint: _('Last sheet')},
+			{type: 'button',  id: 'insertsheet', img: 'insertsheet', hint: _('Insert sheet')}
 		],
 		onClick: function (e) {
 			onClick(e, e.target);
@@ -1084,13 +1089,14 @@ function initNormalToolbar(toolItems) {
 	toolbar.w2toolbar({
 		name: 'presentation-toolbar',
 		tooltip: 'bottom',
+		hidden: true,
 		items: [
 			{type: 'html',  id: 'left'},
 			{type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _('Fullscreen presentation')},
 			{type: 'break', id: 'presentationbreak', hidden:true},
-			{type: 'button',  id: 'insertpage', img: 'insertpage', hidden:true, hint: _UNO('.uno:TaskPaneInsertPage', 'presentation')},
-			{type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hidden:true, hint: _UNO('.uno:DuplicateSlide', 'presentation')},
-			{type: 'button',  id: 'deletepage', img: 'deletepage', hidden:true, hint: _UNO('.uno:DeleteSlide', 'presentation')},
+			{type: 'button',  id: 'insertpage', img: 'insertpage', hint: _UNO('.uno:TaskPaneInsertPage', 'presentation')},
+			{type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: _UNO('.uno:DuplicateSlide', 'presentation')},
+			{type: 'button',  id: 'deletepage', img: 'deletepage', hint: _UNO('.uno:DeleteSlide', 'presentation')},
 			{type: 'html',  id: 'right'}
 		],
 		onClick: function (e) {
@@ -1509,9 +1515,6 @@ function onDocLayerInit() {
 			]
 		});
 
-		var spreadsheetToolbar = w2ui['spreadsheet-toolbar'];
-		spreadsheetToolbar.show('firstrecord', 'nextrecord', 'prevrecord', 'lastrecord', 'insertsheet');
-
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id:'break1'},
@@ -1544,13 +1547,15 @@ function onDocLayerInit() {
 				]}
 			]);
 		}
-
-		// Remove irrelevant toolbars
-		$('#presentation-toolbar').hide();
+		$('#spreadsheet-toolbar').show();
+		$('#formulabar').show();
 
 		break;
 	case 'text':
-		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
+		toolbarUp.remove('wraptextseparator', 'wraptext', 'fitcell', 'textpath', 'togglemergecells', 'breakmergecells',
+			'numberformatcurrency','numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'insertobjectchart', 'sum',
+			'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
+
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
@@ -1571,23 +1576,12 @@ function onDocLayerInit() {
 			]);
 		}
 
-		// Remove irrelevant toolbars
-		$('#formulabar').hide();
-		$('#spreadsheet-toolbar').hide();
-		$('#spreadsheet-row-column-frame').hide();
-		$('#presentation-toolbar').hide();
-
 		break;
 	case 'presentation':
 		var presentationToolbar = w2ui['presentation-toolbar'];
-		presentationToolbar.show('insertpage', 'duplicatepage', 'deletepage');
 		if (!map['wopi'].HideExportOption) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'fitcell', 'togglemergecells', 'breakmergecells',
-			'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals',
-			'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset',
-			'sum', 'incrementindent', 'decrementindent', 'breakindent');
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
@@ -1602,24 +1596,14 @@ function onDocLayerInit() {
 				}
 			]);
 		}
-
-		// Remove irrelevant toolbars
-		$('#formulabar').hide();
-		$('#spreadsheet-toolbar').hide();
-		$('#spreadsheet-row-column-frame').hide();
-
-		break;
+		// FALLTHROUGH intended
 	case 'drawing':
 		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'fitcell', 'togglemergecells', 'breakmergecells',
 			'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals',
 			'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset',
 			'sum', 'incrementindent', 'decrementindent', 'breakindent');
 
-		// Remove irrelevant toolbars
-		$('#formulabar').hide();
-		$('#spreadsheet-toolbar').hide();
-		$('#spreadsheet-row-column-frame').hide();
-
+		$('#presentation-toolbar').show();
 		break;
 	}
 
