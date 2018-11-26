@@ -160,7 +160,8 @@ ifelse(MOBILEAPP,[true],
 dnl# For use in conditionals in JS: window.ThisIsAMobileApp, window.ThisIsTheiOSApp,
 dnl# and window.ThisIsTheGtkApp
 ifelse(MOBILEAPP,[true],
-  [window.ThisIsAMobileApp = true;],
+  [window.ThisIsAMobileApp = true;
+   window.MobileAppName='MOBILEAPPNAME'],
   [window.ThisIsAMobileApp = false;]
 )
 ifelse(IOSAPP,[true],

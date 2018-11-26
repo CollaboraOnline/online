@@ -24,7 +24,7 @@ make or open the Mobile project there yet.
 3) Do a separate clone of the online repo on Linux, run autogen.sh,
 and configure it with the --enable-iosapp option:
 
-./configure --enable-iosapp
+./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice"
 
 Then run make. That will produce files in loleaflet/dist, nothing
 else. Copy those to the corresponding folder in the online clone
