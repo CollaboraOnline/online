@@ -264,7 +264,9 @@ L.Socket = L.Class.extend({
 			var loolwsdVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			var h = loolwsdVersionObj.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				h = '<a target="_blank" href="https://hub.libreoffice.org/git-online/' + h + '">' + h + '</a>';
+				if (!window.ThisIsTheiOSApp) {
+					h = '<a target="_blank" href="https://hub.libreoffice.org/git-online/' + h + '">' + h + '</a>';
+				}
 				$('#loolwsd-version').html(loolwsdVersionObj.Version + ' (git hash: ' + h + ')');
 			}
 			else {
