@@ -602,6 +602,7 @@ AC_LINK_FILES([loleaflet/node_shrinkwrap], [loleaflet/node_shrinkwrap])
 
 AC_CONFIG_FILES([Makefile
                  gtk/Makefile
+                 ios/config.h
                  ios/Mobile/Info.plist
                  test/Makefile
                  loleaflet/Makefile
