@@ -279,7 +279,7 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('lokitversion ')) {
 			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			h = lokitVersionObj.BuildId.substring(0, 7);
-			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
+			if (!window.ThisIsTheiOSApp && parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://hub.libreoffice.org/git-core/' + h + '">' + h + '</a>';
 			}
 			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
