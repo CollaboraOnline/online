@@ -3,7 +3,7 @@
  * Document parts switching handler
  */
 L.Map.include({
-	setPart: function (part, external) {
+	setPart: function (part, external, calledFromSetPartHandler) {
 		var docLayer = this._docLayer;
 		docLayer._prevSelectedPart = docLayer._selectedPart;
 		if (part === 'prev') {
@@ -41,7 +41,7 @@ L.Map.include({
 		docLayer.eachView(docLayer._cellViewCursors, docLayer._onUpdateCellViewCursor, docLayer);
 		docLayer.eachView(docLayer._graphicViewMarkers, docLayer._onUpdateGraphicViewSelection, docLayer);
 		docLayer.eachView(docLayer._viewSelections, docLayer._onUpdateTextViewSelection, docLayer);
-		docLayer._clearSelections();
+		docLayer._clearSelections(calledFromSetPartHandler);
 		docLayer._updateOnChangePart();
 		docLayer._pruneTiles();
 		docLayer._prevSelectedPartNeedsUpdate = true;

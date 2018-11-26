@@ -1477,9 +1477,9 @@ L.TileLayer = L.GridLayer.extend({
 		e.tile.onload = null;
 	},
 
-	_clearSelections: function () {
+	_clearSelections: function (calledFromSetPartHandler) {
 		// hide the cursor if not editable
-		this._onUpdateCursor();
+		this._onUpdateCursor(calledFromSetPartHandler);
 		// hide the text selection
 		this._selections.clearLayers();
 		// hide the selection handles

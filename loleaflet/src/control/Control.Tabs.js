@@ -152,7 +152,7 @@ L.Control.Tabs = L.Control.extend({
 	_setPart: function (e) {
 		var part =  e.target.id.match(/\d+/g)[0];
 		if (part !== null) {
-			this._map.setPart(parseInt(part));
+			this._map.setPart(parseInt(part), /*external:*/ false, /*calledFromSetPartHandler:*/ true);
 		}
 	}
 });
