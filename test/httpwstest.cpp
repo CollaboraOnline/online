@@ -585,6 +585,7 @@ void HTTPWSTest::testLoadTorture()
     std::vector<std::string> docNames = { "setclientpart.ods", "hello.odt", "viewcursor.odp" };
 
     std::vector<std::thread> threads;
+    threads.reserve(docNames.size());
     for (const auto& docName : docNames)
     {
         threads.emplace_back([&]
