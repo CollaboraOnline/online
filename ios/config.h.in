@@ -70,10 +70,10 @@
 #define LOOLWSD_CACHEDIR lo_ios_app_getCacheDir()
 
 /* LibreOffice Online WebSocket server version */
-#define LOOLWSD_VERSION "master" // ???
+#define LOOLWSD_VERSION "@LOOLWSD_VERSION@"
 
 /* LibreOffice Online git hash if present */
-#define LOOLWSD_VERSION_HASH "xxxxxx" // ???
+#define LOOLWSD_VERSION_HASH "@LOOLWSD_VERSION_HASH@"
 
 /* Path to LibreOffice installation */
 #define LO_PATH "."
