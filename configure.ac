@@ -77,6 +77,11 @@ AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
                              [Point to a directory containing an icon set to use instead of the default empty one.]))
 
+AC_ARG_WITH([iosapp-fonts],
+              AS_HELP_STRING([--with-iosapp-fonts=<path>],
+                             [Point to a directory containing .ttf or .otf files to be bundled in the iOS app (and
+                              thus installed on the device for use of the LO core code).]))
+
 AC_ARG_ENABLE([gtkapp],
               AS_HELP_STRING([--enable-gtkapp],
                              [Use in a tree where the only purpose is to build the gtk+ "app" that is supposed
@@ -599,6 +604,23 @@ AC_CONFIG_LINKS([discovery.xml:discovery.xml])
 AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
 AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
 AC_LINK_FILES([loleaflet/node_shrinkwrap], [loleaflet/node_shrinkwrap])
+
+AS_IF([test "$ENABLE_IOSAPP" = "true"],
+      [
+       if test `uname -s` = "Darwin"; then
+          IOSAPP_FONTS=''
+          if test "$with_iosapp_fonts" != no -a -d "$with_iosapp_fonts"; then
+              AC_MSG_NOTICE([copying fonts to be bundled])
+              mkdir -p ios/Mobile/Fonts
+              IOSAPP_FONTS=`find "$with_iosapp_fonts" -type f |
+                            while read fname; do
+                               cp "$fname" ios/Mobile/Fonts
+                               echo '<string>Fonts/'$(basename $fname)'</string>'
+                            done`
+          fi
+       fi
+      ])
+AC_SUBST(IOSAPP_FONTS)
 
 AC_CONFIG_FILES([Makefile
                  gtk/Makefile

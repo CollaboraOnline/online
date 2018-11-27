@@ -20,6 +20,7 @@
         <string>share/fonts/truetype/LiberationSerif-BoldItalic.ttf</string>
         <string>share/fonts/truetype/LiberationSerif-Italic.ttf</string>
         <string>share/fonts/truetype/LiberationSerif-Regular.ttf</string>
+        @IOSAPP_FONTS@
 	</array>
 	<key>CFBundleLocalizations</key>
 	<array>

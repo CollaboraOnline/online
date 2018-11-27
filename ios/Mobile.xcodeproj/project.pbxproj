@@ -31,6 +31,7 @@
 		BE5EB5DA2140363100E0826C /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D92140363100E0826C /* ios.mm */; };
 		BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* ICU.dat */; };
 		BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* MobileCoreServices.framework */; };
+		BE80E43221AD92F700859C97 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BE80E43121AD92F600859C97 /* Fonts */; };
 		BE8D772C2136762500AC58EA /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D772B2136762500AC58EA /* AppDelegate.mm */; };
 		BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D772E2136762500AC58EA /* DocumentBrowserViewController.mm */; };
 		BE8D77322136762500AC58EA /* DocumentViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D77312136762500AC58EA /* DocumentViewController.mm */; };
@@ -334,6 +335,7 @@
 		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE80E43121AD92F600859C97 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Mobile/Fonts; sourceTree = SOURCE_ROOT; };
 		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8D772A2136762500AC58EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE8D772B2136762500AC58EA /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 		BE00F8922139494E001CE2D4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BE80E43121AD92F600859C97 /* Fonts */,
 				BE8D85BE214055F2009F1860 /* config */,
 				BE8D85BB214055F2009F1860 /* filter */,
 				BE8D85C6214055F3009F1860 /* fundamentalrc */,
@@ -1328,6 +1331,7 @@
 				BE8D85D4214055F3009F1860 /* fundamentalrc in Resources */,
 				BE8D85C9214055F3009F1860 /* filter in Resources */,
 				BE8D85CD214055F3009F1860 /* registry in Resources */,
+				BE80E43221AD92F700859C97 /* Fonts in Resources */,
 				BE00F8A821396585001CE2D4 /* images in Resources */,
 				BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */,
 				BE8D85CE214055F3009F1860 /* oovbaapi.rdb in Resources */,
