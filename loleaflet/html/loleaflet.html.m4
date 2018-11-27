@@ -129,7 +129,7 @@ ifelse(MOBILEAPP,[true],
 
     <div id="presentation-controls-wrapper">
       <div id="slide-sorter"></div>
-      <div id="presentation-toolbar"></div>
+      <div id="presentation-toolbar" style="display: none"></div>
     </div>
 
     <div id="toolbar-down"></div>
