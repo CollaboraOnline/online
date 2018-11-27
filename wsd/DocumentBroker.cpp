@@ -569,8 +569,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         if (localStorage != nullptr)
         {
             std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = localStorage->getLocalFileInfo();
-            userId = localfileinfo->_userId;
-            username = localfileinfo->_username;
+            userId = localfileinfo->getUserId();
+            username = localfileinfo->getUsername();
 
             if (LOOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
             {

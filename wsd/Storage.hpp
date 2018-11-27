@@ -227,6 +227,10 @@ public:
         {
         }
 
+        const std::string& getUserId() const { return _userId; }
+        const std::string& getUsername() const { return _username; }
+
+    private:
         std::string _userId;
         std::string _username;
     };
