@@ -2,6 +2,25 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+        <string>share/fonts/truetype/LiberationMono-Bold.ttf</string>
+        <string>share/fonts/truetype/LiberationMono-BoldItalic.ttf</string>
+        <string>share/fonts/truetype/LiberationMono-Italic.ttf</string>
+        <string>share/fonts/truetype/LiberationMono-Regular.ttf</string>
+        <string>share/fonts/truetype/LiberationSans-Bold.ttf</string>
+        <string>share/fonts/truetype/LiberationSans-BoldItalic.ttf</string>
+        <string>share/fonts/truetype/LiberationSans-Italic.ttf</string>
+        <string>share/fonts/truetype/LiberationSans-Regular.ttf</string>
+        <string>share/fonts/truetype/LiberationSansNarrow-Bold.ttf</string>
+        <string>share/fonts/truetype/LiberationSansNarrow-BoldItalic.ttf</string>
+        <string>share/fonts/truetype/LiberationSansNarrow-Italic.ttf</string>
+        <string>share/fonts/truetype/LiberationSansNarrow-Regular.ttf</string>
+        <string>share/fonts/truetype/LiberationSerif-Bold.ttf</string>
+        <string>share/fonts/truetype/LiberationSerif-BoldItalic.ttf</string>
+        <string>share/fonts/truetype/LiberationSerif-Italic.ttf</string>
+        <string>share/fonts/truetype/LiberationSerif-Regular.ttf</string>
+	</array>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
