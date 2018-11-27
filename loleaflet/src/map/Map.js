@@ -261,8 +261,14 @@ L.Map = L.Evented.extend({
 				// Let the first page finish loading then load the sidebar.
 				var map = this;
 				setTimeout(function () {
+                    // This triggers all sidebar decks, so they would
+                    // be loaded and show rather quickly on first use.
+                    // Also, triggers sidebar window creation in the client.
+					map._socket.sendMessage('uno .uno:MasterSlidesPanel');
+					map._socket.sendMessage('uno .uno:CustomAnimation');
+					map._socket.sendMessage('uno .uno:SlideChangeWindow');
 					map._socket.sendMessage('uno .uno:ModifyPage');
-				}, 1000);
+				}, 200);
 			}
 		}, this);
 	},
