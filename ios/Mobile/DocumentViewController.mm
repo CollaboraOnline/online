@@ -220,6 +220,12 @@
             // Close one end of the socket pair, that will wake up the forwarding thread above
             fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
+            [self.document saveToURL:[self.document fileURL]
+                    forSaveOperation:UIDocumentSaveForOverwriting
+                   completionHandler:^(BOOL success) {
+                      LOG_TRC("save completion handler gets " << (success?"YES":"NO"));
+                   }];
+
             [self dismissDocumentViewController];
             return;
         }

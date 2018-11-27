@@ -37,8 +37,14 @@
 @implementation Document
 
 - (id)contentsForType:(NSString*)typeName error:(NSError **)errorPtr {
-    // Encode your document with an instance of NSData or NSFileWrapper
-    return [[NSData alloc] init];
+    // Somehow this doesn't feel right, creating an NSFileWrapper around the file that was given to
+    // us for loadFromContents. I get the vague feeling that the file is perhaps just a temporary
+    // data container created by the system for us to be used while loading the document data, and
+    // not the actual permanent document, especially in the case of things like NextCloud. Or is it?
+    // Is savng back to it (which we have already done by the time we get here, in the LO core code)
+    // correct? This does seem to work, though. Anyway, clearly I need to read more documentation
+    // for UIDocument etc.
+    return [[NSFileWrapper alloc] initWithURL:[self fileURL] options:0 error:errorPtr];
 }
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
