@@ -737,7 +737,7 @@ function createToolbar() {
 				{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
 			]},
 		{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _UNO('.uno:WrapText', 'spreadsheet', true), hidden: true, uno: 'WrapText', disabled: true},
-		{type: 'break', id: 'breakspacing'},
+		{type: 'break', id: 'breakspacing', hidden: true},
 		{type: 'button',  id: 'defaultnumbering',  img: 'numbering', hint: _UNO('.uno:DefaultNumbering', '', true), hidden: true, uno: 'DefaultNumbering', disabled: true},
 		{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), hidden: true, uno: 'DefaultBullet', disabled: true},
 		{type: 'break', id: 'breakbullet', hidden: true},
@@ -1503,7 +1503,7 @@ function onDocLayerInit() {
 
 	switch (docType) {
 	case 'spreadsheet':
-		toolbarUp.show('textalign', 'wraptext', 'insertannotation', 'numberformatcurrency', 'numberformatpercent',
+		toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'numberformatcurrency', 'numberformatpercent',
 			'numberformatincdecimals', 'numberformatdecdecimals', 'insertobjectchart', 'sum', 'break-number',
 			'setborderstyle');
 		statusbar.remove('prev', 'next', 'prevnextbreak');
@@ -1553,7 +1553,7 @@ function onDocLayerInit() {
 		break;
 	case 'text':
 		toolbarUp.show('styles', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-			'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
+			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 			'breakindent', 'inserttable', 'insertannotation');
 
 		if (!_useSimpleUI()) {
@@ -1599,7 +1599,7 @@ function onDocLayerInit() {
 		// FALLTHROUGH intended
 	case 'drawing':
 		toolbarUp.show('styles', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-			'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttable');
+			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttable');
 
 		$('#presentation-toolbar').show();
 		break;
