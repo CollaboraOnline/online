@@ -26,7 +26,8 @@ function _mobilify() {
 	var statusbar = w2ui['toolbar-down'];
 
 	toolbarUp.items.forEach(function(item) {
-		if (item.mobile === false && !item.hidden) {
+		if ((item.mobile === false ||
+		     (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
 			toolbarUp.hide(item.id);
 		}
 	});
@@ -616,6 +617,9 @@ var stylesSelectValue;
 var fontsSelectValue;
 var fontsizesSelectValue;
 
+// mobile:false means hide it both for normal Online used from a mobile browser, and in a mobile app
+// mobilebrowser:false means hide it for normal Online used from a mobile browser, but don't hide it in a mobile app
+
 function createToolbar() {
 	var toolItems = [
 		{type: 'menu', id: 'menu-wrap', caption: _('Textwrap'), mobile: false, items: [
@@ -634,8 +638,8 @@ function createToolbar() {
 		{type: 'button',  id: 'repair', img: 'repair', hint: _('Document repair'), disabled: true, mobile: false},
 		{type: 'break', mobile: false},
 		{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>', mobile: false},
-		{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>', mobile: false},
-		{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>', mobile: false},
+		{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>', mobilebrowser: false},
+		{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>', mobilebrowser: false},
 		{type: 'break', mobile: false},
 		{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold', disabled: true},
 		{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic', disabled: true},
