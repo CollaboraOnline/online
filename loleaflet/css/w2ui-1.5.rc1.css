@@ -312,7 +312,7 @@ input[type=checkbox].w2ui-toggle:focus {
 .w2ui-overlay > div {
   border-radius: 4px;
   position: relative;
-  border: 3px solid #777777;
+  border: 1px solid #bbbbbb;
 }
 .w2ui-overlay table td {
   color: inherit;
@@ -330,26 +330,26 @@ input[type=checkbox].w2ui-toggle:focus {
   left: 4px;
 }
 .w2ui-overlay.top-arrow:before {
-  border-bottom: 12px solid #6f6f6f;
+  border-bottom: 6px solid #bbbbbb;
   border-right: 12px solid transparent;
   border-left: 12px solid transparent;
   bottom: 100%;
-  margin-bottom: -3px;
+  margin-bottom: -1px;
 }
 .w2ui-overlay.top-arrow:after {
-  border-bottom: 8px solid #000000;
+  border-bottom: 6px solid #000000;
   border-bottom-color: inherit;
   border-right: 8px solid transparent;
   border-left: 8px solid transparent;
   bottom: 100%;
-  margin-bottom: -3px;
+  margin-bottom: -1px;
 }
 .w2ui-overlay.bottom-arrow:before {
-  border-top: 12px solid #6f6f6f;
+  border-top: 6px solid #bbbbbb;
   border-right: 12px solid transparent;
   border-left: 12px solid transparent;
   top: 100%;
-  margin-top: -3px;
+  margin-bottom: -1px;
 }
 .w2ui-overlay.bottom-arrow:after {
   border-top: 8px solid #000000;
