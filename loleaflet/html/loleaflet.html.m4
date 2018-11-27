@@ -124,7 +124,8 @@ ifelse(MOBILEAPP,[true],
     <div id="document-container">
       <div id="map"></div>
     </div>
-    <div id="spreadsheet-toolbar"></div>
+
+    <div id="spreadsheet-toolbar" style="display: none"></div>
 
     <div id="presentation-controls-wrapper">
       <div id="slide-sorter"></div>
