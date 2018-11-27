@@ -261,7 +261,7 @@ function onClick(e, id, item, subItem) {
 		}
 		L.toggleFullScreen();
 	}
-	else if (id === 'close') {
+	else if (id === 'close' || id === 'closemobile') {
 		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 		map.remove();
 	}
@@ -792,7 +792,7 @@ function initMobileToolbar(toolItems) {
 		name: 'toolbar-down',
 		tooltip: 'bottom',
 		items: [
-			{type: 'button',  id: 'close',  img: 'closemobile'},
+			{type: 'button',  id: 'closemobile',  img: 'closemobile'},
 			{type: 'spacer'},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
@@ -2236,9 +2236,8 @@ $(window).resize(function() {
 });
 
 $(document).ready(function() {
-	if (!closebutton) {
-		$('#closebuttonwrapper').hide();
-	} else {
+	if (closebutton && !L.Browser.mobile) {
+		$('#closebuttonwrapper').show();
 		$('#closebutton').click(function() {
 			if (window.ThisIsAMobileApp) {
 				window.webkit.messageHandlers.lool.postMessage('BYE', '*');
