@@ -68,6 +68,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		boundsOptions: {
 			weight:    1,
 			opacity:   1,
+			interactive: false,
 			dashArray: [3, 3],
 			fill:      false
 		},
