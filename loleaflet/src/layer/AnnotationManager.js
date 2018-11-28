@@ -472,19 +472,6 @@ L.AnnotationManager = L.Class.extend({
 
 	},
 
-	layout: function (zoom) {
-		if (zoom)
-			this.doLayout(zoom);
-		else if (!this._layoutTimer) {
-			var me = this;
-			me._layoutTimer = setTimeout(function() {
-				delete me._layoutTimer;
-				me.doLayout(zoom);
-			}, 250 /* ms */);
-		} // else - avoid excessive re-layout
-
-	},
-
 	add: function (comment) {
 		var annotation = L.annotation(this._map._docLayer._twipsToLatLng(comment.anchorPos.getTopRight()), comment,
 			comment.id === 'new' ? {noMenu: true} : {}).addTo(this._map);
