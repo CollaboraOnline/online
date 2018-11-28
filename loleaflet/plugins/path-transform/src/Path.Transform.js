@@ -165,6 +165,11 @@ L.Handler.PathTransform = L.Handler.extend({
 			.off('dragstart', this._onDragStart, this)
 			.off('drag',      this._onDrag, this)
 			.off('dragend',   this._onDragEnd,   this);
+
+		if (this._map.hasLayer(this._rect)) {
+			this._map.removeLayer(this._rect);
+		}
+
 		this._handlersGroup = null;
 		this._rect = null;
 		this._handlers = [];
