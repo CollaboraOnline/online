@@ -3,7 +3,7 @@
  * L.WOPI contains WOPI related logic
  */
 
-/* global $ w2ui toolbarUpMobileItems resizeToolbar _ */
+/* global $ w2ui toolbarUpMobileItems _ */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -175,7 +175,6 @@ L.Map.WOPI = L.Handler.extend({
 							var idx = toolbarUpMobileItems.indexOf('save');
 							toolbarUpMobileItems.splice(idx, 0, msg.Values.id);
 						}
-						resizeToolbar();
 					}
 					else if (this._map._permission === 'readonly') {
 						// Just add a menu entry for it
