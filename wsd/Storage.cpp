@@ -328,10 +328,10 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 #else // MOBILEAPP
 
     // In the mobile app we use no jail
-    _jailedFilePath = _uri.getPath();
-    _isLoaded = true;
+    setRootFilePath(getUri().getPath());
+    setLoaded(true);
 
-    return _jailedFilePath;
+    return getRootFilePath();
 #endif
 
 }
