@@ -150,7 +150,11 @@
     } else if ([message.name isEqualToString:@"debug"]) {
         LOG_TRC_NOFILE("==> " << [message.body UTF8String]);
     } else if ([message.name isEqualToString:@"lool"]) {
-        LOG_TRC("To Online: " << [message.body UTF8String]);
+        NSString *subBody = [message.body substringToIndex:std::min(40ul, ((NSString*)message.body).length)];
+        if (subBody.length < ((NSString*)message.body).length)
+            subBody = [subBody stringByAppendingString:@"..."];
+
+        LOG_TRC("To Online: " << [subBody UTF8String]);
 
         if ([message.body isEqualToString:@"HULLO"]) {
             // Now we know that the JS has started completely
