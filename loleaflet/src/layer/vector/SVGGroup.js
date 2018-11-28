@@ -5,10 +5,14 @@
 
 L.SVGGroup = L.Layer.extend({
 
+	options: {
+		noClip: true
+	},
+
 	initialize: function (bounds, options) {
 		L.setOptions(this, options);
 		this._bounds = bounds;
-		this._rect = L.rectangle(bounds, options);
+		this._rect = L.rectangle(bounds, this.options);
 	},
 
 	addEmbeddedSVG: function (svgString) {
@@ -97,7 +101,6 @@ L.SVGGroup = L.Layer.extend({
 
 	_update: function () {
 		this._rect.setBounds(this._bounds);
-		this._rect._reset();
 		if (this._svg) {
 			var point = this._map.latLngToLayerPoint(this._bounds.getNorthWest());
 			this._svg.setAttribute('x', point.x);
