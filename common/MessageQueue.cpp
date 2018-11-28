@@ -31,7 +31,7 @@ void TileQueue::put_impl(const Payload& value)
 
     if (firstToken == "canceltiles")
     {
-        LOG_TRC("Processing [" << msg << "]. Before canceltiles have " << getQueue().size() << " in queue.");
+        LOG_TRC("Processing [" << LOOLProtocol::getAbbreviatedMessage(msg) << "]. Before canceltiles have " << getQueue().size() << " in queue.");
         const std::string seqs = msg.substr(12);
         StringTokenizer tokens(seqs, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         getQueue().erase(std::remove_if(getQueue().begin(), getQueue().end(),
@@ -119,7 +119,7 @@ void TileQueue::removeTileDuplicate(const std::string& tileMsg)
         if (it.size() > newMsgPos &&
             strncmp(tileMsg.data(), it.data(), newMsgPos) == 0)
         {
-            LOG_TRC("Remove duplicate tile request: " << std::string(it.data(), it.size()) << " -> " << tileMsg);
+            LOG_TRC("Remove duplicate tile request: " << std::string(it.data(), it.size()) << " -> " << LOOLProtocol::getAbbreviatedMessage(tileMsg));
             getQueue().erase(getQueue().begin() + i);
             break;
         }
@@ -334,7 +334,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
             if (unoCommand == queuedUnoCommand)
             {
-                LOG_TRC("Remove obsolete uno command: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
+                LOG_TRC("Remove obsolete uno command: " << std::string(it.data(), it.size()) << " -> " << LOOLProtocol::getAbbreviatedMessage(callbackMsg));
                 getQueue().erase(getQueue().begin() + i);
                 break;
             }
@@ -371,7 +371,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
             if (!isViewCallback && (queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2]))
             {
-                LOG_TRC("Remove obsolete callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
+                LOG_TRC("Remove obsolete callback: " << std::string(it.data(), it.size()) << " -> " << LOOLProtocol::getAbbreviatedMessage(callbackMsg));
                 getQueue().erase(getQueue().begin() + i);
                 break;
             }
@@ -384,7 +384,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 
                 if (viewId == queuedViewId)
                 {
-                    LOG_TRC("Remove obsolete view callback: " << std::string(it.data(), it.size()) << " -> " << callbackMsg);
+                    LOG_TRC("Remove obsolete view callback: " << std::string(it.data(), it.size()) << " -> " << LOOLProtocol::getAbbreviatedMessage(callbackMsg));
                     getQueue().erase(getQueue().begin() + i);
                     break;
                 }
@@ -444,7 +444,7 @@ TileQueue::Payload TileQueue::get_impl()
     if (!isTile || isPreview)
     {
         // Don't combine non-tiles or tiles with id.
-        LOG_TRC("MessageQueue res: " << msg);
+        LOG_TRC("MessageQueue res: " << LOOLProtocol::getAbbreviatedMessage(msg));
         getQueue().erase(getQueue().begin());
 
         // de-prioritize the other tiles with id - usually the previews in
@@ -507,7 +507,7 @@ TileQueue::Payload TileQueue::get_impl()
         }
 
         TileDesc tile2 = TileDesc::parse(msg);
-        LOG_TRC("Combining candidate: " << msg);
+        LOG_TRC("Combining candidate: " << LOOLProtocol::getAbbreviatedMessage(msg));
 
         // Check if it's on the same row.
         if (tiles[0].onSameRow(tile2))
@@ -526,12 +526,12 @@ TileQueue::Payload TileQueue::get_impl()
     if (tiles.size() == 1)
     {
         msg = tiles[0].serialize("tile");
-        LOG_TRC("MessageQueue res: " << msg);
+        LOG_TRC("MessageQueue res: " << LOOLProtocol::getAbbreviatedMessage(msg));
         return Payload(msg.data(), msg.data() + msg.size());
     }
 
     std::string tileCombined = TileCombined::create(tiles).serialize("tilecombine");
-    LOG_TRC("MessageQueue res: " << tileCombined);
+    LOG_TRC("MessageQueue res: " << LOOLProtocol::getAbbreviatedMessage(tileCombined));
     return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
 }
 

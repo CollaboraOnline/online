@@ -1677,7 +1677,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
         return true;
     }
 
-    LOG_TRC("Forwarding payload to child [" << viewId << "]: " << message);
+    LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
     std::string msg = "child-" + viewId + ' ' + message;
 
@@ -1701,7 +1701,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     }
 
     // try the not yet created sessions
-    LOG_WRN("Child session [" << viewId << "] not found to forward message: " << message);
+    LOG_WRN("Child session [" << viewId << "] not found to forward message: " << getAbbreviatedMessage(message));
 
     return false;
 }

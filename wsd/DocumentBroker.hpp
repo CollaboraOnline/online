@@ -155,7 +155,7 @@ public:
         {
             if (_ws)
             {
-                LOG_TRC("Send DocBroker to Child message: [" << data << "].");
+                LOG_TRC("Send DocBroker to Child message: [" << LOOLProtocol::getAbbreviatedMessage(data) << "].");
                 _ws->sendMessage(data);
                 return true;
             }
@@ -163,11 +163,11 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to send child [" << _pid << "] data [" <<
-                    data << "] due to: " << exc.what());
+                    LOOLProtocol::getAbbreviatedMessage(data) << "] due to: " << exc.what());
             throw;
         }
 
-        LOG_WRN("No socket between DocBroker and child to send [" << data << "]");
+        LOG_WRN("No socket between DocBroker and child to send [" << LOOLProtocol::getAbbreviatedMessage(data) << "]");
         return false;
     }
 
