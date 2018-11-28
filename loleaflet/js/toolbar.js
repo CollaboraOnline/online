@@ -173,11 +173,6 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'lastrecord') {
 		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() + 120);
 	}
-	else if (id.startsWith('menu-wrap:wrap-'))
-	{
-		var wrapType = id.substring('menu-wrap:wrap-'.length);
-		map.toggleCommandState(wrapType);
-	}
 	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
 		L.DomUtil.get('insertgraphic').click();
 	}
@@ -622,15 +617,6 @@ var fontsizesSelectValue;
 
 function createToolbar() {
 	var toolItems = [
-		{type: 'menu', id: 'menu-wrap', caption: _('Textwrap'), mobile: false, items: [
-			{ text: _('No wrap'), id: 'wrap-WrapOff' },
-			{ text: _('Page wrap'), id: 'wrap-WrapOn' },
-			{ text: _('Wrap anchor only'), id: 'wrap-WrapAnchorOnly' },
-			{ text: _('Ideal wrap'), id: 'wrap-WrapIdeal' },
-			{ text: _('Left wrap'), id: 'wrap-WrapLeft' },
-			{ text: _('Right wrap'), id: 'wrap-WrapRight' },
-			{ text: _('Wrap through'), id: 'wrap-WrapThrough' }
-		]},
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
 		{type: 'break', id: 'savebreak'},
 		{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
