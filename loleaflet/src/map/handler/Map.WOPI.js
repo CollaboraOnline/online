@@ -152,6 +152,9 @@ L.Map.WOPI = L.Handler.extend({
 				    && msg.Values.imgurl) {
 					if (this._map._permission === 'edit') {
 						// add the css rule for the image
+						var style = $('html > head > style');
+						if (style.length == 0)
+							$('html > head').append('<style/>');
 						$('html > head > style').append('.w2ui-icon.' + msg.Values.id + '{background: url(' + msg.Values.imgurl + ') no-repeat center !important; }');
 
 						// add the item to the toolbar
