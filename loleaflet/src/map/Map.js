@@ -6,7 +6,12 @@
 function moveObjectVertically(obj, diff) {
 	if (obj) {
 		var prevTop = obj.css('top');
-		prevTop = parseInt(prevTop.slice(0, -2)) + diff;
+		if (prevTop) {
+			prevTop = parseInt(prevTop.slice(0, -2)) + diff;
+		}
+		else {
+			prevTop = 0 + diff;
+		}
 		obj.css({'top': String(prevTop) + 'px'});
 	}
 }
@@ -1392,7 +1397,7 @@ L.Map = L.Evented.extend({
 		var obj = null;
 		if ($('.main-nav').css('display') === 'none') {
 			$('.main-nav').css({'display': ''});
-			if (closebutton) {
+			if (closebutton && !window.mode.isTablet()) {
 				$('#closebuttonwrapper').css({'display': ''});
 			}
 

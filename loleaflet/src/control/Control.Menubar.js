@@ -224,7 +224,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action'}
+			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
 		],
 
 		presentation: [
@@ -303,7 +303,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action'}
+			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
 		],
 
 		spreadsheet: [
@@ -397,7 +397,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action'}
+			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
 		],
 
 		commandStates: {},
@@ -909,6 +909,14 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'action') {
 				$(aItem).data('type', 'action');
 				$(aItem).data('id', menu[i].id);
+			}
+
+			if (menu[i].tablet == false && window.mode.isTablet()) {
+				$(aItem).css('display', 'none');
+			}
+
+			if (menu[i].mobile == false && window.mode.isMobile()) {
+				$(aItem).css('display', 'none');
 			}
 
 			itemList.push(liItem);
