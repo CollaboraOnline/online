@@ -727,6 +727,10 @@ tr.useritem-avatar > td {
     padding: 7px;
 }
 
+tr.useritem-avatar > td > img {
+    border-radius: 100px;
+}
+
 tr.useritem-avatar > td.usercolor {
     display: inline-block;
     top: 0px;
