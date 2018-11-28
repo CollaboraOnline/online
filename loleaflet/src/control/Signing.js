@@ -370,5 +370,23 @@ L.Map.include({
 			});
 			adjustUIState();
 		}
+	},
+	handleSigningClickEvent: function(id, item) {
+		if (id === 'login') {
+			this.signingLogin();
+		}
+		else if (id === 'logout') {
+			this.signingLogout();
+		}
+		else if (id === 'sign') {
+			this.signDocument();
+		}
+		else if (id === 'upload') {
+			this.uploadToVereign();
+		}
+		else if (id.startsWith('passport:')) {
+			this.setCurrentPassport(item.value, item.text);
+		}
+		return false;
 	}
 });

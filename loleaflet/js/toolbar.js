@@ -233,15 +233,6 @@ function onClick(e, id, item, subItem) {
 			map.sendUnoCommand('.uno:StatusBarFunc', command);
 		});
 	}
-	else if (id === 'login') {
-		map.signingLogin();
-	}
-	else if (id === 'logout') {
-		map.signingLogout();
-	}
-	else if (id === 'sign') {
-		map.signDocument();
-	}
 	else if (id === 'fullscreen') {
 		if (item.checked) {
 			toolbar.uncheck(id);
@@ -251,8 +242,8 @@ function onClick(e, id, item, subItem) {
 		}
 		L.toggleFullScreen();
 	}
-	else if (id.startsWith('passport:')) {
-		map.setCurrentPassport(item.value, item.text);
+	else {
+		map.handleSigningClickEvent(id, item); // this handles a bunch of signing bar click events
 	}
 }
 
