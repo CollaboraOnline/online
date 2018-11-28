@@ -9,8 +9,18 @@
 
 var map;
 
-function _useSimpleUI() {
+// has to match small screen size requirement
+function _inMobileMode() {
 	return L.Browser.mobile && $('#main-menu').css('display') === 'none';
+}
+
+// mobile device with big screen size
+function _inTabletMode() {
+	return L.Browser.mobile && !_inMobileMode();
+}
+
+function _inDesktopMode() {
+	return !L.Browser.mobile;
 }
 
 function onDelete(e) {
@@ -18,6 +28,13 @@ function onDelete(e) {
 		map.deletePage();
 	}
 }
+
+// make functions visible outside: window.mode.isMobile()
+global.mode = {
+	isMobile: _inMobileMode,
+	isTablet: _inTabletMode,
+	isDesktop: _inDesktopMode
+};
 
 var nUsers, oneUser, noUser;
 
@@ -34,6 +51,43 @@ function _mobilify() {
 
 	statusbar.items.forEach(function(item) {
 		if (item.mobile === false && !item.hidden) {
+			statusbar.hide(item.id);
+		}
+	});
+
+	if (_inTabletMode()) {
+		toolbarUp.items.forEach(function(item) {
+			if (item.tablet === false && !item.hidden) {
+				toolbarUp.hide(item.id);
+			}
+			else if (item.tablet === true && item.hidden) {
+				toolbarUp.show(item.id);
+			}
+		});
+
+		statusbar.items.forEach(function(item) {
+			if (item.tablet === false && !item.hidden) {
+				statusbar.hide(item.id);
+			}
+			else if (item.tablet === true && item.hidden) {
+				statusbar.show(item.id);
+			}
+		});
+	}
+}
+
+function _prepareDesktop() {
+	var toolbarUp = w2ui['toolbar-up'];
+	var statusbar = w2ui['toolbar-down'];
+
+	toolbarUp.items.forEach(function(item) {
+		if (item.desktop === false && !item.hidden) {
+			toolbarUp.hide(item.id);
+		}
+	});
+
+	statusbar.items.forEach(function(item) {
+		if (item.desktop === false && !item.hidden) {
 			statusbar.hide(item.id);
 		}
 	});
@@ -249,7 +303,7 @@ function onClick(e, id, item, subItem) {
 			map.sendUnoCommand('.uno:StatusBarFunc', command);
 		});
 	}
-	else if (id === 'fold') {
+	else if (id === 'fold' || id === 'hamburger-tablet') {
 		map.toggleMenubar();
 	}
 	else if (id === 'fullscreen') {
@@ -262,6 +316,7 @@ function onClick(e, id, item, subItem) {
 		L.toggleFullScreen();
 	}
 	else if (id === 'close' || id === 'closemobile') {
+		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
 		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 		map.remove();
 	}
@@ -634,6 +689,7 @@ var fontsizesSelectValue;
 
 function createToolbar() {
 	var toolItems = [
+		{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true},
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
 		{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false},
 		{type: 'break', id: 'savebreak', mobile: false},
@@ -776,10 +832,11 @@ function createToolbar() {
 		{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
-		{type: 'button',  id: 'fold',  img: 'fold', mobile: false}
+		{type: 'button',  id: 'fold',  img: 'fold', mobile: false},
+		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true}
 	];
 
-	if (_useSimpleUI()) {
+	if (_inMobileMode()) {
 		initMobileToolbar(toolItems);
 	} else {
 		initNormalToolbar(toolItems);
@@ -1515,7 +1572,7 @@ function onDocLayerInit() {
 			]
 		});
 
-		if (!_useSimpleUI()) {
+		if (!_inMobileMode()) {
 			statusbar.insert('left', [
 				{type: 'break', id:'break1'},
 				{type: 'html',  id: 'StatusDocPos',
@@ -1556,7 +1613,7 @@ function onDocLayerInit() {
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 			'breakindent', 'inserttable', 'insertannotation');
 
-		if (!_useSimpleUI()) {
+		if (!_inMobileMode()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
 				{type: 'html',  id: 'StatePageNumber',
@@ -1582,7 +1639,7 @@ function onDocLayerInit() {
 		if (!map['wopi'].HideExportOption) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		if (!_useSimpleUI()) {
+		if (!_inMobileMode()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
 				{
@@ -1620,11 +1677,38 @@ function onDocLayerInit() {
 		oneUser = _('1 user');
 		noUser = _('0 users');
 		$('#document-name-input').show();
+
+		if (_inDesktopMode()) {
+			_prepareDesktop();
+		}
 	}
 
 	updateUserListCount();
 	toolbarUp.refresh();
 	statusbar.refresh();
+
+	if (window.mode.isTablet()) {
+		// calc tablet version needs one more row before folding the menu
+		if (window.mode.isTablet() && map._docLayer._docType == 'spreadsheet') {
+			var content = $('#document-container');
+			if (content) {
+				var diff = 59;
+				var prevTop = content.css('top');
+				if (prevTop) {
+					prevTop = parseInt(prevTop.slice(0, -2)) + diff;
+				}
+				else {
+					prevTop = 0 + diff;
+				}
+				content.css({'top': String(prevTop) + 'px'});
+			}
+		}
+
+		// Fold menubar by default
+		map.toggleMenubar();
+		$('#tb_toolbar-up_item_fonts').css({'display': 'none'});
+		$('#tb_toolbar-up_item_fontsizes').css({'display': 'none'});
+	}
 }
 
 function onCommandStateChanged(e) {
@@ -1820,7 +1904,7 @@ function onCommandStateChanged(e) {
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
 	else if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
 		var toolbarUp = toolbar;
-		if (_useSimpleUI()) {
+		if (_inMobileMode()) {
 			toolbarUp = statusbar;
 		}
 		if (state === 'enabled') {
@@ -2238,16 +2322,13 @@ $(window).resize(function() {
 $(document).ready(function() {
 	if (closebutton && !L.Browser.mobile) {
 		$('#closebuttonwrapper').show();
-		$('#closebutton').click(function() {
-			if (window.ThisIsAMobileApp) {
-				window.webkit.messageHandlers.lool.postMessage('BYE', '*');
-			} else {
-				map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-				map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-			}
-			map.remove();
-		});
 	}
+
+	$('#closebutton').click(function() {
+		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
+		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+		map.remove();
+	});
 
 	// Attach insert file action
 	$('#insertgraphic').on('change', onInsertFile);
