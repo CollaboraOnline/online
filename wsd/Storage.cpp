@@ -258,15 +258,15 @@ std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 
 std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 {
-    const Poco::Path path = Poco::Path(_uri.getPath());
-    LOG_DBG("Getting info for local uri [" << LOOLWSD::anonymizeUrl(_uri.toString()) << "], path [" << LOOLWSD::anonymizeUrl(path.toString()) << "].");
+    const Poco::Path path = Poco::Path(getUri().getPath());
+    LOG_DBG("Getting info for local uri [" << LOOLWSD::anonymizeUrl(getUri().toString()) << "], path [" << LOOLWSD::anonymizeUrl(path.toString()) << "].");
 
     const auto& filename = path.getFileName();
     const Poco::File file = Poco::File(path);
     const Poco::Timestamp lastModified = file.getLastModified();
     const size_t size = file.getSize();
 
-    _fileInfo = FileInfo({filename, "localhost", lastModified, size});
+    setFileInfo(FileInfo({filename, "localhost", lastModified, size}));
 
     // Set automatic userid and username
     return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), "LocalHost#" + std::to_string(LastLocalStorageId++)}));
@@ -276,53 +276,53 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 {
 #ifndef MOBILEAPP
     // /chroot/jailId/user/doc/childId/file.ext
-    const std::string filename = Poco::Path(_uri.getPath()).getFileName();
-    _jailedFilePath = Poco::Path(getLocalRootPath(), filename).toString();
-    _jailedFilePathAnonym = LOOLWSD::anonymizeUrl(_jailedFilePath);
-    LOG_INF("Public URI [" << LOOLWSD::anonymizeUrl(_uri.getPath()) <<
-            "] jailed to [" << _jailedFilePathAnonym << "].");
+    const std::string filename = Poco::Path(getUri().getPath()).getFileName();
+    setRootFilePath(Poco::Path(getLocalRootPath(), filename).toString());
+    setRootFilePathAnonym(LOOLWSD::anonymizeUrl(getRootFilePath()));
+    LOG_INF("Public URI [" << LOOLWSD::anonymizeUrl(getUri().getPath()) <<
+            "] jailed to [" << getRootFilePathAnonym() << "].");
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
-    const std::string publicFilePath = _uri.getPath();
+    const std::string publicFilePath = getUri().getPath();
 
-    if (!FileUtil::checkDiskSpace(_jailedFilePath))
+    if (!FileUtil::checkDiskSpace(getRootFilePath()))
     {
-        throw StorageSpaceLowException("Low disk space for " + _jailedFilePathAnonym);
+        throw StorageSpaceLowException("Low disk space for " + getRootFilePathAnonym());
     }
 
-    LOG_INF("Linking " << LOOLWSD::anonymizeUrl(publicFilePath) << " to " << _jailedFilePathAnonym);
-    if (!Poco::File(_jailedFilePath).exists() && link(publicFilePath.c_str(), _jailedFilePath.c_str()) == -1)
+    LOG_INF("Linking " << LOOLWSD::anonymizeUrl(publicFilePath) << " to " << getRootFilePathAnonym());
+    if (!Poco::File(getRootFilePath()).exists() && link(publicFilePath.c_str(), getRootFilePath().c_str()) == -1)
     {
         // Failed
-        LOG_WRN("link(\"" << LOOLWSD::anonymizeUrl(publicFilePath) << "\", \"" << _jailedFilePathAnonym << "\") failed. Will copy. "
+        LOG_WRN("link(\"" << LOOLWSD::anonymizeUrl(publicFilePath) << "\", \"" << getRootFilePathAnonym() << "\") failed. Will copy. "
                 "Linking error: " << Util::symbolicErrno(errno) << " " << strerror(errno));
     }
 
     try
     {
         // Fallback to copying.
-        if (!Poco::File(_jailedFilePath).exists())
+        if (!Poco::File(getRootFilePath()).exists())
         {
-            LOG_INF("Copying " << LOOLWSD::anonymizeUrl(publicFilePath) << " to " << _jailedFilePathAnonym);
-            Poco::File(publicFilePath).copyTo(_jailedFilePath);
+            LOG_INF("Copying " << LOOLWSD::anonymizeUrl(publicFilePath) << " to " << getRootFilePathAnonym());
+            Poco::File(publicFilePath).copyTo(getRootFilePath());
             _isCopy = true;
         }
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_ERR("copyTo(\"" << LOOLWSD::anonymizeUrl(publicFilePath) << "\", \"" << _jailedFilePathAnonym << "\") failed: " << exc.displayText());
+        LOG_ERR("copyTo(\"" << LOOLWSD::anonymizeUrl(publicFilePath) << "\", \"" << getRootFilePathAnonym() << "\") failed: " << exc.displayText());
         throw;
     }
 
-    _isLoaded = true;
+    setLoaded(true);
     // Now return the jailed path.
 #ifndef KIT_IN_PROCESS
     if (LOOLWSD::NoCapsForKit)
-        return _jailedFilePath;
+        return getRootFilePath();
     else
-        return Poco::Path(_jailPath, filename).toString();
+        return Poco::Path(getJailPath(), filename).toString();
 #else
-    return _jailedFilePath;
+    return getRootFilePath();
 #endif
 
 #else // MOBILEAPP
@@ -340,22 +340,22 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
 {
     try
     {
-        LOG_TRC("Saving local file to local file storage (isCopy: " << _isCopy << ") for " << _jailedFilePathAnonym);
+        LOG_TRC("Saving local file to local file storage (isCopy: " << _isCopy << ") for " << getRootFilePathAnonym());
         // Copy the file back.
-        if (_isCopy && Poco::File(_jailedFilePath).exists())
+        if (_isCopy && Poco::File(getRootFilePath()).exists())
         {
-            LOG_INF("Copying " << _jailedFilePathAnonym << " to " << LOOLWSD::anonymizeUrl(_uri.getPath()));
-            Poco::File(_jailedFilePath).copyTo(_uri.getPath());
+            LOG_INF("Copying " << getRootFilePathAnonym() << " to " << LOOLWSD::anonymizeUrl(getUri().getPath()));
+            Poco::File(getRootFilePath()).copyTo(getUri().getPath());
         }
 
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
-        _fileInfo._modifiedTime = Poco::File(_uri.getPath()).getLastModified();
-        LOG_TRC("New FileInfo modified time in storage " << _fileInfo._modifiedTime);
+        getFileInfo()._modifiedTime = Poco::File(getUri().getPath()).getLastModified();
+        LOG_TRC("New FileInfo modified time in storage " << getFileInfo()._modifiedTime);
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_ERR("copyTo(\"" << _jailedFilePathAnonym << "\", \"" << LOOLWSD::anonymizeUrl(_uri.getPath()) <<
+        LOG_ERR("copyTo(\"" << getRootFilePathAnonym() << "\", \"" << LOOLWSD::anonymizeUrl(getUri().getPath()) <<
                 "\") failed: " << exc.displayText());
         return StorageBase::SaveResult::FAILED;
     }
@@ -424,7 +424,7 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::st
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
 {
     // update the access_token to the one matching to the session
-    Poco::URI uriObject(_uri);
+    Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
 
@@ -518,7 +518,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         // Anonymize key values.
         if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
         {
-            Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(_uri.toString()));
+            Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(getUri().toString()));
 
             JsonUtil::findJSONValue(object, "ObfuscatedUserId", obfuscatedUserId, false);
             if (!obfuscatedUserId.empty())
@@ -599,7 +599,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     }
 
     const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
-    _fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
+    setFileInfo(FileInfo({filename, ownerId, modifiedTime, size}));
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
         {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, canWrite,
@@ -615,11 +615,11 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
 {
     // WOPI URI to download files ends in '/contents'.
     // Add it here to get the payload instead of file info.
-    Poco::URI uriObject(_uri);
+    Poco::URI uriObject(getUri());
     uriObject.setPath(uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
-    Poco::URI uriObjectAnonym(_uri);
+    Poco::URI uriObjectAnonym(getUri());
     uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
     const std::string uriAnonym = uriObjectAnonym.toString();
 
@@ -660,19 +660,19 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
         }
         else // Successful
         {
-            _jailedFilePath = Poco::Path(getLocalRootPath(), _fileInfo._filename).toString();
-            _jailedFilePathAnonym = LOOLWSD::anonymizeUrl(_jailedFilePath);
-            std::ofstream ofs(_jailedFilePath);
+            setRootFilePath(Poco::Path(getLocalRootPath(), getFileInfo()._filename).toString());
+            setRootFilePathAnonym(LOOLWSD::anonymizeUrl(getRootFilePath()));
+            std::ofstream ofs(getRootFilePath());
             std::copy(std::istreambuf_iterator<char>(rs),
                       std::istreambuf_iterator<char>(),
                       std::ostreambuf_iterator<char>(ofs));
             ofs.close();
-            LOG_INF("WOPI::GetFile downloaded " << getFileSize(_jailedFilePath) << " bytes from [" <<
-                    uriAnonym << "] -> " << _jailedFilePathAnonym << " in " << diff.count() << "s");
+            LOG_INF("WOPI::GetFile downloaded " << getFileSize(getRootFilePath()) << " bytes from [" <<
+                    uriAnonym << "] -> " << getRootFilePathAnonym() << " in " << diff.count() << "s");
 
-            _isLoaded = true;
+            setLoaded(true);
             // Now return the jailed path.
-            return Poco::Path(_jailPath, _fileInfo._filename).toString();
+            return Poco::Path(getJailPath(), getFileInfo()._filename).toString();
         }
     }
     catch (const Poco::Exception& pexc)
@@ -690,12 +690,12 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     // TODO: Check if this URI has write permission (canWrite = true)
 
     const bool isSaveAs = !saveAsPath.empty() && !saveAsFilename.empty();
-    const std::string filePath(isSaveAs ? saveAsPath : _jailedFilePath);
+    const std::string filePath(isSaveAs ? saveAsPath : getRootFilePath());
     const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath);
 
     const size_t size = getFileSize(filePath);
 
-    Poco::URI uriObject(_uri);
+    Poco::URI uriObject(getUri());
     uriObject.setPath(isSaveAs? uriObject.getPath(): uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
@@ -715,14 +715,14 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         {
             // normal save
             request.set("X-WOPI-Override", "PUT");
-            request.set("X-LOOL-WOPI-IsModifiedByUser", _isUserModified? "true": "false");
-            request.set("X-LOOL-WOPI-IsAutosave", _isAutosave? "true": "false");
+            request.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified()? "true": "false");
+            request.set("X-LOOL-WOPI-IsAutosave", getIsAutosave()? "true": "false");
 
-            if (!_forceSave)
+            if (!getForceSave())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
                 request.set("X-LOOL-WOPI-Timestamp",
-                            Poco::DateTimeFormatter::format(Poco::DateTime(_fileInfo._modifiedTime),
+                            Poco::DateTimeFormatter::format(Poco::DateTime(getFileInfo()._modifiedTime),
                                                             Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
             }
         }
@@ -824,7 +824,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
             {
                 const std::string lastModifiedTime = JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
                 LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
-                _fileInfo._modifiedTime = iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
+                getFileInfo()._modifiedTime = iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
 
                 if (isSaveAs)
                 {
@@ -839,7 +839,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
 
                 // Reset the force save flag now, if any, since we are done saving
                 // Next saves shouldn't be saved forcefully unless commanded
-                _forceSave = false;
+                forceSave(false);
             }
             else
             {
@@ -885,8 +885,8 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
 std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 {
     // TODO: implement webdav GET.
-    _isLoaded = true;
-    return _uri.toString();
+    setLoaded(true);
+    return getUri().toString();
 }
 
 StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/)

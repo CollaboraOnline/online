@@ -707,7 +707,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
         // Use the local temp file's timestamp.
         _lastFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
-        _tileCache.reset(new TileCache(_storage->getUri(), _lastFileModifiedTime, _cacheRoot, LOOLWSD::TileCachePersistent));
+        _tileCache.reset(new TileCache(_storage->getUriString(), _lastFileModifiedTime, _cacheRoot, LOOLWSD::TileCachePersistent));
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 

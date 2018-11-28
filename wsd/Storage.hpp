@@ -127,7 +127,11 @@ public:
 
     virtual ~StorageBase() {}
 
-    const std::string getUri() const { return _uri.toString(); }
+    const Poco::URI& getUri() const { return _uri; }
+
+    const std::string getUriString() const { return _uri.toString(); }
+
+    const std::string& getJailPath() const { return _jailPath; };
 
     /// Returns the root path to the jailed file.
     const std::string& getRootFilePath() const { return _jailedFilePath; };
@@ -140,20 +144,37 @@ public:
         _jailedFilePath = newPath;
     }
 
+    const std::string& getRootFilePathAnonym() const { return _jailedFilePathAnonym; };
+
+    void setRootFilePathAnonym(const std::string& newPath)
+    {
+        _jailedFilePathAnonym = newPath;
+    }
+
+    void setLoaded(bool isLoaded) { _isLoaded = isLoaded; }
+
     bool isLoaded() const { return _isLoaded; }
 
     /// Asks the storage object to force overwrite to storage upon next save
     /// even if document turned out to be changed in storage
-    void forceSave() { _forceSave = true; }
+    void forceSave(bool newSave = true) { _forceSave = newSave; }
+
+    bool getForceSave() const { return _forceSave; }
 
     /// To be able to set the WOPI extension header appropriately.
     void setUserModified(bool isUserModified) { _isUserModified = isUserModified; }
 
+    bool isUserModified() const { return _isUserModified; }
+
     /// To be able to set the WOPI 'is autosave?' header appropriately.
     void setIsAutosave(bool isAutosave) { _isAutosave = isAutosave; }
 
+    bool getIsAutosave() const { return _isAutosave; }
+
+    void setFileInfo(const FileInfo& fileInfo) { _fileInfo = fileInfo; }
+
     /// Returns the basic information about the file.
-    const FileInfo& getFileInfo() const { return _fileInfo; }
+    FileInfo& getFileInfo() { return _fileInfo; }
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo._filename).getExtension(); }
 
@@ -181,7 +202,7 @@ protected:
     /// Returns the root path of the jail directory of docs.
     std::string getLocalRootPath() const;
 
-protected:
+private:
     const Poco::URI _uri;
     std::string _localStorePath;
     std::string _jailPath;
