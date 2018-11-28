@@ -88,6 +88,9 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		if (this._path._path) {
 			L.DomUtil.removeClass(this._path._path, L.Handler.PathDrag.DRAGGING_CLS);
 		}
+
+		L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
+		L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
 	},
 
 	/**
