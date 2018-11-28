@@ -92,7 +92,7 @@
         js = @"window.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
         js = [js stringByAppendingString: [[NSData dataWithBytes:buffer length:length] base64EncodedStringWithOptions:0]];
         js = [js stringByAppendingString:@"')});"];
-        NSString *subjs = [js substringToIndex:std::min(40ul, js.length)];
+        NSString *subjs = [js substringToIndex:std::min(100ul, js.length)];
         if (subjs.length < js.length)
             subjs = [subjs stringByAppendingString:@"..."];
 

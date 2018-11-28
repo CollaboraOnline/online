@@ -150,7 +150,7 @@
     } else if ([message.name isEqualToString:@"debug"]) {
         LOG_TRC_NOFILE("==> " << [message.body UTF8String]);
     } else if ([message.name isEqualToString:@"lool"]) {
-        NSString *subBody = [message.body substringToIndex:std::min(40ul, ((NSString*)message.body).length)];
+        NSString *subBody = [message.body substringToIndex:std::min(100ul, ((NSString*)message.body).length)];
         if (subBody.length < ((NSString*)message.body).length)
             subBody = [subBody stringByAppendingString:@"..."];
 
