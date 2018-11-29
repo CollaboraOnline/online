@@ -302,8 +302,10 @@ L.Map.Keyboard = L.Handler.extend({
 			inputEle.value = '';
 		}
 
-		if (this.modifier == this.keyModifier.alt || this.modifier == this.keyModifier.shift + this.keyModifier.alt) {
+		if ((this.modifier == this.keyModifier.alt || this.modifier == this.keyModifier.shift + this.keyModifier.alt) &&
+		    keyCode >= 48) {
 			// Presumably a Mac or iOS client accessing a "special character". Just ignore the alt modifier.
+			// But don't ignore it for Alt + non-printing keys.
 			this.modifier -= alt;
 			alt = 0;
 		}
