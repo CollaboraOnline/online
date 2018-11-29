@@ -25,6 +25,7 @@ L.SVGGroup = L.Layer.extend({
 		this._svg.setAttribute('width', size.x);
 		this._svg.setAttribute('height', size.y);
 		this._svg.setAttribute('preserveAspectRatio', 'xMinYMin');
+		this._svg.setAttribute('display', 'none');
 		this._update();
 	},
 
