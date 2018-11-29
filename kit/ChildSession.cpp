@@ -1367,10 +1367,12 @@ bool ChildSession::signDocumentContent(const char* buffer, int length, const std
     Poco::JSON::Parser parser;
     Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
 
-    for (auto& chainPtr : *root->getArray("chain"))
+    for (auto& rChainPtr : *root->getArray("chain"))
     {
-        assert(chainPtr.isString());
-        std::string chainCertificate = chainPtr;
+        if (!rChainPtr.isString())
+            return false;
+
+        std::string chainCertificate = rChainPtr;
         std::vector<unsigned char> binaryChainCertificate = decodeBase64(extractCertificate(chainCertificate));
 
         bResult = getLOKitDocument()->addCertificate(
