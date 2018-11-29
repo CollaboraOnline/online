@@ -822,7 +822,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
         std::string tempFile = Util::createRandomTmpDir() + "/" + name;
         std::ofstream fileStream;
         fileStream.open(tempFile);
-        fileStream << binaryData.data();
+        fileStream.write(reinterpret_cast<char*>(binaryData.data()), binaryData.size());
         fileStream.close();
         url = "file://" + tempFile;
 #endif
