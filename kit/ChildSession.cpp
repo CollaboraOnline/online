@@ -25,11 +25,13 @@
 #include <Poco/URI.h>
 #include <Poco/BinaryReader.h>
 #include <Poco/Base64Decoder.h>
+#ifndef MOBILEAPP
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
+#endif
 
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
@@ -365,10 +367,12 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         {
             askSignatureStatus(buffer, length, tokens);
         }
+#ifndef MOBILEAPP
         else if (tokens[0] == "uploadsigneddocument")
         {
             return uploadSignedDocument(buffer, length, tokens);
         }
+#endif
         else
         {
             assert(false && "Unknown command token.");
@@ -377,6 +381,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
     return true;
 }
+
+#ifndef MOBILEAPP
 
 // add to common / tools
 size_t getFileSize(const std::string& filename)
@@ -508,6 +514,8 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const st
 
     return true;
 }
+
+#endif
 
 bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
