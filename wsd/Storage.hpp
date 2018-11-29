@@ -34,11 +34,10 @@ public:
         FileInfo(const std::string& filename,
                  const std::string& ownerId,
                  const Poco::Timestamp& modifiedTime,
-                 size_t size)
+                 size_t /*size*/)
             : _filename(filename),
               _ownerId(ownerId),
-              _modifiedTime(modifiedTime),
-              _size(size)
+              _modifiedTime(modifiedTime)
         {
         }
 
@@ -48,10 +47,18 @@ public:
             return !_filename.empty();
         }
 
+        const std::string& getFilename() const { return _filename; }
+
+        const std::string& getOwnerId() const { return _ownerId; }
+
+        void setModifiedTime(const Poco::Timestamp& modifiedTime) { _modifiedTime = modifiedTime; }
+
+        const Poco::Timestamp& getModifiedTime() const { return _modifiedTime; }
+
+    private:
         std::string _filename;
         std::string _ownerId;
         Poco::Timestamp _modifiedTime;
-        size_t _size;
     };
 
     class SaveResult
@@ -176,7 +183,7 @@ public:
     /// Returns the basic information about the file.
     FileInfo& getFileInfo() { return _fileInfo; }
 
-    std::string getFileExtension() const { return Poco::Path(_fileInfo._filename).getExtension(); }
+    std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.

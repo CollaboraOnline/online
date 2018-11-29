@@ -526,7 +526,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         if (wopifileinfo->getDisableExport())
             wopifileinfo->setHideExportOption(true);
 
-        wopiInfo->set("BaseFileName", wopiStorage->getFileInfo()._filename);
+        wopiInfo->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
         wopiInfo->set("HidePrintOption", wopifileinfo->getHidePrintOption());
         wopiInfo->set("HideSaveOption", wopifileinfo->getHideSaveOption());
         wopiInfo->set("HideExportOption", wopifileinfo->getHideExportOption());
@@ -551,7 +551,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         session->sendMessage("wopi: " + wopiInfoString);
 
         // Mark the session as 'Document owner' if WOPI hosts supports it
-        if (userId == _storage->getFileInfo()._ownerId)
+        if (userId == _storage->getFileInfo().getOwnerId())
         {
             LOG_DBG("Session [" << sessionId << "] is the document owner");
             session->setDocumentOwner(true);
@@ -604,21 +604,21 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
     if (firstInstance)
     {
-        _documentLastModifiedTime = fileInfo._modifiedTime;
+        _documentLastModifiedTime = fileInfo.getModifiedTime();
         LOG_DBG("Document timestamp: " << _documentLastModifiedTime);
     }
     else
     {
         // Check if document has been modified by some external action
-        LOG_TRC("Document modified time: " << fileInfo._modifiedTime);
+        LOG_TRC("Document modified time: " << fileInfo.getModifiedTime());
         static const Poco::Timestamp Zero(Poco::Timestamp::fromEpochTime(0));
         if (_documentLastModifiedTime != Zero &&
-            fileInfo._modifiedTime != Zero &&
-            _documentLastModifiedTime != fileInfo._modifiedTime)
+            fileInfo.getModifiedTime() != Zero &&
+            _documentLastModifiedTime != fileInfo.getModifiedTime())
         {
             LOG_DBG("Document " << _docKey << "] has been modified behind our back. " <<
                     "Informing all clients. Expected: " << _documentLastModifiedTime <<
-                    ", Actual: " << fileInfo._modifiedTime);
+                    ", Actual: " << fileInfo.getModifiedTime());
 
             _documentChangedInStorage = true;
             std::string message = "close: documentconflict";
@@ -703,7 +703,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
         _uriJailedAnonym = Poco::URI(Poco::URI("file://"), LOOLWSD::anonymizeUrl(localPath)).toString();
 
-        _filename = fileInfo._filename;
+        _filename = fileInfo.getFilename();
 
         // Use the local temp file's timestamp.
         _lastFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
@@ -840,7 +840,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             _lastSaveTime = std::chrono::steady_clock::now();
 
             // Save the storage timestamp.
-            _documentLastModifiedTime = _storage->getFileInfo()._modifiedTime;
+            _documentLastModifiedTime = _storage->getFileInfo().getModifiedTime();
 
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
