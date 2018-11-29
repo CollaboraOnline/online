@@ -250,11 +250,11 @@ void DocumentBroker::pollThread()
     uint64_t adminSent = 0;
     uint64_t adminRecv = 0;
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
+    auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     int limit_load_secs = LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
-    auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
