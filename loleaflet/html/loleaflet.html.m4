@@ -101,6 +101,9 @@ ifelse(MOBILEAPP,[true],
     </table>
 
     <!--%DOCUMENT_SIGNING_DIV%-->
+    <script>
+      window.documentSigningURL = '%DOCUMENT_SIGNING_URL%';
+    </script>
 
     <input id="insertgraphic" type="file" style="position: fixed; top: -100em">
     <input id="document-name-input" type="text" disabled="true"/>
@@ -111,8 +114,7 @@ ifelse(MOBILEAPP,[true],
 
     <div id="spreadsheet-row-column-frame"></div>
 
-    ifelse(MOBILEAPP,[true],[<div id="document-container">],[<!--%DOCUMENT_CONTAINER%-->])
-
+    <div id="document-container">
       <div id="map"></div>
     </div>
     <div id="spreadsheet-toolbar"></div>

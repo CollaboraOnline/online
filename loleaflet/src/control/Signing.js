@@ -9,8 +9,6 @@ var library = null;
 var identity = null;
 var currentPassport = null;
 
-var vereignURL = 'https://integration2.vereign.com';
-
 function isSuccess(result) {
 	return result.code == '200';
 }
@@ -229,6 +227,8 @@ function vereignRestoreIdentity() {
 L.Map.include({
 	showSignDocument: function() {
 		this.initializeLibrary();
+
+		$('#document-container').css('top', '100px');
 	},
 	signingInitializeBar: function() {
 		adjustUIState();
@@ -255,6 +255,7 @@ L.Map.include({
 		var filename = 'fileId'; // need to read the filename
 
 		library.getPassports(filename).then(function(result) {
+			var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
 			if (isSuccess(result)) {
 				var resultArray = result.data;
 				for (var i = 0; i < resultArray.length; i++) {
@@ -338,6 +339,10 @@ L.Map.include({
 		});
 	},
 	initializeLibrary: function() {
+		var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
+		if (vereignURL.length == 0)
+			return;
+
 		setupViamAPI(
 			'signdocument-iframe-content',
 			{
