@@ -183,6 +183,29 @@ L.Map.WOPI = L.Handler.extend({
 				}
 			}
 		}
+		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button') {
+			if (!msg.Values) {
+				console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				console.error('Property "Values.id" not set');
+				return;
+			}
+			if (this._map._permission !== 'edit') {
+				console.log('No toolbar in readonly mode - ignoring Remove_Button request.');
+				return;
+			}
+			if (!w2ui['toolbar-up'].get(msg.Values.id)) {
+				console.error('Toolbar button with id "' + msg.Values.id + '" not found.');
+				return;
+			}
+			if (msg.MessageId === 'Show_Button') {
+				w2ui['toolbar-up'].show(msg.Values.id);
+			} else {
+				w2ui['toolbar-up'].hide(msg.Values.id);
+			}
+		}
 		else if (msg.MessageId === 'Set_Settings') {
 			if (msg.Values) {
 				var alwaysActive = msg.Values.AlwaysActive;
