@@ -58,6 +58,7 @@ L.SVGGroup = L.Layer.extend({
 		if (this._path && this._rect._path) {
 			this._rect._map = this._map;
 			this._rect._renderer = this._renderer;
+			L.DomUtil.addClass(this._path, 'leaflet-control-buttons-disabled');
 			this._path.appendChild(this._rect._path);
 			this.addInteractiveTarget(this._rect._path);
 		}
