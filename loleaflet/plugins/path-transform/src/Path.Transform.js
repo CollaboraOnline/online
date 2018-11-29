@@ -477,6 +477,16 @@ L.Handler.PathTransform = L.Handler.extend({
 		return [sw, west, nw, north, ne, east, se, south];
 	},
 
+	_getMirroredIndex: function(type, index) {
+		var sw = 0, w = 1, nw = 2, n = 3, ne = 4, e = 5, se = 6, s = 7;
+		if (type === 'h')
+			return [nw, w, sw, s, se, e, ne, n][index];
+		else if (type === 'v')
+			return [se, e, ne, n, nw, w, sw, s][index];
+		else if (type === 'c')
+			return [ne, e, se, s, sw, w, nw, n][index];
+	},
+
 	/**
 	* Creates markers and handles
 	*/
@@ -714,11 +724,23 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._map.addLayer(this._handleLine);
 		this._map.addLayer(this._rotationMarker);
 
+		var type;
+		var index = this._activeMarker.options.index;
+		if (this._scale.x < 0 && this._scale.y < 0)
+			type = 'c';
+		else if (this._scale.x < 0)
+			type = 'v';
+		else if (this._scale.y < 0)
+			type = 'h';
+
+		if (type)
+			index = this._getMirroredIndex(type, index);
+
 		this._apply();
 		this._path.fire('scaleend', {
 			layer: this._path,
 			scale: this._scale.clone(),
-			pos: this._getPoints()[this._activeMarker.options.index]
+			pos: this._getPoints()[index]
 		});
 	},
 

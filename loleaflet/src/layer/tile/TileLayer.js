@@ -97,6 +97,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle graphic selection
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		// Rotation angle of selected graphic object
+		this._graphicSelectionAngle = 0;
 		// Original rectangle of cell cursor in twips
 		this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle for cell cursor
@@ -613,6 +615,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('childid', {id: command.id});
 	},
 
+	_isGraphicAngleDivisibleBy90: function() {
+		return (this._graphicSelectionAngle % 9000 === 0);
+	},
+
 	_onShapeSelectionContent: function (textMsg) {
 		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
 		if (this._graphicMarker) {
@@ -636,7 +642,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicSelection = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
-
+			this._graphicSelectionAngle = (strTwips.length === 5) ? parseInt(strTwips[4]) : 0;
 			this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 		}
 
@@ -1767,15 +1773,104 @@ L.TileLayer = L.GridLayer.extend({
 		if (!e.pos) { return; }
 
 		var aPos = this._latLngToTwips(e.pos);
+		var selMin = this._graphicSelectionTwips.min;
+		var selMax = this._graphicSelectionTwips.max;
+
 		if (e.type === 'scalestart') {
 			this._graphicMarker.isDragged = true;
-			this._postSelectGraphicEvent('start',
-						Math.min(aPos.x, this._graphicSelectionTwips.max.x - 1),
-						Math.min(aPos.y, this._graphicSelectionTwips.max.y - 1));
+			if (selMax.x - selMin.x < 2)
+				this._graphicMarker.dragHorizDir = 0; // overlapping handles
+			else if (Math.abs(selMin.x - aPos.x) < 2)
+				this._graphicMarker.dragHorizDir = -1; // left handle
+			else if (Math.abs(selMax.x - aPos.x) < 2)
+				this._graphicMarker.dragHorizDir = 1; // right handle
+			if (selMax.y - selMin.y < 2)
+				this._graphicMarker.dragVertDir = 0; // overlapping handles
+			else if (Math.abs(selMin.y - aPos.y) < 2)
+				this._graphicMarker.dragVertDir = -1; // up handle
+			else if (Math.abs(selMax.y - aPos.y) < 2)
+				this._graphicMarker.dragVertDir = 1; // down handle
 		}
-		else if (e.type == 'scaleend') {
-			this._postSelectGraphicEvent('end', aPos.x, aPos.y);
+		else if (e.type === 'scaleend') {
+			var oldSize = selMax.subtract(selMin);
+			var newSize = oldSize.clone();
+			var newPos = selMin.clone();
+			var center = this._graphicSelectionTwips.getCenter();
+			var horizDir = this._graphicMarker.dragHorizDir;
+			var vertDir = this._graphicMarker.dragVertDir;
+
+			var computePosAndSize = function (coord) {
+				var direction = (coord === 'x') ? horizDir : vertDir;
+				var delta;
+				if (direction === 0) {
+					newSize[coord] = Math.abs(aPos[coord] - center[coord]);
+					newPos[coord] = (aPos[coord] > center[coord]) ? center[coord] : center[coord] - newSize[coord];
+				}
+				else if (direction === -1) { // left/up handle
+					delta = selMin[coord] - aPos[coord];
+					newSize[coord] = oldSize[coord] + delta;
+					newPos[coord] = aPos[coord];
+				}
+				else if (direction === 1) {  // right/down handle
+					delta = aPos[coord] - selMax[coord];
+					newSize[coord] = oldSize[coord] + delta;
+					newPos[coord] = selMin[coord];
+				}
+			};
+
+			computePosAndSize('x');
+			computePosAndSize('y');
+
+			// do we need to perform uniform scaling ?
+			if (!this._isGraphicAngleDivisibleBy90()) {
+				var delta = 0;
+				if (horizDir !== undefined && vertDir === undefined) {
+					newSize.y = Math.round(oldSize.y * (newSize.x / oldSize.x));
+					delta = newSize.y - oldSize.y;
+					newPos.y = Math.round(selMin.y - delta / 2);
+				}
+				else if (horizDir === undefined && vertDir !== undefined) {
+					newSize.x = Math.round(oldSize.x * (newSize.y / oldSize.y));
+					delta = newSize.x - oldSize.x;
+					newPos.x = Math.round(selMin.x - delta / 2);
+				}
+			}
+
+			// try to keep shape inside document
+			if (newPos.x + newSize.x > this._docWidthTwips)
+				newPos.x = this._docWidthTwips - newSize.x;
+			if (newPos.x < 0)
+				newPos.x = 0;
+
+			if (newPos.y + newSize.y > this._docHeightTwips)
+				newPos.y = this._docHeightTwips - newSize.y;
+			if (newPos.y < 0)
+				newPos.y = 0;
+
+			// fill params for uno command
+			var param = {
+				TransformPosX: {
+					type: 'long',
+					value: newPos.x
+				},
+				TransformPosY: {
+					type: 'long',
+					value: newPos.y
+				},
+				TransformWidth: {
+					type: 'long',
+					value: newSize.x
+				},
+				TransformHeight: {
+					type: 'long',
+					value: newSize.y
+				}
+			};
+
+			this._map.sendUnoCommand('.uno:TransformDialog ', param);
 			this._graphicMarker.isDragged = false;
+			this._graphicMarker.dragHorizDir = undefined;
+			this._graphicMarker.dragVertDir = undefined;
 		}
 	},
 
@@ -1888,7 +1983,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.on('rotatestart rotateend', this._onGraphicRotate, this);
 			this._map.addLayer(this._graphicMarker);
 			this._graphicMarker.dragging.enable();
-			this._graphicMarker.transform.enable({uniformScaling: false});
+			this._graphicMarker.transform.enable({uniformScaling: !this._isGraphicAngleDivisibleBy90()});
 		}
 		else if (this._graphicMarker) {
 			this._graphicMarker.removeEventParent(this._map);
