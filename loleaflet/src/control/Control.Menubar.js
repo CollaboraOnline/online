@@ -8,11 +8,11 @@ L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
 		initial: [
-			{name: _UNO('.uno:PickList'), disabled: true},
-			{name: _UNO('.uno:EditMenu'), disabled: true},
-			{name: _UNO('.uno:ViewMenu'), disabled: true},
-			{name: _UNO('.uno:InsertMenu'), disabled: true},
-			{name: _UNO('.uno:ToolsMenu'), disabled: true}
+			{name: _UNO('.uno:PickList')},
+			{name: _UNO('.uno:EditMenu')},
+			{name: _UNO('.uno:ViewMenu')},
+			{name: _UNO('.uno:InsertMenu')},
+			{name: _UNO('.uno:ToolsMenu')}
 		],
 		text:  [
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [

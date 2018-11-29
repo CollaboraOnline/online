@@ -319,10 +319,3 @@
     border: 1px solid transparent;
     cursor: pointer;
 }
-
-#menu-last-mod a:hover {
-    background: #fff;
-    border-color: #bbbbbb;
-    padding: 7px 14px 6px 14px;
-    border: 1px solid #bbb;
-}
