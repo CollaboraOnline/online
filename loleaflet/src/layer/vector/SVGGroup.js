@@ -13,6 +13,9 @@ L.SVGGroup = L.Layer.extend({
 		L.setOptions(this, options);
 		this._bounds = bounds;
 		this._rect = L.rectangle(bounds, this.options);
+
+		this.on('dragstart scalestart rotatestart', this._showEmbeddedSVG, this);
+		this.on('dragend scaleend rotateend', this._hideEmbeddedSVG, this);
 	},
 
 	addEmbeddedSVG: function (svgString) {
@@ -81,6 +84,12 @@ L.SVGGroup = L.Layer.extend({
 		}
 	},
 
+	_hideEmbeddedSVG: function () {
+		if (this._svg) {
+			this._svg.setAttribute('display', 'none');
+		}
+	},
+
 	_transform: function(matrix) {
 		if (this._renderer) {
 			if (matrix) {
@@ -99,6 +108,12 @@ L.SVGGroup = L.Layer.extend({
 
 	_reset: function () {
 		this._update();
+	},
+
+	_showEmbeddedSVG: function () {
+		if (this._svg) {
+			this._svg.setAttribute('display', '');
+		}
 	},
 
 	_update: function () {
