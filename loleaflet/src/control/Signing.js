@@ -9,6 +9,8 @@ var library = null;
 var identity = null;
 var currentPassport = null;
 
+var oldtoolbarSize = null;
+
 function isSuccess(result) {
 	return result.code == '200';
 }
@@ -227,8 +229,15 @@ function vereignRestoreIdentity() {
 L.Map.include({
 	showSignDocument: function() {
 		this.initializeLibrary();
+		oldtoolbarSize = $('#document-container').css('top');
 
-		$('#document-container').css('top', '100px');
+		$('#document-container').css('top', '110px');
+	},
+	hideSignDocument: function() {
+		library = null;
+		identity = null;
+		currentPassport = null;
+		$('#document-container').css('top', oldtoolbarSize);
 	},
 	signingInitializeBar: function() {
 		adjustUIState();
@@ -377,7 +386,10 @@ L.Map.include({
 		}
 	},
 	handleSigningClickEvent: function(id, item) {
-		if (id === 'login') {
+		if (id === 'close') {
+			this.hideSignDocument();
+		}
+		else if (id === 'login') {
 			this.signingLogin();
 		}
 		else if (id === 'logout') {

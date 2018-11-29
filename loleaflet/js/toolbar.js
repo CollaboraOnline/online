@@ -952,9 +952,10 @@ function initNormalToolbar(toolItems) {
 				{type: 'break' },
 				{type: 'menu', id: 'passport', caption: _('Select passport'), items: []},
 				{type: 'html', id: 'current-passport', html: 'Passport: N/A'},
-				{type: 'break' },
+				{type: 'spacer'},
 				{type: 'button',  id: 'logout',  caption: 'Logout', img: '', hint: _('Logout')},
 				{type: 'button',  id: 'login',  caption: 'Login', img: '', hint: _('Login')},
+				{type: 'button',  id: 'close', img: 'closetoolbar', hint: _('Close')},
 			],
 			onClick: function (e) {
 				onClick(e, e.target);
