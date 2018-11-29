@@ -11,6 +11,7 @@
 
 #include "ChildSession.hpp"
 
+#include <fstream>
 #include <sstream>
 
 #define LOK_USE_UNSTABLE_API
@@ -40,6 +41,18 @@ using Poco::URI;
 using namespace LOOLProtocol;
 
 std::recursive_mutex ChildSession::Mutex;
+
+namespace {
+
+std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
+{
+    std::istringstream stream(inputBase64);
+    Poco::Base64Decoder base64Decoder(stream);
+    std::istreambuf_iterator<char> eos;
+    return std::vector<unsigned char>(std::istreambuf_iterator<char>(base64Decoder), eos);
+}
+
+}
 
 ChildSession::ChildSession(const std::string& id,
                            const std::string& jailId,
@@ -773,6 +786,8 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
 bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     std::string name, type;
+
+#ifndef MOBILEAPP
     if (tokens.size() != 3 ||
         !getTokenString(tokens[1], "name", name) ||
         !getTokenString(tokens[2], "type", type))
@@ -780,14 +795,37 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
         sendTextFrame("error: cmd=insertfile kind=syntax");
         return false;
     }
+#else
+    std::string data;
+    if (tokens.size() != 4 ||
+        !getTokenString(tokens[1], "name", name) ||
+        !getTokenString(tokens[2], "type", type) ||
+        !getTokenString(tokens[3], "data", data))
+    {
+        sendTextFrame("error: cmd=insertfile kind=syntax");
+        return false;
+    }
+#endif
 
     if (type == "graphic" || type == "graphicurl")
     {
         std::string url;
+
+#ifndef MOBILEAPP
         if (type == "graphic")
             url = "file://" + std::string(JAILED_DOCUMENT_ROOT) + "insertfile/" + name;
         else if (type == "graphicurl")
             URI::decode(name, url);
+#else
+        assert(type == "graphic");
+        auto binaryData = decodeBase64(data);
+        std::string tempFile = Util::createRandomTmpDir() + "/" + name;
+        std::ofstream fileStream;
+        fileStream.open(tempFile);
+        fileStream << binaryData.data();
+        fileStream.close();
+        url = "file://" + tempFile;
+#endif
 
         std::string command = ".uno:InsertGraphic";
         std::string arguments = "{"
@@ -1170,14 +1208,6 @@ std::string extractPrivateKey(const std::string & privateKey)
     pos2 = pos2 - pos1;
 
     return privateKey.substr(pos1, pos2);
-}
-
-std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
-{
-    std::istringstream stream(inputBase64);
-    Poco::Base64Decoder base64Decoder(stream);
-    std::istreambuf_iterator<char> eos;
-    return std::vector<unsigned char>(std::istreambuf_iterator<char>(base64Decoder), eos);
 }
 
 }
