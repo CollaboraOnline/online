@@ -2761,31 +2761,17 @@ private:
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-        // http://server/hosting/capabilities
-#if defined __linux && defined MOBILEAPP
-        std::string capabilitiesPath = Path(Application::instance().commandPath()).parent().parent().toString() + "capabilities.json";
-#else
-        std::string capabilitiesPath = Path(Application::instance().commandPath()).parent().toString() + "capabilities.json";
-#endif
-        if (!File(capabilitiesPath).exists())
-        {
-            capabilitiesPath = LOOLWSD::FileServerRoot + "/capabilities.json";
-        }
-        std::ifstream ifs (capabilitiesPath.c_str(), std::ifstream::in);
-
-        if(!ifs.is_open())
-            return "";
-
-        Poco::JSON::Parser parser;
-        Poco::Dynamic::Var jsonFile = parser.parse(ifs);
-        Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
-        Poco::JSON::Object::Ptr convert_to = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
-
+        // Can the convert-to be used?
+        Poco::JSON::Object::Ptr convert_to = new Poco::JSON::Object;
         Poco::Dynamic::Var available = allowConvertTo(socket->clientAddress(), request);
         convert_to->set("available", available);
 
+        // Compose the content of http://server/hosting/capabilities
+        Poco::JSON::Object::Ptr capabilities = new Poco::JSON::Object;
+        capabilities->set("convert-to", convert_to);
+
         std::ostringstream ostrJSON;
-        features->stringify(ostrJSON);
+        capabilities->stringify(ostrJSON);
         return ostrJSON.str();
     }
 
