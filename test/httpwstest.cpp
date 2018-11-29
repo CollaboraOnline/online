@@ -116,6 +116,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testUndoConflict);
     CPPUNIT_TEST(testRenderShapeSelectionImpress);
     CPPUNIT_TEST(testRenderShapeSelectionWriter);
+    CPPUNIT_TEST(testRenderShapeSelectionWriterImage);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -175,6 +176,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testUndoConflict();
     void testRenderShapeSelectionImpress();
     void testRenderShapeSelectionWriter();
+    void testRenderShapeSelectionWriterImage();
 
     void loadDoc(const std::string& documentURL, const std::string& testname);
 
@@ -2771,6 +2773,34 @@ void HTTPWSTest::testRenderShapeSelectionWriter()
             responseSVG.erase(responseSVG.begin(), ++it);
 
         const std::vector<char> expectedSVG = helpers::readDataFromFile("shape_writer.svg");
+        CPPUNIT_ASSERT(expectedSVG == responseSVG);
+    }
+    catch (const Poco::Exception& exc)
+    {
+        CPPUNIT_FAIL(exc.displayText());
+    }
+}
+
+void HTTPWSTest::testRenderShapeSelectionWriterImage()
+{
+    const char* testname = "testRenderShapeSelectionWriterImage ";
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL("non-shape-image.odt", documentPath, documentURL, testname);
+
+        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+        // Select the shape with SHIFT + F4
+        sendKeyPress(socket, 0, 771 | skShift, testname);
+        sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
+        std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
+        CPPUNIT_ASSERT(!responseSVG.empty());
+        auto it = std::find(responseSVG.begin(), responseSVG.end(),'\n');
+        if (it != responseSVG.end())
+            responseSVG.erase(responseSVG.begin(), ++it);
+
+        const std::vector<char> expectedSVG = helpers::readDataFromFile("non_shape_writer_image.svg");
         CPPUNIT_ASSERT(expectedSVG == responseSVG);
     }
     catch (const Poco::Exception& exc)
