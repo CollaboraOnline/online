@@ -62,11 +62,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    // Access the document
+    // When the user uses the camer to insert a photo, when the camera is displayed, this view is
+    // removed. After the photo is taken it is then added back to the hierarchy. Our Document object
+    // is still there intact, however, so no need to re-open the document when we re-appear.
+
+    // Check whether the Document object is an already initialised one.
+    if (self.document->fakeClientFd >= 0)
+        return;
+
     [self.document openWithCompletionHandler:^(BOOL success) {
         if (success) {
             // Display the content of the document
-
         } else {
             // Make sure to handle the failed import appropriately, e.g., by presenting an error message to the user.
         }
