@@ -711,7 +711,7 @@ function initMobileToolbar(toolItems) {
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 			{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
-			{type: 'drop', id: 'userlist', img: 'users', html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
+			{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 				'<hr><table class="loleaflet-font" id="editor-btn">' +
 				'<tr>' +
 				'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
@@ -1034,7 +1034,7 @@ function initNormalToolbar(toolItems) {
 				{type: 'html',  id: 'right'},
 				{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile:false},
 				{type: 'break', id: 'modifiedstatuslabelbreak', mobile:false},
-				{type: 'drop', id: 'userlist', text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
+				{type: 'drop', id: 'userlist', hidden: true, text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 					'<hr><table class="loleaflet-font" id="editor-btn">' +
 					'<tr>' +
 					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
@@ -2131,6 +2131,12 @@ function updateUserListCount() {
 	var zoomlevel = $('#zoomlevel').html();
 	w2ui['toolbar-down'].refresh();
 	$('#zoomlevel').html(zoomlevel);
+
+	if (count > 1) {
+		$('#tb_toolbar-down_item_userlist').show();
+	} else {
+		$('#tb_toolbar-down_item_userlist').hide();
+	}
 }
 
 function onAddView(e) {
