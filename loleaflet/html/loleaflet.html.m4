@@ -136,7 +136,7 @@ ifelse(MOBILEAPP,[true],
       <div id="mobile-edit-button-image"></div>
     </div>
 
-    <div id="toolbar-down"></div>
+    <div id="toolbar-down" style="display: none"></div>
 
     <!-- Remove if you don't want the About dialog -->
     <div id="about-dialog" style="display:none; text-align: center; user-select: text">

@@ -839,6 +839,7 @@ function createToolbar() {
 	if (_inMobileMode()) {
 		initMobileToolbar(toolItems);
 	} else {
+		$('#toolbar-down').show();
 		initNormalToolbar(toolItems);
 	}
 }
@@ -1603,8 +1604,9 @@ function onDocLayerInit() {
 					{ id: '1', text: _('None')}
 				]}
 			]);
+
+			$('#spreadsheet-toolbar').show();
 		}
-		$('#spreadsheet-toolbar').show();
 		$('#formulabar').show();
 
 		break;
@@ -2138,6 +2140,25 @@ function onUpdatePermission(e) {
 			toolbar.enable(id);
 		});
 		$('#search-input').prop('disabled', false);
+
+		// FIXME avoid hardcoding this stuff if possible
+		if (_inMobileMode()) {
+			$('#toolbar-down').show();
+			switch (map._docLayer._docType) {
+			case 'text':
+				$('#document-container').css('bottom', '33px');
+				break;
+			case 'spreadsheet':
+				$('#document-container').css('bottom', '68px'); // FIXME this and spreadsheet-row-column-frame are supposed to be the same, but are not
+				$('#spreadsheet-row-column-frame').css('bottom', '65px');
+				$('#spreadsheet-tabs-container').show();
+				$('#spreadsheet-toolbar').show();
+				break;
+			case 'presentation':
+				$('#document-container').css('bottom', '33px');
+				break;
+			}
+		}
 	}
 	else {
 		// Disable list boxes
@@ -2169,6 +2190,25 @@ function onUpdatePermission(e) {
 			toolbar.disable(id);
 		});
 		$('#search-input').prop('disabled', true);
+
+		// FIXME avoid hardcoding this stuff if possible
+		if (_inMobileMode()) {
+			$('#toolbar-down').hide();
+			switch (map._docLayer._docType) {
+			case 'text':
+				$('#document-container').css('bottom', '0');
+				break;
+			case 'spreadsheet':
+				$('#document-container').css('bottom', '0');
+				$('#spreadsheet-row-column-frame').css('bottom', '0');
+				$('#spreadsheet-tabs-container').hide();
+				$('#spreadsheet-toolbar').hide();
+				break;
+			case 'presentation':
+				$('#document-container').css('bottom', '0');
+				break;
+			}
+		}
 	}
 }
 
