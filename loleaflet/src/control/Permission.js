@@ -2,22 +2,59 @@
 /*
  * Document permission handler
  */
+/* global $ */
 L.Map.include({
 	setPermission: function (perm) {
-		this._permission = perm;
 		if (perm === 'edit') {
-			this._socket.sendMessage('requestloksession');
-			if (!L.Browser.touch) {
-				this.dragging.disable();
+			if (L.Browser.mobile) {
+				var button = $('#mobile-edit-button');
+				button.show();
+				button.off('click');
+
+				var that = this;
+				button.on('click', function () {
+					button.hide();
+					that._enterEditMode('edit');
+					that.fire('editorgotfocus');
+					that.focus();
+				});
+
+				// temporarily, before the user touches the floating action button
+				this._enterReadOnlyMode('readonly');
+			}
+			else {
+				this._enterEditMode(perm);
 			}
 		}
 		else if (perm === 'view' || perm === 'readonly') {
-			this.dragging.enable();
-			// disable all user interaction, will need to add keyboard too
-			this._docLayer._onUpdateCursor();
-			this._docLayer._clearSelections();
-			this._docLayer._onUpdateTextSelection();
+			if (L.Browser.mobile) {
+				$('#mobile-edit-button').hide();
+			}
+
+			this._enterReadOnlyMode(perm);
 		}
+	},
+
+	_enterEditMode: function (perm) {
+		this._permission = perm;
+
+		this._socket.sendMessage('requestloksession');
+		if (!L.Browser.touch) {
+			this.dragging.disable();
+		}
+
+		this.fire('updatepermission', {perm : perm});
+	},
+
+	_enterReadOnlyMode: function (perm) {
+		this._permission = perm;
+
+		this.dragging.enable();
+		// disable all user interaction, will need to add keyboard too
+		this._docLayer._onUpdateCursor();
+		this._docLayer._clearSelections();
+		this._docLayer._onUpdateTextSelection();
+
 		this.fire('updatepermission', {perm : perm});
 	},
 
