@@ -148,10 +148,10 @@ w2ui-toolbar {
 
 .closebuttonimage{ background: url('images/lc_closedoc.svg') no-repeat center !important; }
 
-#tb_toolbar-down_item_left {
+#tb_actionbar_item_left {
     width: 45%;
 }
-#tb_toolbar-down_item_right {
+#tb_actionbar_item_right {
     width: 100%;
 }
 

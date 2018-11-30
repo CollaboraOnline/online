@@ -40,7 +40,7 @@ var nUsers, oneUser, noUser;
 
 function _mobilify() {
 	var toolbarUp = w2ui['editbar'];
-	var statusbar = w2ui['toolbar-down'];
+	var statusbar = w2ui['actionbar'];
 
 	toolbarUp.items.forEach(function(item) {
 		if ((item.mobile === false ||
@@ -78,7 +78,7 @@ function _mobilify() {
 
 function _prepareDesktop() {
 	var toolbarUp = w2ui['editbar'];
-	var statusbar = w2ui['toolbar-down'];
+	var statusbar = w2ui['actionbar'];
 
 	toolbarUp.items.forEach(function(item) {
 		if (item.desktop === false && !item.hidden) {
@@ -96,14 +96,14 @@ function _prepareDesktop() {
 function resizeToolbar() {
 	if ($(window).width() !== map.getSize().x) {
 		var toolbarUp = w2ui['editbar'];
-		var statusbar = w2ui['toolbar-down'];
+		var statusbar = w2ui['actionbar'];
 		toolbarUp.resize();
 		statusbar.resize();
 	}
 }
 
 function _cancelSearch() {
-	var toolbar = w2ui['toolbar-down'];
+	var toolbar = w2ui['actionbar'];
 	map.resetSelection();
 	toolbar.hide('cancelsearch');
 	toolbar.disable('searchprev');
@@ -125,8 +125,8 @@ function onClick(e, id, item, subItem) {
 		toolbar = w2ui['document-signing-bar'];
 		item = toolbar.get(id);
 	}
-	else if (w2ui['toolbar-down'].get(id) !== null) {
-		toolbar = w2ui['toolbar-down'];
+	else if (w2ui['actionbar'].get(id) !== null) {
+		toolbar = w2ui['actionbar'];
 		item = toolbar.get(id);
 	}
 	else if (w2ui['spreadsheet-toolbar'].get(id) !== null) {
@@ -280,7 +280,7 @@ function onClick(e, id, item, subItem) {
 	}
 	else if (id.startsWith('StateTableCellMenu') && subItem) {
 		e.done(function () {
-			var menu = w2ui['toolbar-down'].get('StateTableCellMenu');
+			var menu = w2ui['actionbar'].get('StateTableCellMenu');
 			if (subItem.id === '1') { // 'None' was clicked, remove all other options
 				menu.selected = ['1'];
 			}
@@ -846,7 +846,7 @@ function createToolbar() {
 function initMobileToolbar(toolItems) {
 	var toolbar = $('#toolbar-up');
 	toolbar.w2toolbar({
-		name: 'toolbar-down',
+		name: 'actionbar',
 		tooltip: 'bottom',
 		items: [
 			{type: 'button',  id: 'closemobile',  img: 'closemobile'},
@@ -871,7 +871,7 @@ function initMobileToolbar(toolItems) {
 		}
 	});
 	toolbar.bind('touchstart', function(e) {
-		w2ui['toolbar-down'].touchStarted = true;
+		w2ui['actionbar'].touchStarted = true;
 		var touchEvent = e.originalEvent;
 		if (touchEvent && touchEvent.touches.length > 1) {
 			L.DomEvent.preventDefault(e);
@@ -1169,7 +1169,7 @@ function initNormalToolbar(toolItems) {
 	toolbar = $('#toolbar-down');
 	if ($('#main-menu').css('display') !== 'none') {
 		toolbar.w2toolbar({
-			name: 'toolbar-down',
+			name: 'actionbar',
 			tooltip: 'top',
 			items: [
 				{type: 'html',  id: 'search',
@@ -1226,7 +1226,7 @@ function initNormalToolbar(toolItems) {
 				onClick(e, e.target, e.item, e.subItem);
 			},
 			onRefresh: function() {
-				$('#tb_toolbar-down_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
+				$('#tb_actionbar_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
 				$('#search-input').off('input', onSearch).on('input', onSearch);
 				$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
 			}
@@ -1234,13 +1234,13 @@ function initNormalToolbar(toolItems) {
 	}
 	else {
 		toolbar.w2toolbar({
-			name: 'toolbar-down',
+			name: 'actionbar',
 			tooltip: 'top',
 			items: []
 		});
 	}
 	toolbar.bind('touchstart', function() {
-		w2ui['toolbar-down'].touchStarted = true;
+		w2ui['actionbar'].touchStarted = true;
 	});
 }
 
@@ -1297,7 +1297,7 @@ function unoCmdToToolbarId(commandname)
 }
 
 function onSearch() {
-	var toolbar = w2ui['toolbar-down'];
+	var toolbar = w2ui['actionbar'];
 	// conditionally disabling until, we find a solution for tdf#108577
 	if (L.DomUtil.get('search-input').value === '') {
 		toolbar.disable('searchprev');
@@ -1555,7 +1555,7 @@ function onWopiProps(e) {
 
 function onDocLayerInit() {
 	var toolbarUp = w2ui['editbar'];
-	var statusbar = w2ui['toolbar-down'];
+	var statusbar = w2ui['actionbar'];
 	var docType = map.getDocType();
 
 	switch (docType) {
@@ -1713,7 +1713,7 @@ function onDocLayerInit() {
 
 function onCommandStateChanged(e) {
 	var toolbar = w2ui['editbar'];
-	var statusbar = w2ui['toolbar-down'];
+	var statusbar = w2ui['actionbar'];
 	var commandName = e.commandName;
 	var state = e.state;
 	var found = false;
@@ -2035,7 +2035,7 @@ function onUpdateParts(e) {
 		count = e.parts;
 	}
 
-	var toolbar = w2ui['toolbar-down'];
+	var toolbar = w2ui['actionbar'];
 	if (e.docType === 'presentation') {
 		toolbar.set('prev', {hint: _('Previous slide')});
 		toolbar.set('next', {hint: _('Next slide')});
@@ -2133,7 +2133,7 @@ function onUpdatePermission(e) {
 			toolbar.enable(id);
 		});
 
-		toolbar = w2ui['toolbar-down'];
+		toolbar = w2ui['actionbar'];
 		toolbarDownButtons.forEach(function(id) {
 			toolbar.enable(id);
 		});
@@ -2164,7 +2164,7 @@ function onUpdatePermission(e) {
 			toolbar.disable(id);
 		});
 
-		toolbar = w2ui['toolbar-down'];
+		toolbar = w2ui['actionbar'];
 		toolbarDownButtons.forEach(function(id) {
 			toolbar.disable(id);
 		});
@@ -2181,7 +2181,7 @@ function onUseritemClicked(e) { // eslint-disable-line no-unused-vars
 	map._goToViewId(viewId);
 
 	if (viewId === map._docLayer._viewId) {
-		$('#tb_toolbar-down_item_userlist').w2overlay('');
+		$('#tb_actionbar_item_userlist').w2overlay('');
 		return;
 	} else if (docLayer._followThis !== -1) {
 		map._setFollowing(false, null);
@@ -2209,7 +2209,7 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 			docLayer._followThis = editorId;
 		}
 
-		var userlistItem = w2ui['toolbar-down'].get('userlist');
+		var userlistItem = w2ui['actionbar'].get('userlist');
 		if (userlistItem !== null) {
 			$('.selected-user').removeClass('selected-user');
 			if ($(userlistItem.html).find('.selected-user').length !== 0)
@@ -2220,19 +2220,19 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 		docLayer._followEditor = false;
 		docLayer._followThis = -1;
 	}
-	$('#tb_toolbar-down_item_userlist').w2overlay('');
+	$('#tb_actionbar_item_userlist').w2overlay('');
 }
 
 global.editorUpdate = editorUpdate;
 
 function selectUser(viewId) {
-	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	var userlistItem = w2ui['actionbar'].get('userlist');
 	if (userlistItem === null) {
 		return;
 	}
 
 	userlistItem.html = $(userlistItem.html).find('#user-' + viewId).addClass('selected-user').parent().parent().parent()[0].outerHTML;
-	$('#tb_toolbar-down_item_userlist').w2overlay('');
+	$('#tb_actionbar_item_userlist').w2overlay('');
 }
 
 function getUserItem(viewId, userName, extraInfo, color) {
@@ -2256,7 +2256,7 @@ function getUserItem(viewId, userName, extraInfo, color) {
 }
 
 function updateUserListCount() {
-	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	var userlistItem = w2ui['actionbar'].get('userlist');
 	if (userlistItem === null) {
 		return;
 	}
@@ -2271,18 +2271,18 @@ function updateUserListCount() {
 	}
 
 	var zoomlevel = $('#zoomlevel').html();
-	w2ui['toolbar-down'].refresh();
+	w2ui['actionbar'].refresh();
 	$('#zoomlevel').html(zoomlevel);
 
 	if (count > 1) {
-		$('#tb_toolbar-down_item_userlist').show();
+		$('#tb_actionbar_item_userlist').show();
 	} else {
-		$('#tb_toolbar-down_item_userlist').hide();
+		$('#tb_actionbar_item_userlist').hide();
 	}
 }
 
 function onAddView(e) {
-	$('#tb_toolbar-down_item_userlist')
+	$('#tb_actionbar_item_userlist')
 		.w2overlay({
 			class: 'loleaflet-font',
 			html: userJoinedPopupMessage.replace('%user', e.username),
@@ -2290,7 +2290,7 @@ function onAddView(e) {
 		});
 	clearTimeout(userPopupTimeout);
 	userPopupTimeout = setTimeout(function() {
-		$('#tb_toolbar-down_item_userlist').w2overlay('');
+		$('#tb_actionbar_item_userlist').w2overlay('');
 		clearTimeout(userPopupTimeout);
 		userPopupTimeout = null;
 	}, 3000);
@@ -2307,7 +2307,7 @@ function onAddView(e) {
 		username += ' (' +  _('Readonly') + ')';
 	}
 
-	var userlistItem = w2ui['toolbar-down'].get('userlist');
+	var userlistItem = w2ui['actionbar'].get('userlist');
 	if (userlistItem !== null) {
 		var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
 		userlistItem.html = newhtml;
@@ -2396,7 +2396,7 @@ function setupToolbar(e) {
 
 	map.on('search', function (e) {
 		var searchInput = L.DomUtil.get('search-input');
-		var toolbar = w2ui['toolbar-down'];
+		var toolbar = w2ui['actionbar'];
 		if (e.count === 0) {
 			toolbar.disable('searchprev');
 			toolbar.disable('searchnext');
@@ -2416,18 +2416,18 @@ function setupToolbar(e) {
 	});
 
 	map.on('showbusy', function(e) {
-		w2utils.lock(w2ui['toolbar-down'].box, e.label, true);
+		w2utils.lock(w2ui['actionbar'].box, e.label, true);
 	});
 
 	map.on('hidebusy', function() {
 		// If locked, unlock
-		if (w2ui['toolbar-down'].box.firstChild.className === 'w2ui-lock') {
-			w2utils.unlock(w2ui['toolbar-down'].box);
+		if (w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
+			w2utils.unlock(w2ui['actionbar'].box);
 		}
 	});
 
 	map.on('removeview', function(e) {
-		$('#tb_toolbar-down_item_userlist')
+		$('#tb_actionbar_item_userlist')
 			.w2overlay({
 				class: 'loleaflet-font',
 				html: userLeftPopupMessage.replace('%user', e.username),
@@ -2435,7 +2435,7 @@ function setupToolbar(e) {
 			});
 		clearTimeout(userPopupTimeout);
 		userPopupTimeout = setTimeout(function() {
-			$('#tb_toolbar-down_item_userlist').w2overlay('');
+			$('#tb_actionbar_item_userlist').w2overlay('');
 			clearTimeout(userPopupTimeout);
 			userPopupTimeout = null;
 		}, 3000);
@@ -2445,7 +2445,7 @@ function setupToolbar(e) {
 			map._docLayer._followUser = false;
 		}
 
-		var userlistItem = w2ui['toolbar-down'].get('userlist');
+		var userlistItem = w2ui['actionbar'].get('userlist');
 		if (userlistItem !== null) {
 			userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
 			updateUserListCount();
