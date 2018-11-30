@@ -39,7 +39,7 @@ global.mode = {
 var nUsers, oneUser, noUser;
 
 function _mobilify() {
-	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUp = w2ui['editbar'];
 	var statusbar = w2ui['toolbar-down'];
 
 	toolbarUp.items.forEach(function(item) {
@@ -77,7 +77,7 @@ function _mobilify() {
 }
 
 function _prepareDesktop() {
-	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUp = w2ui['editbar'];
 	var statusbar = w2ui['toolbar-down'];
 
 	toolbarUp.items.forEach(function(item) {
@@ -95,7 +95,7 @@ function _prepareDesktop() {
 
 function resizeToolbar() {
 	if ($(window).width() !== map.getSize().x) {
-		var toolbarUp = w2ui['toolbar-up'];
+		var toolbarUp = w2ui['editbar'];
 		var statusbar = w2ui['toolbar-down'];
 		toolbarUp.resize();
 		statusbar.resize();
@@ -113,8 +113,8 @@ function _cancelSearch() {
 }
 
 function onClick(e, id, item, subItem) {
-	if (w2ui['toolbar-up'].get(id) !== null) {
-		var toolbar = w2ui['toolbar-up'];
+	if (w2ui['editbar'].get(id) !== null) {
+		var toolbar = w2ui['editbar'];
 		item = toolbar.get(id);
 	}
 	else if (w2ui.formulabar.get(id) !== null) {
@@ -356,8 +356,8 @@ function setBorders(left, right, bottom, top, horiz, vert) {
 
 // close the popup
 function closePopup() {
-	if ($('#w2ui-overlay-toolbar-up').length > 0) {
-		$('#w2ui-overlay-toolbar-up').removeData('keepOpen')[0].hide();
+	if ($('#w2ui-overlay-editbar').length > 0) {
+		$('#w2ui-overlay-editbar').removeData('keepOpen')[0].hide();
 	}
 	map.focus();
 }
@@ -952,7 +952,7 @@ function initMobileToolbar(toolItems) {
 
 	toolbar = $('#toolbar-down');
 	toolbar.w2toolbar({
-		name: 'toolbar-up',
+		name: 'editbar',
 		tooltip: 'top',
 		items: toolItems,
 		onClick: function (e) {
@@ -970,7 +970,7 @@ function initMobileToolbar(toolItems) {
 				updateCommandValues(edata.target);
 			}
 
-			if (edata.target === 'toolbar-up' && map.getDocType() === 'presentation') {
+			if (edata.target === 'editbar' && map.getDocType() === 'presentation') {
 				// Fill the style select box if not yet filled
 				if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
 					var data = [''];
@@ -998,7 +998,7 @@ function initMobileToolbar(toolItems) {
 	});
 
 	toolbar.bind('touchstart', function(e) {
-		w2ui['toolbar-up'].touchStarted = true;
+		w2ui['editbar'].touchStarted = true;
 		var touchEvent = e.originalEvent;
 		if (touchEvent && touchEvent.touches.length > 1) {
 			L.DomEvent.preventDefault(e);
@@ -1009,7 +1009,7 @@ function initMobileToolbar(toolItems) {
 function initNormalToolbar(toolItems) {
 	var toolbar = $('#toolbar-up');
 	toolbar.w2toolbar({
-		name: 'toolbar-up',
+		name: 'editbar',
 		tooltip: 'bottom',
 		items: toolItems,
 		onClick: function (e) {
@@ -1017,7 +1017,7 @@ function initNormalToolbar(toolItems) {
 			hideTooltip(this, e.target);
 		},
 		onRefresh: function(event) {
-			if (event.target === 'toolbar-up' && map.getDocType() === 'presentation') {
+			if (event.target === 'editbar' && map.getDocType() === 'presentation') {
 				// Fill the style select box if not yet filled
 				if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
 					var data = [''];
@@ -1048,7 +1048,7 @@ function initNormalToolbar(toolItems) {
 	});
 
 	toolbar.bind('touchstart', function() {
-		w2ui['toolbar-up'].touchStarted = true;
+		w2ui['editbar'].touchStarted = true;
 	});
 
 	toolbar = $('#formulabar');
@@ -1518,7 +1518,7 @@ function onFormulaBarBlur() {
 
 function onWopiProps(e) {
 	if (e.HideSaveOption) {
-		w2ui['toolbar-up'].hide('save');
+		w2ui['editbar'].hide('save');
 	}
 	if (e.HideExportOption) {
 		w2ui['presentation-toolbar'].hide('presentation', 'presentationbreak');
@@ -1548,13 +1548,13 @@ function onWopiProps(e) {
 		$('#document-name-input').off('keypress', onDocumentNameKeyPress);
 	}
 	if (e.EnableInsertRemoteImage === true) {
-		w2ui['toolbar-up'].hide('insertgraphic');
-		w2ui['toolbar-up'].show('menugraphic');
+		w2ui['editbar'].hide('insertgraphic');
+		w2ui['editbar'].show('menugraphic');
 	}
 }
 
 function onDocLayerInit() {
-	var toolbarUp = w2ui['toolbar-up'];
+	var toolbarUp = w2ui['editbar'];
 	var statusbar = w2ui['toolbar-down'];
 	var docType = map.getDocType();
 
@@ -1706,13 +1706,13 @@ function onDocLayerInit() {
 
 		// Fold menubar by default
 		map.toggleMenubar();
-		$('#tb_toolbar-up_item_fonts').css({'display': 'none'});
-		$('#tb_toolbar-up_item_fontsizes').css({'display': 'none'});
+		$('#tb_editbar_item_fonts').css({'display': 'none'});
+		$('#tb_editbar_item_fontsizes').css({'display': 'none'});
 	}
 }
 
 function onCommandStateChanged(e) {
-	var toolbar = w2ui['toolbar-up'];
+	var toolbar = w2ui['editbar'];
 	var statusbar = w2ui['toolbar-down'];
 	var commandName = e.commandName;
 	var state = e.state;
@@ -1829,11 +1829,11 @@ function onCommandStateChanged(e) {
 		var html;
 		if (modifiedStatus) {
 			html = $('#modifiedstatuslabel').html('').parent().html();
-			w2ui['toolbar-up'].set('save', {img:'savemodified'});
+			w2ui['editbar'].set('save', {img:'savemodified'});
 		}
 		else {
 			html = $('#modifiedstatuslabel').html(_('Document saved')).parent().html();
-			w2ui['toolbar-up'].set('save', {img:'save'});
+			w2ui['editbar'].set('save', {img:'save'});
 		}
 		updateToolbarItem(statusbar, 'modifiedstatuslabel', html);
 	}
@@ -2083,13 +2083,13 @@ function onCommandResult(e) {
 	}
 	else if ((commandName === '.uno:Undo' || commandName === '.uno:Redo') &&
 		e.success === true && e.result.value && !isNaN(e.result.value)) { /*UNDO_CONFLICT*/
-		$('#tb_toolbar-up_item_repair').w2overlay({ html: '<div style="padding: 10px; line-height: 150%">' +
+		$('#tb_editbar_item_repair').w2overlay({ html: '<div style="padding: 10px; line-height: 150%">' +
 			_('Conflict Undo/Redo with multiple users. Please use document repair to resolve') + '</div>'});
 	}
 }
 
 function onUpdatePermission(e) {
-	var toolbar = w2ui['toolbar-up'];
+	var toolbar = w2ui['editbar'];
 
 	// copy the first array
 	var items = toolbar.items.slice();
@@ -2384,7 +2384,7 @@ function setupToolbar(e) {
 			break;
 		}
 		$('#zoomlevel').html(zoomPercent);
-		w2ui['toolbar-up'].set('zoom', {text: zoomPercent, selected: zoomSelected});
+		w2ui['editbar'].set('zoom', {text: zoomPercent, selected: zoomSelected});
 	});
 
 	map.on('celladdress', function (e) {
@@ -2412,7 +2412,7 @@ function setupToolbar(e) {
 	});
 
 	map.on('updatetoolbarcommandvalues', function() {
-		w2ui['toolbar-up'].refresh();
+		w2ui['editbar'].refresh();
 	});
 
 	map.on('showbusy', function(e) {

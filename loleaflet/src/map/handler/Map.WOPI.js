@@ -148,7 +148,7 @@ L.Map.WOPI = L.Handler.extend({
 
 		if (msg.MessageId === 'Insert_Button') {
 			if (msg.Values) {
-				if (msg.Values.id && !w2ui['toolbar-up'].get(msg.Values.id)
+				if (msg.Values.id && !w2ui['editbar'].get(msg.Values.id)
 				    && msg.Values.imgurl) {
 					if (this._map._permission === 'edit') {
 						// add the css rule for the image
@@ -158,7 +158,7 @@ L.Map.WOPI = L.Handler.extend({
 						$('html > head > style').append('.w2ui-icon.' + msg.Values.id + '{background: url(' + msg.Values.imgurl + ') no-repeat center !important; }');
 
 						// add the item to the toolbar
-						w2ui['toolbar-up'].insert('save', [
+						w2ui['editbar'].insert('save', [
 							{
 								type: 'button',
 								id: msg.Values.id,
