@@ -154,7 +154,7 @@ std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = fal
     {
         try
         {
-            Poco::Path procEntry = it.path();
+            const Poco::Path& procEntry = it.path();
             const std::string& fileName = procEntry.getFileName();
             int pid;
             std::size_t endPos = 0;
