@@ -981,6 +981,10 @@ bool DocumentBroker::autoSave(const bool force)
     {
         LOG_TRC("Sending forced save command for [" << _docKey << "].");
         // Don't terminate editing as this can be invoked by the admin OOM, but otherwise force saving anyway.
+        // Flag isAutosave=false so the WOPI host wouldn't think this is a regular checkpoint and
+        // potentially optimize it away. This is as good as user-issued save, since this is
+        // triggered when the document is closed. In the case of network disconnection or browser crash
+        // most users would want to have had the chance to hit save before the document unloaded.
         sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
                            /*dontSaveIfUnmodified=*/true, /*isAutosave=*/false,
                            /*isExitSave=*/true);
