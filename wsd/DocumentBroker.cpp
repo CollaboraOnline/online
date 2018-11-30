@@ -607,6 +607,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         }
     }
 
+
 #if ENABLE_SUPPORT_KEY
     if (!LOOLWSD::OverrideWatermark.empty())
         watermarkText = LOOLWSD::OverrideWatermark;
