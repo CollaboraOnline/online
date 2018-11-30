@@ -80,6 +80,27 @@ body {
     width: 0;
 }
 
+#mobile-edit-button {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    right: 16px;
+    bottom: 16px;
+    background-color: #0b87e7;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 2000;
+}
+
+#mobile-edit-button-image {
+    position: relative;
+    left: 16px;
+    top: 16px;
+    width: 24px;
+    height: 24px;
+    background: url('images/baseline-edit-24px.svg') no-repeat center !important;
+}
+
 @media (max-width: 767px),(max-device-height: 767px) {
     /* Show slidesorter beyond 768px only */
     #presentation-controls-wrapper {
