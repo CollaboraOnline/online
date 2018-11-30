@@ -837,6 +837,7 @@ function createToolbar() {
 	];
 
 	if (_inMobileMode()) {
+		$('#mobile-edit-button').show();
 		initMobileToolbar(toolItems);
 	} else {
 		$('#toolbar-down').show();
