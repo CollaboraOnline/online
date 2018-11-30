@@ -132,7 +132,7 @@ ifelse(MOBILEAPP,[true],
       <div id="presentation-toolbar" style="display: none"></div>
     </div>
 
-    <div id="mobile-edit-button">
+    <div id="mobile-edit-button" style="display: none">
       <div id="mobile-edit-button-image"></div>
     </div>
 
