@@ -136,7 +136,7 @@ void HTTPServerTest::testCapabilities()
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
 
     // Get discovery first and extract the urlsrc of the capabilities end point
-    std::string capabiltiesURI;
+    std::string capabilitiesURI;
     {
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/hosting/discovery");
@@ -161,13 +161,13 @@ void HTTPServerTest::testCapabilities()
             if(parent && parent->getAttribute("name") == "Capabilities")
             {
                 foundCapabilities = true;
-                capabiltiesURI = elem->getAttribute("urlsrc");
+                capabilitiesURI = elem->getAttribute("urlsrc");
                 break;
             }
         }
 
         CPPUNIT_ASSERT(foundCapabilities);
-        CPPUNIT_ASSERT_EQUAL(_uri.toString() + CAPABILITIES_END_POINT, capabiltiesURI);
+        CPPUNIT_ASSERT_EQUAL(_uri.toString() + CAPABILITIES_END_POINT, capabilitiesURI);
     }
 
     // Then get the capabilities json
