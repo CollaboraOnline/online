@@ -3,13 +3,16 @@
  * Document Signing
  */
 
-/* global window setupViamAPI w2ui vex $ */
+/* global window setupViamAPI w2ui vex Promise $ */
 
 var library = null;
 var identity = null;
 var currentPassport = null;
+var passportCertificates = [];
 
 var oldtoolbarSize = null;
+var _map = null;
+var currentDocumentSigningStatus = 'N/A'
 
 function isSuccess(result) {
 	return result.code == '200';
@@ -48,6 +51,30 @@ function addPassportToToolbar(passport, i) {
 	w2ui['document-signing-bar'].get('passport').items.push(
 		{ text: name, id: 'item ' + (i+1), value: passport.uuid }
 	);
+
+	var promise = library.getCertificateByPassport(passport.uuid);
+	promise = promise.then(function(result) {
+		if (isSuccess(result)) {
+			var chain = result.data.chain;
+			for (var i = 0; i < chain.length; i++) {
+				if (passportCertificates.indexOf(chain[i]) == -1) {
+					passportCertificates.push(chain[i]);
+				}
+			}
+			passportCertificates.push(result.data.x509Certificate);
+		}
+	});
+	return promise;
+}
+
+function checkCurrentDocument() {
+	var certificates = {
+		certificates: passportCertificates
+	};
+	var blob = new Blob(['asksignaturestatus\n', JSON.stringify(certificates)]);
+	if (_map) {
+		_map._socket.sendMessage(blob);
+	}
 }
 
 function updatePassportList() {
@@ -55,13 +82,19 @@ function updatePassportList() {
 		library.passportListPassports().then(function(result) {
 			if (isSuccess(result))
 			{
+				passportCertificates = [];
 				w2ui['document-signing-bar'].get('passport').items = [];
 				var passports = result.data;
+				var promises = [];
 				for (var i = 0; i < passports.length; i++) {
-					addPassportToToolbar(passports[i], i);
+					promises.push(addPassportToToolbar(passports[i], i));
 				}
-				updateCurrentPassport();
-				adjustUIState();
+				// wait for all promises to complete
+				Promise.all(promises).then(function() {
+					updateCurrentPassport();
+					checkCurrentDocument();
+					adjustUIState();
+				});
 			}
 		});
 	}
@@ -109,6 +142,9 @@ function adjustUIState() {
 		w2ui['document-signing-bar'].hide('passport');
 		w2ui['document-signing-bar'].hide('current-passport');
 	}
+
+	w2ui['document-signing-bar'].get('current-document-status').html = '<p>' + currentDocumentSigningStatus + '</p>';
+
 	w2ui['document-signing-bar'].refresh();
 }
 
@@ -251,6 +287,7 @@ L.Map.include({
 						var otp = result.data;
 						var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
 						map._socket.sendMessage(blob);
+						checkCurrentDocument();
 					}
 				});
 			}
@@ -351,7 +388,7 @@ L.Map.include({
 		var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
 		if (vereignURL.length == 0)
 			return;
-
+		_map = this;
 		setupViamAPI(
 			'signdocument-iframe-content',
 			{
@@ -405,5 +442,43 @@ L.Map.include({
 			this.setCurrentPassport(item.value, item.text);
 		}
 		return false;
+	},
+	onChangeSignStatus: function(signstatus) {
+		var statusText = '';
+		switch (signstatus) {
+		case '0':
+			currentDocumentSigningStatus = 'Not Signed';
+			break;
+		case '1':
+			statusText = 'Document signed and validated.';
+			currentDocumentSigningStatus = 'Signed and validated';
+			break;
+		case '2':
+			statusText = 'Document signed but signatue is broken.';
+			currentDocumentSigningStatus = 'Signature broken';
+			break;
+		case '3':
+			statusText = 'Document signed but the document is already modified.';
+			currentDocumentSigningStatus = 'Signed but document modified';
+			break;
+		case '4':
+			statusText = 'Document signed but can not be validated.';
+			currentDocumentSigningStatus = 'Signed but not validated';
+			break;
+		case '5':
+			statusText = 'Document signed but not all files are signed.';
+			currentDocumentSigningStatus = 'Signed but not all files are signed';
+			break;
+		}
+
+		if (statusText) {
+			this.fire('infobar', {
+				msg: statusText,
+				action: null,
+				actionLabel: null
+			});
+		}
+
+		adjustUIState();
 	}
 });

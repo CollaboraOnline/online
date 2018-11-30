@@ -1404,9 +1404,38 @@ bool ChildSession::signDocumentContent(const char* buffer, int length, const std
     return bResult;
 }
 
-bool ChildSession::askSignatureStatus(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /*tokens*/)
+bool ChildSession::askSignatureStatus(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
 {
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+    bool bResult = true;
+
+    const std::string firstLine = getFirstLine(buffer, length);
+    const char* data = buffer + firstLine.size() + 1;
+    const int size = length - firstLine.size() - 1;
+    std::string json(data, size);
+
+    Poco::JSON::Parser parser;
+    Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+
+    if (root)
+    {
+        for (auto& rChainPtr : *root->getArray("certificates"))
+        {
+            if (!rChainPtr.isString())
+                return false;
+
+            std::string chainCertificate = rChainPtr;
+            std::vector<unsigned char> binaryChainCertificate = decodeBase64(extractCertificate(chainCertificate));
+
+            bResult = getLOKitDocument()->addCertificate(
+                binaryChainCertificate.data(),
+                binaryChainCertificate.size());
+
+            if (!bResult)
+                return false;
+        }
+    }
 
     int nStatus = getLOKitDocument()->getSignatureState();
 
