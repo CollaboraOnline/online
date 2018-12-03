@@ -367,6 +367,9 @@
 		BE80E45021B562F600859C97 /* component.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component.cxx; path = "../../ios-device/cppuhelper/source/component.cxx"; sourceTree = "<group>"; };
 		BE80E45121B562F600859C97 /* propertysetmixin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = propertysetmixin.cxx; path = "../../ios-device/cppuhelper/source/propertysetmixin.cxx"; sourceTree = "<group>"; };
 		BE80E45221B562F600859C97 /* servicemanager.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = servicemanager.hxx; path = "../../ios-device/cppuhelper/source/servicemanager.hxx"; sourceTree = "<group>"; };
+		BE80E45321B56E5000859C97 /* init.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = init.cxx; path = "../../ios-device/desktop/source/lib/init.cxx"; sourceTree = "<group>"; };
+		BE80E45421B56E5000859C97 /* lokclipboard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lokclipboard.cxx; path = "../../ios-device/desktop/source/lib/lokclipboard.cxx"; sourceTree = "<group>"; };
+		BE80E45521B56E5000859C97 /* lokinteractionhandler.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lokinteractionhandler.cxx; path = "../../ios-device/desktop/source/lib/lokinteractionhandler.cxx"; sourceTree = "<group>"; };
 		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8D772A2136762500AC58EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE8D772B2136762500AC58EA /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -758,6 +761,9 @@
 		BE34D183218CFC7200815297 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				BE80E45321B56E5000859C97 /* init.cxx */,
+				BE80E45421B56E5000859C97 /* lokclipboard.cxx */,
+				BE80E45521B56E5000859C97 /* lokinteractionhandler.cxx */,
 			);
 			name = lib;
 			sourceTree = "<group>";
