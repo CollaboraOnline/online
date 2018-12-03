@@ -336,6 +336,37 @@
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BE80E43121AD92F600859C97 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Mobile/Fonts; sourceTree = SOURCE_ROOT; };
+		BE80E43421B562F500859C97 /* servicemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servicemanager.cxx; path = "../../ios-device/cppuhelper/source/servicemanager.cxx"; sourceTree = "<group>"; };
+		BE80E43521B562F500859C97 /* component_context.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component_context.cxx; path = "../../ios-device/cppuhelper/source/component_context.cxx"; sourceTree = "<group>"; };
+		BE80E43621B562F500859C97 /* bootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bootstrap.cxx; path = "../../ios-device/cppuhelper/source/bootstrap.cxx"; sourceTree = "<group>"; };
+		BE80E43721B562F500859C97 /* macro_expander.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = macro_expander.cxx; path = "../../ios-device/cppuhelper/source/macro_expander.cxx"; sourceTree = "<group>"; };
+		BE80E43821B562F500859C97 /* propshlp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = propshlp.cxx; path = "../../ios-device/cppuhelper/source/propshlp.cxx"; sourceTree = "<group>"; };
+		BE80E43921B562F500859C97 /* compat.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = compat.cxx; path = "../../ios-device/cppuhelper/source/compat.cxx"; sourceTree = "<group>"; };
+		BE80E43A21B562F500859C97 /* loadsharedlibcomponentfactory.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = loadsharedlibcomponentfactory.hxx; path = "../../ios-device/cppuhelper/source/loadsharedlibcomponentfactory.hxx"; sourceTree = "<group>"; };
+		BE80E43B21B562F500859C97 /* paths.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = paths.cxx; path = "../../ios-device/cppuhelper/source/paths.cxx"; sourceTree = "<group>"; };
+		BE80E43C21B562F500859C97 /* typemanager.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = typemanager.hxx; path = "../../ios-device/cppuhelper/source/typemanager.hxx"; sourceTree = "<group>"; };
+		BE80E43D21B562F500859C97 /* implbase_ex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = implbase_ex.cxx; path = "../../ios-device/cppuhelper/source/implbase_ex.cxx"; sourceTree = "<group>"; };
+		BE80E43E21B562F500859C97 /* weak.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = weak.cxx; path = "../../ios-device/cppuhelper/source/weak.cxx"; sourceTree = "<group>"; };
+		BE80E43F21B562F500859C97 /* gcc3.map */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = gcc3.map; path = "../../ios-device/cppuhelper/source/gcc3.map"; sourceTree = "<group>"; };
+		BE80E44021B562F500859C97 /* implementationentry.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = implementationentry.cxx; path = "../../ios-device/cppuhelper/source/implementationentry.cxx"; sourceTree = "<group>"; };
+		BE80E44121B562F500859C97 /* macro_expander.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = macro_expander.hxx; path = "../../ios-device/cppuhelper/source/macro_expander.hxx"; sourceTree = "<group>"; };
+		BE80E44221B562F500859C97 /* paths.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = paths.hxx; path = "../../ios-device/cppuhelper/source/paths.hxx"; sourceTree = "<group>"; };
+		BE80E44321B562F500859C97 /* unourl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unourl.cxx; path = "../../ios-device/cppuhelper/source/unourl.cxx"; sourceTree = "<group>"; };
+		BE80E44421B562F500859C97 /* supportsservice.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = supportsservice.cxx; path = "../../ios-device/cppuhelper/source/supportsservice.cxx"; sourceTree = "<group>"; };
+		BE80E44521B562F500859C97 /* defaultbootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = defaultbootstrap.cxx; path = "../../ios-device/cppuhelper/source/defaultbootstrap.cxx"; sourceTree = "<group>"; };
+		BE80E44621B562F500859C97 /* interfacecontainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = interfacecontainer.cxx; path = "../../ios-device/cppuhelper/source/interfacecontainer.cxx"; sourceTree = "<group>"; };
+		BE80E44721B562F500859C97 /* implbase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = implbase.cxx; path = "../../ios-device/cppuhelper/source/implbase.cxx"; sourceTree = "<group>"; };
+		BE80E44821B562F600859C97 /* access_control.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = access_control.cxx; path = "../../ios-device/cppuhelper/source/access_control.cxx"; sourceTree = "<group>"; };
+		BE80E44921B562F600859C97 /* shlib.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = shlib.cxx; path = "../../ios-device/cppuhelper/source/shlib.cxx"; sourceTree = "<group>"; };
+		BE80E44A21B562F600859C97 /* factory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = factory.cxx; path = "../../ios-device/cppuhelper/source/factory.cxx"; sourceTree = "<group>"; };
+		BE80E44B21B562F600859C97 /* tdmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tdmgr.cxx; path = "../../ios-device/cppuhelper/source/tdmgr.cxx"; sourceTree = "<group>"; };
+		BE80E44C21B562F600859C97 /* typemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = typemanager.cxx; path = "../../ios-device/cppuhelper/source/typemanager.cxx"; sourceTree = "<group>"; };
+		BE80E44D21B562F600859C97 /* findsofficepath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = findsofficepath.c; path = "../../ios-device/cppuhelper/source/findsofficepath.c"; sourceTree = "<group>"; };
+		BE80E44E21B562F600859C97 /* typeprovider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = typeprovider.cxx; path = "../../ios-device/cppuhelper/source/typeprovider.cxx"; sourceTree = "<group>"; };
+		BE80E44F21B562F600859C97 /* exc_thrower.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = exc_thrower.cxx; path = "../../ios-device/cppuhelper/source/exc_thrower.cxx"; sourceTree = "<group>"; };
+		BE80E45021B562F600859C97 /* component.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component.cxx; path = "../../ios-device/cppuhelper/source/component.cxx"; sourceTree = "<group>"; };
+		BE80E45121B562F600859C97 /* propertysetmixin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = propertysetmixin.cxx; path = "../../ios-device/cppuhelper/source/propertysetmixin.cxx"; sourceTree = "<group>"; };
+		BE80E45221B562F600859C97 /* servicemanager.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = servicemanager.hxx; path = "../../ios-device/cppuhelper/source/servicemanager.hxx"; sourceTree = "<group>"; };
 		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8D772A2136762500AC58EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE8D772B2136762500AC58EA /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -950,6 +981,7 @@
 			isa = PBXGroup;
 			children = (
 				BEA8CDC12199AC7A009FE17E /* comphelper */,
+				BE80E43321B5629300859C97 /* cppuhelper */,
 				BE34D182218CFC6C00815297 /* desktop */,
 				BEA8CDC42199E5ED009FE17E /* i18nlangtag */,
 				BEB6521A216F5D4600B8C09A /* sal */,
@@ -961,6 +993,44 @@
 				BE93D420216CAA52007A39F4 /* vcl */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		BE80E43321B5629300859C97 /* cppuhelper */ = {
+			isa = PBXGroup;
+			children = (
+				BE80E44821B562F600859C97 /* access_control.cxx */,
+				BE80E43621B562F500859C97 /* bootstrap.cxx */,
+				BE80E43921B562F500859C97 /* compat.cxx */,
+				BE80E43521B562F500859C97 /* component_context.cxx */,
+				BE80E45021B562F600859C97 /* component.cxx */,
+				BE80E44521B562F500859C97 /* defaultbootstrap.cxx */,
+				BE80E44F21B562F600859C97 /* exc_thrower.cxx */,
+				BE80E44A21B562F600859C97 /* factory.cxx */,
+				BE80E44D21B562F600859C97 /* findsofficepath.c */,
+				BE80E43F21B562F500859C97 /* gcc3.map */,
+				BE80E43D21B562F500859C97 /* implbase_ex.cxx */,
+				BE80E44721B562F500859C97 /* implbase.cxx */,
+				BE80E44021B562F500859C97 /* implementationentry.cxx */,
+				BE80E44621B562F500859C97 /* interfacecontainer.cxx */,
+				BE80E43A21B562F500859C97 /* loadsharedlibcomponentfactory.hxx */,
+				BE80E43721B562F500859C97 /* macro_expander.cxx */,
+				BE80E44121B562F500859C97 /* macro_expander.hxx */,
+				BE80E43B21B562F500859C97 /* paths.cxx */,
+				BE80E44221B562F500859C97 /* paths.hxx */,
+				BE80E45121B562F600859C97 /* propertysetmixin.cxx */,
+				BE80E43821B562F500859C97 /* propshlp.cxx */,
+				BE80E43421B562F500859C97 /* servicemanager.cxx */,
+				BE80E45221B562F600859C97 /* servicemanager.hxx */,
+				BE80E44921B562F600859C97 /* shlib.cxx */,
+				BE80E44421B562F500859C97 /* supportsservice.cxx */,
+				BE80E44B21B562F600859C97 /* tdmgr.cxx */,
+				BE80E44C21B562F600859C97 /* typemanager.cxx */,
+				BE80E43C21B562F500859C97 /* typemanager.hxx */,
+				BE80E44E21B562F600859C97 /* typeprovider.cxx */,
+				BE80E44321B562F500859C97 /* unourl.cxx */,
+				BE80E43E21B562F500859C97 /* weak.cxx */,
+			);
+			name = cppuhelper;
 			sourceTree = "<group>";
 		};
 		BE8D771E2136762500AC58EA = {
