@@ -420,6 +420,7 @@ L.Control.Menubar = L.Control.extend({
 		this._initializeMenu(this.options.initial);
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
+		map.on('updatepermission', this._onRefresh, this);
 		map.on('addmenu', this._addMenu, this);
 		map.on('commandvalues', this._onInitMenu, this);
 		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
@@ -491,6 +492,37 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
+	_onRefresh: function() {
+		// clear initial menu
+		while (this._menubarCont.hasChildNodes()) {
+			this._menubarCont.removeChild(this._menubarCont.firstChild);
+		}
+
+		// Add document specific menu
+		var docType = this._map.getDocType();
+		if (docType === 'text') {
+			this._initializeMenu(this.options.text);
+		} else if (docType === 'spreadsheet') {
+			this._initializeMenu(this.options.spreadsheet);
+		} else if (docType === 'presentation' || docType === 'drawing') {
+			this._initializeMenu(this.options.presentation);
+		}
+
+		// initialize menubar plugin
+		$('#main-menu').smartmenus({
+			hideOnClick: true,
+			showOnClick: true,
+			hideTimeout: 0,
+			hideDuration: 0,
+			showDuration: 0,
+			showTimeout: 0,
+			collapsibleHideDuration: 0,
+			subIndicatorsPos: 'append',
+			subIndicatorsText: '&#8250;'
+		});
+		$('#main-menu').attr('tabindex', 0);
+	},
+
 	_onStyleMenu: function (e) {
 		if (e.commandName === '.uno:StyleApply') {
 			var style;
@@ -515,39 +547,18 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_onDocLayerInit: function() {
-		// clear initial menu
-		while (this._menubarCont.hasChildNodes()) {
-			this._menubarCont.removeChild(this._menubarCont.firstChild);
-		}
+		this._onRefresh();
 
-		// Add document specific menu
 		var docType = this._map.getDocType();
 		var $docLogo = $('#document-logo');
 		$docLogo.bind('click', {self: this}, this._createDocument);
 		if (docType === 'text') {
 			$docLogo.addClass('writer-icon-img');
-			this._initializeMenu(this.options.text);
 		} else if (docType === 'spreadsheet') {
 			$docLogo.addClass('calc-icon-img');
-			this._initializeMenu(this.options.spreadsheet);
 		} else if (docType === 'presentation' || docType === 'drawing') {
 			$docLogo.addClass('impress-icon-img');
-			this._initializeMenu(this.options.presentation);
 		}
-
-		// initialize menubar plugin
-		$('#main-menu').smartmenus({
-			hideOnClick: true,
-			showOnClick: true,
-			hideTimeout: 0,
-			hideDuration: 0,
-			showDuration: 0,
-			showTimeout: 0,
-			collapsibleHideDuration: 0,
-			subIndicatorsPos: 'append',
-			subIndicatorsText: '&#8250;'
-		});
-		$('#main-menu').attr('tabindex', 0);
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
 		$('#main-menu').bind('mouseenter.smapi', {self: this}, this._onMouseEnter);
