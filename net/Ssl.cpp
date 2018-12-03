@@ -22,7 +22,11 @@ extern "C"
     // Not needed in recent (1.x?) versions.
     struct CRYPTO_dynlock_value
     {
-        std::mutex Mutex;
+    public:
+        void lock() { _mutex.lock(); }
+        void unlock() { _mutex.unlock(); }
+    private:
+        std::mutex _mutex;
     };
 }
 
@@ -180,11 +184,11 @@ void SslContext::dynlock(int mode, struct CRYPTO_dynlock_value* lock, const char
 {
     if (mode & CRYPTO_LOCK)
     {
-        lock->Mutex.lock();
+        lock->lock();
     }
     else
     {
-        lock->Mutex.unlock();
+        lock->unlock();
     }
 }
 
