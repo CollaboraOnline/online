@@ -2094,6 +2094,9 @@ function onCommandResult(e) {
 function onUpdatePermission(e) {
 	var toolbar = w2ui['editbar'];
 
+	// always enabled items
+	var enabledButtons = ['closemobile'];
+
 	// copy the first array
 	var items = toolbar.items.slice();
 	for (var idx in items) {
@@ -2104,7 +2107,10 @@ function onUpdatePermission(e) {
 				toolbar.enable(items[idx].id);
 			}
 		} else {
-			toolbar.disable(items[idx].id);
+			var item = enabledButtons.filter(function(id) { return id === items[idx].id });
+			if (item.length === 0) {
+				toolbar.disable(items[idx].id);
+			}
 		}
 	}
 
