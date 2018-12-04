@@ -175,7 +175,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "signdocument" &&
              tokens[0] != "asksignaturestatus" &&
              tokens[0] != "uploadsigneddocument" &&
-             tokens[0] != "rendershapeselection")
+             tokens[0] != "rendershapeselection" &&
+             tokens[0] != "removesession")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
@@ -360,6 +361,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         docBroker->sendRequestedTiles(shared_from_this());
         return true;
+    }
+    else if (tokens[0] == "removesession") {
+        std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
+        docBroker->broadcastMessage(firstLine);
+        docBroker->removeSession(sessionId);
     }
     else
     {
