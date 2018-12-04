@@ -491,6 +491,14 @@ L.TileLayer = L.GridLayer.extend({
 			var signstatus = textMsg.substring('signaturestatus:'.length + 1);
 			this._map.onChangeSignStatus(signstatus);
 		}
+		else if (textMsg.startsWith('removesession')) {
+			var viewId = parseInt(textMsg.substring('removesession'.length + 1));
+			if (this._map._docLayer._viewId === viewId) {
+				this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
+				this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
+				this._map.remove();
+			}
+		}
 	},
 
 	toggleTileDebugModeImpl: function() {
