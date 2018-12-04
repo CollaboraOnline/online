@@ -834,4 +834,4 @@ msgstr "A enviar..."
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."
-msgstr ""
+msgstr "Criar uma cópia..."
