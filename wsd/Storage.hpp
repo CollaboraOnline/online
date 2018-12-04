@@ -174,10 +174,11 @@ public:
 
     bool isUserModified() const { return _isUserModified; }
 
-    /// To be able to set the WOPI 'is autosave?' header appropriately.
+    /// To be able to set the WOPI 'is autosave/is exitsave?' headers appropriately.
     void setIsAutosave(bool isAutosave) { _isAutosave = isAutosave; }
-
     bool getIsAutosave() const { return _isAutosave; }
+    void setIsExitSave(bool isExitSave) { _isExitSave = isExitSave; }
+    bool isExitSave() const { return _isExitSave; }
 
     void setFileInfo(const FileInfo& fileInfo) { _fileInfo = fileInfo; }
 
@@ -225,6 +226,8 @@ private:
 
     /// This save operation is an autosave.
     bool _isAutosave;
+    /// Saving on exit (when the document is cleaned up from memory)
+    bool _isExitSave;
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;
