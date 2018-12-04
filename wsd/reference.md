@@ -134,6 +134,10 @@ To distinguish autosave vs. explicit user requests to save, the following header
 
 will have the value 'true' when the PutFile is triggered by autosave, and 'false' when triggered by explicit user operation (Save button or menu entry).
 
+When the document gets cleaned up from memory (e.g. when all users disconnect), an automatic save will be triggered. In this case the following header will be set to "true":
+
+    X-LOOL-WOPI-IsExitSave
+
 Detecting external document change
 ----------------------------------
 

@@ -717,6 +717,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
             request.set("X-WOPI-Override", "PUT");
             request.set("X-LOOL-WOPI-IsModifiedByUser", _isUserModified? "true": "false");
             request.set("X-LOOL-WOPI-IsAutosave", _isAutosave? "true": "false");
+            request.set("X-LOOL-WOPI-IsExitSave", isExitSave()? "true": "false");
 
             if (!_forceSave)
             {

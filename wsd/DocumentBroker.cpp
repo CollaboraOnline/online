@@ -962,7 +962,9 @@ bool DocumentBroker::autoSave(const bool force)
     {
         LOG_TRC("Sending forced save command for [" << _docKey << "].");
         // Don't terminate editing as this can be invoked by the admin OOM, but otherwise force saving anyway.
-        sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/ true, /*dontSaveIfUnmodified=*/ true, /*isAutosave=*/ false);
+        sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
+                           /*dontSaveIfUnmodified=*/true, /*isAutosave=*/false,
+                           /*isExitSave=*/true);
     }
     else if (_isModified)
     {
@@ -979,14 +981,17 @@ bool DocumentBroker::autoSave(const bool force)
             timeSinceLastSaveMs >= autoSaveDurationMs)
         {
             LOG_TRC("Sending timed save command for [" << _docKey << "].");
-            sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/ true, /*dontSaveIfUnmodified=*/ true, /*isAutosave=*/ true);
+            sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
+                               /*dontSaveIfUnmodified=*/true, /*isAutosave=*/true,
+                               /*isExitSave=*/false);
         }
     }
 
     return sent;
 }
 
-bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminateEdit, bool dontSaveIfUnmodified, bool isAutosave)
+bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminateEdit,
+                                 bool dontSaveIfUnmodified, bool isAutosave, bool isExitSave)
 {
     assertCorrectThread();
 
@@ -1029,6 +1034,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
 
         assert(_storage);
         _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
+        _storage->setIsExitSave(isExitSave);
 
         const std::string saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);

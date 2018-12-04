@@ -151,6 +151,8 @@ public:
 
     /// To be able to set the WOPI 'is autosave?' header appropriately.
     void setIsAutosave(bool isAutosave) { _isAutosave = isAutosave; }
+    void setIsExitSave(bool isExitSave) { _isExitSave = isExitSave; }
+    bool isExitSave() const { return _isExitSave; }
 
     /// Returns the basic information about the file.
     const FileInfo& getFileInfo() const { return _fileInfo; }
@@ -196,6 +198,8 @@ protected:
 
     /// This save operation is an autosave.
     bool _isAutosave;
+    /// Saving on exit (when the document is cleaned up from memory)
+    bool _isExitSave;
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;
