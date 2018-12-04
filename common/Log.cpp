@@ -44,17 +44,29 @@ namespace Log
     /// Helper to avoid destruction ordering issues.
     struct StaticNameHelper
     {
-        std::atomic<bool> inited;
-        std::string name;
-        std::string id;
+    private:
+        std::atomic<bool> _inited;
+        std::string _name;
+        std::string _id;
+    public:
         StaticNameHelper() :
-            inited(true)
+            _inited(true)
         {
         }
         ~StaticNameHelper()
         {
-            inited = false;
+            _inited = false;
         }
+
+        bool getInited() const { return _inited; }
+
+        void setId(const std::string& id) { _id = id; }
+
+        const std::string& getId() const { return _id; }
+
+        void setName(const std::string& name) { _name = name; }
+
+        const std::string& getName() const { return _name; }
     };
     static StaticNameHelper Source;
 
@@ -105,7 +117,7 @@ namespace Log
 #endif
         Poco::DateTime time;
         snprintf(buffer, len, "%s-%.05lu %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
-                    (Source.inited ? Source.id.c_str() : "<shutdown>"),
+                    (Source.getInited() ? Source.getId().c_str() : "<shutdown>"),
                     osTid,
                     time.year(), time.month(), time.day(),
                     time.hour(), time.minute(), time.second(),
@@ -127,14 +139,14 @@ namespace Log
                     const bool logToFile,
                     const std::map<std::string, std::string>& config)
     {
-        Source.name = name;
+        Source.setName(name);
         std::ostringstream oss;
-        oss << Source.name;
+        oss << Source.getName();
 #ifndef MOBILEAPP // Just one process in a mobile app, the pid is uninteresting.
         oss << '-'
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
 #endif
-        Source.id = oss.str();
+        Source.setId(oss.str());
 
         // Configure the logger.
         AutoPtr<Channel> channel;
@@ -158,7 +170,7 @@ namespace Log
          * after chroot can cause file creation inside the jail instead of outside
          * */
         channel->open();
-        auto& logger = Poco::Logger::create(Source.name, channel, Poco::Message::PRIO_TRACE);
+        auto& logger = Poco::Logger::create(Source.getName(), channel, Poco::Message::PRIO_TRACE);
 
         logger.setLevel(logLevel.empty() ? std::string("trace") : logLevel);
 
@@ -181,7 +193,7 @@ namespace Log
 
     Poco::Logger& logger()
     {
-        return Poco::Logger::get(Source.inited ? Source.name : std::string());
+        return Poco::Logger::get(Source.getInited() ? Source.getName() : std::string());
     }
 
     void shutdown()
