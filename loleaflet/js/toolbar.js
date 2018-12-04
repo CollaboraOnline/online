@@ -2095,22 +2095,22 @@ function onUpdatePermission(e) {
 	var toolbar = w2ui['editbar'];
 
 	// always enabled items
-	var enabledButtons = ['closemobile'];
+	var enabledButtons = ['closemobile', 'undo', 'redo'];
 
 	// copy the first array
 	var items = toolbar.items.slice();
 	for (var idx in items) {
+		var found = enabledButtons.filter(function(id) { return id === items[idx].id });
+		var alwaysEnable = found.length !== 0;
+
 		var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
 		var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
 		if (e.perm === 'edit') {
-			if (!keepDisabled) {
+			if (!keepDisabled || alwaysEnable) {
 				toolbar.enable(items[idx].id);
 			}
-		} else {
-			var item = enabledButtons.filter(function(id) { return id === items[idx].id });
-			if (item.length === 0) {
-				toolbar.disable(items[idx].id);
-			}
+		} else if (!alwaysEnable) {
+			toolbar.disable(items[idx].id);
 		}
 	}
 
