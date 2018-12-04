@@ -11,6 +11,7 @@
 #import "DocumentBrowserViewController.h"
 #import "Document.h"
 #import "DocumentViewController.h"
+#import "TemplateCollectionViewController.h"
 
 @interface DocumentBrowserViewController () <UIDocumentBrowserViewControllerDelegate>
 
@@ -34,6 +35,11 @@
 }
 
 - (void)documentBrowser:(UIDocumentBrowserViewController *)controller didRequestDocumentCreationWithHandler:(void (^)(NSURL * _Nullable, UIDocumentBrowserImportMode))importHandler {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    TemplateCollectionViewController *templateCollectionViewController = [storyBoard instantiateViewControllerWithIdentifier:@"TemplateCollectionViewController"];
+    [self presentViewController:templateCollectionViewController animated:YES completion:nil];
+
+#if 0
     NSURL *newDocumentURL = nil;
 
     // Set the URL for the new document here. Optionally, you can present a template chooser before calling the importHandler.
@@ -43,6 +49,7 @@
     } else {
         importHandler(newDocumentURL, UIDocumentBrowserImportModeNone);
     }
+#endif
 }
 
 -(void)documentBrowser:(UIDocumentBrowserViewController *)controller didPickDocumentURLs:(NSArray<NSURL *> *)documentURLs {

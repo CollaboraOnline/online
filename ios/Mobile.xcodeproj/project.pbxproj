@@ -32,6 +32,9 @@
 		BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* ICU.dat */; };
 		BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* MobileCoreServices.framework */; };
 		BE80E43221AD92F700859C97 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BE80E43121AD92F600859C97 /* Fonts */; };
+		BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE80E45721B68F5700859C97 /* TemplateCollectionViewController.mm */; };
+		BE80E45E21B6CEF200859C97 /* TemplateSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE80E45D21B6CEF200859C97 /* TemplateSectionHeaderView.m */; };
+		BE80E46821B7066D00859C97 /* Templates in Resources */ = {isa = PBXBuildFile; fileRef = BE80E46721B7066C00859C97 /* Templates */; };
 		BE8D772C2136762500AC58EA /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D772B2136762500AC58EA /* AppDelegate.mm */; };
 		BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D772E2136762500AC58EA /* DocumentBrowserViewController.mm */; };
 		BE8D77322136762500AC58EA /* DocumentViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8D77312136762500AC58EA /* DocumentViewController.mm */; };
@@ -370,6 +373,11 @@
 		BE80E45321B56E5000859C97 /* init.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = init.cxx; path = "../../ios-device/desktop/source/lib/init.cxx"; sourceTree = "<group>"; };
 		BE80E45421B56E5000859C97 /* lokclipboard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lokclipboard.cxx; path = "../../ios-device/desktop/source/lib/lokclipboard.cxx"; sourceTree = "<group>"; };
 		BE80E45521B56E5000859C97 /* lokinteractionhandler.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lokinteractionhandler.cxx; path = "../../ios-device/desktop/source/lib/lokinteractionhandler.cxx"; sourceTree = "<group>"; };
+		BE80E45621B68F5000859C97 /* TemplateCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateCollectionViewController.h; sourceTree = "<group>"; };
+		BE80E45721B68F5700859C97 /* TemplateCollectionViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TemplateCollectionViewController.mm; sourceTree = "<group>"; };
+		BE80E45C21B6CEF100859C97 /* TemplateSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateSectionHeaderView.h; sourceTree = "<group>"; };
+		BE80E45D21B6CEF200859C97 /* TemplateSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateSectionHeaderView.m; sourceTree = "<group>"; };
+		BE80E46721B7066C00859C97 /* Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Templates; sourceTree = "<group>"; };
 		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8D772A2136762500AC58EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE8D772B2136762500AC58EA /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -564,6 +572,7 @@
 		BE00F8922139494E001CE2D4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BE80E46721B7066C00859C97 /* Templates */,
 				BE80E43121AD92F600859C97 /* Fonts */,
 				BE8D85BE214055F2009F1860 /* config */,
 				BE8D85BB214055F2009F1860 /* filter */,
@@ -1072,6 +1081,10 @@
 				BE8D77312136762500AC58EA /* DocumentViewController.mm */,
 				BE8D77332136762500AC58EA /* Document.h */,
 				BE8D77342136762500AC58EA /* Document.mm */,
+				BE80E45C21B6CEF100859C97 /* TemplateSectionHeaderView.h */,
+				BE80E45D21B6CEF200859C97 /* TemplateSectionHeaderView.m */,
+				BE80E45621B68F5000859C97 /* TemplateCollectionViewController.h */,
+				BE80E45721B68F5700859C97 /* TemplateCollectionViewController.mm */,
 				BE8D77362136762500AC58EA /* Main.storyboard */,
 				BE8D77392136762600AC58EA /* Assets.xcassets */,
 				BE8D773B2136762600AC58EA /* LaunchScreen.storyboard */,
@@ -1426,6 +1439,7 @@
 				BE8D77382136762500AC58EA /* Main.storyboard in Resources */,
 				BE8D85D2214055F3009F1860 /* program in Resources */,
 				BE8D85CB214055F3009F1860 /* share in Resources */,
+				BE80E46821B7066D00859C97 /* Templates in Resources */,
 				BE00F8A621396585001CE2D4 /* loading.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1440,6 +1454,7 @@
 				BEA2835D21498AD400848631 /* Socket.cpp in Sources */,
 				BE5EB5C4213FE29900E0826C /* Util.cpp in Sources */,
 				BEA283582146945500848631 /* ChildSession.cpp in Sources */,
+				BE80E45E21B6CEF200859C97 /* TemplateSectionHeaderView.m in Sources */,
 				BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */,
 				BE5EB5D22140039100E0826C /* LOOLWSD.cpp in Sources */,
 				BE5EB5C6213FE29900E0826C /* SigUtil.cpp in Sources */,
@@ -1452,6 +1467,7 @@
 				BE8D77402136762600AC58EA /* main.m in Sources */,
 				BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */,
 				BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */,
+				BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */,
 				BE8D77352136762500AC58EA /* Document.mm in Sources */,
 				BE5EB5C7213FE29900E0826C /* Protocol.cpp in Sources */,
 				BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */,
