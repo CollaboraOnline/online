@@ -298,6 +298,7 @@ pot:
 		src/control/Control.Menubar.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.Tabs.js \
+		src/control/Signing.js \
 		src/control/Ruler.js \
 		src/control/Toolbar.js \
 		src/core/Socket.js \

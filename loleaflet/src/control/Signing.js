@@ -3,7 +3,7 @@
  * Document Signing
  */
 
-/* global window setupViamAPI w2ui vex Promise $ */
+/* global window setupViamAPI w2ui vex Promise $ _ */
 
 var library = null;
 var identity = null;
@@ -150,7 +150,7 @@ function adjustUIState() {
 
 function vereignPinCodeDialog(selectedIdentityKey) {
 	vex.dialog.open({
-		message: 'PIN Code',
+		message: _('PIN Code'),
 		input: '<input name="pincode" type="text" value="" required />',
 		callback: function(data) {
 			console.log(data.pincode);
@@ -213,7 +213,7 @@ function vereignRecoverFromEmail() {
 		return;
 	}
 	vex.dialog.open({
-		message: 'Login from email or mobile number',
+		message: _('Login from email or mobile number'),
 		input: '<input name="emailOrMobileNumber" type="text" value="" required />',
 		callback: function(data) {
 			if (data.emailOrMobileNumber) {
@@ -223,8 +223,8 @@ function vereignRecoverFromEmail() {
 						library.identityRestoreAccess(result.data, data.emailOrMobileNumber).then(function(result) {
 							if (isSuccess(result)) {
 								vex.dialog.open({
-									message: 'PIN Code',
-									input: '<p>Check your email</p><input name="pincode" type="text" value="" required />',
+									message: _('PIN Code'),
+									input: '<p>' + _('Check your email') + '</p><input name="pincode" type="text" value="" required />',
 									callback: function(data) {
 										console.log(data.pincode);
 										if (data.pincode) {
@@ -447,27 +447,27 @@ L.Map.include({
 		var statusText = '';
 		switch (signstatus) {
 		case '0':
-			currentDocumentSigningStatus = 'Not Signed';
+			currentDocumentSigningStatus = _('Not Signed');
 			break;
 		case '1':
-			statusText = 'Document signed and validated.';
-			currentDocumentSigningStatus = 'Signed and validated';
+			statusText = _('Document signed and validated.');
+			currentDocumentSigningStatus = _('Signed and validated');
 			break;
 		case '2':
-			statusText = 'Document signed but signatue is broken.';
-			currentDocumentSigningStatus = 'Signature broken';
+			statusText = _('Document signed but signature is broken.');
+			currentDocumentSigningStatus = _('Signature broken');
 			break;
 		case '3':
-			statusText = 'Document signed but the document is already modified.';
-			currentDocumentSigningStatus = 'Signed but document modified';
+			statusText = _('Document signed but the document is already modified.');
+			currentDocumentSigningStatus = _('Signed but document modified');
 			break;
 		case '4':
-			statusText = 'Document signed but can not be validated.';
-			currentDocumentSigningStatus = 'Signed but not validated';
+			statusText = _('Document signed but can not be validated.');
+			currentDocumentSigningStatus = _('Signed but not validated');
 			break;
 		case '5':
-			statusText = 'Document signed but not all files are signed.';
-			currentDocumentSigningStatus = 'Signed but not all files are signed';
+			statusText = _('Document signed but not all files are signed.');
+			currentDocumentSigningStatus = _('Signed but not all files are signed');
 			break;
 		}
 
