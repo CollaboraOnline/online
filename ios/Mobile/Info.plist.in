@@ -51,16 +51,6 @@
         </dict>
         <dict>
             <key>CFBundleTypeName</key>
-            <string>OpenDocument Text Template</string>
-            <key>LSHandlerRank</key>
-            <string>Owner</string>
-            <key>LSItemContentTypes</key>
-            <array>
-                <string>org.oasis-open.opendocument.text-template</string>
-            </array>
-        </dict>
-        <dict>
-            <key>CFBundleTypeName</key>
             <string>OpenDocument Flat Text</string>
             <key>LSHandlerRank</key>
             <string>Default</string>
@@ -252,23 +242,6 @@
             <dict>
                 <key>public.filename-extension</key>
                 <string>odt</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>UTTypeConformsTo</key>
-            <array>
-                <string>public.data</string>
-            </array>
-            <key>UTTypeDescription</key>
-            <string>OpenDocument Text Template</string>
-            <key>UTTypeIconFiles</key>
-            <array/>
-            <key>UTTypeIdentifier</key>
-            <string>org.oasis-open.opendocument.text-template</string>
-            <key>UTTypeTagSpecification</key>
-            <dict>
-                <key>public.filename-extension</key>
-                <string>ott</string>
             </dict>
         </dict>
         <dict>
