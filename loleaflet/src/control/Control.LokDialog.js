@@ -395,7 +395,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	focus: function(dlgId) {
-		if (!this._isOpen(dlgId) || !this._dialogs[dlgId].input)
+		if (!this._isOpen(dlgId) || !this._dialogs[dlgId].input || !this._dialogs[dlgId].cursorVisible)
 			return;
 
 		if (this._dialogs[dlgId].cursorVisible)
