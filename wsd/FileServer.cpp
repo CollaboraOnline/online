@@ -670,9 +670,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "X-XSS-Protection: 1; mode=block\r\n"
         << "Referrer-Policy: no-referrer\r\n";
 
+    // Document signing: if endpoint URL is configured, whitelist that for
+    // iframe purposes.
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
-           << "frame-src 'self' blob:; "
+           << "frame-src 'self' blob: " << documentSigningURL << "; "
            << "connect-src 'self' " << host << "; "
            << "script-src 'unsafe-inline' 'self'; "
            << "style-src 'self' 'unsafe-inline'; "
