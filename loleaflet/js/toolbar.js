@@ -1471,6 +1471,7 @@ function onDocLayerInit() {
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
 		$('#spreadsheet-toolbar').hide();
+		$('#spreadsheet-row-column-frame').hide();
 		$('#presentation-toolbar').hide();
 
 		break;
@@ -1499,6 +1500,7 @@ function onDocLayerInit() {
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
 		$('#spreadsheet-toolbar').hide();
+		$('#spreadsheet-row-column-frame').hide();
 
 		break;
 	case 'drawing':
@@ -1507,6 +1509,7 @@ function onDocLayerInit() {
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
 		$('#spreadsheet-toolbar').hide();
+		$('#spreadsheet-row-column-frame').hide();
 
 		break;
 	}
