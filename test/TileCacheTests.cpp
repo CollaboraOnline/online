@@ -1238,7 +1238,6 @@ void TileCacheTests::testTileWireIDHandling()
 
     // For the second input wsd will send one tile, since some of them are indentical
     arrivedTiles = 0;
-    gotTile = false;
     do
     {
         std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
@@ -1299,7 +1298,6 @@ void TileCacheTests::testTileProcessed()
 
     // Now we can get the remaining tiles
     int arrivedTile2 = 0;
-    gotTile = false;
     do
     {
         std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
@@ -1391,7 +1389,6 @@ void TileCacheTests::testTileBeingRenderedHandling()
         assertResponseString(socket, "invalidatetiles:", testname);
 
         arrivedTiles = 0;
-        gotTile = false;
         do
         {
             std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
@@ -1449,7 +1446,6 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
 
     // For the second input wsd will send one tile, since other tiles are indentical
     arrivedTiles = 0;
-    gotTile = false;
     do
     {
         std::vector<char> tile = getResponseMessage(socket1, "tile:", testname, 1000);
@@ -1466,7 +1462,6 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
 
     // We expect three tiles sent to the second client
     arrivedTiles = 0;
-    gotTile = false;
     do
     {
         std::vector<char> tile = getResponseMessage(socket2, "tile:", testname, 1000);
@@ -1511,7 +1506,6 @@ void TileCacheTests::testLimitTileVersionsOnFly()
     sendChar(socket, 'x', skNone, testname);
 
     // Handle all tiles sent by wsd
-    getTileResp = false;
     do
     {
         std::string tile = getResponseString(socket, "tile:", testname, 1000);
