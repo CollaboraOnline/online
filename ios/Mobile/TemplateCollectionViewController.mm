@@ -111,9 +111,7 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName)
 
     self.importHandler(newURL, UIDocumentBrowserImportModeMove);
 
-    [self dismissViewControllerAnimated:YES completion:^ {
-            NSLog(@"foo");
-        }];
+    [self dismissViewControllerAnimated:YES completion:nil];
 
     return YES;
 }
