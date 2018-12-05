@@ -320,6 +320,12 @@ L.Map.include({
 						};
 						var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
 						map._socket.sendMessage(blob);
+						// Let the user know that we're done.
+						map.fire('infobar', {
+							msg: _('Document uploaded.'),
+							action: null,
+							actionLabel: null
+						});
 					}
 				}
 			}
@@ -451,6 +457,8 @@ L.Map.include({
 	},
 	onChangeSignStatus: function(signstatus) {
 		var statusText = '';
+		// This is meant to be in sync with core.git
+		// include/sfx2/signaturestate.hxx, SignatureState.
 		switch (signstatus) {
 		case '0':
 			currentDocumentSigningStatus = _('Not Signed');
