@@ -6,8 +6,26 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#import <LibreOfficeKit/LibreOfficeKit.h>
+#import <LibreOfficeKit/LibreOfficeKitInit.h>
+
 #import "TemplateCollectionViewController.h"
 #import "TemplateSectionHeaderView.h"
+
+static NSString *mapTemplateExtensionToActual(NSString *templateName)
+{
+    NSString *baseName = [templateName stringByDeletingPathExtension];
+    NSString *extension = [templateName substringFromIndex:baseName.length];
+
+    if ([extension isEqualToString:@".ott"])
+        return [baseName stringByAppendingString:@".odt"];
+    else if ([extension isEqualToString:@".ots"])
+        return [baseName stringByAppendingString:@".ods"];
+    else if ([extension isEqualToString:@".otp"])
+        return [baseName stringByAppendingString:@".odp"];
+    else
+        assert(false);
+}
 
 @implementation TemplateCollectionViewController
 
@@ -73,6 +91,31 @@
         header.title.text = @"Presentation";
 
     return header;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSURL *selectedTemplate = templates[[indexPath indexAtPosition:0]][[indexPath indexAtPosition:1]];
+
+    NSURL *cacheDirectory = [NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask][0];
+    NSURL *newURL = [cacheDirectory URLByAppendingPathComponent:mapTemplateExtensionToActual(selectedTemplate.lastPathComponent)
+                                                    isDirectory:NO];
+
+    // Load the template into LibreOffice core, save as the corresponding document type (with the
+    // same basename), and then proceed to edit that.
+    LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
+    kit->pClass->registerCallback(kit, [](int, const char *, void*){}, nullptr);
+    LibreOfficeKitDocument *doc = kit->pClass->documentLoad(kit, [[selectedTemplate absoluteString] UTF8String]);
+    doc->pClass->saveAs(doc, [[newURL absoluteString] UTF8String], nullptr, nullptr);
+    doc->pClass->destroy(doc);
+    kit->pClass->destroy(kit);
+
+    self.importHandler(newURL, UIDocumentBrowserImportModeMove);
+
+    [self dismissViewControllerAnimated:YES completion:^ {
+            NSLog(@"foo");
+        }];
+
+    return YES;
 }
 
 @end

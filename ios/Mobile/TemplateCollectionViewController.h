@@ -14,6 +14,8 @@
     NSArray<NSURL*> *templates[3];
 }
 
+@property (copy) void (^ _Nullable importHandler)(NSURL * _Nullable, UIDocumentBrowserImportMode);
+
 @end
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:

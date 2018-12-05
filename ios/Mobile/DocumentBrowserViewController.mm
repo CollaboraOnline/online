@@ -37,19 +37,9 @@
 - (void)documentBrowser:(UIDocumentBrowserViewController *)controller didRequestDocumentCreationWithHandler:(void (^)(NSURL * _Nullable, UIDocumentBrowserImportMode))importHandler {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TemplateCollectionViewController *templateCollectionViewController = [storyBoard instantiateViewControllerWithIdentifier:@"TemplateCollectionViewController"];
+
+    templateCollectionViewController.importHandler = importHandler;
     [self presentViewController:templateCollectionViewController animated:YES completion:nil];
-
-#if 0
-    NSURL *newDocumentURL = nil;
-
-    // Set the URL for the new document here. Optionally, you can present a template chooser before calling the importHandler.
-    // Make sure the importHandler is always called, even if the user cancels the creation request.
-    if (newDocumentURL != nil) {
-        importHandler(newDocumentURL, UIDocumentBrowserImportModeMove);
-    } else {
-        importHandler(newDocumentURL, UIDocumentBrowserImportModeNone);
-    }
-#endif
 }
 
 -(void)documentBrowser:(UIDocumentBrowserViewController *)controller didPickDocumentURLs:(NSArray<NSURL *> *)documentURLs {
