@@ -357,7 +357,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	focus: function(dlgId) {
-		if (!this._isOpen(dlgId) || !this._dialogs[dlgId].input)
+		if (!this._isOpen(dlgId) || !this._dialogs[dlgId].input || !this._dialogs[dlgId].cursorVisible)
 			return;
 
 		this._dialogs[dlgId].input.focus();
@@ -556,7 +556,7 @@ L.Control.LokDialog = L.Control.extend({
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
-			dlgInput.focus();
+			this.focus(id);
 		}, this);
 		L.DomEvent.on(dlgInput,
 		              'keyup keypress keydown compositionstart compositionupdate compositionend textInput',
