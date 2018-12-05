@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:42+0100\n"
+"POT-Creation-Date: 2018-12-05 20:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -374,7 +374,7 @@ msgstr ""
 msgid "Entering text mode"
 msgstr ""
 
-#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1494
+#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1495
 msgid "Text Language"
 msgstr ""
 
@@ -422,52 +422,52 @@ msgstr ""
 msgid "Word Counter"
 msgstr ""
 
-#: js/toolbar.js:1489
+#: js/toolbar.js:1490
 msgid "Number of Slides"
 msgstr ""
 
-#: js/toolbar.js:1525
+#: js/toolbar.js:1528
 msgid "%n users"
 msgstr ""
 
-#: js/toolbar.js:1526
+#: js/toolbar.js:1529
 msgid "1 user"
 msgstr ""
 
-#: js/toolbar.js:1527
+#: js/toolbar.js:1530
 msgid "0 users"
 msgstr ""
 
-#: js/toolbar.js:1657
+#: js/toolbar.js:1660
 msgid "Document saved"
 msgstr ""
 
-#: js/toolbar.js:1807
+#: js/toolbar.js:1810
 msgid "Style"
 msgstr ""
 
-#: js/toolbar.js:1829
+#: js/toolbar.js:1832
 msgid "Font"
 msgstr ""
 
-#: js/toolbar.js:1862
+#: js/toolbar.js:1865
 msgid "Previous slide"
 msgstr ""
 
-#: js/toolbar.js:1863
+#: js/toolbar.js:1866
 msgid "Next slide"
 msgstr ""
 
-#: js/toolbar.js:1925
+#: js/toolbar.js:1928
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: js/toolbar.js:2159 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2162 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr ""
 
-#: js/toolbar.js:2165
+#: js/toolbar.js:2168
 msgid "Readonly"
 msgstr ""
 
@@ -649,59 +649,63 @@ msgstr ""
 msgid "Enter new sheet name"
 msgstr ""
 
-#: src/control/Signing.js:153 src/control/Signing.js:226
+#: src/control/Signing.js:156 src/control/Signing.js:229
 msgid "PIN Code"
 msgstr ""
 
-#: src/control/Signing.js:216
+#: src/control/Signing.js:219
 msgid "Login from email or mobile number"
 msgstr ""
 
-#: src/control/Signing.js:227
+#: src/control/Signing.js:230
 msgid "Check your email"
 msgstr ""
 
-#: src/control/Signing.js:450
+#: src/control/Signing.js:325
+msgid "Document uploaded."
+msgstr ""
+
+#: src/control/Signing.js:464
 msgid "Not Signed"
 msgstr ""
 
-#: src/control/Signing.js:453
+#: src/control/Signing.js:467
 msgid "Document signed and validated."
 msgstr ""
 
-#: src/control/Signing.js:454
+#: src/control/Signing.js:468
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:457
+#: src/control/Signing.js:471
 msgid "Document signed but signature is broken."
 msgstr ""
 
-#: src/control/Signing.js:458
+#: src/control/Signing.js:472
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:461
+#: src/control/Signing.js:475
 msgid "Document signed but the document is already modified."
 msgstr ""
 
-#: src/control/Signing.js:462
+#: src/control/Signing.js:476
 msgid "Signed but document modified"
 msgstr ""
 
-#: src/control/Signing.js:465
+#: src/control/Signing.js:479
 msgid "Document signed but can not be validated."
 msgstr ""
 
-#: src/control/Signing.js:466
+#: src/control/Signing.js:480
 msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:469
+#: src/control/Signing.js:483
 msgid "Document signed but not all files are signed."
 msgstr ""
 
-#: src/control/Signing.js:470
+#: src/control/Signing.js:484
 msgid "Signed but not all files are signed"
 msgstr ""
 
