@@ -110,6 +110,9 @@ function updateCurrentPassport() {
 }
 
 function adjustUIState() {
+	if (w2ui['document-signing-bar'] === undefined)
+		return;
+
 	if (library && identity) {
 		w2ui['document-signing-bar'].hide('login');
 		w2ui['document-signing-bar'].show('logout');
@@ -264,18 +267,21 @@ function vereignRestoreIdentity() {
 
 L.Map.include({
 	showSignDocument: function() {
+		$('#document-signing-bar').show();
 		this.initializeLibrary();
 		oldtoolbarSize = $('#document-container').css('top');
 
 		$('#document-container').css('top', '110px');
 	},
 	hideSignDocument: function() {
+		$('#document-signing-bar').hide();
 		library = null;
 		identity = null;
 		currentPassport = null;
 		$('#document-container').css('top', oldtoolbarSize);
 	},
 	signingInitializeBar: function() {
+		$('#document-signing-bar').hide();
 		adjustUIState();
 	},
 	signDocument: function() {
