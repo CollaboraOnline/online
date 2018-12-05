@@ -439,6 +439,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	_onStatusMsg: function (textMsg) {
 		var command = this._map._socket.parseServerCmd(textMsg);
+		// Since we have two status commands, remove them so we store and compare payloads only.
+		textMsg = textMsg.replace('status: ', '');
+		textMsg = textMsg.replace('statusupdate: ', '');
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
