@@ -405,13 +405,13 @@ L.Control.LokDialog = L.Control.extend({
 
 		this._createDialogCursor(strId);
 		var dlgInput = this._createDialogInput(strId);
-		this._setupWindowEvents(id, dialogCanvas, dlgInput);
+		this._setupWindowEvents(id, dialogCanvas, dlgInput, true);
 
 		this._currentId = id;
 		this._sendPaintWindow(id, this._createRectStr(id));
 	},
 
-	_setupWindowEvents: function(id, canvas, dlgInput) {
+	_setupWindowEvents: function(id, canvas, dlgInput, zooming) {
 		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(canvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
@@ -449,44 +449,46 @@ L.Control.LokDialog = L.Control.extend({
 		});
 
 		// Zooming dialogs
-		var targetId = toZoomTargetId(canvas.id);
-		var zoomTarget = $('#' + targetId).parent().get(0);
-		var state = {
-			startX: 0,
-			startY: 0,
-			initScale: 1
-		}
-		var transformation = {
-			translate: { x: 0, y: 0 },
-			scale: 1,
-			angle: 0,
-			rx: 0,
-			ry: 0,
-			rz: 0
-		};
-
-		zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state});
-
-		var hammerContent = new Hammer(canvas);
-		var hammerAll = new Hammer(zoomTarget);
-
-		hammerContent.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-		hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-		hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
-
-		hammerContent.on('panstart panmove', this.onPan);
-		hammerAll.on('panstart panmove', this.onPan);
-		hammerAll.on('pinchstart pinchmove', this.onPinch);
-		hammerAll.on('hammer.input', function(ev) {
-			if (ev.isFinal) {
-				var id = toZoomTargetId(ev.target.id);
-				var target = findZoomTarget(id);
-				if (target) {
-					target.initialState.startX = target.transformation.translate.x;
-					target.initialState.startY = target.transformation.translate.y;
-				}
+		if (zooming == true) {
+			var targetId = toZoomTargetId(canvas.id);
+			var zoomTarget = $('#' + targetId).parent().get(0);
+			var state = {
+				startX: 0,
+				startY: 0,
+				initScale: 1
 			}
-		});
+			var transformation = {
+				translate: { x: 0, y: 0 },
+				scale: 1,
+				angle: 0,
+				rx: 0,
+				ry: 0,
+				rz: 0
+			};
+
+			zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state});
+
+			var hammerContent = new Hammer(canvas);
+			var hammerAll = new Hammer(zoomTarget);
+
+			hammerContent.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+			hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+			hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
+
+			hammerContent.on('panstart panmove', this.onPan);
+			hammerAll.on('panstart panmove', this.onPan);
+			hammerAll.on('pinchstart pinchmove', this.onPinch);
+			hammerAll.on('hammer.input', function(ev) {
+				if (ev.isFinal) {
+					var id = toZoomTargetId(ev.target.id);
+					var target = findZoomTarget(id);
+					if (target) {
+						target.initialState.startX = target.transformation.translate.x;
+						target.initialState.startY = target.transformation.translate.y;
+					}
+				}
+			});
+		}
 	},
 
 	_postWindowCompositionEvent: function(winid, type, text) {
