@@ -514,6 +514,10 @@ L.Control.LokDialog = L.Control.extend({
 				this._resizeSidebar(strId, width);
 			}
 
+			// Hide cursor.
+			this._currentDeck.cursorVisible = false;
+			$('#' + strId + '-cursor').css({display: 'none'});
+
 			// update the underlying canvas
 			var panelCanvas = L.DomUtil.get(this._currentDeck.strId + '-canvas');
 			this._setCanvasWidthHeight(panelCanvas, width, height);
