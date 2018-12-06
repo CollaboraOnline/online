@@ -47,7 +47,7 @@
                     <collectionView key="view" clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" id="cHi-RU-96O">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="w0h-io-kZq">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="50" height="50"/>
@@ -56,28 +56,28 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="ppW-Sx-T3H">
-                                <rect key="frame" x="50" y="50" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="50" y="50" width="150" height="150"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjg-QH-lLg">
-                                            <rect key="frame" x="7" y="75" width="93" height="25"/>
+                                            <rect key="frame" x="0.0" y="129.5" width="150" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="79y-w8-uiT">
-                                            <rect key="frame" x="7" y="0.0" width="93" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="121.5"/>
                                         </imageView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="fjg-QH-lLg" firstAttribute="top" secondItem="79y-w8-uiT" secondAttribute="bottom" constant="8" symbolic="YES" id="FMl-Ul-D9h"/>
-                                    <constraint firstItem="fjg-QH-lLg" firstAttribute="width" secondItem="79y-w8-uiT" secondAttribute="width" id="kOC-Jx-Eho"/>
+                                    <constraint firstAttribute="bottom" secondItem="fjg-QH-lLg" secondAttribute="bottom" id="AT2-XZ-lxx"/>
+                                    <constraint firstItem="79y-w8-uiT" firstAttribute="top" secondItem="ppW-Sx-T3H" secondAttribute="top" id="Qao-Rw-z5w"/>
                                 </constraints>
-                                <size key="customSize" width="100" height="100"/>
+                                <size key="customSize" width="150" height="150"/>
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="SectionHeaderView" id="Vbs-oR-qri" customClass="TemplateSectionHeaderView">
@@ -88,7 +88,7 @@
                                     <rect key="frame" x="8" y="0.0" width="359" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>

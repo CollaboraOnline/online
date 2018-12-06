@@ -58,8 +58,11 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName)
     UIImageView *image = (UIImageView *)[cell viewWithTag:1];
     UILabel *title = (UILabel *)[cell viewWithTag:2];
 
-    // FIXME: Just use a dummy image for now
-    image.image = [UIImage imageNamed:@"AppIcon"];
+    NSString *templateThumbnail = [[templates[[indexPath indexAtPosition:0]][[indexPath indexAtPosition:1]] path] stringByAppendingString:@".png"];
+    if ([NSFileManager.defaultManager fileExistsAtPath:templateThumbnail])
+          image.image = [UIImage imageWithContentsOfFile:templateThumbnail];
+    else
+          image.image = [UIImage imageNamed:@"AppIcon"];
 
     NSString *fileName = [templates[[indexPath indexAtPosition:0]][[indexPath indexAtPosition:1]] lastPathComponent];
 
