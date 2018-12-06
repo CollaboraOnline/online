@@ -23,6 +23,7 @@ openssl genrsa -out "certs/servers/localhost/privkey.pem" 2048 -key "certs/serve
 openssl req -key "certs/servers/localhost/privkey.pem" -new -sha256 -out "certs/tmp/localhost.csr.pem" -subj "/C=DE/ST=BW/L=Stuttgart/O=Dummy Authority/CN=localhost"
 openssl x509 -req -in certs/tmp/localhost.csr.pem -CA certs/ca/root.crt.pem -CAkey certs/ca/root.key.pem -CAcreateserial -out certs/servers/localhost/cert.pem -days 9131
 mv certs/servers/localhost/privkey.pem /etc/loolwsd/key.pem
+chown lool: /etc/loolwsd/key.pem
 mv certs/servers/localhost/cert.pem /etc/loolwsd/cert.pem
 mv certs/ca/root.crt.pem /etc/loolwsd/ca-chain.cert.pem
 fi
