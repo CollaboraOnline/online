@@ -12,8 +12,7 @@
 #import "TemplateCollectionViewController.h"
 #import "TemplateSectionHeaderView.h"
 
-static NSString *mapTemplateExtensionToActual(NSString *templateName)
-{
+static NSString *mapTemplateExtensionToActual(NSString *templateName) {
     NSString *baseName = [templateName stringByDeletingPathExtension];
     NSString *extension = [templateName substringFromIndex:baseName.length];
 
@@ -29,7 +28,7 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName)
 
 @implementation TemplateCollectionViewController
 
--(void)viewDidLoad {
+- (void)viewDidLoad {
 
     // Here we should scan for available templates.
 
@@ -59,10 +58,13 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName)
     UILabel *title = (UILabel *)[cell viewWithTag:2];
 
     NSString *templateThumbnail = [[templates[[indexPath indexAtPosition:0]][[indexPath indexAtPosition:1]] path] stringByAppendingString:@".png"];
+    UIImage *thumbnail;
     if ([NSFileManager.defaultManager fileExistsAtPath:templateThumbnail])
-          image.image = [UIImage imageWithContentsOfFile:templateThumbnail];
+        thumbnail = [UIImage imageWithContentsOfFile:templateThumbnail];
     else
-          image.image = [UIImage imageNamed:@"AppIcon"];
+        thumbnail = [UIImage imageNamed:@"AppIcon"];
+
+    image.image = thumbnail;
 
     NSString *fileName = [templates[[indexPath indexAtPosition:0]][[indexPath indexAtPosition:1]] lastPathComponent];
 
