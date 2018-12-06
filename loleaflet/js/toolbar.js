@@ -853,6 +853,8 @@ function initMobileToolbar(toolItems) {
 		items: [
 			{type: 'button',  id: 'closemobile',  img: 'closemobile'},
 			{type: 'spacer'},
+			{type: 'button',  id: 'prev', img: 'prev', hint: _UNO('.uno:PageUp', 'text'), hidden: true},
+			{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text'), hidden: true},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 			{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
@@ -870,6 +872,13 @@ function initMobileToolbar(toolItems) {
 		onClick: function (e) {
 			onClick(e, e.target);
 			hideTooltip(this, e.target);
+		},
+		onRefresh: function() {
+			var docType = map.getDocType();
+			if (docType === 'presentation') {
+				this.show('prev');
+				this.show('next');
+			}
 		}
 	});
 	toolbar.bind('touchstart', function(e) {
