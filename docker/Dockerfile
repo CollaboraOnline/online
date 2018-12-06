@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 # get the latest fixes
 RUN apt-get update && apt-get upgrade -y
@@ -13,13 +13,7 @@ RUN apt-get update && apt-get upgrade -y
 # install apt-transport-https in order to set up repo for Poco
 # install adduser, findutils and cpio that we need later
 # install an editor
-RUN apt-get -y install apt-transport-https locales-all libpng12-0 libxinerama1 libgl1-mesa-glx libfontconfig1 libfreetype6 libxrender1 libxcb-shm0 libxcb-render0 adduser cpio findutils nano
-
-# set up 3rd party repo of Poco, dependency of loolwsd
-RUN echo "deb https://collaboraoffice.com/repos/Poco/ /" >> /etc/apt/sources.list.d/poco.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0C54D189F4BA284D
-RUN apt-get update
-RUN apt-get -y install libpoco*60
+RUN apt-get -y install apt-transport-https locales-all libpng12-0 libxinerama1 libgl1-mesa-glx libfontconfig1 libfreetype6 libxrender1 libxcb-shm0 libxcb-render0 adduser cpio findutils nano libpoco*50
 
 # tdf#117557 - Add CJK Fonts to LibreOffice Online Docker Image
 RUN apt-get -y install fonts-wqy-zenhei fonts-wqy-microhei fonts-droid-fallback fonts-noto-cjk
