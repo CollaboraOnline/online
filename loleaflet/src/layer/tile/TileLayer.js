@@ -1600,7 +1600,10 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._map._clipboardContainer.showCursor();
-		this._map.focus();
+		if (!L.Browser.mobile) {
+			// On mobile, this is causing some key input to get lost.
+			this._map.focus();
+		}
 	},
 
 	// Update cursor layer (blinking cursor).
