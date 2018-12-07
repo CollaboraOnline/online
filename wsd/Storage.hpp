@@ -159,7 +159,7 @@ public:
         _jailedFilePathAnonym = newPath;
     }
 
-    void setLoaded(bool isLoaded) { _isLoaded = isLoaded; }
+    void setLoaded(bool loaded) { _isLoaded = loaded; }
 
     bool isLoaded() const { return _isLoaded; }
 
@@ -170,14 +170,14 @@ public:
     bool getForceSave() const { return _forceSave; }
 
     /// To be able to set the WOPI extension header appropriately.
-    void setUserModified(bool isUserModified) { _isUserModified = isUserModified; }
+    void setUserModified(bool userModified) { _isUserModified = userModified; }
 
     bool isUserModified() const { return _isUserModified; }
 
     /// To be able to set the WOPI 'is autosave/is exitsave?' headers appropriately.
     void setIsAutosave(bool isAutosave) { _isAutosave = isAutosave; }
     bool getIsAutosave() const { return _isAutosave; }
-    void setIsExitSave(bool isExitSave) { _isExitSave = isExitSave; }
+    void setIsExitSave(bool exitSave) { _isExitSave = exitSave; }
     bool isExitSave() const { return _isExitSave; }
 
     void setFileInfo(const FileInfo& fileInfo) { _fileInfo = fileInfo; }
