@@ -1790,6 +1790,45 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	// Update dragged graphics selection
+	_onGraphicMove: function (e) {
+		if (!e.pos) { return; }
+		var aPos = this._latLngToTwips(e.pos);
+		if (e.type === 'graphicmovestart') {
+			this._graphicMarker.isDragged = true;
+			this._graphicMarker._startPos = aPos;
+		}
+		else if (e.type === 'graphicmoveend') {
+			var deltaPos = aPos.subtract(this._graphicMarker._startPos);
+			var newPos = this._graphicSelectionTwips.min.add(deltaPos);
+			var size = this._graphicSelectionTwips.getSize();
+
+			// try to keep shape inside document
+			if (newPos.x + size.x > this._docWidthTwips)
+				newPos.x = this._docWidthTwips - size.x;
+			if (newPos.x < 0)
+				newPos.x = 0;
+
+			if (newPos.y + size.y > this._docHeightTwips)
+				newPos.y = this._docHeightTwips - size.y;
+			if (newPos.y < 0)
+				newPos.y = 0;
+
+			var param = {
+				TransformPosX: {
+					type: 'long',
+					value: newPos.x
+				},
+				TransformPosY: {
+					type: 'long',
+					value: newPos.y
+				}
+			};
+			this._map.sendUnoCommand('.uno:TransformDialog ', param);
+			this._graphicMarker.isDragged = false;
+		}
+	},
+
 	// Update dragged graphics selection resize.
 	_onGraphicEdit: function (e) {
 		if (!e.pos) { return; }
@@ -2000,7 +2039,7 @@ L.TileLayer = L.GridLayer.extend({
 				return;
 			}
 
-			this._graphicMarker.addEventParent(this._map);
+			this._graphicMarker.on('graphicmovestart graphicmoveend', this._onGraphicMove, this);
 			this._graphicMarker.on('scalestart scaleend', this._onGraphicEdit, this);
 			this._graphicMarker.on('rotatestart rotateend', this._onGraphicRotate, this);
 			this._map.addLayer(this._graphicMarker);
@@ -2008,7 +2047,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.transform.enable({uniformScaling: !this._isGraphicAngleDivisibleBy90()});
 		}
 		else if (this._graphicMarker) {
-			this._graphicMarker.removeEventParent(this._map);
+			this._graphicMarker.off('graphicmovestart graphicmoveend', this._onGraphicMove, this);
 			this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
 			this._graphicMarker.off('rotatestart rotateend', this._onGraphicRotate, this);
 			this._graphicMarker.dragging.disable();

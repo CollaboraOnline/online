@@ -24,11 +24,48 @@ L.SVGGroup = L.Layer.extend({
 		var size = L.bounds(this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
 			this._map.latLngToLayerPoint(this._bounds.getSouthEast())).getSize();
 
+		if (doc.lastChild.localName !== 'svg')
+			return;
+
+		L.DomUtil.remove(this._rect._path);
 		this._svg = this._path.appendChild(doc.lastChild);
+		this._svg.setAttribute('opacity', 0);
 		this._svg.setAttribute('width', size.x);
 		this._svg.setAttribute('height', size.y);
-		this._svg.setAttribute('display', 'none');
+		this._svg.setAttribute('pointer-events', 'visiblePainted');
+		this._dragShape = this._svg;
+		L.DomEvent.on(this._svg, 'mousedown', this._onDragStart, this);
+
 		this._update();
+	},
+
+	_onDragStart: function(evt) {
+		if (!this._dragShape)
+			return;
+
+		this._showEmbeddedSVG();
+		L.DomEvent.on(this._dragShape, 'mouseup', this._onDragEnd, this);
+
+		var data = {
+			originalEvent: evt,
+			containerPoint: this._map.mouseEventToContainerPoint(evt)
+		};
+		this.dragging._onDragStart(data);
+
+		var pos = this._map.mouseEventToLatLng(evt);
+		this.fire('graphicmovestart', {pos: pos});
+	},
+
+	_onDragEnd: function(evt) {
+		if (!this._dragShape)
+			return;
+
+		L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
+		this.dragging._onDragEnd(evt);
+
+		this._hideEmbeddedSVG();
+		var pos = this._map.mouseEventToLatLng(evt);
+		this.fire('graphicmoveend', {pos: pos});
 	},
 
 	bringToFront: function () {
@@ -63,7 +100,8 @@ L.SVGGroup = L.Layer.extend({
 			this._rect._renderer = this._renderer;
 			L.DomUtil.addClass(this._path, 'leaflet-control-buttons-disabled');
 			this._path.appendChild(this._rect._path);
-			this.addInteractiveTarget(this._rect._path);
+			this._dragShape = this._rect._path;
+			L.DomEvent.on(this._rect._path, 'mousedown', this._onDragStart, this);
 		}
 		this._update();
 	},
@@ -77,6 +115,7 @@ L.SVGGroup = L.Layer.extend({
 
 	removeEmbeddedSVG: function () {
 		if (this._svg) {
+			this._dragShape = null;
 			L.DomUtil.remove(this._svg);
 			delete this._svg;
 			this._update();
@@ -85,7 +124,7 @@ L.SVGGroup = L.Layer.extend({
 
 	_hideEmbeddedSVG: function () {
 		if (this._svg) {
-			this._svg.setAttribute('display', 'none');
+			this._svg.setAttribute('opacity', 0);
 		}
 	},
 
@@ -111,7 +150,7 @@ L.SVGGroup = L.Layer.extend({
 
 	_showEmbeddedSVG: function () {
 		if (this._svg) {
-			this._svg.setAttribute('display', '');
+			this._svg.setAttribute('opacity', 1);
 		}
 	},
 
