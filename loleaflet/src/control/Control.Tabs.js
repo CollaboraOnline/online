@@ -21,6 +21,15 @@ L.Control.Tabs = L.Control.extend({
 		setTimeout(function() {
 			$('.spreadsheet-tab').contextMenu(e.perm === 'edit');
 		}, 1000);
+
+		if (e.perm === 'edit') {
+			$('.spreadsheet-tabs-container').css('bottom', '33px');
+			$('#spreadsheet-toolbar').css('bottom', '33px');
+		}
+		else {
+			$('.spreadsheet-tabs-container').css('bottom', '0px');
+			$('#spreadsheet-toolbar').css('bottom', '0px');
+		}
 	},
 
 	_initialize: function () {

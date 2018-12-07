@@ -2123,7 +2123,7 @@ function onUpdatePermission(e) {
 		}
 	}
 
-	var spreadsheetButtons = ['firstrecord', 'prevrecord', 'nextrecord', 'lastrecord', 'insertsheet'];
+	var spreadsheetButtons = ['insertsheet'];
 	var formulaBarButtons = ['sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
 	var toolbarDownButtons = ['next', 'prev'];
@@ -2167,7 +2167,6 @@ function onUpdatePermission(e) {
 			case 'spreadsheet':
 				$('#document-container').css('bottom', '68px'); // FIXME this and spreadsheet-row-column-frame are supposed to be the same, but are not
 				$('#spreadsheet-row-column-frame').css('bottom', '65px');
-				$('#spreadsheet-tabs-container').show();
 				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
@@ -2215,10 +2214,9 @@ function onUpdatePermission(e) {
 				$('#document-container').css('bottom', '0');
 				break;
 			case 'spreadsheet':
-				$('#document-container').css('bottom', '0');
+				$('#document-container').css('bottom', '35px');
 				$('#spreadsheet-row-column-frame').css('bottom', '0');
-				$('#spreadsheet-tabs-container').hide();
-				$('#spreadsheet-toolbar').hide();
+				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
 				$('#document-container').css('bottom', '0');
