@@ -10,10 +10,9 @@ FROM ubuntu:18.04
 RUN apt-get update && apt-get upgrade -y
 
 # install LibreOffice run-time dependencies
-# install apt-transport-https in order to set up repo for Poco
 # install adduser, findutils and cpio that we need later
 # install an editor
-RUN apt-get -y install apt-transport-https locales-all libpng16-16 libxinerama1 libgl1-mesa-glx libfontconfig1 libfreetype6 libxrender1 libxcb-shm0 libxcb-render0 adduser cpio findutils nano libpoco*50 libcap2-bin openssl libpixman-1-0
+RUN apt-get -y install locales-all libpng16-16 libxinerama1 libgl1-mesa-glx libfontconfig1 libfreetype6 libxrender1 libxcb-shm0 libxcb-render0 adduser cpio findutils nano libpoco*50 libcap2-bin openssl libpixman-1-0
 
 # tdf#117557 - Add CJK Fonts to LibreOffice Online Docker Image
 RUN apt-get -y install fonts-wqy-zenhei fonts-wqy-microhei fonts-droid-fallback fonts-noto-cjk
