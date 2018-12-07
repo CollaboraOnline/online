@@ -365,7 +365,7 @@ var fnInitHook = function() {
 	} else if (this.dragging) {
 		this.dragging.disable();
 	}
-}
+};
 
 L.Path.addInitHook(fnInitHook);
 L.SVGGroup.addInitHook(fnInitHook);
