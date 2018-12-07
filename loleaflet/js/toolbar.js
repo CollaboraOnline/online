@@ -725,7 +725,7 @@ function createToolbar() {
 						e.item.html = undefined;
 					}});
 				}
-			}, mobile: false, hidden: true },
+			}, mobile: false },
 		{type: 'html',   id: 'fonts',
 			html: '<select class="fonts-select"><option>Liberation Sans</option></select>',
 			onRefresh: function (edata) {
@@ -1574,6 +1574,8 @@ function onDocLayerInit() {
 		toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'numberformatcurrency', 'numberformatpercent',
 			'numberformatincdecimals', 'numberformatdecdecimals', 'insertobjectchart', 'sum', 'break-number',
 			'setborderstyle');
+		toolbarUp.remove('styles');
+
 		statusbar.remove('prev', 'next', 'prevnextbreak');
 
 		toolbarUp.set('zoom', {
@@ -1621,7 +1623,7 @@ function onDocLayerInit() {
 
 		break;
 	case 'text':
-		toolbarUp.show('styles', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 			'breakindent', 'inserttable', 'insertannotation');
 
@@ -1667,7 +1669,7 @@ function onDocLayerInit() {
 		}
 		// FALLTHROUGH intended
 	case 'drawing':
-		toolbarUp.show('styles', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttable');
 
 		$('#presentation-toolbar').show();
