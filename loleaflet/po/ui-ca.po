@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:42+0100\n"
+"POT-Creation-Date: 2018-12-09 17:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,7 +119,7 @@ msgstr "Gràfic de CPU"
 msgid "Network Graph"
 msgstr "Gràfic de xarxa"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:232
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:242
 msgid "Save"
 msgstr "Desa"
 
@@ -219,263 +219,259 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
-#: js/toolbar.js:154
+#: js/toolbar.js:224
 msgid "Are you sure you want to delete this page?"
 msgstr "Esteu segur que voleu suprimir aquesta pàgina?"
 
-#: js/toolbar.js:621
-msgid "Document repair"
-msgstr "Reparació del document"
-
-#: js/toolbar.js:661
-msgid "Insert table"
-msgstr "Insereix una taula"
-
-#: js/toolbar.js:663
+#: js/toolbar.js:767
 msgid "Borders"
 msgstr "Vores"
 
-#: js/toolbar.js:671
+#: js/toolbar.js:775
 msgid "More..."
 msgstr "Més..."
 
-#: js/toolbar.js:683
-msgid "Insert shapes"
-msgstr "Insereix formes"
+#: js/toolbar.js:820
+msgid "Insert table"
+msgstr "Insereix una taula"
 
-#: js/toolbar.js:690
+#: js/toolbar.js:825
 msgid "Insert Local Image"
 msgstr "Insereix una imatge local"
 
-#: js/toolbar.js:718 js/toolbar.js:1041
+#: js/toolbar.js:828
+msgid "Insert shapes"
+msgstr "Insereix formes"
+
+#: js/toolbar.js:865 js/toolbar.js:1204
 msgid "Always follow the editor"
 msgstr "Segueix sempre l'editor"
 
-#: js/toolbar.js:721 js/toolbar.js:1044
+#: js/toolbar.js:868 js/toolbar.js:1207
 msgid "Current"
 msgstr "Actual"
 
-#: js/toolbar.js:746 js/toolbar.js:913 js/toolbar.js:1438
+#: js/toolbar.js:901 js/toolbar.js:1074 js/toolbar.js:1614
 msgid "Sum"
 msgstr "Suma"
 
-#: js/toolbar.js:747 js/toolbar.js:914
+#: js/toolbar.js:902 js/toolbar.js:1075
 msgid "Function"
 msgstr "Funció"
 
-#: js/toolbar.js:748 js/toolbar.js:915 src/layer/marker/Annotation.js:171
+#: js/toolbar.js:903 js/toolbar.js:1076 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: js/toolbar.js:749 js/toolbar.js:916
+#: js/toolbar.js:904 js/toolbar.js:1077
 msgid "Accept"
 msgstr "Accepta"
 
-#: js/toolbar.js:782 js/toolbar.js:980
+#: js/toolbar.js:937 js/toolbar.js:1142
 msgid "First sheet"
 msgstr "Primer full"
 
-#: js/toolbar.js:783 js/toolbar.js:981
+#: js/toolbar.js:938 js/toolbar.js:1143
 msgid "Previous sheet"
 msgstr "Full anterior"
 
-#: js/toolbar.js:784 js/toolbar.js:982
+#: js/toolbar.js:939 js/toolbar.js:1144
 msgid "Next sheet"
 msgstr "Full següent"
 
-#: js/toolbar.js:785 js/toolbar.js:983
+#: js/toolbar.js:940 js/toolbar.js:1145
 msgid "Last sheet"
 msgstr "Últim full"
 
-#: js/toolbar.js:786 js/toolbar.js:984
+#: js/toolbar.js:941 js/toolbar.js:1146
 msgid "Insert sheet"
 msgstr "Insereix un full"
 
-#: js/toolbar.js:947
+#: js/toolbar.js:1108
 msgid "Sign"
 msgstr ""
 
-#: js/toolbar.js:947 src/control/Control.Menubar.js:30
+#: js/toolbar.js:1108 src/control/Control.Menubar.js:30
 msgid "Sign document"
 msgstr "Signa el document"
 
-#: js/toolbar.js:948
+#: js/toolbar.js:1109
 msgid "Upload"
 msgstr ""
 
-#: js/toolbar.js:948
+#: js/toolbar.js:1109
 msgid "Upload document"
 msgstr ""
 
-#: js/toolbar.js:950
+#: js/toolbar.js:1111
 msgid "Identity:"
 msgstr ""
 
-#: js/toolbar.js:951 js/toolbar.js:957
+#: js/toolbar.js:1112 js/toolbar.js:1118
 msgid "N/A"
 msgstr ""
 
-#: js/toolbar.js:953
+#: js/toolbar.js:1114
 msgid "Select passport"
 msgstr ""
 
-#: js/toolbar.js:954
+#: js/toolbar.js:1115
 msgid "Passport: N/A"
 msgstr ""
 
-#: js/toolbar.js:956
+#: js/toolbar.js:1117
 msgid "Status:"
 msgstr ""
 
-#: js/toolbar.js:959
+#: js/toolbar.js:1120
 msgid "Logout"
 msgstr "Finalitza la sessió"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:1121
 msgid "Login"
 msgstr ""
 
-#: js/toolbar.js:961
+#: js/toolbar.js:1122
 msgid "Close"
 msgstr ""
 
-#: js/toolbar.js:1001 src/control/Control.Menubar.js:297
+#: js/toolbar.js:1164 src/control/Control.Menubar.js:295
 msgid "Fullscreen presentation"
 msgstr "Presentació a pantalla completa"
 
-#: js/toolbar.js:1025
+#: js/toolbar.js:1188
 msgid "Search:"
 msgstr "Cerca:"
 
-#: js/toolbar.js:1032
+#: js/toolbar.js:1195
 msgid "Cancel the search"
 msgstr "Cancel·la la cerca"
 
-#: js/toolbar.js:1037
+#: js/toolbar.js:1200
 msgid "No users"
 msgstr "Cap usuari"
 
-#: js/toolbar.js:1051 src/control/Control.Menubar.js:63
+#: js/toolbar.js:1214 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
 msgid "Reset zoom"
 msgstr "Reinicia el zoom"
 
-#: js/toolbar.js:1095
+#: js/toolbar.js:1258
 msgid "%user has joined"
 msgstr "%user s'ha unit"
 
-#: js/toolbar.js:1096
+#: js/toolbar.js:1259
 msgid "%user has left"
 msgstr "%user ha sortit"
 
-#: js/toolbar.js:1416
+#: js/toolbar.js:1592
 msgid "Number of Sheets"
 msgstr "Nombre de fulls"
 
-#: js/toolbar.js:1419
+#: js/toolbar.js:1595
 msgid "Selected range of cells"
 msgstr "Interval de cel·les seleccionades"
 
-#: js/toolbar.js:1422 js/toolbar.js:1461
+#: js/toolbar.js:1598 js/toolbar.js:1640
 msgid "Entering text mode"
 msgstr "Entrada en mode de text"
 
-#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1494
+#: js/toolbar.js:1601 js/toolbar.js:1646 js/toolbar.js:1666
 msgid "Text Language"
 msgstr "Llengua del text"
 
-#: js/toolbar.js:1428 js/toolbar.js:1464
+#: js/toolbar.js:1604 js/toolbar.js:1643
 msgid "Selection Mode"
 msgstr "Mode de selecció"
 
-#: js/toolbar.js:1431
+#: js/toolbar.js:1607
 msgid "Choice of functions"
 msgstr "Tria de funcions"
 
-#: js/toolbar.js:1433
+#: js/toolbar.js:1609
 msgid "Average"
 msgstr "Mitjana"
 
-#: js/toolbar.js:1434
+#: js/toolbar.js:1610
 msgid "CountA"
 msgstr "ComptaA"
 
-#: js/toolbar.js:1435
+#: js/toolbar.js:1611
 msgid "Count"
 msgstr "Compta"
 
-#: js/toolbar.js:1436
+#: js/toolbar.js:1612
 msgid "Maximum"
 msgstr "Màxim"
 
-#: js/toolbar.js:1437
+#: js/toolbar.js:1613
 msgid "Minimum"
 msgstr "Mínim"
 
-#: js/toolbar.js:1439
+#: js/toolbar.js:1615
 msgid "Selection count"
 msgstr "Recompte de la selecció"
 
-#: js/toolbar.js:1440
+#: js/toolbar.js:1616
 msgid "None"
 msgstr "Cap"
 
-#: js/toolbar.js:1455
+#: js/toolbar.js:1634
 msgid "Number of Pages"
 msgstr "Nombre de pàgines"
 
-#: js/toolbar.js:1458
+#: js/toolbar.js:1637
 msgid "Word Counter"
 msgstr "Comptador de paraules"
 
-#: js/toolbar.js:1489
+#: js/toolbar.js:1661
 msgid "Number of Slides"
 msgstr "Nombre de diapositives"
 
-#: js/toolbar.js:1525
+#: js/toolbar.js:1690
 msgid "%n users"
 msgstr "%n usuaris"
 
-#: js/toolbar.js:1526
+#: js/toolbar.js:1691
 msgid "1 user"
 msgstr "1 usuari"
 
-#: js/toolbar.js:1527
+#: js/toolbar.js:1692
 msgid "0 users"
 msgstr "0 usuaris"
 
-#: js/toolbar.js:1657
+#: js/toolbar.js:1849
 msgid "Document saved"
 msgstr "S'ha desat el document"
 
-#: js/toolbar.js:1807
+#: js/toolbar.js:1999
 msgid "Style"
 msgstr "Estil"
 
-#: js/toolbar.js:1829
+#: js/toolbar.js:2021
 msgid "Font"
 msgstr "Tipus de lletra"
 
-#: js/toolbar.js:1862
+#: js/toolbar.js:2054
 msgid "Previous slide"
 msgstr "Diapositiva anterior"
 
-#: js/toolbar.js:1863
+#: js/toolbar.js:2055
 msgid "Next slide"
 msgstr "Diapositiva següent"
 
-#: js/toolbar.js:1925
+#: js/toolbar.js:2101
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Hi ha un conflicte de desfer i refer amb múltiples usuaris. Useu la "
 "reparació del document per a resoldre-ho"
 
-#: js/toolbar.js:2159 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2357 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Vós"
 
-#: js/toolbar.js:2165
+#: js/toolbar.js:2363
 msgid "Readonly"
 msgstr "Només de lectura"
 
@@ -511,7 +507,7 @@ msgstr "Tipus"
 msgid "Index"
 msgstr "Índex"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:226
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:228
 msgid "Comment"
 msgstr "Comentari"
 
@@ -532,17 +528,17 @@ msgid "Share..."
 msgstr "Comparteix..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
-#: src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:314
 msgid "See revision history"
 msgstr "Mostra l'historial de revisions"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:236
-#: src/control/Control.Menubar.js:317
+#: src/control/Control.Menubar.js:315
 msgid "Download as"
 msgstr "Baixa com a"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:237
-#: src/control/Control.Menubar.js:318
+#: src/control/Control.Menubar.js:316
 msgid "PDF Document (.pdf)"
 msgstr "Document PDF (.pdf)"
 
@@ -562,13 +558,18 @@ msgstr "Document del Word (.docx)"
 msgid "Rich Text (.rtf)"
 msgstr "Text enriquit (.rtf)"
 
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:321
+msgid "Close document"
+msgstr "Tanca el document"
+
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:247
-#: src/control/Control.Menubar.js:328
+#: src/control/Control.Menubar.js:326
 msgid "Repair"
 msgstr "Repara"
 
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
-#: src/control/Control.Menubar.js:341
+#: src/control/Control.Menubar.js:339
 msgid "Local Image..."
 msgstr "Imatge local..."
 
@@ -581,25 +582,25 @@ msgid "Text orientation"
 msgstr "Orientació del text"
 
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:302
-#: src/control/Control.Menubar.js:396
+#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:300
+#: src/control/Control.Menubar.js:394
 msgid "None (Do not check spelling)"
 msgstr "Cap (no verifiquis l'ortografia)"
 
-#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:305
-#: src/control/Control.Menubar.js:399
+#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:303
+#: src/control/Control.Menubar.js:397
 msgid "Keyboard shortcuts"
 msgstr "Dreceres de teclat"
 
-#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:306
-#: src/control/Control.Menubar.js:400
+#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:304
+#: src/control/Control.Menubar.js:398
 msgid "About"
 msgstr "Quant a"
 
-#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:308
-#: src/control/Control.Menubar.js:402
-msgid "Close document"
-msgstr "Tanca el document"
+#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:306
+#: src/control/Control.Menubar.js:400 src/map/Map.js:273
+msgid "Last modification"
+msgstr ""
 
 #: src/control/Control.Menubar.js:238
 msgid "ODF presentation (.odp)"
@@ -613,23 +614,23 @@ msgstr "Presentació del PowerPoint 2003 (.ppt)"
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Presentació del PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.js:319
+#: src/control/Control.Menubar.js:317
 msgid "ODF spreadsheet (.ods)"
 msgstr "Full de càlcul ODF (.ods)"
 
-#: src/control/Control.Menubar.js:320
+#: src/control/Control.Menubar.js:318
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Full de càlcul de l'Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:321
+#: src/control/Control.Menubar.js:319
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Full de càlcul de l'Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:467
+#: src/control/Control.Menubar.js:466
 msgid "Reset to Default Language"
 msgstr "Reinicialitza a la llengua predeterminada"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:743
 msgid "Are you sure you want to delete this slide?"
 msgstr "Esteu segur que voleu suprimir aquesta diapositiva?"
 
@@ -641,75 +642,79 @@ msgstr "Desplaça cap amunt les anotacions"
 msgid "Scroll down annotations"
 msgstr "Desplaça cap avall les anotacions"
 
-#: src/control/Control.Tabs.js:55
+#: src/control/Control.Tabs.js:64
 msgid "Insert sheet before this"
 msgstr "Insereix el full abans d'aquest"
 
-#: src/control/Control.Tabs.js:56
+#: src/control/Control.Tabs.js:65
 msgid "Insert sheet after this"
 msgstr "Insereix el full després d'aquest"
 
-#: src/control/Control.Tabs.js:61
+#: src/control/Control.Tabs.js:70
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "Esteu segur que voleu suprimir el full «%sheet%»?"
 
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:83
 msgid "Enter new sheet name"
 msgstr "Introduïu el nom nou del full"
 
-#: src/control/Signing.js:153 src/control/Signing.js:226
+#: src/control/Signing.js:156 src/control/Signing.js:229
 msgid "PIN Code"
 msgstr ""
 
-#: src/control/Signing.js:216
+#: src/control/Signing.js:219
 msgid "Login from email or mobile number"
 msgstr ""
 
-#: src/control/Signing.js:227
+#: src/control/Signing.js:230
 msgid "Check your email"
 msgstr ""
 
-#: src/control/Signing.js:450
+#: src/control/Signing.js:325
+msgid "Document uploaded."
+msgstr ""
+
+#: src/control/Signing.js:464
 msgid "Not Signed"
 msgstr ""
 
-#: src/control/Signing.js:453
+#: src/control/Signing.js:467
 msgid "Document signed and validated."
 msgstr ""
 
-#: src/control/Signing.js:454
+#: src/control/Signing.js:468
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:457
+#: src/control/Signing.js:471
 msgid "Document signed but signature is broken."
 msgstr ""
 
-#: src/control/Signing.js:458
+#: src/control/Signing.js:472
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:461
+#: src/control/Signing.js:475
 msgid "Document signed but the document is already modified."
 msgstr ""
 
-#: src/control/Signing.js:462
+#: src/control/Signing.js:476
 msgid "Signed but document modified"
 msgstr ""
 
-#: src/control/Signing.js:465
+#: src/control/Signing.js:479
 msgid "Document signed but can not be validated."
 msgstr ""
 
-#: src/control/Signing.js:466
+#: src/control/Signing.js:480
 msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:469
+#: src/control/Signing.js:483
 msgid "Document signed but not all files are signed."
 msgstr ""
 
-#: src/control/Signing.js:470
+#: src/control/Signing.js:484
 msgid "Signed but not all files are signed"
 msgstr ""
 
@@ -725,7 +730,7 @@ msgstr "Marge dret"
 msgid "Downloading..."
 msgstr "S'està baixant..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1039
+#: src/control/Toolbar.js:99 src/map/Map.js:1119
 msgid "Saving..."
 msgstr "S'està desant..."
 
@@ -755,29 +760,29 @@ msgstr ""
 msgid "Unsupported server version."
 msgstr "Versió del servidor no suportada."
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid "Session terminated by document owner"
 msgstr "El propietari del document ha finalitzat la sessió"
 
-#: src/core/Socket.js:333
+#: src/core/Socket.js:338
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Document inactiu, feu clic per a tornar a carregar-lo i continuar-ne l'edició"
 
-#: src/core/Socket.js:340
+#: src/core/Socket.js:345
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 "El servidor s'està tancant per manteniment (s'està desant automàticament)"
 
-#: src/core/Socket.js:344
+#: src/core/Socket.js:349
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ep, hi ha un problema en connectar al document"
 
-#: src/core/Socket.js:348
+#: src/core/Socket.js:353
 msgid "Server is recycling and will be available shortly"
 msgstr "El servidor s'està reciclant i aviat serà disponible"
 
-#: src/core/Socket.js:379
+#: src/core/Socket.js:384
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -785,7 +790,7 @@ msgstr ""
 "El document ha canviat en l'emmagatzematge. S'està carregant el document "
 "nou. La vostra versió és disponible com a versió."
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:390
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -793,7 +798,7 @@ msgstr ""
 "Restauració d'una versió anterior. Tots els canvis sense desar seran "
 "disponibles en l'historial de versions"
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:508
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -801,39 +806,39 @@ msgstr ""
 "S'ha modificat el document a l'emmagatzematge. Què voleu fer amb els canvis "
 "sense desar?"
 
-#: src/core/Socket.js:508
+#: src/core/Socket.js:513
 msgid "Discard"
 msgstr "Descarta'ls"
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:518
 msgid "Overwrite"
 msgstr "Sobreescriu-los"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:523
 msgid "Save to new file"
 msgstr "Desa'ls en un fitxer nou"
 
-#: src/core/Socket.js:586
+#: src/core/Socket.js:591
 msgid "Document requires password to view."
 msgstr "Cal introduir la contrasenya per a visualitzar el document."
 
-#: src/core/Socket.js:589
+#: src/core/Socket.js:594
 msgid "Document requires password to modify."
 msgstr "Cal introduir la contrasenya per a modificar el document."
 
-#: src/core/Socket.js:591
+#: src/core/Socket.js:596
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Premeu Cancel·la per a obrir-lo en el mode de només lectura."
 
-#: src/core/Socket.js:595
+#: src/core/Socket.js:600
 msgid "Wrong password provided. Please try again."
 msgstr "Heu indicat una contrasenya errònia. Torneu-ho a intentar."
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:713
 msgid "Connecting..."
 msgstr "S'està connectant…"
 
-#: src/core/Socket.js:860
+#: src/core/Socket.js:865
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -959,39 +964,39 @@ msgstr ""
 "El document no s'ha pogut desar en el magatzem. Comproveu els permisos o "
 "contacteu amb l'administrador del servidor d'emmagatzematge."
 
-#: src/layer/marker/Annotation.js:201
+#: src/layer/marker/Annotation.js:211
 msgid "Accept change"
 msgstr "Accepta el canvi"
 
-#: src/layer/marker/Annotation.js:206
+#: src/layer/marker/Annotation.js:216
 msgid "Reject change"
 msgstr "Rebutja el canvi"
 
-#: src/layer/marker/Annotation.js:215
+#: src/layer/marker/Annotation.js:225
 msgid "Open menu"
 msgstr "Obre el menú"
 
-#: src/layer/marker/Annotation.js:235 src/layer/tile/TileLayer.js:199
+#: src/layer/marker/Annotation.js:245 src/layer/tile/TileLayer.js:201
 msgid "Reply"
 msgstr "Respon"
 
-#: src/layer/tile/TileLayer.js:193
+#: src/layer/tile/TileLayer.js:195
 msgid "Modify"
 msgstr "Modifica"
 
-#: src/layer/tile/TileLayer.js:205
+#: src/layer/tile/TileLayer.js:207
 msgid "Remove"
 msgstr "Suprimeix"
 
-#: src/map/Map.js:146
+#: src/map/Map.js:170
 msgid "Initializing..."
 msgstr "S'està iniciant..."
 
-#: src/map/Map.js:911
+#: src/map/Map.js:991
 msgid "Inactive document - please click to resume editing"
 msgstr "El document no és actiu, feu clic per a continuar editant-lo"
 
-#: src/map/Map.js:1042
+#: src/map/Map.js:1122
 msgid "Loading..."
 msgstr "S'està carregant..."
 
@@ -999,7 +1004,7 @@ msgstr "S'està carregant..."
 msgid "Uploading..."
 msgstr "S'està carregant..."
 
-#: src/map/handler/Map.WOPI.js:275
+#: src/map/handler/Map.WOPI.js:277
 msgid "Creating copy..."
 msgstr "S'està creant una còpia..."
 
@@ -1026,3 +1031,6 @@ msgstr "S'està creant una còpia..."
 
 #~ msgid "Wrap through"
 #~ msgstr "Ajusta a la línia"
+
+#~ msgid "Document repair"
+#~ msgstr "Reparació del document"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:42+0100\n"
+"POT-Creation-Date: 2018-12-09 17:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,7 +119,7 @@ msgstr "CPU 圖表"
 msgid "Network Graph"
 msgstr "網路圖表"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:232
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:242
 msgid "Save"
 msgstr "儲存"
 
@@ -215,261 +215,257 @@ msgstr " 分鐘"
 msgid " s"
 msgstr " 秒"
 
-#: js/toolbar.js:154
+#: js/toolbar.js:224
 msgid "Are you sure you want to delete this page?"
 msgstr "您確定要刪除這個頁面？"
 
-#: js/toolbar.js:621
-msgid "Document repair"
-msgstr "文件修復"
-
-#: js/toolbar.js:661
-msgid "Insert table"
-msgstr "插入表格"
-
-#: js/toolbar.js:663
+#: js/toolbar.js:767
 msgid "Borders"
 msgstr "邊框"
 
-#: js/toolbar.js:671
+#: js/toolbar.js:775
 msgid "More..."
 msgstr "其他..."
 
-#: js/toolbar.js:683
-msgid "Insert shapes"
-msgstr "插入形狀"
+#: js/toolbar.js:820
+msgid "Insert table"
+msgstr "插入表格"
 
-#: js/toolbar.js:690
+#: js/toolbar.js:825
 msgid "Insert Local Image"
 msgstr "插入本機影像"
 
-#: js/toolbar.js:718 js/toolbar.js:1041
+#: js/toolbar.js:828
+msgid "Insert shapes"
+msgstr "插入形狀"
+
+#: js/toolbar.js:865 js/toolbar.js:1204
 msgid "Always follow the editor"
 msgstr "總是跟隨編輯器"
 
-#: js/toolbar.js:721 js/toolbar.js:1044
+#: js/toolbar.js:868 js/toolbar.js:1207
 msgid "Current"
 msgstr "目前"
 
-#: js/toolbar.js:746 js/toolbar.js:913 js/toolbar.js:1438
+#: js/toolbar.js:901 js/toolbar.js:1074 js/toolbar.js:1614
 msgid "Sum"
 msgstr "總和"
 
-#: js/toolbar.js:747 js/toolbar.js:914
+#: js/toolbar.js:902 js/toolbar.js:1075
 msgid "Function"
 msgstr "函式"
 
-#: js/toolbar.js:748 js/toolbar.js:915 src/layer/marker/Annotation.js:171
+#: js/toolbar.js:903 js/toolbar.js:1076 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "取消"
 
-#: js/toolbar.js:749 js/toolbar.js:916
+#: js/toolbar.js:904 js/toolbar.js:1077
 msgid "Accept"
 msgstr "接受"
 
-#: js/toolbar.js:782 js/toolbar.js:980
+#: js/toolbar.js:937 js/toolbar.js:1142
 msgid "First sheet"
 msgstr "第一個工作表"
 
-#: js/toolbar.js:783 js/toolbar.js:981
+#: js/toolbar.js:938 js/toolbar.js:1143
 msgid "Previous sheet"
 msgstr "上一個工作表"
 
-#: js/toolbar.js:784 js/toolbar.js:982
+#: js/toolbar.js:939 js/toolbar.js:1144
 msgid "Next sheet"
 msgstr "下一個工作表"
 
-#: js/toolbar.js:785 js/toolbar.js:983
+#: js/toolbar.js:940 js/toolbar.js:1145
 msgid "Last sheet"
 msgstr "最後的工作表"
 
-#: js/toolbar.js:786 js/toolbar.js:984
+#: js/toolbar.js:941 js/toolbar.js:1146
 msgid "Insert sheet"
 msgstr "插入工作表"
 
-#: js/toolbar.js:947
+#: js/toolbar.js:1108
 msgid "Sign"
 msgstr ""
 
-#: js/toolbar.js:947 src/control/Control.Menubar.js:30
+#: js/toolbar.js:1108 src/control/Control.Menubar.js:30
 msgid "Sign document"
 msgstr "簽署文件"
 
-#: js/toolbar.js:948
+#: js/toolbar.js:1109
 msgid "Upload"
 msgstr ""
 
-#: js/toolbar.js:948
+#: js/toolbar.js:1109
 msgid "Upload document"
 msgstr ""
 
-#: js/toolbar.js:950
+#: js/toolbar.js:1111
 msgid "Identity:"
 msgstr ""
 
-#: js/toolbar.js:951 js/toolbar.js:957
+#: js/toolbar.js:1112 js/toolbar.js:1118
 msgid "N/A"
 msgstr ""
 
-#: js/toolbar.js:953
+#: js/toolbar.js:1114
 msgid "Select passport"
 msgstr ""
 
-#: js/toolbar.js:954
+#: js/toolbar.js:1115
 msgid "Passport: N/A"
 msgstr ""
 
-#: js/toolbar.js:956
+#: js/toolbar.js:1117
 msgid "Status:"
 msgstr ""
 
-#: js/toolbar.js:959
+#: js/toolbar.js:1120
 msgid "Logout"
 msgstr "登出"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:1121
 msgid "Login"
 msgstr ""
 
-#: js/toolbar.js:961
+#: js/toolbar.js:1122
 msgid "Close"
 msgstr ""
 
-#: js/toolbar.js:1001 src/control/Control.Menubar.js:297
+#: js/toolbar.js:1164 src/control/Control.Menubar.js:295
 msgid "Fullscreen presentation"
 msgstr "全螢幕呈現"
 
-#: js/toolbar.js:1025
+#: js/toolbar.js:1188
 msgid "Search:"
 msgstr "搜尋："
 
-#: js/toolbar.js:1032
+#: js/toolbar.js:1195
 msgid "Cancel the search"
 msgstr "取消搜尋"
 
-#: js/toolbar.js:1037
+#: js/toolbar.js:1200
 msgid "No users"
 msgstr "無使用者"
 
-#: js/toolbar.js:1051 src/control/Control.Menubar.js:63
+#: js/toolbar.js:1214 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
 msgid "Reset zoom"
 msgstr "重設遠近"
 
-#: js/toolbar.js:1095
+#: js/toolbar.js:1258
 msgid "%user has joined"
 msgstr "%user 已加入"
 
-#: js/toolbar.js:1096
+#: js/toolbar.js:1259
 msgid "%user has left"
 msgstr "%user 已離開"
 
-#: js/toolbar.js:1416
+#: js/toolbar.js:1592
 msgid "Number of Sheets"
 msgstr "工作表數量"
 
-#: js/toolbar.js:1419
+#: js/toolbar.js:1595
 msgid "Selected range of cells"
 msgstr "所選的儲存格範圍"
 
-#: js/toolbar.js:1422 js/toolbar.js:1461
+#: js/toolbar.js:1598 js/toolbar.js:1640
 msgid "Entering text mode"
 msgstr "輸入文字模式"
 
-#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1494
+#: js/toolbar.js:1601 js/toolbar.js:1646 js/toolbar.js:1666
 msgid "Text Language"
 msgstr "文字語言"
 
-#: js/toolbar.js:1428 js/toolbar.js:1464
+#: js/toolbar.js:1604 js/toolbar.js:1643
 msgid "Selection Mode"
 msgstr "選取模式"
 
-#: js/toolbar.js:1431
+#: js/toolbar.js:1607
 msgid "Choice of functions"
 msgstr "函式選擇"
 
-#: js/toolbar.js:1433
+#: js/toolbar.js:1609
 msgid "Average"
 msgstr "平均值"
 
-#: js/toolbar.js:1434
+#: js/toolbar.js:1610
 msgid "CountA"
 msgstr "全計數"
 
-#: js/toolbar.js:1435
+#: js/toolbar.js:1611
 msgid "Count"
 msgstr "數計數"
 
-#: js/toolbar.js:1436
+#: js/toolbar.js:1612
 msgid "Maximum"
 msgstr "最大"
 
-#: js/toolbar.js:1437
+#: js/toolbar.js:1613
 msgid "Minimum"
 msgstr "最小"
 
-#: js/toolbar.js:1439
+#: js/toolbar.js:1615
 msgid "Selection count"
 msgstr "選取計數"
 
-#: js/toolbar.js:1440
+#: js/toolbar.js:1616
 msgid "None"
 msgstr "無"
 
-#: js/toolbar.js:1455
+#: js/toolbar.js:1634
 msgid "Number of Pages"
 msgstr "頁數"
 
-#: js/toolbar.js:1458
+#: js/toolbar.js:1637
 msgid "Word Counter"
 msgstr "字數統計"
 
-#: js/toolbar.js:1489
+#: js/toolbar.js:1661
 msgid "Number of Slides"
 msgstr "投影片數"
 
-#: js/toolbar.js:1525
+#: js/toolbar.js:1690
 msgid "%n users"
 msgstr "%n 位使用者"
 
-#: js/toolbar.js:1526
+#: js/toolbar.js:1691
 msgid "1 user"
 msgstr "1 位使用者"
 
-#: js/toolbar.js:1527
+#: js/toolbar.js:1692
 msgid "0 users"
 msgstr "0 位使用者"
 
-#: js/toolbar.js:1657
+#: js/toolbar.js:1849
 msgid "Document saved"
 msgstr "文件已儲存"
 
-#: js/toolbar.js:1807
+#: js/toolbar.js:1999
 msgid "Style"
 msgstr "樣式"
 
-#: js/toolbar.js:1829
+#: js/toolbar.js:2021
 msgid "Font"
 msgstr "字型"
 
-#: js/toolbar.js:1862
+#: js/toolbar.js:2054
 msgid "Previous slide"
 msgstr "上一張投影片"
 
-#: js/toolbar.js:1863
+#: js/toolbar.js:2055
 msgid "Next slide"
 msgstr "下一張投影片"
 
-#: js/toolbar.js:1925
+#: js/toolbar.js:2101
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多位使用者間取消動作/再次動作發生衝突。請使用文件修復來解決問題"
 
-#: js/toolbar.js:2159 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2357 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "您"
 
-#: js/toolbar.js:2165
+#: js/toolbar.js:2363
 msgid "Readonly"
 msgstr "唯讀"
 
@@ -505,7 +501,7 @@ msgstr "類型"
 msgid "Index"
 msgstr "索引"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:226
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:228
 msgid "Comment"
 msgstr "評註"
 
@@ -526,17 +522,17 @@ msgid "Share..."
 msgstr "分享..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
-#: src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:314
 msgid "See revision history"
 msgstr "檢視修訂記錄"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:236
-#: src/control/Control.Menubar.js:317
+#: src/control/Control.Menubar.js:315
 msgid "Download as"
 msgstr "下載為"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:237
-#: src/control/Control.Menubar.js:318
+#: src/control/Control.Menubar.js:316
 msgid "PDF Document (.pdf)"
 msgstr "PDF 文件 (.pdf)"
 
@@ -556,13 +552,18 @@ msgstr "Word 文件 (.docx)"
 msgid "Rich Text (.rtf)"
 msgstr "豐富文字檔 (.rtf)"
 
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:321
+msgid "Close document"
+msgstr "關閉文件"
+
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:247
-#: src/control/Control.Menubar.js:328
+#: src/control/Control.Menubar.js:326
 msgid "Repair"
 msgstr "修復"
 
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
-#: src/control/Control.Menubar.js:341
+#: src/control/Control.Menubar.js:339
 msgid "Local Image..."
 msgstr "本機影像..."
 
@@ -575,25 +576,25 @@ msgid "Text orientation"
 msgstr "文字方向"
 
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:302
-#: src/control/Control.Menubar.js:396
+#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:300
+#: src/control/Control.Menubar.js:394
 msgid "None (Do not check spelling)"
 msgstr "無 (不檢查拼字)"
 
-#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:305
-#: src/control/Control.Menubar.js:399
+#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:303
+#: src/control/Control.Menubar.js:397
 msgid "Keyboard shortcuts"
 msgstr "鍵盤快捷鍵"
 
-#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:306
-#: src/control/Control.Menubar.js:400
+#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:304
+#: src/control/Control.Menubar.js:398
 msgid "About"
 msgstr "關於"
 
-#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:308
-#: src/control/Control.Menubar.js:402
-msgid "Close document"
-msgstr "關閉文件"
+#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:306
+#: src/control/Control.Menubar.js:400 src/map/Map.js:273
+msgid "Last modification"
+msgstr ""
 
 #: src/control/Control.Menubar.js:238
 msgid "ODF presentation (.odp)"
@@ -607,23 +608,23 @@ msgstr "PowerPoint 2003 簡報 (.ppt)"
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint 簡報 (.pptx)"
 
-#: src/control/Control.Menubar.js:319
+#: src/control/Control.Menubar.js:317
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF 試算表 (.ods)"
 
-#: src/control/Control.Menubar.js:320
+#: src/control/Control.Menubar.js:318
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 試算表 (.xls)"
 
-#: src/control/Control.Menubar.js:321
+#: src/control/Control.Menubar.js:319
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel 試算表 (.xlsx)"
 
-#: src/control/Control.Menubar.js:467
+#: src/control/Control.Menubar.js:466
 msgid "Reset to Default Language"
 msgstr "重設回預設語言"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:743
 msgid "Are you sure you want to delete this slide?"
 msgstr "確定要刪除此投影片？"
 
@@ -635,75 +636,79 @@ msgstr "往上捲動註解"
 msgid "Scroll down annotations"
 msgstr "往下捲動註解"
 
-#: src/control/Control.Tabs.js:55
+#: src/control/Control.Tabs.js:64
 msgid "Insert sheet before this"
 msgstr "在這之前插入工作表"
 
-#: src/control/Control.Tabs.js:56
+#: src/control/Control.Tabs.js:65
 msgid "Insert sheet after this"
 msgstr "在這之後插入工作表"
 
-#: src/control/Control.Tabs.js:61
+#: src/control/Control.Tabs.js:70
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "您確定要刪除這份工作表：%sheet%？"
 
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:83
 msgid "Enter new sheet name"
 msgstr "請輸入新的工作表名稱"
 
-#: src/control/Signing.js:153 src/control/Signing.js:226
+#: src/control/Signing.js:156 src/control/Signing.js:229
 msgid "PIN Code"
 msgstr ""
 
-#: src/control/Signing.js:216
+#: src/control/Signing.js:219
 msgid "Login from email or mobile number"
 msgstr ""
 
-#: src/control/Signing.js:227
+#: src/control/Signing.js:230
 msgid "Check your email"
 msgstr ""
 
-#: src/control/Signing.js:450
+#: src/control/Signing.js:325
+msgid "Document uploaded."
+msgstr ""
+
+#: src/control/Signing.js:464
 msgid "Not Signed"
 msgstr ""
 
-#: src/control/Signing.js:453
+#: src/control/Signing.js:467
 msgid "Document signed and validated."
 msgstr ""
 
-#: src/control/Signing.js:454
+#: src/control/Signing.js:468
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:457
+#: src/control/Signing.js:471
 msgid "Document signed but signature is broken."
 msgstr ""
 
-#: src/control/Signing.js:458
+#: src/control/Signing.js:472
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:461
+#: src/control/Signing.js:475
 msgid "Document signed but the document is already modified."
 msgstr ""
 
-#: src/control/Signing.js:462
+#: src/control/Signing.js:476
 msgid "Signed but document modified"
 msgstr ""
 
-#: src/control/Signing.js:465
+#: src/control/Signing.js:479
 msgid "Document signed but can not be validated."
 msgstr ""
 
-#: src/control/Signing.js:466
+#: src/control/Signing.js:480
 msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:469
+#: src/control/Signing.js:483
 msgid "Document signed but not all files are signed."
 msgstr ""
 
-#: src/control/Signing.js:470
+#: src/control/Signing.js:484
 msgid "Signed but not all files are signed"
 msgstr ""
 
@@ -719,7 +724,7 @@ msgstr "右邊距"
 msgid "Downloading..."
 msgstr "下載中..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1039
+#: src/control/Toolbar.js:99 src/map/Map.js:1119
 msgid "Saving..."
 msgstr "儲存中..."
 
@@ -746,77 +751,77 @@ msgstr "糟糕，連接至 LibreOffice Online 時發生問題："
 msgid "Unsupported server version."
 msgstr "未支援的伺服器版本。"
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid "Session terminated by document owner"
 msgstr "作業階段由文件擁有者終止"
 
-#: src/core/Socket.js:333
+#: src/core/Socket.js:338
 msgid "Idle document - please click to reload and resume editing"
 msgstr "閒置文件 - 請點按以重新載入並繼續編輯"
 
-#: src/core/Socket.js:340
+#: src/core/Socket.js:345
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "伺服器正在關機作維護（自動存檔中）"
 
-#: src/core/Socket.js:344
+#: src/core/Socket.js:349
 msgid "Oops, there is a problem connecting the document"
 msgstr "糟糕…連接文件時發生了問題"
 
-#: src/core/Socket.js:348
+#: src/core/Socket.js:353
 msgid "Server is recycling and will be available shortly"
 msgstr "伺服器正在重啟循環，即將無法使用"
 
-#: src/core/Socket.js:379
+#: src/core/Socket.js:384
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "儲存空間內的文件已經變更。載入新文件中。您的版本會以修訂形式存在。"
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:390
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "還原舊的版本。任何尚未儲存的變更都會放在版本歷史中。"
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:508
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "儲存位置中的文件已經變更。對於您尚未儲存的變更，您希望怎麼處理？"
 
-#: src/core/Socket.js:508
+#: src/core/Socket.js:513
 msgid "Discard"
 msgstr "放棄"
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:518
 msgid "Overwrite"
 msgstr "覆蓋"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:523
 msgid "Save to new file"
 msgstr "儲存為新檔案"
 
-#: src/core/Socket.js:586
+#: src/core/Socket.js:591
 msgid "Document requires password to view."
 msgstr "文件需要密碼才能檢視。"
 
-#: src/core/Socket.js:589
+#: src/core/Socket.js:594
 msgid "Document requires password to modify."
 msgstr "文件需要密碼才能修改。"
 
-#: src/core/Socket.js:591
+#: src/core/Socket.js:596
 msgid "Hit Cancel to open in view-only mode."
 msgstr "點按「取消」以唯讀模式開啟。"
 
-#: src/core/Socket.js:595
+#: src/core/Socket.js:600
 msgid "Wrong password provided. Please try again."
 msgstr "提供的密碼錯誤。請重試。"
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:713
 msgid "Connecting..."
 msgstr "連接中..."
 
-#: src/core/Socket.js:860
+#: src/core/Socket.js:865
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -913,39 +918,39 @@ msgid ""
 "server administrator."
 msgstr "文件無法儲存。請檢查您的權限，或請聯絡儲存空間伺服器管理員。"
 
-#: src/layer/marker/Annotation.js:201
+#: src/layer/marker/Annotation.js:211
 msgid "Accept change"
 msgstr "接受更改"
 
-#: src/layer/marker/Annotation.js:206
+#: src/layer/marker/Annotation.js:216
 msgid "Reject change"
 msgstr "拒絕更改"
 
-#: src/layer/marker/Annotation.js:215
+#: src/layer/marker/Annotation.js:225
 msgid "Open menu"
 msgstr "開啟選單"
 
-#: src/layer/marker/Annotation.js:235 src/layer/tile/TileLayer.js:199
+#: src/layer/marker/Annotation.js:245 src/layer/tile/TileLayer.js:201
 msgid "Reply"
 msgstr "回覆"
 
-#: src/layer/tile/TileLayer.js:193
+#: src/layer/tile/TileLayer.js:195
 msgid "Modify"
 msgstr "修改"
 
-#: src/layer/tile/TileLayer.js:205
+#: src/layer/tile/TileLayer.js:207
 msgid "Remove"
 msgstr "移除"
 
-#: src/map/Map.js:146
+#: src/map/Map.js:170
 msgid "Initializing..."
 msgstr "初始化中..."
 
-#: src/map/Map.js:911
+#: src/map/Map.js:991
 msgid "Inactive document - please click to resume editing"
 msgstr "非使用中文件 - 請點按按鍵繼續編輯"
 
-#: src/map/Map.js:1042
+#: src/map/Map.js:1122
 msgid "Loading..."
 msgstr "載入中..."
 
@@ -953,7 +958,7 @@ msgstr "載入中..."
 msgid "Uploading..."
 msgstr "上傳中..."
 
-#: src/map/handler/Map.WOPI.js:275
+#: src/map/handler/Map.WOPI.js:277
 msgid "Creating copy..."
 msgstr "製作副本中..."
 
@@ -980,3 +985,6 @@ msgstr "製作副本中..."
 
 #~ msgid "Wrap through"
 #~ msgstr "穿繞式環繞"
+
+#~ msgid "Document repair"
+#~ msgstr "文件修復"

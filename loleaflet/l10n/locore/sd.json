@@ -87,7 +87,7 @@
 "Croatian":"ڪروشن",
 "Czech":"چيڪ",
 "Danish":"ڊينش",
-"Default":"وڪلپ جي غيرمؤجودگيءَ سبب اڳ ۾ ئي اپنايل ",
+"Default":"وڪلپ جي غيرمؤجودگيءَ سبب اڳ ۾ ئي اَپنايل",
 "Definition":"وصف",
 "Dhivehi":"ڌويلي",
 "Dimension Line":"آيام جي ليڪ ",
@@ -261,6 +261,7 @@
 "Nepali (India)":"نيپالي (ڀارت)",
 "Nepali (Nepal)":"نيپالي (نيپالي)",
 "Nine Slides":"نَوَ سلائيڊ",
+"None (Do not check spelling)":"ڪجهہ بہ نہ (هجي نہ چڪاسيو)",
 "Northern Sotho":"اُتري سوٿو",
 "Norwegian, Bokmål":"نارويجِين، بوڪمال",
 "Norwegian, Nynorsk":"نارويجين نائنورسڪ",
@@ -462,5 +463,6 @@
 "Yiddish (Israel)":"يدش (اِزرائل)",
 "Yoruba":"يوروُبا",
 "Zulu":"زولو",
+"[None]":"[ڪجهہ نہ]",
 "Éwé":"ايوي"
 }

@@ -33,6 +33,7 @@
 "Arabic (Yemen)":"अरबी (यमन)",
 "Aragonese":"अरागोनिज",
 "Armenian":"आर्मेनियाली",
+"Assamese":"आसामी",
 "Asturian":"अस्तुरियन",
 "Average":"औसत",
 "Azerbaijani Cyrillic":"अजरबैजानी सिरिलिक",
@@ -269,6 +270,7 @@
 "Ndebele, South":"डेबेले, दक्षिण",
 "Nepali (India)":"नेपाली (भारत)",
 "Nepali (Nepal)":"नेपाली (नेपाल)",
+"None (Do not check spelling)":"कुनै पनि होइन (हिज्जे जाँच नगर्नुहोस्)",
 "Northern Sotho":"उतरी सोठो",
 "Norwegian, Bokmål":"नर्वेली, बोकमाल",
 "Norwegian, Nynorsk":"नर्वेली, नाइनोर्स्क",
@@ -387,6 +389,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"दृढ असर",
 "Subtitle":"उप शीर्षक",
+"Sum":"योगफल",
 "Swahili (Kenya)":"स्वाहिली (केन्या)",
 "Swahili (Tanzania)":"स्वाहिली (तान्जानिया)",
 "Swazi":"स्वाजी",
@@ -463,6 +466,6 @@
 "Yiddish (USA)":"येहुदी (USA)",
 "Yoruba":"योरूबा",
 "Zulu":"जुलु",
-"[None]":"[कुनै पनि होइन]",
+"[None]":"[None]",
 "Éwé":"एवे"
 }

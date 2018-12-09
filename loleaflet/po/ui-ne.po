@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:42+0100\n"
+"POT-Creation-Date: 2018-12-09 17:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /ne/libo_online/loleaflet-ui-ne.po\n"
-"X-Pootle-Revision: 3609154\n"
+"X-Pootle-Revision: 3616645\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -119,7 +119,7 @@ msgstr "CPU मानचित्र"
 msgid "Network Graph"
 msgstr "सञ्जाल मानचित्र"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:232
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:242
 msgid "Save"
 msgstr "सङ्ग्रह गर्नुहोस्"
 
@@ -215,263 +215,259 @@ msgstr " मिनेट"
 msgid " s"
 msgstr " s"
 
-#: js/toolbar.js:154
+#: js/toolbar.js:224
 msgid "Are you sure you want to delete this page?"
 msgstr "पृष्ठ मेट्न चाहनुमा विश्वस्त हुनुहुन्छ?"
 
-#: js/toolbar.js:621
-msgid "Document repair"
-msgstr "कागजात मर्मत"
-
-#: js/toolbar.js:661
-msgid "Insert table"
-msgstr "तालिका घुसाउनुहोस्"
-
-#: js/toolbar.js:663
+#: js/toolbar.js:767
 msgid "Borders"
 msgstr "किनाराहरू"
 
-#: js/toolbar.js:671
+#: js/toolbar.js:775
 msgid "More..."
 msgstr "थप..."
 
-#: js/toolbar.js:683
+#: js/toolbar.js:820
+msgid "Insert table"
+msgstr "तालिका घुसाउनुहोस्"
+
+#: js/toolbar.js:825
+msgid "Insert Local Image"
+msgstr "स्थानीय छवि सम्मिलित गर्नुहोस्"
+
+#: js/toolbar.js:828
 msgid "Insert shapes"
 msgstr "पाना घुसाउनुहोस्"
 
-#: js/toolbar.js:690
-msgid "Insert Local Image"
-msgstr ""
-
-#: js/toolbar.js:718 js/toolbar.js:1041
+#: js/toolbar.js:865 js/toolbar.js:1204
 msgid "Always follow the editor"
 msgstr "सधैँ सम्पादकलाई पछ्याउनुहोस्"
 
-#: js/toolbar.js:721 js/toolbar.js:1044
+#: js/toolbar.js:868 js/toolbar.js:1207
 msgid "Current"
 msgstr "हालको"
 
-#: js/toolbar.js:746 js/toolbar.js:913 js/toolbar.js:1438
+#: js/toolbar.js:901 js/toolbar.js:1074 js/toolbar.js:1614
 msgid "Sum"
 msgstr "योगफल"
 
-#: js/toolbar.js:747 js/toolbar.js:914
+#: js/toolbar.js:902 js/toolbar.js:1075
 msgid "Function"
 msgstr "प्रकार्य"
 
-#: js/toolbar.js:748 js/toolbar.js:915 src/layer/marker/Annotation.js:171
+#: js/toolbar.js:903 js/toolbar.js:1076 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "रद्द गर्नुहोस्"
 
-#: js/toolbar.js:749 js/toolbar.js:916
+#: js/toolbar.js:904 js/toolbar.js:1077
 msgid "Accept"
 msgstr "स्वीकार गर्नुहोस्"
 
-#: js/toolbar.js:782 js/toolbar.js:980
+#: js/toolbar.js:937 js/toolbar.js:1142
 msgid "First sheet"
 msgstr "पहिलो पाना"
 
-#: js/toolbar.js:783 js/toolbar.js:981
+#: js/toolbar.js:938 js/toolbar.js:1143
 msgid "Previous sheet"
 msgstr "अघिल्लो पाना"
 
-#: js/toolbar.js:784 js/toolbar.js:982
+#: js/toolbar.js:939 js/toolbar.js:1144
 msgid "Next sheet"
 msgstr "पछिल्लो पाना"
 
-#: js/toolbar.js:785 js/toolbar.js:983
+#: js/toolbar.js:940 js/toolbar.js:1145
 msgid "Last sheet"
 msgstr "अन्तिम पाना"
 
-#: js/toolbar.js:786 js/toolbar.js:984
+#: js/toolbar.js:941 js/toolbar.js:1146
 msgid "Insert sheet"
 msgstr "पाना घुसाउनुहोस्"
 
-#: js/toolbar.js:947
+#: js/toolbar.js:1108
 msgid "Sign"
 msgstr ""
 
-#: js/toolbar.js:947 src/control/Control.Menubar.js:30
+#: js/toolbar.js:1108 src/control/Control.Menubar.js:30
 msgid "Sign document"
-msgstr ""
+msgstr "कागजात हस्ताक्षर गर्नुहोस्"
 
-#: js/toolbar.js:948
+#: js/toolbar.js:1109
 msgid "Upload"
 msgstr ""
 
-#: js/toolbar.js:948
+#: js/toolbar.js:1109
 msgid "Upload document"
 msgstr ""
 
-#: js/toolbar.js:950
+#: js/toolbar.js:1111
 msgid "Identity:"
 msgstr ""
 
-#: js/toolbar.js:951 js/toolbar.js:957
+#: js/toolbar.js:1112 js/toolbar.js:1118
 msgid "N/A"
 msgstr ""
 
-#: js/toolbar.js:953
+#: js/toolbar.js:1114
 msgid "Select passport"
 msgstr ""
 
-#: js/toolbar.js:954
+#: js/toolbar.js:1115
 msgid "Passport: N/A"
 msgstr ""
 
-#: js/toolbar.js:956
+#: js/toolbar.js:1117
 msgid "Status:"
 msgstr ""
 
-#: js/toolbar.js:959
+#: js/toolbar.js:1120
 msgid "Logout"
-msgstr ""
+msgstr "बाहिर निस्कनुहोस्"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:1121
 msgid "Login"
 msgstr ""
 
-#: js/toolbar.js:961
+#: js/toolbar.js:1122
 msgid "Close"
 msgstr ""
 
-#: js/toolbar.js:1001 src/control/Control.Menubar.js:297
+#: js/toolbar.js:1164 src/control/Control.Menubar.js:295
 msgid "Fullscreen presentation"
 msgstr "पूरा स्क्रिन प्रस्तुति"
 
-#: js/toolbar.js:1025
+#: js/toolbar.js:1188
 msgid "Search:"
 msgstr "खोजी गर्नुहोस्:"
 
-#: js/toolbar.js:1032
+#: js/toolbar.js:1195
 msgid "Cancel the search"
 msgstr "खोज रद्द गर्नुहोस्"
 
-#: js/toolbar.js:1037
+#: js/toolbar.js:1200
 msgid "No users"
 msgstr "कुनै पनि प्रयोगकर्ता छैनन्"
 
-#: js/toolbar.js:1051 src/control/Control.Menubar.js:63
+#: js/toolbar.js:1214 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
 msgid "Reset zoom"
 msgstr "जुम रिसेट गर्नुहोस्"
 
-#: js/toolbar.js:1095
+#: js/toolbar.js:1258
 msgid "%user has joined"
 msgstr "%user सहभागी हुनुभयो"
 
-#: js/toolbar.js:1096
+#: js/toolbar.js:1259
 msgid "%user has left"
 msgstr "%user ले छोड्नु भयो"
 
-#: js/toolbar.js:1416
+#: js/toolbar.js:1592
 msgid "Number of Sheets"
 msgstr "पानाका सङ्ख्याहरू"
 
-#: js/toolbar.js:1419
+#: js/toolbar.js:1595
 msgid "Selected range of cells"
 msgstr "छानिएको सेलको दायरा"
 
-#: js/toolbar.js:1422 js/toolbar.js:1461
+#: js/toolbar.js:1598 js/toolbar.js:1640
 msgid "Entering text mode"
 msgstr "पाठ मोडमा प्रवेश गर्दै"
 
-#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1494
+#: js/toolbar.js:1601 js/toolbar.js:1646 js/toolbar.js:1666
 msgid "Text Language"
 msgstr "पाठ भाषा"
 
-#: js/toolbar.js:1428 js/toolbar.js:1464
+#: js/toolbar.js:1604 js/toolbar.js:1643
 msgid "Selection Mode"
 msgstr "चयन मोड"
 
-#: js/toolbar.js:1431
+#: js/toolbar.js:1607
 msgid "Choice of functions"
 msgstr "प्रकार्यहरूको छनौट"
 
-#: js/toolbar.js:1433
+#: js/toolbar.js:1609
 msgid "Average"
 msgstr "औसत"
 
-#: js/toolbar.js:1434
+#: js/toolbar.js:1610
 msgid "CountA"
 msgstr "CountA"
 
-#: js/toolbar.js:1435
+#: js/toolbar.js:1611
 msgid "Count"
 msgstr "Count"
 
-#: js/toolbar.js:1436
+#: js/toolbar.js:1612
 msgid "Maximum"
 msgstr "अधिकतम"
 
-#: js/toolbar.js:1437
+#: js/toolbar.js:1613
 msgid "Minimum"
 msgstr "न्युनतम"
 
-#: js/toolbar.js:1439
+#: js/toolbar.js:1615
 msgid "Selection count"
 msgstr "छनौट गणना"
 
-#: js/toolbar.js:1440
+#: js/toolbar.js:1616
 msgid "None"
 msgstr "कुनै पनि होइन"
 
-#: js/toolbar.js:1455
+#: js/toolbar.js:1634
 msgid "Number of Pages"
 msgstr "पृष्ठहरूको संख्या"
 
-#: js/toolbar.js:1458
+#: js/toolbar.js:1637
 msgid "Word Counter"
 msgstr "शब्द गणक"
 
-#: js/toolbar.js:1489
+#: js/toolbar.js:1661
 msgid "Number of Slides"
 msgstr "स्लाइडहरूको सङ्ख्या"
 
-#: js/toolbar.js:1525
+#: js/toolbar.js:1690
 msgid "%n users"
 msgstr "%n प्रयोगकर्ताहरू"
 
-#: js/toolbar.js:1526
+#: js/toolbar.js:1691
 msgid "1 user"
 msgstr "1 प्रयोगकर्ता"
 
-#: js/toolbar.js:1527
+#: js/toolbar.js:1692
 msgid "0 users"
 msgstr "0 प्रयोगकर्ता"
 
-#: js/toolbar.js:1657
+#: js/toolbar.js:1849
 msgid "Document saved"
 msgstr "कागजात सङ्ग्रह गरियो ।"
 
-#: js/toolbar.js:1807
+#: js/toolbar.js:1999
 msgid "Style"
 msgstr "शैली"
 
-#: js/toolbar.js:1829
+#: js/toolbar.js:2021
 msgid "Font"
 msgstr "फन्ट"
 
-#: js/toolbar.js:1862
+#: js/toolbar.js:2054
 msgid "Previous slide"
 msgstr "अघिल्लो स्लाइड"
 
-#: js/toolbar.js:1863
+#: js/toolbar.js:2055
 msgid "Next slide"
 msgstr "पछिल्लो स्लाइड"
 
-#: js/toolbar.js:1925
+#: js/toolbar.js:2101
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "धेरै प्रयोगकर्ताहरू सँग विवादास्पद अनडू/रिडू। कृपया समाधान गर्नको लागि कागजा"
 "त मर्मत प्रयोग गर्नुहोस्"
 
-#: js/toolbar.js:2159 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2357 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "तपाईँ"
 
-#: js/toolbar.js:2165
+#: js/toolbar.js:2363
 msgid "Readonly"
 msgstr "पढ्ने मात्र"
 
@@ -507,7 +503,7 @@ msgstr "प्रकार"
 msgid "Index"
 msgstr "अनुक्रमणिका"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:226
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:228
 msgid "Comment"
 msgstr "टिप्पणी"
 
@@ -525,20 +521,20 @@ msgstr "स्टेटमा जानुहोस्"
 
 #: src/control/Control.Menubar.js:21
 msgid "Share..."
-msgstr ""
+msgstr "साझा गर्नुहोस्..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
-#: src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:314
 msgid "See revision history"
 msgstr "पुनरावलोकन इतिहास गर्नुहोस्"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:236
-#: src/control/Control.Menubar.js:317
+#: src/control/Control.Menubar.js:315
 msgid "Download as"
 msgstr "मा डाउनलोड"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:237
-#: src/control/Control.Menubar.js:318
+#: src/control/Control.Menubar.js:316
 msgid "PDF Document (.pdf)"
 msgstr "PDF कागजात (.pdf)"
 
@@ -558,15 +554,20 @@ msgstr "Word कागजात (.docx)"
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:321
+msgid "Close document"
+msgstr "कागजात बन्द गर्नुहोस्"
+
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:247
-#: src/control/Control.Menubar.js:328
+#: src/control/Control.Menubar.js:326
 msgid "Repair"
 msgstr "मर्मत गर्नुहोस्"
 
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
-#: src/control/Control.Menubar.js:341
+#: src/control/Control.Menubar.js:339
 msgid "Local Image..."
-msgstr ""
+msgstr "स्थानीय छवि..."
 
 #: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
 msgid "All"
@@ -577,25 +578,25 @@ msgid "Text orientation"
 msgstr "पाठ अभिमूखिकरण"
 
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:302
-#: src/control/Control.Menubar.js:396
+#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:300
+#: src/control/Control.Menubar.js:394
 msgid "None (Do not check spelling)"
 msgstr "कुनै पनि होइन (हिज्जे जाँच नगर्नुहोस्)"
 
-#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:305
-#: src/control/Control.Menubar.js:399
+#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:303
+#: src/control/Control.Menubar.js:397
 msgid "Keyboard shortcuts"
 msgstr "कुञ्जीपाटी सर्टकट"
 
-#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:306
-#: src/control/Control.Menubar.js:400
+#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:304
+#: src/control/Control.Menubar.js:398
 msgid "About"
 msgstr "बारेमा"
 
-#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:308
-#: src/control/Control.Menubar.js:402
-msgid "Close document"
-msgstr "कागजात बन्द गर्नुहोस्"
+#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:306
+#: src/control/Control.Menubar.js:400 src/map/Map.js:273
+msgid "Last modification"
+msgstr ""
 
 #: src/control/Control.Menubar.js:238
 msgid "ODF presentation (.odp)"
@@ -609,23 +610,23 @@ msgstr "PowerPoint 2003 प्रस्तुति (.ppt)"
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint प्रस्तुति (.pptx)"
 
-#: src/control/Control.Menubar.js:319
+#: src/control/Control.Menubar.js:317
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF स्प्रेडसिट (.ods)"
 
-#: src/control/Control.Menubar.js:320
+#: src/control/Control.Menubar.js:318
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 स्प्रेडसिट (.xls)"
 
-#: src/control/Control.Menubar.js:321
+#: src/control/Control.Menubar.js:319
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel स्प्रेडसिट (.xlsx)"
 
-#: src/control/Control.Menubar.js:467
+#: src/control/Control.Menubar.js:466
 msgid "Reset to Default Language"
 msgstr "पूर्वनिर्धारित भाषामा पनु स्थापित गर्नुहोस्"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:743
 msgid "Are you sure you want to delete this slide?"
 msgstr "यस स्लाइड मेट्ने कुरामा निश्चित हुनुहुन्छ?"
 
@@ -637,91 +638,95 @@ msgstr "एनोटेसनहरू माथि सार्नुहोस�
 msgid "Scroll down annotations"
 msgstr "एनोटेसनहरू तल सार्नुहोस्"
 
-#: src/control/Control.Tabs.js:55
+#: src/control/Control.Tabs.js:64
 msgid "Insert sheet before this"
 msgstr "यस पछि एक सिट घुसार्नुहोस्"
 
-#: src/control/Control.Tabs.js:56
+#: src/control/Control.Tabs.js:65
 msgid "Insert sheet after this"
 msgstr "यस पछि एक सिट घुसार्नुहोस्"
 
-#: src/control/Control.Tabs.js:61
+#: src/control/Control.Tabs.js:70
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "के तपाईं पाना %sheet% मेटाउन निश्चित हुनुहुन्छ?"
 
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:83
 msgid "Enter new sheet name"
 msgstr "नयाँ पानाको नाम यहाँ प्रविष्ट गर्नुहोस्"
 
-#: src/control/Signing.js:153 src/control/Signing.js:226
+#: src/control/Signing.js:156 src/control/Signing.js:229
 msgid "PIN Code"
 msgstr ""
 
-#: src/control/Signing.js:216
+#: src/control/Signing.js:219
 msgid "Login from email or mobile number"
 msgstr ""
 
-#: src/control/Signing.js:227
+#: src/control/Signing.js:230
 msgid "Check your email"
 msgstr ""
 
-#: src/control/Signing.js:450
+#: src/control/Signing.js:325
+msgid "Document uploaded."
+msgstr ""
+
+#: src/control/Signing.js:464
 msgid "Not Signed"
 msgstr ""
 
-#: src/control/Signing.js:453
+#: src/control/Signing.js:467
 msgid "Document signed and validated."
 msgstr ""
 
-#: src/control/Signing.js:454
+#: src/control/Signing.js:468
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:457
+#: src/control/Signing.js:471
 msgid "Document signed but signature is broken."
 msgstr ""
 
-#: src/control/Signing.js:458
+#: src/control/Signing.js:472
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:461
+#: src/control/Signing.js:475
 msgid "Document signed but the document is already modified."
 msgstr ""
 
-#: src/control/Signing.js:462
+#: src/control/Signing.js:476
 msgid "Signed but document modified"
 msgstr ""
 
-#: src/control/Signing.js:465
+#: src/control/Signing.js:479
 msgid "Document signed but can not be validated."
 msgstr ""
 
-#: src/control/Signing.js:466
+#: src/control/Signing.js:480
 msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:469
+#: src/control/Signing.js:483
 msgid "Document signed but not all files are signed."
 msgstr ""
 
-#: src/control/Signing.js:470
+#: src/control/Signing.js:484
 msgid "Signed but not all files are signed"
 msgstr ""
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "बायाँ सीमान्त"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "दायाँ सीमान्त"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
 msgstr "डाउनलोड गर्दै..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1039
+#: src/control/Toolbar.js:99 src/map/Map.js:1119
 msgid "Saving..."
 msgstr "सङ्ग्रह गर्दै..."
 
@@ -749,29 +754,29 @@ msgstr "उफ्, LibreOffice Online सँग जोड्न त्यहा�
 msgid "Unsupported server version."
 msgstr "असमर्थित सर्भर संस्करण।"
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid "Session terminated by document owner"
 msgstr "सेसन कागजात मालिक द्वारा समाप्त गरियो"
 
-#: src/core/Socket.js:333
+#: src/core/Socket.js:338
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक "
 "गर्नुहोस्"
 
-#: src/core/Socket.js:340
+#: src/core/Socket.js:345
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "सर्भर मर्मतको लागि बन्द हुँदैछ (स्वत: बचतगर्दै)"
 
-#: src/core/Socket.js:344
+#: src/core/Socket.js:349
 msgid "Oops, there is a problem connecting the document"
 msgstr "उफ्, कागजात जडान गर्दा समस्या छ"
 
-#: src/core/Socket.js:348
+#: src/core/Socket.js:353
 msgid "Server is recycling and will be available shortly"
 msgstr "सर्भर रिसाइक्ल हुदैछ र छिट्टै उपलब्ध हुनेछ"
 
-#: src/core/Socket.js:379
+#: src/core/Socket.js:384
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -779,7 +784,7 @@ msgstr ""
 "भण्डारणमा कागजात परिवर्तन भएको छ। नयाँ कागजात लोड गर्दै। तपाइँको संस्करण "
 "परिमार्जनको रूपमा उपलब्ध छ।"
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:390
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -787,7 +792,7 @@ msgstr ""
 "पुरानो संशोधन पुनर्स्थापित गर्दै। कुनै बचत नगरिएको परिवर्तनहरु संस्करण "
 "इतिहासमा उपलब्ध हुनेछ"
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:508
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -795,39 +800,39 @@ msgstr ""
 "स्टोरेजमा कागजातलाई परिवर्तन गरिएको छ। तपाईंले गर्नुभएका तर सुरक्षित नगरिएका "
 "परिवर्तनहरूलाई के गर्न चाहनुहुन्छ?"
 
-#: src/core/Socket.js:508
+#: src/core/Socket.js:513
 msgid "Discard"
 msgstr "छाड्नुहोस्"
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:518
 msgid "Overwrite"
 msgstr "अधिलेखन गर्नुहोस्"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:523
 msgid "Save to new file"
 msgstr "नयाँ फाइलमा बचत गर्नुहोस्"
 
-#: src/core/Socket.js:586
+#: src/core/Socket.js:591
 msgid "Document requires password to view."
 msgstr "कागजात हेर्नको लागी पासवर्ड चाहिन्छ।"
 
-#: src/core/Socket.js:589
+#: src/core/Socket.js:594
 msgid "Document requires password to modify."
 msgstr "कागजातलाई परिमार्जन गर्न पासवर्ड चाहिन्छ।"
 
-#: src/core/Socket.js:591
+#: src/core/Socket.js:596
 msgid "Hit Cancel to open in view-only mode."
 msgstr "भियु-अन्ली मोडमा खोल्न रद्द गर्नुहोस्।"
 
-#: src/core/Socket.js:595
+#: src/core/Socket.js:600
 msgid "Wrong password provided. Please try again."
 msgstr "गलत पासवर्ड प्रदान गरियो। कृपया पुन: प्रयास गर्नुहोस।"
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:713
 msgid "Connecting..."
 msgstr "जडान गर्दै..."
 
-#: src/core/Socket.js:860
+#: src/core/Socket.js:865
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -950,39 +955,39 @@ msgstr ""
 "कागजात बचत गर्न सकिँदैन। आफ्नो अनुमति जाँच गर्नुहोस् वा भण्डारण सर्भर "
 "प्रशासकलाई सम्पर्क गर्नुहोस्।"
 
-#: src/layer/marker/Annotation.js:201
+#: src/layer/marker/Annotation.js:211
 msgid "Accept change"
 msgstr "परिवर्तनहरू स्वीकार गर्नुहोस्"
 
-#: src/layer/marker/Annotation.js:206
+#: src/layer/marker/Annotation.js:216
 msgid "Reject change"
 msgstr "परिवर्तनहरू अस्वीकार गर्नुहोस्"
 
-#: src/layer/marker/Annotation.js:215
+#: src/layer/marker/Annotation.js:225
 msgid "Open menu"
 msgstr "मेनु खोल्नोहोस्"
 
-#: src/layer/marker/Annotation.js:235 src/layer/tile/TileLayer.js:199
+#: src/layer/marker/Annotation.js:245 src/layer/tile/TileLayer.js:201
 msgid "Reply"
 msgstr "जवाफ दिनुहोस्"
 
-#: src/layer/tile/TileLayer.js:193
+#: src/layer/tile/TileLayer.js:195
 msgid "Modify"
 msgstr "परिमार्जन गर्नुहोस्"
 
-#: src/layer/tile/TileLayer.js:205
+#: src/layer/tile/TileLayer.js:207
 msgid "Remove"
 msgstr "हटाउनुहोस्"
 
-#: src/map/Map.js:146
+#: src/map/Map.js:170
 msgid "Initializing..."
 msgstr "थालनी गर्दै..."
 
-#: src/map/Map.js:911
+#: src/map/Map.js:991
 msgid "Inactive document - please click to resume editing"
 msgstr "निस्क्रिय कागजात - स्पादन पुनःसुरु गर्न क्लिक गर्नुहोस्"
 
-#: src/map/Map.js:1042
+#: src/map/Map.js:1122
 msgid "Loading..."
 msgstr "लोडहुँदै छ..."
 
@@ -990,9 +995,9 @@ msgstr "लोडहुँदै छ..."
 msgid "Uploading..."
 msgstr "अपलोड हुँदैछ..."
 
-#: src/map/handler/Map.WOPI.js:275
+#: src/map/handler/Map.WOPI.js:277
 msgid "Creating copy..."
-msgstr ""
+msgstr "प्रतिलिपि बनाउदै..."
 
 #~ msgid "Textwrap"
 #~ msgstr "टेक्स्टर्‍याप"
@@ -1017,3 +1022,6 @@ msgstr ""
 
 #~ msgid "Wrap through"
 #~ msgstr "पूरै बेर्नुहोस्"
+
+#~ msgid "Document repair"
+#~ msgstr "कागजात मर्मत"

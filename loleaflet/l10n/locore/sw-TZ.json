@@ -317,6 +317,7 @@
 "StDev":"MuachaDifu",
 "Strong Emphasis":"Shada",
 "Subtitle":"Subtitle",
+"Sum":"Sum",
 "Swahili (Kenya)":"Swahili (Kenya)",
 "Swahili (Tanzania)":"Swahili (Tanzania)",
 "Swazi":"Swazi",
@@ -381,5 +382,6 @@
 "Welsh":"Kiwelshi",
 "Xhosa":"Xhosa",
 "Zulu":"Zulu",
+"[None]":"[Bila]",
 "Éwé":"Éwé"
 }

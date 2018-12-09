@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:42+0100\n"
+"POT-Creation-Date: 2018-12-09 17:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
-"X-Pootle-Revision: 3609044\n"
+"X-Pootle-Revision: 3615433\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -119,7 +119,7 @@ msgstr "Γράφημα CPU"
 msgid "Network Graph"
 msgstr "Γράφημα δικτύου"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:232
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:242
 msgid "Save"
 msgstr "Αποθήκευση"
 
@@ -217,263 +217,259 @@ msgstr " λεπτά"
 msgid " s"
 msgstr " δευτερόλεπτα"
 
-#: js/toolbar.js:154
+#: js/toolbar.js:224
 msgid "Are you sure you want to delete this page?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη σελίδα;"
 
-#: js/toolbar.js:621
-msgid "Document repair"
-msgstr "Επιδιόρθωση εγγράφου"
-
-#: js/toolbar.js:661
-msgid "Insert table"
-msgstr "Εισαγωγή πίνακα"
-
-#: js/toolbar.js:663
+#: js/toolbar.js:767
 msgid "Borders"
 msgstr "Περιγράμματα"
 
-#: js/toolbar.js:671
+#: js/toolbar.js:775
 msgid "More..."
 msgstr "Περισσότερα..."
 
-#: js/toolbar.js:683
+#: js/toolbar.js:820
+msgid "Insert table"
+msgstr "Εισαγωγή πίνακα"
+
+#: js/toolbar.js:825
+msgid "Insert Local Image"
+msgstr "Εισαγωγή τοπικής εικόνας"
+
+#: js/toolbar.js:828
 msgid "Insert shapes"
 msgstr "Εισαγωγή σχημάτων"
 
-#: js/toolbar.js:690
-msgid "Insert Local Image"
-msgstr ""
-
-#: js/toolbar.js:718 js/toolbar.js:1041
+#: js/toolbar.js:865 js/toolbar.js:1204
 msgid "Always follow the editor"
 msgstr "Να ακολουθείται πάντα ο επεξεργαστής"
 
-#: js/toolbar.js:721 js/toolbar.js:1044
+#: js/toolbar.js:868 js/toolbar.js:1207
 msgid "Current"
 msgstr "Τρέχουσα"
 
-#: js/toolbar.js:746 js/toolbar.js:913 js/toolbar.js:1438
+#: js/toolbar.js:901 js/toolbar.js:1074 js/toolbar.js:1614
 msgid "Sum"
 msgstr "Άθροισμα"
 
-#: js/toolbar.js:747 js/toolbar.js:914
+#: js/toolbar.js:902 js/toolbar.js:1075
 msgid "Function"
 msgstr "Συνάρτηση"
 
-#: js/toolbar.js:748 js/toolbar.js:915 src/layer/marker/Annotation.js:171
+#: js/toolbar.js:903 js/toolbar.js:1076 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: js/toolbar.js:749 js/toolbar.js:916
+#: js/toolbar.js:904 js/toolbar.js:1077
 msgid "Accept"
 msgstr "Αποδοχή"
 
-#: js/toolbar.js:782 js/toolbar.js:980
+#: js/toolbar.js:937 js/toolbar.js:1142
 msgid "First sheet"
 msgstr "Πρώτο φύλλο"
 
-#: js/toolbar.js:783 js/toolbar.js:981
+#: js/toolbar.js:938 js/toolbar.js:1143
 msgid "Previous sheet"
 msgstr "Προηγούμενο φύλλο"
 
-#: js/toolbar.js:784 js/toolbar.js:982
+#: js/toolbar.js:939 js/toolbar.js:1144
 msgid "Next sheet"
 msgstr "Επόμενο φύλλο"
 
-#: js/toolbar.js:785 js/toolbar.js:983
+#: js/toolbar.js:940 js/toolbar.js:1145
 msgid "Last sheet"
 msgstr "Τελευταίο φύλλο"
 
-#: js/toolbar.js:786 js/toolbar.js:984
+#: js/toolbar.js:941 js/toolbar.js:1146
 msgid "Insert sheet"
 msgstr "Εισαγωγή φύλλου"
 
-#: js/toolbar.js:947
+#: js/toolbar.js:1108
 msgid "Sign"
 msgstr ""
 
-#: js/toolbar.js:947 src/control/Control.Menubar.js:30
+#: js/toolbar.js:1108 src/control/Control.Menubar.js:30
 msgid "Sign document"
-msgstr ""
+msgstr "Υπογραφή εγγράφου"
 
-#: js/toolbar.js:948
+#: js/toolbar.js:1109
 msgid "Upload"
 msgstr ""
 
-#: js/toolbar.js:948
+#: js/toolbar.js:1109
 msgid "Upload document"
 msgstr ""
 
-#: js/toolbar.js:950
+#: js/toolbar.js:1111
 msgid "Identity:"
 msgstr ""
 
-#: js/toolbar.js:951 js/toolbar.js:957
+#: js/toolbar.js:1112 js/toolbar.js:1118
 msgid "N/A"
 msgstr ""
 
-#: js/toolbar.js:953
+#: js/toolbar.js:1114
 msgid "Select passport"
 msgstr ""
 
-#: js/toolbar.js:954
+#: js/toolbar.js:1115
 msgid "Passport: N/A"
 msgstr ""
 
-#: js/toolbar.js:956
+#: js/toolbar.js:1117
 msgid "Status:"
 msgstr ""
 
-#: js/toolbar.js:959
+#: js/toolbar.js:1120
 msgid "Logout"
-msgstr ""
+msgstr "Αποσύνδεση"
 
-#: js/toolbar.js:960
+#: js/toolbar.js:1121
 msgid "Login"
 msgstr ""
 
-#: js/toolbar.js:961
+#: js/toolbar.js:1122
 msgid "Close"
 msgstr ""
 
-#: js/toolbar.js:1001 src/control/Control.Menubar.js:297
+#: js/toolbar.js:1164 src/control/Control.Menubar.js:295
 msgid "Fullscreen presentation"
 msgstr "Παρουσίαση πλήρους οθόνης"
 
-#: js/toolbar.js:1025
+#: js/toolbar.js:1188
 msgid "Search:"
 msgstr "Αναζήτηση:"
 
-#: js/toolbar.js:1032
+#: js/toolbar.js:1195
 msgid "Cancel the search"
 msgstr "Ακύρωση αναζήτησης"
 
-#: js/toolbar.js:1037
+#: js/toolbar.js:1200
 msgid "No users"
 msgstr "Κανένας χρήστης"
 
-#: js/toolbar.js:1051 src/control/Control.Menubar.js:63
+#: js/toolbar.js:1214 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
 msgid "Reset zoom"
 msgstr "Επαναφορά εστίασης"
 
-#: js/toolbar.js:1095
+#: js/toolbar.js:1258
 msgid "%user has joined"
 msgstr "Ο %user συμμετέχει"
 
-#: js/toolbar.js:1096
+#: js/toolbar.js:1259
 msgid "%user has left"
 msgstr "Ο %user έφυγε"
 
-#: js/toolbar.js:1416
+#: js/toolbar.js:1592
 msgid "Number of Sheets"
 msgstr "Αριθμός φύλλων"
 
-#: js/toolbar.js:1419
+#: js/toolbar.js:1595
 msgid "Selected range of cells"
 msgstr "Επιλεγμένη περιοχή κελιών"
 
-#: js/toolbar.js:1422 js/toolbar.js:1461
+#: js/toolbar.js:1598 js/toolbar.js:1640
 msgid "Entering text mode"
 msgstr "Εκκινεί τη λειτουργία κειμένου"
 
-#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1494
+#: js/toolbar.js:1601 js/toolbar.js:1646 js/toolbar.js:1666
 msgid "Text Language"
 msgstr "Γλώσσα Κειμένου"
 
-#: js/toolbar.js:1428 js/toolbar.js:1464
+#: js/toolbar.js:1604 js/toolbar.js:1643
 msgid "Selection Mode"
 msgstr "Κατάσταση επιλογής"
 
-#: js/toolbar.js:1431
+#: js/toolbar.js:1607
 msgid "Choice of functions"
 msgstr "Επιλογή λειτουργιών"
 
-#: js/toolbar.js:1433
+#: js/toolbar.js:1609
 msgid "Average"
 msgstr "Μέσος όρος"
 
-#: js/toolbar.js:1434
+#: js/toolbar.js:1610
 msgid "CountA"
 msgstr "ΠλήθοςA"
 
-#: js/toolbar.js:1435
+#: js/toolbar.js:1611
 msgid "Count"
 msgstr "Πλήθος"
 
-#: js/toolbar.js:1436
+#: js/toolbar.js:1612
 msgid "Maximum"
 msgstr "Μέγιστο"
 
-#: js/toolbar.js:1437
+#: js/toolbar.js:1613
 msgid "Minimum"
 msgstr "Ελάχιστο"
 
-#: js/toolbar.js:1439
+#: js/toolbar.js:1615
 msgid "Selection count"
 msgstr "Πλήθος επιλογών"
 
-#: js/toolbar.js:1440
+#: js/toolbar.js:1616
 msgid "None"
 msgstr "Καμία"
 
-#: js/toolbar.js:1455
+#: js/toolbar.js:1634
 msgid "Number of Pages"
 msgstr "Αριθμός σελίδων"
 
-#: js/toolbar.js:1458
+#: js/toolbar.js:1637
 msgid "Word Counter"
 msgstr "Καταμέτρηση λέξεων"
 
-#: js/toolbar.js:1489
+#: js/toolbar.js:1661
 msgid "Number of Slides"
 msgstr "Αριθμός διαφανειών"
 
-#: js/toolbar.js:1525
+#: js/toolbar.js:1690
 msgid "%n users"
 msgstr "%n χρήστες"
 
-#: js/toolbar.js:1526
+#: js/toolbar.js:1691
 msgid "1 user"
 msgstr "1 χρήστης"
 
-#: js/toolbar.js:1527
+#: js/toolbar.js:1692
 msgid "0 users"
 msgstr "0 χρήστες"
 
-#: js/toolbar.js:1657
+#: js/toolbar.js:1849
 msgid "Document saved"
 msgstr "Το έγγραφο αποθηκεύτηκε"
 
-#: js/toolbar.js:1807
+#: js/toolbar.js:1999
 msgid "Style"
 msgstr "Τεχνοτροπία"
 
-#: js/toolbar.js:1829
+#: js/toolbar.js:2021
 msgid "Font"
 msgstr "Γραμματοσειρά"
 
-#: js/toolbar.js:1862
+#: js/toolbar.js:2054
 msgid "Previous slide"
 msgstr "Προηγούμενη διαφάνεια"
 
-#: js/toolbar.js:1863
+#: js/toolbar.js:2055
 msgid "Next slide"
 msgstr "Επόμενη διαφάνεια"
 
-#: js/toolbar.js:1925
+#: js/toolbar.js:2101
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Σύγκρουση αναίρεσης/ακύρωσης αναίρεσης για πολλαπλούς χρήστες. Παρακαλούμε, "
 "χρησιμοποιήστε την επιδιόρθωση του εγγράφου για να το επιλύσετε."
 
-#: js/toolbar.js:2159 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2357 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Εσείς"
 
-#: js/toolbar.js:2165
+#: js/toolbar.js:2363
 msgid "Readonly"
 msgstr "Μόνο για ανάγνωση"
 
@@ -509,7 +505,7 @@ msgstr "Τύπος"
 msgid "Index"
 msgstr "Ευρετήριο"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:226
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:228
 msgid "Comment"
 msgstr "Σχόλιο"
 
@@ -527,20 +523,20 @@ msgstr "Μετάβαση στην κατάσταση"
 
 #: src/control/Control.Menubar.js:21
 msgid "Share..."
-msgstr ""
+msgstr "Μερισμός..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
-#: src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:314
 msgid "See revision history"
 msgstr "Δείτε το ιστορικό των αναθεωρήσεων"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:236
-#: src/control/Control.Menubar.js:317
+#: src/control/Control.Menubar.js:315
 msgid "Download as"
 msgstr "Μεταφόρτωση ως"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:237
-#: src/control/Control.Menubar.js:318
+#: src/control/Control.Menubar.js:316
 msgid "PDF Document (.pdf)"
 msgstr "Έγγραφο PDF (.pdf)"
 
@@ -560,15 +556,20 @@ msgstr "Έγγραφο Word (.docx)"
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:321
+msgid "Close document"
+msgstr "Κλείσιμο εγγράφου"
+
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:247
-#: src/control/Control.Menubar.js:328
+#: src/control/Control.Menubar.js:326
 msgid "Repair"
 msgstr "Επιδιόρθωση"
 
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
-#: src/control/Control.Menubar.js:341
+#: src/control/Control.Menubar.js:339
 msgid "Local Image..."
-msgstr ""
+msgstr "Τοπική εικόνα..."
 
 #: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
 msgid "All"
@@ -579,25 +580,25 @@ msgid "Text orientation"
 msgstr "Προσανατολισμός κειμένου"
 
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:302
-#: src/control/Control.Menubar.js:396
+#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:300
+#: src/control/Control.Menubar.js:394
 msgid "None (Do not check spelling)"
 msgstr "Καμία (χωρίς ορθογραφικό έλεγχο)"
 
-#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:305
-#: src/control/Control.Menubar.js:399
+#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:303
+#: src/control/Control.Menubar.js:397
 msgid "Keyboard shortcuts"
 msgstr "Συντομεύσεις πληκτρολογίου"
 
-#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:306
-#: src/control/Control.Menubar.js:400
+#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:304
+#: src/control/Control.Menubar.js:398
 msgid "About"
 msgstr "Περί"
 
-#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:308
-#: src/control/Control.Menubar.js:402
-msgid "Close document"
-msgstr "Κλείσιμο εγγράφου"
+#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:306
+#: src/control/Control.Menubar.js:400 src/map/Map.js:273
+msgid "Last modification"
+msgstr ""
 
 #: src/control/Control.Menubar.js:238
 msgid "ODF presentation (.odp)"
@@ -611,23 +612,23 @@ msgstr "Παρουσίαση PowerPoint 2003 (.ppt)"
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Παρουσίαση PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.js:319
+#: src/control/Control.Menubar.js:317
 msgid "ODF spreadsheet (.ods)"
 msgstr "Υπολογιστικό φύλλο ODF (.ods)"
 
-#: src/control/Control.Menubar.js:320
+#: src/control/Control.Menubar.js:318
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Υπολογιστικό φύλλο Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:321
+#: src/control/Control.Menubar.js:319
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Υπολογιστικό φύλλο Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:467
+#: src/control/Control.Menubar.js:466
 msgid "Reset to Default Language"
 msgstr "Επαναφορά στην προεπιλεγμένη γλώσσα"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:743
 msgid "Are you sure you want to delete this slide?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη διαφάνεια;"
 
@@ -639,91 +640,95 @@ msgstr "Κύλιση προς τα πάνω των σχολίων"
 msgid "Scroll down annotations"
 msgstr "Κύλιση προς τα κάτω των σχολίων"
 
-#: src/control/Control.Tabs.js:55
+#: src/control/Control.Tabs.js:64
 msgid "Insert sheet before this"
 msgstr "Εισαγωγή φύλλου πριν από αυτό"
 
-#: src/control/Control.Tabs.js:56
+#: src/control/Control.Tabs.js:65
 msgid "Insert sheet after this"
 msgstr "Εισαγωγή φύλλου μετά από αυτό"
 
-#: src/control/Control.Tabs.js:61
+#: src/control/Control.Tabs.js:70
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε το φύλλο, %sheet%;"
 
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:83
 msgid "Enter new sheet name"
 msgstr "Εισάγετε ένα νέο όνομα φύλλου."
 
-#: src/control/Signing.js:153 src/control/Signing.js:226
+#: src/control/Signing.js:156 src/control/Signing.js:229
 msgid "PIN Code"
 msgstr ""
 
-#: src/control/Signing.js:216
+#: src/control/Signing.js:219
 msgid "Login from email or mobile number"
 msgstr ""
 
-#: src/control/Signing.js:227
+#: src/control/Signing.js:230
 msgid "Check your email"
 msgstr ""
 
-#: src/control/Signing.js:450
+#: src/control/Signing.js:325
+msgid "Document uploaded."
+msgstr ""
+
+#: src/control/Signing.js:464
 msgid "Not Signed"
 msgstr ""
 
-#: src/control/Signing.js:453
+#: src/control/Signing.js:467
 msgid "Document signed and validated."
 msgstr ""
 
-#: src/control/Signing.js:454
+#: src/control/Signing.js:468
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:457
+#: src/control/Signing.js:471
 msgid "Document signed but signature is broken."
 msgstr ""
 
-#: src/control/Signing.js:458
+#: src/control/Signing.js:472
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:461
+#: src/control/Signing.js:475
 msgid "Document signed but the document is already modified."
 msgstr ""
 
-#: src/control/Signing.js:462
+#: src/control/Signing.js:476
 msgid "Signed but document modified"
 msgstr ""
 
-#: src/control/Signing.js:465
+#: src/control/Signing.js:479
 msgid "Document signed but can not be validated."
 msgstr ""
 
-#: src/control/Signing.js:466
+#: src/control/Signing.js:480
 msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:469
+#: src/control/Signing.js:483
 msgid "Document signed but not all files are signed."
 msgstr ""
 
-#: src/control/Signing.js:470
+#: src/control/Signing.js:484
 msgid "Signed but not all files are signed"
 msgstr ""
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "Αριστερό περιθώριο"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "Δεξιό περιθώριο"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
 msgstr "Μεταφορτώνεται..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1039
+#: src/control/Toolbar.js:99 src/map/Map.js:1119
 msgid "Saving..."
 msgstr "Αποθήκευση..."
 
@@ -752,29 +757,29 @@ msgstr "Όπα, υπάρχει πρόβλημα στη σύνδεση με το 
 msgid "Unsupported server version."
 msgstr "Μη υποστηριζόμενη έκδοση διακομιστή."
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:334
 msgid "Session terminated by document owner"
 msgstr "Η συνεδρία τελείωσε από τον κάτοχο του εγγράφου"
 
-#: src/core/Socket.js:333
+#: src/core/Socket.js:338
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Ανενεργό έγγραφο - παρακαλούμε πατήστε για να επαναφορτώσετε και να "
 "συνεχίσετε την επεξεργασία"
 
-#: src/core/Socket.js:340
+#: src/core/Socket.js:345
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Ο διακομιστής κλείνει για συντήρηση (αυτόματη αποθήκευση)"
 
-#: src/core/Socket.js:344
+#: src/core/Socket.js:349
 msgid "Oops, there is a problem connecting the document"
 msgstr "Όπα, υπάρχει πρόβλημα σύνδεσης του εγγράφου."
 
-#: src/core/Socket.js:348
+#: src/core/Socket.js:353
 msgid "Server is recycling and will be available shortly"
 msgstr "Ο διακομιστής επανεκκινεί και θα είναι σύντομα διαθέσιμος."
 
-#: src/core/Socket.js:379
+#: src/core/Socket.js:384
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -782,7 +787,7 @@ msgstr ""
 "Το έγγραφο έχει αλλάξει στην αποθήκευση. Φόρτωση του νέου εγγράφου. Η έκδοση "
 "σας είναι διαθέσιμη ως αναθεώρηση."
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:390
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -790,7 +795,7 @@ msgstr ""
 "Επαναφορά πιο παλιάς έκδοσης. Οποιεσδήποτε μη αποθηκευμένες αλλαγές θα είναι "
 "διαθέσιμες στο ιστορικό της έκδοσης."
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:508
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -798,39 +803,39 @@ msgstr ""
 "Το έγγραφο έχει αλλαχθεί στην αποθήκευση. Τι θα θέλατε να κάνετε με τις μη "
 "αποθηκευμένες αλλαγές σας;"
 
-#: src/core/Socket.js:508
+#: src/core/Socket.js:513
 msgid "Discard"
 msgstr "Απόρριψη"
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:518
 msgid "Overwrite"
 msgstr "Αντικατάσταση"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:523
 msgid "Save to new file"
 msgstr "Αποθήκευση σε νέο αρχείο"
 
-#: src/core/Socket.js:586
+#: src/core/Socket.js:591
 msgid "Document requires password to view."
 msgstr "Για την προβολή του εγγράφου απαιτείται κωδικός πρόσβασης."
 
-#: src/core/Socket.js:589
+#: src/core/Socket.js:594
 msgid "Document requires password to modify."
 msgstr "Για την τροποποίηση του εγγράφου απαιτείται κωδικός πρόσβασης."
 
-#: src/core/Socket.js:591
+#: src/core/Socket.js:596
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Πατήστε Άκυρο για να ανοιχθεί σε κατάσταση μόνο για προβολή."
 
-#: src/core/Socket.js:595
+#: src/core/Socket.js:600
 msgid "Wrong password provided. Please try again."
 msgstr "Εσφαλμένος κωδικός πρόσβασης. Παρακαλούμε, ξαναπροσπαθήστε."
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:713
 msgid "Connecting..."
 msgstr "Συνδέεται..."
 
-#: src/core/Socket.js:860
+#: src/core/Socket.js:865
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -962,41 +967,41 @@ msgstr ""
 "Το έγγραφο δεν μπορεί να αποθηκευτεί. Ελέγξτε τα δικαιώματά σας ή "
 "επικοινωνήστε με τον διαχειριστή του διακομιστή αποθήκευσης."
 
-#: src/layer/marker/Annotation.js:201
+#: src/layer/marker/Annotation.js:211
 msgid "Accept change"
 msgstr "Αποδοχή αλλαγής"
 
-#: src/layer/marker/Annotation.js:206
+#: src/layer/marker/Annotation.js:216
 msgid "Reject change"
 msgstr "Απόρριψη αλλαγής"
 
-#: src/layer/marker/Annotation.js:215
+#: src/layer/marker/Annotation.js:225
 msgid "Open menu"
 msgstr "Άνοιγμα μενού"
 
-#: src/layer/marker/Annotation.js:235 src/layer/tile/TileLayer.js:199
+#: src/layer/marker/Annotation.js:245 src/layer/tile/TileLayer.js:201
 msgid "Reply"
 msgstr "Απάντηση"
 
-#: src/layer/tile/TileLayer.js:193
+#: src/layer/tile/TileLayer.js:195
 msgid "Modify"
 msgstr "Τροποποίηση"
 
-#: src/layer/tile/TileLayer.js:205
+#: src/layer/tile/TileLayer.js:207
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: src/map/Map.js:146
+#: src/map/Map.js:170
 msgid "Initializing..."
 msgstr "Αρχικοποίηση..."
 
-#: src/map/Map.js:911
+#: src/map/Map.js:991
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 "Ανενεργό έγγραφο - παρακαλούμε πατήστε (κλικ) για να συνεχίσετε την "
 "επεξεργασία"
 
-#: src/map/Map.js:1042
+#: src/map/Map.js:1122
 msgid "Loading..."
 msgstr "Φόρτωση..."
 
@@ -1004,9 +1009,9 @@ msgstr "Φόρτωση..."
 msgid "Uploading..."
 msgstr "Ανεβαίνει..."
 
-#: src/map/handler/Map.WOPI.js:275
+#: src/map/handler/Map.WOPI.js:277
 msgid "Creating copy..."
-msgstr ""
+msgstr "Δημιουργείται αντίγραφο..."
 
 #~ msgid "Textwrap"
 #~ msgstr "Αναδίπλωση κειμένου"
@@ -1031,3 +1036,6 @@ msgstr ""
 
 #~ msgid "Wrap through"
 #~ msgstr "Αναδίπλωση δια μέσου"
+
+#~ msgid "Document repair"
+#~ msgstr "Επιδιόρθωση εγγράφου"

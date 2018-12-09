@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:43+0200\n"
+"POT-Creation-Date: 2018-12-09 17:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /af/libo_online/loleaflet-help-af.po\n"
-"X-Pootle-Revision: 3614474\n"
+"X-Pootle-Revision: 3615159\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -286,14 +286,13 @@ msgstr "Ctrl + A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-18
-#, fuzzy
 msgid "Move cursor to the left"
-msgstr "Skuif wyser regs toe"
+msgstr "Skuif wyser lings toe"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-68
 msgid "Arrow Left"
-msgstr ""
+msgstr "Pyltjie Lings"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
@@ -302,9 +301,8 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-83
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-83
-#, fuzzy
 msgid "Shift + Arrow Left"
-msgstr "Shift + Reg Pyltjie"
+msgstr "Shift + Lings Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
@@ -694,7 +692,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:112-18
 msgid "Shift + Ctrl + Del"
-msgstr ""
+msgstr "Shift + Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:112-86
 msgid ""

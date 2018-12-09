@@ -90,6 +90,7 @@
 "Drop Caps":"Vallende hoofletters",
 "Dutch (Belgium)":"Nederlands (België)",
 "Dutch (Netherlands)":"Nederlands (Nederland)",
+"Dzongkha":"Dzongkha",
 "Emphasis":"Beklemtoning",
 "Endnote":"Eindnoot",
 "Endnote Characters":"Eindnota-karakters",
@@ -203,6 +204,7 @@
 "Last column":"Laaste kolom",
 "Latvian":"Letties",
 "Left Page":"Linkerbladsy",
+"Line Numbering":"Reëlnommering",
 "Lingala":"Lingala",
 "List":"Lys",
 "List 1":"Lys 1",
@@ -246,6 +248,7 @@
 "Nepali (India)":"Nepalees (Indië)",
 "Nepali (Nepal)":"Nepalees (Nepal)",
 "Nine Slides":"Nege skyfies",
+"None (Do not check spelling)":"Geen (moenie spelling kontroleer nie)",
 "Northern Sotho":"Noord-Sotho",
 "Norwegian, Bokmål":"Noors, Bokmål",
 "Norwegian, Nynorsk":"Noors, Nynorsk",
@@ -353,6 +356,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"Sterk beklemtoning",
 "Subtitle":"Subtitel",
+"Sum":"Som",
 "Swahili (Kenya)":"Swahili (Kenia)",
 "Swahili (Tanzania)":"Swahili (Tanzanië)",
 "Swazi":"Swazi",
@@ -423,5 +427,6 @@
 "Welsh":"Wallies",
 "Xhosa":"Xhosa",
 "Zulu":"Zulu",
+"[None]":"[Geen]",
 "Éwé":"Éwé"
 }

@@ -2,6 +2,7 @@
 "Addressee":"प्राप्तकएनिहार",
 "Albanian":"अल्बानियाइ",
 "Arabic":"अरेबिक",
+"Assamese":"असामी",
 "Asturian":"एस्ट्यूरियन",
 "Average":"औसत",
 "Background":"पृष्ठभूमि",
@@ -73,6 +74,7 @@
 "Greek":"ग्रीक",
 "Gujarati":"गुजराती",
 "HTML":"HTML",
+"Header":"शीर्ष टिप्पणी",
 "Heading":"शीर्षक",
 "Heading 10":"शीर्षक 10",
 "Heading 2":"शीर्षक 2",
@@ -107,6 +109,7 @@
 "Italian (Italy)":"इटालियन (इटली)",
 "Japanese":"जापानी",
 "Kannada":"कन्नड",
+"Kazakh":"कज़ाख",
 "Khmer":"ख्मेर",
 "Konkani":"कोंकणी",
 "Labels":"लेबिल",
@@ -114,6 +117,7 @@
 "Lao":"लाओ",
 "Latvian":"लातवियाइ",
 "Left Page":"बम्माँ पृष्ठ ",
+"Line Numbering":"रेखा क्रमांकन",
 "List":"सूची",
 "List 1":"सूची 1",
 "List 1 Cont.":"सूची 1 जारी राखू",
@@ -206,6 +210,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"बेसी बल",
 "Subtitle":"उपशीर्षक",
+"Sum":"जोड़",
 "Swazi":"स्वाजी",
 "Swedish (Sweden)":"स्वीडिश (स्वीडन)",
 "Table":"सारणी",
@@ -255,5 +260,6 @@
 "Watermark":"जलचिह्न",
 "Welsh":"वेल्श",
 "Xhosa":"झोसा",
-"Zulu":"जूलु"
+"Zulu":"जूलु",
+"[None]":"[केओ नहि]"
 }

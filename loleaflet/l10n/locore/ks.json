@@ -54,7 +54,7 @@
 "Graphics":"اشکال",
 "Greek":"یونئنی",
 "HTML":"HTML",
-"Header":"صفحہ کےاوپرکا حاشیہ",
+"Header":"صفحہك پيٹھم خاش",
 "Heading":"عنوان",
 "Heading 10":"عنوان 10",
 "Heading 2":"عنوان  2",
@@ -107,6 +107,7 @@
 "List 5 Cont.":"فہرست5  جاری",
 "List 5 End":"فہرست 5ختم",
 "List Contents":"فہرست مشمولات",
+"List Heading":"فہرست عنوان ",
 "List Indent":"لسٹ انڈینٹ",
 "Marginalia":"مارجینالیا",
 "Max":"زیادئ  ہوتئ زیادئ",
@@ -199,5 +200,6 @@
 "Vertical Title, Text, Chart":" كھڈا عنوان،مواد  ،چارٹ ",
 "Vertical Title, Vertical Text":"كھڈا عنوان، كھڈا مواد",
 "Visited Internet Link":" مل چكا انٹرنیٹ رابطہ ",
-"Watermark":"واٹر مارك "
+"Watermark":"واٹر مارك ",
+"[None]":"[کوئی نہیں]"
 }
