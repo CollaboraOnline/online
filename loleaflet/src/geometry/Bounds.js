@@ -83,6 +83,12 @@ L.Bounds.prototype = {
 		return xIntersects && yIntersects;
 	},
 
+	toString: function () {
+		return '[' +
+		        this.min.toString() + ', ' +
+		        this.max.toString() + ']';
+	},
+
 	isValid: function () {
 		return !!(this.min && this.max);
 	}

@@ -53,6 +53,10 @@ L.Control = L.Class.extend({
 			corner.appendChild(container);
 		}
 
+		if (this.onAdded) {
+			this.onAdded(this._map);
+		}
+
 		return this;
 	},
 

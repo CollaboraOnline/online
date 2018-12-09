@@ -16,17 +16,10 @@ L.Control.ContextToolbar = L.Control.extend({
 		if (!this._container) {
 			this._initLayout();
 		}
-		if (this._pos) {
-			var maxBounds = this._map.getPixelBounds();
-			var size = new L.Point(this._container.clientWidth,this._container.clientHeight);
-			var bounds = new L.Bounds(this._pos, this._pos.add(size));
-			if (!maxBounds.contains(bounds)) {
-				this._pos._subtract(new L.Point(bounds.max.x - maxBounds.max.x, bounds.max.y - maxBounds.max.y));
-			}
-			L.DomUtil.setPosition(this._container, this._pos);
-		}
+		this._container.style.visibility = 'hidden';
 		return this._container;
 	},
+
 
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'loleaflet-context-toolbar');
@@ -51,6 +44,27 @@ L.Control.ContextToolbar = L.Control.extend({
 		L.DomEvent.on(paste, stopEvents,  L.DomEvent.stopPropagation)
 			.on(paste, onDown, this.onMouseDown, this)
 			.on(paste, onUp, this.onMouseUp, this);
+	},
+
+	onAdded: function () {
+		if (this._pos) {
+			var maxBounds = this._map.getPixelBounds();
+			var size = new L.Point(this._container.clientWidth,this._container.clientHeight);
+			var bounds = new L.Bounds(this._pos, this._pos.add(size));
+			if (!maxBounds.contains(bounds)) {
+				var offset = L.point(0, 0);
+				if (bounds.max.x > maxBounds.max.x) {
+					offset.x = size.x;
+				}
+
+				if (bounds.max.y > maxBounds.max.y) {
+					offset.y = size.y;
+				}
+				this._pos._subtract(offset);
+			}
+			L.DomUtil.setPosition(this._container, this._pos);
+		}
+		this._container.style.visibility = '';
 	},
 
 	onMouseDown: function (e) {
