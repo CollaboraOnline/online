@@ -1,24 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# #-#-#-#-#  LibreOffice 5.1 Compendium (sl) #-#-#-#-#
+# Martin Srebotnjak <miles@filmsi.net>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:42+0100\n"
-"PO-Revision-Date: 2018-11-10 11:59+0100\n"
+"POT-Creation-Date: 2018-12-05 20:34+0100\n"
+"PO-Revision-Date: 2018-12-06 23:25+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3);\n"
-"X-Accelerator-Marker: ~\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 "X-Generator: Poedit 2.2\n"
+"X-Accelerator-Marker: ~\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -295,51 +292,51 @@ msgstr "Vstavi delovni list"
 
 #: js/toolbar.js:947
 msgid "Sign"
-msgstr ""
+msgstr "Podpiši"
 
 #: js/toolbar.js:947 src/control/Control.Menubar.js:30
 msgid "Sign document"
-msgstr ""
+msgstr "Podpiši dokument"
 
 #: js/toolbar.js:948
 msgid "Upload"
-msgstr ""
+msgstr "Naloži na strežnik"
 
 #: js/toolbar.js:948
 msgid "Upload document"
-msgstr ""
+msgstr "Naloži dokument"
 
 #: js/toolbar.js:950
 msgid "Identity:"
-msgstr ""
+msgstr "Identiteta:"
 
 #: js/toolbar.js:951 js/toolbar.js:957
 msgid "N/A"
-msgstr ""
+msgstr "N/D"
 
 #: js/toolbar.js:953
 msgid "Select passport"
-msgstr ""
+msgstr "Izberite potni list"
 
 #: js/toolbar.js:954
 msgid "Passport: N/A"
-msgstr ""
+msgstr "Potni list: N/D"
 
 #: js/toolbar.js:956
 msgid "Status:"
-msgstr ""
+msgstr "Stanje:"
 
 #: js/toolbar.js:959
 msgid "Logout"
-msgstr ""
+msgstr "Odjava"
 
 #: js/toolbar.js:960
 msgid "Login"
-msgstr ""
+msgstr "Prijava"
 
 #: js/toolbar.js:961
 msgid "Close"
-msgstr ""
+msgstr "Zapri"
 
 #: js/toolbar.js:1001 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -368,7 +365,7 @@ msgstr "Pridružil se je uporabnik %user"
 
 #: js/toolbar.js:1096
 msgid "%user has left"
-msgstr ""
+msgstr "Odšel je uporabnik %user"
 
 #: js/toolbar.js:1416
 msgid "Number of Sheets"
@@ -382,7 +379,7 @@ msgstr "Izbran obseg celic"
 msgid "Entering text mode"
 msgstr "Vstopanje v besedilni način"
 
-#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1494
+#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1495
 msgid "Text Language"
 msgstr "Jezik besedila"
 
@@ -430,54 +427,54 @@ msgstr "Število strani"
 msgid "Word Counter"
 msgstr "Števec besed"
 
-#: js/toolbar.js:1489
+#: js/toolbar.js:1490
 msgid "Number of Slides"
 msgstr "Število prosojnic"
 
-#: js/toolbar.js:1525
+#: js/toolbar.js:1528
 msgid "%n users"
 msgstr "%n uporabnikov"
 
-#: js/toolbar.js:1526
+#: js/toolbar.js:1529
 msgid "1 user"
 msgstr "1 uporabnik"
 
-#: js/toolbar.js:1527
+#: js/toolbar.js:1530
 msgid "0 users"
 msgstr "0 uporabnikov"
 
-#: js/toolbar.js:1657
+#: js/toolbar.js:1660
 msgid "Document saved"
 msgstr "Dokument shranjen"
 
-#: js/toolbar.js:1807
+#: js/toolbar.js:1810
 msgid "Style"
 msgstr "Slog"
 
-#: js/toolbar.js:1829
+#: js/toolbar.js:1832
 msgid "Font"
 msgstr "Pisava"
 
-#: js/toolbar.js:1862
+#: js/toolbar.js:1865
 msgid "Previous slide"
 msgstr "Prejšnja prosojnica"
 
-#: js/toolbar.js:1863
+#: js/toolbar.js:1866
 msgid "Next slide"
 msgstr "Naslednja prosojnica"
 
-#: js/toolbar.js:1925
+#: js/toolbar.js:1928
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Spor razveljavljanja/ponavljanja med več uporabniki. Uporabite popravilo "
 "dokumenta za razrešitev težave."
 
-#: js/toolbar.js:2159 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2162 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Vi"
 
-#: js/toolbar.js:2165
+#: js/toolbar.js:2168
 msgid "Readonly"
 msgstr "Samo za branje"
 
@@ -659,69 +656,73 @@ msgstr "Ali ste prepričani, da želite izbrisati delovni list %sheet%?"
 msgid "Enter new sheet name"
 msgstr "Vnesite ime za nov delovni list"
 
-#: src/control/Signing.js:153 src/control/Signing.js:226
+#: src/control/Signing.js:156 src/control/Signing.js:229
 msgid "PIN Code"
-msgstr ""
+msgstr "Kodo PIN"
 
-#: src/control/Signing.js:216
+#: src/control/Signing.js:219
 msgid "Login from email or mobile number"
-msgstr ""
+msgstr "Prijava z e-pošte ali mobilne številke"
 
-#: src/control/Signing.js:227
+#: src/control/Signing.js:230
 msgid "Check your email"
-msgstr ""
+msgstr "Preverite svojo e-pošto"
 
-#: src/control/Signing.js:450
+#: src/control/Signing.js:325
+msgid "Document uploaded."
+msgstr "Dokument naložen."
+
+#: src/control/Signing.js:464
 msgid "Not Signed"
-msgstr ""
+msgstr "Ni podpisano"
 
-#: src/control/Signing.js:453
+#: src/control/Signing.js:467
 msgid "Document signed and validated."
-msgstr ""
+msgstr "Dokument podpisan in overjen."
 
-#: src/control/Signing.js:454
+#: src/control/Signing.js:468
 msgid "Signed and validated"
-msgstr ""
+msgstr "Podpisano in overjeno"
 
-#: src/control/Signing.js:457
+#: src/control/Signing.js:471
 msgid "Document signed but signature is broken."
-msgstr ""
+msgstr "Dokument podpisan, vendar je podpis okvarjen."
 
-#: src/control/Signing.js:458
+#: src/control/Signing.js:472
 msgid "Signature broken"
-msgstr ""
+msgstr "Podpis okvarjen"
 
-#: src/control/Signing.js:461
+#: src/control/Signing.js:475
 msgid "Document signed but the document is already modified."
-msgstr ""
+msgstr "Dokument podpisan, vendar je dokument že spremenjen."
 
-#: src/control/Signing.js:462
+#: src/control/Signing.js:476
 msgid "Signed but document modified"
-msgstr ""
+msgstr "Dokument podpisan, vendar spremenjen"
 
-#: src/control/Signing.js:465
+#: src/control/Signing.js:479
 msgid "Document signed but can not be validated."
-msgstr ""
+msgstr "Dokument podpisan, vendar ga ni mogoče overiti."
 
-#: src/control/Signing.js:466
+#: src/control/Signing.js:480
 msgid "Signed but not validated"
-msgstr ""
+msgstr "Podpisano, vendar ne potrjeno"
 
-#: src/control/Signing.js:469
+#: src/control/Signing.js:483
 msgid "Document signed but not all files are signed."
-msgstr ""
+msgstr "Dokument podpisan, vendar niso vse datoteke podpisane."
 
-#: src/control/Signing.js:470
+#: src/control/Signing.js:484
 msgid "Signed but not all files are signed"
-msgstr ""
+msgstr "Podpisano, vendar vse datoteke niso podpisane"
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "Levi rob"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "Desni rob"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
@@ -743,8 +744,8 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "IE11 je dosegel največje število povezav. Po potrebi si oglejte naslednji "
-"dokument za povečanje te omejitve (v angl.): https://docs.microsoft.com/"
-"en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
+"dokument za povečanje te omejitve (v angl.): https://docs.microsoft.com/en-"
+"us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:81
@@ -836,7 +837,8 @@ msgstr "Povezovanje ..."
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
+msgstr ""
+"Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
 #: src/errormessages.js:13
 msgid ""
@@ -997,7 +999,7 @@ msgstr "Prenašanje na strežnik ..."
 
 #: src/map/handler/Map.WOPI.js:275
 msgid "Creating copy..."
-msgstr ""
+msgstr "Ustvarjanje kopije ..."
 
 #~ msgid "Textwrap"
 #~ msgstr "Oblivanje besedila"
@@ -1013,12 +1015,6 @@ msgstr ""
 
 #~ msgid "Ideal wrap"
 #~ msgstr "Idealno oblivanje"
-
-#~ msgid "Left wrap"
-#~ msgstr "Levo oblivanje"
-
-#~ msgid "Right wrap"
-#~ msgstr "Desno oblivanje"
 
 #~ msgid "Wrap through"
 #~ msgstr "Oblij skozi"
