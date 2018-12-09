@@ -359,6 +359,9 @@ L.Map.include({
 				contentCSS: { width: w + 'px' },
 				buttons: {},
 				afterOpen: function($vexContent) {
+					$('#select-identity').text(_('Select identity:'));
+					$('#login-qr').text(_('Login from mobile'));
+					$('#recover-from-email').text(_('Recover from email'));
 					library.listIdentities().then(function(response) {
 						var identities = response.data;
 						var identitiesDiv = $vexContent.find('#identites');
