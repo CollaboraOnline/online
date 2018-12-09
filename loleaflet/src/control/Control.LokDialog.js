@@ -527,8 +527,10 @@ L.Control.LokDialog = L.Control.extend({
 		this._setupWindowEvents(id, panelCanvas, dlgInput);
 
 		L.DomEvent.on(panelContainer, 'resize', function() {
-			this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelContainer.width + ',' + panelContainer.height);
+			// Don't resize the window as we handle overflowing with scrollbars.
+			// this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelContainer.width + ',' + panelContainer.height);
 		}, this);
+
 		L.DomEvent.on(panelContainer, 'mouseleave', function() {
 			// Move the mouse off-screen when we leave the sidebar
 			// so we don't leave edge-elements highlighted as if
