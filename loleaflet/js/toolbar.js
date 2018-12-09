@@ -1119,7 +1119,7 @@ function initNormalToolbar(toolItems) {
 				{type: 'spacer'},
 				{type: 'button',  id: 'logout',  caption: _('Logout'), img: '', hint: _('Logout')},
 				{type: 'button',  id: 'login',  caption: _('Login'), img: '', hint: _('Login')},
-				{type: 'button',  id: 'close', img: 'closetoolbar', hint: _('Close')},
+				{type: 'button',  id: 'close-document-signing-bar', img: 'closetoolbar', hint: _('Close')},
 			],
 			onClick: function (e) {
 				onClick(e, e.target);
