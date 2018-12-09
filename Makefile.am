@@ -239,6 +239,8 @@ dist-hook:
 EXTRA_DIST = discovery.xml \
              favicon.ico \
              loolkitconfig.xcu \
+             loolwsd.init.rhel6 \
+             loolwsd.init.sle11 \
              loolwsd.spec \
              loolwsd.xml.in \
              loolwsd.service \
@@ -253,6 +255,7 @@ EXTRA_DIST = discovery.xml \
              debian/changelog \
              debian/control \
              debian/loolwsd.postinst \
+             debian/loolwsd.postrm \
              etc/key.pem \
              etc/cert.pem \
              etc/ca-chain.cert.pem \

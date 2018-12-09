@@ -19,7 +19,3 @@ override_dh_auto_test:
 
 override_dh_installinit:
 	# no init.d scripts here, assume systemd
-
-override_dh_gencontrol:
-	# put package names of LibreOffice here
-	# dh_gencontrol -- -Vlo:Depends=""
