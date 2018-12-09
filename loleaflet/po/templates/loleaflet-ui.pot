@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-08 16:09+0100\n"
+"POT-Creation-Date: 2018-12-09 21:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -666,47 +666,59 @@ msgstr ""
 msgid "Document uploaded."
 msgstr ""
 
-#: src/control/Signing.js:464
-msgid "Not Signed"
+#: src/control/Signing.js:362
+msgid "Select identity:"
+msgstr ""
+
+#: src/control/Signing.js:363
+msgid "Login from mobile"
+msgstr ""
+
+#: src/control/Signing.js:364
+msgid "Recover from email"
 msgstr ""
 
 #: src/control/Signing.js:467
+msgid "Not Signed"
+msgstr ""
+
+#: src/control/Signing.js:470
 msgid "Document signed and validated."
 msgstr ""
 
-#: src/control/Signing.js:468
+#: src/control/Signing.js:471
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:471
+#: src/control/Signing.js:474
 msgid "Document signed but signature is broken."
 msgstr ""
 
-#: src/control/Signing.js:472
+#: src/control/Signing.js:475
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:475
+#: src/control/Signing.js:478
 msgid "Document signed but the document is already modified."
 msgstr ""
 
-#: src/control/Signing.js:476
+#: src/control/Signing.js:479
 msgid "Signed but document modified"
 msgstr ""
 
-#: src/control/Signing.js:479
+#: src/control/Signing.js:482
 msgid "Document signed but can not be validated."
 msgstr ""
 
-#: src/control/Signing.js:480
+#: src/control/Signing.js:483
 msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:483
+#: src/control/Signing.js:486
 msgid "Document signed but not all files are signed."
 msgstr ""
 
-#: src/control/Signing.js:484
+#: src/control/Signing.js:487
 msgid "Signed but not all files are signed"
 msgstr ""
 
