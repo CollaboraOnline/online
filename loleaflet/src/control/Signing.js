@@ -438,7 +438,7 @@ L.Map.include({
 		}
 	},
 	handleSigningClickEvent: function(id, item) {
-		if (id === 'close') {
+		if (id === 'close-document-signing-bar') {
 			this.hideSignDocument();
 		}
 		else if (id === 'login') {
