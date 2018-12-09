@@ -955,7 +955,10 @@ button.leaflet-control-search-next
 .w2ui-icon.fullscreen{ background: url('images/lc_fullscreen.svg') no-repeat center !important; }
 .w2ui-icon.closemobile{ background: url('images/lc_closedocmobile.svg') no-repeat center !important; }
 .w2ui-icon.closetoolbar{ background: url('images/close_toolbar.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_modify_page{ background: url('images/lc_formproperties.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_modify_page{ background: url('images/sidebar-property-large.png') no-repeat center !important; }
+.w2ui-icon.sidebar_slide_change{ background: url('images/sidebar-transition-large.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_custom_animation{ background: url('images/sidebar-animation-large.png') no-repeat center !important; }
+.w2ui-icon.sidebar_master_slides{ background: url('images/sidebar-template-large.png') no-repeat center !important; }
 .w2ui-icon.mobile_wizard{ background: url('images/lc_mobile_wizard.svg') no-repeat center !important; }
 .w2ui-icon.fullscreen-presentation{ background: url('images/lc_fullscreen-presentation-toolbar-mobile.svg') no-repeat center !important;}
 .w2ui-icon.insertion_mobile_wizard{ background: url('images/lc_insertion_mobile_wizard.svg') no-repeat center !important; }
