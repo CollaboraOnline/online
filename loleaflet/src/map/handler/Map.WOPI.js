@@ -193,7 +193,7 @@ L.Map.WOPI = L.Handler.extend({
 				return;
 			}
 			if (this._map._permission !== 'edit') {
-				console.log('No toolbar in readonly mode - ignoring Remove_Button request.');
+				console.log('No toolbar in readonly mode - ignoring request.');
 				return;
 			}
 			if (!w2ui['editbar'].get(msg.Values.id)) {
