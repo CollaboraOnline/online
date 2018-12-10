@@ -421,7 +421,7 @@ L.Map.include({
 					}
 				}
 			},
-			vereignURL + '/vcl/js/iframe'
+			vereignURL + '/api/js/iframe'
 		).then(function(lib) {
 			library = lib;
 			adjustUIState();
