@@ -1702,24 +1702,17 @@ function onDocLayerInit() {
 	statusbar.refresh();
 
 	if (window.mode.isTablet()) {
-		// calc tablet version needs one more row before folding the menu
-		if (window.mode.isTablet() && map._docLayer._docType == 'spreadsheet') {
-			var content = $('#document-container');
-			if (content) {
-				var diff = 59;
-				var prevTop = content.css('top');
-				if (prevTop) {
-					prevTop = parseInt(prevTop.slice(0, -2)) + diff;
-				}
-				else {
-					prevTop = 0 + diff;
-				}
-				content.css({'top': String(prevTop) + 'px'});
-			}
-		}
-
 		// Fold menubar by default
-		map.toggleMenubar();
+		// FIXME: reuse toogleMenubar / use css
+		$('.main-nav').css({'display': 'none'});
+		$('#closebuttonwrapper').css({'display': 'none'});
+		var obj = $('.fold');
+		obj.removeClass('w2ui-icon fold');
+		obj.addClass('w2ui-icon unfold');
+		$('#document-container').addClass('tablet');
+		$('#spreadsheet-row-column-frame').addClass('tablet');
+		$('#presentation-controls-wrapper').css({'top': '41px'});
+
 		$('#tb_editbar_item_fonts').css({'display': 'none'});
 		$('#tb_editbar_item_fontsizes').css({'display': 'none'});
 	}

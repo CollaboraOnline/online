@@ -1416,9 +1416,9 @@ L.Map = L.Evented.extend({
 			obj.removeClass('w2ui-icon unfold');
 			obj.addClass('w2ui-icon fold');
 
-			moveObjectVertically($('#spreadsheet-row-column-frame'), 35);
-			moveObjectVertically($('#document-container'), 35);
-			moveObjectVertically($('#presentation-controls-wrapper'), 35);
+			moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
+			moveObjectVertically($('#document-container'), 36);
+			moveObjectVertically($('#presentation-controls-wrapper'), 36);
 		}
 		else {
 			$('.main-nav').css({'display': 'none'});
@@ -1428,9 +1428,9 @@ L.Map = L.Evented.extend({
 			obj.removeClass('w2ui-icon fold');
 			obj.addClass('w2ui-icon unfold');
 
-			moveObjectVertically($('#spreadsheet-row-column-frame'), -35);
-			moveObjectVertically($('#document-container'), -35);
-			moveObjectVertically($('#presentation-controls-wrapper'), -35);
+			moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
+			moveObjectVertically($('#document-container'), -36);
+			moveObjectVertically($('#presentation-controls-wrapper'), -36);
 		}
 	}
 });

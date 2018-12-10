@@ -22,13 +22,15 @@ L.Control.Tabs = L.Control.extend({
 			$('.spreadsheet-tab').contextMenu(e.perm === 'edit');
 		}, 1000);
 
-		if (e.perm === 'edit') {
-			$('.spreadsheet-tabs-container').css('bottom', '33px');
-			$('#spreadsheet-toolbar').css('bottom', '33px');
-		}
-		else {
-			$('.spreadsheet-tabs-container').css('bottom', '0px');
-			$('#spreadsheet-toolbar').css('bottom', '0px');
+		if (window.mode.isMobile() == true) {
+			if (e.perm === 'edit') {
+				$('.spreadsheet-tabs-container').css('bottom', '33px');
+				$('#spreadsheet-toolbar').css('bottom', '33px');
+			}
+			else {
+				$('.spreadsheet-tabs-container').css('bottom', '0px');
+				$('#spreadsheet-toolbar').css('bottom', '0px');
+			}
 		}
 	},
 
