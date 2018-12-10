@@ -12,6 +12,7 @@
 
 @interface TemplateCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
     NSArray<NSURL*> *templates[3];
+    LibreOfficeKit *kit;
 }
 
 @property (copy) void (^ _Nullable importHandler)(NSURL * _Nullable, UIDocumentBrowserImportMode);

@@ -6,9 +6,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#import "svtools/strings.hrc"
+
 #import <LibreOfficeKit/LibreOfficeKit.h>
 #import <LibreOfficeKit/LibreOfficeKitInit.h>
 
+#import "AppDelegate.h"
 #import "TemplateCollectionViewController.h"
 #import "TemplateSectionHeaderView.h"
 
@@ -30,7 +33,9 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
 
 - (void)viewDidLoad {
 
-    // Here we should scan for available templates.
+    kit = lok_init_2(nullptr, nullptr);
+
+    // Scan for available templates.
 
     templates[0] = [[NSBundle mainBundle] URLsForResourcesWithExtension:@".ott" subdirectory:@"Templates"];
     templates[1] = [[NSBundle mainBundle] URLsForResourcesWithExtension:@".ots" subdirectory:@"Templates"];
@@ -88,12 +93,20 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
 
     TemplateSectionHeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"SectionHeaderView" forIndexPath:indexPath];
 
+    char *translatedHeader;
+
     if (index == 0)
-        header.title.text = @"Document";
+        translatedHeader = kit->pClass->translateGet(kit, STR_DESCRIPTION_FACTORY_WRITER, "svt", [app_locale UTF8String]);
     else if (index == 1)
-        header.title.text = @"Spreadsheet";
+        translatedHeader = kit->pClass->translateGet(kit, STR_DESCRIPTION_FACTORY_CALC, "svt", [app_locale UTF8String]);
     else if (index == 2)
-        header.title.text = @"Presentation";
+        translatedHeader = kit->pClass->translateGet(kit, STR_DESCRIPTION_FACTORY_IMPRESS, "svt", [app_locale UTF8String]);
+    else
+        abort();
+
+    header.title.text = [NSString stringWithUTF8String:translatedHeader];
+
+    free(translatedHeader);
 
     return header;
 }
@@ -107,12 +120,10 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
 
     // Load the template into LibreOffice core, save as the corresponding document type (with the
     // same basename), and then proceed to edit that.
-    LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
     kit->pClass->registerCallback(kit, [](int, const char *, void*){}, nullptr);
     LibreOfficeKitDocument *doc = kit->pClass->documentLoad(kit, [[selectedTemplate absoluteString] UTF8String]);
     doc->pClass->saveAs(doc, [[newURL absoluteString] UTF8String], nullptr, nullptr);
     doc->pClass->destroy(doc);
-    kit->pClass->destroy(kit);
 
     self.importHandler(newURL, UIDocumentBrowserImportModeMove);
 
