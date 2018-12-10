@@ -166,20 +166,25 @@ namespace
 
     struct fs
     {
-        fs(const std::string& p, dev_t d)
-            : path(p), dev(d)
+        fs(const std::string& path, dev_t dev)
+            : _path(path), _dev(dev)
         {
         }
 
-        std::string path;
-        dev_t dev;
+        const std::string& getPath() const { return _path; }
+
+        dev_t getDev() const { return _dev; }
+
+    private:
+        std::string _path;
+        dev_t _dev;
     };
 
     struct fsComparator
     {
         bool operator() (const fs& lhs, const fs& rhs) const
         {
-            return (lhs.dev < rhs.dev);
+            return (lhs.getDev() < rhs.getDev());
         }
     };
 
@@ -226,9 +231,9 @@ namespace FileUtil
 
         for (const auto& i: filesystems)
         {
-            if (!checkDiskSpace(i.path))
+            if (!checkDiskSpace(i.getPath()))
             {
-                return i.path;
+                return i.getPath();
             }
         }
 
