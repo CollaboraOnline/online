@@ -1,12 +1,19 @@
 #document-container.spreadsheet-document {
         border-top: 1px solid #B6B6B6;
-        top: 136px;
+        top: 137px;
         left: 50px;
         bottom: 68px;
 }
 
 #document-container.spreadsheet-document.readonly {
-        top: 56px;
+	top: 61px;
+}
+
+#document-container.spreadsheet-document.tablet {
+	border-top: 1px solid #B6B6B6;
+	top: 100px;
+	left: 50px;
+	bottom: 68px;
 }
 
 .spreadsheet-tabs-container {
@@ -62,12 +69,16 @@
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 116px;
+	top: 117px;
 	bottom: 65px;
 }
 
 #spreadsheet-row-column-frame.readonly {
-        top: 36px;
+        top: 41px;
+}
+
+#spreadsheet-row-column-frame.tablet {
+	top: 80px;
 }
 
 #spreadsheet-header-corner-container {

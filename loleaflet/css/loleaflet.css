@@ -8,8 +8,12 @@
 	left: 0px;
 }
 
+#document-container.tablet {
+	top: 41px;
+}
+
 #document-container.readonly {
-    top: 36px;
+    top: 41px;
 }
 
 #toolbar-wrapper.readonly {
@@ -61,7 +65,7 @@ body {
 }
 
 #presentation-controls-wrapper.readonly {
-    top: 36px;
+    top: 41px;
 }
 
 #toolbar-wrapper {
@@ -113,16 +117,16 @@ body {
 	top: 103px !important;
     }
     #document-container.spreadsheet-document.readonly {
-	top: 56px !important;
+	top: 61px !important;
     }
     #document-container {
-	top: 40px;
+	top: 41px;
     }
     #spreadsheet-row-column-frame {
 	top: 83px !important;
     }
     #spreadsheet-row-column-frame.readonly {
-	top: 36px !important;
+	top: 41px !important;
     }
     #toolbar-hamburger {
 	width: 41px;
