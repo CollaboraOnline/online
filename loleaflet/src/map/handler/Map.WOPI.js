@@ -196,14 +196,14 @@ L.Map.WOPI = L.Handler.extend({
 				console.log('No toolbar in readonly mode - ignoring Remove_Button request.');
 				return;
 			}
-			if (!w2ui['toolbar-up'].get(msg.Values.id)) {
+			if (!w2ui['editbar'].get(msg.Values.id)) {
 				console.error('Toolbar button with id "' + msg.Values.id + '" not found.');
 				return;
 			}
 			if (msg.MessageId === 'Show_Button') {
-				w2ui['toolbar-up'].show(msg.Values.id);
+				w2ui['editbar'].show(msg.Values.id);
 			} else {
-				w2ui['toolbar-up'].hide(msg.Values.id);
+				w2ui['editbar'].hide(msg.Values.id);
 			}
 		}
 		else if (msg.MessageId === 'Set_Settings') {
