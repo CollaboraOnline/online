@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-//#define LOK_USE_UNSTABLE_API
-//#import <LibreOfficeKit/LibreOfficeKit.h>
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @end
+
+extern NSString *app_locale;
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
 

@@ -24,9 +24,7 @@
 
 static LOOLWSD *loolwsd = nullptr;
 
-@interface AppDelegate ()
-
-@end
+NSString *app_locale;
 
 @implementation AppDelegate
 
@@ -34,6 +32,16 @@ static LOOLWSD *loolwsd = nullptr;
     auto trace = std::getenv("LOOL_LOGLEVEL");
     if (!trace)
         trace = strdup("warning");
+
+    // Having LANG in the environment is expected to happen only when debugging from Xcode. When
+    // testing some language one doesn't know it might be risky to simply set one's iPad to that
+    // language, as it might be hard to find the way to set it back to a known language.
+
+    char *lang = std::getenv("LANG");
+    if (lang != nullptr)
+        app_locale = [NSString stringWithUTF8String:lang];
+    else
+        app_locale = [[NSLocale preferredLanguages] firstObject];
 
     Log::initialize("Mobile", trace, false, false, {});
     Util::setThreadName("main");

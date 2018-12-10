@@ -51,22 +51,14 @@
     fakeClientFd = fakeSocketSocket();
     NSString *uri = [[self fileURL] absoluteString];
 
-    // Having LANG in the environment is expected to happen only when debugging from Xcode
-    char *lang = std::getenv("LANG");
-    NSString *locale;
-    if (lang != nullptr)
-        locale = [NSString stringWithUTF8String:lang];
-    else
-        locale = [[NSLocale preferredLanguages] firstObject];
-
-    comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([locale UTF8String])), true));
+    comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([app_locale UTF8String])), true));
 
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:uri],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
                                [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
-                               [NSURLQueryItem queryItemWithName:@"lang" value:locale]
+                               [NSURLQueryItem queryItemWithName:@"lang" value:app_locale]
                              ];
 
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];
