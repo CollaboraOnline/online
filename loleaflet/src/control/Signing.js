@@ -272,6 +272,11 @@ L.Map.include({
 		oldtoolbarSize = $('#document-container').css('top');
 
 		$('#document-container').css('top', '110px');
+
+		// Avoid scroll button ">>"
+		var el = w2ui['document-signing-bar'];
+		if (el)
+			el.resize();
 	},
 	hideSignDocument: function() {
 		$('#document-signing-bar').hide();
