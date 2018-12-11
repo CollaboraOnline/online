@@ -2721,6 +2721,16 @@ void HTTPWSTest::testRenderShapeSelection()
 
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
+        int major = 0;
+        int minor = 0;
+        getServerVersion(socket, major, minor, testname);
+        if (major != 6 || minor != 0)
+        {
+            TST_LOG("Skipping test on incompatible client ["
+                    << major << '.' << minor << "], expected [6.0].");
+            return;
+        }
+
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
         sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
