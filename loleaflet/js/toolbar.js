@@ -38,59 +38,33 @@ global.mode = {
 
 var nUsers, oneUser, noUser;
 
-function _mobilify() {
-	var toolbarUp = w2ui['editbar'];
-	var statusbar = w2ui['actionbar'];
+function _updateVisibilityForToolbar(toolbar) {
+	var isDesktop = _inDesktopMode();
+	var isMobile = _inMobileMode();
+	var isTablet = _inTabletMode();
 
-	toolbarUp.items.forEach(function(item) {
-		if ((item.mobile === false ||
-		     (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
-			toolbarUp.hide(item.id);
+	var toShow = [];
+	var toHide = [];
+
+	toolbar.items.forEach(function(item) {
+		if (((isMobile && item.mobile === false) || (isTablet && item.tablet === false) || (isDesktop && item.desktop === false) || (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
+			toHide.push(item.id);
+		}
+		else if (((isMobile && item.mobile === true) || (isTablet && item.tablet === true) || (isDesktop && item.desktop === true) || (window.ThisIsAMobileApp && item.mobilebrowser === true)) && item.hidden) {
+			toShow.push(item.id);
 		}
 	});
 
-	statusbar.items.forEach(function(item) {
-		if (item.mobile === false && !item.hidden) {
-			statusbar.hide(item.id);
-		}
-	});
+	console.log('explicitly hiding: ' + toHide);
+	console.log('explicitly showing: ' + toShow);
 
-	if (_inTabletMode()) {
-		toolbarUp.items.forEach(function(item) {
-			if (item.tablet === false && !item.hidden) {
-				toolbarUp.hide(item.id);
-			}
-			else if (item.tablet === true && item.hidden) {
-				toolbarUp.show(item.id);
-			}
-		});
-
-		statusbar.items.forEach(function(item) {
-			if (item.tablet === false && !item.hidden) {
-				statusbar.hide(item.id);
-			}
-			else if (item.tablet === true && item.hidden) {
-				statusbar.show(item.id);
-			}
-		});
-	}
+	toolbar.hide(toHide);
+	toolbar.show(toShow);
 }
 
-function _prepareDesktop() {
-	var toolbarUp = w2ui['editbar'];
-	var statusbar = w2ui['actionbar'];
-
-	toolbarUp.items.forEach(function(item) {
-		if (item.desktop === false && !item.hidden) {
-			toolbarUp.hide(item.id);
-		}
-	});
-
-	statusbar.items.forEach(function(item) {
-		if (item.desktop === false && !item.hidden) {
-			statusbar.hide(item.id);
-		}
-	});
+function _updateToolbarsVisibility() {
+	_updateVisibilityForToolbar(w2ui['editbar']);
+	_updateVisibilityForToolbar(w2ui['actionbar']);
 }
 
 function resizeToolbar() {
@@ -689,7 +663,7 @@ var fontsizesSelectValue;
 
 function createToolbar() {
 	var toolItems = [
-		{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true},
+		{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
 		{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false},
 		{type: 'break', id: 'savebreak', mobile: false},
@@ -833,7 +807,7 @@ function createToolbar() {
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
 		{type: 'button',  id: 'fold',  img: 'fold', mobile: false},
-		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true}
+		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, hidden: true}
 	];
 
 	if (_inMobileMode()) {
@@ -1736,8 +1710,9 @@ function onDocLayerInit() {
 		map.signingInitializeBar();
 	}
 
+	_updateToolbarsVisibility();
+
 	if (L.Browser.mobile) {
-		_mobilify();
 		nUsers = '%n';
 		oneUser = '1';
 		noUser = '0';
@@ -1747,10 +1722,6 @@ function onDocLayerInit() {
 		oneUser = _('1 user');
 		noUser = _('0 users');
 		$('#document-name-input').show();
-
-		if (_inDesktopMode()) {
-			_prepareDesktop();
-		}
 	}
 
 	updateUserListCount();
