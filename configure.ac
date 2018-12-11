@@ -166,6 +166,9 @@ AC_ARG_ENABLE([werror],
             AS_HELP_STRING([--disable-werror],
                           [Do not turn warnings into errors.]))
 
+AC_ARG_ENABLE([vereign],
+            AS_HELP_STRING([--enable-vereign],
+                          [Set Vereign document_signing_url configuration key to the default app.vereign.com.]))
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -302,6 +305,13 @@ AS_IF([test "$MAX_DOCUMENTS" -lt "2"],
       [MAX_DOCUMENTS="2"])
 AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
 AC_SUBST(MAX_DOCUMENTS)
+
+VEREIGN_URL=
+if test "$enable_vereign" = "yes"; then
+    VEREIGN_URL="https://app.vereign.com"
+fi
+AC_DEFINE_UNQUOTED([VEREIGN_URL],["$VEREIGN_URL"],[Default value of per_documents.document_signing_url])
+AC_SUBST(VEREIGN_URL)
 
 # Test for build environment
 
