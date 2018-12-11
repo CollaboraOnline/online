@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-// #import "TemplateCollectionView.h"
-
 @interface TemplateCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
     NSArray<NSURL*> *templates[3];
     LibreOfficeKit *kit;
