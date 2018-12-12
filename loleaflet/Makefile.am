@@ -148,6 +148,7 @@ LOLEAFLET_PREFIX := $(if $(ENABLE_DEBUG),$(abs_builddir),$(abs_builddir)/build)
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
 all-local:
+	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@$(MAKE) node_modules
 	@$(MAKE) build-loleaflet
 
