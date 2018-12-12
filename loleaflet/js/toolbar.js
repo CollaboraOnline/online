@@ -58,8 +58,8 @@ function _updateVisibilityForToolbar(toolbar) {
 	console.log('explicitly hiding: ' + toHide);
 	console.log('explicitly showing: ' + toShow);
 
-	toolbar.hide(toHide);
-	toolbar.show(toShow);
+	toHide.forEach(function(item) { toolbar.hide(item); });
+	toShow.forEach(function(item) { toolbar.show(item); });
 }
 
 function _updateToolbarsVisibility() {
@@ -806,7 +806,7 @@ function createToolbar() {
 		{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: 'InsertSymbol'},
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
-		{type: 'button',  id: 'fold',  img: 'fold', mobile: false},
+		{type: 'button',  id: 'fold',  img: 'fold', mobile: false, hidden: true},
 		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, hidden: true}
 	];
 
