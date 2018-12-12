@@ -168,6 +168,7 @@ var unoCommandsArray = {
 	PageDialog:{global:{menu:_('~Page...'),},text:{menu:_('~Page...'),},},
 	PageFormatDialog:{spreadsheet:{menu:_('~Page...'),},},
 	PageDown:{text:{menu:_('Next Page'),},},
+	PageSetup:{presentation:{menu:_('~Page Properties...'),},},
 	PageUp:{text:{menu:_('Previous Page'),},},
 	ParaLeftToRight:{global:{menu:_('Left-To-Right'),},},
 	ParaRightToLeft:{global:{menu:_('Right-To-Left'),},},
