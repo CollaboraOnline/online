@@ -498,6 +498,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     bool userCanNotWriteRelative = true;
     bool enableInsertRemoteImage = false;
     bool enableShare = false;
+    bool hideUserList = false;
     WOPIFileInfo::TriState disableChangeTrackingRecord = WOPIFileInfo::TriState::Unset;
     WOPIFileInfo::TriState disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
     WOPIFileInfo::TriState hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
@@ -578,6 +579,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "UserCanNotWriteRelative", userCanNotWriteRelative);
         JsonUtil::findJSONValue(object, "EnableInsertRemoteImage", enableInsertRemoteImage);
         JsonUtil::findJSONValue(object, "EnableShare", enableShare);
+        JsonUtil::findJSONValue(object, "HideUserList", hideUserList);
         bool booleanFlag = false;
         if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
             disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
@@ -606,7 +608,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
          postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
          enableOwnerTermination, disablePrint, disableExport, disableCopy,
          disableInactiveMessages, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,
-         disableChangeTrackingShow, disableChangeTrackingRecord,
+         hideUserList, disableChangeTrackingShow, disableChangeTrackingRecord,
          hideChangeTrackingControls, callDuration}));
 }
 
