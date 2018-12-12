@@ -879,6 +879,19 @@ function initMobileToolbar(toolItems) {
 				this.show('prev');
 				this.show('next');
 			}
+
+			var showUserList = map['wopi'].HideUserList !== null &&
+								map['wopi'].HideUserList !== undefined &&
+								!map['wopi'].HideUserList.includes('true') &&
+								((window.mode.isMobile() && !map['wopi'].HideUserList.includes('mobile')) ||
+								(window.mode.isTablet() && !map['wopi'].HideUserList.includes('tablet')));
+			if (this.get('userlist').hidden == true && showUserList) {
+				this.show('userlist');
+				this.show('userlistbreak');
+				map.on('deselectuser', deselectUser);
+				map.on('addview', onAddView);
+				map.on('removeview', onRemoveView);
+			}
 		}
 	});
 	toolbar.bind('touchstart', function(e) {
@@ -1241,13 +1254,16 @@ function initNormalToolbar(toolItems) {
 				$('#search-input').off('input', onSearch).on('input', onSearch);
 				$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
 
-				if (this.get('userlist').hidden == true && map['wopi'].HideUserList === false) {
+				var showInDesktop = map['wopi'].HideUserList !== null &&
+									map['wopi'].HideUserList !== undefined &&
+									!map['wopi'].HideUserList.includes('true') &&
+									!map['wopi'].HideUserList.includes('desktop');
+				if (this.get('userlist').hidden == true && showInDesktop) {
 					this.show('userlist');
 					this.show('userlistbreak');
-				}
-				else if (this.get('userlist').hidden == false && map['wopi'].HideUserList === true) {
-					this.hide('userlist');
-					this.hide('userlistbreak');
+					map.on('deselectuser', deselectUser);
+					map.on('addview', onAddView);
+					map.on('removeview', onRemoveView);
 				}
 			}
 		});
@@ -1262,12 +1278,6 @@ function initNormalToolbar(toolItems) {
 	toolbar.bind('touchstart', function() {
 		w2ui['actionbar'].touchStarted = true;
 	});
-
-	if (map['wopi'].HideUserList === false) {
-		map.on('deselectuser', deselectUser);
-		map.on('addview', onAddView);
-		map.on('removeview', onRemoveView);
-	}
 }
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';

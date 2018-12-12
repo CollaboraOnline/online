@@ -498,7 +498,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     bool userCanNotWriteRelative = true;
     bool enableInsertRemoteImage = false;
     bool enableShare = false;
-    bool hideUserList = false;
+    std::string hideUserList("false");
     WOPIFileInfo::TriState disableChangeTrackingRecord = WOPIFileInfo::TriState::Unset;
     WOPIFileInfo::TriState disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
     WOPIFileInfo::TriState hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
