@@ -151,7 +151,6 @@ namespace
                 strcmp(path, "program/wizards") != 0 &&
                 strcmp(path, "sdk") != 0 &&
                 strcmp(path, "share/basic") != 0 &&
-                strcmp(path, "share/gallery") != 0 &&
                 strcmp(path, "share/Scripts/java") != 0 &&
                 strcmp(path, "share/Scripts/javascript") != 0 &&
                 strcmp(path, "share/template") != 0 &&
