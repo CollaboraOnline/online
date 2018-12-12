@@ -665,7 +665,7 @@ function createToolbar() {
 	var toolItems = [
 		{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
-		{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false},
+		{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false},
 		{type: 'break', id: 'savebreak', mobile: false},
 		{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 		{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
@@ -674,7 +674,7 @@ function createToolbar() {
 		{type: 'break', mobile: false},
 		{type: 'menu-radio', id: 'zoom', text: '100%',
 			selected: 'zoom100',
-			mobile: false,
+			mobile: false, tablet: false,
 			items: [
 				{ id: 'zoom50', text: '50%', scale: 6},
 				{ id: 'zoom60', text: '60%', scale: 7},
@@ -687,8 +687,8 @@ function createToolbar() {
 				{ id: 'zoom200', text: '200%', scale: 14}
 			]
 		},
-		{type: 'break', mobile: false},
-		{type: 'html',   id: 'styles',
+		{type: 'break', mobile: false, tablet: false,},
+		{type: 'html', id: 'styles',
 			html: '<select class="styles-select"><option>Default Style</option></select>',
 			onRefresh: function (edata) {
 				if (!edata.item.html) {
@@ -699,8 +699,8 @@ function createToolbar() {
 						e.item.html = undefined;
 					}});
 				}
-			}, mobile: false },
-		{type: 'html',   id: 'fonts',
+			}, hidden: true, mobile: false, tablet: false },
+		{type: 'html', id: 'fonts',
 			html: '<select class="fonts-select"><option>Liberation Sans</option></select>',
 			onRefresh: function (edata) {
 				if (!edata.item.html) {
@@ -724,7 +724,7 @@ function createToolbar() {
 					}});
 				}
 			}, mobile: false},
-		{type: 'break', mobile: false},
+		{type: 'break', mobile: false, tablet: false },
 		{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
 		{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
 		{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
@@ -806,7 +806,7 @@ function createToolbar() {
 		{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: 'InsertSymbol'},
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
-		{type: 'button',  id: 'fold',  img: 'fold', mobile: false, hidden: true},
+		{type: 'button',  id: 'fold',  img: 'fold', desktop: true, mobile: false, hidden: true},
 		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, hidden: true}
 	];
 
@@ -1179,7 +1179,7 @@ function initNormalToolbar(toolItems) {
 				{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
 				{type: 'html',  id: 'left'},
 				{type: 'html',  id: 'right'},
-				{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile:false},
+				{type: 'html',  id: 'modifiedstatuslabel', hidden: true, html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile: false, tablet: false},
 				{type: 'break', id: 'modifiedstatuslabelbreak', mobile: false},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 					'<hr><table class="loleaflet-font" id="editor-btn">' +
@@ -1593,24 +1593,24 @@ function onDocLayerInit() {
 					type: 'html', id: 'RowColSelCount',
 					html: '<div id="RowColSelCount" class="loleaflet-font" title="' + _('Selected range of cells') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
-				{type: 'break', id: 'break3'},
+				{type: 'break', id: 'break3', tablet: false},
 				{
-					type: 'html', id: 'InsertMode', mobile: false,
+					type: 'html', id: 'InsertMode', mobile: false, tablet: false,
 					html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
-				{type: 'break', id: 'break4'},
+				{type: 'break', id: 'break4', tablet: false},
 				{
-					type: 'html', id: 'LanguageStatus', mobile: false,
+					type: 'html', id: 'LanguageStatus', mobile: false, tablet: false,
 					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
-				{type: 'break', id: 'break5'},
+				{type: 'break', id: 'break5', tablet: false},
 				{
-					type: 'html', id: 'StatusSelectionMode', mobile: false,
+					type: 'html', id: 'StatusSelectionMode', mobile: false, tablet: false,
 					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="' + _('Selection Mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
-				{type: 'break', id: 'break8', mobile: false},
+				{type: 'break', id: 'break8', mobile: false, tablet: false},
 				{
-					type: 'html', id: 'StateTableCell', mobile: false,
+					type: 'html', id: 'StateTableCell', mobile: false, tablet: false,
 					html: '<div id="StateTableCell" class="loleaflet-font" title="' + _('Choice of functions') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
 				{
@@ -1623,7 +1623,7 @@ function onDocLayerInit() {
 						{id: '512', text: _('Sum')},
 						{id: '8192', text: _('Selection count')},
 						{id: '1', text: _('None')}
-					]
+					], tablet: false
 				},
 				{type: 'break', id: 'break8', mobile: false}
 			]);
@@ -1647,22 +1647,22 @@ function onDocLayerInit() {
 				},
 				{type: 'break', id: 'break2'},
 				{
-					type: 'html', id: 'StateWordCount', mobile: false,
+					type: 'html', id: 'StateWordCount', mobile: false, tablet: false,
 					html: '<div id="StateWordCount" class="loleaflet-font" title="' + _('Word Counter') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
-				{type: 'break', id: 'break5', mobile: false},
+				{type: 'break', id: 'break5', mobile: false, tablet: false},
 				{
-					type: 'html', id: 'InsertMode', mobile: false,
+					type: 'html', id: 'InsertMode', mobile: false, tablet: false,
 					html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
-				{type: 'break', id: 'break6', mobile: false},
+				{type: 'break', id: 'break6', mobile: false, tablet: false},
 				{
-					type: 'html', id: 'StatusSelectionMode', mobile: false,
+					type: 'html', id: 'StatusSelectionMode', mobile: false, tablet: false,
 					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="' + _('Selection Mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
-				{type: 'break', id: 'break7', mobile: false},
+				{type: 'break', id: 'break7', mobile: false, tablet: false},
 				{
-					type: 'html', id: 'LanguageStatus', mobile: false,
+					type: 'html', id: 'LanguageStatus', mobile: false, tablet: false,
 					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
 				{type: 'break', id: 'break8', mobile: false}
@@ -1682,9 +1682,9 @@ function onDocLayerInit() {
 					type: 'html', id: 'PageStatus',
 					html: '<div id="PageStatus" class="loleaflet-font" title="' + _('Number of Slides') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
-				{type: 'break', id: 'break2', mobile: false},
+				{type: 'break', id: 'break2', mobile: false, tablet: false},
 				{
-					type: 'html', id: 'LanguageStatus', mobile: false,
+					type: 'html', id: 'LanguageStatus', mobile: false, tablet: false,
 					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
 				{type: 'break', id: 'break8', mobile: false}
