@@ -1831,6 +1831,13 @@ function onCommandStateChanged(e) {
 			toolbar.disable('repair');
 		}
 	}
+	else if (commandName === '.uno:SlideMasterPage') {
+		if (state === 'true') {
+			// Rename menu to Close Master and set uno to .uno:CloseMasterView
+		} else {
+			// Rename menu to Master Slide and set uno to .uno:SlideMasterPage
+		}
+	}
 
 	var id = unoCmdToToolbarId(commandName);
 	if (state === 'true') {

@@ -278,12 +278,11 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:SlideMasterPage'},
-				{uno: '.uno:CloseMasterView'},
-				{uno: '.uno:MasterSlidesPanel'},
-				{uno: '.uno:ModifyPage'},
+                {uno: '.uno:ModifyPage'},
 				{uno: '.uno:SlideChangeWindow'},
-				{uno: '.uno:CustomAnimation'}
-			]},
+				{uno: '.uno:CustomAnimation'},
+                {name: _('Master Slides'), id: 'masterslidespanel', type: 'action'}]
+			},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
