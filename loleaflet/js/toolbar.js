@@ -1196,8 +1196,8 @@ function initNormalToolbar(toolItems) {
 				{type: 'html',  id: 'left'},
 				{type: 'html',  id: 'right'},
 				{type: 'html',    id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile:false},
-				{type: 'break', id: 'modifiedstatuslabelbreak', mobile:false},
-				{type: 'drop', id: 'userlist', hidden: true, text: _('No users'), html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
+				{type: 'break', id: 'modifiedstatuslabelbreak', mobile: false},
+				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 					'<hr><table class="loleaflet-font" id="editor-btn">' +
 					'<tr>' +
 					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
@@ -1207,7 +1207,7 @@ function initNormalToolbar(toolItems) {
 					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
 					'</div>'
 				},
-				{type: 'break', id: 'userlistbreak'},
+				{type: 'break', id: 'userlistbreak', hidden: true, mobile: false },
 				{type: 'button',  id: 'prev', img: 'prev', hint: _UNO('.uno:PageUp', 'text')},
 				{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text')},
 				{type: 'break', id: 'prevnextbreak'},
@@ -1240,6 +1240,15 @@ function initNormalToolbar(toolItems) {
 				$('#tb_actionbar_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
 				$('#search-input').off('input', onSearch).on('input', onSearch);
 				$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
+
+				if (this.get('userlist').hidden == true && map['wopi'].HideUserList === false) {
+					this.show('userlist');
+					this.show('userlistbreak');
+				}
+				else if (this.get('userlist').hidden == false && map['wopi'].HideUserList === true) {
+					this.hide('userlist');
+					this.hide('userlistbreak');
+				}
 			}
 		});
 	}
@@ -1253,6 +1262,12 @@ function initNormalToolbar(toolItems) {
 	toolbar.bind('touchstart', function() {
 		w2ui['actionbar'].touchStarted = true;
 	});
+
+	if (map['wopi'].HideUserList === false) {
+		map.on('deselectuser', deselectUser);
+		map.on('addview', onAddView);
+		map.on('removeview', onRemoveView);
+	}
 }
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
@@ -1587,34 +1602,49 @@ function onDocLayerInit() {
 
 		if (!_inMobileMode()) {
 			statusbar.insert('left', [
-				{type: 'break', id:'break1'},
-				{type: 'html',  id: 'StatusDocPos',
-					html: '<div id="StatusDocPos" class="loleaflet-font" title="'+_('Number of Sheets')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break2'},
-				{type: 'html',  id: 'RowColSelCount',
-					html: '<div id="RowColSelCount" class="loleaflet-font" title="'+_('Selected range of cells')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break3'},
-				{type: 'html',  id: 'InsertMode', mobile: false,
-					html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break4'},
-				{type: 'html',  id: 'LanguageStatus', mobile: false,
-					html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break5'},
-				{type: 'html',  id: 'StatusSelectionMode', mobile: false,
-					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break8', mobile: false},
-				{type: 'html',  id: 'StateTableCell', mobile:false,
-				 html: '<div id="StateTableCell" class="loleaflet-font" title="'+_('Choice of functions')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'menu-check', id: 'StateTableCellMenu', caption: '', selected: ['2', '512'], items: [
-					{ id: '2', text: _('Average')},
-					{ id: '8', text: _('CountA')},
-					{ id: '4', text: _('Count')},
-					{ id: '16', text: _('Maximum')},
-					{ id: '32', text: _('Minimum')},
-					{ id: '512', text: _('Sum')},
-					{ id: '8192', text: _('Selection count')},
-					{ id: '1', text: _('None')}
-				]}
+				{type: 'break', id: 'break1'},
+				{
+					type: 'html', id: 'StatusDocPos',
+					html: '<div id="StatusDocPos" class="loleaflet-font" title="' + _('Number of Sheets') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break2'},
+				{
+					type: 'html', id: 'RowColSelCount',
+					html: '<div id="RowColSelCount" class="loleaflet-font" title="' + _('Selected range of cells') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break3'},
+				{
+					type: 'html', id: 'InsertMode', mobile: false,
+					html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break4'},
+				{
+					type: 'html', id: 'LanguageStatus', mobile: false,
+					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break5'},
+				{
+					type: 'html', id: 'StatusSelectionMode', mobile: false,
+					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="' + _('Selection Mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break8', mobile: false},
+				{
+					type: 'html', id: 'StateTableCell', mobile: false,
+					html: '<div id="StateTableCell" class="loleaflet-font" title="' + _('Choice of functions') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{
+					type: 'menu-check', id: 'StateTableCellMenu', caption: '', selected: ['2', '512'], items: [
+						{id: '2', text: _('Average')},
+						{id: '8', text: _('CountA')},
+						{id: '4', text: _('Count')},
+						{id: '16', text: _('Maximum')},
+						{id: '32', text: _('Minimum')},
+						{id: '512', text: _('Sum')},
+						{id: '8192', text: _('Selection count')},
+						{id: '1', text: _('None')}
+					]
+				},
+				{type: 'break', id: 'break8', mobile: false}
 			]);
 
 			$('#spreadsheet-toolbar').show();
@@ -1630,20 +1660,31 @@ function onDocLayerInit() {
 		if (!_inMobileMode()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
-				{type: 'html',  id: 'StatePageNumber',
-					html: '<div id="StatePageNumber" class="loleaflet-font" title="'+_('Number of Pages')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break2'},
-				{type: 'html',  id: 'StateWordCount', mobile: false,
-					html: '<div id="StateWordCount" class="loleaflet-font" title="'+_('Word Counter')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break5', mobile: false},
-				{type: 'html',  id: 'InsertMode', mobile: false,
-					html: '<div id="InsertMode" class="loleaflet-font" title="'+_('Entering text mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break6', mobile:false},
-				{type: 'html',  id: 'StatusSelectionMode', mobile: false,
-					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="'+_('Selection Mode')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' },
-				{type: 'break', id:'break7', mobile:false},
-				{type: 'html',  id: 'LanguageStatus', mobile: false,
-					html: '<div id="LanguageStatus" class="loleaflet-font" title="'+_('Text Language')+ '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>' }
+				{
+					type: 'html', id: 'StatePageNumber',
+					html: '<div id="StatePageNumber" class="loleaflet-font" title="' + _('Number of Pages') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break2'},
+				{
+					type: 'html', id: 'StateWordCount', mobile: false,
+					html: '<div id="StateWordCount" class="loleaflet-font" title="' + _('Word Counter') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break5', mobile: false},
+				{
+					type: 'html', id: 'InsertMode', mobile: false,
+					html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break6', mobile: false},
+				{
+					type: 'html', id: 'StatusSelectionMode', mobile: false,
+					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="' + _('Selection Mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break7', mobile: false},
+				{
+					type: 'html', id: 'LanguageStatus', mobile: false,
+					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				},
+				{type: 'break', id: 'break8', mobile: false}
 			]);
 		}
 
@@ -1664,7 +1705,8 @@ function onDocLayerInit() {
 				{
 					type: 'html', id: 'LanguageStatus', mobile: false,
 					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				}
+				},
+				{type: 'break', id: 'break8', mobile: false}
 			]);
 		}
 		// FALLTHROUGH intended

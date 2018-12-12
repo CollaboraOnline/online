@@ -22,6 +22,7 @@ L.Map.WOPI = L.Handler.extend({
 	UserCanNotWriteRelative: true,
 	EnableInsertRemoteImage: false,
 	EnableShare: false,
+	HideUserList: false,
 	CallPythonScriptSource: null,
 
 	_appLoadedConditions: {
@@ -79,6 +80,7 @@ L.Map.WOPI = L.Handler.extend({
 		this.UserCanNotWriteRelative = !!wopiInfo['UserCanNotWriteRelative'];
 		this.EnableInsertRemoteImage = !!wopiInfo['EnableInsertRemoteImage'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
+		this.HideUserList = !!wopiInfo['HideUserList'];
 
 		this._map.fire('postMessage', {
 			msgId: 'App_LoadingStatus',
