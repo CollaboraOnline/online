@@ -488,9 +488,7 @@ class DummyDocument : public DocumentManagerInterface
     std::mutex _documentMutex;
 public:
     DummyDocument()
-        : _tileQueue(new TileQueue()),
-        _mutex(),
-        _documentMutex()
+        : _tileQueue(new TileQueue())
     {
     }
     bool onLoad(const std::string& /*sessionId*/,
