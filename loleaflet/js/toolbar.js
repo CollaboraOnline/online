@@ -699,7 +699,7 @@ function createToolbar() {
 						e.item.html = undefined;
 					}});
 				}
-			}, hidden: true, mobile: false, tablet: false },
+			}, desktop: true, mobile: false, tablet: false}, // FIXME would be better to start with 'hidden: false' and show it only where necessary, but that currently ends up with never showing 'styles'
 		{type: 'html', id: 'fonts',
 			html: '<select class="fonts-select"><option>Liberation Sans</option></select>',
 			onRefresh: function (edata) {
