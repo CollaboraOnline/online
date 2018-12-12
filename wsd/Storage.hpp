@@ -324,7 +324,7 @@ public:
                      const bool userCanNotWriteRelative,
                      const bool enableInsertRemoteImage,
                      const bool enableShare,
-                     const bool hideUserList,
+                     const std::string& hideUserList,
                      const TriState disableChangeTrackingShow,
                      const TriState disableChangeTrackingRecord,
                      const TriState hideChangeTrackingControls,
@@ -438,8 +438,10 @@ public:
         bool _enableInsertRemoteImage;
         /// If set to true, users can access the file share functionality
         bool _enableShare;
-        /// If set to true, user list on the status bar will be hidden
-        bool _hideUserList;
+        /// If set to "true", user list on the status bar will be hidden
+        /// If set to "mobile" | "tablet" | "desktop", will be hidden on a specified device
+        /// (may be joint, delimited by commas eg. "mobile,tablet")
+        std::string _hideUserList;
         /// If we should disable change-tracking visibility by default (meaningful at loading).
         TriState _disableChangeTrackingShow;
         /// If we should disable change-tracking ability by default (meaningful at loading).
