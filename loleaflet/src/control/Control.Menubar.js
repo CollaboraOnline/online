@@ -277,6 +277,10 @@ L.Control.Menubar = L.Control.extend({
                                {uno: '.uno:HeaderAndFooter'}]
 			},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), type: 'menu', menu: [
+				{uno: '.uno:FontDialog'},
+				{uno: '.uno:ParagraphDialog'},
+				{uno: '.uno:PageSetup'},
+				{type: 'separator'},
 				{uno: '.uno:TransformDialog'},
 				{uno: '.uno:FormatLine'},
 				{uno: '.uno:FormatArea'},
