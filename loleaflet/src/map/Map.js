@@ -292,7 +292,7 @@ L.Map = L.Evented.extend({
 			var special = [ 'bn_IN', 'hi_IN', 'id_ID', 'nb_NO', 'nn_NO', 'pt_BR', 'zh_CN', 'zh_TW'];
 			var locale = String.locale;
 			locale = locale.replace('-', '_');
-			if (!special.includes(locale)) {
+			if (!$.inArray(locale, special)) {
 				if (locale.indexOf('_') > 0) {
 					locale = locale.substring(0, locale.indexOf('_'));
 				}

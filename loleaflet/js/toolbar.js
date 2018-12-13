@@ -882,9 +882,9 @@ function initMobileToolbar(toolItems) {
 
 			var showUserList = map['wopi'].HideUserList !== null &&
 								map['wopi'].HideUserList !== undefined &&
-								!map['wopi'].HideUserList.includes('true') &&
-								((window.mode.isMobile() && !map['wopi'].HideUserList.includes('mobile')) ||
-								(window.mode.isTablet() && !map['wopi'].HideUserList.includes('tablet')));
+								!$.inArray('true', map['wopi'].HideUserList) &&
+								((window.mode.isMobile() && !$.inArray('mobile', map['wopi'].HideUserList)) ||
+								(window.mode.isTablet() && !$.inArray('tablet', map['wopi'].HideUserList)));
 			if (this.get('userlist').hidden == true && showUserList) {
 				this.show('userlist');
 				this.show('userlistbreak');
@@ -1256,8 +1256,8 @@ function initNormalToolbar(toolItems) {
 
 				var showInDesktop = map['wopi'].HideUserList !== null &&
 									map['wopi'].HideUserList !== undefined &&
-									!map['wopi'].HideUserList.includes('true') &&
-									!map['wopi'].HideUserList.includes('desktop');
+									!$.inArray('true', map['wopi'].HideUserList) &&
+									!$.inArray('desktop', map['wopi'].HideUserList);
 				if (this.get('userlist').hidden == true && showInDesktop) {
 					this.show('userlist');
 					this.show('userlistbreak');
