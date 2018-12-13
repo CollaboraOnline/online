@@ -256,7 +256,7 @@ L.Map = L.Evented.extend({
 			this.initializeModificationIndicator();
 
 			// Show sidebar.
-			if (this._docLayer &&
+			if (this._docLayer && !window.mode.isMobile() &&
 				(this._docLayer._docType === 'spreadsheet' || this._docType === 'text')) {
 				// Let the first page finish loading then load the sidebar.
 				var map = this;
