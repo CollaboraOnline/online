@@ -12,6 +12,7 @@
 #import <LibreOfficeKit/LibreOfficeKitInit.h>
 
 #import "AppDelegate.h"
+#import "L10n.h"
 #import "TemplateCollectionViewController.h"
 #import "TemplateSectionHeaderView.h"
 
@@ -96,11 +97,11 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
     char *translatedHeader;
 
     if (index == 0)
-        translatedHeader = kit->pClass->translateGet(kit, STR_DESCRIPTION_FACTORY_WRITER, "svt", [app_locale UTF8String]);
+        translatedHeader = _(STR_DESCRIPTION_FACTORY_WRITER, "svt");
     else if (index == 1)
-        translatedHeader = kit->pClass->translateGet(kit, STR_DESCRIPTION_FACTORY_CALC, "svt", [app_locale UTF8String]);
+        translatedHeader = _(STR_DESCRIPTION_FACTORY_CALC, "svt");
     else if (index == 2)
-        translatedHeader = kit->pClass->translateGet(kit, STR_DESCRIPTION_FACTORY_IMPRESS, "svt", [app_locale UTF8String]);
+        translatedHeader = _(STR_DESCRIPTION_FACTORY_IMPRESS, "svt");
     else
         abort();
 
