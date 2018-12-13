@@ -141,6 +141,7 @@ body {
 	/* Show sidebar beyond 768px only */
 	#sidebar-dock-wrapper {
 		display: none;
+		top: 41px;
 	}
 
 	#document-container.sidebar-document {
