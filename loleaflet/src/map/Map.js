@@ -280,7 +280,7 @@ L.Map = L.Evented.extend({
 			this.updateModificationIndicator(this._lastmodtime);
 
 			// Replace menu button body with new content
-			lastModButton.firstChild.innerHTML = null;
+			lastModButton.firstChild.innerHTML = '';
 			lastModButton.firstChild.appendChild(mainSpan);
 		}
 	},
@@ -292,7 +292,7 @@ L.Map = L.Evented.extend({
 			var special = [ 'bn_IN', 'hi_IN', 'id_ID', 'nb_NO', 'nn_NO', 'pt_BR', 'zh_CN', 'zh_TW'];
 			var locale = String.locale;
 			locale = locale.replace('-', '_');
-			if (!$.inArray(locale, special)) {
+			if ($.inArray(locale, special) < 0) {
 				if (locale.indexOf('_') > 0) {
 					locale = locale.substring(0, locale.indexOf('_'));
 				}
