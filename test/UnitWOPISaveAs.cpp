@@ -38,7 +38,7 @@ public:
 
         // make sure it is a pdf - or at least that it is larger than what it
         // used to be
-        CPPUNIT_ASSERT(std::stoul(request.get("X-WOPI-Size")) > _fileContent.size());
+        CPPUNIT_ASSERT(std::stoul(request.get("X-WOPI-Size")) > getFileContent().size());
     }
 
     bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/) override
@@ -65,8 +65,8 @@ public:
             {
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "saveas url=wopi:///jan/hole%C5%A1ovsk%C3%BD/hello%20world.pdf", testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "saveas url=wopi:///jan/hole%C5%A1ovsk%C3%BD/hello%20world.pdf", testName);
                 SocketPoll::wakeupWorld();
 
                 _phase = Phase::Polling;

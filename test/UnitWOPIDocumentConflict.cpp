@@ -54,7 +54,7 @@ public:
 	{
 	    // On second doc load, we should have the document in storage which
 	    // was changed beneath us, not the one which we modified by pressing 'a'
-	    if (_fileContent != "Modified content in storage")
+	    if (getFileContent() != "Modified content in storage")
 		exitTest(TestResult::Failed);
 	    else
 		exitTest(TestResult::Ok);
@@ -68,7 +68,7 @@ public:
         {
 	    // we don't want to save current changes because doing so would
 	    // overwrite the document which was changed underneath us
-	    helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "closedocument", _testName.c_str());
+	    helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", _testName.c_str());
 	    _phase = Phase::LoadNewDocument;
         }
 
@@ -84,7 +84,7 @@ public:
                 initWebsocket("/wopi/files/0?access_token=anything");
 		_docLoaded = DocLoaded::Doc1;
 
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, _testName.c_str());
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), _testName.c_str());
 
                 _phase = Phase::ModifyAndChangeStorageDoc;
                 break;
@@ -92,8 +92,8 @@ public:
             case Phase::ModifyAndChangeStorageDoc:
             {
 		// modify the currently opened document; type 'a'
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "key type=input char=97 key=0", _testName.c_str());
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "key type=up char=0 key=512", _testName.c_str());
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0", _testName.c_str());
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512", _testName.c_str());
                 SocketPoll::wakeupWorld();
 
 		// ModifiedStatus=true is a bit slow; let's sleep and hope that
@@ -106,7 +106,7 @@ public:
 		// save the document; wsd should detect now that document has
 		// been changed underneath it and send us:
 		// "error: cmd=storage kind=documentconflict"
-		helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "save", _testName.c_str());
+		helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "save", _testName.c_str());
 
                 _phase = Phase::Polling;
 

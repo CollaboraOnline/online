@@ -52,15 +52,15 @@ public:
             {
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
 
                 _phase = Phase::Modify;
                 break;
             }
             case Phase::Modify:
             {
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "key type=input char=97 key=0", testName);
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "key type=up char=0 key=512", testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0", testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512", testName);
 
                 _phase = Phase::OwnerTermination;
                 SocketPoll::wakeupWorld();
@@ -69,7 +69,7 @@ public:
 	        case Phase::OwnerTermination:
             {
                 _phase = Phase::Polling;
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "closedocument", testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", testName);
                 break;
             }
             case Phase::Polling:

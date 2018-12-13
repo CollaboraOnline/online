@@ -30,7 +30,7 @@ class WopiTestServer : public UnitWSD
         DocChanged = 1010
     };
 
-protected:
+private:
     /// The WOPISrc URL.
     std::string _wopiSrc;
 
@@ -43,6 +43,13 @@ protected:
     /// Last modified time of the file
     Poco::Timestamp _fileLastModifiedTime;
 
+protected:
+    const std::string& getWopiSrc() const { return _wopiSrc; }
+
+    const std::unique_ptr<UnitWebSocket>& getWs() const { return _ws; }
+
+    const std::string& getFileContent() const { return _fileContent; }
+
     /// Sets the file content to a given value and update the last file modified time
     void setFileContent(const std::string& fileContent)
     {
@@ -52,8 +59,7 @@ protected:
 
 public:
     WopiTestServer(std::string fileContent = "Hello, world")
-        : UnitWSD()
-        , _fileContent(fileContent)
+        : _fileContent(std::move(fileContent))
     {
     }
 
