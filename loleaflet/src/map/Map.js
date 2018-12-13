@@ -289,15 +289,14 @@ L.Map = L.Evented.extend({
 		this._lastmodtime = newModificationTime;
 		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
 			// Get locale
-			var special = [ 'bn_IN', 'hi_IN', 'id_ID', 'nb_NO', 'nn_NO', 'pt-BR', 'zh_CN', 'zh_TW'];
+			var special = [ 'bn_IN', 'hi_IN', 'id_ID', 'nb_NO', 'nn_NO', 'pt_BR', 'zh_CN', 'zh_TW'];
 			var locale = String.locale;
 			locale = locale.replace('-', '_');
 			if (!special.includes(locale)) {
 				if (locale.indexOf('_') > 0) {
-					locale = locale.substring(0, locale.indexOf('_') - 1);
+					locale = locale.substring(0, locale.indexOf('_'));
 				}
 			}
-
 			// Real-time auto update
 			this.lastModIndicator.setAttribute('datetime', newModificationTime);
 			timeago().render(this.lastModIndicator, locale);
