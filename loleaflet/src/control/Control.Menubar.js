@@ -278,7 +278,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:SlideMasterPage'},
-                {uno: '.uno:ModifyPage'},
+				{type: 'separator'},
+				{uno: '.uno:ModifyPage'},
 				{uno: '.uno:SlideChangeWindow'},
 				{uno: '.uno:CustomAnimation'},
                 {name: _('Master Slides'), id: 'masterslidespanel', type: 'action'}]
@@ -1136,6 +1137,8 @@ L.Control.Menubar = L.Control.extend({
 			});
 		} else if (window.ThisIsAMobileApp && $(item).data('mobileappuno')) {
 			this._map.sendUnoCommand($(item).data('mobileappuno'));
+		} else if (id == 'masterslidespanel') {
+			this._map.sendUnoCommand('.uno:MasterSlidesPanel');
 		}
 		// Inform the host if asked
 		if ($(item).data('postmessage') === 'true') {
