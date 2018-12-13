@@ -154,7 +154,7 @@ function adjustUIState() {
 function vereignPinCodeDialog(selectedIdentityKey) {
 	vex.dialog.open({
 		message: _('PIN Code'),
-		input: '<input name="pincode" type="text" value="" required />',
+		input: '<input name="pincode" type="password" value="" required />',
 		callback: function(data) {
 			console.log(data.pincode);
 			if (data.pincode) {
