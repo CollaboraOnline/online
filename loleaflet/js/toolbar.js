@@ -829,7 +829,7 @@ function createToolbar() {
 			html: '<div id="insertshape-wrapper"><div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all"><div class="insertshape-grid"></div></div></div>'},
 
 		{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog'), uno: 'HyperlinkDialog', disabled: true},
-		{type: 'button',  id: 'specialcharacter', img: 'specialcharacter', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
+		{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: 'InsertSymbol'},
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
 		{type: 'button',  id: 'fold',  img: 'fold', mobile: false},
