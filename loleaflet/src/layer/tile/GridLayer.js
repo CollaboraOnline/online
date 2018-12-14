@@ -921,12 +921,10 @@ L.GridLayer = L.Layer.extend({
 						tile: tile,
 						coords: coords
 					});
-				} else {
-					tile = this._tiles[key].el;
-				}
 
-				if (this._tileCache[key]) {
-					tile.src = this._tileCache[key];
+					if (this._tileCache[key]) {
+						tile.src = this._tileCache[key];
+					}
 				}
 			}
 
