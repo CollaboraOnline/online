@@ -562,7 +562,7 @@ button.leaflet-control-search-next
 .w2ui-icon.inserttable{ background: url('images/lc_inserttable.svg') no-repeat center !important; }
 .w2ui-icon.insertgraphic{ background: url('images/lc_gallery.svg') no-repeat center !important; }
 .w2ui-icon.link{ background: url('images/lc_inserthyperlink.svg') no-repeat center !important; }
-.w2ui-icon.specialcharacter{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
+.w2ui-icon.insertsymbol{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
 .w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; }
 .w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center !important; }
 .w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center !important; }

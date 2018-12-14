@@ -2152,6 +2152,7 @@ void HTTPWSTest::testStateUnoCommandImpress()
         ".uno:PageStatus=",
         ".uno:LayoutStatus=",
         ".uno:Context=",
+        ".uno:InsertSymbol=",
     };
 
     try
