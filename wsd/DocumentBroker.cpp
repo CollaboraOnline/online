@@ -552,7 +552,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         wopiInfo->set("UserCanNotWriteRelative", wopifileinfo->getUserCanNotWriteRelative());
         wopiInfo->set("EnableInsertRemoteImage", wopifileinfo->getEnableInsertRemoteImage());
         wopiInfo->set("EnableShare", wopifileinfo->getEnableShare());
-        wopiInfo->set("HideUserList", wopifileinfo->_hideUserList);
+        wopiInfo->set("HideUserList", wopifileinfo->getHideUserList());
         if (wopifileinfo->getHideChangeTrackingControls() != WopiStorage::WOPIFileInfo::TriState::Unset)
             wopiInfo->set("HideChangeTrackingControls", wopifileinfo->getHideChangeTrackingControls() == WopiStorage::WOPIFileInfo::TriState::True);
 
