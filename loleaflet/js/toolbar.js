@@ -2562,35 +2562,10 @@ function setupToolbar(e) {
 		}
 	});
 
-	map.on('removeview', function(e) {
-		$('#tb_actionbar_item_userlist')
-			.w2overlay({
-				class: 'loleaflet-font',
-				html: userLeftPopupMessage.replace('%user', e.username),
-				style: 'padding: 5px'
-			});
-		clearTimeout(userPopupTimeout);
-		userPopupTimeout = setTimeout(function() {
-			$('#tb_actionbar_item_userlist').w2overlay('');
-			clearTimeout(userPopupTimeout);
-			userPopupTimeout = null;
-		}, 3000);
-
-		if (e.viewId === map._docLayer._followThis) {
-			map._docLayer._followThis = -1;
-			map._docLayer._followUser = false;
-		}
-
-		var userlistItem = w2ui['actionbar'].get('userlist');
-		if (userlistItem !== null) {
-			userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
-			updateUserListCount();
-		}
-	});
-
 	map.on('doclayerinit', onDocLayerInit);
 	map.on('wopiprops', onWopiProps);
 	map.on('addview', onAddView);
+	map.on('removeview', onRemoveView);
 	map.on('updatepermission', onUpdatePermission);
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
