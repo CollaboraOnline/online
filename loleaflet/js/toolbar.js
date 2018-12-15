@@ -2336,6 +2336,15 @@ function selectUser(viewId) {
 	$('#tb_actionbar_item_userlist').w2overlay('');
 }
 
+function deselectUser(e) {
+	var userlistItem = w2ui['actionbar'].get('userlist');
+	if (userlistItem === null) {
+		return;
+	}
+
+	userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).removeClass('selected-user').parent().parent().parent()[0].outerHTML;
+}
+
 function getUserItem(viewId, userName, extraInfo, color) {
 	var className = 'useritem';
 	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
@@ -2412,6 +2421,32 @@ function onAddView(e) {
 	if (userlistItem !== null) {
 		var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
 		userlistItem.html = newhtml;
+		updateUserListCount();
+	}
+}
+
+function onRemoveView(e) {
+	$('#tb_actionbar_item_userlist')
+		.w2overlay({
+			class: 'loleaflet-font',
+			html: userLeftPopupMessage.replace('%user', e.username),
+			style: 'padding: 5px'
+		});
+	clearTimeout(userPopupTimeout);
+	userPopupTimeout = setTimeout(function() {
+		$('#tb_actionbar_item_userlist').w2overlay('');
+		clearTimeout(userPopupTimeout);
+		userPopupTimeout = null;
+	}, 3000);
+
+	if (e.viewId === map._docLayer._followThis) {
+		map._docLayer._followThis = -1;
+		map._docLayer._followUser = false;
+	}
+
+	var userlistItem = w2ui['actionbar'].get('userlist');
+	if (userlistItem !== null) {
+		userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
 		updateUserListCount();
 	}
 }
