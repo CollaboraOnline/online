@@ -393,6 +393,8 @@ public:
 
         bool getEnableShare() const { return _enableShare; }
 
+        std::string& getHideUserList() const { return _hideUserList; }
+
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
 
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
