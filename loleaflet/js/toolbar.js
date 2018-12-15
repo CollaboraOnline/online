@@ -1002,10 +1002,6 @@ function initMobileToolbar(toolItems) {
 			L.DomEvent.preventDefault(e);
 		}
 	});
-
-	map.on('deselectuser', deselectUser);
-	map.on('addview', onAddView);
-	map.on('removeview', onRemoveView);
 }
 
 function initNormalToolbar(toolItems) {
@@ -2539,8 +2535,6 @@ function setupToolbar(e) {
 
 	map.on('doclayerinit', onDocLayerInit);
 	map.on('wopiprops', onWopiProps);
-	map.on('addview', onAddView);
-	map.on('removeview', onRemoveView);
 	map.on('updatepermission', onUpdatePermission);
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
