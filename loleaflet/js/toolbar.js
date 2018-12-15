@@ -2359,8 +2359,10 @@ function updateUserListCount() {
 
 	if (count > 1) {
 		$('#tb_actionbar_item_userlist').show();
+		$('#tb_actionbar_item_userlistbreak').show();
 	} else {
 		$('#tb_actionbar_item_userlist').hide();
+		$('#tb_actionbar_item_userlistbreak').hide();
 	}
 }
 
