@@ -9,6 +9,14 @@ L.Control.MobileInput = L.Control.extend({
 
 	initialize: function (options) {
 		L.setOptions(this, options);
+		this._cursorHandler = L.marker(new L.LatLng(0, 0), {
+			icon: L.divIcon({
+				className: 'leaflet-cursor-handler',
+				iconSize: null
+			}),
+			draggable: true
+		});
+
 	},
 
 	onAdd: function () {
@@ -18,7 +26,13 @@ L.Control.MobileInput = L.Control.extend({
 
 	onGotFocus: function () {
 		if (this._map._docLayer._cursorMarker) {
+			this._cursorHandler.setLatLng(this._map._docLayer._visibleCursor.getSouthWest());
 			this._map.addLayer(this._map._docLayer._cursorMarker);
+			if (this._map._docLayer._selections.getLayers().length === 0) {
+				this._map.addLayer(this._cursorHandler);
+			} else {
+				this._map.removeLayer(this._cursorHandler);
+			}
 		}
 	},
 
@@ -26,6 +40,7 @@ L.Control.MobileInput = L.Control.extend({
 		if (this._map._docLayer._cursorMarker) {
 			this._textArea.value = '';
 			this._map.removeLayer(this._map._docLayer._cursorMarker);
+			this._map.removeLayer(this._cursorHandler);
 		}
 	},
 
