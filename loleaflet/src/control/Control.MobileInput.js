@@ -17,11 +17,18 @@ L.Control.MobileInput = L.Control.extend({
 			draggable: true
 		});
 
+		this._cursorHandler.on('dragend', this.onDragEnd, this);
 	},
 
 	onAdd: function () {
 		this._initLayout();
 		return this._container;
+	},
+
+	onDragEnd: function () {
+		var mousePos = this._map._docLayer._latLngToTwips(this._cursorHandler.getLatLng());
+		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
+		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 	},
 
 	onGotFocus: function () {
