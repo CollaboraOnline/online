@@ -11,3 +11,10 @@
 	height: 44px;
 	background-image: url('images/handle_end.png');
 	}
+
+.leaflet-cursor-handler {
+	margin-left: -12px;
+	width: 25px;
+	height: 41px;
+	background-image: url('images/cursor-handler.png');
+}
