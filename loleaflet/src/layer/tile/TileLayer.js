@@ -1645,8 +1645,8 @@ L.TileLayer = L.GridLayer.extend({
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
 			this._updateCursorPos();
 		}
-		else if (this._cursorMarker) {
-			this._map.removeLayer(this._cursorMarker);
+		else {
+			this._map._clipboardContainer.hideCursor();
 		}
 	},
 
