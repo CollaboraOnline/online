@@ -5,7 +5,8 @@
 
 L.Control.ContextToolbar = L.Control.extend({
 	options: {
-		position: 'topleft'
+		position: 'topleft',
+		item: ''
 	},
 
 	initialize: function (options) {
@@ -16,10 +17,22 @@ L.Control.ContextToolbar = L.Control.extend({
 		if (!this._container) {
 			this._initLayout();
 		}
+		if (this.options.item === 'paste') {
+			this._paste.style.display = '';
+			this._cut.style.display = 'none';
+			this._copy.style.display = 'none';
+		}
+
 		this._container.style.visibility = 'hidden';
 		return this._container;
 	},
 
+	onRemove: function () {
+		this._paste.style.display = '';
+		this._cut.style.display = '';
+		this._copy.style.display = '';
+		this.options.item = '';
+	},
 
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'loleaflet-context-toolbar');
@@ -32,24 +45,25 @@ L.Control.ContextToolbar = L.Control.extend({
 		    tbody = L.DomUtil.create('tbody', '', container),
 		    tr = L.DomUtil.create('tr', '', tbody);
 
-		var cut = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-cut', tr);
-		L.DomEvent.on(cut, stopEvents,  L.DomEvent.stopPropagation)
-			.on(cut, onDown, this.onMouseDown, this)
-			.on(cut, onUp, this.onMouseUp, this);
-		var copy = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-copy', tr);
-		L.DomEvent.on(copy, stopEvents,  L.DomEvent.stopPropagation)
-			.on(copy, onDown, this.onMouseDown, this)
-			.on(copy, onUp, this.onMouseUp, this);
-		var paste = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-paste', tr);
-		L.DomEvent.on(paste, stopEvents,  L.DomEvent.stopPropagation)
-			.on(paste, onDown, this.onMouseDown, this)
-			.on(paste, onUp, this.onMouseUp, this);
+		this._cut = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-cut', tr);
+		L.DomEvent.on(this._cut, stopEvents,  L.DomEvent.stopPropagation)
+			.on(this._cut, onDown, this.onMouseDown, this)
+			.on(this._cut, onUp, this.onMouseUp, this);
+		this._copy = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-copy', tr);
+		L.DomEvent.on(this._copy, stopEvents,  L.DomEvent.stopPropagation)
+			.on(this._copy, onDown, this.onMouseDown, this)
+			.on(this._copy, onUp, this.onMouseUp, this);
+		this._paste = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-paste', tr);
+		L.DomEvent.on(this._paste, stopEvents,  L.DomEvent.stopPropagation)
+			.on(this._paste, onDown, this.onMouseDown, this)
+			.on(this._paste, onUp, this.onMouseUp, this);
 	},
 
 	onAdded: function () {
 		if (this._pos) {
 			var maxBounds = this._map.getPixelBounds();
-			var size = new L.Point(this._container.clientWidth,this._container.clientHeight);
+			var size = L.point(this._container.clientWidth,this._container.clientHeight);
+			this._pos._add(L.point(-size.x / 2, -size.y));
 			var bounds = new L.Bounds(this._pos, this._pos.add(size));
 			if (!maxBounds.contains(bounds)) {
 				var offset = L.point(0, 0);
