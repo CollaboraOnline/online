@@ -62,6 +62,10 @@ L.Control.MobileInput = L.Control.extend({
 		}
 	},
 
+	hideCursor: function () {
+		this.onLostFocus();
+	},
+
 	_initLayout: function () {
 		var constOff = 'off',
 		stopEvents = 'touchstart touchmove touchend mousedown mousemove mouseout mouseover mouseup mousewheel click scroll',

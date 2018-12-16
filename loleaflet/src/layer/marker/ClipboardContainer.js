@@ -87,6 +87,10 @@ L.ClipboardContainer = L.Layer.extend({
 		L.DomUtil.setPosition(this._container, this._map.latLngToLayerPoint(L.latLng(cursorPos)).round());
 	},
 
+	hideCursor: function () {
+		this._map.removeLayer(this._map._docLayer._cursorMarker);
+	},
+
 	_setPos: function (pos) {
 		L.DomUtil.setPosition(this._container, pos);
 	}
