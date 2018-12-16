@@ -147,7 +147,7 @@ L.Draggable = L.Evented.extend({
 		this.fire('drag', e);
 	},
 
-	_onUp: function () {
+	_onUp: function (e) {
 		L.DomUtil.removeClass(document.body, 'leaflet-dragging');
 
 		if (this._lastTarget) {
@@ -171,6 +171,8 @@ L.Draggable = L.Evented.extend({
 			this.fire('dragend', {
 				distance: this._newPos.distanceTo(this._startPos)
 			});
+		} else {
+			this.fire('up', {originalEvent: e});
 		}
 
 		this._moving = false;

@@ -18,7 +18,8 @@ L.Handler.MarkerDrag = L.Handler.extend({
 		this._draggable.on({
 			dragstart: this._onDragStart,
 			drag: this._onDrag,
-			dragend: this._onDragEnd
+			dragend: this._onDragEnd,
+			up: this._onUp
 		}, this).enable();
 
 		L.DomUtil.addClass(icon, 'leaflet-marker-draggable');
@@ -28,7 +29,8 @@ L.Handler.MarkerDrag = L.Handler.extend({
 		this._draggable.off({
 			dragstart: this._onDragStart,
 			drag: this._onDrag,
-			dragend: this._onDragEnd
+			dragend: this._onDragEnd,
+			up: this._onUp
 		}, this).disable();
 
 		if (this._marker._icon) {
@@ -70,5 +72,9 @@ L.Handler.MarkerDrag = L.Handler.extend({
 		this._marker
 		    .fire('moveend')
 		    .fire('dragend', e);
+	},
+
+	_onUp: function (e) {
+		this._marker.fire('up', e);
 	}
 });
