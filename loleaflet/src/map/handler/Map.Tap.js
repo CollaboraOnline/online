@@ -20,6 +20,17 @@ L.Map.Tap = L.Handler.extend({
 		L.DomEvent.off(this._map._container, 'touchstart', this._onDown, this);
 	},
 
+	_onCursorClick: function (e) {
+		L.DomEvent.preventDefault(e.originalEvent);
+
+		var state = this._map['stateChangeHandler'].getItemValue('.uno:Paste');
+		if (state !== 'disabled') {
+			L.setOptions(this._toolbar, {item: 'paste'});
+			this._toolbar._pos = this._map.latLngToContainerPoint(this._map._docLayer._visibleCursor.getNorthWest());
+			this._toolbar.addTo(this._map);
+		}
+	},
+
 	_onDown: function (e) {
 		if (!e.touches || !this._map._docLayer) { return; }
 
