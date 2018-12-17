@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TemplateCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
-    NSArray<NSURL*> *templates[3];
-    LibreOfficeKit *kit;
+    NSMutableArray<NSURL*> *templates[3];
 }
 
 @property (copy) void (^ _Nullable importHandler)(NSURL * _Nullable, UIDocumentBrowserImportMode);
