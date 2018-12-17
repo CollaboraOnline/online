@@ -579,6 +579,7 @@ L.Control.Menubar = L.Control.extend({
 
 		$('#main-menu').bind('keydown', {self: this}, this._onKeyDown);
 
+		var self = this;
 		// SmartMenus mobile menu toggle button
 		$(function() {
 			var $mainMenuState = $('#main-menu-state');
@@ -588,6 +589,7 @@ L.Control.Menubar = L.Control.extend({
 					var $menu = $('#main-menu');
 					var $nav = $menu.parent();
 					if (this.checked) {
+						self._map.fire('closesidebar');
 						$nav.css({height: 'initial', bottom: '38px'});
 						$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
 					} else {

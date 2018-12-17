@@ -90,6 +90,7 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('opendialog', this._openDialog, this);
 		map.on('docloaded', this._docLoaded, this);
 		map.on('closepopup', this.onCloseCurrentPopUp, this);
+		map.on('closesidebar', this._closeSidebar, this);
 		map.on('editorgotfocus', this._onEditorGotFocus, this);
 		L.DomEvent.on(document, 'mouseup', this.onCloseCurrentPopUp, this);
 	},
@@ -708,6 +709,15 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._currentId || !this._isOpen(this._currentId) || this._dialogs[this._currentId].title)
 			return;
 		this._onDialogClose(this._currentId, true);
+	},
+
+	_closeSidebar: function() {
+		for (var dialog in this._dialogs) {
+			if (this._dialogs[dialog].isSidebar == true) {
+				this._onSidebarClose(dialog);
+			}
+		}
+		$('#sidebar-dock-wrapper').css({display: ''});
 	},
 
 	_onEditorGotFocus: function() {
