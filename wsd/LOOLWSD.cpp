@@ -3089,6 +3089,7 @@ int LOOLWSD::innerMain()
     ::setenv("LC_ALL", "en_US.UTF-8", 1);
     setlocale(LC_ALL, "en_US.UTF-8");
 
+#ifndef MOBILEAPP
     if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
     {
         const auto err = "Unable to access cache [" + Cache +
@@ -3098,7 +3099,6 @@ int LOOLWSD::innerMain()
         return Application::EXIT_SOFTWARE;
     }
 
-#ifndef MOBILEAPP
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the parent (but not in the
     // child) separately now. Also check for options that are

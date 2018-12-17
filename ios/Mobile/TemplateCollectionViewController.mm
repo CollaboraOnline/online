@@ -8,9 +8,6 @@
 
 #import "svtools/strings.hrc"
 
-#import <LibreOfficeKit/LibreOfficeKit.h>
-#import <LibreOfficeKit/LibreOfficeKitInit.h>
-
 #import "AppDelegate.h"
 #import "L10n.h"
 #import "TemplateCollectionViewController.h"
@@ -34,13 +31,33 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
 
 - (void)viewDidLoad {
 
-    kit = lok_init_2(nullptr, nullptr);
+    static NSString *downloadedTemplates = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/downloadedTemplates/"];
 
-    // Scan for available templates.
+    // Scan for available templates. First downloaded ones.
+    NSDirectoryEnumerator<NSString *> *e = [[NSFileManager defaultManager] enumeratorAtPath:downloadedTemplates];
 
-    templates[0] = [[NSBundle mainBundle] URLsForResourcesWithExtension:@".ott" subdirectory:@"Templates"];
-    templates[1] = [[NSBundle mainBundle] URLsForResourcesWithExtension:@".ots" subdirectory:@"Templates"];
-    templates[2] = [[NSBundle mainBundle] URLsForResourcesWithExtension:@".otp" subdirectory:@"Templates"];
+    templates[0] = [@[] mutableCopy];
+    templates[1] = [@[] mutableCopy];
+    templates[2] = [@[] mutableCopy];
+
+    NSString *subPath;
+    while ((subPath = [e nextObject]) != nil) {
+        NSString *path = [downloadedTemplates stringByAppendingString:subPath];
+        if ([[path pathExtension] isEqualToString:@"ott"]) {
+            [templates[0] addObject:[NSURL fileURLWithPath:path]];
+        } else if ([[path pathExtension] isEqualToString:@"ots"]) {
+            [templates[1] addObject:[NSURL fileURLWithPath:path]];
+        } else if ([[path pathExtension] isEqualToString:@"otp"]) {
+            [templates[2] addObject:[NSURL fileURLWithPath:path]];
+        }
+    }
+
+    if ([templates[0] count] == 0)
+        templates[0] = [[[NSBundle mainBundle] URLsForResourcesWithExtension:@".ott" subdirectory:@"Templates"] mutableCopy];
+    if ([templates[1] count] == 0)
+        templates[1] = [[[NSBundle mainBundle] URLsForResourcesWithExtension:@".ots" subdirectory:@"Templates"] mutableCopy];
+    if ([templates[2] count] == 0)
+        templates[2] = [[[NSBundle mainBundle] URLsForResourcesWithExtension:@".otp" subdirectory:@"Templates"] mutableCopy];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -121,8 +138,7 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
 
     // Load the template into LibreOffice core, save as the corresponding document type (with the
     // same basename), and then proceed to edit that.
-    kit->pClass->registerCallback(kit, [](int, const char *, void*){}, nullptr);
-    LibreOfficeKitDocument *doc = kit->pClass->documentLoad(kit, [[selectedTemplate absoluteString] UTF8String]);
+    LibreOfficeKitDocument *doc = lo_kit->pClass->documentLoad(lo_kit, [[selectedTemplate absoluteString] UTF8String]);
     doc->pClass->saveAs(doc, [[newURL absoluteString] UTF8String], nullptr, nullptr);
     doc->pClass->destroy(doc);
 

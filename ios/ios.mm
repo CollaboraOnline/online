@@ -19,7 +19,7 @@ int loolwsd_server_socket_fd = -1;
 
 const char* lo_ios_app_getCacheDir()
 {
-    static NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    static NSString *cachePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/tilecache"];
     static const char* result = strdup([cachePath UTF8String]);
 
     return result;
