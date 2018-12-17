@@ -466,6 +466,14 @@ L.Control.LokDialog = L.Control.extend({
 		if (!top)
 			top = 0;
 
+		if (window.mode.isMobile() && this._map._permission != 'edit')
+			return;
+
+		var ratio = 1.0;
+		if (width > window.screen.width) {
+			ratio = window.screen.width / width;
+		}
+
 		var strId = this._toStrId(id);
 
 		if (this._currentDeck) {
@@ -489,6 +497,10 @@ L.Control.LokDialog = L.Control.extend({
 
 			// Render window.
 			this._sendPaintWindowRect(id);
+
+			if (ratio < 1.0) {
+				$('#sidebar-dock-wrapper').css('width', String(width * ratio) + 'px');
+			}
 			return;
 		}
 
