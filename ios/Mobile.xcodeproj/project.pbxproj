@@ -63,6 +63,7 @@
 		BEA2835D21498AD400848631 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835C21498AD400848631 /* Socket.cpp */; };
 		BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835F214ACA8500848631 /* FakeSocket.cpp */; };
 		BEA28377214FFD8C00848631 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA28376214FFD8C00848631 /* Unit.cpp */; };
+		BEB0E5D921C7CA800085A0CF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEB0E5D821C7CA800085A0CF /* Settings.bundle */; };
 		BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEFB1EE021C29CC70081D757 /* L10n.mm */; };
 /* End PBXBuildFile section */
 
@@ -502,6 +503,7 @@
 		BEA8CDC32199AC9D009FE17E /* lok.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lok.cxx; path = "../../ios-device/comphelper/source/misc/lok.cxx"; sourceTree = "<group>"; };
 		BEA8CDC52199E621009FE17E /* languagetagicu.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = languagetagicu.cxx; path = "../../ios-device/i18nlangtag/source/languagetag/languagetagicu.cxx"; sourceTree = "<group>"; };
 		BEA8CDC62199E621009FE17E /* languagetag.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = languagetag.cxx; path = "../../ios-device/i18nlangtag/source/languagetag/languagetag.cxx"; sourceTree = "<group>"; };
+		BEB0E5D821C7CA800085A0CF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEB6521C216F5D8B00B8C09A /* file_path_helper.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = file_path_helper.hxx; path = "../../ios-device/sal/osl/unx/file_path_helper.hxx"; sourceTree = "<group>"; };
 		BEB6521D216F5D8B00B8C09A /* file_error_transl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = file_error_transl.hxx; path = "../../ios-device/sal/osl/unx/file_error_transl.hxx"; sourceTree = "<group>"; };
 		BEB6521E216F5D8B00B8C09A /* nlsupport.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = nlsupport.hxx; path = "../../ios-device/sal/osl/unx/nlsupport.hxx"; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 		BE00F8922139494E001CE2D4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BEB0E5D821C7CA800085A0CF /* Settings.bundle */,
 				BE80E46721B7066C00859C97 /* Templates */,
 				BE80E43121AD92F600859C97 /* Fonts */,
 				BE8D85BE214055F2009F1860 /* config */,
@@ -1445,6 +1448,7 @@
 				BE8D85D2214055F3009F1860 /* program in Resources */,
 				BE8D85CB214055F3009F1860 /* share in Resources */,
 				BE80E46821B7066D00859C97 /* Templates in Resources */,
+				BEB0E5D921C7CA800085A0CF /* Settings.bundle in Resources */,
 				BE00F8A621396585001CE2D4 /* loading.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

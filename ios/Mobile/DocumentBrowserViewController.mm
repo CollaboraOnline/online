@@ -8,6 +8,7 @@
 
 #import "config.h"
 
+#import "AppDelegate.h"
 #import "DocumentBrowserViewController.h"
 #import "Document.h"
 #import "DocumentViewController.h"
@@ -21,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.delegate = self;
     self.allowsDocumentCreation = YES;
     self.allowsPickingMultipleItems = NO;
@@ -42,7 +44,7 @@
     [self presentViewController:templateCollectionViewController animated:YES completion:nil];
 }
 
--(void)documentBrowser:(UIDocumentBrowserViewController *)controller didPickDocumentURLs:(NSArray<NSURL *> *)documentURLs {
+-(void)documentBrowser:(UIDocumentBrowserViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)documentURLs {
     NSURL *sourceURL = documentURLs.firstObject;
     if (!sourceURL) {
         return;
