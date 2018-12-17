@@ -2777,9 +2777,14 @@ private:
         Poco::Dynamic::Var available = allowConvertTo(socket->clientAddress(), request);
         convert_to->set("available", available);
 
-        // Compose the content of http://server/hosting/capabilities
         Poco::JSON::Object::Ptr capabilities = new Poco::JSON::Object;
         capabilities->set("convert-to", convert_to);
+
+        // Supports the TemplateSaveAs in CheckFileInfo?
+        capabilities->set("hasTemplateSaveAs", false);
+
+        // Version
+        capabilities->set("version", LOOLWSD_VERSION);
 
         std::ostringstream ostrJSON;
         capabilities->stringify(ostrJSON);
