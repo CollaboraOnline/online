@@ -63,7 +63,7 @@ public:
 /// Unit test stub for a server request
 class UnitHTTPServerRequest : public Poco::Net::HTTPServerRequest
 {
-protected:
+private:
     UnitHTTPServerResponse& _response;
     Poco::Net::SocketAddress _clientAddress;
     Poco::Net::SocketAddress _serverAddress;
