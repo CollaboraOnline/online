@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 16:56+0200\n"
+"POT-Creation-Date: 2018-12-17 14:59+0200\n"
 "PO-Revision-Date: 2016-10-04 12:59+0000\n"
 "Last-Translator: Muḥend Velqasem <belkacem77@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -799,8 +799,9 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:128-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:212-93
+#, fuzzy
 msgid "Ctrl + Enter"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:129-18
 msgid "Column break (in multicolumnar text)"
@@ -954,4 +955,3 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:213-18
 msgid "Select all in slide / drawing page"
 msgstr ""
-

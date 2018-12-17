@@ -2,12 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 16:56+0100\n"
+"POT-Creation-Date: 2018-12-17 14:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /lo/libo_online/loleaflet-ui-lo.po\n"
-"X-Pootle-Revision: 3464481\n"
+"X-Pootle-Revision: 3609128\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -219,249 +218,217 @@ msgstr ""
 msgid "Are you sure you want to delete this page?"
 msgstr ""
 
-#: js/toolbar.js:621
-msgid "Textwrap"
-msgstr ""
-
-#: js/toolbar.js:622
-msgid "No wrap"
-msgstr ""
-
-#: js/toolbar.js:623
-msgid "Page wrap"
-msgstr ""
-
-#: js/toolbar.js:624
-msgid "Wrap anchor only"
-msgstr ""
-
-#: js/toolbar.js:625
-msgid "Ideal wrap"
-msgstr ""
-
-#: js/toolbar.js:626
-msgid "Left wrap"
-msgstr ""
-
-#: js/toolbar.js:627
-msgid "Right wrap"
-msgstr ""
-
-#: js/toolbar.js:628
-msgid "Wrap through"
-msgstr ""
-
-#: js/toolbar.js:634
+#: js/toolbar.js:620
 msgid "Document repair"
 msgstr ""
 
-#: js/toolbar.js:674
+#: js/toolbar.js:660
 msgid "Insert table"
 msgstr ""
 
-#: js/toolbar.js:676
+#: js/toolbar.js:662
 msgid "Borders"
 msgstr ""
 
-#: js/toolbar.js:684
+#: js/toolbar.js:670
 msgid "More..."
 msgstr ""
 
-#: js/toolbar.js:696
+#: js/toolbar.js:682
 msgid "Insert shapes"
 msgstr ""
 
-#: js/toolbar.js:703
+#: js/toolbar.js:689
 msgid "Insert Local Image"
 msgstr ""
 
-#: js/toolbar.js:731 js/toolbar.js:1045
+#: js/toolbar.js:717 js/toolbar.js:1031
 msgid "Always follow the editor"
 msgstr ""
 
-#: js/toolbar.js:734 js/toolbar.js:1048
+#: js/toolbar.js:720 js/toolbar.js:1034
 msgid "Current"
 msgstr ""
 
-#: js/toolbar.js:759 js/toolbar.js:926 js/toolbar.js:1442
+#: js/toolbar.js:745 js/toolbar.js:912 js/toolbar.js:1428
 msgid "Sum"
 msgstr ""
 
-#: js/toolbar.js:760 js/toolbar.js:927
+#: js/toolbar.js:746 js/toolbar.js:913
 msgid "Function"
 msgstr ""
 
-#: js/toolbar.js:761 js/toolbar.js:928 src/layer/marker/Annotation.js:171
+#: js/toolbar.js:747 js/toolbar.js:914 src/layer/marker/Annotation.js:171
 msgid "Cancel"
 msgstr ""
 
-#: js/toolbar.js:762 js/toolbar.js:929
+#: js/toolbar.js:748 js/toolbar.js:915
 msgid "Accept"
 msgstr ""
 
-#: js/toolbar.js:795 js/toolbar.js:984
+#: js/toolbar.js:781 js/toolbar.js:970
 msgid "First sheet"
 msgstr ""
 
-#: js/toolbar.js:796 js/toolbar.js:985
+#: js/toolbar.js:782 js/toolbar.js:971
 msgid "Previous sheet"
 msgstr ""
 
-#: js/toolbar.js:797 js/toolbar.js:986
+#: js/toolbar.js:783 js/toolbar.js:972
 msgid "Next sheet"
 msgstr ""
 
-#: js/toolbar.js:798 js/toolbar.js:987
+#: js/toolbar.js:784 js/toolbar.js:973
 msgid "Last sheet"
 msgstr ""
 
-#: js/toolbar.js:799 js/toolbar.js:988
+#: js/toolbar.js:785 js/toolbar.js:974
 msgid "Insert sheet"
 msgstr ""
 
-#: js/toolbar.js:960 src/control/Control.Menubar.js:30
+#: js/toolbar.js:946 src/control/Control.Menubar.js:30
 msgid "Sign document"
 msgstr ""
 
-#: js/toolbar.js:965
+#: js/toolbar.js:951
 msgid "Logout"
 msgstr ""
 
-#: js/toolbar.js:1005 src/control/Control.Menubar.js:297
+#: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
 msgstr ""
 
-#: js/toolbar.js:1029
+#: js/toolbar.js:1015
 msgid "Search:"
 msgstr ""
 
-#: js/toolbar.js:1036
+#: js/toolbar.js:1022
 msgid "Cancel the search"
 msgstr ""
 
-#: js/toolbar.js:1041
+#: js/toolbar.js:1027
 msgid "No users"
 msgstr ""
 
-#: js/toolbar.js:1055 src/control/Control.Menubar.js:63
+#: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
 msgid "Reset zoom"
 msgstr ""
 
-#: js/toolbar.js:1099
+#: js/toolbar.js:1085
 msgid "%user has joined"
 msgstr ""
 
-#: js/toolbar.js:1100
+#: js/toolbar.js:1086
 msgid "%user has left"
 msgstr ""
 
-#: js/toolbar.js:1420
+#: js/toolbar.js:1406
 msgid "Number of Sheets"
 msgstr ""
 
-#: js/toolbar.js:1423
+#: js/toolbar.js:1409
 msgid "Selected range of cells"
 msgstr ""
 
-#: js/toolbar.js:1426 js/toolbar.js:1465
+#: js/toolbar.js:1412 js/toolbar.js:1451
 msgid "Entering text mode"
 msgstr ""
 
-#: js/toolbar.js:1429 js/toolbar.js:1471 js/toolbar.js:1498
+#: js/toolbar.js:1415 js/toolbar.js:1457 js/toolbar.js:1484
 msgid "Text Language"
 msgstr ""
 
-#: js/toolbar.js:1432 js/toolbar.js:1468
+#: js/toolbar.js:1418 js/toolbar.js:1454
 msgid "Selection Mode"
 msgstr ""
 
-#: js/toolbar.js:1435
+#: js/toolbar.js:1421
 msgid "Choice of functions"
 msgstr ""
 
-#: js/toolbar.js:1437
+#: js/toolbar.js:1423
 msgid "Average"
 msgstr ""
 
-#: js/toolbar.js:1438
+#: js/toolbar.js:1424
 msgid "CountA"
 msgstr ""
 
-#: js/toolbar.js:1439
+#: js/toolbar.js:1425
 msgid "Count"
 msgstr ""
 
-#: js/toolbar.js:1440
+#: js/toolbar.js:1426
 msgid "Maximum"
 msgstr ""
 
-#: js/toolbar.js:1441
+#: js/toolbar.js:1427
 msgid "Minimum"
 msgstr ""
 
-#: js/toolbar.js:1443
+#: js/toolbar.js:1429
 msgid "Selection count"
 msgstr ""
 
-#: js/toolbar.js:1444
+#: js/toolbar.js:1430
 msgid "None"
 msgstr ""
 
-#: js/toolbar.js:1459
+#: js/toolbar.js:1445
 msgid "Number of Pages"
 msgstr ""
 
-#: js/toolbar.js:1462
+#: js/toolbar.js:1448
 msgid "Word Counter"
 msgstr ""
 
-#: js/toolbar.js:1493
+#: js/toolbar.js:1479
 msgid "Number of Slides"
 msgstr ""
 
-#: js/toolbar.js:1525
+#: js/toolbar.js:1511
 msgid "%n users"
 msgstr ""
 
-#: js/toolbar.js:1526
+#: js/toolbar.js:1512
 msgid "1 user"
 msgstr ""
 
-#: js/toolbar.js:1527
+#: js/toolbar.js:1513
 msgid "0 users"
 msgstr ""
 
-#: js/toolbar.js:1657
+#: js/toolbar.js:1643
 msgid "Document saved"
 msgstr ""
 
-#: js/toolbar.js:1807
+#: js/toolbar.js:1793
 msgid "Style"
 msgstr ""
 
-#: js/toolbar.js:1829
+#: js/toolbar.js:1815
 msgid "Font"
 msgstr ""
 
-#: js/toolbar.js:1862
+#: js/toolbar.js:1848
 msgid "Previous slide"
 msgstr ""
 
-#: js/toolbar.js:1863
+#: js/toolbar.js:1849
 msgid "Next slide"
 msgstr ""
 
-#: js/toolbar.js:1925
+#: js/toolbar.js:1911
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: js/toolbar.js:2153 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr ""
 
-#: js/toolbar.js:2159
+#: js/toolbar.js:2145
 msgid "Readonly"
 msgstr ""
 
@@ -884,6 +851,6 @@ msgstr ""
 msgid "Uploading..."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:250
+#: src/map/handler/Map.WOPI.js:273
 msgid "Creating copy..."
 msgstr ""

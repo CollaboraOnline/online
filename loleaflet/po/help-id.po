@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 16:56+0200\n"
+"POT-Creation-Date: 2018-12-17 14:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-help-id.po\n"
-"X-Pootle-Revision: 3504898\n"
+"X-Pootle-Revision: 3614408\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -464,7 +464,7 @@ msgstr "Ctrl + Shift + Panah Bawah"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-18
 #, fuzzy
 msgid "Go to beginning of line"
-msgstr "Ke awal baris"
+msgstr "Ctrl + Shift + Panah Bawah"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-68
@@ -802,7 +802,7 @@ msgstr "Ctrl + Alt + C"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Insert soft hyphen"
-msgstr ""
+msgstr "Sisip tanda hubung"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-63
 msgid "Ctrl + -"
@@ -810,7 +810,7 @@ msgstr "Ctrl + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
 msgid "Insert non-breaking hyphen"
-msgstr ""
+msgstr "Sisip tanda hubung yang tidak putus"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-71
 msgid "Ctrl + Shift + -"
@@ -818,7 +818,7 @@ msgstr "Ctrl + Shift + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "Sisipkan jarak tidak putus"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-70
 msgid "Ctrl + Shift + Space"

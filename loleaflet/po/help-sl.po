@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 16:56+0200\n"
-"PO-Revision-Date: 2016-11-09 00:07+0100\n"
+"POT-Creation-Date: 2018-12-17 14:59+0200\n"
+"PO-Revision-Date: 2018-12-06 23:20+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
 "Language: sl\n"
@@ -68,7 +68,7 @@ msgstr "Krmilka + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:34-18
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Prikaži pomoč za tipke za bližnjice"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:34-80
 msgid "Ctrl + Shift + ?"
@@ -391,7 +391,7 @@ msgstr "Dvigalka + smerna tipka navzgor"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Premakne kazalko na začetek prejšnjega odstavka."
+msgstr "Premakne kazalko na začetek prejšnjega odstavka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-95
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-95
@@ -952,11 +952,11 @@ msgstr "Ubežnica"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:210-18
 msgid "Select objects in the order in which they were created"
-msgstr "Izbere predmete v vrstnem redu nastanka."
+msgstr "Izbere predmete v vrstnem redu nastanka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:211-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Izbere predmete v obratnem vrstnem redu nastanka."
+msgstr "Izbere predmete v obratnem vrstnem redu nastanka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:212-18
 msgid "Move to next text object on slide / drawing page"

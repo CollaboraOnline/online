@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 16:56+0200\n"
+"POT-Creation-Date: 2018-12-17 14:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /af/libo_online/loleaflet-help-af.po\n"
-"X-Pootle-Revision: 826588\n"
+"X-Pootle-Revision: 3620412\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -24,27 +24,27 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:29-18
 msgid "Undo"
-msgstr ""
+msgstr "Ontdoen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:29-49
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:30-18
 msgid "Redo"
-msgstr ""
+msgstr "Herdoen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:30-49
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Ctrl + Y"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Cut"
-msgstr ""
+msgstr "Sny"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:31-48
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Ctrl + X"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:32-18
 msgid "Paste as unformatted text"
@@ -52,15 +52,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:32-70
 msgid "Ctrl + Alt + Shift + V"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:33-18
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "Druk (Laai af as PDF)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:33-68
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Ctrl + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:34-18
 msgid "Display the Keyboard shortcuts help"
@@ -68,89 +68,89 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:34-80
 msgid "Ctrl + Shift + ?"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:38-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:160-9
 msgid "Text formatting"
-msgstr ""
+msgstr "SMS formaat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-18
 msgid "Bold"
-msgstr ""
+msgstr "Vetdruk"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-49
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-49
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-49
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-18
 msgid "Italic"
-msgstr ""
+msgstr "Skuinsdruk"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-51
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-51
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-51
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + I"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:164-18
 msgid "Underline"
-msgstr ""
+msgstr "Onderstreep"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:164-54
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Ctrl + U"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:43-18
 msgid "Double Underline"
-msgstr ""
+msgstr "Dubbel Onderstreep"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:43-61
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-54
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:44-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:165-18
 msgid "Strikethrough"
-msgstr ""
+msgstr "Deurhaal"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:44-58
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-58
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:165-58
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-18
 msgid "Superscript"
-msgstr ""
+msgstr "Superskrif "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-56
 msgid "Ctrl + Shift + P"
-msgstr ""
+msgstr "Ctrl + Shift + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-18
 msgid "Subscript"
-msgstr ""
+msgstr "Onderskrif"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-54
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Ctrl + Shift + B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
@@ -160,7 +160,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-69
 msgid "Ctrl + M"
-msgstr ""
+msgstr "Ctrl + M"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:49-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:170-9
@@ -171,49 +171,49 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-18
 msgid "Align Center"
-msgstr ""
+msgstr "Belyn middel"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-57
 msgid "Ctrl + E"
-msgstr ""
+msgstr "Ctrl + E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:173-18
 msgid "Align Left"
-msgstr ""
+msgstr "Belyn links"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:173-55
 msgid "Ctrl + L"
-msgstr ""
+msgstr "Ctrl + L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:174-18
 msgid "Align Right"
-msgstr ""
+msgstr "Regsbelyn"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:174-56
 msgid "Ctrl + R"
-msgstr ""
+msgstr "Ctrl + R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:175-18
 msgid "Justify"
-msgstr ""
+msgstr "Justeer"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:175-52
 msgid "Ctrl + J"
-msgstr ""
+msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-18
 msgid "Apply Default paragraph style"
@@ -221,48 +221,48 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-74
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "Ctrl + 0"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-18
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "Implementeer Paragraafstyle Opskrif 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-76
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "Ctrl + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:57-18
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "Implementeer Paragraafstyle Opskrif 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:57-76
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "Ctrl + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:58-18
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "Implementeer Paragraafstyle Opskrif 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:58-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-69
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "Ctrl + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-18
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "Implementeer Paragraafstyle Opskrif 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-76
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "Ctrl + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-18
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "Implementeer Paragraafstyle Opskrif 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-76
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "Ctrl + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:62-9
 msgid "Text selection and navigation in document"
@@ -273,7 +273,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18
 msgid "Select All"
-msgstr ""
+msgstr "Merk alles"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
@@ -282,17 +282,17 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:213-79
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Ctrl + A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-18
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Skuif wyser lings toe"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-68
 msgid "Arrow Left"
-msgstr ""
+msgstr "Pyltjie Lings"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
@@ -302,7 +302,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-83
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-83
 msgid "Shift + Arrow Left"
-msgstr ""
+msgstr "Shift + Lings Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
@@ -312,7 +312,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-70
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Links Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
@@ -322,17 +322,17 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-76
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "Ctrl + Shift + Lings Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-18
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "Skuif wyser regs toe"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-69
 msgid "Arrow Right"
-msgstr ""
+msgstr "Pyltjie Regs"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
@@ -342,7 +342,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-84
 msgid "Shift + Arrow Right"
-msgstr ""
+msgstr "Shift + Reg Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-18
@@ -352,7 +352,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-73
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-73
 msgid "Ctrl + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Regs Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
@@ -362,17 +362,18 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-77
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "Ctrl + Shift + Regs Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-18
 msgid "Move cursor up one line"
-msgstr ""
+msgstr "Skuif wyser een lyn op"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-68
+#, fuzzy
 msgid "Arrow Up"
-msgstr ""
+msgstr "Op Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
@@ -382,7 +383,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-78
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Shift + Op Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
@@ -392,7 +393,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-95
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-95
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Op Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
@@ -402,17 +403,17 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-77
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "Ctrl + Shift + Op Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-18
 msgid "Move cursor down one line"
-msgstr ""
+msgstr "Skuif wyser een lyn af"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-70
 msgid "Arrow Down"
-msgstr ""
+msgstr "Af Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
@@ -422,7 +423,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-80
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-80
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Shift + Af Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-18
@@ -432,7 +433,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-91
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-91
 msgid "Ctrl + Arrow Down"
-msgstr ""
+msgstr "Ctrl + Af Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
@@ -442,7 +443,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-71
 msgid "Ctrl + Shift + Arrow Down"
-msgstr ""
+msgstr "Ctrl + Shift + Af Pyltjie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-18
@@ -462,7 +463,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-85
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-85
 msgid "Shift + Home"
-msgstr ""
+msgstr "Shift + Tuis"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-18
@@ -473,7 +474,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-68
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Ctrl + Tuis"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Go and select text to start of document"
@@ -482,7 +483,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-83
 msgid "Ctrl + Shift + Home"
-msgstr ""
+msgstr "Ctrl + Shift + Tuis"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:202-18
@@ -492,7 +493,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:202-62
 msgid "End"
-msgstr ""
+msgstr "Einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-18
@@ -502,7 +503,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-79
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-79
 msgid "Shift + End"
-msgstr ""
+msgstr "Shift + Einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-18
@@ -513,7 +514,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-66
 msgid "Ctrl + End"
-msgstr ""
+msgstr "Ctrl + Einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Go and select text to end of document"
@@ -522,7 +523,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-82
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-81
 msgid "Ctrl + Shift + End"
-msgstr ""
+msgstr "Ctrl + Shift + Einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Move the view up one page"
@@ -578,7 +579,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:95-72
 msgid "Ctrl + Backspace"
-msgstr ""
+msgstr "Ctrl + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Delete to end of word"
@@ -586,23 +587,24 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-66
 msgid "Ctrl + Del"
-msgstr ""
+msgstr "Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-18
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "Skrap tot begin van sin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-76
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Ctrl + Shift + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
+#, fuzzy
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Skrap tot begin van sin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-70
 msgid "Ctrl + Shift + Del"
-msgstr ""
+msgstr "Ctrl + Shift + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:100-9
 msgid "Shortcut Keys for Tables"
@@ -630,7 +632,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-18
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Ctrl + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-56
 msgid ""
@@ -640,7 +642,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt + Arrow Keys"
-msgstr ""
+msgstr "Alt + Pyltjie Sleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-62
 msgid ""
@@ -649,7 +651,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid "Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt + Shift + Pyltjie Sleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -657,7 +659,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:108-18
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr ""
+msgstr "Alt + Ctrl + Pyltjie Sleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:108-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:109-77
@@ -666,11 +668,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:109-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + Pyltjie Sleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:110-18
 msgid "Alt + Insert"
-msgstr ""
+msgstr "Alt + Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:110-58
 msgid ""
@@ -680,7 +682,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:111-18
 msgid "Alt + Del"
-msgstr ""
+msgstr "Alt + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:111-55
 msgid ""
@@ -690,7 +692,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:112-18
 msgid "Shift + Ctrl + Del"
-msgstr ""
+msgstr "Shift + Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:112-86
 msgid ""
@@ -723,7 +725,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-60
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Ctrl + Alt + F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-18
 msgid "Insert endnote"
@@ -731,7 +733,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-59
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Ctrl + Alt + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
@@ -741,7 +743,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-59
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-59
 msgid "Ctrl + Alt + C"
-msgstr ""
+msgstr "Ctrl + Alt + C"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Insert soft hyphen"
@@ -749,7 +751,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-63
 msgid "Ctrl + -"
-msgstr ""
+msgstr "Ctrl + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
 msgid "Insert non-breaking hyphen"
@@ -757,7 +759,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-71
 msgid "Ctrl + Shift + -"
-msgstr ""
+msgstr "Ctrl + Shift + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
 msgid "Insert non-breaking space"
@@ -765,7 +767,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-70
 msgid "Ctrl + Shift + Space"
-msgstr ""
+msgstr "Ctrl + Shift + Space"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-18
 msgid "Insert line break"
@@ -773,7 +775,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-62
 msgid "Shift + Enter"
-msgstr ""
+msgstr "Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:128-18
 msgid "Manual page break"
@@ -782,7 +784,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:128-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:212-93
 msgid "Ctrl + Enter"
-msgstr ""
+msgstr "Ctrl + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:129-18
 msgid "Column break (in multicolumnar text)"
@@ -790,7 +792,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:129-81
 msgid "Ctrl + Shift + Enter"
-msgstr ""
+msgstr "Ctrl + Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:130-18
 msgid ""
@@ -800,7 +802,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:130-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:131-155
 msgid "Alt + Enter"
-msgstr ""
+msgstr "Alt + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:131-18
 msgid ""
@@ -810,7 +812,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:135-9
 msgid "Cell formatting"
-msgstr ""
+msgstr "Sell formaat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
 msgid "Display comment"
@@ -818,7 +820,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-60
 msgid "Ctrl + F1"
-msgstr ""
+msgstr "Ctrl + F1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid "Fill Down"
@@ -834,7 +836,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-84
 msgid "Ctrl + Shift + 1"
-msgstr ""
+msgstr "Ctrl + Shift + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Standard exponential format"
@@ -842,15 +844,17 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-72
 msgid "Ctrl + Shift + 2"
-msgstr ""
+msgstr "Ctrl + Shift + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:153-18
+#, fuzzy
 msgid "Standard date format"
-msgstr ""
+msgstr "Standaard formaat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:153-65
+#, fuzzy
 msgid "Ctrl + Shift + 3"
-msgstr ""
+msgstr "Ctrl + Shift + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:154-18
 msgid "Standard currency format"
@@ -858,7 +862,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:154-69
 msgid "Ctrl + Shift + 4"
-msgstr ""
+msgstr "Ctrl + Shift + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:155-18
 msgid "Standard percentage format (two decimal places)"
@@ -866,15 +870,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:155-92
 msgid "Ctrl + Shift + 5"
-msgstr ""
+msgstr "Ctrl + Shift + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:156-18
 msgid "Standard format"
-msgstr ""
+msgstr "Standaard formaat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:156-60
 msgid "Ctrl + Shift + 6"
-msgstr ""
+msgstr "Ctrl + Shift + 6"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-18
 msgid "Demote list item (list item has to be selected)"
@@ -892,7 +896,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:211-107
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Shift + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:179-9
 msgid "Text selection and navigation in a textbox"
@@ -918,7 +922,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-166
 msgid "Esc"
-msgstr ""
+msgstr "Esc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:210-18
 msgid "Select objects in the order in which they were created"
