@@ -507,7 +507,8 @@ L.Control.LokDialog = L.Control.extend({
 		if (!top)
 			top = 0;
 
-		if (window.mode.isMobile() && this._map._permission != 'edit')
+		if ((window.mode.isMobile() || window.mode.isTablet())
+		    && this._map._permission != 'edit')
 			return;
 
 		var ratio = 1.0;
@@ -538,6 +539,9 @@ L.Control.LokDialog = L.Control.extend({
 
 			// Render window.
 			this._sendPaintWindowRect(id);
+
+			if (window.mode.isTablet())
+				$('#sidebar-dock-wrapper').addClass('tablet');
 
 			if (ratio < 1.0) {
 				$('#sidebar-dock-wrapper').css('width', String(width * ratio) + 'px');

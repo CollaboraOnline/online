@@ -20,6 +20,10 @@
 	display: none;
 }
 
+#sidebar-dock-wrapper.tablet {
+	top: 41px;
+}
+
 #map {
 	position: absolute;
 	top: 0px;
