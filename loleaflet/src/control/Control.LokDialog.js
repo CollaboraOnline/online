@@ -793,12 +793,14 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogChildClose: function(dialogId) {
 		$('#' + this._toStrId(dialogId) + '-floating').remove();
-		// remove any extra height allocated for the parent container
-		var canvas = document.getElementById(dialogId + '-canvas');
-		if (!canvas)
-			return;
-		var canvasHeight = canvas.height;
-		$('#' + dialogId).height(canvasHeight + 'px');
+		if (!this._isSidebar(dialogId)) {
+			// Remove any extra height allocated for the parent container (only for floating dialogs).
+			var canvas = document.getElementById(dialogId + '-canvas');
+			if (!canvas)
+				return;
+			var canvasHeight = canvas.height;
+			$('#' + dialogId).height(canvasHeight + 'px');
+		}
 	},
 
 	_removeDialogChild: function(id) {
@@ -835,6 +837,8 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setStyle(floatingCanvas, 'position', 'absolute');
 		L.DomUtil.setStyle(floatingCanvas, 'left', (left - 1) + 'px'); // Align drop-down list with parent.
 		L.DomUtil.setStyle(floatingCanvas, 'top', top + 'px');
+		L.DomUtil.setStyle(floatingCanvas, 'width', '0px');
+		L.DomUtil.setStyle(floatingCanvas, 'height', '0px');
 
 		// attach events
 		this._setupChildEvents(childId, floatingCanvas);
