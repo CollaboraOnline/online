@@ -1739,6 +1739,12 @@ function onDocLayerInit() {
 		$('#tb_editbar_item_fonts').css({'display': 'none'});
 		$('#tb_editbar_item_fontsizes').css({'display': 'none'});
 	}
+
+	if (docType == 'spreadsheet') {
+		var el = w2ui['spreadsheet-toolbar'];
+		if (el)
+			el.resize();
+	}
 }
 
 function onCommandStateChanged(e) {
