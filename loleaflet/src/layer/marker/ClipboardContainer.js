@@ -80,6 +80,10 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	showCursor: function () {
+		if (!this._map._docLayer._cursorMarker) {
+			return;
+		}
+
 		this._map.addLayer(this._map._docLayer._cursorMarker);
 
 		// move the hidden input field with the cursor
@@ -88,6 +92,10 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	hideCursor: function () {
+		if (!this._map._docLayer._cursorMarker) {
+			return;
+		}
+
 		this._map.removeLayer(this._map._docLayer._cursorMarker);
 	},
 
