@@ -855,6 +855,10 @@ L.Control.Menubar = L.Control.extend({
 					continue;
 			}
 
+			if (this._map._permission === 'readonly' && menu[i].id === 'last-mod') {
+				continue;
+			}
+
 			if (menu[i].type === 'action') {
 				if ((menu[i].id === 'rev-history' && !revHistoryEnabled) ||
 					(menu[i].id === 'closedocument' && !closebutton)) {
