@@ -542,7 +542,10 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             wopifileinfo->setHideExportOption(true);
 
         wopiInfo->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
-        wopiInfo->set("TemplateSaveAs", wopifileinfo->getTemplateSaveAs());
+
+        if (!wopifileinfo->getTemplateSaveAs().empty())
+            wopiInfo->set("TemplateSaveAs", wopifileinfo->getTemplateSaveAs());
+
         wopiInfo->set("HidePrintOption", wopifileinfo->getHidePrintOption());
         wopiInfo->set("HideSaveOption", wopifileinfo->getHideSaveOption());
         wopiInfo->set("HideExportOption", wopifileinfo->getHideExportOption());
