@@ -413,10 +413,26 @@ L.Map.include({
 				onEvent: function(event) {
 					switch (event.type) {
 					case 'ActionConfirmedAndExecuted':
-						console.log('ActionConfirmedAndExecuted');
+						console.log('event ActionConfirmedAndExecuted');
 						break;
 					case 'Authenticated':
-						vereignRestoreIdentity();
+						console.log('event Authenticated');
+						library.hasSession().then(function(result) {
+							if (isSuccess(result)) {
+								library.listIdentities().then(function(result) {
+									if (isSuccess(result)) {
+										vereignRestoreIdentity();
+									}
+								});
+							}
+						});
+						break;
+					case 'Logout':
+						console.log('event Logout');
+						_map.signingLogout();
+						break;
+					case 'QRCodeUpdated':
+						console.log('event QRCodeUpdated');
 						break;
 					default:
 						console.log('UNKNOWN EVENT: ' + event.type);
