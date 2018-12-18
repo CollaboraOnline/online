@@ -8,12 +8,18 @@
  * @param methods - list of methods to be used in iframe
  * @param iframeUrl - iframe URL to connect
  * @param apiUrl -  API URL used to access API endpoints
+ * @param wopiUrl -  WOPI URL used to acces WopiAPI
  * @returns {*}
  */
-function setupViamAPI(divId, methods, iframeUrl, apiUrl) {
+function setupViamAPI(divId, methods, iframeUrl, apiUrl, wopiUrl) {
   if (!apiUrl) {
     apiUrl = `${window.location.origin}/api/`;
     console.warn(`API host URL not specified. Fall back to ${apiUrl}`); // eslint-disable-line no-console
+  }
+
+  if (!wopiUrl) {
+    wopiUrl = `${window.location.origin}/wopi/`;
+    console.warn(`WOPI host URL not specified. Fall back to ${wopiUrl}`); // eslint-disable-line no-console
   }
 
   if (!iframeUrl) {
@@ -31,9 +37,10 @@ function setupViamAPI(divId, methods, iframeUrl, apiUrl) {
   });
 
   return connection.promise
-    .then((child) => child.initializeApiHost(apiUrl).then(() => child));
+    .then((child) => child.initialize(apiUrl, wopiUrl).then(() => child));
 }
 
 window.setupViamAPI = setupViamAPI;
+
 /* jshint ignore:end */
 /* eslint-enable no-alert, no-console */
