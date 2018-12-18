@@ -114,7 +114,7 @@ public:
                 c |= 0x80;
         }
 
-        replace.reset(fuzzed.release());
+        replace = std::move(fuzzed);
 
         return true;
     }
