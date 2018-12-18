@@ -338,13 +338,11 @@ L.Map.include({
 	},
 	signingLogout: function() {
 		if (library) {
-			library.logout().then(function(result) {
-				if (isSuccess(result)) {
-					identity = null;
-					currentPassport = null;
-					updateIndentity();
-					adjustUIState();
-				}
+			library.logout().then(function() {
+				identity = null;
+				currentPassport = null;
+				updateIndentity();
+				adjustUIState();
 			});
 		}
 	},
