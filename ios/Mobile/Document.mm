@@ -133,7 +133,10 @@
                                               completionHandler:^(id _Nullable obj, NSError * _Nullable error)
                      {
                          if (error) {
-                             LOG_ERR("Error after " << [js UTF8String] << ": " << [error.userInfo[@"WKJavaScriptExceptionMessage"] UTF8String]);
+                             LOG_ERR("Error after " << [js UTF8String] << ": " << [[error localizedDescription] UTF8String]);
+                             NSString *jsException = error.userInfo[@"WKJavaScriptExceptionMessage"];
+                             if (jsException != nil)
+                                 LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
                          }
                      }
                  ];
