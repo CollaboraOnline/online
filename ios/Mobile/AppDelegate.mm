@@ -32,7 +32,7 @@ LibreOfficeKit *lo_kit;
 static void download(NSURL *source, NSURL *destination) {
     [[[NSURLSession sharedSession] downloadTaskWithURL:source
                                      completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                if (error == nil  && [(NSHTTPURLResponse*)response statusCode] == 200) {
+                if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200) {
                     NSError *error = nil;
                     NSURL *resultingItem = nil;
                     if ([[NSFileManager defaultManager] replaceItemAtURL:destination
@@ -114,7 +114,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
                 [req setHTTPMethod:@"HEAD"];
                 [[[NSURLSession sharedSession] dataTaskWithRequest:req
                                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                            if (error == nil && [(NSHTTPURLResponse*)response statusCode] == 200) {
+                            if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200) {
                                 NSString *lastModified = [[(NSHTTPURLResponse*)response allHeaderFields] objectForKey:@"Last-Modified"];
                                 NSDateFormatter *df = [[NSDateFormatter alloc] init];
                                 df.dateFormat = @"EEE, dd MMM yyyy HH:mm:ss z";
@@ -178,7 +178,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         if (url != nil) {
             [[[NSURLSession sharedSession] dataTaskWithURL:url
                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                        if (error == nil)
+                        if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200)
                             updateTemplates(data, response);
                     }] resume];
         }
