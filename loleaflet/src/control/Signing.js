@@ -265,6 +265,10 @@ function vereignRestoreIdentity() {
 	});
 }
 
+function randomName() {
+	return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+}
+
 L.Map.include({
 	showSignDocument: function() {
 		$('#document-signing-bar').show();
@@ -312,8 +316,8 @@ L.Map.include({
 		var map = this;
 
 		vex.dialog.open({
-			message: _('Select document tpye to push to Vereign:'),
-			input: 'Type: <select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select>',
+			message: _('Select document type to upload:'),
+			input: 'Type: <select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select></p>',
 			callback: function(data) {
 				var documentType = null;
 
@@ -332,7 +336,9 @@ L.Map.include({
 				if (documentType == null)
 					return;
 
-				var filename = 'fileId.' + documentType; // need to read the filename
+				var filename = map['wopi'].BaseFileName;
+				if (!filename)
+					filename = randomName() + '.' + documentType;
 
 				library.getPassports(filename).then(function(result) {
 					var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
@@ -350,7 +356,7 @@ L.Map.include({
 								map._socket.sendMessage(blob);
 								// Let the user know that we're done.
 								map.fire('infobar', {
-									msg: _('Document uploaded.'),
+									msg: _('Document "' + filename + '"uploaded.'),
 									action: null,
 									actionLabel: null
 								});
