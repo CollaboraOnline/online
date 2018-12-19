@@ -2767,7 +2767,7 @@ private:
         return ostrXML.str();
     }
 
-    /// Process the capabilities.json file and return as string.
+    /// Create the /hosting/capabilities JSON and return as string.
     std::string getCapabilitiesJson(const Poco::Net::HTTPRequest& request)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -2783,8 +2783,8 @@ private:
         // Supports the TemplateSaveAs in CheckFileInfo?
         capabilities->set("hasTemplateSaveAs", true);
 
-        // Version
-        capabilities->set("version", LOOLWSD_VERSION);
+        // Hint to encourage use on mobile devices
+        capabilities->set("hasMobileSupport", true);
 
         std::ostringstream ostrJSON;
         capabilities->stringify(ostrJSON);
