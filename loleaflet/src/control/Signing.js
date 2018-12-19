@@ -316,8 +316,8 @@ L.Map.include({
 		var map = this;
 
 		vex.dialog.open({
-			message: _('Select document type to upload:'),
-			input: 'Type: <select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select></p>',
+			message: _('Select document type to upload'),
+			input: _('Type:') + '<select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select>',
 			callback: function(data) {
 				var documentType = null;
 
@@ -356,7 +356,7 @@ L.Map.include({
 								map._socket.sendMessage(blob);
 								// Let the user know that we're done.
 								map.fire('infobar', {
-									msg: _('Document "' + filename + '"uploaded.'),
+									msg: _('Document uploaded.') + '\n\n' + filename,
 									action: null,
 									actionLabel: null
 								});
