@@ -39,25 +39,46 @@ public:
     };
 
     TraceFileRecord() :
-        Dir(Direction::Invalid),
-        TimestampNs(0),
-        Pid(0)
+        _dir(Direction::Invalid),
+        _timestampNs(0),
+        _pid(0)
     {
     }
 
     std::string toString() const
     {
         std::ostringstream oss;
-        oss << static_cast<char>(Dir) << Pid << static_cast<char>(Dir)
-            << SessionId << static_cast<char>(Dir) << Payload;
+        oss << static_cast<char>(_dir) << _pid << static_cast<char>(_dir)
+            << _sessionId << static_cast<char>(_dir) << _payload;
         return oss.str();
     }
 
-    Direction Dir;
-    unsigned TimestampNs;
-    unsigned Pid;
-    std::string SessionId;
-    std::string Payload;
+    void setDir(Direction dir) { _dir = dir; }
+
+    Direction getDir() const { return _dir; }
+
+    void setTimestampNs(unsigned timestampNs) { _timestampNs = timestampNs; }
+
+    unsigned getTimestampNs() const { return _timestampNs; }
+
+    void setPid(unsigned pid) { _pid = pid; }
+
+    unsigned getPid() const { return _pid; }
+
+    void setSessionId(const std::string& sessionId) { _sessionId = sessionId; }
+
+    const std::string& getSessionId() const { return _sessionId; }
+
+    void setPayload(const std::string& payload) { _payload = payload; }
+
+    const std::string& getPayload() const { return _payload; }
+
+private:
+    Direction _dir;
+    unsigned _timestampNs;
+    unsigned _pid;
+    std::string _sessionId;
+    std::string _payload;
 };
 
 /// Trace-file generator class.
@@ -403,19 +424,19 @@ private:
         }
 
         if (_records.empty() ||
-            _records[0].Dir != TraceFileRecord::Direction::Event ||
-            _records[0].Payload.find("NewSession") != 0)
+            _records[0].getDir() != TraceFileRecord::Direction::Event ||
+            _records[0].getPayload().find("NewSession") != 0)
         {
             fprintf(stderr, "Invalid trace file with %ld records. First record: %s\n", _records.size(),
-                    _records.empty() ? "<empty>" : _records[0].Payload.c_str());
+                    _records.empty() ? "<empty>" : _records[0].getPayload().c_str());
             throw std::runtime_error("Invalid trace file.");
         }
 
         _indexIn = advance(-1, TraceFileRecord::Direction::Incoming);
         _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
 
-        _epochStart = _records[0].TimestampNs;
-        _epochEnd = _records[_records.size() - 1].TimestampNs;
+        _epochStart = _records[0].getTimestampNs();
+        _epochEnd = _records[_records.size() - 1].getTimestampNs();
     }
 
     static bool extractRecord(const std::string& s, TraceFileRecord& rec)
@@ -424,7 +445,7 @@ private:
             return false;
 
         char delimiter = s[0];
-        rec.Dir = static_cast<TraceFileRecord::Direction>(delimiter);
+        rec.setDir(static_cast<TraceFileRecord::Direction>(delimiter));
 
         size_t pos = 1;
         int record = 0;
@@ -435,16 +456,16 @@ private:
             switch (record)
             {
                 case 0:
-                    rec.TimestampNs = std::atoi(s.substr(pos, next - pos).c_str());
+                    rec.setTimestampNs(std::atoi(s.substr(pos, next - pos).c_str()));
                     break;
                 case 1:
-                    rec.Pid = std::atoi(s.substr(pos, next - pos).c_str());
+                    rec.setPid(std::atoi(s.substr(pos, next - pos).c_str()));
                     break;
                 case 2:
-                    rec.SessionId = s.substr(pos, next - pos);
+                    rec.setSessionId(s.substr(pos, next - pos));
                     break;
                 case 3:
-                    rec.Payload = s.substr(pos);
+                    rec.setPayload(s.substr(pos));
                     return true;
             }
 
@@ -461,7 +482,7 @@ private:
     {
         while (++index < _records.size())
         {
-            if (_records[index].Dir == dir)
+            if (_records[index].getDir() == dir)
             {
                 break;
             }
