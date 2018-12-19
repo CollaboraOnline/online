@@ -4,7 +4,7 @@ var deps = {
 		src: ['Leaflet.js',
 		      'errormessages.js',
 		      'unocommands.js',
-		      'vcl.js',
+		      'viamapi-client.js',
 		      'core/Log.js',
 		      'core/Util.js',
 		      'core/LOUtil.js',
