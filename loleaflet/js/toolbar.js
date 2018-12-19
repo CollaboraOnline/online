@@ -290,8 +290,12 @@ function onClick(e, id, item, subItem) {
 		L.toggleFullScreen();
 	}
 	else if (id === 'close' || id === 'closemobile') {
-		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+		if (window.ThisIsAMobileApp) {
+			window.webkit.messageHandlers.lool.postMessage('BYE', '*');
+		} else {
+			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
+			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+		}
 		map.remove();
 	}
 	else {
