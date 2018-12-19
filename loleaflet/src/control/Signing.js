@@ -308,31 +308,56 @@ L.Map.include({
 		if (library == null) {
 			return;
 		}
-		var map = this;
-		var filename = 'fileId'; // need to read the filename
 
-		library.getPassports(filename).then(function(result) {
-			var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
-			if (isSuccess(result)) {
-				var resultArray = result.data;
-				for (var i = 0; i < resultArray.length; i++) {
-					if (currentPassport.uuid == resultArray[i].PassportUUID) {
-						var jsonRequest = {
-							filename: filename,
-							wopiUrl: vereignURL + '/wopi/files',
-							token: resultArray[i].AccessToken,
-							type: 'pdf'
-						};
-						var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
-						map._socket.sendMessage(blob);
-						// Let the user know that we're done.
-						map.fire('infobar', {
-							msg: _('Document uploaded.'),
-							action: null,
-							actionLabel: null
-						});
-					}
+		var map = this;
+
+		vex.dialog.open({
+			message: _('Select document tpye to push to Vereign:'),
+			input: 'Type: <select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select>',
+			callback: function(data) {
+				var documentType = null;
+
+				switch (data.selection) {
+				case 'ODT':
+					documentType = 'odt';
+					break;
+				case 'DOCX':
+					documentType = 'docx';
+					break;
+				case 'PDF':
+					documentType = 'pdf';
+					break;
 				}
+
+				if (documentType == null)
+					return;
+
+				var filename = 'fileId.' + documentType; // need to read the filename
+
+				library.getPassports(filename).then(function(result) {
+					var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
+					if (isSuccess(result)) {
+						var resultArray = result.data;
+						for (var i = 0; i < resultArray.length; i++) {
+							if (currentPassport.uuid == resultArray[i].PassportUUID) {
+								var jsonRequest = {
+									filename: filename,
+									wopiUrl: vereignURL + '/wopi/files',
+									token: resultArray[i].AccessToken,
+									type: documentType
+								};
+								var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
+								map._socket.sendMessage(blob);
+								// Let the user know that we're done.
+								map.fire('infobar', {
+									msg: _('Document uploaded.'),
+									action: null,
+									actionLabel: null
+								});
+							}
+						}
+					}
+				});
 			}
 		});
 	},
