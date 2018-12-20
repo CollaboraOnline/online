@@ -128,8 +128,8 @@ public:
             const auto it = _urlToSnapshot.find(url);
             if (it != _urlToSnapshot.end())
             {
-                snapshot = it->second.Snapshot;
-                it->second.SessionCount++;
+                snapshot = it->second.getSnapshot();
+                it->second.getSessionCount()++;
             }
             else
             {
@@ -164,15 +164,15 @@ public:
         const auto it = _urlToSnapshot.find(url);
         if (it != _urlToSnapshot.end())
         {
-            snapshot = it->second.Snapshot;
-            if (it->second.SessionCount == 1)
+            snapshot = it->second.getSnapshot();
+            if (it->second.getSessionCount() == 1)
             {
                 // Last session, remove the mapping.
                 _urlToSnapshot.erase(it);
             }
             else
             {
-                it->second.SessionCount--;
+                it->second.getSessionCount()--;
             }
         }
 
@@ -216,8 +216,8 @@ public:
                         const auto it = _urlToSnapshot.find(url);
                         if (it != _urlToSnapshot.end())
                         {
-                            LOG_TRC("TraceFile: Mapped URL: " << url << " to " << it->second.Snapshot);
-                            tokens[1] = "url=" + it->second.Snapshot;
+                            LOG_TRC("TraceFile: Mapped URL: " << url << " to " << it->second.getSnapshot());
+                            tokens[1] = "url=" + it->second.getSnapshot();
                             std::string newData;
                             for (const auto& token : tokens)
                             {
@@ -304,19 +304,26 @@ private:
     struct SnapshotData
     {
         SnapshotData(const std::string& snapshot) :
-            Snapshot(snapshot)
+            _snapshot(snapshot)
         {
-            SessionCount = 1;
+            _sessionCount = 1;
         }
 
         SnapshotData(const SnapshotData& other) :
-            Snapshot(other.Snapshot)
+            _snapshot(other.getSnapshot())
         {
-            SessionCount = other.SessionCount.load();
+            _sessionCount = other.getSessionCount().load();
         }
 
-        std::string Snapshot;
-        std::atomic<size_t> SessionCount;
+        const std::string& getSnapshot() const { return _snapshot; }
+
+        std::atomic<size_t>& getSessionCount() { return _sessionCount; }
+
+        const std::atomic<size_t>& getSessionCount() const { return _sessionCount; }
+
+    private:
+        std::string _snapshot;
+        std::atomic<size_t> _sessionCount;
     };
 
 private:
