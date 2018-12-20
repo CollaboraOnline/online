@@ -67,7 +67,8 @@ cat > libreoffice/autogen.input << EOF
 --disable-gstreamer-1-0
 --disable-gtk
 --disable-gtk3
---disable-kde4
+--disable-qt5
+--disable-kde5
 --disable-odk
 --disable-online-update
 --disable-pdfimport
