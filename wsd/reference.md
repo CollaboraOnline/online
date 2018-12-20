@@ -170,3 +170,21 @@ Hosts should not save the file to storage in such cases and respond with HTTP 40
 When the user chooses "overwrite" when asked how to resolve the conflict, LibreOffice will attempt one more save operation, but this time it will lack the X-LOOL-WOPI-Timestamp header, which means "save regardless of state of the
 file".
 
+/hosting/capabilities
+---------------------
+
+With new features, it is important for the integrations to know if the Online they are using is supporting them.  For this reason, we have introduced a /hosting/capabilities endpoint that returns a JSON with information about the availability of various features.
+
+Currently the following are present:
+
+* convert-to: {available: true/false }
+
+  The property *available* is *true* when the convert-to functionality is present and correctly accessible from the WOPI host.
+
+* hasTemplateSaveAs: true/false
+
+  is *true* when the Online supports the TemplateSaveAs CheckFileInfo property.
+
+* hasMobileSupport: true/false
+
+  is *true* when the Online has a good support for the mobile devices and responsive design.
