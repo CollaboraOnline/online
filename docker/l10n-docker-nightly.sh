@@ -64,14 +64,14 @@ mkdir -p "$INSTDIR"
 
 # libreoffice repo
 if test ! -d libreoffice ; then
-    git clone git://anongit.freedesktop.org/libreoffice/core libreoffice || exit 1
+    git clone https://git.libreoffice.org/core libreoffice || exit 1
 fi
 
 ( cd libreoffice && git fetch --all && git checkout $LIBREOFFICE_BRANCH && ./g pull -r ) || exit 1
 
 # online repo
 if test ! -d online ; then
-    git clone git://anongit.freedesktop.org/libreoffice/online online || exit 1
+    git clone https://git.libreoffice.org/online online || exit 1
     ( cd online && ./autogen.sh ) || exit 1
 fi
 
