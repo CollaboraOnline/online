@@ -8,6 +8,7 @@
 # -- Available env vars --
 # * DOCKER_HUB_REPO - which Docker Hub repo to use
 # * DOCKER_HUB_TAG  - which Docker Hub tag to create
+# * LIBREOFFICE_BRANCH  - which branch to build (needs to exist in both core and online)
 
 # check we can sudo without asking a pwd
 echo "Trying if sudo works without a password"
@@ -25,6 +26,11 @@ if [ -z "$DOCKER_HUB_TAG" ]; then
   DOCKER_HUB_TAG="master"
 fi;
 echo "Using Docker Hub Repository: '$DOCKER_HUB_REPO' with tag '$DOCKER_HUB_TAG'."
+
+if [ -z "$LIBREOFFICE_BRANCH" ]; then
+  LIBREOFFICE_BRANCH="master"
+fi;
+echo "Building branch '$LIBREOFFICE_BRANCH'"
 
 # check if we have jake
 which jake || { cat << EOF
@@ -53,7 +59,7 @@ if test ! -d libreoffice ; then
     git clone git://anongit.freedesktop.org/libreoffice/core libreoffice || exit 1
 fi
 
-( cd libreoffice && git checkout master && ./g pull -r ) || exit 1
+( cd libreoffice && git checkout $LIBREOFFICE_BRANCH && ./g pull -r ) || exit 1
 
 # online repo
 if test ! -d online ; then
@@ -61,7 +67,7 @@ if test ! -d online ; then
     ( cd online && ./autogen.sh ) || exit 1
 fi
 
-( cd online && git checkout -f master && git pull -r ) || exit 1
+( cd online && git checkout -f $LIBREOFFICE_BRANCH && git pull -r ) || exit 1
 
 ##### LibreOffice #####
 
