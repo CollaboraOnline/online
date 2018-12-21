@@ -1242,12 +1242,9 @@ public:
             for (auto& it : self->_sessions)
             {
                 std::shared_ptr<ChildSession> session = it.second;
-                if (session)
+                if (session && !it.second->isCloseFrame())
                 {
-                    if (!it.second->isCloseFrame())
-                    {
-                        session->loKitCallback(type, payload);
-                    }
+                    session->loKitCallback(type, payload);
                 }
             }
             return;
