@@ -469,25 +469,27 @@ L.Control.LokDialog = L.Control.extend({
 			zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state});
 
 			var hammerContent = new Hammer(canvas);
-			var hammerAll = new Hammer(zoomTarget);
-
 			hammerContent.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-			hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-			hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
-
 			hammerContent.on('panstart panmove', this.onPan);
-			hammerAll.on('panstart panmove', this.onPan);
-			hammerAll.on('pinchstart pinchmove', this.onPinch);
-			hammerAll.on('hammer.input', function(ev) {
-				if (ev.isFinal) {
-					var id = toZoomTargetId(ev.target.id);
-					var target = findZoomTarget(id);
-					if (target) {
-						target.initialState.startX = target.transformation.translate.x;
-						target.initialState.startY = target.transformation.translate.y;
+
+			if (window.mode.isMobile() || window.mode.isTablet()) {
+				var hammerAll = new Hammer(zoomTarget);
+				hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+				hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
+
+				hammerAll.on('panstart panmove', this.onPan);
+				hammerAll.on('pinchstart pinchmove', this.onPinch);
+				hammerAll.on('hammer.input', function(ev) {
+					if (ev.isFinal) {
+						var id = toZoomTargetId(ev.target.id);
+						var target = findZoomTarget(id);
+						if (target) {
+							target.initialState.startX = target.transformation.translate.x;
+							target.initialState.startY = target.transformation.translate.y;
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 	},
 
