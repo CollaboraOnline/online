@@ -681,7 +681,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
            << "font-src 'self' data:; "
            << "object-src blob:; ";
 
-#if !ENABLE_DEBUG // always allow iframe embedding in debug mode
     // Frame ancestors: Allow loolwsd host, wopi host and anything configured.
     std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
     std::string frameAncestors = configFrameAncestor;
@@ -723,7 +722,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     cspOss << "\r\n";
     // Append CSP to response headers too
     oss << cspOss.str();
-#endif
 
     // Setup HTTP Public key pinning
     if ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) && config.getBool("ssl.hpkp[@enable]", false))
