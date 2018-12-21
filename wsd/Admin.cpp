@@ -610,22 +610,22 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
 
         for (const auto& doc : docList)
         {
-            LOG_TRC("OOM Document: DocKey: [" << doc.DocKey << "], Idletime: [" << doc.IdleTime << "]," <<
-                    " Saved: [" << doc.Saved << "], Mem: [" << doc.Mem << "].");
-            if (doc.Saved)
+            LOG_TRC("OOM Document: DocKey: [" << doc.getDocKey() << "], Idletime: [" << doc.getIdleTime() << "]," <<
+                    " Saved: [" << doc.getSaved() << "], Mem: [" << doc.getMem() << "].");
+            if (doc.getSaved())
             {
                 // Kill the saved documents first.
-                LOG_DBG("OOM: Killing saved document with DocKey [" << doc.DocKey << "] with " << doc.Mem << " KB.");
-                LOOLWSD::closeDocument(doc.DocKey, "oom");
-                memToFreeKb -= doc.Mem;
+                LOG_DBG("OOM: Killing saved document with DocKey [" << doc.getDocKey() << "] with " << doc.getMem() << " KB.");
+                LOOLWSD::closeDocument(doc.getDocKey(), "oom");
+                memToFreeKb -= doc.getMem();
                 if (memToFreeKb <= 1024)
                     break;
             }
             else
             {
                 // Save unsaved documents.
-                LOG_TRC("Saving document: DocKey [" << doc.DocKey << "].");
-                LOOLWSD::autoSave(doc.DocKey);
+                LOG_TRC("Saving document: DocKey [" << doc.getDocKey() << "].");
+                LOOLWSD::autoSave(doc.getDocKey());
             }
         }
     }

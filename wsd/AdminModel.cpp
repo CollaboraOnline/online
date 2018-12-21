@@ -644,7 +644,7 @@ std::vector<DocBasicInfo> AdminModel::getDocumentsSortedByIdle() const
     std::sort(std::begin(docs), std::end(docs),
               [](const DocBasicInfo& a, const DocBasicInfo& b)
               {
-                return a.IdleTime >= b.IdleTime;
+                return a.getIdleTime() >= b.getIdleTime();
               });
 
     return docs;

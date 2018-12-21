@@ -56,20 +56,29 @@ struct DocProcSettings
 };
 
 /// Containing basic information about document
-struct DocBasicInfo
+class DocBasicInfo
 {
-    std::string DocKey;
-    std::time_t IdleTime;
-    int Mem;
-    bool Saved;
+    std::string _docKey;
+    std::time_t _idleTime;
+    int _mem;
+    bool _saved;
 
+public:
     DocBasicInfo(const std::string& docKey, std::time_t idleTime, int mem, bool saved) :
-        DocKey(docKey),
-        IdleTime(idleTime),
-        Mem(mem),
-        Saved(saved)
+        _docKey(docKey),
+        _idleTime(idleTime),
+        _mem(mem),
+        _saved(saved)
     {
     }
+
+    const std::string& getDocKey() const { return _docKey; }
+
+    std::time_t getIdleTime() const { return _idleTime; }
+
+    int getMem() const { return _mem; }
+
+    bool getSaved() const { return _saved; }
 };
 
 /// A document in Admin controller.
