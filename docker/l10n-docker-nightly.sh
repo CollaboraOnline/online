@@ -5,6 +5,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+# -- Available env vars --
+# * DOCKER_HUB_REPO - which Docker Hub repo to use
+# * DOCKER_HUB_TAG  - which Docker Hub tag to create
+
 # check we can sudo without asking a pwd
 echo "Trying if sudo works without a password"
 echo
@@ -12,6 +16,15 @@ echo "If you get a password prompt now, break, and fix your setup using 'sudo vi
 echo "yourusername ALL=(ALL) NOPASSWD: ALL"
 echo
 sudo echo "works"
+
+# Check env variables
+if [ -z "$DOCKER_HUB_REPO" ]; then
+  DOCKER_HUB_REPO="libreoffice/online"
+fi;
+if [ -z "$DOCKER_HUB_TAG" ]; then
+  DOCKER_HUB_TAG="master"
+fi;
+echo "Using Docker Hub Repository: '$DOCKER_HUB_REPO' with tag '$DOCKER_HUB_TAG'."
 
 # check if we have jake
 which jake || { cat << EOF
@@ -135,5 +148,5 @@ chrpath -r '$ORIGIN' "$INSTDIR"/opt/libreoffice/program/libcairo.so.2
 # Create new docker image
 
 cd "$SRCDIR"
-docker build --no-cache -t libreoffice/online:master . || exit 1
-docker push libreoffice/online:master || exit 1
+docker build --no-cache -t $DOCKER_HUB_REPO:$DOCKER_HUB_TAG . || exit 1
+docker push $DOCKER_HUB_REPO:$DOCKER_HUB_TAG || exit 1
