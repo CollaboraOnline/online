@@ -1159,7 +1159,7 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_preFetchTiles: function () {
-		if (this._emptyTilesCount > 0) {
+		if (this._emptyTilesCount > 0 || !this._map) {
 			return;
 		}
 		var center = this._map.getCenter();
