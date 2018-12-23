@@ -2022,6 +2022,7 @@ function updateCommandValues(targetName) {
 		});
 		$('.styles-select').val(stylesSelectValue).trigger('change');
 		$('.styles-select').on('select2:select', onStyleSelect);
+		w2ui['editbar'].resize();
 	}
 
 	if (targetName === 'fonts' && $('.fonts-select option').length === 1) {
@@ -2044,6 +2045,7 @@ function updateCommandValues(targetName) {
 		});
 		$('.fonts-select').on('select2:select', onFontSelect);
 		$('.fonts-select').val(fontsSelectValue).trigger('change');
+		w2ui['editbar'].resize();
 	}
 
 	if (targetName === 'fontsizes' && $('.fontsizes-select option').length === 1) {
@@ -2057,6 +2059,7 @@ function updateCommandValues(targetName) {
 			updateFontSizeList(fontsSelectValue);
 		}
 		$('.fontsizes-select').val(fontsizesSelectValue).trigger('change');
+		w2ui['editbar'].resize();
 	}
 }
 
