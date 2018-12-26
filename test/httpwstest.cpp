@@ -2703,11 +2703,13 @@ void HTTPWSTest::testUndoConflict()
         // undo conflict
         response = getResponseString(socket0, "unocommandresult:", testname + "0 ");
         Poco::JSON::Object::Ptr objJSON = parser.parse(response.substr(17)).extract<Poco::JSON::Object::Ptr>();
-        Poco::DynamicStruct dsJSON = *objJSON;
-        CPPUNIT_ASSERT_EQUAL(dsJSON["commandName"].toString(), std::string(".uno:Undo"));
-        CPPUNIT_ASSERT_EQUAL(dsJSON["success"].toString(), std::string("true"));
-        CPPUNIT_ASSERT_EQUAL(dsJSON["result"]["type"].toString(), std::string("long"));
-        CPPUNIT_ASSERT(Poco::strToInt(dsJSON["result"]["value"].toString(), conflict, 10));
+        CPPUNIT_ASSERT_EQUAL(objJSON->get("commandName").toString(), std::string(".uno:Undo"));
+        CPPUNIT_ASSERT_EQUAL(objJSON->get("success").toString(), std::string("true"));
+        CPPUNIT_ASSERT(objJSON->has("result"));
+        const Poco::Dynamic::Var parsedResultJSON = objJSON->get("result");
+        const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
+        CPPUNIT_ASSERT_EQUAL(resultObj->get("type").toString(), std::string("long"));
+        CPPUNIT_ASSERT(Poco::strToInt(resultObj->get("value").toString(), conflict, 10));
         CPPUNIT_ASSERT(conflict > 0); /*UNDO_CONFLICT*/
     }
     catch(const Poco::Exception& exc)
