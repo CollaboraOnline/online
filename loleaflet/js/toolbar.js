@@ -424,7 +424,7 @@ function insertTable() {
 }
 
 var shapes = {
-	'Basic': [
+	'Basic Shapes': [
 		{img: 'basicshapes_rectangle', uno: 'BasicShapes.rectangle'},
 		{img: 'basicshapes_round-rectangle', uno: 'BasicShapes.round-rectangle'},
 		{img: 'basicshapes_quadrat', uno: 'BasicShapes.quadrat'},
@@ -475,7 +475,7 @@ var shapes = {
 		{img: 'symbolshapes_diamond-bevel', uno: 'SymbolShapes.diamond-bevel'}
 	],
 
-	'Arrows': [
+	'Block Arrows': [
 		{img: 'arrowshapes_left-arrow', uno: 'ArrowShapes.left-arrow'},
 		{img: 'arrowshapes_right-arrow', uno: 'ArrowShapes.right-arrow'},
 		{img: 'arrowshapes_up-arrow', uno: 'ArrowShapes.up-arrow'},
@@ -508,7 +508,7 @@ var shapes = {
 		{img: 'arrowshapes_s-sharped-arrow', uno: 'ArrowShapes.s-sharped-arrow'}
 	],
 
-	'Star': [
+	'Stars': [
 		{img: 'starshapes_bang', uno: 'StarShapes.bang'},
 		{img: 'starshapes_star4', uno: 'StarShapes.star4'},
 		{img: 'starshapes_star5', uno: 'StarShapes.star5'},
@@ -524,7 +524,7 @@ var shapes = {
 		{img: 'starshapes_doorplate', uno: 'StarShapes.doorplate'}
 	],
 
-	'Callout': [
+	'Callouts': [
 		{img: 'calloutshapes_rectangular-callout', uno: 'CalloutShapes.rectangular-callout'},
 		{img: 'calloutshapes_round-rectangular-callout', uno: 'CalloutShapes.round-rectangular-callout'},
 		{img: 'calloutshapes_round-callout', uno: 'CalloutShapes.round-callout'},
@@ -578,7 +578,7 @@ function insertShapes() {
 		return;
 
 	for (var s in shapes) {
-		var $rowHeader = $('<div/>').addClass('row-header loleaflet-font').append(s);
+		var $rowHeader = $('<div/>').addClass('row-header loleaflet-font').append(_(s));
 		$grid.append($rowHeader);
 
 		var rows = Math.ceil(shapes[s].length / width);

@@ -48,9 +48,9 @@ if __name__ == "__main__":
 
         sys.stderr.write('Generating ' + lang + '...\n')
 
-        # extract 'Clear formatting' and some status bar strings
+        # extract 'Clear formatting', shape group names, and some status bar strings
         poFile = dir + lang + '/svx/messages.po'
-        extractFromPo(poFile, ["RID_SVXSTR_CLEARFORM", "RID_SVXSTR_OVERWRITE_TEXT", "selectionmenu|"], translations)
+        extractFromPo(poFile, ["RID_SVXSTR_CLEARFORM", "RID_SVXSTR_OVERWRITE_TEXT", "selectionmenu|", "defaultshapespanel|"], translations)
 
         # extract Writer style names and status bar strings
         poFile = dir + lang + '/sw/messages.po'
