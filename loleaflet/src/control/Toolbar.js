@@ -180,7 +180,17 @@ L.Map.include({
 	},
 
 	showLOKeyboardHelp: function() {
-		var w = window.innerWidth / 2;
+		var w;
+		var iw = window.innerWidth;
+		if (iw < 768) {
+			w = iw - 30;
+		}
+		else if (iw > 1920) {
+			w = 960;
+		}
+		else {
+			w = iw / 5 + 590;
+		}
 		var map = this;
 		$.get('loleaflet-help.html', function(data) {
 			vex.open({
@@ -249,7 +259,17 @@ L.Map.include({
 		content.find('#product-name').text(productName);
 		var productString = _('This version of %productName is powered by');
 		content.find('#product-string').text(productString.replace('%productName', productName));
-		var w = window.innerWidth / 2;
+		var w;
+		var iw = window.innerWidth;
+		if (iw < 768) {
+			w = iw - 30;
+		}
+		else if (iw > 1920) {
+			w = 960;
+		}
+		else {
+			w = iw / 5 + 590;
+		}
 		var map = this;
 		var handler = function(event) {
 			if (event.keyCode === 68) {
