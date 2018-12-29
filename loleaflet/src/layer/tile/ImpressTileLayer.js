@@ -29,6 +29,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		map.on('AnnotationSave', this.onAnnotationSave, this);
 		map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
+		map.on('resize', this.onResize, this);
 	},
 
 	getAnnotation: function (id) {
@@ -58,6 +59,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		var annotations = this._annotations[this._partHashes[this._selectedPart]];
 		if (annotations && annotations.length === count) {
 			this._map._docLayer._updateMaxBounds(true, extraSize);
+		}
+	},
+
+	onResize: function () {
+		if (!L.Browser.mobile) {
+			this._map.setView(this._map.getCenter(), this._map.getZoom(), {reset: true});
 		}
 	},
 
