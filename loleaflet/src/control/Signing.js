@@ -181,7 +181,7 @@ function adjustUIState() {
 
 function vereignPinCodeDialog(selectedIdentityKey) {
 	vex.dialog.open({
-		message: _('PIN Code'),
+		message: _('Please enter the PIN Code'),
 		input: '<input name="pincode" type="password" value="" required />',
 		callback: function(data) {
 			if (data.pincode != null && data.pincode != '' && library) {
@@ -216,7 +216,7 @@ function verignNewIdentity(newIdentity) {
 	library.login(newIdentity, 'newdevice', '', '').then(function(result) {
 		if (isSuccess(result)) {
 			vex.open({
-				content: '<div id="image-container"></div>',
+				content: '<p>Please scan the code</p><p><div id="image-container"></div></p>',
 				showCloseButton: true,
 				escapeButtonCloses: true,
 				overlayClosesOnClick: true,
@@ -238,16 +238,44 @@ function verignNewIdentity(newIdentity) {
 }
 
 function verignQrDialog() {
-	if (library) {
-		library.createIdentity('00000000').then(function(result) {
-			if (isSuccess(result)) {
-				verignNewIdentity(result.data);
-			}
-		});
+	if (library == null) {
+		return;
 	}
+	library.createIdentity('00000000').then(function(result) {
+		if (isSuccess(result)) {
+			verignNewIdentity(result.data);
+		}
+	});
 }
 
-function vereignRecoverFromEmail() {
+function vereignRecoverFromEmail(emailOrSMS) {
+	library.createIdentity('00000000').then(function(result) {
+		if (!isSuccess(result)) {
+			return;
+		}
+		var createdIdentity = result.data;
+		library.identityRestoreAccess(result.data, emailOrSMS).then(function(result) {
+			if (isSuccess(result)) {
+				return;
+			}
+			vex.dialog.open({
+				message: _('PIN Code'),
+				input: '<p>' + _('Please enter the PIN code from the EMail or SMS') + '</p><input name="pincode" type="password" value="" required />',
+				callback: function(data) {
+					if (data.pincode) {
+						library.login(createdIdentity, 'sms', data.pincode, '').then(function(result) {
+							if (isSuccess(result)) {
+								vereignRestoreIdentity();
+							}
+						});
+					}
+				}
+			});
+		});
+	});
+}
+
+function vereignRecoverFromEmailDialog() {
 	if (library == null) {
 		return;
 	}
@@ -256,31 +284,7 @@ function vereignRecoverFromEmail() {
 		input: '<input name="emailOrMobileNumber" type="text" value="" required />',
 		callback: function(data) {
 			if (data.emailOrMobileNumber) {
-				library.createIdentity('00000000').then(function(result) {
-					if (isSuccess(result)) {
-						var createdIdentity = result.data;
-						library.identityRestoreAccess(result.data, data.emailOrMobileNumber).then(function(result) {
-							if (isSuccess(result)) {
-								vex.dialog.open({
-									message: _('PIN Code'),
-									input: '<p>' + _('Check your email') + '</p><input name="pincode" type="text" value="" required />',
-									callback: function(data) {
-										console.log(data.pincode);
-										if (data.pincode) {
-											if (library) {
-												library.login(createdIdentity, 'sms', data.pincode).then(function(result) {
-													if (isSuccess(result)) {
-														vereignRestoreIdentity();
-													}
-												});
-											}
-										}
-									}
-								});
-							}
-						});
-					}
-				});
+				vereignRecoverFromEmail(data.emailOrMobileNumber);
 			}
 		}
 	});
@@ -467,7 +471,7 @@ L.Map.include({
 						verignQrDialog();
 					}
 					else if (recoverFromEmail) {
-						vereignRecoverFromEmail();
+						vereignRecoverFromEmailDialog();
 					}
 					else if (selectedIdentityKey) {
 						vereignPinCodeDialog(selectedIdentityKey);
