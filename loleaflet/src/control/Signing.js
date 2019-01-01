@@ -29,6 +29,16 @@ function getVereignWopiURL() {
 	return vereignURL + '/wopi/';
 }
 
+function getVereignApiURL() {
+	var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
+	return vereignURL + '/api/';
+}
+
+function getVereignIFrameURL() {
+	var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
+	return vereignURL + '/vcl/js/iframe';
+}
+
 function randomName() {
 	return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
 }
@@ -495,8 +505,8 @@ L.Map.include({
 					}
 				}
 			},
-			vereignURL + '/vcl/js/iframe',
-			vereignURL + '/api/',
+			getVereignIFrameURL(),
+			getVereignApiURL(),
 			getVereignWopiURL()
 		).then(function(lib) {
 			library = lib;
