@@ -612,6 +612,8 @@ button.leaflet-control-search-next
 .w2ui-icon.closemobile{ background: url('images/lc_closedocmobile.svg') no-repeat center !important; }
 .w2ui-icon.closetoolbar{ background: url('images/close_toolbar.svg') no-repeat center !important; }
 
+.w2ui-icon.vereign{ background: url('images/vereign.png') no-repeat center !important; }
+
 .inserttable-pop {
     z-index: 1000;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);

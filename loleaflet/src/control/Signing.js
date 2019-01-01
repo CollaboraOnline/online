@@ -144,12 +144,15 @@ function adjustUIState() {
 		w2ui['document-signing-bar'].show('logout');
 		w2ui['document-signing-bar'].show('identity-label');
 		w2ui['document-signing-bar'].show('identity');
+		w2ui['document-signing-bar'].show('identity-break');
 		if (currentPassport) {
+			w2ui['document-signing-bar'].show('passport-break');
 			w2ui['document-signing-bar'].show('passport');
 			w2ui['document-signing-bar'].show('current-passport');
 			w2ui['document-signing-bar'].show('sign-upload');
 		}
 		else {
+			w2ui['document-signing-bar'].show('passport-break');
 			w2ui['document-signing-bar'].show('passport');
 			w2ui['document-signing-bar'].hide('current-passport');
 			w2ui['document-signing-bar'].hide('sign');
@@ -163,10 +166,11 @@ function adjustUIState() {
 			w2ui['document-signing-bar'].hide('login');
 
 		w2ui['document-signing-bar'].hide('logout');
+		w2ui['document-signing-bar'].hide('identity-break');
 		w2ui['document-signing-bar'].hide('identity-label');
 		w2ui['document-signing-bar'].hide('identity');
-		w2ui['document-signing-bar'].hide('sign');
-		w2ui['document-signing-bar'].hide('upload');
+		w2ui['document-signing-bar'].hide('sign-upload');
+		w2ui['document-signing-bar'].hide('passport-break');
 		w2ui['document-signing-bar'].hide('passport');
 		w2ui['document-signing-bar'].hide('current-passport');
 	}
@@ -385,7 +389,7 @@ L.Map.include({
 		this.initializeLibrary();
 		oldtoolbarSize = $('#document-container').css('top');
 
-		$('#document-container').css('top', '110px');
+		$('#document-container').css('top', '116px');
 
 		// Avoid scroll button ">>"
 		var el = w2ui['document-signing-bar'];
