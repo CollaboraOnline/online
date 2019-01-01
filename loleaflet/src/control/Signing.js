@@ -51,18 +51,16 @@ function getCurrentDocumentFilename(documentType) {
 }
 
 function updateIndentity() {
-	if (library) {
-		if (identity) {
-			library.getIdentityProfile(identity.authentication.publicKey).then(function(result) {
-				var initials = result.data.initials;
-				w2ui['document-signing-bar'].get('identity').html = '<p>' + initials + '</p>';
-				w2ui['document-signing-bar'].refresh();
-			});
-		}
-		else {
-			w2ui['document-signing-bar'].get('identity').html = '';
+	if (library && identity) {
+		library.getIdentityProfile(identity.authentication.publicKey).then(function(result) {
+			var initials = result.data.initials;
+			w2ui['document-signing-bar'].get('identity').html = '<p>' + initials + '</p>';
 			w2ui['document-signing-bar'].refresh();
-		}
+		});
+	}
+	else {
+		w2ui['document-signing-bar'].get('identity').html = '';
+		w2ui['document-signing-bar'].refresh();
 	}
 }
 
@@ -174,7 +172,6 @@ function adjustUIState() {
 	}
 
 	w2ui['document-signing-bar'].get('current-document-status').html = '<p>' + currentDocumentSigningStatus + '</p>';
-
 	w2ui['document-signing-bar'].refresh();
 }
 
@@ -183,19 +180,16 @@ function vereignPinCodeDialog(selectedIdentityKey) {
 		message: _('PIN Code'),
 		input: '<input name="pincode" type="password" value="" required />',
 		callback: function(data) {
-			console.log(data.pincode);
-			if (data.pincode) {
-				if (library) {
-					return library.loadIdentity(selectedIdentityKey, data.pincode).then(function(result) {
-						if (isSuccess(result)) {
-							identity = result.data;
-							vereignLogin();
-						}
-						else {
-							identity = null;
-						}
-					});
-				}
+			if (data.pincode != null && data.pincode != '' && library) {
+				return library.loadIdentity(selectedIdentityKey, data.pincode).then(function(result) {
+					if (isSuccess(result)) {
+						identity = result.data;
+						vereignLogin();
+					}
+					else {
+						identity = null;
+					}
+				});
 			}
 		}
 	});
@@ -203,36 +197,47 @@ function vereignPinCodeDialog(selectedIdentityKey) {
 
 function vereignLogin() {
 	if (library && identity) {
-		library.login(identity, 'previousaddeddevice').then(function(result) {
-			console.log(result);
+		library.login(identity, 'previousaddeddevice', '', '').then(function(result) {
 			if (isSuccess(result)) {
-				updateIndentity();
-				updatePassportList();
-				adjustUIState();
+				console.log(result);
 			}
+			updateIndentity();
+			updatePassportList();
+			adjustUIState();
 		});
 	}
+}
+
+function verignNewIdentity(newIdentity) {
+	library.login(newIdentity, 'newdevice', '', '').then(function(result) {
+		if (isSuccess(result)) {
+			vex.open({
+				content: '<div id="image-container"></div>',
+				showCloseButton: true,
+				escapeButtonCloses: true,
+				overlayClosesOnClick: true,
+				buttons: {},
+				afterOpen: function($vexContent) {
+					var container = $vexContent.find('#image-container');
+					var image = $('<img style="display: block; margin-left: auto; margin-right: auto"/>');
+					image.attr('src', result.data.image);
+					container.append(image);
+				}
+			});
+		}
+		else {
+			vex.dialog.alert(_('Couldn\'t get the QR code image.'));
+			console.log('Login Error: ' + result);
+			library.clearIdentities();
+		}
+	});
 }
 
 function verignQrDialog() {
 	if (library) {
 		library.createIdentity('00000000').then(function(result) {
 			if (isSuccess(result)) {
-				library.login(result.data, 'newdevice').then(function(result) {
-					vex.open({
-						content: '<div id="image-container"></div>',
-						showCloseButton: true,
-						escapeButtonCloses: true,
-						overlayClosesOnClick: true,
-						buttons: {},
-						afterOpen: function($vexContent) {
-							var container = $vexContent.find('#image-container');
-							var image = $('<img style="display: block; margin-left: auto; margin-right: auto"/>');
-							image.attr('src', result.data.image);
-							container.append(image);
-						},
-					});
-				});
+				verignNewIdentity(result.data);
 			}
 		});
 	}
@@ -283,8 +288,8 @@ function vereignRestoreIdentity() {
 	}
 	library.getCurrentlyAuthenticatedIdentity().then(function(result) {
 		if (isSuccess(result)) {
-			vex.closeAll();
 			identity = result.data;
+			vex.closeAll();
 			updateIndentity();
 			updatePassportList();
 			adjustUIState();
@@ -480,17 +485,12 @@ L.Map.include({
 					case 'ActionConfirmedAndExecuted':
 						console.log('event ActionConfirmedAndExecuted');
 						break;
+					case 'IdentityNotLoaded':
+						vereignPinCodeDialog(event.payloads[0]);
+						break;
 					case 'Authenticated':
 						console.log('event Authenticated');
-						library.hasSession().then(function(result) {
-							if (isSuccess(result)) {
-								library.listIdentities().then(function(result) {
-									if (isSuccess(result)) {
-										vereignRestoreIdentity();
-									}
-								});
-							}
-						});
+						vereignRestoreIdentity();
 						break;
 					case 'Logout':
 						console.log('event Logout');
@@ -518,7 +518,7 @@ L.Map.include({
 			currentPassport = { uuid: uuid, text: text };
 			updateCurrentPassport();
 			library.passportGetAvatarByPassport(uuid).then(function(result) {
-				console.log(result);
+				console.log(result); // TODO
 			});
 			adjustUIState();
 		}
@@ -550,23 +550,23 @@ L.Map.include({
 			currentDocumentSigningStatus = _('Not Signed');
 			break;
 		case '1':
-			statusText = _('Document signed and validated.');
+			statusText = _('This document is digitally signed and the signature is valid.');
 			currentDocumentSigningStatus = _('Signed and validated');
 			break;
 		case '2':
-			statusText = _('Document signed but signature is broken.');
+			statusText = _('This document has an invalid signature.');
 			currentDocumentSigningStatus = _('Signature broken');
 			break;
 		case '3':
-			statusText = _('Document signed but the document is already modified.');
+			statusText = _('The signature was valid, but the document has been modified');
 			currentDocumentSigningStatus = _('Signed but document modified');
 			break;
 		case '4':
-			statusText = _('Document signed but can not be validated.');
+			statusText = _('The signature is OK, but the certificate could not be validated.');
 			currentDocumentSigningStatus = _('Signed but not validated');
 			break;
 		case '5':
-			statusText = _('Document signed but not all files are signed.');
+			statusText = _('The signature is OK, but the document is only partially signed');
 			currentDocumentSigningStatus = _('Signed but not all files are signed');
 			break;
 		}
