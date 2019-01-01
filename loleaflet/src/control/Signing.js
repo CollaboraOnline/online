@@ -14,12 +14,30 @@ var oldtoolbarSize = null;
 var _map = null;
 var currentDocumentSigningStatus = 'N/A'
 
+var awaitForDocumentStatusToUpload = false;
+
 function isSuccess(result) {
 	return result.code == '200';
 }
 
 function haveIdentity() {
 	return identity != null;
+}
+
+function getVereignWopiURL() {
+	var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
+	return vereignURL + '/wopi/';
+}
+
+function randomName() {
+	return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+}
+
+function getCurrentDocumentFilename(documentType) {
+	var filename = _map['wopi'].BaseFileName;
+	if (!filename)
+		filename = randomName() + '.' + documentType;
+	return filename;
 }
 
 function updateIndentity() {
@@ -121,8 +139,7 @@ function adjustUIState() {
 		if (currentPassport) {
 			w2ui['document-signing-bar'].show('passport');
 			w2ui['document-signing-bar'].show('current-passport');
-			w2ui['document-signing-bar'].show('sign');
-			w2ui['document-signing-bar'].show('upload');
+			w2ui['document-signing-bar'].show('sign-upload');
 		}
 		else {
 			w2ui['document-signing-bar'].show('passport');
@@ -265,8 +282,86 @@ function vereignRestoreIdentity() {
 	});
 }
 
-function randomName() {
-	return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+function vereignSign() {
+	if (library == null) {
+		return;
+	}
+	if (currentPassport == null) {
+		return;
+	}
+	library.getOneTimeCertificateByPassport(currentPassport.uuid).then(function(result) {
+		if (isSuccess(result)) {
+			var otp = result.data;
+			var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
+			_map._socket.sendMessage(blob);
+			awaitForDocumentStatusToUpload = true;
+			checkCurrentDocument();
+		}
+	});
+}
+
+function vereignUploadForType(uploadDocType) {
+	var vereignWopiUrl = getVereignWopiURL();
+	if (vereignWopiUrl == null || vereignWopiUrl == '')
+		return;
+
+	var documentType = null;
+
+	switch (uploadDocType) {
+	case 'ODT':
+		documentType = 'odt';
+		break;
+	case 'DOCX':
+		documentType = 'docx';
+		break;
+	case 'PDF':
+		documentType = 'pdf';
+		break;
+	}
+
+	if (documentType == null)
+		return;
+
+	var filename = getCurrentDocumentFilename(documentType);
+
+	library.getPassports(filename).then(function(result) {
+		if (!isSuccess(result)) {
+			return;
+		}
+		var resultArray = result.data;
+		for (var i = 0; i < resultArray.length; i++) {
+			if (currentPassport.uuid == resultArray[i].PassportUUID) {
+				var jsonRequest = {
+					filename: filename,
+					wopiUrl: vereignWopiUrl + 'files/',
+					token: resultArray[i].AccessToken,
+					type: documentType
+				};
+				var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
+				_map._socket.sendMessage(blob);
+				// Let the user know that we're done.
+				_map.fire('infobar', {
+					msg: _('Document uploaded.') + '\n\n' + filename,
+					action: null,
+					actionLabel: null
+				});
+			}
+		}
+	});
+}
+
+function vereignUploadDialog() {
+	if (library == null) {
+		return;
+	}
+
+	vex.dialog.open({
+		message: _('Select document type to upload'),
+		input: _('Type:') + '<select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select>',
+		callback: function(data) {
+			vereignUploadForType(data.selection);
+		}
+	});
 }
 
 L.Map.include({
@@ -293,79 +388,8 @@ L.Map.include({
 		$('#document-signing-bar').hide();
 		adjustUIState();
 	},
-	signDocument: function() {
-		if (library) {
-			var map = this;
-			if (currentPassport) {
-				library.getOneTimeCertificateByPassport(currentPassport.uuid).then(function(result) {
-					if (isSuccess(result)) {
-						var otp = result.data;
-						var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
-						map._socket.sendMessage(blob);
-						checkCurrentDocument();
-					}
-				});
-			}
-		}
-	},
-	uploadToVereign: function() {
-		if (library == null) {
-			return;
-		}
-
-		var map = this;
-
-		vex.dialog.open({
-			message: _('Select document type to upload'),
-			input: _('Type:') + '<select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select>',
-			callback: function(data) {
-				var documentType = null;
-
-				switch (data.selection) {
-				case 'ODT':
-					documentType = 'odt';
-					break;
-				case 'DOCX':
-					documentType = 'docx';
-					break;
-				case 'PDF':
-					documentType = 'pdf';
-					break;
-				}
-
-				if (documentType == null)
-					return;
-
-				var filename = map['wopi'].BaseFileName;
-				if (!filename)
-					filename = randomName() + '.' + documentType;
-
-				library.getPassports(filename).then(function(result) {
-					var vereignURL = window.documentSigningURL == null ? '' : window.documentSigningURL;
-					if (isSuccess(result)) {
-						var resultArray = result.data;
-						for (var i = 0; i < resultArray.length; i++) {
-							if (currentPassport.uuid == resultArray[i].PassportUUID) {
-								var jsonRequest = {
-									filename: filename,
-									wopiUrl: vereignURL + '/wopi/files',
-									token: resultArray[i].AccessToken,
-									type: documentType
-								};
-								var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
-								map._socket.sendMessage(blob);
-								// Let the user know that we're done.
-								map.fire('infobar', {
-									msg: _('Document uploaded.') + '\n\n' + filename,
-									action: null,
-									actionLabel: null
-								});
-							}
-						}
-					}
-				});
-			}
-		});
+	signAndUploadDocument: function() {
+		vereignSign();
 	},
 	signingLogout: function() {
 		if (library) {
@@ -473,7 +497,7 @@ L.Map.include({
 			},
 			vereignURL + '/vcl/js/iframe',
 			vereignURL + '/api/',
-			vereignURL + '/wopi/'
+			getVereignWopiURL()
 		).then(function(lib) {
 			library = lib;
 			adjustUIState();
@@ -499,11 +523,8 @@ L.Map.include({
 		else if (id === 'logout') {
 			this.signingLogout();
 		}
-		else if (id === 'sign') {
-			this.signDocument();
-		}
-		else if (id === 'upload') {
-			this.uploadToVereign();
+		else if (id === 'sign-upload') {
+			this.signAndUploadDocument();
 		}
 		else if (id.startsWith('passport:')) {
 			this.setCurrentPassport(item.value, item.text);
@@ -549,5 +570,11 @@ L.Map.include({
 		}
 
 		adjustUIState();
+
+		if (awaitForDocumentStatusToUpload) {
+			awaitForDocumentStatusToUpload = false;
+			vereignUploadDialog();
+		}
+		awaitForDocumentStatusToUpload = false;
 	}
 });

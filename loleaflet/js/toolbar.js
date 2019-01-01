@@ -1096,8 +1096,7 @@ function initNormalToolbar(toolItems) {
 			items: [
 				{type: 'html',  id: 'left'},
 				{type: 'html', id: 'logo', html: '<p><b>Vereign</b></p>'},
-				{type: 'button',  id: 'sign',  caption: _('Sign'), img: '', hint: _('Sign document')},
-				{type: 'button',  id: 'upload',  caption: _('Upload'), img: '', hint: _('Upload document')},
+				{type: 'button',  id: 'sign-upload',  caption: _('Sign & Upload'), img: '', hint: _('Sign and upload document')},
 				{type: 'break' },
 				{type: 'html', id: 'identity-label', html: '<b>' + _('Identity:') + '&nbsp;</b>'},
 				{type: 'html', id: 'identity', html: _('N/A')},
