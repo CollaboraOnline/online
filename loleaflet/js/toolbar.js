@@ -792,7 +792,6 @@ function createToolbar() {
 		{type: 'button',  id: 'numberformatpercent',  img: 'numberformatpercent', hint: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), hidden: true, uno: 'NumberFormatPercent', disabled: true},
 		{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatDecDecimals', disabled: true},
 		{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatIncDecimals', disabled: true},
-		{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), hidden: true, uno: 'InsertObjectChart'},
 		{type: 'break',   id: 'break-number', hidden: true},
 		{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true},
 		{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: insertTable},
@@ -803,6 +802,7 @@ function createToolbar() {
 				{id: 'localgraphic', text: _('Insert Local Image')},
 				{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)},
 			]},
+		{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 		{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: insertShapes},
 			html: '<div id="insertshape-wrapper"><div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all"><div class="insertshape-grid"></div></div></div>'},
 
@@ -1574,7 +1574,7 @@ function onDocLayerInit() {
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'numberformatcurrency', 'numberformatpercent',
-			'numberformatincdecimals', 'numberformatdecdecimals', 'insertobjectchart', 'sum', 'break-number',
+			'numberformatincdecimals', 'numberformatdecdecimals', 'sum', 'break-number',
 			'setborderstyle');
 		toolbarUp.remove('styles');
 
