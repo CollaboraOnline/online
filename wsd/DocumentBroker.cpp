@@ -61,7 +61,7 @@ namespace
 
 void sendLastModificationTime(const std::shared_ptr<Session>& session,
                               DocumentBroker* documentBroker,
-                              Poco::Timestamp documentLastModifiedTime)
+                              const Poco::Timestamp& documentLastModifiedTime)
 {
     if (!session)
         return;
@@ -878,7 +878,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             // normalize the url (mainly to " " -> "%20")
             const std::string url = Poco::URI(storageSaveResult.getSaveAsUrl()).toString();
 
-            const std::string filename = storageSaveResult.getSaveAsName();
+            const std::string& filename = storageSaveResult.getSaveAsName();
 
             // encode the name
             std::string encodedName;
