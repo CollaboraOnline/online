@@ -45,6 +45,11 @@ class Tool: public Poco::Util::Application
 public:
     Tool();
 
+    const std::string& getServerURI() const { return _serverURI; }
+    const std::string& getDestinationFormat() const { return _destinationFormat; }
+    const std::string& getDestinationDir() const { return _destinationDir; }
+
+private:
     unsigned    _numWorkers;
     std::string _serverURI;
     std::string _destinationFormat;
@@ -71,9 +76,9 @@ using Poco::Util::OptionSet;
 /// Thread class which performs the conversion.
 class Worker: public Runnable
 {
-public:
     Tool& _app;
     std::vector< std::string > _files;
+public:
     Worker(Tool& app, const std::vector< std::string > & files) :
         _app(app), _files(files)
     {
@@ -87,10 +92,10 @@ public:
 
     void convertFile(const std::string& document)
     {
-        Poco::URI uri(_app._serverURI);
+        Poco::URI uri(_app.getServerURI());
 
         Poco::Net::HTTPClientSession *session;
-        if (_app._serverURI.compare(0, 5, "https") == 0)
+        if (_app.getServerURI().compare(0, 5, "https") == 0)
             session = new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
         else
             session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
@@ -100,7 +105,7 @@ public:
         try {
             Poco::Net::HTMLForm form;
             form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-            form.set("format", _app._destinationFormat);
+            form.set("format", _app.getDestinationFormat());
             form.addPart("data", new Poco::Net::FilePartSource(document));
             form.prepareSubmit(request);
 
@@ -121,7 +126,7 @@ public:
             std::istream& responseStream = session->receiveResponse(response);
 
             Poco::Path path(document);
-            std::string outPath = _app._destinationDir + "/" + path.getBaseName() + "." + _app._destinationFormat;
+            std::string outPath = _app.getDestinationDir() + "/" + path.getBaseName() + "." + _app.getDestinationFormat();
             std::ofstream fileStream(outPath);
 
             Poco::StreamCopier::copyStream(responseStream, fileStream);
