@@ -213,7 +213,8 @@ function vereignLogin() {
 			}
 			else {
 				vex.dialog.alert(_('Error at login.'));
-				console.log('Login Error: ' + result);
+				console.log('Error at login of previousa added device');
+				console.log(result);
 				identity = null;
 			}
 		});
@@ -239,7 +240,8 @@ function verignNewIdentity(newIdentity) {
 		}
 		else {
 			vex.dialog.alert(_('Couldn\'t get the QR code image.'));
-			console.log('Login Error: ' + result);
+			console.log('Error getting the QR code');
+			console.log(result);
 			library.clearIdentities();
 		}
 	});
@@ -263,7 +265,10 @@ function vereignRecoverFromEmail(emailOrSMS) {
 		}
 		var createdIdentity = result.data;
 		library.identityRestoreAccess(result.data, emailOrSMS).then(function(result) {
-			if (isSuccess(result)) {
+			if (!isSuccess(result)) {
+				vex.dialog.alert(_('Error when trying to restore access to identity.'));
+				console.log('Error at IdentityRestoreAccess');
+				console.log(result);
 				return;
 			}
 			vex.dialog.open({
@@ -482,7 +487,7 @@ L.Map.include({
 						vereignRecoverFromEmailDialog();
 					}
 					else if (selectedIdentityKey) {
-						vereignPinCodeDialog(selectedIdentityKey);
+						vereignLoadIdentity(selectedIdentityKey, '00000000');
 					}
 				}
 			});
