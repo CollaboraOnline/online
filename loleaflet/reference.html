@@ -3017,6 +3017,20 @@ Actions response
 		is mentioned by <code>Action_Save</code> PostMessage API.
 		</td>
 	</tr>
+	<tr>
+		<td><code><b>FollowUser_Changed</b></code></td>
+		<td><code>
+			<nobr>FollowedViewId: &lt;Number&gt;</nobr>
+			<nobr>IsFollowUser: &lt;Boolean&gt;</nobr>
+			<nobr>IsFollowEditor: &lt;Boolean&gt;</nobr>
+		</code></td>
+		<td>Notification about current following state.<br/>
+		<code>FollowedViewId</code> tells which user is followed. <code>IsFollowUser</code> determines if following the specific user is
+		activated. <code>IsFollowEditor</code> determines if following the editor is
+		activated. If both <code>IsFollowUser</code> & <code>IsFollowEditor</code> are false then following is
+		inactive.
+		</td>
+	</tr>
 </table>
 
 <h3 id="loleaflet-postmessage-versioning">Version Restore</h3>
