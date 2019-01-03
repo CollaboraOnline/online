@@ -1402,6 +1402,12 @@ L.Map = L.Evented.extend({
 			this.fire('deselectuser', {viewId: this._docLayer._followThis});
 			this._docLayer._followThis = -1;
 		}
+
+		// Notify about changes
+		this.fire('postMessage', {msgId: 'FollowUser_Changed',
+			args: {FollowedViewId: this._docLayer._followThis,
+				IsFollowUser: followUser,
+				IsFollowEditor: followEditor}});
 	},
 
 	toggleMenubar: function() {
