@@ -54,7 +54,8 @@ function updateIndentity() {
 	if (library && identity) {
 		library.getIdentityProfile(identity.authentication.publicKey).then(function(result) {
 			var initials = result.data.initials;
-			w2ui['document-signing-bar'].get('identity').html = '<p>' + initials + '</p>';
+			var color = result.data.identityColor;
+			w2ui['document-signing-bar'].get('identity').html = '<p style="background-color: ' + color + '; border: none; color: white; padding: 8px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 4px 2px; border-radius: 50%;">' + initials + '</p>';
 			w2ui['document-signing-bar'].refresh();
 		});
 	}
@@ -140,43 +141,54 @@ function adjustUIState() {
 		return;
 
 	if (library && identity) {
-		w2ui['document-signing-bar'].hide('login');
-		w2ui['document-signing-bar'].show('logout');
-		w2ui['document-signing-bar'].show('identity-label');
-		w2ui['document-signing-bar'].show('identity');
-		w2ui['document-signing-bar'].show('identity-break');
+		w2ui['document-signing-bar'].show('passport');
+		w2ui['document-signing-bar'].show('passport-break');
+
 		if (currentPassport) {
-			w2ui['document-signing-bar'].show('passport-break');
-			w2ui['document-signing-bar'].show('passport');
 			w2ui['document-signing-bar'].show('current-passport');
 			w2ui['document-signing-bar'].show('sign-upload');
+			w2ui['document-signing-bar'].show('sign-upload-break');
 		}
 		else {
-			w2ui['document-signing-bar'].show('passport-break');
-			w2ui['document-signing-bar'].show('passport');
 			w2ui['document-signing-bar'].hide('current-passport');
-			w2ui['document-signing-bar'].hide('sign');
-			w2ui['document-signing-bar'].hide('upload');
+			w2ui['document-signing-bar'].hide('sign-upload');
+			w2ui['document-signing-bar'].hide('sign-upload-break');
 		}
+
+		w2ui['document-signing-bar'].show('identity');
+		w2ui['document-signing-bar'].hide('login');
+		w2ui['document-signing-bar'].show('logout');
 	}
 	else {
+		w2ui['document-signing-bar'].hide('passport');
+		w2ui['document-signing-bar'].hide('current-passport');
+		w2ui['document-signing-bar'].hide('passport-break');
+		w2ui['document-signing-bar'].hide('sign-upload-break');
+		w2ui['document-signing-bar'].hide('sign-upload');
+
+		w2ui['document-signing-bar'].hide('identity');
 		if (library)
 			w2ui['document-signing-bar'].show('login');
 		else
 			w2ui['document-signing-bar'].hide('login');
-
 		w2ui['document-signing-bar'].hide('logout');
-		w2ui['document-signing-bar'].hide('identity-break');
-		w2ui['document-signing-bar'].hide('identity-label');
-		w2ui['document-signing-bar'].hide('identity');
-		w2ui['document-signing-bar'].hide('sign-upload');
-		w2ui['document-signing-bar'].hide('passport-break');
-		w2ui['document-signing-bar'].hide('passport');
-		w2ui['document-signing-bar'].hide('current-passport');
 	}
 
 	w2ui['document-signing-bar'].get('current-document-status').html = '<p>' + currentDocumentSigningStatus + '</p>';
 	w2ui['document-signing-bar'].refresh();
+}
+
+function vereignLoadIdentity(selectedIdentityKey, pincode) {
+	library.loadIdentity(selectedIdentityKey, pincode).then(function(result) {
+		if (isSuccess(result)) {
+			identity = result.data;
+			vereignLogin();
+		}
+		else {
+			identity = null;
+			vereignPinCodeDialog(selectedIdentityKey);
+		}
+	});
 }
 
 function vereignPinCodeDialog(selectedIdentityKey) {
@@ -184,16 +196,8 @@ function vereignPinCodeDialog(selectedIdentityKey) {
 		message: _('Please enter the PIN Code'),
 		input: '<input name="pincode" type="password" value="" required />',
 		callback: function(data) {
-			if (data.pincode != null && data.pincode != '' && library) {
-				return library.loadIdentity(selectedIdentityKey, data.pincode).then(function(result) {
-					if (isSuccess(result)) {
-						identity = result.data;
-						vereignLogin();
-					}
-					else {
-						identity = null;
-					}
-				});
+			if (library && data.pincode != null && data.pincode != '') {
+				vereignLoadIdentity(selectedIdentityKey, data.pincode);
 			}
 		}
 	});
@@ -203,11 +207,15 @@ function vereignLogin() {
 	if (library && identity) {
 		library.login(identity, 'previousaddeddevice', '', '').then(function(result) {
 			if (isSuccess(result)) {
-				console.log(result);
+				updatePassportList();
+				updateIndentity();
+				adjustUIState();
 			}
-			updateIndentity();
-			updatePassportList();
-			adjustUIState();
+			else {
+				vex.dialog.alert(_('Error at login.'));
+				console.log('Login Error: ' + result);
+				identity = null;
+			}
 		});
 	}
 }
@@ -216,7 +224,7 @@ function verignNewIdentity(newIdentity) {
 	library.login(newIdentity, 'newdevice', '', '').then(function(result) {
 		if (isSuccess(result)) {
 			vex.open({
-				content: '<p>Please scan the code</p><p><div id="image-container"></div></p>',
+				content: '<p>' + _('Please scan the code') + '</p><p><div id="image-container"></div></p>',
 				showCloseButton: true,
 				escapeButtonCloses: true,
 				overlayClosesOnClick: true,
@@ -494,7 +502,7 @@ L.Map.include({
 						console.log('event ActionConfirmedAndExecuted');
 						break;
 					case 'IdentityNotLoaded':
-						vereignPinCodeDialog(event.payloads[0]);
+						vereignLoadIdentity(event.payloads[0], '00000000');
 						break;
 					case 'Authenticated':
 						console.log('event Authenticated');
