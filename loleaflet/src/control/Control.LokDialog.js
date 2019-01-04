@@ -466,14 +466,14 @@ L.Control.LokDialog = L.Control.extend({
 				rz: 0
 			};
 
+			if (findZoomTarget(targetId) != null) {
+				removeZoomTarget(targetId);
+			}
+
 			zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state});
 
-			var hammerContent = new Hammer(canvas);
-			hammerContent.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-			hammerContent.on('panstart panmove', this.onPan);
-
 			if (window.mode.isMobile() || window.mode.isTablet()) {
-				var hammerAll = new Hammer(zoomTarget);
+				var hammerAll = new Hammer(canvas);
 				hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
 				hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
 
