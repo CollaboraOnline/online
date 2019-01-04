@@ -263,7 +263,7 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'close') {
 			parent = this._getParentId(e.id);
 			if (parent)
-				this._onDialogChildClose(this._toStrId(parent));
+				this._onDialogChildClose(parent);
 			else
 				this._onDialogClose(e.id, false);
 		}
@@ -612,7 +612,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogChildClose: function(dialogId) {
-		$('#' + dialogId + '-floating').remove();
+		$('#' + this._toStrId(dialogId) + '-floating').remove();
 		// remove any extra height allocated for the parent container
 		var canvasHeight = document.getElementById(dialogId + '-canvas').height;
 		$('#' + dialogId).height(canvasHeight + 'px');
