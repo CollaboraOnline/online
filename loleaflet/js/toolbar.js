@@ -851,11 +851,12 @@ function initMobileToolbar(toolItems) {
 			onClick(e, e.target);
 			hideTooltip(this, e.target);
 		},
-		onRefresh: function() {
+		onRefresh: function(e) {
 			var docType = map.getDocType();
-			if (docType === 'presentation') {
-				this.show('prev');
-				this.show('next');
+			if (docType === 'presentation' && (e.target === 'prev' || e.target === 'next')) {
+				if (this.get(e.target).hidden === true) {
+					this.show(e.target);
+				}
 			}
 
 			var showUserList = map['wopi'].HideUserList !== null &&
