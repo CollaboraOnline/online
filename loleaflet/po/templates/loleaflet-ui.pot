@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-02 11:34+0100\n"
+"POT-Creation-Date: 2019-01-04 13:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -225,11 +225,11 @@ msgstr ""
 msgid "More..."
 msgstr ""
 
-#: js/toolbar.js:798
+#: js/toolbar.js:797
 msgid "Insert table"
 msgstr ""
 
-#: js/toolbar.js:803
+#: js/toolbar.js:802
 msgid "Insert Local Image"
 msgstr ""
 
@@ -237,15 +237,15 @@ msgstr ""
 msgid "Insert shapes"
 msgstr ""
 
-#: js/toolbar.js:843 js/toolbar.js:1194
+#: js/toolbar.js:843 js/toolbar.js:1192
 msgid "Always follow the editor"
 msgstr ""
 
-#: js/toolbar.js:846 js/toolbar.js:1197
+#: js/toolbar.js:846 js/toolbar.js:1195
 msgid "Current"
 msgstr ""
 
-#: js/toolbar.js:892 js/toolbar.js:1065 js/toolbar.js:1629
+#: js/toolbar.js:892 js/toolbar.js:1065 js/toolbar.js:1627
 msgid "Sum"
 msgstr ""
 
@@ -261,197 +261,193 @@ msgstr ""
 msgid "Accept"
 msgstr ""
 
-#: js/toolbar.js:928 js/toolbar.js:1132
+#: js/toolbar.js:928 js/toolbar.js:1130
 msgid "First sheet"
 msgstr ""
 
-#: js/toolbar.js:929 js/toolbar.js:1133
+#: js/toolbar.js:929 js/toolbar.js:1131
 msgid "Previous sheet"
 msgstr ""
 
-#: js/toolbar.js:930 js/toolbar.js:1134
+#: js/toolbar.js:930 js/toolbar.js:1132
 msgid "Next sheet"
 msgstr ""
 
-#: js/toolbar.js:931 js/toolbar.js:1135
+#: js/toolbar.js:931 js/toolbar.js:1133
 msgid "Last sheet"
 msgstr ""
 
-#: js/toolbar.js:932 js/toolbar.js:1136
+#: js/toolbar.js:932 js/toolbar.js:1134
 msgid "Insert sheet"
 msgstr ""
 
 #: js/toolbar.js:1099
-msgid "Sign & Upload"
-msgstr ""
-
-#: js/toolbar.js:1099
-msgid "Sign and upload document"
-msgstr ""
-
-#: js/toolbar.js:1101
-msgid "Identity:"
-msgstr ""
-
-#: js/toolbar.js:1102 js/toolbar.js:1108
-msgid "N/A"
-msgstr ""
-
-#: js/toolbar.js:1104
 msgid "Select passport"
 msgstr ""
 
-#: js/toolbar.js:1105
+#: js/toolbar.js:1100
 msgid "Passport: N/A"
 msgstr ""
 
-#: js/toolbar.js:1107
+#: js/toolbar.js:1102
+msgid "Sign & Upload"
+msgstr ""
+
+#: js/toolbar.js:1102
+msgid "Sign and upload document"
+msgstr ""
+
+#: js/toolbar.js:1104
 msgid "Status:"
 msgstr ""
 
-#: js/toolbar.js:1110
+#: js/toolbar.js:1105
+msgid "N/A"
+msgstr ""
+
+#: js/toolbar.js:1108
 msgid "Logout"
 msgstr ""
 
-#: js/toolbar.js:1111
+#: js/toolbar.js:1109
 msgid "Login"
 msgstr ""
 
-#: js/toolbar.js:1112
+#: js/toolbar.js:1110
 msgid "Close"
 msgstr ""
 
-#: js/toolbar.js:1154 src/control/Control.Menubar.js:295
+#: js/toolbar.js:1152 src/control/Control.Menubar.js:295
 msgid "Fullscreen presentation"
 msgstr ""
 
-#: js/toolbar.js:1178
+#: js/toolbar.js:1176
 msgid "Search:"
 msgstr ""
 
-#: js/toolbar.js:1185
+#: js/toolbar.js:1183
 msgid "Cancel the search"
 msgstr ""
 
-#: js/toolbar.js:1204 src/control/Control.Menubar.js:63
+#: js/toolbar.js:1202 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
 msgid "Reset zoom"
 msgstr ""
 
-#: js/toolbar.js:1260
+#: js/toolbar.js:1258
 msgid "%user has joined"
 msgstr ""
 
-#: js/toolbar.js:1261
+#: js/toolbar.js:1259
 msgid "%user has left"
 msgstr ""
 
-#: js/toolbar.js:1595
+#: js/toolbar.js:1593
 msgid "Number of Sheets"
 msgstr ""
 
-#: js/toolbar.js:1600
+#: js/toolbar.js:1598
 msgid "Selected range of cells"
 msgstr ""
 
-#: js/toolbar.js:1605 js/toolbar.js:1662
+#: js/toolbar.js:1603 js/toolbar.js:1660
 msgid "Entering text mode"
 msgstr ""
 
-#: js/toolbar.js:1610 js/toolbar.js:1672 js/toolbar.js:1694
+#: js/toolbar.js:1608 js/toolbar.js:1670 js/toolbar.js:1692
 msgid "Text Language"
 msgstr ""
 
-#: js/toolbar.js:1615 js/toolbar.js:1667
+#: js/toolbar.js:1613 js/toolbar.js:1665
 msgid "Selection Mode"
 msgstr ""
 
-#: js/toolbar.js:1620
+#: js/toolbar.js:1618
 msgid "Choice of functions"
 msgstr ""
 
-#: js/toolbar.js:1624
+#: js/toolbar.js:1622
 msgid "Average"
 msgstr ""
 
-#: js/toolbar.js:1625
+#: js/toolbar.js:1623
 msgid "CountA"
 msgstr ""
 
-#: js/toolbar.js:1626
+#: js/toolbar.js:1624
 msgid "Count"
 msgstr ""
 
-#: js/toolbar.js:1627
+#: js/toolbar.js:1625
 msgid "Maximum"
 msgstr ""
 
-#: js/toolbar.js:1628
+#: js/toolbar.js:1626
 msgid "Minimum"
 msgstr ""
 
-#: js/toolbar.js:1630
+#: js/toolbar.js:1628
 msgid "Selection count"
 msgstr ""
 
-#: js/toolbar.js:1631
+#: js/toolbar.js:1629
 msgid "None"
 msgstr ""
 
-#: js/toolbar.js:1652
+#: js/toolbar.js:1650
 msgid "Number of Pages"
 msgstr ""
 
-#: js/toolbar.js:1657
+#: js/toolbar.js:1655
 msgid "Word Counter"
 msgstr ""
 
-#: js/toolbar.js:1689
+#: js/toolbar.js:1687
 msgid "Number of Slides"
 msgstr ""
 
-#: js/toolbar.js:1720
+#: js/toolbar.js:1718
 msgid "%n users"
 msgstr ""
 
-#: js/toolbar.js:1721
+#: js/toolbar.js:1719
 msgid "1 user"
 msgstr ""
 
-#: js/toolbar.js:1722
+#: js/toolbar.js:1720
 msgid "0 users"
 msgstr ""
 
-#: js/toolbar.js:1874
+#: js/toolbar.js:1872
 msgid "Document saved"
 msgstr ""
 
-#: js/toolbar.js:2024
+#: js/toolbar.js:2022
 msgid "Style"
 msgstr ""
 
-#: js/toolbar.js:2047
+#: js/toolbar.js:2045
 msgid "Font"
 msgstr ""
 
-#: js/toolbar.js:2082
+#: js/toolbar.js:2080
 msgid "Previous slide"
 msgstr ""
 
-#: js/toolbar.js:2083
+#: js/toolbar.js:2081
 msgid "Next slide"
 msgstr ""
 
-#: js/toolbar.js:2129
+#: js/toolbar.js:2127
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: js/toolbar.js:2394 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2392 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr ""
 
-#: js/toolbar.js:2400
+#: js/toolbar.js:2398
 msgid "Readonly"
 msgstr ""
 
@@ -642,91 +638,103 @@ msgstr ""
 msgid "Enter new sheet name"
 msgstr ""
 
-#: src/control/Signing.js:184
+#: src/control/Signing.js:196
 msgid "Please enter the PIN Code"
 msgstr ""
 
-#: src/control/Signing.js:233
+#: src/control/Signing.js:215
+msgid "Error at login."
+msgstr ""
+
+#: src/control/Signing.js:228
+msgid "Please scan the code"
+msgstr ""
+
+#: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
 msgstr ""
 
-#: src/control/Signing.js:262
+#: src/control/Signing.js:269
+msgid "Error when trying to restore access to identity."
+msgstr ""
+
+#: src/control/Signing.js:275
 msgid "PIN Code"
 msgstr ""
 
-#: src/control/Signing.js:263
+#: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"
 msgstr ""
 
-#: src/control/Signing.js:283
+#: src/control/Signing.js:296
 msgid "Login from email or mobile number"
 msgstr ""
 
-#: src/control/Signing.js:367
+#: src/control/Signing.js:380
 msgid "Document uploaded."
 msgstr ""
 
-#: src/control/Signing.js:382
+#: src/control/Signing.js:395
 msgid "Select document type to upload"
 msgstr ""
 
-#: src/control/Signing.js:383
+#: src/control/Signing.js:396
 msgid "Type:"
 msgstr ""
 
-#: src/control/Signing.js:443
+#: src/control/Signing.js:456
 msgid "Select identity:"
 msgstr ""
 
-#: src/control/Signing.js:444
+#: src/control/Signing.js:457
 msgid "Login from mobile"
 msgstr ""
 
-#: src/control/Signing.js:445
+#: src/control/Signing.js:458
 msgid "Recover from email"
 msgstr ""
 
-#: src/control/Signing.js:558
+#: src/control/Signing.js:571
 msgid "Not Signed"
 msgstr ""
 
-#: src/control/Signing.js:561
+#: src/control/Signing.js:574
 msgid "This document is digitally signed and the signature is valid."
 msgstr ""
 
-#: src/control/Signing.js:562
+#: src/control/Signing.js:575
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:565
+#: src/control/Signing.js:578
 msgid "This document has an invalid signature."
 msgstr ""
 
-#: src/control/Signing.js:566
+#: src/control/Signing.js:579
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:569
+#: src/control/Signing.js:582
 msgid "The signature was valid, but the document has been modified"
 msgstr ""
 
-#: src/control/Signing.js:570
+#: src/control/Signing.js:583
 msgid "Signed but document modified"
 msgstr ""
 
-#: src/control/Signing.js:573
+#: src/control/Signing.js:586
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr ""
 
-#: src/control/Signing.js:574
+#: src/control/Signing.js:587
 msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:577
+#: src/control/Signing.js:590
 msgid "The signature is OK, but the document is only partially signed"
 msgstr ""
 
-#: src/control/Signing.js:578
+#: src/control/Signing.js:591
 msgid "Signed but not all files are signed"
 msgstr ""
 
