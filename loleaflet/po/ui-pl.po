@@ -567,7 +567,7 @@ msgstr "Napraw"
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:339
 msgid "Local Image..."
-msgstr ""
+msgstr "Obraz z dysku..."
 
 #: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
 msgid "All"
@@ -716,11 +716,11 @@ msgstr ""
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "Lewy margines"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "Prawy margines"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
