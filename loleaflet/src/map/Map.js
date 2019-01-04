@@ -1053,8 +1053,7 @@ L.Map = L.Evented.extend({
 		if (sidebarpanel) {
 			var sidebar = sidebarpanel.children[0];
 			if (sidebar) {
-				var newSize = this.getSize();
-				sidebar.height = newSize.y - 10;
+				sidebar.height = this._container.clientHeight - 10;
 				sidebar.style.height = sidebar.height + 'px';
 
 				// Fire the resize event to propagate the size change to WSD.
