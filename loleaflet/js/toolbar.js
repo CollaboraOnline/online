@@ -1694,6 +1694,8 @@ function onDocLayerInit() {
 				{type: 'break', id: 'break8', mobile: false}
 			]);
 		}
+
+		break;
 		// FALLTHROUGH intended
 	case 'drawing':
 		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
