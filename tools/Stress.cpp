@@ -42,6 +42,7 @@ public:
     static bool Benchmark;
     static size_t Iterations;
     static bool NoDelay;
+private:
     unsigned _numClients;
     std::string _serverURI;
 
