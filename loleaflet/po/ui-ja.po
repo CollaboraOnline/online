@@ -120,7 +120,7 @@ msgstr "保存"
 
 #: admin.strings.js:31
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "メモリー統計のキャッシュサイズ"
 
 #: admin.strings.js:32
 msgid "Time interval of memory statistics (in ms)"
@@ -128,7 +128,7 @@ msgstr ""
 
 #: admin.strings.js:33
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "CPU統計のキャッシュサイズ"
 
 #: admin.strings.js:34
 msgid "Time interval of CPU statistics (in ms)"
@@ -834,4 +834,4 @@ msgstr "アップロード中..."
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."
-msgstr ""
+msgstr "コピーの作成..."

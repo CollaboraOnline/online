@@ -262,7 +262,7 @@ msgstr "Więcej..."
 
 #: dist/toolbar/toolbar.js:475
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Wstaw obraz z dysku"
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -335,7 +335,7 @@ msgstr "użytkownik %user dołączył"
 
 #: dist/toolbar/toolbar.js:659
 msgid "%user has left"
-msgstr ""
+msgstr "%user zakończył sesję"
 
 #: dist/toolbar/toolbar.js:988
 msgid "Number of Sheets"
@@ -548,7 +548,7 @@ msgstr "Przejście do stanu"
 
 #: src/control/Control.Menubar.js:20
 msgid "Share..."
-msgstr ""
+msgstr "Współdziel..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:310
@@ -654,19 +654,19 @@ msgstr "Czy na pewno usunąć ten slajd?"
 
 #: src/control/Control.MetricInput.js:38
 msgid "(100th/mm)"
-msgstr ""
+msgstr "(0,01 mm)"
 
 #: src/control/Control.MetricInput.js:44
 msgid "Add: "
-msgstr ""
+msgstr "Dodaj: "
 
 #: src/control/Control.MetricInput.js:61
 msgid "Default value"
-msgstr ""
+msgstr "Wartość domyślna"
 
 #: src/control/Control.MetricInput.js:68
 msgid "Submit"
-msgstr ""
+msgstr "Zatwierdź"
 
 #: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
@@ -834,4 +834,4 @@ msgstr "Wysyłanie..."
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."
-msgstr ""
+msgstr "Wykonaj kopię..."

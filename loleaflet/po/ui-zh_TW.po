@@ -188,11 +188,11 @@ msgstr "主機 URL 空白。loolwsd 伺服器可能設定錯誤，請聯絡管�
 
 #: dist/errormessages.js:3
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr ""
+msgstr "這是 {productname} 的未支援版本。為了避免這個版本被誤認為適合企業佈署的假象，此訊息會在同時間使用超過 {docs} 份文件或 {connections} 連線數時出現"
 
 #: dist/errormessages.js:4
 msgid "More information and support"
-msgstr ""
+msgstr "其他資訊與支援"
 
 #: dist/errormessages.js:5
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
@@ -208,7 +208,7 @@ msgstr "未授權的 WOPI 主機。請稍後重試，若問題持續發生請回
 
 #: dist/errormessages.js:8
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "WOPISrc 參數錯誤或遺失，請聯絡支援單位。"
 
 #: dist/errormessages.js:9
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
@@ -254,15 +254,15 @@ msgstr "插入表格"
 
 #: dist/toolbar/toolbar.js:450
 msgid "Borders"
-msgstr ""
+msgstr "邊框"
 
 #: dist/toolbar/toolbar.js:458
 msgid "More..."
-msgstr ""
+msgstr "其他..."
 
 #: dist/toolbar/toolbar.js:475
 msgid "Insert Local Image"
-msgstr ""
+msgstr "插入本機影像"
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -298,7 +298,7 @@ msgstr "最後的工作表"
 
 #: dist/toolbar/toolbar.js:556
 msgid "Insert sheet"
-msgstr ""
+msgstr "插入工作表"
 
 #: dist/toolbar/toolbar.js:573 src/control/Control.Menubar.js:291
 msgid "Fullscreen presentation"
@@ -589,7 +589,7 @@ msgstr "修復"
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:258
 #: src/control/Control.Menubar.js:333
 msgid "Local Image..."
-msgstr ""
+msgstr "本機影像..."
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
@@ -694,11 +694,11 @@ msgstr "請輸入新的工作表名稱"
 
 #: src/control/Ruler.js:94
 msgid "Left Margin"
-msgstr ""
+msgstr "左邊距"
 
 #: src/control/Ruler.js:95
 msgid "Right Margin"
-msgstr ""
+msgstr "右邊距"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
@@ -714,7 +714,7 @@ msgstr "此 %productName 版本源自"
 
 #: src/core/Socket.js:47
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr ""
+msgstr "IE11 已達其最大連線數。請查看此文件視需要調高限制數：https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -754,19 +754,19 @@ msgstr "還原舊的版本。任何尚未儲存的變更都會放在版本歷史
 
 #: src/core/Socket.js:456
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr ""
+msgstr "儲存位置中的文件已經變更。對於您尚未儲存的變更，您希望怎麼處理？"
 
 #: src/core/Socket.js:461
 msgid "Discard"
-msgstr ""
+msgstr "放棄"
 
 #: src/core/Socket.js:466
 msgid "Overwrite"
-msgstr ""
+msgstr "覆蓋"
 
 #: src/core/Socket.js:471
 msgid "Save to new file"
-msgstr ""
+msgstr "儲存為新檔案"
 
 #: src/core/Socket.js:539
 msgid "Document requires password to view."
@@ -834,4 +834,4 @@ msgstr "上傳中..."
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."
-msgstr ""
+msgstr "製作副本中..."

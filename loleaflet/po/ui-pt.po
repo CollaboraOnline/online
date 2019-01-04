@@ -262,7 +262,7 @@ msgstr "Mais..."
 
 #: dist/toolbar/toolbar.js:475
 msgid "Insert Local Image"
-msgstr "Inserir imagens locais"
+msgstr "Inserir imagem local"
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -589,7 +589,7 @@ msgstr "Reparar"
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:258
 #: src/control/Control.Menubar.js:333
 msgid "Local Image..."
-msgstr "Imagens locais..."
+msgstr "Imagem local…"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
@@ -714,7 +714,7 @@ msgstr "Esta versão do %productName é disponibilizada por"
 
 #: src/core/Socket.js:47
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr "O IE11 alcançou o número máximo de conexões. Consulte este documento para aumentar o limite se necessário: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr "O IE11 atingiu o número máximo de ligações. Se necessitar de mais ligações, consulte este documento: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -834,4 +834,4 @@ msgstr "A enviar..."
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."
-msgstr ""
+msgstr "Criar uma cópia..."

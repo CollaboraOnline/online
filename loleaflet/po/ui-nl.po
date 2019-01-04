@@ -188,11 +188,11 @@ msgstr "De URL van de host is leeg. Waarschijnlijk is de loolwsd server verkeerd
 
 #: dist/errormessages.js:3
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr ""
+msgstr "Dit is een niet-ondersteunde versie van {productname}. Om de indruk te vermijden dat het geschikt is voor gebruik in bedrijven, wordt dit bericht weergegeven wanneer er meer dan {docs} documenten of {connections} verbindingen tegelijkertijd worden gebruikt"
 
 #: dist/errormessages.js:4
 msgid "More information and support"
-msgstr ""
+msgstr "Meer informatie en ondersteuning"
 
 #: dist/errormessages.js:5
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
@@ -208,7 +208,7 @@ msgstr "Niet geautoriseerde WOPI-host. Probeer het alstublieft later opnieuw en 
 
 #: dist/errormessages.js:8
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "Verkeerde of ontbrekende parameter WOPISrc, neem contact op met de ondersteuning."
 
 #: dist/errormessages.js:9
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
@@ -254,15 +254,15 @@ msgstr "Tabel invoegen"
 
 #: dist/toolbar/toolbar.js:450
 msgid "Borders"
-msgstr ""
+msgstr "Randen"
 
 #: dist/toolbar/toolbar.js:458
 msgid "More..."
-msgstr ""
+msgstr "Meer..."
 
 #: dist/toolbar/toolbar.js:475
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Locale afbeelding invoegen"
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -298,7 +298,7 @@ msgstr "Laatste werkblad"
 
 #: dist/toolbar/toolbar.js:556
 msgid "Insert sheet"
-msgstr ""
+msgstr "Blad invoegen"
 
 #: dist/toolbar/toolbar.js:573 src/control/Control.Menubar.js:291
 msgid "Fullscreen presentation"
@@ -589,7 +589,7 @@ msgstr "Herstellen"
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:258
 #: src/control/Control.Menubar.js:333
 msgid "Local Image..."
-msgstr ""
+msgstr "Locale afbeelding..."
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
@@ -694,11 +694,11 @@ msgstr "Voer een nieuwe bladnaam in."
 
 #: src/control/Ruler.js:94
 msgid "Left Margin"
-msgstr ""
+msgstr "Linkermarge"
 
 #: src/control/Ruler.js:95
 msgid "Right Margin"
-msgstr ""
+msgstr "Rechtermarge"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
@@ -714,7 +714,7 @@ msgstr "Deze versie van %productName werk op basis van"
 
 #: src/core/Socket.js:47
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr ""
+msgstr "IE11 heeft zijn maximum aantal verbindingen bereikt. Gelieve dit document te raadplegen om deze limiet te verhogen, indien nodig: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -754,19 +754,19 @@ msgstr "Oudere revisie herstellen. Niet-opgeslagen wijzigingen zijn beschikbaar 
 
 #: src/core/Socket.js:456
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr ""
+msgstr "Document is gewijzigd tijdens opslag. Wat zou wilt u doen met uw niet-opgeslagen wijzigingen?"
 
 #: src/core/Socket.js:461
 msgid "Discard"
-msgstr ""
+msgstr "Verwerpen"
 
 #: src/core/Socket.js:466
 msgid "Overwrite"
-msgstr ""
+msgstr "Overschrijven"
 
 #: src/core/Socket.js:471
 msgid "Save to new file"
-msgstr ""
+msgstr "Als nieuw bestand opslaan"
 
 #: src/core/Socket.js:539
 msgid "Document requires password to view."
@@ -834,4 +834,4 @@ msgstr "Bezig met laden…"
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."
-msgstr ""
+msgstr "Kopie maken..."

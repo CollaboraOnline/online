@@ -188,11 +188,11 @@ msgstr "主机URL为空。loolwsd服务器的配置可能不正确，请联系�
 
 #: dist/errormessages.js:3
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr ""
+msgstr "这是 {productname} 不受支持的版本。为了避免让人觉得它适合在企业中部署，当同时使用超过 {docs} 个文档或超过 {connections} 个连接时，就会出现这个消息"
 
 #: dist/errormessages.js:4
 msgid "More information and support"
-msgstr ""
+msgstr "更多信息和支持"
 
 #: dist/errormessages.js:5
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
@@ -208,7 +208,7 @@ msgstr "未授权的WOPI主机。请稍后重试，若问题持续存在请反�
 
 #: dist/errormessages.js:8
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "错误或缺少WOPISrc参数，请联系支持。"
 
 #: dist/errormessages.js:9
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
@@ -254,15 +254,15 @@ msgstr "插入表格"
 
 #: dist/toolbar/toolbar.js:450
 msgid "Borders"
-msgstr ""
+msgstr "边框"
 
 #: dist/toolbar/toolbar.js:458
 msgid "More..."
-msgstr ""
+msgstr "更多..."
 
 #: dist/toolbar/toolbar.js:475
 msgid "Insert Local Image"
-msgstr ""
+msgstr "插入本地图像"
 
 #: dist/toolbar/toolbar.js:521 dist/toolbar/toolbar.js:1010
 msgid "Sum"
@@ -298,7 +298,7 @@ msgstr "最后一个工作表"
 
 #: dist/toolbar/toolbar.js:556
 msgid "Insert sheet"
-msgstr ""
+msgstr "插入工作表"
 
 #: dist/toolbar/toolbar.js:573 src/control/Control.Menubar.js:291
 msgid "Fullscreen presentation"
@@ -472,7 +472,7 @@ msgstr "您确定要关闭服务器吗？"
 
 #: src/admin/Util.js:13
 msgid "kB"
-msgstr "KB"
+msgstr "kB"
 
 #: src/admin/Util.js:13
 msgid "MB"
@@ -488,15 +488,15 @@ msgstr "TB"
 
 #: src/admin/Util.js:42 src/admin/Util.js:44
 msgid " hrs"
-msgstr " hrs"
+msgstr " 小时"
 
 #: src/admin/Util.js:48 src/admin/Util.js:50
 msgid " mins"
-msgstr " mins"
+msgstr " 分钟"
 
 #: src/admin/Util.js:53
 msgid " s"
-msgstr " s"
+msgstr " 秒"
 
 #: src/control/Control.AlertDialog.js:27
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -589,7 +589,7 @@ msgstr "修复"
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:258
 #: src/control/Control.Menubar.js:333
 msgid "Local Image..."
-msgstr ""
+msgstr "本地图像…"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:83
 msgid "All"
@@ -694,11 +694,11 @@ msgstr "输入新的工作表名"
 
 #: src/control/Ruler.js:94
 msgid "Left Margin"
-msgstr ""
+msgstr "左边距"
 
 #: src/control/Ruler.js:95
 msgid "Right Margin"
-msgstr ""
+msgstr "右边距"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
@@ -714,7 +714,7 @@ msgstr "当前版本 %productName 的提供者为"
 
 #: src/core/Socket.js:47
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr ""
+msgstr "IE11 已超过了其最大连接数限制。若需要增加连接数限制，请参考这个文档: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:49
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -754,19 +754,19 @@ msgstr "恢复老版本。任何未保存的更改将会在版本历史中可用
 
 #: src/core/Socket.js:456
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr ""
+msgstr "文档已在存储位置被更改。对于您尚未保存更改的文档，您打算怎么做？"
 
 #: src/core/Socket.js:461
 msgid "Discard"
-msgstr ""
+msgstr "丢弃"
 
 #: src/core/Socket.js:466
 msgid "Overwrite"
-msgstr ""
+msgstr "覆盖"
 
 #: src/core/Socket.js:471
 msgid "Save to new file"
-msgstr ""
+msgstr "保存为新文档"
 
 #: src/core/Socket.js:539
 msgid "Document requires password to view."
@@ -834,4 +834,4 @@ msgstr "正在上传..."
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."
-msgstr ""
+msgstr "正在创建副本…"
