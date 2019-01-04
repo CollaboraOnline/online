@@ -246,7 +246,7 @@ msgstr "Czy na pewno chcesz usunąć tą stronę?"
 
 #: dist/toolbar/toolbar.js:410
 msgid "Document repair"
-msgstr ""
+msgstr "Naprawa dokumentu"
 
 #: dist/toolbar/toolbar.js:448
 msgid "Insert table"
@@ -571,11 +571,11 @@ msgstr "Dokument tekstowy ODF (.odt)"
 
 #: src/control/Control.Menubar.js:26
 msgid "Microsoft Word 2003 (.doc)"
-msgstr ""
+msgstr "Microsoft Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Microsoft Word (.docx)"
-msgstr ""
+msgstr "Microsoft Word (.docx)"
 
 #: src/control/Control.Menubar.js:28
 msgid "Rich Text (.rtf)"
@@ -626,11 +626,11 @@ msgstr "Prezentacja ODF (.odp)"
 
 #: src/control/Control.Menubar.js:235
 msgid "Microsoft Powerpoint 2003 (.ppt)"
-msgstr ""
+msgstr "Microsoft Powerpoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:236
 msgid "Microsoft Powerpoint (.pptx)"
-msgstr ""
+msgstr "Microsoft Powerpoint (.pptx)"
 
 #: src/control/Control.Menubar.js:313
 msgid "ODF spreadsheet (.ods)"
@@ -638,11 +638,11 @@ msgstr "Arkusz kalkulacyjny ODF (.ods)"
 
 #: src/control/Control.Menubar.js:314
 msgid "Microsoft Excel 2003 (.xls)"
-msgstr ""
+msgstr "Microsoft Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:315
 msgid "Microsoft Excel (.xlsx)"
-msgstr ""
+msgstr "Microsoft Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:459
 msgid "Reset to Default Language"
