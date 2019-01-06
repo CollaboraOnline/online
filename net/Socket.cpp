@@ -136,11 +136,15 @@ bool SocketPoll::startThread()
 
 void SocketPoll::joinThread()
 {
-    addCallback([this]()
-                {
-                    removeSockets();
-                });
-    stop();
+    if (isAlive())
+    {
+        addCallback([this]()
+                    {
+                        removeSockets();
+                    });
+        stop();
+    }
+
     if (_threadStarted && _thread.joinable())
     {
         if (_thread.get_id() == std::this_thread::get_id())

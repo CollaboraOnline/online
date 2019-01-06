@@ -422,9 +422,7 @@ DocumentBroker::~DocumentBroker()
     _poll->joinThread();
 
     if (!_sessions.empty())
-    {
         LOG_WRN("DocumentBroker [" << _docKey << "] still has unremoved sessions.");
-    }
 
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
@@ -1648,7 +1646,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
         }
         else
         {
-            LOG_WRN("Dropping empty tilecombine response: " << firstLine);
+            LOG_INF("Dropping empty tilecombine response: " << firstLine);
             // They will get re-issued if we don't forget them.
         }
     }
