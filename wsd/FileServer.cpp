@@ -592,9 +592,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::URI::encode(accessHeader, "'", escapedAccessHeader);
 
     unsigned long tokenTtl = 0;
-    if (accessToken != "")
+    if (!accessToken.empty())
     {
-        if (accessTokenTtl != "")
+        if (!accessTokenTtl.empty())
         {
             try
             {
@@ -607,7 +607,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         }
         else
         {
-            LOG_WRN("WOPI host did not pass optional access_token_ttl");
+            LOG_INF("WOPI host did not pass optional access_token_ttl");
         }
     }
 
