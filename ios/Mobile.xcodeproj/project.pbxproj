@@ -505,6 +505,15 @@
 		BEA8CDC62199E621009FE17E /* languagetag.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = languagetag.cxx; path = "../../ios-device/i18nlangtag/source/languagetag/languagetag.cxx"; sourceTree = "<group>"; };
 		BEB0E5D821C7CA800085A0CF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEB0E5DB21CA7C780085A0CF /* graphicfilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicfilter.cxx; path = "../../ios-device/vcl/source/filter/graphicfilter.cxx"; sourceTree = "<group>"; };
+		BEB0E5DE21CA93D80085A0CF /* svdograf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdograf.cxx; path = "../../ios-device/svx/source/svdraw/svdograf.cxx"; sourceTree = "<group>"; };
+		BEB0E5E021CA9DC00085A0CF /* salbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salbmp.cxx; path = "../../ios-device/vcl/quartz/salbmp.cxx"; sourceTree = "<group>"; };
+		BEB0E5E121CA9DDC0085A0CF /* salgdi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdi.cxx; path = "../../ios-device/vcl/quartz/salgdi.cxx"; sourceTree = "<group>"; };
+		BEB0E5E221CA9DDC0085A0CF /* salvd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salvd.cxx; path = "../../ios-device/vcl/quartz/salvd.cxx"; sourceTree = "<group>"; };
+		BEB0E5E321CA9DDC0085A0CF /* ctfonts.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ctfonts.cxx; path = "../../ios-device/vcl/quartz/ctfonts.cxx"; sourceTree = "<group>"; };
+		BEB0E5E421CA9DDD0085A0CF /* salgdicommon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdicommon.cxx; path = "../../ios-device/vcl/quartz/salgdicommon.cxx"; sourceTree = "<group>"; };
+		BEB0E5E521CA9DDD0085A0CF /* utils.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = utils.cxx; path = "../../ios-device/vcl/quartz/utils.cxx"; sourceTree = "<group>"; };
+		BEB0E5E621CA9DDD0085A0CF /* salgdiutils.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdiutils.cxx; path = "../../ios-device/vcl/quartz/salgdiutils.cxx"; sourceTree = "<group>"; };
+		BEB0E5E821D6426B0085A0CF /* bitmap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmap.cxx; path = "../../ios-device/vcl/source/outdev/bitmap.cxx"; sourceTree = "<group>"; };
 		BEB6521C216F5D8B00B8C09A /* file_path_helper.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = file_path_helper.hxx; path = "../../ios-device/sal/osl/unx/file_path_helper.hxx"; sourceTree = "<group>"; };
 		BEB6521D216F5D8B00B8C09A /* file_error_transl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = file_error_transl.hxx; path = "../../ios-device/sal/osl/unx/file_error_transl.hxx"; sourceTree = "<group>"; };
 		BEB6521E216F5D8B00B8C09A /* nlsupport.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = nlsupport.hxx; path = "../../ios-device/sal/osl/unx/nlsupport.hxx"; sourceTree = "<group>"; };
@@ -1009,6 +1018,7 @@
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
 				BE34D1892190712C00815297 /* sc */,
+				BEB0E5DC21CA93950085A0CF /* svx */,
 				BE34D10C218B667400815297 /* sw */,
 				BEB6524B216FD09400B8C09A /* tools */,
 				BEA8CD7221959315009FE17E /* unotools */,
@@ -1109,6 +1119,8 @@
 				BE93D421216CAA59007A39F4 /* app */,
 				BEB0E5DA21CA7C330085A0CF /* filter */,
 				BE58E1312187938700249358 /* headless */,
+				BEB0E5E721D642420085A0CF /* outdev */,
+				BEB0E5DF21CA9DA20085A0CF /* quartz */,
 				BE34D140218CF87D00815297 /* window */,
 			);
 			name = vcl;
@@ -1288,6 +1300,44 @@
 				BEB0E5DB21CA7C780085A0CF /* graphicfilter.cxx */,
 			);
 			name = filter;
+			sourceTree = "<group>";
+		};
+		BEB0E5DC21CA93950085A0CF /* svx */ = {
+			isa = PBXGroup;
+			children = (
+				BEB0E5DD21CA93A50085A0CF /* svdraw */,
+			);
+			name = svx;
+			sourceTree = "<group>";
+		};
+		BEB0E5DD21CA93A50085A0CF /* svdraw */ = {
+			isa = PBXGroup;
+			children = (
+				BEB0E5DE21CA93D80085A0CF /* svdograf.cxx */,
+			);
+			name = svdraw;
+			sourceTree = "<group>";
+		};
+		BEB0E5DF21CA9DA20085A0CF /* quartz */ = {
+			isa = PBXGroup;
+			children = (
+				BEB0E5E321CA9DDC0085A0CF /* ctfonts.cxx */,
+				BEB0E5E021CA9DC00085A0CF /* salbmp.cxx */,
+				BEB0E5E121CA9DDC0085A0CF /* salgdi.cxx */,
+				BEB0E5E421CA9DDD0085A0CF /* salgdicommon.cxx */,
+				BEB0E5E621CA9DDD0085A0CF /* salgdiutils.cxx */,
+				BEB0E5E221CA9DDC0085A0CF /* salvd.cxx */,
+				BEB0E5E521CA9DDD0085A0CF /* utils.cxx */,
+			);
+			name = quartz;
+			sourceTree = "<group>";
+		};
+		BEB0E5E721D642420085A0CF /* outdev */ = {
+			isa = PBXGroup;
+			children = (
+				BEB0E5E821D6426B0085A0CF /* bitmap.cxx */,
+			);
+			name = outdev;
 			sourceTree = "<group>";
 		};
 		BEB6521A216F5D4600B8C09A /* sal */ = {
