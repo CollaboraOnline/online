@@ -699,7 +699,7 @@ function createToolbar() {
 						e.item.html = undefined;
 					}});
 				}
-			}, desktop: true, mobile: false, tablet: false}, // FIXME would be better to start with 'hidden: false' and show it only where necessary, but that currently ends up with never showing 'styles'
+			}, hidden: true, desktop: true, mobile: false, tablet: false},
 		{type: 'html', id: 'fonts',
 			html: '<select class="fonts-select"><option>Liberation Sans</option></select>',
 			onRefresh: function (edata) {
@@ -1035,8 +1035,17 @@ function initNormalToolbar(toolItems) {
 				}
 			}
 
-			if (event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes')
+			if (event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes') {
+				var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(event.item.id));
+				if ((_inDesktopMode() && event.item.desktop == false)
+					|| (_inTabletMode() && event.item.tablet == false)) {
+					toolItem.css('display', 'none');
+				} else {
+					toolItem.css('display', '');
+				}
+
 				updateCommandValues(event.target);
+			}
 
 			if (event.target === 'inserttable')
 				insertTable();
