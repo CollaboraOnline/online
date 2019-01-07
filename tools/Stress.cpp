@@ -192,7 +192,7 @@ private:
 
         static std::atomic<unsigned> SessionId;
         const size_t sessionId = ++SessionId;
-        std::shared_ptr<Connection> connection = Connection::create(_serverUri, _uri, std::to_string(sessionId));
+        std::shared_ptr<Connection> connection = Connection::create(getServerUri(), getUri(), std::to_string(sessionId));
 
         connection->load();
 

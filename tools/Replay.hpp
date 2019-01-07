@@ -269,7 +269,10 @@ protected:
         }
     }
 
-protected:
+    const std::string& getServerUri() const { return _serverUri; }
+    const std::string& getUri() const { return _uri; }
+
+private:
     const std::string _serverUri;
     const std::string _uri;
 
