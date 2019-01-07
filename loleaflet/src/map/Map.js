@@ -114,9 +114,11 @@ L.Map = L.Evented.extend({
 		}
 
 		// Avoid white bar on the bottom - force resize-detector to get full size
-		$('#document-container').css('bottom', '0px');
-		this._clipboardContainer._textArea.blur();
-		this._clipboardContainer._textArea.focus();
+		if (window.mode.isMobile()) {
+			$('#document-container').css('bottom', '0px');
+			this._clipboardContainer._textArea.blur();
+			this._clipboardContainer._textArea.focus();
+		}
 
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
