@@ -473,6 +473,7 @@ AC_CHECK_HEADERS([security/pam_appl.h],
                  [AC_MSG_ERROR([header security/pam_appl.h not found, install PAM development package])])
 AC_CHECK_LIB(pam, pam_start, [], [AC_MSG_ERROR([No. Install PAM development package])])
 
+AC_MSG_CHECKING([whether to build with support public key])
 if test "x$with_support_public_key" != "x"; then
     AC_DEFINE([ENABLE_SUPPORT_KEY],1,[Whether to enable support key])
 
@@ -480,9 +481,11 @@ if test "x$with_support_public_key" != "x"; then
     echo -e "#ifndef INCLUDED_SUPPORT_PUBLIC_KEY_HPP\n#define INCLUDED_SUPPORT_PUBLIC_KEY_HPP\n#include <string>\nconst static std::string SUPPORT_PUBLIC_KEY(" > "${srcdir}/common/support-public-key.hpp"
     sed 's/\(.*\)/"\1\\n"/' "$with_support_public_key" >> "${srcdir}/common/support-public-key.hpp"
     echo -e ");\n#endif" >> "${srcdir}/common/support-public-key.hpp"
+    AC_MSG_RESULT([yes])
 else
     AC_DEFINE([ENABLE_SUPPORT_KEY],0,[Whether to enable support key])
     rm -f "${srcdir}/common/support-public-key.hpp"
+    AC_MSG_RESULT([no])
 fi
 AC_SUBST(ENABLE_SUPPORT_KEY)
 
