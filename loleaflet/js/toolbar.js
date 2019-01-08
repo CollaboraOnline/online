@@ -847,14 +847,7 @@ function initMobileToolbar(toolItems) {
 			onClick(e, e.target);
 			hideTooltip(this, e.target);
 		},
-		onRefresh: function(e) {
-			var docType = map.getDocType();
-			if (docType === 'presentation' && (e.target === 'prev' || e.target === 'next')) {
-				if (this.get(e.target).hidden === true) {
-					this.show(e.target);
-				}
-			}
-
+		onRefresh: function() {
 			var showUserList = map['wopi'].HideUserList !== null &&
 								map['wopi'].HideUserList !== undefined &&
 								$.inArray('true', map['wopi'].HideUserList) < 0 &&
@@ -1704,6 +1697,7 @@ function onDocLayerInit() {
 	case 'drawing':
 		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttable');
+		statusbar.show('prev', 'next');
 
 		$('#presentation-toolbar').show();
 		break;
