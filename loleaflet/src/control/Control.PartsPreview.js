@@ -34,6 +34,7 @@ L.Control.PartsPreview = L.Control.extend({
 			if (!this._previewInitialized)
 			{
 				// make room for the preview
+				var control = this;
 				var docContainer = this._map.options.documentContainer;
 				L.DomUtil.addClass(docContainer, 'parts-preview-document');
 				setTimeout(L.bind(function () {
@@ -43,6 +44,20 @@ L.Control.PartsPreview = L.Control.extend({
 				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
 				this._previewContTop = previewContBB.top;
 				var bottomBound = previewContBB.bottom + previewContBB.height / 2;
+
+				$('#slide-sorter').mCustomScrollbar({
+					axis: 'y',
+					theme: 'dark-thick',
+					scrollInertia: 0,
+					alwaysShowScrollbar: 1,
+					callbacks:{
+						whileScrolling: function() {
+							control._onScroll(this);
+						}
+					}
+				});
+				this._scrollContainer = $('#slide-sorter .mCSB_container').get(0);
+
 				for (var i = 0; i < parts; i++) {
 					this._previewTiles.push(this._createPreview(i, e.partNames[i], bottomBound));
 				}
@@ -65,7 +80,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_createPreview: function (i, hashCode, bottomBound) {
-		var frame = L.DomUtil.create('div', 'preview-frame', this._partsPreviewCont);
+		var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
 		L.DomUtil.create('span', 'preview-helper', frame);
 
 		var imgClassName = 'preview-img';
@@ -187,22 +202,6 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_updatePreview: function (e) {
 		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing') {
-			// the scrollbar has to be re-initialized here else it doesn't work
-			// probably a bug from the scrollbar
-			var control = this;
-			this._previewTiles[e.id].onload = function () {
-				$('#slide-sorter').mCustomScrollbar({
-					axis: 'y',
-					theme: 'dark-thick',
-					scrollInertia: 0,
-					alwaysShowScrollbar: 1,
-					callbacks:{
-						whileScrolling: function() {
-							control._onScroll(this);
-						}
-					}
-				});
-			};
 			this._previewTiles[e.id].src = e.tile;
 		}
 	},
