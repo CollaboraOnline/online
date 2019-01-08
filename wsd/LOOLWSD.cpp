@@ -1137,10 +1137,10 @@ void LOOLWSD::initialize(Application& self)
     ServerApplication::initialize(self);
 
     DocProcSettings docProcSettings;
-    docProcSettings.LimitVirtMemMb = getConfigValue<int>("per_document.limit_virt_mem_mb", 0);
-    docProcSettings.LimitStackMemKb = getConfigValue<int>("per_document.limit_stack_mem_kb", 0);
-    docProcSettings.LimitFileSizeMb = getConfigValue<int>("per_document.limit_file_size_mb", 0);
-    docProcSettings.LimitNumberOpenFiles = getConfigValue<int>("per_document.limit_num_open_files", 0);
+    docProcSettings.setLimitVirtMemMb(getConfigValue<int>("per_document.limit_virt_mem_mb", 0));
+    docProcSettings.setLimitStackMemKb(getConfigValue<int>("per_document.limit_stack_mem_kb", 0));
+    docProcSettings.setLimitFileSizeMb(getConfigValue<int>("per_document.limit_file_size_mb", 0));
+    docProcSettings.setLimitNumberOpenFiles(getConfigValue<int>("per_document.limit_num_open_files", 0));
     Admin::instance().setDefDocProcSettings(docProcSettings, false);
 
 #if ENABLE_DEBUG
@@ -1558,10 +1558,10 @@ bool LOOLWSD::createForKit()
 
     const DocProcSettings& docProcSettings = Admin::instance().getDefDocProcSettings();
     std::ostringstream ossRLimits;
-    ossRLimits << "limit_virt_mem_mb:" << docProcSettings.LimitVirtMemMb;
-    ossRLimits << ";limit_stack_mem_kb:" << docProcSettings.LimitStackMemKb;
-    ossRLimits << ";limit_file_size_mb:" << docProcSettings.LimitFileSizeMb;
-    ossRLimits << ";limit_num_open_files:" << docProcSettings.LimitNumberOpenFiles;
+    ossRLimits << "limit_virt_mem_mb:" << docProcSettings.getLimitVirtMemMb();
+    ossRLimits << ";limit_stack_mem_kb:" << docProcSettings.getLimitStackMemKb();
+    ossRLimits << ";limit_file_size_mb:" << docProcSettings.getLimitFileSizeMb();
+    ossRLimits << ";limit_num_open_files:" << docProcSettings.getLimitNumberOpenFiles();
     args.push_back("--rlimits=" + ossRLimits.str());
 
     if (UnitWSD::get().hasKitHooks())

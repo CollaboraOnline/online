@@ -48,11 +48,20 @@ private:
 
 struct DocProcSettings
 {
-    size_t LimitVirtMemMb;
-    size_t LimitDataMemKb;
-    size_t LimitStackMemKb;
-    size_t LimitFileSizeMb;
-    size_t LimitNumberOpenFiles;
+    void setLimitVirtMemMb(size_t limitVirtMemMb) { _limitVirtMemMb = limitVirtMemMb; }
+    size_t getLimitVirtMemMb() const { return _limitVirtMemMb; }
+    void setLimitStackMemKb(size_t limitStackMemKb) { _limitStackMemKb = limitStackMemKb; }
+    size_t getLimitStackMemKb() const { return _limitStackMemKb; }
+    void setLimitFileSizeMb(size_t limitFileSizeMb) { _limitFileSizeMb = limitFileSizeMb; }
+    size_t getLimitFileSizeMb() const { return _limitFileSizeMb; }
+    void setLimitNumberOpenFiles(size_t limitNumberOpenFiles) { _limitNumberOpenFiles = limitNumberOpenFiles; }
+    size_t getLimitNumberOpenFiles() const { return _limitNumberOpenFiles; }
+
+private:
+    size_t _limitVirtMemMb;
+    size_t _limitStackMemKb;
+    size_t _limitFileSizeMb;
+    size_t _limitNumberOpenFiles;
 };
 
 /// Containing basic information about document
