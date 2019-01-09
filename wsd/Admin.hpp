@@ -155,7 +155,15 @@ private:
     size_t _totalSysMemKb;
     size_t _totalAvailMemKb;
 
-    struct MonitorConnectRecord {
+    struct MonitorConnectRecord
+    {
+        void setWhen(std::chrono::steady_clock::time_point when) { _when = when; }
+        std::chrono::steady_clock::time_point getWhen() const { return _when; }
+
+        void setUri(const std::string& uri) { _uri = uri; }
+        std::string getUri() const { return _uri; }
+
+    protected:
         std::chrono::steady_clock::time_point _when;
         std::string _uri;
     };

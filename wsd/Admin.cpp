@@ -451,10 +451,10 @@ void Admin::pollingThread()
         if (_pendingConnects.size())
         {
             MonitorConnectRecord rec = _pendingConnects[0];
-            if (rec._when < now)
+            if (rec.getWhen() < now)
             {
                 _pendingConnects.erase(_pendingConnects.begin());
-                connectToMonitorSync(rec._uri);
+                connectToMonitorSync(rec.getUri());
             }
         }
 
@@ -688,8 +688,8 @@ void Admin::scheduleMonitorConnect(const std::string &uri, std::chrono::steady_c
     assertCorrectThread();
 
     MonitorConnectRecord todo;
-    todo._when = when;
-    todo._uri = uri;
+    todo.setWhen(when);
+    todo.setUri(uri);
     _pendingConnects.push_back(todo);
 }
 
