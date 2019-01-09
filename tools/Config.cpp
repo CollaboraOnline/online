@@ -300,6 +300,7 @@ int Config::main(const std::vector<std::string>& args)
                 {
                     std::cerr << "Valid for " << validDays << " days - setting to config\n";
                     _loolConfig.setString("support_key", supportKeyString);
+                    changed = true;
                 }
             }
         }
@@ -307,8 +308,8 @@ int Config::main(const std::vector<std::string>& args)
         {
             std::cerr << "Removing empty support key\n";
             _loolConfig.remove("support_key");
+            changed = true;
         }
-        changed = true;
     }
 #endif
     else if (args[0] == "set")
