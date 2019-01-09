@@ -687,7 +687,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     std::string frameAncestors = configFrameAncestor;
     Poco::URI uriHost(host);
     if (uriHost.getHost() != configFrameAncestor)
-        frameAncestors += " " + uriHost.getHost();
+        frameAncestors += " " + uriHost.getHost() + ":*";
 
     for (const auto& param : params)
     {
@@ -700,7 +700,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
             wopiFrameAncestor = uriWopiFrameAncestor.getHost();
             if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
             {
-                frameAncestors += " " + wopiFrameAncestor;
+                frameAncestors += " " + wopiFrameAncestor + ":*";
                 LOG_TRC("Picking frame ancestor from WOPISrc: " << wopiFrameAncestor);
             }
             break;
