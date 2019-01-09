@@ -317,8 +317,15 @@ L.AnnotationManager = L.Class.extend({
 		var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
 		var posX = docRight.x + this.options.marginX;
 		posX = this._map.latLngToLayerPoint(this._map.unproject(L.point(posX, 0))).x;
-		layoutBounds.extend(layoutBounds.min.subtract([0, bounds.getSize().y]));
-		var posY = layoutBounds.min.y;
+		var posY;
+		if (layoutBounds.intersects(bounds)) {
+			layoutBounds.extend(layoutBounds.min.subtract([0, bounds.getSize().y]));
+			posY = layoutBounds.min.y;
+		}
+		else {
+			posY = bounds.min.y;
+			layoutBounds.extend(L.point(layoutBounds.min.x, bounds.min.y));
+		}
 		var pt = L.point(posX, posY);
 		layoutBounds.extend(layoutBounds.min.subtract([0, this.options.marginY]));
 
@@ -350,8 +357,15 @@ L.AnnotationManager = L.Class.extend({
 		var docRight = this._map.project(this._map.options.docBounds.getNorthEast());
 		var posX = docRight.x + this.options.marginX;
 		posX = this._map.latLngToLayerPoint(this._map.unproject(L.point(posX, 0))).x;
-		var posY = layoutBounds.getBottomLeft().y;
-		layoutBounds.extend(layoutBounds.max.add([0, bounds.getSize().y]));
+		var posY;
+		if (layoutBounds.intersects(bounds)) {
+			posY = layoutBounds.getBottomLeft().y;
+			layoutBounds.extend(layoutBounds.max.add([0, bounds.getSize().y]));
+		}
+		else {
+			posY = bounds.min.y;
+			layoutBounds.extend(L.point(layoutBounds.max.x, bounds.max.y));
+		}
 		var pt = L.point(posX, posY);
 		layoutBounds.extend(layoutBounds.max.add([0, this.options.marginY]));
 
