@@ -66,6 +66,20 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		if (!L.Browser.mobile) {
 			this._map.setView(this._map.getCenter(), this._map.getZoom(), {reset: true});
 		}
+
+		var presentationControlWrapperElem = L.DomUtil.get('presentation-controls-wrapper');
+		var visible = L.DomUtil.getStyle(presentationControlWrapperElem, 'display');
+
+		if (!this._isSlidePaneVisible && visible !== 'none') {
+			this._map.fire('updateparts', {
+				selectedPart: this._selectedPart,
+				selectedParts: this._selectedParts,
+				parts: this._parts,
+				docType: this._docType,
+				partNames: this._partHashes
+			});
+		}
+		this._isSlidePaneVisible = !(visible === 'none');
 	},
 
 	onAdd: function (map) {
