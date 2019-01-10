@@ -163,7 +163,7 @@ private:
         void setUri(const std::string& uri) { _uri = uri; }
         std::string getUri() const { return _uri; }
 
-    protected:
+    private:
         std::chrono::steady_clock::time_point _when;
         std::string _uri;
     };

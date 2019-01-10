@@ -103,9 +103,20 @@ static int openPid(unsigned proc_id, const char *name)
 }
 
 struct Map {
+private:
     addr_t _start;
     addr_t _end;
     std::string _name;
+public:
+    void setStart(addr_t start) { _start = start; }
+    addr_t getStart() const { return _start; }
+
+    void setEnd(addr_t end) { _end = end; }
+    addr_t getEnd() const { return _end; }
+
+    void setName(const std::string& name) { _name = name; }
+    const std::string& getName() const { return _name; }
+
     size_t size() { return _end - _start; }
 };
 
@@ -143,8 +154,8 @@ struct AddrSpace {
     {
         for (const Map &i : _maps)
         {
-            if (i._start <= page && i._end > page)
-                return i._name;
+            if (i.getStart() <= page && i.getEnd() > page)
+                return i.getName();
         }
         return std::string("");
     }
@@ -152,9 +163,9 @@ struct AddrSpace {
     void insert(addr_t start, addr_t end, const char *name)
     {
         Map map;
-        map._start = start;
-        map._end = end;
-        map._name = std::string(name, 0, strlen(name) - 1);
+        map.setStart(start);
+        map.setEnd(end);
+        map.setName(std::string(name, 0, strlen(name) - 1));
         _maps.push_back(map);
     }
 
@@ -210,7 +221,7 @@ struct AddrSpace {
                     StringData &sdata = _strings[isUnicode ? 1 : 0];
                     sdata._count ++;
                     sdata._chars += len;
-                    _addrToStr[map._start + i] = str;
+                    _addrToStr[map.getStart() + i] = str;
                     i += ((4 + str.length() * (isUnicode ? 2 : 1)) >>2 ) * 4;
                 }
             }
@@ -219,7 +230,7 @@ struct AddrSpace {
                 StringData &sdata = _strings[2];
                 sdata._count ++;
                 sdata._chars += str.length();
-                _addrToStr[map._start + i] = str;
+                _addrToStr[map.getStart() + i] = str;
                 i += (str.length() >> 2) * 4;
             }
         }
@@ -232,10 +243,10 @@ struct AddrSpace {
         {
             std::vector<unsigned char> data;
             data.resize (map.size());
-            if (lseek(mem_fd, map._start, SEEK_SET) < 0 ||
+            if (lseek(mem_fd, map.getStart(), SEEK_SET) < 0 ||
                 read(mem_fd, &data[0], map.size()) != (int)map.size())
                 error(EXIT_FAILURE, errno, "Failed to seek in /proc/%d/mem to %lld",
-                      _proc_id, map._start);
+                      _proc_id, map.getStart());
 
             scanForSalStrings(map, data);
         }
