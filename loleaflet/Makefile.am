@@ -24,9 +24,13 @@ $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10
 	done
 endif
 
-JQUERY_UI_IMAGE_PATH = node_modules/jquery-ui/themes/base/minified/images
-JQUERY_UI_IMAGES = $(wildcard $(JQUERY_UI_IMAGE_PATH)/*.png)
-JQUERY_UI_DIST_IMAGES = $(patsubst $(JQUERY_UI_IMAGE_PATH)/%.png,$(builddir)/dist/images/%.png,$(JQUERY_UI_IMAGES))
+JQUERY_LIGHTNESS_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
+JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
+JQUERY_LIGHTNESS_DIST_IMAGES = $(patsubst $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png,$(builddir)/dist/images/%.png,$(JQUERY_LIGHTNESS_IMAGES))
+
+JQUERY_MINIFIED_IMAGE_PATH = node_modules/jquery-ui/themes/base/minified/images
+JQUERY_MINIFIED_IMAGES = $(wildcard $(JQUERY_MINIFIED_IMAGE_PATH)/*.png)
+JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(builddir)/dist/images/%.png,$(JQUERY_MINIFIED_IMAGES))
 
 LOLEAFLET_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
 LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(builddir)/dist/%,$(LOLEAFLET_IMAGES_SRC))
@@ -156,7 +160,8 @@ endif
 build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
 	$(LOLEAFLET_IMAGES_DST) \
-	$(JQUERY_UI_DIST_IMAGES) \
+	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
+	$(JQUERY_MINIFIED_DIST_IMAGES) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(ADMIN_BUNDLE) \
 	$(builddir)/dist/bundle.css \
@@ -275,11 +280,19 @@ $(builddir)/dist/node_modules/%.js: $(builddir)/node_modules/%.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/$(JQUERY_UI_IMAGE_PATH)/%.png: $(JQUERY_UI_IMAGE_PATH)/%.png
+$(builddir)/dist/$(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png: $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/images/%.png: $(JQUERY_UI_IMAGE_PATH)/%.png
+$(builddir)/dist/images/%.png: $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/$(JQUERY_MINIFIED_IMAGE_PATH)/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(builddir)/dist/images/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
