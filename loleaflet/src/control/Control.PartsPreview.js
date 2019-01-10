@@ -31,6 +31,10 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 
 		if (docType === 'presentation' || docType === 'drawing') {
+			var presentationControlWrapperElem = L.DomUtil.get('presentation-controls-wrapper');
+			var visible = L.DomUtil.getStyle(presentationControlWrapperElem, 'display');
+			if (visible === 'none')
+				return;
 			if (!this._previewInitialized)
 			{
 				// make room for the preview
@@ -203,6 +207,8 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_updatePreview: function (e) {
 		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing') {
+			if (!this._previewInitialized)
+				return;
 			this._previewTiles[e.id].src = e.tile;
 		}
 	},
