@@ -121,12 +121,23 @@ public:
 };
 
 struct StringData {
+private:
     size_t _count;
     size_t _chars;
+
+public:
     StringData() :
         _count(0),
         _chars(0)
     {}
+
+    void setCount(size_t count) { _count = count; }
+
+    size_t getCount() const { return _count; }
+
+    void setChars(size_t chars) { _chars = chars; }
+
+    size_t getChars() const { return _chars; }
 };
 
 struct AddrSpace {
@@ -145,8 +156,8 @@ struct AddrSpace {
         for (int i = 0; i < 3; ++i)
         {
             printf("%cStrings      :%20lld, %lld chars\n",
-                   prefixes[i], (addr_t)_strings[i]._count,
-                   (addr_t)_strings[i]._chars);
+                   prefixes[i], (addr_t)_strings[i].getCount(),
+                   (addr_t)_strings[i].getChars());
        }
     }
 
@@ -219,8 +230,8 @@ struct AddrSpace {
                 if (isStringAtOffset(data, i + 8, len, isUnicode, str))
                 {
                     StringData &sdata = _strings[isUnicode ? 1 : 0];
-                    sdata._count ++;
-                    sdata._chars += len;
+                    sdata.setCount(sdata.getCount() + 1);
+                    sdata.setChars(sdata.getChars() + len);
                     _addrToStr[map.getStart() + i] = str;
                     i += ((4 + str.length() * (isUnicode ? 2 : 1)) >>2 ) * 4;
                 }
@@ -228,8 +239,8 @@ struct AddrSpace {
             if ((i%8 == 0) && isCStringAtOffset(data, i, str))
             {
                 StringData &sdata = _strings[2];
-                sdata._count ++;
-                sdata._chars += str.length();
+                sdata.setCount(sdata.getCount() + 1);
+                sdata.setChars(sdata.getChars() + str.length());
                 _addrToStr[map.getStart() + i] = str;
                 i += (str.length() >> 2) * 4;
             }
