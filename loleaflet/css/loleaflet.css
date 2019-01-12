@@ -171,7 +171,7 @@ body {
 	}
 	#document-container {
 	top: 41px;
-
+	right: 0px !important;
 	}
 	#spreadsheet-row-column-frame {
 	top: 83px !important;
