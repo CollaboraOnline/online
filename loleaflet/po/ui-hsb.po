@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /hsb/libo_online/loleaflet-ui-hsb.po\n"
-"X-Pootle-Revision: 3609345\n"
+"X-Pootle-Revision: 3651054\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -224,7 +225,7 @@ msgstr "Chceće tutu stronu woprawdźe zhašeć?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Dokument porjedźić"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -311,8 +312,9 @@ msgid "Cancel the search"
 msgstr "Pytanje přetorhnyć"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Žani wužiwarjo"
+msgstr "0 wužiwarjow"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -628,11 +630,11 @@ msgstr "Prawa kroma"
 msgid "Downloading..."
 msgstr "Sćahuje so..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Składuje so..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Tuta wersija %productName spěchuje so wot"
 
@@ -735,7 +737,7 @@ msgstr "Wopačne hesło podate. Prošu spytajće hišće raz."
 msgid "Connecting..."
 msgstr "Zwjazuje so..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -883,16 +885,16 @@ msgstr "Změnić"
 msgid "Remove"
 msgstr "Wotstronić"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Inicializuje so..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 "Inaktiwny dokument - prošu klikńće, zo byšće z wobdźěłowanjom pokročował"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Čita so..."
 
@@ -904,26 +906,107 @@ msgstr "Nahrawa so..."
 msgid "Creating copy..."
 msgstr "Kopija so wutworja..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Tekstowy wobběh"
+#~ msgid "Select passport"
+#~ msgstr "Pas wubrać"
 
-#~ msgid "No wrap"
-#~ msgstr "Žadyn wobběh"
+#~ msgid "Passport: N/A"
+#~ msgstr "Pas: ND"
 
-#~ msgid "Page wrap"
-#~ msgstr "Wobběh strony"
+#~ msgid "Sign & Upload"
+#~ msgstr "Signować a nahrać"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Jenož wobběh kótwički"
+#~ msgid "Sign and upload document"
+#~ msgstr "Signować a dokument nahrać"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Idealny wobběh"
+#~ msgid "Status:"
+#~ msgstr "Status:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Wobběh nalěwo"
+#~ msgid "N/A"
+#~ msgstr "ND"
 
-#~ msgid "Right wrap"
-#~ msgstr "Wobběh naprawo"
+#~ msgid "Login"
+#~ msgstr "Přizjewjenje"
 
-#~ msgid "Wrap through"
-#~ msgstr "Přeběžk"
+#~ msgid "Close"
+#~ msgstr "Začinić"
+
+#~ msgid "Last modification"
+#~ msgstr "Poslednja změna"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Prošu zapodajće PIN-kod"
+
+#~ msgid "Error at login."
+#~ msgstr "Zmylk při přizjewjenju."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Prošu skenujće kod"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Wobraz QR-koda njeda so wobstarać"
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Zmylk při pospyće, přistup na identitu wobnowić."
+
+#~ msgid "PIN Code"
+#~ msgstr "PIN-kod"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Prošu zapodajće PIN-kod z e-mejlki abo SMS"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Přizjewjenje z e-mejlu abo čisłom mobilneho telefona"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument je so nahrał."
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Wubjerće dokumentowy typ za nahraće"
+
+#~ msgid "Type:"
+#~ msgstr "Typ:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Wubjerće identitu:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Přizjewjenje wot mobilneho telefona"
+
+#~ msgid "Recover from email"
+#~ msgstr "Z e-mejle wobnowić"
+
+#~ msgid "Not Signed"
+#~ msgstr "Njesignowany"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Dokument je digitalnje signowany a signatura je płaćiwa."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Signowany a wobkrućeny"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Tutón dokument ma njepłaćiwu signaturu."
+
+#~ msgid "Signature broken"
+#~ msgstr "Signatura je wobškodźena"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Signatura bě płaćiwa, ale dokument je so změnił"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Signowany, ale dokument je změnjeny"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Signatura je w porjadku, ale certifikat njeda so přepruwować."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Signowany, ale njewobkrućeny"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Signatura je w porjadku, ale dokument je jenož zdźěla signowany"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Signowany, ale nic wšě dataje su signowane"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Nowa dataja so z předłohi wutworja..."

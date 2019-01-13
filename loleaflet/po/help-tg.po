@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0200\n"
+"POT-Creation-Date: 2019-01-13 21:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,9 +133,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:44-58
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-58
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:165-58
-#, fuzzy
 msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Shift + ?"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-18
@@ -532,9 +531,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-66
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-66
-#, fuzzy
 msgid "Ctrl + End"
-msgstr "Ctrl + Z"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Go and select text to end of document"
@@ -607,18 +605,16 @@ msgid "Delete to end of word"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-66
-#, fuzzy
 msgid "Ctrl + Del"
-msgstr "Ctrl + Z"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-18
 msgid "Delete to beginning of sentence"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-76
-#, fuzzy
 msgid "Ctrl + Shift + Backspace"
-msgstr "Ctrl + Shift + ?"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 msgid "Delete to end of sentence"

@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /zh_TW/libo_online/loleaflet-ui-zh_TW.po\n"
-"X-Pootle-Revision: 3609394\n"
+"X-Pootle-Revision: 3650849\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "您確定要刪除這個頁面？"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "文件修復"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "取消搜尋"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "無使用者"
+msgstr "0 位使用者"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -622,11 +624,11 @@ msgstr "右邊距"
 msgid "Downloading..."
 msgstr "下載中..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "儲存中..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "此 %productName 版本源自"
 
@@ -719,7 +721,7 @@ msgstr "提供的密碼錯誤。請重試。"
 msgid "Connecting..."
 msgstr "連接中..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -840,15 +842,15 @@ msgstr "修改"
 msgid "Remove"
 msgstr "移除"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "初始化中..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "非使用中文件 - 請點按按鍵繼續編輯"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "載入中..."
 
@@ -860,26 +862,63 @@ msgstr "上傳中..."
 msgid "Creating copy..."
 msgstr "製作副本中..."
 
-#~ msgid "Textwrap"
-#~ msgstr "文字環繞"
+#~ msgid "Select passport"
+#~ msgstr "選擇通行護照"
 
-#~ msgid "No wrap"
-#~ msgstr "不環繞"
+#~ msgid "Passport: N/A"
+#~ msgstr "通行護照：無法使用"
 
-#~ msgid "Page wrap"
-#~ msgstr "頁面環繞"
+#~ msgid "Status:"
+#~ msgstr "狀態："
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "僅環繞錨定"
+#~ msgid "N/A"
+#~ msgstr "無法使用"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "理想環繞"
+#~ msgid "Login"
+#~ msgstr "登入"
 
-#~ msgid "Left wrap"
-#~ msgstr "左側環繞"
+#~ msgid "Close"
+#~ msgstr "關閉"
 
-#~ msgid "Right wrap"
-#~ msgstr "右側環繞"
+#~ msgid "Last modification"
+#~ msgstr "上次修改"
 
-#~ msgid "Wrap through"
-#~ msgstr "穿繞式環繞"
+#~ msgid "PIN Code"
+#~ msgstr "PIN 碼"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "以電子郵件或行動電話登入"
+
+#~ msgid "Document uploaded."
+#~ msgstr "文件已上傳。"
+
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "類型"
+
+#~ msgid "Select identity:"
+#~ msgstr "選取身份："
+
+#~ msgid "Login from mobile"
+#~ msgstr "以手機登入"
+
+#~ msgid "Recover from email"
+#~ msgstr "以電子郵件復原"
+
+#~ msgid "Not Signed"
+#~ msgstr "未簽署"
+
+#~ msgid "Signed and validated"
+#~ msgstr "已簽署和驗證"
+
+#~ msgid "Signature broken"
+#~ msgstr "簽章損毀"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "已簽署但文件已修改"
+
+#~ msgid "Signed but not validated"
+#~ msgstr "已簽署但驗證未過"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "有簽署但非所有檔案皆簽署"

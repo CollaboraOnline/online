@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /hi/libo_online/loleaflet-ui-hi.po\n"
-"X-Pootle-Revision: 3609084\n"
+"X-Pootle-Revision: 3650683\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -222,7 +223,7 @@ msgstr "क्या आप निश्चित हैं कि आप इस
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "दस्तावेज़ मरम्मत"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -310,8 +311,9 @@ msgid "Cancel the search"
 msgstr "खोज रद्द करें"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "कोइ उपयोक्ता नहीं"
+msgstr "० उपयोक्ता"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -627,11 +629,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr "डाउनलोड कीया जा रहा है"
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "सहेजा जा रहा है..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "यह %productName का संस्करण इ्स द्वारा संचालित है"
 
@@ -726,7 +728,7 @@ msgstr "गलत कूटशब्द दिया गया है। कृ�
 msgid "Connecting..."
 msgstr "सर्वर से संपर्क हो रहा हैं ..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -870,15 +872,15 @@ msgstr "बदलें"
 msgid "Remove"
 msgstr "मिटाएँ"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "आरंभ हो रहा है..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "निष्क्रिय दस्तावेज़ - संपादन करने के लिये कृप्या क्लिक करें।"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "लोड कर रहा है..."
 
@@ -890,26 +892,6 @@ msgstr "अपलोडिंग ..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Textwrap"
-#~ msgstr "शब्दों को अलग रखें"
-
-#~ msgid "No wrap"
-#~ msgstr "मत लपेटेेेें"
-
-#~ msgid "Page wrap"
-#~ msgstr "पृष्ठ लपेटें"
-
-#~ msgid "Wrap anchor only"
-#~ msgstr "केवल लंगर लपेटें"
-
-#~ msgid "Ideal wrap"
-#~ msgstr "आदर्श लपेट"
-
-#~ msgid "Left wrap"
-#~ msgstr "बायां लपेट"
-
-#~ msgid "Right wrap"
-#~ msgstr "दाहिना लपेट"
-
-#~ msgid "Wrap through"
-#~ msgstr "इससे होकर लपेटें"
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "क़िस्म"

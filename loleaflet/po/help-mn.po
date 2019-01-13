@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0200\n"
+"POT-Creation-Date: 2019-01-13 21:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -603,9 +603,8 @@ msgid "Delete to beginning of sentence"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-76
-#, fuzzy
 msgid "Ctrl + Shift + Backspace"
-msgstr "Ctrl + Shift + ?"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 msgid "Delete to end of sentence"
@@ -799,9 +798,8 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:128-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:212-93
-#, fuzzy
 msgid "Ctrl + Enter"
-msgstr "Ctrl + E"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:129-18
 msgid "Column break (in multicolumnar text)"

@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /dsb/libo_online/loleaflet-ui-dsb.po\n"
-"X-Pootle-Revision: 3609353\n"
+"X-Pootle-Revision: 3651070\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -224,7 +225,7 @@ msgstr "Cośo toś ten bok napšawdu lašowaś?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Dokument pórěźiś"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -311,8 +312,9 @@ msgid "Cancel the search"
 msgstr "Pytanje pśetergnuś"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Žedne wužywarje"
+msgstr "0 wužywarjow"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -628,11 +630,11 @@ msgstr "Pšawa kšoma"
 msgid "Downloading..."
 msgstr "Ześěgujo se..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Składujo se..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Toś ta wersija %productName spěchujo se wót"
 
@@ -734,7 +736,7 @@ msgstr "Wopacne gronidło pódane. Pšosym wopytajśo hyšći raz."
 msgid "Connecting..."
 msgstr "Zwězujo se..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -883,15 +885,15 @@ msgstr "Změniś"
 msgid "Remove"
 msgstr "Wótwónoźeś"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Inicializěrujo se..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktiwny dokument - pšosym klikniśo, aby z wobźěłowanim pókšacował"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Cyta se..."
 
@@ -903,26 +905,107 @@ msgstr "Nagrawa se..."
 msgid "Creating copy..."
 msgstr "Kopija se napórajo..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Tekstowy woběg"
+#~ msgid "Select passport"
+#~ msgstr "Pas wubraś"
 
-#~ msgid "No wrap"
-#~ msgstr "Žeden woběg"
+#~ msgid "Passport: N/A"
+#~ msgstr "Pas: ND"
 
-#~ msgid "Page wrap"
-#~ msgstr "Woběg boka"
+#~ msgid "Sign & Upload"
+#~ msgstr "Signěrowaś a nagraś"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Jano woběg kokulki"
+#~ msgid "Sign and upload document"
+#~ msgstr "Signěrowaś a dokument nagraś"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Idealny woběg"
+#~ msgid "Status:"
+#~ msgstr "Status:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Lěwy woběg"
+#~ msgid "N/A"
+#~ msgstr "ND"
 
-#~ msgid "Right wrap"
-#~ msgstr "Pšawy woběg"
+#~ msgid "Login"
+#~ msgstr "Pśizjawjenje"
 
-#~ msgid "Wrap through"
-#~ msgstr "Pśeběg"
+#~ msgid "Close"
+#~ msgstr "Zacyniś"
+
+#~ msgid "Last modification"
+#~ msgstr "Slědna změna"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Pšosym zapódajśo PIN-kod"
+
+#~ msgid "Error at login."
+#~ msgstr "Zmólka pśi přizjawjenju."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Pšosym skannujśo kod"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Wobraz QR-koda njedajo se wobstaraś"
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Zmólka pśi wopyśe, pśistup na identitu wótnowiś."
+
+#~ msgid "PIN Code"
+#~ msgstr "PIN-kod"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Pšosym zapódajśo PIN-kod z mejlki abo SMS"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Pśizjawjenje z e-mailu abo numerom mobilnego telefona"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument jo se nagrał."
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Wubjeŕśo dokumentowy typ za nagraśe"
+
+#~ msgid "Type:"
+#~ msgstr "Typ:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Wubjeŕśo identitu:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Pśizjawjenje wót mobilnego telefona"
+
+#~ msgid "Recover from email"
+#~ msgstr "Z e-maile wótnowiś"
+
+#~ msgid "Not Signed"
+#~ msgstr "Njesigněrowany"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Dokument jo digitalnje signěrowany a signatura jo płaśiwa."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Signěrowany a wobkšuśony"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Toś ten dokument ma njepłaśiwu signaturu."
+
+#~ msgid "Signature broken"
+#~ msgstr "Signatura jo wobškóźona"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Signatura jo była płaśiwa, ale dokument jo se změnił"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Signěrowany, ale dokument jo změnjony"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Signatura jo w pórěźe, ale certifikat njedajo se pśeglědowaś."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Signěrowany, ale njewobkšuśony"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Signatura jo w pórědku, ale dokument jo jano signěrowany pó źělach"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Signěrowany, ale nic wšykne dataje su signěrowane"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Nowa dataja se z pśedłogi napórajo..."

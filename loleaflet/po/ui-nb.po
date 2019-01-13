@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-ui-nb.po\n"
-"X-Pootle-Revision: 3622262\n"
+"X-Pootle-Revision: 3650751\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -221,7 +222,7 @@ msgstr "Er du sikker på at du vil slette denne siden?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Dokument gjenoppretting"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -308,6 +309,7 @@ msgid "Cancel the search"
 msgstr "Avbryt søket"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
 msgstr "Ingen brukere."
 
@@ -625,11 +627,11 @@ msgstr "Høyre marg"
 msgid "Downloading..."
 msgstr "Laster ned …"
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Lagrer..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Denne versjonen av %productName kjøres på"
 
@@ -730,7 +732,7 @@ msgstr "Feil passord. Prøv igjen:"
 msgid "Connecting..."
 msgstr "Kobler til …"
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -876,15 +878,15 @@ msgstr "Endre"
 msgid "Remove"
 msgstr "Slett"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Klargjør …"
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dkument, vennligs klikk for å fortsette redigering"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Laster …"
 
@@ -896,26 +898,63 @@ msgstr "Laster opp…"
 msgid "Creating copy..."
 msgstr "Lager en kopi...."
 
-#~ msgid "Textwrap"
-#~ msgstr "Tektbryting"
+#~ msgid "Select passport"
+#~ msgstr "Velg pass"
 
-#~ msgid "No wrap"
-#~ msgstr "Ingen tekstbryting"
+#~ msgid "Passport: N/A"
+#~ msgstr "Pass ikke tilgjengelig"
 
-#~ msgid "Page wrap"
-#~ msgstr "Sidebryting"
+#~ msgid "Status:"
+#~ msgstr "Status"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Bryt kun forankring"
+#~ msgid "N/A"
+#~ msgstr "N/A"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Optimal bryting"
+#~ msgid "Login"
+#~ msgstr "Logg inn"
 
-#~ msgid "Left wrap"
-#~ msgstr "Tekstbryting til venstre"
+#~ msgid "Close"
+#~ msgstr "Steng"
 
-#~ msgid "Right wrap"
-#~ msgstr "Tekstbryting til høyre"
+#~ msgid "Last modification"
+#~ msgstr "Siste endring"
 
-#~ msgid "Wrap through"
-#~ msgstr "Bryt gjennom"
+#~ msgid "PIN Code"
+#~ msgstr "PIN kode"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Logg inn fra e-post eller mobilnummer"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument lastet opp."
+
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Type"
+
+#~ msgid "Select identity:"
+#~ msgstr "Velg identitet:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Logg inn fra mobil"
+
+#~ msgid "Recover from email"
+#~ msgstr "Gjenopprett fra e--post"
+
+#~ msgid "Not Signed"
+#~ msgstr "Ikke signert"
+
+#~ msgid "Signed and validated"
+#~ msgstr "Signert og validert"
+
+#~ msgid "Signature broken"
+#~ msgstr "Signaturen er brutt"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Signert, men dokumentet er midifisert"
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Signert, men ikke validert"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Dokumentet er signert, men ikke alle filene er signert."

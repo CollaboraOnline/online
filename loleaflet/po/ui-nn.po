@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /nn/libo_online/loleaflet-ui-nn.po\n"
-"X-Pootle-Revision: 3609693\n"
+"X-Pootle-Revision: 3650757\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -223,7 +224,7 @@ msgstr "Er du sikker på at du vil sletta denne sida?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Dokumentgjenoppretting"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -310,8 +311,9 @@ msgid "Cancel the search"
 msgstr "Avbryt søket"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Ingen brukarar"
+msgstr "0 brukarar"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -627,11 +629,11 @@ msgstr "Høgremarg"
 msgid "Downloading..."
 msgstr "Lastar ned …"
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Lagrar …"
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Denne versjonen av %productName vert driven av"
 
@@ -731,7 +733,7 @@ msgstr "Feil passord. Prøv igjen:"
 msgid "Connecting..."
 msgstr "Koplar til …"
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -878,15 +880,15 @@ msgstr "Endra"
 msgid "Remove"
 msgstr "Fjern"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Klargjer …"
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dokument, klikk for å halda fram med redigeringa"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Lastar ..."
 
@@ -898,26 +900,63 @@ msgstr "Lastar opp ..."
 msgid "Creating copy..."
 msgstr "Lagar kopi …"
 
-#~ msgid "Textwrap"
-#~ msgstr "Tekstbryting"
+#~ msgid "Select passport"
+#~ msgstr "Vel nøkkel"
 
-#~ msgid "No wrap"
-#~ msgstr "Inga tekstbryting"
+#~ msgid "Passport: N/A"
+#~ msgstr "Nøkkelen I/T"
 
-#~ msgid "Page wrap"
-#~ msgstr "Tekstbryting på sida"
+#~ msgid "Status:"
+#~ msgstr "Status:"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Bryt berre forankring"
+#~ msgid "N/A"
+#~ msgstr "I/T"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Beste bryting"
+#~ msgid "Login"
+#~ msgstr "Login"
 
-#~ msgid "Left wrap"
-#~ msgstr "Tekstbryting til venstre"
+#~ msgid "Close"
+#~ msgstr "Lukk"
 
-#~ msgid "Right wrap"
-#~ msgstr "Tekstbryting til høgre"
+#~ msgid "Last modification"
+#~ msgstr "Siste endring"
 
-#~ msgid "Wrap through"
-#~ msgstr "Tekstflyt"
+#~ msgid "PIN Code"
+#~ msgstr "PIN-kode"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Logg inn frå e-post eller mobilnummer"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument er lasta opp."
+
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Type"
+
+#~ msgid "Select identity:"
+#~ msgstr "Vel identitet:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Logg inn frå mobil"
+
+#~ msgid "Recover from email"
+#~ msgstr "Gjenopprett frå e-post"
+
+#~ msgid "Not Signed"
+#~ msgstr "Ikkje signert"
+
+#~ msgid "Signed and validated"
+#~ msgstr "Signert og validert"
+
+#~ msgid "Signature broken"
+#~ msgstr "Signaturen er øydelagt"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Signert, men dokumentet er endra"
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Signert men ikkje validert"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Signert, men ikkje alle filene er signerte."

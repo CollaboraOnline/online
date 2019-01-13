@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
-"X-Pootle-Revision: 3609508\n"
+"X-Pootle-Revision: 3652310\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -224,7 +225,7 @@ msgstr "Ziur orri hau ezabatu nahi duzula?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Dokumentu konponketa"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -311,8 +312,9 @@ msgid "Cancel the search"
 msgstr "Utzi bilaketa"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Erabiltzailerik ez"
+msgstr "0 erabiltzaile"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -628,11 +630,11 @@ msgstr "Eskuineko marjina"
 msgid "Downloading..."
 msgstr "Deskargatzen..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Gordetzen..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "%productName bertsio honen oinarria"
 
@@ -732,7 +734,7 @@ msgstr "Pasahitz okerra. Saiatu berriro."
 msgid "Connecting..."
 msgstr "Konektatzen..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -883,46 +885,127 @@ msgstr "Aldatu"
 msgid "Remove"
 msgstr "Kendu"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Hasieratzen..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Dokumentu ez aktiboa - Egin klik edizioari berrekiteko"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Kargatzen..."
 
 #: src/map/handler/Map.FileInserter.js:82
 msgid "Uploading..."
-msgstr "Igotzen..."
+msgstr "Kargatzen..."
 
 #: src/map/handler/Map.WOPI.js:273
 msgid "Creating copy..."
 msgstr "Kopia sortzen..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Testua itzulbiratzea"
+#~ msgid "Select passport"
+#~ msgstr "Hautatu pasaportea"
 
-#~ msgid "No wrap"
-#~ msgstr "Ez itzulbiratu"
+#~ msgid "Passport: N/A"
+#~ msgstr "Pasaportea: N/A"
 
-#~ msgid "Page wrap"
-#~ msgstr "Orrialde-itzulbiratzea"
+#~ msgid "Sign & Upload"
+#~ msgstr "Sinatu eta kargatu"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Itzulbiratu aingura besterik ez"
+#~ msgid "Sign and upload document"
+#~ msgstr "Sinatu eta kargatu dokumentua"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Itzulbiratze ideala"
+#~ msgid "Status:"
+#~ msgstr "Egoera:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Ezker-itzulbira"
+#~ msgid "N/A"
+#~ msgstr "E/E"
 
-#~ msgid "Right wrap"
-#~ msgstr "Eskuin-itzulbira"
+#~ msgid "Login"
+#~ msgstr "Saio-hasiera"
 
-#~ msgid "Wrap through"
-#~ msgstr "Zeharkatu"
+#~ msgid "Close"
+#~ msgstr "Itxi"
+
+#~ msgid "Last modification"
+#~ msgstr "Azken aldaketa"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Sartu PIN kodea"
+
+#~ msgid "Error at login."
+#~ msgstr "Errorea saioa hastean."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Eskaneatu kodea"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Ezin izan da QR kodearen irudia atzitu."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Errorea nortasuna atzitzeko eskubideak leheneratzean."
+
+#~ msgid "PIN Code"
+#~ msgstr "PIN kodea"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Sartu posta elektronikoko edo SMSko PIN kodea"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Hasi saioa posta bidez edo sakelakoaren zenbakiaren bidez"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokumentua kargatu da."
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Hautatu kargatuko den dokumentu mota"
+
+#~ msgid "Type:"
+#~ msgstr "Mota:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Hautatu nortasuna:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Hasi saioa sakelakotik"
+
+#~ msgid "Recover from email"
+#~ msgstr "Berreskuratu posta elektroniko bidez"
+
+#~ msgid "Not Signed"
+#~ msgstr "Sinatu gabea"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Dokumentu honek sinadura digitala du eta sinadura baliozkoa da."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Sinatua eta balioztatua"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Dokumentu honek baliogabeko sinadura du."
+
+#~ msgid "Signature broken"
+#~ msgstr "Sinadura hautsia"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Sinadura baliozkoa da, baina dokumentua aldatua izan da"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Sinatua baina dokumentua aldatua"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Sinadura ongi dago, baina ziurtagiria ezin izan da balioztatu."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Sinatua baina balioztatu gabea"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Sinadura ondo dago, baina dokumentua partzialki sinatuta dago."
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Sinatua baina fitxategi guztiak ez daude sinatuta"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Fitxategi berria sortzen txantiloitik..."

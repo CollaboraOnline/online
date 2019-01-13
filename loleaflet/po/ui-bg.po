@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /bg/libo_online/loleaflet-ui-bg.po\n"
-"X-Pootle-Revision: 3609644\n"
+"X-Pootle-Revision: 3674494\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "Наистина ли искате да изтриете тази стр
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Поправяне на документ"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "Отказ от търсенето"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Няма потребители"
+msgstr "0 потребители"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -624,11 +626,11 @@ msgstr "Дясно поле"
 msgid "Downloading..."
 msgstr "Протича изтегляне..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Протича записване..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Тази версия на %productName се поддържа от"
 
@@ -728,7 +730,7 @@ msgstr "Въведена е погрешна парола. Моля, опита�
 msgid "Connecting..."
 msgstr "Протича свързване..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -877,15 +879,15 @@ msgstr "Променяне"
 msgid "Remove"
 msgstr "Премахване"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Протича инициализиране..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Неактивен документ - щракнете за редактиране"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Протича зареждане..."
 
@@ -897,26 +899,107 @@ msgstr "Протича качване..."
 msgid "Creating copy..."
 msgstr "Създава се копие..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Обтичане с текст"
+#~ msgid "Select passport"
+#~ msgstr "Избор на паспорт"
 
-#~ msgid "No wrap"
-#~ msgstr "Без обтичане"
+#~ msgid "Passport: N/A"
+#~ msgstr "Паспорт: N/A"
 
-#~ msgid "Page wrap"
-#~ msgstr "Обтичане по страницата"
+#~ msgid "Sign & Upload"
+#~ msgstr "Подписване и качване"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Само котвата"
+#~ msgid "Sign and upload document"
+#~ msgstr "Подписване и качване на документа"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Оптимално обтичане"
+#~ msgid "Status:"
+#~ msgstr "Състояние:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Обтичане отляво"
+#~ msgid "N/A"
+#~ msgstr "N/A"
 
-#~ msgid "Right wrap"
-#~ msgstr "Обтичане отдясно"
+#~ msgid "Login"
+#~ msgstr "Влизане"
 
-#~ msgid "Wrap through"
-#~ msgstr "Изливане през обекта"
+#~ msgid "Close"
+#~ msgstr "Затваряне"
+
+#~ msgid "Last modification"
+#~ msgstr "Последна промяна"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Моля, въведете ПИН кода"
+
+#~ msgid "Error at login."
+#~ msgstr "Грешка при влизане."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Моля, сканирайте кода"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Грешка при заснемане на QR кода."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Грешка при опит за възстановяване на достъп до самоличност."
+
+#~ msgid "PIN Code"
+#~ msgstr "ПИН код"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Моля, въведете ПИН кода, получен по е-поща или SMS"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Влизане от е-поща или мобилен номер"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Документът е качен."
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Изберете типа на документа за качване"
+
+#~ msgid "Type:"
+#~ msgstr "Тип:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Изберете самоличност:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Влизане от мобилно устройство"
+
+#~ msgid "Recover from email"
+#~ msgstr "Възстановяване от е-поща"
+
+#~ msgid "Not Signed"
+#~ msgstr "Неподписан"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Документът е подписан с валиден електронен подпис."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Подписан и проверен"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Подписът на документа е невалиден."
+
+#~ msgid "Signature broken"
+#~ msgstr "Невалиден подпис"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Подписът е бил валиден, но документът е променен."
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Подписан, но променен документ"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Подписът е наред, но валидността на сертификата не може да се провери."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Подписан, но непроверен"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Подписът е наред, но документът е подписан само частично."
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Подписан, но не всички файлове"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Създава се нов файл от шаблон..."

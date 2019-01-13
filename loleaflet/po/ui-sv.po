@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /sv/libo_online/loleaflet-ui-sv.po\n"
-"X-Pootle-Revision: 3609208\n"
+"X-Pootle-Revision: 3650807\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -222,7 +223,7 @@ msgstr "Är du säker på att du vill ta bort denna sida?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Reparera dokument"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -309,6 +310,7 @@ msgid "Cancel the search"
 msgstr "Avbryt sökning"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
 msgstr "Inga användare"
 
@@ -626,11 +628,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr "Hämtar..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Sparar..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Denna version av %productName drivs av"
 
@@ -725,7 +727,7 @@ msgstr "Felaktigt lösenord. Försök igen."
 msgid "Connecting..."
 msgstr "Ansluter..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -869,15 +871,15 @@ msgstr "Ändra"
 msgid "Remove"
 msgstr "Ta bort"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Initierar..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dokument - klicka för att fortsätta redigera."
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Läser in..."
 
@@ -889,20 +891,6 @@ msgstr "Laddar upp..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Textwrap"
-#~ msgstr "Radbrytning"
-
-#~ msgid "No wrap"
-#~ msgstr "Ingen brytning"
-
-#~ msgid "Page wrap"
-#~ msgstr "Sidanpassning"
-
-#~ msgid "Left wrap"
-#~ msgstr "Textanpassning vänster"
-
-#~ msgid "Right wrap"
-#~ msgstr "Textanpassning höger"
-
-#~ msgid "Wrap through"
-#~ msgstr "Textgenomflöde"
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Typ"

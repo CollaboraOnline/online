@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-ui-cy.po\n"
-"X-Pootle-Revision: 3609665\n"
+"X-Pootle-Revision: 3673193\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r dudalen hon?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Trwsio dogfennau"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "Diddymu'r chwilio"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Dim defnyddwyr"
+msgstr "0 defnyddwyr"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -624,11 +626,11 @@ msgstr "Ymyl Dde"
 msgid "Downloading..."
 msgstr "Wrthi'n Llwytho i Lawr..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Yn cadw..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Mae'r fersiwn yma o %productName yn cael ei yrru gan"
 
@@ -728,7 +730,7 @@ msgstr "Wedi darparu cyfrinair anghywir. Ceisiwch eto."
 msgid "Connecting..."
 msgstr "Cysylltu..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -875,15 +877,15 @@ msgstr "Newid"
 msgid "Remove"
 msgstr "Tynnu"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Cychwyn..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Dogfen anweithredol - cliciwch i ailgychwyn golygu"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Yn llwytho..."
 
@@ -895,26 +897,108 @@ msgstr "Yn llwytho..."
 msgid "Creating copy..."
 msgstr "Creu copi..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Amlapio Testun"
+#~ msgid "Select passport"
+#~ msgstr "Dewis pasbort"
 
-#~ msgid "No wrap"
-#~ msgstr "Dim amlapio"
+#~ msgid "Passport: N/A"
+#~ msgstr "Pasbort: Dim ar Gael"
 
-#~ msgid "Page wrap"
-#~ msgstr "Amlapio tudalen"
+#~ msgid "Sign & Upload"
+#~ msgstr "Llofnodi a Llwytho i Fyny"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Amlapio angor yn unig"
+#~ msgid "Sign and upload document"
+#~ msgstr "Llofnodi a llwytho dogfen i fyny"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Amlapio delfrydol"
+#~ msgid "Status:"
+#~ msgstr "Statws:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Amlapio i'r chwith"
+#~ msgid "N/A"
+#~ msgstr "Dim ar Gael"
 
-#~ msgid "Right wrap"
-#~ msgstr "Amlapio i'r dde"
+#~ msgid "Login"
+#~ msgstr "Mewngofnod"
 
-#~ msgid "Wrap through"
-#~ msgstr "Amlapio parhaus"
+#~ msgid "Close"
+#~ msgstr "Cau"
+
+#~ msgid "Last modification"
+#~ msgstr "Newid diwethaf"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Rhowch y Cod PIN"
+
+#~ msgid "Error at login."
+#~ msgstr "Gwall wrth fewngofnodi"
+
+#~ msgid "Please scan the code"
+#~ msgstr "Sganiwch y cod"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Methu cael y ddelwedd cod QR"
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Gwall wrth geisio adfer mynediad i hunainaeth."
+
+#~ msgid "PIN Code"
+#~ msgstr "Cod PIN"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Rhowch y cod PIN o'r E-bost neu SMS"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Mewngofndo o e-boost neu rif symudol"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dogfen wedi ei llwytho i fyny"
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Dewiswch y math o ddogfen i'w lwytho i fyny"
+
+#~ msgid "Type:"
+#~ msgstr "Math:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Dewis enw"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Mewngofnod o symudol"
+
+#~ msgid "Recover from email"
+#~ msgstr "Adfer o e-bost"
+
+#~ msgid "Not Signed"
+#~ msgstr "Heb lofnod"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Mae'r ddogfen wedi ei llofnodi'n ddigidol ac mae'r lofnod yn ddilys."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Llofnodwyd a gwiriwyd"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Mae gan y ddogfen hon lofnod annilys."
+
+#~ msgid "Signature broken"
+#~ msgstr "Llofnod wedi torri"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Roedd y llofnod y ddilys, ond mae'r ddogfen wedi ei newid"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Llofnodwyd ond mae'r ddogfen wedi ei newid."
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Mae'r llofnod yn iawn ond nid oedd modd dilysu'r dystysgrif."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Llofnodwyd ond heb ei dilysu"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr ""
+#~ "Mae'r llofnod yn iawn ond dim ond yn rhannol mae'r ddogfen wedi ei llofnodi"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Llofnodwyd ond nid yw'r holl ffeiliau wedi'u llofnodi"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Creu ffeil newydd o dempled..."

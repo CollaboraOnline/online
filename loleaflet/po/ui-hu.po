@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
-"X-Pootle-Revision: 3609261\n"
+"X-Pootle-Revision: 3694444\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -224,7 +225,7 @@ msgstr "Biztosan törli ezt az oldalt?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Dokumentum helyreállítása"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -311,6 +312,7 @@ msgid "Cancel the search"
 msgstr "Keresés leállítása"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
 msgstr "Nincsenek felhasználók"
 
@@ -629,11 +631,11 @@ msgstr "Jobb margó"
 msgid "Downloading..."
 msgstr "Letöltés…"
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Mentés…"
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "%productName verzióinformációk:"
 
@@ -734,7 +736,7 @@ msgstr "A megadott jelszó nem jó. Próbálja újra."
 msgid "Connecting..."
 msgstr "Kapcsolódás..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -884,15 +886,15 @@ msgstr "Módosítás"
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Előkészítés…"
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktív dokumentum – kattintson a szerkesztés folytatásához"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Betöltés…"
 
@@ -904,26 +906,108 @@ msgstr "Feltöltés…"
 msgid "Creating copy..."
 msgstr "Másolat létrehozása..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Szöveg körbefuttatása"
+#~ msgid "Select passport"
+#~ msgstr "Passport választása"
 
-#~ msgid "No wrap"
-#~ msgstr "Nincs körbefuttatás"
+#~ msgid "Passport: N/A"
+#~ msgstr "Passport: nincs"
 
-#~ msgid "Page wrap"
-#~ msgstr "Körbefuttatás minden oldalon"
+#~ msgid "Sign & Upload"
+#~ msgstr "Aláírás és feltöltés"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Csak horgony körbefuttatása"
+#~ msgid "Sign and upload document"
+#~ msgstr "Dokumentum aláírása és feltöltése"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Ideális körbefuttatás"
+#~ msgid "Status:"
+#~ msgstr "Állapot:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Körbefuttatás bal oldalon"
+#~ msgid "N/A"
+#~ msgstr "Nincs"
 
-#~ msgid "Right wrap"
-#~ msgstr "Körbefuttatás jobb oldalon"
+#~ msgid "Login"
+#~ msgstr "Bejelentkezés"
 
-#~ msgid "Wrap through"
-#~ msgstr "Keresztülfuttatás"
+#~ msgid "Close"
+#~ msgstr "Bezárás"
+
+#~ msgid "Last modification"
+#~ msgstr "Utolsó módosítás"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Adja meg a PIN kódot"
+
+#~ msgid "Error at login."
+#~ msgstr "Hiba a bejelentkezéskor."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Olvassa be a kódot"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "A QR kód nem elérhető."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr ""
+#~ "Hiba történt a személyazonossághoz való hozzáférés helyreállítása közben."
+
+#~ msgid "PIN Code"
+#~ msgstr "PIN-kód"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Adja meg a PIN kódot az emailből vagy SMS-ből"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Bejelentkezés e-mail vagy mobilszám alapján"
+
+#~ msgid "Document uploaded."
+#~ msgstr "A dokumentum feltöltve."
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Válassza ki a feltöltendő dokumentum típusát"
+
+#~ msgid "Type:"
+#~ msgstr "Típus:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Válasszon identitást:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Bejelentkezés mobillal"
+
+#~ msgid "Recover from email"
+#~ msgstr "Visszaállítás emailből"
+
+#~ msgid "Not Signed"
+#~ msgstr "Nincs aláírva"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "A dokumentum alá van írva, és az aláírás érvényes."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Aláírt és érvényes"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "A dokumentum aláírása nem érvényes."
+
+#~ msgid "Signature broken"
+#~ msgstr "Rossz aláírás"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Az aláírás érvényes, de a dokumentum módosítva lett"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Aláírt, de módosított dokumentum"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Az aláírás rendben van, de a tanúsítványt nem lehet érvényesíteni."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Aláírt, de nem érvényes"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Az aláírás rendben van, de a dokumentum csak részben van aláírva."
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Aláírt, de nem minden fájlon van aláírás"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Új fájl létrehozása sablonból..."

@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /am/libo_online/loleaflet-ui-am.po\n"
-"X-Pootle-Revision: 3608990\n"
+"X-Pootle-Revision: 3650589\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "በ እርግጥ ይህን ገጽ ማጥፋት ይፈልጋሉ?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "ሰነድ መጠገኛ"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -292,7 +293,7 @@ msgstr ""
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr ""
+msgstr "መውጫ"
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "ፍለጋውን መሰረዣ"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "ተጠቃሚዎች የሉም"
+msgstr "0 ተጠቃሚዎች"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -482,7 +484,7 @@ msgstr "ወደ ሁኔታ መዝለያ"
 
 #: src/control/Control.Menubar.js:21
 msgid "Share..."
-msgstr ""
+msgstr "ማካፈያ..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
 #: src/control/Control.Menubar.js:316
@@ -523,7 +525,7 @@ msgstr "መጠገኛ"
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:341
 msgid "Local Image..."
-msgstr ""
+msgstr "የ አካባቢ ምስል..."
 
 #: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
 msgid "All"
@@ -622,11 +624,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr "በማውረድ ላይ..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "በማስቀመጥ ላይ..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "ይህ እትም %productName የ ተሰናዳው በ"
 
@@ -717,7 +719,7 @@ msgstr "የ ተሳሳተ የ መግቢያ ቃል: እባክዎን እንደገ�
 msgid "Connecting..."
 msgstr "በ መገናኘት ላይ..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -851,15 +853,15 @@ msgstr "ማሻሻያ"
 msgid "Remove"
 msgstr "ማስወገጃ"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "በማስጀመር ላይ..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "ንቁ ያልሆነ ሰነድ - እባክዎን ይጫኑ ማረም ለ መቀጠል"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "በመጫን ላይ..."
 
@@ -871,26 +873,18 @@ msgstr "በ መጫን ላይ..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Textwrap"
-#~ msgstr "ጽሁፍ መጠቅለያ"
+#~ msgid "Status:"
+#~ msgstr "ሁኔታው:"
 
-#~ msgid "No wrap"
-#~ msgstr "መጠቅለያ የለም"
+#~ msgid "N/A"
+#~ msgstr "ዝ/አ"
 
-#~ msgid "Page wrap"
-#~ msgstr "ገጽ መጠቅለያ"
+#~ msgid "Login"
+#~ msgstr "መግቢያ"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "ማስቆሚያ ብቻ መጠቅለያ"
+#~ msgid "Close"
+#~ msgstr "መዝጊያ"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "ፍጹም መጠቅለያ"
-
-#~ msgid "Left wrap"
-#~ msgstr "በ ግራ መጠቅለያ"
-
-#~ msgid "Right wrap"
-#~ msgstr "በ ቀኝ መጠቅለያ"
-
-#~ msgid "Wrap through"
-#~ msgstr "በ ውስጡ መጠቅለያ"
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "አይነት"

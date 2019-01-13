@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /it/libo_online/loleaflet-ui-it.po\n"
-"X-Pootle-Revision: 3609098\n"
+"X-Pootle-Revision: 3650697\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -226,7 +227,7 @@ msgstr "Eliminare veramente questa pagina?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Riparazione dei documenti"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -246,7 +247,7 @@ msgstr "Inserisci forme"
 
 #: js/toolbar.js:689
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Inserisci immagine locale"
 
 #: js/toolbar.js:717 js/toolbar.js:1031
 msgid "Always follow the editor"
@@ -294,11 +295,11 @@ msgstr "Inserisci foglio"
 
 #: js/toolbar.js:946 src/control/Control.Menubar.js:30
 msgid "Sign document"
-msgstr ""
+msgstr "Firma documento"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr ""
+msgstr "Chiudi sessione"
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -313,8 +314,9 @@ msgid "Cancel the search"
 msgstr "Annulla la ricerca"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Nessun utente"
+msgstr "0 utenti"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -490,7 +492,7 @@ msgstr "Passa allo stato"
 
 #: src/control/Control.Menubar.js:21
 msgid "Share..."
-msgstr ""
+msgstr "Condividi..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
 #: src/control/Control.Menubar.js:316
@@ -531,7 +533,7 @@ msgstr "Ripara"
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:341
 msgid "Local Image..."
-msgstr ""
+msgstr "Immagine locale..."
 
 #: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
 msgid "All"
@@ -620,21 +622,21 @@ msgstr "Inserisci il nuovo nome del foglio"
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "Margine sinistro"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "Margine destro"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
 msgstr "Scaricamento in corso..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Salvataggio in corso..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Questa versione di %productName è alimentata da"
 
@@ -735,7 +737,7 @@ msgstr "La password è errata. Riprova."
 msgid "Connecting..."
 msgstr "Connessione..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -885,15 +887,15 @@ msgstr "Modifica"
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Inizializzazione in corso..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Documento inattivo - fai clic per riprendere le modifiche"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Caricamento in corso..."
 
@@ -903,28 +905,66 @@ msgstr "Caricamento..."
 
 #: src/map/handler/Map.WOPI.js:273
 msgid "Creating copy..."
-msgstr ""
+msgstr "Creazione della copia..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Scorrimento testo"
+#~ msgid "Select passport"
+#~ msgstr "Seleziona passaporto"
 
-#~ msgid "No wrap"
-#~ msgstr "Separato"
+#~ msgid "Passport: N/A"
+#~ msgstr "Passaporto: N/D"
 
-#~ msgid "Page wrap"
-#~ msgstr "Intorno"
+#~ msgid "Status:"
+#~ msgstr "Stato:"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Scorrimento solamente all'ancoraggio"
+#~ msgid "N/A"
+#~ msgstr "N/D"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Dinamico"
+#~ msgid "Login"
+#~ msgstr "Accedi"
 
-#~ msgid "Left wrap"
-#~ msgstr "Scorrimento a sinistra"
+#~ msgid "Close"
+#~ msgstr "Chiudi"
 
-#~ msgid "Right wrap"
-#~ msgstr "Scorrimento a destra"
+#~ msgid "Last modification"
+#~ msgstr "Ultima modifica"
 
-#~ msgid "Wrap through"
-#~ msgstr "Attraverso"
+#~ msgid "PIN Code"
+#~ msgstr "Codice PIN"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Accesso da e-mail o da numero mobile"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Documento caricato."
+
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Tipo"
+
+#~ msgid "Select identity:"
+#~ msgstr "Seleziona identità:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Accesso da dispositivo mobile"
+
+#~ msgid "Recover from email"
+#~ msgstr "Recupera da e-mail"
+
+#~ msgid "Not Signed"
+#~ msgstr "Non firmato"
+
+#~ msgid "Signed and validated"
+#~ msgstr "Firmato e convalidato"
+
+# Concordo con te. "danneggiata" è la traduzione corretta
+#~ msgid "Signature broken"
+#~ msgstr "Firma danneggiata"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Firmato ma il documento è modificato"
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Firmato ma non convalidato"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Firmato ma non tutti i file sono firmati"

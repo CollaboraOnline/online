@@ -1,6 +1,5 @@
 {
 "$1 of $2 records found":"Najdenih $1 od $2 zapisov",
-"%1 words, %2 characters":"%1 besed, %2 znakov",
 "A0":"A0",
 "A4":"A4",
 "Adding selection":"Izbiranje z dodajanjem",
@@ -237,6 +236,7 @@
 "Heading 8":"Naslov 8",
 "Heading 9":"Naslov 9",
 "Heading A0":"Naslov A0",
+"Heading A4":"Naslov A4",
 "Heading1":"Naslov1",
 "Hebrew":"hebrejski",
 "Hiligaynon":"hiligajnonski",
@@ -573,6 +573,7 @@
 "Tigrigna (Ethiopia)":"tigrajski (Etiopija)",
 "Title":"Naslov",
 "Title A0":"Naslov A0",
+"Title A4":"Naslov A4",
 "Title Only":"Samo naslov",
 "Title Slide":"Naslovna prosojnica",
 "Title and 2 Content":"Naslov in vsebini",

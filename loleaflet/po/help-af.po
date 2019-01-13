@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0200\n"
+"POT-Creation-Date: 2019-01-13 21:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /af/libo_online/loleaflet-help-af.po\n"
-"X-Pootle-Revision: 3620412\n"
+"X-Pootle-Revision: 3651727\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -155,7 +155,7 @@ msgstr "Ctrl + Shift + B"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "Verwyder direkte formatering"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-69
@@ -165,7 +165,7 @@ msgstr "Ctrl + M"
 #: html/loleaflet-help.html%2Bdiv.div.h2:49-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:170-9
 msgid "Paragraph formatting"
-msgstr ""
+msgstr "Paragraafformatering"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
@@ -195,7 +195,7 @@ msgstr "Ctrl + L"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:174-18
 msgid "Align Right"
-msgstr "Regsbelyn"
+msgstr "Belyn regs"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-56

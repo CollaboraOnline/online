@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /ko/libo_online/loleaflet-ui-ko.po\n"
-"X-Pootle-Revision: 3609118\n"
+"X-Pootle-Revision: 3650862\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "이 페이지를 정말 삭제하겠습니까?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "문서 복구"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -232,7 +233,7 @@ msgstr "테두리"
 
 #: js/toolbar.js:670
 msgid "More..."
-msgstr ""
+msgstr "더보기..."
 
 #: js/toolbar.js:682
 msgid "Insert shapes"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "검색 취소"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "사용자 없음"
+msgstr "사용자 0명"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -622,11 +624,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr "내려 받는 중..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "저장 중..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "%productName 의 이 버전 제공자: "
 
@@ -719,7 +721,7 @@ msgstr "암호가 틀렸습니다. 다시 시도하십시오"
 msgid "Connecting..."
 msgstr "연결하는 중.."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -843,15 +845,15 @@ msgstr "수정"
 msgid "Remove"
 msgstr "제거하기"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "초기화하는 중..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "비활성화된 문서 - 편집을 계속하려면 클릭하십시오."
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "불러오는 중..."
 
@@ -863,11 +865,6 @@ msgstr "업로드 중..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Textwrap"
-#~ msgstr "자동 줄 바꿈"
-
-#~ msgid "No wrap"
-#~ msgstr "줄 바꿈 없음"
-
-#~ msgid "Page wrap"
-#~ msgstr "페이지 줄 바꿈"
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "유형"

@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /vec/libo_online/loleaflet-ui-vec.po\n"
-"X-Pootle-Revision: 3609240\n"
+"X-Pootle-Revision: 3650839\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -224,7 +225,7 @@ msgstr "Sito securo de vołer ełiminar 'sta pàjina?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Reparasion de i documenti"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -311,8 +312,9 @@ msgid "Cancel the search"
 msgstr "Canseła el serca"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Nesun utente"
+msgstr "0 utenti"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -629,11 +631,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr ""
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr ""
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr ""
 
@@ -724,7 +726,7 @@ msgstr "Ła password ła ze zbajà. Inserìsiła da novo."
 msgid "Connecting..."
 msgstr ""
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -868,15 +870,15 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr ""
 
@@ -888,26 +890,6 @@ msgstr ""
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Textwrap"
-#~ msgstr "Adatasion testo"
-
-#~ msgid "No wrap"
-#~ msgstr "Sensa adatasion"
-
-#~ msgid "Page wrap"
-#~ msgstr "Adatasion pàjina"
-
-#~ msgid "Wrap anchor only"
-#~ msgstr "Adatasion soło a l'àncora"
-
-#~ msgid "Ideal wrap"
-#~ msgstr "Adatasion ideałe"
-
-#~ msgid "Left wrap"
-#~ msgstr "Adatasion a sanca"
-
-#~ msgid "Right wrap"
-#~ msgstr "Adatasion a drita"
-
-#~ msgid "Wrap through"
-#~ msgstr "Adatasion continua"
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Tipo"

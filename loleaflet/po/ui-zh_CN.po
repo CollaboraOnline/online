@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 3609248\n"
+"X-Pootle-Revision: 3650847\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -112,7 +113,7 @@ msgstr "内存图"
 
 #: admin/admin.strings.js:29
 msgid "CPU Graph"
-msgstr "CPU图"
+msgstr "CPU 图"
 
 #: admin/admin.strings.js:30
 msgid "Network Graph"
@@ -132,11 +133,11 @@ msgstr "内存统计的时间间隔（毫秒）"
 
 #: admin/admin.strings.js:34
 msgid "Cache size of CPU statistics"
-msgstr "CPU统计的缓存大小"
+msgstr "CPU 统计的缓存大小"
 
 #: admin/admin.strings.js:35
 msgid "Time interval of CPU statistics (in ms)"
-msgstr "CPU统计的时间间隔（毫秒）"
+msgstr "CPU 统计的时间间隔（毫秒）"
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -156,7 +157,7 @@ msgstr "文档:"
 
 #: admin/admin.strings.js:40
 msgid "Expired:"
-msgstr "失效："
+msgstr "失效:"
 
 #: admin/admin.strings.js:41
 msgid "Refresh"
@@ -188,7 +189,7 @@ msgstr "您确定要关闭服务器吗？"
 
 #: admin/src/Util.js:14
 msgid "kB"
-msgstr "KB"
+msgstr "kB"
 
 #: admin/src/Util.js:14
 msgid "MB"
@@ -204,15 +205,15 @@ msgstr "TB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
-msgstr " hrs"
+msgstr " 小时"
 
 #: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
-msgstr " mins"
+msgstr " 分钟"
 
 #: admin/src/Util.js:54
 msgid " s"
-msgstr " s"
+msgstr " 秒"
 
 #: js/toolbar.js:153
 msgid "Are you sure you want to delete this page?"
@@ -220,7 +221,7 @@ msgstr "您确定要删除该页面吗？"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "文档修复"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -240,7 +241,7 @@ msgstr "插入形状"
 
 #: js/toolbar.js:689
 msgid "Insert Local Image"
-msgstr ""
+msgstr "插入本地图像"
 
 #: js/toolbar.js:717 js/toolbar.js:1031
 msgid "Always follow the editor"
@@ -288,11 +289,11 @@ msgstr "插入工作表"
 
 #: js/toolbar.js:946 src/control/Control.Menubar.js:30
 msgid "Sign document"
-msgstr ""
+msgstr "签名文档"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr ""
+msgstr "退出"
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -300,15 +301,16 @@ msgstr "全屏演示"
 
 #: js/toolbar.js:1015
 msgid "Search:"
-msgstr "搜索："
+msgstr "搜索:"
 
 #: js/toolbar.js:1022
 msgid "Cancel the search"
 msgstr "取消搜索"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "无用户"
+msgstr "0 位用户"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -422,7 +424,7 @@ msgstr "下一张幻灯片"
 #: js/toolbar.js:1911
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "多个用户之间的撤销/重做发生了冲突。请使用文档恢复来解决冲突。"
+msgstr "多个用户之间的撤销/重做发生了冲突。请使用文档恢复来解决冲突"
 
 #: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
 msgid "You"
@@ -482,7 +484,7 @@ msgstr "跳转到状态"
 
 #: src/control/Control.Menubar.js:21
 msgid "Share..."
-msgstr ""
+msgstr "分享..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
 #: src/control/Control.Menubar.js:316
@@ -497,19 +499,19 @@ msgstr "下载为"
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:237
 #: src/control/Control.Menubar.js:318
 msgid "PDF Document (.pdf)"
-msgstr "PDF文档 (.pdf)"
+msgstr "PDF 文档 (.pdf)"
 
 #: src/control/Control.Menubar.js:26
 msgid "ODF text document (.odt)"
-msgstr "ODF文本文档 (.odt)"
+msgstr "ODF 文本文档 (.odt)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Word 2003 Document (.doc)"
-msgstr "Word 2003 文件 (.doc)"
+msgstr "Word 2003 文档 (.doc)"
 
 #: src/control/Control.Menubar.js:28
 msgid "Word Document (.docx)"
-msgstr "Word 文档(.docx)"
+msgstr "Word 文档 (.docx)"
 
 #: src/control/Control.Menubar.js:29
 msgid "Rich Text (.rtf)"
@@ -523,7 +525,7 @@ msgstr "修复"
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:341
 msgid "Local Image..."
-msgstr ""
+msgstr "本地图像…"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
 msgid "All"
@@ -531,7 +533,7 @@ msgstr "所有"
 
 #: src/control/Control.Menubar.js:134
 msgid "Text orientation"
-msgstr "文本方向"
+msgstr "文字方向"
 
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
 #: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:302
@@ -556,31 +558,31 @@ msgstr "关闭文档"
 
 #: src/control/Control.Menubar.js:238
 msgid "ODF presentation (.odp)"
-msgstr "ODF演示文稿 (.odp)"
+msgstr "ODF 演示文稿 (.odp)"
 
 #: src/control/Control.Menubar.js:239
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr "PowerPoint 2003 演示 (.ppt)"
+msgstr "PowerPoint 2003 演示文稿 (.ppt)"
 
 #: src/control/Control.Menubar.js:240
 msgid "PowerPoint Presentation (.pptx)"
-msgstr "PowerPoint 演示 (.pptx)"
+msgstr "PowerPoint 演示文稿 (.pptx)"
 
 #: src/control/Control.Menubar.js:319
 msgid "ODF spreadsheet (.ods)"
-msgstr "ODF电子表格 (.ods)"
+msgstr "ODF 电子表格 (.ods)"
 
 #: src/control/Control.Menubar.js:320
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr "Excel 2003 表格 (.xls)"
+msgstr "Excel 2003 电子表格 (.xls)"
 
 #: src/control/Control.Menubar.js:321
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr "Excel 表格 (.xlsx)"
+msgstr "Excel 电子表格 (.xlsx)"
 
 #: src/control/Control.Menubar.js:467
 msgid "Reset to Default Language"
-msgstr "重设为默认语言"
+msgstr "重置为默认语言"
 
 #: src/control/Control.Menubar.js:718
 msgid "Are you sure you want to delete this slide?"
@@ -604,7 +606,7 @@ msgstr "在后面插入工作表"
 
 #: src/control/Control.Tabs.js:61
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr "您确定要删除此工作表 %sheet% 吗？"
+msgstr "您确定要删除工作表 %sheet% 吗？"
 
 #: src/control/Control.Tabs.js:74
 msgid "Enter new sheet name"
@@ -612,21 +614,21 @@ msgstr "输入新的工作表名"
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "左边距"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "右边距"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
 msgstr "正在下载..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "正在保存..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "当前版本 %productName 的提供者为"
 
@@ -637,13 +639,13 @@ msgid ""
 "versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
-"IE11 已超过了其最大连接数限制。若需要增加连接数限制，请参考这个文档：https://docs.microsoft.com/en-us/"
+"IE11 已超过了其最大连接数限制。若需要增加连接数限制，请参考这个文档: https://docs.microsoft.com/en-us/"
 "previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:81
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "糟糕，连接到LibreOffice Online时出现了问题："
+msgstr "糟糕，连接到 LibreOffice Online 时出现了问题: "
 
 #: src/core/Socket.js:276
 msgid "Unsupported server version."
@@ -679,7 +681,7 @@ msgstr "文档已在服务器上被更改。正在加载新的文件，您编辑
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
-msgstr "恢复老版本。任何未保存的更改将会在版本历史中可用。"
+msgstr "恢复老版本。任何未保存的更改可在版本历史中查看"
 
 #: src/core/Socket.js:501
 msgid ""
@@ -719,7 +721,7 @@ msgstr "密码错误。请重试。"
 msgid "Connecting..."
 msgstr "正在连接..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -744,8 +746,8 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
-"这是{productname}受不支持的版本。为了避免让人觉得它适合在企业中部署，当超过{docs}个文档或超过{connections}个连接同时使用时"
-"，就会出现这个消息。"
+"这是 {productname} 不受支持的版本。为了避免让人觉得它适合在企业中部署，当同时使用超过 {docs} 个文档或超过 "
+"{connections} 个连接时，就会出现这个消息"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -840,15 +842,15 @@ msgstr "修改"
 msgid "Remove"
 msgstr "删除"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "正在初始化..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "文档已暂停，单击以继续编辑"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "正在载入..."
 
@@ -858,28 +860,65 @@ msgstr "正在上传..."
 
 #: src/map/handler/Map.WOPI.js:273
 msgid "Creating copy..."
-msgstr ""
+msgstr "正在创建副本…"
 
-#~ msgid "Textwrap"
-#~ msgstr "文字环绕"
+#~ msgid "Select passport"
+#~ msgstr "选择通行证"
 
-#~ msgid "No wrap"
-#~ msgstr "无环绕"
+#~ msgid "Passport: N/A"
+#~ msgstr "通行证: N/A"
 
-#~ msgid "Page wrap"
-#~ msgstr "页面环绕"
+#~ msgid "Status:"
+#~ msgstr "状态:"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "仅环绕锚定"
+#~ msgid "N/A"
+#~ msgstr "N/A"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "最佳环绕"
+#~ msgid "Login"
+#~ msgstr "登录"
 
-#~ msgid "Left wrap"
-#~ msgstr "左环绕"
+#~ msgid "Close"
+#~ msgstr "关闭"
 
-#~ msgid "Right wrap"
-#~ msgstr "右环绕"
+#~ msgid "Last modification"
+#~ msgstr "最后修改"
 
-#~ msgid "Wrap through"
-#~ msgstr "贯穿环绕"
+#~ msgid "PIN Code"
+#~ msgstr "密码"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "通过电子邮箱或手机号码登录"
+
+#~ msgid "Document uploaded."
+#~ msgstr "文档已上传。"
+
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "类型"
+
+#~ msgid "Select identity:"
+#~ msgstr "选择身份:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "通过手机登录"
+
+#~ msgid "Recover from email"
+#~ msgstr "通过电子邮箱恢复"
+
+#~ msgid "Not Signed"
+#~ msgstr "未签名"
+
+#~ msgid "Signed and validated"
+#~ msgstr "已签名并验证"
+
+#~ msgid "Signature broken"
+#~ msgstr "签名损坏"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "已签名但文档已修改"
+
+#~ msgid "Signed but not validated"
+#~ msgstr "已签名未验证"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "已签名但不是所有文件都有签名"

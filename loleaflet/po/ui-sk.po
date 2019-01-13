@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
-"X-Pootle-Revision: 3622118\n"
+"X-Pootle-Revision: 3652973\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -76,7 +77,7 @@ msgstr "Prijaté bajty"
 
 #: admin/admin.strings.js:20
 msgid "PID"
-msgstr "Identifikátor programu"
+msgstr "PID"
 
 #: admin/admin.strings.js:21
 msgid "Document"
@@ -222,7 +223,7 @@ msgstr "Naozaj chcete túto stranu odstrániť?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Obnoviť dokument"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -309,8 +310,9 @@ msgid "Cancel the search"
 msgstr "Zrušiť vyhľadávanie"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Žiadni používatelia"
+msgstr "Počet používateľov: 0"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -399,7 +401,7 @@ msgstr "1 používateľ"
 
 #: js/toolbar.js:1513
 msgid "0 users"
-msgstr "Žiadni používatelia"
+msgstr "Počet používateľov: 0"
 
 #: js/toolbar.js:1643
 msgid "Document saved"
@@ -626,11 +628,11 @@ msgstr "Pravý okraj"
 msgid "Downloading..."
 msgstr "Preberá sa…"
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Prebieha ukladanie..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Táto verzia of %productName bola vytvorená"
 
@@ -732,7 +734,7 @@ msgstr "Zadané nesprávne heslo, zopakujte."
 msgid "Connecting..."
 msgstr "Prebieha pripájanie…"
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -878,15 +880,15 @@ msgstr "Upraviť"
 msgid "Remove"
 msgstr "Odstrániť"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Prebieha inicializácia..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Neaktívny dokument - na pokračovanie kliknite myšou"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Načítava sa…"
 
@@ -898,26 +900,107 @@ msgstr "Načítava sa…"
 msgid "Creating copy..."
 msgstr "Vytváranie kópie..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Obtekanie textu"
+#~ msgid "Select passport"
+#~ msgstr "Zvoliť heslo"
 
-#~ msgid "No wrap"
-#~ msgstr "Bez obtekania"
+#~ msgid "Passport: N/A"
+#~ msgstr "Heslo: N/A"
 
-#~ msgid "Page wrap"
-#~ msgstr "Obtekanie strany"
+#~ msgid "Sign & Upload"
+#~ msgstr "Prihlásiť sa a nahrať"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Obtekať len ukotvenie"
+#~ msgid "Sign and upload document"
+#~ msgstr "Prihlásiť sa a nahrať dokument"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Ideálne obtekanie"
+#~ msgid "Status:"
+#~ msgstr "Stav:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Obtekanie vľavo"
+#~ msgid "N/A"
+#~ msgstr "N/A"
 
-#~ msgid "Right wrap"
-#~ msgstr "Obtekanie vpravo"
+#~ msgid "Login"
+#~ msgstr "Prihlásiť"
 
-#~ msgid "Wrap through"
-#~ msgstr "Obtekanie cez"
+#~ msgid "Close"
+#~ msgstr "Zatvoriť"
+
+#~ msgid "Last modification"
+#~ msgstr "Posledná zmena"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Vložte PIN kód"
+
+#~ msgid "Error at login."
+#~ msgstr "Chyba pri prihlasovaní"
+
+#~ msgid "Please scan the code"
+#~ msgstr "Zoskenujte kód"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Nepodarilo sa získať obrázok QR kódu"
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Chyba pri pokuse o obnovenie prístupu k identite."
+
+#~ msgid "PIN Code"
+#~ msgstr "PIN kód"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Vložte PIN kód z Emailu alebo SMS"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Prihlásiť sa z e-mailu nebo mobilného čísla"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument nahraný."
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Vybrať typ dokumentu na nahratie"
+
+#~ msgid "Type:"
+#~ msgstr "Typ:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Vyberať identitu:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Prihlásenie z mobilu"
+
+#~ msgid "Recover from email"
+#~ msgstr "Obnova z e-mailu"
+
+#~ msgid "Not Signed"
+#~ msgstr "Nepodpísané"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Tento dokument je elektronicky podpísaný platným podpisom."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Podepísané a validované"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Tento dokument má neplatný podpis."
+
+#~ msgid "Signature broken"
+#~ msgstr "Podpis je poškodený"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Podpis bol platný, ale dokument bol zmenený"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Podepísané, ale dokument bol zmenený"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Podpis je platný, nemožno však overiť certifikát."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Podpísaný, ale nie je validovaný"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Podpis je platný, ale dokument je podpísaný len čiastočne."
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Podpísané, ale nie všetky súbory sú podpísané"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Vytvára sa nový súbor zo šablóny..."

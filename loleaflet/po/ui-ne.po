@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /ne/libo_online/loleaflet-ui-ne.po\n"
-"X-Pootle-Revision: 3616645\n"
+"X-Pootle-Revision: 3650753\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "पृष्ठ मेट्न चाहनुमा विश्वस
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "कागजात मर्मत"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "खोज रद्द गर्नुहोस्"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "कुनै पनि प्रयोगकर्ता छैनन्"
+msgstr "0 प्रयोगकर्ता"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -624,11 +626,11 @@ msgstr "दायाँ सीमान्त"
 msgid "Downloading..."
 msgstr "डाउनलोड गर्दै..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "सङ्ग्रह गर्दै..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "द्वारा यो संस्करणको %productName संचालित छ"
 
@@ -730,7 +732,7 @@ msgstr "गलत पासवर्ड प्रदान गरियो। �
 msgid "Connecting..."
 msgstr "जडान गर्दै..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -877,15 +879,15 @@ msgstr "परिमार्जन गर्नुहोस्"
 msgid "Remove"
 msgstr "हटाउनुहोस्"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "थालनी गर्दै..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "निस्क्रिय कागजात - स्पादन पुनःसुरु गर्न क्लिक गर्नुहोस्"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "लोडहुँदै छ..."
 
@@ -897,26 +899,63 @@ msgstr "अपलोड हुँदैछ..."
 msgid "Creating copy..."
 msgstr "प्रतिलिपि बनाउदै..."
 
-#~ msgid "Textwrap"
-#~ msgstr "टेक्स्टर्‍याप"
+#~ msgid "Select passport"
+#~ msgstr "पासपोर्ट चयन गर्नुहोस्"
 
-#~ msgid "No wrap"
-#~ msgstr "नबेर्नुहोस्"
+#~ msgid "Passport: N/A"
+#~ msgstr "पासपोर्ट: लागु नहुने"
 
-#~ msgid "Page wrap"
-#~ msgstr "पृष्ठ बेर्ने"
+#~ msgid "Status:"
+#~ msgstr "स्थिति:"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "ऱयाप् एङ्कर मात्र"
+#~ msgid "N/A"
+#~ msgstr "लागु नहुने"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "आईडियल ऱयाप्"
+#~ msgid "Login"
+#~ msgstr "लग-इन गर्नुहोस्"
 
-#~ msgid "Left wrap"
-#~ msgstr "बायाँ बेर्नुहोस्"
+#~ msgid "Close"
+#~ msgstr "बन्द गर्नुहोस्"
 
-#~ msgid "Right wrap"
-#~ msgstr "दायाँ बेर्नुहोस्"
+#~ msgid "Last modification"
+#~ msgstr "अन्तिम संशोधन"
 
-#~ msgid "Wrap through"
-#~ msgstr "पूरै बेर्नुहोस्"
+#~ msgid "PIN Code"
+#~ msgstr "पिन कोड"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "ईमेल वा मोबाइल नम्बरबाट लग-इन गर्नुहोस्"
+
+#~ msgid "Document uploaded."
+#~ msgstr "कागजात अपलोड गरियो।"
+
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "प्रकार"
+
+#~ msgid "Select identity:"
+#~ msgstr "पहिचान चयन गर्नुहोस्:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "मोबाइलबाट लग-इन गर्नुहोस्"
+
+#~ msgid "Recover from email"
+#~ msgstr "ईमेल बाट पुनःप्राप्त गर्नुहोस्"
+
+#~ msgid "Not Signed"
+#~ msgstr "हस्ताक्षर गरिएको छैन"
+
+#~ msgid "Signed and validated"
+#~ msgstr "हस्ताक्षर र प्रमाणित गरियो"
+
+#~ msgid "Signature broken"
+#~ msgstr "हस्ताक्षर टूटेको छ"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "हस्ताक्षरित तर कागजात संशोधन गरिएको"
+
+#~ msgid "Signed but not validated"
+#~ msgstr "हस्ताक्षरित तर प्रमाणित छैन"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "हस्ताक्षरित तर सबै फाईलहरू हस्ताक्षर गरिएका छैनन्।"

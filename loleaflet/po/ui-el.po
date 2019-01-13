@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
-"X-Pootle-Revision: 3615433\n"
+"X-Pootle-Revision: 3694377\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -222,7 +223,7 @@ msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε 
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Επιδιόρθωση εγγράφου"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -309,8 +310,9 @@ msgid "Cancel the search"
 msgstr "Ακύρωση αναζήτησης"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Κανένας χρήστης"
+msgstr "0 χρήστες"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -626,11 +628,11 @@ msgstr "Δεξιό περιθώριο"
 msgid "Downloading..."
 msgstr "Μεταφορτώνεται..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Αποθήκευση..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Αυτή η έκδοση του %productName παρέχεται από"
 
@@ -733,7 +735,7 @@ msgstr "Εσφαλμένος κωδικός πρόσβασης. Παρακαλο
 msgid "Connecting..."
 msgstr "Συνδέεται..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -889,17 +891,17 @@ msgstr "Τροποποίηση"
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Αρχικοποίηση..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 "Ανενεργό έγγραφο - παρακαλούμε πατήστε (κλικ) για να συνεχίσετε την "
 "επεξεργασία"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Φόρτωση..."
 
@@ -911,26 +913,110 @@ msgstr "Ανεβαίνει..."
 msgid "Creating copy..."
 msgstr "Δημιουργείται αντίγραφο..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Αναδίπλωση κειμένου"
+#~ msgid "Select passport"
+#~ msgstr "Επιλογή διαβατηρίου"
 
-#~ msgid "No wrap"
-#~ msgstr "Χωρίς αναδίπλωση"
+#~ msgid "Passport: N/A"
+#~ msgstr "Διαβατήριο: Δ/Υ"
 
-#~ msgid "Page wrap"
-#~ msgstr "Αναδίπλωση σελίδας"
+#~ msgid "Sign & Upload"
+#~ msgstr "Υπογραφή & Ανέβασμα"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Αναδίπλωση μόνο της άγκυρας"
+#~ msgid "Sign and upload document"
+#~ msgstr "Υπογραφή και ανέβασμα εγγράφου"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Ιδανική αναδίπλωση"
+#~ msgid "Status:"
+#~ msgstr "Κατάσταση:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Αναδίπλωση αριστερά"
+#~ msgid "N/A"
+#~ msgstr "Δ/Υ"
 
-#~ msgid "Right wrap"
-#~ msgstr "Αναδίπλωση δεξιά"
+#~ msgid "Login"
+#~ msgstr "Σύνδεση"
 
-#~ msgid "Wrap through"
-#~ msgstr "Αναδίπλωση δια μέσου"
+#~ msgid "Close"
+#~ msgstr "Κλείσιμο"
+
+#~ msgid "Last modification"
+#~ msgstr "Τελευταία τροποποίηση"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Παρακαλούμε, εισάγετε τον κωδικό PIN"
+
+#~ msgid "Error at login."
+#~ msgstr "Σφάλμα στη σύνδεση."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Παρακαλούμε, σαρώστε τον κωδικό"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Αδυναμία λήψης της εικόνας κώδικα QR."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Σφάλμα κατά την προσπάθεια επαναφοράς της στην ταυτότητα."
+
+#~ msgid "PIN Code"
+#~ msgstr "Κωδικός PIN"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Παρακαλούμε, εισάγετε τον κωδικό PIN από ηλ. διεύθυνση ή SMS"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Σύνδεση από ηλ. διεύθυνση ή κινητό αριθμό"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Το έγγραφο ανέβηκε."
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Επιλέξτε τον τύπο εγγράφου για ανέβασμα"
+
+#~ msgid "Type:"
+#~ msgstr "Τύπος:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Επιλογή ταυτότητας:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Σύνδεση από κινητό"
+
+#~ msgid "Recover from email"
+#~ msgstr "Ανάκτηση από ηλ. διεύθυνση"
+
+#~ msgid "Not Signed"
+#~ msgstr "Μη υπογεγραμμένο"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr ""
+#~ "Αυτό το έγγραφο είναι ψηφιακά υπογεγραμμένο και η υπογραφή είναι έγκυρη."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Υπογεγραμμένο και επικυρωμένο"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Αυτό το έγγραφο έχει άκυρη υπογραφή."
+
+#~ msgid "Signature broken"
+#~ msgstr "Αλλοιωμένη υπογραφή"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Η υπογραφή ήταν έγκυρη, αλλά το έγγραφο έχει τροποποιηθεί"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Υπογεγραμμένο, αλλά το έγγραφο τροποποιήθηκε."
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr ""
+#~ "Η υπογραφή είναι εντάξει, αλλά το πιστοποιητικό δεν μπόρεσε να επικυρωθεί."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Υπογεγραμμένο αλλά μη επικυρωμένο"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr ""
+#~ "Η υπογραφή είναι εντάξει, αλλά το έγγραφο είναι μόνο μερικώς υπογεγραμμένο."
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Υπογεγραμμένο, αλλά δεν έχουν υπογραφεί όλα τα αρχεία."
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Δημιουργία νέου αρχείου από πρότυπο..."

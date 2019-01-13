@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 3613318\n"
+"X-Pootle-Revision: 3650633\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "Er du sikker på, at du vil slette denne side?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Dokumentreparation"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "Annullerer søgning"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Ingen brugere"
+msgstr "0 brugere"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -624,11 +626,11 @@ msgstr "Højre margin"
 msgid "Downloading..."
 msgstr "Downloader..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Gemmer..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Denne version af %productName drives af"
 
@@ -727,7 +729,7 @@ msgstr "Forkert adgangskode; prøv venligst igen:"
 msgid "Connecting..."
 msgstr "Forbinder..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -876,15 +878,15 @@ msgstr "Ændre"
 msgid "Remove"
 msgstr "Fjern"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Initialiserer..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dokument - klik for at genoptage redigering"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Indlæser..."
 
@@ -896,26 +898,63 @@ msgstr "Indlæser..."
 msgid "Creating copy..."
 msgstr "Oprette kopi..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Tekstombrydning"
+#~ msgid "Select passport"
+#~ msgstr "Vælg pas"
 
-#~ msgid "No wrap"
-#~ msgstr "Ingen ombrydning"
+#~ msgid "Passport: N/A"
+#~ msgstr "pas: N/A"
 
-#~ msgid "Page wrap"
-#~ msgstr "Sideombrydning"
+#~ msgid "Status:"
+#~ msgstr "Status:"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Ombryd kun anker"
+#~ msgid "N/A"
+#~ msgstr "N/A"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Optimal ombrydning"
+#~ msgid "Login"
+#~ msgstr "Login:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Venstre ombrydning"
+#~ msgid "Close"
+#~ msgstr "Luk"
 
-#~ msgid "Right wrap"
-#~ msgstr "Højre ombrydning"
+#~ msgid "Last modification"
+#~ msgstr "Seneste ændring"
 
-#~ msgid "Wrap through"
-#~ msgstr "Gennemgående ombrydning"
+#~ msgid "PIN Code"
+#~ msgstr "Pinkode"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Login fra email eller mobil"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument uploadet."
+
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Type"
+
+#~ msgid "Select identity:"
+#~ msgstr "Vælg identitet:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Login fra mobil"
+
+#~ msgid "Recover from email"
+#~ msgstr "Genskab fra email"
+
+#~ msgid "Not Signed"
+#~ msgstr "Ikke signeret"
+
+#~ msgid "Signed and validated"
+#~ msgstr "Signeret og valideret"
+
+#~ msgid "Signature broken"
+#~ msgstr "Signatur er defekt"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Signeret, men dokumentet ændret"
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Signeret, men ikke valideret"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Signeret, men ikke alle filer er signeret"

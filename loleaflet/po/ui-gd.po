@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /gd/libo_online/loleaflet-ui-gd.po\n"
-"X-Pootle-Revision: 3609074\n"
+"X-Pootle-Revision: 3650673\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -228,7 +229,7 @@ msgstr ""
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Càirich an sgrìobhainn"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -316,8 +317,9 @@ msgid "Cancel the search"
 msgstr "Sguir dhen lorg"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Gun chleachdaiche"
+msgstr "0 cleachdaiche"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -637,11 +639,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr "'Ga luchdadh a-nuas ..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "’Ga shàbhaladh..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "An tionndadh seo de %productName le cumhachd"
 
@@ -739,7 +741,7 @@ msgstr "Tha am facal-faire cearr. Feuch ris a-rithist."
 msgid "Connecting..."
 msgstr "A’ dèanamh ceangal..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -888,16 +890,16 @@ msgstr "Atharraich"
 msgid "Remove"
 msgstr "Thoir air falbh"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "’Ga thòiseachadh..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson leantainn air an deasachadh"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "’Ga luchdadh..."
 
@@ -909,26 +911,6 @@ msgstr "’Ga luchdadh suas..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Textwrap"
-#~ msgstr "Pasgadh an teacsa"
-
-#~ msgid "No wrap"
-#~ msgstr "Gun phasgadh"
-
-#~ msgid "Page wrap"
-#~ msgstr "Pasgadh na duilleige"
-
-#~ msgid "Wrap anchor only"
-#~ msgstr "Na paisg ach an acair"
-
-#~ msgid "Ideal wrap"
-#~ msgstr "Pasgadh as fhearr"
-
-#~ msgid "Left wrap"
-#~ msgstr "Pasgadh clì"
-
-#~ msgid "Right wrap"
-#~ msgstr "Pasgadh deas"
-
-#~ msgid "Wrap through"
-#~ msgstr "Paisg troimhe"
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Seòrsa"

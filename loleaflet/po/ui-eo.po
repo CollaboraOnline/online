@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
-"X-Pootle-Revision: 3609052\n"
+"X-Pootle-Revision: 3650651\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "Ĉu vi certe volas forigi ĉi tiun paĝon?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Ripari dokumenton"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "Nuligi serĉon"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Neniu uzanto"
+msgstr "0 uzantoj"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -624,11 +626,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr "Elŝutas..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Konservas..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Ĉi tiu versio de %productName estas povigita de"
 
@@ -724,7 +726,7 @@ msgstr "Malĝusta pasvorto. Bonvolu reprovi."
 msgid "Connecting..."
 msgstr "Konektas..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -870,15 +872,15 @@ msgstr "Ŝanĝi"
 msgid "Remove"
 msgstr "Forigi"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Pravalorizas..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Neaktiva dokumento - bonvolu alklaki por daŭrigi redakti"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Ŝargas..."
 
@@ -890,26 +892,6 @@ msgstr "Alŝutas..."
 msgid "Creating copy..."
 msgstr ""
 
-#~ msgid "Textwrap"
-#~ msgstr "Teksta ĉirkaŭfluo"
-
-#~ msgid "No wrap"
-#~ msgstr "Sen ĉirkaŭfluo"
-
-#~ msgid "Page wrap"
-#~ msgstr "Paĝa ĉirkaŭfluo"
-
-#~ msgid "Wrap anchor only"
-#~ msgstr "Ĉirkaŭfluigi nur la ankron"
-
-#~ msgid "Ideal wrap"
-#~ msgstr "Ideala ĉirkaŭfluo"
-
-#~ msgid "Left wrap"
-#~ msgstr "Maldekstra ĉirkaŭfluo"
-
-#~ msgid "Right wrap"
-#~ msgstr "Dekstra ĉirkaŭfluo"
-
-#~ msgid "Wrap through"
-#~ msgstr "Trafluo"
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Tipo"

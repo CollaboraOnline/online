@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-ui-de.po\n"
-"X-Pootle-Revision: 3611827\n"
+"X-Pootle-Revision: 3678182\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -223,7 +224,7 @@ msgstr "Sind Sie sicher, dass Sie diese Folie löschen möchten?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Dokument reparieren"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -310,8 +311,9 @@ msgid "Cancel the search"
 msgstr "Suche abbrechen"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Keine Benutzer"
+msgstr "0 Benutzer"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -628,11 +630,11 @@ msgstr "Rechter Rand"
 msgid "Downloading..."
 msgstr "Wird heruntergeladen..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Speichern..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Diese Version von %productName wird bereitgestellt von"
 
@@ -736,7 +738,7 @@ msgstr ""
 msgid "Connecting..."
 msgstr "Verbinden..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -892,15 +894,15 @@ msgstr "Ändern"
 msgid "Remove"
 msgstr "Entfernen"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Initialisierung..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktives Dokument - zum Fortsetzen der Bearbeitung bitte klicken"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Laden..."
 
@@ -912,26 +914,107 @@ msgstr "Hochladen..."
 msgid "Creating copy..."
 msgstr "Kopie erstellen..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Textumlauf"
+#~ msgid "Select passport"
+#~ msgstr "Schlüssel auswählen"
 
-#~ msgid "No wrap"
-#~ msgstr "Kein Umlauf"
+#~ msgid "Passport: N/A"
+#~ msgstr "Schlüssel: NV"
 
-#~ msgid "Page wrap"
-#~ msgstr "Paralleler Umlauf"
+#~ msgid "Sign & Upload"
+#~ msgstr "Signieren und Hochladen"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Nur Ankerumlauf"
+#~ msgid "Sign and upload document"
+#~ msgstr "Dokument signieren und hochladen"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Optimaler Umlauf"
+#~ msgid "Status:"
+#~ msgstr "Status:"
 
-#~ msgid "Left wrap"
-#~ msgstr "Linker Umlauf"
+#~ msgid "N/A"
+#~ msgstr "NV"
 
-#~ msgid "Right wrap"
-#~ msgstr "Rechter Umlauf"
+#~ msgid "Login"
+#~ msgstr "Anmelden"
 
-#~ msgid "Wrap through"
-#~ msgstr "Durchlauf"
+#~ msgid "Close"
+#~ msgstr "Schließen"
+
+#~ msgid "Last modification"
+#~ msgstr "Letzte Bearbeitung"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Geben Sie bitte den PIN-Code ein"
+
+#~ msgid "Error at login."
+#~ msgstr "Fehler bei der Anmeldung."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Scannen Sie bitte den Code"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Das Bild des QR-Codes konnte nicht empfangen werden."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Fehler beim Wiederherstellen des Zugriffs auf die Identität."
+
+#~ msgid "PIN Code"
+#~ msgstr "PIN Code"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Geben Sie bitte den PIN-Code der E-Mail oder SMS ein"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Anmeldung über E-Mail oder Handynummer"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument hochgeladen."
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Wählen Sie den Dokumententyp zum Hochladen aus"
+
+#~ msgid "Type:"
+#~ msgstr "Typ:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Identität wählen:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Anmeldung übers Handy"
+
+#~ msgid "Recover from email"
+#~ msgstr "Wiederherstellung über E-Mail"
+
+#~ msgid "Not Signed"
+#~ msgstr "Nicht signiert"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Dieses Dokument ist digital signiert und die Signatur ist gültig."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Signiert und bestätigt"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Dieses Dokument hat eine ungültige Signatur."
+
+#~ msgid "Signature broken"
+#~ msgstr "Signatur beschädigt"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Die Signatur ist gültig, aber das Dokument wurde geändert"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Signiert aber Dokument verändert"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Die Signatur ist OK, aber das Zertifikat konnte nicht geprüft werden."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Signiert aber nicht bestätigt"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Die Signatur ist OK, aber das Dokument ist nur teilweise signiert"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Signiert aber nicht alle Dateien sind signiert"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Neue Datei aus Vorlage erzeugen..."

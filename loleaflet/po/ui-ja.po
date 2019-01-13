@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-ui-ja.po\n"
-"X-Pootle-Revision: 3613957\n"
+"X-Pootle-Revision: 3650699\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -220,7 +221,7 @@ msgstr "このページを本当に削除してよろしいですか？"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "ドキュメントの修復"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -307,8 +308,9 @@ msgid "Cancel the search"
 msgstr "検索のキャンセル"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "ユーザーなし"
+msgstr "0 ユーザー"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -622,11 +624,11 @@ msgstr ""
 msgid "Downloading..."
 msgstr "ダウンロード中..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "保存中..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "このバージョンの %productName は以下で動作しています"
 
@@ -716,7 +718,7 @@ msgstr "パスワードが間違っています、再度挑戦してください
 msgid "Connecting..."
 msgstr "接続中..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -842,15 +844,15 @@ msgstr "変更"
 msgid "Remove"
 msgstr "削除"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "初期化しています..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "休止中のドキュメント - 編集を継続するにはクリックしてください"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "読み込み中..."
 
@@ -862,23 +864,6 @@ msgstr "アップロード中..."
 msgid "Creating copy..."
 msgstr "コピーの作成..."
 
-#~ msgid "Textwrap"
-#~ msgstr "テキストの折り返し"
-
-#~ msgid "No wrap"
-#~ msgstr "上下折り返し"
-
-#~ msgid "Page wrap"
-#~ msgstr "両側折り返し"
-
-#~ msgid "Wrap anchor only"
-#~ msgstr "アンカーだけを折り返し"
-
-#~ msgid "Left wrap"
-#~ msgstr "左の折り返し"
-
-#~ msgid "Right wrap"
-#~ msgstr "右の折り返し"
-
-#~ msgid "Wrap through"
-#~ msgstr "折り返しなし"
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "タイプ"

@@ -2,11 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 14:59+0100\n"
+"POT-Creation-Date: 2019-01-13 21:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /gl/libo_online/loleaflet-ui-gl.po\n"
-"X-Pootle-Revision: 3621367\n"
+"X-Pootle-Revision: 3650675\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -226,7 +227,7 @@ msgstr "Confirma que desexa eliminar esta páxina?"
 
 #: js/toolbar.js:620
 msgid "Document repair"
-msgstr "Reparación de documentos"
+msgstr ""
 
 #: js/toolbar.js:660
 msgid "Insert table"
@@ -313,8 +314,9 @@ msgid "Cancel the search"
 msgstr "Cancelar a busca"
 
 #: js/toolbar.js:1027
+#, fuzzy
 msgid "No users"
-msgstr "Sen usuarios"
+msgstr "0 usuarios"
 
 #: js/toolbar.js:1041 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:261
@@ -630,11 +632,11 @@ msgstr "Marxe dereita"
 msgid "Downloading..."
 msgstr "Descargando..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1036
+#: src/control/Toolbar.js:99 src/map/Map.js:1039
 msgid "Saving..."
 msgstr "Gardando..."
 
-#: src/control/Toolbar.js:250
+#: src/control/Toolbar.js:260
 msgid "This version of %productName is powered by"
 msgstr "Esta versión do %productName funciona grazas a"
 
@@ -734,7 +736,7 @@ msgstr "O contrasinal é incorrecto. Ténteo de novo."
 msgid "Connecting..."
 msgstr "Conectando..."
 
-#: src/core/Socket.js:857
+#: src/core/Socket.js:858
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -881,15 +883,15 @@ msgstr "Modificar"
 msgid "Remove"
 msgstr "Retirar"
 
-#: src/map/Map.js:143
+#: src/map/Map.js:146
 msgid "Initializing..."
 msgstr "Inicializando..."
 
-#: src/map/Map.js:908
+#: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
 msgstr "Documento inactivo - prema para continuar editando"
 
-#: src/map/Map.js:1039
+#: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Cargando…"
 
@@ -901,26 +903,63 @@ msgstr "Enviando..."
 msgid "Creating copy..."
 msgstr "A crear unha copia..."
 
-#~ msgid "Textwrap"
-#~ msgstr "Axuste do texto"
+#~ msgid "Select passport"
+#~ msgstr "Seleccionar pasaporte"
 
-#~ msgid "No wrap"
-#~ msgstr "Sen axuste"
+#~ msgid "Passport: N/A"
+#~ msgstr "Pasaporte: N/D"
 
-#~ msgid "Page wrap"
-#~ msgstr "Axuste de páxina"
+#~ msgid "Status:"
+#~ msgstr "Estado"
 
-#~ msgid "Wrap anchor only"
-#~ msgstr "Axustar só a áncora"
+#~ msgid "N/A"
+#~ msgstr "N/D"
 
-#~ msgid "Ideal wrap"
-#~ msgstr "Axuste ideal"
+#~ msgid "Login"
+#~ msgstr "Inicio de sesión"
 
-#~ msgid "Left wrap"
-#~ msgstr "Axuste á esquerda"
+#~ msgid "Close"
+#~ msgstr "Pechar"
 
-#~ msgid "Right wrap"
-#~ msgstr "Axuste á dereita"
+#~ msgid "Last modification"
+#~ msgstr "Última modificación"
 
-#~ msgid "Wrap through"
-#~ msgstr "Axuste a través"
+#~ msgid "PIN Code"
+#~ msgstr "Código PIN"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Iniciar sesión desde correo ou número de móbil"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Documento cargado."
+
+#, fuzzy
+#~ msgid "Type:"
+#~ msgstr "Tipo"
+
+#~ msgid "Select identity:"
+#~ msgstr "Selecionar identidade:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Inicia sesión desde móbil"
+
+#~ msgid "Recover from email"
+#~ msgstr "Recuperar desde correo"
+
+#~ msgid "Not Signed"
+#~ msgstr "Non asinado"
+
+#~ msgid "Signed and validated"
+#~ msgstr "Asinado e validado"
+
+#~ msgid "Signature broken"
+#~ msgstr "Sinatura inservíbel"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Asinado mais modificado"
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Asinado mais non validado"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Asinado mais non todos están asinados"
