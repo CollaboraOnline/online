@@ -55,6 +55,9 @@ public:
     /// Access to the document instance.
     virtual std::shared_ptr<lok::Document> getLOKitDocument() = 0;
 
+    /// Access to the office instance.
+    virtual std::shared_ptr<lok::Office> getLOKit() = 0;
+
     /// Send updated view info to all active sessions.
     virtual void notifyViewInfo() = 0;
     virtual void updateEditorSpeeds(int id, int speed) = 0;
@@ -264,6 +267,7 @@ private:
     bool signDocumentContent(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool askSignatureStatus(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool uploadSignedDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool exportSignAndUploadDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool renderShapeSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);

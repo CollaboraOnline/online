@@ -15,6 +15,7 @@ var _map = null;
 var currentDocumentSigningStatus = 'N/A'
 
 var awaitForDocumentStatusToUpload = false;
+var currentDocumentType = null;
 
 function isSuccess(result) {
 	return result.code == '200';
@@ -205,7 +206,7 @@ function vereignPinCodeDialog(selectedIdentityKey) {
 
 function vereignLogin() {
 	if (library && identity) {
-		library.login(identity, 'previousaddeddevice', '', '').then(function(result) {
+		library.login(identity, 'previousaddeddevice').then(function(result) {
 			if (isSuccess(result)) {
 				updatePassportList();
 				updateIndentity();
@@ -318,29 +319,87 @@ function vereignRestoreIdentity() {
 	});
 }
 
-function vereignSign() {
+function vereignSignAndUploadDocument() {
 	if (library == null) {
 		return;
 	}
 	if (currentPassport == null) {
 		return;
 	}
-	library.getOneTimeCertificateByPassport(currentPassport.uuid).then(function(result) {
-		if (isSuccess(result)) {
-			var otp = result.data;
-			var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
-			_map._socket.sendMessage(blob);
-			awaitForDocumentStatusToUpload = true;
-			checkCurrentDocument();
+	vex.dialog.open({
+		message: _('Select document type to upload'),
+		input: _('Type:') + '<select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select>',
+		callback: function(data) {
+			vereignSignAndUploadForType(data.selection);
 		}
 	});
 }
 
-function vereignUploadForType(uploadDocType) {
-	var vereignWopiUrl = getVereignWopiURL();
-	if (vereignWopiUrl == null || vereignWopiUrl == '')
+function vereignUpload(documentType) {
+	if (library == null || documentType == null) {
 		return;
+	}
 
+	var filename = getCurrentDocumentFilename(documentType);
+
+	library.getPassports(filename).then(function(result) {
+		if (!isSuccess(result)) {
+			return;
+		}
+		var resultArray = result.data;
+		for (var i = 0; i < resultArray.length; i++) {
+			if (currentPassport.uuid == resultArray[i].PassportUUID) {
+				var jsonRequest = {
+					filename: filename,
+					wopiUrl: getVereignWopiURL() + 'files',
+					token: resultArray[i].AccessToken,
+					type: documentType
+				};
+				var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
+				_map._socket.sendMessage(blob);
+				// Let the user know that we're done.
+				_map.fire('infobar', {
+					msg: _('Document uploaded.') + '\n\n' + filename,
+					action: null,
+					actionLabel: null
+				});
+			}
+		}
+	});
+}
+
+function vereignSignAndUploadPDF(documentType) {
+	library.getOneTimeCertificateByPassport(currentPassport.uuid).then(function(result) {
+		if (!isSuccess(result)) {
+			return;
+		}
+		var otp = result.data;
+		var filename = getCurrentDocumentFilename(documentType);
+		library.getPassports(filename).then(function(result) {
+			if (!isSuccess(result)) {
+				return;
+			}
+			var resultArray = result.data;
+			for (var i = 0; i < resultArray.length; i++) {
+				if (currentPassport.uuid == resultArray[i].PassportUUID) {
+					var parameters = {
+						x509Certificate: otp.x509Certificate,
+						privateKey: otp.privateKey,
+						chain: otp.chain,
+						filename: filename,
+						wopiUrl: getVereignWopiURL() + 'files',
+						token: resultArray[i].AccessToken,
+						type: documentType
+					}
+					var blob = new Blob(['exportsignanduploaddocument\n', JSON.stringify(parameters)]);
+					_map._socket.sendMessage(blob);
+				}
+			}
+		});
+	});
+}
+
+function vereignSignAndUploadForType(uploadDocType) {
 	var documentType = null;
 
 	switch (uploadDocType) {
@@ -358,46 +417,21 @@ function vereignUploadForType(uploadDocType) {
 	if (documentType == null)
 		return;
 
-	var filename = getCurrentDocumentFilename(documentType);
-
-	library.getPassports(filename).then(function(result) {
-		if (!isSuccess(result)) {
-			return;
-		}
-		var resultArray = result.data;
-		for (var i = 0; i < resultArray.length; i++) {
-			if (currentPassport.uuid == resultArray[i].PassportUUID) {
-				var jsonRequest = {
-					filename: filename,
-					wopiUrl: vereignWopiUrl + 'files/',
-					token: resultArray[i].AccessToken,
-					type: documentType
-				};
-				var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
-				_map._socket.sendMessage(blob);
-				// Let the user know that we're done.
-				_map.fire('infobar', {
-					msg: _('Document uploaded.') + '\n\n' + filename,
-					action: null,
-					actionLabel: null
-				});
-			}
-		}
-	});
-}
-
-function vereignUploadDialog() {
-	if (library == null) {
-		return;
+	if (uploadDocType == 'PDF') {
+		vereignSignAndUploadPDF(documentType);
 	}
-
-	vex.dialog.open({
-		message: _('Select document type to upload'),
-		input: _('Type:') + '<select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select>',
-		callback: function(data) {
-			vereignUploadForType(data.selection);
-		}
-	});
+	else if (uploadDocType == 'DOCX' || uploadDocType == 'ODT') {
+		library.getOneTimeCertificateByPassport(currentPassport.uuid).then(function(result) {
+			if (isSuccess(result)) {
+				var otp = result.data;
+				var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
+				_map._socket.sendMessage(blob);
+				awaitForDocumentStatusToUpload = true;
+				currentDocumentType = documentType;
+				checkCurrentDocument();
+			}
+		});
+	}
 }
 
 L.Map.include({
@@ -423,9 +457,6 @@ L.Map.include({
 	signingInitializeBar: function() {
 		$('#document-signing-bar').hide();
 		adjustUIState();
-	},
-	signAndUploadDocument: function() {
-		vereignSign();
 	},
 	signingLogout: function() {
 		if (library) {
@@ -555,7 +586,7 @@ L.Map.include({
 			this.signingLogout();
 		}
 		else if (id === 'sign-upload') {
-			this.signAndUploadDocument();
+			vereignSignAndUploadDocument();
 		}
 		else if (id.startsWith('passport:')) {
 			this.setCurrentPassport(item.value, item.text);
@@ -604,8 +635,9 @@ L.Map.include({
 
 		if (awaitForDocumentStatusToUpload) {
 			awaitForDocumentStatusToUpload = false;
-			vereignUploadDialog();
+			vereignUpload(currentDocumentType);
 		}
 		awaitForDocumentStatusToUpload = false;
+		currentDocumentType = null;
 	}
 });

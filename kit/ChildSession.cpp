@@ -274,6 +274,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "asksignaturestatus" ||
                tokens[0] == "signdocument" ||
                tokens[0] == "uploadsigneddocument" ||
+               tokens[0] == "exportsignanduploaddocument" ||
                tokens[0] == "rendershapeselection");
 
         if (tokens[0] == "clientzoom")
@@ -372,6 +373,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "uploadsigneddocument")
         {
             return uploadSignedDocument(buffer, length, tokens);
+        }
+        else if (tokens[0] == "exportsignanduploaddocument")
+        {
+            return exportSignAndUploadDocument(buffer, length, tokens);
         }
 #endif
         else if (tokens[0] == "rendershapeselection")
@@ -1395,6 +1400,169 @@ bool ChildSession::signDocumentContent(const char* buffer, int length, const std
                     binaryPrivateKey.data(), binaryPrivateKey.size());
 
     return bResult;
+}
+
+bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
+{
+    bool bResult = false;
+
+    std::string filename;
+    std::string wopiUrl;
+    std::string token;
+    std::string filetype;
+    std::string x509Certificate;
+    std::string privateKey;
+    std::vector<std::string> certificateChain;
+
+    { // parse JSON
+        const std::string firstLine = getFirstLine(buffer, length);
+        const char* data = buffer + firstLine.size() + 1;
+        const int size = length - firstLine.size() - 1;
+        std::string json(data, size);
+
+        Poco::JSON::Parser parser;
+        Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+
+        filename = JsonUtil::getJSONValue<std::string>(root, "filename");
+        wopiUrl = JsonUtil::getJSONValue<std::string>(root, "wopiUrl");
+        token = JsonUtil::getJSONValue<std::string>(root, "token");
+        filetype = JsonUtil::getJSONValue<std::string>(root, "type");
+        x509Certificate = JsonUtil::getJSONValue<std::string>(root, "x509Certificate");
+        privateKey = JsonUtil::getJSONValue<std::string>(root, "privateKey");
+
+        for (auto& rChainPtr : *root->getArray("chain"))
+        {
+            if (!rChainPtr.isString())
+            {
+                sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+                return false;
+            }
+            std::string chainCertificate = rChainPtr;
+            certificateChain.push_back(chainCertificate);
+        }
+    }
+
+    if (filetype.empty() || filename.empty() || wopiUrl.empty() || token.empty() || x509Certificate.empty() || privateKey.empty())
+    {
+        sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+        return false;
+    }
+
+    std::string mimetype = getMimeFromFileType(filetype);
+    if (mimetype.empty())
+    {
+        sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+        return false;
+    }
+
+    // add certificate chain
+    for (auto const & certificate : certificateChain)
+    {
+        std::vector<unsigned char> binaryChainCertificate = decodeBase64(extractCertificate(certificate));
+
+        bResult = getLOKitDocument()->addCertificate(
+            binaryChainCertificate.data(),
+            binaryChainCertificate.size());
+
+        if (!bResult)
+        {
+            sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+            return false;
+        }
+    }
+
+    // export document to a temp file
+    const std::string aTempDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
+    const Poco::Path filenameParam(filename);
+    const std::string aTempDocumentURL = JAILED_DOCUMENT_ROOT + aTempDir + "/" + filenameParam.getFileName();
+
+    {
+        std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+        getLOKitDocument()->saveAs(aTempDocumentURL.c_str(), filetype.c_str(), nullptr);
+    }
+
+    // sign document
+    {
+        std::vector<unsigned char> binaryCertificate = decodeBase64(extractCertificate(x509Certificate));
+        std::vector<unsigned char> binaryPrivateKey = decodeBase64(extractPrivateKey(privateKey));
+
+        bResult = _docManager.getLOKit()->signDocument(aTempDocumentURL.c_str(),
+                        binaryCertificate.data(), binaryCertificate.size(),
+                        binaryPrivateKey.data(), binaryPrivateKey.size());
+
+        if (!bResult)
+        {
+            sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+            return false;
+        }
+    }
+
+    // upload
+    Authorization authorization(Authorization::Type::Token, token);
+    Poco::URI uriObject(wopiUrl + "/" + filename + "/contents");
+
+    authorization.authorizeURI(uriObject);
+
+    try
+    {
+        Poco::Net::initializeSSL();
+        Poco::Net::Context::Params sslClientParams;
+        sslClientParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
+        Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler = new Poco::Net::KeyConsoleHandler(false);
+        Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler = new Poco::Net::AcceptCertificateHandler(false);
+        Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
+        Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession;
+        psession.reset(new Poco::Net::HTTPSClientSession(
+                        uriObject.getHost(),
+                        uriObject.getPort(),
+                        Poco::Net::SSLManager::instance().defaultClientContext()));
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        authorization.authorizeRequest(request);
+
+        request.set("X-WOPI-Override", "PUT");
+
+        const size_t filesize = getFileSize(aTempDocumentURL);
+
+        request.setContentType(mimetype);
+        request.setContentLength(filesize);
+
+        std::ostream& httpOutputStream = psession->sendRequest(request);
+
+        std::ifstream inputFileStream(aTempDocumentURL);
+        Poco::StreamCopier::copyStream(inputFileStream, httpOutputStream);
+
+        Poco::Net::HTTPResponse response;
+        std::istream& responseStream = psession->receiveResponse(response);
+
+        std::ostringstream outputStringStream;
+        Poco::StreamCopier::copyStream(responseStream, outputStringStream);
+        std::string responseString = outputStringStream.str();
+
+        if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK &&
+            response.getStatus() != Poco::Net::HTTPResponse::HTTP_CREATED)
+        {
+            LOG_ERR("Upload signed document HTTP Response Error: " << response.getStatus() << ' ' << response.getReason());
+
+            sendTextFrame("error: cmd=exportsignanduploaddocument kind=httpresponse");
+
+            return false;
+        }
+    }
+    catch (const Poco::Exception& pocoException)
+    {
+        LOG_ERR("Upload signed document Exception: " + pocoException.displayText());
+
+        sendTextFrame("error: cmd=exportsignanduploaddocument kind=failure");
+
+        return false;
+    }
+
+    return true;
 }
 
 bool ChildSession::askSignatureStatus(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
