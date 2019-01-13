@@ -2010,6 +2010,12 @@ private:
         LOG_DBG("Thread finished.");
     }
 
+    /// Return access to the lok::Office instance.
+    std::shared_ptr<lok::Office> getLOKit() override
+    {
+        return _loKit;
+    }
+
     /// Return access to the lok::Document instance.
     std::shared_ptr<lok::Document> getLOKitDocument() override
     {

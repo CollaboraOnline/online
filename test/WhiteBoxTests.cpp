@@ -511,6 +511,11 @@ public:
     {
     }
 
+    std::shared_ptr<lok::Office> getLOKit() override
+    {
+        return nullptr;
+    }
+
     std::shared_ptr<lok::Document> getLOKitDocument() override
     {
         return nullptr;
