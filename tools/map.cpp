@@ -141,11 +141,13 @@ public:
 };
 
 struct AddrSpace {
+private:
     unsigned _proc_id;
     std::vector<Map> _maps;
     std::unordered_map<addr_t, std::string> _addrToStr;
     StringData _strings[3];
 
+public:
     AddrSpace(unsigned proc_id) :
         _proc_id(proc_id)
     {
@@ -263,6 +265,8 @@ struct AddrSpace {
         }
         close (mem_fd);
     }
+
+    const std::unordered_map<addr_t, std::string>& getAddrToStr() const { return _addrToStr; }
 };
 
 
@@ -289,8 +293,8 @@ static void dumpDiff(const AddrSpace &space,
         for (unsigned int j = 0; j < width/8; j++)
         {
             std::string str;
-            auto it = space._addrToStr.find(ptrs[j]);
-            if (it != space._addrToStr.end())
+            auto it = space.getAddrToStr().find(ptrs[j]);
+            if (it != space.getAddrToStr().end())
             {
                 str = it->second;
                 haveAnnots = true;
@@ -486,7 +490,7 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
     if (DumpStrings)
     {
         printf("String dump:\n");
-        for (const auto& addr : space._addrToStr)
+        for (const auto& addr : space.getAddrToStr())
         {
             if (DumpAll ||
                 unShared.find((addr.first & ~0x1fff)) != unShared.end())
