@@ -17,7 +17,7 @@ Vendor:         %{vendor}
 Summary:        LibreOffice Online WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
-BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5
+BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5 m4
 %if 0%{?fedora} || 0%{?rhel} >= 7
 BuildRequires:  libpcap kernel-headers
 %else
