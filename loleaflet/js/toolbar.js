@@ -2074,6 +2074,10 @@ function onUpdateParts(e) {
 	}
 
 	var toolbar = w2ui['actionbar'];
+	if (!toolbar) {
+		return;
+	}
+
 	if (e.docType === 'presentation') {
 		toolbar.set('prev', {hint: _('Previous slide')});
 		toolbar.set('next', {hint: _('Next slide')});
@@ -2128,24 +2132,25 @@ function onCommandResult(e) {
 
 function onUpdatePermission(e) {
 	var toolbar = w2ui['editbar'];
+	if (toolbar) {
+		// always enabled items
+		var enabledButtons = ['closemobile', 'undo', 'redo'];
 
-	// always enabled items
-	var enabledButtons = ['closemobile', 'undo', 'redo'];
+		// copy the first array
+		var items = toolbar.items.slice();
+		for (var idx in items) {
+			var found = enabledButtons.filter(function(id) { return id === items[idx].id });
+			var alwaysEnable = found.length !== 0;
 
-	// copy the first array
-	var items = toolbar.items.slice();
-	for (var idx in items) {
-		var found = enabledButtons.filter(function(id) { return id === items[idx].id });
-		var alwaysEnable = found.length !== 0;
-
-		if (e.perm === 'edit') {
-			var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
-			var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
-			if (!keepDisabled || alwaysEnable) {
-				toolbar.enable(items[idx].id);
+			if (e.perm === 'edit') {
+				var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
+				var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
+				if (!keepDisabled || alwaysEnable) {
+					toolbar.enable(items[idx].id);
+				}
+			} else if (!alwaysEnable) {
+				toolbar.disable(items[idx].id);
 			}
-		} else if (!alwaysEnable) {
-			toolbar.disable(items[idx].id);
 		}
 	}
 
@@ -2163,24 +2168,32 @@ function onUpdatePermission(e) {
 		$('#addressInput').prop('disabled', false);
 		$('#formulaInput').prop('disabled', false);
 		toolbar = w2ui.formulabar;
-		formulaBarButtons.forEach(function(id) {
-			toolbar.enable(id);
-		});
+		if (toolbar) {
+			formulaBarButtons.forEach(function(id) {
+				toolbar.enable(id);
+			});
+		}
 
 		toolbar = w2ui['spreadsheet-toolbar'];
-		spreadsheetButtons.forEach(function(id) {
-			toolbar.enable(id);
-		});
+		if (toolbar) {
+			spreadsheetButtons.forEach(function(id) {
+				toolbar.enable(id);
+			});
+		}
 
 		toolbar = w2ui['presentation-toolbar'];
-		presentationButtons.forEach(function(id) {
-			toolbar.enable(id);
-		});
+		if (toolbar) {
+			presentationButtons.forEach(function(id) {
+				toolbar.enable(id);
+			});
+		}
 
 		toolbar = w2ui['actionbar'];
-		toolbarDownButtons.forEach(function(id) {
-			toolbar.enable(id);
-		});
+		if (toolbar) {
+			toolbarDownButtons.forEach(function(id) {
+				toolbar.enable(id);
+			});
+		}
 		$('#search-input').prop('disabled', false);
 
 		// FIXME avoid hardcoding this stuff if possible
@@ -2212,24 +2225,32 @@ function onUpdatePermission(e) {
 		$('#formulaInput').prop('disabled', true);
 
 		toolbar = w2ui.formulabar;
-		formulaBarButtons.forEach(function(id) {
-			toolbar.disable(id);
-		});
+		if (toolbar) {
+			formulaBarButtons.forEach(function(id) {
+				toolbar.disable(id);
+			});
+		}
 
 		toolbar = w2ui['spreadsheet-toolbar'];
-		spreadsheetButtons.forEach(function(id) {
-			toolbar.disable(id);
-		});
+		if (toolbar) {
+			spreadsheetButtons.forEach(function(id) {
+				toolbar.disable(id);
+			});
+		}
 
 		toolbar = w2ui['presentation-toolbar'];
-		presentationButtons.forEach(function(id) {
-			toolbar.disable(id);
-		});
+		if (toolbar) {
+			presentationButtons.forEach(function(id) {
+				toolbar.disable(id);
+			});
+		}
 
 		toolbar = w2ui['actionbar'];
-		toolbarDownButtons.forEach(function(id) {
-			toolbar.disable(id);
-		});
+		if (toolbar) {
+			toolbarDownButtons.forEach(function(id) {
+				toolbar.disable(id);
+			});
+		}
 		$('#search-input').prop('disabled', true);
 
 		// FIXME avoid hardcoding this stuff if possible
