@@ -73,7 +73,6 @@ setupToolbar(map);
 map.addControl(L.control.scroll());
 map.addControl(L.control.alertDialog());
 map.addControl(L.control.lokDialog());
-map.addControl(L.control.partsPreview());
 map.addControl(L.control.tabs());
 map.addControl(L.control.columnHeader());
 map.addControl(L.control.rowHeader());

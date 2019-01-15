@@ -83,6 +83,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	onAdd: function (map) {
+		map.addControl(L.control.partsPreview());
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
 		this._topAnnotation = [];
