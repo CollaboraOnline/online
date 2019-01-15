@@ -123,6 +123,7 @@ public:
         }
     }
 
+private:
     LOOLWebSocket& _ws;
 };
 
