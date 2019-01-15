@@ -2547,24 +2547,27 @@ function setupToolbar(e) {
 		}
 	});
 
-	map.on('updatetoolbarcommandvalues', function() {
-		w2ui['editbar'].refresh();
-	});
 
-	map.on('showbusy', function(e) {
-		w2utils.lock(w2ui['actionbar'].box, e.label, true);
-	});
+	if (!window.mode.isMobile()) {
+		map.on('updatetoolbarcommandvalues', function() {
+			w2ui['editbar'].refresh();
+		});
 
-	map.on('hidebusy', function() {
-		// If locked, unlock
-		if (w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
-			w2utils.unlock(w2ui['actionbar'].box);
-		}
-	});
+		map.on('showbusy', function(e) {
+			w2utils.lock(w2ui['actionbar'].box, e.label, true);
+		});
 
-	map.on('doclayerinit', onDocLayerInit);
+		map.on('hidebusy', function() {
+			// If locked, unlock
+			if (w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
+				w2utils.unlock(w2ui['actionbar'].box);
+			}
+		});
+
+		map.on('doclayerinit', onDocLayerInit);
+		map.on('updatepermission', onUpdatePermission);
+	}
 	map.on('wopiprops', onWopiProps);
-	map.on('updatepermission', onUpdatePermission);
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
 	map.on('commandstatechanged', onCommandStateChanged);
