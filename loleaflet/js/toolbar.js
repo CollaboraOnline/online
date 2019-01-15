@@ -666,6 +666,16 @@ var fontsizesSelectValue;
 // mobilebrowser:false means hide it for normal Online used from a mobile browser, but don't hide it in a mobile app
 
 function createToolbar() {
+
+	if (_inMobileMode()) {
+		$('#mobile-edit-button').show();
+	} else {
+		$('#toolbar-down').show();
+		initNormalToolbar();
+	}
+}
+
+function initNormalToolbar() {
 	var toolItems = [
 		{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
@@ -814,15 +824,6 @@ function createToolbar() {
 		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, hidden: true}
 	];
 
-	if (_inMobileMode()) {
-		$('#mobile-edit-button').show();
-	} else {
-		$('#toolbar-down').show();
-		initNormalToolbar(toolItems);
-	}
-}
-
-function initNormalToolbar(toolItems) {
 	var toolbar = $('#toolbar-up');
 	toolbar.w2toolbar({
 		name: 'editbar',
