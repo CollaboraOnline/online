@@ -54,6 +54,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	onAdd: function (map) {
+		map.addControl(L.control.tabs());
+		map.addControl(L.control.columnHeader());
+		map.addControl(L.control.rowHeader());
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
 	},
