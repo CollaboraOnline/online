@@ -32,7 +32,7 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onGotFocus: function () {
-		if (this._map._docLayer._cursorMarker) {
+		if (this._map._docLayer && this._map._docLayer._cursorMarker) {
 			this._cursorHandler.setLatLng(this._map._docLayer._visibleCursor.getSouthWest());
 			this._map.addLayer(this._map._docLayer._cursorMarker);
 			if (this._map._docLayer._selections.getLayers().length === 0) {
@@ -44,7 +44,7 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onLostFocus: function () {
-		if (this._map._docLayer._cursorMarker) {
+		if (this._map._docLayer && this._map._docLayer._cursorMarker) {
 			this._textArea.value = '';
 			this._map.removeLayer(this._map._docLayer._cursorMarker);
 			this._map.removeLayer(this._cursorHandler);
