@@ -3,6 +3,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
+/* global $ _ w2ui w2utils _UNO */
 L.CalcTileLayer = L.TileLayer.extend({
 	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
 							  * 0.1986cm with TeX points,
@@ -44,6 +45,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		map.on('AnnotationReply', this._onAnnotationReply, this);
 		map.on('AnnotationSave', this._onAnnotationSave, this);
+		if (L.Browser.mobile) {
+			map.on('doclayerinit', this.onMobileInit, this);
+		}
 	},
 
 	clearAnnotations: function () {
@@ -59,6 +63,226 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.addControl(L.control.rowHeader());
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
+	},
+
+	onMobileInit: function () {
+		var map = this._map;
+		var toolItems = [
+			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
+			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
+			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
+			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
+			{type: 'break'},
+			{type: 'text-color',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
+			{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
+			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), uno: 'ToggleMergeCells', disabled: true},
+			{type: 'break', id: 'breakmergecells'},
+			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'),
+				items: [
+					{id: 'alignleft', text: _UNO('.uno:AlignLeft', 'spreadsheet', true), icon: 'alignleft', uno: 'AlignLeft'},
+					{id: 'alignhorizontalcenter', text: _UNO('.uno:AlignHorizontalCenter', 'spreadsheet', true), icon: 'alignhorizontal', uno: 'AlignHorizontalCenter'},
+					{id: 'alignright', text: _UNO('.uno:AlignRight', 'spreadsheet', true), icon: 'alignright', uno: 'AlignRight'},
+					{id: 'alignblock', text: _UNO('.uno:AlignBlock', 'spreadsheet', true), icon: 'alignblock', uno: 'AlignBlock'},
+				]},
+			{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _UNO('.uno:WrapText', 'spreadsheet', true), uno: 'WrapText', disabled: true},
+			{type: 'button',  id: 'numberformatcurrency',  img: 'numberformatcurrency', hint: _UNO('.uno:NumberFormatCurrency', 'spreadsheet', true), uno: 'NumberFormatCurrency', disabled: true},
+			{type: 'button',  id: 'numberformatpercent',  img: 'numberformatpercent', hint: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), uno: 'NumberFormatPercent', disabled: true},
+			{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatDecDecimals', disabled: true},
+			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatIncDecimals', disabled: true},
+			{type: 'button',  id: 'sum',  img: 'autosum', hint: _('Sum')},
+			{type: 'break',   id: 'break-number'},
+			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true)},
+			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
+			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
+			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: window.insertShapes},
+				html: '<div id="insertshape-wrapper"><div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all"><div class="insertshape-grid"></div></div></div>'},
+
+			{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog'), uno: 'HyperlinkDialog', disabled: true},
+			{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: 'InsertSymbol'}
+		];
+
+		var toolbar = $('#toolbar-up');
+		toolbar.w2toolbar({
+			name: 'actionbar',
+			tooltip: 'bottom',
+			items: [
+				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
+				{type: 'spacer'},
+				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
+				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
+				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
+				{type: 'drop', id: 'userlist', img: 'users', html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
+					'<hr><table class="loleaflet-font" id="editor-btn">' +
+					'<tr>' +
+					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
+					'<td>' + _('Always follow the editor') + '</td>' +
+					'</tr>' +
+					'</table>' +
+					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
+					'</div>'
+				},
+			],
+			onClick: function (e) {
+				window.onClick(e, e.target);
+				window.hideTooltip(this, e.target);
+			},
+			onRefresh: function() {
+				var showUserList = map['wopi'].HideUserList !== null &&
+									map['wopi'].HideUserList !== undefined &&
+									$.inArray('true', map['wopi'].HideUserList) < 0 &&
+									((window.mode.isMobile() && $.inArray('mobile', map['wopi'].HideUserList) < 0) ||
+									(window.mode.isTablet() && $.inArray('tablet', map['wopi'].HideUserList) < 0));
+				if (this.get('userlist').hidden == true && showUserList) {
+					this.show('userlist');
+					this.show('userlistbreak');
+					map.on('deselectuser', window.deselectUser);
+					map.on('addview', window.onAddView);
+					map.on('removeview', window.onRemoveView);
+				}
+			}
+		});
+		toolbar.bind('touchstart', function(e) {
+			w2ui['actionbar'].touchStarted = true;
+			var touchEvent = e.originalEvent;
+			if (touchEvent && touchEvent.touches.length > 1) {
+				L.DomEvent.preventDefault(e);
+			}
+		});
+
+		toolbar = $('#formulabar');
+		toolbar.w2toolbar({
+			name: 'formulabar',
+			tooltip: 'bottom',
+			hidden: true,
+			items: [
+				{type: 'html',  id: 'left'},
+				{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
+				{type: 'break'},
+				{type: 'button',  id: 'sum',  img: 'autosum', hint: _('Sum')},
+				{type: 'button',  id: 'function',  img: 'equal', hint: _('Function')},
+				{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
+				{type: 'button', hidden: true, id: 'acceptformula',  img: 'accepttrackedchanges', hint: _('Accept')},
+				{type: 'html', id: 'formula', html: '<input id="formulaInput" type="text">'}
+			],
+			onClick: function (e) {
+				window.onClick(e, e.target);
+				window.hideTooltip(this, e.target);
+			},
+			onRefresh: function() {
+				$('#addressInput').off('keyup', window.onAddressInput).on('keyup', window.onAddressInput);
+				$('#formulaInput').off('keyup', window.onFormulaInput).on('keyup', window.onFormulaInput);
+				$('#formulaInput').off('blur', window.onFormulaBarBlur).on('blur', window.onFormulaBarBlur);
+				$('#formulaInput').off('focus', window.onFormulaBarFocus).on('focus', window.onFormulaBarFocus);
+			}
+		});
+		toolbar.bind('touchstart', function(e) {
+			w2ui['formulabar'].touchStarted = true;
+			var touchEvent = e.originalEvent;
+			if (touchEvent && touchEvent.touches.length > 1) {
+				L.DomEvent.preventDefault(e);
+			}
+		});
+
+		$(w2ui.formulabar.box).find('.w2ui-scroll-left, .w2ui-scroll-right').hide();
+		w2ui.formulabar.on('resize', function(target, e) {
+			e.isCancelled = true;
+		});
+
+		toolbar = $('#spreadsheet-toolbar');
+		toolbar.w2toolbar({
+			name: 'spreadsheet-toolbar',
+			tooltip: 'bottom',
+			hidden: true,
+			items: [
+				{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hint: _('First sheet')},
+				{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hint: _('Previous sheet')},
+				{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hint: _('Next sheet')},
+				{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hint: _('Last sheet')},
+				{type: 'button',  id: 'insertsheet', img: 'insertsheet', hint: _('Insert sheet')}
+			],
+			onClick: function (e) {
+				window.onClick(e, e.target);
+				window.hideTooltip(this, e.target);
+			}
+		});
+		toolbar.bind('touchstart', function(e) {
+			w2ui['spreadsheet-toolbar'].touchStarted = true;
+			var touchEvent = e.originalEvent;
+			if (touchEvent && touchEvent.touches.length > 1) {
+				L.DomEvent.preventDefault(e);
+			}
+		});
+
+		toolbar = $('#toolbar-down');
+		toolbar.w2toolbar({
+			name: 'editbar',
+			tooltip: 'top',
+			items: toolItems,
+			onClick: function (e) {
+				window.onClick(e, e.target);
+				window.hideTooltip(this, e.target);
+			},
+			onRefresh: function(edata) {
+				if (edata.target === 'styles' || edata.target === 'fonts' || edata.target === 'fontsizes') {
+					var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(edata.item.id));
+					if (edata.item.hidden) {
+						toolItem.css('display', 'none');
+					} else {
+						toolItem.css('display', '');
+					}
+					window.updateCommandValues(edata.target);
+				}
+
+				if (edata.target === 'editbar' && map.getDocType() === 'presentation') {
+					// Fill the style select box if not yet filled
+					if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
+						var data = [''];
+						// Inserts a separator element
+						data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+
+						L.Styles.impressLayout.forEach(function(layout) {
+							data = data.concat({id: layout.id, text: _(layout.text)});
+						}, this);
+
+						$('.styles-select').select2({
+							data: data,
+							placeholder: _UNO('.uno:LayoutStatus', 'presentation')
+						});
+						$('.styles-select').on('select2:select', window.onStyleSelect);
+					}
+				}
+
+				if (edata.target === 'inserttable')
+					window.insertTable();
+
+				if (edata.target === 'insertshapes')
+					window.insertShapes();
+			}
+		});
+		toolbar.bind('touchstart', function(e) {
+			w2ui['editbar'].touchStarted = true;
+			var touchEvent = e.originalEvent;
+			if (touchEvent && touchEvent.touches.length > 1) {
+				L.DomEvent.preventDefault(e);
+			}
+		});
+
+		map.on('updatetoolbarcommandvalues', function() {
+			w2ui['editbar'].refresh();
+		});
+
+		map.on('showbusy', function(e) {
+			w2utils.lock(w2ui['actionbar'].box, e.label, true);
+		});
+
+		map.on('hidebusy', function() {
+			// If locked, unlock
+			if (w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
+				w2utils.unlock(w2ui['actionbar'].box);
+			}
+		});
+
+		map.on('updatepermission', window.onUpdatePermission);
 	},
 
 	onAnnotationModify: function (annotation) {
