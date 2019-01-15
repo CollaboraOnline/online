@@ -2395,5 +2395,19 @@ function setupToolbar(e) {
 }
 
 global.setupToolbar = setupToolbar;
+global.onClick = onClick;
+global.hideTooltip = hideTooltip;
+global.deselectUser = deselectUser;
+global.onAddView = onAddView;
+global.onRemoveView = onRemoveView;
+global.onAddressInput = onAddressInput;
+global.onFormulaInput = onFormulaInput;
+global.onFormulaBarBlur = onFormulaBarBlur;
+global.onFormulaBarFocus = onFormulaBarFocus;
+global.updateCommandValues = updateCommandValues;
+global.onStyleSelect = onStyleSelect;
+global.insertTable = insertTable;
+global.insertShapes = insertShapes;
+global.onUpdatePermission = onUpdatePermission;
 
 }(window));
