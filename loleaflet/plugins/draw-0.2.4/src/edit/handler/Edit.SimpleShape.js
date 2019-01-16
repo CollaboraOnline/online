@@ -4,11 +4,11 @@ L.Edit = L.Edit || {};
 L.Edit.SimpleShape = L.Handler.extend({
 	options: {
 		moveIcon: new L.DivIcon({
-			iconSize: new L.Point(16, 16),
+			iconSize: new L.Point(8, 8),
 			className: 'leaflet-div-icon leaflet-editing-icon leaflet-edit-move'
 		}),
 		resizeIcon: new L.DivIcon({
-			iconSize: new L.Point(16, 16),
+			iconSize: new L.Point(8, 8),
 			className: 'leaflet-div-icon leaflet-editing-icon leaflet-edit-resize'
 		})
 	},
