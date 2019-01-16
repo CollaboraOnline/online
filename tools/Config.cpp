@@ -46,9 +46,18 @@ public:
 
 struct AdminConfig
 {
-    unsigned pwdSaltLength = 128;
-    unsigned pwdIterations = 10000;
-    unsigned pwdHashLength = 128;
+protected:
+    unsigned _pwdSaltLength = 128;
+    unsigned _pwdIterations = 10000;
+    unsigned _pwdHashLength = 128;
+public:
+
+    void setPwdSaltLength(unsigned pwdSaltLength) { _pwdSaltLength = pwdSaltLength; }
+    unsigned getPwdSaltLength() const { return _pwdSaltLength; }
+    void setPwdIterations(unsigned pwdIterations) { _pwdIterations = pwdIterations; }
+    unsigned getPwdIterations() const { return _pwdIterations; }
+    void setPwdHashLength(unsigned pwdHashLength) { _pwdHashLength = pwdHashLength; }
+    unsigned getPwdHashLength() const { return _pwdHashLength; }
 };
 
 // Config tool to change loolwsd configuration (loolwsd.xml)
@@ -159,7 +168,7 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
             len = MIN_PWD_SALT_LENGTH;
             std::cout << "Password salt length adjusted to minimum " << len << std::endl;
         }
-        _adminConfig.pwdSaltLength = len;
+        _adminConfig.setPwdSaltLength(len);
     }
     else if (optionName == "pwd-iterations")
     {
@@ -169,7 +178,7 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
             len = MIN_PWD_ITERATIONS;
             std::cout << "Password iteration adjusted to minimum " << len << std::endl;
         }
-        _adminConfig.pwdIterations = len;
+        _adminConfig.setPwdIterations(len);
     }
     else if (optionName == "pwd-hash-length")
     {
@@ -179,7 +188,7 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
             len = MIN_PWD_HASH_LENGTH;
             std::cout << "Password hash length adjusted to minimum " << len << std::endl;
         }
-        _adminConfig.pwdHashLength = len;
+        _adminConfig.setPwdHashLength(len);
     }
     else if (optionName == "support-key")
     {
@@ -204,9 +213,9 @@ int Config::main(const std::vector<std::string>& args)
     if (args[0] == "set-admin-password")
     {
 #if HAVE_PKCS5_PBKDF2_HMAC
-        unsigned char pwdhash[_adminConfig.pwdHashLength];
-        unsigned char salt[_adminConfig.pwdSaltLength];
-        RAND_bytes(salt, _adminConfig.pwdSaltLength);
+        unsigned char pwdhash[_adminConfig.getPwdHashLength()];
+        unsigned char salt[_adminConfig.getPwdSaltLength()];
+        RAND_bytes(salt, _adminConfig.getPwdSaltLength());
         std::stringstream stream;
 
         // Ask for admin username
@@ -242,13 +251,13 @@ int Config::main(const std::vector<std::string>& args)
 
         // Do the magic !
         PKCS5_PBKDF2_HMAC(adminPwd.c_str(), -1,
-                          salt, _adminConfig.pwdSaltLength,
-                          _adminConfig.pwdIterations,
+                          salt, _adminConfig.getPwdSaltLength(),
+                          _adminConfig.getPwdIterations(),
                           EVP_sha512(),
-                          _adminConfig.pwdHashLength, pwdhash);
+                          _adminConfig.getPwdHashLength(), pwdhash);
 
         // Make salt randomness readable
-        for (unsigned j = 0; j < _adminConfig.pwdSaltLength; ++j)
+        for (unsigned j = 0; j < _adminConfig.getPwdSaltLength(); ++j)
             stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(salt[j]);
         const std::string saltHash = stream.str();
 
@@ -257,12 +266,12 @@ int Config::main(const std::vector<std::string>& args)
         stream.clear();
 
         // Make the hashed password readable
-        for (unsigned j = 0; j < _adminConfig.pwdHashLength; ++j)
+        for (unsigned j = 0; j < _adminConfig.getPwdHashLength(); ++j)
             stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pwdhash[j]);
         const std::string passwordHash = stream.str();
 
         std::stringstream pwdConfigValue("pbkdf2.sha512.", std::ios_base::in | std::ios_base::out | std::ios_base::ate);
-        pwdConfigValue << std::to_string(_adminConfig.pwdIterations) << ".";
+        pwdConfigValue << std::to_string(_adminConfig.getPwdIterations()) << ".";
         pwdConfigValue << saltHash << "." << passwordHash;
         _loolConfig.setString("admin_console.username", adminUser);
         _loolConfig.setString("admin_console.secure_password[@desc]",
