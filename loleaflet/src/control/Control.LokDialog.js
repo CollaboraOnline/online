@@ -822,8 +822,11 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this._isSidebar(dialogId)) {
 			// Remove any extra height allocated for the parent container (only for floating dialogs).
 			var canvas = document.getElementById(dialogId + '-canvas');
-			if (!canvas)
-				return;
+			if (!canvas) {
+				canvas = document.getElementById(this._toStrId(dialogId) + '-canvas');
+				if (!canvas)
+					return;
+			}
 			var canvasHeight = canvas.height;
 			$('#' + dialogId).height(canvasHeight + 'px');
 		}
