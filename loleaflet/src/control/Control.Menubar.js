@@ -71,6 +71,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
+                               {uno: '.uno:InsertSection'},
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertPageNumberField'},
 					{uno: '.uno:InsertPageCountField'},
@@ -102,9 +103,10 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertZWNBSP'},
 					{uno: '.uno:InsertLRM'},
 					{uno: '.uno:InsertRLM'}]},
-				{uno: '.uno:InsertIndexesEntry'}
-			]
-			},
+                                {name: _UNO('.uno:IndexesMenu', 'text'), type: 'menu', menu: [
+					{uno: '.uno:InsertIndexesEntry'},
+					{uno: '.uno:InsertAuthoritiesEntry'}]},
+			]},
 			{name: _UNO('.uno:FormatMenu', 'text'), type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:Bold'},
@@ -268,12 +270,16 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:HyperlinkDialog'},
 				{type: 'separator'},
-				{uno: '.uno:InsertSymbol'}]
+				{uno: '.uno:InsertSymbol'},
+                               {type: 'separator'},
+                               {uno: '.uno:HeaderAndFooter'}]
 			},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), type: 'menu', menu: [
 				{uno: '.uno:TransformDialog'},
 				{uno: '.uno:FormatLine'},
-				{uno: '.uno:FormatArea'}]
+				{uno: '.uno:FormatArea'},
+				{type: 'separator'},
+				{uno: '.uno:OutlineBullet'}]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 				{name: _UNO('.uno:TableInsertMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
@@ -342,11 +348,14 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:HyperlinkDialog'},
-				{uno: '.uno:InsertSymbol'}
+				{uno: '.uno:InsertSymbol'},
+				{uno: '.uno:EditHeaderAndFooter'}
 			]},
 			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:ResetAttributes'},
-				{uno: '.uno:FormatCellDialog'}
+				{uno: '.uno:FormatCellDialog'},
+				{uno: '.uno:PageFormatDialog'},
+				{uno: '.uno:ConditionalFormatManagerDialog'}
 			]},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
@@ -391,7 +400,8 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:ToolsMenu', 'spreadsheet'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+				{uno: '.uno:GoalSeekDialog'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
