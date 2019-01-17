@@ -1562,6 +1562,8 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
         return false;
     }
 
+    sendTextFrame("signeddocumentuploadstatus: OK");
+
     return true;
 }
 
