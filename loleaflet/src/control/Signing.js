@@ -368,7 +368,7 @@ function vereignUpload(documentType) {
 	});
 }
 
-function vereignSignAndUploadPDF(documentType) {
+function vereignExportSignAndUploadToVereign(documentType) {
 	library.getOneTimeCertificateByPassport(currentPassport.uuid).then(function(result) {
 		if (!isSuccess(result)) {
 			return;
@@ -417,10 +417,10 @@ function vereignSignAndUploadForType(uploadDocType) {
 	if (documentType == null)
 		return;
 
-	if (uploadDocType == 'PDF') {
-		vereignSignAndUploadPDF(documentType);
+	if (uploadDocType == 'PDF' || uploadDocType == 'DOCX' || uploadDocType == 'ODT') {
+		vereignExportSignAndUploadToVereign(documentType);
 	}
-	else if (uploadDocType == 'DOCX' || uploadDocType == 'ODT') {
+	else {
 		library.getOneTimeCertificateByPassport(currentPassport.uuid).then(function(result) {
 			if (isSuccess(result)) {
 				var otp = result.data;
