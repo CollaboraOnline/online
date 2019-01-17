@@ -639,5 +639,14 @@ L.Map.include({
 		}
 		awaitForDocumentStatusToUpload = false;
 		currentDocumentType = null;
+	},
+	onVereignUploadStatus: function(uploadStatus) {
+		if (uploadStatus == 'OK') {
+			_map.fire('infobar', {
+				msg: _('Document uploaded.'),
+				action: null,
+				actionLabel: null
+			});
+		}
 	}
 });
