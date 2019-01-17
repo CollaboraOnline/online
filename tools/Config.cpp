@@ -46,7 +46,7 @@ public:
 
 struct AdminConfig
 {
-protected:
+private:
     unsigned _pwdSaltLength = 128;
     unsigned _pwdIterations = 10000;
     unsigned _pwdHashLength = 128;

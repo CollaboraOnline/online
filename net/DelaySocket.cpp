@@ -31,14 +31,18 @@ class DelaySocket : public Socket {
 
     /// queued up data - sent to us by our opposite twin.
     struct WriteChunk {
+    private:
         std::chrono::steady_clock::time_point _sendTime;
         std::vector<char> _data;
+    public:
         WriteChunk(int delayMs)
         {
             _sendTime = std::chrono::steady_clock::now() +
                 std::chrono::milliseconds(delayMs);
         }
         bool isError() { return _data.size() == 0; }
+        std::chrono::steady_clock::time_point getSendTime() const { return _sendTime; }
+        std::vector<char>& getData() { return _data; }
     private:
         WriteChunk();
     };
@@ -65,8 +69,8 @@ public:
         {
             os << "\t\tin: " <<
                 std::chrono::duration_cast<std::chrono::milliseconds>(
-                    chunk->_sendTime - now).count() << "ms - "
-               << chunk->_data.size() << "bytes\n";
+                    chunk->getSendTime() - now).count() << "ms - "
+               << chunk->getData().size() << "bytes\n";
         }
     }
 
@@ -79,7 +83,7 @@ public:
         if (_chunks.size() > 0)
         {
             int remainingMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-                (*_chunks.begin())->_sendTime - now).count();
+                (*_chunks.begin())->getSendTime() - now).count();
             if (remainingMs < timeoutMaxMs)
                 DELAY_LOG("#" << getFD() << " reset timeout max to " << remainingMs
                           << "ms from " << timeoutMaxMs << "ms\n");
@@ -87,7 +91,7 @@ public:
         }
 
         if (_chunks.size() > 0 &&
-            now > (*_chunks.begin())->_sendTime)
+            now > (*_chunks.begin())->getSendTime())
             return POLLIN | POLLOUT;
         else
             return POLLIN;
@@ -142,7 +146,7 @@ public:
             {
                 DELAY_LOG("#" << getFD() << " read " << len
                           << " to queue: " << _chunks.size() << "\n");
-                chunk->_data.insert(chunk->_data.end(), &buf[0], &buf[len]);
+                chunk->getData().insert(chunk->getData().end(), &buf[0], &buf[len]);
                 if (_dest)
                     _dest->_chunks.push_back(chunk);
                 else
@@ -164,9 +168,9 @@ public:
         {
             std::shared_ptr<WriteChunk> chunk = *_chunks.begin();
             if (std::chrono::duration_cast<std::chrono::milliseconds>(
-                    now - chunk->_sendTime).count() >= 0)
+                    now - chunk->getSendTime()).count() >= 0)
             {
-                if (chunk->_data.size() == 0)
+                if (chunk->getData().size() == 0)
                 { // delayed error or close
                     DELAY_LOG("#" << getFD() << " handling delayed close\n");
                     changeState(Closed);
@@ -175,7 +179,7 @@ public:
                 {
                     ssize_t len;
                     do {
-                        len = ::write(getFD(), &chunk->_data[0], chunk->_data.size());
+                        len = ::write(getFD(), &chunk->getData()[0], chunk->getData().size());
                     } while (len < 0 && errno == EINTR);
 
                     if (len < 0)
@@ -188,7 +192,7 @@ public:
                         {
                             DELAY_LOG("#" << getFD() << " failed onwards write "
                                       << len << "bytes of "
-                                      << chunk->_data.size()
+                                      << chunk->getData().size()
                                       << " queue: " << _chunks.size() << " error: "
                                       << Util::symbolicErrno(errno) << ": " << strerror(errno) << "\n");
                             changeState(Closed);
@@ -197,12 +201,12 @@ public:
                     else
                     {
                         DELAY_LOG("#" << getFD() << " written onwards " << len << "bytes of "
-                                  << chunk->_data.size()
+                                  << chunk->getData().size()
                                   << " queue: " << _chunks.size() << "\n");
                         if (len > 0)
-                            chunk->_data.erase(chunk->_data.begin(), chunk->_data.begin() + len);
+                            chunk->getData().erase(chunk->getData().begin(), chunk->getData().begin() + len);
 
-                        if (chunk->_data.size() == 0)
+                        if (chunk->getData().size() == 0)
                             _chunks.erase(_chunks.begin(), _chunks.begin() + 1);
                     }
                 }
