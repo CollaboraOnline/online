@@ -56,11 +56,13 @@ ifelse(MOBILEAPP,[true],
 )dnl
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
 ifelse(MOBILEAPP,[true],
-  [<link rel="localizations" href="l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+  [<link rel="localizations" href="l10n/uno-localizations-override.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>],
-  [<link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
+  [<link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno-localizations-override.json" type="application/vnd.oftn.l10n+json"/>
+   <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
