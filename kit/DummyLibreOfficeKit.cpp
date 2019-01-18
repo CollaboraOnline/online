@@ -19,15 +19,19 @@
 
 struct LibLODocument_Impl : public _LibreOfficeKitDocument
 {
+private:
     std::shared_ptr< LibreOfficeKitDocumentClass > m_pDocumentClass;
 
+public:
     LibLODocument_Impl();
 };
 
 struct LibLibreOffice_Impl : public _LibreOfficeKit
 {
+private:
     std::shared_ptr< LibreOfficeKitClass > m_pOfficeClass;
 
+public:
     LibLibreOffice_Impl();
 };
 
