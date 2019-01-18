@@ -164,8 +164,9 @@ L.Annotation = L.Layer.extend({
 		}
 	},
 
-	_createButton: function(container, value, handler) {
-		var button = L.DomUtil.create('input', 'loleaflet-controls', container);
+	_createButton: function(container, id, value, handler) {
+		var button = L.DomUtil.create('input', 'annotation-button', container);
+		button.id = id;
 		button.type = 'button';
 		button.value = value;
 		L.DomEvent.on(button, 'mousedown', L.DomEvent.preventDefault);
@@ -246,11 +247,11 @@ L.Annotation = L.Layer.extend({
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeModify);
 		L.DomEvent.on(this._nodeModifyText, 'blur', this._onLostFocus, this);
 		L.DomEvent.on(this._nodeReplyText, 'blur', this._onLostFocusReply, this);
-		this._createButton(buttons, _('Save'), this._onSaveComment);
-		this._createButton(buttons, cancel, this._onCancelClick);
+		this._createButton(buttons, 'annotation-cancel', cancel, this._onCancelClick);
+		this._createButton(buttons, 'annotation-save', _('Save'), this._onSaveComment);
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeReply);
-		this._createButton(buttons, _('Reply'), this._onReplyClick);
-		this._createButton(buttons, cancel, this._onCancelClick);
+		this._createButton(buttons, 'annotation-cancel', cancel, this._onCancelClick);
+		this._createButton(buttons, 'annotation-reply', _('Reply'), this._onReplyClick);
 		L.DomEvent.disableScrollPropagation(this._container);
 
 		this._container.style.visibility = 'hidden';
