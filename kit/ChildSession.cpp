@@ -1956,14 +1956,17 @@ bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, cons
 
     getLOKitDocument()->setView(_viewId);
 
-    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT && nPart != getLOKitDocument()->getPart())
+    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
     {
-        getLOKitDocument()->selectPart(nPart, nSelect);
+        if (nPart != getLOKitDocument()->getPart())
+        {
+            getLOKitDocument()->selectPart(nPart, nSelect);
 
-        // Notify the client of the selection update.
-        const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
-        if (!status.empty())
-            return sendTextFrame("statusupdate: " + status);
+            // Notify the client of the selection update.
+            const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
+            if (!status.empty())
+                return sendTextFrame("statusupdate: " + status);
+        }
     }
     else
     {
