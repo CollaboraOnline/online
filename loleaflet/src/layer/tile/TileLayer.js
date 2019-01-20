@@ -2456,14 +2456,14 @@ L.TileLayer = L.GridLayer.extend({
 					var preview = this._map._docPreviews[key];
 					if (preview.index >= 0 && this._docType === 'text') {
 						// we have a preview for a page
-						if (this._partPageRectanglesTwips.length > preview.index &&
-								invalidBounds.intersects(this._partPageRectanglesTwips[preview.index])) {
+						if (preview.invalid || (this._partPageRectanglesTwips.length > preview.index &&
+								invalidBounds.intersects(this._partPageRectanglesTwips[preview.index]))) {
 							toInvalidate[key] = true;
 						}
 					}
 					else if (preview.index >= 0) {
 						// we have a preview for a part
-						if (preview.index === this._selectedPart ||
+						if (preview.invalid || preview.index === this._selectedPart ||
 								(preview.index === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) {
 							// if the current part needs its preview updated OR
 							// the part has been changed and we need to update the previous part preview
@@ -2478,7 +2478,7 @@ L.TileLayer = L.GridLayer.extend({
 						var bounds = new L.Bounds(
 								new L.Point(preview.tilePosX, preview.tilePosY),
 								new L.Point(preview.tilePosX + preview.tileWidth, preview.tilePosY + preview.tileHeight));
-						if ((preview.part === this._selectedPart ||
+						if (preview.invalid || (preview.part === this._selectedPart ||
 								(preview.part === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) &&
 								invalidBounds.intersects(bounds)) {
 							// if the current part needs its preview updated OR
