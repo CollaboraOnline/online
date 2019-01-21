@@ -827,12 +827,18 @@ L.AnnotationManager = L.Class.extend({
 
 L.Map.include({
 	insertComment: function() {
+		var avatar = undefined;
+		var author = this.getViewName(this._docLayer._viewId);
+		if (author in this._viewInfoByUserName) {
+			avatar = this._viewInfoByUserName[author].userextrainfo.avatar;
+		}
 		this._docLayer.newAnnotation({
 			text: '',
 			textrange: '',
-			author: this.getViewName(this._docLayer._viewId),
+			author: author,
 			dateTime: new Date().toDateString(),
-			id: 'new' // 'new' only when added by us
+			id: 'new', // 'new' only when added by us
+			avatar: avatar
 		});
 	}
 });
