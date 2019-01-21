@@ -55,9 +55,11 @@ static bool EnableHttps = false;
 
 struct Session
 {
+private:
     std::string _session_name;
     Poco::Net::HTTPClientSession *_session;
 
+public:
     Session(const char *session_name, bool https = false)
         : _session_name(session_name)
     {
@@ -129,7 +131,9 @@ struct Session
 
 struct ThreadWorker : public Runnable
 {
+private:
     const char *_domain;
+public:
     ThreadWorker(const char *domain = nullptr)
         : _domain(domain)
     {
