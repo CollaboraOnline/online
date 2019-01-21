@@ -1600,7 +1600,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._map._clipboardContainer.showCursor();
-		if (!L.Browser.mobile) {
+		if (this._map._isFocused && !L.Browser.mobile) {
 			// On mobile, this is causing some key input to get lost.
 			this._map.focus();
 		}
