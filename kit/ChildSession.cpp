@@ -1404,6 +1404,8 @@ bool ChildSession::signDocumentContent(const char* buffer, int length, const std
     return bResult;
 }
 
+#ifndef MOBILEAPP
+
 bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
 {
     bool bResult = false;
@@ -1568,6 +1570,8 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
 
     return true;
 }
+
+#endif
 
 bool ChildSession::askSignatureStatus(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
 {
