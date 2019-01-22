@@ -628,9 +628,9 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       [
        if test `uname -s` = "Darwin"; then
           IOSAPP_FONTS=''
+          mkdir -p ios/Mobile/Fonts
           if test "$with_iosapp_fonts" != no -a -d "$with_iosapp_fonts"; then
               AC_MSG_NOTICE([copying fonts to be bundled])
-              mkdir -p ios/Mobile/Fonts
               IOSAPP_FONTS=`find "$with_iosapp_fonts" -type f |
                             while read fname; do
                                cp "$fname" ios/Mobile/Fonts
