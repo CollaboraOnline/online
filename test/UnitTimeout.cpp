@@ -17,8 +17,6 @@
 #include <Util.hpp>
 #include <Unit.hpp>
 
-using Poco::Timestamp;
-
 class UnitTimeout : public UnitWSD
 {
     std::atomic<bool> _timedOut;
