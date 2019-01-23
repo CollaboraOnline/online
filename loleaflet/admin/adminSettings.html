@@ -75,25 +75,78 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"><script>document.write(l10nstrings.strSettings)</script></h1>
-          <form id="admin_settings">
-            <label for="mem_stats_size"><script>document.write(l10nstrings.strMemoryStatsCachesize)</script></label>
-            <input type="text" id="mem_stats_size" name="Memory Stats Size"><br/>
-            <label for="mem_stats_interval"><script>document.write(l10nstrings.strMemoryStatsInterval)</script></label>
-            <input type="text" id="mem_stats_interval" name="Memory Stats Interval"><br/>
-            <label for="cpu_stats_size"><script>document.write(l10nstrings.strCpuStatsCachesize)</script></label>
-            <input type="text" id="cpu_stats_size" name="Cpu Stats Size"><br/>
-            <label for="cpu_stats_interval"><script>document.write(l10nstrings.strCpuStatsInterval)</script></label>
-            <input type="text" id="cpu_stats_interval" name="Cpu Stats Interval"><br/>
-            <label for="limit_virt_mem_mb"><script>document.write(l10nstrings.strLimitVirtMemMb)</script></label>
-            <input type="text" id="limit_virt_mem_mb" name="Max Document Virtual Memory MB"><br/>
-            <label for="limit_stack_mem_kb"><script>document.write(l10nstrings.strLimitStackMemKb)</script></label>
-            <input type="text" id="limit_stack_mem_kb" name="Max Document Stack Memory Kb"><br/>
-            <label for="limit_file_size_mb"><script>document.write(l10nstrings.strLimitFileSizeMb)</script></label>
-            <input type="text" id="limit_file_size_mb" name="Max File Write Size Mb"><br/>
-            <script>document.write('<input type="submit" value="' + l10nstrings.strSave + '"/><br/>')</script>
+          <form id="admin_settings" class="form-horizontal">
+            <div class="form-group">
+              <label for="mem_stats_size" class="col-md-4 control-label">
+                <script>document.write(l10nstrings.strMemoryStatsCachesize)</script>
+              </label>
+              <div class="col-md-2">
+                <input type="number" id="mem_stats_size" class="form-control" name="Memory Stats Size">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="mem_stats_interval" class="col-md-4 control-label">
+                <script>document.write(l10nstrings.strMemoryStatsInterval)</script>
+              </label>
+              <div class="col-md-2">
+                <input type="number" id="mem_stats_interval" class="form-control" name="Memory Stats Interval">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cpu_stats_size" class="col-md-4 control-label">
+                <script>document.write(l10nstrings.strCpuStatsSize)</script>
+              </label>
+              <div class="col-md-2">
+                <input type="number" id="cpu_stats_size" class="form-control" name="Cpu Stats Size">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cpu_stats_interval" class="col-md-4 control-label">
+                <script>document.write(l10nstrings.strCpuStatsInterval)</script>
+              </label>
+              <div class="col-md-2">
+                <input type="number" id="cpu_stats_interval" class="form-control" name="Cpu Stats Size">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="limit_virt_mem_mb" class="col-md-4 control-label">
+                <script>document.write(l10nstrings.strLimitVirtMemMb)</script>
+              </label>
+              <div class="col-md-2">
+                <input type="number" id="limit_virt_mem_mb" class="form-control" name="Max Document Virtual Memory MB">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="limit_stack_mem_kb" class="col-md-4 control-label">
+                <script>document.write(l10nstrings.strLimitStackMemKb)</script>
+              </label>
+              <div class="col-md-2">
+                <input type="number" id="limit_stack_mem_kb" class="form-control" name="Max Document Stack Memory Kb">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="limit_file_size_mb" class="col-md-4 control-label">
+                <script>document.write(l10nstrings.strLimitFileSizeMb)</script>
+              </label>
+              <div class="col-md-2">
+                <input type="number" id="limit_file_size_mb" class="form-control" name="Max File Write Size Mb">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-offset-4 col-md-8">
+                <button type="submit" class="btn btn-primary"><script>document.write(l10nstrings.strSave)</script></button>
+              </div>
+            </div>
           </form>
           <br />
-          <input id="btnShutdown" type="submit" value="Shutdown"/>
+          <input id="btnShutdown" type="submit" value="Shutdown" class="btn btn-danger"/>
         </div>
       </div>
     </div>
