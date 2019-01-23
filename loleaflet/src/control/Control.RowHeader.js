@@ -312,11 +312,13 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var ctx = this._cornerCanvasContext;
 		var ctrlHeadSize = this._groupHeadSize;
 		var levelSpacing = this._levelSpacing;
+		var scale = L.getDpiScaleFactor();
 
 		var startOrt = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
-		var startPar = this._cornerCanvas.height - (ctrlHeadSize + (L.Control.Header.colHeaderHeight - ctrlHeadSize) / 2);
+		var startPar = this._cornerCanvas.height / scale - (ctrlHeadSize + (L.Control.Header.colHeaderHeight - ctrlHeadSize) / 2);
 
 		ctx.save();
+		ctx.scale(scale, scale);
 		ctx.fillStyle = this._hoverColor;
 		ctx.fillRect(startOrt, startPar, ctrlHeadSize, ctrlHeadSize);
 		ctx.strokeStyle = 'black';
