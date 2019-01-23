@@ -229,7 +229,7 @@ private:
             StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() != 5 ||
                 tokens[0] != "adddoc" ||
-                tokens[2] != documentPath1.substr(documentPath1.find_last_of("/") + 1) )
+                tokens[2] != documentPath1.substr(documentPath1.find_last_of('/') + 1) )
             {
                 LOG_INF("testAddDocNotify: Unrecognized message format");
                 return TestResult::Failed;
@@ -257,7 +257,7 @@ private:
             StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() != 5 ||
                 tokens[0] != "adddoc" ||
-                tokens[2] != documentPath1.substr(documentPath1.find_last_of("/") + 1) )
+                tokens[2] != documentPath1.substr(documentPath1.find_last_of('/') + 1) )
             {
                 LOG_INF("testAddDocNotify: Unrecognized message format");
                 return TestResult::Failed;
@@ -292,7 +292,7 @@ private:
             StringTokenizer tokens(_messageReceived, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
             if (tokens.count() != 5 ||
                 tokens[0] != "adddoc" ||
-                tokens[2] != documentPath2.substr(documentPath2.find_last_of("/") + 1) )
+                tokens[2] != documentPath2.substr(documentPath2.find_last_of('/') + 1) )
             {
                 LOG_INF("testAddDocNotify: Unrecognized message format");
                 return TestResult::Failed;
