@@ -155,7 +155,11 @@ L.Control.Scroll = L.Control.extend({
 
 	_onScrollTo: function (e) {
 		// triggered by the document (e.g. search result out of the viewing area)
-		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {calledFromInvalidateCursorMsg: e.calledFromInvalidateCursorMsg});
+		if (window.ThisIsAMobileApp) {
+			$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {calledFromInvalidateCursorMsg: e.calledFromInvalidateCursorMsg});
+		} else {
+			$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x]);
+		}
 	},
 
 	_onScrollBy: function (e) {
