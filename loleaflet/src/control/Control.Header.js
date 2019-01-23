@@ -472,7 +472,7 @@ L.Control.Header = L.Control.extend({
 		return Math.round(this._getParallelPos(this.converter(point)));
 	},
 
-	_setCanvasSizeImpl: function (container, canvas, property, value) {
+	_setCanvasSizeImpl: function (container, canvas, property, value, isCorner) {
 		if (!value) {
 			value = parseInt(L.DomUtil.getStyle(container, property));
 		}
@@ -483,28 +483,31 @@ L.Control.Header = L.Control.extend({
 		var scale = L.getDpiScaleFactor();
 		if (property === 'width') {
 			canvas.width = value * scale;
-			this._canvasWidth = value;
+			if (!isCorner)
+				this._canvasWidth = value;
+			console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
 			canvas.height = value * scale;
-			this._canvasHeight = value;
+			if (!isCorner)
+				this._canvasHeight = value;
 		}
 	},
 
 	_setCanvasWidth: function (width) {
-		this._setCanvasSizeImpl(this._headerContainer, this._canvas, 'width', width);
+		this._setCanvasSizeImpl(this._headerContainer, this._canvas, 'width', width, /*isCorner: */ false);
 	},
 
 	_setCanvasHeight: function (height) {
-		this._setCanvasSizeImpl(this._headerContainer, this._canvas, 'height', height);
+		this._setCanvasSizeImpl(this._headerContainer, this._canvas, 'height', height, /*isCorner: */ false);
 	},
 
 	_setCornerCanvasWidth: function (width) {
-		this._setCanvasSizeImpl(this._cornerHeaderContainer, this._cornerCanvas, 'width', width);
+		this._setCanvasSizeImpl(this._cornerHeaderContainer, this._cornerCanvas, 'width', width, /*isCorner: */ true);
 	},
 
 	_setCornerCanvasHeight: function (height) {
-		this._setCanvasSizeImpl(this._cornerHeaderContainer, this._cornerCanvas, 'height', height);
+		this._setCanvasSizeImpl(this._cornerHeaderContainer, this._cornerCanvas, 'height', height, /*isCorner: */ true);
 	},
 
 	_hitOutline: function (e) {
