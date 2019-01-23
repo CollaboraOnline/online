@@ -615,12 +615,12 @@ L.Control.Header = L.Control.extend({
 
 		ctx.fillStyle = this._borderColor;
 		if (this._isColumn) {
-			var startY = this._cornerCanvas.height - (L.Control.Header.colHeaderHeight + this._borderWidth);
+			var startY = this._cornerCanvas.height / scale - (L.Control.Header.colHeaderHeight + this._borderWidth);
 			if (startY > 0)
 				ctx.fillRect(0, startY, this._cornerCanvas.width, this._borderWidth);
 		}
 		else {
-			var startX = this._cornerCanvas.width - (L.Control.Header.rowHeaderWidth + this._borderWidth);
+			var startX = this._cornerCanvas.width / scale - (L.Control.Header.rowHeaderWidth + this._borderWidth);
 			if (startX > 0)
 				ctx.fillRect(startX, 0, this._borderWidth, this._cornerCanvas.height);
 		}
