@@ -1644,6 +1644,10 @@ private:
     {
         const std::string sessionId = session->getId();
 
+        std::string options;
+        if (!lang.empty())
+            options = "Language=" + lang;
+
         std::unique_lock<std::mutex> lock(_documentMutex);
 
         if (!_loKitDocument)
@@ -1666,10 +1670,6 @@ private:
             _docPassword = docPassword;
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
-
-            std::string options;
-            if (!lang.empty())
-                options = "Language=" + lang;
 
             LOG_DBG("Calling lokit::documentLoad(" << uriAnonym << ", \"" << options << "\").");
             Timestamp timestamp;
@@ -1735,8 +1735,8 @@ private:
                 }
             }
 
-            LOG_INF("Creating view to url [" << uriAnonym << "] for session [" << sessionId << "].");
-            _loKitDocument->createView();
+            LOG_INF("Creating view to url [" << uriAnonym << "] for session [" << sessionId << "] with " << options << '.');
+            _loKitDocument->createView(options.c_str());
             LOG_TRC("View to url [" << uriAnonym << "] created.");
         }
 
