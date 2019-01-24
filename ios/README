@@ -55,4 +55,11 @@ property into the ios/Mobile/Info.plist file, and set up some
 symbolic links that point to the LIbreOffice core source and build
 directories (which can be the same, of course).
 
-4) Now you can open the Mobile Xcode project, build it, and run it.
+4) Before opening the Xcode project for the first time
+   - seriously consider disabling source code indexing, this
+   spawns a vast number of git processes, and consumes huge
+   amounts of CPU & memory:
+
+	Xcode -> Preferences, "Source Control", uncheck "Enable Source Control"
+
+5) Now you can open the Mobile Xcode project, build it, and run it.
