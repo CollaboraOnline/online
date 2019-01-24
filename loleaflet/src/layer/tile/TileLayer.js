@@ -1634,11 +1634,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (!zoom && !(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
 			    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 			    !(docLayer._followEditor || docLayer._followUser)) {
-				if (window.ThisIsAMobileApp) {
-					this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
-				} else {
-					this._map.fire('scrollto', {x: center.x, y: center.y});
-				}
+				this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
 			}
 		}
 
