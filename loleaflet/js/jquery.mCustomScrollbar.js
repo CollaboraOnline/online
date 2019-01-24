@@ -2138,8 +2138,7 @@ and dependencies (minified).
 						// hidden part of the document (for instance when pressing enter on the
 						// last visible line). The options.timeout==1 is a silly way to detect
 						// the mouse-wheel scrolling.
-						if((window.ThisIsAMobileApp && (options.drag || options.timeout===1 || options.calledFromInvalidateCursorMsg==true)) ||
-						   (!window.ThisIsAMobileApp)) {
+						if(!window.ThisIsAMobileApp || options.drag || options.timeout===1 || options.calledFromInvalidateCursorMsg==true){
 							/* callbacks: whileScrolling */
 							if(_cb("whileScrolling")){_mcs(); o.callbacks.whileScrolling.call(el[0]);}
 						}
