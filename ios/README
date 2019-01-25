@@ -33,7 +33,7 @@ from step 2. This is what I do:
 make clean && make && tar cf - loleaflet/dist | ssh misan.local 'cd lo/online-ios-device && tar xvf -'
 
 where misan.local is the macOS machine where I build the app, in the
-~lo/online-ios-device folder.
+~/lo/online-ios-device folder.
 
 4) In the online folder form step 2, edit the
 ios/Mobile.xcodeproj/project.pbxproj file in your favourite text
@@ -52,7 +52,7 @@ and
 
 The configure script puts the app name as the CFBundleDisplayName
 property into the ios/Mobile/Info.plist file, and set up some
-symbolic links that point to the LIbreOffice core source and build
+symbolic links that point to the LibreOffice core source and build
 directories (which can be the same, of course).
 
 4) Now you can open the Mobile Xcode project, build it, and run it.
