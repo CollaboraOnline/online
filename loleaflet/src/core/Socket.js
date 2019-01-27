@@ -107,6 +107,18 @@ L.Socket = L.Class.extend({
 		}
 	},
 
+	attach: function (socket, msgQueue) {
+		this.socket = socket;
+		this.socket.onerror = L.bind(this._onSocketError, this);
+		this.socket.onclose = L.bind(this._onSocketClose, this);
+		this.socket.onopen = L.bind(this._onSocketOpen, this);
+		this.socket.onmessage = L.bind(this._onMessage, this);
+
+		for (var it = 0; it < msgQueue.length; it++) {
+			this._onMessage({data: msgQueue[it]});
+		}
+	},
+
 	_sessionExpiredWarning: function() {
 		clearTimeout(this._accessTokenExpireTimeout);
 		var expirymsg = errorMessages.sessionexpiry;

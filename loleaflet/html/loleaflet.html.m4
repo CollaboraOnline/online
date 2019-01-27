@@ -172,6 +172,7 @@ ifelse(MOBILEAPP,[true],
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
       window.tileSize = 256;])
+syscmd([cat ]GLOBAL_JS)dnl
     </script>
   <script defer>
 

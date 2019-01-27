@@ -75,7 +75,14 @@ map.addControl(L.control.alertDialog());
 map.addControl(L.control.lokDialog());
 map.addControl(L.control.contextMenu());
 map.addControl(L.control.infobar());
-map.loadDocument();
+if (global.socket && (global.socket.readyState === 1 || global.socket.readyState === 0)) {
+	map._socket.attach(global.socket, global.queueMsg);
+} else {
+	map.loadDocument();
+}
+
+delete global.socket;
+delete global.queueMsg;
 
 window.addEventListener('beforeunload', function () {
 	if (map && map._socket) {

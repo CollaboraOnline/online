@@ -121,9 +121,6 @@ endif
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
 NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
 
-GLOBAL_JS =\
-	global.js
-
 LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
 LOPLUGIN_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').deps.join(' '))} catch(e) {}"))
 
@@ -231,7 +228,7 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(srcdir)/js/global.js \
+	$(builddir)/dist/global.js \
 	$(srcdir)/js/jquery.mCustomScrollbar.js \
 	$(srcdir)/js/w2ui-1.5.rc1.js \
 	$(srcdir)/js/toolbar.js \
@@ -259,7 +256,8 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DMOBILEAPPNAME="$(MOBILE_APP_NAME)" \
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
 		-DBUNDLE_CSS="$(abs_builddir)/dist/bundle.css" \
-		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(GLOBAL_JS) $(NODE_MODULES_JS) \
+		-DGLOBAL_JS="$(abs_builddir)/dist/global.js" \
+		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \
 		$(patsubst %.js,plugins/draw-$(DRAW_VERSION)/%.js,$(call LOLEAFLET_JS,$(srcdir)/plugins/draw-$(DRAW_VERSION)/build/build.js)) \
 		$(patsubst %.js,plugins/path-transform/%.js,$(call LOPLUGIN_JS,$(srcdir)/plugins/path-transform/build/deps.js)) \
