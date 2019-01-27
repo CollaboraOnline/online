@@ -152,7 +152,7 @@ ifelse(MOBILEAPP,[true],
       <div id="lokit-version"></div>
     </div>
 
-    <script>
+    <script defer>
 ifelse(MOBILEAPP,[true],
      [window.host = '';
       window.serviceRoot = '';
@@ -173,7 +173,7 @@ ifelse(MOBILEAPP,[true],
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
       window.tileSize = 256;])
     </script>
-  <script>
+  <script defer>
 
 dnl# For use in conditionals in JS: window.ThisIsAMobileApp, window.ThisIsTheiOSApp,
 dnl# and window.ThisIsTheGtkApp
@@ -207,14 +207,14 @@ ifelse(ANDROIDAPP,[true],
 
 ifelse(MOBILEAPP,[true],
   ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
-  [    <script src="fileJS"></script>
+  [    <script src="fileJS" defer></script>
   ]),
-  [    <script src="bundle.js"></script>
+  [    <script src="bundle.js" defer></script>
   ]),
   ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
-  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/fileJS"></script>
+  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/fileJS" defer></script>
   ]),
-  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.js"></script>
+  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.js" defer></script>
   ])
 )dnl
     <!--%BRANDING_JS%--> <!-- logo onclick handler -->
