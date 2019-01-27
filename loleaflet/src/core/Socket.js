@@ -50,7 +50,7 @@ L.Socket = L.Class.extend({
 		this._msgQueue = [];
 	},
 
-	connect: function() {
+	connect: function(socket) {
 		var map = this._map;
 		if (map.options.permission) {
 			map.options.docParams['permission'] = map.options.permission;
@@ -61,7 +61,9 @@ L.Socket = L.Class.extend({
 		if (window.ThisIsAMobileApp) {
 			this.socket = new FakeWebSocket();
 			window.TheFakeWebSocket = this.socket;
-		} else {
+		} else if (socket && (socket.readyState === 1 || socket.readyState === 0)) {
+			this.socket = socket;
+		} else	{
 			var wopiSrc = '';
 			if (map.options.wopiSrc != '') {
 				wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
@@ -104,6 +106,15 @@ L.Socket = L.Class.extend({
 			clearTimeout(this._accessTokenExpireTimeout);
 			this._accessTokenExpireTimeout = setTimeout(L.bind(this._sessionExpiredWarning, this),
 			                                            parseInt(map.options.docParams.access_token_ttl) - Date.now() - tokenExpiryWarning);
+		}
+
+		// process messages for early socket connection
+		if (socket && ((socket.readyState === 1 || socket.readyState === 0)) &&
+			window.queueMsg && window.queueMsg.length > 0) {
+			for (var it = 0; it < window.queueMsg.length; it++) {
+				this._onMessage({data: window.queueMsg[it]});
+			}
+			window.queueMsg = [];
 		}
 	},
 

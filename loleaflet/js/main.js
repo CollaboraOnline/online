@@ -79,8 +79,9 @@ map.addControl(L.control.columnHeader());
 map.addControl(L.control.rowHeader());
 map.addControl(L.control.contextMenu());
 map.addControl(L.control.infobar());
-map.loadDocument();
+map.loadDocument(global.socket);
 
+global.socket = map._socket;
 window.addEventListener('beforeunload', function () {
 	if (map && map._socket) {
 		map._socket.close();

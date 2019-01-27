@@ -49,4 +49,59 @@
 		}
 	};
 
+	var docParams, wopiParams;
+	var filePath = global.getParameterByName('file_path');
+	var wopiSrc = global.getParameterByName('WOPISrc');
+	if (wopiSrc != '') {
+		global.docURL = decodeURIComponent(wopiSrc);
+		wopiSrc = '?WOPISrc=' + wopiSrc + '&compat=/ws';
+		if (global.accessToken !== '') {
+			wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL };
+		}
+		else if (global.accessHeader !== '') {
+			wopiParams = { 'access_header': global.accessHeader };
+		}
+		docParams = Object.keys(wopiParams).map(function(key) {
+			return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key])
+		}).join('&');
+	} else {
+		global.docURL = filePath;
+	}
+
+	var websocketURI = global.host + global.serviceRoot + '/lool/' + encodeURIComponent(global.docURL + (docParams ? '?' + docParams : '')) + '/ws' + wopiSrc;
+
+	try {
+		global.socket = new WebSocket(websocketURI);
+	} catch (err) {
+		console.log(err);
+	}
+
+	global.queueMsg = [];
+	if (global.socket && global.socket.readyState !== 3) {
+		global.socket.onopen = function () {
+			if (global.socket.readyState === 1) {
+				var ProtocolVersionNumber = '0.1';
+				global.socket.send('loolclient ' + ProtocolVersionNumber);
+				global.socket.send('load url=' + encodeURIComponent(global.docURL));
+			}
+		}
+
+		global.socket.onerror = function (event) {
+			console.log(event);
+		}
+
+		global.socket.onclose = function (event) {
+			console.log(event);
+		}
+
+		global.socket.onmessage = function (event) {
+			if (global.L && global.socket instanceof global.L.Socket) {
+				global.socket._onMessage(event);
+			} else {
+				global.queueMsg.push(event.data);
+			}
+		}
+
+		global.socket.binaryType = 'arraybuffer';
+	}
 }(window));
