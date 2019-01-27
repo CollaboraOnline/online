@@ -44,16 +44,16 @@ var Base64ToArrayBuffer = function(base64Str) {
 </script>
 
 ifelse(MOBILEAPP,[true],
-  ifelse(DEBUG,[true],
+  [ifelse(DEBUG,[true],
     foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="fileCSS" />
   ]),
-    [<link rel="stylesheet" href="bundle.css" />
-  ]),
-  ifelse(DEBUG,[true],
+    [<style>syscmd([cat ]BUNDLE_CSS)</style>
+  ])],
+  [ifelse(DEBUG,[true],
     foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="%SERVICE_ROOT%/loleaflet/%VERSION%/fileCSS" />
   ]),
-    [<link rel="stylesheet" href="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.css" />
-  ])dnl
+    [<style>syscmd([cat ]BUNDLE_CSS)</style>
+  ])]dnl
 )dnl
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
 ifelse(IOSAPP,[true],
