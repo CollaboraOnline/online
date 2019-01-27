@@ -226,6 +226,10 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
 	@echo "Uglify loleaflet css files..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@
 
+$(builddir)/dist/global.js: $(srcdir)/js/global.js
+	@echo "Uglify global.js file..."
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@
+
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(builddir)/dist/global.js \
