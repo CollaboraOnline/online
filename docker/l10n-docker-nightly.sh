@@ -49,7 +49,7 @@ BUILDDIR="$SRCDIR/builddir"
 mkdir -p "$BUILDDIR"
 cd "$BUILDDIR"
 
-rm -rf "$INSTDIR"
+rm -rf "$INSTDIR" || true
 mkdir -p "$INSTDIR"
 
 ##### cloning & updating #####
