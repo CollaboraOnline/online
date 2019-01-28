@@ -9,6 +9,7 @@
 # * DOCKER_HUB_REPO - which Docker Hub repo to use
 # * DOCKER_HUB_TAG  - which Docker Hub tag to create
 # * LIBREOFFICE_BRANCH  - which branch to build (needs to exist in both core and online)
+# * LIBREOFFICE_BUILD_TARGET - which make target to run (in core repo)
 
 # check we can sudo without asking a pwd
 echo "Trying if sudo works without a password"
@@ -31,6 +32,11 @@ if [ -z "$LIBREOFFICE_BRANCH" ]; then
   LIBREOFFICE_BRANCH="master"
 fi;
 echo "Building branch '$LIBREOFFICE_BRANCH'"
+
+if [ -z "$LIBREOFFICE_BUILD_TARGET" ]; then
+  LIBREOFFICE_BUILD_TARGET=""
+fi;
+echo "LibreOffice build target: '$LIBREOFFICE_BUILD_TARGET'"
 
 # check if we have jake
 which jake || { cat << EOF
@@ -127,7 +133,7 @@ cat > libreoffice/autogen.input << EOF
 EOF
 
 ( cd libreoffice && ./autogen.sh ) || exit 1
-( cd libreoffice && make ) || exit 1
+( cd libreoffice && make $LIBREOFFICE_BUILD_TARGET ) || exit 1
 
 # copy stuff
 mkdir -p "$INSTDIR"/opt/
