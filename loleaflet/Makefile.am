@@ -202,6 +202,7 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(builddir)/dist/global.js \
+	$(builddir)/dist/l10n.js \
 	$(builddir)/dist/w2ui-1.5.rc1.js \
 	$(builddir)/dist/toolbar.js \
 	$(builddir)/dist/main.js
@@ -233,6 +234,7 @@ $(builddir)/dist/global.js: $(srcdir)/js/global.js
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(builddir)/dist/global.js \
+	$(builddir)/dist/l10n.js \
 	$(srcdir)/js/jquery.mCustomScrollbar.js \
 	$(srcdir)/js/w2ui-1.5.rc1.js \
 	$(srcdir)/js/toolbar.js \
@@ -261,6 +263,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
 		-DBUNDLE_CSS="$(abs_builddir)/dist/bundle.css" \
 		-DGLOBAL_JS="$(abs_builddir)/dist/global.js" \
+		-DL10N_JS="$(abs_builddir)/dist/l10n.js" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \
 		$(patsubst %.js,plugins/draw-$(DRAW_VERSION)/%.js,$(call LOLEAFLET_JS,$(srcdir)/plugins/draw-$(DRAW_VERSION)/build/build.js)) \

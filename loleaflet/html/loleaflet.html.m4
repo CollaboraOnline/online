@@ -173,6 +173,7 @@ ifelse(MOBILEAPP,[true],
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
       window.tileSize = 256;])
 syscmd([cat ]GLOBAL_JS)dnl
+syscmd([cat ]L10N_JS)dnl
     </script>
   <script defer>
 
