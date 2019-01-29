@@ -56,6 +56,11 @@ L.Map = L.Evented.extend({
 		// hack for https://github.com/Leaflet/Leaflet/issues/1980
 		this._onResize = L.bind(this._onResize, this);
 
+		// Start with readonly toolbars on desktop
+		if (!L.Browser.mobile) {
+			L.DomUtil.addClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
+		}
+
 		this._initEvents();
 
 		if (options.maxBounds) {
