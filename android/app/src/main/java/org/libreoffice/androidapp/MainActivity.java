@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         WebSettings browserSettings = browser.getSettings();
         browserSettings.setJavaScriptEnabled(true);
 
-        browser.loadUrl("http://www.libreoffice.org");
+        browser.loadUrl("file:///android_asset/html/index.html");
     }
 }
 
