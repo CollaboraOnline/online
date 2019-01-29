@@ -13,11 +13,11 @@
 }
 
 #document-container.readonly {
-	top: 36px;
+    top: 36px;
 }
 
 #toolbar-wrapper.readonly {
-	display: none;
+    display: none;
 }
 
 #sidebar-dock-wrapper.tablet {
@@ -40,125 +40,128 @@
 }
 
 .loleaflet-scrollbar-show {
-	opacity: 1 !important;
-	filter: "alpha(opacity=100)" !important;
-	-ms-filter: "alpha(opacity=100)" !important;
+    opacity: 1 !important;
+    filter: "alpha(opacity=100)" !important;
+    -ms-filter: "alpha(opacity=100)" !important;
 }
 
 body {
-	margin: 0;
-	overflow: hidden;
-	overscroll-behavior-y: none; /* disable the pull to reload gesture */
-	background: #ffffff;
-	touch-action: none;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior-y: none; /* disable the pull to reload gesture */
+    background: #ffffff;
+    touch-action: none;
 }
 
 #presentation-controls-wrapper {
-	background: #dfdfdf;
-	position: absolute;
-	top: 77px;
-	left: 0px;
-	bottom: 66px;
-	max-width: 218px;
-	border-top: 1px solid #b6b6b6;
-	display: block;
+    background: #dfdfdf;
+    position: absolute;
+    top: 77px;
+    left: 0px;
+    bottom: 66px;
+    max-width: 218px;
+    border-top: 1px solid #b6b6b6;
+    display: block;
 }
 
 #presentation-controls-wrapper.drawing {
-	bottom: 40px; /* Hide the presentation toolbar (insert slide etc.) for doctype = drawing */
+    bottom: 40px; /* Hide the presentation toolbar (insert slide etc.) for doctype = drawing */
 }
 
 #presentation-controls-wrapper.readonly {
-	top: 36px;
+    top: 36px;
 }
 
 #toolbar-wrapper {
-	position: relative;
-	table-layout: fixed;
-	border-collapse: collapse;
+    position: relative;
+    table-layout: fixed;
+    border-collapse: collapse;
 	width: 100%;
 	border-top: 1px solid #bbbbbb;
 }
 
 #toolbar-logo {
-	width: 0;
+    width: 0;
 }
 
 #toolbar-hamburger {
-	width: 0;
+    width: 0;
 }
 
 #mobile-edit-button {
-	position: absolute;
-	width: 56px;
-	height: 56px;
-	right: 16px;
-	bottom: 16px;
-	background-color: #0b87e7;
-	border-radius: 50%;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	z-index: 2000;
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    right: 16px;
+    bottom: 16px;
+    background-color: #0b87e7;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 2000;
 }
 
 #mobile-edit-button-image {
-	position: relative;
-	left: 16px;
-	top: 16px;
-	width: 24px;
-	height: 24px;
-	background: url('images/baseline-edit-24px.svg') no-repeat center !important;
+    position: relative;
+    left: 16px;
+    top: 16px;
+    width: 24px;
+    height: 24px;
+    background: url('images/baseline-edit-24px.svg') no-repeat center !important;
 }
 
 @media (max-width: 767px),(max-device-height: 767px) {
-	/* Show slidesorter beyond 768px only */
-	#presentation-controls-wrapper {
+    /* Show slidesorter beyond 768px only */
+    #presentation-controls-wrapper {
 	display: none;
-	}
+    }
+<<<<<<< HEAD
+=======
 
-	/* Show sidebar beyond 768px only */
-	#sidebar-dock-wrapper {
+    /* Show sidebar beyond 768px only */
+    #sidebar-dock-wrapper {
 	display: none;
 	top: 41px;
-	}
+    }
 
-	#document-container.tablet {
-		top: 41px;
-	}
+    #document-container.tablet {
+        top: 41px;
+    }
 
-	#document-container.readonly {
-		top: 41px;
-	}
+    #document-container.readonly {
+        top: 41px;
+    }
 
-	#sidebar-dock-wrapper.tablet {
-		top: 41px;
-	}
+    #sidebar-dock-wrapper.tablet {
+        top: 41px;
+    }
 
-	#document-container.sidebar-document {
+    #document-container.sidebar-document {
 	left: 0px !important;
-	}
+    }
 
-	#document-container.parts-preview-document {
+>>>>>>> c620fd91a... Reduce readonly toolbar height
+    #document-container.parts-preview-document {
 	left: 0px !important;
-	}
-	#document-container.spreadsheet-document {
+    }
+    #document-container.spreadsheet-document {
 	top: 103px !important;
-	}
-	#document-container.spreadsheet-document.readonly {
+    }
+    #document-container.spreadsheet-document.readonly {
 	top: 61px !important;
-	}
-	#document-container {
+    }
+    #document-container {
 	top: 41px;
-	}
-	#spreadsheet-row-column-frame {
+    }
+    #spreadsheet-row-column-frame {
 	top: 83px !important;
-	}
-	#spreadsheet-row-column-frame.readonly {
+    }
+    #spreadsheet-row-column-frame.readonly {
 	top: 41px !important;
-	}
-	#toolbar-hamburger {
+    }
+    #toolbar-hamburger {
 	width: 41px;
-	}
-	#closebuttonwrapper {
+    }
+    #closebuttonwrapper {
 	display: none;
 	}
 	/* Show menubar even if folded */
@@ -168,9 +171,9 @@ body {
 }
 
 .loleaflet-font {
-	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
-	font-size: 12px !important;
-	font-weight: normal !important;
+    font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
 }
 
 .loleaflet-character {
@@ -266,8 +269,8 @@ body {
 }
 
 .loleaflet-dont-break {
-		/* These are technically the same, but use both */
-		overflow-wrap: break-word;
+        /* These are technically the same, but use both */
+        overflow-wrap: break-word;
 	word-wrap: break-word;
 
 	/* Don't eat new lines  */
@@ -331,32 +334,32 @@ body {
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline, .loleaflet-redline-accept-button, .loleaflet-redline-reject-button {
 	margin: 0;
-		padding: 0;
-		width: 24px;
-		height: 24px;
+        padding: 0;
+        width: 24px;
+        height: 24px;
 	vertical-align: top;
 	border: 1px solid transparent;
 	display: inline-block;
 }
 
 .loleaflet-redline-accept-button {
-		background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important;
+        background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important;
 }
 
 .loleaflet-redline-reject-button {
-		background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
+        background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
 }
 
 .loleaflet-context-copy {
-		background: url('images/lc_copy.svg') no-repeat center !important;
+        background: url('images/lc_copy.svg') no-repeat center !important;
 }
 
 .loleaflet-context-cut {
-		background: url('images/lc_cut.svg') no-repeat center !important;
+        background: url('images/lc_cut.svg') no-repeat center !important;
 }
 
 .loleaflet-context-paste {
-		background: url('images/lc_paste.svg') no-repeat center !important;
+        background: url('images/lc_paste.svg') no-repeat center !important;
 }
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {
@@ -384,7 +387,7 @@ body {
 }
 
 .loleaflet-annotation-caption {
-		font-weight: bold;
+        font-weight: bold;
 }
 
 .loleaflet-bar {
@@ -467,14 +470,14 @@ body {
 }
 
 .lokdialog_canvas {
-		cursor: default;
-		display: block; /* required to remove all borders around canvas element */
-		caret-color: transparent; /* firefox shows a caret otherwise on top-left of the canvas */
-		user-select: none;
-		-moz-user-select: none;
-		-khtml-user-select: none;
-		-webkit-user-select: none;
-		-o-user-select: none;
+        cursor: default;
+        display: block; /* required to remove all borders around canvas element */
+        caret-color: transparent; /* firefox shows a caret otherwise on top-left of the canvas */
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
 }
 
 /* Infobar */
