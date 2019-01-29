@@ -9,11 +9,11 @@
 }
 
 #document-container.tablet {
-	top: 41px;
+	top: 36px;
 }
 
 #document-container.readonly {
-    top: 41px;
+    top: 36px;
 }
 
 #toolbar-wrapper.readonly {
@@ -65,7 +65,7 @@ body {
 }
 
 #presentation-controls-wrapper.readonly {
-    top: 41px;
+    top: 36px;
 }
 
 #toolbar-wrapper {
@@ -110,6 +110,15 @@ body {
     #presentation-controls-wrapper {
 	display: none;
     }
+
+    #document-container.tablet {
+        top: 41px;
+    }
+
+    #document-container.readonly {
+        top: 41px;
+    }
+
     #document-container.parts-preview-document {
 	left: 0px !important;
     }
