@@ -87,7 +87,7 @@ ifelse(MOBILEAPP,[true],
        </div>
        <!-- Mobile menu toggle button (hamburger/x icon) -->
        <input id="main-menu-state" type="checkbox" style="display: none"/>
-       <ul id="main-menu" class="sm sm-simple lo-menu"></ul>
+       <ul id="main-menu" class="sm sm-simple lo-menu readonly"></ul>
        <div id="document-titlebar">
          <div class="document-title">
            <input id="document-name-input" type="text" disabled="true" style="display: none"/>
@@ -121,15 +121,15 @@ ifelse(MOBILEAPP,[true],
       <div class="closebuttonimage" id="closebutton"></div>
     </div>
 
-    <div id="spreadsheet-row-column-frame"></div>
+    <div id="spreadsheet-row-column-frame" class="readonly"></div>
 
-    <div id="document-container">
+    <div id="document-container" class="readonly">
       <div id="map"></div>
     </div>
 
     <div id="spreadsheet-toolbar" style="display: none"></div>
 
-    <div id="presentation-controls-wrapper">
+    <div id="presentation-controls-wrapper" class="readonly">
       <div id="slide-sorter"></div>
       <div id="presentation-toolbar" style="display: none"></div>
     </div>
