@@ -9,19 +9,15 @@
 }
 
 #document-container.tablet {
-	top: 36px;
+	top: 41px;
 }
 
 #document-container.readonly {
-    top: 36px;
+    top: 41px;
 }
 
 #toolbar-wrapper.readonly {
     display: none;
-}
-
-#sidebar-dock-wrapper.tablet {
-	top: 36px;
 }
 
 #map {
@@ -69,7 +65,7 @@ body {
 }
 
 #presentation-controls-wrapper.readonly {
-    top: 36px;
+    top: 41px;
 }
 
 #toolbar-wrapper {
@@ -114,32 +110,6 @@ body {
     #presentation-controls-wrapper {
 	display: none;
     }
-<<<<<<< HEAD
-=======
-
-    /* Show sidebar beyond 768px only */
-    #sidebar-dock-wrapper {
-	display: none;
-	top: 41px;
-    }
-
-    #document-container.tablet {
-        top: 41px;
-    }
-
-    #document-container.readonly {
-        top: 41px;
-    }
-
-    #sidebar-dock-wrapper.tablet {
-        top: 41px;
-    }
-
-    #document-container.sidebar-document {
-	left: 0px !important;
-    }
-
->>>>>>> c620fd91a... Reduce readonly toolbar height
     #document-container.parts-preview-document {
 	left: 0px !important;
     }
