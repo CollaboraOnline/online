@@ -10,6 +10,7 @@
 package org.libreoffice.androidapp;
 
 import android.os.Bundle;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -24,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         WebView browser = findViewById(R.id.browser);
         browser.setWebViewClient(new WebViewClient());
+
+        WebSettings browserSettings = browser.getSettings();
+        browserSettings.setJavaScriptEnabled(true);
+
         browser.loadUrl("http://www.libreoffice.org");
     }
 }
