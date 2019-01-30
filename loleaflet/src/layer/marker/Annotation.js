@@ -193,12 +193,11 @@ L.Annotation = L.Layer.extend({
 		var tr = L.DomUtil.create('tr', empty, tbody);
 		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
-		var imgAuthor = L.DomUtil.create('img', empty, tdImg);
+		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
 		imgAuthor.setAttribute('src', L.Icon.Default.imagePath + '/user.png');
 		imgAuthor.setAttribute('width', this.options.imgSize.x);
 		imgAuthor.setAttribute('height', this.options.imgSize.y);
 		this._authorAvatarImg = imgAuthor;
-		this._authorUserLine = L.DomUtil.create(tagDiv, 'loleaflet-annotation-userline', tdImg);
 		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
 
@@ -359,6 +358,11 @@ L.Annotation = L.Layer.extend({
 		$(this._nodeModifyText).text(this._data.text);
 		$(this._contentAuthor).text(this._data.author);
 		$(this._authorAvatarImg).attr('src', this._data.avatar);
+		var user = this._map.getViewId(this._data.author);
+		if (user >= 0) {
+			var color = L.LOUtil.rgbToHex(this._map.getViewColor(user));
+			$(this._authorAvatarImg).css('border-color', color);
+		}
 
 		var d = new Date(this._data.dateTime.replace(/,.*/, 'Z'));
 		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
@@ -385,10 +389,6 @@ L.Annotation = L.Layer.extend({
 		this._wrapper.style.width = wrapperWidth + 'px';
 		var wrapperFontSize = Math.round(initialLayoutData.wrapperFontSize * scaleFactor);
 		this._wrapper.style.fontSize = wrapperFontSize + 'px';
-		var authorLineWidth = Math.round(initialLayoutData.authorLineWidth * scaleFactor);
-		this._authorUserLine.style.width = authorLineWidth + 'px';
-		var authorLineHeight = Math.round(initialLayoutData.authorLineHeight * scaleFactor);
-		this._authorUserLine.style.height = authorLineHeight + 'px';
 		var contentAuthorHeight = Math.round(initialLayoutData.authorContentHeight * scaleFactor);
 		this._contentAuthor.style.height = contentAuthorHeight + 'px';
 		var dateFontSize = Math.round(initialLayoutData.dateFontSize * scaleFactor);
