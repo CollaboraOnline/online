@@ -357,8 +357,8 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setPosition(dlgContainer, new L.Point(left, top));
 	},
 
-	focus: function(dlgId) {
-		if (!this._isOpen(dlgId) || !this._dialogs[dlgId].input || !this._dialogs[dlgId].cursorVisible)
+	focus: function(dlgId, force) {
+		if (!force && (!this._isOpen(dlgId) || !this._dialogs[dlgId].input || !this._dialogs[dlgId].cursorVisible))
 			return;
 
 		this._dialogs[dlgId].input.focus();
@@ -581,7 +581,7 @@ L.Control.LokDialog = L.Control.extend({
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
-			this.focus(id);
+			this.focus(id, !this._dialogs[id].isSidebar);
 		}, this);
 		L.DomEvent.on(dlgInput,
 		              'keyup keypress keydown compositionstart compositionupdate compositionend textInput',
@@ -757,7 +757,7 @@ L.Control.LokDialog = L.Control.extend({
 			var container = L.DomUtil.get(strId);
 			if (container)
 				$(container).parent().show();
-			that.focus(parentId);
+			that.focus(parentId, !that._isSidebar(parentId));
 		};
 		img.src = imgData;
 	},
