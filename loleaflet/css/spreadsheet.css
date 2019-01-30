@@ -6,7 +6,7 @@
 }
 
 #document-container.spreadsheet-document.readonly {
-	top: 61px;
+	top: 56px;
 }
 
 #document-container.spreadsheet-document.tablet {
@@ -74,7 +74,7 @@
 }
 
 #spreadsheet-row-column-frame.readonly {
-        top: 41px;
+        top: 36px;
 }
 
 #spreadsheet-row-column-frame.tablet {
