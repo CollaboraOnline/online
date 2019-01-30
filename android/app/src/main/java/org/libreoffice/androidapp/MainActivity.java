@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         browserSettings.setJavaScriptEnabled(true);
 
         browser.loadUrl("file:///android_asset/html/index.html");
+
+        browser.addJavascriptInterface(new JavaScriptInterface(), "MainHandler");
+
+
     }
 }
 
