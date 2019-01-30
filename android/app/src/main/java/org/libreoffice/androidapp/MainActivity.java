@@ -10,9 +10,11 @@
 package org.libreoffice.androidapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,17 +25,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WebView browser = findViewById(R.id.browser);
+        final WebView browser = findViewById(R.id.browser);
         browser.setWebViewClient(new WebViewClient());
 
         WebSettings browserSettings = browser.getSettings();
         browserSettings.setJavaScriptEnabled(true);
+        browser.addJavascriptInterface(new JavaScriptInterface(), "MainHandler");
 
         browser.loadUrl("file:///android_asset/html/index.html");
 
-        browser.addJavascriptInterface(new JavaScriptInterface(), "MainHandler");
-
-
+        Button jsButton = findViewById(R.id.js_button);
+        jsButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            browser.loadUrl("javascript:helloFromJavascript()");
+                                        }
+                                    }
+        );
     }
 }
 
