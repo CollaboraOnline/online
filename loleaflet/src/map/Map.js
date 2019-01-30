@@ -271,10 +271,10 @@ L.Map = L.Evented.extend({
 	updateAvatars: function() {
 		if (this._docLayer && this._docLayer._annotations && this._docLayer._annotations._items) {
 			for (var idxAnno in this._docLayer._annotations._items) {
-				var username = this._docLayer._annotations._items[idxAnno]._data.author;
-				if (this._viewInfoByUserName[username]) {
-					$(this._docLayer._annotations._items[idxAnno]._authorAvatarImg).attr('src', this._viewInfoByUserName[username].userextrainfo.avatar);
-				}
+				var annotation = this._docLayer._annotations._items[idxAnno];
+				var username = annotation._data.author;
+				annotation._data.avatar = this._viewInfoByUserName[username].userextrainfo.avatar;
+				annotation._updateContent();
 			}
 		}
 	},

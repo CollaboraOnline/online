@@ -302,6 +302,11 @@ body {
 	display: inline-block;
 }
 
+.avatar-img {
+	border: solid 2px;
+	border-radius: 50%;
+}
+
 .loleaflet-annotation-author {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -352,12 +357,6 @@ body {
 
 .loleaflet-annotation-date {
 	font-size: 11px;
-}
-
-.loleaflet-annotation-userline {
-	background-color: darkblue;
-	width: 32px;
-	height: 6px;
 }
 
 .loleaflet-annotation-menubar {

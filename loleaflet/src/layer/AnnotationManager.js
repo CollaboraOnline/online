@@ -796,15 +796,12 @@ L.AnnotationManager = L.Class.extend({
 		var initNeeded = (this._initialLayoutData === undefined);
 		var contentWrapperClass = $('.loleaflet-annotation-content-wrapper');
 		if (initNeeded && contentWrapperClass.length > 0) {
-			var userlineClass = $('.loleaflet-annotation-userline');
 			var contentAuthor = $('.loleaflet-annotation-content-author');
 			var dateClass = $('.loleaflet-annotation-date');
 
 			this._initialLayoutData = {
 				wrapperWidth: parseInt(contentWrapperClass.css('width')),
 				wrapperFontSize: parseInt(contentWrapperClass.css('font-size')),
-				authorLineWidth: parseInt(userlineClass.css('width')),
-				authorLineHeight: parseInt(userlineClass.css('height')),
 				authorContentHeight: parseInt(contentAuthor.css('height')),
 				dateFontSize: parseInt(dateClass.css('font-size')),
 			};
