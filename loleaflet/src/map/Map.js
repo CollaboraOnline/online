@@ -273,7 +273,8 @@ L.Map = L.Evented.extend({
 			for (var idxAnno in this._docLayer._annotations._items) {
 				var annotation = this._docLayer._annotations._items[idxAnno];
 				var username = annotation._data.author;
-				annotation._data.avatar = this._viewInfoByUserName[username].userextrainfo.avatar;
+				if (this._viewInfoByUserName[username])
+					annotation._data.avatar = this._viewInfoByUserName[username].userextrainfo.avatar;
 				annotation._updateContent();
 			}
 		}
