@@ -62,9 +62,7 @@ w2ui-toolbar {
  * as a container
  */
 .select2-container {
-    margin-left: 3px;
-    margin-right: 3px;
-    z-index: 11;
+    z-index: 1000;
 }
 
 .w2ui-scroll-left,
