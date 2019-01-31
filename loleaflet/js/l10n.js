@@ -18,6 +18,7 @@ var
   undef_type = "undefined"
 , string_type = "string"
 , nav = {}
+, lang = {}
 , String_ctr = String
 , has_own_prop = Object.prototype.hasOwnProperty
 , load_queues = {}
@@ -188,6 +189,7 @@ var
 try
 {
     nav = self.navigator;
+    lang = self.getParameterByName('lang');
 }
 catch(selfNotFoundException)
 {
@@ -240,7 +242,7 @@ if (!browserless && typeof XMLHttpRequest === undef_type && typeof ActiveXObject
 }
 
 String_ctr[$default_locale] = String_ctr[$default_locale] || "";
-String_ctr[$locale] = nav && (nav.language || nav.userLanguage) || "";
+String_ctr[$locale] = nav && lang && (lang) || "en";
 
 if (!browserless || typeof document !== undef_type) {
 	var
@@ -268,6 +270,11 @@ if (!browserless || typeof document !== undef_type) {
 			}
 		}
 	}
+
+	load(self.__globalL10n);
+	load(self.__locoreL10n);
+	load(self.__helpL10n);
+	load(self.__unoL10n);
 }
 else
 {
