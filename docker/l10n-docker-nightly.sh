@@ -10,6 +10,7 @@
 # * DOCKER_HUB_TAG  - which Docker Hub tag to create
 # * LIBREOFFICE_BRANCH  - which branch to build (needs to exist in both core and online)
 # * LIBREOFFICE_BUILD_TARGET - which make target to run (in core repo)
+# * ONLINE_EXTRA_BUILD_OPTIONS - extra build options for online
 # * NO_DOCKER_IMAGE - if set, don't build the docker image itself, just do all the preps
 
 # check we can sudo without asking a pwd
@@ -146,7 +147,7 @@ chrpath -r '$ORIGIN' "$INSTDIR"/opt/libreoffice/program/libcairo.so.2
 ##### loolwsd & loleaflet #####
 
 # build
-( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/libreoffice/include --with-lo-path="$INSTDIR"/opt/libreoffice ) || exit 1
+( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/libreoffice/include --with-lo-path="$INSTDIR"/opt/libreoffice $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
 ( cd online/loleaflet/po && ../../scripts/downloadpootle.sh )
 ( cd online/loleaflet && make l10n) || exit 1
 ( cd online && scripts/locorestrings.py "$BUILDDIR"/online "$BUILDDIR"/libreoffice/translations )
