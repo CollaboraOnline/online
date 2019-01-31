@@ -79,7 +79,7 @@ if test ! -d online ; then
     ( cd online && ./autogen.sh ) || exit 1
 fi
 
-( cd online && git checkout -f $LIBREOFFICE_BRANCH && git pull -r ) || exit 1
+( cd online && git checkout -f $ONLINE_BRANCH && git pull -r ) || exit 1
 
 ##### LibreOffice #####
 
