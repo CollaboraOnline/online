@@ -10,6 +10,7 @@
 # * DOCKER_HUB_TAG  - which Docker Hub tag to create
 # * LIBREOFFICE_BRANCH  - which branch to build (needs to exist in both core and online)
 # * LIBREOFFICE_BUILD_TARGET - which make target to run (in core repo)
+# * NO_DOCKER_IMAGE - if set, don't build the docker image itself, just do all the preps
 
 # check we can sudo without asking a pwd
 echo "Trying if sudo works without a password"
@@ -157,7 +158,10 @@ chrpath -r '$ORIGIN' "$INSTDIR"/opt/libreoffice/program/libcairo.so.2
 ( cd online && DESTDIR="$INSTDIR" make install ) || exit 1
 
 # Create new docker image
-
-cd "$SRCDIR"
-docker build --no-cache -t $DOCKER_HUB_REPO:$DOCKER_HUB_TAG . || exit 1
-docker push $DOCKER_HUB_REPO:$DOCKER_HUB_TAG || exit 1
+if [ -z "$NO_DOCKER_IMAGE" ]; then
+  cd "$SRCDIR"
+  docker build --no-cache -t $DOCKER_HUB_REPO:$DOCKER_HUB_TAG . || exit 1
+  docker push $DOCKER_HUB_REPO:$DOCKER_HUB_TAG || exit 1
+else
+  echo "Skipping docker image build"
+fi;
