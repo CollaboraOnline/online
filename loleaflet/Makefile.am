@@ -336,9 +336,13 @@ $(builddir)/dist/images/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/l10n/%: $(srcdir)/l10n/%
+$(builddir)/dist/l10n/%.json: $(srcdir)/l10n/%.json
 	@mkdir -p $(dir $@)
+if ENABLE_DEBUG
 	@cp $< $@
+else
+	@tr -d '[:space:]' <$<  >$@
+endif
 
 $(builddir)/dist/l10n/%.json: $(srcdir)/po/%.po
 	@$(srcdir)/util/po2json.py $< -o $@
