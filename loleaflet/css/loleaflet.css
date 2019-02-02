@@ -117,24 +117,26 @@ body {
 }
 
 #sidebar-dock-wrapper {
-    background: #fff;
-    position: absolute;
-    top: 77px;
-    right: 0px;
-    bottom: 37px;
-    border-top: 1px solid #b6b6b6;
-    border-left: 1px solid #b6b6b6;
-    overflow: hidden; /* FIXME we want scrollbars here to handle overflows client-side */
-    z-index: 1100;
+	background: #fff;
+	position: absolute;
+	top: 77px;
+	right: 0px;
+	bottom: 37px;
+	border-top: 1px solid #b6b6b6;
+	border-left: 1px solid #b6b6b6;
+	overflow: hidden;
+	z-index: 1100;
 }
 
 #sidebar-panel {
-    padding: 0px;
-    margin: 0px;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
+	padding: 0px;
+	margin: 0px;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: 1200;
 }
 
 #toolbar-wrapper {
