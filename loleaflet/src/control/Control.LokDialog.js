@@ -885,6 +885,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_resizeSidebar: function(strId, width) {
 		this._currentDeck.width = width;
+		width = width + 15;
 		var sidebar = L.DomUtil.get(strId);
 		if (sidebar) {
 			sidebar.width = width;
