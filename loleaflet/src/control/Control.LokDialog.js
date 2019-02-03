@@ -479,9 +479,8 @@ L.Control.LokDialog = L.Control.extend({
 		var strId = this._toStrId(id);
 
 		if (this._currentDeck) {
-			if (width > 0) {
-				this._resizeSidebar(strId, width);
-			}
+			this._currentDeck.width = width;
+			this._currentDeck.height = height;
 
 			// Hide cursor.
 			this._currentDeck.cursorVisible = false;
@@ -492,10 +491,6 @@ L.Control.LokDialog = L.Control.extend({
 				$(panel).parent().show();
 			else
 				$(panel).parent().hide();
-
-			// update the underlying canvas
-			var panelCanvas = L.DomUtil.get(this._currentDeck.strId + '-canvas');
-			this._setCanvasWidthHeight(panelCanvas, width, height);
 
 			// Render window.
 			this._sendPaintWindowRect(id);
@@ -513,7 +508,7 @@ L.Control.LokDialog = L.Control.extend({
 		panelContainer.id = strId;
 
 		// Create the panel canvas.
-		panelCanvas = L.DomUtil.create('canvas', 'panel_canvas', panelContainer);
+		var panelCanvas = L.DomUtil.create('canvas', 'panel_canvas', panelContainer);
 		L.DomUtil.setStyle(panelCanvas, 'position', 'absolute');
 		this._setCanvasWidthHeight(panelCanvas, width, height);
 		panelCanvas.id = strId + '-canvas';
@@ -752,8 +747,14 @@ L.Control.LokDialog = L.Control.extend({
 			}
 
 			// Sidebars find out their size and become visible on first paint.
-			if (that._isSidebar(parentId))
+			var isSidebar = that._isSidebar(parentId);
+			if (isSidebar) {
 				that._resizeSidebar(strId, that._currentDeck.width);
+
+				// Update the underlying canvas.
+				var panelCanvas = L.DomUtil.get(that._currentDeck.strId + '-canvas');
+				that._setCanvasWidthHeight(panelCanvas, that._currentDeck.width, that._currentDeck.height);
+			}
 
 			ctx.drawImage(img, x, y);
 
@@ -761,7 +762,7 @@ L.Control.LokDialog = L.Control.extend({
 			var container = L.DomUtil.get(strId);
 			if (container)
 				$(container).parent().show();
-			that.focus(parentId, !that._isSidebar(parentId));
+			that.focus(parentId, !isSidebar);
 		};
 		img.src = imgData;
 	},
