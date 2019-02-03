@@ -658,12 +658,12 @@ L.Control.LokDialog = L.Control.extend({
 		var dialogTitle = $('.lokdialog_notitle');
 		if (dialogTitle != null && dialogTitle.length == 0) {
 			var dialogTitleBar = $('.ui-dialog-titlebar');
-			top += dialogTitleBar.height() * L.getDpiScaleFactor();
+			top += dialogTitleBar.outerHeight() * L.getDpiScaleFactor();
 		}
 
 		floatingCanvas.id = strId + '-floating';
 		L.DomUtil.setStyle(floatingCanvas, 'position', 'absolute');
-		L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px'); // yes, it's necessary to append 'px'
+		L.DomUtil.setStyle(floatingCanvas, 'left', (left - 1) + 'px'); // Align drop-down list with parent.
 		L.DomUtil.setStyle(floatingCanvas, 'top', top + 'px');
 
 		// attach events
