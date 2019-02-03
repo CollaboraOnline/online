@@ -276,7 +276,7 @@ L.Control.LokDialog = L.Control.extend({
 			}
 		}
 
-		// all other callbacks doens't make sense without an active dialog
+		// All other callbacks doen't make sense without an active dialog.
 		if (!(this._isOpen(e.id) || this._getParentId(e.id)))
 			return;
 
@@ -612,6 +612,8 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(canvas, 'mousemove', function(e) {
 			this._map.lastActiveTime = Date.now();
 			this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
+			// Keep map active while user is playing with sidebar/dialog.
+			this._map.lastActiveTime = Date.now();
 		}, this);
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
@@ -627,6 +629,8 @@ L.Control.LokDialog = L.Control.extend({
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
 			this.focus(id, !this._dialogs[id].isSidebar);
+			// Keep map active while user is playing with sidebar/dialog.
+			this._map.lastActiveTime = Date.now();
 		}, this);
 		L.DomEvent.on(dlgInput,
 		              'keyup keypress keydown compositionstart compositionupdate compositionend textInput',
@@ -641,7 +645,7 @@ L.Control.LokDialog = L.Control.extend({
 			                                                id),
 			                                         dlgInput);
 
-			              // Keep map active while user is playing with window.
+			              // Keep map active while user is playing with sidebar/dialog.
 			              this._map.lastActiveTime = Date.now();
 		              }, this);
 		L.DomEvent.on(dlgInput, 'paste', function(e) {
