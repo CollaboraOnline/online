@@ -1572,7 +1572,7 @@ function onDocLayerInit() {
 	case 'spreadsheet':
 		toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
 			'numberformatcurrency', 'numberformatpercent',
-			'numberformatincdecimals', 'numberformatdecdecimals', 'break-number',
+			'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
 			'setborderstyle');
 		toolbarUp.remove('styles');
 
