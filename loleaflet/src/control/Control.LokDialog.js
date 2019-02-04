@@ -585,9 +585,9 @@ L.Control.LokDialog = L.Control.extend({
 
 	// Binary dialog msg recvd from core
 	_onDialogPaint: function (e) {
-		var parent = this._getParentId(e.id);
-		if (parent) {
-			this._paintDialogChild(parent, e.width, e.height, e.rectangle, e.img);
+		var parentId = this._getParentId(e.id);
+		if (parentId) {
+			this._paintDialogChild(parentId, e.img);
 		} else {
 			this._paintDialog(e.id, e.rectangle, e.img);
 		}
@@ -595,18 +595,24 @@ L.Control.LokDialog = L.Control.extend({
 
 	// Dialog Child Methods
 
-	_paintDialogChild: function(parentId, width, height, rectangle, imgData) {
+	_paintDialogChild: function(parentId, imgData) {
 		var strId = this._toStrId(parentId);
 		var canvas = L.DomUtil.get(strId + '-floating');
 		if (!canvas)
 			return; // no floating window to paint to
 
-		this._setCanvasWidthHeight(canvas, width, height);
+		// The image is rendered per the HiDPI scale we used
+		// while requesting rendering the image. Here we
+		// set the canvas to have the actual size, while
+		// the image is rendred with the HiDPI scale.
+		this._setCanvasWidthHeight(canvas, this._dialogs[parentId].childwidth,
+										   this._dialogs[parentId].childheight);
 
 		var ctx = canvas.getContext('2d');
 		var img = new Image();
 		img.onload = function() {
 			ctx.drawImage(img, 0, 0);
+			$(canvas).show();
 		};
 		img.src = imgData;
 	},
@@ -628,6 +634,7 @@ L.Control.LokDialog = L.Control.extend({
 		var strId = this._toStrId(parentId);
 		var dialogContainer = L.DomUtil.get(strId);
 		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', dialogContainer);
+		$(floatingCanvas).hide(); // Hide to avoid flickering while we set the dimensions.
 		floatingCanvas.id = strId + '-floating';
 		L.DomUtil.setStyle(floatingCanvas, 'position', 'absolute');
 		L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px'); // yes, it's necessary to append 'px'
