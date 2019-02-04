@@ -1575,7 +1575,7 @@ function onDocLayerInit() {
 	switch (docType) {
 	case 'spreadsheet':
 		toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'numberformatcurrency', 'numberformatpercent',
-			'numberformatincdecimals', 'numberformatdecdecimals', 'sum', 'break-number',
+			'numberformatincdecimals', 'numberformatdecdecimals', 'break-number',
 			'setborderstyle');
 		toolbarUp.remove('styles');
 
