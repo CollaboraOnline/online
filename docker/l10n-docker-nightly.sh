@@ -67,7 +67,7 @@ if test ! -d libreoffice ; then
     git clone git://anongit.freedesktop.org/libreoffice/core libreoffice || exit 1
 fi
 
-( cd libreoffice && git checkout $LIBREOFFICE_BRANCH && ./g pull -r ) || exit 1
+( cd libreoffice && git fetch --all && git checkout $LIBREOFFICE_BRANCH && ./g pull -r ) || exit 1
 
 # online repo
 if test ! -d online ; then
@@ -75,7 +75,7 @@ if test ! -d online ; then
     ( cd online && ./autogen.sh ) || exit 1
 fi
 
-( cd online && git checkout -f $LIBREOFFICE_BRANCH && git pull -r ) || exit 1
+( cd online && git fetch --all && git checkout -f $LIBREOFFICE_BRANCH && git pull -r ) || exit 1
 
 ##### LibreOffice #####
 
