@@ -13086,7 +13086,8 @@ var w2prompt = function (label, title, callBack) {
                 if (scrollBox.scrollLeft() > 0) {
                     box.find('.w2ui-scroll-left').show();
                 }
-                if (scrollBox.scrollLeft() < scrollBox.find(':first').outerWidth() - scrollBox.outerWidth()) {
+                // Allow for rounding errors (on mobile, the max scrollLeft we get is 0.5 less than the real max).
+                if (scrollBox.scrollLeft() < scrollBox.find(':first').outerWidth() - scrollBox.outerWidth() - 1) {
                     box.find('.w2ui-scroll-right').show();
                 }
             }
@@ -13790,7 +13791,8 @@ var w2prompt = function (label, title, callBack) {
                 if (scrollBox.scrollLeft() > 0) {
                     box.find('.w2ui-scroll-left').show();
                 }
-                if (scrollBox.scrollLeft() < scrollBox.find(':first').outerWidth() - scrollBox.outerWidth()) {
+                // Allow for rounding errors (on mobile, the max scrollLeft we get is 0.5 less than the real max).
+                if (scrollBox.scrollLeft() < scrollBox.find(':first').outerWidth() - scrollBox.outerWidth() - 1) {
                     box.find('.w2ui-scroll-right').show();
                 }
             }
