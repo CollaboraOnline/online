@@ -54,12 +54,12 @@ ifelse(MOBILEAPP,[true],
     [<style>syscmd([cat ]BUNDLE_CSS)</style>
   ])],
   [ifelse(DEBUG,[true],
-    foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="%SERVICE_ROOT%/loleaflet/%VERSION%/fileCSS" />
+    foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/fileCSS" />
   ]),
     [<style>syscmd([cat ]BUNDLE_CSS)</style>
   ])]dnl
 )dnl
-<!--%BRANDING_CSS%--> <!-- add your logo here -->
+<%BRANDING_CSS%> <!-- add your logo here -->
 </head>
 
   <body style="user-select: none;">
@@ -103,9 +103,9 @@ ifelse(MOBILEAPP,[true],
      </tr>
     </table>
 
-    <!--%DOCUMENT_SIGNING_DIV%-->
+    <%DOCUMENT_SIGNING_DIV%>
     <script>
-      window.documentSigningURL = '%DOCUMENT_SIGNING_URL%';
+      window.documentSigningURL = '<%DOCUMENT_SIGNING_URL%>';
     </script>
 
     <input id="insertgraphic" type="file" style="position: fixed; top: -100em">
@@ -155,14 +155,14 @@ ifelse(MOBILEAPP,[true],
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;
       window.tileSize = 256;],
-     [window.host = '%HOST%';
-      window.serviceRoot = '%SERVICE_ROOT%';
-      window.accessToken = '%ACCESS_TOKEN%';
-      window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
-      window.accessHeader = '%ACCESS_HEADER%';
-      window.loleafletLogging = '%LOLEAFLET_LOGGING%';
-      window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
-      window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
+     [window.host = '<%HOST%>';
+      window.serviceRoot = '<%SERVICE_ROOT%>';
+      window.accessToken = '<%ACCESS_TOKEN%>';
+      window.accessTokenTTL = '<%ACCESS_TOKEN_TTL%>';
+      window.accessHeader = '<%ACCESS_HEADER%>';
+      window.loleafletLogging = '<%LOLEAFLET_LOGGING%>';
+      window.outOfFocusTimeoutSecs = <%OUT_OF_FOCUS_TIMEOUT_SECS%>;
+      window.idleTimeoutSecs = <%IDLE_TIMEOUT_SECS%>;
       window.tileSize = 256;])
 syscmd([cat ]GLOBAL_JS)dnl
 syscmd([cat ]L10N_JS)dnl
@@ -210,10 +210,10 @@ ifelse(MOBILEAPP,[true],
   [    <script src="bundle.js" defer></script>
   ]),
   ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
-  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/fileJS" defer></script>
+  [    <script src="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/fileJS" defer></script>
   ]),
-  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.js" defer></script>
+  [    <script src="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/bundle.js" defer></script>
   ])
 )dnl
-    <!--%BRANDING_JS%--> <!-- logo onclick handler -->
+    <%BRANDING_JS%> <!-- logo onclick handler -->
 </body></html>
