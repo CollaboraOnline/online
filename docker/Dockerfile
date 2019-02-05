@@ -32,7 +32,7 @@ RUN rm -rf /opt/lool
 RUN mkdir -p /opt/lool/child-roots
 RUN chown lool: /opt/lool
 RUN chown lool: /opt/lool/child-roots
-RUN su lool --shell=/bin/sh -c "loolwsd-systemplate-setup /opt/lool/systemplate /opt/libreoffice >/dev/null 2>&1"
+RUN loolwsd-systemplate-setup /opt/lool/systemplate /opt/libreoffice >/dev/null 2>&1
 RUN touch /var/log/loolwsd.log
 RUN chown lool /var/log/loolwsd.log
 CMD bash /run-lool.sh
