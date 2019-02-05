@@ -738,6 +738,11 @@ L.Socket = L.Class.extend({
 
 			// Decode UTF-8 in case it is binary frame
 			if (typeof e.data === 'object') {
+				// FIXME: Not sure what this code is supposed to do. Doesn't
+				// decodeURIComponent() exactly reverse what window.escape() (which
+				// is a deprecated equivalent of encodeURIComponent()) does? In what
+				// case is this code even hit? If somebody figures out what is going
+				// on here, please replace this comment with an explanation.
 				textMsg = decodeURIComponent(window.escape(textMsg));
 			}
 		}
