@@ -2131,9 +2131,9 @@ function onUpdatePermission(e) {
 		var found = enabledButtons.filter(function(id) { return id === items[idx].id });
 		var alwaysEnable = found.length !== 0;
 
-		var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
-		var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
 		if (e.perm === 'edit') {
+			var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
+			var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
 			if (!keepDisabled || alwaysEnable) {
 				toolbar.enable(items[idx].id);
 			}
