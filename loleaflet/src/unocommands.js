@@ -67,6 +67,7 @@ var unoCommandsArray = {
 	DuplicateSlide:{presentation:{menu:_('Duplicate ~Slide'),},},
 	EditHeaderAndFooter:{spreadsheet:{menu:_('~Headers and Footers...'),},},
 	EditMenu:{global:{menu:_('~Edit'),},},
+	EditRegion:{text:{menu:_('~Sections...'),}},
 	EditStyle:{global:{menu:_('~Edit Style...'),},presentation:{menu:_('E~dit Style...'),},},
 	EntireCell:{text:{menu:_('C~ell'),},},
 	EntireColumn:{presentation:{menu:_('~Columns'),},text:{menu:_('~Column'),},},

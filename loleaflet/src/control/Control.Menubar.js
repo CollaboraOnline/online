@@ -181,6 +181,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:ParagraphDialog'},
 				{uno: '.uno:OutlineBullet'},
 				{uno: '.uno:PageDialog'},
+				{uno: '.uno:EditRegion'},
 				{type: 'separator'},
 				{uno: '.uno:FormatColumns'},
 				{type: 'separator'},
