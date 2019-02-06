@@ -158,7 +158,6 @@ function adjustUIState() {
 
 		w2ui['document-signing-bar'].show('identity');
 		w2ui['document-signing-bar'].hide('login');
-		w2ui['document-signing-bar'].show('logout');
 	}
 	else {
 		w2ui['document-signing-bar'].hide('passport');
@@ -172,7 +171,6 @@ function adjustUIState() {
 			w2ui['document-signing-bar'].show('login');
 		else
 			w2ui['document-signing-bar'].hide('login');
-		w2ui['document-signing-bar'].hide('logout');
 	}
 
 	w2ui['document-signing-bar'].get('current-document-status').html = '<p>' + currentDocumentSigningStatus + '</p>';
@@ -447,7 +445,7 @@ L.Map.include({
 		if (el)
 			el.resize();
 	},
-	hideSignDocument: function() {
+	hideSignToolbar: function() {
 		$('#document-signing-bar').hide();
 		library = null;
 		identity = null;
@@ -577,13 +575,11 @@ L.Map.include({
 	},
 	handleSigningClickEvent: function(id, item) {
 		if (id === 'close-document-signing-bar') {
-			this.hideSignDocument();
-		}
-		else if (id === 'login') {
-			this.signingLogin();
-		}
-		else if (id === 'logout') {
 			this.signingLogout();
+			this.hideSignToolbar();
+		}
+		else if (id === 'login' || id === 'identity') {
+			this.signingLogin();
 		}
 		else if (id === 'sign-upload') {
 			vereignSignAndUploadDocument();
@@ -592,6 +588,21 @@ L.Map.include({
 			this.setCurrentPassport(item.value, item.text);
 		}
 		return false;
+	},
+	setupSigningToolbarItems: function() {
+		return [
+				{type: 'html',  id: 'logo', html: '<a href="http://www.vereign.com" target="_blank"><img src="images/vereign.png" style="padding-right: 16px; padding-left: 6px; height: 32px"/></a>' },
+				{type: 'menu', id: 'passport', caption: _('Select passport'), items: []},
+				{type: 'html', id: 'current-passport', html: _('Passport: N/A')},
+				{type: 'break', id: 'passport-break' },
+				{type: 'button',  id: 'sign-upload',  caption: _('Sign'), img: '', hint: _('Sign document')},
+				{type: 'break', id: 'sign-upload-break' },
+				{type: 'html', id: 'current-document-status-label', html: '<p><b>' + _('Status:') + '&nbsp;</b></p>'},
+				{type: 'html', id: 'current-document-status', html: _('N/A')},
+				{type: 'spacer'},
+				{type: 'html', id: 'identity', html: ''},
+				{type: 'button',  id: 'login',  caption: _('Login'), img: '', hint: _('Login')},
+				{type: 'button',  id: 'close-document-signing-bar', img: 'closetoolbar', hint: _('Close')}];
 	},
 	onChangeSignStatus: function(signstatus) {
 		var statusText = '';
