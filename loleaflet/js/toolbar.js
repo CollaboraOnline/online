@@ -1919,11 +1919,15 @@ function onCommandStateChanged(e) {
 
 	var id = unoCmdToToolbarId(commandName);
 	if (state === 'true') {
-		toolbar.enable(id);
+		if (map._permission === 'edit') {
+			toolbar.enable(id);
+		}
 		toolbar.check(id);
 	}
 	else if (state === 'false') {
-		toolbar.enable(id);
+		if (map._permission === 'edit') {
+			toolbar.enable(id);
+		}
 		toolbar.uncheck(id);
 	}
 	// Change the toolbar button states if we are in editmode
