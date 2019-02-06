@@ -1092,22 +1092,7 @@ function initNormalToolbar(toolItems) {
 		toolbar.w2toolbar({
 			name: 'document-signing-bar',
 			tooltip: 'bottom',
-			items: [
-				{type: 'html',  id: 'left'},
-				{type: 'html',  id: 'logo', html: '<img src="images/vereign.png" style="padding-right: 16px; padding-left: 6px; height: 32px"/>' },
-				{type: 'menu', id: 'passport', caption: _('Select passport'), items: []},
-				{type: 'html', id: 'current-passport', html: _('Passport: N/A')},
-				{type: 'break', id: 'passport-break' },
-				{type: 'button',  id: 'sign-upload',  caption: _('Sign & Upload'), img: '', hint: _('Sign and upload document')},
-				{type: 'break', id: 'sign-upload-break' },
-				{type: 'html', id: 'current-document-status-label', html: '<p><b>' + _('Status:') + '&nbsp;</b></p>'},
-				{type: 'html', id: 'current-document-status', html: _('N/A')},
-				{type: 'spacer'},
-				{type: 'html', id: 'identity', html: ''},
-                {type: 'button',  id: 'logout',  caption: _('Logout'), img: '', hint: _('Logout')},
-				{type: 'button',  id: 'login',  caption: _('Login'), img: '', hint: _('Login')},
-				{type: 'button',  id: 'close-document-signing-bar', img: 'closetoolbar', hint: _('Close')},
-			],
+			items: map.setupSigningToolbarItems(),
 			onClick: function (e) {
 				onClick(e, e.target);
 				hideTooltip(this, e.target);
