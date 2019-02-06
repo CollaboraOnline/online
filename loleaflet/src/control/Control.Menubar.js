@@ -182,8 +182,6 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:OutlineBullet'},
 				{uno: '.uno:PageDialog'},
 				{type: 'separator'},
-				{uno: '.uno:Watermark'},
-				{type: 'separator'},
 				{uno: '.uno:FormatColumns'},
 				{type: 'separator'},
 				{uno: '.uno:ResetAttributes'}
