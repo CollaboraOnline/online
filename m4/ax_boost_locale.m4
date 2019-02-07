@@ -84,14 +84,16 @@ AC_DEFUN([AX_BOOST_LOCALE],
             if test "x$ax_boost_user_locale_lib" = "x"; then
                 for libextension in `ls $BOOSTLIBDIR/libboost_locale*.so* $BOOSTLIBDIR/libboost_locale*.dylib* $BOOSTLIBDIR/libboost_locale*.a* 2>/dev/null | sed 's,.*/,,' | sed -e 's;^lib\(boost_locale.*\)\.so.*$;\1;' -e 's;^lib\(boost_locale.*\)\.dylib.*$;\1;' -e 's;^lib\(boost_locale.*\)\.a.*$;\1;'` ; do
                      ax_lib=${libextension}
-				    AC_CHECK_LIB($ax_lib, exit,
+LDFLAGS="$LDFLAGS_SAVE -l$ax_lib"
+AC_LINK_IFELSE([AC_LANG_PROGRAM([#include<boost/locale.hpp>],[boost::locale::pgettext("test","test");])],
                                  [BOOST_LOCALE_LIB="-l$ax_lib"; AC_SUBST(BOOST_LOCALE_LIB) link_locale="yes"; break],
                                  [link_locale="no"])
 				done
                 if test "x$link_locale" != "xyes"; then
                 for libextension in `ls $BOOSTLIBDIR/boost_locale*.dll* $BOOSTLIBDIR/boost_locale*.a* 2>/dev/null | sed 's,.*/,,' | sed -e 's;^\(boost_locale.*\)\.dll.*$;\1;' -e 's;^\(boost_locale.*\)\.a.*$;\1;'` ; do
                      ax_lib=${libextension}
-				    AC_CHECK_LIB($ax_lib, exit,
+LDFLAGS="$LDFLAGS_SAVE -l$ax_lib"
+AC_LINK_IFELSE([AC_LANG_PROGRAM([#include<boost/locale.hpp>],[boost::locale::pgettext("test","test");])],
                                  [BOOST_LOCALE_LIB="-l$ax_lib"; AC_SUBST(BOOST_LOCALE_LIB) link_locale="yes"; break],
                                  [link_locale="no"])
 				done
@@ -99,7 +101,8 @@ AC_DEFUN([AX_BOOST_LOCALE],
 
             else
                for ax_lib in $ax_boost_user_locale_lib boost_locale-$ax_boost_user_locale_lib; do
-				      AC_CHECK_LIB($ax_lib, exit,
+LDFLAGS="$LDFLAGS_SAVE -l$ax_lib"
+AC_LINK_IFELSE([AC_LANG_PROGRAM([#include<boost/locale.hpp>],[boost::locale::pgettext("test","test");])],
                                    [BOOST_LOCALE_LIB="-l$ax_lib"; AC_SUBST(BOOST_LOCALE_LIB) link_locale="yes"; break],
                                    [link_locale="no"])
                   done
