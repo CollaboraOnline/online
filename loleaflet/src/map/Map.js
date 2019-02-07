@@ -224,6 +224,15 @@ L.Map = L.Evented.extend({
 
 	loadDocument: function() {
 		this._socket.connect();
+		this.sendInitUNOCommands();
+	},
+
+	sendInitUNOCommands: function() {
+		// TODO: remove duplicated init code
+		this._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
+		this._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+		this.fire('updatescrolloffset');
+		this._docLayer._getToolbarCommandsValues();
 	},
 
 	// public methods that modify map state
