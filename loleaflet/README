@@ -377,3 +377,26 @@ are independent of the map's div, thus enabling us to link them to the map as ne
 When the user scrolls, the map is panned by the same amount as it would've been scrolled.
 Also, some custom jquery scrollbars are used, to trigger the same scroll events across
 browsers.
+
+Z-index values:
+-------------------------------------------
+		leaflet
+-------------------------------------------
+10			map
+11			ruler
+-------------------------------------------
+		under menu
+-------------------------------------------
+990			sidebar
+999			toolbar-up
+-------------------------------------------
+		menu items
+-------------------------------------------
+1000			menu, toolbar-down
+1050			closebuttonwrapper
+-------------------------------------------
+		on the top
+-------------------------------------------
+1105			dialogs
+2000			mobile-edit-button
+-------------------------------------------

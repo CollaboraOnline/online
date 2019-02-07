@@ -125,7 +125,7 @@ body {
 	border-top: 1px solid #b6b6b6;
 	border-left: 1px solid #b6b6b6;
 	overflow: hidden;
-	z-index: 1100;
+	z-index: 990;
 }
 
 #sidebar-panel {
