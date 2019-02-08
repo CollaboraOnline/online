@@ -311,7 +311,6 @@ public:
     void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
     void cancelTileRequests(const std::shared_ptr<ClientSession>& session);
     void handleTileResponse(const std::vector<char>& payload);
-    void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
     void handleTileCombinedResponse(const std::vector<char>& payload);
 
     bool isMarkedToDestroy() const { return _markToDestroy || _stop; }
