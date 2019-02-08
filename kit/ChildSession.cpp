@@ -854,6 +854,8 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
         {
             filterOptions += Poco::cat(std::string(" "), tokens.begin() + 5, tokens.end());
         }
+        //HACK = add watermark to filteroptions
+        filterOptions += std::string(",Watermark=") + getWatermarkText() + std::string("WATERMARKEND");
     }
 
     // The file is removed upon downloading.
