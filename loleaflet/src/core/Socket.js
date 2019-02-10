@@ -706,6 +706,7 @@ L.Socket = L.Class.extend({
 				this._map.options.doc = docUrl;
 				this._map.options.wopiSrc = encodeURIComponent(docUrl);
 				this._map.loadDocument();
+				this._map.sendInitUNOCommands();
 			}
 			// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 		}
