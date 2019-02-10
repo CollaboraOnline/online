@@ -683,124 +683,74 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
     }
 
-    enum class ParseState
-    {
-        None,
-        Subs,
-        L10n
-    };
-
-    std::string token;
+    std::string lang;
+    std::locale locale;
     std::ostringstream ostr;
-    std::stringstream varSubs, varL10n;
     std::istringstream istr(preprocess);
-    ParseState state = ParseState::None;
 
-    getToken(istr, token);
-    while (!token.empty())
-    {
-        if (token == "<%")
+    parse(locale, istr, ostr, [&](const std::string& var) {
+        bool result = true;
+        if (var == "ACCESS_TOKEN")
         {
-            if (state == ParseState::None)
-            {
-                state = ParseState::Subs;
-                varSubs.str("");
-                varSubs.clear();
-            }
-            else ostr << token;
+            ostr << escapedAccessToken;
         }
-        else if (token == "%>")
+        else if (var == "ACCESS_TOKEN_TTL")
         {
-            if (state == ParseState::Subs)
-            {
-                std::string var = varSubs.str();
-                if (var == "ACCESS_TOKEN")
-                {
-                    ostr << escapedAccessToken;
-                }
-                else if (var == "ACCESS_TOKEN_TTL")
-                {
-                    ostr << tokenTtl;
-                }
-                else if (var == "ACCESS_HEADER")
-                {
-                    ostr << escapedAccessHeader;
-                }
-                else if (var == "HOST")
-                {
-                    ostr << host;
-                }
-                else if (var == "VERSION")
-                {
-                    ostr << LOOLWSD_VERSION_HASH;
-                }
-                else if (var == "SERVICE_ROOT")
-                {
-                    ostr << LOOLWSD::ServiceRoot;
-                }
-                else if (var == "LOLEAFLET_LOGGING")
-                {
-                    ostr << config.getString("loleaflet_logging", "false");
-                }
-                else if (var == "OUT_OF_FOCUS_TIMEOUT_SECS")
-                {
-                    ostr << config.getString("per_view.out_of_focus_timeout_secs", "60");
-                }
-                else if (var == "IDLE_TIMEOUT_SECS")
-                {
-                    ostr << config.getString("per_view.idle_timeout_secs", "900");
-                }
-                else if (var == "DOCUMENT_SIGNING_DIV")
-                {
-                    ostr << documentSigningDiv;
-                }
-                else if (var == "DOCUMENT_SIGNING_URL")
-                {
-                    ostr << documentSigningURL;
-                }
-                else if (var == "BRANDING_CSS")
-                {
-                    ostr << brandCSS;
-                }
-                else if (var == "BRANDING_JS")
-                {
-                    ostr << brandJS;
-                }
-                else ostr << var;
-
-                state = ParseState::None;
-            }
-            else ostr << token;
+            ostr << tokenTtl;
         }
-        else
+        else if (var == "ACCESS_HEADER")
         {
-            switch (state)
-            {
-                case ParseState::None:
-                    ostr << token;
-                    break;
-
-                case ParseState::Subs:
-                    varSubs << token;
-                    break;
-
-                case ParseState::L10n:
-                    varL10n << token;
-                    break;
-            }
+            ostr << escapedAccessHeader;
         }
+        else if (var == "HOST")
+        {
+            ostr << host;
+        }
+        else if (var == "VERSION")
+        {
+            ostr << LOOLWSD_VERSION_HASH;
+        }
+        else if (var == "SERVICE_ROOT")
+        {
+            ostr << LOOLWSD::ServiceRoot;
+        }
+        else if (var == "LOLEAFLET_LOGGING")
+        {
+            ostr << config.getString("loleaflet_logging", "false");
+        }
+        else if (var == "OUT_OF_FOCUS_TIMEOUT_SECS")
+        {
+            ostr << config.getString("per_view.out_of_focus_timeout_secs", "60");
+        }
+        else if (var == "IDLE_TIMEOUT_SECS")
+        {
+            ostr << config.getString("per_view.idle_timeout_secs", "900");
+        }
+        else if (var == "DOCUMENT_SIGNING_DIV")
+        {
+            ostr << documentSigningDiv;
+        }
+        else if (var == "DOCUMENT_SIGNING_URL")
+        {
+            ostr << documentSigningURL;
+        }
+        else if (var == "BRANDING_CSS")
+        {
+            ostr << brandCSS;
+        }
+        else if (var == "BRANDING_JS")
+        {
+            ostr << brandJS;
+        }
+        else if (var == "LANG")
+        {
+            if (lang != "en")
+                ostr << "?lang=" << lang;
+        }
+        else result = false;
 
-        getToken(istr, token);
-    }
-
-    if (state == ParseState::Subs)
-    {
-        ostr << varSubs.str();
-    }
-    else if (state == ParseState::L10n)
-    {
-        ostr << varL10n.str();
-    }
+        return result;
+    });
 
     const std::string mimeType = "text/html";
 
@@ -987,4 +937,92 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     socket->send(oss.str());
 }
 
+void FileServerRequestHandler::parse(const std::locale& locale, std::istringstream& istr, std::ostringstream& ostr, const std::function<bool(const std::string&)>& funcSubs)
+{
+    enum class ParseState
+    {
+        None,
+        Subs,
+        L10n
+    };
+
+    std::string token;
+    std::stringstream varSubs, varL10n;
+    ParseState state = ParseState::None;
+
+    getToken(istr, token);
+    while (!token.empty())
+    {
+        if (token == "<%")
+        {
+            if (state == ParseState::None)
+            {
+                state = ParseState::Subs;
+                varSubs.str("");
+                varSubs.clear();
+            }
+            else ostr << token;
+        }
+        else if (token == "_(\'")
+        {
+            if (state == ParseState::None)
+            {
+                state = ParseState::L10n;
+                varL10n.str("");
+                varL10n.clear();
+            }
+            else ostr << token;
+        }
+        else if (token == "\')")
+        {
+            if (state == ParseState::L10n)
+            {
+                LOG_INF(locale.name());
+                //ostr << '\'' << boost::locale::gettext(varL10n.str().c_str(), locale) << '\'';
+                state = ParseState::None;
+            }
+            else ostr << token;
+        }
+        else if (token == "%>")
+        {
+            if (state == ParseState::Subs)
+            {
+                std::string var = varSubs.str();
+                if (!funcSubs(var))
+                    ostr << var;
+
+                state = ParseState::None;
+            }
+            else ostr << token;
+        }
+        else
+        {
+            switch (state)
+            {
+                case ParseState::None:
+                    ostr << token;
+                    break;
+
+                case ParseState::Subs:
+                    varSubs << token;
+                    break;
+
+                case ParseState::L10n:
+                    varL10n << token;
+                    break;
+            }
+        }
+
+        getToken(istr, token);
+    }
+
+    if (state == ParseState::Subs)
+    {
+        ostr << varSubs.str();
+    }
+    else if (state == ParseState::L10n)
+    {
+        ostr << varL10n.str();
+    }
+}
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
