@@ -30,10 +30,6 @@ ifelse(MOBILEAPP,[],
     }
   };
   window.addEventListener('message', PostMessageReadyListener, false);
-  window.__globalL10n = syscmd([cat ]LOCALIZATION_JSON);
-  window.__locoreL10n = syscmd([cat ]LOCORE_LOCALIZATION_JSON);
-  window.__helpL10n = syscmd([cat ]HELP_LOCALIZATION_JSON);
-  window.__unoL10n = syscmd([cat ]UNO_LOCALIZATION_JSON);
 ])dnl
 
 var Base64ToArrayBuffer = function(base64Str) {
@@ -165,11 +161,6 @@ ifelse(MOBILEAPP,[true],
       window.idleTimeoutSecs = <%IDLE_TIMEOUT_SECS%>;
       window.tileSize = 256;])
 syscmd([cat ]GLOBAL_JS)dnl
-syscmd([cat ]L10N_JS)dnl
-      delete window.__globalL10n;
-      delete window.__locoreL10n;
-      delete window.__helpL10n;
-      delete window.__unoL10n;
     </script>
   <script defer>
 
