@@ -38,6 +38,9 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
+#include <boost/locale.hpp>
+#include <boost/locale/gnu_gettext.hpp>
+#include <boost/exception/all.hpp>
 
 #include "Auth.hpp"
 #include <Common.hpp>
@@ -426,6 +429,18 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         sendError(404, request, socket, "404 - file not found!",
                   "There seems to be a problem locating");
     }
+    catch (const boost::exception&  exc)
+    {
+        LOG_WRN("FileServerRequestHandler: " << boost::diagnostic_information(exc));
+        sendError(404, request, socket, "404 - file not found!",
+            "There seems to be a localization problem");
+    }
+    catch (const std::exception&  exc)
+    {
+        LOG_WRN("FileServerRequestHandler: " << exc.what());
+        sendError(404, request, socket, "404 - file not found!",
+            "Internal error");
+    }
 }
 
 void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPRequest& request,
@@ -683,10 +698,18 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
     }
 
-    std::string lang;
-    std::locale locale;
+    std::string lang("en");
     std::ostringstream ostr;
     std::istringstream istr(preprocess);
+
+    auto pos = std::find_if(params.begin(), params.end(),
+        [](const std::pair<std::string, std::string>& it) { return it.first == "lang"; });
+    if (pos != params.end())
+    {
+        lang = pos->second;
+    }
+
+    std::locale locale(LOOLWSD::Generator(lang + ".utf8"));
 
     parse(locale, istr, ostr, [&](const std::string& var) {
         bool result = true;
@@ -977,8 +1000,7 @@ void FileServerRequestHandler::parse(const std::locale& locale, std::istringstre
         {
             if (state == ParseState::L10n)
             {
-                LOG_INF(locale.name());
-                //ostr << '\'' << boost::locale::gettext(varL10n.str().c_str(), locale) << '\'';
+                ostr << '\'' << boost::locale::gettext(varL10n.str().c_str(), locale) << '\'';
                 state = ParseState::None;
             }
             else ostr << token;
