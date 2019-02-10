@@ -225,6 +225,12 @@ else
 fi
 AC_SUBST(ENABLE_BROWSERSYNC)
 
+AC_CHECK_PROGS(MSGFMT, [msgfmt])
+AC_CHECK_PROGS(MSGCAT, [msgcat])
+if test -z "$MSGFMT"; then
+    AC_MSG_ERROR([msgfmt not found. Install GNU gettext])
+fi
+
 if test -n "$with_logfile" ; then
    LOOLWSD_LOGFILE="$with_logfile"
 fi
