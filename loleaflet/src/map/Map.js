@@ -224,7 +224,6 @@ L.Map = L.Evented.extend({
 
 	loadDocument: function() {
 		this._socket.connect();
-		this.sendInitUNOCommands();
 	},
 
 	sendInitUNOCommands: function() {
