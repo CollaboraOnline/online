@@ -625,16 +625,25 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_removeDialogChild: function(id) {
-		if (typeof id === 'number')
-			id = this._toStrId(id);
-		$('#' + id + '-floating').remove();
+		$('#' + this._toStrId(id) + '-floating').remove();
 	},
 
 	_createDialogChild: function(childId, parentId, top, left) {
 		var strId = this._toStrId(parentId);
-		var dialogContainer = L.DomUtil.get(strId);
+		var dialogContainer = L.DomUtil.get(strId).parentNode;
 		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', dialogContainer);
 		$(floatingCanvas).hide(); // Hide to avoid flickering while we set the dimensions.
+
+		// Since child windows are now top-level, their 'top' offset
+		// needs adjusting. If we are in a dialog, our top is from the
+		// dialog body, not the title bar, which is a separate div.
+		// This doesn't apply for context menus, which don't have titles.
+		var dialogTitle = $('.lokdialog_notitle');
+		if (dialogTitle != null && dialogTitle.length == 0) {
+			var dialogTitleBar = $('.ui-dialog-titlebar');
+			top += dialogTitleBar.height() * L.getDpiScaleFactor();
+		}
+
 		floatingCanvas.id = strId + '-floating';
 		L.DomUtil.setStyle(floatingCanvas, 'position', 'absolute');
 		L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px'); // yes, it's necessary to append 'px'
