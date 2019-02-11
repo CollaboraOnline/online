@@ -249,12 +249,6 @@ NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
 LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
 LOPLUGIN_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').deps.join(' '))} catch(e) {}"))
 
-PLUGINS_JS =\
-	jquery.mCustomScrollbar.js \
-	w2ui-1.5.rc1.js \
-	toolbar.js \
-	main.js
-
 LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
 LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(builddir)/dist/src/%.js,$(LOLEAFLET_JS_SRC))
 
@@ -380,9 +374,12 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DBUNDLE_CSS="$(abs_builddir)/dist/bundle.css" \
 		-DGLOBAL_JS="$(abs_builddir)/dist/global.js" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
+		jquery.mCustomScrollbar.js \
+		w2ui-1.5.rc1.js \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \
 		$(patsubst %.js,plugins/path-transform/%.js,$(call LOPLUGIN_JS,$(srcdir)/plugins/path-transform/build/deps.js)) \
-		$(PLUGINS_JS))" \
+		toolbar.js \
+		main.js)" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
 node_modules: npm-shrinkwrap.json
