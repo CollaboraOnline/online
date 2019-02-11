@@ -93,3 +93,24 @@ ios/Mobile/Assets.xcassets/AppIcon.appiconset
 
 # iOS app build number
 BUNDLE-VERSION
+
+# backup and temporary editor files: the only convenience rules allowed here.
+*~
+.*sw?
+\#*
+.\#*
+*.kdev4
+.kdev_include_paths
+.buckd
+.directory
+.cproject
+.project
+.settings
+.eclipsesettingfile
+eclipsesettingfile.xml
+.clang_complete
+.cxx_tags
+.yavide_proj
+.yavide_session
+.vscode
+*.code-workspace
