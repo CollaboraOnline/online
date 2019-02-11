@@ -1996,18 +1996,21 @@ L.TileLayer = L.GridLayer.extend({
 
 			var expectedPos = L.point(e.originalEvent.pageX, e.originalEvent.pageY).subtract(e.target.dragging._draggable.startOffset);
 
-			// If the map has been scrolled, but the cursor hasn't been updated yet, then
-			// the current mouse position differs.
-			if (!expectedPos.equals(cursorPos)) {
-				var correction = expectedPos.subtract(cursorPos);
+			// Dragging the selection handles vertically more than one line on a touch
+			// device is more or less impossible without this hack.
+			if (!(typeof e.originalEvent.type === 'string' && e.originalEvent.type === 'touchmove')) {
+				// If the map has been scrolled, but the cursor hasn't been updated yet, then
+				// the current mouse position differs.
+				if (!expectedPos.equals(cursorPos)) {
+					var correction = expectedPos.subtract(cursorPos);
 
-				e.target.dragging._draggable._startPoint = e.target.dragging._draggable._startPoint.add(correction);
-				e.target.dragging._draggable._startPos = e.target.dragging._draggable._startPos.add(correction);
-				e.target.dragging._draggable._newPos = e.target.dragging._draggable._newPos.add(correction);
+					e.target.dragging._draggable._startPoint = e.target.dragging._draggable._startPoint.add(correction);
+					e.target.dragging._draggable._startPos = e.target.dragging._draggable._startPos.add(correction);
+					e.target.dragging._draggable._newPos = e.target.dragging._draggable._newPos.add(correction);
 
-				e.target.dragging._draggable._updatePosition();
+					e.target.dragging._draggable._updatePosition();
+				}
 			}
-
 			var containerPos = new L.Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
 				expectedPos.y - this._map._container.getBoundingClientRect().top);
 
