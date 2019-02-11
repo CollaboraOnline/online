@@ -1,0 +1,29 @@
+* Compile LibreOffice master for Android
+
+  Something like the following in autogen.input:
+
+      --build=x86_64-unknown-linux-gnu
+      --with-android-ndk=/home/$USER/Android/Sdk/ndk-bundle
+      --with-android-sdk=/home/$USER/Android/Sdk
+      --with-distro=LibreOfficeAndroid
+      --enable-sal-log
+
+  And the usual ./autogen.sh && make
+
+* Build the POCO for Android
+
+  # use the 1.9.0 branch; the 1.9.1 and master did not compile for me
+  git checkout -b poco-1.9.0 origin/poco-1.9.0
+
+  # configure
+  ./configure --config=Android --no-samples --no-tests --minimal
+
+  # make it
+  make ANDROID_ABI=armeabi-v7a TOOL=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/arm-linux-androideabi CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++
+
+  # install it to /opt/poco-android
+  make ANDROID_ABI=armeabi-v7a TOOL=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/arm-linux-androideabi CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ install INSTALLDIR=/opt/poco-android
+
+* Build the online.git
+
+  ./autogen.sh && ./configure CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ --host=arm-linux-androideabi --enable-silent-rules --with-lokit-path=/local/libreoffice/master-android/include --with-lo-path=/local/libreoffice/master-android/instdir --with-poco-includes=/opt/poco-android/include --with-poco-libs=/opt/poco-android --with-libpng-includes=/local/libreoffice/master-android/workdir/UnpackedTarball/libpng --with-libpng-libs=/local/libreoffice/master-android/workdir/LinkTarget/StaticLibrary --disable-setcap --enable-androidapp --with-logfile=/tmp/loolwsd.log --enable-debug

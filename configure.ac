@@ -88,6 +88,12 @@ AC_ARG_ENABLE([gtkapp],
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view. See gtk/README.]))
 
+AC_ARG_ENABLE([androidapp],
+              AS_HELP_STRING([--enable-androidapp],
+                             [Use in a tree where the only purpose is to build the Android app that is supposed
+                              to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
+                              message plumbing point of view.]))
+
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
                              [Disable use of linux/seccomp.h header when kernel on target system does not support it.
@@ -394,6 +400,13 @@ AC_SUBST(TILECACHE_PATH)
 AC_SUBST(SYSTEMPLATE_PATH)
 AM_CONDITIONAL(HAVE_LO_PATH,[test "$have_lo_path" = "true"])
 
+ENABLE_ANDROIDAPP=
+if test "$enable_androidapp" = "yes"; then
+   ENABLE_ANDROIDAPP=true
+fi
+AC_SUBST(ENABLE_ANDROIDAPP)
+AM_CONDITIONAL([ENABLE_ANDROIDAPP], [test "$ENABLE_ANDROIDAPP" = "true"])
+
 AS_IF([test -n "$with_poco_includes"],
       [CPPFLAGS="$CPPFLAGS -isystem ${with_poco_includes}"])
 
@@ -426,7 +439,7 @@ AS_IF([test `uname -s` != Darwin],
                       [],
                       [AC_MSG_ERROR([dlopen not found])])])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_SEARCH_LIBS([png_create_write_struct],
                       [png],
                       [],
@@ -436,7 +449,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true"],
        PKG_CHECK_MODULES([CPPUNIT], [cppunit])
        ])
 
-AS_IF([test `uname -s` = Linux],
+AS_IF([test `uname -s` = Linux -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_SEARCH_LIBS([cap_get_proc],
                       [cap],
                       [],
@@ -449,7 +462,7 @@ AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 
 mobile_app=
 AC_MSG_CHECKING([Is this a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes"; then
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp"; then
      AC_MSG_RESULT([Yes])
      mobile_app=true;
 else
@@ -469,10 +482,11 @@ fi
 AM_CONDITIONAL([ENABLE_SSL], [$ENABLE_SSL])
 AC_SUBST(ENABLE_SSL)
 
-AC_CHECK_HEADERS([security/pam_appl.h],
-                 [],
-                 [AC_MSG_ERROR([header security/pam_appl.h not found, install PAM development package])])
-AC_CHECK_LIB(pam, pam_start, [], [AC_MSG_ERROR([No. Install PAM development package])])
+AS_IF([test "$ENABLE_ANDROIDAPP" != "true"],
+      [AC_CHECK_HEADERS([security/pam_appl.h],
+                        [],
+                        [AC_MSG_ERROR([header security/pam_appl.h not found, install PAM development package])])
+       AC_CHECK_LIB(pam, pam_start, [], [AC_MSG_ERROR([No. Install PAM development package])])])
 
 AC_MSG_CHECKING([whether to build with support public key])
 if test "x$with_support_public_key" != "x"; then
