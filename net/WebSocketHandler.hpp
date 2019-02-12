@@ -113,7 +113,7 @@ public:
                 static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
         _shuttingDown = true;
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         const size_t len = statusMessage.size();
         std::vector<char> buf(2 + len);
         buf[0] = ((((int)statusCode) >> 8) & 0xff);
@@ -136,7 +136,7 @@ public:
         if (len == 0)
             return false; // avoid logging.
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         if (len < 2) // partial read
         {
             LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
@@ -218,7 +218,7 @@ public:
         socket->getInBuffer().erase(socket->getInBuffer().begin(),
                                     socket->getInBuffer().begin() + headerLen + payloadLen);
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
         LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code "
@@ -274,7 +274,7 @@ public:
 
 #endif
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         if (doClose)
         {
             if (!_shuttingDown)
@@ -316,7 +316,7 @@ public:
 
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-#ifdef MOBILEAPP
+#if MOBILEAPP
         // No separate "upgrade" is going on
         if (socket != nullptr && !socket->isWebSocket())
             socket->setWebSocket();
@@ -326,7 +326,7 @@ public:
         {
             LOG_ERR("No socket associated with WebSocketHandler " << this);
         }
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         else if (_isClient && !socket->isWebSocket())
             handleClientUpgrade();
 #endif
@@ -349,7 +349,7 @@ public:
         return POLLIN;
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     /// Send a ping message
     void sendPingOrPong(std::chrono::steady_clock::time_point now,
                         const char* data, const size_t len,
@@ -392,7 +392,7 @@ public:
     /// Do we need to handle a timeout ?
     void checkTimeout(std::chrono::steady_clock::time_point now) override
     {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         if (_isClient)
             return;
 
@@ -449,7 +449,7 @@ private:
         socket->assertCorrectThread();
         std::vector<char>& out = socket->getOutBuffer();
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         const size_t oldSize = out.size();
 
         out.push_back(flags);
@@ -555,7 +555,7 @@ protected:
         LOG_TRC("#" << socket->getFD() << ": Upgrading to WebSocket.");
         assert(!socket->isWebSocket());
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         // create our websocket goodness ...
         const int wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
@@ -583,7 +583,7 @@ protected:
         setWebSocket();
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     // Handle incoming upgrade to full socket as client WS.
     void handleClientUpgrade()
     {

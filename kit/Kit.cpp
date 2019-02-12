@@ -70,7 +70,7 @@
 #include <Util.hpp>
 #include "Delta.hpp"
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 #include <common/SigUtil.hpp>
 #include <common/Seccomp.hpp>
 #endif
@@ -80,7 +80,7 @@
 #include <wsd/LOOLWSD.hpp>
 #endif
 
-#ifdef MOBILEAPP
+#if MOBILEAPP
 #include "LOOLWSD.hpp"
 #endif
 
@@ -126,7 +126,7 @@ static std::string ObfuscatedFileId;
 #  define ADD_DEBUG_RENDERID ("\n")
 #endif
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 static LokHookFunction2* initFunction = nullptr;
 
@@ -750,7 +750,7 @@ private:
     std::vector<unsigned char> _pixmap;
 };
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 static FILE* ProcSMapsFile = nullptr;
 #endif
 
@@ -998,7 +998,7 @@ public:
             }
 
             num_sessions = _sessions.size();
-#ifndef MOBILEAPP
+#if !MOBILEAPP
             if (num_sessions == 0)
             {
                 LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
@@ -1534,7 +1534,7 @@ private:
         if (viewCount == 1)
         {
             std::unique_lock<std::mutex> lock(_mutex);
-#ifndef MOBILEAPP
+#if !MOBILEAPP
             if (_sessions.empty())
             {
                 LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
@@ -1994,7 +1994,7 @@ private:
         Util::setThreadName("lokit_" + _docId);
 
         LOG_DBG("Thread started.");
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         // Update memory stats and editor every 5 seconds.
         const int memStatsPeriodMs = 5000;
         auto lastMemStatsTime = std::chrono::steady_clock::now();
@@ -2007,7 +2007,7 @@ private:
                 const TileQueue::Payload input = _tileQueue->get(POLL_TIMEOUT_MS * 2);
                 if (input.empty())
                 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
                     auto duration = (std::chrono::steady_clock::now() - lastMemStatsTime);
                     std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
                     if (durationMs > memStatsPeriodMs)
@@ -2241,7 +2241,7 @@ protected:
     {
         std::string message(data.data(), data.size());
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         if (UnitKit::get().filterKitMessage(this, message))
             return;
 #endif
@@ -2316,7 +2316,7 @@ protected:
         }
         else if (tokens.size() == 3 && tokens[0] == "setconfig")
         {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
             // Currently onlly rlimit entries are supported.
             if (!Rlimit::handleSetrlimitCommand(tokens))
             {
@@ -2332,7 +2332,7 @@ protected:
 
     void onDisconnect() override
     {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
         TerminationFlag = true;
 #endif
@@ -2347,7 +2347,7 @@ void documentViewCallback(const int type, const char* payload, void* data)
 #ifndef BUILDING_TESTS
 
 void lokit_main(
-#ifndef MOBILEAPP
+#if !MOBILEAPP
                 const std::string& childRoot,
                 const std::string& jailId,
                 const std::string& sysTemplate,
@@ -2363,7 +2363,7 @@ void lokit_main(
 #endif
                 )
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 #ifndef FUZZER
     SigUtil::setFatalSignals();
@@ -2424,7 +2424,7 @@ void lokit_main(
 
     try
     {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         jailPath = Path::forDirectory(childRoot + "/" + jailId);
         LOG_INF("Jail path: " << jailPath.toString());
         File(jailPath).createDirectories();
@@ -2644,7 +2644,7 @@ void lokit_main(
 
         std::shared_ptr<SocketHandlerInterface> websocketHandler =
             std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit);
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler);
 #else
         mainKit.insertNewFakeSocket(docBrokerSocket, websocketHandler);
@@ -2652,7 +2652,7 @@ void lokit_main(
 
         LOG_INF("New kit client websocket inserted.");
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         if (bTraceStartup && LogLevel != "trace")
         {
             LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
@@ -2664,7 +2664,7 @@ void lokit_main(
         {
             mainKit.poll(SocketPoll::DefaultPollTimeoutMs);
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
             if (document && document->purgeSessions() == 0)
             {
                 LOG_INF("Last session discarded. Setting TerminationFlag");
@@ -2675,7 +2675,7 @@ void lokit_main(
 
         LOG_INF("Kit poll terminated.");
 
-#ifdef MOBILEAPP
+#if MOBILEAPP
         SocketPoll::wakeupWorld();
 #endif
 
@@ -2691,7 +2691,7 @@ void lokit_main(
         LOG_ERR("Exception: " << exc.what());
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
     // Trap the signal handler, if invoked,
     // to prevent exiting.
@@ -2713,7 +2713,7 @@ std::string anonymizeUrl(const std::string& url)
 #endif
 }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)

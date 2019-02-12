@@ -29,7 +29,7 @@ class TraceFileWriter;
 class DocumentBroker;
 
 std::shared_ptr<ChildProcess> getNewChild_Blocks(
-#ifdef MOBILEAPP
+#if MOBILEAPP
                                                  const std::string& uri
 #endif
                                                  );
@@ -249,7 +249,7 @@ private:
     /// Settings passed from the command-line to override those in the config file.
     std::map<std::string, std::string> _overrideSettings;
 
-#ifdef MOBILEAPP
+#if MOBILEAPP
 public:
     static int prisonerServerSocketFD;
 #endif

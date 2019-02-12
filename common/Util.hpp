@@ -54,7 +54,7 @@ namespace Util
     /// Create randomized temporary directory
     std::string createRandomTmpDir();
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     /// Get number of threads in this process or -1 on error
     int getProcessThreadCount();
 
@@ -73,7 +73,7 @@ namespace Util
 
     bool windowingAvailable();
 
-#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS) && !defined(MOBILEAPP)
+#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS) && !MOBILEAPP
 
     /// Send a message to all clients.
     void alertAllUsers(const std::string& msg);
@@ -117,7 +117,7 @@ namespace Util
 #endif
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     /// Print given number of bytes in human-understandable form (KB,MB, etc.)
     std::string getHumanizedBytes(unsigned long nBytes);
 

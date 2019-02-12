@@ -30,7 +30,7 @@ static Poco::Thread TimeoutThread("unit timeout");
 
 UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibPath)
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     void *dlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);
     if (!dlHandle)
     {

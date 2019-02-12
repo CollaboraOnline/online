@@ -48,7 +48,7 @@ public:
     /// Returns true on success only.
     bool listen(const int backlog = 64)
     {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         const int rc = ::listen(getFD(), backlog);
 #else
         const int rc = fakeSocketListen(getFD());
@@ -96,7 +96,7 @@ protected:
     std::shared_ptr<SocketFactory> _sockFactory;
 };
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 /// A non-blocking, streaming Unix Domain Socket for local use
 class LocalServerSocket : public ServerSocket

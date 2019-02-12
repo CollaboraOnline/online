@@ -727,7 +727,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         return false;
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     LOOLWSD::dumpOutgoingTrace(docBroker->getJailId(), getId(), firstLine);
 #endif
 
@@ -818,7 +818,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 return false;
          }
     }
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     else if (tokens.size() == 3 && tokens[0] == "saveas:")
     {
         bool isConvertTo = static_cast<bool>(_saveAsSocket);

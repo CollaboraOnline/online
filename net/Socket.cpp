@@ -30,7 +30,7 @@
 
 #include <SigUtil.hpp>
 #include "ServerSocket.hpp"
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 #include "SslSocket.hpp"
 #endif
 #include "WebSocketHandler.hpp"
@@ -43,7 +43,7 @@ std::atomic<bool> Socket::InhibitThreadChecks(false);
 
 int Socket::createSocket(Socket::Type type)
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     int domain = AF_UNSPEC;
     switch (type)
     {
@@ -83,7 +83,7 @@ SocketPoll::SocketPoll(const std::string& threadName)
 {
     // Create the wakeup fd.
     if (
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         ::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1
 #else
         fakeSocketPipe2(_wakeup) == -1
@@ -111,7 +111,7 @@ SocketPoll::~SocketPoll()
             getWakeupsArray().erase(it);
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     ::close(_wakeup[0]);
     ::close(_wakeup[1]);
 #else
@@ -201,7 +201,7 @@ void SocketPoll::wakeupWorld()
         wakeup(fd);
 }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 void SocketPoll::insertNewWebSocketSync(
     const Poco::URI &uri,
@@ -438,7 +438,7 @@ void SocketPoll::dumpState(std::ostream& os)
 /// Returns true on success only.
 bool ServerSocket::bind(Type type, int port)
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     // Enable address reuse to avoid stalling after
     // recycling, when previous socket is TIME_WAIT.
     //TODO: Might be worth refactoring out.
@@ -493,7 +493,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
 {
     // Accept a connection (if any) and set it to non-blocking.
     // There still need the client's address to filter request from POST(call from REST) here.
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     assert(_type != Socket::Type::Unix);
 
     struct sockaddr_in6 clientInfo;
@@ -510,7 +510,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
         {
             std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
             char addrstr[INET6_ADDRSTRLEN];
 
             const void *inAddr;
@@ -543,7 +543,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
     return nullptr;
 }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 int Socket::getPid() const
 {

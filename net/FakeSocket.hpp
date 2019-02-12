@@ -10,7 +10,7 @@
 #ifndef INCLUDED_FAKESOCKET_H
 #define INCLUDED_FAKESOCKET_H
 
-#ifdef MOBILEAPP
+#if MOBILEAPP
 
 #include <string>
 

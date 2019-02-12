@@ -190,7 +190,7 @@ namespace
 
 namespace FileUtil
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     void registerFileSystemForDiskSpaceChecks(const std::string& path)
     {
         const std::string::size_type lastSlash = path.rfind('/');
@@ -240,7 +240,7 @@ namespace FileUtil
     {
         assert(!path.empty());
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         bool hookResult;
         if (UnitBase::get().filterCheckDiskSpace(path, hookResult))
             return hookResult;

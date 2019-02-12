@@ -25,7 +25,7 @@
 #include <Poco/URI.h>
 #include <Poco/BinaryReader.h>
 #include <Poco/Base64Decoder.h>
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/SSLManager.h>
@@ -386,7 +386,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         {
             askSignatureStatus(buffer, length, tokens);
         }
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         else if (tokens[0] == "uploadsigneddocument")
         {
             return uploadSignedDocument(buffer, length, tokens);
@@ -409,7 +409,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     return true;
 }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 // add to common / tools
 size_t getFileSize(const std::string& filename)
@@ -967,7 +967,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
 {
     std::string name, type;
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     if (tokens.size() != 3 ||
         !getTokenString(tokens[1], "name", name) ||
         !getTokenString(tokens[2], "type", type))
@@ -991,7 +991,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
     {
         std::string url;
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         if (type == "graphic")
             url = "file://" + std::string(JAILED_DOCUMENT_ROOT) + "insertfile/" + name;
         else if (type == "graphicurl")
@@ -1481,7 +1481,7 @@ bool ChildSession::signDocumentContent(const char* buffer, int length, const std
     return bResult;
 }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
 {
