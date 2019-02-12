@@ -19,23 +19,12 @@ var deps = {
 		      'geo/LatLng.js',
 		      'geo/LatLngBounds.js',
 		      'geo/projection/Projection.LonLat.js',
-		      'geo/projection/Projection.SphericalMercator.js',
 		      'geo/crs/CRS.js',
 		      'geo/crs/CRS.Simple.js',
-		      'geo/crs/CRS.Earth.js',
-		      'geo/crs/CRS.EPSG3857.js',
-		      'geo/crs/CRS.EPSG4326.js',
 		      'map/Map.js',
 		      'layer/Layer.js'
 		      ],
 		desc: 'The core of the library, including OOP, events, DOM facilities, basic units, projections (EPSG:3857 and EPSG:4326) and the base Map class.'
-	},
-
-	EPSG3395: {
-		src: ['geo/projection/Projection.Mercator.js',
-		      'geo/crs/CRS.EPSG3395.js'],
-		desc: 'EPSG:3395 projection (used by some map providers).',
-		heading: 'Additional projections'
 	},
 
 	GridLayer: {
@@ -190,13 +179,6 @@ var deps = {
 		deps: ['Path'],
 		desc: 'Canvas backend for vector layers.'
 	},
-
-	GeoJSON: {
-		src: ['layer/GeoJSON.js'],
-		deps: ['Polygon', 'Circle', 'CircleMarker', 'Marker', 'FeatureGroup'],
-		desc: 'GeoJSON layer, parses the data and adds corresponding layers above.'
-	},
-
 
 	MapDrag: {
 		src: ['dom/DomEvent.js',
@@ -460,12 +442,6 @@ var deps = {
 			],
 		deps: ['AnimationPan'],
 		desc: 'Smooth zooming animation. Works only on browsers that support CSS3 Transitions.'
-	},
-
-	Geolocation: {
-		src: ['map/ext/Map.Geolocation.js'],
-		desc: 'Adds Map#locate method and related events to make geolocation easier.',
-		heading: 'Misc'
 	},
 
 	AnnotationManager: {
