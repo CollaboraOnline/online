@@ -434,7 +434,7 @@ private:
             _records[0].getDir() != TraceFileRecord::Direction::Event ||
             _records[0].getPayload().find("NewSession") != 0)
         {
-            fprintf(stderr, "Invalid trace file with %ld records. First record: %s\n", _records.size(),
+            fprintf(stderr, "Invalid trace file with %ld records. First record: %s\n", static_cast<long>(_records.size()),
                     _records.empty() ? "<empty>" : _records[0].getPayload().c_str());
             throw std::runtime_error("Invalid trace file.");
         }

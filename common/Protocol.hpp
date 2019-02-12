@@ -286,7 +286,7 @@ namespace LOOLProtocol
 
     inline std::string getAbbreviatedMessage(const std::string& message)
     {
-        const size_t pos = Util::getDelimiterPosition(message.data(), std::min(message.size(), 501UL), '\n');
+        const size_t pos = Util::getDelimiterPosition(message.data(), std::min<size_t>(message.size(), 501), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
         if (pos < static_cast<std::string::size_type>(message.size()) - 1)
