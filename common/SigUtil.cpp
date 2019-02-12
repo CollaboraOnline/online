@@ -11,7 +11,9 @@
 
 #include "SigUtil.hpp"
 
-#include <execinfo.h>
+#if !defined(__ANDROID__)
+#  include <execinfo.h>
+#endif
 #include <csignal>
 #include <sys/poll.h>
 #include <sys/stat.h>
@@ -202,6 +204,7 @@ namespace SigUtil
         char header[32];
         sprintf(header, "Backtrace %d:\n", getpid());
 
+#if !defined(__ANDROID__)
         const int maxSlots = 50;
         void *backtraceBuffer[maxSlots];
         int numSlots = backtrace(backtraceBuffer, maxSlots);
@@ -227,6 +230,9 @@ namespace SigUtil
                 }
             }
         }
+#else
+        LOG_SYS("Backtrace not available on Android.");
+#endif
 
         if (std::getenv("LOOL_DEBUG"))
         {

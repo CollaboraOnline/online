@@ -11,7 +11,6 @@
 
 #include "Util.hpp"
 
-#include <execinfo.h>
 #include <csignal>
 #include <sys/poll.h>
 #ifdef __linux
