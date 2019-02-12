@@ -461,13 +461,16 @@ AS_IF([test "$ENABLE_GTKAPP" = true],
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 
 mobile_app=
+MOBILEAPP=
 AC_MSG_CHECKING([Is this a mobile app])
 if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp"; then
      AC_MSG_RESULT([Yes])
      mobile_app=true;
+     MOBILEAPP=1
 else
      AC_MSG_RESULT([No])
 fi
+AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp (eg. Android) build.])
 
 ENABLE_SSL=true
 if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then

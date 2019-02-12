@@ -138,8 +138,10 @@ using Poco::Net::PartHandler;
 #ifdef MOBILEAPP
 #ifdef IOS
 #include "ios.h"
-#else
+#elif GTKAPP
 #include "gtk.hpp"
+#elif defined(__ANDROID__)
+#include "androidapp.h"
 #endif
 #endif
 
