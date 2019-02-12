@@ -112,7 +112,9 @@ L.Map = L.Evented.extend({
 
 		if (L.Browser.mobile) {
 			this._clipboardContainer = L.control.mobileInput().addTo(this);
-			this._clipboardContainer._cursorHandler.on('up', this.tap._onCursorClick, this.tap);
+			if (this.tap !== undefined) {
+				this._clipboardContainer._cursorHandler.on('up', this.tap._onCursorClick, this.tap);
+			}
 		} else {
 			this._clipboardContainer = L.clipboardContainer();
 			this.addLayer(this._clipboardContainer);
