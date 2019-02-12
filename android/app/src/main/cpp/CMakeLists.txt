@@ -40,11 +40,10 @@ target_link_libraries(androidapp
                       log
                       /local/libreoffice/master-android/workdir/LinkTarget/StaticLibrary/liblibpng.a
                       /opt/poco-android/lib/libPocoEncodings.a
-                      /opt/poco-android/lib/libPocoFoundation.a
-                      /opt/poco-android/lib/libPocoJSON.a
                       /opt/poco-android/lib/libPocoNet.a
                       /opt/poco-android/lib/libPocoRedis.a
                       /opt/poco-android/lib/libPocoUtil.a
                       /opt/poco-android/lib/libPocoXML.a
-                      -static-libstdc++
+                      /opt/poco-android/lib/libPocoJSON.a
+                      /opt/poco-android/lib/libPocoFoundation.a
                       )
