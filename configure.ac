@@ -55,6 +55,10 @@ AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],
                              [Enable debugging, link with debugging version of Poco libraries]))
 
+AC_ARG_ENABLE([browsersync],
+              AS_HELP_STRING([--enable-browsersync],
+                             [Don't copy files to the target directory but create the symlink to allow browsersync usage]))
+
 AC_ARG_ENABLE([anonymize-usernames],
               AS_HELP_STRING([--enable-anonymize-usernames],
                              [Enable anonymization/obfuscation of usernames in logs]))
@@ -206,6 +210,17 @@ AC_SUBST(ENABLE_DEBUG)
 AC_SUBST(LOOLWSD_LOGLEVEL)
 AC_SUBST(LOOLWSD_LOG_TO_FILE)
 AC_SUBST(LOLEAFLET_LOGGING)
+
+ENABLE_BROWSERSYNC=
+browsersync_msg="disabled: copy files to the target directory"
+if test "$enable_browsersync" = "yes"; then
+   AC_DEFINE([ENABLE_BROWSERSYNC],1,[Whether to create symlinks instead of copying files to the target dorectory to run browsersync])
+   ENABLE_BROWSERSYNC=true
+   browsersync_msg="enabled: create symlinks in the target directory"
+else
+    AC_DEFINE([ENABLE_BROWSERSYNC],0,[Whether to create symlinks instead of copying files to the target dorectory to run browsersync])
+fi
+AC_SUBST(ENABLE_BROWSERSYNC)
 
 if test -n "$with_logfile" ; then
    LOOLWSD_LOGFILE="$with_logfile"
@@ -487,6 +502,7 @@ AS_IF([test "$ENABLE_GTKAPP" = true],
       [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
+AM_CONDITIONAL([ENABLE_BROWSERSYNC], [test "$ENABLE_BROWSERSYNC" = "true"])
 
 mobile_app=
 ENABLE_MOBILEAPP=
@@ -750,10 +766,12 @@ Configuration:
     Debug & low security    $debug_msg
     Anonymization           $anonym_msg
     Set capabilities        $setcap_msg
+    Browsersync             $browsersync_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then
 echo "    \$ make run # to start loolwsd
+    \$ make sync-writer|calc|impress # to start browsersync with specified app
 "
 fi
       ])

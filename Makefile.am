@@ -289,6 +289,15 @@ run: all @JAILS_PATH@
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=true --o:logging.level=trace
 
+sync-writer:
+	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
+
+sync-calc:
+	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.ods"
+
+sync-impress:
+	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
+
 run-valgrind: all @JAILS_PATH@
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype

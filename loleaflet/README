@@ -91,6 +91,29 @@ with the --o:storage.filesystem[@allow]=true option of loolwsd. In case anything
 the debugging output. You might be asked to confirm the certificate if you are using self-signed certificate
 for loolwsd.
 
+Development
+-----------
+
+For faster development you might want to install browser-sync which can reload app in your browsers automatically
+after you edit and save the source code (so for .css only):
+
+npm install -g browser-sync
+
+Remember to add '--enable-browsersync' argument for './configure' script and delete `dist` directory.
+
+Run server and start browser-sync:
+
+LOOL_SERVE_FROM_FS=1 make run
+
+and in the second terminal:
+
+make sync-[writer|calc|impress]
+
+Your browser will open example document and now you can edit .css files and see the result without server restart.
+
+To run another document use:
+browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file:///path/to/the/file.ods"
+
 Admin Panel
 -----------
 

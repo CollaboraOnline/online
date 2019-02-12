@@ -55,7 +55,11 @@ LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(builddir)/dist/admin/%,$(LO
 
 define file_target
 $(1): $(2)
-	@cp $$< $$@
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		`cp $$< $$@`; \
+	else \
+		`ln -sf ../$$< $$@`; \
+	fi
 
 endef
 
@@ -267,7 +271,11 @@ node_modules: npm-shrinkwrap.json
 
 $(builddir)/dist/plugins/%.js: $(srcdir)/plugins/%.js
 	@mkdir -p $(dir $@)
-	@cp $< $@
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		`cp $< $@`; \
+	else \
+		`ln -sf $(abs_srcdir)/$< $@`; \
+	fi
 
 $(builddir)/dist/images/%: $(srcdir)/images/%
 	@mkdir -p $(dir $@)
@@ -279,11 +287,20 @@ $(builddir)/dist/%.html: $(srcdir)/html/%.html
 
 $(builddir)/dist/src/%.js: $(srcdir)/src/%.js
 	@mkdir -p $(dir $@)
-	@cp $< $@
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		`cp $< $@`; \
+	else \
+		`echo $< $@`; \
+		`ln -sf $(abs_srcdir)/$< $@`; \
+	fi
 
 $(builddir)/dist/%.js: $(srcdir)/js/%.js
 	@mkdir -p $(dir $@)
-	@cp $< $@
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		`cp $< $@`; \
+	else \
+		`ln -sf $(abs_srcdir)/$< $@`; \
+	fi
 
 $(builddir)/dist/node_modules/%.js: $(builddir)/node_modules/%.js
 	@mkdir -p $(dir $@)
