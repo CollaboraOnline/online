@@ -41,7 +41,7 @@
 std::atomic<bool> TerminationFlag(false);
 std::atomic<bool> DumpGlobalState(false);
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 std::atomic<bool> ShutdownRequestFlag(false);
 
 std::mutex SigHandlerTrap;

@@ -14,7 +14,7 @@
 
 #include <common/Util.hpp>
 
-#ifdef MOBILEAPP
+#if MOBILEAPP
 
 #include "ClientSession.hpp"
 #include "DocumentBroker.hpp"
@@ -23,7 +23,7 @@
 #endif
 
 void lokit_main(
-#ifndef MOBILEAPP
+#if !MOBILEAPP
                 const std::string& childRoot,
                 const std::string& jailId,
                 const std::string& sysTemplate,

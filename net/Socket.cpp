@@ -28,7 +28,7 @@
 
 #include <SigUtil.hpp>
 #include "ServerSocket.hpp"
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 #include "SslSocket.hpp"
 #endif
 #include "WebSocketHandler.hpp"
@@ -39,7 +39,7 @@ std::atomic<bool> Socket::InhibitThreadChecks(false);
 
 int Socket::createSocket(Socket::Type type)
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     int domain = type == Type::IPv4 ? AF_INET : AF_INET6;
     return socket(domain, SOCK_STREAM | SOCK_NONBLOCK, 0);
 #else
@@ -71,7 +71,7 @@ SocketPoll::SocketPoll(const std::string& threadName)
 {
     // Create the wakeup fd.
     if (
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         ::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1
 #else
         fakeSocketPipe2(_wakeup) == -1
@@ -99,7 +99,7 @@ SocketPoll::~SocketPoll()
             getWakeupsArray().erase(it);
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     ::close(_wakeup[0]);
     ::close(_wakeup[1]);
 #else
@@ -190,14 +190,14 @@ void SocketPoll::wakeupWorld()
 }
 
 void SocketPoll::insertNewWebSocketSync(
-#ifndef MOBILEAPP
+#if !MOBILEAPP
                                         const Poco::URI &uri,
 #else
                                         int peerSocket,
 #endif
                                         const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     LOG_INF("Connecting to " << uri.getHost() << " : " << uri.getPort() << " : " << uri.getPath());
 
     // FIXME: put this in a ClientSocket class ?
@@ -380,7 +380,7 @@ void SocketPoll::dumpState(std::ostream& os)
 /// Returns true on success only.
 bool ServerSocket::bind(Type type, int port)
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     // Enable address reuse to avoid stalling after
     // recycling, when previous socket is TIME_WAIT.
     //TODO: Might be worth refactoring out.
@@ -430,7 +430,7 @@ bool ServerSocket::bind(Type type, int port)
 #endif
 }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,

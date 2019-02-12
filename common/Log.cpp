@@ -142,7 +142,7 @@ namespace Log
         Source.setName(name);
         std::ostringstream oss;
         oss << Source.getName();
-#ifndef MOBILEAPP // Just one process in a mobile app, the pid is uninteresting.
+#if !MOBILEAPP // Just one process in a mobile app, the pid is uninteresting.
         oss << '-'
             << std::setw(5) << std::setfill('0') << Poco::Process::id();
 #endif

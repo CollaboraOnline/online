@@ -24,7 +24,7 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
@@ -59,7 +59,7 @@ bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
 Util::RegexListMatcher StorageBase::WopiHosts;
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 std::string StorageBase::getLocalRootPath() const
 {
@@ -86,7 +86,7 @@ size_t StorageBase::getFileSize(const std::string& filename)
 
 void StorageBase::initialize()
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     const auto& app = Poco::Util::Application::instance();
     FilesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
 
@@ -146,7 +146,7 @@ bool StorageBase::allowedWopiHost(const std::string& host)
     return WopiEnabled && WopiHosts.match(host);
 }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 bool isLocalhost(const std::string& targetHost)
 {
@@ -238,7 +238,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
 
         LOG_ERR("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
     }
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     else if (WopiEnabled)
     {
         LOG_INF("Public URI [" << LOOLWSD::anonymizeUrl(uri.toString()) << "] considered WOPI.");
@@ -274,7 +274,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 
 std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
 {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     // /chroot/jailId/user/doc/childId/file.ext
     const std::string filename = Poco::Path(getUri().getPath()).getFileName();
     setRootFilePath(Poco::Path(getLocalRootPath(), filename).toString());
@@ -363,7 +363,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
     return StorageBase::SaveResult(StorageBase::SaveResult::OK);
 }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 namespace
 {

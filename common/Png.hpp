@@ -130,7 +130,7 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
         return false;
     }
 
-#ifdef MOBILEAPP
+#if MOBILEAPP
     png_set_compression_level(png_ptr, Z_BEST_SPEED);
 #endif
 

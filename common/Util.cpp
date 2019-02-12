@@ -146,7 +146,7 @@ namespace Util
         return newTmp;
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     int getProcessThreadCount()
     {
         DIR *fdDir = opendir("/proc/self/task");
@@ -294,7 +294,7 @@ namespace Util
         return std::getenv("DISPLAY") != nullptr;
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
     static const char *startsWith(const char *line, const char *tag)
     {

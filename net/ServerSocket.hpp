@@ -47,7 +47,7 @@ public:
     /// Returns true on success only.
     bool listen(const int backlog = 64)
     {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         const int rc = ::listen(getFD(), backlog);
 #else
         const int rc = fakeSocketListen(getFD());
@@ -64,7 +64,7 @@ public:
     {
         // Accept a connection (if any) and set it to non-blocking.
         // There still need the client's address to filter request from POST(call from REST) here.
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         struct sockaddr_in6 clientInfo;
         socklen_t addrlen = sizeof(clientInfo);
         const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK);
@@ -77,7 +77,7 @@ public:
             // Create a socket object using the factory.
             if (rc != -1)
             {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
                 char addrstr[INET6_ADDRSTRLEN];
 
                 const void *inAddr;

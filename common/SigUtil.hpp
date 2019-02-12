@@ -13,7 +13,7 @@
 #include <atomic>
 #include <mutex>
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 /// Flag to commence clean shutdown
 extern std::atomic<bool> ShutdownRequestFlag;
 #else
@@ -26,7 +26,7 @@ extern std::atomic<bool> TerminationFlag;
 /// Flag to dump internal state
 extern std::atomic<bool> DumpGlobalState;
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 
 /// Mutex to trap signal handler, if any,
 /// and prevent _Exit while collecting backtrace.

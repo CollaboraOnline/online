@@ -116,7 +116,7 @@ public:
         LOG_TRC("#" << getFD() << " Socket dtor.");
 
         // Doesn't block on sockets; no error handling needed.
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         ::close(_fd);
 #else
         fakeSocketClose(_fd);
@@ -144,7 +144,7 @@ public:
     virtual void shutdown()
     {
         LOG_TRC("#" << _fd << ": socket shutdown RDWR.");
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         ::shutdown(_fd, SHUT_RDWR);
 #else
         fakeSocketShutdown(_fd);
@@ -165,14 +165,14 @@ public:
     /// manage latency issues around packet aggregation
     void setNoDelay()
     {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         const int val = 1;
         ::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY,
                      (char *) &val, sizeof(val));
 #endif
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     /// Sets the kernel socket send buffer in size bytes.
     /// Note: TCP will allocate twice this size for admin purposes,
     /// so a subsequent call to getSendBufferSize will return
@@ -218,14 +218,14 @@ public:
     /// Gets our fast cache of the socket buffer size
     int getSendBufferSize() const
     {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         return _sendBufferSize;
 #else
         return INT_MAX; // We want to always send a single record in one go
 #endif
     }
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
     /// Sets the receive buffer size in bytes.
     /// Note: TCP will allocate twice this size for admin purposes,
     /// so a subsequent call to getReceieveBufferSize will return
@@ -318,7 +318,7 @@ protected:
         _owner = std::this_thread::get_id();
         LOG_DBG("#" << _fd << " Thread affinity set to " << Log::to_string(_owner) << ".");
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 #if ENABLE_DEBUG
         if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
         {
@@ -401,7 +401,7 @@ public:
     {
         LOG_DBG("Stopping " << _name << ".");
         _stop = true;
-#ifdef MOBILEAPP
+#if MOBILEAPP
         {
             // We don't want to risk some callbacks in _newCallbacks being invoked when we start
             // running a thread for this SocketPoll again.
@@ -485,7 +485,7 @@ public:
         int rc;
         do
         {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
             rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
 #else
             LOG_TRC("SocketPoll Poll");
@@ -504,7 +504,7 @@ public:
                 std::lock_guard<std::mutex> lock(_mutex);
 
                 // Clear the data.
-#ifndef MOBILEAPP
+#if !MOBILEAPP
                 int dump = ::read(_wakeup[0], &dump, sizeof(dump));
 #else
                 LOG_TRC("Wakeup pipe read");
@@ -588,7 +588,7 @@ public:
         // wakeup the main-loop.
         int rc;
         do {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
             rc = ::write(fd, "w", 1);
 #else
 #if 0
@@ -645,7 +645,7 @@ public:
     /// Inserts a new websocket to be polled.
     /// NOTE: The DNS lookup is synchronous.
     void insertNewWebSocketSync(
-#ifndef MOBILEAPP
+#if !MOBILEAPP
                                 const Poco::URI &uri,
 #else
                                 int peerSocket,
@@ -864,7 +864,7 @@ public:
     {
         assertCorrectThread();
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         // SSL decodes blocks of 16Kb, so for efficiency we use the same.
         char buf[16 * 1024];
         ssize_t len;
@@ -1081,7 +1081,7 @@ protected:
     virtual int readData(char* buf, int len)
     {
         assertCorrectThread();
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         return ::read(getFD(), buf, len);
 #else
         return fakeSocketRead(getFD(), buf, len);
@@ -1092,7 +1092,7 @@ protected:
     virtual int writeData(const char* buf, const int len)
     {
         assertCorrectThread();
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         return ::write(getFD(), buf, len);
 #else
         struct pollfd p;

@@ -129,7 +129,7 @@ public:
         if (_pid < 0)
             return;
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         if (::kill(_pid, 0) == 0)
         {
             LOG_INF("Killing child [" << _pid << "].");
@@ -176,7 +176,7 @@ public:
     /// time after the other end-point closes. So this isn't accurate.
     bool isAlive() const
     {
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         try
         {
             return _pid > 1 && _ws && ::kill(_pid, 0) == 0;
