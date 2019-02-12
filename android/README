@@ -12,17 +12,17 @@
 
 * Build the POCO for Android
 
-  # use the 1.9.0 branch; the 1.9.1 and master did not compile for me
-  git checkout -b poco-1.9.0 origin/poco-1.9.0
+  # use the 1.9.1 branch
+  git checkout -b poco-1.9.1 origin/poco-1.9.1
 
   # configure
   ./configure --config=Android --no-samples --no-tests --minimal
 
   # make it
-  make ANDROID_ABI=armeabi-v7a TOOL=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/arm-linux-androideabi CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++
+  PATH="$PATH":~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin make -j8 ANDROID_ABI=armeabi-v7a CC=armv7a-linux-androideabi21-clang CXX=armv7a-linux-androideabi21-clang++ SYSLIBS=-static-libstdc++
 
   # install it to /opt/poco-android
-  make ANDROID_ABI=armeabi-v7a TOOL=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/arm-linux-androideabi CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ install INSTALLDIR=/opt/poco-android
+  PATH="$PATH":~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin make -j8 ANDROID_ABI=armeabi-v7a CC=armv7a-linux-androideabi21-clang CXX=armv7a-linux-androideabi21-clang++ SYSLIBS=-static-libstdc++ install INSTALLDIR=/opt/poco-android
 
 * Configure the online.git
 
