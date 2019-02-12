@@ -87,6 +87,9 @@
 /* Limit the maximum number of open documents */
 #define MAX_DOCUMENTS 1
 
+/* Define to 1 if this is a mobileapp (eg. Android) build. */
+#define MOBILEAPP 1
+
 /* Name of package */
 #undef PACKAGE
 
