@@ -82,11 +82,26 @@ L.Map.Scroll = L.Handler.extend({
 		this._startTime = null;
 
 		if (!delta) { return; }
-
 		if (map.options.scrollWheelZoom === 'center') {
-			map.setZoom(zoom + delta);
-		} else {
-			map.setZoomAround(this._lastMousePos, zoom + delta);
+			if (map.getDocType() === 'spreadsheet') {
+				if (delta > 0) {
+					map.setZoom(14); // 200%
+				} else {
+					map.setZoom(10); // 100%
+				}
+			} else {
+				map.setZoom(zoom + delta);
+			}
+		} else { // eslint-disable-next-line no-lonely-if
+			if (map.getDocType() === 'spreadsheet') { 
+				if (delta > 0) {
+					map.setZoomAround(this._lastMousePos, 14); // 200%
+				} else {
+					map.setZoomAround(this._lastMousePos, 10); // 100%
+				}
+			} else {
+				map.setZoomAround(this._lastMousePos, zoom + delta);
+			}
 		}
 	}
 });
