@@ -3,10 +3,8 @@ DRAW_VERSION=0.2.4
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 
-if !ENABLE_IOSAPP
-if !ENABLE_GTKAPP
+if !ENABLE_MOBILEAPP
 L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
-endif
 endif
 
 if ENABLE_IOSAPP
@@ -113,11 +111,9 @@ NODE_MODULES_JS =\
 	node_modules/vex-js/js/vex.dialog.js \
 	node_modules/@braintree/sanitize-url/dist.js
 
-if !ENABLE_IOSAPP
-if !ENABLE_GTKAPP
+if !ENABLE_MOBILEAPP
 NODE_MODULES_JS +=\
 	node_modules/l10n-for-node/l10n.js
-endif
 endif
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
@@ -151,10 +147,8 @@ all-local:
 	@$(MAKE) node_modules
 	@$(MAKE) build-loleaflet
 
-if !ENABLE_IOSAPP
-if !ENABLE_GTKAPP
+if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(builddir)/dist/admin-bundle.js
-endif
 endif
 
 build-loleaflet: | $(LOLEAFLET_L10N_DST) \
@@ -168,6 +162,16 @@ build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(builddir)/dist/bundle.js \
 	$(builddir)/dist/loleaflet.html
 	@echo "build loleaflet completed"
+if ENABLE_ANDROIDAPP
+	@rm -rf $(srcdir)/../android/app/src/main/assets/dist
+	@cp -a $(builddir)/dist $(srcdir)/../android/app/src/main/assets/
+	@echo
+	@echo "Copied JS, HTML and CSS to the Android project (android/app/src/main/assets/dist)."
+	@echo
+	@echo "  Now you need to build the actual .apk from Android Studio:"
+	@echo "  Just open the 'android' subdir as a project there and build."
+	@echo
+endif
 
 $(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	$(LOLEAFLET_PREFIX)/dist/admin-src.js
@@ -246,6 +250,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DGTKAPP=$(ENABLE_GTKAPP) \
+		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
 		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
 		-DBUNDLE_CSS="$(abs_builddir)/dist/bundle.css" \
