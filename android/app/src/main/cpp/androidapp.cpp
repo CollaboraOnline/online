@@ -11,6 +11,7 @@
 #include <jni.h>
 #include <android/log.h>
 
+#include <chrono>
 #include <thread>
 
 #include <FakeSocket.hpp>
@@ -265,6 +266,7 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv*, jobject)
                         loolwsd->run(1, argv);
                         delete loolwsd;
                         LOG_TRC("One run of LOOLWSD completed");
+                        std::this_thread::sleep_for(std::chrono::milliseconds(100));
                     }
                 }).detach();
 
