@@ -160,10 +160,10 @@ inline
 Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
 {
 #if ENABLE_SSL
-    return new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
-#else
-    return new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+    if (uri.getScheme() == "https")
+        return new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
 #endif
+    return new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
 
 inline

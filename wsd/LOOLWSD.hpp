@@ -157,6 +157,9 @@ public:
         return AnonymizeUsernames ? Util::anonymize(username) : username;
     }
 
+    /// get correct server URL with protocol + port number for this running server
+    static std::string getServerURL();
+
     int innerMain();
 
 protected:

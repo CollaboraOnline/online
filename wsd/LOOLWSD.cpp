@@ -3063,6 +3063,17 @@ private:
 
 static LOOLWSDServer srv;
 
+std::string LOOLWSD::getServerURL()
+{
+    std::ostringstream oss;
+
+    oss << getLaunchBase("");
+    oss << LOOLWSD::ServiceRoot;
+    oss << LOOLWSD_TEST_LOLEAFLET_UI;
+
+    return oss.str();
+}
+
 int LOOLWSD::innerMain()
 {
 #if !defined FUZZER && !MOBILEAPP
