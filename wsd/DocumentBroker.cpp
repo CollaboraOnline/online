@@ -219,6 +219,7 @@ void DocumentBroker::pollThread()
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                   _threadStart).count() > timeoutMs)
             break;
+
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
         std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
     }
@@ -501,7 +502,6 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
 #ifndef MOBILEAPP
     std::chrono::duration<double> getInfoCallDuration(0);
-
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
@@ -527,7 +527,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                 (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()))
             {
                 wopifileinfo->getPostMessageOrigin().replace(0, 4, "https");
-                LOG_DBG("Updating PostMessageOrgin scheme to HTTPS. Updated origin is [" << wopifileinfo->getPostMessageOrigin() << "].");
+                LOG_DBG("Updating PostMessageOrigin scheme to HTTPS. Updated origin is [" << wopifileinfo->getPostMessageOrigin() << "].");
             }
 
             wopiInfo->set("PostMessageOrigin", wopifileinfo->getPostMessageOrigin());
