@@ -110,9 +110,9 @@ AC_ARG_WITH([lo-path],
 
 AC_ARG_WITH([lo-builddir],
             AS_HELP_STRING([--with-lo-builddir=<path>],
-                           [Mandatory, and relevant, in a tree where building the iOS app.
+                           [Mandatory, and relevant, in a tree where building the iOS or Android app.
                             Path to a the build directory of the LibreOffice core source tree you want to use.
-                            In addition you MUST manually edit the ios/Mobile.xcodeproj/project.pbxproj
+                            In case of macOS, you MUST manually edit the ios/Mobile.xcodeproj/project.pbxproj
                             file and change the references to "../ios-device" to refer to the corresponding
                             LibreOffice core source directory (which typically would be the same as the build
                             directory you specify with this option).]))
@@ -230,6 +230,57 @@ fi
 AC_DEFINE_UNQUOTED([APP_NAME],["$APP_NAME"],[The user-visible name of the app you build.])
 AC_SUBST(APP_NAME)
 
+# macOS: When configuring for building the app itself, on macOS, we need these.
+# But not when just configuring for building the JS on Linux, for copying over
+# to the Mac.
+# Android: We need these to setup the CMakeLists.txt properly.
+LOBUILDDIR=
+POCOINCLUDE=
+POCOLIB=
+if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \); then
+   AC_MSG_CHECKING([for LibreOffice build tree to build against])
+   if test -z "$with_lo_builddir"; then
+      AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the mobile app build tree.])
+   fi
+
+   LOBUILDDIR="$with_lo_builddir"
+   # Sanity check, just a random object file in the LibreOffice build tree
+   if test \( "$enable_iosapp" = "yes" -a -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o" \) -o \( "$enable_androidapp" = "yes" -a -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" \); then
+       AC_MSG_RESULT([$LOBUILDDIR])
+   else
+       AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
+   fi
+
+   AC_MSG_CHECKING([for Poco include directory to build against])
+   if test -z "$with_poco_includes"; then
+      AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the mobile app build tree.])
+   fi
+
+   POCOINCLUDE="$with_poco_includes"
+   # Sanity check
+   if test -f "$POCOINCLUDE/Poco/Poco.h"; then
+       AC_MSG_RESULT([$POCOINCLUDE])
+   else
+       AC_MSG_ERROR([This is not a Poco include directory: $POCOINCLUDE])
+   fi
+
+   AC_MSG_CHECKING([for Poco lib directory to build against])
+   if test -z "$with_poco_libs"; then
+      AC_MSG_ERROR([You MUST use the --with-poco-libs option when configuring the mobile app build tree.])
+   fi
+
+   POCOLIB="$with_poco_libs"
+   # Sanity check
+   if test -f "$POCOLIB/libPocoFoundation.a"; then
+       AC_MSG_RESULT([$POCOLIB])
+   else
+       AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
+   fi
+fi
+AC_SUBST(LOBUILDDIR)
+AC_SUBST(POCOINCLUDE)
+AC_SUBST(POCOLIB)
+
 ENABLE_IOSAPP=
 IOSAPP_BUNDLE_VERSION=
 
@@ -242,50 +293,6 @@ if test "$enable_iosapp" = "yes"; then
        IOSAPP_BUNDLE_VERSION=1
    fi
    echo $IOSAPP_BUNDLE_VERSION >BUNDLE-VERSION
-
-   # When configuring for building the app itself, on macOS, we need
-   # these. But not when just configuring for building the JS on
-   # Linux, for copying over to the Mac.
-   if test `uname -s` = "Darwin"; then
-      AC_MSG_CHECKING([for LibreOffice build tree to build against])
-      if test -z "$with_lo_builddir"; then
-         AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the iOS app build tree.])
-      fi
-
-      LOBUILDDIR="$with_lo_builddir"
-      # Sanity check, just a random object file in the LibreOffice build tree
-      if test -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o"; then
-          AC_MSG_RESULT([$LOBUILDDIR])
-      else
-          AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
-      fi
-
-      AC_MSG_CHECKING([for Poco include directory to build against])
-      if test -z "$with_poco_includes"; then
-         AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the iOS app build tree.])
-      fi
-
-      POCOINCLUDE="$with_poco_includes"
-      # Sanity check
-      if test -f "$POCOINCLUDE/Poco/Poco.h"; then
-          AC_MSG_RESULT([$POCOINCLUDE])
-      else
-          AC_MSG_ERROR([This is not a Poco include directory: $POCOINCLUDE])
-      fi
-
-      AC_MSG_CHECKING([for Poco lib directory to build against])
-      if test -z "$with_poco_libs"; then
-         AC_MSG_ERROR([You MUST use the --with-poco-libs option when configuring the iOS app build tree.])
-      fi
-
-      POCOLIB="$with_poco_libs"
-      # Sanity check
-      if test -f "$POCOLIB/libPocoFoundation.a"; then
-          AC_MSG_RESULT([$POCOLIB])
-      else
-          AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
-      fi
-   fi
 fi
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
@@ -666,6 +673,7 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
 AC_SUBST(IOSAPP_FONTS)
 
 AC_CONFIG_FILES([Makefile
+                 android/app/src/main/cpp/CMakeLists.txt
                  gtk/Makefile
                  ios/config.h
                  ios/Mobile/Info.plist
