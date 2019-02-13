@@ -225,6 +225,14 @@ public:
         return parse(LOOLProtocol::tokenize(message.data(), message.size()));
     }
 
+    std::string generateID() const
+    {
+        std::ostringstream tileID;
+        tileID << getPart() << ":" << getTilePosX() << ":" << getTilePosY() << ":"
+               << getTileWidth() << ":" << getTileHeight();
+        return tileID.str();
+    }
+
 private:
     int _part;
     int _width;

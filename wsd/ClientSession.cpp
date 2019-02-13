@@ -1060,8 +1060,7 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     {
         // Avoid sending tile if it has the same wireID as the previously sent tile
         tile.reset(new TileDesc(TileDesc::parse(data->firstLine())));
-        const std::string tileID = generateTileID(*tile);
-        auto iter = _oldWireIds.find(tileID);
+        auto iter = _oldWireIds.find(tile->generateID());
         if(iter != _oldWireIds.end() && tile->getWireId() != 0 && tile->getWireId() == iter->second)
         {
             LOG_INF("WSD filters out a tile with the same wireID: " <<  tile->serialize("tile:"));
@@ -1110,7 +1109,7 @@ Authorization ClientSession::getAuthorization() const
 
 void ClientSession::addTileOnFly(const TileDesc& tile)
 {
-    _tilesOnFly.push_back({generateTileID(tile), std::chrono::steady_clock::now()});
+    _tilesOnFly.push_back({tile.generateID(), std::chrono::steady_clock::now()});
 }
 
 void ClientSession::clearTilesOnFly()
@@ -1139,7 +1138,7 @@ void ClientSession::removeOutdatedTilesOnFly()
 size_t ClientSession::countIdenticalTilesOnFly(const TileDesc& tile) const
 {
     size_t count = 0;
-    std::string tileID = generateTileID(tile);
+    std::string tileID = tile.generateID();
     for(auto& tileItem : _tilesOnFly)
     {
         if(tileItem.first == tileID)
@@ -1283,7 +1282,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                     invalidTiles.emplace_back(part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
 
                     TileWireId oldWireId = 0;
-                    auto iter = _oldWireIds.find(generateTileID(invalidTiles.back()));
+                    auto iter = _oldWireIds.find(invalidTiles.back().generateID());
                     if(iter != _oldWireIds.end())
                         oldWireId = iter->second;
 
@@ -1308,7 +1307,7 @@ void ClientSession::resetWireIdMap()
 
 void ClientSession::traceTileBySend(const TileDesc& tile, bool deduplicated)
 {
-    const std::string tileID = generateTileID(tile);
+    const std::string tileID = tile.generateID();
 
     // Store wireId first
     auto iter = _oldWireIds.find(tileID);
@@ -1365,14 +1364,6 @@ void ClientSession::removeOutdatedTileSubscriptions()
 void ClientSession::clearTileSubscription()
 {
     _tilesBeingRendered.clear();
-}
-
-std::string ClientSession::generateTileID(const TileDesc& tile) const
-{
-    std::ostringstream tileID;
-    tileID << tile.getPart() << ":" << tile.getTilePosX() << ":" << tile.getTilePosY() << ":"
-           << tile.getTileWidth() << ":" << tile.getTileHeight();
-    return tileID.str();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

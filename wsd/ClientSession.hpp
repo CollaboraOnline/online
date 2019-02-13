@@ -170,9 +170,6 @@ private:
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
-    /// Generate a unique id for a tile
-    std::string generateTileID(const TileDesc& tile) const;
-
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
