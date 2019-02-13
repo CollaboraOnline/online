@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         browserSettings.setJavaScriptEnabled(true);
         browser.addJavascriptInterface(new JavaScriptInterface(), "MainHandler");
 
-        browser.loadUrl("file:///android_asset/html/index.html");
+        browser.loadUrl("file:///android_asset/dist/loleaflet.html");
 
         Button jsButton = findViewById(R.id.js_button);
         jsButton.setOnClickListener(new View.OnClickListener() {

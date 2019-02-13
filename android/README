@@ -28,7 +28,12 @@
 
   ./autogen.sh && ./configure CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ --host=arm-linux-androideabi --enable-androidapp --with-lo-builddir=/local/libreoffice/master-android --with-poco-includes=/opt/poco-android/include --with-poco-libs=/opt/poco-android/lib --disable-setcap --enable-silent-rules --enable-debug
 
-* Build it
+* Build the JavaScript, HTML and CSS files
+
+  # just run 'make'
+  make
+
+* Build the actual app
 
   + Start Android Studio
   + Open this 'android' subdir as a project

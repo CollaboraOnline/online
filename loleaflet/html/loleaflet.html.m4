@@ -16,6 +16,7 @@ dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ 
 define([MOBILEAPP],[])
 ifelse(IOSAPP,[true],[define([MOBILEAPP],[true])])
 ifelse(GTKAPP,[true],[define([MOBILEAPP],[true])])
+ifelse(ANDROIDAPP,[true],[define([MOBILEAPP],[true])])
 
 ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the

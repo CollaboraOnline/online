@@ -91,6 +91,10 @@ pocolib-symlink
 ICU.dat
 ios/Mobile/Assets.xcassets/AppIcon.appiconset
 
+# android stuff
+/android/app/src/main/assets/dist
+/android/app/src/main/cpp/CMakeLists.txt
+
 # backup and temporary editor files: the only convenience rules allowed here.
 *~
 .*sw?

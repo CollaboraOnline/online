@@ -1,14 +1,12 @@
 ETAGS=ctags -e
 
-if ENABLE_IOSAPP
-
-SUBDIRS = loleaflet
-
-else
+if ENABLE_MOBILEAPP
 
 if ENABLE_GTKAPP
-
 SUBDIRS = gtk loleaflet
+else
+SUBDIRS = loleaflet
+endif
 
 else
 
@@ -391,5 +389,4 @@ endif
 # just run the build without any tests
 build-nocheck: all-am
 
-endif
 endif
