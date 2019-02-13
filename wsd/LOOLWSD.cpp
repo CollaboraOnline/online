@@ -3063,6 +3063,8 @@ private:
 
 static LOOLWSDServer srv;
 
+#if !MOBILEAPP
+
 std::string LOOLWSD::getServerURL()
 {
     std::ostringstream oss;
@@ -3073,6 +3075,8 @@ std::string LOOLWSD::getServerURL()
 
     return oss.str();
 }
+
+#endif
 
 int LOOLWSD::innerMain()
 {
