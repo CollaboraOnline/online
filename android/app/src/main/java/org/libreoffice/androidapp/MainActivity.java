@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //createLOOLWSD();
+
         final WebView browser = findViewById(R.id.browser);
         browser.setWebViewClient(new WebViewClient());
 
@@ -32,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
         browserSettings.setJavaScriptEnabled(true);
         browser.addJavascriptInterface(new JavaScriptInterface(), "MainHandler");
 
-        browser.loadUrl("file:///android_asset/dist/loleaflet.html");
+        browser.loadUrl("file:///android_asset/dist/loleaflet.html?file_path=" +
+                "file:///android_asset/dist/hello-world.odt" + // TODO the real URL here
+                "&closebutton=1&permission=edit" +
+                "&debug=true"); // TODO remove later?
 
         Button jsButton = findViewById(R.id.js_button);
         jsButton.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
                                     }
         );
     }
+
+    static {
+        System.loadLibrary("androidapp");
+    }
+    public native void createLOOLWSD();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

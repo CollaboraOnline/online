@@ -140,7 +140,7 @@ using Poco::Net::PartHandler;
 #elif GTKAPP
 #include "gtk.hpp"
 #elif defined(__ANDROID__)
-#include "androidapp.h"
+#include "androidapp.hpp"
 #endif
 #endif
 
