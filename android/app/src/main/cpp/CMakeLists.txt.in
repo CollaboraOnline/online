@@ -24,21 +24,21 @@ add_library(androidapp SHARED
 target_compile_definitions(androidapp PRIVATE LOOLWSD_CONFIGDIR="/etc/loolwsd") # TODO somewhere in assets maybe?
 
 target_include_directories(androidapp PRIVATE
-                           .                                         # path to androidapp.h
-                           ../../../../..                            # path to config.h
-                           ../../../../../common                     # the needed loolwsd includes
+                           .                     # path to androidapp.h
+                           ../../../../..        # path to config.h
+                           ../../../../../common # the needed loolwsd includes
                            ../../../../../kit
                            ../../../../../net
                            ../../../../../wsd
-                           @POCOINCLUDE@                             # POCO
-                           /local/libreoffice/master-android/workdir/UnpackedTarball/libpng # libpng
-                           /local/libreoffice/master-android/include # LibreOfficeKit
+                           @POCOINCLUDE@         # POCO
+                           @LIBPNG_INCLUDES@     # libpng
+                           @LOKIT_PATH@          # LibreOfficeKit
                            )
 
 target_link_libraries(androidapp
                       android
                       log
-                      /local/libreoffice/master-android/workdir/LinkTarget/StaticLibrary/liblibpng.a
+                      @LIBPNG_LIBS@/liblibpng.a
                       @POCOLIB@/libPocoEncodings.a
                       @POCOLIB@/libPocoNet.a
                       @POCOLIB@/libPocoRedis.a
