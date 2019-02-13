@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        createLOOLWSD();
+        String urlToLoad = "file:///android_asset/dist/hello-world.odt";
+        createLOOLWSD(urlToLoad);
 
         final WebView browser = findViewById(R.id.browser);
         browser.setWebViewClient(new WebViewClient());
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         browser.addJavascriptInterface(this, "LOOLMessageHandler");
 
         browser.loadUrl("file:///android_asset/dist/loleaflet.html?file_path=" +
-                "file:///android_asset/dist/hello-world.odt" + // TODO the real URL here
+                urlToLoad +
                 "&closebutton=1&permission=edit" +
                 "&debug=true"); // TODO remove later?
 
@@ -55,19 +56,19 @@ public class MainActivity extends AppCompatActivity {
     static {
         System.loadLibrary("androidapp");
     }
-    public native void createLOOLWSD();
+
+    /** Initialize the LOOLWSD to load 'loadFileURL'. */
+    public native void createLOOLWSD(String loadFileURL);
 
     /** Passing messages from JS (instead of the websocket communication). */
     @JavascriptInterface
-    public void postMobileMessage(String message)
-    {
-        Log.d(TAG, "postMobileMessage: " + message);
-    }
+    public native void postMobileMessage(String message);
 
     /** Passing messages from JS (instead of the websocket communication). */
     @JavascriptInterface
     public void postMobileError(String message)
     {
+        // TODO handle this
         Log.d(TAG, "postMobileError: " + message);
     }
 
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     @JavascriptInterface
     public void postMobileDebug(String message)
     {
+        // TODO handle this
         Log.d(TAG, "postMobileDebug: " + message);
     }
 }

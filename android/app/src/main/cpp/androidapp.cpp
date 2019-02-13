@@ -127,13 +127,13 @@ static char *js_result_as_gstring(WebKitJavascriptResult *js_result)
     return nullptr;
 #endif
 }
+#endif
 
-// TODO handle the message from JS here
-static void handle_lool_message(WebKitUserContentManager *manager,
-                                WebKitJavascriptResult   *js_result,
-                                gpointer                  user_data)
+/// Handle a message from JavaScript.
+extern "C" JNIEXPORT void JNICALL
+Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobject, jstring message)
 {
-    gchar *string_value = js_result_as_gstring(js_result);
+    const char *string_value = env->GetStringUTFChars(message, nullptr);
 
     if (string_value)
     {
@@ -188,7 +188,7 @@ static void handle_lool_message(WebKitUserContentManager *manager,
                                            return;
                                        std::vector<char> buf(n);
                                        n = fakeSocketRead(fakeClientFd, buf.data(), n);
-                                       send2JS(buf);
+                                       // TODO send2JS(buf);
                                    }
                                }
                                else
@@ -234,17 +234,17 @@ static void handle_lool_message(WebKitUserContentManager *manager,
                             free(string_copy);
                         }).detach();
         }
-        g_free(string_value);
     }
     else
         LOG_TRC_NOFILE("From JS: lool: some object");
 }
-#endif
 
 /// Create the LOOLWSD instance.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv*, jobject)
+Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject, jstring loadFileURL)
 {
+    fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
+
     Log::initialize("Mobile", "trace", false, false, {});
     Util::setThreadName("main");
 
