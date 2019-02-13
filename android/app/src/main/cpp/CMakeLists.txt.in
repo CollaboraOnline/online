@@ -39,11 +39,11 @@ target_link_libraries(androidapp
                       android
                       log
                       @LIBPNG_LIBS@/liblibpng.a
-                      @POCOLIB@/libPocoEncodings.a
-                      @POCOLIB@/libPocoNet.a
-                      @POCOLIB@/libPocoRedis.a
-                      @POCOLIB@/libPocoUtil.a
-                      @POCOLIB@/libPocoXML.a
-                      @POCOLIB@/libPocoJSON.a
-                      @POCOLIB@/libPocoFoundation.a
+                      @POCOLIB@/libPocoEncodings@POCODEBUG@.a
+                      @POCOLIB@/libPocoNet@POCODEBUG@.a
+                      @POCOLIB@/libPocoRedis@POCODEBUG@.a
+                      @POCOLIB@/libPocoUtil@POCODEBUG@.a
+                      @POCOLIB@/libPocoXML@POCODEBUG@.a
+                      @POCOLIB@/libPocoJSON@POCODEBUG@.a
+                      @POCOLIB@/libPocoFoundation@POCODEBUG@.a
                       )
