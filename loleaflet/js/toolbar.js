@@ -291,7 +291,7 @@ function onClick(e, id, item, subItem) {
 	}
 	else if (id === 'close' || id === 'closemobile') {
 		if (window.ThisIsAMobileApp) {
-			window.webkit.messageHandlers.lool.postMessage('BYE', '*');
+			window.postMobileMessage('BYE');
 		} else {
 			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
 			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});

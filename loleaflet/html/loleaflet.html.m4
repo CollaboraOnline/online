@@ -178,17 +178,30 @@ ifelse(MOBILEAPP,[true],
 dnl# For use in conditionals in JS: window.ThisIsAMobileApp, window.ThisIsTheiOSApp,
 dnl# and window.ThisIsTheGtkApp
 ifelse(MOBILEAPP,[true],
-  [window.ThisIsAMobileApp = true;
-   window.MobileAppName='MOBILEAPPNAME'],
-  [window.ThisIsAMobileApp = false;]
+  [   window.ThisIsAMobileApp = true;
+   window.MobileAppName='MOBILEAPPNAME';],
+  [   window.ThisIsAMobileApp = false;]
 )
 ifelse(IOSAPP,[true],
-  [window.ThisIsTheiOSApp = true;],
-  [window.ThisIsTheiOSApp = false;]
+  [   window.ThisIsTheiOSApp = true;
+   window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lool.postMessage.postMessage(msg, '*'); };
+   window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
+   window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };],
+  [   window.ThisIsTheiOSApp = false;]
 )
 ifelse(GTKAPP,[true],
-  [window.ThisIsTheGtkApp = true;],
-  [window.ThisIsTheGtkApp = false;]
+  [   window.ThisIsTheGtkApp = true;
+   window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lool.postMessage.postMessage(msg, '*'); };
+   window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
+   window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };],
+  [   window.ThisIsTheGtkApp = false;]
+)
+ifelse(ANDROIDAPP,[true],
+  [   window.ThisIsTheAndroidApp = true;
+   window.postMobileMessage = function(msg) { window.LOOLMessageHandler.postMobileMessage(msg); };
+   window.postMobileError   = function(msg) { window.LOOLMessageHandler.postMobileError(msg); };
+   window.postMobileDebug   = function(msg) { window.LOOLMessageHandler.postMobileDebug(msg); };],
+  [   window.ThisIsTheAndroidApp = false;]
 )
   </script>
 

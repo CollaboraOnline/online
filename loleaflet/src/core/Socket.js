@@ -29,7 +29,7 @@ FakeWebSocket.prototype.close = function() {
 
 FakeWebSocket.prototype.send = function(data) {
 	this.sendCounter++;
-	window.webkit.messageHandlers.lool.postMessage(data, '*');
+	window.postMobileMessage(data);
 }
 
 L.Socket = L.Class.extend({
@@ -95,7 +95,7 @@ L.Socket = L.Class.extend({
 			// map.options.doc, as in the websocketURI above? On the other hand, the app
 			// code that handles this special message knows the document to be edited
 			// anyway, and can send it on as necessary to the Online code.
-			window.webkit.messageHandlers.lool.postMessage('HULLO', '*');
+			window.postMobileMessage('HULLO');
 			// A FakeWebSocket is immediately open.
 			this.socket.onopen();
 		}
