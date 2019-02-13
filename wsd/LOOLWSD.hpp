@@ -95,9 +95,14 @@ public:
     /// Return true iff extension is marked as view action in discovery.xml.
     static bool IsViewFileExtension(const std::string& extension)
     {
+#if MOBILEAPP
+        (void) extension;
+        return false; // mark everything editable on mobile
+#else
         std::string lowerCaseExtension = extension;
         std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
         return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
+#endif
     }
 
     /// Returns the value of the specified application configuration,

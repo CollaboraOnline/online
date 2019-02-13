@@ -2713,12 +2713,11 @@ private:
     /// Process the discovery.xml file and return as string.
     static std::string getDiscoveryXML()
     {
-#if defined __linux && MOBILEAPP
-        // discovery.xml is in the top directory
-        std::string discoveryPath = Path(Application::instance().commandPath()).parent().parent().toString() + "discovery.xml";
+#if MOBILEAPP
+        // not needed for mobile
+        return std::string();
 #else
         std::string discoveryPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
-#endif
         if (!File(discoveryPath).exists())
         {
             // http://server/hosting/discovery.xml
@@ -2767,6 +2766,7 @@ private:
         DOMWriter writer;
         writer.writeNode(ostrXML, docXML);
         return ostrXML.str();
+#endif
     }
 
     /// Create the /hosting/capabilities JSON and return as string.

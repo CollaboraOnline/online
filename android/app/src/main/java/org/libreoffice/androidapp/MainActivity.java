@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //createLOOLWSD();
+        createLOOLWSD();
 
         final WebView browser = findViewById(R.id.browser);
         browser.setWebViewClient(new WebViewClient());
