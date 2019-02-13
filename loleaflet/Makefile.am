@@ -163,8 +163,11 @@ build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(builddir)/dist/loleaflet.html
 	@echo "build loleaflet completed"
 if ENABLE_ANDROIDAPP
-	@rm -rf $(srcdir)/../android/app/src/main/assets/dist
-	@cp -a $(builddir)/dist $(srcdir)/../android/app/src/main/assets/
+	@rm -rf $(abs_top_srcdir)/android/app/src/main/assets/dist
+	@cp -a $(builddir)/dist $(abs_top_srcdir)/android/app/src/main/assets/
+	@cp -a $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/android/app/src/main/assets/hello-world.odt
+	@cp -a $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/android/app/src/main/assets/hello-world.ods
+	@cp -a $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/android/app/src/main/assets/hello-world.odp
 	@echo
 	@echo "Copied JS, HTML and CSS to the Android project (android/app/src/main/assets/dist)."
 	@echo
