@@ -757,10 +757,15 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'duplicatepage') {
 			this._map.duplicatePage();
 		} else if (id === 'deletepage') {
+			var map = this._map;
 			vex.dialog.confirm({
 				message: _('Are you sure you want to delete this slide?'),
-				callback: this._onDeleteSlide
-			}, this);
+				callback: function(e) {
+					if (e) {
+						map.deletePage();
+					}
+				}
+			});
 		} else if (id === 'about') {
 			this._map.showLOAboutDialog();
 		} else if (id === 'keyboard-shortcuts') {
@@ -793,12 +798,6 @@ L.Control.Menubar = L.Control.extend({
 			unoCommand = unoCommand + ($(item).hasClass('lo-menu-item-checked') ? 'On:bool=false' : 'On:bool=true');
 		}
 		this._map.sendUnoCommand(unoCommand);
-	},
-
-	_onDeleteSlide: function(e) {
-		if (e) {
-			this._map.deletePage();
-		}
 	},
 
 	_onItemSelected: function(e, item) {
