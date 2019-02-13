@@ -856,6 +856,11 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
         }
     }
 
+    // Hack pass watermark by filteroptions to saveas
+    if ( getWatermarkText().length() > 0) {
+        filterOptions += std::string(",Watermark=") + getWatermarkText() + std::string("WATERMARKEND");
+    }
+
     // The file is removed upon downloading.
     const std::string tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
     // Prevent user inputting anything funny here.
