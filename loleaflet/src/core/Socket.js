@@ -125,7 +125,9 @@ L.Socket = L.Class.extend({
 		if (parseInt(this._map.options.docParams.access_token_ttl) - Date.now() <= 0) {
 			expirymsg = errorMessages.sessionexpired;
 		}
-		var timerepr = $.timeago(parseInt(this._map.options.docParams.access_token_ttl)).replace(' ago', '');
+		var dateTime = new Date(parseInt(this._map.options.docParams.access_token_ttl));
+		var dateOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+		var timerepr = dateTime.toLocaleDateString(String.locale, dateOptions);
 		this._map.fire('warn', {msg: expirymsg.replace('%time', timerepr)});
 
 		// If user still doesn't refresh the session, warn again periodically
