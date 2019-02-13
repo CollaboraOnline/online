@@ -30,7 +30,7 @@ target_include_directories(androidapp PRIVATE
                            ../../../../../kit
                            ../../../../../net
                            ../../../../../wsd
-                           /opt/poco-android/include                 # POCO
+                           @POCOINCLUDE@                             # POCO
                            /local/libreoffice/master-android/workdir/UnpackedTarball/libpng # libpng
                            /local/libreoffice/master-android/include # LibreOfficeKit
                            )
@@ -39,11 +39,11 @@ target_link_libraries(androidapp
                       android
                       log
                       /local/libreoffice/master-android/workdir/LinkTarget/StaticLibrary/liblibpng.a
-                      /opt/poco-android/lib/libPocoEncodings.a
-                      /opt/poco-android/lib/libPocoNet.a
-                      /opt/poco-android/lib/libPocoRedis.a
-                      /opt/poco-android/lib/libPocoUtil.a
-                      /opt/poco-android/lib/libPocoXML.a
-                      /opt/poco-android/lib/libPocoJSON.a
-                      /opt/poco-android/lib/libPocoFoundation.a
+                      @POCOLIB@/libPocoEncodings.a
+                      @POCOLIB@/libPocoNet.a
+                      @POCOLIB@/libPocoRedis.a
+                      @POCOLIB@/libPocoUtil.a
+                      @POCOLIB@/libPocoXML.a
+                      @POCOLIB@/libPocoJSON.a
+                      @POCOLIB@/libPocoFoundation.a
                       )

@@ -26,7 +26,7 @@
 
 * Configure the online.git
 
-  ./autogen.sh && ./configure CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ --host=arm-linux-androideabi --enable-silent-rules --with-lokit-path=/local/libreoffice/master-android/include --with-lo-path=/local/libreoffice/master-android/instdir --with-poco-includes=/opt/poco-android/include --with-poco-libs=/opt/poco-android --with-libpng-includes=/local/libreoffice/master-android/workdir/UnpackedTarball/libpng --with-libpng-libs=/local/libreoffice/master-android/workdir/LinkTarget/StaticLibrary --disable-setcap --enable-androidapp --with-logfile=/tmp/loolwsd.log --enable-debug
+  ./autogen.sh && ./configure CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ --host=arm-linux-androideabi --enable-silent-rules --with-lo-builddir=/local/libreoffice/master-android --with-lokit-path=/local/libreoffice/master-android/include --with-lo-path=/local/libreoffice/master-android/instdir --with-poco-includes=/opt/poco-android/include --with-poco-libs=/opt/poco-android --with-libpng-includes=/local/libreoffice/master-android/workdir/UnpackedTarball/libpng --with-libpng-libs=/local/libreoffice/master-android/workdir/LinkTarget/StaticLibrary --disable-setcap --enable-androidapp --with-logfile=/tmp/loolwsd.log --enable-debug
 
 * Build it
 
