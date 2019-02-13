@@ -237,6 +237,7 @@ AC_SUBST(APP_NAME)
 LOBUILDDIR=
 POCOINCLUDE=
 POCOLIB=
+POCODEBUG=
 if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \); then
    AC_MSG_CHECKING([for LibreOffice build tree to build against])
    if test -z "$with_lo_builddir"; then
@@ -276,10 +277,15 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    else
        AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
    fi
+
+   if test "$ENABLE_DEBUG" = "true" ; then
+       POCODEBUG=d
+   fi
 fi
 AC_SUBST(LOBUILDDIR)
 AC_SUBST(POCOINCLUDE)
 AC_SUBST(POCOLIB)
+AC_SUBST(POCODEBUG)
 
 LIBPNG_INCLUDES="$with_libpng_includes"
 LIBPNG_LIBS="$with_libpng_libs"
