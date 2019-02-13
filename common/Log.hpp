@@ -24,6 +24,10 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Logger.h>
 
+#ifdef __ANDROID__
+#include <android/log.h>
+#endif
+
 #include "Util.hpp"
 
 inline std::ostream& operator<< (std::ostream& os, const Poco::Timestamp& ts)
@@ -240,6 +244,17 @@ namespace Log
             LOG << "| " << LOG_FILE_NAME(__FILE__) << ':' << __LINE__; \
     } while (false)
 
+#ifdef __ANDROID__
+
+#define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                 \
+    char b_[1024];                                                                          \
+    std::ostringstream oss_(Log::prefix(b_, sizeof(b_) - 1, LVL), std::ostringstream::ate); \
+    oss_ << std::boolalpha << X;                                                            \
+    LOG_END(oss_, FILEP);                                                                   \
+    ((void)__android_log_print(ANDROID_LOG_DEBUG, "libreoffice", "%s %s", LVL, oss_.str().c_str()))
+
+#else
+
 #define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                 \
     Poco::Message m_(LOG.name(), "", Poco::Message::PRIO_##PRIO);                           \
     char b_[1024];                                                                          \
@@ -248,6 +263,8 @@ namespace Log
     LOG_END(oss_, FILEP);                                                                   \
     m_.setText(oss_.str());                                                                 \
     LOG.log(m_);
+
+#endif
 
 #define LOG_TRC(X)                                  \
     do                                              \
