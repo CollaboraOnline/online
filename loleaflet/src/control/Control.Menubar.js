@@ -799,7 +799,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('postMessage', {msgId: 'UI_FileVersions'});
 		} else if (id === 'closedocument') {
 			if (window.ThisIsAMobileApp) {
-				window.webkit.messageHandlers.lool.postMessage('BYE', '*');
+				window.postMobileMessage('BYE');
 			} else {
 				this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
 				this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});

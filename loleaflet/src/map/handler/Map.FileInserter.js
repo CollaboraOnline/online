@@ -89,15 +89,15 @@ L.Map.FileInserter = L.Handler.extend({
 					for (var i = 0; i < byteBuffer.length; i++) {
 						strBytes += String.fromCharCode(byteBuffer[i]);
 					}
-					window.webkit.messageHandlers.lool.postMessage('insertfile name=' + aFile.name + ' type=graphic' +
+					window.postMobileMessage('insertfile name=' + aFile.name + ' type=graphic' +
 										       ' data=' + window.btoa(strBytes));
 				};
 			})(file);
 			reader.onerror = function(e) {
-				window.webkit.messageHandlers.error.postMessage('Error when reading file: ' + e);
+				window.postMobileError('Error when reading file: ' + e);
 			};
 			reader.onprogress = function(e) {
-				window.webkit.messageHandlers.debug.postMessage('FileReader progress: ' + Math.round(e.loaded*100 / e.total) + '%');
+				window.postMobileDebug('FileReader progress: ' + Math.round(e.loaded*100 / e.total) + '%');
 			};
 			reader.readAsArrayBuffer(file);
 		} else {
