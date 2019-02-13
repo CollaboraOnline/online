@@ -68,7 +68,14 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
 
 bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 {
+#if !MOBILEAPP
     assert(!Global);
+#else
+    // The LOOLWSD initialization is called in a loop on mobile, allow reuse
+    if (Global)
+        return true;
+#endif
+
     if (!unitLibPath.empty())
     {
         Global = linkAndCreateUnit(type, unitLibPath);
