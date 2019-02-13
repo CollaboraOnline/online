@@ -35,11 +35,9 @@
   poll() calls to be without timeout. Or something similar, depending
   on case.
 
-- Recursive mutexes are evil. In general, I think the consensus is
-  that recursive mutexes should be avoided. One should use them only
-  when absolutely necessary because the code-base is so complex that
-  one has no idea how it works. That was hopefully not the case when
-  recursive mutexes were introduced here? But probably it is by now...
+- Recursive mutexes are evil. The last remaining instances should be
+  removed from the Kit/ChildSession.cppp as/when we move to a single
+  threaded Kit process.
 
 - Occasionally Control-C (SIGINT) doesn't shut down loolwsd. One has
   to kill it with SIGKILL. Which of course leaves all the chroot jails
