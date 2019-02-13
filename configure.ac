@@ -281,6 +281,24 @@ AC_SUBST(LOBUILDDIR)
 AC_SUBST(POCOINCLUDE)
 AC_SUBST(POCOLIB)
 
+LIBPNG_INCLUDES="$with_libpng_includes"
+LIBPNG_LIBS="$with_libpng_libs"
+LOKIT_PATH=`readlink -f $with_lokit_path`
+if test "$enable_androidapp" = "yes"; then
+   if test -z "$LIBPNG_INCLUDES" ; then
+      LIBPNG_INCLUDES="$LOBUILDDIR/workdir/UnpackedTarball/libpng"
+   fi
+   if test -z "$LIBPNG_LIBS" ; then
+      LIBPNG_LIBS="$LOBUILDDIR/workdir/LinkTarget/StaticLibrary"
+   fi
+   if test -z "$LOKIT_PATH" ; then
+      LOKIT_PATH=`readlink -f $LOBUILDDIR/include`
+   fi
+fi
+AC_SUBST(LIBPNG_INCLUDES)
+AC_SUBST(LIBPNG_LIBS)
+AC_SUBST(LOKIT_PATH)
+
 ENABLE_IOSAPP=
 MOBILE_APP_NAME="Mobile"
 
@@ -371,10 +389,9 @@ else
     AC_MSG_ERROR(no)
 fi
 
-with_lokit_path=`readlink -f $with_lokit_path`
-AS_IF([test -n "$with_lokit_path"],
-      [CPPFLAGS="$CPPFLAGS -I${with_lokit_path}"])
-lokit_msg="$with_lokit_path"
+AS_IF([test -n "$LOKIT_PATH"],
+      [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
+lokit_msg="$LOKIT_PATH"
 
 LO_PATH="/usr/lib64/libreoffice"
 JAIL_PATH=not-set
@@ -420,11 +437,11 @@ AS_IF([test -n "$with_poco_includes"],
 AS_IF([test -n "$with_poco_libs"],
       [LDFLAGS="$LDFLAGS -L${with_poco_libs}"])
 
-AS_IF([test -n "$with_libpng_includes"],
-      [CPPFLAGS="$CPPFLAGS -isystem ${with_libpng_includes}"])
+AS_IF([test -n "$LIBPNG_INCLUDES"],
+      [CPPFLAGS="$CPPFLAGS -isystem ${LIBPNG_INCLUDES}"])
 
-AS_IF([test -n "$with_libpng_libs"],
-      [LDFLAGS="$LDFLAGS -L${with_libpng_libs}"])
+AS_IF([test -n "$LIBPNG_LIBS"],
+      [LDFLAGS="$LDFLAGS -L${LIBPNG_LIBS}"])
 
 AS_IF([test -n "$with_cppunit_includes"],
       [CPPFLAGS="$CPPFLAGS -isystem ${with_cppunit_includes}"])
