@@ -45,54 +45,18 @@ using Poco::File;
 using Poco::StringTokenizer;
 using Poco::Timestamp;
 
-namespace {
-    TileCache::Tile loadTile(const std::string &fileName)
-    {
-        TileCache::Tile ret;
-
-        std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
-        if (result && result->is_open())
-        {
-            LOG_TRC("Found cache tile: " << fileName);
-
-            result->seekg(0, std::ios_base::end);
-            std::streamsize size = result->tellg();
-            ret = std::make_shared<std::vector<char>>(size);
-            result->seekg(0, std::ios_base::beg);
-            result->read(ret->data(), size);
-            result->close();
-        }
-        return ret;
-    }
-}
-
 TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,
-                     const std::string& cacheDir,
-                     const bool tileCachePersistent) :
+                     bool dontCache) :
     _docURL(docURL),
-    _cacheDir(cacheDir),
-    _tileCachePersistent(tileCachePersistent)
+    _dontCache(dontCache)
 {
 #ifndef BUILDING_TESTS
     LOG_INF("TileCache ctor for uri [" << LOOLWSD::anonymizeUrl(_docURL) <<
-            "], cacheDir: [" << _cacheDir <<
             "], modifiedTime=" << (modifiedTime.raw()/1000000) <<
-            " getLastModified()=" << (getLastModified().raw()/1000000));
+            "], dontCache=" << _dontCache);
 #endif
-    File directory(_cacheDir);
-    std::string unsaved;
-    if (directory.exists() &&
-        (getLastModified() < modifiedTime ||
-         getTextFile("unsaved.txt", unsaved)))
-    {
-        // Document changed externally or modifications were not saved after all. Cache not useful.
-        completeCleanup();
-    }
-
-    File(_cacheDir).createDirectories();
-
-    saveLastModified(modifiedTime);
+    (void)modifiedTime;
 }
 
 TileCache::~TileCache()
@@ -103,10 +67,10 @@ TileCache::~TileCache()
 #endif
 }
 
-void TileCache::completeCleanup() const
+void TileCache::clear()
 {
-    FileUtil::removeFile(_cacheDir, true);
-    LOG_INF("Completely cleared tile cache: " << _cacheDir);
+    _cache.clear();
+    LOG_INF("Completely cleared tile cache for: " << _docURL);
 }
 
 /// Tracks the rendering of a given tile
@@ -188,10 +152,10 @@ int TileCache::getTileBeingRenderedVersion(const TileDesc& tile)
 
 TileCache::Tile TileCache::lookupTile(const TileDesc& tile)
 {
-    if (!_tileCachePersistent)
-        return nullptr;
+    if (_dontCache)
+        return TileCache::Tile();
 
-    const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
+    const std::string fileName = cacheFileName(tile);
     TileCache::Tile ret = loadTile(fileName);
 
     UnitWSD::get().lookupTile(tile.getPart(), tile.getWidth(), tile.getHeight(),
@@ -199,6 +163,16 @@ TileCache::Tile TileCache::lookupTile(const TileDesc& tile)
                               tile.getTileWidth(), tile.getTileHeight(), ret);
 
     return ret;
+}
+
+void TileCache::saveDataToCache(const std::string &fileName, const char *data, const size_t size)
+{
+    if (_dontCache)
+        return;
+
+    TileCache::Tile tile = std::make_shared<std::vector<char>>(size);
+    std::memcpy(tile->data(), data, size);
+    _cache[fileName] = tile;
 }
 
 void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size)
@@ -213,11 +187,9 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
 
     // Ignore if we can't save the tile, things will work anyway, but slower.
     // An error indication is supposed to be sent to all users in that case.
-    const auto fileName = _cacheDir + "/" + cachedName;
-    if (_tileCachePersistent && FileUtil::saveDataToFileSafely(fileName, data, size))
-    {
-        LOG_TRC("Saved cache tile: " << fileName);
-    }
+    const auto fileName = cachedName;
+    saveDataToCache(fileName, data, size);
+    LOG_TRC("Saved cache tile: " << fileName);
 
     // Notify subscribers, if any.
     if (tileBeingRendered)
@@ -286,51 +258,31 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
 
 bool TileCache::getTextFile(const std::string& fileName, std::string& content)
 {
-    const std::string fullFileName =  _cacheDir + "/" + fileName;
-
-    std::fstream textStream(fullFileName, std::ios::in);
-    if (!textStream.is_open())
+    Tile textStream = loadTile(fileName);
+    if (!textStream)
     {
-        LOG_INF("Could not open " << fullFileName);
+        LOG_INF("Could not open " << fileName);
         return false;
     }
 
-    std::vector<char> buffer;
-    textStream.seekg(0, std::ios_base::end);
-    std::streamsize size = textStream.tellg();
-    buffer.resize(size);
-    textStream.seekg(0, std::ios_base::beg);
-    textStream.read(buffer.data(), size);
-    textStream.close();
+    std::vector<char> buffer = *textStream;
 
     if (buffer.size() > 0 && buffer.back() == '\n')
         buffer.pop_back();
 
     content = std::string(buffer.data(), buffer.size());
     LOG_INF("Read '" << LOOLProtocol::getAbbreviatedMessage(content.c_str(), content.size()) <<
-            "' from " << fullFileName);
+            "' from " << fileName);
 
     return true;
 }
 
 void TileCache::saveTextFile(const std::string& text, const std::string& fileName)
 {
-    const std::string fullFileName = _cacheDir + "/" + fileName;
-    std::fstream textStream(fullFileName, std::ios::out);
+    LOG_INF("Saving '" << LOOLProtocol::getAbbreviatedMessage(text.c_str(), text.size()) <<
+            "' to " << fileName);
 
-    if (!textStream.is_open())
-    {
-        LOG_ERR("Could not save '" << text << "' to " << fullFileName);
-        return;
-    }
-    else
-    {
-        LOG_INF("Saving '" << LOOLProtocol::getAbbreviatedMessage(text.c_str(), text.size()) <<
-                "' to " << fullFileName);
-    }
-
-    textStream << text << std::endl;
-    textStream.close();
+    saveDataToCache(fileName, text.c_str(), text.size());
 }
 
 void TileCache::setUnsavedChanges(bool state)
@@ -344,25 +296,14 @@ void TileCache::setUnsavedChanges(bool state)
 void TileCache::saveRendering(const std::string& name, const std::string& dir, const char *data, std::size_t size)
 {
     // can fonts be invalidated?
-    const std::string dirName = _cacheDir + "/" + dir;
+    const std::string fileName = dir + "/" + name;
 
-    File(dirName).createDirectories();
-
-    const std::string fileName = dirName + "/" + name;
-
-    FileUtil::saveDataToFileSafely(fileName, data, size);
+    saveDataToCache(fileName, data, size);
 }
 
 TileCache::Tile TileCache::lookupCachedTile(const std::string& name, const std::string& dir)
 {
-    const std::string dirName = _cacheDir + "/" + dir;
-    const std::string fileName = dirName + "/" + name;
-    File directory(dirName);
-
-    if (directory.exists() && directory.isDirectory() && File(fileName).exists())
-        return loadTile(fileName);
-    else
-        return Tile();
+    return loadTile(dir + "/" + name);
 }
 
 void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
@@ -372,21 +313,18 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
             ", width: " << width <<
             ", height: " << height);
 
-    File dir(_cacheDir);
-
     assertCorrectThread();
 
-    if (dir.exists() && dir.isDirectory())
+    for (auto it = _cache.begin(); it != _cache.end();)
     {
-        for (auto tileIterator = DirectoryIterator(dir); tileIterator != DirectoryIterator(); ++tileIterator)
+        const std::string fileName = it->first;
+        if (intersectsTile(fileName, part, x, y, width, height))
         {
-            const std::string fileName = tileIterator.path().getFileName();
-            if (intersectsTile(fileName, part, x, y, width, height))
-            {
-                LOG_TRC("Removing tile: " << tileIterator.path().toString());
-                FileUtil::removeFile(tileIterator.path());
-            }
+            LOG_DBG("Removing tile: " << it->first);
+            it = _cache.erase(it);
         }
+        else
+            ++it;
     }
 }
 
@@ -436,10 +374,12 @@ std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string&
 
 void TileCache::removeFile(const std::string& fileName)
 {
-    const std::string fullFileName = _cacheDir + "/" + fileName;
-
-    if (std::remove(fullFileName.c_str()) == 0)
-        LOG_INF("Removed file: " << fullFileName);
+    auto it = _cache.find(fileName);
+    if (it != _cache.end())
+    {
+        LOG_INF("Removed file: " << fileName);
+        _cache.erase(it);
+    }
 }
 
 std::string TileCache::cacheFileName(const TileDesc& tile)
@@ -474,27 +414,6 @@ bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int
     }
 
     return false;
-}
-
-Timestamp TileCache::getLastModified()
-{
-    std::fstream modTimeFile(_cacheDir + "/modtime.txt", std::ios::in);
-
-    if (!modTimeFile.is_open())
-        return 0;
-
-    Timestamp::TimeVal result;
-    modTimeFile >> result;
-
-    modTimeFile.close();
-    return result;
-}
-
-void TileCache::saveLastModified(const Timestamp& timestamp)
-{
-    std::fstream modTimeFile(_cacheDir + "/modtime.txt", std::ios::out);
-    modTimeFile << timestamp.raw() << std::endl;
-    modTimeFile.close();
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
@@ -627,6 +546,18 @@ void TileCache::assertCorrectThread()
                 Log::to_string(_owner) << " but called from " <<
                 std::this_thread::get_id() << " (" << Util::getThreadId() << ").");
     assert (correctThread);
+}
+
+TileCache::Tile TileCache::loadTile(const std::string &fileName)
+{
+    auto it = _cache.find(fileName);
+    if (it != _cache.end())
+    {
+        LOG_TRC("Found cache tile: " << fileName);
+        return it->second;
+    }
+    else
+        return TileCache::Tile();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
