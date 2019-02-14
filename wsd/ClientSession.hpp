@@ -65,12 +65,25 @@ public:
         return true;
     }
 
+    bool sendTile(const std::string &header, const TileCache::Tile &tile)
+    {
+        // FIXME: performance - optimize away this copy ...
+        std::vector<char> output;
+
+        output.resize(header.size() + tile->size());
+        std::memcpy(output.data(), header.data(), header.size());
+        std::memcpy(output.data() + header.size(), tile->data(), tile->size());
+
+        return sendBinaryFrame(output.data(), output.size());
+    }
+
     bool sendTextFrame(const char* buffer, const int length) override
     {
         auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
         enqueueSendMessage(payload);
         return true;
     }
+
 
     void enqueueSendMessage(const std::shared_ptr<Message>& data);
 

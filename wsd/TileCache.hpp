@@ -31,6 +31,8 @@ class TileCache
     std::shared_ptr<TileBeingRendered> findTileBeingRendered(const TileDesc& tile);
 
 public:
+    typedef std::shared_ptr<std::vector<char>> Tile;
+
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
@@ -54,7 +56,8 @@ public:
     /// Cancels all tile requests by the given subscriber.
     std::string cancelTiles(const std::shared_ptr<ClientSession>& subscriber);
 
-    std::unique_ptr<std::fstream> lookupTile(const TileDesc& tile);
+    /// Find the tile with this description
+    Tile lookupTile(const TileDesc& tile);
 
     void saveTileAndNotify(const TileDesc& tile, const char* data, const size_t size);
 
@@ -73,7 +76,8 @@ public:
     // The dir parameter should be the type of rendering, like "font", "style", etc
     void saveRendering(const std::string& name, const std::string& dir, const char* data, size_t size);
 
-    std::unique_ptr<std::fstream> lookupCachedFile(const std::string& name, const std::string& dir);
+    /// Return the tile data if we have it, or nothing.
+    Tile lookupCachedTile(const std::string& name, const std::string& dir);
 
     // The tiles parameter is an invalidatetiles: message as sent by the child process
     void invalidateTiles(const std::string& tiles);

@@ -195,8 +195,8 @@ void TileCacheTests::testSimple()
     TileDesc tile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, -1, 0, -1, false);
 
     // No Cache
-    std::unique_ptr<std::fstream> file = tc.lookupTile(tile);
-    CPPUNIT_ASSERT_MESSAGE("found tile when none was expected", !file);
+    TileCache::Tile tileData = tc.lookupTile(tile);
+    CPPUNIT_ASSERT_MESSAGE("found tile when none was expected", !tileData);
 
     // Cache Tile
     const int size = 1024;
@@ -204,17 +204,16 @@ void TileCacheTests::testSimple()
     tc.saveTileAndNotify(tile, data.data(), size);
 
     // Find Tile
-    file = tc.lookupTile(tile);
-    CPPUNIT_ASSERT_MESSAGE("tile not found when expected", file && file->is_open());
-    const std::vector<char> tileData = readDataFromFile(file);
-    CPPUNIT_ASSERT_MESSAGE("cached tile corrupted", data == tileData);
+    tileData = tc.lookupTile(tile);
+    CPPUNIT_ASSERT_MESSAGE("tile not found when expected", tileData);
+    CPPUNIT_ASSERT_MESSAGE("cached tile corrupted", data == *tileData);
 
     // Invalidate Tiles
     tc.invalidateTiles("invalidatetiles: EMPTY");
 
     // No Cache
-    file = tc.lookupTile(tile);
-    CPPUNIT_ASSERT_MESSAGE("found tile when none was expected", !file);
+    tileData = tc.lookupTile(tile);
+    CPPUNIT_ASSERT_MESSAGE("found tile when none was expected", !tileData);
 }
 
 void TileCacheTests::testSimpleCombine()

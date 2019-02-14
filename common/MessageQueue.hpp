@@ -141,7 +141,6 @@ private:
     std::vector<Payload> _queue;
     mutable std::mutex _mutex;
     std::condition_variable _cv;
-
 };
 
 typedef MessageQueueBase<std::vector<char>> MessageQueue;

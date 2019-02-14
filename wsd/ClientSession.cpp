@@ -564,24 +564,13 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, const std:
     }
 
     getTokenString(tokens[2], "char", text);
-    const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
 
-    std::vector<char> output;
-    output.resize(response.size());
-    std::memcpy(output.data(), response.data(), response.size());
 
-    std::unique_ptr<std::fstream> cachedRendering = docBroker->tileCache().lookupCachedFile(font+text, "font");
-    if (cachedRendering && cachedRendering->is_open())
+    TileCache::Tile cachedTile = docBroker->tileCache().lookupCachedTile(font+text, "font");
+    if (cachedTile)
     {
-        cachedRendering->seekg(0, std::ios_base::end);
-        size_t pos = output.size();
-        std::streamsize size = cachedRendering->tellg();
-        output.resize(pos + size);
-        cachedRendering->seekg(0, std::ios_base::beg);
-        cachedRendering->read(output.data() + pos, size);
-        cachedRendering->close();
-
-        return sendBinaryFrame(output.data(), output.size());
+        const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+        return sendTile(response, cachedTile);
     }
 
     return forwardToChild(std::string(buffer, length), docBroker);

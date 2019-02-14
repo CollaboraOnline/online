@@ -214,7 +214,8 @@ public:
     // ---------------- TileCache hooks ----------------
     /// Called before the lookupTile call returns. Should always be called to fire events.
     virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
-                            int tileWidth, int tileHeight, std::unique_ptr<std::fstream>& cacheFile);
+                            int tileWidth, int tileHeight,
+                            std::shared_ptr<std::vector<char>> &tile);
 
     // ---------------- DocumentBroker hooks ----------------
     virtual bool filterLoad(const std::string& /* sessionId */,
