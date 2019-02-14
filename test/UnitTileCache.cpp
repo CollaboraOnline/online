@@ -34,13 +34,14 @@ public:
     }
 
     virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
-                            int tileWidth, int tileHeight, std::unique_ptr<std::fstream>& cacheFile)
+                            int tileWidth, int tileHeight,
+                            std::shared_ptr<std::vector<char>> &tile)
     {
         // Call base to fire events.
-        UnitWSD::lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, cacheFile);
+        UnitWSD::lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, tile);
 
         // Fail the lookup to force subscription and rendering.
-        cacheFile.reset();
+        tile.reset();
 
         // FIXME: push through to the right place to exercise this.
         exitTest(TestResult::Ok);

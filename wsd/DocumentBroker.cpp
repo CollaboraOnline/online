@@ -1334,7 +1334,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     const std::string tileMsg = tile.serialize();
     LOG_TRC("Tile request for " << tileMsg);
 
-    std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
+    TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile)
     {
 #if ENABLE_DEBUG
@@ -1342,22 +1342,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
 #else
         const std::string response = tile.serialize("tile:") + '\n';
 #endif
-
-        std::vector<char> output;
-        output.reserve(static_cast<size_t>(4) * tile.getWidth() * tile.getHeight());
-        output.resize(response.size());
-        std::memcpy(output.data(), response.data(), response.size());
-
-        assert(cachedTile->is_open());
-        cachedTile->seekg(0, std::ios_base::end);
-        const size_t pos = output.size();
-        std::streamsize size = cachedTile->tellg();
-        output.resize(pos + size);
-        cachedTile->seekg(0, std::ios_base::beg);
-        cachedTile->read(output.data() + pos, size);
-        cachedTile->close();
-
-        session->sendBinaryFrame(output.data(), output.size());
+        session->sendTile(response, cachedTile);
         return;
     }
 
@@ -1388,15 +1373,13 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
     LOG_TRC("TileCombined request for " << tileCombined.serialize());
 
-    // Check which newly requested tiles needs rendering.
+    // Check which newly requested tiles need rendering.
     std::vector<TileDesc> tilesNeedsRendering;
     for (auto& tile : tileCombined.getTiles())
     {
         tile.setVersion(++_tileVersion);
-        std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
-        if(cachedTile)
-            cachedTile->close();
-        else
+        TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
+        if(!cachedTile)
         {
             // Not cached, needs rendering.
             tilesNeedsRendering.push_back(tile);
@@ -1491,8 +1474,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     // Drop tiles which we are waiting for too long
     session->removeOutdatedTilesOnFly();
 
-    // All tiles were processed on client side what we sent last time, so we can send a new banch of tiles
-    // which was invalidated / requested in the meantime
+    // All tiles were processed on client side that we sent last time, so we can send
+    // a new banch of tiles which was invalidated / requested in the meantime
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
     if (!requestedTiles.empty())
     {
@@ -1517,7 +1500,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             }
 
             // Satisfy as many tiles from the cache.
-            std::unique_ptr<std::fstream> cachedTile = _tileCache->lookupTile(tile);
+            TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
             if (cachedTile)
             {
                 //TODO: Combine the response to reduce latency.
@@ -1526,22 +1509,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 #else
                 const std::string response = tile.serialize("tile:") + "\n";
 #endif
-
-                std::vector<char> output;
-                output.reserve(static_cast<size_t>(4) * tile.getWidth() * tile.getHeight());
-                output.resize(response.size());
-                std::memcpy(output.data(), response.data(), response.size());
-
-                assert(cachedTile->is_open());
-                cachedTile->seekg(0, std::ios_base::end);
-                const auto pos = output.size();
-                std::streamsize size = cachedTile->tellg();
-                output.resize(pos + size);
-                cachedTile->seekg(0, std::ios_base::beg);
-                cachedTile->read(output.data() + pos, size);
-                cachedTile->close();
-
-                session->sendBinaryFrame(output.data(), output.size());
+                session->sendTile(response, cachedTile);
             }
             else
             {

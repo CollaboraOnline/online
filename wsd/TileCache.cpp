@@ -44,6 +44,27 @@ using Poco::File;
 using Poco::StringTokenizer;
 using Poco::Timestamp;
 
+namespace {
+    TileCache::Tile loadTile(const std::string &fileName)
+    {
+        TileCache::Tile ret;
+
+        std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
+        if (result && result->is_open())
+        {
+            LOG_TRC("Found cache tile: " << fileName);
+
+            result->seekg(0, std::ios_base::end);
+            std::streamsize size = result->tellg();
+            ret = std::make_shared<std::vector<char>>(size);
+            result->seekg(0, std::ios_base::beg);
+            result->read(ret->data(), size);
+            result->close();
+        }
+        return ret;
+    }
+}
+
 TileCache::TileCache(const std::string& docURL,
                      const Timestamp& modifiedTime,
                      const std::string& cacheDir,
@@ -164,25 +185,19 @@ int TileCache::getTileBeingRenderedVersion(const TileDesc& tile)
         return 0;
 }
 
-std::unique_ptr<std::fstream> TileCache::lookupTile(const TileDesc& tile)
+TileCache::Tile TileCache::lookupTile(const TileDesc& tile)
 {
     if (!_tileCachePersistent)
         return nullptr;
 
     const std::string fileName = _cacheDir + "/" + cacheFileName(tile);
+    TileCache::Tile ret = loadTile(fileName);
 
-    std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
     UnitWSD::get().lookupTile(tile.getPart(), tile.getWidth(), tile.getHeight(),
                               tile.getTilePosX(), tile.getTilePosY(),
-                              tile.getTileWidth(), tile.getTileHeight(), result);
+                              tile.getTileWidth(), tile.getTileHeight(), ret);
 
-    if (result && result->is_open())
-    {
-        LOG_TRC("Found cache tile: " << fileName);
-        return result;
-    }
-
-    return nullptr;
+    return ret;
 }
 
 void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size)
@@ -337,19 +352,16 @@ void TileCache::saveRendering(const std::string& name, const std::string& dir, c
     FileUtil::saveDataToFileSafely(fileName, data, size);
 }
 
-std::unique_ptr<std::fstream> TileCache::lookupCachedFile(const std::string& name, const std::string& dir)
+TileCache::Tile TileCache::lookupCachedTile(const std::string& name, const std::string& dir)
 {
     const std::string dirName = _cacheDir + "/" + dir;
     const std::string fileName = dirName + "/" + name;
     File directory(dirName);
 
     if (directory.exists() && directory.isDirectory() && File(fileName).exists())
-    {
-        std::unique_ptr<std::fstream> result(new std::fstream(fileName, std::ios::in));
-        return result;
-    }
-
-    return nullptr;
+        return loadTile(fileName);
+    else
+        return Tile();
 }
 
 void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
