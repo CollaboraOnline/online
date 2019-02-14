@@ -137,16 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 urlToLoad +
                 "&closebutton=1&permission=edit" +
                 "&debug=true"); // TODO remove later?
-
-        Button jsButton = findViewById(R.id.js_button);
-        jsButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            browser.loadUrl("javascript:helloFromJavascript()");
-                                        }
-                                    }
-        );
-    }
+        }
 
     @Override
     protected void onResume() {
