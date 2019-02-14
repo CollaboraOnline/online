@@ -11,6 +11,8 @@
 
 #include <config.h>
 
+#include <random>
+
 #include <Exceptions.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
