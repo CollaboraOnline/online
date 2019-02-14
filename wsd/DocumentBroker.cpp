@@ -391,9 +391,8 @@ void DocumentBroker::pollThread()
     LOOLWSD::doHousekeeping();
 #endif
 
-    // Remove all tiles related to this document from the cache if configured so.
-    if (_tileCache && !LOOLWSD::TileCachePersistent)
-        _tileCache->completeCleanup();
+    if (_tileCache)
+        _tileCache->clear();
 
     LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
 }
@@ -727,7 +726,15 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
         // Use the local temp file's timestamp.
         _lastFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
-        _tileCache.reset(new TileCache(_storage->getUriString(), _lastFileModifiedTime, _cacheRoot, LOOLWSD::TileCachePersistent));
+
+        bool dontUseCache = false;
+#if MOBILEAPP
+        // avoid memory consumption for single-user local bits.
+        // FIXME: arguably should/could do this for single user documents too.
+        dontUseCache = true;
+#endif
+
+        _tileCache.reset(new TileCache(_storage->getUriString(), _lastFileModifiedTime, dontUseCache));
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 
@@ -856,7 +863,6 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             // Saved and stored; update flags.
             setModified(false);
             _lastFileModifiedTime = newFileModifiedTime;
-            _tileCache->saveLastModified(_lastFileModifiedTime);
             _lastSaveTime = std::chrono::steady_clock::now();
 
             // Save the storage timestamp.

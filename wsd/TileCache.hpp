@@ -36,11 +36,11 @@ public:
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
-    TileCache(const std::string& docURL, const Poco::Timestamp& modifiedTime, const std::string& cacheDir, bool tileCachePersistent);
+    TileCache(const std::string& docURL, const Poco::Timestamp& modifiedTime, bool dontCache = false);
     ~TileCache();
 
-    /// Remove the entire cache directory.
-    void completeCleanup() const;
+    /// Completely clear the cache contents.
+    void clear();
 
     TileCache(const TileCache&) = delete;
 
@@ -85,9 +85,6 @@ public:
     /// Parse invalidateTiles message to a part number and a rectangle of the invalidated area
     static std::pair<int, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
 
-    /// Store the timestamp to modtime.txt.
-    void saveLastModified(const Poco::Timestamp& timestamp);
-
     void forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered, const TileDesc& tile);
     double getTileBeingRenderedElapsedTimeMs(const std::string& tileCacheName) const;
 
@@ -102,7 +99,10 @@ public:
 private:
     void invalidateTiles(int part, int x, int y, int width, int height);
 
-    // Removes the given file from the cache
+    /// Lookup tile in our cache.
+    TileCache::Tile loadTile(const std::string &fileName);
+
+    /// Removes the given file from the cache
     void removeFile(const std::string& fileName);
 
     static std::string cacheFileName(const TileDesc& tile);
@@ -111,17 +111,14 @@ private:
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
     static bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height);
 
-    /// Load the timestamp from modtime.txt.
-    Poco::Timestamp getLastModified();
+    void saveDataToCache(const std::string &fileName, const char *data, const size_t size);
 
     const std::string _docURL;
 
-    const std::string _cacheDir;
-
-    const bool _tileCachePersistent;
-
     std::thread::id _owner;
 
+    bool _dontCache;
+    std::map<std::string, Tile> _cache;
     std::map<std::string, std::shared_ptr<TileBeingRendered> > _tilesBeingRendered;
 };
 
