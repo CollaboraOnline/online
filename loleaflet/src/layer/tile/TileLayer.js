@@ -89,6 +89,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Do we have focus - ie. should we render a cursor
 		this._isFocused = true;
+		// Last cursor position for invalidation
+		this.lastCursorPos = this._visibleCursor.getNorthWest();
 		// Are we zooming currently ? - if so, no cursor.
 		this._isZooming = false;
 		// Cursor is visible or hidden (e.g. for graphic selection).
@@ -792,17 +794,27 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursor = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+		var cursorPos = this._visibleCursor.getNorthWest();
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
 			this._map._setFollowing(false, null);
 		}
 		this._map.lastActionByUser = false;
-
 		if (!this._map._isFocused && this._map._permission === 'edit') {
 			// Regain cursor if we had been out of focus and now have input.
 			this._map.fire('editorgotfocus');
 		}
 
-		this._onUpdateCursor(this._viewId === modifierViewId);
+		//first time document open, set last cursor position
+		if (this.lastCursorPos.lat === 0 && this.lastCursorPos.lng === 0)
+			this.lastCursorPos = cursorPos;
+		
+		var updateCursor = false;
+		if ((this.lastCursorPos.lat !== cursorPos.lat) || (this.lastCursorPos.lng !== cursorPos.lng)) {
+			updateCursor = true;
+			this.lastCursorPos = cursorPos;
+		}
+
+		this._onUpdateCursor(updateCursor && (modifierViewId === this._viewId));
 	},
 
 	_updateEditor: function(textMsg) {
@@ -1616,7 +1628,6 @@ L.TileLayer = L.GridLayer.extend({
 			center = center.subtract(this._map.getSize().divideBy(2));
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
-
 			if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
 			    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 			    !(docLayer._followEditor || docLayer._followUser)) {
