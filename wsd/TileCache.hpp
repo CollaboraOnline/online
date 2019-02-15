@@ -91,10 +91,10 @@ public:
     bool hasTileBeingRendered(const TileDesc& tile);
     int getTileBeingRenderedVersion(const TileDesc& tile);
 
+    // Debugging bits ...
+    void dumpState(std::ostream& os);
     void setThreadOwner(const std::thread::id &id) { _owner = id; }
     void assertCorrectThread();
-
-
 
 private:
     void invalidateTiles(int part, int x, int y, int width, int height);
