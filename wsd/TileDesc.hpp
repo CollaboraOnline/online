@@ -233,7 +233,7 @@ public:
         return tileID.str();
     }
 
-private:
+protected:
     int _part;
     int _width;
     int _height;

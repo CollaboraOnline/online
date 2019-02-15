@@ -57,6 +57,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(TileCacheTests);
 
+    CPPUNIT_TEST(testDesc);
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
     CPPUNIT_TEST(testCancelTiles);
@@ -91,6 +92,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testDesc();
     void testSimple();
     void testSimpleCombine();
     void testCancelTiles();
@@ -172,6 +174,15 @@ public:
         resetTestStartTime();
     }
 };
+
+void TileCacheTests::testDesc()
+{
+    TileCacheDesc descA = TileDesc(0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1, true);
+    TileCacheDesc descB = TileDesc(0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2, false);
+
+    CPPUNIT_ASSERT_MESSAGE("versions do match", descA.getVersion() != descB.getVersion());
+    CPPUNIT_ASSERT_MESSAGE("Compare includes fields it should not", descA == descB);
+}
 
 void TileCacheTests::testSimple()
 {

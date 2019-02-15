@@ -11,10 +11,10 @@
 #define INCLUDED_TILECACHE_HPP
 
 #include <iosfwd>
-#include <map>
 #include <memory>
 #include <thread>
 #include <string>
+#include <unordered_map>
 
 #include <Poco/Timestamp.h>
 #include <Rectangle.hpp>
@@ -23,11 +23,58 @@
 
 class ClientSession;
 
+class TileCacheDesc : public TileDesc
+{
+public:
+    TileCacheDesc(const TileDesc &copy)
+        : TileDesc(copy)
+    {
+    }
+
+    // The cache cares about only some properties.
+    bool operator==(const TileCacheDesc& other) const
+    {
+        return _part == other._part &&
+               _width == other._width &&
+               _height == other._height &&
+               _tilePosX == other._tilePosX &&
+               _tilePosY == other._tilePosY &&
+               _tileWidth == other._tileWidth &&
+               _tileHeight == other._tileHeight;
+    }
+};
+
+// The cache cares about only some properties.
+struct TileCacheDescCompareEqual
+{
+    bool operator()(const TileCacheDesc &l, const TileCacheDesc &r) const { return l == r; }
+};
+
+// The cache cares about only some properties.
+struct TileCacheDescHasher
+{
+    size_t
+    operator()(const TileCacheDesc &t) const
+    {
+        size_t hash = t.getPart();
+
+        hash = (hash << 5) + hash + t.getWidth();
+        hash = (hash << 5) + hash + t.getHeight();
+        hash = (hash << 5) + hash + t.getTilePosX();
+        hash = (hash << 5) + hash + t.getTilePosY();
+        hash = (hash << 5) + hash + t.getTileWidth();
+        hash = (hash << 5) + hash + t.getTileHeight();
+
+        return hash;
+    }
+};
+
 /// Handles the caching of tiles of one document.
 class TileCache
 {
     struct TileBeingRendered;
 
+    bool hasTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
     std::shared_ptr<TileBeingRendered> findTileBeingRendered(const TileDesc& tile);
 
 public:
@@ -61,23 +108,26 @@ public:
 
     void saveTileAndNotify(const TileDesc& tile, const char* data, const size_t size);
 
+    enum StreamType {
+        Font,
+        Style,
+        CmdValues,
+        Last
+    };
+
     /// Get the content of a cache file.
     /// @param content Valid only when the call returns true.
     /// @return true when the file actually exists
-    bool getTextFile(const std::string& fileName, std::string& content);
+    bool getTextStream(StreamType type, const std::string& fileName, std::string& content);
 
     // Save some text into a file in the cache directory
-    void saveTextFile(const std::string& text, const std::string& fileName);
-
-    // Set the unsaved-changes state, used for sanity checks, ideally not needed
-    void setUnsavedChanges(bool state);
+    void saveTextStream(StreamType type, const std::string& text, const std::string& fileName);
 
     // Saves a font / style / etc rendering
-    // The dir parameter should be the type of rendering, like "font", "style", etc
-    void saveRendering(const std::string& name, const std::string& dir, const char* data, size_t size);
+    void saveStream(StreamType type, const std::string& name, const char* data, size_t size);
 
     /// Return the tile data if we have it, or nothing.
-    Tile lookupCachedTile(const std::string& name, const std::string& dir);
+    Tile lookupCachedStream(StreamType type, const std::string& name);
 
     // The tiles parameter is an invalidatetiles: message as sent by the child process
     void invalidateTiles(const std::string& tiles);
@@ -86,12 +136,11 @@ public:
     static std::pair<int, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
 
     void forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
-    double getTileBeingRenderedElapsedTimeMs(const std::string& tileCacheName) const;
+    double getTileBeingRenderedElapsedTimeMs(const TileDesc &tileDesc) const;
 
-    size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& subscriber);
-
-    bool hasTileBeingRendered(const TileDesc& tile);
-    int  getTileBeingRenderedVersion(const TileDesc& tile);
+    size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session);
+    bool hasTileBeingRendered(const TileDesc& tileDesc);
+    int  getTileBeingRenderedVersion(const TileDesc& tileDesc);
 
     // Debugging bits ...
     void dumpState(std::ostream& os);
@@ -102,26 +151,39 @@ private:
     void invalidateTiles(int part, int x, int y, int width, int height);
 
     /// Lookup tile in our cache.
-    TileCache::Tile loadTile(const std::string &fileName);
+    TileCache::Tile findTile(const TileDesc &desc);
 
-    /// Removes the given file from the cache
-    void removeFile(const std::string& fileName);
+    /// Lookup tile in our stream cache.
+    TileCache::Tile findStreamTile(StreamType type, const std::string &fileName);
 
-    static std::string cacheFileName(const TileDesc& tile);
+    /// Removes the named stream from the cache
+    void removeStream(StreamType type, const std::string& fileName);
+
+    static std::string cacheFileName(const TileDesc& tileDesc);
     static bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
-    static bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height);
+    static bool intersectsTile(const TileDesc &tileDesc, int part, int x, int y, int width, int height);
 
-    void saveDataToCache(const std::string &fileName, const char *data, const size_t size);
+    void saveDataToCache(const TileDesc &desc, const char *data, const size_t size);
+    void saveDataToStreamCache(StreamType type, const std::string &fileName, const char *data, const size_t size);
 
     const std::string _docURL;
 
     std::thread::id _owner;
 
     bool _dontCache;
-    std::map<std::string, Tile> _cache;
-    std::map<std::string, std::shared_ptr<TileBeingRendered> > _tilesBeingRendered;
+    // FIXME: should we have a tile-desc to WID map instead and a simpler lookup ?
+    std::unordered_map<TileCacheDesc, Tile,
+                       TileCacheDescHasher,
+                       TileCacheDescCompareEqual> _cache;
+    // FIXME: TileBeingRendered contains TileDesc too ...
+    std::unordered_map<TileCacheDesc, std::shared_ptr<TileBeingRendered>,
+                       TileCacheDescHasher,
+                       TileCacheDescCompareEqual> _tilesBeingRendered;
+
+    // old-style file-name to data grab-bag.
+    std::map<std::string, Tile> _streamCache[(int)StreamType::Last];
 };
 
 #endif

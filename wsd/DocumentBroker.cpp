@@ -1645,7 +1645,6 @@ void DocumentBroker::setModified(const bool value)
     }
 
     _storage->setUserModified(value);
-    _tileCache->setUnsavedChanges(value);
 }
 
 bool DocumentBroker::isInitialSettingSet(const std::string& name) const

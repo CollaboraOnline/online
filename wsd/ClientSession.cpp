@@ -480,15 +480,11 @@ bool ClientSession::getCommandValues(const char *buffer, int length, const std::
 {
     std::string command;
     if (tokens.size() != 2 || !getTokenString(tokens[1], "command", command))
-    {
         return sendTextFrame("error: cmd=commandvalues kind=syntax");
-    }
 
     std::string cmdValues;
-    if (docBroker->tileCache().getTextFile("cmdValues" + command + ".txt", cmdValues))
-    {
+    if (docBroker->tileCache().getTextStream(TileCache::StreamType::CmdValues, command, cmdValues))
         return sendTextFrame(cmdValues);
-    }
 
     return forwardToChild(std::string(buffer, length), docBroker);
 }
@@ -505,8 +501,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, const std:
 
     getTokenString(tokens[2], "char", text);
 
-
-    TileCache::Tile cachedTile = docBroker->tileCache().lookupCachedTile(font+text, "font");
+    TileCache::Tile cachedTile = docBroker->tileCache().lookupCachedStream(TileCache::StreamType::Font, font+text);
     if (cachedTile)
     {
         const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
@@ -951,7 +946,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                     commandName == ".uno:StyleApply")
                 {
                     // other commands should not be cached
-                    docBroker->tileCache().saveTextFile(stringMsg, "cmdValues" + commandName + ".txt");
+                    docBroker->tileCache().saveTextStream(TileCache::StreamType::CmdValues, stringMsg, commandName);
                 }
             }
         }
@@ -1006,7 +1001,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
             getTokenString(tokens[2], "char", text);
             assert(firstLine.size() < static_cast<std::string::size_type>(length));
-            docBroker->tileCache().saveRendering(font+text, "font", buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+            docBroker->tileCache().saveStream(TileCache::StreamType::Font, font+text,
+                                              buffer + firstLine.size() + 1, length - firstLine.size() - 1);
             return forwardToClient(payload);
         }
     }
