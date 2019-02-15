@@ -1888,6 +1888,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  last saved: " << std::ctime(&t);
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
+    _tileCache->dumpState(os);
 
     _poll->dumpState(os);
 }

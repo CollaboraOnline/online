@@ -559,4 +559,18 @@ TileCache::Tile TileCache::loadTile(const std::string &fileName)
         return TileCache::Tile();
 }
 
+void TileCache::dumpState(std::ostream& os)
+{
+    size_t num = 0, size = 0;
+    for (auto it : _cache)
+    {
+        num++; size += it.second->size();
+    }
+    os << "  tile cache: num: " << num << " size: " << size << " bytes\n";
+    for (auto it : _cache)
+    {
+        os << "    " /* << std::setw(4) << it.first->getWireId() */ << " - '" << it.first << "' - " << it.second->size() << " bytes\n";
+    }
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
