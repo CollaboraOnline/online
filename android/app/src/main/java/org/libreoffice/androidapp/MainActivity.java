@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         AssetManager assetManager = getResources().getAssets();
 
-        ApplicationInfo applicationInfo = getApplicationInfo();
-        String dataDir = applicationInfo.dataDir;
-        Log.i(TAG, String.format("Initializing LibreOfficeKit, dataDir=%s\n", dataDir));
-
         //redirectStdio(true);
 
         String cacheDir = getApplication().getCacheDir().getAbsolutePath();
@@ -58,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         String urlToLoad = "file:///android_asset/dist/hello-world.odt";
 
-        createLOOLWSD(dataDir/*"/assets"*/, cacheDir, apkFile, assetManager, urlToLoad);
+        createLOOLWSD("/assets", cacheDir, apkFile, assetManager, urlToLoad);
 
         final WebView browser = findViewById(R.id.browser);
         browser.setWebViewClient(new WebViewClient());
