@@ -239,10 +239,14 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobj
         LOG_TRC_NOFILE("From JS: lool: some object");
 }
 
+extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager);
+
 /// Create the LOOLWSD instance.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject, jstring loadFileURL)
+Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL)
 {
+    libreofficekit_initialize(env, dataDir, cacheDir, apkFile, assetManager);
+
     fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
 
     Log::initialize("Mobile", "trace", false, false, {});
