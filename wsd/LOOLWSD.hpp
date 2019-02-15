@@ -53,7 +53,6 @@ public:
     static std::atomic<int> ForKitProcId;
     static bool DummyLOK;
     static std::string FuzzFileName;
-    static std::string Cache;
     static std::string ConfigFile;
     static std::string ConfigDir;
     static std::string SysTemplate;
@@ -68,7 +67,6 @@ public:
     static bool AnonymizeUserData;
     static std::uint64_t AnonymizationSalt;
     static std::atomic<unsigned> NumConnections;
-    static bool TileCachePersistent;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
     static std::set<std::string> EditFileExtensions;
     static unsigned MaxConnections;

@@ -27,7 +27,6 @@
 static LOOLWSD *loolwsd = nullptr;
 
 NSString *app_locale;
-BOOL empty_tile_cache;
 
 static void download(NSURL *source, NSURL *destination) {
     [[[NSURLSession sharedSession] downloadTaskWithURL:source
@@ -202,7 +201,6 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     // templates.
 
     NSString *templateListURL = nil;
-    NSNumber *emptyTileCache = nil;
 
     // First check managed configuration, if present
     NSDictionary *managedConfig = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"com.apple.configuration.managed"];
@@ -210,18 +208,10 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         templateListURL = managedConfig[@"templateListURL"];
         if (templateListURL != nil && ![templateListURL isKindOfClass:[NSString class]])
             templateListURL = nil;
-        emptyTileCache = managedConfig[@"emptyTileCache"];
-        if (emptyTileCache != nil && ![emptyTileCache isKindOfClass:[NSNumber class]])
-            emptyTileCache = nil;
     }
 
     if (templateListURL == nil)
         templateListURL = [[NSUserDefaults standardUserDefaults] stringForKey:@"templateListURL"];
-
-    if (emptyTileCache == nil)
-        empty_tile_cache = [[NSUserDefaults standardUserDefaults] boolForKey:@"emptyTileCache"];
-    else
-        empty_tile_cache = [emptyTileCache boolValue];
 
     if (templateListURL != nil) {
         NSURL *url = [NSURL URLWithString:templateListURL];

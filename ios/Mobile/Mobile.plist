@@ -4,7 +4,5 @@
     <dict>
         <key>templateListURL</key>
         <string>https://foo.bar/template.list</string>
-        <key>emptyTileCache</key>
-        <true/>
     </dict>
 </plist>

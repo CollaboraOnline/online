@@ -450,7 +450,6 @@ if test -n "$with_lo_path"; then
    version_file="$with_lo_path/program/versionrc"
    if test -f $version_file; then
      JAILS_PATH="\${abs_top_builddir}/jails"
-     TILECACHE_PATH="\${abs_top_builddir}/cache"
      SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
      have_lo_path=true
      lo_msg="test against $LO_PATH"
@@ -466,7 +465,6 @@ fi
 AC_SUBST(LO_PATH)
 AC_DEFINE_UNQUOTED([LO_PATH],["$LO_PATH"],[Path to LibreOffice installation])
 AC_SUBST(JAILS_PATH)
-AC_SUBST(TILECACHE_PATH)
 AC_SUBST(SYSTEMPLATE_PATH)
 AM_CONDITIONAL(HAVE_LO_PATH,[test "$have_lo_path" = "true"])
 
@@ -662,22 +660,9 @@ AS_IF([test `uname -s` = "Linux"],
        fi
        ])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true"],
-      [test "$prefix" = NONE && prefix=$ac_default_prefix
-       LOOLWSD_CACHEDIR=${localstatedir}/cache/${PACKAGE}
-       while :; do
-           oldvalue=$LOOLWSD_CACHEDIR
-           LOOLWSD_CACHEDIR=`eval echo $LOOLWSD_CACHEDIR`
-           test $LOOLWSD_CACHEDIR = $oldvalue && break
-       done
-       ])
-
 # need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
 AS_IF([test -n "$with_compiler_plugins"],
       [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin -Xclang -plugin-arg-loplugin -Xclang --lool-base-path=\${abs_top_srcdir}"])
-
-AC_DEFINE_UNQUOTED([LOOLWSD_CACHEDIR],["$LOOLWSD_CACHEDIR"],[Cache folder])
-AC_SUBST(LOOLWSD_CACHEDIR)
 
 LOOLWSD_CONFIGDIR=${sysconfdir}/${PACKAGE}
 AC_SUBST(LOOLWSD_CONFIGDIR)

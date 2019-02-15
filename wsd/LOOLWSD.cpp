@@ -209,9 +209,7 @@ static int careerSpanMs = 0;
 #endif
 
 bool LOOLWSD::NoCapsForKit = false;
-bool LOOLWSD::TileCachePersistent = true;
 std::atomic<unsigned> LOOLWSD::NumConnections;
-std::string LOOLWSD::Cache = LOOLWSD_CACHEDIR;
 std::set<std::string> LOOLWSD::EditFileExtensions;
 
 #if MOBILEAPP
@@ -845,8 +843,6 @@ void LOOLWSD::initialize(Application& self)
             { "storage.wopi.max_file_size", "0" },
             { "storage.wopi[@allow]", "true" },
             { "sys_template_path", "systemplate" },
-            { "tile_cache_path", LOOLWSD_CACHEDIR },
-            { "tile_cache_persistent", "true" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
             { "trace[@enable]", "false" }
@@ -1050,7 +1046,6 @@ void LOOLWSD::initialize(Application& self)
 
 #endif
 
-    Cache = getPathFromConfig("tile_cache_path");
     SysTemplate = getPathFromConfig("sys_template_path");
     LoTemplate = getPathFromConfig("lo_template_path");
     ChildRoot = getPathFromConfig("child_root_path");
@@ -1147,8 +1142,6 @@ void LOOLWSD::initialize(Application& self)
     LOG_INF("Maximum concurrent client Connections limit: " << LOOLWSD::MaxConnections);
 
     LOOLWSD::NumConnections = 0;
-
-    TileCachePersistent = getConfigValue<bool>(conf, "tile_cache_persistent", true);
 
     // Command Tracing.
     if (getConfigValue<bool>(conf, "trace[@enable]", false))
@@ -3163,15 +3156,6 @@ int LOOLWSD::innerMain()
     setlocale(LC_ALL, "en_US.UTF-8");
 
 #if !MOBILEAPP
-    if (access(Cache.c_str(), R_OK | W_OK | X_OK) != 0)
-    {
-        const auto err = "Unable to access cache [" + Cache +
-                "] please make sure it exists, and has write permission for this user.";
-        LOG_SFL( err );
-        std::cerr << "FATAL: " << err << std::endl;
-        return Application::EXIT_SOFTWARE;
-    }
-
     // We use the same option set for both parent and child loolwsd,
     // so must check options required in the parent (but not in the
     // child) separately now. Also check for options that are
@@ -3197,7 +3181,6 @@ int LOOLWSD::innerMain()
         ChildRoot += '/';
 
     FileUtil::registerFileSystemForDiskSpaceChecks(ChildRoot);
-    FileUtil::registerFileSystemForDiskSpaceChecks(Cache + "/.");
 
     if (FileServerRoot.empty())
         FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().toString();
