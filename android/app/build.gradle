@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+// buildhost settings - paths and the like
+apply from: 'liboSettings.gradle'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -51,3 +54,172 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
+
+task copyUnpackAssets(type: Copy) {
+    description "copies assets that need to be extracted on the device"
+    into 'src/main/assets'
+    into('program') {
+        from("${liboInstdir}/${liboEtcFolder}/types") {
+            includes = [
+                    "offapi.rdb",
+                    "oovbaapi.rdb"
+            ]
+        }
+        from("${liboInstdir}/${liboUreMiscFolder}") {
+            includes = ["types.rdb"]
+            rename 'types.rdb', 'udkapi.rdb'
+        }
+    }
+    into('user/fonts') {
+        from "${liboInstdir}/share/fonts/truetype"
+        // Note: restrict list of fonts due to size considerations - no technical reason anymore
+        // ToDo: fonts would be good candidate for using Expansion Files instead
+        includes = [
+                "Liberation*.ttf",
+                "Caladea-*.ttf",
+                "Carlito-*.ttf",
+                "Gen*.ttf",
+                "opens___.ttf"
+        ]
+    }
+    into('etc/fonts') {
+        from "./"
+        includes = ['fonts.conf']
+        filter {
+            String line ->
+                line.replaceAll(
+                        '@@APPLICATION_ID@@', new String("${android.defaultConfig.applicationId}")
+                )
+        }
+    }
+}
+
+task copyAssets(type: Copy) {
+    description "copies assets that can be accessed within the installed apk"
+    into 'src/main/assets'
+    from("${liboSrcRoot}/readlicense_oo/license/") {
+        includes = ["LICENSE", "NOTICE"]
+        rename "LICENSE", "license.txt"
+        rename "NOTICE", "notice.txt"
+    }
+    from("${liboExampleDocument}") {
+        rename ".*", "example.odt"
+    }
+    into('program') {
+        from "${liboInstdir}/program"
+        includes = ['services.rdb', 'services/services.rdb']
+
+        into('resource') {
+            from "${liboInstdir}/${liboSharedResFolder}"
+            includes = ['*en-US.res']
+        }
+    }
+    into('share') {
+        from "${liboInstdir}/share"
+        // Filter data is needed by e.g. the drawingML preset shape import.
+        includes = ['registry/**', 'filter/**']
+        // those two get processed by mobile-config.py
+        excludes = ['registry/main.xcd', 'registry/res/registry_en-US.xcd']
+    }
+}
+
+task createFullConfig(type: Copy) {
+    into 'src/main/assets/share/config/soffice.cfg'
+    from "${liboInstdir}/share/config/soffice.cfg"
+}
+
+task createStrippedConfig {
+    def preserveDir = file("src/main/assets/share/config/soffice.cfg/empty")
+    outputs.dir "src/main/assets/share/registry/res"
+    outputs.file preserveDir
+
+    doLast {
+        file('src/main/assets/share/registry/res').mkdirs()
+        file("src/main/assets/share/config/soffice.cfg").mkdirs()
+        // just empty file
+        preserveDir.text = ""
+    }
+}
+
+
+task createStrippedConfigMain(type: Exec) {
+    dependsOn 'createStrippedConfig'
+    inputs.files "${liboInstdir}/share/registry/main.xcd", "${liboSrcRoot}/android/mobile-config.py"
+    outputs.file "src/main/assets/share/registry/main.xcd"
+    executable "${liboSrcRoot}/android/mobile-config.py"
+    args = ["${liboInstdir}/share/registry/main.xcd", "src/main/assets/share/registry/main.xcd"]
+}
+
+task createStrippedConfigRegistry(type: Exec) {
+    dependsOn 'createStrippedConfig'
+    inputs.files "${liboInstdir}/share/registry/res/registry_en-US.xcd", "${liboSrcRoot}/android/mobile-config.py"
+    outputs.file "src/main/assets/share/registry/res/registry_en-US.xcd"
+    executable "${liboSrcRoot}/android/mobile-config.py"
+    args = ["${liboInstdir}/share/registry/res/registry_en-US.xcd", "src/main/assets/share/registry/res/registry_en-US.xcd"]
+    doFirst {
+        file('src/main/assets/share/registry/res').mkdirs()
+    }
+}
+
+task createRCfiles {
+    inputs.file "liboSettings.gradle"
+    dependsOn copyUnpackAssets, copyAssets
+    def sofficerc     = file('src/main/assets/program/sofficerc')
+    def fundamentalrc = file('src/main/assets/program/fundamentalrc')
+    def bootstraprc   = file('src/main/assets/program/bootstraprc')
+    def unorc         = file('src/main/assets/program/unorc')
+    def versionrc     = file('src/main/assets/program/versionrc')
+
+    outputs.files sofficerc, fundamentalrc, unorc, bootstraprc, versionrc
+
+    doLast {
+        sofficerc.text = '''\
+            [Bootstrap]
+            Logo=1
+            NativeProgress=1
+            URE_BOOTSTRAP=file:///assets/program/fundamentalrc
+            HOME=$APP_DATA_DIR/cache
+            OSL_SOCKET_PATH=$APP_DATA_DIR/cache
+            '''.stripIndent()
+
+        fundamentalrc.text =  '''\
+            [Bootstrap]
+            LO_LIB_DIR=file://$APP_DATA_DIR/lib/
+            BRAND_BASE_DIR=file:///assets
+            CONFIGURATION_LAYERS=xcsxcu:${BRAND_BASE_DIR}/share/registry res:${BRAND_BASE_DIR}/share/registry
+            URE_BIN_DIR=file:///assets/ure/bin/dir/nothing-here/we-can/exec-anyway
+            '''.stripIndent()
+
+        bootstraprc.text =  '''\
+            [Bootstrap]
+            InstallMode=<installmode>
+            ProductKey=LibreOffice '''+ "${liboVersionMajor}.${liboVersionMinor}" + '''
+            UserInstallation=file://$APP_DATA_DIR
+            '''.stripIndent()
+
+        unorc.text = '''\
+            [Bootstrap]
+            URE_INTERNAL_LIB_DIR=file://$APP_DATA_DIR/lib/
+            UNO_TYPES=file://$APP_DATA_DIR/program/udkapi.rdb file://$APP_DATA_DIR/program/offapi.rdb file://$APP_DATA_DIR/program/oovbaapi.rdb
+            UNO_SERVICES=file:///assets/program/services.rdb file:///assets/program/services/services.rdb
+            '''.stripIndent()
+
+        versionrc.text = '''\
+            [Version]
+            AllLanguages=en-US
+            BuildVersion=
+            buildid=''' + "${liboGitFullCommit}" + '''
+            ReferenceOOoMajorMinor=4.1
+            '''.stripIndent()
+    }
+}
+
+// creating the UI stuff is cheap, don't bother only applying it for the flavor..
+preBuild.dependsOn 'createRCfiles',
+        'createStrippedConfigMain',
+        'createStrippedConfigRegistry',
+        'createFullConfig'
+
+//clean.dependsOn 'cleanCopyAssets',
+//        'cleanCreateStrippedConfig',
+//        'cleanCreateFullConfig'
