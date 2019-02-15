@@ -2706,7 +2706,7 @@ void lokit_main(
 
 #else // MOBILEAPP
 
-#ifdef __linux
+#if defined(__linux) && !defined(__ANDROID__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #else

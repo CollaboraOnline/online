@@ -9,6 +9,8 @@
 
 package org.libreoffice.androidapp;
 
+import android.content.pm.ApplicationInfo;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +30,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AssetManager assetManager = getResources().getAssets();
+
+        ApplicationInfo applicationInfo = getApplicationInfo();
+        String dataDir = applicationInfo.dataDir;
+        Log.i(TAG, String.format("Initializing LibreOfficeKit, dataDir=%s\n", dataDir));
+
+        //redirectStdio(true);
+
+        String cacheDir = getApplication().getCacheDir().getAbsolutePath();
+        String apkFile = getApplication().getPackageResourcePath();
+
+        /* TODO
+        // If there is a fonts.conf file in the apk that can be extracted, automatically
+        // set the FONTCONFIG_FILE env var.
+        InputStream inputStream;
+        try {
+            inputStream = activity.getAssets().open("unpack/etc/fonts/fonts.conf");
+        } catch (java.io.IOException exception) {
+            inputStream = null;
+        }
+
+        if (inputStream != null) {
+            putenv("FONTCONFIG_FILE=" + dataDir + "/etc/fonts/fonts.conf");
+        }
+        */
+
         String urlToLoad = "file:///android_asset/dist/hello-world.odt";
-        createLOOLWSD(urlToLoad);
+
+        createLOOLWSD(dataDir/*"/assets"*/, cacheDir, apkFile, assetManager, urlToLoad);
 
         final WebView browser = findViewById(R.id.browser);
         browser.setWebViewClient(new WebViewClient());
@@ -58,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Initialize the LOOLWSD to load 'loadFileURL'. */
-    public native void createLOOLWSD(String loadFileURL);
+    public native void createLOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL);
 
     /** Passing messages from JS (instead of the websocket communication). */
     @JavascriptInterface
