@@ -3,4 +3,12 @@
 /android.iml
 /gradle
 /local.properties
+/app/src/main/assets/etc/
+/app/src/main/assets/example.odt
+/app/src/main/assets/license.txt
+/app/src/main/assets/notice.txt
+/app/src/main/assets/program/
+/app/src/main/assets/share/
+/app/src/main/assets/unpack/
+/app/src/main/assets/user/
 /app/src/main/cpp/lib
