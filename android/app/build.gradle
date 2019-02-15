@@ -57,7 +57,7 @@ dependencies {
 
 task copyUnpackAssets(type: Copy) {
     description "copies assets that need to be extracted on the device"
-    into 'src/main/assets'
+    into 'src/main/assets/unpack'
     into('program') {
         from("${liboInstdir}/${liboEtcFolder}/types") {
             includes = [
@@ -164,7 +164,7 @@ task createStrippedConfigRegistry(type: Exec) {
 task createRCfiles {
     inputs.file "liboSettings.gradle"
     dependsOn copyUnpackAssets, copyAssets
-    def sofficerc     = file('src/main/assets/program/sofficerc')
+    def sofficerc     = file('src/main/assets/unpack/program/sofficerc')
     def fundamentalrc = file('src/main/assets/program/fundamentalrc')
     def bootstraprc   = file('src/main/assets/program/bootstraprc')
     def unorc         = file('src/main/assets/program/unorc')
@@ -219,7 +219,3 @@ preBuild.dependsOn 'createRCfiles',
         'createStrippedConfigMain',
         'createStrippedConfigRegistry',
         'createFullConfig'
-
-//clean.dependsOn 'cleanCopyAssets',
-//        'cleanCreateStrippedConfig',
-//        'cleanCreateFullConfig'

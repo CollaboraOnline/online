@@ -9,9 +9,11 @@
 
 package org.libreoffice.androidapp;
 
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -20,41 +22,109 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     final static String TAG = "MainActivity";
 
+    private static final String ASSETS_EXTRACTED_PREFS_KEY = "ASSETS_EXTRACTED";
+
+    private static boolean copyFromAssets(AssetManager assetManager,
+                                          String fromAssetPath, String targetDir) {
+        try {
+            String[] files = assetManager.list(fromAssetPath);
+
+            boolean res = true;
+            for (String file : files) {
+                String[] dirOrFile = assetManager.list(fromAssetPath + "/" + file);
+                if ( dirOrFile.length == 0) {
+                    // noinspection ResultOfMethodCallIgnored
+                    new File(targetDir).mkdirs();
+                    res &= copyAsset(assetManager,
+                            fromAssetPath + "/" + file,
+                            targetDir + "/" + file);
+                } else
+                    res &= copyFromAssets(assetManager,
+                            fromAssetPath + "/" + file,
+                            targetDir + "/" + file);
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "copyFromAssets failed: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) {
+        ReadableByteChannel source = null;
+        FileChannel dest = null;
+        try {
+            try {
+                source = Channels.newChannel(assetManager.open(fromAssetPath));
+                dest = new FileOutputStream(toPath).getChannel();
+                long bytesTransferred = 0;
+                // might not copy all at once, so make sure everything gets copied....
+                ByteBuffer buffer = ByteBuffer.allocate(4096);
+                while (source.read(buffer) > 0) {
+                    buffer.flip();
+                    bytesTransferred += dest.write(buffer);
+                    buffer.clear();
+                }
+                Log.v(TAG, "Success copying " + fromAssetPath + " to " + toPath + " bytes: " + bytesTransferred);
+                return true;
+            } finally {
+                if (dest != null) dest.close();
+                if (source != null) source.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "file " + fromAssetPath + " not found! " + e.getMessage());
+            return false;
+        } catch (IOException e) {
+            Log.e(TAG, "failed to copy file " + fromAssetPath + " from assets to " + toPath + " - " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void updatePreferences() {
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (sPrefs.getInt(ASSETS_EXTRACTED_PREFS_KEY, 0) != BuildConfig.VERSION_CODE) {
+            if (copyFromAssets(getAssets(), "unpack", getApplicationInfo().dataDir)) {
+                sPrefs.edit().putInt(ASSETS_EXTRACTED_PREFS_KEY, BuildConfig.VERSION_CODE).apply();
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        updatePreferences();
+
         setContentView(R.layout.activity_main);
 
         AssetManager assetManager = getResources().getAssets();
+
+        ApplicationInfo applicationInfo = getApplicationInfo();
+        String dataDir = applicationInfo.dataDir;
+        Log.i(TAG, String.format("Initializing LibreOfficeKit, dataDir=%s\n", dataDir));
 
         //redirectStdio(true);
 
         String cacheDir = getApplication().getCacheDir().getAbsolutePath();
         String apkFile = getApplication().getPackageResourcePath();
 
-        /* TODO
-        // If there is a fonts.conf file in the apk that can be extracted, automatically
-        // set the FONTCONFIG_FILE env var.
-        InputStream inputStream;
-        try {
-            inputStream = activity.getAssets().open("unpack/etc/fonts/fonts.conf");
-        } catch (java.io.IOException exception) {
-            inputStream = null;
-        }
-
-        if (inputStream != null) {
-            putenv("FONTCONFIG_FILE=" + dataDir + "/etc/fonts/fonts.conf");
-        }
-        */
-
         String urlToLoad = "file:///android_asset/dist/hello-world.odt";
 
-        createLOOLWSD("/assets", cacheDir, apkFile, assetManager, urlToLoad);
+        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
 
         final WebView browser = findViewById(R.id.browser);
         browser.setWebViewClient(new WebViewClient());
@@ -76,6 +146,15 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
         );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume..");
+
+        // check for config change
+        updatePreferences();
     }
 
     static {
