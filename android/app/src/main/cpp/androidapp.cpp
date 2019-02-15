@@ -20,6 +20,8 @@
 #include <Protocol.hpp>
 #include <Util.hpp>
 
+#include "Poco/Base64Encoder.h"
+
 const int SHOW_JS_MAXLEN = 70;
 
 int loolwsd_server_socket_fd = -1;
@@ -29,15 +31,7 @@ static LOOLWSD *loolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
 
-#if 0
-static void send2JS_ready_callback(GObject      *source_object,
-                                   GAsyncResult *res,
-                                   gpointer      user_data)
-{
-    free(user_data);
-}
-
-static void send2JS(const std::vector<char>& buffer)
+static void send2JS(JNIEnv *env, jobject obj, const std::vector<char>& buffer)
 {
     LOG_TRC_NOFILE("Send to JS: " << LOOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
 
@@ -53,11 +47,16 @@ static void send2JS(const std::vector<char>& buffer)
     if (newline != nullptr)
     {
         // The data needs to be an ArrayBuffer
-        js = "window.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
-        gchar *base64 = g_base64_encode((const guchar*)buffer.data(), buffer.size());
-        js = js + std::string(base64);
-        g_free(base64);
-        js = js + "')});";
+        std::stringstream ss;
+        ss << "Base64ToArrayBuffer('";
+
+        Poco::Base64Encoder encoder(ss);
+        encoder << std::string(buffer.data(), buffer.size());
+        encoder.close();
+
+        ss << "')";
+
+        js = ss.str();
     }
     else
     {
@@ -79,59 +78,26 @@ static void send2JS(const std::vector<char>& buffer)
         }
         data.push_back(0);
 
-        js = "window.TheFakeWebSocket.onmessage({'data': '";
-        js = js + std::string(buffer.data(), buffer.size());
-        js = js + "'});";
+        js = std::string(data.data(), data.size());
     }
 
     std::string subjs = js.substr(0, std::min(std::string::size_type(SHOW_JS_MAXLEN), js.length()));
     if (js.length() > SHOW_JS_MAXLEN)
         subjs += "...";
 
-    LOG_TRC_NOFILE( "Evaluating JavaScript: " << subjs);
+    LOG_TRC_NOFILE( "Sending to JavaScript: " << subjs);
 
-    char *jscopy = strdup(js.c_str());
-    g_idle_add([](gpointer data)
-               {
-                   char *jscopy = (char*) data;
-                   webkit_web_view_run_javascript(webView, jscopy, nullptr, send2JS_ready_callback, jscopy);
-                   return FALSE;
-               }, jscopy);
+    /* TODO commented out, see the other TODO wrt. the NewGlobalRef
+    jstring jstr = env->NewStringUTF(js.c_str());
+    jclass clazz = env->FindClass("org/libreoffice/androidapp/MainActivity");
+    jmethodID callFakeWebsocket = env->GetMethodID(clazz, "callFakeWebsocketOnMessage", "(V)Ljava/lang/String;");
+    env->CallObjectMethod(obj, callFakeWebsocket, jstr);
+    */
 }
-
-static char *js_result_as_gstring(WebKitJavascriptResult *js_result)
-{
-#if WEBKIT_CHECK_VERSION(2,22,0) // unclear when this API changed ...
-    JSCValue *value = webkit_javascript_result_get_js_value(js_result);
-    if (jsc_value_is_string(value))
-        return jsc_value_to_string(value);
-    else
-        return nullptr;
-#else // older Webkits
-    JSValueRef value = webkit_javascript_result_get_value(js_result);
-    JSContextRef ctx = webkit_javascript_result_get_global_context(js_result);
-    if (JSValueIsString(ctx, value))
-    {
-        const JSStringRef js_str = JSValueToStringCopy(ctx, value, nullptr);
-        size_t gstring_max = JSStringGetMaximumUTF8CStringSize(js_str);
-        char *gstring = (char *)g_malloc(gstring_max);
-        if (gstring)
-            JSStringGetUTF8CString(js_str, gstring, gstring_max);
-        else
-            LOG_TRC_NOFILE("No string");
-        JSStringRelease(js_str);
-        return gstring;
-    }
-    else
-        LOG_TRC_NOFILE("Unexpected object type " << JSValueGetType(ctx, value));
-    return nullptr;
-#endif
-}
-#endif
 
 /// Handle a message from JavaScript.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobject, jstring message)
+Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobject obj, jstring message)
 {
     const char *string_value = env->GetStringUTFChars(message, nullptr);
 
@@ -153,7 +119,9 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobj
             fakeSocketPipe2(closeNotificationPipeForForwardingThread);
 
             // Start another thread to read responses and forward them to the JavaScript
-            std::thread([]
+            // TODO here we actually need to do NewGlobalRef and pass that to
+            // the thread; not the env and obj itself
+            std::thread([&env, &obj]
                         {
                             Util::setThreadName("app2js");
                             while (true)
@@ -188,7 +156,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobj
                                            return;
                                        std::vector<char> buf(n);
                                        n = fakeSocketRead(fakeClientFd, buf.data(), n);
-                                       // TODO send2JS(buf);
+                                       send2JS(env, obj, buf);
                                    }
                                }
                                else
