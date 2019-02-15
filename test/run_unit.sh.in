@@ -11,7 +11,6 @@ abs_top_builddir="${DIR}/.."
 systemplate_path="@SYSTEMPLATE_PATH@"
 enable_debug="@ENABLE_DEBUG@"
 jails_path="@JAILS_PATH@"
-tilecache_path="@TILECACHE_PATH@"
 lo_path="@LO_PATH@"
 valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes"
 verbose=''
@@ -89,7 +88,6 @@ if test "z$tst" == "z"; then
      ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
                                  --o:lo_template_path="$lo_path" \
                                  --o:child_root_path="$jails_path" \
-                                 --o:tile_cache_path="$tilecache_path" \
                                  --o:storage.filesystem[@allow]=true \
                                  --o:logging.level=trace \
                                  --o:logging.file[@enable]=false \
@@ -122,7 +120,6 @@ else # newer unit tests.
        ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
                                    --o:lo_template_path="$lo_path" \
                                    --o:child_root_path="$jails_path" \
-                                   --o:tile_cache_path="$tilecache_path" \
                                    --o:storage.filesystem[@allow]=true \
                                    --o:logging.level=trace \
                                    --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
@@ -139,7 +136,6 @@ else # newer unit tests.
         echo "   $ gdb --args ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
         echo "         --o:lo_template_path=\"$lo_path\" \\"
         echo "         --o:child_root_path=\"$jails_path\" \\"
-        echo "         --o:tile_cache_path=\"$tilecache_path\" \\"
         echo "         --o:storage.filesystem[@allow]=true \\"
         echo "         --o:logging.level=trace \\"
         echo "         --o:ssl.key_file_path=\"${abs_top_builddir}/etc/key.pem\" \\"

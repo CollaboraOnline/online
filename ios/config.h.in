@@ -66,9 +66,6 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* Cache folder */
-#define LOOLWSD_CACHEDIR lo_ios_app_getCacheDir()
-
 /* LibreOffice Online WebSocket server version */
 #define LOOLWSD_VERSION "@LOOLWSD_VERSION@"
 

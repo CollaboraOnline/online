@@ -74,16 +74,6 @@ void sendLastModificationTime(const std::shared_ptr<Session>& session,
         documentBroker->broadcastMessage(message);
 }
 
-/// Returns the cache path for a given document URI.
-std::string getCachePath(const std::string& uri)
-{
-    Poco::SHA1Engine digestEngine;
-
-    digestEngine.update(uri.c_str(), uri.size());
-
-    return LOOLWSD::Cache + '/' +
-        Poco::DigestEngine::digestToHex(digestEngine.digest()).insert(3, "/").insert(2, "/").insert(1, "/");
-}
 }
 
 Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
@@ -167,7 +157,6 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _childRoot(childRoot),
-    _cacheRoot(getCachePath(uriPublic.toString())),
     _documentChangedInStorage(false),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),

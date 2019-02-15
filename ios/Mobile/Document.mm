@@ -49,12 +49,6 @@
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
 
-    // If we are asked to empty the tile cache, do that now.
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"emptyTileCache"]) {
-        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithUTF8String:LOOLWSD_CACHEDIR] error:nil];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"emptyTileCache"];
-    }
-
     fakeClientFd = fakeSocketSocket();
     NSString *uri = [[self fileURL] absoluteString];
 
