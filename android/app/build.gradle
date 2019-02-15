@@ -83,7 +83,7 @@ task copyUnpackAssets(type: Copy) {
         ]
     }
     into('etc/fonts') {
-        from "./"
+        from "${liboSrcRoot}/android/source/"
         includes = ['fonts.conf']
         filter {
             String line ->
