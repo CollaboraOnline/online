@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String ASSETS_EXTRACTED_PREFS_KEY = "ASSETS_EXTRACTED";
 
+    WebView mWebView;
+
     private static boolean copyFromAssets(AssetManager assetManager,
                                           String fromAssetPath, String targetDir) {
         try {
@@ -126,14 +128,14 @@ public class MainActivity extends AppCompatActivity {
 
         createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
 
-        final WebView browser = findViewById(R.id.browser);
-        browser.setWebViewClient(new WebViewClient());
+        mWebView = findViewById(R.id.browser);
+        mWebView.setWebViewClient(new WebViewClient());
 
-        WebSettings browserSettings = browser.getSettings();
-        browserSettings.setJavaScriptEnabled(true);
-        browser.addJavascriptInterface(this, "LOOLMessageHandler");
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        mWebView.addJavascriptInterface(this, "LOOLMessageHandler");
 
-        browser.loadUrl("file:///android_asset/dist/loleaflet.html?file_path=" +
+        mWebView.loadUrl("file:///android_asset/dist/loleaflet.html?file_path=" +
                 urlToLoad +
                 "&closebutton=1&permission=edit" +
                 "&debug=true"); // TODO remove later?
@@ -161,18 +163,22 @@ public class MainActivity extends AppCompatActivity {
 
     /** Passing messages from JS (instead of the websocket communication). */
     @JavascriptInterface
-    public void postMobileError(String message)
-    {
+    public void postMobileError(String message) {
         // TODO handle this
         Log.d(TAG, "postMobileError: " + message);
     }
 
     /** Passing messages from JS (instead of the websocket communication). */
     @JavascriptInterface
-    public void postMobileDebug(String message)
-    {
+    public void postMobileDebug(String message) {
         // TODO handle this
         Log.d(TAG, "postMobileDebug: " + message);
+    }
+
+    /** Passing message the other way around - from Java to the FakeWebSocket in JS. */
+    void callFakeWebsocketOnMessage(String message) {
+        Log.i(TAG,"Got JavaScript, forwarding to the WebView: " + message);
+        mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data': '" + message + "'});");
     }
 }
 
