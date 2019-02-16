@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         String cacheDir = getApplication().getCacheDir().getAbsolutePath();
         String apkFile = getApplication().getPackageResourcePath();
 
-        String urlToLoad = "file:///android_asset/dist/hello-world.odt";
+        String urlToLoad = "file:///assets/hello-world.odt";
 
         createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
 
@@ -176,9 +176,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Passing message the other way around - from Java to the FakeWebSocket in JS. */
-    void callFakeWebsocketOnMessage(String message) {
-        Log.i(TAG,"Got JavaScript, forwarding to the WebView: " + message);
-        mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data': '" + message + "'});");
+    void callFakeWebsocketOnMessage(final String message) {
+        // call from the UI thread
+        mWebView.post(new Runnable() {
+            public void run() {
+                Log.i(TAG,"Forwarding to the WebView: " + message);
+                mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data': '" + message + "'});");
+            }
+        });
     }
 }
 
