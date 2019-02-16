@@ -322,7 +322,7 @@ L.Socket = L.Class.extend({
 			return;
 		}
 		else if (textMsg.startsWith('lastmodtime: ')) {
-			var time = textMsg.substring(textMsg.indexOf(' '));
+			var time = textMsg.substring(textMsg.indexOf(' ') + 1);
 			this._map.updateModificationIndicator(time);
 			return;
 		}
