@@ -30,8 +30,21 @@ static std::string fileURL;
 static LOOLWSD *loolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
+static JavaVM* javaVM = nullptr;
 
-static void send2JS(JNIEnv *env, jobject obj, const std::vector<char>& buffer)
+extern "C" JNIEXPORT jint JNICALL
+JNI_OnLoad(JavaVM* vm, void*) {
+    javaVM = vm;
+
+    JNIEnv* env;
+    if (vm->GetEnv((void**)&env, JNI_VERSION_1_6) != JNI_OK) {
+        return JNI_ERR; // JNI version not supported.
+    }
+
+    return JNI_VERSION_1_6;
+}
+
+static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::vector<char>& buffer)
 {
     LOG_TRC_NOFILE("Send to JS: " << LOOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
 
@@ -87,17 +100,25 @@ static void send2JS(JNIEnv *env, jobject obj, const std::vector<char>& buffer)
 
     LOG_TRC_NOFILE( "Sending to JavaScript: " << subjs);
 
-    /* TODO commented out, see the other TODO wrt. the NewGlobalRef
+    JNIEnv *env;
+    jint res = javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
+    if (res != JNI_OK) {
+        LOG_TRC_NOFILE("GetEnv need to attach thread");
+        res = javaVM->AttachCurrentThread(&env, nullptr);
+        if (JNI_OK != res) {
+            LOG_TRC_NOFILE("Failed to AttachCurrentThread");
+            return;
+        }
+    }
+
     jstring jstr = env->NewStringUTF(js.c_str());
-    jclass clazz = env->FindClass("org/libreoffice/androidapp/MainActivity");
-    jmethodID callFakeWebsocket = env->GetMethodID(clazz, "callFakeWebsocketOnMessage", "(V)Ljava/lang/String;");
-    env->CallObjectMethod(obj, callFakeWebsocket, jstr);
-    */
+    jmethodID callFakeWebsocket = env->GetMethodID(mainActivityClz, "callFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
+    env->CallVoidMethod(mainActivityObj, callFakeWebsocket, jstr);
 }
 
 /// Handle a message from JavaScript.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobject obj, jstring message)
+Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobject instance, jstring message)
 {
     const char *string_value = env->GetStringUTFChars(message, nullptr);
 
@@ -119,9 +140,11 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobj
             fakeSocketPipe2(closeNotificationPipeForForwardingThread);
 
             // Start another thread to read responses and forward them to the JavaScript
-            // TODO here we actually need to do NewGlobalRef and pass that to
-            // the thread; not the env and obj itself
-            std::thread([&env, &obj]
+            jclass clz = env->GetObjectClass(instance);
+            jclass mainActivityClz = (jclass) env->NewGlobalRef(clz);
+            jobject mainActivityObj = env->NewGlobalRef(instance);
+
+            std::thread([&mainActivityClz, &mainActivityObj]
                         {
                             Util::setThreadName("app2js");
                             while (true)
@@ -156,7 +179,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobj
                                            return;
                                        std::vector<char> buf(n);
                                        n = fakeSocketRead(fakeClientFd, buf.data(), n);
-                                       send2JS(env, obj, buf);
+                                       send2JS(mainActivityClz, mainActivityObj, buf);
                                    }
                                }
                                else
