@@ -1,3 +1,4 @@
 /.externalNativeBuild
 /app.iml
 /build
+/liboSettings.gradle
