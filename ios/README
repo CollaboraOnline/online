@@ -21,7 +21,7 @@ workdir/CustomTarget/ios/ios-all-static-libs.list)
 2) Do a separate clone of the online repo on macOS, but don't run any
 make or open the Mobile project there yet.
 
-3) Do a separate clone of the online repo on Linux, run autogen.sh,
+3) Either: do a separate clone of the online repo on Linux, run autogen.sh,
 and configure it with the --enable-iosapp option:
 
 ./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice"
@@ -34,6 +34,16 @@ make clean && make && tar cf - loleaflet/dist | ssh misan.local 'cd lo/online-io
 
 where misan.local is the macOS machine where I build the app, in the
 ~/lo/online-ios-device folder.
+
+3) Or: install brew: https://brew.sh/
+
+   Then:
+
+brew install libtool npm
+./autogen.sh
+sudo python -m ensurepip --default-pip
+sudo pip install polib lxml
+make ; make
 
 4) In the online folder form step 2, edit the
 ios/Mobile.xcodeproj/project.pbxproj file in your favourite text
