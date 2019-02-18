@@ -116,3 +116,6 @@ eclipsesettingfile.xml
 .yavide_session
 .vscode
 *.code-workspace
+
+# autoconf stuff
+autogen.input
