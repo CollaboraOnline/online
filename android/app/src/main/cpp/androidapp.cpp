@@ -20,7 +20,9 @@
 #include <Protocol.hpp>
 #include <Util.hpp>
 
-#include "Poco/Base64Encoder.h"
+#include <osl/detail/android-bootstrap.h>
+
+#include <Poco/Base64Encoder.h>
 
 const int SHOW_JS_MAXLEN = 70;
 
@@ -35,6 +37,7 @@ static JavaVM* javaVM = nullptr;
 extern "C" JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM* vm, void*) {
     javaVM = vm;
+    libreofficekit_set_javavm(vm);
 
     JNIEnv* env;
     if (vm->GetEnv((void**)&env, JNI_VERSION_1_6) != JNI_OK) {
