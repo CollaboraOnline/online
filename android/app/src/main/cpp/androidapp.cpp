@@ -79,6 +79,7 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
     {
         const unsigned char *ubufp = (const unsigned char *)buffer.data();
         std::vector<char> data;
+        data.push_back('\'');
         for (int i = 0; i < buffer.size(); i++)
         {
             if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\')
@@ -93,7 +94,7 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
                 data.push_back(ubufp[i]);
             }
         }
-        data.push_back(0);
+        data.push_back('\'');
 
         js = std::string(data.data(), data.size());
     }
