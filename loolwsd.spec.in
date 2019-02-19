@@ -21,16 +21,16 @@ Vendor:         Collabora
 Summary:        LibreOffice On-Line WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
-BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5
+BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5 pam-devel gcc-c++ cppunit-devel pam-devel fontconfig python-lxml make
 
 # Red Hat and CentOS
-%if 0%{?fedora} || 0%{?rhel} >= 7
-BuildRequires:  libpcap kernel-headers
+%if 0%{?fedora} || 0%{?rhel} >= 6
+BuildRequires:  libpcap kernel-headers python2-polib
 %endif
 
-# openSUSE and SLES12
+# openSUSE 42.3, openSUSE 15.0, SLES12, SLES15
 %if 0%{?suse_version} >= 1300
-BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros
+BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros python-polib
 %endif
 
 # SLES11SP4
