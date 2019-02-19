@@ -18,11 +18,14 @@ L.Map.FileInserter = L.Handler.extend({
 		this._toInsertURL = {};
 		var parser = document.createElement('a');
 		parser.href = map.options.server;
+	},
+
+	getWopiUrl: function (map) {
 		var wopiSrc = '';
 		if (map.options.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
 		}
-		this._url = map.options.webserver + map.options.serviceRoot + '/' + map.options.urlPrefix +
+		return map.options.webserver + map.options.serviceRoot + '/' + map.options.urlPrefix +
 			'/' + encodeURIComponent(map.options.doc) + '/insertfile' + wopiSrc;
 	},
 
@@ -72,9 +75,10 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	_sendFile: function (name, file) {
-		var url = this._url;
 		var socket = this._map._socket;
 		var map = this._map;
+		var url = this.getWopiUrl(map);
+
 		if (window.ThisIsAMobileApp) {
 			// Pass the file contents as a base64-encoded parameter in an insertfile message
 			var reader = new FileReader();
