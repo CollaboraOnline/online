@@ -58,11 +58,11 @@ static void send2JS(const std::vector<char>& buffer)
     if (newline != nullptr)
     {
         // The data needs to be an ArrayBuffer
-        js = "window.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
+        js = "window.TheFakeWebSocket.onmessage({'base64data':'";
         gchar *base64 = g_base64_encode((const guchar*)buffer.data(), buffer.size());
         js = js + std::string(base64);
         g_free(base64);
-        js = js + "')});";
+        js = js + "'});";
     }
     else
     {
@@ -84,7 +84,7 @@ static void send2JS(const std::vector<char>& buffer)
         }
         data.push_back(0);
 
-        js = "window.TheFakeWebSocket.onmessage({'data': '";
+        js = "window.TheFakeWebSocket.onmessage({'data':'";
         js = js + std::string(buffer.data(), buffer.size());
         js = js + "'});";
     }

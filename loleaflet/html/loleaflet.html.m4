@@ -12,7 +12,7 @@ define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script>
-dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed
+dnl# Define MOBILEAPP as true if this is either for the iOS app, Android app or for the gtk+ "app" testbed
 define([MOBILEAPP],[])
 ifelse(IOSAPP,[true],[define([MOBILEAPP],[true])])
 ifelse(GTKAPP,[true],[define([MOBILEAPP],[true])])
@@ -31,16 +31,6 @@ ifelse(MOBILEAPP,[],
   };
   window.addEventListener('message', PostMessageReadyListener, false);
 )dnl
-
-var Base64ToArrayBuffer = function(base64Str) {
-  var binStr = atob(base64Str);
-  var ab = new ArrayBuffer(binStr.length);
-  var bv = new Uint8Array(ab);
-  for (var i = 0, l = binStr.length; i < l; i++) {
-    bv[[i]] = binStr.charCodeAt(i);
-  }
-  return ab;
-}
 </script>
 
 ifelse(MOBILEAPP,[true],

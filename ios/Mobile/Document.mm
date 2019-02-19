@@ -82,9 +82,9 @@
     const char *newline = (const char *)memchr(buffer, '\n', length);
     if (newline != nullptr) {
         // The data needs to be an ArrayBuffer
-        js = @"window.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
+        js = @"window.TheFakeWebSocket.onmessage({'base64data':'";
         js = [js stringByAppendingString: [[NSData dataWithBytes:buffer length:length] base64EncodedStringWithOptions:0]];
-        js = [js stringByAppendingString:@"')});"];
+        js = [js stringByAppendingString:@"'});"];
         NSString *subjs = [js substringToIndex:std::min(100ul, js.length)];
         if (subjs.length < js.length)
             subjs = [subjs stringByAppendingString:@"..."];
@@ -116,7 +116,7 @@
         }
         data.push_back(0);
 
-        js = @"window.TheFakeWebSocket.onmessage({'data': '";
+        js = @"window.TheFakeWebSocket.onmessage({'data':'";
         js = [js stringByAppendingString:[NSString stringWithUTF8String:data.data()]];
         js = [js stringByAppendingString:@"'});"];
 

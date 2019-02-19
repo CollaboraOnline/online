@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         mWebView.post(new Runnable() {
             public void run() {
                 Log.i(TAG,"Forwarding to the WebView: " + message);
-                mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data': '" + message + "'});");
+                mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage(" + message + ");");
             }
         });
     }
