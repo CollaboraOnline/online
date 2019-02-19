@@ -19,7 +19,10 @@ EOF
 if test `uname -s` = Linux; then
     libtoolize || failed "libtool"
 elif test `uname -s` = Darwin; then
-    glibtoolize || failed "Can't find glibtoolize - cf. https://brew.sh and brew install libtool"
+    echo 'Having glibtoolize is mandatory only if you intend to use the alternative "brew" method. See ios/README.' >&2
+    echo 'So unless you plan to do that, it does not matter if glibtoolize is not be found below:' >&2
+    glibtoolize
+    echo 'There. The script now continues. Errors below are fatal.' >&2
 fi
 
 aclocal || failed "aclocal"
