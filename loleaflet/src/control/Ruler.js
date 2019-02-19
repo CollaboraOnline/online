@@ -39,19 +39,21 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_changeInteractions: function(e) {
-		if (e.perm === 'edit') {
-			this._lMarginDrag.style.cursor = 'e-resize';
-			this._rMarginDrag.style.cursor = 'w-resize';
+		if (this._lMarginDrag) {
+			if (e.perm === 'edit') {
+				this._lMarginDrag.style.cursor = 'e-resize';
+				this._rMarginDrag.style.cursor = 'w-resize';
 
-			L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
-			L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
-		}
-		else {
-			this._lMarginDrag.style.cursor = 'default';
-			this._rMarginDrag.style.cursor = 'default';
+				L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
+				L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+			}
+			else {
+				this._lMarginDrag.style.cursor = 'default';
+				this._rMarginDrag.style.cursor = 'default';
 
-			L.DomEvent.off(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
-			L.DomEvent.off(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+				L.DomEvent.off(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
+				L.DomEvent.off(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+			}
 		}
 	},
 

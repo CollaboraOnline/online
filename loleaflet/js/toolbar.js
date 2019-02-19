@@ -1032,7 +1032,7 @@ function initNormalToolbar(toolItems) {
 				}
 			}
 
-			if (event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes') {
+			if ((event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes') && event.item) {
 				var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(event.item.id));
 				if ((_inDesktopMode() && event.item.desktop == false)
 					|| (_inTabletMode() && event.item.tablet == false)) {
