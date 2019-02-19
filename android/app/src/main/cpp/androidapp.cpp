@@ -67,6 +67,7 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
         ss << "Base64ToArrayBuffer('";
 
         Poco::Base64Encoder encoder(ss);
+        encoder.rdbuf()->setLineLength(0); // unlimited
         encoder << std::string(buffer.data(), buffer.size());
         encoder.close();
 
