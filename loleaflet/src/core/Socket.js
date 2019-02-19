@@ -241,10 +241,7 @@ L.Socket = L.Class.extend({
 	_onMessage: function (e) {
 		var imgBytes, index, textMsg;
 
-		if (typeof(e.base64data) === 'string') {
-			textMsg = atob(e.base64data);
-		}
-		else if (typeof (e.data) === 'string') {
+		if (typeof (e.data) === 'string') {
 			textMsg = e.data;
 		}
 		else if (typeof (e.data) === 'object') {

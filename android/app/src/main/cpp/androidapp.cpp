@@ -64,14 +64,14 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
     {
         // The data needs to be an ArrayBuffer
         std::stringstream ss;
-        ss << "{'base64data':'";
+        ss << "Base64ToArrayBuffer('";
 
         Poco::Base64Encoder encoder(ss);
         encoder.rdbuf()->setLineLength(0); // unlimited
         encoder << std::string(buffer.data(), buffer.size());
         encoder.close();
 
-        ss << "'}";
+        ss << "')";
 
         js = ss.str();
     }
@@ -93,8 +93,9 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
                 data.push_back(ubufp[i]);
             }
         }
+        data.push_back(0);
 
-        js = "{'data':'" + std::string(data.data(), data.size()) + "'}";
+        js = std::string(data.data(), data.size());
     }
 
     std::string subjs = js.substr(0, std::min(std::string::size_type(SHOW_JS_MAXLEN), js.length()));
