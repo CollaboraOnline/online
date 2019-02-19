@@ -1518,6 +1518,9 @@ function onWopiProps(e) {
 	if (e.HideExportOption) {
 		w2ui['presentation-toolbar'].hide('presentation', 'presentationbreak');
 	}
+	if (e.HidePrintOption) {
+		w2ui['editbar'].hide('print');
+	}
 	if (e.DisableCopy) {
 		$('input#formulaInput').bind('copy', function(evt) {
 			evt.preventDefault();
