@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         String cacheDir = getApplication().getCacheDir().getAbsolutePath();
         String apkFile = getApplication().getPackageResourcePath();
 
-        String urlToLoad = "file:///assets/hello-world.odt";
+        String urlToLoad = "file://" + dataDir + "/hello-world.odt";
 
         createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
 
