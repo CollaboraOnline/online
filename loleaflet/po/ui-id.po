@@ -1,722 +1,776 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-09 17:36+0100\n"
+"POT-Creation-Date: 2019-02-20 10:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-ui-id.po\n"
-"X-Pootle-Revision: 3610036\n"
+"X-Pootle-Revision: 3755797\n"
 
-#: admin/admin.strings.js:6
+#: admin.strings.js:5
 msgid "Admin console"
 msgstr "Konsol admin"
 
-#: admin/admin.strings.js:7
+#: admin.strings.js:7
 msgid "Settings"
 msgstr "Pengaturan"
 
-#: admin/admin.strings.js:8
+#: admin.strings.js:8
 msgid "Overview"
 msgstr "Ringkasan"
 
-#: admin/admin.strings.js:9
+#: admin.strings.js:9
 msgid "(current)"
 msgstr "(saat ini)"
 
-#: admin/admin.strings.js:10
+#: admin.strings.js:10
 msgid "Analytics"
 msgstr "Analitis"
 
-#: admin/admin.strings.js:11
+#: evol.colorpicker.strings.js:6
 msgid "History"
 msgstr "Riwayat"
 
-#: admin/admin.strings.js:12
+#: admin.strings.js:11
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: admin/admin.strings.js:13
+#: admin.strings.js:12
 msgid "Users online"
 msgstr "Pengguna daring"
 
-#: admin/admin.strings.js:14
+#: admin.strings.js:13
 msgid "User Name"
 msgstr "Nama Pengguna"
 
-#: admin/admin.strings.js:15
+#: admin.strings.js:13
 msgid "Documents opened"
 msgstr "Dokumen terbuka"
 
-#: admin/admin.strings.js:16
+#: admin.strings.js:16
 msgid "Number of Documents"
 msgstr "Nomor dari Dokumen"
 
-#: admin/admin.strings.js:17
+#: admin.strings.js:14
 msgid "Memory consumed"
 msgstr "Memori dikonsumsi"
 
-#: admin/admin.strings.js:18
+#: admin.strings.js:18
 msgid "Bytes sent"
 msgstr "Byte terkirim"
 
-#: admin/admin.strings.js:19
+#: admin.strings.js:19
 msgid "Bytes received"
 msgstr "Byte diterima"
 
-#: admin/admin.strings.js:20
+#: admin.strings.js:15
 msgid "PID"
 msgstr "PID"
 
-#: admin/admin.strings.js:21
+#: admin.strings.js:16
 msgid "Document"
 msgstr "Dokumen"
 
-#: admin/admin.strings.js:22
+#: admin.strings.js:17
 msgid "Number of views"
 msgstr "Cacah tilikan"
 
-#: admin/admin.strings.js:23
+#: admin.strings.js:18
 msgid "Elapsed time"
 msgstr "Waktu berjalan"
 
-#: admin/admin.strings.js:24
+#: admin.strings.js:19
 msgid "Idle time"
 msgstr "Waktu jeda"
 
-#: admin/admin.strings.js:25
+#: admin.strings.js:25
 msgid "Modified"
 msgstr "Diubah"
 
-#: admin/admin.strings.js:26
+#: admin.strings.js:20
 msgid "Kill"
 msgstr "Matikan"
 
-#: admin/admin.strings.js:27
+#: admin.strings.js:21
 msgid "Graphs"
 msgstr "Grafik"
 
-#: admin/admin.strings.js:28
+#: admin.strings.js:27
 msgid "Memory Graph"
 msgstr "Grafik Memori"
 
-#: admin/admin.strings.js:29
+#: admin.strings.js:28
 msgid "CPU Graph"
 msgstr "Grafik CPU"
 
-#: admin/admin.strings.js:30
+#: admin.strings.js:29
 msgid "Network Graph"
 msgstr "Grafik Jaringan"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:242
+#: admin.strings.js:22
+#: dist/toolbar/toolbar.js:473
+#: src/control/Control.Menubar.js:11
+#: src/control/Control.Menubar.js:175
+#: src/control/Control.Menubar.js:235
+#: src/layer/marker/Annotation.js:184
 msgid "Save"
 msgstr "Simpan"
 
-#: admin/admin.strings.js:32
+#: admin.strings.js:23
 msgid "Cache size of memory statistics"
 msgstr "Ukuran singgahan dari statistik memori"
 
-#: admin/admin.strings.js:33
+#: admin.strings.js:24
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Selang waktu statistik memori (dalam ms)"
 
-#: admin/admin.strings.js:34
+#: admin.strings.js:25
 msgid "Cache size of CPU statistics"
 msgstr "Ukuran singgahan dari statistik CPU"
 
-#: admin/admin.strings.js:35
+#: admin.strings.js:26
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Selang waktu statistik CPU (dalam ms)"
 
-#: admin/admin.strings.js:36
+#: admin.strings.js:35
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 "Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - kurangi saja"
 
 #: admin/admin.strings.js:37
-#, fuzzy
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
-"Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - kurangi saja"
+"Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - Hanya kurangi"
 
-#: admin/admin.strings.js:38
+#: admin.strings.js:37
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"Ukuran file maksimum diizinkan untuk menulis ke disk (dalam MB) - kurangi "
+"saja"
 
-#: admin/admin.strings.js:39
+#: admin.strings.js:38
 msgid "Documents:"
 msgstr "Dokumen:"
 
-#: admin/admin.strings.js:40
+#: admin.strings.js:39
 msgid "Expired:"
 msgstr "Kadar Luarsa:"
 
-#: admin/admin.strings.js:41
+#: unocommands.js:19
 msgid "Refresh"
 msgstr "Perbarui"
 
-#: admin/src/AdminSocketAnalytics.js:219
+#: src/admin/AdminSocketAnalytics.js:218
 msgid "Received"
 msgstr "Diterima"
 
-#: admin/src/AdminSocketAnalytics.js:223
+#: src/admin/AdminSocketAnalytics.js:222
 msgid "Sent"
 msgstr "Terkirim"
 
-#: admin/src/AdminSocketBase.js:46
+#: src/admin/AdminSocketBase.js:46
 msgid "Connection error"
 msgstr "Galat koneksi"
 
-#: admin/src/AdminSocketOverview.js:101
+#: src/admin/AdminSocketOverview.js:66
 msgid "Are you sure you want to terminate this session?"
 msgstr "Anda yakin ingin mengakhiri sesi ini?"
 
-#: admin/src/AdminSocketOverview.js:182 admin/src/AdminSocketOverview.js:284
+#: src/admin/AdminSocketOverview.js:152
+#: src/admin/AdminSocketOverview.js:311
 msgid "Documents"
 msgstr "Dokumen"
 
-#: admin/src/AdminSocketSettings.js:34
+#: src/admin/AdminSocketSettings.js:31
 msgid "Are you sure you want to shut down the server?"
 msgstr "Apakah anda yakin ingin mematikan server?"
 
-#: admin/src/Util.js:14
+#: src/admin/Util.js:13
 msgid "kB"
 msgstr "kB"
 
-#: admin/src/Util.js:14
+#: src/admin/Util.js:13
 msgid "MB"
 msgstr "MB"
 
-#: admin/src/Util.js:14
+#: src/admin/Util.js:13
 msgid "GB"
 msgstr "GB"
 
-#: admin/src/Util.js:14
+#: src/admin/Util.js:13
 msgid "TB"
 msgstr "TB"
 
-#: admin/src/Util.js:43 admin/src/Util.js:45
+#: src/admin/Util.js:42
+#: src/admin/Util.js:44
 msgid " hrs"
 msgstr " jam"
 
-#: admin/src/Util.js:49 admin/src/Util.js:51
+#: src/admin/Util.js:48
+#: src/admin/Util.js:50
 msgid " mins"
 msgstr " menit"
 
-#: admin/src/Util.js:54
+#: src/admin/Util.js:53
 msgid " s"
 msgstr " d"
 
-#: js/toolbar.js:224
+#: dist/toolbar/toolbar.js:264
 msgid "Are you sure you want to delete this page?"
 msgstr "Anda yakin ingin menghapus halaman ini?"
 
-#: js/toolbar.js:767
+#: js/toolbar.js:635
 msgid "Borders"
 msgstr "Bingkai"
 
-#: js/toolbar.js:775
+#: js/toolbar.js:643
 msgid "More..."
 msgstr "Lebih..."
 
-#: js/toolbar.js:820
+#: dist/toolbar/toolbar.js:520
 msgid "Insert table"
 msgstr "Sisip tabel"
 
-#: js/toolbar.js:825
+#: js/toolbar.js:703
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Sisipkan Citra Lokal"
 
-#: js/toolbar.js:828
+#: js/toolbar.js:578
 msgid "Insert shapes"
 msgstr "Sisipkan bentuk"
 
-#: js/toolbar.js:865 js/toolbar.js:1204
+#: dist/toolbar/toolbar.js:680
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Selalu ikuti penyunting"
 
-#: js/toolbar.js:868 js/toolbar.js:1207
+#: dist/toolbar/toolbar.js:683
 msgid "Current"
-msgstr ""
+msgstr "Saat Ini"
 
-#: js/toolbar.js:901 js/toolbar.js:1074 js/toolbar.js:1614
+#: dist/toolbar/toolbar.js:631
+#: dist/toolbar/toolbar.js:976
 msgid "Sum"
 msgstr "Jumlah"
 
-#: js/toolbar.js:902 js/toolbar.js:1075
+#: dist/toolbar/toolbar.js:632
 msgid "Function"
 msgstr "Fungsi"
 
-#: js/toolbar.js:903 js/toolbar.js:1076 src/layer/marker/Annotation.js:181
+#: dist/toolbar/toolbar.js:633
+#: src/control/Control.CharacterMap.js:428
+#: src/layer/marker/Annotation.js:130
 msgid "Cancel"
 msgstr "Batal"
 
-#: js/toolbar.js:904 js/toolbar.js:1077
+#: dist/toolbar/toolbar.js:634
 msgid "Accept"
 msgstr "Terima"
 
-#: js/toolbar.js:937 js/toolbar.js:1142
+#: dist/toolbar/toolbar.js:649
 msgid "First sheet"
 msgstr "Lembar pertama"
 
-#: js/toolbar.js:938 js/toolbar.js:1143
+#: dist/toolbar/toolbar.js:650
 msgid "Previous sheet"
 msgstr "Lembar sebelumnya"
 
-#: js/toolbar.js:939 js/toolbar.js:1144
+#: dist/toolbar/toolbar.js:651
 msgid "Next sheet"
 msgstr "Lembar selanjutnya"
 
-#: js/toolbar.js:940 js/toolbar.js:1145
+#: dist/toolbar/toolbar.js:652
 msgid "Last sheet"
 msgstr "Lembar terakhir"
 
-#: js/toolbar.js:941 js/toolbar.js:1146
+#: dist/toolbar/toolbar.js:647
 msgid "Insert sheet"
 msgstr "Sisipkan lembar kerja"
 
-#: js/toolbar.js:1108
-msgid "Sign"
-msgstr ""
-
-#: js/toolbar.js:1108 src/control/Control.Menubar.js:30
-msgid "Sign document"
-msgstr "Tandatangani Dokumen"
-
-#: js/toolbar.js:1109
-msgid "Upload"
-msgstr ""
-
-#: js/toolbar.js:1109
-msgid "Upload document"
-msgstr ""
-
-#: js/toolbar.js:1111
-msgid "Identity:"
-msgstr ""
-
-#: js/toolbar.js:1112 js/toolbar.js:1118
-msgid "N/A"
-msgstr ""
-
 #: js/toolbar.js:1114
 msgid "Select passport"
-msgstr ""
+msgstr "PIlih Passport"
 
 #: js/toolbar.js:1115
 msgid "Passport: N/A"
-msgstr ""
+msgstr "Passport: N/A"
+
+#: js/toolbar.js:1102
+msgid "Sign & Upload"
+msgstr "Tandai & Unggah"
+
+#: js/toolbar.js:1102
+msgid "Sign and upload document"
+msgstr "Tandai & Unggah dokumen"
 
 #: js/toolbar.js:1117
 msgid "Status:"
-msgstr ""
+msgstr "Status"
 
-#: js/toolbar.js:1120
+#: js/toolbar.js:1112
+#: js/toolbar.js:1118
+msgid "N/A"
+msgstr "N/A"
+
+#: js/toolbar.js:965
 msgid "Logout"
 msgstr "Keluar"
 
 #: js/toolbar.js:1121
 msgid "Login"
-msgstr ""
+msgstr "Log Masuk"
 
 #: js/toolbar.js:1122
 msgid "Close"
-msgstr ""
+msgstr "Tutup"
 
-#: js/toolbar.js:1164 src/control/Control.Menubar.js:295
+#: dist/toolbar/toolbar.js:662
+#: src/control/Control.Menubar.js:224
 msgid "Fullscreen presentation"
 msgstr "Presentasi layar penuh"
 
-#: js/toolbar.js:1188
+#: dist/toolbar/toolbar.js:679
 msgid "Search:"
 msgstr "Cari:"
 
-#: js/toolbar.js:1195
+#: dist/toolbar/toolbar.js:686
 msgid "Cancel the search"
 msgstr "Batalkan pencarian"
 
-#: js/toolbar.js:1200
-msgid "No users"
-msgstr "Tidak ada pengguna"
-
-#: js/toolbar.js:1214 src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:261
+#: dist/toolbar/toolbar.js:696
+#: src/control/Control.Menubar.js:44
+#: src/control/Control.Menubar.js:199
 msgid "Reset zoom"
 msgstr "Reset zum"
 
-#: js/toolbar.js:1258
+#: dist/toolbar/toolbar.js:715
 msgid "%user has joined"
-msgstr ""
+msgstr "%user telah bergabung"
 
-#: js/toolbar.js:1259
+#: js/toolbar.js:1100
 msgid "%user has left"
-msgstr ""
+msgstr "%user telah keluar"
 
-#: js/toolbar.js:1592
-#, fuzzy
+#: dist/toolbar/toolbar.js:957
 msgid "Number of Sheets"
-msgstr "Cacah tilikan"
+msgstr "Jumlah lembar kerja"
 
-#: js/toolbar.js:1595
+#: dist/toolbar/toolbar.js:960
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Pilih rentang sel"
 
-#: js/toolbar.js:1598 js/toolbar.js:1640
+#: dist/toolbar/toolbar.js:963
+#: dist/toolbar/toolbar.js:998
 msgid "Entering text mode"
-msgstr ""
+msgstr "Masuk ke mode teks"
 
-#: js/toolbar.js:1601 js/toolbar.js:1646 js/toolbar.js:1666
+#: dist/toolbar/toolbar.js:680
 msgid "Text Language"
 msgstr "Bahasa Teks"
 
-#: js/toolbar.js:1604 js/toolbar.js:1643
+#: dist/toolbar/toolbar.js:966
+#: dist/toolbar/toolbar.js:1001
 msgid "Selection Mode"
 msgstr "Mode Seleksi"
 
-#: js/toolbar.js:1607
+#: dist/toolbar/toolbar.js:969
 msgid "Choice of functions"
-msgstr ""
+msgstr "Pilih Fungsi"
 
-#: js/toolbar.js:1609
+#: dist/toolbar/toolbar.js:971
 msgid "Average"
 msgstr "Rerata"
 
-#: js/toolbar.js:1610
-#, fuzzy
+#: js/toolbar.js:1438
 msgid "CountA"
-msgstr "Menghitung"
+msgstr "HitungA"
 
-#: js/toolbar.js:1611
+#: dist/toolbar/toolbar.js:973
 msgid "Count"
 msgstr "Menghitung"
 
-#: js/toolbar.js:1612
+#: dist/toolbar/toolbar.js:974
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: js/toolbar.js:1613
+#: dist/toolbar/toolbar.js:975
 msgid "Minimum"
 msgstr "Minimum"
 
-#: js/toolbar.js:1615
+#: dist/toolbar/toolbar.js:977
 msgid "Selection count"
-msgstr ""
+msgstr "Cacah pilihan"
 
-#: js/toolbar.js:1616
+#: dist/toolbar/toolbar.js:978
+#: src/control/Control.CharacterMap.js:11
 msgid "None"
 msgstr "Nihil"
 
-#: js/toolbar.js:1634
-#, fuzzy
+#: dist/toolbar/toolbar.js:992
 msgid "Number of Pages"
-msgstr "Cacah tilikan"
+msgstr "Nomor Halaman"
 
-#: js/toolbar.js:1637
+#: dist/toolbar/toolbar.js:995
 msgid "Word Counter"
-msgstr ""
+msgstr "Penjumlah Kata"
 
-#: js/toolbar.js:1661
-#, fuzzy
+#: dist/toolbar/toolbar.js:1018
 msgid "Number of Slides"
-msgstr "Cacah tilikan"
+msgstr "Nomor Salindia"
 
-#: js/toolbar.js:1690
+#: dist/toolbar/toolbar.js:105
 msgid "%n users"
 msgstr "%n pengguna"
 
-#: js/toolbar.js:1691
+#: dist/toolbar/toolbar.js:106
 msgid "1 user"
 msgstr "1 pengguna"
 
-#: js/toolbar.js:1692
+#: dist/toolbar/toolbar.js:107
 msgid "0 users"
 msgstr "0 pengguna"
 
-#: js/toolbar.js:1849
+#: dist/toolbar/toolbar.js:1161
 msgid "Document saved"
 msgstr "Dokumen telah disimpan"
 
-#: js/toolbar.js:1999
+#: dist/toolbar/toolbar.js:1324
 msgid "Style"
 msgstr "Gaya"
 
-#: js/toolbar.js:2021
+#: dist/toolbar/toolbar.js:1343
 msgid "Font"
 msgstr "Fonta"
 
-#: js/toolbar.js:2054
+#: dist/toolbar/toolbar.js:1379
 msgid "Previous slide"
 msgstr "Salindia sebelumnya"
 
-#: js/toolbar.js:2055
+#: dist/toolbar/toolbar.js:1380
 msgid "Next slide"
 msgstr "Salindia selanjutnya"
 
-#: js/toolbar.js:2101
+#: dist/toolbar/toolbar.js:1433
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Konfik Urungkan/Ulangi dengan user ganda. Tolong gunakan perbaiki dokumen "
+"untuk mengatasinya"
 
-#: js/toolbar.js:2357 src/control/Control.DocumentRepair.js:95
+#: dist/toolbar/toolbar.js:1598
+#: src/control/Control.DocumentRepair.js:87
 msgid "You"
 msgstr "Kamu"
 
-#: js/toolbar.js:2363
+#: dist/toolbar/toolbar.js:1604
 msgid "Readonly"
 msgstr "Hanya baca"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "Peladen mengalami kesalahan %0 saat mem-parsing perintah %1."
 
-#: src/control/Control.ContextMenu.js:131
+#: src/control/Control.ContextMenu.js:135
 msgid "Internal Cut"
-msgstr ""
+msgstr "Potongan Dalam"
 
-#: src/control/Control.ContextMenu.js:134
+#: src/control/Control.ContextMenu.js:138
 msgid "Internal Copy"
-msgstr ""
+msgstr "Salin Internal"
 
-#: src/control/Control.ContextMenu.js:137
+#: src/control/Control.ContextMenu.js:141
 msgid "Internal Paste"
-msgstr ""
+msgstr "Rekat Internal"
 
-#: src/control/Control.ContextMenu.js:159
+#: src/control/Control.ContextMenu.js:163
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Rekat Spesial Internal"
 
-#: src/control/Control.DocumentRepair.js:33
+#: src/control/Control.DocumentRepair.js:32
 msgid "Repair Document"
-msgstr ""
+msgstr "Perbaiki Dokumen"
+
+#: src/control/Control.DocumentRepair.js:40
+msgid "Type"
+msgstr "Tipe"
+
+#: src/control/Control.DocumentRepair.js:42
+msgid "Index"
+msgstr "indeks"
 
 #: src/control/Control.DocumentRepair.js:44
-msgid "Type"
-msgstr ""
-
-#: src/control/Control.DocumentRepair.js:46
-msgid "Index"
-msgstr ""
-
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:228
+#: src/layer/tile/TileLayer.js:215
 msgid "Comment"
 msgstr "Komentar"
 
 #: src/control/Control.DocumentRepair.js:50
-#, fuzzy
 msgid "User name"
 msgstr "Nama Pengguna"
 
-#: src/control/Control.DocumentRepair.js:52
+#: src/control/Control.DocumentRepair.js:48
 msgid "Timestamp"
-msgstr ""
+msgstr "Cap Waktu"
 
-#: src/control/Control.DocumentRepair.js:56
+#: src/control/Control.DocumentRepair.js:52
 msgid "Jump to state"
-msgstr ""
+msgstr "Loncat ke pernyataan"
 
 #: src/control/Control.Menubar.js:21
 msgid "Share..."
-msgstr ""
+msgstr "Bagikan..."
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
-#: src/control/Control.Menubar.js:314
+#: src/control/Control.Menubar.js:13
+#: src/control/Control.Menubar.js:177
+#: src/control/Control.Menubar.js:237
 msgid "See revision history"
-msgstr ""
+msgstr "Lihat histori perubahan"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:236
-#: src/control/Control.Menubar.js:315
+#: src/control/Control.Menubar.js:14
+#: src/control/Control.Menubar.js:178
+#: src/control/Control.Menubar.js:238
 msgid "Download as"
 msgstr "Unduh sebagai"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:237
-#: src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:15
+#: src/control/Control.Menubar.js:179
+#: src/control/Control.Menubar.js:239
 msgid "PDF Document (.pdf)"
 msgstr "Dokumen PDF (.pdf)"
 
-#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:16
 msgid "ODF text document (.odt)"
 msgstr "Dokumen teks ODF (*.odt)"
 
-#: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:25
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Dokumen Word 2003 (.doc)"
 
-#: src/control/Control.Menubar.js:28
+#: src/control/Control.Menubar.js:26
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Word Dokument (.docx)"
 
-#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Teks Kaya (.rtf)"
 
-#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:242
-#: src/control/Control.Menubar.js:321
+#: js/toolbar.js:960
+#: src/control/Control.Menubar.js:30
+msgid "Sign document"
+msgstr "Tandatangani Dokumen"
+
+#: dist/toolbar/toolbar.js:527
+#: src/control/Control.Menubar.js:170
+#: src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:277
 msgid "Close document"
 msgstr "Tutup dokumen"
 
-#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:247
-#: src/control/Control.Menubar.js:326
+#: src/control/Control.Menubar.js:21
 msgid "Repair"
-msgstr ""
+msgstr "Repair"
 
-#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
-#: src/control/Control.Menubar.js:339
+#: src/control/Control.Menubar.js:69
+#: src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:341
 msgid "Local Image..."
-msgstr ""
+msgstr "Gambar Lokal..."
 
-#: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
+#: src/control/Control.Menubar.js:71
+#: src/control/Control.Menubar.js:73
 msgid "All"
-msgstr ""
+msgstr "Semua"
 
-#: src/control/Control.Menubar.js:134
+#: src/control/Control.Menubar.js:95
 msgid "Text orientation"
-msgstr ""
+msgstr "Orientasi Teks"
 
-#: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:300
-#: src/control/Control.Menubar.js:394
+#: src/control/Control.Menubar.js:191
+#: src/control/Control.Menubar.js:193
+#: src/control/Control.Menubar.js:195
+#: src/control/Control.Menubar.js:274
+#: src/control/Control.Menubar.js:364
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Tidak (Jangan periksa ejaan)"
 
-#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:303
-#: src/control/Control.Menubar.js:397
+#: src/control/Control.Menubar.js:167
+#: src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:274
 msgid "Keyboard shortcuts"
 msgstr "Pintasan papan tik"
 
-#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:304
-#: src/control/Control.Menubar.js:398
+#: src/control/Control.Menubar.js:168
+#: src/control/Control.Menubar.js:228
+#: src/control/Control.Menubar.js:275
 msgid "About"
 msgstr "Ihwal"
 
-#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:306
-#: src/control/Control.Menubar.js:400 src/map/Map.js:273
+#: src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:306
+#: src/control/Control.Menubar.js:400
+#: src/map/Map.js:273
 msgid "Last modification"
-msgstr ""
+msgstr "Modifikasi terakhir"
 
-#: src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
 msgstr "Presentasi ODF (.odp)"
 
-#: src/control/Control.Menubar.js:239
+#: src/control/Control.Menubar.js:235
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003 Presentation (.ppt)"
+
+#: src/control/Control.Menubar.js:236
+msgid "PowerPoint Presentation (.pptx)"
+msgstr "PowerPoint Presentation (.pptx)"
 
 #: src/control/Control.Menubar.js:240
-msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
-
-#: src/control/Control.Menubar.js:317
 msgid "ODF spreadsheet (.ods)"
 msgstr "Lembar kerja ODF (.ods)"
 
-#: src/control/Control.Menubar.js:318
+#: src/control/Control.Menubar.js:315
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Excel 2003 Spreadsheet (.xls)"
 
-#: src/control/Control.Menubar.js:319
+#: src/control/Control.Menubar.js:316
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Excel Spreadsheet (.xlsx)"
 
-#: src/control/Control.Menubar.js:466
+#: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Kembalikan ke Bahasa Bawaan"
 
-#: src/control/Control.Menubar.js:743
+#: src/control/Control.Menubar.js:477
 msgid "Are you sure you want to delete this slide?"
 msgstr "Anda yakin ingin menghapus salindia ini?"
 
-#: src/control/Control.Scroll.Annotation.js:10
+#: src/control/Control.Scroll.Annotation.js:9
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Gulirkan anotasi ke atas"
 
-#: src/control/Control.Scroll.Annotation.js:12
+#: src/control/Control.Scroll.Annotation.js:11
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Gulirkan anotasi ke bawah"
 
-#: src/control/Control.Tabs.js:64
+#: src/control/Control.Tabs.js:46
 msgid "Insert sheet before this"
 msgstr "Sisipkan lembar sebelum ini"
 
-#: src/control/Control.Tabs.js:65
+#: src/control/Control.Tabs.js:47
 msgid "Insert sheet after this"
 msgstr "Sisip lembar setelah ini"
 
-#: src/control/Control.Tabs.js:70
+#: src/control/Control.Tabs.js:52
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "Anda yakin ingin menghapus lembar %sheet%?"
 
-#: src/control/Control.Tabs.js:83
+#: src/control/Control.Tabs.js:65
 msgid "Enter new sheet name"
 msgstr "Masukkan nama lembar baru"
 
-#: src/control/Signing.js:156 src/control/Signing.js:229
+#: src/control/Signing.js:196
+msgid "Please enter the PIN Code"
+msgstr "Harap Masukan Kode PIN"
+
+#: src/control/Signing.js:215
+msgid "Error at login."
+msgstr "Kesalahan saat masuk."
+
+#: src/control/Signing.js:228
+msgid "Please scan the code"
+msgstr "Silakan pindai kodenya"
+
+#: src/control/Signing.js:242
+msgid "Couldn't get the QR code image."
+msgstr "Tidak dapat mendapatkan citra kode QR."
+
+#: src/control/Signing.js:269
+msgid "Error when trying to restore access to identity."
+msgstr "Error saat mencoba mengembalikan akses ke identitas."
+
+#: src/control/Signing.js:156
+#: src/control/Signing.js:229
 msgid "PIN Code"
-msgstr ""
+msgstr "Kode PIN"
+
+#: src/control/Signing.js:276
+msgid "Please enter the PIN code from the EMail or SMS"
+msgstr "Silakan masukkan kode PIN dari EMail atau SMS"
 
 #: src/control/Signing.js:219
 msgid "Login from email or mobile number"
-msgstr ""
-
-#: src/control/Signing.js:230
-msgid "Check your email"
-msgstr ""
+msgstr "Masuk dari email atau nomor ponsel"
 
 #: src/control/Signing.js:325
 msgid "Document uploaded."
-msgstr ""
+msgstr "Dokumen diunggah"
 
-#: src/control/Signing.js:464
-msgid "Not Signed"
-msgstr ""
+#: src/control/Signing.js:395
+msgid "Select document type to upload"
+msgstr "Pilih jenis dokument untuk unggah"
+
+#: src/control/Signing.js:396
+msgid "Type:"
+msgstr "Jenis:"
+
+#: src/control/Signing.js:362
+msgid "Select identity:"
+msgstr "Pilih identitas:"
+
+#: src/control/Signing.js:363
+msgid "Login from mobile"
+msgstr "Masuk dari ponsel"
+
+#: src/control/Signing.js:364
+msgid "Recover from email"
+msgstr "Pulihkan dari email"
 
 #: src/control/Signing.js:467
-msgid "Document signed and validated."
-msgstr ""
+msgid "Not Signed"
+msgstr "Tidak ditandai"
 
-#: src/control/Signing.js:468
+#: src/control/Signing.js:574
+msgid "This document is digitally signed and the signature is valid."
+msgstr "Dokumen ini ditandatangani secara digital dan tanda tangannya valid."
+
+#: src/control/Signing.js:471
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:471
-msgid "Document signed but signature is broken."
-msgstr ""
-
-#: src/control/Signing.js:472
-msgid "Signature broken"
+#: src/control/Signing.js:578
+msgid "This document has an invalid signature."
 msgstr ""
 
 #: src/control/Signing.js:475
-msgid "Document signed but the document is already modified."
-msgstr ""
+msgid "Signature broken"
+msgstr "Tanda tangan rusak"
 
-#: src/control/Signing.js:476
-msgid "Signed but document modified"
+#: src/control/Signing.js:582
+msgid "The signature was valid, but the document has been modified"
 msgstr ""
 
 #: src/control/Signing.js:479
-msgid "Document signed but can not be validated."
-msgstr ""
+msgid "Signed but document modified"
+msgstr "Ditandatangani tetapi dokumen dimodifikasi"
 
-#: src/control/Signing.js:480
-msgid "Signed but not validated"
+#: src/control/Signing.js:586
+msgid "The signature is OK, but the certificate could not be validated."
 msgstr ""
 
 #: src/control/Signing.js:483
-msgid "Document signed but not all files are signed."
+msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:484
+#: src/control/Signing.js:590
+msgid "The signature is OK, but the document is only partially signed"
+msgstr ""
+
+#: src/control/Signing.js:487
 msgid "Signed but not all files are signed"
 msgstr ""
 
@@ -728,105 +782,107 @@ msgstr ""
 msgid "Right Margin"
 msgstr ""
 
-#: src/control/Toolbar.js:75 src/control/Toolbar.js:84
+#: src/control/Toolbar.js:74
+#: src/control/Toolbar.js:83
 msgid "Downloading..."
 msgstr "Mengunduh..."
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1119
+#: src/control/Toolbar.js:95
+#: src/map/Map.js:939
 msgid "Saving..."
 msgstr "Menyimpan..."
 
-#: src/control/Toolbar.js:255
+#: src/control/Toolbar.js:246
 msgid "This version of %productName is powered by"
 msgstr "Versi %productName ini ditenagai oleh"
 
-#: src/core/Socket.js:79
+#: src/core/Socket.js:47
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-"versions/windows/internet-explorer/ie-developer/general-info/"
-"ee330736(v=vs.85)#websocket-maximum-server-connections"
+"versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85"
+")#websocket-maximum-server-connections"
 msgstr ""
 
-#: src/core/Socket.js:81
+#: src/core/Socket.js:30
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Ups, ada masalah menyambung ke LibreOffice Daring: "
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:188
 msgid "Unsupported server version."
 msgstr "Versi server tidak didukung."
 
-#: src/core/Socket.js:334
+#: src/core/Socket.js:226
 msgid "Session terminated by document owner"
 msgstr ""
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:261
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 
-#: src/core/Socket.js:345
+#: src/core/Socket.js:229
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
-#: src/core/Socket.js:349
+#: src/core/Socket.js:272
 msgid "Oops, there is a problem connecting the document"
 msgstr ""
 
-#: src/core/Socket.js:353
+#: src/core/Socket.js:232
 msgid "Server is recycling and will be available shortly"
 msgstr ""
 
-#: src/core/Socket.js:384
+#: src/core/Socket.js:306
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
 
-#: src/core/Socket.js:390
+#: src/core/Socket.js:320
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
 
-#: src/core/Socket.js:508
+#: src/core/Socket.js:442
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:447
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:452
 msgid "Overwrite"
 msgstr ""
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:457
 msgid "Save to new file"
 msgstr ""
 
-#: src/core/Socket.js:591
+#: src/core/Socket.js:348
 msgid "Document requires password to view."
 msgstr "Dokumen perlu sandi untuk menilik."
 
-#: src/core/Socket.js:594
+#: src/core/Socket.js:351
 msgid "Document requires password to modify."
 msgstr "Dokumen perlu sandi untuk mengubah."
 
-#: src/core/Socket.js:596
+#: src/core/Socket.js:353
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Tekan Batal untuk membuka dalam mode hanya tilik."
 
-#: src/core/Socket.js:600
+#: src/core/Socket.js:357
 msgid "Wrong password provided. Please try again."
 msgstr "Sandi salah. Harap coba lagi."
 
-#: src/core/Socket.js:713
+#: src/core/Socket.js:420
 msgid "Connecting..."
 msgstr ""
 
-#: src/core/Socket.js:865
+#: src/core/Socket.js:542
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -834,7 +890,7 @@ msgstr ""
 "Aduh, ini memalukan, kami tidak bisa menyambung ke dokumen Anda. Harap coba "
 "lagi."
 
-#: src/errormessages.js:13
+#: dist/errormessages.js:1
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
@@ -842,7 +898,7 @@ msgstr ""
 "Tidak ada ruang penyimpanan yang tersisa di pelden, silahkan hubungi admin "
 "peladen untuk melanjutkan."
 
-#: src/errormessages.js:14
+#: dist/errormessages.js:2
 msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
@@ -850,7 +906,7 @@ msgstr ""
 "URL host kosong. Server loolwsd mungkin salah konfigurasi, harap hubungi "
 "administrator."
 
-#: src/errormessages.js:15
+#: dist/errormessages.js:3
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears when "
@@ -858,70 +914,68 @@ msgid ""
 "concurrently"
 msgstr ""
 
-#: src/errormessages.js:16
+#: dist/errormessages.js:4
 msgid "More information and support"
 msgstr ""
 
-#: src/errormessages.js:17
+#: dist/errormessages.js:4
 msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
 
-#: src/errormessages.js:18
+#: dist/errormessages.js:5
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
 
-#: src/errormessages.js:19
+#: dist/errormessages.js:6
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
 
-#: src/errormessages.js:20
+#: dist/errormessages.js:8
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr ""
 
-#: src/errormessages.js:21
+#: dist/errormessages.js:8
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
 
-#: src/errormessages.js:22
+#: dist/errormessages.js:9
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
 
-#: src/errormessages.js:23
+#: dist/errormessages.js:10
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
 
-#: src/errormessages.js:26
-#, javascript-format
+#: dist/errormessages.js:13
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
 
-#: src/errormessages.js:27
-#, javascript-format
+#: dist/errormessages.js:14
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
 
-#: src/errormessages.js:28
+#: dist/errormessages.js:15
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 
-#: src/errormessages.js:29
+#: dist/errormessages.js:16
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -929,62 +983,53 @@ msgstr ""
 "Dokumen tidak dapat disimpan. Cek hak akses kamu atau hubungi admin peladen "
 "penyimpanan."
 
-#: src/layer/marker/Annotation.js:211
+#: src/layer/marker/Annotation.js:156
 msgid "Accept change"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:216
+#: src/layer/marker/Annotation.js:161
 msgid "Reject change"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:225
+#: src/layer/marker/Annotation.js:169
 msgid "Open menu"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:245 src/layer/tile/TileLayer.js:201
+#: unocommands.js:18
+#: src/layer/marker/Annotation.js:187
+#: src/layer/tile/TileLayer.js:188
 msgid "Reply"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:195
+#: src/layer/tile/TileLayer.js:182
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:207
+#: src/layer/tile/TileLayer.js:194
 msgid "Remove"
 msgstr ""
 
-#: src/map/Map.js:170
+#: src/map/Map.js:131
 msgid "Initializing..."
 msgstr "Menginisialisasi..."
 
-#: src/map/Map.js:991
+#: src/map/Map.js:820
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
-#: src/map/Map.js:1122
+#: src/map/Map.js:942
 msgid "Loading..."
 msgstr "Memuat..."
 
-#: src/map/handler/Map.FileInserter.js:101
+#: src/map/handler/Map.FileInserter.js:54
 #, fuzzy
 msgid "Uploading..."
 msgstr "Memuat..."
 
-#: src/map/handler/Map.WOPI.js:277
-msgid "Creating copy..."
+#: src/map/handler/Map.WOPI.js:97
+msgid "Creating new file from template..."
 msgstr ""
 
-#~ msgid "No wrap"
-#~ msgstr "Tanpa pembungkus"
-
-#~ msgid "Page wrap"
-#~ msgstr "Pembungkus halaman"
-
-#~ msgid "Left wrap"
-#~ msgstr "Pembungkus kiri"
-
-#~ msgid "Right wrap"
-#~ msgstr "Pembungkus kanan"
-
-#~ msgid "Document repair"
-#~ msgstr "Perbaikan dokumen"
+#: src/map/handler/Map.WOPI.js:250
+msgid "Creating copy..."
+msgstr ""
