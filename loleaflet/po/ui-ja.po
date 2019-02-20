@@ -92,7 +92,7 @@ msgstr "アイドル時間"
 
 #: admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "変更"
 
 #: admin.strings.js:20
 msgid "Kill"
@@ -224,11 +224,11 @@ msgstr "このページを本当に削除してよろしいですか？"
 
 #: js/toolbar.js:635
 msgid "Borders"
-msgstr ""
+msgstr "外枠"
 
 #: js/toolbar.js:643
 msgid "More..."
-msgstr ""
+msgstr "詳細..."
 
 #: dist/toolbar/toolbar.js:520
 msgid "Insert table"
@@ -236,7 +236,7 @@ msgstr "表の挿入"
 
 #: js/toolbar.js:703
 msgid "Insert Local Image"
-msgstr ""
+msgstr "ローカル画像の挿入"
 
 #: js/toolbar.js:645
 msgid "Insert shapes"
@@ -248,7 +248,7 @@ msgstr "常に編集者に従う"
 
 #: dist/toolbar/toolbar.js:683
 msgid "Current"
-msgstr ""
+msgstr "現在"
 
 #: dist/toolbar/toolbar.js:631
 #: dist/toolbar/toolbar.js:976
@@ -543,15 +543,15 @@ msgstr "ODF 文書ドキュメント (.odt)"
 
 #: src/control/Control.Menubar.js:25
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Word 2003 文書ドキュメント (.doc)"
 
 #: src/control/Control.Menubar.js:26
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Word 文書ドキュメント (.docx)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "リッチテキスト形式 (.rtf)"
 
 #: js/toolbar.js:960
 #: src/control/Control.Menubar.js:30
@@ -573,7 +573,7 @@ msgstr "修復"
 #: src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:341
 msgid "Local Image..."
-msgstr ""
+msgstr "ローカル画像..."
 
 #: src/control/Control.Menubar.js:71
 #: src/control/Control.Menubar.js:73
@@ -609,7 +609,7 @@ msgstr "このソフトウェアについて"
 #: src/control/Control.Menubar.js:400
 #: src/map/Map.js:273
 msgid "Last modification"
-msgstr ""
+msgstr "最後の修正"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -617,11 +617,11 @@ msgstr "ODFプレゼンテーション(.odp)"
 
 #: src/control/Control.Menubar.js:235
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003プレゼンテーション(.ppt)"
 
 #: src/control/Control.Menubar.js:236
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "PowerPointプレゼンテーション(.ppt)"
 
 #: src/control/Control.Menubar.js:240
 msgid "ODF spreadsheet (.ods)"
@@ -629,11 +629,11 @@ msgstr "ODF表計算(.ods)"
 
 #: src/control/Control.Menubar.js:315
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Excel 2003表計算(.xls)"
 
 #: src/control/Control.Menubar.js:316
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Excel表計算(.xlsx)"
 
 #: src/control/Control.Menubar.js:178
 msgid "Reset to Default Language"
@@ -709,9 +709,8 @@ msgid "Select document type to upload"
 msgstr ""
 
 #: src/control/Signing.js:396
-#, fuzzy
 msgid "Type:"
-msgstr "タイプ"
+msgstr "タイプ:"
 
 #: src/control/Signing.js:362
 msgid "Select identity:"
@@ -771,11 +770,11 @@ msgstr ""
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "左余白"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "右余白"
 
 #: src/control/Toolbar.js:74
 #: src/control/Toolbar.js:83
@@ -797,7 +796,7 @@ msgid ""
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
 "versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85"
 ")#websocket-maximum-server-connections"
-msgstr ""
+msgstr "IE11が最大接続数に達しました。もし最大接続数の上限を増やす必要がある場合は、このドキュメントを参照して下さい。https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:30
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -843,7 +842,7 @@ msgstr "以前のリビジョンを復元しています。 保存されてい�
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
-msgstr ""
+msgstr "ドキュメントがストレージ上で変更されました。"
 
 #: src/core/Socket.js:447
 msgid "Discard"
@@ -1021,7 +1020,7 @@ msgstr "アップロード中..."
 
 #: src/map/handler/Map.WOPI.js:97
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "テンプレートから新しいファイルを作成しています..."
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."

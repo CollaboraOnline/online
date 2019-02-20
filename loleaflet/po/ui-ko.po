@@ -518,7 +518,7 @@ msgstr "상태로 이동"
 
 #: src/control/Control.Menubar.js:21
 msgid "Share..."
-msgstr ""
+msgstr "공유..."
 
 #: src/control/Control.Menubar.js:13
 #: src/control/Control.Menubar.js:177
@@ -574,7 +574,7 @@ msgstr "복구"
 #: src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:341
 msgid "Local Image..."
-msgstr ""
+msgstr "로컬 이미지..."
 
 #: src/control/Control.Menubar.js:71
 #: src/control/Control.Menubar.js:73
@@ -610,7 +610,7 @@ msgstr "정보"
 #: src/control/Control.Menubar.js:400
 #: src/map/Map.js:273
 msgid "Last modification"
-msgstr ""
+msgstr "마지막 수정"
 
 #: src/control/Control.Menubar.js:180
 msgid "ODF presentation (.odp)"
@@ -710,9 +710,8 @@ msgid "Select document type to upload"
 msgstr ""
 
 #: src/control/Signing.js:396
-#, fuzzy
 msgid "Type:"
-msgstr "유형"
+msgstr "유형:"
 
 #: src/control/Signing.js:362
 msgid "Select identity:"
@@ -772,11 +771,11 @@ msgstr ""
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "왼쪽 여백"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "오른쪽 여백"
 
 #: src/control/Toolbar.js:74
 #: src/control/Toolbar.js:83
@@ -1023,8 +1022,8 @@ msgstr "업로드 중..."
 
 #: src/map/handler/Map.WOPI.js:97
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "템플릿에서 새 파일 만들기 ..."
 
 #: src/map/handler/Map.WOPI.js:250
 msgid "Creating copy..."
-msgstr ""
+msgstr "사본 생성 중 ..."
