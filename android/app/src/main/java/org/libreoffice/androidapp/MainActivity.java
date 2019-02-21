@@ -12,6 +12,7 @@ package org.libreoffice.androidapp;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -134,6 +135,14 @@ public class MainActivity extends AppCompatActivity {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         mWebView.addJavascriptInterface(this, "LOOLMessageHandler");
+
+        // allow debugging (when building the debug version); see details in
+        // https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+                WebView.setWebContentsDebuggingEnabled(true);
+            }
+        }
 
         mWebView.loadUrl("file:///android_asset/dist/loleaflet.html?file_path=" +
                 urlToLoad +
