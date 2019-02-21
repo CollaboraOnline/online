@@ -18,6 +18,7 @@ android {
                 //abiFilters "x86", "armeabi-v7a", "armeabi"
                 abiFilters "armeabi-v7a"
             }
+            debuggable true
         }
         release {
             ndk {
