@@ -8,6 +8,8 @@
 
 #include <cstring>
 
+#include "ios.h"
+
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
@@ -16,6 +18,7 @@ extern "C" {
 }
 
 int loolwsd_server_socket_fd = -1;
+std::shared_ptr<lok::Document> lok_document;
 
 const char* lo_ios_app_getCacheDir()
 {
