@@ -8,6 +8,7 @@
 
 #import "config.h"
 
+#import <cstdio>
 #import <string>
 #import <vector>
 
@@ -237,6 +238,61 @@
                    }];
 
             [self dismissDocumentViewController];
+            return;
+        } else if ([message.body isEqualToString:@"SLIDESHOW"]) {
+
+            // Create the SVG for the slideshow.
+
+            self.slideshowFile = Util::createRandomTmpDir() + "/slideshow.svg";
+            self.slideshowURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:self.slideshowFile.c_str()] isDirectory:NO];
+
+            lok_document->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
+
+            // Add a new full-screen WebView displaying the slideshow.
+
+            WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+            WKUserContentController *userContentController = [[WKUserContentController alloc] init];
+
+            [userContentController addScriptMessageHandler:self name:@"lool"];
+
+            configuration.userContentController = userContentController;
+
+            self.slideshowWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
+
+            [self.slideshowWebView becomeFirstResponder];
+
+            self.slideshowWebView.contentMode = UIViewContentModeScaleAspectFit;
+            self.slideshowWebView.translatesAutoresizingMaskIntoConstraints = NO;
+            self.slideshowWebView.navigationDelegate = self;
+            self.slideshowWebView.UIDelegate = self;
+
+            self.webView.hidden = true;
+
+            [self.view addSubview:self.slideshowWebView];
+            [self.view bringSubviewToFront:self.slideshowWebView];
+
+
+            WKWebView *slideshowWebViewP = self.slideshowWebView;
+            NSDictionary *views = NSDictionaryOfVariableBindings(slideshowWebViewP);
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[slideshowWebViewP(>=0)]-0-|"
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:views]];
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[slideshowWebViewP(>=0)]-0-|"
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:views]];
+            [self.slideshowWebView loadRequest:[NSURLRequest requestWithURL:self.slideshowURL]];
+
+            return;
+        } else if ([message.body isEqualToString:@"EXITSLIDESHOW"]) {
+
+            std::remove(self.slideshowFile.c_str());
+
+            [self.slideshowWebView removeFromSuperview];
+            self.slideshowWebView = nil;
+            self.webView.hidden = false;
+
             return;
         }
 

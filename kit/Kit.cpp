@@ -1675,7 +1675,11 @@ private:
             Timestamp timestamp;
             _loKitDocument.reset(_loKit->documentLoad(uri.c_str(), options.c_str()));
             LOG_DBG("Returned lokit::documentLoad(" << uriAnonym << ") in " << (timestamp.elapsed() / 1000.) << "ms.");
-
+#ifdef IOS
+            // The iOS app (and the Android one) has max one document open at a time, so we can keep
+            // a pointer to it in a global.
+            lok_document = _loKitDocument;
+#endif
             if (!_loKitDocument || !_loKitDocument->get())
             {
                 LOG_ERR("Failed to load: " << uriAnonym << ", error: " << _loKit->getError());
