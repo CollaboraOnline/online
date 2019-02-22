@@ -8,6 +8,8 @@
 
 #include <cstring>
 
+#include "ios.h"
+
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
@@ -16,5 +18,6 @@ extern "C" {
 }
 
 int loolwsd_server_socket_fd = -1;
+std::shared_ptr<lok::Document> lok_document;
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
