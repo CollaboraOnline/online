@@ -84,7 +84,7 @@ ifelse(MOBILEAPP,[true],
 
      <nav class="main-nav" role="navigation">
        <div id="document-header">
-        <div id="document-logo"></div>
+        <div id="document-logo" class="document-logo"></div>
        </div>
        <!-- Mobile menu toggle button (hamburger/x icon) -->
        <input id="main-menu-state" type="checkbox" style="display: none"/>
