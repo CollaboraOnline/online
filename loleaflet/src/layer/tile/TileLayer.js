@@ -1815,6 +1815,11 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (e.type === 'graphicmoveend') {
 			var deltaPos = aPos.subtract(this._graphicMarker._startPos);
+			if (deltaPos.x === 0 && deltaPos.y === 0) {
+				this._graphicMarker.isDragged = false;
+				return;
+			}
+
 			var newPos = this._graphicSelectionTwips.min.add(deltaPos);
 			var size = this._graphicSelectionTwips.getSize();
 

@@ -107,6 +107,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 	_onDragStart: function(evt) {
 		var eventType = evt.originalEvent._simulated ? 'touchstart' : evt.originalEvent.type;
 
+		this._mouseDown = evt.originalEvent;
 		this._mapDraggingWasEnabled = false;
 		this._startPoint = evt.containerPoint.clone();
 		this._dragStartPoint = evt.containerPoint.clone();
@@ -184,6 +185,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 	* @param  {L.MouseEvent} evt
 	*/
 	_onDragEnd: function(evt) {
+		L.DomEvent.stop(evt);
 		var containerPoint = this._path._map.mouseEventToContainerPoint(evt);
 		var moved = this.moved();
 
@@ -193,8 +195,6 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			this._path._updatePath();
 			this._path._project();
 			this._path._transform(null);
-
-			L.DomEvent.stop(evt);
 		}
 
 		L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
@@ -225,6 +225,11 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		if (this._mapDraggingWasEnabled) {
 			if (moved) L.DomEvent._fakeStop({ type: 'click' });
 			this._path._map.dragging.enable();
+		}
+
+		if (!moved) {
+			this._path._map._handleDOMEvent(this._mouseDown);
+			this._path._map._handleDOMEvent(evt)
 		}
 	},
 
