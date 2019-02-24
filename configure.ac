@@ -322,16 +322,26 @@ AC_SUBST(LOKIT_PATH)
 
 ENABLE_IOSAPP=
 MOBILE_APP_NAME="Mobile"
+IOSAPP_BUNDLE_VERSION=
 
 if test "$enable_iosapp" = "yes"; then
    ENABLE_IOSAPP=true
    if test -n "$with_iosapp_name"; then
       MOBILE_APP_NAME="$with_iosapp_name"
    fi
+
+   if test -f BUNDLE-VERSION; then
+       IOSAPP_BUNDLE_VERSION=$(cat BUNDLE-VERSION)
+   else
+       IOSAPP_BUNDLE_VERSION=1
+   fi
+   echo $IOSAPP_BUNDLE_VERSION >BUNDLE-VERSION
 fi
+
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
 AC_SUBST(MOBILE_APP_NAME)
+AC_SUBST(IOSAPP_BUNDLE_VERSION)
 
 ENABLE_GTKAPP=
 if test "$enable_gtkapp" = "yes"; then
