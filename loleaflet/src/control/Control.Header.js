@@ -273,7 +273,7 @@ L.Control.Header = L.Control.extend({
 
 		if (this._mouseOverEntry) {
 			this.drawHeaderEntry(this._mouseOverEntry, /*isOver: */ false);
-			this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
+			this._lastMouseOverIndex = this._mouseOverEntry.index + this._startHeaderIndex; // used by context menu
 			this._mouseOverEntry = null;
 		}
 		this._hitResizeArea = false;
