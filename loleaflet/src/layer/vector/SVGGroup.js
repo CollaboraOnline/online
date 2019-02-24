@@ -42,8 +42,9 @@ L.SVGGroup = L.Layer.extend({
 	_onDragStart: function(evt) {
 		if (!this._dragShape)
 			return;
+		this._moved = false;
 
-		this._showEmbeddedSVG();
+		L.DomEvent.on(this._dragShape, 'mousemove', this._onDrag, this);
 		L.DomEvent.on(this._dragShape, 'mouseup', this._onDragEnd, this);
 
 		var data = {
@@ -56,16 +57,35 @@ L.SVGGroup = L.Layer.extend({
 		this.fire('graphicmovestart', {pos: pos});
 	},
 
-	_onDragEnd: function(evt) {
+	_onDrag: function(evt) {
 		if (!this._dragShape)
 			return;
 
-		L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
-		this.dragging._onDragEnd(evt);
+		if (!this._moved) {
+			this._moved = true;
+			this._showEmbeddedSVG();
+		}
 
+		var data = {
+			originalEvent: evt,
+			containerPoint: this._map.mouseEventToContainerPoint(evt)
+		};
+		this.dragging._onDrag(data);
+
+	},
+
+	_onDragEnd: function(evt) {
+		if (!this._dragShape)
+			return;
+		L.DomEvent.off(this._dragShape, 'mousemove', this._onDrag, this);
+		L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
+
+		this._moved = false;
 		this._hideEmbeddedSVG();
 		var pos = this._map.mouseEventToLatLng(evt);
 		this.fire('graphicmoveend', {pos: pos});
+
+		this.dragging._onDragEnd(evt);
 	},
 
 	bringToFront: function () {
