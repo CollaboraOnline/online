@@ -39,8 +39,6 @@
 
 using namespace LOOLProtocol;
 
-using Poco::DirectoryIterator;
-using Poco::File;
 using Poco::StringTokenizer;
 using Poco::Timestamp;
 
