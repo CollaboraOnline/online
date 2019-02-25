@@ -90,3 +90,6 @@ pocoinclude-symlink
 pocolib-symlink
 ICU.dat
 ios/Mobile/Assets.xcassets/AppIcon.appiconset
+
+# iOS app build number
+BUNDLE-VERSION
