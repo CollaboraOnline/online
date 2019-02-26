@@ -81,8 +81,12 @@ L.Map.include({
 	},
 
 	print: function () {
-		this.showBusy(_('Downloading...'), false);
-		this.downloadAs('print.pdf', 'pdf', null, 'print');
+		if (window.ThisIsTheiOSApp) {
+			window.postMobileMessage('PRINT');
+		} else {
+			this.showBusy(_('Downloading...'), false);
+			this.downloadAs('print.pdf', 'pdf', null, 'print');
+		}
 	},
 
 	saveAs: function (url, format, options) {
