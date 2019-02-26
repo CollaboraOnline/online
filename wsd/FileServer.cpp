@@ -702,7 +702,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
            "font-src 'self' data:; "
-           "object-src blob:; ";
+           "object-src 'self' blob:; ";
 
     // Frame ancestors: Allow loolwsd host, wopi host and anything configured.
     std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
