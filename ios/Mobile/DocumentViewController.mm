@@ -294,6 +294,32 @@
             self.webView.hidden = false;
 
             return;
+        } else if ([message.body isEqualToString:@"PRINT"]) {
+
+            // Create the PDF to print.
+
+            std::string printFile = Util::createRandomTmpDir() + "/print.pdf";
+            NSURL *printURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:printFile.c_str()] isDirectory:NO];
+            lok_document->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
+
+            UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
+            UIPrintInfo *printInfo = [UIPrintInfo printInfo];
+            printInfo.outputType = UIPrintInfoOutputGeneral;
+            printInfo.orientation = UIPrintInfoOrientationPortrait; // FIXME Check the document?
+            printInfo.jobName = @"Document"; // FIXME
+
+            pic.printInfo = printInfo;
+            pic.printingItem = printURL;
+
+            [pic presentFromRect:CGRectZero
+                          inView:self.webView
+                        animated:YES
+               completionHandler:^(UIPrintInteractionController *pic, BOOL completed, NSError *error) {
+                    LOG_TRC("print completion handler gets " << (completed?"YES":"NO"));
+                    std::remove(printFile.c_str());
+                }];
+
+            return;
         }
 
         const char *buf = [message.body UTF8String];
@@ -309,3 +335,4 @@
 @end
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
+
