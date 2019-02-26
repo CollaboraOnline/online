@@ -232,7 +232,7 @@ L.Map = L.Evented.extend({
 		// TODO: remove duplicated init code
 		this._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 		this._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
-		this.fire('updatescrolloffset');
+		this.fire('updaterowcolumnheaders');
 		this._docLayer._getToolbarCommandsValues();
 	},
 
