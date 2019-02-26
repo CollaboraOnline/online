@@ -18,7 +18,7 @@ extern "C" {
 }
 
 int loolwsd_server_socket_fd = -1;
-std::shared_ptr<lok::Document> lok_document;
+lok::Document *lok_document;
 
 const char* lo_ios_app_getCacheDir()
 {
