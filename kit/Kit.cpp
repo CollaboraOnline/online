@@ -1678,7 +1678,7 @@ private:
 #ifdef IOS
             // The iOS app (and the Android one) has max one document open at a time, so we can keep
             // a pointer to it in a global.
-            lok_document = _loKitDocument;
+            lok_document = _loKitDocument.get();
 #endif
             if (!_loKitDocument || !_loKitDocument->get())
             {

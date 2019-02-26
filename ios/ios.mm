@@ -18,6 +18,6 @@ extern "C" {
 }
 
 int loolwsd_server_socket_fd = -1;
-std::shared_ptr<lok::Document> lok_document;
+lok::Document *lok_document;
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
