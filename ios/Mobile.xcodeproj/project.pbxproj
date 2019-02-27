@@ -303,6 +303,7 @@
 		BE34D1FE219076CF00815297 /* output2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = output2.cxx; path = "../../ios-device/sc/source/ui/view/output2.cxx"; sourceTree = "<group>"; };
 		BE34D1FF219076CF00815297 /* formatsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formatsh.cxx; path = "../../ios-device/sc/source/ui/view/formatsh.cxx"; sourceTree = "<group>"; };
 		BE34D200219076CF00815297 /* dbfunc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbfunc3.cxx; path = "../../ios-device/sc/source/ui/view/dbfunc3.cxx"; sourceTree = "<group>"; };
+		BE43FD39222693F200376855 /* zcodec.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = zcodec.cxx; path = "../../ios-device/tools/source/zcodec/zcodec.cxx"; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -940,6 +941,14 @@
 			name = view;
 			sourceTree = "<group>";
 		};
+		BE43FD38222693CC00376855 /* zcodec */ = {
+			isa = PBXGroup;
+			children = (
+				BE43FD39222693F200376855 /* zcodec.cxx */,
+			);
+			name = zcodec;
+			sourceTree = "<group>";
+		};
 		BE58E1312187938700249358 /* headless */ = {
 			isa = PBXGroup;
 			children = (
@@ -1406,6 +1415,7 @@
 			isa = PBXGroup;
 			children = (
 				BEB6524C216FD0AA00B8C09A /* stream */,
+				BE43FD38222693CC00376855 /* zcodec */,
 			);
 			name = tools;
 			sourceTree = "<group>";
