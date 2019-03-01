@@ -160,13 +160,11 @@ std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
 DocumentBroker::DocumentBroker(const std::string& uri,
                                const Poco::URI& uriPublic,
-                               const std::string& docKey,
-                               const std::string& childRoot) :
+                               const std::string& docKey) :
     _uriOrig(uri),
     _uriPublic(uriPublic),
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
-    _childRoot(childRoot),
     _cacheRoot(getCachePath(uriPublic.toString())),
     _documentChangedInStorage(false),
     _lastSaveTime(std::chrono::steady_clock::now()),
@@ -186,10 +184,10 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _debugRenderedTileCount(0)
 {
     assert(!_docKey.empty());
-    assert(!_childRoot.empty());
+    assert(!LOOLWSD::ChildRoot.empty());
 
     LOG_INF("DocumentBroker [" << LOOLWSD::anonymizeUrl(_uriPublic.toString()) <<
-            "] created with docKey [" << _docKey << "] and root [" << _childRoot << "]");
+            "] created with docKey [" << _docKey << "]");
 }
 
 void DocumentBroker::startThread()
@@ -1077,7 +1075,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
 std::string DocumentBroker::getJailRoot() const
 {
     assert(!_jailId.empty());
-    return Poco::Path(_childRoot, _jailId).toString();
+    return Poco::Path(LOOLWSD::ChildRoot, _jailId).toString();
 }
 
 size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
