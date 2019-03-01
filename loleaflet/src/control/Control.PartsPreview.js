@@ -8,6 +8,7 @@ L.Control.PartsPreview = L.Control.extend({
 	options: {
 		autoUpdate: true
 	},
+	partsFocused: false,
 
 	onAdd: function (map) {
 		this._previewInitialized = false;
@@ -61,6 +62,24 @@ L.Control.PartsPreview = L.Control.extend({
 						}
 					}
 				});
+
+				this._map.on('click', function() {
+					this.partsFocused = false;
+				}, this);
+
+				this._map.on('keydown', function(e) {
+					if (this.partsFocused === true) {
+						switch (e.originalEvent.keyCode) {
+						case 38:
+							this._setPart('prev');
+							break;
+						case 40:
+							this._setPart('next');
+							break;
+						}
+					}
+				}, this);
+
 				this._scrollContainer = $('#slide-sorter .mCSB_container').get(0);
 
 				// Add a special frame just as a drop-site for reordering.
@@ -110,7 +129,10 @@ L.Control.PartsPreview = L.Control.extend({
 			.on(img, 'click', L.DomEvent.stopPropagation)
 			.on(img, 'click', L.DomEvent.stop)
 			.on(img, 'click', this._setPart, this)
-			.on(img, 'click', this._map.focus, this._map);
+			.on(img, 'click', this._map.focus, this._map)
+			.on(img, 'click', function() {
+				this.partsFocused = true;
+			}, this);
 
 		var topBound = this._previewContTop;
 		var previewFrameTop = 0;
@@ -150,6 +172,33 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_setPart: function (e) {
+		//helper function to check if the view is in the scrollview visible area
+		function isVisible(el) {
+			var elemRect = el.getBoundingClientRect();
+			var elemTop = elemRect.top;
+			var elemBottom = elemRect.bottom;
+			var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+			return isVisible;
+		}
+		if (e === 'prev' || e === 'next') {
+			this._map.setPart(e);
+			var node = $('#slide-sorter .mCSB_container .preview-frame')[this._map.getCurrentPartNumber()];
+			if (!isVisible(node)) {
+				if (e === 'prev') {
+					setTimeout(function () {
+						$('#slide-sorter').mCustomScrollbar('scrollTo', node);
+					}, 50);
+				} else {
+					var nodeHeight = $(node).height();
+					var sliderHeight= $('#slide-sorter').height();
+					var nodePos = $(node).position().top;
+					setTimeout(function () {
+						$('#slide-sorter').mCustomScrollbar('scrollTo', nodePos-(sliderHeight-nodeHeight-nodeHeight/2));
+					}, 50);
+				}
+			}
+			return;
+		}
 		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
