@@ -558,18 +558,24 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
 
 #if !MOBILEAPP
 
-/// Handles the filename part of the convert-to POST request payload.
+/// Handles the filename part of the convert-to POST request payload,
+/// Also owns the file - cleaning it up when destroyed.
 class ConvertToPartHandler : public PartHandler
 {
-    std::string& _filename;
+    std::string _filename;
 
     /// Is it really a convert-to, ie. use an especially formed path?
     bool _convertTo;
 
 public:
-    ConvertToPartHandler(std::string& filename, bool convertTo = false)
-        : _filename(filename)
-        , _convertTo(convertTo)
+    std::string getFilename() const { return _filename; }
+
+    ConvertToPartHandler(bool convertTo = false)
+        : _convertTo(convertTo)
+    {
+    }
+
+    virtual ~ConvertToPartHandler()
     {
     }
 
@@ -2322,8 +2328,7 @@ private:
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() > 2 && tokens[2] == "convert-to")
         {
-            std::string fromPath;
-            ConvertToPartHandler handler(fromPath, /*convertTo =*/ true);
+            ConvertToPartHandler handler(/*convertTo =*/ true);
             HTMLForm form(request, message, handler);
 
             std::string format = (form.has("format") ? form.get("format") : "");
@@ -2347,6 +2352,7 @@ private:
                 format = tokens[3];
 
             bool sent = false;
+            std::string fromPath = handler.getFilename();
             LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
             if (!fromPath.empty() && !format.empty())
             {
@@ -2432,8 +2438,7 @@ private:
         {
             LOG_INF("Insert file request.");
 
-            std::string tmpPath;
-            ConvertToPartHandler handler(tmpPath);
+            ConvertToPartHandler handler;
             HTMLForm form(request, message, handler);
 
             if (form.has("childid") && form.has("name"))
@@ -2463,7 +2468,7 @@ private:
                                               + JAILED_DOCUMENT_ROOT + "insertfile";
                     File(dirPath).createDirectories();
                     std::string fileName = dirPath + "/" + form.get("name");
-                    File(tmpPath).moveTo(fileName);
+                    File(handler.getFilename()).moveTo(fileName);
                     response.setContentLength(0);
                     socket->send(response);
                     return;
