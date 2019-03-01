@@ -221,8 +221,7 @@ public:
     /// Construct DocumentBroker with URI, docKey, and root path.
     DocumentBroker(const std::string& uri,
                    const Poco::URI& uriPublic,
-                   const std::string& docKey,
-                   const std::string& childRoot);
+                   const std::string& docKey);
 
     ~DocumentBroker();
 
