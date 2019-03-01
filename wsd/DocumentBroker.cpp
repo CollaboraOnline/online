@@ -37,6 +37,7 @@
 #include <common/Message.hpp>
 #include <common/Protocol.hpp>
 #include <common/Unit.hpp>
+#include <common/FileUtil.hpp>
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -1847,6 +1848,18 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
         sessionIt.second->getIOStats(s, r);
         sent += s;
         recv += r;
+    }
+}
+
+ConvertToBroker::~ConvertToBroker()
+{
+    if (!_uriOrig.empty())
+    {
+        // Remove source file and directory
+        Poco::Path path = _uriOrig;
+        Poco::File(path).remove();
+        Poco::File(path.makeParent()).remove();
+        FileUtil::removeFile(_uriOrig);
     }
 }
 
