@@ -2344,11 +2344,7 @@ private:
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() > 2 && tokens[2] == "convert-to")
         {
-            ConvertToPartHandler handler(/*convertTo =*/ true);
-            HTMLForm form(request, message, handler);
-
-            std::string format = (form.has("format") ? form.get("format") : "");
-
+            // Validate sender - FIXME: should do this even earlier.
             if (!allowConvertTo(socket->clientAddress(), request, true))
             {
                 LOG_TRC("Conversion not allowed from this address");
@@ -2362,6 +2358,11 @@ private:
                 socket->shutdown();
                 return;
             }
+
+            ConvertToPartHandler handler(/*convertTo =*/ true);
+            HTMLForm form(request, message, handler);
+
+            std::string format = (form.has("format") ? form.get("format") : "");
 
             // prefer what is in the URI
             if (tokens.count() > 3)
