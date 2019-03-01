@@ -223,7 +223,7 @@ public:
                    const Poco::URI& uriPublic,
                    const std::string& docKey);
 
-    ~DocumentBroker();
+    virtual ~DocumentBroker();
 
     /// Start processing events
     void startThread();
@@ -402,8 +402,9 @@ private:
     /// Sum the I/O stats from all connected sessions
     void getIOStats(uint64_t &sent, uint64_t &recv);
 
-private:
+protected:
     const std::string _uriOrig;
+private:
     const Poco::URI _uriPublic;
     /// URL-based key. May be repeated during the lifetime of WSD.
     const std::string _docKey;
@@ -470,6 +471,19 @@ private:
 
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
+};
+
+class ConvertToBroker : public DocumentBroker
+{
+public:
+    /// Construct DocumentBroker with URI and docKey
+    ConvertToBroker(const std::string& uri,
+                    const Poco::URI& uriPublic,
+                    const std::string& docKey)
+        : DocumentBroker(uri, uriPublic, docKey)
+    {
+    }
+    virtual ~ConvertToBroker();
 };
 
 #endif
