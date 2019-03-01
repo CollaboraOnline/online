@@ -128,7 +128,7 @@ L.Control.Tabs = L.Control.extend({
 						continue;
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('div', 'spreadsheet-tab', ssTabScroll);
-					tab.innerHTML = e.partNames[i];
+					tab.textContent = e.partNames[i];
 					tab.id = id;
 
 					L.DomEvent
