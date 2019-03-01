@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0100\n"
+"POT-Creation-Date: 2019-03-01 13:24+0100\n"
 "PO-Revision-Date: 2016-05-13 09:50+0000\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -582,7 +582,7 @@ msgstr ""
 msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:719
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 

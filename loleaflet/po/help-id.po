@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0200\n"
+"POT-Creation-Date: 2019-03-01 13:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-help-id.po\n"
-"X-Pootle-Revision: 3614408\n"
+"X-Pootle-Revision: 3755739\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -366,136 +366,114 @@ msgstr "Ctrl + Shift + Panah Kanan"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-18
-#, fuzzy
 msgid "Move cursor up one line"
 msgstr "Pindah kursor naik sebaris"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-68
-#, fuzzy
 msgid "Arrow Up"
 msgstr "Panah Atas"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
-#, fuzzy
 msgid "Select lines in upwards direction"
 msgstr "Memilih baris ke arah atas"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-78
-#, fuzzy
 msgid "Shift + Arrow Up"
 msgstr "Shift + Panah Atas"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
-#, fuzzy
 msgid "Move cursor to beginning of the previous paragraph"
 msgstr "Pindah kursor ke awal paragraf sebelumnya"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-95
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-95
-#, fuzzy
 msgid "Ctrl + Arrow Up"
 msgstr "Ctrl + Panah Atas"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
-#, fuzzy
 msgid "Select to beginning of paragraph"
 msgstr "Memilih sampai ke awal paragraf"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-77
-#, fuzzy
 msgid "Ctrl + Shift + Arrow Up"
 msgstr "Ctrl + Shift + Panah Atas"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-18
-#, fuzzy
 msgid "Move cursor down one line"
 msgstr "Pindah kursor turun sebaris"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-70
-#, fuzzy
 msgid "Arrow Down"
 msgstr "Panah Bawah"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
-#, fuzzy
 msgid "Select lines in downwards direction"
 msgstr "Memilih baris ke arah bawah"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-80
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-80
-#, fuzzy
 msgid "Shift + Arrow Down"
 msgstr "Shift + Panah Bawah"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-18
-#, fuzzy
 msgid "Move cursor to beginning of the next paragraph"
 msgstr "Pindahkan kursor ke awal paragraf selanjutnya"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-91
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-91
-#, fuzzy
 msgid "Ctrl + Arrow Down"
 msgstr "Ctrl + Panah Turun"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
-#, fuzzy
 msgid "Select to end of paragraph"
 msgstr "Memilih sampai akhir paragraf"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-71
-#, fuzzy
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Shift + Panah Bawah"
+msgstr "Ctrl + Shift + Panah Bawah "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-18
-#, fuzzy
 msgid "Go to beginning of line"
-msgstr "Ctrl + Shift + Panah Bawah"
+msgstr "Ctrl + Shift + Panah Bawah "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-68
-#, fuzzy
 msgid "Home"
 msgstr "Home"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-18
-#, fuzzy
 msgid "Go and select to the beginning of a line"
-msgstr "Pergi dan pilih sampai awal baris"
+msgstr "Pergi dan pilih sampai awal baris "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-85
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-85
-#, fuzzy
 msgid "Shift + Home"
-msgstr "Shift + Home"
+msgstr "Shift + Home "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-18
-#, fuzzy
 msgid "Go to start of document"
-msgstr "Ke awal dokumen"
+msgstr "Ke awal dokumen "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-68
-#, fuzzy
 msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
+msgstr "Ctrl + Home "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Go and select text to start of document"
@@ -503,44 +481,37 @@ msgstr "Pergi dan pilih teks hingga awal dokumen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-83
-#, fuzzy
 msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + Home"
+msgstr "Ctrl + Shift + Home "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:202-18
-#, fuzzy
 msgid "Go to end of line"
-msgstr "Ke akhir baris"
+msgstr "Ke akhir baris "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:202-62
-#, fuzzy
 msgid "End"
-msgstr "End"
+msgstr "Akhir"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-18
-#, fuzzy
 msgid "Go and select to the end of a line"
-msgstr "Pergi dan pilih hingga akhir baris"
+msgstr "Menyorot/blok hingga akhir baris"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-79
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-79
-#, fuzzy
 msgid "Shift + End"
 msgstr "Shift + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-18
-#, fuzzy
 msgid "Go to end of document"
 msgstr "Ke akhir dokumen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-66
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-66
-#, fuzzy
 msgid "Ctrl + End"
 msgstr "Ctrl + End"
 
@@ -550,7 +521,6 @@ msgstr "Pergi dan pilih hingga akhir dokumen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-82
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-81
-#, fuzzy
 msgid "Ctrl + Shift + End"
 msgstr "Ctrl + Shift + End"
 
@@ -702,7 +672,6 @@ msgstr "Alt + Ctrl + Tombol Panah"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:108-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:109-77
-#, fuzzy
 msgid "Like Alt, but only the active cell is modified"
 msgstr "Seperti Alt, tapi hanya sel aktif yang diubah"
 
@@ -790,13 +759,11 @@ msgstr "Ctrl + Alt + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
-#, fuzzy
 msgid "Insert comment"
 msgstr "Menyisipkan komentar"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-59
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-59
-#, fuzzy
 msgid "Ctrl + Alt + C"
 msgstr "Ctrl + Alt + C"
 
@@ -838,7 +805,6 @@ msgstr "Pemutus halaman manual"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:128-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:212-93
-#, fuzzy
 msgid "Ctrl + Enter"
 msgstr "Ctrl + Enter"
 
@@ -859,7 +825,6 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:130-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:131-155
-#, fuzzy
 msgid "Alt + Enter"
 msgstr "Alt + Enter"
 
@@ -945,7 +910,6 @@ msgstr "Turun tingkatkan butir daftar (butir daftar mesti dipilih)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-92
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:210-99
-#, fuzzy
 msgid "Tab"
 msgstr "Tab"
 
@@ -955,7 +919,6 @@ msgstr "Naik tingkatkan butir daftar (butir daftar mesti dipilih)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:211-107
-#, fuzzy
 msgid "Shift + Tab"
 msgstr "Shift + Tab"
 

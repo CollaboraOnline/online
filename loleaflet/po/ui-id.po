@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0100\n"
+"POT-Creation-Date: 2019-03-01 13:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-ui-id.po\n"
-"X-Pootle-Revision: 3650693\n"
+"X-Pootle-Revision: 3756995\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -145,14 +145,15 @@ msgstr ""
 "Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - kurangi saja"
 
 #: admin/admin.strings.js:37
-#, fuzzy
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
-"Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - kurangi saja"
+"Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - Hanya kurangi"
 
 #: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"Ukuran file maksimum diizinkan untuk menulis ke disk (dalam MB) - kurangi "
+"saja"
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
@@ -244,15 +245,15 @@ msgstr "Sisipkan bentuk"
 
 #: js/toolbar.js:689
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Sisipkan Citra Lokal"
 
 #: js/toolbar.js:717 js/toolbar.js:1031
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Selalu ikuti penyunting"
 
 #: js/toolbar.js:720 js/toolbar.js:1034
 msgid "Current"
-msgstr ""
+msgstr "Saat Ini"
 
 #: js/toolbar.js:745 js/toolbar.js:912 js/toolbar.js:1428
 msgid "Sum"
@@ -322,24 +323,23 @@ msgstr "Reset zum"
 
 #: js/toolbar.js:1085
 msgid "%user has joined"
-msgstr ""
+msgstr "%user telah bergabung"
 
 #: js/toolbar.js:1086
 msgid "%user has left"
-msgstr ""
+msgstr "%user telah keluar"
 
 #: js/toolbar.js:1406
-#, fuzzy
 msgid "Number of Sheets"
-msgstr "Cacah tilikan"
+msgstr "Jumlah lembar kerja"
 
 #: js/toolbar.js:1409
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Pilih rentang sel"
 
 #: js/toolbar.js:1412 js/toolbar.js:1451
 msgid "Entering text mode"
-msgstr ""
+msgstr "Masuk ke mode teks"
 
 #: js/toolbar.js:1415 js/toolbar.js:1457 js/toolbar.js:1484
 msgid "Text Language"
@@ -351,16 +351,15 @@ msgstr "Mode Seleksi"
 
 #: js/toolbar.js:1421
 msgid "Choice of functions"
-msgstr ""
+msgstr "Pilih Fungsi"
 
 #: js/toolbar.js:1423
 msgid "Average"
 msgstr "Rerata"
 
 #: js/toolbar.js:1424
-#, fuzzy
 msgid "CountA"
-msgstr "Menghitung"
+msgstr "HitungA"
 
 #: js/toolbar.js:1425
 msgid "Count"
@@ -376,25 +375,23 @@ msgstr "Minimum"
 
 #: js/toolbar.js:1429
 msgid "Selection count"
-msgstr ""
+msgstr "Cacah pilihan"
 
 #: js/toolbar.js:1430
 msgid "None"
 msgstr "Nihil"
 
 #: js/toolbar.js:1445
-#, fuzzy
 msgid "Number of Pages"
-msgstr "Cacah tilikan"
+msgstr "Nomor Halaman"
 
 #: js/toolbar.js:1448
 msgid "Word Counter"
-msgstr ""
+msgstr "Penjumlah Kata"
 
 #: js/toolbar.js:1479
-#, fuzzy
 msgid "Number of Slides"
-msgstr "Cacah tilikan"
+msgstr "Nomor Salindia"
 
 #: js/toolbar.js:1511
 msgid "%n users"
@@ -432,6 +429,8 @@ msgstr "Salindia selanjutnya"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Konfik Urungkan/Ulangi dengan user ganda. Tolong gunakan perbaiki dokumen "
+"untuk mengatasinya"
 
 #: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
 msgid "You"
@@ -443,61 +442,60 @@ msgstr "Hanya baca"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "Peladen mengalami kesalahan %0 saat mem-parsing perintah %1."
 
 #: src/control/Control.ContextMenu.js:131
 msgid "Internal Cut"
-msgstr ""
+msgstr "Potongan Dalam"
 
 #: src/control/Control.ContextMenu.js:134
 msgid "Internal Copy"
-msgstr ""
+msgstr "Salin Internal"
 
 #: src/control/Control.ContextMenu.js:137
 msgid "Internal Paste"
-msgstr ""
+msgstr "Rekat Internal"
 
 #: src/control/Control.ContextMenu.js:159
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Rekat Spesial Internal"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
-msgstr ""
+msgstr "Perbaiki Dokumen"
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
-msgstr ""
+msgstr "Tipe"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "Index"
-msgstr ""
+msgstr "indeks"
 
 #: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:226
 msgid "Comment"
 msgstr "Komentar"
 
 #: src/control/Control.DocumentRepair.js:50
-#, fuzzy
 msgid "User name"
 msgstr "Nama Pengguna"
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
-msgstr ""
+msgstr "Cap Waktu"
 
 #: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
-msgstr ""
+msgstr "Loncat ke pernyataan"
 
 #: src/control/Control.Menubar.js:21
 msgid "Share..."
-msgstr ""
+msgstr "Bagikan..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
 #: src/control/Control.Menubar.js:316
 msgid "See revision history"
-msgstr ""
+msgstr "Lihat histori perubahan"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:236
 #: src/control/Control.Menubar.js:317
@@ -515,39 +513,39 @@ msgstr "Dokumen teks ODF (*.odt)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Dokumen Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:28
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Word Dokument (.docx)"
 
 #: src/control/Control.Menubar.js:29
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Teks Kaya (.rtf)"
 
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:247
 #: src/control/Control.Menubar.js:328
 msgid "Repair"
-msgstr ""
+msgstr "Repair"
 
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:341
 msgid "Local Image..."
-msgstr ""
+msgstr "Gambar Lokal..."
 
 #: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
 msgid "All"
-msgstr ""
+msgstr "Semua"
 
 #: src/control/Control.Menubar.js:134
 msgid "Text orientation"
-msgstr ""
+msgstr "Orientasi Teks"
 
 #: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
 #: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:302
 #: src/control/Control.Menubar.js:396
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Tidak (Jangan periksa ejaan)"
 
 #: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:305
 #: src/control/Control.Menubar.js:399
@@ -570,11 +568,11 @@ msgstr "Presentasi ODF (.odp)"
 
 #: src/control/Control.Menubar.js:239
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003 Presentation (.ppt)"
 
 #: src/control/Control.Menubar.js:240
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "PowerPoint Presentation (.pptx)"
 
 #: src/control/Control.Menubar.js:319
 msgid "ODF spreadsheet (.ods)"
@@ -582,27 +580,27 @@ msgstr "Lembar kerja ODF (.ods)"
 
 #: src/control/Control.Menubar.js:320
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Excel 2003 Spreadsheet (.xls)"
 
 #: src/control/Control.Menubar.js:321
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Excel Spreadsheet (.xlsx)"
 
 #: src/control/Control.Menubar.js:467
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Kembalikan ke Bahasa Bawaan"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:719
 msgid "Are you sure you want to delete this slide?"
 msgstr "Anda yakin ingin menghapus salindia ini?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Gulirkan anotasi ke atas"
 
 #: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Gulirkan anotasi ke bawah"
 
 #: src/control/Control.Tabs.js:55
 msgid "Insert sheet before this"
@@ -622,11 +620,11 @@ msgstr "Masukkan nama lembar baru"
 
 #: src/control/Ruler.js:95
 msgid "Left Margin"
-msgstr ""
+msgstr "Margin Kiri"
 
 #: src/control/Ruler.js:96
 msgid "Right Margin"
-msgstr ""
+msgstr "Margin Kanan"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:84
 msgid "Downloading..."
@@ -647,6 +645,10 @@ msgid ""
 "versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
+"IE11 telah mencapai jumlah koneksi maksimum. Silakan lihat dokumen ini untuk "
+"meningkatkan batas ini jika diperlukan: https://docs.microsoft.com/en-us/"
+"previous-versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:81
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -658,53 +660,60 @@ msgstr "Versi server tidak didukung."
 
 #: src/core/Socket.js:327
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "Sesi diakhiri oleh pemilik dokumen"
 
 #: src/core/Socket.js:331
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
+"Dokumen idle - silakan klik untuk memuat ulang dan melanjutkan penyuntingan"
 
 #: src/core/Socket.js:338
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Pelden dimatikan untuk pemeliharaan (penyimpanan otomatis)"
 
 #: src/core/Socket.js:342
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "Ups, ada masalah saat menghubungkan dokumen"
 
 #: src/core/Socket.js:346
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "Peladen sendang mendaur ulang dan akan segera tersedia"
 
 #: src/core/Socket.js:377
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Dokumen telah berubah dalam penyimpanan. Memuat dokumen baru. Versi Anda "
+"tersedia sebagai revisi."
 
 #: src/core/Socket.js:383
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
+"Memulihkan revisi yang lebih lama. Setiap perubahan yang belum disimpan akan "
+"tersedia dalam riwayat versi"
 
 #: src/core/Socket.js:501
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"Dokumen telah diubah dalam penyimpanan. Apa yang ingin Anda lakukan dengan "
+"perubahan yang belum disimpan?"
 
 #: src/core/Socket.js:506
 msgid "Discard"
-msgstr ""
+msgstr "Buang"
 
 #: src/core/Socket.js:511
 msgid "Overwrite"
-msgstr ""
+msgstr "Timpa"
 
 #: src/core/Socket.js:516
 msgid "Save to new file"
-msgstr ""
+msgstr "Simpan ke file baru"
 
 #: src/core/Socket.js:584
 msgid "Document requires password to view."
@@ -724,7 +733,7 @@ msgstr "Sandi salah. Harap coba lagi."
 
 #: src/core/Socket.js:706
 msgid "Connecting..."
-msgstr ""
+msgstr "Menghubungkan..."
 
 #: src/core/Socket.js:858
 msgid ""
@@ -757,50 +766,66 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
+"Ini adalah versi {productname} yang tidak didukung. Untuk menghindari kesan "
+"bahwa itu cocok untuk ditempatkan di perusahaan, pesan ini muncul ketika "
+"lebih dari {docs} dokumen atau koneksi {connections} sedang digunakan secara "
+"bersamaan."
 
 #: src/errormessages.js:16
 msgid "More information and support"
-msgstr ""
+msgstr "Informasi dan dukungan lebih lanjut"
 
 #: src/errormessages.js:17
 msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
+"Layanan ini terbatas pada%0 dokumen, dan%1 koneksi total oleh admin. Batas "
+"ini telah tercapai. Silakan coba lagi nanti."
 
 #: src/errormessages.js:18
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Layanan tidak tersedia. Silakan coba lagi nanti dan laporkan ke "
+"administrator Anda jika masalah berlanjut."
 
 #: src/errormessages.js:19
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"host WOPI tidak resmi. Silakan coba lagi nanti dan laporkan ke administrator "
+"Anda jika masalah berlanjut."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "Parameter WOPISrc salah atau hilang, silakan hubungi dukungan."
 
 #: src/errormessages.js:21
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
+"Sesi Anda akan kedaluwarsa dalam %time. Harap simpan pekerjaan Anda dan "
+"segarkan sesi (atau halaman web) untuk melanjutkan."
 
 #: src/errormessages.js:22
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
+"Sesi Anda telah kedaluwarsa. Perubahan lebih lanjut pada dokumen mungkin "
+"tidak disimpan. Harap segarkan sesi (atau halaman web) untuk melanjutkan."
 
 #: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
+"Gagal memuat dokumen. Harap pastikan jenis file didukung dan tidak rusak, "
+"dan coba lagi."
 
 #: src/errormessages.js:26
 #, javascript-format
@@ -808,6 +833,8 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Gagal membaca dokumen dari penyimpanan. Silakan hubungi administrator "
+"peladen penyimpanan Anda (%storageserver)."
 
 #: src/errormessages.js:27
 #, javascript-format
@@ -816,10 +843,14 @@ msgid ""
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
+"Gagal menyimpan karena tidak ada ruang disk yang tersisa di server "
+"penyimpanan. Dokumen sekarang akan menjadi hanya-baca. Silakan hubungi "
+"administrator server (%storageserver) untuk melanjutkan pengeditan."
 
 #: src/errormessages.js:28
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Dokumen tidak dapat disimpan karena token akses kedaluwarsa atau tidak valid."
 
 #: src/errormessages.js:29
 msgid ""
@@ -831,27 +862,27 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:201
 msgid "Accept change"
-msgstr ""
+msgstr "Terima Perubahan"
 
 #: src/layer/marker/Annotation.js:206
 msgid "Reject change"
-msgstr ""
+msgstr "Tolak Perubahan"
 
 #: src/layer/marker/Annotation.js:215
 msgid "Open menu"
-msgstr ""
+msgstr "Buka Menu"
 
 #: src/layer/marker/Annotation.js:235 src/layer/tile/TileLayer.js:199
 msgid "Reply"
-msgstr ""
+msgstr "Balas"
 
 #: src/layer/tile/TileLayer.js:193
 msgid "Modify"
-msgstr ""
+msgstr "Ubah"
 
 #: src/layer/tile/TileLayer.js:205
 msgid "Remove"
-msgstr ""
+msgstr "Buang"
 
 #: src/map/Map.js:146
 msgid "Initializing..."
@@ -859,17 +890,121 @@ msgstr "Menginisialisasi..."
 
 #: src/map/Map.js:911
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "Dokumen tidak aktif - silakan klik untuk melanjutkan pengeditan"
 
 #: src/map/Map.js:1042
 msgid "Loading..."
 msgstr "Memuat..."
 
 #: src/map/handler/Map.FileInserter.js:82
-#, fuzzy
 msgid "Uploading..."
 msgstr "Memuat..."
 
 #: src/map/handler/Map.WOPI.js:273
 msgid "Creating copy..."
-msgstr ""
+msgstr "Membuat salinan ..."
+
+#~ msgid "Select passport"
+#~ msgstr "PIlih Passport"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Passport: N/A"
+
+#~ msgid "Sign & Upload"
+#~ msgstr "Tandai & Unggah"
+
+#~ msgid "Sign and upload document"
+#~ msgstr "Tandai & Unggah dokumen"
+
+#~ msgid "Status:"
+#~ msgstr "Status"
+
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Login"
+#~ msgstr "Log Masuk"
+
+#~ msgid "Close"
+#~ msgstr "Tutup"
+
+#~ msgid "Last modification"
+#~ msgstr "Modifikasi terakhir"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Harap Masukan Kode PIN"
+
+#~ msgid "Error at login."
+#~ msgstr "Kesalahan saat masuk."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Silakan pindai kodenya"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Tidak dapat mendapatkan citra kode QR."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Error saat mencoba mengembalikan akses ke identitas."
+
+#~ msgid "PIN Code"
+#~ msgstr "Kode PIN"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Silakan masukkan kode PIN dari EMail atau SMS"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Masuk dari email atau nomor ponsel"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokumen diunggah"
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Pilih jenis dokument untuk unggah"
+
+#~ msgid "Type:"
+#~ msgstr "Jenis:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Pilih identitas:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Masuk dari ponsel"
+
+#~ msgid "Recover from email"
+#~ msgstr "Pulihkan dari email"
+
+#~ msgid "Not Signed"
+#~ msgstr "Tidak ditandai"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Dokumen ini ditandatangani secara digital dan tanda tangannya valid."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Ditandatangani dan divalidasi"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Dokumen ini punya tanda tangan yang tidak valid."
+
+#~ msgid "Signature broken"
+#~ msgstr "Tanda tangan rusak"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Tanda tangan valid, tapi dokumen telah diubah"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Ditandatangani tetapi dokumen dimodifikasi"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Tanda tangannya OK, tetapi sertifikat tidak dapat divalidasi."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Ditandatangani tapi tidak divalidasi"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Tanda tangannya OK, tetapi dokumen hanya ditandatangani sebagian"
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Ditandatangani tetapi tidak semua file ditandatangani"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Membuat file baru dari template ..."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0100\n"
+"POT-Creation-Date: 2019-03-01 13:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /gl/libo_online/loleaflet-ui-gl.po\n"
-"X-Pootle-Revision: 3650675\n"
+"X-Pootle-Revision: 3698262\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -592,7 +592,7 @@ msgstr "Folla de Excel (.xlsx)"
 msgid "Reset to Default Language"
 msgstr "Restabelecer o idioma predeterminado"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:719
 msgid "Are you sure you want to delete this slide?"
 msgstr "Confirma que desexa eliminar esta diapositiva?"
 
@@ -909,6 +909,12 @@ msgstr "A crear unha copia..."
 #~ msgid "Passport: N/A"
 #~ msgstr "Pasaporte: N/D"
 
+#~ msgid "Sign & Upload"
+#~ msgstr "Asinar e enviar"
+
+#~ msgid "Sign and upload document"
+#~ msgstr "Asinar e enviar o documento"
+
 #~ msgid "Status:"
 #~ msgstr "Estado"
 
@@ -924,8 +930,26 @@ msgstr "A crear unha copia..."
 #~ msgid "Last modification"
 #~ msgstr "Última modificación"
 
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Introduza o código PIN"
+
+#~ msgid "Error at login."
+#~ msgstr "Produciuse un erro ao iniciar a sesión."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Escanee o código"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Non foi posíbel obter a imaxe do código QR."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Produciuse un erro ao tentar restaurar o acceso á identidade."
+
 #~ msgid "PIN Code"
 #~ msgstr "Código PIN"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Introduza o código PIN recibido por correo electrónico ou SMS"
 
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Iniciar sesión desde correo ou número de móbil"
@@ -933,9 +957,11 @@ msgstr "A crear unha copia..."
 #~ msgid "Document uploaded."
 #~ msgstr "Documento cargado."
 
-#, fuzzy
+#~ msgid "Select document type to upload"
+#~ msgstr "Seleccione o tipo de documento que desexa enviar"
+
 #~ msgid "Type:"
-#~ msgstr "Tipo"
+#~ msgstr "Tipo:"
 
 #~ msgid "Select identity:"
 #~ msgstr "Selecionar identidade:"
@@ -949,17 +975,35 @@ msgstr "A crear unha copia..."
 #~ msgid "Not Signed"
 #~ msgstr "Non asinado"
 
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Este documento asinouse dixitalmente e a sinatura é válida."
+
 #~ msgid "Signed and validated"
 #~ msgstr "Asinado e validado"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Este documento ten unha sinatura non válida."
 
 #~ msgid "Signature broken"
 #~ msgstr "Sinatura inservíbel"
 
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "A sinatura era válida mais o documento foi modificado"
+
 #~ msgid "Signed but document modified"
 #~ msgstr "Asinado mais modificado"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "A sinatura é correcta mais non foi posíbel validar o certificado."
 
 #~ msgid "Signed but not validated"
 #~ msgstr "Asinado mais non validado"
 
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "A sinatura é correcta, mais o documento só está asinado parcialmente"
+
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Asinado mais non todos están asinados"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "A crear un ficheiro novo a partir do modelo..."

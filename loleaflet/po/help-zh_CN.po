@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0200\n"
+"POT-Creation-Date: 2019-03-01 13:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-help-zh_CN.po\n"
-"X-Pootle-Revision: 2364709\n"
+"X-Pootle-Revision: 3766628\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -578,7 +578,7 @@ msgstr "删除至字词首"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:95-72
 msgid "Ctrl + Backspace"
-msgstr "Ctrl + Backspace"
+msgstr "Ctrl + 退格"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Delete to end of word"
@@ -594,7 +594,7 @@ msgstr "删除至句首"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-76
 msgid "Ctrl + Shift + Backspace"
-msgstr "Ctrl + Shift + Backspace"
+msgstr "Ctrl + Shift + 退格"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 msgid "Delete to end of sentence"
