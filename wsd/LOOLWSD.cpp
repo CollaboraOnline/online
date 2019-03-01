@@ -593,6 +593,7 @@ public:
         if (!params.has("filename"))
             return;
 
+        // FIXME: needs wrapping - until then - keep in sync with ~ConvertToBroker
         Path tempPath = _convertTo? Path::forDirectory(Poco::TemporaryFile::tempName("/tmp/convert-to") + "/") :
                                     Path::forDirectory(Poco::TemporaryFile::tempName() + "/");
         File(tempPath).createDirectories();
@@ -2369,7 +2370,7 @@ private:
                     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey);
+                    auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey);
 
                     cleanupDocBrokers();
 
