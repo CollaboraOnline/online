@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0100\n"
+"POT-Creation-Date: 2019-03-01 13:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-ui-nb.po\n"
-"X-Pootle-Revision: 3650751\n"
+"X-Pootle-Revision: 3698215\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -587,7 +587,7 @@ msgstr "Excel-regneark (.xlsx)"
 msgid "Reset to Default Language"
 msgstr "Nullstill til standardspråk"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:719
 msgid "Are you sure you want to delete this slide?"
 msgstr "Er du sikker på at du vil slette detre lysboldet?"
 
@@ -904,6 +904,12 @@ msgstr "Lager en kopi...."
 #~ msgid "Passport: N/A"
 #~ msgstr "Pass ikke tilgjengelig"
 
+#~ msgid "Sign & Upload"
+#~ msgstr "Signer og last opp"
+
+#~ msgid "Sign and upload document"
+#~ msgstr "Signer og last opp dokument"
+
 #~ msgid "Status:"
 #~ msgstr "Status"
 
@@ -919,8 +925,26 @@ msgstr "Lager en kopi...."
 #~ msgid "Last modification"
 #~ msgstr "Siste endring"
 
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Vennligs skriv inn PIN koden"
+
+#~ msgid "Error at login."
+#~ msgstr "Feil ved ligginn"
+
+#~ msgid "Please scan the code"
+#~ msgstr "Vennligst skann koden"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Kunne ikke lese QR-kodebildet."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Feil ved forsøk på å gjenopprette tilgang til identitet."
+
 #~ msgid "PIN Code"
 #~ msgstr "PIN kode"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Vennligst skriv inn PIN-koden fra E-post eller SMS"
 
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Logg inn fra e-post eller mobilnummer"
@@ -928,9 +952,11 @@ msgstr "Lager en kopi...."
 #~ msgid "Document uploaded."
 #~ msgstr "Dokument lastet opp."
 
-#, fuzzy
+#~ msgid "Select document type to upload"
+#~ msgstr "Velg dokumenttype for opplasting"
+
 #~ msgid "Type:"
-#~ msgstr "Type"
+#~ msgstr "Type:"
 
 #~ msgid "Select identity:"
 #~ msgstr "Velg identitet:"
@@ -944,17 +970,35 @@ msgstr "Lager en kopi...."
 #~ msgid "Not Signed"
 #~ msgstr "Ikke signert"
 
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Dette dokumentet er signert digitalt og signaturen er gyldig."
+
 #~ msgid "Signed and validated"
 #~ msgstr "Signert og validert"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Dette dokumentet har en ugyldig sgnatur."
 
 #~ msgid "Signature broken"
 #~ msgstr "Signaturen er brutt"
 
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Signaturen var gyldig, men dokumentet har blitt endret"
+
 #~ msgid "Signed but document modified"
 #~ msgstr "Signert, men dokumentet er midifisert"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Signaturen er OK, men sertifikatet kan ikke valideres."
 
 #~ msgid "Signed but not validated"
 #~ msgstr "Signert, men ikke validert"
 
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Signaturen er OK, men dokumentet er bare delvis signert."
+
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Dokumentet er signert, men ikke alle filene er signert."
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Oppretter ny fil fra mal ..."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0100\n"
+"POT-Creation-Date: 2019-03-01 13:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /it/libo_online/loleaflet-ui-it.po\n"
-"X-Pootle-Revision: 3650697\n"
+"X-Pootle-Revision: 3699382\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -592,7 +592,7 @@ msgstr "Foglio di calcolo Excel (.xlsx)"
 msgid "Reset to Default Language"
 msgstr "Ripristina la lingua predefinita"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:719
 msgid "Are you sure you want to delete this slide?"
 msgstr "Vuoi davvero eliminare questa diapositiva?"
 
@@ -913,6 +913,12 @@ msgstr "Creazione della copia..."
 #~ msgid "Passport: N/A"
 #~ msgstr "Passaporto: N/D"
 
+#~ msgid "Sign & Upload"
+#~ msgstr "Firma e carica"
+
+#~ msgid "Sign and upload document"
+#~ msgstr "Firma e carica il documento"
+
 #~ msgid "Status:"
 #~ msgstr "Stato:"
 
@@ -928,8 +934,26 @@ msgstr "Creazione della copia..."
 #~ msgid "Last modification"
 #~ msgstr "Ultima modifica"
 
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Indica il codice PIN"
+
+#~ msgid "Error at login."
+#~ msgstr "Errore all'accesso."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Esegui la scansione del codice"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Non è possibile ottenere l'immagine del codice QR."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Errore durante il tentativo di ripristinare l'accesso all'identità."
+
 #~ msgid "PIN Code"
 #~ msgstr "Codice PIN"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Inserisci il codice PIN da e-mail o SMS"
 
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Accesso da e-mail o da numero mobile"
@@ -937,9 +961,11 @@ msgstr "Creazione della copia..."
 #~ msgid "Document uploaded."
 #~ msgstr "Documento caricato."
 
-#, fuzzy
+#~ msgid "Select document type to upload"
+#~ msgstr "Seleziona il tipo di documento da caricare"
+
 #~ msgid "Type:"
-#~ msgstr "Tipo"
+#~ msgstr "Tipo:"
 
 #~ msgid "Select identity:"
 #~ msgstr "Seleziona identità:"
@@ -953,18 +979,36 @@ msgstr "Creazione della copia..."
 #~ msgid "Not Signed"
 #~ msgstr "Non firmato"
 
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Questo documento è firmato digitalmente e la firma è valida."
+
 #~ msgid "Signed and validated"
 #~ msgstr "Firmato e convalidato"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Questo documento possiede una firma non valida."
 
 # Concordo con te. "danneggiata" è la traduzione corretta
 #~ msgid "Signature broken"
 #~ msgstr "Firma danneggiata"
 
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "La firma era valida ma il documento è stato modificato"
+
 #~ msgid "Signed but document modified"
 #~ msgstr "Firmato ma il documento è modificato"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "La firma è valida ma il certificato non può essere convalidato."
 
 #~ msgid "Signed but not validated"
 #~ msgstr "Firmato ma non convalidato"
 
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "La firma è valida ma il documento è firmato solo parzialmente"
+
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Firmato ma non tutti i file sono firmati"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Creazione di un nuovo file da modello..."

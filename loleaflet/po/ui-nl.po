@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0100\n"
+"POT-Creation-Date: 2019-03-01 13:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
-"X-Pootle-Revision: 3673270\n"
+"X-Pootle-Revision: 3700604\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -592,7 +592,7 @@ msgstr "Excel-spreadsheet (.xlsx)"
 msgid "Reset to Default Language"
 msgstr "Herstellen naar standaard taal"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:719
 msgid "Are you sure you want to delete this slide?"
 msgstr "Bent u zeker dat u deze dia wilt verwijderen?"
 
@@ -909,12 +909,109 @@ msgstr "Bezig met laden…"
 msgid "Creating copy..."
 msgstr "Kopie maken..."
 
+#~ msgid "Select passport"
+#~ msgstr "Selecteer wachtwoord"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Wachtwoord: NVT"
+
+#~ msgid "Sign & Upload"
+#~ msgstr "Aanmelden en uploaden"
+
+#~ msgid "Sign and upload document"
+#~ msgstr "Document aanmelden en uploaden"
+
 #~ msgid "Status:"
 #~ msgstr "Status:"
+
+#~ msgid "N/A"
+#~ msgstr "NVT"
 
 #~ msgid "Login"
 #~ msgstr "Aanmelden"
 
-#, fuzzy
+#~ msgid "Close"
+#~ msgstr "Sluiten"
+
+#~ msgid "Last modification"
+#~ msgstr "Laatste aanpassing"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "De pincode invullen aub"
+
+#~ msgid "Error at login."
+#~ msgstr "Fout bij inloggen."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Scan de code a.u.b."
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Het beeld van de QR-code kon niet worden ontvangen."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Fout bij herstellen van toegang tot de identiteit."
+
+#~ msgid "PIN Code"
+#~ msgstr "PIN-code"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Voer de pincode in van de e-mail of sms"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Aanmelden via e-mail of mobiel nummer"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Document geüpload"
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Selecteer documenttype voor uploaden"
+
 #~ msgid "Type:"
-#~ msgstr "Type"
+#~ msgstr "Type:"
+
+#~ msgid "Select identity:"
+#~ msgstr "Selecteer een identiteit:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Aanmelden via mobiel"
+
+#~ msgid "Recover from email"
+#~ msgstr "Herstellen van e-mail"
+
+#~ msgid "Not Signed"
+#~ msgstr "Niet ondertekend"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Het document is digitaal ondertekend en de handtekening is geldig."
+
+#~ msgid "Signed and validated"
+#~ msgstr "Ondertekend en gevalideerd"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Dit document heeft een ongeldige ondertekening."
+
+#~ msgid "Signature broken"
+#~ msgstr "Handtekening beschadigd"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "De handtekening is geldig, maar het document is gewijzigd"
+
+#~ msgid "Signed but document modified"
+#~ msgstr "Ondertekend maar document aangepast"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr ""
+#~ "De handtekening is OK, maar het certificaat kon niet worden gevalideerd."
+
+#~ msgid "Signed but not validated"
+#~ msgstr "Ondertekend maar niet gevalideerd"
+
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr ""
+#~ "De ondertekening is OK, maar het document is maar gedeeltelijk ondertekend."
+
+#~ msgid "Signed but not all files are signed"
+#~ msgstr "Ondertekend, maar niet alle bestanden zijn ondertekend"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Nieuw bestand van sjabloon maken..."

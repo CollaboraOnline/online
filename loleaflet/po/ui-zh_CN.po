@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 21:06+0100\n"
+"POT-Creation-Date: 2019-03-01 13:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 3650847\n"
+"X-Pootle-Revision: 3701135\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -584,7 +584,7 @@ msgstr "Excel 电子表格 (.xlsx)"
 msgid "Reset to Default Language"
 msgstr "重置为默认语言"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:719
 msgid "Are you sure you want to delete this slide?"
 msgstr "您确定要删除这张幻灯片吗？"
 
@@ -868,6 +868,12 @@ msgstr "正在创建副本…"
 #~ msgid "Passport: N/A"
 #~ msgstr "通行证: N/A"
 
+#~ msgid "Sign & Upload"
+#~ msgstr "签署 & 上传"
+
+#~ msgid "Sign and upload document"
+#~ msgstr "签署并上传文件"
+
 #~ msgid "Status:"
 #~ msgstr "状态:"
 
@@ -883,8 +889,26 @@ msgstr "正在创建副本…"
 #~ msgid "Last modification"
 #~ msgstr "最后修改"
 
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "请输入 PIN 码"
+
+#~ msgid "Error at login."
+#~ msgstr "登录时出错。"
+
+#~ msgid "Please scan the code"
+#~ msgstr "请扫码"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "无法获取二维码图像。"
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "尝试恢复身份权限时出错。"
+
 #~ msgid "PIN Code"
 #~ msgstr "密码"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "请输入电子邮件或 SMS 短信中的 PIN 码"
 
 #~ msgid "Login from email or mobile number"
 #~ msgstr "通过电子邮箱或手机号码登录"
@@ -892,9 +916,11 @@ msgstr "正在创建副本…"
 #~ msgid "Document uploaded."
 #~ msgstr "文档已上传。"
 
-#, fuzzy
+#~ msgid "Select document type to upload"
+#~ msgstr "选择要上传的文档类型"
+
 #~ msgid "Type:"
-#~ msgstr "类型"
+#~ msgstr "类型:"
 
 #~ msgid "Select identity:"
 #~ msgstr "选择身份:"
@@ -908,17 +934,35 @@ msgstr "正在创建副本…"
 #~ msgid "Not Signed"
 #~ msgstr "未签名"
 
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "此文档已经数字签名，且签名有效。"
+
 #~ msgid "Signed and validated"
 #~ msgstr "已签名并验证"
+
+#~ msgid "This document has an invalid signature."
+#~ msgstr "此文档的签名无效。"
 
 #~ msgid "Signature broken"
 #~ msgstr "签名损坏"
 
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "签名有效，但文档已被修改"
+
 #~ msgid "Signed but document modified"
 #~ msgstr "已签名但文档已修改"
+
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "签名没有问题，但无法验证证书。"
 
 #~ msgid "Signed but not validated"
 #~ msgstr "已签名未验证"
 
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "签名没有问题，但文档仅被部分签名"
+
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "已签名但不是所有文件都有签名"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "从模版创建新文件..."
