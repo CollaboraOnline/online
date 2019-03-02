@@ -490,18 +490,24 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks()
     return nullptr;
 }
 
-/// Handles the filename part of the convert-to POST request payload.
+/// Handles the filename part of the convert-to POST request payload,
+/// Also owns the file - cleaning it up when destroyed.
 class ConvertToPartHandler : public PartHandler
 {
-    std::string& _filename;
+    std::string _filename;
 
     /// Is it really a convert-to, ie. use an especially formed path?
     bool _convertTo;
 
 public:
-    ConvertToPartHandler(std::string& filename, bool convertTo = false)
-        : _filename(filename)
-        , _convertTo(convertTo)
+    std::string getFilename() const { return _filename; }
+
+    ConvertToPartHandler(bool convertTo = false)
+        : _convertTo(convertTo)
+    {
+    }
+
+    virtual ~ConvertToPartHandler()
     {
     }
 
@@ -519,6 +525,7 @@ public:
         if (!params.has("filename"))
             return;
 
+        // FIXME: needs wrapping - until then - keep in sync with ~ConvertToBroker
         Path tempPath = _convertTo? Path::forDirectory(Poco::TemporaryFile::tempName("/tmp/convert-to") + "/") :
                                     Path::forDirectory(Poco::TemporaryFile::tempName() + "/");
         File(tempPath).createDirectories();
@@ -1592,7 +1599,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
 
         // Set the one we just created.
         LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-        docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey, LOOLWSD::ChildRoot);
+        docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey);
         DocBrokers.emplace(docKey, docBroker);
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
     }
@@ -2187,8 +2194,7 @@ private:
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() > 2 && tokens[2] == "convert-to")
         {
-            std::string fromPath;
-            ConvertToPartHandler handler(fromPath, /*convertTo =*/ true);
+            ConvertToPartHandler handler(/*convertTo =*/ true);
             HTMLForm form(request, message, handler);
 
             std::string format = (form.has("format") ? form.get("format") : "");
@@ -2211,6 +2217,7 @@ private:
                 format = tokens[3];
 
             bool sent = false;
+            std::string fromPath = handler.getFilename();
             LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
             if (!fromPath.empty())
             {
@@ -2226,7 +2233,7 @@ private:
                     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    auto docBroker = std::make_shared<DocumentBroker>(fromPath, uriPublic, docKey, LOOLWSD::ChildRoot);
+                    auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey);
 
                     cleanupDocBrokers();
 
@@ -2300,8 +2307,7 @@ private:
         {
             LOG_INF("Insert file request.");
 
-            std::string tmpPath;
-            ConvertToPartHandler handler(tmpPath);
+            ConvertToPartHandler handler;
             HTMLForm form(request, message, handler);
 
             if (form.has("childid") && form.has("name"))
@@ -2331,7 +2337,7 @@ private:
                                               + JAILED_DOCUMENT_ROOT + "insertfile";
                     File(dirPath).createDirectories();
                     std::string fileName = dirPath + "/" + form.get("name");
-                    File(tmpPath).moveTo(fileName);
+                    File(handler.getFilename()).moveTo(fileName);
                     response.setContentLength(0);
                     socket->send(response);
                     return;
