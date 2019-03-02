@@ -1315,39 +1315,4 @@ void ClientSession::traceTileBySend(const TileDesc& tile, bool deduplicated)
         addTileOnFly(tile);
 }
 
-void ClientSession::traceSubscribeToTile(const std::string& cacheName)
-{
-    _tilesBeingRendered.insert(cacheName);
-}
-
-void ClientSession::traceUnSubscribeToTile(const std::string& cacheName)
-{
-    _tilesBeingRendered.erase(cacheName);
-}
-
-void ClientSession::removeOutdatedTileSubscriptions()
-{
-    const std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
-    if(!docBroker)
-        return;
-
-    auto iterator = _tilesBeingRendered.begin();
-    while(iterator != _tilesBeingRendered.end())
-    {
-        double elapsedTime = docBroker->tileCache().getTileBeingRenderedElapsedTimeMs(*iterator);
-        if(elapsedTime < 0.0 && elapsedTime > 200.0)
-        {
-            LOG_INF("Tracked TileBeingRendered was dropped because of time out.");
-            _tilesBeingRendered.erase(iterator);
-        }
-        else
-            ++iterator;
-    }
-}
-
-void ClientSession::clearTileSubscription()
-{
-    _tilesBeingRendered.clear();
-}
-
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

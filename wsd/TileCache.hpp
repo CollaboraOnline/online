@@ -85,11 +85,13 @@ public:
     /// Parse invalidateTiles message to a part number and a rectangle of the invalidated area
     static std::pair<int, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
 
-    void forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered, const TileDesc& tile);
+    void forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
     double getTileBeingRenderedElapsedTimeMs(const std::string& tileCacheName) const;
 
+    size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& subscriber);
+
     bool hasTileBeingRendered(const TileDesc& tile);
-    int getTileBeingRenderedVersion(const TileDesc& tile);
+    int  getTileBeingRenderedVersion(const TileDesc& tile);
 
     // Debugging bits ...
     void dumpState(std::ostream& os);

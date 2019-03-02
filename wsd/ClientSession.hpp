@@ -21,7 +21,6 @@
 #include <map>
 #include <list>
 #include <utility>
-#include <unordered_set>
 
 class DocumentBroker;
 
@@ -130,14 +129,6 @@ public:
     /// Call this method anytime when a new tile is sent to the client
     void traceTileBySend(const TileDesc& tile, bool deduplicated = false);
 
-    /// Trask tiles what we a subscription to
-    void traceSubscribeToTile(const std::string& tileCacheName);
-    void traceUnSubscribeToTile(const std::string& tileCacheName);
-    void removeOutdatedTileSubscriptions();
-    void clearTileSubscription();
-
-    size_t getTilesBeingRenderedCount() const {return _tilesBeingRendered.size();}
-
     /// Clear wireId map anytime when client visible area changes (visible area, zoom, part number)
     void resetWireIdMap();
 
@@ -226,10 +217,6 @@ private:
 
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
     std::list<std::pair<std::string, std::chrono::steady_clock::time_point>> _tilesOnFly;
-
-    /// Names of tiles requested from kit, which this session is subsrcibed to
-    /// Track only non-thumbnail tiles (getId() == -1)
-    std::unordered_set<std::string> _tilesBeingRendered;
 
     /// Requested tiles are stored in this list, before we can send them to the client
     std::deque<TileDesc> _requestedTiles;

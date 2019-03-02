@@ -98,6 +98,19 @@ private:
     std::string _cachedName;
 };
 
+size_t TileCache::countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session)
+{
+    size_t count = 0;
+    for (auto &it : _tilesBeingRendered)
+    {
+        for (auto &s : it.second->getSubscribers()) {
+            if (s.lock() == session)
+                count++;
+        }
+    }
+    return count;
+}
+
 std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(const TileDesc& tileDesc)
 {
     const std::string cachedName = cacheFileName(tileDesc);
@@ -108,18 +121,11 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(c
     return tile != _tilesBeingRendered.end() ? tile->second : nullptr;
 }
 
-void TileCache::forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered, const TileDesc& tile)
+void TileCache::forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered)
 {
     assertCorrectThread();
     assert(tileBeingRendered);
     assert(_tilesBeingRendered.find(tileBeingRendered->getCacheName()) != _tilesBeingRendered.end());
-
-    for(auto& subscriber : tileBeingRendered->getSubscribers())
-    {
-        std::shared_ptr<ClientSession> session = subscriber.lock();
-        if(session && tile.getId() == -1)
-            session->traceUnSubscribeToTile(tileBeingRendered->getCacheName());
-    }
 
     _tilesBeingRendered.erase(tileBeingRendered->getCacheName());
 }
@@ -244,7 +250,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
         {
             LOG_DBG("STATISTICS: tile " << tile.getVersion() << " internal roundtrip " <<
                     tileBeingRendered->getElapsedTimeMs() << " ms.");
-            forgetTileBeingRendered(tileBeingRendered, tile);
+            forgetTileBeingRendered(tileBeingRendered);
         }
     }
     else
@@ -439,8 +445,6 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
         LOG_DBG("Subscribing " << subscriber->getName() << " to tile " << name << " which has " <<
                 tileBeingRendered->getSubscribers().size() << " subscribers already.");
         tileBeingRendered->getSubscribers().push_back(subscriber);
-        if(tile.getId() == -1)
-            subscriber->traceSubscribeToTile(tileBeingRendered->getCacheName());
 
         const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
         if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
@@ -460,8 +464,6 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 
         tileBeingRendered = std::make_shared<TileBeingRendered>(cachedName, tile);
         tileBeingRendered->getSubscribers().push_back(subscriber);
-        if(tile.getId() == -1)
-            subscriber->traceSubscribeToTile(tileBeingRendered->getCacheName());
         _tilesBeingRendered[cachedName] = tileBeingRendered;
     }
 }

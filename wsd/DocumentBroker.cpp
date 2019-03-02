@@ -1462,9 +1462,6 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
         tilesOnFlyUpperLimit = 200; // Have a big number here to get all tiles requested by file openning
     }
 
-
-    // Update client's tilesBeingRendered list
-    session->removeOutdatedTileSubscriptions();
     // Drop tiles which we are waiting for too long
     session->removeOutdatedTilesOnFly();
 
@@ -1475,7 +1472,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     {
         size_t delayedTiles = 0;
         std::vector<TileDesc> tilesNeedsRendering;
-        while(session->getTilesOnFlyCount() + session->getTilesBeingRenderedCount() < tilesOnFlyUpperLimit &&
+        size_t beingRendered = _tileCache->countTilesBeingRenderedForSession(session);
+        while(session->getTilesOnFlyCount() + beingRendered < tilesOnFlyUpperLimit &&
               !requestedTiles.empty() &&
               // If we delayed all tiles we don't send any tile (we will when next tileprocessed message arrives)
               delayedTiles < requestedTiles.size())
@@ -1516,6 +1514,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                     _debugRenderedTileCount++;
                 }
                 tileCache().subscribeToTileRendering(tile, session);
+                beingRendered++;
             }
             requestedTiles.pop_front();
         }
@@ -1541,8 +1540,6 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
     session->clearTilesOnFly();
 
     session->getRequestedTiles().clear();
-
-    session->clearTileSubscription();
 
     session->resetWireIdMap();
 
