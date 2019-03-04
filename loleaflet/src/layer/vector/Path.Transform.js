@@ -282,6 +282,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		var matrix = this._matrix.clone();
 		var angle = this._angle;
 		var scale = this._scale.clone();
+		var moved = this._handleDragged;
 
 		this._transformGeometries();
 
@@ -299,7 +300,11 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		this._updateHandlers();
 
-		map.dragging.enable();
+		if (this._mapDraggingWasEnabled) {
+			if (moved) L.DomEvent._fakeStop({ type: 'click' });
+			map.dragging.enable();
+		}
+
 		this._path.fire('transformed', {
 			matrix: matrix,
 			scale: scale,
@@ -574,7 +579,12 @@ L.Handler.PathTransform = L.Handler.extend({
 	_onRotateStart: function(evt) {
 		var map = this._map;
 
-		map.dragging.disable();
+		this._handleDragged = false;
+		this._mapDraggingWasEnabled = false;
+		if (map.dragging.enabled()) {
+			map.dragging.disable();
+			this._mapDraggingWasEnabled = true;
+		}
 
 		this._originMarker     = null;
 		this._rotationOriginPt = map.latLngToLayerPoint(this._getRotationOrigin());
@@ -601,6 +611,8 @@ L.Handler.PathTransform = L.Handler.extend({
 		var pos = evt.layerPoint;
 		var previous = this._rotationStart;
 		var origin   = this._rotationOriginPt;
+
+		this._handleDragged = true;
 
 		// rotation step angle
 		this._angle = Math.atan2(pos.y - origin.y, pos.x - origin.x) -
@@ -647,7 +659,12 @@ L.Handler.PathTransform = L.Handler.extend({
 		var marker = evt.target;
 		var map = this._map;
 
-		map.dragging.disable();
+		this._handleDragged = false;
+		this._mapDraggingWasEnabled = false;
+		if (map.dragging.enabled()) {
+			map.dragging.disable();
+			this._mapDraggingWasEnabled = true;
+		}
 
 		this._activeMarker = marker;
 
@@ -686,6 +703,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	_onScale: function(evt) {
 		var originPoint = this._originMarker._point;
 		var ratioX, ratioY;
+
+		this._handleDragged = true;
+
 		if (this.options.uniformScaling) {
 			ratioX = originPoint.distanceTo(evt.layerPoint) / this._initialDist;
 			ratioY = ratioX;
