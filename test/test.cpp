@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#define TST_LOG_REDIRECT
 #include <test.hpp>
 
 #include <config.h>
@@ -79,6 +80,15 @@ bool isStandalone()
     return IsStandalone;
 }
 
+static std::mutex errorMutex;
+static std::stringstream errors;
+
+void tstLog(const std::ostringstream &stream)
+{
+    std::lock_guard<std::mutex> lock(errorMutex);
+    errors << stream.str();
+}
+
 // returns true on success
 bool runClientTests(bool standalone, bool verbose)
 {
@@ -119,16 +129,11 @@ bool runClientTests(bool standalone, bool verbose)
     if (!verbose)
     {
         // redirect std::cerr temporarily
-        std::stringstream errorBuffer;
-        std::streambuf* oldCerr = std::cerr.rdbuf(errorBuffer.rdbuf());
-
         runner.run(controller);
-
-        std::cerr.rdbuf(oldCerr);
 
         // output the errors we got during the testing
         if (!result.wasSuccessful())
-            std::cerr << errorBuffer.str() << std::endl;
+            std::cerr << errors.str() << std::endl;
     }
     else
     {
