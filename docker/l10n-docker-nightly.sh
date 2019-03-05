@@ -72,7 +72,6 @@ fi
 # online repo
 if test ! -d online ; then
     git clone https://git.libreoffice.org/online online || exit 1
-    ( cd online && ./autogen.sh ) || exit 1
 fi
 
 ( cd online && git fetch --all && git checkout -f $LIBREOFFICE_BRANCH && git pull -r ) || exit 1
@@ -147,6 +146,7 @@ chrpath -r '$ORIGIN' "$INSTDIR"/opt/libreoffice/program/libcairo.so.2
 ##### loolwsd & loleaflet #####
 
 # build
+( cd online && ./autogen.sh ) || exit 1
 ( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/libreoffice/include --with-lo-path="$INSTDIR"/opt/libreoffice $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
 ( cd online/loleaflet/po && ../../scripts/downloadpootle.sh )
 ( cd online/loleaflet && make l10n) || exit 1
