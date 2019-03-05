@@ -91,6 +91,9 @@ struct TileCache::TileBeingRendered
     double getElapsedTimeMs() const { return std::chrono::duration_cast<std::chrono::milliseconds>
                                               (std::chrono::steady_clock::now() - _startTime).count(); }
     std::vector<std::weak_ptr<ClientSession>>& getSubscribers() { return _subscribers; }
+
+    void dumpState(std::ostream& os);
+
 private:
     std::vector<std::weak_ptr<ClientSession>> _subscribers;
     std::chrono::steady_clock::time_point _startTime;
@@ -553,6 +556,16 @@ void TileCache::saveDataToStreamCache(StreamType type, const std::string &fileNa
     _streamCache[type][fileName] = tile;
 }
 
+void TileCache::TileBeingRendered::dumpState(std::ostream& os)
+{
+    os << "    " << _tile.serialize() << " " << std::setw(4) << getElapsedTimeMs() << "ms " << _subscribers.size() << " subscribers\n";
+    for (auto it : _subscribers)
+    {
+        std::shared_ptr<ClientSession> session = it.lock();
+        os << "      " << session->getId() << " " << session->getUserId() << " " << session->getName() << "\n";
+    }
+}
+
 void TileCache::dumpState(std::ostream& os)
 {
     {
@@ -585,6 +598,10 @@ void TileCache::dumpState(std::ostream& os)
                << "\t" << std::setw(6) << it.second->size() << " bytes\n";
         }
     }
+
+    os << "  tiles being rendered " << _tilesBeingRendered.size() << "\n";
+    for (auto it : _tilesBeingRendered)
+        it.second->dumpState(os);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
