@@ -5,33 +5,6 @@
 
 /* global _ vex $ errorMessages Uint8Array brandProductName brandProductFAQURL */
 
-window.fakeWebSocketCounter = 0;
-function FakeWebSocket() {
-	this.binaryType = 'arraybuffer';
-	this.bufferedAmount = 0;
-	this.extensions = '';
-	this.protocol = '';
-	this.readyState = 1;
-	this.id = window.fakeWebSocketCounter++;
-	this.sendCounter = 0;
-	this.onclose = function() {
-	};
-	this.onerror = function() {
-	};
-	this.onmessage = function() {
-	};
-	this.onopen = function() {
-	};
-}
-
-FakeWebSocket.prototype.close = function() {
-}
-
-FakeWebSocket.prototype.send = function(data) {
-	this.sendCounter++;
-	window.postMobileMessage(data);
-}
-
 L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 	ReconnectCount: 0,
@@ -59,7 +32,7 @@ L.Socket = L.Class.extend({
 			this.close();
 		}
 		if (window.ThisIsAMobileApp) {
-			this.socket = new FakeWebSocket();
+			this.socket = new window.FakeWebSocket();
 			window.TheFakeWebSocket = this.socket;
 		} else {
 			var wopiSrc = '';
