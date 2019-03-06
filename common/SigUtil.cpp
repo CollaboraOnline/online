@@ -253,7 +253,8 @@ namespace SigUtil
                << Poco::Process::id() << "\n";
         std::string streamStr = stream.str();
         assert (sizeof (FatalGdbString) > strlen(streamStr.c_str()) + 1);
-        strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString));
+        strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString)-1);
+        FatalGdbString[sizeof(FatalGdbString)-1] = '\0';
     }
 
     static
