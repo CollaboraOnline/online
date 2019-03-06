@@ -1,6 +1,33 @@
 /* -*- js-indent-level: 8 -*- */
 (function (global) {
 
+	global.fakeWebSocketCounter = 0;
+	global.FakeWebSocket = function () {
+		this.binaryType = 'arraybuffer';
+		this.bufferedAmount = 0;
+		this.extensions = '';
+		this.protocol = '';
+		this.readyState = 1;
+		this.id = window.fakeWebSocketCounter++;
+		this.sendCounter = 0;
+		this.onclose = function() {
+		};
+		this.onerror = function() {
+		};
+		this.onmessage = function() {
+		};
+		this.onopen = function() {
+		};
+	}
+
+	global.FakeWebSocket.prototype.close = function() {
+	}
+
+	global.FakeWebSocket.prototype.send = function(data) {
+		this.sendCounter++;
+		window.postMobileMessage(data);
+	}
+
 	// If not debug, don't print anything on the console
 	// except in tile debug mode (Ctrl-Shift-Alt-d)
 	console.log2 = console.log;
@@ -68,12 +95,17 @@
 		global.docURL = filePath;
 	}
 
-	var websocketURI = global.host + global.serviceRoot + '/lool/' + encodeURIComponent(global.docURL + (docParams ? '?' + docParams : '')) + '/ws' + wopiSrc;
+	if (window.ThisIsAMobileApp) {
+		global.socket = new global.FakeWebSocket();
+		window.TheFakeWebSocket = global.socket;
+	} else {
+		var websocketURI = global.host + global.serviceRoot + '/lool/' + encodeURIComponent(global.docURL + (docParams ? '?' + docParams : '')) + '/ws' + wopiSrc;
 
-	try {
-		global.socket = new WebSocket(websocketURI);
-	} catch (err) {
-		console.log(err);
+		try {
+			global.socket = new WebSocket(websocketURI);
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	global.queueMsg = [];
