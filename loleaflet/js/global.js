@@ -76,6 +76,10 @@
 		global._ = function (string) {
 			return string;
 		}
+	} else {
+		global._ = function (string) {
+			return string.toLocaleString();
+		}
 	}
 
 	var docParams, wopiParams;
