@@ -134,5 +134,16 @@
 		}
 
 		global.socket.binaryType = 'arraybuffer';
+
+		if (window.ThisIsAMobileApp) {
+			// This corresponds to the initial GET request when creating a WebSocket
+			// connection and tells the app's code that it is OK to start invoking
+			// TheFakeWebSocket's onmessage handler. The app code that handles this
+			// special message knows the document to be edited anyway, and can send it
+			// on as necessary to the Online code.
+			window.postMobileMessage('HULLO');
+			// A FakeWebSocket is immediately open.
+			this.socket.onopen();
+		}
 	}
 }(window));
