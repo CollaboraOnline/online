@@ -97,7 +97,7 @@ cat > libreoffice/autogen.input << EOF
 --disable-kde5
 --disable-odk
 --disable-online-update
---disable-pdfimport
+--enable-pdfimport
 --disable-postgresql-sdbc
 --disable-report-builder
 --disable-scripting-beanshell
@@ -130,7 +130,7 @@ cat > libreoffice/autogen.input << EOF
 --without-system-libpng
 --without-system-libxml
 --without-system-openssl
---without-system-poppler
+--disable-poppler
 --without-system-postgresql
 EOF
 
