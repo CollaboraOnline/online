@@ -76,9 +76,13 @@
 		global._ = function (string) {
 			return string;
 		}
-	} else {
+	} else if (typeof String.prototype.toLocaleString === 'function') {
 		global._ = function (string) {
 			return string.toLocaleString();
+		}
+	} else {
+		global._ = function (string) {
+			return string;
 		}
 	}
 
