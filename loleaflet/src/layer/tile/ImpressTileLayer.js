@@ -205,35 +205,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				window.hideTooltip(this, e.target);
 			},
 			onRefresh: function(edata) {
-				if (edata.target === 'styles' || edata.target === 'fonts' || edata.target === 'fontsizes') {
-					var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(edata.item.id));
-					if (edata.item.hidden) {
-						toolItem.css('display', 'none');
-					} else {
-						toolItem.css('display', '');
-					}
-					window.updateCommandValues(edata.target);
-				}
-
-				if (edata.target === 'editbar' && map.getDocType() === 'presentation') {
-					// Fill the style select box if not yet filled
-					if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
-						var data = [''];
-						// Inserts a separator element
-						data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
-
-						L.Styles.impressLayout.forEach(function(layout) {
-							data = data.concat({id: layout.id, text: _(layout.text)});
-						}, this);
-
-						$('.styles-select').select2({
-							data: data,
-							placeholder: _UNO('.uno:LayoutStatus', 'presentation')
-						});
-						$('.styles-select').on('select2:select', window.onStyleSelect);
-					}
-				}
-
 				if (edata.target === 'inserttable')
 					window.insertTable();
 
