@@ -224,8 +224,8 @@ L.Map = L.Evented.extend({
 		}, this);
 	},
 
-	loadDocument: function() {
-		this._socket.connect();
+	loadDocument: function(socket) {
+		this._socket.connect(socket);
 	},
 
 	sendInitUNOCommands: function() {

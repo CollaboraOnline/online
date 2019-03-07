@@ -118,9 +118,8 @@
 		}
 	}
 
+	global.queueMsg = [];
 	if (global.socket && global.socket.readyState !== 3) {
-		global.queueMsg = [];
-
 		global.socket.onopen = function () {
 			if (global.socket.readyState === 1) {
 				var ProtocolVersionNumber = '0.1';
@@ -138,7 +137,11 @@
 		}
 
 		global.socket.onmessage = function (event) {
-			global.queueMsg.push(event.data);
+			if (global.L && global.socket instanceof L.Socket) {
+				global.socket._onMessage(event);
+			} else {
+				global.queueMsg.push(event.data);
+			}
 		}
 
 		global.socket.binaryType = 'arraybuffer';
