@@ -657,7 +657,12 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 			this._graphicSelectionAngle = (strTwips.length === 5) ? parseInt(strTwips[4]) : 0;
-			this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
+			// Workaround for tdf#123874. For some reason the handling of the
+			// shapeselectioncontent messages that we get back causes the WebKit process
+			// to crash on iOS.
+			if (!window.ThisIsTheiOSApp) {
+				this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
+			}
 		}
 
 		this._onUpdateGraphicSelection();
