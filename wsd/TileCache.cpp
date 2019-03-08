@@ -559,7 +559,7 @@ void TileCache::saveDataToStreamCache(StreamType type, const std::string &fileNa
 void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 {
     os << "    " << _tile.serialize() << " " << std::setw(4) << getElapsedTimeMs() << "ms " << _subscribers.size() << " subscribers\n";
-    for (auto it : _subscribers)
+    for (const auto& it : _subscribers)
     {
         std::shared_ptr<ClientSession> session = it.lock();
         os << "      " << session->getId() << " " << session->getUserId() << " " << session->getName() << "\n";
@@ -570,12 +570,12 @@ void TileCache::dumpState(std::ostream& os)
 {
     {
         size_t num = 0, size = 0;
-        for (auto it : _cache)
+        for (const auto& it : _cache)
         {
             num++; size += it.second->size();
         }
         os << "  tile cache: num: " << num << " size: " << size << " bytes\n";
-        for (auto it : _cache)
+        for (const auto& it : _cache)
         {
             os << "    " << std::setw(4) << it.first.getWireId()
                << "\t" << std::setw(6) << it.second->size() << " bytes"
@@ -584,15 +584,15 @@ void TileCache::dumpState(std::ostream& os)
     }
 
     int type = 0;
-    for (auto i : _streamCache)
+    for (const auto& i : _streamCache)
     {
         size_t num = 0, size = 0;
-        for (auto it : i)
+        for (const auto& it : i)
         {
             num++; size += it.second->size();
         }
         os << "  stream cache: " << type++ << " num: " << num << " size: " << size << " bytes\n";
-        for (auto it : i)
+        for (const auto& it : i)
         {
             os << "    " << it.first
                << "\t" << std::setw(6) << it.second->size() << " bytes\n";
@@ -600,7 +600,7 @@ void TileCache::dumpState(std::ostream& os)
     }
 
     os << "  tiles being rendered " << _tilesBeingRendered.size() << "\n";
-    for (auto it : _tilesBeingRendered)
+    for (const auto& it : _tilesBeingRendered)
         it.second->dumpState(os);
 }
 
