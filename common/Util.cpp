@@ -582,6 +582,10 @@ namespace Util
 
     std::map<std::string, std::string> JsonToMap(const std::string& jsonString)
     {
+        std::map<std::string, std::string> map;
+        if (jsonString.empty())
+            return map;
+
         Poco::JSON::Parser parser;
         const Poco::Dynamic::Var result = parser.parse(jsonString);
         const auto& json = result.extract<Poco::JSON::Object::Ptr>();
@@ -589,7 +593,6 @@ namespace Util
         std::vector<std::string> names;
         json->getNames(names);
 
-        std::map<std::string, std::string> map;
         for (const auto& name : names)
         {
             map[name] = json->get(name).toString();
