@@ -12,6 +12,7 @@ var deps = {
 		      'core/Events.js',
 		      'core/Socket.js',
 		      'core/Browser.js',
+		      'core/Matrix.js',
 		      'geometry/Point.js',
 		      'geometry/Bounds.js',
 		      'geometry/Transformation.js',
@@ -144,12 +145,6 @@ var deps = {
 		desc: ['Rectangle overlays.']
 	},
 
-	SVGGroup: {
-		src: ['layer/vector/SVGGroup.js'],
-		deps: ['Path'],
-		desc: 'SVG group element.'
-	},
-
 	CircleMarker: {
 		src: ['layer/vector/CircleMarker.js'],
 		deps: ['Path'],
@@ -163,21 +158,56 @@ var deps = {
 	},
 
 	SVG: {
-		src: ['layer/vector/SVG.js'],
+		src: [
+			'layer/vector/SVG.js',
+			'layer/vector/Path.Transform.SVG.js'
+		],
 		deps: ['Path'],
 		desc: 'SVG backend for vector layers.'
 	},
 
+	SVGGroup: {
+		src: [
+			'core/Handler.js',
+			'layer/vector/SVGGroup.js'
+		],
+		deps: ['Path'],
+		desc: 'SVG group element.'
+	},
+
+	PathTransform: {
+		src: [
+			'layer/vector/Path.Drag.Transform.js',
+			'layer/vector/Path.Drag.js',
+			'layer/vector/Path.Transform.Util.js',
+			'layer/vector/Path.Transform.js'
+		],
+		deps: ['Path'],
+		desc: 'Path Transform extension.'
+	},
+
 	VML: {
-		src: ['layer/vector/SVG.VML.js'],
+		src: [
+			'layer/vector/SVG.VML.js',
+			'layer/vector/Path.Transform.SVG.VML.js'
+		],
 		deps: ['SVG'],
 		desc: 'VML fallback for vector layers in IE7-8.'
 	},
 
 	Canvas: {
-		src: ['layer/vector/Canvas.js'],
+		src: [
+			'layer/vector/Canvas.js',
+			'layer/vector/Path.Transform.Canvas.js'
+		],
 		deps: ['Path'],
 		desc: 'Canvas backend for vector layers.'
+	},
+
+	GeoJSON: {
+		src: ['layer/GeoJSON.js'],
+		deps: ['Polygon', 'Circle', 'CircleMarker', 'Marker', 'FeatureGroup'],
+		desc: 'GeoJSON layer, parses the data and adds corresponding layers above.'
 	},
 
 	MapDrag: {
