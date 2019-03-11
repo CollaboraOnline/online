@@ -2165,15 +2165,12 @@ function deselectUser(e) {
 }
 
 function getUserItem(viewId, userName, extraInfo, color) {
-	var className = 'useritem';
-	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-		className = 'useritem-avatar';
-	}
-
-	var html = '<tr class="' + className + '" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
+	var html = '<tr class="useritem" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
 		     '<td class=usercolor>';
 	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 		html += '<img class="avatar-img" src="' + extraInfo.avatar + '" style="border-color: ' + color  + ';" />';
+	} else {
+		html += '<div class="user-info" style="background-color: ' + color  + ';" />';
 	}
 
 	// TODO: Add mail and other links as sub-menu.
