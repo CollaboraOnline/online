@@ -499,6 +499,10 @@ var deps = {
 	DivOverlay: {
 		src: ['layer/marker/DivOverlay.js'],
 		desc: 'Div overlay to put on the map.'
+	},
+
+	Main: {
+		src: ['main.js']
 	}
 };
 

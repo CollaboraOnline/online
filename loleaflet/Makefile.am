@@ -308,8 +308,7 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(builddir)/dist/global.js \
 	$(builddir)/dist/jquery.mCustomScrollbar.js \
-	$(builddir)/dist/w2ui-1.5.rc1.js \
-	$(builddir)/dist/main.js
+	$(builddir)/dist/w2ui-1.5.rc1.js
 	@touch $@
 else
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
@@ -335,8 +334,7 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(builddir)/dist/global.js \
 	$(srcdir)/js/jquery.mCustomScrollbar.js \
-	$(srcdir)/js/w2ui-1.5.rc1.js \
-	$(srcdir)/js/main.js
+	$(srcdir)/js/w2ui-1.5.rc1.js
 	@echo "Uglify loleaflet js files..."
 	NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
 		$(L10N_IOS_ALL_JS) \
@@ -344,7 +342,6 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 		$(srcdir)/js/jquery.mCustomScrollbar.js \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
 		$(builddir)/build/dist/loleaflet-src.js \
-		$(srcdir)/js/main.js \
 		--output $@
 endif
 
@@ -362,8 +359,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		jquery.mCustomScrollbar.js \
 		w2ui-1.5.rc1.js \
-		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \
-		main.js)" \
+		$(call LOLEAFLET_JS,$(srcdir)/build/build.js))" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
 node_modules: npm-shrinkwrap.json
