@@ -307,6 +307,14 @@ body {
 	border-radius: 50%;
 }
 
+.user-info {
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	overflow: auto;
+	margin: auto;
+}
+
 .loleaflet-annotation-author {
 	padding-left: 10px;
 	padding-right: 10px;
