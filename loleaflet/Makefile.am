@@ -309,7 +309,6 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(builddir)/dist/global.js \
 	$(builddir)/dist/jquery.mCustomScrollbar.js \
 	$(builddir)/dist/w2ui-1.5.rc1.js \
-	$(builddir)/dist/toolbar.js \
 	$(builddir)/dist/main.js
 	@touch $@
 else
@@ -337,7 +336,6 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(builddir)/dist/global.js \
 	$(srcdir)/js/jquery.mCustomScrollbar.js \
 	$(srcdir)/js/w2ui-1.5.rc1.js \
-	$(srcdir)/js/toolbar.js \
 	$(srcdir)/js/main.js
 	@echo "Uglify loleaflet js files..."
 	NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
@@ -346,7 +344,6 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 		$(srcdir)/js/jquery.mCustomScrollbar.js \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
 		$(builddir)/build/dist/loleaflet-src.js \
-		$(srcdir)/js/toolbar.js \
 		$(srcdir)/js/main.js \
 		--output $@
 endif
@@ -366,7 +363,6 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		jquery.mCustomScrollbar.js \
 		w2ui-1.5.rc1.js \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \
-		toolbar.js \
 		main.js)" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
@@ -448,7 +444,7 @@ pot:
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
-		js/toolbar.js \
+		scr/control/toolbar.js \
 		src/control/Control.AlertDialog.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \

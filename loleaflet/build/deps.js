@@ -291,6 +291,12 @@ var deps = {
 		desc: 'Makes markers draggable (by mouse or touch).'
 	},
 
+	ControlToolbar: {
+		src: ['control/toolbar.js'],
+		heading: 'Controls',
+		desc: 'LibreOffice Online toolbar'
+	},
+
 	ControlPartsPreview: {
 		src: ['control/Control.js',
 		      'control/Control.PartsPreview.js'],
