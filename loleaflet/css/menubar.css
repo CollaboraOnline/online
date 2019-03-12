@@ -6,6 +6,8 @@
     float: left;
     background-color: transparent;
     margin-left: 5px;
+    white-space: nowrap;
+    display: inline;
 }
 
 #main-menu.readonly {
@@ -15,11 +17,10 @@
 #document-header {
     position: relative;
     background: #ffffff;
-    margin-left: 5px;
-    float: left;
+    margin-right: 5px;
 }
 
-#document-logo {
+.document-logo {
 	position: relative;
 	width: 22px;
 	height: 30px;
@@ -256,7 +257,7 @@
 }
 
 @media (max-width: 767px),(max-device-height: 767px) {
-    #document-logo {
+    .document-logo {
         width: 35px;
         height: 38px;
     }
