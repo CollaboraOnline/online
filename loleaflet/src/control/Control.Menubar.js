@@ -426,7 +426,7 @@ L.Control.Menubar = L.Control.extend({
 		allowedViewModeActions: [
 			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'print', // file menu
-			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', // file menu
+			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', // view menu
 			'about', 'keyboard-shortcuts' // help menu
 		]
