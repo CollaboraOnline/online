@@ -90,8 +90,8 @@
 	var filePath = global.getParameterByName('file_path');
 	var wopiSrc = global.getParameterByName('WOPISrc');
 	if (wopiSrc != '') {
-		wopiSrc = '?WOPISrc=' + wopiSrc + '&compat=/ws';
 		global.docURL = decodeURIComponent(wopiSrc);
+		wopiSrc = '?WOPISrc=' + wopiSrc + '&compat=/ws';
 		if (global.accessToken !== '') {
 			wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL };
 		}

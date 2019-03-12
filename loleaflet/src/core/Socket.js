@@ -82,7 +82,8 @@ L.Socket = L.Class.extend({
 		}
 
 		// process messages for early socket connection
-		if (window.queueMsg && window.queueMsg.length > 0) {
+		if (socket && ((socket.readyState === 1 || socket.readyState === 0)) &&
+			window.queueMsg && window.queueMsg.length > 0) {
 			for (var it = 0; it < window.queueMsg.length; it++) {
 				this._onMessage({data: window.queueMsg[it]});
 			}
