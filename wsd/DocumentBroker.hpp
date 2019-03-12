@@ -479,11 +479,11 @@ public:
     /// Construct DocumentBroker with URI and docKey
     ConvertToBroker(const std::string& uri,
                     const Poco::URI& uriPublic,
-                    const std::string& docKey)
-        : DocumentBroker(uri, uriPublic, docKey)
-    {
-    }
+                    const std::string& docKey);
     virtual ~ConvertToBroker();
+
+    /// How many live conversions are running.
+    static size_t getInstanceCount();
 };
 
 #endif
