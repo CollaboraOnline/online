@@ -36,6 +36,9 @@ L.Map.include({
 	},
 
 	_enterEditMode: function (perm) {
+		if (this._permission == 'readonly' && L.Browser.mobile) {
+			this.sendInitUNOCommands();
+		}
 		this._permission = perm;
 
 		this._socket.sendMessage('requestloksession');
