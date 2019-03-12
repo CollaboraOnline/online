@@ -1914,8 +1914,24 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
     }
 }
 
+static std::atomic<size_t> NumConverters;
+
+size_t ConvertToBroker::getInstanceCount()
+{
+    return NumConverters;
+}
+
+ConvertToBroker::ConvertToBroker(const std::string& uri,
+                                 const Poco::URI& uriPublic,
+                                 const std::string& docKey)
+    : DocumentBroker(uri, uriPublic, docKey)
+{
+    NumConverters++;
+}
+
 ConvertToBroker::~ConvertToBroker()
 {
+    NumConverters--;
     if (!_uriOrig.empty())
     {
         // Remove source file and directory
