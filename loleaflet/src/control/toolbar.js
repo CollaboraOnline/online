@@ -975,7 +975,7 @@ function initNormalToolbar() {
 	});
 
 	toolbar = $('#toolbar-down');
-	if ($('#main-menu').css('display') !== 'none') {
+	if (!window.mode.isMobile()) {
 		toolbar.w2toolbar({
 			name: 'actionbar',
 			tooltip: 'top',
