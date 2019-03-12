@@ -769,7 +769,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.showLOAboutDialog();
 		} else if (id === 'keyboard-shortcuts') {
 			this._map.showLOKeyboardHelp();
-		} else if (id === 'rev-history' || id === 'last-mod') {
+		} else if (revHistoryEnabled && (id === 'rev-history' || id === 'last-mod')) {
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode
 			this._map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
