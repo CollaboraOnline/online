@@ -254,8 +254,8 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
 inline void checkSessionLimitsAndWarnClients()
 {
 #ifndef MOBILEAPP
-
-    if (DocBrokers.size() > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
+    size_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
+    if (docBrokerCount > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
     {
         const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
         LOG_INF("Sending client 'limitreached' message: " << info);
@@ -2948,6 +2948,7 @@ public:
                   << "[ " << DocBrokers.size() << " ]:\n";
         for (auto &i : DocBrokers)
             i.second->dumpState(os);
+        os << "Converter count: " << ConvertToBroker::getInstanceCount() << "\n";
 
         Socket::InhibitThreadChecks = false;
         SocketPoll::InhibitThreadChecks = false;
