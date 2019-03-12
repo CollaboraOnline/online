@@ -538,6 +538,10 @@ L.Control.Menubar = L.Control.extend({
 			subIndicatorsText: '&#8250;'
 		});
 		$('#main-menu').attr('tabindex', 0);
+
+		if (this._map._permission !== 'readonly') {
+			this._createFileIcon();
+		}
 	},
 
 	_onStyleMenu: function (e) {
@@ -565,17 +569,6 @@ L.Control.Menubar = L.Control.extend({
 
 	_onDocLayerInit: function() {
 		this._onRefresh();
-
-		var docType = this._map.getDocType();
-		var $docLogo = $('#document-logo');
-		$docLogo.bind('click', {self: this}, this._createDocument);
-		if (docType === 'text') {
-			$docLogo.addClass('writer-icon-img');
-		} else if (docType === 'spreadsheet') {
-			$docLogo.addClass('calc-icon-img');
-		} else if (docType === 'presentation' || docType === 'drawing') {
-			$docLogo.addClass('impress-icon-img');
-		}
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
 		$('#main-menu').bind('mouseenter.smapi', {self: this}, this._onMouseEnter);
@@ -836,6 +829,30 @@ L.Control.Menubar = L.Control.extend({
 		if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && e.keyCode == 112) {
 			self._map.showHelp();
 		}
+	},
+
+	_createFileIcon: function() {
+		var iconClass = 'document-logo';
+		var docType = this._map.getDocType();
+		if (docType === 'text') {
+			iconClass += ' writer-icon-img';
+		} else if (docType === 'spreadsheet') {
+			iconClass += ' calc-icon-img';
+		} else if (docType === 'presentation' || docType === 'drawing') {
+			iconClass += ' impress-icon-img';
+		}
+
+		var liItem = L.DomUtil.create('li', '');
+		liItem.id = 'document-header';
+		var aItem = L.DomUtil.create('div', iconClass, liItem);
+		$(aItem).data('id', 'document-logo');
+		$(aItem).data('type', 'action');
+
+		this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
+
+		var $docLogo = $(aItem);
+		$docLogo.bind('click', {self: this}, this._createDocument);
+
 	},
 
 	_createMenu: function(menu) {

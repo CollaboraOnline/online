@@ -105,6 +105,12 @@ body {
 	background: url('images/baseline-edit-24px.svg') no-repeat center !important;
 }
 
+@media (max-width: 900px),(max-device-height: 900px) {
+	#menu-last-mod {
+		display: none;
+	}
+}
+
 @media (max-width: 767px),(max-device-height: 767px) {
 	/* Show slidesorter beyond 768px only */
 	#presentation-controls-wrapper {
