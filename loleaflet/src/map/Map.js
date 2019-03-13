@@ -108,7 +108,14 @@ L.Map = L.Evented.extend({
 		}
 		this._addLayers(this.options.layers);
 		this._socket = L.socket(this);
-		this._progressBar = L.progressOverlay(this.getCenter(), L.point(150, 25));
+
+		var center = this.getCenter();
+		if (L.Browser.mobile) {
+			var doubledProgressHeight = 200;
+			var size = new L.point(screen.width, screen.height - doubledProgressHeight);
+			center = this.layerPointToLatLng(size._divideBy(2));
+		}
+		this._progressBar = L.progressOverlay(center, new L.point(150, 25));
 
 		if (L.Browser.mobile) {
 			this._clipboardContainer = L.control.mobileInput().addTo(this);
