@@ -146,7 +146,7 @@ w2ui-toolbar {
 
 .closebuttonimage {
     display: none;
-    background: url('images/lc_closedoc.svg') no-repeat center !important;
+    background: url('images/closedoc.svg') no-repeat center !important;
 }
 
 #tb_actionbar_item_left {
