@@ -16,7 +16,7 @@ function moveObjectVertically(obj, diff) {
 	}
 }
 
-/* global timeago closebutton vex $ _ */
+/* global timeago closebutton vex revHistoryEnabled $ _ */
 L.Map = L.Evented.extend({
 
 	options: {
@@ -308,6 +308,10 @@ L.Map = L.Evented.extend({
 			// Replace menu button body with new content
 			lastModButton.firstChild.innerHTML = '';
 			lastModButton.firstChild.appendChild(mainSpan);
+
+			if (revHistoryEnabled) {
+				L.DomUtil.setStyle(lastModButton, 'cursor', 'pointer');
+			}
 		}
 	},
 
