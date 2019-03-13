@@ -342,6 +342,40 @@
 		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE7AECDD22393D3D00B117D2 /* watermarkdialog.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = watermarkdialog.cxx; path = "../../ios-device/sw/source/uibase/dialog/watermarkdialog.cxx"; sourceTree = "<group>"; };
+		BE7AECDE22393D3D00B117D2 /* wordcountwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wordcountwrapper.cxx; path = "../../ios-device/sw/source/uibase/dialog/wordcountwrapper.cxx"; sourceTree = "<group>"; };
+		BE7AECDF22393D3D00B117D2 /* SwSpellDialogChildWindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SwSpellDialogChildWindow.cxx; path = "../../ios-device/sw/source/uibase/dialog/SwSpellDialogChildWindow.cxx"; sourceTree = "<group>"; };
+		BE7AECE022393D3D00B117D2 /* regionsw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = regionsw.cxx; path = "../../ios-device/sw/source/uibase/dialog/regionsw.cxx"; sourceTree = "<group>"; };
+		BE7AECE122393D3D00B117D2 /* swwrtshitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swwrtshitem.cxx; path = "../../ios-device/sw/source/uibase/dialog/swwrtshitem.cxx"; sourceTree = "<group>"; };
+		BE7AECE222393D3D00B117D2 /* swabstdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swabstdlg.cxx; path = "../../ios-device/sw/source/uibase/dialog/swabstdlg.cxx"; sourceTree = "<group>"; };
+		BE7AECE42239694700B117D2 /* thumbpos.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = thumbpos.hxx; path = "../../ios-device/vcl/source/control/thumbpos.hxx"; sourceTree = "<group>"; };
+		BE7AECE52239694700B117D2 /* longcurr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = longcurr.cxx; path = "../../ios-device/vcl/source/control/longcurr.cxx"; sourceTree = "<group>"; };
+		BE7AECE62239694700B117D2 /* fixedhyper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fixedhyper.cxx; path = "../../ios-device/vcl/source/control/fixedhyper.cxx"; sourceTree = "<group>"; };
+		BE7AECE72239694700B117D2 /* prgsbar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = prgsbar.cxx; path = "../../ios-device/vcl/source/control/prgsbar.cxx"; sourceTree = "<group>"; };
+		BE7AECE82239694700B117D2 /* edit.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = edit.cxx; path = "../../ios-device/vcl/source/control/edit.cxx"; sourceTree = "<group>"; };
+		BE7AECE92239694700B117D2 /* morebtn.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = morebtn.cxx; path = "../../ios-device/vcl/source/control/morebtn.cxx"; sourceTree = "<group>"; };
+		BE7AECEA2239694700B117D2 /* listbox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = listbox.cxx; path = "../../ios-device/vcl/source/control/listbox.cxx"; sourceTree = "<group>"; };
+		BE7AECEB2239694700B117D2 /* spinfld.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = spinfld.cxx; path = "../../ios-device/vcl/source/control/spinfld.cxx"; sourceTree = "<group>"; };
+		BE7AECEC2239694700B117D2 /* notebookbar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = notebookbar.cxx; path = "../../ios-device/vcl/source/control/notebookbar.cxx"; sourceTree = "<group>"; };
+		BE7AECED2239694700B117D2 /* fixed.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fixed.cxx; path = "../../ios-device/vcl/source/control/fixed.cxx"; sourceTree = "<group>"; };
+		BE7AECEE2239694700B117D2 /* menubtn.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menubtn.cxx; path = "../../ios-device/vcl/source/control/menubtn.cxx"; sourceTree = "<group>"; };
+		BE7AECEF2239694700B117D2 /* field2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = field2.cxx; path = "../../ios-device/vcl/source/control/field2.cxx"; sourceTree = "<group>"; };
+		BE7AECF02239694700B117D2 /* imgctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imgctrl.cxx; path = "../../ios-device/vcl/source/control/imgctrl.cxx"; sourceTree = "<group>"; };
+		BE7AECF12239694700B117D2 /* tabctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabctrl.cxx; path = "../../ios-device/vcl/source/control/tabctrl.cxx"; sourceTree = "<group>"; };
+		BE7AECF22239694700B117D2 /* scrbar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scrbar.cxx; path = "../../ios-device/vcl/source/control/scrbar.cxx"; sourceTree = "<group>"; };
+		BE7AECF32239694700B117D2 /* button.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = button.cxx; path = "../../ios-device/vcl/source/control/button.cxx"; sourceTree = "<group>"; };
+		BE7AECF42239694700B117D2 /* combobox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = combobox.cxx; path = "../../ios-device/vcl/source/control/combobox.cxx"; sourceTree = "<group>"; };
+		BE7AECF52239694700B117D2 /* quickselectionengine.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = quickselectionengine.cxx; path = "../../ios-device/vcl/source/control/quickselectionengine.cxx"; sourceTree = "<group>"; };
+		BE7AECF62239694700B117D2 /* spinbtn.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = spinbtn.cxx; path = "../../ios-device/vcl/source/control/spinbtn.cxx"; sourceTree = "<group>"; };
+		BE7AECF72239694800B117D2 /* slider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = slider.cxx; path = "../../ios-device/vcl/source/control/slider.cxx"; sourceTree = "<group>"; };
+		BE7AECF82239694800B117D2 /* field.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = field.cxx; path = "../../ios-device/vcl/source/control/field.cxx"; sourceTree = "<group>"; };
+		BE7AECF92239694800B117D2 /* listctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = listctrl.cxx; path = "../../ios-device/vcl/source/control/listctrl.cxx"; sourceTree = "<group>"; };
+		BE7AECFA2239694800B117D2 /* ctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ctrl.cxx; path = "../../ios-device/vcl/source/control/ctrl.cxx"; sourceTree = "<group>"; };
+		BE7AECFB2239694800B117D2 /* group.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = group.cxx; path = "../../ios-device/vcl/source/control/group.cxx"; sourceTree = "<group>"; };
+		BE7AECFC2239694800B117D2 /* imp_listbox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imp_listbox.cxx; path = "../../ios-device/vcl/source/control/imp_listbox.cxx"; sourceTree = "<group>"; };
+		BE7AECFD2239694800B117D2 /* throbber.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = throbber.cxx; path = "../../ios-device/vcl/source/control/throbber.cxx"; sourceTree = "<group>"; };
+		BE7AECFF2239B79600B117D2 /* dummies.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dummies.cxx; path = "../../ios-device/vcl/ios/dummies.cxx"; sourceTree = "<group>"; };
+		BE7AED002239B79600B117D2 /* iosinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iosinst.cxx; path = "../../ios-device/vcl/ios/iosinst.cxx"; sourceTree = "<group>"; };
 		BE80E43121AD92F600859C97 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Mobile/Fonts; sourceTree = SOURCE_ROOT; };
 		BE80E43421B562F500859C97 /* servicemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servicemanager.cxx; path = "../../ios-device/cppuhelper/source/servicemanager.cxx"; sourceTree = "<group>"; };
 		BE80E43521B562F500859C97 /* component_context.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component_context.cxx; path = "../../ios-device/cppuhelper/source/component_context.cxx"; sourceTree = "<group>"; };
@@ -567,6 +601,72 @@
 		BEB6524E216FD0CA00B8C09A /* stream.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stream.cxx; path = "../../ios-device/tools/source/stream/stream.cxx"; sourceTree = "<group>"; };
 		BEB6524F216FD0CA00B8C09A /* strmwnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmwnt.cxx; path = "../../ios-device/tools/source/stream/strmwnt.cxx"; sourceTree = "<group>"; };
 		BEB65250216FD0CA00B8C09A /* strmunx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmunx.cxx; path = "../../ios-device/tools/source/stream/strmunx.cxx"; sourceTree = "<group>"; };
+		BEF7F1B22236AFF700CB3AEA /* octree.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = octree.cxx; path = "../../ios-device/vcl/source/gdi/octree.cxx"; sourceTree = "<group>"; };
+		BEF7F1B32236AFF700CB3AEA /* salmisc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salmisc.cxx; path = "../../ios-device/vcl/source/gdi/salmisc.cxx"; sourceTree = "<group>"; };
+		BEF7F1B42236AFF700CB3AEA /* hatch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hatch.cxx; path = "../../ios-device/vcl/source/gdi/hatch.cxx"; sourceTree = "<group>"; };
+		BEF7F1B52236AFF800CB3AEA /* bmpacc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bmpacc3.cxx; path = "../../ios-device/vcl/source/gdi/bmpacc3.cxx"; sourceTree = "<group>"; };
+		BEF7F1B62236AFF800CB3AEA /* pdffontcache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdffontcache.cxx; path = "../../ios-device/vcl/source/gdi/pdffontcache.cxx"; sourceTree = "<group>"; };
+		BEF7F1B72236AFF800CB3AEA /* impanmvw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impanmvw.cxx; path = "../../ios-device/vcl/source/gdi/impanmvw.cxx"; sourceTree = "<group>"; };
+		BEF7F1B82236AFF800CB3AEA /* textlayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textlayout.cxx; path = "../../ios-device/vcl/source/gdi/textlayout.cxx"; sourceTree = "<group>"; };
+		BEF7F1B92236AFF800CB3AEA /* impgraph.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impgraph.cxx; path = "../../ios-device/vcl/source/gdi/impgraph.cxx"; sourceTree = "<group>"; };
+		BEF7F1BA2236AFF800CB3AEA /* metaact.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = metaact.cxx; path = "../../ios-device/vcl/source/gdi/metaact.cxx"; sourceTree = "<group>"; };
+		BEF7F1BB2236AFF800CB3AEA /* animate.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = animate.cxx; path = "../../ios-device/vcl/source/gdi/animate.cxx"; sourceTree = "<group>"; };
+		BEF7F1BC2236AFF800CB3AEA /* alpha.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = alpha.cxx; path = "../../ios-device/vcl/source/gdi/alpha.cxx"; sourceTree = "<group>"; };
+		BEF7F1BD2236AFF800CB3AEA /* regionband.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = regionband.cxx; path = "../../ios-device/vcl/source/gdi/regionband.cxx"; sourceTree = "<group>"; };
+		BEF7F1BE2236AFF800CB3AEA /* jobset.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = jobset.cxx; path = "../../ios-device/vcl/source/gdi/jobset.cxx"; sourceTree = "<group>"; };
+		BEF7F1BF2236AFF800CB3AEA /* base14.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = base14.cxx; path = "../../ios-device/vcl/source/gdi/base14.cxx"; sourceTree = "<group>"; };
+		BEF7F1C02236AFF800CB3AEA /* print.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = print.cxx; path = "../../ios-device/vcl/source/gdi/print.cxx"; sourceTree = "<group>"; };
+		BEF7F1C12236AFF800CB3AEA /* oldprintadaptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = oldprintadaptor.cxx; path = "../../ios-device/vcl/source/gdi/oldprintadaptor.cxx"; sourceTree = "<group>"; };
+		BEF7F1C22236AFF800CB3AEA /* gdimtf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gdimtf.cxx; path = "../../ios-device/vcl/source/gdi/gdimtf.cxx"; sourceTree = "<group>"; };
+		BEF7F1C32236AFF800CB3AEA /* region.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = region.cxx; path = "../../ios-device/vcl/source/gdi/region.cxx"; sourceTree = "<group>"; };
+		BEF7F1C42236AFF800CB3AEA /* genVerticalOrientationData.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; name = genVerticalOrientationData.pl; path = "../../ios-device/vcl/source/gdi/genVerticalOrientationData.pl"; sourceTree = "<group>"; };
+		BEF7F1C52236AFF800CB3AEA /* graph.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graph.cxx; path = "../../ios-device/vcl/source/gdi/graph.cxx"; sourceTree = "<group>"; };
+		BEF7F1C62236AFF800CB3AEA /* bitmap4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmap4.cxx; path = "../../ios-device/vcl/source/gdi/bitmap4.cxx"; sourceTree = "<group>"; };
+		BEF7F1C72236AFF800CB3AEA /* pdffontcache.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = pdffontcache.hxx; path = "../../ios-device/vcl/source/gdi/pdffontcache.hxx"; sourceTree = "<group>"; };
+		BEF7F1C82236AFF800CB3AEA /* scrptrun.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scrptrun.cxx; path = "../../ios-device/vcl/source/gdi/scrptrun.cxx"; sourceTree = "<group>"; };
+		BEF7F1C92236AFF800CB3AEA /* vectorgraphicdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vectorgraphicdata.cxx; path = "../../ios-device/vcl/source/gdi/vectorgraphicdata.cxx"; sourceTree = "<group>"; };
+		BEF7F1CA2236AFF800CB3AEA /* pdfextoutdevdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfextoutdevdata.cxx; path = "../../ios-device/vcl/source/gdi/pdfextoutdevdata.cxx"; sourceTree = "<group>"; };
+		BEF7F1CB2236AFF800CB3AEA /* bmpfast.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bmpfast.cxx; path = "../../ios-device/vcl/source/gdi/bmpfast.cxx"; sourceTree = "<group>"; };
+		BEF7F1CC2236AFF900CB3AEA /* pdfwriter_impl2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfwriter_impl2.cxx; path = "../../ios-device/vcl/source/gdi/pdfwriter_impl2.cxx"; sourceTree = "<group>"; };
+		BEF7F1CD2236AFF900CB3AEA /* impbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impbmp.cxx; path = "../../ios-device/vcl/source/gdi/impbmp.cxx"; sourceTree = "<group>"; };
+		BEF7F1CE2236AFF900CB3AEA /* pdfwriter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfwriter.cxx; path = "../../ios-device/vcl/source/gdi/pdfwriter.cxx"; sourceTree = "<group>"; };
+		BEF7F1CF2236AFF900CB3AEA /* pngwrite.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pngwrite.cxx; path = "../../ios-device/vcl/source/gdi/pngwrite.cxx"; sourceTree = "<group>"; };
+		BEF7F1D02236AFF900CB3AEA /* salgdiimpl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdiimpl.cxx; path = "../../ios-device/vcl/source/gdi/salgdiimpl.cxx"; sourceTree = "<group>"; };
+		BEF7F1D12236AFF900CB3AEA /* virdev.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = virdev.cxx; path = "../../ios-device/vcl/source/gdi/virdev.cxx"; sourceTree = "<group>"; };
+		BEF7F1D22236AFF900CB3AEA /* gradient.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gradient.cxx; path = "../../ios-device/vcl/source/gdi/gradient.cxx"; sourceTree = "<group>"; };
+		BEF7F1D32236AFF900CB3AEA /* FileDefinitionWidgetDraw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileDefinitionWidgetDraw.cxx; path = "../../ios-device/vcl/source/gdi/FileDefinitionWidgetDraw.cxx"; sourceTree = "<group>"; };
+		BEF7F1D42236AFF900CB3AEA /* graphictools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphictools.cxx; path = "../../ios-device/vcl/source/gdi/graphictools.cxx"; sourceTree = "<group>"; };
+		BEF7F1D52236AFF900CB3AEA /* pdfwriter_impl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = pdfwriter_impl.hxx; path = "../../ios-device/vcl/source/gdi/pdfwriter_impl.hxx"; sourceTree = "<group>"; };
+		BEF7F1D62236AFF900CB3AEA /* regband.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = regband.cxx; path = "../../ios-device/vcl/source/gdi/regband.cxx"; sourceTree = "<group>"; };
+		BEF7F1D72236AFF900CB3AEA /* print3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = print3.cxx; path = "../../ios-device/vcl/source/gdi/print3.cxx"; sourceTree = "<group>"; };
+		BEF7F1D82236AFF900CB3AEA /* impvect.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = impvect.hxx; path = "../../ios-device/vcl/source/gdi/impvect.hxx"; sourceTree = "<group>"; };
+		BEF7F1D92236AFF900CB3AEA /* CommonSalLayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommonSalLayout.cxx; path = "../../ios-device/vcl/source/gdi/CommonSalLayout.cxx"; sourceTree = "<group>"; };
+		BEF7F1DA2236AFF900CB3AEA /* pngread.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pngread.cxx; path = "../../ios-device/vcl/source/gdi/pngread.cxx"; sourceTree = "<group>"; };
+		BEF7F1DB2236AFF900CB3AEA /* WidgetDefinitionReader.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WidgetDefinitionReader.cxx; path = "../../ios-device/vcl/source/gdi/WidgetDefinitionReader.cxx"; sourceTree = "<group>"; };
+		BEF7F1DC2236AFFA00CB3AEA /* bitmap3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmap3.cxx; path = "../../ios-device/vcl/source/gdi/bitmap3.cxx"; sourceTree = "<group>"; };
+		BEF7F1DD2236AFFA00CB3AEA /* bmpacc2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bmpacc2.cxx; path = "../../ios-device/vcl/source/gdi/bmpacc2.cxx"; sourceTree = "<group>"; };
+		BEF7F1DE2236AFFA00CB3AEA /* configsettings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configsettings.cxx; path = "../../ios-device/vcl/source/gdi/configsettings.cxx"; sourceTree = "<group>"; };
+		BEF7F1DF2236AFFA00CB3AEA /* extoutdevdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = extoutdevdata.cxx; path = "../../ios-device/vcl/source/gdi/extoutdevdata.cxx"; sourceTree = "<group>"; };
+		BEF7F1E02236AFFA00CB3AEA /* bitmapex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmapex.cxx; path = "../../ios-device/vcl/source/gdi/bitmapex.cxx"; sourceTree = "<group>"; };
+		BEF7F1E12236AFFA00CB3AEA /* sallayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sallayout.cxx; path = "../../ios-device/vcl/source/gdi/sallayout.cxx"; sourceTree = "<group>"; };
+		BEF7F1E22236AFFA00CB3AEA /* wall.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wall.cxx; path = "../../ios-device/vcl/source/gdi/wall.cxx"; sourceTree = "<group>"; };
+		BEF7F1E32236AFFA00CB3AEA /* WidgetDefinition.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WidgetDefinition.cxx; path = "../../ios-device/vcl/source/gdi/WidgetDefinition.cxx"; sourceTree = "<group>"; };
+		BEF7F1E42236AFFA00CB3AEA /* salgdilayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdilayout.cxx; path = "../../ios-device/vcl/source/gdi/salgdilayout.cxx"; sourceTree = "<group>"; };
+		BEF7F1E52236AFFA00CB3AEA /* mapmod.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mapmod.cxx; path = "../../ios-device/vcl/source/gdi/mapmod.cxx"; sourceTree = "<group>"; };
+		BEF7F1E62236AFFA00CB3AEA /* lineinfo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lineinfo.cxx; path = "../../ios-device/vcl/source/gdi/lineinfo.cxx"; sourceTree = "<group>"; };
+		BEF7F1E72236AFFA00CB3AEA /* svmconverter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svmconverter.cxx; path = "../../ios-device/vcl/source/gdi/svmconverter.cxx"; sourceTree = "<group>"; };
+		BEF7F1E82236AFFA00CB3AEA /* gfxlink.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gfxlink.cxx; path = "../../ios-device/vcl/source/gdi/gfxlink.cxx"; sourceTree = "<group>"; };
+		BEF7F1E92236AFFA00CB3AEA /* dibtools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dibtools.cxx; path = "../../ios-device/vcl/source/gdi/dibtools.cxx"; sourceTree = "<group>"; };
+		BEF7F1EA2236AFFB00CB3AEA /* bmpacc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bmpacc.cxx; path = "../../ios-device/vcl/source/gdi/bmpacc.cxx"; sourceTree = "<group>"; };
+		BEF7F1EB2236AFFB00CB3AEA /* impvect.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impvect.cxx; path = "../../ios-device/vcl/source/gdi/impvect.cxx"; sourceTree = "<group>"; };
+		BEF7F1EC2236AFFB00CB3AEA /* cvtgrf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cvtgrf.cxx; path = "../../ios-device/vcl/source/gdi/cvtgrf.cxx"; sourceTree = "<group>"; };
+		BEF7F1ED2236AFFB00CB3AEA /* VerticalOrientationData.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VerticalOrientationData.cxx; path = "../../ios-device/vcl/source/gdi/VerticalOrientationData.cxx"; sourceTree = "<group>"; };
+		BEF7F1EE2236AFFB00CB3AEA /* print2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = print2.cxx; path = "../../ios-device/vcl/source/gdi/print2.cxx"; sourceTree = "<group>"; };
+		BEF7F1EF2236AFFB00CB3AEA /* pdfwriter_impl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfwriter_impl.cxx; path = "../../ios-device/vcl/source/gdi/pdfwriter_impl.cxx"; sourceTree = "<group>"; };
+		BEF7F1F02236AFFB00CB3AEA /* gdimetafiletools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gdimetafiletools.cxx; path = "../../ios-device/vcl/source/gdi/gdimetafiletools.cxx"; sourceTree = "<group>"; };
+		BEF7F1F12236AFFB00CB3AEA /* bitmap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmap.cxx; path = "../../ios-device/vcl/source/gdi/bitmap.cxx"; sourceTree = "<group>"; };
+		BEF7F1F22236AFFB00CB3AEA /* salnativewidgets-none.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "salnativewidgets-none.cxx"; path = "../../ios-device/vcl/source/gdi/salnativewidgets-none.cxx"; sourceTree = "<group>"; };
+		BEF7F1F32236AFFB00CB3AEA /* embeddedfontshelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = embeddedfontshelper.cxx; path = "../../ios-device/vcl/source/gdi/embeddedfontshelper.cxx"; sourceTree = "<group>"; };
 		BEFB1EDF21C29CC70081D757 /* L10n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L10n.h; sourceTree = "<group>"; };
 		BEFB1EE021C29CC70081D757 /* L10n.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = L10n.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -640,6 +740,7 @@
 			isa = PBXGroup;
 			children = (
 				BE34D10E218B669000815297 /* app */,
+				BE7AECDC22393D1200B117D2 /* dialog */,
 				BE34D120218B674400815297 /* shells */,
 			);
 			name = uibase;
@@ -1045,6 +1146,61 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
+		BE7AECDC22393D1200B117D2 /* dialog */ = {
+			isa = PBXGroup;
+			children = (
+				BE7AECE022393D3D00B117D2 /* regionsw.cxx */,
+				BE7AECE222393D3D00B117D2 /* swabstdlg.cxx */,
+				BE7AECDF22393D3D00B117D2 /* SwSpellDialogChildWindow.cxx */,
+				BE7AECE122393D3D00B117D2 /* swwrtshitem.cxx */,
+				BE7AECDD22393D3D00B117D2 /* watermarkdialog.cxx */,
+				BE7AECDE22393D3D00B117D2 /* wordcountwrapper.cxx */,
+			);
+			name = dialog;
+			sourceTree = "<group>";
+		};
+		BE7AECE32239692A00B117D2 /* control */ = {
+			isa = PBXGroup;
+			children = (
+				BE7AECF32239694700B117D2 /* button.cxx */,
+				BE7AECF42239694700B117D2 /* combobox.cxx */,
+				BE7AECFA2239694800B117D2 /* ctrl.cxx */,
+				BE7AECE82239694700B117D2 /* edit.cxx */,
+				BE7AECF82239694800B117D2 /* field.cxx */,
+				BE7AECEF2239694700B117D2 /* field2.cxx */,
+				BE7AECED2239694700B117D2 /* fixed.cxx */,
+				BE7AECE62239694700B117D2 /* fixedhyper.cxx */,
+				BE7AECFB2239694800B117D2 /* group.cxx */,
+				BE7AECF02239694700B117D2 /* imgctrl.cxx */,
+				BE7AECFC2239694800B117D2 /* imp_listbox.cxx */,
+				BE7AECEA2239694700B117D2 /* listbox.cxx */,
+				BE7AECF92239694800B117D2 /* listctrl.cxx */,
+				BE7AECE52239694700B117D2 /* longcurr.cxx */,
+				BE7AECEE2239694700B117D2 /* menubtn.cxx */,
+				BE7AECE92239694700B117D2 /* morebtn.cxx */,
+				BE7AECEC2239694700B117D2 /* notebookbar.cxx */,
+				BE7AECE72239694700B117D2 /* prgsbar.cxx */,
+				BE7AECF52239694700B117D2 /* quickselectionengine.cxx */,
+				BE7AECF22239694700B117D2 /* scrbar.cxx */,
+				BE7AECF72239694800B117D2 /* slider.cxx */,
+				BE7AECF62239694700B117D2 /* spinbtn.cxx */,
+				BE7AECEB2239694700B117D2 /* spinfld.cxx */,
+				BE7AECF12239694700B117D2 /* tabctrl.cxx */,
+				BE7AECFD2239694800B117D2 /* throbber.cxx */,
+				BE7AECE42239694700B117D2 /* thumbpos.hxx */,
+			);
+			name = control;
+			sourceTree = "<group>";
+		};
+		BE7AECFE2239B76F00B117D2 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				BE7AECFF2239B79600B117D2 /* dummies.cxx */,
+				BE7AED002239B79600B117D2 /* iosinst.cxx */,
+			);
+			name = ios;
+			sourceTree = "<group>";
+		};
 		BE80E43321B5629300859C97 /* cppuhelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -1135,7 +1291,10 @@
 			isa = PBXGroup;
 			children = (
 				BE93D421216CAA59007A39F4 /* app */,
+				BE7AECFE2239B76F00B117D2 /* ios */,
+				BE7AECE32239692A00B117D2 /* control */,
 				BEB0E5DA21CA7C330085A0CF /* filter */,
+				BEF7F1B12236AFCC00CB3AEA /* gdi */,
 				BE58E1312187938700249358 /* headless */,
 				BEB0E5E721D642420085A0CF /* outdev */,
 				BEB0E5DF21CA9DA20085A0CF /* quartz */,
@@ -1439,6 +1598,79 @@
 				BEB6524D216FD0CA00B8C09A /* vcompat.cxx */,
 			);
 			name = stream;
+			sourceTree = "<group>";
+		};
+		BEF7F1B12236AFCC00CB3AEA /* gdi */ = {
+			isa = PBXGroup;
+			children = (
+				BEF7F1BC2236AFF800CB3AEA /* alpha.cxx */,
+				BEF7F1BB2236AFF800CB3AEA /* animate.cxx */,
+				BEF7F1BF2236AFF800CB3AEA /* base14.cxx */,
+				BEF7F1F12236AFFB00CB3AEA /* bitmap.cxx */,
+				BEF7F1DC2236AFFA00CB3AEA /* bitmap3.cxx */,
+				BEF7F1C62236AFF800CB3AEA /* bitmap4.cxx */,
+				BEF7F1E02236AFFA00CB3AEA /* bitmapex.cxx */,
+				BEF7F1EA2236AFFB00CB3AEA /* bmpacc.cxx */,
+				BEF7F1DD2236AFFA00CB3AEA /* bmpacc2.cxx */,
+				BEF7F1B52236AFF800CB3AEA /* bmpacc3.cxx */,
+				BEF7F1CB2236AFF800CB3AEA /* bmpfast.cxx */,
+				BEF7F1D92236AFF900CB3AEA /* CommonSalLayout.cxx */,
+				BEF7F1DE2236AFFA00CB3AEA /* configsettings.cxx */,
+				BEF7F1EC2236AFFB00CB3AEA /* cvtgrf.cxx */,
+				BEF7F1E92236AFFA00CB3AEA /* dibtools.cxx */,
+				BEF7F1F32236AFFB00CB3AEA /* embeddedfontshelper.cxx */,
+				BEF7F1DF2236AFFA00CB3AEA /* extoutdevdata.cxx */,
+				BEF7F1D32236AFF900CB3AEA /* FileDefinitionWidgetDraw.cxx */,
+				BEF7F1F02236AFFB00CB3AEA /* gdimetafiletools.cxx */,
+				BEF7F1C22236AFF800CB3AEA /* gdimtf.cxx */,
+				BEF7F1C42236AFF800CB3AEA /* genVerticalOrientationData.pl */,
+				BEF7F1E82236AFFA00CB3AEA /* gfxlink.cxx */,
+				BEF7F1D22236AFF900CB3AEA /* gradient.cxx */,
+				BEF7F1C52236AFF800CB3AEA /* graph.cxx */,
+				BEF7F1D42236AFF900CB3AEA /* graphictools.cxx */,
+				BEF7F1B42236AFF700CB3AEA /* hatch.cxx */,
+				BEF7F1B72236AFF800CB3AEA /* impanmvw.cxx */,
+				BEF7F1CD2236AFF900CB3AEA /* impbmp.cxx */,
+				BEF7F1B92236AFF800CB3AEA /* impgraph.cxx */,
+				BEF7F1EB2236AFFB00CB3AEA /* impvect.cxx */,
+				BEF7F1D82236AFF900CB3AEA /* impvect.hxx */,
+				BEF7F1BE2236AFF800CB3AEA /* jobset.cxx */,
+				BEF7F1E62236AFFA00CB3AEA /* lineinfo.cxx */,
+				BEF7F1E52236AFFA00CB3AEA /* mapmod.cxx */,
+				BEF7F1BA2236AFF800CB3AEA /* metaact.cxx */,
+				BEF7F1B22236AFF700CB3AEA /* octree.cxx */,
+				BEF7F1C12236AFF800CB3AEA /* oldprintadaptor.cxx */,
+				BEF7F1CA2236AFF800CB3AEA /* pdfextoutdevdata.cxx */,
+				BEF7F1B62236AFF800CB3AEA /* pdffontcache.cxx */,
+				BEF7F1C72236AFF800CB3AEA /* pdffontcache.hxx */,
+				BEF7F1EF2236AFFB00CB3AEA /* pdfwriter_impl.cxx */,
+				BEF7F1D52236AFF900CB3AEA /* pdfwriter_impl.hxx */,
+				BEF7F1CC2236AFF900CB3AEA /* pdfwriter_impl2.cxx */,
+				BEF7F1CE2236AFF900CB3AEA /* pdfwriter.cxx */,
+				BEF7F1DA2236AFF900CB3AEA /* pngread.cxx */,
+				BEF7F1CF2236AFF900CB3AEA /* pngwrite.cxx */,
+				BEF7F1C02236AFF800CB3AEA /* print.cxx */,
+				BEF7F1EE2236AFFB00CB3AEA /* print2.cxx */,
+				BEF7F1D72236AFF900CB3AEA /* print3.cxx */,
+				BEF7F1D62236AFF900CB3AEA /* regband.cxx */,
+				BEF7F1C32236AFF800CB3AEA /* region.cxx */,
+				BEF7F1BD2236AFF800CB3AEA /* regionband.cxx */,
+				BEF7F1D02236AFF900CB3AEA /* salgdiimpl.cxx */,
+				BEF7F1E42236AFFA00CB3AEA /* salgdilayout.cxx */,
+				BEF7F1E12236AFFA00CB3AEA /* sallayout.cxx */,
+				BEF7F1B32236AFF700CB3AEA /* salmisc.cxx */,
+				BEF7F1F22236AFFB00CB3AEA /* salnativewidgets-none.cxx */,
+				BEF7F1C82236AFF800CB3AEA /* scrptrun.cxx */,
+				BEF7F1E72236AFFA00CB3AEA /* svmconverter.cxx */,
+				BEF7F1B82236AFF800CB3AEA /* textlayout.cxx */,
+				BEF7F1C92236AFF800CB3AEA /* vectorgraphicdata.cxx */,
+				BEF7F1ED2236AFFB00CB3AEA /* VerticalOrientationData.cxx */,
+				BEF7F1D12236AFF900CB3AEA /* virdev.cxx */,
+				BEF7F1E22236AFFA00CB3AEA /* wall.cxx */,
+				BEF7F1E32236AFFA00CB3AEA /* WidgetDefinition.cxx */,
+				BEF7F1DB2236AFF900CB3AEA /* WidgetDefinitionReader.cxx */,
+			);
+			name = gdi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
