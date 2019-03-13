@@ -2277,7 +2277,7 @@ $(document).ready(function() {
 	if (!closebutton) {
 		$('#closebuttonwrapper').hide();
 	} else if (closebutton && !L.Browser.mobile) {
-		$('#closebuttonwrapper').show();
+		$('.closebuttonimage').show();
 	}
 
 	$('#closebutton').click(function() {

@@ -128,7 +128,6 @@ w2ui-toolbar {
     width: 28px;
     height: 28px;
     background-color: white;
-    display: none;
 }
 
 #closebutton {
@@ -145,7 +144,10 @@ w2ui-toolbar {
     background-color: #eee;
 }
 
-.closebuttonimage{ background: url('images/closedoc.svg') no-repeat center !important; }
+.closebuttonimage {
+    display: none;
+    background: url('images/closedoc.svg') no-repeat center !important;
+}
 
 #tb_actionbar_item_left {
     width: 45%;

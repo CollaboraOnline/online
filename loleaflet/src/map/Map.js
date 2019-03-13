@@ -1480,7 +1480,9 @@ L.Map = L.Evented.extend({
 		}
 		else {
 			$('.main-nav').css({'display': 'none'});
-			$('#closebuttonwrapper').css({'display': 'none'});
+			if (closebutton) {
+				$('#closebuttonwrapper').css({'display': 'none'});
+			}
 
 			obj = $('.fold');
 			obj.removeClass('w2ui-icon fold');
