@@ -2274,7 +2274,9 @@ $(window).resize(function() {
 });
 
 $(document).ready(function() {
-	if (closebutton && !L.Browser.mobile) {
+	if (!closebutton) {
+		$('#closebuttonwrapper').hide();
+	} else if (closebutton && !L.Browser.mobile) {
 		$('#closebuttonwrapper').show();
 	}
 
