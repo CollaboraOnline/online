@@ -1,14 +1,3 @@
-
-
-
-
-
-===> Note that at the moment the iOS app does not work if built from the master branch. <===
-
-
-
-
-
 How to build the iOS app:
 
 1) First you need to build the LibreOffice core code for iOS. Put in
