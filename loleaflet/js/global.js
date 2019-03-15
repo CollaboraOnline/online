@@ -53,11 +53,9 @@
 		String.locale = 'en';
 	}
 
-	// In the mobile app case we don't use any "server-side" localisation. For real Online, what
-	// looks like calls to a _ function are in fact replaced by Online's file server with the
-	// translation.
-	if (window.ThisIsTheiOSApp) {
-		global._ = function (string) {
+	global._ = function (string) {
+		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
+		if (window.ThisIsTheiOSApp) {
 			// We use another approach just for iOS for now.
 			if (window.LOCALIZATIONS.hasOwnProperty(string)) {
 				// window.postMobileDebug('_(' + string + '): YES: ' + window.LOCALIZATIONS[string]);
@@ -70,13 +68,13 @@
 				// window.postMobileDebug('_(' + string + '): NO');
 				return string;
 			}
-		}
-	} else if (window.ThisIsAMobileApp) {
-		// Bail out without translations on other mobile platforms for now.
-		global._ = function (string) {
+		} else if (window.ThisIsAMobileApp) {
+			// And bail out without translations on other mobile platforms.
 			return string;
+		} else {
+			return string.toLocaleString();
 		}
-	}
+	};
 
 	var docParams, wopiParams;
 	var filePath = global.getParameterByName('file_path');

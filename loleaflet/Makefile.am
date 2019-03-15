@@ -138,6 +138,7 @@ LANGUAGES = \
 
 if ENABLE_IOSAPP
 L10N_IOS_ALL_JS = $(builddir)/dist/l10n-all.js
+L10N_JSON = $(L10N_IOS_ALL_JS)
 
 $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10n -name '*.*')
 	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
@@ -260,7 +261,6 @@ ADMIN_BUNDLE = $(builddir)/dist/admin-bundle.js
 endif
 
 build-loleaflet: | \
-	$(L10N_IOS_ALL_JS) \
 	$(LOLEAFLET_MO_DST) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
@@ -337,7 +337,6 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(srcdir)/js/w2ui-1.5.rc1.js
 	@echo "Uglify loleaflet js files..."
 	NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
-		$(L10N_IOS_ALL_JS) \
 		$(NODE_MODULES_JS) \
 		$(srcdir)/js/jquery.mCustomScrollbar.js \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
