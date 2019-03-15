@@ -21,7 +21,6 @@
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
-#include <boost/locale.hpp>
 
 #include "Util.hpp"
 
@@ -73,7 +72,6 @@ public:
     static unsigned MaxDocuments;
     static std::string OverrideWatermark;
     static std::set<const Poco::Util::AbstractConfiguration*> PluginConfigurations;
-    static boost::locale::generator Generator;
 
     static std::vector<int> getKitPids();
 

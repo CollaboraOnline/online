@@ -694,7 +694,6 @@ unsigned LOOLWSD::MaxConnections;
 unsigned LOOLWSD::MaxDocuments;
 std::string LOOLWSD::OverrideWatermark;
 std::set<const Poco::Util::AbstractConfiguration*> LOOLWSD::PluginConfigurations;
-boost::locale::generator LOOLWSD::Generator;
 
 static std::string UnitTestLibrary;
 
@@ -1012,12 +1011,6 @@ void LOOLWSD::initialize(Application& self)
     LoTemplate = getPathFromConfig("lo_template_path");
     ChildRoot = getPathFromConfig("child_root_path");
     ServerName = config().getString("server_name");
-
-    Generator.locale_cache_enabled(true);
-    Generator.add_messages_domain("loolwsd");
-    Generator.characters(boost::locale::char_facet);
-    Generator.categories(boost::locale::message_facet);
-    Generator.add_messages_path(config().getString("application.dir", "./") + "locale");
 
     FileServerRoot = getPathFromConfig("file_server_root_path");
     NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
