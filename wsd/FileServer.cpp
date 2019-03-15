@@ -24,7 +24,6 @@
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
-#include <Poco/DeflatingStream.h>
 #include <Poco/Exception.h>
 #include <Poco/FileStream.h>
 #include <Poco/Net/HTMLForm.h>
@@ -702,9 +701,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
     }
 
-    std::streampos size;
     std::string lang("en");
-    std::ostringstream ostr, ogzip;
+    std::ostringstream ostr;
     std::istringstream istr(preprocess);
 
     auto pos = std::find_if(params.begin(), params.end(),
@@ -781,16 +779,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     });
 
     const std::string mimeType = "text/html";
-    bool gzip = request.hasToken("Accept-Encoding", "gzip");
-    if (gzip)
-    {
-        Poco::DeflatingOutputStream deflater(ogzip, Poco::DeflatingStreamBuf::STREAM_GZIP, 8);
-        deflater << ostr.str();
-        deflater.close();
-        size = ogzip.tellp();
-    }
-    else
-        size = ostr.tellp();
 
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
@@ -807,9 +795,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.
-    if (gzip)
-        oss << "Content-Encoding: gzip\r\n";
-
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
            << "frame-src 'self' blob: " << documentSigningURL << "; "
@@ -919,7 +904,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     }
 
     oss << "\r\n"
-        << (gzip ? ogzip.str() : ostr.str());
+        << ostr.str();
 
     socket->send(oss.str());
     LOG_DBG("Sent file: " << relPath << ": " << preprocess);
@@ -1076,39 +1061,26 @@ void FileServerRequestHandler::preprocessJS(const HTTPRequest& request, const st
     if (pos != params.end())
         lang = pos->second;
 
+    response.setContentType("application/javascript");
+    response.set("User-Agent", HTTP_AGENT_STRING);
+    response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+    response.add("X-Content-Type-Options", "nosniff");
+
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string preprocess = *getUncompressedFile(relPath);
 
-    std::streampos size;
-    std::ostringstream oss, ostr, ogzip;
+    std::ostringstream ostr;
     std::istringstream istr(preprocess);
     std::locale locale(LOOLWSD::Generator(lang + ".utf8"));
 
     parse(locale, istr, ostr, [](const std::string&) { return false; });
 
-    bool gzip = request.hasToken("Accept-Encoding", "gzip");
-    if (gzip)
-    {
-        response.set("Content-Encoding", "gzip");
-        Poco::DeflatingOutputStream deflater(ogzip, Poco::DeflatingStreamBuf::STREAM_GZIP, 8);
-        deflater << ostr.str();
-        deflater.close();
-        size = ogzip.tellp();
-    }
-    else
-        size = ostr.tellp();
-
-    response.setContentType("application/javascript");
-    response.setContentLength(static_cast<int>(size));
-    response.setChunkedTransferEncoding(false);
-    response.set("User-Agent", HTTP_AGENT_STRING);
-    response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
-    response.add("X-Content-Type-Options", "nosniff");
+    std::ostringstream oss;
     response.write(oss);
-
-    oss << (gzip ? ogzip.str() : ostr.str());
+    oss << ostr.str();
     socket->send(oss.str());
+
     LOG_DBG("Sent file: " << relPath);
 }
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
