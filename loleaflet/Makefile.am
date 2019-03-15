@@ -1,140 +1,9 @@
 
-LANGUAGES = \
-	ab \
-	af \
-	am \
-	an \
-	anp \
-	ar \
-	as \
-	ast \
-	az \
-	bar \
-	be \
-	bg \
-	bm \
-	bn_IN \
-	bn \
-	bo \
-	br \
-	brx \
-	bs \
-	ca \
-	ca-valencia \
-	ce \
-	cs \
-	cy \
-	da \
-	de \
-	dgo \
-	dsb \
-	dz \
-	el \
-	en_AU \
-	en_GB \
-	en_ZA \
-	eo \
-	es \
-	et \
-	eu \
-	fa \
-	fi \
-	fr \
-	fur \
-	fy \
-	ga \
-	gbm \
-	gd \
-	gl \
-	gug \
-	gu \
-	he \
-	hi \
-	hr \
-	hsb \
-	hu \
-	hy \
-	id \
-	is \
-	it \
-	ja \
-	jv \
-	kab \
-	ka \
-	kk \
-	kl \
-	km \
-	kmr-Latn \
-	kn \
-	kok \
-	ko \
-	ks \
-	ky \
-	lb \
-	lo \
-	lt \
-	lv \
-	mai \
-	mk \
-	ml \
-	mni \
-	ml \
-	mr \
-	mt \
-	my \
-	nah \
-	nb \
-	ne \
-	nl \
-	nn \
-	nqo \
-	nr \
-	nso \
-	oc \
-	om \
-	or \
-	pa_IN \
-	pap_CW \
-	pl \
-	pt_BR \
-	pt \
-	ro \
-	ru \
-	rw \
-	sah \
-	sa_IN \
-	sat \
-	sd \
-	sid \
-	si \
-	sk \
-	sl \
-	sq \
-	ss \
-	st \
-	sv \
-	sw_TZ \
-	ta \
-	te \
-	tg \
-	th \
-	ti \
-	tn \
-	tr \
-	ts \
-	tt \
-	ug \
-	uk \
-	ur \
-	uz \
-	vec \
-	ve \
-	vi \
-	wo \
-	xh \
-	zh_CN \
-	zh_TW \
-	zu
+L10N_PO = $(wildcard $(srcdir)/po/*.po)
+
+if !ENABLE_MOBILEAPP
+L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
+endif
 
 if ENABLE_IOSAPP
 L10N_IOS_ALL_JS = $(builddir)/dist/l10n-all.js
@@ -173,11 +42,6 @@ LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(builddir)/dist/%.html,$(
 LOLEAFLET_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html')
 LOLEAFLET_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
 LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(builddir)/dist/admin/%,$(LOLEAFLET_ADMIN_SRC))
-
-define lang_target
-$(1):: $(2)
-
-endef
 
 define file_target
 $(1): $(2)
@@ -218,15 +82,8 @@ LOLEAFLET_CSS =\
 
 LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(builddir)/dist/$(notdir $(file)))
 LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
-LOLEAFLET_MO_DST = $(foreach lang,$(LANGUAGES),$(top_builddir)/locale/$(lang)/LC_MESSAGES/loolwsd.mo)
 
 $(eval $(call file_targets,$(LOLEAFLET_CSS)))
-$(eval $(foreach lang,$(LANGUAGES), \
-               $(call lang_target,$(top_builddir)/locale/$(lang)/LC_MESSAGES/loolwsd.mo, \
-                       $(srcdir)/po/help-$(lang).po $(srcdir)/po/ui-$(lang).po \
-               ) \
-       ) \
-)
 
 NODE_MODULES_JS =\
 	node_modules/hammerjs/hammer.min.js \
@@ -270,8 +127,8 @@ if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(builddir)/dist/admin-bundle.js
 endif
 
-build-loleaflet: | \
-	$(LOLEAFLET_MO_DST) \
+build-loleaflet: | $(LOLEAFLET_L10N_DST) \
+	$(L10N_JSON) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
@@ -441,10 +298,13 @@ $(builddir)/dist/images/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(top_builddir)/locale/%/LC_MESSAGES/loolwsd.mo: $(srcdir)/po/help-%.po $(srcdir)/po/ui-%.po
-	@echo "INFO: compiling message catalog $@"
+$(builddir)/dist/l10n/%.json: $(srcdir)/l10n/%.json
 	@mkdir -p $(dir $@)
-	@$(MSGCAT) $^ | $(MSGFMT) -o $@ -
+if ENABLE_DEBUG
+	@cp $< $@
+else
+	@tr -d '[:space:]' <$<  >$@
+endif
 
 $(builddir)/dist/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
@@ -489,7 +349,6 @@ l10n: pot
 clean-local:
 	rm -rf node_modules
 	rm -rf $(builddir)/dist
-	rm -rf $(top_builddir)/locale
 	rm -rf $(builddir)/build/dist
 
 spec/data/load-test:
