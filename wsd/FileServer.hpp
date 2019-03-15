@@ -22,7 +22,6 @@ class FileServerRequestHandler
 
     static void getToken(std::istringstream&, std::string&);
     static void parse(const std::locale&, std::istringstream&, std::ostringstream&, const std::function<bool(const std::string&)>&);
-    static void preprocessJS(const Poco::Net::HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket);
     static void preprocessFile(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket);
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket);
 public:

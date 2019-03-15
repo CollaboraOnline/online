@@ -335,10 +335,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             const std::string fileType = endPoint.substr(extPoint + 1);
             std::string mimeType;
             if (fileType == "js")
-            {
-                preprocessJS(request, socket);
-                return;
-            }
+                mimeType = "application/javascript";
             else if (fileType == "css")
                 mimeType = "text/css";
             else if (fileType == "html")
@@ -1049,38 +1046,5 @@ void FileServerRequestHandler::parse(const std::locale& locale, std::istringstre
     {
         ostr << varL10n.str();
     }
-}
-
-void FileServerRequestHandler::preprocessJS(const HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket)
-{
-    std::string lang("en");
-    Poco::Net::HTTPResponse response;
-    const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
-    auto pos = std::find_if(params.begin(), params.end(),
-        [](const std::pair<std::string, std::string>& it) { return it.first == "lang"; });
-    if (pos != params.end())
-        lang = pos->second;
-
-    response.setContentType("application/javascript");
-    response.set("User-Agent", HTTP_AGENT_STRING);
-    response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
-    response.add("X-Content-Type-Options", "nosniff");
-
-    const std::string relPath = getRequestPathname(request);
-    LOG_DBG("Preprocessing file: " << relPath);
-    std::string preprocess = *getUncompressedFile(relPath);
-
-    std::ostringstream ostr;
-    std::istringstream istr(preprocess);
-    std::locale locale(LOOLWSD::Generator(lang + ".utf8"));
-
-    parse(locale, istr, ostr, [](const std::string&) { return false; });
-
-    std::ostringstream oss;
-    response.write(oss);
-    oss << ostr.str();
-    socket->send(oss.str());
-
-    LOG_DBG("Sent file: " << relPath);
 }
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
