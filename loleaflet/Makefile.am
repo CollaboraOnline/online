@@ -162,6 +162,11 @@ JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(b
 LOLEAFLET_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
 LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(builddir)/dist/%,$(LOLEAFLET_IMAGES_SRC))
 
+LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
+if !ENABLE_IOSAPP
+LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(builddir)/dist/l10n/%,$(LOLEAFLET_L10N_SRC))
+endif
+
 LOLEAFLET_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
 LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(builddir)/dist/%.html,$(LOLEAFLET_HTML_SRC))
 
@@ -234,6 +239,11 @@ NODE_MODULES_JS =\
 	node_modules/select2/dist/js/select2.js \
 	node_modules/vex-js/js/vex.js \
 	node_modules/vex-js/js/vex.dialog.js
+
+if !ENABLE_MOBILEAPP
+NODE_MODULES_JS +=\
+	node_modules/l10n-for-node/l10n.js
+endif
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
 NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
@@ -308,6 +318,7 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(builddir)/dist/global.js \
 	$(builddir)/dist/jquery.mCustomScrollbar.js \
+	$(builddir)/dist/l10n.js \
 	$(builddir)/dist/w2ui-1.5.rc1.js
 	@touch $@
 else
@@ -330,13 +341,20 @@ $(builddir)/dist/global.js: $(srcdir)/js/global.js
 	@echo "Uglify global.js file..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@
 
+$(builddir)/dist/l10n.js: $(srcdir)/js/l10n.js
+	@echo "Uglify l10n.js file..."
+	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@
+
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(builddir)/dist/global.js \
+	$(builddir)/dist/l10n.js \
 	$(srcdir)/js/jquery.mCustomScrollbar.js \
 	$(srcdir)/js/w2ui-1.5.rc1.js
 	@echo "Uglify loleaflet js files..."
 	NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
+		$(srcdir)/js/global.js \
+		$(L10N_IOS_ALL_JS) \
 		$(NODE_MODULES_JS) \
 		$(srcdir)/js/jquery.mCustomScrollbar.js \
 		$(srcdir)/js/w2ui-1.5.rc1.js \
@@ -355,6 +373,11 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
 		-DBUNDLE_CSS="$(abs_builddir)/dist/bundle.css" \
 		-DGLOBAL_JS="$(abs_builddir)/dist/global.js" \
+		-DL10N_JS="$(abs_builddir)/dist/l10n.js" \
+		-DLOCALIZATION_JSON="$(abs_builddir)/dist/l10n/localizations.json" \
+		-DLOCORE_LOCALIZATION_JSON="$(abs_builddir)/dist/l10n/locore-localizations.json" \
+		-DHELP_LOCALIZATION_JSON="$(abs_builddir)/dist/l10n/help-localizations.json" \
+		-DUNO_LOCALIZATION_JSON="$(abs_builddir)/dist/l10n/uno-localizations.json" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		jquery.mCustomScrollbar.js \
 		w2ui-1.5.rc1.js \
