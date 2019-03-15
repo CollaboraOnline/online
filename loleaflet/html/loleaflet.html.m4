@@ -57,11 +57,9 @@ ifelse(MOBILEAPP,[true],
     foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/fileCSS" />
   ]),
     [<style>syscmd([cat ]BUNDLE_CSS)</style>
-  ])
-  <%BRANDING_CSS%> <!-- add your logo here -->
-  ]dnl
+  ])]dnl
 )dnl
-
+<%BRANDING_CSS%> <!-- add your logo here -->
 </head>
 
   <body style="user-select: none;">
@@ -213,6 +211,6 @@ ifelse(MOBILEAPP,[true],
   ]),
   [    <script src="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/bundle.js" defer></script>
   ])
-  <%BRANDING_JS%> <!-- logo onclick handler -->
 )dnl
+    <%BRANDING_JS%> <!-- logo onclick handler -->
 </body></html>
