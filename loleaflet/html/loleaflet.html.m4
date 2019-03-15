@@ -209,9 +209,9 @@ ifelse(MOBILEAPP,[true],
   [    <script src="bundle.js" defer></script>
   ]),
   ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
-  [    <script src="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/fileJS<%LANG%>" defer></script>
+  [    <script src="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/fileJS" defer></script>
   ]),
-  [    <script src="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/bundle.js<%LANG%>" defer></script>
+  [    <script src="<%SERVICE_ROOT%>/loleaflet/<%VERSION%>/bundle.js" defer></script>
   ])
   <%BRANDING_JS%> <!-- logo onclick handler -->
 )dnl
