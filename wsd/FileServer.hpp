@@ -20,7 +20,7 @@ class FileServerRequestHandler
 {
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
 
-    static void getToken(std::istringstream&, std::string&);
+    static void getToken(std::istream&, std::string&);
     static void preprocessFile(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket);
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket);
 public:

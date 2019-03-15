@@ -567,7 +567,7 @@ constexpr char BRANDING[] = "branding";
 constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
-void FileServerRequestHandler::getToken(std::istringstream& istr, std::string& token)
+void FileServerRequestHandler::getToken(std::istream& istr, std::string& token)
 {
     token.clear();
     int chr = istr.get();
@@ -581,33 +581,6 @@ void FileServerRequestHandler::getToken(std::istringstream& istr, std::string& t
         else if (chr == '%' && istr.peek() == '>')
         {
             token += "%>";
-            istr.get();
-        }
-        else if (chr == '_' && istr.peek() == '(')
-        {
-            token += "_(";
-            istr.get();
-            chr = istr.peek();
-            switch (chr)
-            {
-                case '\"':
-                    chr = istr.get();
-                    token += (char) chr;
-                break;
-                case '\'':
-                    chr = istr.get();
-                    token += (char) chr;
-                break;
-            }
-        }
-        else if (chr == '"' && istr.peek() == ')')
-        {
-            token += "\")";
-            istr.get();
-        }
-        else if (chr == '\'' && istr.peek() == ')')
-        {
-            token += "')";
             istr.get();
         }
         else token += (char) chr;
