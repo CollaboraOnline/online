@@ -298,13 +298,9 @@ $(builddir)/dist/images/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/l10n/%.json: $(srcdir)/l10n/%.json
+$(builddir)/dist/l10n/%: $(srcdir)/l10n/%
 	@mkdir -p $(dir $@)
-if ENABLE_DEBUG
 	@cp $< $@
-else
-	@tr -d '[:space:]' <$<  >$@
-endif
 
 $(builddir)/dist/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
