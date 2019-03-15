@@ -139,6 +139,28 @@ ifelse(MOBILEAPP,[true],
       <div id="lokit-version"></div>
     </div>
 
+    <script defer>
+ifelse(MOBILEAPP,[true],
+     [window.host = '';
+      window.serviceRoot = '';
+      window.accessToken = '';
+      window.accessTokenTTL = '';
+      window.accessHeader = '';
+      window.loleafletLogging = 'true';
+      window.outOfFocusTimeoutSecs = 1000000;
+      window.idleTimeoutSecs = 1000000;
+      window.tileSize = 256;],
+     [window.host = '<%HOST%>';
+      window.serviceRoot = '<%SERVICE_ROOT%>';
+      window.accessToken = '<%ACCESS_TOKEN%>';
+      window.accessTokenTTL = '<%ACCESS_TOKEN_TTL%>';
+      window.accessHeader = '<%ACCESS_HEADER%>';
+      window.loleafletLogging = '<%LOLEAFLET_LOGGING%>';
+      window.outOfFocusTimeoutSecs = <%OUT_OF_FOCUS_TIMEOUT_SECS%>;
+      window.idleTimeoutSecs = <%IDLE_TIMEOUT_SECS%>;
+      window.tileSize = 256;])
+syscmd([cat ]GLOBAL_JS)dnl
+    </script>
   <script defer>
 
 dnl# For use in conditionals in JS: window.ThisIsAMobileApp, window.ThisIsTheiOSApp,
@@ -169,27 +191,7 @@ ifelse(ANDROIDAPP,[true],
    window.postMobileDebug   = function(msg) { window.LOOLMessageHandler.postMobileDebug(msg); };],
   [   window.ThisIsTheAndroidApp = false;]
 )
-ifelse(MOBILEAPP,[true],
-     [window.host = '';
-      window.serviceRoot = '';
-      window.accessToken = '';
-      window.accessTokenTTL = '';
-      window.accessHeader = '';
-      window.loleafletLogging = 'true';
-      window.outOfFocusTimeoutSecs = 1000000;
-      window.idleTimeoutSecs = 1000000;
-      window.tileSize = 256;],
-     [window.host = '<%HOST%>';
-      window.serviceRoot = '<%SERVICE_ROOT%>';
-      window.accessToken = '<%ACCESS_TOKEN%>';
-      window.accessTokenTTL = '<%ACCESS_TOKEN_TTL%>';
-      window.accessHeader = '<%ACCESS_HEADER%>';
-      window.loleafletLogging = '<%LOLEAFLET_LOGGING%>';
-      window.outOfFocusTimeoutSecs = <%OUT_OF_FOCUS_TIMEOUT_SECS%>;
-      window.idleTimeoutSecs = <%IDLE_TIMEOUT_SECS%>;
-      window.tileSize = 256;])
-syscmd([cat ]GLOBAL_JS)dnl
-    </script>
+  </script>
 
 ifelse(MOBILEAPP,[true],
   ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
