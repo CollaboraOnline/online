@@ -1,9 +1,14 @@
 /* -*- js-indent-level: 8 -*- */
 
-/* global vex _ */
+/* global vex _ getParameterByName */
 var errorMessages = {};
 
 vex.defaultOptions.className = 'vex-theme-plain';
+
+var lang = getParameterByName('lang');
+if (lang) {
+	String.locale = lang;
+}
 
 errorMessages.diskfull = _('No disk space left on server, please contact the server administrator to continue.');
 errorMessages.emptyhosturl = _('The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator.');
