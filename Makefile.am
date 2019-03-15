@@ -63,7 +63,7 @@ if !ENABLE_DEBUG
 AM_CPPFLAGS += -DNDEBUG
 endif
 
-AM_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib -lpam $(ZLIB_LIBS) $(BOOST_LOCALE_LIB)
+AM_LDFLAGS = -pthread -Wl,-E,-rpath,/snap/loolwsd/current/usr/lib -lpam $(ZLIB_LIBS)
 
 if ENABLE_SSL
 AM_LDFLAGS += -lssl -lcrypto
