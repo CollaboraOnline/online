@@ -31,6 +31,7 @@ libtool
 ltmain.sh
 missing
 stamp-h1
+m4
 debian/loolwsd.postinst
 common/support-public-key.hpp
 

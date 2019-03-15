@@ -179,9 +179,6 @@ AC_ARG_ENABLE([werror],
 AC_ARG_ENABLE([vereign],
             AS_HELP_STRING([--enable-vereign],
                           [Set Vereign document_signing_url configuration key to the default app.vereign.com.]))
-
-AX_BOOST_BASE(1.47)
-
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -677,8 +674,6 @@ else
 fi
 
 AC_SUBST(ENABLE_SETCAP)
-
-AX_BOOST_LOCALE
 
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
 AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
