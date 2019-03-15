@@ -567,26 +567,6 @@ constexpr char BRANDING[] = "branding";
 constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
-void FileServerRequestHandler::getToken(std::istream& istr, std::string& token)
-{
-    token.clear();
-    int chr = istr.get();
-    if (chr != -1)
-    {
-        if (chr == '<' && istr.peek() == '%')
-        {
-            token += "<%";
-            istr.get();
-        }
-        else if (chr == '%' && istr.peek() == '>')
-        {
-            token += "%>";
-            istr.get();
-        }
-        else token += (char) chr;
-    }
-}
-
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
@@ -631,6 +611,13 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         }
     }
 
+    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
+    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
+    Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
+    Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
+    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), LOOLWSD::ServiceRoot);
+
     static const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
     static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
 
@@ -648,6 +635,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     }
 #endif
 
+    Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
+    Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_JS%-->"), brandJS);
+
     // Customization related to document signing.
     std::string documentSigningDiv;
     const std::string documentSigningURL = config.getString("per_document.document_signing_url", "");
@@ -655,125 +645,15 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     {
         documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
     }
+    Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
+    Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_URL%"), documentSigningURL);
 
-    enum class ParseState
-    {
-        None,
-        Subs,
-        L10n
-    };
-
-    std::string token;
-    std::ostringstream ostr;
-    std::stringstream varSubs, varL10n;
-    std::istringstream istr(preprocess);
-    ParseState state = ParseState::None;
-
-    getToken(istr, token);
-    while (!token.empty())
-    {
-        if (token == "<%")
-        {
-            if (state == ParseState::None)
-            {
-                state = ParseState::Subs;
-                varSubs.str("");
-                varSubs.clear();
-            }
-            else ostr << token;
-        }
-        else if (token == "%>")
-        {
-            if (state == ParseState::Subs)
-            {
-                std::string var = varSubs.str();
-                if (var == "ACCESS_TOKEN")
-                {
-                    ostr << escapedAccessToken;
-                }
-                else if (var == "ACCESS_TOKEN_TTL")
-                {
-                    ostr << tokenTtl;
-                }
-                else if (var == "ACCESS_HEADER")
-                {
-                    ostr << escapedAccessHeader;
-                }
-                else if (var == "HOST")
-                {
-                    ostr << host;
-                }
-                else if (var == "VERSION")
-                {
-                    ostr << LOOLWSD_VERSION_HASH;
-                }
-                else if (var == "SERVICE_ROOT")
-                {
-                    ostr << LOOLWSD::ServiceRoot;
-                }
-                else if (var == "LOLEAFLET_LOGGING")
-                {
-                    ostr << config.getString("loleaflet_logging", "false");
-                }
-                else if (var == "OUT_OF_FOCUS_TIMEOUT_SECS")
-                {
-                    ostr << config.getString("per_view.out_of_focus_timeout_secs", "60");
-                }
-                else if (var == "IDLE_TIMEOUT_SECS")
-                {
-                    ostr << config.getString("per_view.idle_timeout_secs", "900");
-                }
-                else if (var == "DOCUMENT_SIGNING_DIV")
-                {
-                    ostr << documentSigningDiv;
-                }
-                else if (var == "DOCUMENT_SIGNING_URL")
-                {
-                    ostr << documentSigningURL;
-                }
-                else if (var == "BRANDING_CSS")
-                {
-                    ostr << brandCSS;
-                }
-                else if (var == "BRANDING_JS")
-                {
-                    ostr << brandJS;
-                }
-                else ostr << var;
-
-                state = ParseState::None;
-            }
-            else ostr << token;
-        }
-        else
-        {
-            switch (state)
-            {
-                case ParseState::None:
-                    ostr << token;
-                    break;
-
-                case ParseState::Subs:
-                    varSubs << token;
-                    break;
-
-                case ParseState::L10n:
-                    varL10n << token;
-                    break;
-            }
-        }
-
-        getToken(istr, token);
-    }
-
-    if (state == ParseState::Subs)
-    {
-        ostr << varSubs.str();
-    }
-    else if (state == ParseState::L10n)
-    {
-        ostr << varL10n.str();
-    }
+    const auto loleafletLogging = config.getString("loleaflet_logging", "false");
+    Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
+    const std::string outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");
+    Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), outOfFocusTimeoutSecs);
+    const std::string idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");
+    Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), idleTimeoutSecs);
 
     const std::string mimeType = "text/html";
 
@@ -784,7 +664,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
         << "Cache-Control:max-age=11059200\r\n"
         << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
-        << "Content-Length: " << ostr.tellp() << "\r\n"
+        << "Content-Length: " << preprocess.size() << "\r\n"
         << "Content-Type: " << mimeType << "\r\n"
         << "X-Content-Type-Options: nosniff\r\n"
         << "X-XSS-Protection: 1; mode=block\r\n"
@@ -901,7 +781,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     }
 
     oss << "\r\n"
-        << ostr.str();
+        << preprocess;
 
     socket->send(oss.str());
     LOG_DBG("Sent file: " << relPath << ": " << preprocess);
