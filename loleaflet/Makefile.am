@@ -227,10 +227,6 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DBUNDLE_CSS="$(abs_builddir)/dist/bundle.css" \
 		-DGLOBAL_JS="$(abs_builddir)/dist/global.js" \
 		-DL10N_JS="$(abs_builddir)/dist/l10n.js" \
-		-DLOCALIZATION_JSON="$(abs_builddir)/dist/l10n/localizations.json" \
-		-DLOCORE_LOCALIZATION_JSON="$(abs_builddir)/dist/l10n/locore-localizations.json" \
-		-DHELP_LOCALIZATION_JSON="$(abs_builddir)/dist/l10n/help-localizations.json" \
-		-DUNO_LOCALIZATION_JSON="$(abs_builddir)/dist/l10n/uno-localizations.json" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		jquery.mCustomScrollbar.js \
 		w2ui-1.5.rc1.js \
