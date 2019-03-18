@@ -291,6 +291,9 @@ $(builddir)/dist/l10n/%: $(srcdir)/l10n/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
+$(builddir)/dist/l10n/%.json: $(srcdir)/po/%.po
+	@$(srcdir)/util/po2json.py $< -o $@
+
 $(builddir)/dist/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
