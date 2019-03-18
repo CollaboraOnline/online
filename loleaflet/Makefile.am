@@ -307,7 +307,7 @@ pot:
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
-		scr/control/toolbar.js \
+		src/control/toolbar.js \
 		src/control/Control.AlertDialog.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
