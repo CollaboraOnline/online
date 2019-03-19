@@ -172,7 +172,7 @@ protected:
             assertPutRelativeFileRequest(request);
 
             std::string wopiURL = helpers::getTestServerURI() + "/something wopi/files/1?access_token=anything";
-            std::string content = "{ \"Name\":\"hello world.pdf\", \"Url\":\"" + wopiURL + "\" }";
+            std::string content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
