@@ -105,7 +105,7 @@ body {
 	background: url('images/baseline-edit-24px.svg') no-repeat center !important;
 }
 
-@media (max-width: 900px),(max-device-height: 900px) {
+@media (max-width: 900px) {
 	#menu-last-mod {
 		display: none;
 	}
