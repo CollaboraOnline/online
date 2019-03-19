@@ -816,12 +816,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             return false;
         }
 
-        std::string url, wopiFilename;
-        Poco::URI::decode(encodedURL, url);
+        // Save-as completed, inform the ClientSession.
+        std::string wopiFilename;
         Poco::URI::decode(encodedWopiFilename, wopiFilename);
 
-        // Save-as completed, inform the ClientSession.
-        Poco::URI resultURL(url);
+        // URI constructor implicitly decodes when it gets std::string as param
+        Poco::URI resultURL(encodedURL);
         if (resultURL.getScheme() == "file")
         {
             std::string relative(resultURL.getPath());
@@ -832,7 +832,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             const Path path(docBroker->getJailRoot(), relative);
             if (Poco::File(path).exists())
             {
-                resultURL.setPath(path.toString());
+                // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
+                std::string encodedPath;
+                Poco::URI::encode(path.toString(), "", encodedPath);
+
+                resultURL.setPath(encodedPath);
             }
             else
             {
