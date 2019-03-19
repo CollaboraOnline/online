@@ -1530,11 +1530,16 @@ function updateUserListCount() {
 	$('#zoomlevel').html(zoomlevel);
 }
 
+function escapeHtml(input) {
+	return $('<div>').text(input).html();
+}
+
 function onAddView(e) {
+	var username = escapeHtml(e.username);
 	$('#tb_toolbar-down_item_userlist')
 		.w2overlay({
 			class: 'loleaflet-font',
-			html: userJoinedPopupMessage.replace('%user', e.username),
+			html: userJoinedPopupMessage.replace('%user', username),
 			style: 'padding: 5px'
 		});
 	clearTimeout(userPopupTimeout);
@@ -1544,7 +1549,6 @@ function onAddView(e) {
 		userPopupTimeout = null;
 	}, 3000);
 
-	var username = e.username;
 	var color = L.LOUtil.rgbToHex(map.getViewColor(e.viewId));
 	if (e.viewId === map._docLayer._viewId) {
 		username = _('You');
