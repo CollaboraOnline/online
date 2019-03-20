@@ -49,3 +49,34 @@ build the native parts on Windows.
   + Start Android Studio
   + Open this 'android' subdir as a project
   + Build from Android Studio (Build -> Make Project)
+
+== Tip: How to speed up your core.git build ==
+
+If you use icecream for parallel building, you can use it for
+cross-compilation too.
+
+  # first generate a tarball with the toolchain (once)
+  icecc-create-env ~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang ~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++
+
+And add it and the paths to the compiler as the first things to the
+autogen.input:
+
+  CC=icecc [here copy what the output of ./autogen.sh without icecream said for C compiler]
+  CXX=icecc [here copy what the output of ./autogen.sh without icecream said for C++ compiler]
+  ICECC_VERSION=/path/to/the/tarball/generated/above/955ceb546ceb7a5715bf0223ddd788fe.tar.gz
+  --with-parallelism=[amount of cpu threads in your icecream farm]
+  --enable-icecream
+  [...the original autogen.input...]
+
+So the result will look something like this:
+
+  CC=icecc /home/$USER/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon -Wl,--fix-cortex-a8 -gcc-toolchain /home/$USER/Android/Sdk/ndk-bundle/to>
+  CXX=icecc /home/$USER/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon -Wl,--fix-cortex-a8 -gcc-toolchain /home/$USER/Android/Sdk/ndk-bundle>
+  ICECC_VERSION=/local/libreoffice/android/955ceb546ceb7a5715bf0223ddd788fe.tar.gz
+  --with-parallelism=25
+  --enable-icecream
+  --build=x86_64-unknown-linux-gnu
+  --with-android-ndk=/home/$USER/Android/Sdk/ndk-bundle
+  --with-android-sdk=/home/$USER/Android/Sdk
+  --with-distro=LibreOfficeAndroid
+  --enable-sal-log
