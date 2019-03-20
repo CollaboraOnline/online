@@ -203,6 +203,12 @@
                                        }
                                        if (p[0].revents == POLLIN) {
                                            int n = fakeSocketAvailableDataLength(self.document->fakeClientFd);
+                                           // I don't want to check for n being -1 here, even if
+                                           // that will lead to a crash (std::length_error from the
+                                           // below std::vector constructor), as n being -1 is a
+                                           // sign of something being wrong elsewhere anyway, and I
+                                           // prefer to fix the root cause. Let's see how well this
+                                           // works out. See tdf#122543 for such a case.
                                            if (n == 0)
                                                return;
                                            std::vector<char> buf(n);
