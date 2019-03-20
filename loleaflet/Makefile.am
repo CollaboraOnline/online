@@ -78,7 +78,8 @@ LOLEAFLET_CSS =\
 	$(builddir)/node_modules/vex-js/css/vex-theme-bottom-right-corner.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
-	$(srcdir)/css/menubar.css
+	$(srcdir)/css/menubar.css \
+	$(builddir)/node_modules/jquery-ui/themes/ui-lightness/jquery-ui.css
 
 LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(builddir)/dist/$(notdir $(file)))
 LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
@@ -90,6 +91,7 @@ NODE_MODULES_JS =\
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
+	node_modules/jquery-ui/jquery-ui.js \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
 	node_modules/autolinker/dist/Autolinker.js \
 	node_modules/json-js/json2.js \

@@ -38,6 +38,14 @@
 		}
 	}
 
+	// fix jquery-ui
+	// var jQuery = require('jquery');
+	global.require = function (path) {
+		if (path=='jquery') {
+			return global.jQuery;
+		}
+	};
+
 	global.getParameterByName = function (name) {
 		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
