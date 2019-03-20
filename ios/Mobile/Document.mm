@@ -49,6 +49,11 @@
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
 
+    // If this method is called a second time on the same Document object, just ignore it. This
+    // seems to happen occastionally when the device is awakened after sleep. See tdf#122543.
+    if (fakeClientFd >= 0)
+        return YES;
+
     // If we are asked to empty the tile cache, do that now.
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"emptyTileCache"]) {
         [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithUTF8String:LOOLWSD_CACHEDIR] error:nil];
