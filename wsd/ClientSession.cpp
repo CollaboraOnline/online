@@ -801,11 +801,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             // Rewrite file:// URLs, as they are visible to the outside world.
             const Path path(docBroker->getJailRoot(), relative);
             if (Poco::File(path).exists())
-            {   
-                // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param 
+            {
+                // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
                 std::string encodedPath;
                 Poco::URI::encode(path.toString(), "", encodedPath);
-                
+
                 resultURL.setPath(encodedPath);
             }
             else
