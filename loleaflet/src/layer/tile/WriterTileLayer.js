@@ -182,7 +182,12 @@ L.WriterTileLayer = L.TileLayer.extend({
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
-		var values = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		var braceIndex = textMsg.indexOf('{');
+		if (braceIndex < 0) {
+			return;
+		}
+
+		var values = JSON.parse(textMsg.substring(braceIndex));
 		if (!values) {
 			return;
 		}
