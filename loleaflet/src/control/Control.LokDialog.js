@@ -3,7 +3,7 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global $ L Hammer */
+/* global $ L Hammer w2ui */
 L.WinUtil = {
 
 };
@@ -343,6 +343,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_launchDialog: function(id, leftTwips, topTwips, width, height, title) {
+		if (window.ThisIsTheiOSApp)
+			w2ui['editbar'].disable('closemobile');
 		this.onCloseCurrentPopUp();
 		var dialogContainer = L.DomUtil.create('div', 'lokdialog', document.body);
 		L.DomUtil.setStyle(dialogContainer, 'padding', '0px');
@@ -528,6 +530,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogClose: function(dialogId, notifyBackend) {
+		if (window.ThisIsTheiOSApp)
+			w2ui['editbar'].enable('closemobile');
 		if (notifyBackend)
 			this._sendCloseWindow(dialogId);
 		$('#' + this._toStrId(dialogId)).remove();
