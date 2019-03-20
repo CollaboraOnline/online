@@ -83,7 +83,7 @@ static std::string flush()
 {
     static bool alwaysStderr = std::getenv("FAKESOCKET_LOG_ALWAYS_STDERR") != nullptr;
     if (alwaysStderr)
-        std::cerr << loggingBuffer.str() << std::endl;
+        std::cerr << std::this_thread::get_id() << ":" << loggingBuffer.str() << std::endl;
     else if (loggingCallback != nullptr)
         loggingCallback(loggingBuffer.str());
     loggingBuffer.str("");
