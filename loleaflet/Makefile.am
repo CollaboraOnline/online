@@ -175,7 +175,6 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(builddir)/dist/global.js \
 	$(builddir)/dist/jquery.mCustomScrollbar.js \
 	$(builddir)/dist/w2ui-1.5.rc1.js
 	@touch $@
@@ -201,12 +200,10 @@ $(builddir)/dist/global.js: $(srcdir)/js/global.js
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(builddir)/dist/global.js \
 	$(srcdir)/js/jquery.mCustomScrollbar.js \
 	$(srcdir)/js/w2ui-1.5.rc1.js
 	@echo "Uglify loleaflet js files..."
 	NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
-		$(srcdir)/js/global.js \
 		$(L10N_IOS_ALL_JS) \
 		$(NODE_MODULES_JS) \
 		$(srcdir)/js/jquery.mCustomScrollbar.js \
@@ -215,7 +212,8 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 		--output $@
 endif
 
-$(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) \
+$(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) $(builddir)/dist/bundle.css $(builddir)/dist/global.js \
+\
 	$(builddir)/dist/bundle.css $(builddir)/dist/bundle.js
 	@echo "Generating loleaflet.html..."
 	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
