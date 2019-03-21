@@ -257,10 +257,11 @@ void DocumentBroker::pollThread()
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
 
     static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
+
+#ifndef MOBILEAPP
     static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
                                                       "per_document.idle_timeout_secs", 3600);
 
-#ifndef MOBILEAPP
     // Used to accumulate B/W deltas.
     uint64_t adminSent = 0;
     uint64_t adminRecv = 0;
@@ -331,9 +332,11 @@ void DocumentBroker::pollThread()
             last30SecCheckTime = std::chrono::steady_clock::now();
         }
 
+        if (false)
+            ;
+#ifndef MOBILEAPP
         // Remove idle documents after 1 hour.
-        const bool idle = (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs);
-        if (idle)
+        else if ((isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs))
         {
             // Stop if there is nothing to save.
             LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey() << "] to kill.");
@@ -343,6 +346,7 @@ void DocumentBroker::pollThread()
                 stop("idle");
             }
         }
+#endif
         else if (_sessions.empty() && (isLoaded() || _markToDestroy))
         {
             // If all sessions have been removed, no reason to linger.
