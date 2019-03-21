@@ -995,7 +995,7 @@ function initNormalToolbar() {
 				{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
 				{type: 'html',  id: 'left'},
 				{type: 'html',  id: 'right'},
-				{type: 'html',  id: 'modifiedstatuslabel', hidden: true, html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile: false, tablet: false},
+				{type: 'html',  id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile: false, tablet: false},
 				{type: 'break', id: 'modifiedstatuslabelbreak', mobile: false},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 					'<hr><table class="loleaflet-font" id="editor-btn">' +
@@ -1683,7 +1683,7 @@ function onCommandStateChanged(e) {
 		var modifiedStatus = e.state === 'true';
 		var html;
 		if (modifiedStatus) {
-			html = $('#modifiedstatuslabel').html('').parent().html();
+			html = $('#modifiedstatuslabel').html('Document modified').parent().html();
 			w2ui['editbar'].set('save', {img:'savemodified'});
 		}
 		else {
