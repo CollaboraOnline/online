@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.storage.local;
+package org.libreoffice.androidapp.storage.local;
 
 import android.content.Context;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.libreoffice.storage.IFile;
+import org.libreoffice.androidapp.storage.IFile;
 
 /**
  * Implementation of IFile for the local file system.

@@ -1,4 +1,4 @@
-package org.libreoffice.storage.external;
+package org.libreoffice.androidapp.storage.external;
 
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
@@ -9,13 +9,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import org.libreoffice.R;
-import org.libreoffice.storage.DocumentProviderFactory;
+import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.storage.DocumentProviderFactory;
 
 import java.util.Set;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Activity to select which directory browser to use.

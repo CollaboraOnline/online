@@ -1,4 +1,4 @@
-package org.libreoffice;
+package org.libreoffice.androidapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;

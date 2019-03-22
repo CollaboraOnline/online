@@ -1,4 +1,4 @@
-package org.libreoffice.storage.external;
+package org.libreoffice.androidapp.storage.external;
 
 import android.Manifest;
 import android.content.Context;
@@ -9,16 +9,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 
-import org.libreoffice.R;
-import org.libreoffice.storage.DocumentProviderSettingsActivity;
-import org.libreoffice.storage.IFile;
+import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.storage.DocumentProviderSettingsActivity;
+import org.libreoffice.androidapp.storage.IFile;
 
 import java.io.File;
 import java.net.URI;
+
+import androidx.core.content.ContextCompat;
+import androidx.documentfile.provider.DocumentFile;
 
 /**
  * Implementation of IDocumentProvider for the external file system, for android 4.4+

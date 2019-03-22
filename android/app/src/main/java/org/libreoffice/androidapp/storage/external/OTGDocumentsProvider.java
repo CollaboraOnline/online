@@ -1,4 +1,4 @@
-package org.libreoffice.storage.external;
+package org.libreoffice.androidapp.storage.external;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,11 +6,11 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import org.libreoffice.R;
-import org.libreoffice.storage.DocumentProviderSettingsActivity;
-import org.libreoffice.storage.IFile;
-import org.libreoffice.storage.IOUtils;
-import org.libreoffice.storage.local.LocalFile;
+import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.storage.DocumentProviderSettingsActivity;
+import org.libreoffice.androidapp.storage.IFile;
+import org.libreoffice.androidapp.storage.IOUtils;
+import org.libreoffice.androidapp.storage.local.LocalFile;
 
 import java.io.File;
 import java.net.URI;

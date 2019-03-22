@@ -1,14 +1,15 @@
-package org.libreoffice.storage.external;
+package org.libreoffice.androidapp.storage.external;
 
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
-import org.libreoffice.R;
+import org.libreoffice.androidapp.R;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Container for DirectoryBrowserFragment

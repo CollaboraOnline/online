@@ -7,12 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.storage;
-
-import java.util.Set;
-
-import org.libreoffice.R;
-import org.libreoffice.storage.external.BrowserSelectorActivity;
+package org.libreoffice.androidapp.storage;
 
 import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -21,7 +16,13 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.support.v7.app.AppCompatActivity;
+
+import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.storage.external.BrowserSelectorActivity;
+
+import java.util.Set;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DocumentProviderSettingsActivity extends AppCompatActivity {
 
