@@ -7,20 +7,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.storage.local;
-
-import java.io.File;
-
-import org.libreoffice.storage.IFile;
-import org.libreoffice.R;
+package org.libreoffice.androidapp.storage.local;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
+
+import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.storage.IFile;
+
+import java.io.File;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * A convenience IDocumentProvider to browse the /sdcard/Documents directory.

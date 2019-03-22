@@ -8,7 +8,7 @@
  *
  */
 
-package org.libreoffice;
+package org.libreoffice.androidapp;
 
 import android.app.Application;
 import android.content.Context;

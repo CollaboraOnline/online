@@ -1,3 +1,105 @@
 <resources>
     <string name="app_name">OnlineApp</string>
+
+    <string name="app_version">Version: %1$s\nBuild ID: %2$s</string>
+    <string name="app_description">LibreOffice Viewer is a document viewer based on LibreOffice.</string>
+    <string name="app_credits">https://www.libreoffice.org</string>
+    <string name="app_vendor">This release was supplied by $VENDOR.</string>
+
+    <string name="about_license">Show License</string>
+    <string name="about_notice">Show Notice</string>
+    <string name="about_moreinfo">More Info</string>
+    <string name="back_again_to_quit">Press back again to quit</string>
+
+    <string name="new_textdocument">New Text Document</string>
+    <string name="new_presentation">New Presentation</string>
+    <string name="new_spreadsheet">New Spreadsheet</string>
+    <string name="new_drawing">New Drawing</string>
+    <string name="default_document_name">untitled</string>
+
+    <string name="filter">Filter by</string>
+    <string name="sort">Sort by</string>
+    <string name="sort_smallest">Smallest first</string>
+    <string name="sort_largest">Largest first</string>
+    <string name="sort_az">A-Z</string>
+    <string name="sort_za">Z-A</string>
+    <string name="sort_oldest">Oldest first</string>
+    <string name="sort_newest">Newest first</string>
+    <string name="file_icon_desc">fileicon</string>
+    <string name="title_recents">Recent files</string>
+    <string name="title_browser">All files</string>
+    <!-- Pref keys as resources ; Not currently used -->
+
+    <string name="action_about">About</string>
+    <string name="action_settings">Settings</string>
+    <string name="open">Open</string>
+    <string name="share">Share</string>
+    <string name="share_via">Share via</string>
+
+    <!-- Document browser filters -->
+    <string name="filter_everything">Everything</string>
+    <string name="filter_documents">Documents</string>
+    <string name="filter_spreadsheets">Spreadsheets</string>
+    <string name="filter_presentations">Presentations</string>
+    <string name="filter_drawings">Drawings</string>
+
+    <!-- Document provider names -->
+    <string name="document_locations">Document locations</string>
+    <string name="close_document_locations">Close document locations</string>
+    <string name="local_documents">Documents directory</string>
+    <string name="local_file_system">Local file system</string>
+    <string name="external_sd_file_system">External SD</string>
+    <string name="otg_file_system">OTG device (experimental)</string>
+    <string name="owncloud">Remote server</string>
+    <string name="usb_connected_configure">USB connected, configure your device.</string>
+
+    <string name="ext_document_provider_error">Invalid root file. Check your sd card configuration.</string>
+    <string name="otg_missing_error">Invalid root file. Check your OTG device and/or configuration.</string>
+
+    <!-- Edit action names -->
+
+    <!-- Feedback messages -->
+
+    <!-- Document provider settings -->
+    <string name="storage_provider_settings">Storage provider settings</string>
+    <string name="owncloud_settings">ownCloud settings</string>
+    <string name="physical_storage_settings">Physical storage settings</string>
+    <string name="external_sd_path">External SD path</string>
+    <string name="otg_device_path">OTG device path</string>
+    <string name="otg_warning">Experimental Feature: Use only if OTG device is writable.</string>
+    <string name="server_url">Server URL</string>
+    <string name="server_url_and_port">URL and port of the ownCloud server.</string>
+    <string name="user_name">User name</string>
+    <string name="password">Password</string>
+
+    <!-- Directory browser strings -->
+    <string name="up_description">To parent directory</string>
+    <string name="confirm_label">Confirm</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="search_label">Go</string>
+    <string name="directory_browser_label">Choose Directory</string>
+    <string name="bad_directory">Invalid directory path</string>
+    <string name="current_dir">Current Directory: %1$s</string>
+
+    <!-- Save Alert dialog strings -->
+    <string name="action_cancel">Cancel</string>
+
+    <!-- Create New Document Dialog Strings -->
+    <string name="create_new_document_title">Enter file name</string>
+    <string name="action_create">CREATE</string>
+
+    <!-- Presentation Mode Strings -->
+
+    <!-- Calc Header Menu Strings -->
+
+    <!-- Password dialog strings -->
+
+    <!-- Insert Image Strings -->
+
+    <!-- Clipboard Actions -->
+
+    <!-- UNO cmd controller Strings -->
+    <string name="unable_to_go_further">Unable to go further.</string>
+    <string name="bmp_null">Bmp is null!</string>
+    <string name="directory_not_saved">Directory not saved.</string>
 </resources>

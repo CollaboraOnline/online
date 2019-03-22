@@ -1,4 +1,4 @@
-package org.libreoffice.storage.external;
+package org.libreoffice.androidapp.storage.external;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +20,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.libreoffice.R;
-import org.libreoffice.storage.IOUtils;
+import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.storage.IOUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
+
+import androidx.annotation.Nullable;
 
 /**
  * A simple directory browser.

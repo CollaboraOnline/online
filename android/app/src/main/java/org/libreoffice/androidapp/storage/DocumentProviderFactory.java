@@ -7,25 +7,26 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.storage;
+package org.libreoffice.androidapp.storage;
+
+import android.content.Context;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+
+import org.libreoffice.androidapp.storage.external.ExtsdDocumentsProvider;
+import org.libreoffice.androidapp.storage.external.OTGDocumentsProvider;
+import org.libreoffice.androidapp.storage.local.LocalDocumentsDirectoryProvider;
+import org.libreoffice.androidapp.storage.local.LocalDocumentsProvider;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.libreoffice.storage.external.ExtsdDocumentsProvider;
-import org.libreoffice.storage.external.OTGDocumentsProvider;
-import org.libreoffice.storage.local.LocalDocumentsDirectoryProvider;
-import org.libreoffice.storage.local.LocalDocumentsProvider;
-import org.libreoffice.storage.owncloud.OwnCloudProvider;
-
-import android.content.Context;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+//import org.libreoffice.androidapp.storage.owncloud.OwnCloudProvider;
 
 /**
  * Keeps the instances of the available IDocumentProviders in the system.
  * Instances are maintained in a sorted list and providers have to be
  * accessed from their position.
- *
+ * <p>
  * The factory follows the Singleton pattern, there is only one instance of it
  * in the application and it must be retrieved with
  * DocumentProviderFactory.getInstance().
@@ -51,8 +52,7 @@ public final class DocumentProviderFactory {
      * Initializes the factory with some context. If this method is called for
      * twice or more times those calls will have no effect.
      *
-     * @param context
-     *            Application context for the factory.
+     * @param context Application context for the factory.
      */
     public static void initialize(Context context) {
         if (instance == null) {
@@ -64,15 +64,16 @@ public final class DocumentProviderFactory {
             instance.providers[0] = new LocalDocumentsDirectoryProvider(0);
             instance.providers[1] = new LocalDocumentsProvider(1);
             instance.providers[OTG_PROVIDER_INDEX] = new OTGDocumentsProvider(OTG_PROVIDER_INDEX, context);
-            instance.providers[4] = new OwnCloudProvider(4, context);
+//            instance.providers[4] = new OwnCloudProvider(4, context);
 
             instance.providers[EXTSD_PROVIDER_INDEX] = new ExtsdDocumentsProvider(EXTSD_PROVIDER_INDEX, context);
 
             // initialize document provider names list
             instance.providerNames = new String[instance.providers.length];
             for (int i = 0; i < instance.providers.length; i++) {
-                instance.providerNames[i] = context.getString(instance
-                        .getProvider(i).getNameResource());
+                if (instance.providerNames[i] != null)//own cloud is not declared yet
+                    instance.providerNames[i] = context.getString(instance
+                            .getProvider(i).getNameResource());
             }
         }
     }

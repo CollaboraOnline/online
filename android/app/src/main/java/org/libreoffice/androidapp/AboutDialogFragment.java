@@ -7,33 +7,30 @@
  *
  */
 
-package org.libreoffice;
+package org.libreoffice.androidapp;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.File;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 public class AboutDialogFragment extends DialogFragment {
 
     private static final String DEFAULT_DOC_PATH = "/assets/example.odt";
 
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         @SuppressLint("InflateParams") //suppressed because the view will be placed in a dialog
@@ -104,10 +101,11 @@ public class AboutDialogFragment extends DialogFragment {
     }
 
     private void loadFromAbout(String input) {
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(input)));
-        String packageName = getActivity().getApplicationContext().getPackageName();
-        ComponentName componentName = new ComponentName(packageName, LibreOfficeMainActivity.class.getName());
-        i.setComponent(componentName);
-        getActivity().startActivity(i);
+        //TODO finish loading from about
+//        Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(input)));
+//        String packageName = getActivity().getApplicationContext().getPackageName();
+//        ComponentName componentName = new ComponentName(packageName, LibreOfficeMainActivity.class.getName());
+//        i.setComponent(componentName);
+//        getActivity().startActivity(i);
     }
 }

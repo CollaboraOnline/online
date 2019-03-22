@@ -7,20 +7,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.ui;
+package org.libreoffice.androidapp.ui;
 
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.libreoffice.R;
-import org.libreoffice.storage.IFile;
+import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.storage.IFile;
 
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHolder> {
 

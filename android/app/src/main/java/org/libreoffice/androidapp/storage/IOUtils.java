@@ -1,4 +1,4 @@
-package org.libreoffice.storage;
+package org.libreoffice.androidapp.storage;
 
 import android.util.Log;
 

@@ -7,13 +7,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.ui;
+package org.libreoffice.androidapp.ui;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,27 +21,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.graphics.drawable.Icon;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -64,17 +48,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.libreoffice.AboutDialogFragment;
-import org.libreoffice.LOKitShell;
-import org.libreoffice.LibreOfficeMainActivity;
-import org.libreoffice.LocaleHelper;
-import org.libreoffice.R;
-import org.libreoffice.SettingsActivity;
-import org.libreoffice.SettingsListenerModel;
-import org.libreoffice.storage.DocumentProviderFactory;
-import org.libreoffice.storage.DocumentProviderSettingsActivity;
-import org.libreoffice.storage.IDocumentProvider;
-import org.libreoffice.storage.IFile;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import org.libreoffice.androidapp.AboutDialogFragment;
+import org.libreoffice.androidapp.LocaleHelper;
+import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.storage.DocumentProviderFactory;
+import org.libreoffice.androidapp.storage.DocumentProviderSettingsActivity;
+import org.libreoffice.androidapp.storage.IDocumentProvider;
+import org.libreoffice.androidapp.storage.IFile;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -89,7 +72,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class LibreOfficeUIActivity extends AppCompatActivity implements SettingsListenerModel.OnSettingsPreferenceChangedListener, View.OnClickListener{
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+
+
+//import org.libreoffice.LOKitShell;
+//import org.libreoffice.LibreOfficeMainActivity;
+//import org.libreoffice.SettingsActivity;
+//import org.libreoffice.SettingsListenerModel;
+
+public class LibreOfficeUIActivity extends AppCompatActivity implements /*SettingsListenerModel.OnSettingsPreferenceChangedListener,*/ View.OnClickListener{
     private String LOGTAG = LibreOfficeUIActivity.class.getSimpleName();
     private SharedPreferences prefs;
     private int filterMode = FileUtilities.ALL;
@@ -162,7 +165,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         PreferenceManager.setDefaultValues(this, R.xml.documentprovider_preferences, false);
         readPreferences();
-        SettingsListenerModel.getInstance().setListener(this);
+
+        //TODO finish importing settings
+//        SettingsListenerModel.getInstance().setListener(this);
+
         // Registering the USB detect broadcast receiver
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
@@ -185,8 +191,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         setContentView(R.layout.activity_document_browser);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -242,7 +250,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         );
 
         // Loop through the document providers menu items and check if they are available or not
-        for (int index = 0; index < providerNames.size(); index++) {
+        //TODO remove -1. Used right now to ignore opencloud
+        for (int index = 0; index < providerNames.size()-1; index++) {
             MenuItem item = navigationDrawer.getMenu().getItem(index);
             item.setEnabled(documentProviderFactory.getProvider(index).checkProviderAvailability(this));
         }
@@ -537,47 +546,48 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     public void open(final IFile document) {
         addDocumentToRecents(document);
-        new AsyncTask<IFile, Void, File>() {
-            @Override
-            protected File doInBackground(IFile... document) {
-                // this operation may imply network access and must be run in
-                // a different thread
-                try {
-                    return document[0].getDocument();
-                }
-                catch (final RuntimeException e) {
-                    final Activity activity = LibreOfficeUIActivity.this;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(activity, e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Log.e(LOGTAG, e.getMessage(), e.getCause());
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(File file) {
-                if (file != null) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
-                    String packageName = getApplicationContext().getPackageName();
-                    ComponentName componentName = new ComponentName(packageName,
-                            LibreOfficeMainActivity.class.getName());
-                    i.setComponent(componentName);
-
-                    // these extras allow to rebuild the IFile object in LOMainActivity
-                    i.putExtra("org.libreoffice.document_provider_id",
-                            documentProvider.getId());
-                    i.putExtra("org.libreoffice.document_uri",
-                            document.getUri());
-
-                    startActivity(i);
-                }
-            }
-        }.execute(document);
+        //TODO finish document opening
+//        new AsyncTask<IFile, Void, File>() {
+//            @Override
+//            protected File doInBackground(IFile... document) {
+//                // this operation may imply network access and must be run in
+//                // a different thread
+//                try {
+//                    return document[0].getDocument();
+//                }
+//                catch (final RuntimeException e) {
+//                    final Activity activity = LibreOfficeUIActivity.this;
+//                    activity.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(activity, e.getMessage(),
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                    Log.e(LOGTAG, e.getMessage(), e.getCause());
+//                    return null;
+//                }
+//            }
+//
+//            @Override
+//            protected void onPostExecute(File file) {
+//                if (file != null) {
+//                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
+//                    String packageName = getApplicationContext().getPackageName();
+//                    ComponentName componentName = new ComponentName(packageName,
+//                            LibreOfficeMainActivity.class.getName());
+//                    i.setComponent(componentName);
+//
+//                    // these extras allow to rebuild the IFile object in LOMainActivity
+//                    i.putExtra("org.libreoffice.document_provider_id",
+//                            documentProvider.getId());
+//                    i.putExtra("org.libreoffice.document_uri",
+//                            document.getUri());
+//
+//                    startActivity(i);
+//                }
+//            }
+//        }.execute(document);
     }
 
     // Opens an Input dialog to get the name of new file
@@ -608,10 +618,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     }
 
     private void loadNewDocument(String newDocumentType, String newFilePath) {
-        Intent intent = new Intent(LibreOfficeUIActivity.this, LibreOfficeMainActivity.class);
-        intent.putExtra(NEW_DOC_TYPE_KEY, newDocumentType);
-        intent.putExtra(NEW_FILE_PATH_KEY, newFilePath);
-        startActivity(intent);
+        //TODO finish document loading
+//        Intent intent = new Intent(LibreOfficeUIActivity.this, LibreOfficeMainActivity.class);
+//        intent.putExtra(NEW_DOC_TYPE_KEY, newDocumentType);
+//        intent.putExtra(NEW_FILE_PATH_KEY, newFilePath);
+//        startActivity(intent);
     }
 
     private void open(int position) {
@@ -826,7 +837,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             }
                 return true;
             case R.id.action_settings:
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                //TODO import the settings activity
+//                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
 
             default:
@@ -868,11 +880,13 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         LocaleHelper.setLocale(this, displayLanguage);
     }
 
-    @Override
-    public void settingsPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        readPreferences();
-        refreshView();
-    }
+
+    //TODO finish importing settings
+//    @Override
+//    public void settingsPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+//        readPreferences();
+//        refreshView();
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -1041,19 +1055,21 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 //for some reason, getName uses %20 instead of space
                 String filename = file.getName().replace("%20", " ");
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
-                String packageName = this.getApplicationContext().getPackageName();
-                ComponentName componentName = new ComponentName(packageName, LibreOfficeMainActivity.class.getName());
-                intent.setComponent(componentName);
+                //TODO finish adding to recents
 
-                ShortcutInfo shortcut = new ShortcutInfo.Builder(this, filename)
-                        .setShortLabel(filename)
-                        .setLongLabel(filename)
-                        .setIcon(Icon.createWithResource(this, drawable))
-                        .setIntent(intent)
-                        .build();
-
-                shortcuts.add(shortcut);
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
+//                String packageName = this.getApplicationContext().getPackageName();
+//                ComponentName componentName = new ComponentName(packageName, LibreOfficeMainActivity.class.getName());
+//                intent.setComponent(componentName);
+//
+//                ShortcutInfo shortcut = new ShortcutInfo.Builder(this, filename)
+//                        .setShortLabel(filename)
+//                        .setLongLabel(filename)
+//                        .setIcon(Icon.createWithResource(this, drawable))
+//                        .setIntent(intent)
+//                        .build();
+//
+//                shortcuts.add(shortcut);
             }
             shortcutManager.setDynamicShortcuts(shortcuts);
         }
@@ -1196,12 +1212,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     }
 
     private void setEditFABVisibility(final int visibility){
-        LOKitShell.getMainHandler().post(new Runnable() {
-            @Override
-            public void run() {
-                editFAB.setVisibility(visibility);
-            }
-        });
+//        LOKitShell.getMainHandler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                editFAB.setVisibility(visibility);
+//            }
+//        });
     }
 
     @Override

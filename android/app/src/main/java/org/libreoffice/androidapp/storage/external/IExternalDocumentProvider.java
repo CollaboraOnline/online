@@ -1,8 +1,8 @@
-package org.libreoffice.storage.external;
+package org.libreoffice.androidapp.storage.external;
 
 import android.content.Context;
 
-import org.libreoffice.storage.IDocumentProvider;
+import org.libreoffice.androidapp.storage.IDocumentProvider;
 
 
 /**

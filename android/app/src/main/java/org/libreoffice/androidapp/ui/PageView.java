@@ -1,8 +1,8 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
-package org.libreoffice.ui;
+package org.libreoffice.androidapp.ui;
 
-import org.libreoffice.R;
+import org.libreoffice.androidapp.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;

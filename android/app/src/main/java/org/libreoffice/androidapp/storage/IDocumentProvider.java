@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.storage;
+package org.libreoffice.androidapp.storage;
 
 import android.content.Context;
 

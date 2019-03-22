@@ -1,11 +1,10 @@
-package org.libreoffice.storage.external;
+package org.libreoffice.androidapp.storage.external;
 
 import android.content.Context;
-import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 
-import org.libreoffice.storage.IFile;
-import org.libreoffice.storage.IOUtils;
+import org.libreoffice.androidapp.storage.IFile;
+import org.libreoffice.androidapp.storage.IOUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -18,6 +17,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import androidx.documentfile.provider.DocumentFile;
 
 /**
  * Implementation of IFile for the external file system, for Android 4.4+
