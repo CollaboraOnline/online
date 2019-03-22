@@ -30,11 +30,11 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Empty tile cache next time</string>
+			<string>Empty tile cache each time</string>
 			<key>Key</key>
 			<string>emptyTileCache</string>
 			<key>DefaultValue</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
