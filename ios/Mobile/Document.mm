@@ -101,14 +101,18 @@
     js = [js stringByAppendingString:[NSString stringWithUTF8String:data.data()]];
     js = [js stringByAppendingString:@"'});"];
 
-    // LOG_TRC("Evaluating JavaScript: " << [js UTF8String]);
+    NSString *subjs = [js substringToIndex:std::min(100ul, js.length)];
+    if (subjs.length < js.length)
+        subjs = [subjs stringByAppendingString:@"..."];
+
+    // LOG_TRC("Evaluating JavaScript: " << [subjs UTF8String]);
 
     dispatch_async(dispatch_get_main_queue(), ^{
             [self.viewController.webView evaluateJavaScript:js
                                           completionHandler:^(id _Nullable obj, NSError * _Nullable error)
                  {
                      if (error) {
-                         LOG_ERR("Error after " << [js UTF8String] << ": " << [[error localizedDescription] UTF8String]);
+                         LOG_ERR("Error after " << [subjs UTF8String] << ": " << [[error localizedDescription] UTF8String]);
                          NSString *jsException = error.userInfo[@"WKJavaScriptExceptionMessage"];
                          if (jsException != nil)
                              LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
