@@ -52,6 +52,10 @@
 #include <cassert>
 #include <chrono>
 
+#ifdef IOS
+#include <Foundation/Foundation.h>
+#endif
+
 #include "Log.hpp"
 #include "SpookyV2.h"
 
@@ -134,6 +138,10 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
     png_set_compression_level(png_ptr, Z_BEST_SPEED);
 #endif
 
+#ifdef IOS
+    auto initialSize = output.size();
+#endif
+
     png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
     png_set_write_fn(png_ptr, &output, user_write_fn, user_flush_fn);
@@ -168,6 +176,16 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
     LOG_TRC("Average PNG compression time after " << std::to_string(nCalls) << " calls: " << (totalDuration / static_cast<double>(nCalls)));
 
     png_destroy_write_struct(&png_ptr, &info_ptr);
+
+#ifdef IOS
+    auto base64 = [[NSData dataWithBytesNoCopy:output.data() + initialSize length:(output.size() - initialSize) freeWhenDone:NO] base64EncodedDataWithOptions:0];
+
+    const char dataURLStart[] = "data:image/png;base64,";
+
+    output.resize(initialSize);
+    output.insert(output.end(), dataURLStart, dataURLStart + sizeof(dataURLStart)-1);
+    output.insert(output.end(), (char*)base64.bytes, (char*)base64.bytes + base64.length);
+#endif
 
     return true;
 }

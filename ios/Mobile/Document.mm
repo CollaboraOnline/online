@@ -84,69 +84,39 @@
 
     NSString *js;
 
-    // Check if the message is binary. We say that any message that isn't just a single line is
-    // "binary" even if that strictly speaking isn't the case; for instance the commandvalues:
-    // message has a long bunch of non-binary JSON on multiple lines. But _onMessage() in Socket.js
-    // handles it fine even if such a message, too, comes in as an ArrayBuffer. (Look for the
-    // "textMsg = String.fromCharCode.apply(null, imgBytes);".)
-
-    const char *newline = (const char *)memchr(buffer, '\n', length);
-    if (newline != nullptr) {
-        // The data needs to be an ArrayBuffer
-        js = @"window.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
-        js = [js stringByAppendingString: [[NSData dataWithBytes:buffer length:length] base64EncodedStringWithOptions:0]];
-        js = [js stringByAppendingString:@"')});"];
-        NSString *subjs = [js substringToIndex:std::min(100ul, js.length)];
-        if (subjs.length < js.length)
-            subjs = [subjs stringByAppendingString:@"..."];
-
-        // LOG_TRC("Evaluating JavaScript: " << [subjs UTF8String]);
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-                [self.viewController.webView evaluateJavaScript:js
-                                              completionHandler:^(id _Nullable obj, NSError * _Nullable error)
-                     {
-                         if (error) {
-                             LOG_ERR("Error after " << [subjs UTF8String] << ": " << [error.localizedDescription UTF8String]);
-                         }
-                     }
-                 ];
-        });
-    } else {
-        const unsigned char *ubufp = (const unsigned char *)buffer;
-        std::vector<char> data;
-        for (int i = 0; i < length; i++) {
-            if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\') {
-                data.push_back('\\');
-                data.push_back('x');
-                data.push_back("0123456789abcdef"[(ubufp[i] >> 4) & 0x0F]);
-                data.push_back("0123456789abcdef"[ubufp[i] & 0x0F]);
-            } else {
-                data.push_back(ubufp[i]);
-            }
+    const unsigned char *ubufp = (const unsigned char *)buffer;
+    std::vector<char> data;
+    for (int i = 0; i < length; i++) {
+        if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\') {
+            data.push_back('\\');
+            data.push_back('x');
+            data.push_back("0123456789abcdef"[(ubufp[i] >> 4) & 0x0F]);
+            data.push_back("0123456789abcdef"[ubufp[i] & 0x0F]);
+        } else {
+            data.push_back(ubufp[i]);
         }
-        data.push_back(0);
-
-        js = @"window.TheFakeWebSocket.onmessage({'data': '";
-        js = [js stringByAppendingString:[NSString stringWithUTF8String:data.data()]];
-        js = [js stringByAppendingString:@"'});"];
-
-        // LOG_TRC("Evaluating JavaScript: " << [js UTF8String]);
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-                [self.viewController.webView evaluateJavaScript:js
-                                              completionHandler:^(id _Nullable obj, NSError * _Nullable error)
-                     {
-                         if (error) {
-                             LOG_ERR("Error after " << [js UTF8String] << ": " << [[error localizedDescription] UTF8String]);
-                             NSString *jsException = error.userInfo[@"WKJavaScriptExceptionMessage"];
-                             if (jsException != nil)
-                                 LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
-                         }
-                     }
-                 ];
-            });
     }
+    data.push_back(0);
+
+    js = @"window.TheFakeWebSocket.onmessage({'data': '";
+    js = [js stringByAppendingString:[NSString stringWithUTF8String:data.data()]];
+    js = [js stringByAppendingString:@"'});"];
+
+    // LOG_TRC("Evaluating JavaScript: " << [js UTF8String]);
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+            [self.viewController.webView evaluateJavaScript:js
+                                          completionHandler:^(id _Nullable obj, NSError * _Nullable error)
+                 {
+                     if (error) {
+                         LOG_ERR("Error after " << [js UTF8String] << ": " << [[error localizedDescription] UTF8String]);
+                         NSString *jsException = error.userInfo[@"WKJavaScriptExceptionMessage"];
+                         if (jsException != nil)
+                             LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
+                     }
+                 }
+             ];
+        });
 }
 
 @end

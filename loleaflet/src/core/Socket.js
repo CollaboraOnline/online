@@ -239,7 +239,7 @@ L.Socket = L.Class.extend({
 	},
 
 	_onMessage: function (e) {
-		var imgBytes, index, textMsg;
+		var imgBytes, index, textMsg, img;
 
 		if (typeof (e.data) === 'string') {
 			textMsg = e.data;
@@ -749,13 +749,21 @@ L.Socket = L.Class.extend({
 				textMsg = decodeURIComponent(window.escape(textMsg));
 			}
 		}
+		else if (window.ThisIsTheiOSApp) {
+			// In the iOS app, the native code sends us the PNG tile already as a data: URL after the newline
+			var newlineIndex = textMsg.indexOf('\n');
+			if (newlineIndex > 0) {
+				img = textMsg.substring(newlineIndex+1);
+				textMsg = textMsg.substring(0, newlineIndex);
+			}
+		}
 		else {
 			var data = imgBytes.subarray(index + 1);
 
 			if (data.length > 0 && data[0] == 68 /* D */)
 			{
 				console.log('Socket: got a delta !');
-				var img = data;
+				img = data;
 			}
 			else
 			{
