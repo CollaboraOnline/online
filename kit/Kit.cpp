@@ -2655,6 +2655,18 @@ bool globalPreinit(const std::string &loTemplate)
         LOG_FTL("No libreofficekit_hook_2 symbol in " << loadedLibrary << ": " << dlerror());
     }
 
+    // Disable problematic components that may be present from a
+    // desktop or developer's install if env. var not set.
+    ::setenv("UNODISABLELIBRARY",
+             "abp avmediagst avmediavlc cmdmail losessioninstall OGLTrans PresenterScreen "
+             "syssh ucpftp1 ucpgio1 ucphier1 ucpimage updatecheckui updatefeed updchk"
+             // Database
+             "dbaxml dbmm dbp dbu deployment firebird_sdbc fps_office mork "
+             "mysql mysqlc odbc postgresql-sdbc postgresql-sdbc-impl sdbc2 sdbt"
+             // Java
+             "javaloader javavm jdbc rpt rptui rptxml ",
+             0 /* no overwrite */);
+
     LOG_TRC("Invoking lok_preinit(" << loTemplate << "/program\", \"file:///user\")");
     const auto start = std::chrono::steady_clock::now();
     if (preInit((loTemplate + "/program").c_str(), "file:///user") != 0)
