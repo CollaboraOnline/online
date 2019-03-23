@@ -1588,14 +1588,12 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onZoomStart: function () {
 		this._isZooming = true;
-		this._onUpdateCursor();
-		this.updateAllViewCursors();
 	},
 
 
 	_onZoomEnd: function () {
 		this._isZooming = false;
-		this._onUpdateCursor();
+		this._onUpdateCursor(null, true);
 		this.updateAllViewCursors();
 	},
 
@@ -1619,16 +1617,16 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	// Update cursor layer (blinking cursor).
-	_onUpdateCursor: function (scroll) {
+	_onUpdateCursor: function (scroll, zoom) {
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 
-		if ((scroll !== false) && !this._map.getBounds().contains(this._visibleCursor) && this._isCursorVisible) {
+		if ((!zoom && scroll !== false) && !this._map.getBounds().contains(this._visibleCursor) && this._isCursorVisible) {
 			var center = this._map.project(cursorPos);
 			center = center.subtract(this._map.getSize().divideBy(2));
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
-			if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
+			if (!zoom && !(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
 			    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 			    !(docLayer._followEditor || docLayer._followUser)) {
 				this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
