@@ -117,6 +117,7 @@ body {
 }
 
 #sidebar-dock-wrapper {
+	display: none;
 	background: #fff;
 	position: absolute;
 	top: 77px;
