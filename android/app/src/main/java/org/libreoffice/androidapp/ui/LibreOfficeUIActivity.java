@@ -52,6 +52,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import org.libreoffice.androidapp.AboutDialogFragment;
+import org.libreoffice.androidapp.LOKitShell;
 import org.libreoffice.androidapp.LocaleHelper;
 import org.libreoffice.androidapp.R;
 import org.libreoffice.androidapp.storage.DocumentProviderFactory;
@@ -1212,12 +1213,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     }
 
     private void setEditFABVisibility(final int visibility){
-//        LOKitShell.getMainHandler().post(new Runnable() {
-//            @Override
-//            public void run() {
-//                editFAB.setVisibility(visibility);
-//            }
-//        });
+        LOKitShell.getMainHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                editFAB.setVisibility(visibility);
+            }
+        });
     }
 
     @Override
