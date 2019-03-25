@@ -45,11 +45,13 @@ namespace Log
     struct StaticNameHelper
     {
     private:
-        std::atomic<bool> _inited;
+        Poco::Logger* _logger;
         std::string _name;
         std::string _id;
+        std::atomic<bool> _inited;
     public:
         StaticNameHelper() :
+            _logger(nullptr),
             _inited(true)
         {
         }
@@ -67,6 +69,9 @@ namespace Log
         void setName(const std::string& name) { _name = name; }
 
         const std::string& getName() const { return _name; }
+
+        void setLogger(Poco::Logger* logger) { _logger = logger; };
+        Poco::Logger* getLogger() { return _logger; }
     };
     static StaticNameHelper Source;
 
@@ -179,6 +184,7 @@ namespace Log
          * */
         channel->open();
         auto& logger = Poco::Logger::create(Source.getName(), channel, Poco::Message::PRIO_TRACE);
+        Source.setLogger(&logger);
 
         logger.setLevel(logLevel.empty() ? std::string("trace") : logLevel);
 
@@ -201,7 +207,9 @@ namespace Log
 
     Poco::Logger& logger()
     {
-        return Poco::Logger::get(Source.getInited() ? Source.getName() : std::string());
+        Poco::Logger* pLogger = Source.getLogger();
+        return pLogger ? *pLogger
+                       : Poco::Logger::get(Source.getInited() ? Source.getName() : std::string());
     }
 
 #if !MOBILEAPP
