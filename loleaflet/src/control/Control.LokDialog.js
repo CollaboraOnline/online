@@ -471,6 +471,8 @@ L.Control.LokDialog = L.Control.extend({
 		    && this._map._permission != 'edit')
 			return;
 
+		$('#sidebar-dock-wrapper').css('display', 'block');
+
 		var ratio = 1.0;
 		if (width > window.screen.width) {
 			ratio = window.screen.width / width;
@@ -803,7 +805,10 @@ L.Control.LokDialog = L.Control.extend({
 
 	_resizeSidebar: function(strId, width) {
 		this._currentDeck.width = width;
-		width = width + 15;
+		if (width > 1) {
+			// Add extra space for scrollbar only when visible
+			width = width + 15;
+		}
 		var sidebar = L.DomUtil.get(strId);
 		if (sidebar) {
 			sidebar.width = width;
