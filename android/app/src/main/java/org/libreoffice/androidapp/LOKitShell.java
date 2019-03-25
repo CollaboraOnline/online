@@ -23,7 +23,7 @@ public class LOKitShell {
 //        return metrics.density * 160;
 //    }
 //
-    //TODO right now this script is used only for this method that is neccessary to display the editFAB
+    //TODO right now this script is used only for this method that is necessary to display the editFAB
     // Get a Handler for the main java thread
     public static Handler getMainHandler() {
         return LibreOfficeApplication.getMainHandler();
