@@ -108,6 +108,12 @@ L.Control.MobileInput = L.Control.extend({
 			.on(this._textArea, 'blur', this.onLostFocus, this);
 	},
 
+	_getSurrogatePair: function(codePoint) {
+		var highSurrogate = Math.floor((codePoint - 0x10000) / 0x400) + 0xD800;
+		var lowSurrogate = (codePoint - 0x10000) % 0x400 + 0xDC00;
+		return [highSurrogate, lowSurrogate];
+	},
+
 	onKeyEvents: function (e) {
 		var keyCode = e.keyCode,
 		    charCode = e.charCode,
@@ -147,12 +153,27 @@ L.Control.MobileInput = L.Control.extend({
 				unoKeyCode = handler._toUNOKeyCode(keyCode);
 			}
 
-			docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+			if (charCode > 0xFFFF) {
+				// We must handle non-BMP code points as two separate key events
+				// because the sad VCL KeyEvent only takes a 16-bit "characters".
+				var surrogatePair = this._getSurrogatePair(charCode);
+				docLayer._postKeyboardEvent('input', surrogatePair[0], unoKeyCode);
+				docLayer._postKeyboardEvent('up', surrogatePair[0], unoKeyCode);
+				docLayer._postKeyboardEvent('input', surrogatePair[1], unoKeyCode);
+				docLayer._postKeyboardEvent('up', surrogatePair[1], unoKeyCode);
+			}
+			else {
+				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+			}
 			this._lastInput = unoKeyCode;
 			this._keyHandled = true;
 		}
 		else if (e.type === 'keyup') {
-			docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
+			if (charCode <= 0xFFFF) {
+				// For non-BMP characters we generated both 'input' and 'up' events
+				// above already.
+				docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
+			}
 			this._lastInput = null;
 			this._keyHandled = true;
 		}
