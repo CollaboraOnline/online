@@ -154,8 +154,8 @@ L.Control.MobileInput = L.Control.extend({
 			}
 
 			if (charCode > 0xFFFF) {
-				// We must handle non-BMP code points as two separate key events
-				// because the sad VCL KeyEvent only takes a 16-bit "characters".
+				// We must handle non-BMP code points as two separate keys
+				// because the sad VCL KeyEvent only takes a 16-bit "character".
 				var surrogatePair = this._getSurrogatePair(charCode);
 				docLayer._postKeyboardEvent('input', surrogatePair[0], unoKeyCode);
 				docLayer._postKeyboardEvent('up', surrogatePair[0], unoKeyCode);
