@@ -60,9 +60,16 @@ import org.libreoffice.androidapp.storage.DocumentProviderSettingsActivity;
 import org.libreoffice.androidapp.storage.IDocumentProvider;
 import org.libreoffice.androidapp.storage.IFile;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -87,13 +94,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-
 //import org.libreoffice.LOKitShell;
 //import org.libreoffice.LibreOfficeMainActivity;
 //import org.libreoffice.SettingsActivity;
 //import org.libreoffice.SettingsListenerModel;
 
-public class LibreOfficeUIActivity extends AppCompatActivity implements /*SettingsListenerModel.OnSettingsPreferenceChangedListener,*/ View.OnClickListener{
+public class LibreOfficeUIActivity extends AppCompatActivity implements /*SettingsListenerModel.OnSettingsPreferenceChangedListener,*/ View.OnClickListener {
     private String LOGTAG = LibreOfficeUIActivity.class.getSimpleName();
     private SharedPreferences prefs;
     private int filterMode = FileUtilities.ALL;
@@ -185,7 +191,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleHelper.onAttach(newBase,"en"));
+        super.attachBaseContext(LocaleHelper.onAttach(newBase, "en"));
     }
 
     public void createUI() {
@@ -193,7 +199,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         setContentView(R.layout.activity_document_browser);
 
 
-        Toolbar toolbar=findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         actionBar = getSupportActionBar();
@@ -224,11 +230,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         final ArrayList<IFile> recentFiles = new ArrayList<IFile>();
         for (String recentFileString : recentFileStrings) {
             try {
-                if(documentProvider != null)
+                if (documentProvider != null)
                     recentFiles.add(documentProvider.createFromUri(this, new URI(recentFileString)));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
-            } catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 e.printStackTrace();
             }
         }
@@ -252,7 +258,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
         // Loop through the document providers menu items and check if they are available or not
         //TODO remove -1. Used right now to ignore opencloud
-        for (int index = 0; index < providerNames.size()-1; index++) {
+        for (int index = 0; index < providerNames.size() - 1; index++) {
             MenuItem item = navigationDrawer.getMenu().getItem(index);
             item.setEnabled(documentProviderFactory.getProvider(index).checkProviderAvailability(this));
         }
@@ -409,7 +415,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenuInfo menuInfo) {
+                                    ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_menu, menu);
@@ -429,7 +435,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         }
     }
 
-    private boolean isViewModeList(){
+    private boolean isViewModeList() {
         return viewMode == LIST_VIEW;
     }
 
@@ -446,17 +452,16 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                     List<IFile> paths = homeDirectory.listFiles(FileUtilities
                             .getFileFilter(filterMode));
                     filePaths = new ArrayList<IFile>();
-                    for(IFile file: paths) {
-                        if(showHiddenFiles){
+                    for (IFile file : paths) {
+                        if (showHiddenFiles) {
                             filePaths.add(file);
                         } else {
-                            if(!file.getName().startsWith(".")){
+                            if (!file.getName().startsWith(".")) {
                                 filePaths.add(file);
                             }
                         }
                     }
-                }
-                catch (final RuntimeException e) {
+                } catch (final RuntimeException e) {
                     final Activity activity = LibreOfficeUIActivity.this;
                     activity.runOnUiThread(new Runnable() {
                         @Override
@@ -466,7 +471,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                         }
                     });
                     startActivity(new Intent(activity, DocumentProviderSettingsActivity.class));
-                    Log.e(LOGTAG, "failed to switch document provider "+ e.getMessage(), e.getCause());
+                    Log.e(LOGTAG, "failed to switch document provider " + e.getMessage(), e.getCause());
                     return null;
                 }
                 //no exception
@@ -499,7 +504,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             findViewById(R.id.header_recents).setVisibility((View.GONE));
             actionBar.setTitle(dir.getName());
             findViewById(R.id.text_directory_path).setVisibility(View.VISIBLE);
-            ((TextView)findViewById(R.id.text_directory_path)).setText(getString(R.string.current_dir,
+            ((TextView) findViewById(R.id.text_directory_path)).setText(getString(R.string.current_dir,
                     dir.getUri().getPath()));
         }
 
@@ -514,17 +519,16 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                     List<IFile> paths = currentDirectory.listFiles(FileUtilities
                             .getFileFilter(filterMode));
                     filePaths = new ArrayList<IFile>();
-                    for(IFile file: paths) {
-                        if(showHiddenFiles){
+                    for (IFile file : paths) {
+                        if (showHiddenFiles) {
                             filePaths.add(file);
                         } else {
-                            if(!file.getName().startsWith(".")){
+                            if (!file.getName().startsWith(".")) {
                                 filePaths.add(file);
                             }
                         }
                     }
-                }
-                catch (final RuntimeException e) {
+                } catch (final RuntimeException e) {
                     final Activity activity = LibreOfficeUIActivity.this;
                     activity.runOnUiThread(new Runnable() {
                         @Override
@@ -592,7 +596,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     }
 
     // Opens an Input dialog to get the name of new file
-    private void createNewFileInputDialog(final String defaultFileName, final String newDocumentType) {
+    private void createNewFileInputDialog(final String defaultFileName, final String newDocumentType,final String extension) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.create_new_document_title);
         final EditText input = new EditText(this);
@@ -603,8 +607,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         builder.setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                final String newFilePath = currentDirectory.getUri().getPath() + input.getText().toString();
-                loadNewDocument(newDocumentType, newFilePath);
+                createNewFile(currentDirectory.getUri().getPath() + input.getText().toString(),extension);
             }
         });
 
@@ -616,6 +619,39 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         });
 
         builder.show();
+    }
+
+
+    /**
+     * Creates a new file at the specified path, by copying an empty template to that location.
+     * @param path the complete path (including the file name) where the file will be created
+     * @param extension is required to now what template should be used when creating the document
+     */
+    private void createNewFile(final String path,final String extension){
+        InputStream templateFileStream = null;
+        //create a new file where the template will be written
+        File newFile = new File(path );
+        OutputStream newFileStream = null;
+        try {
+            //read the template and copy it to the new file
+            templateFileStream = getAssets().open("templates/untitled"+extension);
+            newFileStream = new FileOutputStream(newFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = templateFileStream.read(buffer)) > 0) {
+                newFileStream.write(buffer, 0, length);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                //close the streams
+                templateFileStream.close();
+                newFileStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void loadNewDocument(String newDocumentType, String newFilePath) {
@@ -761,7 +797,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (!currentDirectory.equals(homeDirectory)){
+                if (!currentDirectory.equals(homeDirectory)) {
                     openParentDirectory();
                 }
                 break;
@@ -836,7 +872,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                 AboutDialogFragment aboutDialogFragment = new AboutDialogFragment();
                 aboutDialogFragment.show(getSupportFragmentManager(), "AboutDialogFragment");
             }
-                return true;
+            return true;
             case R.id.action_settings:
                 //TODO import the settings activity
 //                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
@@ -848,12 +884,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         return true;
     }
 
-    public void readPreferences(){
+    public void readPreferences() {
         prefs = getSharedPreferences(EXPLORER_PREFS_KEY, MODE_PRIVATE);
         sortMode = prefs.getInt(SORT_MODE_KEY, FileUtilities.SORT_AZ);
         SharedPreferences defaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        viewMode = Integer.valueOf(defaultPrefs.getString(EXPLORER_VIEW_TYPE_KEY, ""+ GRID_VIEW));
-        filterMode = Integer.valueOf(defaultPrefs.getString(FILTER_MODE_KEY , "-1"));
+        viewMode = Integer.valueOf(defaultPrefs.getString(EXPLORER_VIEW_TYPE_KEY, "" + GRID_VIEW));
+        filterMode = Integer.valueOf(defaultPrefs.getString(FILTER_MODE_KEY, "-1"));
         showHiddenFiles = defaultPrefs.getBoolean(ENABLE_SHOW_HIDDEN_FILES_KEY, false);
         displayLanguage = defaultPrefs.getString(DISPLAY_LANGUAGE, "en");
 
@@ -869,12 +905,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         }
 
         if (i.hasExtra(FILTER_MODE_KEY)) {
-            filterMode = i.getIntExtra( FILTER_MODE_KEY, FileUtilities.ALL);
+            filterMode = i.getIntExtra(FILTER_MODE_KEY, FileUtilities.ALL);
             Log.d(LOGTAG, FILTER_MODE_KEY);
         }
 
         if (i.hasExtra(EXPLORER_VIEW_TYPE_KEY)) {
-            viewMode = i.getIntExtra( EXPLORER_VIEW_TYPE_KEY, GRID_VIEW);
+            viewMode = i.getIntExtra(EXPLORER_VIEW_TYPE_KEY, GRID_VIEW);
             Log.d(LOGTAG, EXPLORER_VIEW_TYPE_KEY);
         }
 
@@ -894,16 +930,16 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         // TODO Auto-generated method stub
         super.onSaveInstanceState(outState);
 
-        if(currentDirectory != null) {
+        if (currentDirectory != null) {
             outState.putString(CURRENT_DIRECTORY_KEY, currentDirectory.getUri().toString());
             Log.d(LOGTAG, currentDirectory.toString() + Integer.toString(filterMode) + Integer.toString(viewMode));
         }
         outState.putInt(FILTER_MODE_KEY, filterMode);
-        outState.putInt(EXPLORER_VIEW_TYPE_KEY , viewMode);
-        if(documentProvider != null)
+        outState.putInt(EXPLORER_VIEW_TYPE_KEY, viewMode);
+        if (documentProvider != null)
             outState.putInt(DOC_PROVIDER_KEY, documentProvider.getId());
 
-        outState.putBoolean(ENABLE_SHOW_HIDDEN_FILES_KEY , showHiddenFiles);
+        outState.putBoolean(ENABLE_SHOW_HIDDEN_FILES_KEY, showHiddenFiles);
 
         //prefs.edit().putInt(EXPLORER_VIEW_TYPE, viewType).commit();
         Log.d(LOGTAG, "savedInstanceState");
@@ -913,7 +949,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState.isEmpty()){
+        if (savedInstanceState.isEmpty()) {
             return;
         }
         if (documentProvider == null) {
@@ -947,6 +983,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             }
         }
     };
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -957,7 +994,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     protected void onResume() {
         super.onResume();
         Log.d(LOGTAG, "onResume");
-        Log.d(LOGTAG, "sortMode="+ sortMode + " filterMode=" + filterMode);
+        Log.d(LOGTAG, "sortMode=" + sortMode + " filterMode=" + filterMode);
         createUI();
     }
 
@@ -989,7 +1026,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         Log.d(LOGTAG, "onDestroy");
     }
 
-    private int dpToPx(int dp){
+    private int dpToPx(int dp) {
         final float scale = getApplicationContext().getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }
@@ -1079,7 +1116,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.editFAB:
                 if (isFabMenuOpen) {
                     collapseFabMenu();
@@ -1088,16 +1125,16 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                 }
                 break;
             case R.id.newWriterFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_WRITER_EXTENSION, NEW_WRITER_STRING_KEY);
+                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_WRITER_EXTENSION, NEW_WRITER_STRING_KEY,FileUtilities.DEFAULT_WRITER_EXTENSION);
                 break;
             case R.id.newImpressFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, NEW_IMPRESS_STRING_KEY);
+                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, NEW_IMPRESS_STRING_KEY,FileUtilities.DEFAULT_IMPRESS_EXTENSION);
                 break;
             case R.id.newCalcFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, NEW_CALC_STRING_KEY);
+                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, NEW_CALC_STRING_KEY,FileUtilities.DEFAULT_SPREADSHEET_EXTENSION);
                 break;
             case R.id.newDrawFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_DRAWING_EXTENSION, NEW_DRAW_STRING_KEY);
+                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_DRAWING_EXTENSION, NEW_DRAW_STRING_KEY,FileUtilities.DEFAULT_DRAWING_EXTENSION);
                 break;
         }
     }
@@ -1167,7 +1204,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             }
 
             // Date and Size field only exist when we are displaying items in a list.
-            if(isViewModeList()) {
+            if (isViewModeList()) {
                 if (!file.isDirectory()) {
                     String size;
                     long length = filePaths.get(position).getSize();
@@ -1212,7 +1249,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         }
     }
 
-    private void setEditFABVisibility(final int visibility){
+    private void setEditFABVisibility(final int visibility) {
         LOKitShell.getMainHandler().post(new Runnable() {
             @Override
             public void run() {
@@ -1223,17 +1260,17 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode){
+        switch (requestCode) {
             case PERMISSION_WRITE_EXTERNAL_STORAGE:
-                if(permissions.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     switchToDocumentProvider(documentProviderFactory.getDefaultProvider());
                     setEditFABVisibility(View.VISIBLE);
                 } else {
                     setEditFABVisibility(View.INVISIBLE);
                 }
                 break;
-                default:
-                    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }
