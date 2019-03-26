@@ -1373,7 +1373,7 @@ function onWopiProps(e) {
 		$('#document-name-input').removeClass('editable');
 		$('#document-name-input').off('keypress', onDocumentNameKeyPress);
 	}
-	if (e.EnableInsertRemoteImage === true) {
+	if (e.EnableInsertRemoteImage === true && w2ui['editbar']) {
 		w2ui['editbar'].hide('insertgraphic');
 		w2ui['editbar'].show('menugraphic');
 	}
