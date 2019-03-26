@@ -687,14 +687,14 @@ L.Control.LokDialog = L.Control.extend({
 			}
 			else if (e.type === 'touchend')
 			{
-				this._postWindowGestureEvent(childId, 'panEnd', firstTouchPositionX, firstTouchPositionY, touchY - firstTouchPositionY);
+				this._postWindowGestureEvent(childId, 'panEnd', firstTouchPositionX, firstTouchPositionY, firstTouchPositionY - touchY);
 				firstTouchPositionX = null;
 				firstTouchPositionY = null;
 
 			}
 			else if (e.type === 'touchmove')
 			{
-				this._postWindowGestureEvent(childId, 'panUpdate', firstTouchPositionX, firstTouchPositionY, touchY - firstTouchPositionY);
+				this._postWindowGestureEvent(childId, 'panUpdate', firstTouchPositionX, firstTouchPositionY, firstTouchPositionY - touchY);
 			}
 		}, this);
 
