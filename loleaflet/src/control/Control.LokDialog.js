@@ -673,6 +673,7 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
 
 		L.DomEvent.on(canvas, 'touchstart touchmove touchend', function(e) {
+			L.DomEvent.preventDefault(e);
 			var rect = canvas.getBoundingClientRect();
 			var touchX = (e.type === 'touchend') ? e.changedTouches[0].clientX : e.targetTouches[0].clientX;
 			var touchY = (e.type === 'touchend') ? e.changedTouches[0].clientY : e.targetTouches[0].clientY;
