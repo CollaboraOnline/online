@@ -263,6 +263,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "windowkey" ||
                tokens[0] == "mouse" ||
                tokens[0] == "windowmouse" ||
+               tokens[0] == "windowgesture" ||
                tokens[0] == "uno" ||
                tokens[0] == "selecttext" ||
                tokens[0] == "selectgraphic" ||
@@ -328,6 +329,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "windowmouse")
         {
             return mouseEvent(buffer, length, tokens, LokEventTargetEnum::Window);
+        }
+        else if (tokens[0] == "windowgesture")
+        {
+            return gestureEvent(buffer, length, tokens);
         }
         else if (tokens[0] == "uno")
         {
@@ -1090,6 +1095,45 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
         getLOKitDocument()->postKeyEvent(type, charcode, keycode);
     else if (winId != 0)
         getLOKitDocument()->postWindowKeyEvent(winId, type, charcode, keycode);
+
+    return true;
+}
+
+bool ChildSession::gestureEvent(const char* /*buffer*/, int /*length*/,
+                              const std::vector<std::string>& tokens)
+{
+    bool success = true;
+
+    unsigned int windowID = 0;
+    int x;
+    int y;
+    int offset;
+    std::string type;
+
+    if (tokens.size() < 6)
+        success = false;
+
+    if (!success ||
+        !getTokenUInt32(tokens[1], "id", windowID) ||
+        !getTokenString(tokens[2], "type", type) ||
+        !getTokenInteger(tokens[3], "x", x) ||
+        !getTokenInteger(tokens[4], "y", y) ||
+        !getTokenInteger(tokens[5], "offset", offset))
+    {
+        success = false;
+    }
+
+    if (!success)
+    {
+        sendTextFrame("error: cmd=" +  std::string(tokens[0]) + " kind=syntax");
+        return false;
+    }
+
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+
+    getLOKitDocument()->setView(_viewId);
+
+    getLOKitDocument()->postWindowGestureEvent(windowID, type.c_str(), x, y, offset);
 
     return true;
 }

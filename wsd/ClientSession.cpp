@@ -152,6 +152,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "windowkey" &&
              tokens[0] != "mouse" &&
              tokens[0] != "windowmouse" &&
+             tokens[0] != "windowgesture" &&
              tokens[0] != "partpagerectangles" &&
              tokens[0] != "ping" &&
              tokens[0] != "renderfont" &&
