@@ -8,6 +8,9 @@ L.WinUtil = {
 
 };
 
+var firstTouchPositionX = null;
+var firstTouchPositionY = null;
+
 function updateTransformation(target) {
 	if (target !== null && target !== undefined) {
 		var value = [
@@ -524,6 +527,12 @@ L.Control.LokDialog = L.Control.extend({
 		                              ' buttons=' + buttons + ' modifier=' + modifier);
 	},
 
+	_postWindowGestureEvent: function(winid, type, x, y, offset) {
+		console.log('x ' + x + ' y ' + y + ' o ' + offset);
+		this._map._socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
+		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
+	},
+
 	_postWindowKeyboardEvent: function(winid, type, charcode, keycode) {
 		this._map._socket.sendMessage('windowkey id=' + winid + ' type=' + type +
 		                              ' char=' + charcode + ' key=' + keycode);
@@ -662,6 +671,31 @@ L.Control.LokDialog = L.Control.extend({
 
 	_setupChildEvents: function(childId, canvas) {
 		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
+
+		L.DomEvent.on(canvas, 'touchstart touchmove touchend', function(e) {
+			var rect = canvas.getBoundingClientRect();
+			var touchX = (e.type === 'touchend') ? e.changedTouches[0].clientX : e.targetTouches[0].clientX;
+			var touchY = (e.type === 'touchend') ? e.changedTouches[0].clientY : e.targetTouches[0].clientY;
+			touchX = touchX - rect.x;
+			touchY = touchY - rect.y;
+			if (e.type === 'touchstart')
+			{
+				firstTouchPositionX = touchX;
+				firstTouchPositionY = touchY;
+				this._postWindowGestureEvent(childId, 'panBegin', firstTouchPositionX, firstTouchPositionY, 0);
+			}
+			else if (e.type === 'touchend')
+			{
+				this._postWindowGestureEvent(childId, 'panEnd', touchX, touchY, touchY - firstTouchPositionY);
+				firstTouchPositionX = null;
+				firstTouchPositionY = null;
+
+			}
+			else if (e.type === 'touchmove')
+			{
+				this._postWindowGestureEvent(childId, 'panUpdate', touchX, touchY, touchY - firstTouchPositionY);
+			}
+		}, this);
 
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
