@@ -178,6 +178,9 @@ L.DomEvent = {
 
 	getMousePosition: function (e, container) {
 		if (!container) {
+			if (e.clientX === undefined && e.touches !== undefined)
+				return new L.Point(e.touches[0].clientX, e.touches[0].clientY);
+
 			return new L.Point(e.clientX, e.clientY);
 		}
 
@@ -191,6 +194,11 @@ L.DomEvent = {
 			&& L.DomUtil.hasClass(e.currentTarget.frameElement, 'resize-detector')) {
 			left = top = 0;
 		}
+
+		if (e.clientX === undefined && e.touches !== undefined)
+			return new L.Point(
+				e.touches[0].clientX - left - container.clientLeft,
+				e.touches[0].clientY - top - container.clientTop);
 
 		return new L.Point(
 			e.clientX - left - container.clientLeft,
