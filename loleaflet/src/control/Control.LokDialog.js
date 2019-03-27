@@ -10,6 +10,7 @@ L.WinUtil = {
 
 var firstTouchPositionX = null;
 var firstTouchPositionY = null;
+var previousTouchType = null;
 
 function updateTransformation(target) {
 	if (target !== null && target !== undefined) {
@@ -688,6 +689,11 @@ L.Control.LokDialog = L.Control.extend({
 			else if (e.type === 'touchend')
 			{
 				this._postWindowGestureEvent(childId, 'panEnd', firstTouchPositionX, firstTouchPositionY, firstTouchPositionY - touchY);
+				if (previousTouchType === 'touchstart') {
+					// Simulate mouse click
+					this._postWindowMouseEvent('buttondown', childId, firstTouchPositionX, firstTouchPositionY, 1, this._map['mouse'].LOButtons.left, 0);
+					this._postWindowMouseEvent('buttonup', childId, firstTouchPositionX, firstTouchPositionY, 1, this._map['mouse'].LOButtons.left, 0);
+				}
 				firstTouchPositionX = null;
 				firstTouchPositionY = null;
 
@@ -696,6 +702,7 @@ L.Control.LokDialog = L.Control.extend({
 			{
 				this._postWindowGestureEvent(childId, 'panUpdate', firstTouchPositionX, firstTouchPositionY, firstTouchPositionY - touchY);
 			}
+			previousTouchType = e.type;
 		}, this);
 
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
