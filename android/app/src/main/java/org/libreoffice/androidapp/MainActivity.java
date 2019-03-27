@@ -114,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+
+
         AssetManager assetManager = getResources().getAssets();
 
         ApplicationInfo applicationInfo = getApplicationInfo();
@@ -125,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
         String cacheDir = getApplication().getCacheDir().getAbsolutePath();
         String apkFile = getApplication().getPackageResourcePath();
 
-        String urlToLoad = "file://" + dataDir + "/hello-world.odt";
+//        String urlToLoad = "file://" + dataDir + "/hello-world.odt";
+        String urlToLoad=getIntent().getStringExtra("URI");
 
         createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
 

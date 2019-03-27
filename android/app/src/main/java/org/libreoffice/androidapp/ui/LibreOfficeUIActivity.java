@@ -13,6 +13,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,6 +57,7 @@ import com.google.android.material.navigation.NavigationView;
 import org.libreoffice.androidapp.AboutDialogFragment;
 import org.libreoffice.androidapp.LOKitShell;
 import org.libreoffice.androidapp.LocaleHelper;
+import org.libreoffice.androidapp.MainActivity;
 import org.libreoffice.androidapp.R;
 import org.libreoffice.androidapp.storage.DocumentProviderFactory;
 import org.libreoffice.androidapp.storage.DocumentProviderSettingsActivity;
@@ -553,48 +555,37 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
     public void open(final IFile document) {
         addDocumentToRecents(document);
-        //TODO finish document opening
-//        new AsyncTask<IFile, Void, File>() {
-//            @Override
-//            protected File doInBackground(IFile... document) {
-//                // this operation may imply network access and must be run in
-//                // a different thread
-//                try {
-//                    return document[0].getDocument();
-//                }
-//                catch (final RuntimeException e) {
-//                    final Activity activity = LibreOfficeUIActivity.this;
-//                    activity.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(activity, e.getMessage(),
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                    Log.e(LOGTAG, e.getMessage(), e.getCause());
-//                    return null;
-//                }
-//            }
-//
-//            @Override
-//            protected void onPostExecute(File file) {
-//                if (file != null) {
-//                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
-//                    String packageName = getApplicationContext().getPackageName();
-//                    ComponentName componentName = new ComponentName(packageName,
-//                            LibreOfficeMainActivity.class.getName());
-//                    i.setComponent(componentName);
-//
-//                    // these extras allow to rebuild the IFile object in LOMainActivity
-//                    i.putExtra("org.libreoffice.document_provider_id",
-//                            documentProvider.getId());
-//                    i.putExtra("org.libreoffice.document_uri",
-//                            document.getUri());
-//
-//                    startActivity(i);
-//                }
-//            }
-//        }.execute(document);
+        new AsyncTask<IFile, Void, File>() {
+            @Override
+            protected File doInBackground(IFile... document) {
+                // this operation may imply network access and must be run in
+                // a different thread
+                try {
+                    return document[0].getDocument();
+                }
+                catch (final RuntimeException e) {
+                    final Activity activity = LibreOfficeUIActivity.this;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(activity, e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Log.e(LOGTAG, e.getMessage(), e.getCause());
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(File file) {
+                if (file != null) {
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    intent.putExtra("URI", document.getUri().toString());
+                    startActivity(intent);
+                }
+            }
+        }.execute(document);
     }
 
     // Opens an Input dialog to get the name of new file
@@ -611,7 +602,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         input.setText(defaultFileName);
         layout.addView(input);
 
-
         //warning text to notify the user that such a file already exists
         final TextView warningText = new TextView(this);
         warningText.setText("A file with this name already exits, and it will be overwritten.");
@@ -625,7 +615,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         builder.setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                createNewFile(currentDirectory.getUri().getPath() + input.getText().toString(),extension);
+                final String path = currentDirectory.getUri().getPath() + input.getText().toString();
+                createNewFile(path, extension);
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                intent.putExtra("URI", path);
+                startActivity(intent);
             }
         });
 
