@@ -27,7 +27,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -599,10 +601,26 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     private void createNewFileInputDialog(final String defaultFileName, final String newDocumentType,final String extension) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.create_new_document_title);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        //file name input
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setText(defaultFileName);
-        builder.setView(input);
+        layout.addView(input);
+
+
+        //warning text to notify the user that such a file already exists
+        final TextView warningText = new TextView(this);
+        warningText.setText("A file with this name already exits, and it will be overwritten.");
+        layout.addView(warningText);
+        //check if the file exists when showing the create dialog
+        File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
+        warningText.setVisibility(tempFile.exists()?View.VISIBLE:View.GONE);
+
+        builder.setView(layout);
 
         builder.setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
             @Override
@@ -616,6 +634,19 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
+        });
+
+        //check if a file with this name already exists and notify the user
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence c, int start, int before, int count) {
+                File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
+                warningText.setVisibility(tempFile.exists()?View.VISIBLE:View.GONE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
 
         builder.show();
