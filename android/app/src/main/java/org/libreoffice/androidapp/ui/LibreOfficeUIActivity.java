@@ -55,7 +55,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import org.libreoffice.androidapp.AboutDialogFragment;
-import org.libreoffice.androidapp.LOKitShell;
+import org.libreoffice.androidapp.LibreOfficeApplication;
 import org.libreoffice.androidapp.LocaleHelper;
 import org.libreoffice.androidapp.MainActivity;
 import org.libreoffice.androidapp.R;
@@ -96,12 +96,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
-//import org.libreoffice.LOKitShell;
-//import org.libreoffice.LibreOfficeMainActivity;
-//import org.libreoffice.SettingsActivity;
-//import org.libreoffice.SettingsListenerModel;
 
 public class LibreOfficeUIActivity extends AppCompatActivity implements /*SettingsListenerModel.OnSettingsPreferenceChangedListener,*/ View.OnClickListener {
     private String LOGTAG = LibreOfficeUIActivity.class.getSimpleName();
@@ -1268,7 +1262,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     }
 
     private void setEditFABVisibility(final int visibility) {
-        LOKitShell.getMainHandler().post(new Runnable() {
+        LibreOfficeApplication.getMainHandler().post(new Runnable() {
             @Override
             public void run() {
                 editFAB.setVisibility(visibility);
