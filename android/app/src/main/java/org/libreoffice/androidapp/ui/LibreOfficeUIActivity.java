@@ -650,7 +650,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     /**
      * Creates a new file at the specified path, by copying an empty template to that location.
      * @param path the complete path (including the file name) where the file will be created
-     * @param extension is required to now what template should be used when creating the document
+     * @param extension is required to know what template should be used when creating the document
      */
     private void createNewFile(final String path,final String extension){
         InputStream templateFileStream = null;
@@ -679,13 +679,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         }
     }
 
-    private void loadNewDocument(String newDocumentType, String newFilePath) {
-        //TODO finish document loading
-//        Intent intent = new Intent(LibreOfficeUIActivity.this, LibreOfficeMainActivity.class);
-//        intent.putExtra(NEW_DOC_TYPE_KEY, newDocumentType);
-//        intent.putExtra(NEW_FILE_PATH_KEY, newFilePath);
-//        startActivity(intent);
-    }
 
     private void open(int position) {
         IFile file = filePaths.get(position);
