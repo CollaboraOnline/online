@@ -8,6 +8,8 @@
 
 #import "svtools/strings.hrc"
 
+#import <LibreOfficeKit/LibreOfficeKitInit.h>
+
 #import "AppDelegate.h"
 #import "L10n.h"
 #import "TemplateCollectionViewController.h"
@@ -136,8 +138,11 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
     NSURL *newURL = [cacheDirectory URLByAppendingPathComponent:mapTemplateExtensionToActual(selectedTemplate.lastPathComponent)
                                                     isDirectory:NO];
 
+    LibreOfficeKit *lo_kit = lok_init_2(nullptr, nullptr);
+
     // Load the template into LibreOffice core, save as the corresponding document type (with the
     // same basename), and then proceed to edit that.
+
     LibreOfficeKitDocument *doc = lo_kit->pClass->documentLoad(lo_kit, [[selectedTemplate absoluteString] UTF8String]);
     doc->pClass->saveAs(doc, [[newURL absoluteString] UTF8String], nullptr, nullptr);
     doc->pClass->destroy(doc);
