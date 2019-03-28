@@ -27,7 +27,6 @@
 static LOOLWSD *loolwsd = nullptr;
 
 NSString *app_locale;
-LibreOfficeKit *lo_kit;
 
 static void download(NSURL *source, NSURL *destination) {
     [[[NSURLSession sharedSession] downloadTaskWithURL:source
@@ -183,11 +182,6 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
                     }] resume];
         }
     }
-
-    // Initialize LibreOfficeKit.
-
-    lo_kit = lok_init_2(nullptr, nullptr);
-    lo_kit->pClass->registerCallback(lo_kit, [](int, const char *, void*){}, nullptr);
 
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
