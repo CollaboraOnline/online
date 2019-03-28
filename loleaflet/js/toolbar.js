@@ -2476,7 +2476,7 @@ function setupToolbar(e) {
 	});
 
 	map.on('hyperlinkclicked', function (e) {
-		window.open(e.url, '_blank');
+		map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
 	});
 
 	map.on('cellformula', function (e) {
