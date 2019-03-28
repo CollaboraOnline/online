@@ -1521,7 +1521,9 @@ map.on('zoomend', function () {
 });
 
 map.on('hyperlinkclicked', function (e) {
-	window.open(e.url, '_blank');
+	if (!e.url.startsWith('javascript:')) {
+		window.open(e.url, '_blank');
+	}
 });
 
 map.on('updatepermission', function (e) {
