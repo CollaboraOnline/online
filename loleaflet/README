@@ -39,7 +39,7 @@ To update any of the dependency, process often goes like this:
 4.) Do `shrinkpack', which should remove the old tarball, add new one, and make appropriate
     changes to npm-shrinkwrap.json (removing path convention changes by step 3).
 
-If you have not installed `shrinkpack' globally using `npm install -g shrinkpack', it should be
+If you have not installed `shrinkpack' globally using `npm install -g shrinkpack@next', it should be
 in node_modules/.bin/shrinkpack, so you can use the binary from there.
 
 Building
