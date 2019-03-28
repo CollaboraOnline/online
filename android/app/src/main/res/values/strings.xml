@@ -102,4 +102,5 @@
     <string name="unable_to_go_further">Unable to go further.</string>
     <string name="bmp_null">Bmp is null!</string>
     <string name="directory_not_saved">Directory not saved.</string>
+    <string name="title_activity_show_html">About</string>
 </resources>

@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Html;
@@ -78,21 +79,26 @@ public class AboutDialogFragment extends DialogFragment {
                 .setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        loadFromAbout("/assets/license.txt");
-                        dialog.dismiss();
-                    }
+                        Intent intent = new Intent(getContext(), ShowHTMLActivity.class);
+                        intent.putExtra("path", "license.html");
+                        startActivity(intent);
+                        dialog.dismiss();                    }
                 })
                 .setPositiveButton(R.string.about_notice, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        loadFromAbout("/assets/notice.txt");
+                        Intent intent = new Intent(getContext(), ShowHTMLActivity.class);
+                        intent.putExtra("path", "notice.txt");
+                        startActivity(intent);
                         dialog.dismiss();
                     }
                 })
                 .setNeutralButton(R.string.about_moreinfo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        loadFromAbout(DEFAULT_DOC_PATH);
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        intent.putExtra("URI", "file:///android_asset/example.odt");
+                        startActivity(intent);
                         dialog.dismiss();
                     }
                 });
@@ -100,12 +106,5 @@ public class AboutDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    private void loadFromAbout(String input) {
-        //TODO finish loading from about
-//        Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(new File(input)));
-//        String packageName = getActivity().getApplicationContext().getPackageName();
-//        ComponentName componentName = new ComponentName(packageName, LibreOfficeMainActivity.class.getName());
-//        i.setComponent(componentName);
-//        getActivity().startActivity(i);
-    }
+
 }
