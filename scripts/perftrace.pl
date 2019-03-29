@@ -18,29 +18,78 @@ my @events;
 sub escape($)
 {
     my $str = shift;
+    $str =~ s/\\/\\\\/g;
     $str =~ s/\$/\\\$/g;
     $str =~ s/\'/\\'/g;
     $str =~ s/\"/\\"/g;
+    $str =~ s/\&/&amp;/g;
+    $str =~ s/\#/&#35;/g;
+    $str =~ s/\>/&gt;/g;
+    $str =~ s/\</&lt;/g;
+    $str =~ s/[\r\n]+/\\n/g;
     return $str;
 }
+
+# Delimit spans of time:
+my @pairs = (
+    { type => 'INF',
+      emitter => 'loolwsd',
+      start => 'Initializing wsd.\.*',
+      end => 'Listening to prisoner connections.*' },
+    { type => 'INF',
+      emitter => 'forkit',
+      start => 'Initializing frk.\.*',
+      end => 'ForKit process is ready.*'
+    }
+);
+my %pair_starts;
 
 sub consume($$$$$)
 {
     my ($time, $emitter, $type, $message, $line) = @_;
 
+    # print STDERR "$emitter, $type, $time, $message, $line\n";
+
+    # accumulate all threads / processes
     if (!defined $emitters{$emitter}) {
 	$emitters{$emitter} = (scalar keys %emitters) + 1;
     }
 
-    return if ($type eq 'TRC' || $type eq 'DBG' || $type eq 'ERR');
+    my $handled = 0;
+    foreach my $match (@pairs) {
+	next if ($type ne $match->{type});
+	next if (!($emitter =~ m/$match->{emitter}/));
 
+	my $start = $match->{start};
+	my $end = $match->{end};
+	my $key = $type.$emitter.$start;
+	if ($message =~ m/$start/) {
+	    defined $pair_starts{$key} && die "event $start ($end) starts and fails to finish";
+	    $pair_starts{$key} = $time;
+	    last;
+	} elsif ($message =~ m/$end/) {
+	    defined $pair_starts{$key} || die "event $start ($end) ends but failed to start";
+
+	    my $id = (scalar @events) + 1;
+
+	    my $content_e = escape($start);
+	    my $title_e = escape($line);
+	    my $start_time = $pair_starts{$key};
+	    my $end_time = $time;
+	    push @events, "{id: $id, group: $emitters{$emitter}, ".
+		"start: new Date('$log_date $start_time'), ".
+		"end: new Date('$log_date $end_time'), ".
+		"content: '$content_e', title: '$title_e'}";
+	    last;
+	}
+    }
+
+    my $content_e = escape($message. " " . $line);
     my $id = (scalar @events) + 1;
-    # omitted 'end' - should really synthesize more cleverly here. title: '$message_e'
-    my $message_e = escape($message);
-    my $line_e = escape($line);
-    push @events, "{id: $id, group: $emitters{$emitter}, start: new Date('$log_date $time'), content: '$line_e'}";
-
-#    print STDERR "$emitter, $type, $time, $message, $line\n";
+    push @events, "{id: $id, group: $emitters{$emitter}, ".
+	"start: new Date('$log_date $time'), ".
+	"end: new Date('$log_date $time)') + new Date(1), ".
+	"content: '$content_e', title: ''}";
 }
 
 sub emit()
