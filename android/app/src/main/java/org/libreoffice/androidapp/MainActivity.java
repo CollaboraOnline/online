@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "Stop LOOLWSD instance");
-        postMobileMessage("BYE");
+        postMobileMessageNative("BYE");
     }
 
     private void loadDocument() {
@@ -346,7 +346,18 @@ public class MainActivity extends AppCompatActivity {
      * Passing messages from JS (instead of the websocket communication).
      */
     @JavascriptInterface
-    public native void postMobileMessage(String message);
+    public void postMobileMessage(String message) {
+        Log.d(TAG, "postMobileMessage: " + message);
+
+        postMobileMessageNative(message);
+
+        // Going back to document browser on BYE (called when pressing the top left exit button)
+        if (message.equals("BYE"))
+            finish();
+    };
+
+    /** Call the post method form C++ */
+    public native void postMobileMessageNative(String message);
 
     /**
      * Passing messages from JS (instead of the websocket communication).

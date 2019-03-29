@@ -125,7 +125,7 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
 
 /// Handle a message from JavaScript.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidapp_MainActivity_postMobileMessage(JNIEnv *env, jobject instance, jstring message)
+Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env, jobject instance, jstring message)
 {
     const char *string_value = env->GetStringUTFChars(message, nullptr);
 
