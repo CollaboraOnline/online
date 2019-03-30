@@ -1825,22 +1825,15 @@ private:
 
             // New Child is spawned.
             const Poco::URI::QueryParameters params = requestURI.getQueryParameters();
-            Poco::Process::PID pid = -1;
+            int pid = socket->getPid();
             std::string jailId;
             for (const auto& param : params)
             {
-                if (param.first == "pid")
-                {
-                    pid = std::stoi(param.second);
-                }
-                else if (param.first == "jailid")
-                {
+                if (param.first == "jailid")
                     jailId = param.second;
-                }
+
                 else if (param.first == "version")
-                {
                     LOOLWSD::LOKitVersion = param.second;
-                }
             }
 
             if (pid <= 0)
