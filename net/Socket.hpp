@@ -173,6 +173,9 @@ public:
     }
 
 #ifndef MOBILEAPP
+    /// Uses peercreds to get prisoner PID if present or -1
+    int getPid() const;
+
     /// Sets the kernel socket send buffer in size bytes.
     /// Note: TCP will allocate twice this size for admin purposes,
     /// so a subsequent call to getSendBufferSize will return

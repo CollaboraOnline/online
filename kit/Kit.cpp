@@ -2418,11 +2418,8 @@ void lokit_main(
 
         LOG_INF("Process is ready.");
 
-        static const std::string pid = std::to_string(Process::id());
         std::string pathAndQuery(NEW_CHILD_URI);
-        pathAndQuery.append("?pid=");
-        pathAndQuery.append(pid);
-        pathAndQuery.append("&jailid=");
+        pathAndQuery.append("?jailid=");
         pathAndQuery.append(jailId);
         if (queryVersion)
         {
@@ -2455,7 +2452,6 @@ void lokit_main(
 
         // Dummies
         const std::string jailId = "jailid";
-        const std::string pid = "101";
 
 #endif // MOBILEAPP
 
@@ -2463,7 +2459,7 @@ void lokit_main(
         mainKit.runOnClientThread(); // We will do the polling on this thread.
 
         std::shared_ptr<SocketHandlerInterface> websocketHandler =
-            std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit);
+            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit);
 #ifndef MOBILEAPP
         mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler);
 #else

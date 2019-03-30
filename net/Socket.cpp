@@ -16,6 +16,7 @@
 #include <iomanip>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <zlib.h>
 
 #include <Poco/DateTime.h>
@@ -398,7 +399,8 @@ void StreamSocket::dumpState(std::ostream& os)
     int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMs);
     os << "\t" << getFD() << "\t" << events << "\t"
        << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
-       << " r: " << _bytesRecvd << "\t w: " << _bytesSent << "\t";
+       << " r: " << _bytesRecvd << "\t w: " << _bytesSent << "\t"
+       << clientAddress() << "\t";
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         Util::dumpHex(os, "\t\tinBuffer:\n", "\t\t", _inBuffer);
@@ -481,6 +483,123 @@ bool ServerSocket::bind(Type type, int port)
 #else
     return true;
 #endif
+}
+
+std::shared_ptr<Socket> ServerSocket::accept()
+{
+    // Accept a connection (if any) and set it to non-blocking.
+    // There still need the client's address to filter request from POST(call from REST) here.
+#if !MOBILEAPP
+    assert(_type != Socket::Type::Unix);
+
+    struct sockaddr_in6 clientInfo;
+    socklen_t addrlen = sizeof(clientInfo);
+    const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK);
+#else
+    const int rc = fakeSocketAccept4(getFD());
+#endif
+    LOG_DBG("Accepted socket #" << rc << ", creating socket object.");
+    try
+    {
+        // Create a socket object using the factory.
+        if (rc != -1)
+        {
+            std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
+
+#if !MOBILEAPP
+            char addrstr[INET6_ADDRSTRLEN];
+
+            const void *inAddr;
+            if (clientInfo.sin6_family == AF_INET)
+            {
+                auto ipv4 = (struct sockaddr_in *)&clientInfo;
+                inAddr = &(ipv4->sin_addr);
+            }
+            else
+            {
+                auto ipv6 = (struct sockaddr_in6 *)&clientInfo;
+                inAddr = &(ipv6->sin6_addr);
+            }
+
+            inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
+            _socket->setClientAddress(addrstr);
+
+            LOG_DBG("Accepted socket has family " << clientInfo.sin6_family <<
+                    " address " << _socket->clientAddress());
+#endif
+            return _socket;
+        }
+        return std::shared_ptr<Socket>(nullptr);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_SYS("Failed to create client socket #" << rc << ". Error: " << ex.what());
+    }
+
+    return nullptr;
+}
+
+int Socket::getPid() const
+{
+    struct ucred creds;
+    socklen_t credSize = sizeof(struct ucred);
+    if (getsockopt(_fd, SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
+    {
+        LOG_TRC("Failed to get pid via peer creds on " << _fd << " " << strerror(errno));
+        return -1;
+    }
+    return creds.pid;
+}
+
+std::shared_ptr<Socket> LocalServerSocket::accept()
+{
+#if !MOBILEAPP
+    const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
+#else
+    const int rc = fakeSocketAccept4(getFD());
+#endif
+    try
+    {
+        LOG_DBG("Accepted prisoner socket #" << rc << ", creating socket object.");
+        if (rc < 0)
+            return std::shared_ptr<Socket>(nullptr);
+
+        std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
+#if MOBILEAPP
+        // Sanity check this incoming socket
+        struct ucred creds;
+        socklen_t credSize = sizeof(struct ucred);
+        if (getsockopt(GetFD(), SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
+        {
+            LOG_ERR("Failed to get peer creds on " << GetFD() << " " << strerror(errno));
+            ::close(rc);
+            return std::shared_ptr<Socket>(nullptr);
+        }
+
+        int uid = getuid();
+        int gid = getgid();
+        if (creds.uid != uid || cred.gid != gid)
+        {
+            LOG_ERR("Peercred mis-match on domain socket - closing connection. uid: " <<
+                    creds.uid << "vs." << uid << " gid: " << creds.gid << "vs." << gid);
+            ::close(rc);
+            return std::shared_ptr<Socket>(nullptr);
+        }
+        std::string addr("uds-to-pid-");
+        addr.append(std::to_string(creds.pid));
+        _socket->setClientAddress(addr);
+
+        std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
+        LOG_DBG("Accepted socket is UDS - address " << addr <<
+                " and pid/gid " << creds.pid << "/" << creds.gid);
+#endif
+        return _socket;
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_SYS("Failed to create client socket #" << rc << ". Error: " << ex.what());
+        return std::shared_ptr<Socket>(nullptr);
+    }
 }
 
 /// Returns true on success only.
