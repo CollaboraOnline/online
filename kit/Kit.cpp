@@ -2486,20 +2486,21 @@ void lokit_main(
         LOG_INF("Process is ready.");
 
         static const std::string pid = std::to_string(Process::id());
-
-        Poco::URI uri("ws://127.0.0.1");
-        uri.setPort(MasterPortNumber);
-        uri.setPath(NEW_CHILD_URI);
-        uri.addQueryParameter("pid", std::to_string(Process::id()));
-        uri.addQueryParameter("jailid", jailId);
-
+        std::string pathAndQuery(NEW_CHILD_URI);
+        pathAndQuery.append("?pid=");
+        pathAndQuery.append(pid);
+        pathAndQuery.append("&jailid=");
+        pathAndQuery.append(jailId);
         if (queryVersion)
         {
             char* versionInfo = loKit->getVersionInfo();
             std::string versionString(versionInfo);
             if (displayVersion)
                 std::cout << "office version details: " << versionString << std::endl;
-            uri.addQueryParameter("version", versionString);
+            std::string encodedVersion;
+            Poco::URI::encode(versionString, "?#/", encodedVersion);
+            pathAndQuery.append("&version=");
+            pathAndQuery.append(encodedVersion);
             free(versionInfo);
         }
 
@@ -2528,10 +2529,12 @@ void lokit_main(
         SocketPoll mainKit("kit");
         mainKit.runOnClientThread(); // We will do the polling on this thread.
 
+        std::shared_ptr<SocketHandlerInterface> websocketHandler =
+            std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit);
 #if !MOBILEAPP
-        mainKit.insertNewWebSocketSync(uri, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit));
+        mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler);
 #else
-        mainKit.insertNewWebSocketSync(docBrokerSocket, std::make_shared<KitWebSocketHandler>("child_ws_" + pid, loKit, jailId, mainKit));
+        mainKit.insertNewFakeSocketSync(docBrokerSocket, websocketHandler);
 #endif
 
         LOG_INF("New kit client websocket inserted.");
