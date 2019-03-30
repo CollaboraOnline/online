@@ -122,7 +122,7 @@ def extractToolbarCommands(path):
     commands = []
 
     # extract from the menu specifications
-    f = open(path + '/loleaflet/src/control/toolbar.js', 'r')
+    f = open(path + '/loleaflet/src/control/Control.Toolbar.js', 'r')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)

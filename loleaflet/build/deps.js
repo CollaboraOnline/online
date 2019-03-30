@@ -292,7 +292,7 @@ var deps = {
 	},
 
 	ControlToolbar: {
-		src: ['control/toolbar.js'],
+		src: ['control/Control.Toolbar.js'],
 		heading: 'Controls',
 		desc: 'LibreOffice Online toolbar'
 	},
