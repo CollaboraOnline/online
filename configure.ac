@@ -73,10 +73,6 @@ AC_ARG_ENABLE([iosapp],
                               to be copied to a Mac where the iOS app is being built, *or* in a tree where
                               you will build the iOS app.]))
 
-AC_ARG_WITH([iosapp-name],
-              AS_HELP_STRING([--with-iosapp-name=<name>],
-                             [Set the user-visible name of the iOS app you build. Default "Mobile".]))
-
 AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
                              [Point to a directory containing an icon set to use instead of the default empty one.]))
@@ -97,6 +93,10 @@ AC_ARG_ENABLE([androidapp],
                              [Use in a tree where the only purpose is to build the Android app that is supposed
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view.]))
+
+AC_ARG_WITH([app-name],
+              AS_HELP_STRING([--with-app-name=<name>],
+                             [Set the user-visible name of the app you build.]))
 
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
@@ -320,15 +320,18 @@ AC_SUBST(LIBPNG_INCLUDES)
 AC_SUBST(LIBPNG_LIBS)
 AC_SUBST(LOKIT_PATH)
 
+APP_NAME="LOOL"
+if test -n "$with_app_name"; then
+   APP_NAME="$with_app_name"
+fi
+AC_DEFINE_UNQUOTED([APP_NAME],["$APP_NAME"],[The user-visible name of the app you build.])
+AC_SUBST(APP_NAME)
+
 ENABLE_IOSAPP=
-MOBILE_APP_NAME="Mobile"
 IOSAPP_BUNDLE_VERSION=
 
 if test "$enable_iosapp" = "yes"; then
    ENABLE_IOSAPP=true
-   if test -n "$with_iosapp_name"; then
-      MOBILE_APP_NAME="$with_iosapp_name"
-   fi
 
    if test -f BUNDLE-VERSION; then
        IOSAPP_BUNDLE_VERSION=$(cat BUNDLE-VERSION)
@@ -340,7 +343,6 @@ fi
 
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
-AC_SUBST(MOBILE_APP_NAME)
 AC_SUBST(IOSAPP_BUNDLE_VERSION)
 
 ENABLE_GTKAPP=
