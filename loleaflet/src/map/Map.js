@@ -331,10 +331,10 @@ L.Map = L.Evented.extend({
 
 			var elapsed = Date.now() - dateTime;
 			if (elapsed < 60000) {
-				dateValue = Math.round(elapsed / 1000) + ' ' + _('seconds ago');
+				dateValue = _('%d seconds ago').replace('%d', Math.round(elapsed / 1000));
 				timeout = 6000;
 			} else if (elapsed < 3600000) {
-				dateValue = Math.round(elapsed / 60000) + ' ' + _('minutes ago');
+				dateValue = _('%d minutes ago').replace('%d', Math.round(elapsed / 60000));
 				timeout = 60000;
 			}
 

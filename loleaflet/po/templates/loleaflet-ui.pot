@@ -982,11 +982,11 @@ msgid "Initializing..."
 msgstr ""
 
 #: src/map/Map.js:334
-msgid "seconds ago"
+msgid "%d seconds ago"
 msgstr ""
 
 #: src/map/Map.js:337
-msgid "minutes ago"
+msgid "%d minutes ago"
 msgstr ""
 
 #: src/map/Map.js:1033
