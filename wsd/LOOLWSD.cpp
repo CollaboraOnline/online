@@ -1993,6 +1993,7 @@ private:
                         << "\r\n";
                     socket->send(oss.str());
                     socket->shutdown();
+                    return;
                 }
             }
         }
@@ -2011,6 +2012,7 @@ private:
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
             LOG_INF("#" << socket->getFD() << " Exception while processing incoming request: [" <<
                     LOOLProtocol::getAbbreviatedMessage(socket->_inBuffer) << "]: " << exc.what());
+            return;
         }
 
         // if we succeeded - remove the request from our input buffer
