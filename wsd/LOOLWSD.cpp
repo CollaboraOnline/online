@@ -2792,6 +2792,9 @@ private:
         // Hint to encourage use on mobile devices
         capabilities->set("hasMobileSupport", true);
 
+        // Set the product name
+        capabilities->set("productName", APP_NAME);
+
         std::ostringstream ostrJSON;
         capabilities->stringify(ostrJSON);
         return ostrJSON.str();
