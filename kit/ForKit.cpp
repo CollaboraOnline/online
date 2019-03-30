@@ -60,7 +60,7 @@ static std::map<Process::PID, std::string> childJails;
 
 #ifndef KIT_IN_PROCESS
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
+std::string MasterLocation;
 #endif
 
 /// Dispatcher class to demultiplex requests from
@@ -401,7 +401,7 @@ int main(int argc, char** argv)
         ClientPortNumber = std::stoi(clientPort);
     static const char* masterPort = std::getenv("LOOL_TEST_MASTER_PORT");
     if (masterPort)
-        MasterPortNumber = std::stoi(masterPort);
+        MasterLocation = masterPort;
 #endif
 
     for (int i = 0; i < argc; ++i)
@@ -436,7 +436,7 @@ int main(int argc, char** argv)
         else if (std::strstr(cmd, "--masterport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            MasterPortNumber = std::stoll(std::string(eq+1));
+            MasterLocation = std::string(eq+1);
         }
         else if (std::strstr(cmd, "--version") == cmd)
         {

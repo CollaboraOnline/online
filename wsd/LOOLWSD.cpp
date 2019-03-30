@@ -186,8 +186,10 @@ Socket::Type ClientPortProto = Socket::Type::All;
 /// INET address to listen on
 ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 
-/// Port for prisoners to connect to
-int MasterPortNumber = DEFAULT_MASTER_PORT_NUMBER;
+#ifndef MOBILEAPP
+/// UDS address for kits to connect to.
+std::string MasterLocation;
+#endif
 
 // Tracks the set of prisoners / children waiting to be used.
 static std::mutex NewChildrenMutex;
@@ -1277,8 +1279,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false));
 
     optionSet.addOption(Option("port", "", "Port number to listen to (default: " +
-                               std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),"
-                               " must not be " + std::to_string(MasterPortNumber) + ".")
+                               std::to_string(DEFAULT_CLIENT_PORT_NUMBER) + "),")
                         .required(false)
                         .repeatable(false)
                         .argument("port_number"));
@@ -1363,10 +1364,6 @@ void LOOLWSD::handleOption(const std::string& optionName,
     static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
     if (clientPort)
         ClientPortNumber = std::stoi(clientPort);
-
-    static const char* masterPort = std::getenv("LOOL_TEST_MASTER_PORT");
-    if (masterPort)
-        MasterPortNumber = std::stoi(masterPort);
 
     static const char* latencyMs = std::getenv("LOOL_DELAY_SOCKET_MS");
     if (latencyMs)
@@ -1578,7 +1575,7 @@ bool LOOLWSD::createForKit()
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
-    args.push_back("--masterport=" + std::to_string(MasterPortNumber));
+    args.push_back("--masterport=" + MasterLocation);
 
     const DocProcSettings& docProcSettings = Admin::instance().getDefDocProcSettings();
     std::ostringstream ossRLimits;
@@ -2893,10 +2890,10 @@ public:
         stop();
     }
 
-    void startPrisoners(int& port)
+    void startPrisoners()
     {
         PrisonerPoll.startThread();
-        PrisonerPoll.insertNewSocket(findPrisonerServerPort(port));
+        PrisonerPoll.insertNewSocket(findPrisonerServerPort());
     }
 
     void stopPrisoners()
@@ -2935,7 +2932,7 @@ public:
 
         os << "LOOLWSDServer:\n"
            << "  Ports: server " << ClientPortNumber
-           <<          " prisoner " << MasterPortNumber << "\n"
+           <<          " prisoner " << MasterLocation << "\n"
            << "  SSL: " << (LOOLWSD::isSSLEnabled() ? "https" : "http") << "\n"
            << "  SSL-Termination: " << (LOOLWSD::isSSLTermination() ? "yes" : "no") << "\n"
            << "  Security " << (LOOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
@@ -2997,8 +2994,7 @@ private:
                                                   const std::shared_ptr<SocketFactory>& factory)
     {
         auto serverSocket = std::make_shared<ServerSocket>(
-            type == ServerSocket::Type::Local ? Socket::Type::IPv4 : ClientPortProto,
-            clientSocket, factory);
+            ClientPortProto, clientSocket, factory);
 
         if (!serverSocket->bind(type, port))
             return nullptr;
@@ -3010,35 +3006,37 @@ private:
     }
 
     /// Create the internal only, local socket for forkit / kits prisoners to talk to.
-    std::shared_ptr<ServerSocket> findPrisonerServerPort(int& port)
+    std::shared_ptr<ServerSocket> findPrisonerServerPort()
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
-        std::shared_ptr<ServerSocket> socket = getServerSocket(
-            ServerSocket::Type::Local, port, PrisonerPoll, factory);
+#ifndef MOBILEAPP
+        std::string location;
+        auto socket = std::make_shared<LocalServerSocket>(PrisonerPoll, factory);;
 
-#ifdef BUILDING_TESTS
-        // If we fail, try the next 100 ports.
-        for (int i = 0; i < 100 && !socket; ++i)
+        location = socket->bind();
+        if (!location.length())
         {
-            ++port;
-            LOG_INF("Prisoner port " << (port - 1) << " is busy, trying " << port << ".");
-            socket = getServerSocket(
-            ServerSocket::Type::Local, port, PrisonerPoll, factory);
+            LOG_FTL("Failed to create local unix domain socket. Exiting.");
+            Log::shutdown();
+            _exit(Application::EXIT_SOFTWARE);
+            return nullptr;
         }
-#endif
 
-        if (!socket)
+        if (!socket->listen())
         {
-            LOG_FTL("Failed to listen on Prisoner port(s) (" <<
-                    MasterPortNumber << '-' << port << "). Exiting.");
+            LOG_FTL("Failed to listen on local unix domain socket at " << location << ". Exiting.");
             Log::shutdown();
             _exit(Application::EXIT_SOFTWARE);
         }
 
-        MasterPortNumber = port;
-#ifndef MOBILEAPP
-        LOG_INF("Listening to prisoner connections on port " << port);
+        LOG_INF("Listening to prisoner connections on " << location);
+        MasterLocation = location;
 #else
+        // TESTME ...
+        constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
+        std::shared_ptr<ServerSocket> socket = getServerSocket(
+            ServerSocket::Type::Public, DEFAULT_MASTER_PORT_NUMBER, PrisonerPoll, factory);
+
         LOOLWSD::prisonerServerSocketFD = socket->getFD();
         LOG_INF("Listening to prisoner connections on #" << LOOLWSD::prisonerServerSocketFD);
 #endif
@@ -3064,8 +3062,7 @@ private:
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
-            socket = getServerSocket(
-                ServerSocket::Type::Public, port, WebServerPoll, factory);
+            socket = getServerSocket(port, WebServerPoll, factory);
         }
 #endif
 
@@ -3156,16 +3153,13 @@ int LOOLWSD::innerMain()
         FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().toString();
     FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
     LOG_DBG("FileServerRoot: " << FileServerRoot);
-
-    if (ClientPortNumber == MasterPortNumber)
-        throw IncompatibleOptionsException("port");
 #endif
 
     ClientRequestDispatcher::InitStaticFileContentCache();
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
-    srv.startPrisoners(MasterPortNumber);
+    srv.startPrisoners();
 
 // No need to "have at least one child" beforehand on mobile
 #ifndef MOBILEAPP

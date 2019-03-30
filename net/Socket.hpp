@@ -101,7 +101,7 @@ public:
     static const int MaximumSendBufferSize = 128 * 1024;
     static std::atomic<bool> InhibitThreadChecks;
 
-    enum Type { IPv4, IPv6, All };
+    enum Type { IPv4, IPv6, All, Unix };
 
     Socket(Type type) :
         _fd(createSocket(type)),
@@ -643,15 +643,21 @@ public:
         }
     }
 
-    /// Inserts a new websocket to be polled.
-    /// NOTE: The DNS lookup is synchronous.
-    void insertNewWebSocketSync(
 #ifndef MOBILEAPP
-                                const Poco::URI &uri,
-#else
-                                int peerSocket,
-#endif
+    /// Inserts a new remote websocket to be polled.
+    /// NOTE: The DNS lookup is synchronous.
+    void insertNewWebSocketSync(const Poco::URI &uri,
                                 const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
+
+    void insertNewUnixSocket(
+        const std::string &location,
+        const std::string &pathAndQuery,
+        const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
+#else
+    void insertNewFakeSocket(
+        int peerSocket,
+        const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
+#endif
 
     typedef std::function<void()> CallbackFn;
 
@@ -719,6 +725,11 @@ protected:
     }
 
 private:
+    /// Generate the request to connect & upgrade this socket to a given path
+    void clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocket>& socket,
+                                       const std::shared_ptr<SocketHandlerInterface>& websocketHandler,
+                                       const std::string &pathAndQuery);
+
     /// Initialize the poll fds array with the right events
     void setupPollFds(std::chrono::steady_clock::time_point now,
                       int &timeoutMaxMs)

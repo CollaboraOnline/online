@@ -35,12 +35,13 @@ public:
     {
     }
 
+    /// Control access to a bound TCP socket
     enum Type { Local, Public };
 
     /// Binds to a local address (Servers only).
     /// Does not retry on error.
     /// Returns true only on success.
-    bool bind(Type type, int port);
+    virtual bool bind(Type type, int port);
 
     /// Listen to incoming connections (Servers only).
     /// Does not retry on error.
@@ -143,6 +144,21 @@ private:
     Socket::Type _type;
     SocketPoll& _clientPoller;
     std::shared_ptr<SocketFactory> _sockFactory;
+};
+
+/// A non-blocking, streaming Unix Domain Socket for local use
+class LocalServerSocket : public ServerSocket
+{
+public:
+    LocalServerSocket(SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
+        ServerSocket(Socket::Type::Unix, clientPoller, sockFactory)
+    {
+    }
+    virtual bool bind(Type, int) { assert(false); return false; }
+    std::string bind();
+
+private:
+    std::string _name;
 };
 
 #endif
