@@ -509,12 +509,15 @@ L.Socket = L.Class.extend({
 				return;
 			}
 
-			// Parse the storage url as link
-			var tmpLink = document.createElement('a');
-			tmpLink.href = this._map.options.doc;
-			// Insert the storage server address to be more friendly
-			storageError = storageError.replace('%storageserver', tmpLink.host);
-			this._map.fire('warn', {msg: storageError});
+			// Skip empty errors (and allow for suppressing errors by making them blank).
+			if (storageError != '') {
+				// Parse the storage url as link
+				var tmpLink = document.createElement('a');
+				tmpLink.href = this._map.options.doc;
+				// Insert the storage server address to be more friendly
+				storageError = storageError.replace('%storageserver', tmpLink.host);
+				this._map.fire('warn', {msg: storageError});
+			}
 
 			return;
 		}
