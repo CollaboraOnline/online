@@ -678,7 +678,7 @@ AC_SUBST(ENABLE_SETCAP)
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
 AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
 AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
-AC_LINK_FILES([loleaflet/node_shrinkwrap], [loleaflet/node_shrinkwrap])
+AC_LINK_FILES([loleaflet/archived-packages], [loleaflet/archived-packages])
 
 AS_IF([test "$ENABLE_IOSAPP" = "true"],
       [
