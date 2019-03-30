@@ -244,7 +244,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DGTKAPP=$(ENABLE_GTKAPP) \
-		-DMOBILEAPPNAME="$(MOBILE_APP_NAME)" \
+		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(GLOBAL_JS) $(NODE_MODULES_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js) \

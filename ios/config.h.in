@@ -1,6 +1,8 @@
 /* config.h.  Manually edited from config.h.in.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+#define APP_NAME "@APP_NAME@"
+
 /* Whether to disable SECCOMP */
 #define DISABLE_SECCOMP 1
 
