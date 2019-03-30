@@ -932,7 +932,11 @@ public:
     /// Remove the first @count bytes from input buffer
     void eraseFirstInputBytes(size_t count)
     {
-        _inBuffer.erase(_inBuffer.begin(), _inBuffer.begin() + count);
+        size_t toErase = std::min(count, _inBuffer.size());
+        if (toErase < count)
+            LOG_ERR("#" << getFD() << ": attempted to remove: " << count << " which is > size: " << _inBuffer.size() << " clamped to " << toErase);
+        if (toErase > 0)
+            _inBuffer.erase(_inBuffer.begin(), _inBuffer.begin() + count);
     }
 
     /// Detects if we have an HTTP header in the provided message and
