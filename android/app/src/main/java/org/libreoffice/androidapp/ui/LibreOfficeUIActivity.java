@@ -580,9 +580,19 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             @Override
             protected void onPostExecute(File file) {
                 if (file != null) {
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    intent.putExtra("URI", document.getUri().toString());
-                    startActivity(intent);
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
+                    String packageName = getApplicationContext().getPackageName();
+                    ComponentName componentName = new ComponentName(packageName,
+                            MainActivity.class.getName());
+                    i.setComponent(componentName);
+
+                    // these extras allow to rebuild the IFile object in LOMainActivity
+                    i.putExtra("org.libreoffice.document_provider_id",
+                            documentProvider.getId());
+                    i.putExtra("org.libreoffice.document_uri",
+                            document.getUri());
+
+                    startActivity(i);
                 }
             }
         }.execute(document);
