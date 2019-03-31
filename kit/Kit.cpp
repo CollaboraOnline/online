@@ -2530,7 +2530,7 @@ void lokit_main(
 #if !MOBILEAPP
         mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler);
 #else
-        mainKit.insertNewFakeSocketSync(docBrokerSocket, websocketHandler);
+        mainKit.insertNewFakeSocket(docBrokerSocket, websocketHandler);
 #endif
 
         LOG_INF("New kit client websocket inserted.");

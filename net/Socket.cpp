@@ -200,6 +200,8 @@ void SocketPoll::wakeupWorld()
         wakeup(fd);
 }
 
+#if !MOBILEAPP
+
 void SocketPoll::insertNewWebSocketSync(
     const Poco::URI &uri,
     const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
@@ -331,7 +333,8 @@ void SocketPoll::insertNewUnixSocket(
     }
 }
 
-#if MOBILEAPP
+#else
+
 void SocketPoll::insertNewFakeSocket(
     int peerSocket,
     const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
@@ -361,6 +364,7 @@ void SocketPoll::insertNewFakeSocket(
         }
     }
 }
+
 #endif
 
 void ServerSocket::dumpState(std::ostream& os)
@@ -539,6 +543,8 @@ std::shared_ptr<Socket> ServerSocket::accept()
     return nullptr;
 }
 
+#if !MOBILEAPP
+
 int Socket::getPid() const
 {
     struct ucred creds;
@@ -553,11 +559,7 @@ int Socket::getPid() const
 
 std::shared_ptr<Socket> LocalServerSocket::accept()
 {
-#if !MOBILEAPP
     const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);
-#else
-    const int rc = fakeSocketAccept4(getFD());
-#endif
     try
     {
         LOG_DBG("Accepted prisoner socket #" << rc << ", creating socket object.");
@@ -565,7 +567,6 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
             return std::shared_ptr<Socket>(nullptr);
 
         std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
-#if MOBILEAPP
         // Sanity check this incoming socket
         struct ucred creds;
         socklen_t credSize = sizeof(struct ucred);
@@ -592,7 +593,6 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
         LOG_DBG("Accepted socket is UDS - address " << addr <<
                 " and pid/gid " << creds.pid << "/" << creds.gid);
-#endif
         return _socket;
     }
     catch (const std::exception& ex)
@@ -605,7 +605,6 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
 /// Returns true on success only.
 std::string LocalServerSocket::bind()
 {
-#if !MOBILEAPP
     int rc;
     struct sockaddr_un addrunix;
     do
@@ -625,11 +624,9 @@ std::string LocalServerSocket::bind()
 
     if (rc >= 0)
         return std::string(&addrunix.sun_path[1]);
-#endif
+
     return "";
 }
-
-#if !MOBILEAPP
 
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,
