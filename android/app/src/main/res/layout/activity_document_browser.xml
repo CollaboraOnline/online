@@ -71,12 +71,27 @@
                     android:textStyle="bold" />
 
                 <!--Recent files-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list_recent"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_recent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/no_recent_items_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:text="@string/no_recent_items" />
+
+                </FrameLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -99,12 +114,27 @@
 
 
                 <!--Document browser-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/file_recycler_view"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/background_normal"
-                    android:orientation="vertical" />
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/file_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/background_normal"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:id="@+id/no_items_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:text="@string/no_items" />
+
+                </FrameLayout>
 
             </LinearLayout>
 
