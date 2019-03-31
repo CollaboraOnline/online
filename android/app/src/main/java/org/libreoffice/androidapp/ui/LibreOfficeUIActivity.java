@@ -145,6 +145,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     private RecyclerView fileRecyclerView;
     private RecyclerView recentRecyclerView;
 
+    //kept package-private to use these in recyclerView's adapter
+    TextView noRecentItemsTextView;
+    TextView noItemsTextView;
+
     private boolean canQuit = false;
 
     private Animation fabOpenAnimation;
@@ -222,6 +226,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         drawLayout = findViewById(R.id.drawLayout);
 
         recentRecyclerView = findViewById(R.id.list_recent);
+        noRecentItemsTextView = findViewById(R.id.no_recent_items_msg);
 
         Set<String> recentFileStrings = prefs.getStringSet(RECENT_DOCUMENTS_KEY, new HashSet<String>());
 
@@ -241,6 +246,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentFiles));
 
         fileRecyclerView = findViewById(R.id.file_recycler_view);
+        noItemsTextView = findViewById(R.id.no_items_msg);
         //This should be tested because it possibly disables view recycling
         fileRecyclerView.setNestedScrollingEnabled(false);
         openDirectory(currentDirectory);
@@ -498,6 +504,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             findViewById(R.id.text_directory_path).setVisibility(View.GONE);
         } else {
             recentRecyclerView.setVisibility(View.GONE);
+            noRecentItemsTextView.setVisibility(View.GONE);
             findViewById(R.id.header_browser).setVisibility((View.GONE));
             findViewById(R.id.header_recents).setVisibility((View.GONE));
             actionBar.setTitle(dir.getName());
@@ -1154,12 +1161,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
     class ExplorerItemAdapter extends RecyclerView.Adapter<ExplorerItemAdapter.ViewHolder> {
 
-        private Activity mActivity;
+        private LibreOfficeUIActivity mActivity;
         private List<IFile> filePaths;
         private final long KB = 1024;
         private final long MB = 1048576;
 
-        ExplorerItemAdapter(Activity activity, List<IFile> filePaths) {
+        ExplorerItemAdapter(LibreOfficeUIActivity activity, List<IFile> filePaths) {
             this.mActivity = activity;
             this.filePaths = filePaths;
         }
@@ -1238,6 +1245,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
         @Override
         public int getItemCount() {
+            if (filePaths.size() == 0) {
+                mActivity.noItemsTextView.setVisibility(View.VISIBLE);
+            } else {
+                mActivity.noItemsTextView.setVisibility(View.GONE);
+            }
             return filePaths.size();
         }
 

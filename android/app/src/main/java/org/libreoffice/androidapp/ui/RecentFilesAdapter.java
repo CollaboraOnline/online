@@ -77,6 +77,11 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
     @Override
     public int getItemCount() {
+        if (recentFiles.size() == 0) {
+            mActivity.noRecentItemsTextView.setVisibility(View.VISIBLE);
+        } else {
+            mActivity.noRecentItemsTextView.setVisibility(View.GONE);
+        }
         return recentFiles.size();
     }
 
