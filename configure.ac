@@ -633,8 +633,8 @@ AS_IF([test `uname -s` = "Linux"],
            AC_MSG_ERROR([npm required to build loleaflet, but not installed])
        else
            NPM_VER=`npm -v | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-           if test "$NPM_VER" -ge 30900 -a "$NPM_VER" -lt 31004; then
-               AC_MSG_ERROR([This npm version is buggy, either upgrade to >= 3.10.4 or downgrade to < 3.9.0])
+           if test "$NPM_VER" -lt 50000; then
+               AC_MSG_ERROR([This npm version is too old, upgrade to >= 5.0.0])
            fi
        fi
 
