@@ -227,7 +227,8 @@ public:
 
         if (payloadLen + headerLen > len)
         { // partial read wait for more data.
-            LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket frame, have " << len << " bytes, frame is " << payloadLen + headerLen << " bytes");
+            LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket frame, have " << len
+                        << " bytes, frame is " << payloadLen + headerLen << " bytes");
             return false;
         }
 
@@ -238,7 +239,8 @@ public:
             return true;
         }
 
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: " << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: "
+                    << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
 
         data = p + headerLen;
 
@@ -693,7 +695,8 @@ protected:
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-        LOG_TRC("Incoming client websocket upgrade response: " << std::string(&socket->getInBuffer()[0], socket->getInBuffer().size()));
+        LOG_TRC("Incoming client websocket upgrade response: "
+                << std::string(&socket->getInBuffer()[0], socket->getInBuffer().size()));
 
         bool bOk = false;
         StreamSocket::MessageMap map;
@@ -715,8 +718,9 @@ protected:
                     map._headerSize = itBody - socket->getInBuffer().begin() + marker.size();
             }
 
-            if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS &&
-                    response.has("Upgrade") && Poco::icompare(response.get("Upgrade"), "websocket") == 0)
+            if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS
+                && response.has("Upgrade")
+                && Poco::icompare(response.get("Upgrade"), "websocket") == 0)
             {
 #if 0 // SAL_DEBUG ...
                 const std::string wsKey = response.get("Sec-WebSocket-Accept", "");
