@@ -65,6 +65,8 @@ public:
     static std::string ConfigFile;
     static std::string SupportKeyString;
     static bool SupportKeyStringProvided;
+    static std::uint64_t AnonymizationSalt;
+    static bool AnonymizationSaltProvided;
 
 protected:
     void defineOptions(OptionSet&) override;
@@ -82,6 +84,8 @@ std::string Config::ConfigFile =
 
 std::string Config::SupportKeyString;
 bool Config::SupportKeyStringProvided = false;
+std::uint64_t Config::AnonymizationSalt = 0;
+bool Config::AnonymizationSaltProvided = false;
 
 void Config::displayHelp()
 {
@@ -98,6 +102,7 @@ void Config::displayHelp()
     // Command list
     std::cout << std::endl
               << "Commands: " << std::endl
+              << "    anonymize [string-1]...[string-n]" << std::endl
               << "    set-admin-password" << std::endl
 #if ENABLE_SUPPORT_KEY
               << "    set-support-key" << std::endl
@@ -137,6 +142,11 @@ void Config::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("key"));
 #endif
+
+    optionSet.addOption(Option("anonymization-salt", "", "Anonymize strings with the given 64-bit salt instead of the one in the config file.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("salt"));
 }
 
 void Config::handleOption(const std::string& optionName, const std::string& optionValue)
@@ -185,6 +195,12 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
     {
         SupportKeyString = optionValue;
         SupportKeyStringProvided = true;
+    }
+    else if (optionName == "anonymization-salt")
+    {
+        AnonymizationSalt = std::stoull(optionValue);
+        AnonymizationSaltProvided = true;
+        std::cout << "Anonymization Salt: [" << AnonymizationSalt << "]." << std::endl;
     }
 }
 
@@ -343,6 +359,20 @@ int Config::main(const std::vector<std::string>& args)
         retval = system(command);
         if (retval != 0)
             std::cerr << "Error when executing command." << std::endl;
+    }
+    else if (args[0] == "anonymize")
+    {
+        if (!AnonymizationSaltProvided)
+        {
+            const std::string val = _loolConfig.getString("logging.anonymize.anonymization_salt");
+            AnonymizationSalt = std::stoull(val);
+            std::cout << "Anonymization Salt: [" << AnonymizationSalt << "]." << std::endl;
+        }
+
+        for (std::size_t i = 1; i < args.size(); ++i)
+        {
+            std::cout << "[" << args[i] << "]: " << Util::anonymizeUrl(args[i], AnonymizationSalt) << std::endl;
+        }
     }
     else
     {
