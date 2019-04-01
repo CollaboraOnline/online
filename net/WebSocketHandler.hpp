@@ -187,11 +187,13 @@ public:
 
         if (payloadLen + headerLen > len)
         { // partial read wait for more data.
-            LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes, message is " << payloadLen + headerLen << " bytes");
+            LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len
+                        << " bytes, message is " << payloadLen + headerLen << " bytes");
             return false;
         }
 
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: " << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: "
+                    << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
 
         data = p + headerLen;
 
@@ -213,14 +215,16 @@ public:
 
         assert(_wsPayload.size() >= payloadLen);
 
-        socket->getInBuffer().erase(socket->getInBuffer().begin(), socket->getInBuffer().begin() + headerLen + payloadLen);
+        socket->getInBuffer().erase(socket->getInBuffer().begin(),
+                                    socket->getInBuffer().begin() + headerLen + payloadLen);
 
 #ifndef MOBILEAPP
 
         // FIXME: fin, aggregating payloads into _wsPayload etc.
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code " << static_cast<unsigned>(code) <<
-                ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << _wsPayload.size() <<
-                ", residual socket data: " << socket->getInBuffer().size() << " bytes.");
+        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket message code "
+                    << static_cast<unsigned>(code) << ", fin? " << fin << ", mask? " << hasMask
+                    << ", payload length: " << _wsPayload.size()
+                    << ", residual socket data: " << socket->getInBuffer().size() << " bytes.");
 
         bool doClose = false;
 
@@ -607,8 +611,9 @@ protected:
                     responseSize = itBody - socket->getInBuffer().begin() + marker.size();
             }
 
-            if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS &&
-                    response.has("Upgrade") && Poco::icompare(response.get("Upgrade"), "websocket") == 0)
+            if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS
+                && response.has("Upgrade")
+                && Poco::icompare(response.get("Upgrade"), "websocket") == 0)
             {
 #if 0 // SAL_DEBUG ...
                 const std::string wsKey = response.get("Sec-WebSocket-Accept", "");
