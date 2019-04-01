@@ -570,16 +570,16 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         // Sanity check this incoming socket
         struct ucred creds;
         socklen_t credSize = sizeof(struct ucred);
-        if (getsockopt(GetFD(), SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
+        if (getsockopt(getFD(), SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
         {
-            LOG_ERR("Failed to get peer creds on " << GetFD() << " " << strerror(errno));
+            LOG_ERR("Failed to get peer creds on " << getFD() << " " << strerror(errno));
             ::close(rc);
             return std::shared_ptr<Socket>(nullptr);
         }
 
-        int uid = getuid();
-        int gid = getgid();
-        if (creds.uid != uid || cred.gid != gid)
+        uid_t uid = getuid();
+        uid_t gid = getgid();
+        if (creds.uid != uid || creds.gid != gid)
         {
             LOG_ERR("Peercred mis-match on domain socket - closing connection. uid: " <<
                     creds.uid << "vs." << uid << " gid: " << creds.gid << "vs." << gid);
@@ -590,7 +590,6 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         addr.append(std::to_string(creds.pid));
         _socket->setClientAddress(addr);
 
-        std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
         LOG_DBG("Accepted socket is UDS - address " << addr <<
                 " and pid/gid " << creds.pid << "/" << creds.gid);
         return _socket;
