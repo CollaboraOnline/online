@@ -43,7 +43,7 @@ std::atomic<bool> Socket::InhibitThreadChecks(false);
 int Socket::createSocket(Socket::Type type)
 {
 #ifndef MOBILEAPP
-    int domain;
+    int domain = AF_UNSPEC;
     switch (type)
     {
     case Type::IPv4: domain = AF_INET;  break;
