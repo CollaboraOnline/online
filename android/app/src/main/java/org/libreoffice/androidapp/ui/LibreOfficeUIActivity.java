@@ -599,7 +599,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     }
 
     // Opens an Input dialog to get the name of new file
-    private void createNewFileInputDialog(final String defaultFileName, final String newDocumentType,final String extension) {
+    private void createNewFileInputDialog(final String defaultFileName, final String newDocumentType, final String extension) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.create_new_document_title);
 
@@ -662,7 +662,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
      * @param path the complete path (including the file name) where the file will be created
      * @param extension is required to know what template should be used when creating the document
      */
-    private void createNewFile(final String path,final String extension){
+    private void createNewFile(final String path, final String extension) {
         InputStream templateFileStream = null;
         //create a new file where the template will be written
         File newFile = new File(path );
@@ -1153,16 +1153,16 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                 }
                 break;
             case R.id.newWriterFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_WRITER_EXTENSION, NEW_WRITER_STRING_KEY,FileUtilities.DEFAULT_WRITER_EXTENSION);
+                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_WRITER_EXTENSION, NEW_WRITER_STRING_KEY, FileUtilities.DEFAULT_WRITER_EXTENSION);
                 break;
             case R.id.newImpressFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, NEW_IMPRESS_STRING_KEY,FileUtilities.DEFAULT_IMPRESS_EXTENSION);
+                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, NEW_IMPRESS_STRING_KEY, FileUtilities.DEFAULT_IMPRESS_EXTENSION);
                 break;
             case R.id.newCalcFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, NEW_CALC_STRING_KEY,FileUtilities.DEFAULT_SPREADSHEET_EXTENSION);
+                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, NEW_CALC_STRING_KEY, FileUtilities.DEFAULT_SPREADSHEET_EXTENSION);
                 break;
             case R.id.newDrawFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_DRAWING_EXTENSION, NEW_DRAW_STRING_KEY,FileUtilities.DEFAULT_DRAWING_EXTENSION);
+                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_DRAWING_EXTENSION, NEW_DRAW_STRING_KEY, FileUtilities.DEFAULT_DRAWING_EXTENSION);
                 break;
         }
     }
