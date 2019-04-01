@@ -16,11 +16,10 @@ import org.libreoffice.androidapp.storage.external.ExtsdDocumentsProvider;
 import org.libreoffice.androidapp.storage.external.OTGDocumentsProvider;
 import org.libreoffice.androidapp.storage.local.LocalDocumentsDirectoryProvider;
 import org.libreoffice.androidapp.storage.local.LocalDocumentsProvider;
+import org.libreoffice.androidapp.storage.owncloud.OwnCloudProvider;
 
 import java.util.HashSet;
 import java.util.Set;
-
-//import org.libreoffice.androidapp.storage.owncloud.OwnCloudProvider;
 
 /**
  * Keeps the instances of the available IDocumentProviders in the system.
@@ -64,7 +63,7 @@ public final class DocumentProviderFactory {
             instance.providers[0] = new LocalDocumentsDirectoryProvider(0);
             instance.providers[1] = new LocalDocumentsProvider(1);
             instance.providers[OTG_PROVIDER_INDEX] = new OTGDocumentsProvider(OTG_PROVIDER_INDEX, context);
-//            instance.providers[4] = new OwnCloudProvider(4, context);
+            instance.providers[4] = new OwnCloudProvider(4, context);
 
             instance.providers[EXTSD_PROVIDER_INDEX] = new ExtsdDocumentsProvider(EXTSD_PROVIDER_INDEX, context);
 

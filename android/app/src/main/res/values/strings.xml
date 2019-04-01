@@ -55,6 +55,10 @@
     <string name="owncloud">Remote server</string>
     <string name="usb_connected_configure">USB connected, configure your device.</string>
 
+    <string name="owncloud_wrong_connection">Cannot connect to ownCloud server. Check your configuration.</string>
+    <string name="owncloud_unauthorized">Cannot log into ownCloud server. Check your configuration.</string>
+    <string name="owncloud_unspecified_error">Unspecified error connecting to ownCloud server. Check your configuration and/or try later.</string>
+
     <string name="ext_document_provider_error">Invalid root file. Check your sd card configuration.</string>
     <string name="otg_missing_error">Invalid root file. Check your OTG device and/or configuration.</string>
 
