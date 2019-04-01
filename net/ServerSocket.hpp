@@ -106,7 +106,7 @@ public:
         ServerSocket(Socket::Type::Unix, clientPoller, sockFactory)
     {
     }
-    virtual bool bind(Type, int) { assert(false); return false; }
+    virtual bool bind(Type, int) override { assert(false); return false; }
     virtual std::shared_ptr<Socket> accept() override;
     std::string bind();
 
