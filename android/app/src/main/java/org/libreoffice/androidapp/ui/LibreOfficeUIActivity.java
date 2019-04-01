@@ -261,8 +261,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         );
 
         // Loop through the document providers menu items and check if they are available or not
-        //TODO remove -1. Used right now to ignore opencloud
-        for (int index = 0; index < providerNames.size() - 1; index++) {
+        for (int index = 0; index < providerNames.size(); index++) {
             MenuItem item = navigationDrawer.getMenu().getItem(index);
             item.setEnabled(documentProviderFactory.getProvider(index).checkProviderAvailability(this));
         }
