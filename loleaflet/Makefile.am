@@ -310,13 +310,13 @@ pot:
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
-		src/control/toolbar.js \
 		src/control/Control.AlertDialog.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.Tabs.js \
+		src/control/Control.Toolbar.js \
 		src/control/Signing.js \
 		src/control/Ruler.js \
 		src/control/Toolbar.js \
