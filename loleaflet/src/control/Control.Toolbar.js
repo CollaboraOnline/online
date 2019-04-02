@@ -995,8 +995,6 @@ function initNormalToolbar() {
 				{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
 				{type: 'html',  id: 'left'},
 				{type: 'html',  id: 'right'},
-				{type: 'html',  id: 'modifiedstatuslabel', html: '<div id="modifiedstatuslabel" class="loleaflet-font"></div>', mobile: false, tablet: false},
-				{type: 'break', id: 'modifiedstatuslabelbreak', mobile: false},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 					'<hr><table class="loleaflet-font" id="editor-btn">' +
 					'<tr>' +
@@ -1678,19 +1676,6 @@ function onCommandStateChanged(e) {
 	}
 	else if (commandName === '.uno:LanguageStatus') {
 		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(_(state)).parent().html());
-	}
-	else if (commandName === '.uno:ModifiedStatus') {
-		var modifiedStatus = e.state === 'true';
-		var html;
-		if (modifiedStatus) {
-			html = $('#modifiedstatuslabel').html('Document modified').parent().html();
-			w2ui['editbar'].set('save', {img:'savemodified'});
-		}
-		else {
-			html = $('#modifiedstatuslabel').html(_('Document saved')).parent().html();
-			w2ui['editbar'].set('save', {img:'save'});
-		}
-		updateToolbarItem(statusbar, 'modifiedstatuslabel', html);
 	}
 	else if (commandName === '.uno:StatusDocPos') {
 		state = toLocalePattern('Sheet %1 of %2', 'Sheet (\\d+) of (\\d+)', state, '%1', '%2');
