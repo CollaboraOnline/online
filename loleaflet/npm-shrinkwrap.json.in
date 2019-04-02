@@ -211,6 +211,12 @@
       "integrity": "sha1-trvgsGdLnXGXCMo43owjfLUmw9E=",
       "dev": true
     },
+    "sanitize-url": {
+      "version": "3.0.0",
+      "resolved": "file:node_shrinkwrap/sanitize-url-3.0.0.tar",
+      "integrity": "",
+      "dev": true
+    },
     "autolinker": {
       "version": "1.4.3",
       "resolved": "file:node_shrinkwrap/autolinker-1.4.3.tgz",

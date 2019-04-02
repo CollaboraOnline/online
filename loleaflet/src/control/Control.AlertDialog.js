@@ -3,7 +3,7 @@
  * L.Control.Dialog used for displaying alerts
  */
 
-/* global _ vex */
+/* global _ vex sanitizeUrl */
 L.Control.AlertDialog = L.Control.extend({
 	onAdd: function (map) {
 		// TODO: Better distinction between warnings and errors
@@ -28,9 +28,9 @@ L.Control.AlertDialog = L.Control.extend({
 			var url = e.url;
 			var messageText = window.errorMessages.leaving;
 
-			var isLinkValid = true;
-			if (url.trim().toLowerCase().startsWith('javascript:')) {
-				isLinkValid = false;
+			var isLinkValid = sanitizeUrl.sanitizeUrl(url) !== 'about:blank';
+
+			if (!isLinkValid) {
 				messageText = window.errorMessages.invalidLink;
 				messageText = messageText.replace('%url', url);
 			}
