@@ -79,9 +79,9 @@ my @pairs = (
 );
 my %pair_starts;
 
-sub consume($$$$$)
+sub consume($$$$$$$)
 {
-    my ($time, $emitter, $type, $message, $line) = @_;
+    my ($pid, $tid, $time, $emitter, $type, $message, $line) = @_;
 
     # print STDERR "$emitter, $type, $time, $message, $line\n";
 
@@ -116,7 +116,7 @@ sub consume($$$$$)
 	    {
 		my $dur = $end_time - $start_time;
 		my $ms = int ($dur / 1000.0);
-		push @events, "{\"pid\":$emitters{$emitter}, \"tid\":1, \"ts\":$start_time, \"dur\":$dur, \"ph\":\"X\", \"name\":\"$title_e\", \"args\":{ \"ms\":$ms } }";
+		push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$start_time, \"dur\":$dur, \"ph\":\"X\", \"name\":\"$title_e\", \"args\":{ \"ms\":$ms } }";
 	    }
 	    else
 	    {
@@ -133,7 +133,7 @@ sub consume($$$$$)
     my $content_e = escape($message. " " . $line);
     if ($json)
     {
-	push @events, "{\"pid\":$emitters{$emitter}, \"tid\":1, \"ts\":$time, \"ph\":\"i\", \"s\":\"p\", \"name\":\"$content_e\" }";
+	push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"ph\":\"i\", \"s\":\"p\", \"name\":\"$content_e\" }";
     }
     else
     {
@@ -233,11 +233,11 @@ while (my $line = shift @input) {
     $line =~ s/\r*\n*//g;
 
     # wsd-26974-26974 2019-03-27 03:45:46.735736 [ loolwsd ] INF  Initializing wsd. Local time: Wed 2019-03-27 03:45:46+0000. Log level is [8].| common/Log.cpp:191
-    if ($line =~ m/^\S+\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)\|\s+(\S+)$/) {
-	consume($1, $2, $3, $4, $5);
+    if ($line =~ m/^\w+-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)\|\s+(\S+)$/) {
+	consume($1, $2, $3, $4, $5, $6, $7);
 
-    } elsif ($line =~ m/^\S+\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)$/) { # split lines ...
-	my ($time, $emitter, $type, $message, $line) = ($1, $2, $3, $4);
+    } elsif ($line =~ m/^\w+-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)$/) { # split lines ...
+	my ($pid, $tid, $time, $emitter, $type, $message, $line) = ($1, $2, $3, $4, $5, $6);
 	while (my $next =  shift @input) {
 	    # ... | kit/Kit.cpp:1272
 	    if ($next =~ m/^(.*)\|\s+(\S+)$/)
@@ -249,7 +249,7 @@ while (my $line = shift @input) {
 		$message = $message . $next;
 	    }
 	}
-	consume($time, $emitter, $type, $message, $line);
+	consume($pid, $tid, $time, $emitter, $type, $message, $line);
     } else {
 	die "Poorly formed line - is logging.file.flush set to true ? '$line'\n";
     }
