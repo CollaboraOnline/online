@@ -35,8 +35,5 @@
     "libreoffice",
     "lool"
   ],
-  "license": "BSD-2-Clause",
-  "dependencies": {
-    "npm": "^3.10.3"
-  }
+  "license": "BSD-2-Clause"
 }
