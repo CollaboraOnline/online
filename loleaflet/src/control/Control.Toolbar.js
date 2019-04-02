@@ -1443,7 +1443,7 @@ function onDocLayerInit() {
 						{id: '1', text: _('None')}
 					], tablet: false
 				},
-				{type: 'break', id: 'break8', mobile: false}
+				{type: 'break', id: 'break9', mobile: false}
 			]);
 
 			$('#spreadsheet-toolbar').show();
