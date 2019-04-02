@@ -99,7 +99,8 @@ NODE_MODULES_JS =\
 	node_modules/json-js/json2.js \
 	node_modules/select2/dist/js/select2.js \
 	node_modules/vex-js/js/vex.js \
-	node_modules/vex-js/js/vex.dialog.js
+	node_modules/vex-js/js/vex.dialog.js \
+	node_modules/@braintree/sanitize-url/dist.js
 
 if !ENABLE_IOSAPP
 if !ENABLE_GTKAPP

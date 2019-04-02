@@ -3,6 +3,8 @@
   "version": "0.8.0-dev",
   "description": "LibreOffice online front-end",
   "devDependencies": {
+    "@braintree/sanitize-url": "3.0.0",
+    "@types/jquery": "2.0.40",
     "autolinker": "1.4.3",
     "bootstrap": "3.3.6",
     "browserify": "13.1.0",
@@ -34,5 +36,8 @@
     "libreoffice",
     "lool"
   ],
+  "scripts": {
+    "postinstall": "browserify node_modules/@braintree/sanitize-url/index.js --standalone sanitizeUrl > node_modules/@braintree/sanitize-url/dist.js"
+  },
   "license": "BSD-2-Clause"
 }
