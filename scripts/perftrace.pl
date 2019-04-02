@@ -12,22 +12,57 @@ use strict;
 my @input = <STDIN>;
 
 my %emitters;
-my $log_date;
+my $log_start_date;
+my $log_start_time;
+my @log_start;
 my @events;
+my $json = 1;
 
 sub escape($)
 {
     my $str = shift;
     $str =~ s/\\/\\\\/g;
-    $str =~ s/\$/\\\$/g;
-    $str =~ s/\'/\\'/g;
-    $str =~ s/\"/\\"/g;
-    $str =~ s/\&/&amp;/g;
-    $str =~ s/\#/&#35;/g;
-    $str =~ s/\>/&gt;/g;
-    $str =~ s/\</&lt;/g;
+
+    if ($json)
+    {
+	$str =~ s/\t/\\t/g;
+	$str =~ s/\"/\\"/g; # json - and html
+    }
+    else
+    {
+	$str =~ s/\$/\\\$/g;
+	$str =~ s/\'/\\'/g;
+	$str =~ s/\"/\\"/g;
+	$str =~ s/\&/&amp;/g;
+	$str =~ s/\#/&#35;/g;
+	$str =~ s/\>/&gt;/g;
+	$str =~ s/\</&lt;/g;
+    }
     $str =~ s/[\r\n]+/\\n/g;
     return $str;
+}
+
+# 23:34:16.123456
+sub splittime($)
+{
+    my $time = shift;
+    $time =~ m/^(\d\d):(\d\d):(\d\d)\.(\d+)$/ || die "Invalid time: '$time'";
+    return ($1, $2, $3, $4);
+}
+
+sub offset_microsecs($)
+{
+    my @time = splittime(shift);
+
+    my $usec = 0  + $time[0] - $log_start[0];
+    $usec = $usec * 60;
+    $usec = $usec + $time[1] - $log_start[1];
+    $usec = $usec * 60;
+    $usec = $usec + $time[2] - $log_start[2];
+    $usec = $usec * 1000000;
+    $usec = $usec + $time[3];
+
+    return $usec;
 }
 
 # Delimit spans of time:
@@ -50,6 +85,8 @@ sub consume($$$$$)
 
     # print STDERR "$emitter, $type, $time, $message, $line\n";
 
+    $time = offset_microsecs($time) if ($json); # microseconds from start
+
     # accumulate all threads / processes
     if (!defined $emitters{$emitter}) {
 	$emitters{$emitter} = (scalar keys %emitters) + 1;
@@ -70,29 +107,63 @@ sub consume($$$$$)
 	} elsif ($message =~ m/$end/) {
 	    defined $pair_starts{$key} || die "event $start ($end) ends but failed to start";
 
-	    my $id = (scalar @events) + 1;
-
 	    my $content_e = escape($start);
 	    my $title_e = escape($line);
 	    my $start_time = $pair_starts{$key};
 	    my $end_time = $time;
-	    push @events, "{id: $id, group: $emitters{$emitter}, ".
-		"start: new Date('$log_date $start_time'), ".
-		"end: new Date('$log_date $end_time'), ".
-		"content: '$content_e', title: '$title_e'}";
+
+	    if ($json)
+	    {
+		my $dur = $end_time - $start_time;
+		my $ms = int ($dur / 1000.0);
+		push @events, "{\"pid\":$emitters{$emitter}, \"tid\":1, \"ts\":$start_time, \"dur\":$dur, \"ph\":\"X\", \"name\":\"$title_e\", \"args\":{ \"ms\":$ms } }";
+	    }
+	    else
+	    {
+		my $id = (scalar @events) + 1;
+		push @events, "{id: $id, group: $emitters{$emitter}, ".
+		    "start: new Date('$log_start_date $start_time'), ".
+		    "end: new Date('$log_start_date $end_time'), ".
+		    "content: '$content_e', title: '$title_e'}";
+	    }
 	    last;
 	}
     }
 
     my $content_e = escape($message. " " . $line);
-    my $id = (scalar @events) + 1;
-    push @events, "{id: $id, group: $emitters{$emitter}, ".
-	"start: new Date('$log_date $time'), ".
-	"end: new Date('$log_date $time)') + new Date(1), ".
-	"content: '$content_e', title: ''}";
+    if ($json)
+    {
+	push @events, "{\"pid\":$emitters{$emitter}, \"tid\":1, \"ts\":$time, \"ph\":\"i\", \"s\":\"p\", \"name\":\"$content_e\" }";
+    }
+    else
+    {
+	my $id = (scalar @events) + 1;
+	push @events, "{id: $id, group: $emitters{$emitter}, ".
+	    "start: new Date('$log_start_date $time'), ".
+	    "end: new Date('$log_start_date $time)') + new Date(1), ".
+	    "content: '$content_e', title: ''}";
+    }
 }
 
-sub emit()
+# Open in chrome://tracing
+sub emit_json()
+{
+    my $events_json = join(",\n", @events);
+
+    print STDOUT << "JSONEND"
+{
+"traceEvents": [
+   $events_json
+],
+"displayTimeUnit":"ms",
+"meta_user": "online",
+"meta_cpu_count" : 8
+}
+JSONEND
+;
+}
+
+sub emit_js()
 {
     my @groups;
     foreach my $emitter (sort { $emitters{$a} <=> $emitters{$b} } keys %emitters) {
@@ -145,10 +216,12 @@ HTMLEND
 }
 
 # wsd-29885-29885 2019-03-27 ...
-if ($input[0] =~ m/^\S+\s([\d-]+)\s+/)
+if ($input[0] =~ m/^\S+\s([\d-]+)\s+([\d:\.]+)\s+/)
 {
-    $log_date = $1;
-    print STDERR "reading log from $log_date\n";
+    $log_start_date = $1;
+    $log_start_time = $2;
+    @log_start = splittime($2);
+    print STDERR "reading log from $log_start_date / $log_start_time\n";
 } else {
     die "Malformed log line: $input[0]";
 }
@@ -182,4 +255,9 @@ while (my $line = shift @input) {
     }
 }
 
-emit();
+if ($json) {
+    emit_json();
+} else {
+    emit_js();
+}
+
