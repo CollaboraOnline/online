@@ -592,7 +592,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         _socket->setClientAddress(addr);
 
         LOG_DBG("Accepted socket is UDS - address " << addr <<
-                " and pid/gid " << creds.pid << "/" << creds.gid);
+                " and uid/gid " << creds.uid << "/" << creds.gid);
         return _socket;
     }
     catch (const std::exception& ex)
