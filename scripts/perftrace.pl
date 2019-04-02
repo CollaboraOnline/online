@@ -16,6 +16,8 @@ my $log_start_date;
 my $log_start_time;
 my @log_start;
 my @events;
+
+# Google Chrome Trace Event Format if set
 my $json = 1;
 
 sub escape($)
@@ -78,10 +80,11 @@ my @pairs = (
     }
 );
 my %pair_starts;
+my %proc_names;
 
-sub consume($$$$$$$)
+sub consume($$$$$$$$)
 {
-    my ($pid, $tid, $time, $emitter, $type, $message, $line) = @_;
+    my ($proc, $pid, $tid, $time, $emitter, $type, $message, $line) = @_;
 
     # print STDERR "$emitter, $type, $time, $message, $line\n";
 
@@ -90,6 +93,15 @@ sub consume($$$$$$$)
     # accumulate all threads / processes
     if (!defined $emitters{$emitter}) {
 	$emitters{$emitter} = (scalar keys %emitters) + 1;
+	if ($json) {
+	    push @events, "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": $pid, \"tid\": $tid, \"args\": { \"name\" : \"$emitter.\" } }";
+	}
+    }
+    if (!defined $proc_names{$proc}) {
+	$proc_names{$proc} = (scalar keys %proc_names) + 1;
+	if ($json) {
+	    push @events, "{\"name\": \"process_name\", \"ph\": \"M\", \"pid\": $pid, \"args\": { \"name\" : \"$proc.\" } }";
+	}
     }
 
     my $handled = 0;
@@ -131,9 +143,10 @@ sub consume($$$$$$$)
     }
 
     my $content_e = escape($message. " " . $line);
+    # Hack give all events a 10ms duration - better to use the gap to the next event though.
     if ($json)
     {
-	push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"ph\":\"i\", \"s\":\"p\", \"name\":\"$content_e\" }";
+	push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":10000, \"ph\":\"X\", \"s\":\"p\", \"name\":\"$content_e\" }";
     }
     else
     {
@@ -233,11 +246,11 @@ while (my $line = shift @input) {
     $line =~ s/\r*\n*//g;
 
     # wsd-26974-26974 2019-03-27 03:45:46.735736 [ loolwsd ] INF  Initializing wsd. Local time: Wed 2019-03-27 03:45:46+0000. Log level is [8].| common/Log.cpp:191
-    if ($line =~ m/^\w+-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)\|\s+(\S+)$/) {
-	consume($1, $2, $3, $4, $5, $6, $7);
+    if ($line =~ m/^(\w+)-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)\|\s+(\S+)$/) {
+	consume($1, $2, $3, $4, $5, $6, $7, $8);
 
-    } elsif ($line =~ m/^\w+-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)$/) { # split lines ...
-	my ($pid, $tid, $time, $emitter, $type, $message, $line) = ($1, $2, $3, $4, $5, $6);
+    } elsif ($line =~ m/^(\w+)-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)$/) { # split lines ...
+	my ($proc, $pid, $tid, $time, $emitter, $type, $message, $line) = ($1, $2, $3, $4, $5, $6, $7);
 	while (my $next =  shift @input) {
 	    # ... | kit/Kit.cpp:1272
 	    if ($next =~ m/^(.*)\|\s+(\S+)$/)
@@ -249,7 +262,7 @@ while (my $line = shift @input) {
 		$message = $message . $next;
 	    }
 	}
-	consume($pid, $tid, $time, $emitter, $type, $message, $line);
+	consume($proc, $pid, $tid, $time, $emitter, $type, $message, $line);
     } else {
 	die "Poorly formed line - is logging.file.flush set to true ? '$line'\n";
     }
