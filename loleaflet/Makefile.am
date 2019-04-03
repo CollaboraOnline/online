@@ -245,6 +245,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		$(LOLEAFLET_LIBS_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js))" \
+		-DVENDOR="$(VENDOR)" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
 node_modules: npm-shrinkwrap.json
