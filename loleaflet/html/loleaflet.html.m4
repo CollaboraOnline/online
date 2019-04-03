@@ -4,6 +4,7 @@ dnl# foreachq(x, `item_1, item_2, ..., item_n', stmt)
 dnl# quoted list, alternate improved version
 define([foreachq],[ifelse([$2],[],[],[pushdef([$1])_$0([$1],[$3],[],$2)popdef([$1])])])dnl
 define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(shift(shift($@))))])])dnl
+define(_YEAR_,esyscmd(date +%Y|tr -d '\n'))
 <!DOCTYPE html>
 <!-- saved from url=(0054)http://leafletjs.com/examples/quick-start-example.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -146,6 +147,7 @@ ifelse(MOBILEAPP,[true],
       <div id="loolwsd-version"></div>
       <h3>LOKit</h3>
       <div id="lokit-version"></div>
+      <p>Copyright _YEAR_, Collabora Productivity Limited.</p>
     </div>
 
     <script>
