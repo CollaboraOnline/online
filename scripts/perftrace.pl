@@ -17,6 +17,9 @@ my $log_start_time;
 my @log_start;
 my @events;
 
+my %last_times;     # $time for last key
+my %last_event_idx; # $events[$idx] for last key
+
 # Google Chrome Trace Event Format if set
 my $json = 1;
 
@@ -61,7 +64,7 @@ sub offset_microsecs($)
     $usec = $usec + $time[1] - $log_start[1];
     $usec = $usec * 60;
     $usec = $usec + $time[2] - $log_start[2];
-    $usec = $usec * 1000000;
+    $usec = $usec * 1000 * 1000;
     $usec = $usec + $time[3];
 
     return $usec;
@@ -94,13 +97,13 @@ sub consume($$$$$$$$)
     if (!defined $emitters{$emitter}) {
 	$emitters{$emitter} = (scalar keys %emitters) + 1;
 	if ($json) {
-	    push @events, "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": $pid, \"tid\": $tid, \"args\": { \"name\" : \"$emitter.\" } }";
+	    push @events, "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": $pid, \"tid\": $tid, \"args\": { \"name\" : \"$emitter\" } }";
 	}
     }
-    if (!defined $proc_names{$proc}) {
-	$proc_names{$proc} = (scalar keys %proc_names) + 1;
+    if (!defined $proc_names{$pid}) {
+	$proc_names{$pid} = 1;
 	if ($json) {
-	    push @events, "{\"name\": \"process_name\", \"ph\": \"M\", \"pid\": $pid, \"args\": { \"name\" : \"$proc.\" } }";
+	    push @events, "{\"name\": \"process_name\", \"ph\": \"M\", \"pid\": $pid, \"args\": { \"name\" : \"$proc\" } }";
 	}
     }
 
@@ -143,10 +146,19 @@ sub consume($$$$$$$$)
     }
 
     my $content_e = escape($message. " " . $line);
-    # Hack give all events a 10ms duration - better to use the gap to the next event though.
     if ($json)
     {
-	push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":10000, \"ph\":\"X\", \"s\":\"p\", \"name\":\"$content_e\" }";
+	# join events to the last time
+	my $dur = 100; # 0.1ms default
+	my $key = "$pid-$tid";
+	if (defined($last_times{$key})) {
+	    $dur = $time - $last_times{$key};
+	    my $idx = $last_event_idx{$key};
+	    $events[$idx] =~ s/\"dur\":100/\"dur\":$dur/;
+	}
+	$last_times{$key} = $time;
+	$last_event_idx{$key} = scalar @events;
+	push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":100, \"ph\":\"X\", \"s\":\"p\", \"name\":\"$content_e\" }";
     }
     else
     {
