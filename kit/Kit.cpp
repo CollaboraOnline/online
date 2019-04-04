@@ -1344,6 +1344,8 @@ public:
         }
         else
             tileQueue->put("callback " + std::to_string(descriptor->getViewId()) + ' ' + std::to_string(type) + ' ' + payload);
+
+        LOG_TRC("Document::ViewCallback end.");
     }
 
 private:
