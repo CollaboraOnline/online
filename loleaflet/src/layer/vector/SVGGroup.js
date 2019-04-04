@@ -32,14 +32,21 @@ L.SVGGroup = L.Layer.extend({
 		if (doc.lastChild.localName !== 'svg')
 			return;
 
-		L.DomUtil.remove(this._rect._path);
-		this._svg = this._path.appendChild(doc.lastChild);
+		if (svgString.indexOf('XTEXT_PAINTSHAPE_BEGIN') !== -1) {
+			this._svg = this._path.insertBefore(doc.lastChild, this._rect._path);
+			this._rect._path.setAttribute('pointer-events', 'visibleStroke');
+			this._svg.setAttribute('pointer-events', 'none');
+		} else {
+			L.DomUtil.remove(this._rect._path);
+			this._svg = this._path.appendChild(doc.lastChild);
+			this._svg.setAttribute('pointer-events', 'visiblePainted');
+			L.DomEvent.on(this._svg, 'mousedown', this._onDragStart, this);
+			this._dragShape = this._svg;
+		}
+
 		this._svg.setAttribute('opacity', 0);
 		this._svg.setAttribute('width', size.x);
 		this._svg.setAttribute('height', size.y);
-		this._svg.setAttribute('pointer-events', 'visiblePainted');
-		this._dragShape = this._svg;
-		L.DomEvent.on(this._svg, 'mousedown', this._onDragStart, this);
 
 		this._update();
 	},
