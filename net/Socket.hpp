@@ -488,6 +488,7 @@ public:
         int rc;
         do
         {
+            LOG_TRC("Poll start");
 #if !MOBILEAPP
             rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
 #else
