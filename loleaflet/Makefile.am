@@ -63,6 +63,7 @@ LOLEAFLET_CSS =\
 	$(builddir)/node_modules/select2/dist/css/select2.css \
 	$(srcdir)/css/w2ui-1.5.rc1.css \
 	$(srcdir)/css/leaflet.css \
+	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
 	$(srcdir)/css/loleaflet.css \
 	$(srcdir)/css/toolbar.css \
