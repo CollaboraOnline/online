@@ -643,6 +643,15 @@ and dependencies (minified).
 					
 					if($this.data(pluginPfx)){ /* check if plugin has initialized */
 					
+						/* Ugly hack extension: When vertical scrollbar position
+						   was very close to the end of spreadsheet, next part of
+						   the document has to be loaded. This contidion is fulfilled
+						   in that case. We need to ignore it to prevent scrollbar
+						   from reaching the end what blocks possibility to scroll down. */
+						if(!window.ThisIsAMobileApp && options && options.timeout == undefined
+							&& options.calledFromInvalidateCursorMsg == undefined)
+							return;
+
 						var d=$this.data(pluginPfx),o=d.opt,
 							/* method default options */
 							methodDefaults={
