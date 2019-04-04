@@ -88,27 +88,42 @@ my @event_pairs = (
     );
 
 # Idle events
-my @idle_types = (
+my @idleend_types = (
     '^Poll completed'
+    );
+
+my @idlestart_types = (
+    '^Document::ViewCallback end\.'
     );
 
 my %pair_starts;
 my %proc_names;
 
+sub match_list($@)
+{
+    my $message = shift;
+    while (my $match =  shift) {
+        if ($message =~ m/$match/) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 sub get_event_type($$$)
 {
     my ($type, $emitter, $message) = @_;
-    foreach my $match (@idle_types) {
-        if ($message =~ m/$match/) {
-            return 'idle';
-        }
-    }
+    return 'idle_end' if (match_list($message, @idleend_types));
+    return 'idle_start' if (match_list($message, @idlestart_types));
     return '';
 }
 
 sub consume($$$$$$$$)
 {
     my ($proc, $pid, $tid, $time, $emitter, $type, $message, $line) = @_;
+
+    $pid = int($pid);
+    $tid = int($tid);
 
     # print STDERR "$emitter, $type, $time, $message, $line\n";
 
@@ -118,13 +133,13 @@ sub consume($$$$$$$$)
     if (!defined $emitters{$emitter}) {
         $emitters{$emitter} = (scalar keys %emitters) + 1;
         if ($json) {
-            push @events, "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": $pid, \"tid\": $tid, \"args\": { \"name\" : \"$emitter\" } }";
+            push @events, "{\"name\": \"thread_name\", \"thread_sort_index\": -$tid, \"ph\": \"M\", \"pid\": $pid, \"tid\": $tid, \"args\": { \"name\" : \"$emitter\" } }";
         }
     }
     if (!defined $proc_names{$pid}) {
         $proc_names{$pid} = 1;
         if ($json) {
-            push @events, "{\"name\": \"process_name\", \"ph\": \"M\", \"pid\": $pid, \"args\": { \"name\" : \"$proc\" } }";
+            push @events, "{\"name\": \"process_name\", \"process_sort_index\": -$pid, \"ph\": \"M\", \"pid\": $pid, \"args\": { \"name\" : \"$proc\" } }";
         }
     }
 
@@ -178,17 +193,16 @@ sub consume($$$$$$$$)
             $dur = $time - $last_times{$key};
             my $idx = $last_event_idx{$key};
 
-            if ($event_type ne 'idle') { # onlt re-write if not idle
-                $events[$idx] =~ s/\"dur\":10/\"dur\":$dur/;
-            } else {
-                print STDERR "idle re-write to $dur\n";
-            }
+            $dur = 1 if ($event_type eq 'idle_end' && $dur > 1);
+            $events[$idx] =~ s/\"dur\":10/\"dur\":$dur/;
         }
         $last_times{$key} = $time;
         $last_event_idx{$key} = scalar @events;
 
         my $json_type = "\"ph\":\"X\", \"s\":\"p\"";
-        push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":10, $json_type, \"name\":\"$content_e\" }";
+        my $replace_dur = 10;
+        $replace_dur = 1 if ($event_type eq 'idle_start'); # miss the regexp
+        push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":$replace_dur, $json_type, \"name\":\"$content_e\" }";
     }
     else
     {
