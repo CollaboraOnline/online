@@ -30,18 +30,18 @@ sub escape($)
 
     if ($json)
     {
-	$str =~ s/\t/\\t/g;
-	$str =~ s/\"/\\"/g; # json - and html
+        $str =~ s/\t/\\t/g;
+        $str =~ s/\"/\\"/g; # json - and html
     }
     else
     {
-	$str =~ s/\$/\\\$/g;
-	$str =~ s/\'/\\'/g;
-	$str =~ s/\"/\\"/g;
-	$str =~ s/\&/&amp;/g;
-	$str =~ s/\#/&#35;/g;
-	$str =~ s/\>/&gt;/g;
-	$str =~ s/\</&lt;/g;
+        $str =~ s/\$/\\\$/g;
+        $str =~ s/\'/\\'/g;
+        $str =~ s/\"/\\"/g;
+        $str =~ s/\&/&amp;/g;
+        $str =~ s/\#/&#35;/g;
+        $str =~ s/\>/&gt;/g;
+        $str =~ s/\</&lt;/g;
     }
     $str =~ s/[\r\n]+/\\n/g;
     return $str;
@@ -70,20 +70,41 @@ sub offset_microsecs($)
     return $usec;
 }
 
-# Delimit spans of time:
-my @pairs = (
+# Important things that happen in pairs
+my @event_pairs = (
+     { type => 'INF',
+       emitter => '^loolwsd$',
+       start => 'Initializing wsd.\.*',
+       end => 'Listening to prisoner connections.*' },
+     { type => 'INF',
+       emitter => '^forkit$',
+       start => 'Initializing frk.\.*',
+       end => 'ForKit process is ready.*' },
     { type => 'INF',
-      emitter => 'loolwsd',
-      start => 'Initializing wsd.\.*',
-      end => 'Listening to prisoner connections.*' },
-    { type => 'INF',
-      emitter => 'forkit',
-      start => 'Initializing frk.\.*',
-      end => 'ForKit process is ready.*'
-    }
-);
+      emitter => "^lokit_.*",
+      start => 'Loading url .*',
+      end => '^Document loaded in .*ms$' },
+    # FIXME: add save too ...
+    );
+
+# Idle events
+my @idle_types = (
+    '^Poll completed'
+    );
+
 my %pair_starts;
 my %proc_names;
+
+sub get_event_type($$$)
+{
+    my ($type, $emitter, $message) = @_;
+    foreach my $match (@idle_types) {
+        if ($message =~ m/$match/) {
+            return 'idle';
+        }
+    }
+    return '';
+}
 
 sub consume($$$$$$$$)
 {
@@ -95,78 +116,87 @@ sub consume($$$$$$$$)
 
     # accumulate all threads / processes
     if (!defined $emitters{$emitter}) {
-	$emitters{$emitter} = (scalar keys %emitters) + 1;
-	if ($json) {
-	    push @events, "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": $pid, \"tid\": $tid, \"args\": { \"name\" : \"$emitter\" } }";
-	}
+        $emitters{$emitter} = (scalar keys %emitters) + 1;
+        if ($json) {
+            push @events, "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": $pid, \"tid\": $tid, \"args\": { \"name\" : \"$emitter\" } }";
+        }
     }
     if (!defined $proc_names{$pid}) {
-	$proc_names{$pid} = 1;
-	if ($json) {
-	    push @events, "{\"name\": \"process_name\", \"ph\": \"M\", \"pid\": $pid, \"args\": { \"name\" : \"$proc\" } }";
-	}
+        $proc_names{$pid} = 1;
+        if ($json) {
+            push @events, "{\"name\": \"process_name\", \"ph\": \"M\", \"pid\": $pid, \"args\": { \"name\" : \"$proc\" } }";
+        }
     }
 
     my $handled = 0;
-    foreach my $match (@pairs) {
-	next if ($type ne $match->{type});
-	next if (!($emitter =~ m/$match->{emitter}/));
+    foreach my $match (@event_pairs) {
+       next if ($type ne $match->{type});
+       next if (defined $match->{emitter} && !($emitter =~ m/$match->{emitter}/));
 
-	my $start = $match->{start};
-	my $end = $match->{end};
-	my $key = $type.$emitter.$start;
-	if ($message =~ m/$start/) {
-	    defined $pair_starts{$key} && die "event $start ($end) starts and fails to finish";
-	    $pair_starts{$key} = $time;
-	    last;
-	} elsif ($message =~ m/$end/) {
-	    defined $pair_starts{$key} || die "event $start ($end) ends but failed to start";
+       my $start = $match->{start};
+       my $end = $match->{end};
+       my $key = $type.$emitter.$start;
+       if ($message =~ m/$start/) {
+           defined $pair_starts{$key} && die "event $start ($end) starts and fails to finish";
+           $pair_starts{$key} = $time;
+           last;
+       } elsif ($message =~ m/$end/) {
+           defined $pair_starts{$key} || die "event $start ($end) ends but failed to start";
 
-	    my $content_e = escape($start);
-	    my $title_e = escape($line);
-	    my $start_time = $pair_starts{$key};
-	    my $end_time = $time;
+           my $content_e = escape($start);
+           my $title_e = escape($line);
+           my $start_time = $pair_starts{$key};
+           my $end_time = $time;
 
-	    if ($json)
-	    {
-		my $dur = $end_time - $start_time;
-		my $ms = int ($dur / 1000.0);
-		push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$start_time, \"dur\":$dur, \"ph\":\"X\", \"name\":\"$title_e\", \"args\":{ \"ms\":$ms } }";
-	    }
-	    else
-	    {
-		my $id = (scalar @events) + 1;
-		push @events, "{id: $id, group: $emitters{$emitter}, ".
-		    "start: new Date('$log_start_date $start_time'), ".
-		    "end: new Date('$log_start_date $end_time'), ".
-		    "content: '$content_e', title: '$title_e'}";
-	    }
-	    last;
-	}
+           if ($json)
+           {
+               my $dur = $end_time - $start_time;
+               my $ms = int ($dur / 1000.0);
+               push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$start_time, \"dur\":$dur, \"ph\":\"X\", \"name\":\"$title_e\", \"args\":{ \"ms\":$ms } }";
+           }
+           else
+           {
+               my $id = (scalar @events) + 1;
+               push @events, "{id: $id, group: $emitters{$emitter}, ".
+                   "start: new Date('$log_start_date $start_time'), ".
+                   "end: new Date('$log_start_date $end_time'), ".
+                   "content: '$content_e', title: '$title_e'}";
+           }
+           last;
+       }
     }
 
     my $content_e = escape($message. " " . $line);
     if ($json)
     {
-	# join events to the last time
-	my $dur = 100; # 0.1ms default
-	my $key = "$pid-$tid";
-	if (defined($last_times{$key})) {
-	    $dur = $time - $last_times{$key};
-	    my $idx = $last_event_idx{$key};
-	    $events[$idx] =~ s/\"dur\":100/\"dur\":$dur/;
-	}
-	$last_times{$key} = $time;
-	$last_event_idx{$key} = scalar @events;
-	push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":100, \"ph\":\"X\", \"s\":\"p\", \"name\":\"$content_e\" }";
+        my $event_type = get_event_type($type, $emitter, $message);
+
+        # join events to the last time
+        my $dur = 100; # 0.1ms default
+        my $key = "$pid-$tid";
+        if (defined($last_times{$key})) {
+            $dur = $time - $last_times{$key};
+            my $idx = $last_event_idx{$key};
+
+            if ($event_type ne 'idle') { # onlt re-write if not idle
+                $events[$idx] =~ s/\"dur\":10/\"dur\":$dur/;
+            } else {
+                print STDERR "idle re-write to $dur\n";
+            }
+        }
+        $last_times{$key} = $time;
+        $last_event_idx{$key} = scalar @events;
+
+        my $json_type = "\"ph\":\"X\", \"s\":\"p\"";
+        push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":10, $json_type, \"name\":\"$content_e\" }";
     }
     else
     {
-	my $id = (scalar @events) + 1;
-	push @events, "{id: $id, group: $emitters{$emitter}, ".
-	    "start: new Date('$log_start_date $time'), ".
-	    "end: new Date('$log_start_date $time)') + new Date(1), ".
-	    "content: '$content_e', title: ''}";
+        my $id = (scalar @events) + 1;
+        push @events, "{id: $id, group: $emitters{$emitter}, ".
+            "start: new Date('$log_start_date $time'), ".
+            "end: new Date('$log_start_date $time)') + new Date(1), ".
+            "content: '$content_e', title: ''}";
     }
 }
 
@@ -192,7 +222,7 @@ sub emit_js()
 {
     my @groups;
     foreach my $emitter (sort { $emitters{$a} <=> $emitters{$b} } keys %emitters) {
-	push @groups, "{id: $emitters{$emitter}, content: '$emitter'}";
+        push @groups, "{id: $emitters{$emitter}, content: '$emitter'}";
     }
 
     my $groups_json = join(",\n", @groups);
@@ -252,31 +282,32 @@ if ($input[0] =~ m/^\S+\s([\d-]+)\s+([\d:\.]+)\s+/)
 }
 
 # parse all the lines
-while (my $line = shift @input) {
+my $lineno = 0;
+while (my $line = $input[$lineno++]) {
     my ($pevent, $pdetail);
 
     $line =~ s/\r*\n*//g;
 
     # wsd-26974-26974 2019-03-27 03:45:46.735736 [ loolwsd ] INF  Initializing wsd. Local time: Wed 2019-03-27 03:45:46+0000. Log level is [8].| common/Log.cpp:191
     if ($line =~ m/^(\w+)-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)\|\s+(\S+)$/) {
-	consume($1, $2, $3, $4, $5, $6, $7, $8);
+        consume($1, $2, $3, $4, $5, $6, $7, $8);
 
     } elsif ($line =~ m/^(\w+)-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)$/) { # split lines ...
-	my ($proc, $pid, $tid, $time, $emitter, $type, $message, $line) = ($1, $2, $3, $4, $5, $6, $7);
-	while (my $next =  shift @input) {
-	    # ... | kit/Kit.cpp:1272
-	    if ($next =~ m/^(.*)\|\s+(\S+)$/)
-	    {
-		$message = $message . $1;
-		$line = $2;
-		last;
-	    } else {
-		$message = $message . $next;
-	    }
-	}
-	consume($proc, $pid, $tid, $time, $emitter, $type, $message, $line);
+        my ($proc, $pid, $tid, $time, $emitter, $type, $message, $line) = ($1, $2, $3, $4, $5, $6, $7);
+        while (my $next = $input[$lineno++]) {
+            # ... | kit/Kit.cpp:1272
+            if ($next =~ m/^(.*)\|\s+(\S+)$/)
+            {
+                $message = $message . $1;
+                $line = $2;
+                last;
+            } else {
+                $message = $message . $next;
+            }
+        }
+        consume($proc, $pid, $tid, $time, $emitter, $type, $message, $line);
     } else {
-	die "Poorly formed line - is logging.file.flush set to true ? '$line'\n";
+        die "Poorly formed line on " . ($lineno - 1) . " - is logging.file.flush set to true ? '$line'\n";
     }
 }
 
