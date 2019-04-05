@@ -225,7 +225,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:OnlineAutoFormat'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
@@ -313,7 +313,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
@@ -412,7 +412,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:GoalSeekDialog'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
@@ -965,6 +965,10 @@ L.Control.Menubar = L.Control.extend({
 			}
 
 			if (menu[i].mobile == false && window.mode.isMobile()) {
+				$(aItem).css('display', 'none');
+			}
+
+			if (menu[i].mobileapp == false && window.ThisIsAMobileApp) {
 				$(aItem).css('display', 'none');
 			}
 
