@@ -56,8 +56,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:EditStyle'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
-				{type: 'separator'},
+				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false},
+				{type: 'separator', mobileapp: false},
 				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
 				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
@@ -259,8 +259,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SearchDialog'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
-				{type: 'separator'},
+				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
+				{type: 'separator', mobileapp: false},
 				{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
 				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'}]
@@ -346,7 +346,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
+			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', mobileapp: false, menu: [
 				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'}
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), type: 'menu', menu: [
@@ -940,6 +940,9 @@ L.Control.Menubar = L.Control.extend({
 			}
 
 			if (menu[i].type === 'menu') {
+				if (menu[i].mobileapp == false && window.ThisIsAMobileApp) {
+					continue;
+				}
 				var ulItem = L.DomUtil.create('ul', '', liItem);
 				var subitemList = this._createMenu(menu[i].menu);
 				if (!subitemList.length) {
