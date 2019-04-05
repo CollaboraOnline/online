@@ -72,19 +72,34 @@ sub offset_microsecs($)
 
 # Important things that happen in pairs
 my @event_pairs = (
-     { type => 'INF',
-       emitter => '^loolwsd$',
-       start => 'Initializing wsd.\.*',
-       end => 'Listening to prisoner connections.*' },
-     { type => 'INF',
-       emitter => '^forkit$',
-       start => 'Initializing frk.\.*',
-       end => 'ForKit process is ready.*' },
-    { type => 'INF',
-      emitter => "^lokit_.*",
-      start => 'Loading url .*',
+    {
+      name => 'Initialize wsd.',
+      type => 'INF',
+      emitter => '^loolwsd$',
+      start => 'Initializing wsd.\.*',
+      end => 'Listening to prisoner connections.*' },
+    {
+      name => 'initialize forkit',
+      type => 'INF',
+      emitter => '^forkit$',
+      start => 'Initializing frk.\.*',
+      end => 'ForKit process is ready.*' },
+    { # Load
+      emitter => "^lokit_",
+      start => 'Loading url.*for session',
       end => '^Document loaded in .*ms$' },
-    # FIXME: add save too ...
+    { # Save - save to a local file.
+      name => 'save to local',
+      emitter => '^docbroker',
+      start => '^Saving doc',
+      end => 'unocommandresult:.*commandName.*\.uno:Save.*success'
+    },
+    { # Save - to storage
+      name => 'save to storage',
+      emitter => '^docbroker',
+      start => '^Saving to storage docKey',
+      end => '^(Saved docKey.* to URI)|(Save skipped as document)',
+    }
     );
 
 # Idle events
@@ -118,9 +133,9 @@ sub get_event_type($$$)
     return '';
 }
 
-sub consume($$$$$$$$)
+sub consume($$$$$$$$$)
 {
-    my ($proc, $pid, $tid, $time, $emitter, $type, $message, $line) = @_;
+    my ($lineno, $proc, $pid, $tid, $time, $emitter, $type, $message, $line) = @_;
 
     $pid = int($pid);
     $tid = int($tid);
@@ -145,21 +160,25 @@ sub consume($$$$$$$$)
 
     my $handled = 0;
     foreach my $match (@event_pairs) {
-       next if ($type ne $match->{type});
+       next if (defined $match->{type} && $type ne $match->{type});
        next if (defined $match->{emitter} && !($emitter =~ m/$match->{emitter}/));
 
        my $start = $match->{start};
        my $end = $match->{end};
-       my $key = $type.$emitter.$start;
-       if ($message =~ m/$start/) {
-           defined $pair_starts{$key} && die "event $start ($end) starts and fails to finish";
+       my $key;
+       $key = $type if (defined $match->{type});
+       $key .= $emitter.$start;
+       if ($message =~ m/$start/s) {
+#	   print STDERR "matched start $key -> $message vs. $start\n";
+           defined $pair_starts{$key} && die "key $key - event $start ($end) starts and fails to finish at line: $lineno";
            $pair_starts{$key} = $time;
            last;
-       } elsif ($message =~ m/$end/) {
-           defined $pair_starts{$key} || die "event $start ($end) ends but failed to start";
+       } elsif ($message =~ m/$end/s) {
+#	   print STDERR "matched end $key -> $message vs. $end\n";
+           defined $pair_starts{$key} || die "key $key - event $start ($end) ends but failed to start at line: $lineno";
 
-           my $content_e = escape($start);
-           my $title_e = escape($line);
+           my $content_e = escape($start . $line);
+           my $title_e = escape($match->{name});
            my $start_time = $pair_starts{$key};
            my $end_time = $time;
 
@@ -177,6 +196,7 @@ sub consume($$$$$$$$)
                    "end: new Date('$log_start_date $end_time'), ".
                    "content: '$content_e', title: '$title_e'}";
            }
+	   $pair_starts{$key} = undef;
            last;
        }
     }
@@ -304,7 +324,7 @@ while (my $line = $input[$lineno++]) {
 
     # wsd-26974-26974 2019-03-27 03:45:46.735736 [ loolwsd ] INF  Initializing wsd. Local time: Wed 2019-03-27 03:45:46+0000. Log level is [8].| common/Log.cpp:191
     if ($line =~ m/^(\w+)-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)\|\s+(\S+)$/) {
-	consume($1, $2, $3, $4, $5, $6, $7, $8);
+	consume($lineno, $1, $2, $3, $4, $5, $6, $7, $8);
 
     } elsif ($line =~ m/^(\w+)-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)$/) { # split lines ...
 	my ($proc, $pid, $tid, $time, $emitter, $type, $message, $line) = ($1, $2, $3, $4, $5, $6, $7);
@@ -319,7 +339,7 @@ while (my $line = $input[$lineno++]) {
 		$message = $message . $next;
 	    }
 	}
-	consume($proc, $pid, $tid, $time, $emitter, $type, $message, $line);
+	consume($lineno, $proc, $pid, $tid, $time, $emitter, $type, $message, $line);
     } else {
 	die "Poorly formed line on " . ($lineno - 1) . " - is logging.file.flush set to true ? '$line'\n";
     }
