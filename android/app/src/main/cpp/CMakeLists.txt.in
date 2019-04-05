@@ -73,8 +73,8 @@ add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/liblo-
                    COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libssl3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
                    DEPENDS @LOBUILDDIR@/instdir/program/libssl3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/android/source/obj/local/armeabi-v7a/liblo-native-code.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/android/source/obj/local/armeabi-v7a/liblo-native-code.so
+                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS @LOBUILDDIR@/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so
 
                    COMMENT "Copied liblo-native-code.so and its dependencies to the tree."
 )
