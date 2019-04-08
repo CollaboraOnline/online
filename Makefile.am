@@ -314,7 +314,7 @@ run-valgrind: all @JAILS_PATH@
 			  --o:logging.file[@enable]=false --o:logging.level=trace
 
 run-gdb: all @JAILS_PATH@
-	@echo "Launching loolwsd under valgrind's callgrind"
+	@echo "Launching loolwsd under gdb"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
