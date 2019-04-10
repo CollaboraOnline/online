@@ -649,7 +649,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		}
 		else {
-			var strTwips = textMsg.match(/\d+/g);
+			var data = textMsg.split('{');
+			var strTwips = data[0].match(/\d+/g);
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
@@ -657,7 +658,24 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicSelection = new L.LatLngBounds(
 							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
-			this._graphicSelectionAngle = (strTwips.length === 5) ? parseInt(strTwips[4]) : 0;
+			this._graphicSelectionAngle = (strTwips.length > 4) ? parseInt(strTwips[4]) : 0;
+			this._isSelectionWriterGraphic = false;
+
+			if (data.length > 1) {
+				var properties = data[1].slice(0, -1).split(',');
+
+				var i;
+				for (i = 0; i < properties.length; ++i) {
+					var property = properties[i].split('=');
+					if (property.length !== 2)
+						continue;
+					var name = property[0].trim();
+					var value = property[1].trim() === 'true';
+					if (name === 'WriterGraphic') {
+						this._isSelectionWriterGraphic = value;
+					}
+				}
+			}
 			// Workaround for tdf#123874. For some reason the handling of the
 			// shapeselectioncontent messages that we get back causes the WebKit process
 			// to crash on iOS.
@@ -1930,6 +1948,39 @@ L.TileLayer = L.GridLayer.extend({
 			if (newPos.y < 0)
 				newPos.y = 0;
 
+			// For an image in Writer we need to send the size of the image not of the selection box.
+			// So if the image has been rotated we need to compute its size starting from the size of the selection
+			// rectangle and the rotation angle.
+			if (this._isSelectionWriterGraphic) {
+				if (this._isGraphicAngleDivisibleBy90()) {
+					var k = this._graphicSelectionAngle / 9000;
+					// if k is even we have nothing to do since the rotation is 0 or 180.
+					// when k is odd we need to swap width and height.
+					if (k % 2 !== 0) {
+						var temp = newSize.x;
+						newSize.x = newSize.y;
+						newSize.y = temp;
+					}
+				}
+				else {
+					// let's say that the selection rectangle width is subdivided by a corner of the rotated image
+					// in 2 segments of length s and t and the selection rectangle height is subdivided by a corner
+					// of the rotated image in 2 segments of length u and v, so we get the following system of equations:
+					// s + t = w, u + v = h,
+					// l = u/t, l = s/v, where l = tan(rotation angle)
+					var w = newSize.x;
+					var h = newSize.y;
+					var angle = Math.PI * this._graphicSelectionAngle / 18000;
+					var c = Math.abs(Math.cos(angle));
+					var s = Math.abs(Math.sin(angle));
+					var l = s / c;
+					var u = (l * w - l * l * h) / (1 - l * l);
+					var v = h - u;
+					newSize.x = Math.round(u / s);
+					newSize.y = Math.round(v / c);
+				}
+			}
+
 			// fill params for uno command
 			var param = {
 				TransformPosX: {
@@ -1951,6 +2002,21 @@ L.TileLayer = L.GridLayer.extend({
 			};
 
 			this._map.sendUnoCommand('.uno:TransformDialog ', param);
+
+			if (this._isSelectionWriterGraphic) {
+				param = {
+					TransformPosX: {
+						type: 'long',
+						value: newPos.x
+					},
+					TransformPosY: {
+						type: 'long',
+						value: newPos.y
+					}
+				};
+				this._map.sendUnoCommand('.uno:TransformDialog ', param);
+			}
+
 			this._graphicMarker.isDragged = false;
 			this._graphicMarker.dragHorizDir = undefined;
 			this._graphicMarker.dragVertDir = undefined;
