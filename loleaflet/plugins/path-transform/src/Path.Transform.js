@@ -692,8 +692,10 @@ L.Handler.PathTransform = L.Handler.extend({
 				pos: this._getPoints()[this._activeMarker.options.index]
 			});
 
-		this._map.removeLayer(this._handleLine);
-		this._map.removeLayer(this._rotationMarker);
+		if (this.options.rotation) {
+			this._map.removeLayer(this._handleLine);
+			this._map.removeLayer(this._rotationMarker);
+		}
 
 		//this._handleLine = this._rotationMarker = null;
 	},
@@ -741,8 +743,10 @@ L.Handler.PathTransform = L.Handler.extend({
 			.off('mousemove', this._onScale,    this)
 			.off('mouseup',   this._onScaleEnd, this);
 
-		this._map.addLayer(this._handleLine);
-		this._map.addLayer(this._rotationMarker);
+		if (this.options.rotation) {
+			this._map.addLayer(this._handleLine);
+			this._map.addLayer(this._rotationMarker);
+		}
 
 		var type;
 		var index = this._activeMarker.options.index;

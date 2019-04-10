@@ -50,7 +50,7 @@ L.SVGGroup = L.Layer.extend({
 			this.lastTouchEvent.clientY = evt.touches[0].clientY;
 		}
 
-		if (!this._dragShape)
+		if (!this._dragShape || !this.dragging)
 			return;
 		this._moved = false;
 
@@ -76,7 +76,7 @@ L.SVGGroup = L.Layer.extend({
 			this.lastTouchEvent.clientY = evt.touches[0].clientY;
 		}
 
-		if (!this._dragShape)
+		if (!this._dragShape || !this.dragging)
 			return;
 
 		if (!this._moved) {
@@ -96,7 +96,7 @@ L.SVGGroup = L.Layer.extend({
 		if (evt.type === 'touchend' && evt.touches.length == 0)
 			evt.touches[0] = {clientX: this.lastTouchEvent.clientX, clientY: this.lastTouchEvent.clientY};
 
-		if (!this._dragShape)
+		if (!this._dragShape || !this.dragging)
 			return;
 		L.DomEvent.off(this._dragShape, 'mousemove', this._onDrag, this);
 		L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);

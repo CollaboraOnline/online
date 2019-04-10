@@ -660,6 +660,9 @@ L.TileLayer = L.GridLayer.extend({
 							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 			this._graphicSelectionAngle = (strTwips.length > 4) ? parseInt(strTwips[4]) : 0;
 			this._isSelectionWriterGraphic = false;
+			this._isGraphicSelectionDraggable = true;
+			this._isGraphicSelectionResizable = true;
+			this._isGraphicSelectionRotatable = true;
 
 			if (data.length > 1) {
 				var properties = data[1].slice(0, -1).split(',');
@@ -674,12 +677,21 @@ L.TileLayer = L.GridLayer.extend({
 					if (name === 'WriterGraphic') {
 						this._isSelectionWriterGraphic = value;
 					}
+					else if (name === 'Draggable') {
+						this._isGraphicSelectionDraggable = value;
+					}
+					else if (name === 'Resizable') {
+						this._isGraphicSelectionResizable = value;
+					}
+					else if (name === 'Rotatable') {
+						this._isGraphicSelectionRotatable = value;
+					}
 				}
 			}
 			// Workaround for tdf#123874. For some reason the handling of the
 			// shapeselectioncontent messages that we get back causes the WebKit process
 			// to crash on iOS.
-			if (!window.ThisIsTheiOSApp) {
+			if (!window.ThisIsTheiOSApp && this._isGraphicSelectionDraggable) {
 				this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 			}
 		}
@@ -2108,7 +2120,8 @@ L.TileLayer = L.GridLayer.extend({
 				this._graphicMarker.removeEventParent(this._map);
 				this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
 				this._graphicMarker.off('rotatestart rotateend', this._onGraphicRotate, this);
-				this._graphicMarker.dragging.disable();
+				if (this._graphicMarker.dragging)
+					this._graphicMarker.dragging.disable();
 				this._graphicMarker.transform.disable();
 				this._map.removeLayer(this._graphicMarker);
 			}
@@ -2118,7 +2131,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			this._graphicMarker = L.svgGroup(this._graphicSelection, {
-				draggable: true,
+				draggable: this._isGraphicSelectionDraggable,
 				transform: true,
 				stroke: false,
 				fillOpacity: 0,
@@ -2134,14 +2147,19 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.on('scalestart scaleend', this._onGraphicEdit, this);
 			this._graphicMarker.on('rotatestart rotateend', this._onGraphicRotate, this);
 			this._map.addLayer(this._graphicMarker);
-			this._graphicMarker.dragging.enable();
-			this._graphicMarker.transform.enable({uniformScaling: !this._isGraphicAngleDivisibleBy90()});
+			if (this._isGraphicSelectionDraggable)
+				this._graphicMarker.dragging.enable();
+			this._graphicMarker.transform.enable({
+				scaling: this._isGraphicSelectionResizable,
+				rotation: this._isGraphicSelectionRotatable,
+				uniformScaling: !this._isGraphicAngleDivisibleBy90()});
 		}
 		else if (this._graphicMarker) {
 			this._graphicMarker.off('graphicmovestart graphicmoveend', this._onGraphicMove, this);
 			this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);
 			this._graphicMarker.off('rotatestart rotateend', this._onGraphicRotate, this);
-			this._graphicMarker.dragging.disable();
+			if (this._graphicMarker.dragging)
+				this._graphicMarker.dragging.disable();
 			this._graphicMarker.transform.disable();
 			this._map.removeLayer(this._graphicMarker);
 			this._graphicMarker.isDragged = false;
