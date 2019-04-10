@@ -40,14 +40,6 @@ android {
             path "src/main/cpp/CMakeLists.txt"
         }
     }
-
-    if (gradle.startParameter.taskNames.contains(":app:assembleDebug")) {
-        // do not strip the .so's in the debug buils to allow convenient
-        // debugging
-        packagingOptions {
-            doNotStrip '**/*.so'
-        }
-    }
 }
 
 repositories {
