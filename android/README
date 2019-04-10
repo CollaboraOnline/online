@@ -50,6 +50,57 @@ build the native parts on Windows.
   + Open this 'android' subdir as a project
   + Build from Android Studio (Build -> Make Project)
 
+== Debugging ==
+
+To debug the native code in Android Studio, you need the debugging symbols and
+to setup lldb to actually read & use them.
+
+* [Temporary] Cherry pick the following patches in your core.git (if they are
+  not in master yet):
+
+  https://gerrit.libreoffice.org/70366
+  https://gerrit.libreoffice.org/70367
+  https://gerrit.libreoffice.org/70369
+  https://gerrit.libreoffice.org/70370
+  https://gerrit.libreoffice.org/70389
+
+* Add debugging symbols for the modules you are interested in
+
+  To autogen.input, add something like:
+
+    --enable-symbols="vcl/ desktop/ sal/ svx/ framework/ sfx2/ tools/ cppu/ cppuhelper/ filter/ comphelper/ Library_sw Library_swd Library_swui"
+
+  clean the appropriate modules, like
+
+    make vcl.clean desktop.clean sal.clean svx.clean framework.clean sfx2.clean tools.clean cppu.clean cppuhelper.clean filter.clean comphelper.clean sw.clean
+
+  and rebuild using 'make'.
+
+* Add android/source/obj/local/armeabi-v7a from core.git as a Symbol Directory
+
+  In Android Studio, choose Run -> Debug... -> Edit Configurations...
+
+  There go to the Android App -> app, choose the Debugger tab, and:
+
+  Debug type: Auto (or Dual)
+
+  Symbol Directories: here add the full path, like
+
+    /local/libreoffice/master-android/android/source/obj/local/armeabi-v7a
+
+  This path contains the non-stripped version of the liblo-native-code.so, and
+  the debugger will read the symbols from that one (even if the APK contains
+  the stripped version).
+
+  [Alternatively you can add the following to your ~/.lldbinit instead:
+
+    settings set target.inline-breakpoint-strategy always
+    settings append target.exec-search-paths /local/libreoffice/master-android/android/source/obj/local/armeabi-v7a
+  ]
+
+From now on, you will be able to debug directly in the Android Stuido
+debugger.  Happy debugging!
+
 == Tip: How to speed up your core.git build ==
 
 If you use icecream for parallel building, you can use it for
