@@ -643,55 +643,49 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onGraphicSelectionMsg: function (textMsg) {
-
 		if (textMsg.match('EMPTY')) {
 			this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		}
 		else {
-			var data = textMsg.split('{');
-			var strTwips = data[0].match(/\d+/g);
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
+			var msgData = JSON.parse(textMsg);
+			var topLeftTwips = new L.Point(msgData[0], msgData[1]);
+			var offset = new L.Point(msgData[2], msgData[3]);
 			var bottomRightTwips = topLeftTwips.add(offset);
 			this._graphicSelectionTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
 			this._graphicSelection = new L.LatLngBounds(
-							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
-			this._graphicSelectionAngle = (strTwips.length > 4) ? parseInt(strTwips[4]) : 0;
-			this._isSelectionWriterGraphic = false;
-			this._isGraphicSelectionDraggable = true;
-			this._isGraphicSelectionResizable = true;
-			this._isGraphicSelectionRotatable = true;
+				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 
-			if (data.length > 1) {
-				var properties = data[1].slice(0, -1).split(',');
+			this._graphicSelectionAngle = (msgData.length > 4) ? msgData[4] : 0;
 
-				var i;
-				for (i = 0; i < properties.length; ++i) {
-					var property = properties[i].split('=');
-					if (property.length !== 2)
-						continue;
-					var name = property[0].trim();
-					var value = property[1].trim() === 'true';
-					if (name === 'WriterGraphic') {
-						this._isSelectionWriterGraphic = value;
-					}
-					else if (name === 'Draggable') {
-						this._isGraphicSelectionDraggable = value;
-					}
-					else if (name === 'Resizable') {
-						this._isGraphicSelectionResizable = value;
-					}
-					else if (name === 'Rotatable') {
-						this._isGraphicSelectionRotatable = value;
-					}
+			this._graphicSelection.extraInfo = {};
+			if (msgData.length > 5) {
+				this._graphicSelection.extraInfo = msgData[5];
+				var dragInfo = this._graphicSelection.extraInfo.dragInfo;
+				if (dragInfo && dragInfo.dragMethod === 'PieSegmentDragging') {
+					dragInfo.initialOffset /= 100.0;
+					var dragDir = dragInfo.dragDirection;
+					dragInfo.dragDirection = this._twipsToPixels(new L.Point(dragDir[0], dragDir[1]));
+					dragDir = dragInfo.dragDirection;
+					dragInfo.range2 = dragDir.x * dragDir.x + dragDir.y * dragDir.y;
 				}
 			}
+			
+			// defaults
+			var extraInfo = this._graphicSelection.extraInfo;
+			if (extraInfo.isDraggable === undefined)
+				extraInfo.isDraggable = true;
+			if (extraInfo.isResizable === undefined)
+				extraInfo.isResizable = true;
+			if (extraInfo.isRotatable === undefined)
+				extraInfo.isRotatable = true;
+
 			// Workaround for tdf#123874. For some reason the handling of the
 			// shapeselectioncontent messages that we get back causes the WebKit process
 			// to crash on iOS.
-			if (!window.ThisIsTheiOSApp && this._isGraphicSelectionDraggable) {
+			if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg) {
 				this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 			}
 		}
@@ -1852,30 +1846,66 @@ L.TileLayer = L.GridLayer.extend({
 				return;
 			}
 
-			var newPos = this._graphicSelectionTwips.min.add(deltaPos);
-			var size = this._graphicSelectionTwips.getSize();
+			var param;
+			var dragConstraint = this._graphicSelection.extraInfo.dragInfo;
+			if (dragConstraint) {
+				if (dragConstraint.dragMethod === 'PieSegmentDragging') {
 
-			// try to keep shape inside document
-			if (newPos.x + size.x > this._docWidthTwips)
-				newPos.x = this._docWidthTwips - size.x;
-			if (newPos.x < 0)
-				newPos.x = 0;
+					deltaPos = this._twipsToPixels(deltaPos);
+					var dx = deltaPos.x;
+					var dy = deltaPos.y;
 
-			if (newPos.y + size.y > this._docHeightTwips)
-				newPos.y = this._docHeightTwips - size.y;
-			if (newPos.y < 0)
-				newPos.y = 0;
+					var initialOffset = dragConstraint.initialOffset;
+					var dragDirection = dragConstraint.dragDirection;
+					var additionalOffset = (dx * dragDirection.x + dy * dragDirection.y) / dragConstraint.range2;
+					if (additionalOffset < -initialOffset)
+						additionalOffset = -initialOffset;
+					else if (additionalOffset > (1.0 - initialOffset))
+						additionalOffset = 1.0 - initialOffset;
 
-			var param = {
-				TransformPosX: {
-					type: 'long',
-					value: newPos.x
-				},
-				TransformPosY: {
-					type: 'long',
-					value: newPos.y
+					var offset = Math.round((initialOffset + additionalOffset) * 100);
+
+					// hijacking the uno:TransformDialog msg for sending the new offset value
+					// for the pie segment dragging method;
+					// indeed there isn't any uno msg dispatching on the core side, but a chart controller dispatching
+					param = {
+						Action: {
+							type: 'string',
+							value: 'PieSegmentDragging'
+						},
+						Offset: {
+							type: 'long',
+							value: offset
+						}
+					};
 				}
-			};
+			}
+			else {
+				var newPos = this._graphicSelectionTwips.min.add(deltaPos);
+				var size = this._graphicSelectionTwips.getSize();
+
+				// try to keep shape inside document
+				if (newPos.x + size.x > this._docWidthTwips)
+					newPos.x = this._docWidthTwips - size.x;
+				if (newPos.x < 0)
+					newPos.x = 0;
+
+				if (newPos.y + size.y > this._docHeightTwips)
+					newPos.y = this._docHeightTwips - size.y;
+				if (newPos.y < 0)
+					newPos.y = 0;
+
+				param = {
+					TransformPosX: {
+						type: 'long',
+						value: newPos.x
+					},
+					TransformPosY: {
+						type: 'long',
+						value: newPos.y
+					}
+				};
+			}
 			this._map.sendUnoCommand('.uno:TransformDialog ', param);
 			this._graphicMarker.isDragged = false;
 		}
@@ -1963,7 +1993,9 @@ L.TileLayer = L.GridLayer.extend({
 			// For an image in Writer we need to send the size of the image not of the selection box.
 			// So if the image has been rotated we need to compute its size starting from the size of the selection
 			// rectangle and the rotation angle.
-			if (this._isSelectionWriterGraphic) {
+			var isSelectionWriterGraphic =
+				this._graphicSelection.extraInfo ? this._graphicSelection.extraInfo.isWriterGraphic : false;
+			if (isSelectionWriterGraphic) {
 				if (this._isGraphicAngleDivisibleBy90()) {
 					var k = this._graphicSelectionAngle / 9000;
 					// if k is even we have nothing to do since the rotation is 0 or 180.
@@ -2015,7 +2047,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._map.sendUnoCommand('.uno:TransformDialog ', param);
 
-			if (this._isSelectionWriterGraphic) {
+			if (isSelectionWriterGraphic) {
 				param = {
 					TransformPosX: {
 						type: 'long',
@@ -2130,8 +2162,10 @@ L.TileLayer = L.GridLayer.extend({
 				return;
 			}
 
+			var extraInfo = this._graphicSelection.extraInfo;
 			this._graphicMarker = L.svgGroup(this._graphicSelection, {
-				draggable: this._isGraphicSelectionDraggable,
+				draggable: extraInfo.isDraggable,
+				dragConstraint: extraInfo.dragInfo,
 				transform: true,
 				stroke: false,
 				fillOpacity: 0,
@@ -2147,12 +2181,16 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.on('scalestart scaleend', this._onGraphicEdit, this);
 			this._graphicMarker.on('rotatestart rotateend', this._onGraphicRotate, this);
 			this._map.addLayer(this._graphicMarker);
-			if (this._isGraphicSelectionDraggable)
+			if (extraInfo.isDraggable)
 				this._graphicMarker.dragging.enable();
 			this._graphicMarker.transform.enable({
-				scaling: this._isGraphicSelectionResizable,
-				rotation: this._isGraphicSelectionRotatable,
+				scaling: extraInfo.isResizable,
+				rotation: extraInfo.isRotatable,
 				uniformScaling: !this._isGraphicAngleDivisibleBy90()});
+			if (extraInfo.dragInfo && extraInfo.dragInfo.svg) {
+				this._graphicMarker.removeEmbeddedSVG();
+				this._graphicMarker.addEmbeddedSVG(extraInfo.dragInfo.svg);
+			}
 		}
 		else if (this._graphicMarker) {
 			this._graphicMarker.off('graphicmovestart graphicmoveend', this._onGraphicMove, this);

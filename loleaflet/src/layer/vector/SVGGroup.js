@@ -63,6 +63,7 @@ L.SVGGroup = L.Layer.extend({
 
 		L.DomEvent.on(this._dragShape, 'mousemove', this._onDrag, this);
 		L.DomEvent.on(this._dragShape, 'mouseup', this._onDragEnd, this);
+		L.DomEvent.on(this._dragShape, 'mouseout', this._onDragEnd, this);
 
 		L.DomEvent.on(this._dragShape, 'touchmove', this._onDrag, this);
 		L.DomEvent.on(this._dragShape, 'touchend', this._onDragEnd, this);
@@ -96,7 +97,6 @@ L.SVGGroup = L.Layer.extend({
 			containerPoint: this._map.mouseEventToContainerPoint(evt)
 		};
 		this.dragging._onDrag(data);
-
 	},
 
 	_onDragEnd: function(evt) {
@@ -107,6 +107,7 @@ L.SVGGroup = L.Layer.extend({
 			return;
 		L.DomEvent.off(this._dragShape, 'mousemove', this._onDrag, this);
 		L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
+		L.DomEvent.off(this._dragShape, 'mouseout', this._onDragEnd, this);
 
 		L.DomEvent.off(this._dragShape, 'touchmove', this._onDrag, this);
 		L.DomEvent.off(this._dragShape, 'touchend', this._onDragEnd, this);
@@ -116,7 +117,8 @@ L.SVGGroup = L.Layer.extend({
 		var pos = this._map.mouseEventToLatLng(evt);
 		this.fire('graphicmoveend', {pos: pos});
 
-		this.dragging._onDragEnd(evt);
+		if (evt.type === 'mouseup')
+			this.dragging._onDragEnd(evt);
 	},
 
 	bringToFront: function () {
