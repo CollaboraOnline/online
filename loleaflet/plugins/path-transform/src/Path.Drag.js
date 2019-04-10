@@ -159,6 +159,32 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		var dx = x - this._startPoint.x;
 		var dy = y - this._startPoint.y;
 
+		if (isNaN(dx) || isNaN(dy))
+			return;
+
+		if (this.constraint) {
+			if (this.constraint.dragMethod === 'PieSegmentDragging') {
+				var initialOffset = this.constraint.initialOffset;
+				var dragDirection = this.constraint.dragDirection;
+
+				var dsx = x - this._dragStartPoint.x;
+				var dsy = y - this._dragStartPoint.y;
+				var additionalOffset = (dsx * dragDirection.x + dsy * dragDirection.y) / this.constraint.range2;
+				var currentOffset = (dx * dragDirection.x + dy * dragDirection.y) / this.constraint.range2;
+
+				if (additionalOffset < -initialOffset && currentOffset < 0)
+					currentOffset = 0;
+				else if (additionalOffset > (1.0 - initialOffset) && currentOffset > 0)
+					currentOffset = 0;
+
+				dx = currentOffset * dragDirection.x;
+				dy = currentOffset * dragDirection.y;
+
+				x = this._startPoint.x + dx;
+				y = this._startPoint.y + dy;
+			}
+		}
+
 		// Send events only if point was moved
 		if (dx || dy) {
 			if (!this._path._dragMoved) {
@@ -367,8 +393,10 @@ var fnInitHook = function() {
 			L.Handler.PathDrag.makeDraggable(this);
 			this.dragging.enable();
 		}
+		this.dragging.constraint = this.options.dragConstraint;
 	} else if (this.dragging) {
 		this.dragging.disable();
+		this.dragging.constraint = null;
 	}
 };
 
