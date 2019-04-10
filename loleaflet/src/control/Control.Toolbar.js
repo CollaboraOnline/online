@@ -1677,6 +1677,14 @@ function onCommandStateChanged(e) {
 	else if (commandName === '.uno:LanguageStatus') {
 		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(_(state)).parent().html());
 	}
+	else if (commandName === '.uno:ModifiedStatus') {
+		if (e.state === 'true') {
+			w2ui['editbar'].set('save', {img:'savemodified'});
+		}
+		else {
+			w2ui['editbar'].set('save', {img:'save'});
+		}
+	}
 	else if (commandName === '.uno:StatusDocPos') {
 		state = toLocalePattern('Sheet %1 of %2', 'Sheet (\\d+) of (\\d+)', state, '%1', '%2');
 		updateToolbarItem(statusbar, 'StatusDocPos', $('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
