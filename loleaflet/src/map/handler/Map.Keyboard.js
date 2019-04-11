@@ -401,12 +401,8 @@ L.Map.Keyboard = L.Handler.extend({
 	_onIME: function (e) {
 		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
 			this._isComposing = true; // we are starting composing with IME
-			var txt = '';
-			for (var i = 0; i < e.originalEvent.data.length; i++) {
-				txt += e.originalEvent.data[i];
-			}
-			if (txt) {
-				this._map._docLayer._postCompositionEvent(0, 'input', txt);
+			if (e.originalEvent.data.length > 0) {
+				this._map._docLayer._postCompositionEvent(0, 'input', e.originalEvent.data);
 			}
 		}
 
@@ -417,10 +413,10 @@ L.Map.Keyboard = L.Handler.extend({
 			// is clear for the next word
 			this._map._clipboardContainer.setValue('');
 			// Set all keycodes to zero
-			this._map._docLayer._postCompositionEvent(0, 'end', '');
+			this._map._docLayer._postCompositionEvent(0, 'end', e.originalEvent.data);
 		}
 
-		if (e.type === 'textInput' && !this._keyHandled) {
+		if (e.type === 'textInput' && !this._keyHandled && !this._isComposing) {
 			// Hack for making space and spell-check text insert work
 			// in Chrome (on Andorid) or Chrome with IME.
 			//
