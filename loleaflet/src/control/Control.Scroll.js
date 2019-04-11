@@ -31,7 +31,10 @@ L.Control.Scroll = L.Control.extend({
 			axis: 'yx',
 			theme: 'minimal-dark',
 			scrollInertia: 0,
-			advanced:{autoExpandHorizontalScroll: true}, /* weird bug, it should be false */
+			advanced:{
+				autoExpandHorizontalScroll: true, /* weird bug, it should be false */
+				jumpOnContentResize: false /* prevent from jumping on a mobile devices */
+			},
 			callbacks:{
 				onScrollStart: function() {
 					control._map.fire('closepopup');
