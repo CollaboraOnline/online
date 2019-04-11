@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-ui-is.po\n"
-"X-Pootle-Revision: 3650695\n"
+"X-Pootle-Revision: 3795783\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -294,7 +294,7 @@ msgstr "Skrifa undir skjal"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Skrá út"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -429,15 +429,23 @@ msgstr ""
 "Árekstur vegna Afturkalla/Endurtaka við aðra notendur. Notaðu viðgerð á "
 "skjali til að leysa þetta"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Þú"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Aðeins lesanlegt"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Breyta"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Þjónninn rakst á %0 villu við að þátta %1 skipunina."
 
@@ -824,7 +832,15 @@ msgstr ""
 "Gat ekki hlaðið inn skjalinu. Gættu að hvort tegund skjals sé studd og að "
 "það sé ekki skemmt, og reyndu síðan aftur."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -833,7 +849,7 @@ msgstr ""
 "Mistókst að hlaða skjalinu inn úr gagnageymslu. Endilega hafðu samband við "
 "kerfisstjóra (%storageserver) þjónsins."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -844,11 +860,11 @@ msgstr ""
 "núna einungis lesanlegt. Hafðu samband við kerfisstjóra þjónsins "
 "(%storageserver) til að halda áfram."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "Ekki er hægt að vista skjal vegna útrunnins eða ógilds aðgangsteikns."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -896,15 +912,63 @@ msgstr "Hleð inn..."
 msgid "Uploading..."
 msgstr "Sendi inn ..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Bý til afrit..."
+
+#~ msgid "Last modification"
+#~ msgstr "Síðasta breyting"
+
+#~ msgid "Please enter the PIN Code"
+#~ msgstr "Settu inn PIN-kóðann"
+
+#~ msgid "Error at login."
+#~ msgstr "Villa við innskráningu."
+
+#~ msgid "Please scan the code"
+#~ msgstr "Skannaðu kóðann"
+
+#~ msgid "Couldn't get the QR code image."
+#~ msgstr "Gat ekki náð í mynd af QR-kóða."
+
+#~ msgid "Error when trying to restore access to identity."
+#~ msgstr "Villa við að reyna að endurheimta aðgang að auðkennum."
+
+#~ msgid "PIN Code"
+#~ msgstr "PIN-númer"
+
+#~ msgid "Please enter the PIN code from the EMail or SMS"
+#~ msgstr "Settu inn PIN-kóðann úr tölvupósti eða SMS-skilaboðum"
+
+#~ msgid "Login from email or mobile number"
+#~ msgstr "Skrá inn með tölvupósti eða úr farsíma"
+
+#~ msgid "Select document type to upload"
+#~ msgstr "Veldu tegund skjals til að senda inn"
+
+#~ msgid "Type:"
+#~ msgstr "Tegund:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Skjal sent inn."
+
+#~ msgid "Select identity:"
+#~ msgstr "Veldu persónuauðkenni:"
+
+#~ msgid "Login from mobile"
+#~ msgstr "Innskráning úr farsíma"
+
+#~ msgid "Recover from email"
+#~ msgstr "Endurheimta úr tölvupósti"
 
 #~ msgid "Select passport"
 #~ msgstr "Veldu passa"
 
 #~ msgid "Passport: N/A"
 #~ msgstr "Passi: ekki tiltækur"
+
+#~ msgid "Sign"
+#~ msgstr "Undirrita"
 
 #~ msgid "Status:"
 #~ msgstr "Staða:"
@@ -918,45 +982,38 @@ msgstr "Bý til afrit..."
 #~ msgid "Close"
 #~ msgstr "Loka"
 
-#~ msgid "Last modification"
-#~ msgstr "Síðasta breyting"
-
-#~ msgid "PIN Code"
-#~ msgstr "PIN-númer"
-
-#~ msgid "Login from email or mobile number"
-#~ msgstr "Skrá inn með tölvupósti eða úr farsíma"
-
-#~ msgid "Document uploaded."
-#~ msgstr "Skjal sent inn."
-
-#, fuzzy
-#~ msgid "Type:"
-#~ msgstr "Tegund"
-
-#~ msgid "Select identity:"
-#~ msgstr "Veldu persónuauðkenni:"
-
-#~ msgid "Login from mobile"
-#~ msgstr "Innskráning úr farsíma"
-
-#~ msgid "Recover from email"
-#~ msgstr "Endurheimta úr tölvupósti"
-
 #~ msgid "Not Signed"
 #~ msgstr "Óundirritað"
+
+#~ msgid "This document is digitally signed and the signature is valid."
+#~ msgstr "Þetta skjal er með stafrænni undirritun og undirritunin er gild."
 
 #~ msgid "Signed and validated"
 #~ msgstr "Undirritað og sannvottað"
 
+#~ msgid "This document has an invalid signature."
+#~ msgstr "Þetta skjal er með ógilda undirritun."
+
 #~ msgid "Signature broken"
 #~ msgstr "Undirritun er gölluð"
+
+#~ msgid "The signature was valid, but the document has been modified"
+#~ msgstr "Undirritunin var gild, en skjalinu hefur verið breytt"
 
 #~ msgid "Signed but document modified"
 #~ msgstr "Undirritað en skjalinu breytt"
 
+#~ msgid "The signature is OK, but the certificate could not be validated."
+#~ msgstr "Undirritunin er í lagi, en ekki var hægt að sannreyna skilríkið."
+
 #~ msgid "Signed but not validated"
 #~ msgstr "Undirritað en ekki sannvottað"
 
+#~ msgid "The signature is OK, but the document is only partially signed"
+#~ msgstr "Undirritunin er í lagi, en skjalið er aðeins undirritað að hluta"
+
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Undirritað en ekki allar skrár undirritaðar"
+
+#~ msgid "Creating new file from template..."
+#~ msgstr "Bý til nýja skrá út frá sniðmáti..."

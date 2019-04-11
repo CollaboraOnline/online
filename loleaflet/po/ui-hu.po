@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
-"X-Pootle-Revision: 3694444\n"
+"X-Pootle-Revision: 3796481\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -297,7 +297,7 @@ msgstr "Dokumentum aláírása"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Kijelentkezés"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -433,15 +433,23 @@ msgstr ""
 "Feloldhatatlan visszavonási/újraalkalmazási helyzet. A dokumentum korábbi "
 "állapotának helyreállítása a megoldás."
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Ön"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Írásvédett"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Hivatkozás megnyitása"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "A kiszolgáló %0 hibába ütközött a(z) %1 parancs feldolgozása közben."
 
@@ -829,7 +837,15 @@ msgstr ""
 "A dokumentum betöltése sikertelen. Ellenőrizze, hogy a fájltípus támogatott "
 "és a fájl nem sérült, majd próbálkozzon újra."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Érvénytelen hivatkozás: „%url”"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "Elhagyja a szerkesztőt, biztos, hogy folytatja?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -838,7 +854,7 @@ msgstr ""
 "Nem sikerült beolvasni a dokumentumot a tárhelyről. Forduljon a tárhely "
 "(%storageserver) rendszergazdájához."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -849,12 +865,12 @@ msgstr ""
 "mostantól csak olvasható. A szerkesztés folytatásához lépjen kapcsolatba a "
 "rendszergazdával (%storageserver)."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "A dokumentum nem menthető, mert a hozzáférési token lejárt vagy érvénytelen."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -902,33 +918,12 @@ msgstr "Betöltés…"
 msgid "Uploading..."
 msgstr "Feltöltés…"
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Másolat létrehozása..."
 
-#~ msgid "Select passport"
-#~ msgstr "Passport választása"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Passport: nincs"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Aláírás és feltöltés"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Dokumentum aláírása és feltöltése"
-
-#~ msgid "Status:"
-#~ msgstr "Állapot:"
-
-#~ msgid "N/A"
-#~ msgstr "Nincs"
-
-#~ msgid "Login"
-#~ msgstr "Bejelentkezés"
-
-#~ msgid "Close"
-#~ msgstr "Bezárás"
+#~ msgid "Shutdown Server"
+#~ msgstr "Kiszolgáló leállítása"
 
 #~ msgid "Last modification"
 #~ msgstr "Utolsó módosítás"
@@ -958,14 +953,14 @@ msgstr "Másolat létrehozása..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Bejelentkezés e-mail vagy mobilszám alapján"
 
-#~ msgid "Document uploaded."
-#~ msgstr "A dokumentum feltöltve."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Válassza ki a feltöltendő dokumentum típusát"
 
 #~ msgid "Type:"
 #~ msgstr "Típus:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "A dokumentum feltöltve."
 
 #~ msgid "Select identity:"
 #~ msgstr "Válasszon identitást:"
@@ -975,6 +970,27 @@ msgstr "Másolat létrehozása..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Visszaállítás emailből"
+
+#~ msgid "Select passport"
+#~ msgstr "Passport választása"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Passport: nincs"
+
+#~ msgid "Sign"
+#~ msgstr "Aláírás"
+
+#~ msgid "Status:"
+#~ msgstr "Állapot:"
+
+#~ msgid "N/A"
+#~ msgstr "Nincs"
+
+#~ msgid "Login"
+#~ msgstr "Bejelentkezés"
+
+#~ msgid "Close"
+#~ msgstr "Bezárás"
 
 #~ msgid "Not Signed"
 #~ msgstr "Nincs aláírva"
@@ -1008,6 +1024,12 @@ msgstr "Másolat létrehozása..."
 
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Aláírt, de nem minden fájlon van aláírás"
+
+#~ msgid "%d seconds ago"
+#~ msgstr "%d másodperce"
+
+#~ msgid "%d minutes ago"
+#~ msgstr "%d perce"
 
 #~ msgid "Creating new file from template..."
 #~ msgstr "Új fájl létrehozása sablonból..."

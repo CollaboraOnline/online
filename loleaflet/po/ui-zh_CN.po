@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
-"X-Pootle-Revision: 3701135\n"
+"X-Pootle-Revision: 3806275\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -293,7 +293,7 @@ msgstr "签名文档"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "退出"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -426,15 +426,23 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多个用户之间的撤销/重做发生了冲突。请使用文档恢复来解决冲突"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "您"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "只读"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "打开链接"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "编辑"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "服务器在处理 %1 命令时遇到了 %0 错误。"
 
@@ -793,14 +801,22 @@ msgid ""
 "not corrupted, and try again."
 msgstr "无法载入文件，请确认文件类型正确且文件并未受损，请重试。"
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "无效链接: 「%url」"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "您正在离开编辑器，是否确实要继续?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr "从存储位置读取文件错误。请联系存储服务器 (%storageserver) 的管理员。"
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -808,11 +824,11 @@ msgid ""
 "continue editing."
 msgstr "存储服务器上的磁盘空间不足，保存失败。文档现将是只读模式。要继续编辑，请联系服务器(%storageserver) 管理员。"
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "无法保存文件，访问令牌失效或无效。"
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -858,33 +874,12 @@ msgstr "正在载入..."
 msgid "Uploading..."
 msgstr "正在上传..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "正在创建副本…"
 
-#~ msgid "Select passport"
-#~ msgstr "选择通行证"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "通行证: N/A"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "签署 & 上传"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "签署并上传文件"
-
-#~ msgid "Status:"
-#~ msgstr "状态:"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#~ msgid "Login"
-#~ msgstr "登录"
-
-#~ msgid "Close"
-#~ msgstr "关闭"
+#~ msgid "Shutdown Server"
+#~ msgstr "关闭服务器"
 
 #~ msgid "Last modification"
 #~ msgstr "最后修改"
@@ -913,14 +908,14 @@ msgstr "正在创建副本…"
 #~ msgid "Login from email or mobile number"
 #~ msgstr "通过电子邮箱或手机号码登录"
 
-#~ msgid "Document uploaded."
-#~ msgstr "文档已上传。"
-
 #~ msgid "Select document type to upload"
 #~ msgstr "选择要上传的文档类型"
 
 #~ msgid "Type:"
 #~ msgstr "类型:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "文档已上传。"
 
 #~ msgid "Select identity:"
 #~ msgstr "选择身份:"
@@ -930,6 +925,27 @@ msgstr "正在创建副本…"
 
 #~ msgid "Recover from email"
 #~ msgstr "通过电子邮箱恢复"
+
+#~ msgid "Select passport"
+#~ msgstr "选择通行证"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "通行证: N/A"
+
+#~ msgid "Sign"
+#~ msgstr "签名"
+
+#~ msgid "Status:"
+#~ msgstr "状态:"
+
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Login"
+#~ msgstr "登录"
+
+#~ msgid "Close"
+#~ msgstr "关闭"
 
 #~ msgid "Not Signed"
 #~ msgstr "未签名"
@@ -963,6 +979,12 @@ msgstr "正在创建副本…"
 
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "已签名但不是所有文件都有签名"
+
+#~ msgid "%d seconds ago"
+#~ msgstr "%d 秒前"
+
+#~ msgid "%d minutes ago"
+#~ msgstr "%d 分钟前"
 
 #~ msgid "Creating new file from template..."
 #~ msgstr "从模版创建新文件..."

@@ -1,11 +1,11 @@
-# #-#-#-#-#  LibreOffice 5.1 Compendium (sl) #-#-#-#-#
-# Martin Srebotnjak <miles@filmsi.net>, 2016.
+# #-#-#-#-#  LibreOffice 6.3 Online (sl) #-#-#-#-#
+# Martin Srebotnjak <miles@filmsi.net>, 2016, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
-"PO-Revision-Date: 2018-12-06 23:25+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
+"PO-Revision-Date: 2019-03-30 22:09+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
 "Language: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3);\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -430,15 +430,23 @@ msgstr ""
 "Spor razveljavljanja/ponavljanja med več uporabniki. Uporabite popravilo "
 "dokumenta za razrešitev težave."
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Vi"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Samo za branje"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Odpri povezavo"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Uredi"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Strežnik je naletel na napako %0 pri razčlenjevanju ukaza %1."
 
@@ -822,7 +830,15 @@ msgstr ""
 "Napaka pri nalaganju dokumenta. Prepričajte se, da je vrsta datoteke podprta "
 "in da datoteka ni poškodovana, in poskusite znova."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Neveljavna povezava: »%url«"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "Zapuščate urejevalnik, ste prepričani, da želite nadaljevati?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -831,7 +847,7 @@ msgstr ""
 "Dokumenta ni mogoče shraniti v shrambo. Preverite svoje pravice ali stopite "
 "v stik z upraviteljem strežnika shrambe (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -842,13 +858,13 @@ msgstr ""
 "Za nadaljevanje urejanja stopite v stik s skrbnikom strežnika "
 "(%storageserver)."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Dokumenta ni mogoče shraniti zaradi poteklega ali neveljavnega žetona za "
 "dostop."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -896,99 +912,6 @@ msgstr "Nalaganje ..."
 msgid "Uploading..."
 msgstr "Prenašanje na strežnik ..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Ustvarjanje kopije ..."
-
-#~ msgid "Sign"
-#~ msgstr "Podpiši"
-
-#~ msgid "Upload"
-#~ msgstr "Naloži na strežnik"
-
-#~ msgid "Upload document"
-#~ msgstr "Naloži dokument"
-
-#~ msgid "Identity:"
-#~ msgstr "Identiteta:"
-
-#~ msgid "N/A"
-#~ msgstr "N/D"
-
-#~ msgid "Select passport"
-#~ msgstr "Izberite potni list"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Potni list: N/D"
-
-#~ msgid "Status:"
-#~ msgstr "Stanje:"
-
-#~ msgid "Login"
-#~ msgstr "Prijava"
-
-#~ msgid "Close"
-#~ msgstr "Zapri"
-
-#~ msgid "PIN Code"
-#~ msgstr "Kodo PIN"
-
-#~ msgid "Login from email or mobile number"
-#~ msgstr "Prijava z e-pošte ali mobilne številke"
-
-#~ msgid "Check your email"
-#~ msgstr "Preverite svojo e-pošto"
-
-#~ msgid "Document uploaded."
-#~ msgstr "Dokument naložen."
-
-#~ msgid "Not Signed"
-#~ msgstr "Ni podpisano"
-
-#~ msgid "Document signed and validated."
-#~ msgstr "Dokument podpisan in overjen."
-
-#~ msgid "Signed and validated"
-#~ msgstr "Podpisano in overjeno"
-
-#~ msgid "Document signed but signature is broken."
-#~ msgstr "Dokument podpisan, vendar je podpis okvarjen."
-
-#~ msgid "Signature broken"
-#~ msgstr "Podpis okvarjen"
-
-#~ msgid "Document signed but the document is already modified."
-#~ msgstr "Dokument podpisan, vendar je dokument že spremenjen."
-
-#~ msgid "Signed but document modified"
-#~ msgstr "Dokument podpisan, vendar spremenjen"
-
-#~ msgid "Document signed but can not be validated."
-#~ msgstr "Dokument podpisan, vendar ga ni mogoče overiti."
-
-#~ msgid "Signed but not validated"
-#~ msgstr "Podpisano, vendar ne potrjeno"
-
-#~ msgid "Document signed but not all files are signed."
-#~ msgstr "Dokument podpisan, vendar niso vse datoteke podpisane."
-
-#~ msgid "Signed but not all files are signed"
-#~ msgstr "Podpisano, vendar vse datoteke niso podpisane"
-
-#~ msgid "Textwrap"
-#~ msgstr "Oblivanje besedila"
-
-#~ msgid "No wrap"
-#~ msgstr "Brez oblivanja"
-
-#~ msgid "Page wrap"
-#~ msgstr "Oblivanje strani"
-
-#~ msgid "Wrap anchor only"
-#~ msgstr "Oblij samo sidro"
-
-#~ msgid "Ideal wrap"
-#~ msgstr "Idealno oblivanje"
-
-#~ msgid "Wrap through"
-#~ msgstr "Oblij skozi"

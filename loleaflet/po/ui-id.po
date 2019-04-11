@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-ui-id.po\n"
-"X-Pootle-Revision: 3756995\n"
+"X-Pootle-Revision: 3803992\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -297,7 +297,7 @@ msgstr "Tandatangani Dokumen"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Keluar"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -432,15 +432,23 @@ msgstr ""
 "Konfik Urungkan/Ulangi dengan user ganda. Tolong gunakan perbaiki dokumen "
 "untuk mengatasinya"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Kamu"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Hanya baca"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Buka tautan"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Sunting"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Peladen mengalami kesalahan %0 saat mem-parsing perintah %1."
 
@@ -827,7 +835,15 @@ msgstr ""
 "Gagal memuat dokumen. Harap pastikan jenis file didukung dan tidak rusak, "
 "dan coba lagi."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Tautan tidak valid: '%url'"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "Anda akan meninggalkan editor, apa Anda yakin akan melanjutkan?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -836,7 +852,7 @@ msgstr ""
 "Gagal membaca dokumen dari penyimpanan. Silakan hubungi administrator "
 "peladen penyimpanan Anda (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -847,12 +863,12 @@ msgstr ""
 "penyimpanan. Dokumen sekarang akan menjadi hanya-baca. Silakan hubungi "
 "administrator server (%storageserver) untuk melanjutkan pengeditan."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Dokumen tidak dapat disimpan karena token akses kedaluwarsa atau tidak valid."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -900,33 +916,12 @@ msgstr "Memuat..."
 msgid "Uploading..."
 msgstr "Memuat..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Membuat salinan ..."
 
-#~ msgid "Select passport"
-#~ msgstr "PIlih Passport"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Passport: N/A"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Tandai & Unggah"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Tandai & Unggah dokumen"
-
-#~ msgid "Status:"
-#~ msgstr "Status"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#~ msgid "Login"
-#~ msgstr "Log Masuk"
-
-#~ msgid "Close"
-#~ msgstr "Tutup"
+#~ msgid "Shutdown Server"
+#~ msgstr "Matikan Server"
 
 #~ msgid "Last modification"
 #~ msgstr "Modifikasi terakhir"
@@ -955,14 +950,14 @@ msgstr "Membuat salinan ..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Masuk dari email atau nomor ponsel"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Dokumen diunggah"
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Pilih jenis dokument untuk unggah"
 
 #~ msgid "Type:"
 #~ msgstr "Jenis:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokumen diunggah"
 
 #~ msgid "Select identity:"
 #~ msgstr "Pilih identitas:"
@@ -972,6 +967,24 @@ msgstr "Membuat salinan ..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Pulihkan dari email"
+
+#~ msgid "Select passport"
+#~ msgstr "PIlih Passport"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Passport: N/A"
+
+#~ msgid "Status:"
+#~ msgstr "Status"
+
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Login"
+#~ msgstr "Log Masuk"
+
+#~ msgid "Close"
+#~ msgstr "Tutup"
 
 #~ msgid "Not Signed"
 #~ msgstr "Tidak ditandai"
@@ -1005,6 +1018,12 @@ msgstr "Membuat salinan ..."
 
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Ditandatangani tetapi tidak semua file ditandatangani"
+
+#~ msgid "%d seconds ago"
+#~ msgstr "%d detik yang lalu"
+
+#~ msgid "%d minutes ago"
+#~ msgstr "%d menit yang lalu"
 
 #~ msgid "Creating new file from template..."
 #~ msgstr "Membuat file baru dari template ..."

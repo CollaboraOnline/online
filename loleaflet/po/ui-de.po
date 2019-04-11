@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-ui-de.po\n"
-"X-Pootle-Revision: 3678182\n"
+"X-Pootle-Revision: 3803993\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -296,7 +296,7 @@ msgstr "Dokument signieren"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Abmelden"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -431,15 +431,23 @@ msgstr ""
 "Konflikt beim Rückgängigmachen/Wiederherstellen mit mehreren Benutzern. "
 "Bitte verwenden Sie die Dokumentwiederherstellung zur Lösung"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Sie"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Schreibgeschützt"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Verknüpfung öffnen"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 "Der Server ist auf einen Fehler %0 beim Ausführen des Befehls %1 gestoßen."
@@ -743,7 +751,7 @@ msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
-"Es konnte kein Verbindung zu Ihrem Dokument hergestellt werden. Bitte "
+"Es konnte keine Verbindung zu Ihrem Dokument hergestellt werden. Bitte "
 "versuchen Sie es erneut."
 
 #: src/errormessages.js:13
@@ -835,7 +843,15 @@ msgstr ""
 "dass der Dateityp unterstützt und die Datei nicht defekt ist, und versuchen "
 "Sie es dann erneut."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -844,7 +860,7 @@ msgstr ""
 "Lesen des Dokuments vom Speicher fehlgeschlagen. Bitte kontaktieren Sie den "
 "Administrator Ihres Speicherservers (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -856,13 +872,13 @@ msgstr ""
 "kontaktieren Sie den Administrator Ihres Speicherservers (%storageserver), "
 "um mit der Bearbeitung fortzufahren."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Das Dokument kann aufgrund eines abgelaufenen oder ungültigen Zugangs nicht "
 "gespeichert werden."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -910,33 +926,9 @@ msgstr "Laden..."
 msgid "Uploading..."
 msgstr "Hochladen..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Kopie erstellen..."
-
-#~ msgid "Select passport"
-#~ msgstr "Schlüssel auswählen"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Schlüssel: NV"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Signieren und Hochladen"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Dokument signieren und hochladen"
-
-#~ msgid "Status:"
-#~ msgstr "Status:"
-
-#~ msgid "N/A"
-#~ msgstr "NV"
-
-#~ msgid "Login"
-#~ msgstr "Anmelden"
-
-#~ msgid "Close"
-#~ msgstr "Schließen"
 
 #~ msgid "Last modification"
 #~ msgstr "Letzte Bearbeitung"
@@ -965,14 +957,14 @@ msgstr "Kopie erstellen..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Anmeldung über E-Mail oder Handynummer"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Dokument hochgeladen."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Wählen Sie den Dokumententyp zum Hochladen aus"
 
 #~ msgid "Type:"
 #~ msgstr "Typ:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument hochgeladen."
 
 #~ msgid "Select identity:"
 #~ msgstr "Identität wählen:"
@@ -982,6 +974,27 @@ msgstr "Kopie erstellen..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Wiederherstellung über E-Mail"
+
+#~ msgid "Select passport"
+#~ msgstr "Schlüssel auswählen"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Schlüssel: NV"
+
+#~ msgid "Sign"
+#~ msgstr "Signatur"
+
+#~ msgid "Status:"
+#~ msgstr "Status:"
+
+#~ msgid "N/A"
+#~ msgstr "NV"
+
+#~ msgid "Login"
+#~ msgstr "Anmelden"
+
+#~ msgid "Close"
+#~ msgstr "Schließen"
 
 #~ msgid "Not Signed"
 #~ msgstr "Nicht signiert"

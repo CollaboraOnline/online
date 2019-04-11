@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-ui-cy.po\n"
-"X-Pootle-Revision: 3737603\n"
+"X-Pootle-Revision: 3804518\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -293,7 +293,7 @@ msgstr "Llofnodi dogfen"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Allgofnodi"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -428,15 +428,23 @@ msgstr ""
 "Gwrthdaro Dadwneud/Ail-wneud oherwydd defnyddwyr luosog. Defnyddiwch "
 "trwsio'r ddogfen i'w ddatrys"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Chi"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Darllen y unig"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Agor dolen"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Golygu"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Profodd y gweinydd wall %0 wrth ddidoli'r gorchymyn %1."
 
@@ -821,7 +829,15 @@ msgstr ""
 "Wedi methu llwytho'r ddogfen. Gwnewch yn siŵr fod y math yna o ffeil yn cael "
 "ei gynnal ac nad yw wedi ei llygru a cheisiwch eto."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Dolen annilys: '%url'"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "Rydych yn gadael y golygydd, ydych chi'n siŵr eich bod am barhau?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -830,7 +846,7 @@ msgstr ""
 "Methu darllen y ddogfen yn y storfa. Cysylltwch â'ch gweinyddwr gweinydd "
 "storio (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -841,11 +857,11 @@ msgstr ""
 "yn un darllen yn unig, nawr. Cysylltwch â gweinyddwr y gweinydd "
 "(%storageserver) er mwyn parhau i olygu."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "Nid oes modd cadw'r ddogfen oherwydd tocyn mynediad hen neu annilys."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -893,33 +909,12 @@ msgstr "Yn llwytho..."
 msgid "Uploading..."
 msgstr "Yn llwytho..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Creu copi..."
 
-#~ msgid "Select passport"
-#~ msgstr "Dewis pasbort"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Pasbort: Dim ar Gael"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Llofnodi a Llwytho i Fyny"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Llofnodi a llwytho dogfen i fyny"
-
-#~ msgid "Status:"
-#~ msgstr "Statws:"
-
-#~ msgid "N/A"
-#~ msgstr "Dim ar Gael"
-
-#~ msgid "Login"
-#~ msgstr "Mewngofnod"
-
-#~ msgid "Close"
-#~ msgstr "Cau"
+#~ msgid "Shutdown Server"
+#~ msgstr "Diffodd y Gweinydd"
 
 #~ msgid "Last modification"
 #~ msgstr "Newid diwethaf"
@@ -948,14 +943,14 @@ msgstr "Creu copi..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Mewngofndo o e-boost neu rif symudol"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Dogfen wedi ei llwytho i fyny"
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Dewiswch y math o ddogfen i'w lwytho i fyny"
 
 #~ msgid "Type:"
 #~ msgstr "Math:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dogfen wedi ei llwytho i fyny"
 
 #~ msgid "Select identity:"
 #~ msgstr "Dewis enw"
@@ -965,6 +960,27 @@ msgstr "Creu copi..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Adfer o e-bost"
+
+#~ msgid "Select passport"
+#~ msgstr "Dewis pasbort"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Pasbort: Dim ar Gael"
+
+#~ msgid "Sign"
+#~ msgstr "Arwydd"
+
+#~ msgid "Status:"
+#~ msgstr "Statws:"
+
+#~ msgid "N/A"
+#~ msgstr "Dim ar Gael"
+
+#~ msgid "Login"
+#~ msgstr "Mewngofnod"
+
+#~ msgid "Close"
+#~ msgstr "Cau"
 
 #~ msgid "Not Signed"
 #~ msgstr "Heb lofnod"
@@ -999,6 +1015,12 @@ msgstr "Creu copi..."
 
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Llofnodwyd ond nid yw'r holl ffeiliau wedi'u llofnodi"
+
+#~ msgid "%d seconds ago"
+#~ msgstr "%d eiliad yn ôl"
+
+#~ msgid "%d minutes ago"
+#~ msgstr "%d munud yn ôl"
 
 #~ msgid "Creating new file from template..."
 #~ msgstr "Creu ffeil newydd o dempled..."

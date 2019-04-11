@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
-"X-Pootle-Revision: 3652973\n"
+"X-Pootle-Revision: 3795889\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -295,7 +295,7 @@ msgstr "Podpísať dokument"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Odhlásiť"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -430,15 +430,23 @@ msgstr ""
 "Konflikt medzi viacerými používateľmi pri rušení alebo obnove zmien. Na "
 "vyriešenie problému použite prosím obnovu dokumentu."
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Vy"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Len na čítanie"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Upraviť"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Server zaznamenal chybu %0 počas spracovania príkazu %1."
 
@@ -823,7 +831,15 @@ msgstr ""
 "Nepodarilo sa načítať dokument. Prosím preverte si, či je typ súboru "
 "podporovaný alebo či súbor nie je poškodený, a skúste to znova."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -832,7 +848,7 @@ msgstr ""
 "Nepodarilo sa načítať dokument. Prosím kontaktujte správcu vášho sieťového "
 "úložiska (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -843,12 +859,12 @@ msgstr ""
 "priestoru. Dokument bude ďalej v režime len na čítanie. Ak chcete v práci "
 "pokračovať, kontaktuje prosím administrátora servera (%storageserver)."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Dokument nemožno uložiť pre expiráciu alebo neplatnosť prístupového tokenu"
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -896,33 +912,9 @@ msgstr "Načítava sa…"
 msgid "Uploading..."
 msgstr "Načítava sa…"
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Vytváranie kópie..."
-
-#~ msgid "Select passport"
-#~ msgstr "Zvoliť heslo"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Heslo: N/A"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Prihlásiť sa a nahrať"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Prihlásiť sa a nahrať dokument"
-
-#~ msgid "Status:"
-#~ msgstr "Stav:"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#~ msgid "Login"
-#~ msgstr "Prihlásiť"
-
-#~ msgid "Close"
-#~ msgstr "Zatvoriť"
 
 #~ msgid "Last modification"
 #~ msgstr "Posledná zmena"
@@ -951,14 +943,14 @@ msgstr "Vytváranie kópie..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Prihlásiť sa z e-mailu nebo mobilného čísla"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Dokument nahraný."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Vybrať typ dokumentu na nahratie"
 
 #~ msgid "Type:"
 #~ msgstr "Typ:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument nahraný."
 
 #~ msgid "Select identity:"
 #~ msgstr "Vyberať identitu:"
@@ -968,6 +960,27 @@ msgstr "Vytváranie kópie..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Obnova z e-mailu"
+
+#~ msgid "Select passport"
+#~ msgstr "Zvoliť heslo"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Heslo: N/A"
+
+#~ msgid "Sign"
+#~ msgstr "Podpísať"
+
+#~ msgid "Status:"
+#~ msgstr "Stav:"
+
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Login"
+#~ msgstr "Prihlásiť"
+
+#~ msgid "Close"
+#~ msgstr "Zatvoriť"
 
 #~ msgid "Not Signed"
 #~ msgstr "Nepodpísané"
