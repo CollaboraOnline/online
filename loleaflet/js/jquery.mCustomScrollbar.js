@@ -284,6 +284,11 @@ and dependencies (minified).
 				*/
 				updateOnContentResize:true,
 				/*
+				prevent from updating view position after content resize to avoid jumping on mobile devices
+				values: boolean
+				*/
+				jumpOnContentResize:true,
+				/*
 				auto-update scrollbars each time each image inside the element is fully loaded 
 				values: "auto", boolean
 				*/
@@ -561,31 +566,37 @@ and dependencies (minified).
 						var to=[Math.abs(mCSB_container[0].offsetTop),Math.abs(mCSB_container[0].offsetLeft)];
 						if(o.axis!=="x"){ /* y/yx axis */
 							if(!d.overflowed[0]){ /* y scrolling is not required */
-								_resetContentPosition.call(this); /* reset content position */
+								if(o.advanced.jumpOnContentResize)
+									_resetContentPosition.call(this); /* reset content position */
 								if(o.axis==="y"){
 									_unbindEvents.call(this);
-								}else if(o.axis==="yx" && d.overflowed[1]){
+								}else if(o.axis==="yx" && d.overflowed[1] && o.advanced.jumpOnContentResize){
 									_scrollTo($this,to[1].toString(),{dir:"x",dur:0,overwrite:"none"});
 								}
-							}else if(mCSB_dragger[0].height()>mCSB_dragger[0].parent().height()){
+							}else if(mCSB_dragger[0].height()>mCSB_dragger[0].parent().height()
+									&& o.advanced.jumpOnContentResize){
 								_resetContentPosition.call(this); /* reset content position */
 							}else{ /* y scrolling is required */
-								_scrollTo($this,to[0].toString(),{dir:"y",dur:0,overwrite:"none"});
+								if(o.advanced.jumpOnContentResize)
+									_scrollTo($this,to[0].toString(),{dir:"y",dur:0,overwrite:"none"});
 								d.contentReset.y=null;
 							}
 						}
 						if(o.axis!=="y"){ /* x/yx axis */
 							if(!d.overflowed[1]){ /* x scrolling is not required */
-								_resetContentPosition.call(this); /* reset content position */
+								if(o.advanced.jumpOnContentResize)
+									_resetContentPosition.call(this); /* reset content position */
 								if(o.axis==="x"){
 									_unbindEvents.call(this);
-								}else if(o.axis==="yx" && d.overflowed[0]){
+								}else if(o.axis==="yx" && d.overflowed[0] && o.advanced.jumpOnContentResize){
 									_scrollTo($this,to[0].toString(),{dir:"y",dur:0,overwrite:"none"});
 								}
 							}else if(mCSB_dragger[1].width()>mCSB_dragger[1].parent().width()){
-								_resetContentPosition.call(this); /* reset content position */
+								if(o.advanced.jumpOnContentResize)
+									_resetContentPosition.call(this); /* reset content position */
 							}else{ /* x scrolling is required */
-								_scrollTo($this,to[1].toString(),{dir:"x",dur:0,overwrite:"none"});
+								if(o.advanced.jumpOnContentResize)
+									_scrollTo($this,to[1].toString(),{dir:"x",dur:0,overwrite:"none"});
 								d.contentReset.x=null;
 							}
 						}
