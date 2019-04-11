@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -1136,21 +1137,19 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                 //for some reason, getName uses %20 instead of space
                 String filename = file.getName().replace("%20", " ");
 
-                //TODO finish adding to recents
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pathString));
+                String packageName = this.getApplicationContext().getPackageName();
+                ComponentName componentName = new ComponentName(packageName, MainActivity.class.getName());
+                intent.setComponent(componentName);
 
-//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
-//                String packageName = this.getApplicationContext().getPackageName();
-//                ComponentName componentName = new ComponentName(packageName, LibreOfficeMainActivity.class.getName());
-//                intent.setComponent(componentName);
-//
-//                ShortcutInfo shortcut = new ShortcutInfo.Builder(this, filename)
-//                        .setShortLabel(filename)
-//                        .setLongLabel(filename)
-//                        .setIcon(Icon.createWithResource(this, drawable))
-//                        .setIntent(intent)
-//                        .build();
-//
-//                shortcuts.add(shortcut);
+                ShortcutInfo shortcut = new ShortcutInfo.Builder(this, filename)
+                        .setShortLabel(filename)
+                        .setLongLabel(filename)
+                        .setIcon(Icon.createWithResource(this, drawable))
+                        .setIntent(intent)
+                        .build();
+
+                shortcuts.add(shortcut);
             }
             shortcutManager.setDynamicShortcuts(shortcuts);
         }
