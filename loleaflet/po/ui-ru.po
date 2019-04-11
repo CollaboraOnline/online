@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /ru/libo_online/loleaflet-ui-ru.po\n"
-"X-Pootle-Revision: 3650783\n"
+"X-Pootle-Revision: 3795873\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -429,15 +429,23 @@ msgstr ""
 "Конфликт Отмены/Повторения с несколькими пользователями. Пожалуйста, "
 "воспользуйтесь восстановлением документа для разрешения конфликта"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Вы"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Только чтение"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Правка"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 
@@ -820,7 +828,15 @@ msgstr ""
 "Сбой загрузки документа. Попробуйте снова, убедившись, что поддерживается "
 "тип файла и файл не повреждён."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -829,7 +845,7 @@ msgstr ""
 "Сбой чтения документа из хранилища. Свяжитесь с администратором хранилища "
 "(%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -840,13 +856,13 @@ msgstr ""
 "чтения. Для возобновления редактирования свяжитесь с администратором "
 "хранилища (%storageserver)."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Документ не может быть сохранён из-за отсутствующего или неправильного ключа "
 "доступа"
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -894,7 +910,7 @@ msgstr "Загрузка…"
 msgid "Uploading..."
 msgstr "Выгрузка…"
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr ""
 

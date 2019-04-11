@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 3721190\n"
+"X-Pootle-Revision: 3795720\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -293,7 +293,7 @@ msgstr "Underskriv dokument"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Log ud"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -428,15 +428,23 @@ msgstr ""
 "Konfliktende fortryd/genskab med mange brugere. Brug venligst "
 "dokumentreparation for at løse det"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Dig"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Skrivebeskyttet"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Rediger"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Serveren har fundet en %0-fejl under udførelse af kommandoen %1."
 
@@ -822,7 +830,15 @@ msgstr ""
 "Kunne ikke indlæse dokumentet. Kontroller venligst at filtypen er "
 "understøttet og ubeskadiget, og prøv igen."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -831,7 +847,7 @@ msgstr ""
 "Kunne ikke læse dokument fra lager. Kontakt venligst din lager server "
 "(%storageserver) administrator."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -842,11 +858,11 @@ msgstr ""
 "kun læseadgang. Kontakt venligst serverens (%storageserver) administrator "
 "for at fortsætte redigering."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "Dokumentet kan ikke gemmes pga et udløbet eller ugyldigt adgangstegn."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -894,33 +910,9 @@ msgstr "Indlæser..."
 msgid "Uploading..."
 msgstr "Indlæser..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Oprette kopi..."
-
-#~ msgid "Select passport"
-#~ msgstr "Vælg pas"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "pas: N/A"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Signer og upload"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Signer og upload dokument"
-
-#~ msgid "Status:"
-#~ msgstr "Status:"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#~ msgid "Login"
-#~ msgstr "Login:"
-
-#~ msgid "Close"
-#~ msgstr "Luk"
 
 #~ msgid "Last modification"
 #~ msgstr "Seneste ændring"
@@ -949,14 +941,14 @@ msgstr "Oprette kopi..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Login fra email eller mobil"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Dokument uploadet."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Vælg dokumenttype, der skal uploades"
 
 #~ msgid "Type:"
 #~ msgstr "Type:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument uploadet."
 
 #~ msgid "Select identity:"
 #~ msgstr "Vælg identitet:"
@@ -966,6 +958,27 @@ msgstr "Oprette kopi..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Genskab fra email"
+
+#~ msgid "Select passport"
+#~ msgstr "Vælg pas"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "pas: N/A"
+
+#~ msgid "Sign"
+#~ msgstr "Signer"
+
+#~ msgid "Status:"
+#~ msgstr "Status:"
+
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Login"
+#~ msgstr "Login:"
+
+#~ msgid "Close"
+#~ msgstr "Luk"
 
 #~ msgid "Not Signed"
 #~ msgstr "Ikke signeret"

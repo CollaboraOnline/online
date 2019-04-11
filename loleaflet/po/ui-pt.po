@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-ui-pt.po\n"
-"X-Pootle-Revision: 3659827\n"
+"X-Pootle-Revision: 3795866\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -297,7 +297,7 @@ msgstr "Assinar documento"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Terminar sessão"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -432,15 +432,23 @@ msgstr ""
 "Conflito desfazer/refazer com vários utilizadores. Por favor use a reparação "
 "de documentos para o resolver."
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Você"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Apenas leitura"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Editar"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "O servidor encontrou o erro '%0' ao processar o comando %1."
 
@@ -827,7 +835,15 @@ msgstr ""
 "Falha ao carregar o documento. Por favor certifique-se de que o tipo de "
 "ficheiro é suportado ou se está danificado e tente novamente."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -836,7 +852,7 @@ msgstr ""
 "Falhou ao ler o documento do armazenamento. Contacte o administrador do "
 "servidor (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -847,13 +863,13 @@ msgstr ""
 "documento será apenas de leitura. Por favor contacte o administrador do "
 "servidor (%storageserver) para continuar a edição."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Não foi possível guardar o documento porque o 'token' de acesso expirou ou é "
 "inválido."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -901,33 +917,9 @@ msgstr "A carregar..."
 msgid "Uploading..."
 msgstr "A enviar..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Criar uma cópia..."
-
-#~ msgid "Select passport"
-#~ msgstr "Selecionar passaporte"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Passaporte: N/D"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Assinar e enviar"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Assinar e enviar o documento"
-
-#~ msgid "Status:"
-#~ msgstr "Estado:"
-
-#~ msgid "N/A"
-#~ msgstr "N/D"
-
-#~ msgid "Login"
-#~ msgstr "Acesso"
-
-#~ msgid "Close"
-#~ msgstr "Fechar"
 
 #~ msgid "Last modification"
 #~ msgstr "Última modificação"
@@ -956,14 +948,14 @@ msgstr "Criar uma cópia..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Acesso por e-mail ou número de telemóvel."
 
-#~ msgid "Document uploaded."
-#~ msgstr "Documento enviado."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Selecione o tipo de documento a enviar"
 
 #~ msgid "Type:"
 #~ msgstr "Tipo:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Documento enviado."
 
 #~ msgid "Select identity:"
 #~ msgstr "Selecionar identidade:"
@@ -973,6 +965,27 @@ msgstr "Criar uma cópia..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Recuperar por e-mail"
+
+#~ msgid "Select passport"
+#~ msgstr "Selecionar passaporte"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Passaporte: N/D"
+
+#~ msgid "Sign"
+#~ msgstr "Assinar"
+
+#~ msgid "Status:"
+#~ msgstr "Estado:"
+
+#~ msgid "N/A"
+#~ msgstr "N/D"
+
+#~ msgid "Login"
+#~ msgstr "Acesso"
+
+#~ msgid "Close"
+#~ msgstr "Fechar"
 
 #~ msgid "Not Signed"
 #~ msgstr "Não assinado"

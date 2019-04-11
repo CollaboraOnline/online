@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-ui-ca.po\n"
-"X-Pootle-Revision: 3716833\n"
+"X-Pootle-Revision: 3795710\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -297,7 +297,7 @@ msgstr "Signa el document"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Finalitza la sessió"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -432,15 +432,23 @@ msgstr ""
 "Hi ha un conflicte de desfer i refer amb múltiples usuaris. Useu la "
 "reparació del document per a resoldre-ho"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Vós"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Només de lectura"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Edita"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Aquest servidor ha trobat un error %0 en processar l'ordre %1."
 
@@ -832,7 +840,15 @@ msgstr ""
 "No s'ha pogut carregar el document. Assegureu-vos que el tipus de fitxer és "
 "suportat i no estigui malmès, i torneu a intentar-ho més tard."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -841,7 +857,7 @@ msgstr ""
 "No s'ha pogut llegir el document del magatzem. Contacte amb l'administrador "
 "del servidor d'emmagatzematge (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -852,11 +868,11 @@ msgstr ""
 "de només lectura. Contacteu amb l'administrador del servidor (%storageserver)"
 " per a continuar l'edició."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "El document no es pot desar a causa d'un testimoni d'accés invàlid."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -904,33 +920,9 @@ msgstr "S'està carregant..."
 msgid "Uploading..."
 msgstr "S'està carregant..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "S'està creant una còpia..."
-
-#~ msgid "Select passport"
-#~ msgstr "Seleccioneu un passaport"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Passaport: N/D"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Signa i puja"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Signa i puja un document"
-
-#~ msgid "Status:"
-#~ msgstr "Estat:"
-
-#~ msgid "N/A"
-#~ msgstr "N/D"
-
-#~ msgid "Login"
-#~ msgstr "Inici de sessió"
-
-#~ msgid "Close"
-#~ msgstr "Tanca"
 
 #~ msgid "Last modification"
 #~ msgstr "Darrera modificació"
@@ -959,14 +951,14 @@ msgstr "S'està creant una còpia..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Inici de sessió amb correu electrònic o número de mòbil"
 
-#~ msgid "Document uploaded."
-#~ msgstr "S'ha pujat el document."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Seleccioneu el tipus de document a pujar"
 
 #~ msgid "Type:"
 #~ msgstr "Tipus"
+
+#~ msgid "Document uploaded."
+#~ msgstr "S'ha pujat el document."
 
 #~ msgid "Select identity:"
 #~ msgstr "Seleccioneu una identitat:"
@@ -976,6 +968,24 @@ msgstr "S'està creant una còpia..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Recupera amb correu electrònic"
+
+#~ msgid "Select passport"
+#~ msgstr "Seleccioneu un passaport"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Passaport: N/D"
+
+#~ msgid "Status:"
+#~ msgstr "Estat:"
+
+#~ msgid "N/A"
+#~ msgstr "N/D"
+
+#~ msgid "Login"
+#~ msgstr "Inici de sessió"
+
+#~ msgid "Close"
+#~ msgstr "Tanca"
 
 #~ msgid "Not Signed"
 #~ msgstr "Sense signar"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /hsb/libo_online/loleaflet-ui-hsb.po\n"
-"X-Pootle-Revision: 3651054\n"
+"X-Pootle-Revision: 3804936\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -297,7 +297,7 @@ msgstr "Dokument signować"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Wotzjewjenje"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -432,15 +432,23 @@ msgstr ""
 "Konflikt při cofnjenju/wospjetowanju z wjacorymi wužiwarjemi. Prošu "
 "wužiwajće dokumentowe porjedźenje za rozrisanje"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Wy"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Přećiwo pisanju škitany"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Wotkaz wočinić"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Wobdźěłać"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Serwer je při wuwjedźenju přikaza %1 na zmylk %0 storčił."
 
@@ -827,7 +835,15 @@ msgstr ""
 "Dokument njeda so začitać. Prošu přeswědčće so, hač datajowy typ so "
 "podpěruje a wobškodźeny njeje, a spytajće potom hišće raz."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Njepłaćiwy wotkaz: '%url'"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "Chceće editor wopušćić, chceće woprawdźe pokročować?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -836,7 +852,7 @@ msgstr ""
 "Dokument njeda so ze składowaka čitać. Prošu stajće so z administratorom "
 "swojeho składowakeho serwera (%storageserver) do zwiska."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -848,12 +864,12 @@ msgstr ""
 "administratorom (%storageserver) do zwiska, zo byšće z wobdźěłowanjom "
 "pokročował."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Dokument njeda so spadnjeneho abo njepłaćiweho přistupneho tokena składować."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -902,33 +918,12 @@ msgstr "Čita so..."
 msgid "Uploading..."
 msgstr "Nahrawa so..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Kopija so wutworja..."
 
-#~ msgid "Select passport"
-#~ msgstr "Pas wubrać"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Pas: ND"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Signować a nahrać"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Signować a dokument nahrać"
-
-#~ msgid "Status:"
-#~ msgstr "Status:"
-
-#~ msgid "N/A"
-#~ msgstr "ND"
-
-#~ msgid "Login"
-#~ msgstr "Přizjewjenje"
-
-#~ msgid "Close"
-#~ msgstr "Začinić"
+#~ msgid "Shutdown Server"
+#~ msgstr "Serwer wupinać"
 
 #~ msgid "Last modification"
 #~ msgstr "Poslednja změna"
@@ -957,14 +952,14 @@ msgstr "Kopija so wutworja..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Přizjewjenje z e-mejlu abo čisłom mobilneho telefona"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Dokument je so nahrał."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Wubjerće dokumentowy typ za nahraće"
 
 #~ msgid "Type:"
 #~ msgstr "Typ:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument je so nahrał."
 
 #~ msgid "Select identity:"
 #~ msgstr "Wubjerće identitu:"
@@ -974,6 +969,27 @@ msgstr "Kopija so wutworja..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Z e-mejle wobnowić"
+
+#~ msgid "Select passport"
+#~ msgstr "Pas wubrać"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Pas: ND"
+
+#~ msgid "Sign"
+#~ msgstr "Signować"
+
+#~ msgid "Status:"
+#~ msgstr "Status:"
+
+#~ msgid "N/A"
+#~ msgstr "ND"
+
+#~ msgid "Login"
+#~ msgstr "Přizjewjenje"
+
+#~ msgid "Close"
+#~ msgstr "Začinić"
 
 #~ msgid "Not Signed"
 #~ msgstr "Njesignowany"
@@ -1007,6 +1023,12 @@ msgstr "Kopija so wutworja..."
 
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Signowany, ale nic wšě dataje su signowane"
+
+#~ msgid "%d seconds ago"
+#~ msgstr "před %d sekundami"
+
+#~ msgid "%d minutes ago"
+#~ msgstr "před %d mjeńšami"
 
 #~ msgid "Creating new file from template..."
 #~ msgstr "Nowa dataja so z předłohi wutworja..."

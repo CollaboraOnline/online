@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /bg/libo_online/loleaflet-ui-bg.po\n"
-"X-Pootle-Revision: 3674494\n"
+"X-Pootle-Revision: 3795693\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -293,7 +293,7 @@ msgstr "Подписване на документ"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Излизане"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -428,15 +428,23 @@ msgstr ""
 "Конфликт при „Отмяна“/„Възстановяване“ от няколко потребители. Разрешете го "
 "чрез командата за поправяне на документ."
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Вие"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Само за четене"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Редактиране"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Сървърът се сблъска с грешка „%0“ при анализа на командата „%1“."
 
@@ -821,7 +829,15 @@ msgstr ""
 "Зареждането на документа бе неуспешно. Уверете се, че файлът е от поддържан "
 "тип и не е повреден и опитайте отново."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -830,7 +846,7 @@ msgstr ""
 "Прочитането на документа от хранилището бе неуспешно. Моля, свържете се с "
 "администратора на сървъра за съхранение (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -841,13 +857,13 @@ msgstr ""
 "Документът ще остане само за четене. Моля, свържете се с администратора на "
 "сървъра (%storageserver), за да продължите да редактирате."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Документът не може да бъде записан поради изтекъл или невалиден код за "
 "достъп."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -895,33 +911,9 @@ msgstr "Протича зареждане..."
 msgid "Uploading..."
 msgstr "Протича качване..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Създава се копие..."
-
-#~ msgid "Select passport"
-#~ msgstr "Избор на паспорт"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Паспорт: N/A"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Подписване и качване"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Подписване и качване на документа"
-
-#~ msgid "Status:"
-#~ msgstr "Състояние:"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#~ msgid "Login"
-#~ msgstr "Влизане"
-
-#~ msgid "Close"
-#~ msgstr "Затваряне"
 
 #~ msgid "Last modification"
 #~ msgstr "Последна промяна"
@@ -950,14 +942,14 @@ msgstr "Създава се копие..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Влизане от е-поща или мобилен номер"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Документът е качен."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Изберете типа на документа за качване"
 
 #~ msgid "Type:"
 #~ msgstr "Тип:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Документът е качен."
 
 #~ msgid "Select identity:"
 #~ msgstr "Изберете самоличност:"
@@ -967,6 +959,27 @@ msgstr "Създава се копие..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Възстановяване от е-поща"
+
+#~ msgid "Select passport"
+#~ msgstr "Избор на паспорт"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Паспорт: N/A"
+
+#~ msgid "Sign"
+#~ msgstr "Подписване"
+
+#~ msgid "Status:"
+#~ msgstr "Състояние:"
+
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Login"
+#~ msgstr "Влизане"
+
+#~ msgid "Close"
+#~ msgstr "Затваряне"
 
 #~ msgid "Not Signed"
 #~ msgstr "Неподписан"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
-"X-Pootle-Revision: 3650831\n"
+"X-Pootle-Revision: 3795921\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -295,7 +295,7 @@ msgstr "Підписати документ"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Вийти"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -430,15 +430,23 @@ msgstr ""
 "Конфлікт Повернути/Повторити для декількох користувачів. Будь ласка, "
 "використовуйте команду виправити документ для його вирішення"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Ви"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Лише читання"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Зміни"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Сервер зіткнувся з %0 помилок під час опрацювання %1 команд."
 
@@ -826,7 +834,15 @@ msgstr ""
 "Не вдалося відкрити цей документ. Будь ласка, переконайтеся, що тип файлу "
 "підтримується і файл не пошкоджений, а тоді спробуйте знову."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -835,7 +851,7 @@ msgstr ""
 "Не вдалося зчитати документ зі сховища. Будь ласка, зв'яжіться з "
 "адміністратором сервера (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -846,13 +862,13 @@ msgstr ""
 "стає доступним лише для читання. Зв'яжіться з адміністратором сервера "
 "(%storageserver), щоб продовжити редагування."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Документ не може бути збережений через маркер доступу, що застарів або "
 "недійсний."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -900,7 +916,7 @@ msgstr "Завантаження…"
 msgid "Uploading..."
 msgstr "Вивантаження…"
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Створення копії..."
 

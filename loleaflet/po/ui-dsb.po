@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /dsb/libo_online/loleaflet-ui-dsb.po\n"
-"X-Pootle-Revision: 3651070\n"
+"X-Pootle-Revision: 3804935\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -297,7 +297,7 @@ msgstr "Dokument signěrowaś"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Wótzjawjenje"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -432,15 +432,23 @@ msgstr ""
 "Konflikt pśi anulěrowanju/wóspjetowanju z někotarymi wužywarjami. Pšosym "
 "wužywajśo dokumentowe pórěźenje za rozwězanje"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Wy"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Pśeśiwo pisanjeju šćitany"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Wótkaz wócyniś"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Wobźěłaś"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Serwer jo pśi wuwjeźenju pśikaza %1 na zmólku %0 starcył."
 
@@ -827,7 +835,15 @@ msgstr ""
 "Dokument njedajo se zacytaś. Pšosym pśeznańśo se, lěc datajowy typ se "
 "pódpěra a njejo wobškóźony, a wopytajśo pón hyšći raz."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Njepłaśiwy wótkaz: '%url'"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "Cośo editor spušćiś, cośo napšawdu pókšacowaś?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -836,7 +852,7 @@ msgstr ""
 "Dokument njedajo se ze składowaka cytaś. Pšosym stajśo se z administratorom "
 "swójogo składowakego serwera (%storageserver) do zwiska."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -847,13 +863,13 @@ msgstr ""
 "Dokument jo něnto pśeśiwo pisanjeju šćitany. Pšosym stajśo se ze serwerowym "
 "administratorom (%storageserver) do zwiska, aby z wobźěłowanim pókšacował."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Dokument njedajo se spadnjonego abo njepłaśiwego pśistupnego tokena "
 "składowaś."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -901,33 +917,12 @@ msgstr "Cyta se..."
 msgid "Uploading..."
 msgstr "Nagrawa se..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Kopija se napórajo..."
 
-#~ msgid "Select passport"
-#~ msgstr "Pas wubraś"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Pas: ND"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Signěrowaś a nagraś"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Signěrowaś a dokument nagraś"
-
-#~ msgid "Status:"
-#~ msgstr "Status:"
-
-#~ msgid "N/A"
-#~ msgstr "ND"
-
-#~ msgid "Login"
-#~ msgstr "Pśizjawjenje"
-
-#~ msgid "Close"
-#~ msgstr "Zacyniś"
+#~ msgid "Shutdown Server"
+#~ msgstr "Serwer wušaltowaś"
 
 #~ msgid "Last modification"
 #~ msgstr "Slědna změna"
@@ -956,14 +951,14 @@ msgstr "Kopija se napórajo..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Pśizjawjenje z e-mailu abo numerom mobilnego telefona"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Dokument jo se nagrał."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Wubjeŕśo dokumentowy typ za nagraśe"
 
 #~ msgid "Type:"
 #~ msgstr "Typ:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokument jo se nagrał."
 
 #~ msgid "Select identity:"
 #~ msgstr "Wubjeŕśo identitu:"
@@ -973,6 +968,27 @@ msgstr "Kopija se napórajo..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Z e-maile wótnowiś"
+
+#~ msgid "Select passport"
+#~ msgstr "Pas wubraś"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Pas: ND"
+
+#~ msgid "Sign"
+#~ msgstr "Signěrowaś"
+
+#~ msgid "Status:"
+#~ msgstr "Status:"
+
+#~ msgid "N/A"
+#~ msgstr "ND"
+
+#~ msgid "Login"
+#~ msgstr "Pśizjawjenje"
+
+#~ msgid "Close"
+#~ msgstr "Zacyniś"
 
 #~ msgid "Not Signed"
 #~ msgstr "Njesigněrowany"
@@ -1006,6 +1022,12 @@ msgstr "Kopija se napórajo..."
 
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Signěrowany, ale nic wšykne dataje su signěrowane"
+
+#~ msgid "%d seconds ago"
+#~ msgstr "pśed %d sekundami"
+
+#~ msgid "%d minutes ago"
+#~ msgstr "pśed %d minutami"
 
 #~ msgid "Creating new file from template..."
 #~ msgstr "Nowa dataja se z pśedłogi napórajo..."

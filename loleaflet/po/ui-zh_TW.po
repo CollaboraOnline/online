@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /zh_TW/libo_online/loleaflet-ui-zh_TW.po\n"
-"X-Pootle-Revision: 3697237\n"
+"X-Pootle-Revision: 3795940\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -293,7 +293,7 @@ msgstr "簽署文件"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "登出"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -426,15 +426,23 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多位使用者間取消動作/再次動作發生衝突。請使用文件修復來解決問題"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "您"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "唯讀"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr ""
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "編輯"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "伺服器在解析 %1 指令時遭遇 %0 錯誤。"
 
@@ -793,14 +801,22 @@ msgid ""
 "not corrupted, and try again."
 msgstr "無法載入文件。請確認檔案類型有支援且並未毀損，確認後請再重試。"
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr ""
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr ""
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr "無法讀取儲存空間中的文件。請聯絡您的儲存空間伺服器 (%storageserver) 管理員。"
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -808,11 +824,11 @@ msgid ""
 "continue editing."
 msgstr "由於儲存空間的伺服器磁碟空間不足而儲存失敗。文件現在只能唯讀。請聯絡伺服器 (%storageserver) 管理員以便繼續編輯。"
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "文件無法儲存，起因為過期或存取代符無效。"
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -858,33 +874,9 @@ msgstr "載入中..."
 msgid "Uploading..."
 msgstr "上傳中..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "製作副本中..."
-
-#~ msgid "Select passport"
-#~ msgstr "選擇通行護照"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "通行護照：無法使用"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "簽署並上傳"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "簽署並上傳文件"
-
-#~ msgid "Status:"
-#~ msgstr "狀態："
-
-#~ msgid "N/A"
-#~ msgstr "無法使用"
-
-#~ msgid "Login"
-#~ msgstr "登入"
-
-#~ msgid "Close"
-#~ msgstr "關閉"
 
 #~ msgid "Last modification"
 #~ msgstr "上次修改"
@@ -913,14 +905,14 @@ msgstr "製作副本中..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "以電子郵件或行動電話登入"
 
-#~ msgid "Document uploaded."
-#~ msgstr "文件已上傳。"
-
 #~ msgid "Select document type to upload"
 #~ msgstr "選取要上傳的文件類型"
 
 #~ msgid "Type:"
 #~ msgstr "類型："
+
+#~ msgid "Document uploaded."
+#~ msgstr "文件已上傳。"
 
 #~ msgid "Select identity:"
 #~ msgstr "選取身份："
@@ -930,6 +922,27 @@ msgstr "製作副本中..."
 
 #~ msgid "Recover from email"
 #~ msgstr "以電子郵件復原"
+
+#~ msgid "Select passport"
+#~ msgstr "選擇通行護照"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "通行護照：無法使用"
+
+#~ msgid "Sign"
+#~ msgstr "簽署"
+
+#~ msgid "Status:"
+#~ msgstr "狀態："
+
+#~ msgid "N/A"
+#~ msgstr "無法使用"
+
+#~ msgid "Login"
+#~ msgstr "登入"
+
+#~ msgid "Close"
+#~ msgstr "關閉"
 
 #~ msgid "Not Signed"
 #~ msgstr "未簽署"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
-"X-Pootle-Revision: 3652310\n"
+"X-Pootle-Revision: 3804000\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -297,7 +297,7 @@ msgstr "Sinatu dokumentua"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Amaitu saioa"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -432,15 +432,23 @@ msgstr ""
 "Hainbat erabiltzaileen arteko desegin/berrekin talka. Erabili dokumentu-"
 "konponketa ebazteko."
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Zu"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Irakurtzeko soilik"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Ireki esteka"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Editatu"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Zerbitzariak %0 errore bat aurkitu du %1 komandoa analizatzean."
 
@@ -827,7 +835,15 @@ msgstr ""
 "Ezin izan da dokumentua kargatu. Ziurtatu onartutako fitxategi mota bat dela "
 "eta ez dagoela matxuratuta, eta saiatu berriro."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Baliogabeko esteka: '%url'"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "Editorea uzten ari zara, jarraitu nahi duzu?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -836,7 +852,7 @@ msgstr ""
 "Ezin izan da dokumentua irakurri biltegitik. Kontaktatu zure biltegiratze-"
 "zerbitzariaren (%storageserver) administratzailearekin."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -847,13 +863,13 @@ msgstr ""
 "Dokumentua irakurtzeko soilik izango da orain. Kontaktatu zerbitzariaren "
 "(%storageserver) administratzailearekin edizioarekin jarraitzeko."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Ezin izan da dokumentua gorde sarbide token iraungitua edo baliogabea dela "
 "eta."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -901,33 +917,12 @@ msgstr "Kargatzen..."
 msgid "Uploading..."
 msgstr "Kargatzen..."
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Kopia sortzen..."
 
-#~ msgid "Select passport"
-#~ msgstr "Hautatu pasaportea"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Pasaportea: N/A"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Sinatu eta kargatu"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Sinatu eta kargatu dokumentua"
-
-#~ msgid "Status:"
-#~ msgstr "Egoera:"
-
-#~ msgid "N/A"
-#~ msgstr "E/E"
-
-#~ msgid "Login"
-#~ msgstr "Saio-hasiera"
-
-#~ msgid "Close"
-#~ msgstr "Itxi"
+#~ msgid "Shutdown Server"
+#~ msgstr "Itzali zerbitzaria"
 
 #~ msgid "Last modification"
 #~ msgstr "Azken aldaketa"
@@ -956,14 +951,14 @@ msgstr "Kopia sortzen..."
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Hasi saioa posta bidez edo sakelakoaren zenbakiaren bidez"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Dokumentua kargatu da."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Hautatu kargatuko den dokumentu mota"
 
 #~ msgid "Type:"
 #~ msgstr "Mota:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Dokumentua kargatu da."
 
 #~ msgid "Select identity:"
 #~ msgstr "Hautatu nortasuna:"
@@ -973,6 +968,27 @@ msgstr "Kopia sortzen..."
 
 #~ msgid "Recover from email"
 #~ msgstr "Berreskuratu posta elektroniko bidez"
+
+#~ msgid "Select passport"
+#~ msgstr "Hautatu pasaportea"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Pasaportea: N/A"
+
+#~ msgid "Sign"
+#~ msgstr "Sinatu"
+
+#~ msgid "Status:"
+#~ msgstr "Egoera:"
+
+#~ msgid "N/A"
+#~ msgstr "E/E"
+
+#~ msgid "Login"
+#~ msgstr "Saio-hasiera"
+
+#~ msgid "Close"
+#~ msgstr "Itxi"
 
 #~ msgid "Not Signed"
 #~ msgstr "Sinatu gabea"
@@ -1006,6 +1022,12 @@ msgstr "Kopia sortzen..."
 
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Sinatua baina fitxategi guztiak ez daude sinatuta"
+
+#~ msgid "%d seconds ago"
+#~ msgstr "Duela %d segundo"
+
+#~ msgid "%d minutes ago"
+#~ msgstr "Duela %d minutu"
 
 #~ msgid "Creating new file from template..."
 #~ msgstr "Fitxategi berria sortzen txantiloitik..."

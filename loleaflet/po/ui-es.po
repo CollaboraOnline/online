@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:24+0100\n"
+"POT-Creation-Date: 2019-04-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
-"X-Pootle-Revision: 3713381\n"
+"X-Pootle-Revision: 3803795\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -297,7 +297,7 @@ msgstr "Firmar documento"
 
 #: js/toolbar.js:951
 msgid "Logout"
-msgstr "Finalizar sesión"
+msgstr ""
 
 #: js/toolbar.js:991 src/control/Control.Menubar.js:297
 msgid "Fullscreen presentation"
@@ -432,15 +432,23 @@ msgstr ""
 "Hay un conflicto de deshacer y rehacer con varios usuarios. Utilice la "
 "reparación de documento para solucionarlo"
 
-#: js/toolbar.js:2139 src/control/Control.DocumentRepair.js:95
+#: js/toolbar.js:2143 src/control/Control.DocumentRepair.js:95
 msgid "You"
 msgstr "Usted"
 
-#: js/toolbar.js:2145
+#: js/toolbar.js:2149
 msgid "Readonly"
 msgstr "Solo lectura"
 
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Abrir enlace"
+
+#: src/control/Control.AlertDialog.js:54
+msgid "Edit"
+msgstr "Editar"
+
+#: src/control/Control.AlertDialog.js:75
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 "Se produjo el error %0 en el servidor durante el procesamiento de la orden "
@@ -830,7 +838,15 @@ msgstr ""
 "Falló la carga del documento. Asegúrese de que el tipo de archivo sea "
 "compatible y el archivo no esté dañado, e inténtelo de nuevo."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Enlace no válido: «%url»"
+
+#: src/errormessages.js:25
+msgid "You are leaving the editor, are you sure you want to proceed?"
+msgstr "Está por abandonar el editor. ¿Confirma que quiere continuar?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -839,7 +855,7 @@ msgstr ""
 "Falló la lectura del documento desde el almacenamiento. Póngase en contacto "
 "con el personal técnico del servidor de almacenamiento (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -850,13 +866,13 @@ msgstr ""
 "ha activado el modo de solo lectura. Póngase en contacto con el personal "
 "técnico del servidor (%storageserver) para seguir editando."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "No se ha podido guardar el documento a causa de una ficha de acceso caducada "
 "o no válida."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -904,33 +920,12 @@ msgstr "Cargando…"
 msgid "Uploading..."
 msgstr "Cargando…"
 
-#: src/map/handler/Map.WOPI.js:273
+#: src/map/handler/Map.WOPI.js:276
 msgid "Creating copy..."
 msgstr "Creando una copia…"
 
-#~ msgid "Select passport"
-#~ msgstr "Seleccionar pasaporte"
-
-#~ msgid "Passport: N/A"
-#~ msgstr "Pasaporte: N/D"
-
-#~ msgid "Sign & Upload"
-#~ msgstr "Firmar y cargar"
-
-#~ msgid "Sign and upload document"
-#~ msgstr "Firmar y cargar documento"
-
-#~ msgid "Status:"
-#~ msgstr "Estado:"
-
-#~ msgid "N/A"
-#~ msgstr "N/D"
-
-#~ msgid "Login"
-#~ msgstr "Acceso"
-
-#~ msgid "Close"
-#~ msgstr "Cerrar"
+#~ msgid "Shutdown Server"
+#~ msgstr "Apagar servidor"
 
 #~ msgid "Last modification"
 #~ msgstr "Última modificación"
@@ -959,14 +954,14 @@ msgstr "Creando una copia…"
 #~ msgid "Login from email or mobile number"
 #~ msgstr "Acceder mediante correo o número de móvil"
 
-#~ msgid "Document uploaded."
-#~ msgstr "Documento cargado."
-
 #~ msgid "Select document type to upload"
 #~ msgstr "Seleccione el tipo de documento que cargar"
 
 #~ msgid "Type:"
 #~ msgstr "Tipo:"
+
+#~ msgid "Document uploaded."
+#~ msgstr "Documento cargado."
 
 #~ msgid "Select identity:"
 #~ msgstr "Seleccione una identidad:"
@@ -976,6 +971,27 @@ msgstr "Creando una copia…"
 
 #~ msgid "Recover from email"
 #~ msgstr "Recuperar mediante correo"
+
+#~ msgid "Select passport"
+#~ msgstr "Seleccionar pasaporte"
+
+#~ msgid "Passport: N/A"
+#~ msgstr "Pasaporte: N/D"
+
+#~ msgid "Sign"
+#~ msgstr "Firmar"
+
+#~ msgid "Status:"
+#~ msgstr "Estado:"
+
+#~ msgid "N/A"
+#~ msgstr "N/D"
+
+#~ msgid "Login"
+#~ msgstr "Acceso"
+
+#~ msgid "Close"
+#~ msgstr "Cerrar"
 
 #~ msgid "Not Signed"
 #~ msgstr "No firmado"
@@ -1009,6 +1025,12 @@ msgstr "Creando una copia…"
 
 #~ msgid "Signed but not all files are signed"
 #~ msgstr "Firmado pero no todos los archivos tienen firma"
+
+#~ msgid "%d seconds ago"
+#~ msgstr "Hace %d segundos"
+
+#~ msgid "%d minutes ago"
+#~ msgstr "Hace %d minutos"
 
 #~ msgid "Creating new file from template..."
 #~ msgstr "Creando un archivo nuevo desde una plantilla…"
