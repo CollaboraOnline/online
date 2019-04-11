@@ -614,7 +614,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
         //warning text to notify the user that such a file already exists
         final TextView warningText = new TextView(this);
-        warningText.setText("A file with this name already exits, and it will be overwritten.");
+        warningText.setText(getString(R.string.file_exists_warning));
         layout.addView(warningText);
         //check if the file exists when showing the create dialog
         File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
@@ -626,10 +626,21 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 final String path = currentDirectory.getUri().getPath() + input.getText().toString();
-                createNewFile(path, extension);
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                intent.putExtra("URI", path);
-                startActivity(intent);
+                Uri newDocUri = createNewFile(path, extension);
+                if (newDocUri != null) {
+                    Intent i = new Intent(Intent.ACTION_VIEW, newDocUri);
+                    String packageName = getApplicationContext().getPackageName();
+                    ComponentName componentName = new ComponentName(packageName,
+                            MainActivity.class.getName());
+                    i.setComponent(componentName);
+                    i.putExtra("org.libreoffice.document_provider_id",
+                            documentProvider.getId());
+                    i.putExtra("org.libreoffice.document_uri",
+                            newDocUri);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(LibreOfficeUIActivity.this, getString(R.string.file_creation_failed), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -661,11 +672,13 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
      * Creates a new file at the specified path, by copying an empty template to that location.
      * @param path the complete path (including the file name) where the file will be created
      * @param extension is required to know what template should be used when creating the document
+     *
+     * @return Uri of newFile if newFile is successfully created else null
      */
-    private void createNewFile(final String path, final String extension) {
+    private Uri createNewFile(final String path, final String extension) {
         InputStream templateFileStream = null;
         //create a new file where the template will be written
-        File newFile = new File(path );
+        File newFile = new File(path);
         OutputStream newFileStream = null;
         try {
             //read the template and copy it to the new file
@@ -678,6 +691,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } finally {
             try {
                 //close the streams
@@ -687,6 +701,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                 e.printStackTrace();
             }
         }
+        return Uri.fromFile(newFile);
     }
 
 
