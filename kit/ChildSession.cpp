@@ -2152,6 +2152,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("signaturestatus: " + payload);
         break;
 
+    case LOK_CALLBACK_PROFILE_FRAME:
     case LOK_CALLBACK_DOCUMENT_PASSWORD:
     case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
         // these are not handled here.
