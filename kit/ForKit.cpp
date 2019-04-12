@@ -528,6 +528,10 @@ int main(int argc, char** argv)
         return Application::EXIT_SOFTWARE;
     }
 
+    // Enable built in profiling dumps
+    if (Log::logger().trace())
+        ::setenv("SAL_PROFILEZONE_EVENTS", "1", 0);
+
     // Initialize LoKit
     if (!globalPreinit(loTemplate))
     {

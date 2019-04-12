@@ -131,6 +131,8 @@ namespace LOKitHelper
             return "CONTEXT_CHANGED";
         case LOK_CALLBACK_SIGNATURE_STATUS:
             return "SIGNATURE_STATUS";
+        case LOK_CALLBACK_PROFILE_FRAME:
+            return "PROFILE_FRAME";
        }
 
         assert(!"Missing LOK_CALLBACK type");
