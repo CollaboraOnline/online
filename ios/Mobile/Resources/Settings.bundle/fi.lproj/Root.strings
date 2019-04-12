@@ -6,4 +6,5 @@
 "App info" = "Tietoa appista";
 "Version" = "Versio";
 "Settings" = "Asetukset";
+"Empty tile cache each time" = "Tyhjennä laattavälimuisti joka kerta";
 "Template list URL" = "Mallilistan URL";
