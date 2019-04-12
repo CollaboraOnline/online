@@ -128,6 +128,7 @@ ifelse(MOBILEAPP,[true],
     <!-- Remove if you don't want the About dialog -->
     <div id="about-dialog" style="display:none; text-align: center; user-select: text">
       <h1 id="product-name">LibreOffice Online</h1>
+      <div id="product-logo"></div>
       <hr/>
       <p id="product-string"></p>
       <h3>LOOLWSD</h3>
