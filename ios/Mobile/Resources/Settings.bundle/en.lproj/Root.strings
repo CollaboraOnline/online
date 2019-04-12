@@ -1,8 +1,5 @@
 /* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
 
-"Name" = "Name";
-"none given" = "none given";
-"Enabled" = "Enabled";
 "App info" = "App info";
 "Version" = "Version";
 "Settings" = "Settings";
