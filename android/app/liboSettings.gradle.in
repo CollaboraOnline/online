@@ -11,6 +11,7 @@ ext {
     liboVersionMajor    = '@LOOLWSD_VERSION_MAJOR@'
     liboVersionMinor    = '@LOOLWSD_VERSION_MAJOR@'
     liboGitFullCommit   = '@LOOLWSD_VERSION_HASH@'
+    liboAppName         = '@APP_NAME@'
 }
 android.defaultConfig {
     applicationId 'org.libreoffice.androidapp'

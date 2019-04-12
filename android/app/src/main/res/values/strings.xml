@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OnlineApp</string>
+    <!--string name="app_name" definition is deliberately missing here, it is filled in in build.gradle.-->
 
     <string name="app_version">Version: %1$s\nBuild ID: %2$s</string>
     <string name="app_description">LibreOffice Viewer is a document viewer based on LibreOffice.</string>
