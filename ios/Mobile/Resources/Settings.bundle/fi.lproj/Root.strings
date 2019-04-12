@@ -1,0 +1,10 @@
+/* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
+
+"Name" = "Nimi";
+"none given" = "ei mitään";
+"Enabled" = "On";
+"App info" = "Tietoa appista";
+"Version" = "Versio";
+"Settings" = "Asetukset";
+"Empty tile cache each time" = "Tyhjennä laattavälimuisti joka kerta";
+"Template list URL" = "Mallilistan URL";
