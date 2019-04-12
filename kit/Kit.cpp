@@ -1247,7 +1247,7 @@ public:
             self->setDocumentPassword(type);
             return;
         }
-        else if(type == LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE)
+        else if (type == LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE)
         {
             for (auto& it : self->_sessions)
             {
@@ -1259,6 +1259,8 @@ public:
             }
             return;
         }
+        else if (type == LOK_CALLBACK_PROFILE_FRAME)
+            return; // already trace dumped above.
 
         // Broadcast leftover status indicator callbacks to all clients
         self->broadcastCallbackToClients(type, payload);
