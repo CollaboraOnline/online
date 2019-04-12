@@ -48,16 +48,17 @@ sub escape($)
 }
 
 # 23:34:16.123456
-sub splittime($)
+sub splittime($$)
 {
+    my $lineno = shift;
     my $time = shift;
-    $time =~ m/^(\d\d):(\d\d):(\d\d)\.(\d+)$/ || die "Invalid time: '$time'";
+    $time =~ m/^(\d\d):(\d\d):(\d\d)\.(\d+)$/ || die "Invalid time at line $lineno: '$time'";
     return ($1, $2, $3, $4);
 }
 
-sub offset_microsecs($)
+sub offset_microsecs($$)
 {
-    my @time = splittime(shift);
+    my @time = splittime(shift, shift);
 
     my $usec = 0  + $time[0] - $log_start[0];
     $usec = $usec * 60;
@@ -142,7 +143,7 @@ sub consume($$$$$$$$$)
 
     # print STDERR "$emitter, $type, $time, $message, $line\n";
 
-    $time = offset_microsecs($time) if ($json); # microseconds from start
+    $time = offset_microsecs($lineno, $time) if ($json); # microseconds from start
 
     # accumulate all threads / processes
     if (!defined $emitters{$emitter}) {
@@ -156,6 +157,20 @@ sub consume($$$$$$$$$)
 	if ($json) {
 	    push @events, "{\"name\": \"process_name\", \"process_sort_index\": -$pid, \"ph\": \"M\", \"pid\": $pid, \"args\": { \"name\" : \"$proc\" } }";
 	}
+    }
+
+    if ($type eq 'PROF') {
+	# sw::DocumentTimerManager m_aFireIdleJobsTimer: stop 0.047 ms
+	if ($message =~ m/^(.*): stop ([\d\.]+) ms$/) {
+	    my $dur_ms = $2;
+	    my $dur_us = $dur_ms * 1000.0;
+	    my $msg = $1;
+	    $time = $time - $dur_us;
+	    push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":$dur_us, \"ph\":\"X\", \"name\":\"$msg\", \"args\":{ \"ms\":$dur_ms } }";
+	} else {
+	    die "Unknown prof message: '$message'";
+	}
+	return;
     }
 
     my $handled = 0;
@@ -234,6 +249,25 @@ sub consume($$$$$$$$$)
     }
 }
 
+sub parseProfileFrames($$$$$)
+{
+    my ($lineno, $proc, $pid, $emitter, $message) = @_;
+    my @lines = split(/\n/, $message);
+
+    foreach my $line (@lines) {
+	next if ($line =~ m/start$/); # all data we need is in the end.
+	if ($line =~ m/^(\d+)\s+(\d+)\.(\d+)\s+(.*$)/) {
+	    my ($tid, $secs, $fractsecs, $realmsg) = ($1, $2, $3, $4);
+	    #	    print STDERR "Profile frame '$line'\n";
+	    # FIXME: silly to complicate and then re-parse this I guess ...
+	    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime($secs);
+	    my $time = sprintf("%.2d:%.2d:%02.6f", $hour, $min, "$sec.$fractsecs");
+#	    print STDERR "time '$time' from '$secs' - " . time() . "\n";
+	    consume($lineno, $proc, $pid, $tid, $time, $emitter, 'PROF', $realmsg, '');
+	}
+    }
+}
+
 # Open in chrome://tracing
 sub emit_json()
 {
@@ -309,10 +343,10 @@ if ($input[0] =~ m/^\S+\s([\d-]+)\s+([\d:\.]+)\s+/)
 {
     $log_start_date = $1;
     $log_start_time = $2;
-    @log_start = splittime($2);
+    @log_start = splittime(0, $2);
     print STDERR "reading log from $log_start_date / $log_start_time\n";
 } else {
-    die "Malformed log line: $input[0]";
+    die "Malformed log line or no input: $input[0]";
 }
 
 # parse all the lines
@@ -339,7 +373,14 @@ while (my $line = $input[$lineno++]) {
 		$message = $message . $next;
 	    }
 	}
-	consume($lineno, $proc, $pid, $tid, $time, $emitter, $type, $message, $line);
+
+	# Profile frames are special
+	if ($type eq 'TRC' && $emitter eq 'lo_startmain' &&
+	    $message =~ /.*Document::GlobalCallback PROFILE_FRAME.*/) {
+	    parseProfileFrames($lineno, $proc, $pid, $emitter, $message);
+	} else {
+	    consume($lineno, $proc, $pid, $tid, $time, $emitter, $type, $message, $line);
+	}
     } else {
 	die "Poorly formed line on " . ($lineno - 1) . " - is logging.file.flush set to true ? '$line'\n";
     }
