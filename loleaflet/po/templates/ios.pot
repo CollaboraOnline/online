@@ -1,39 +1,35 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+#. /* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
+#. extracted from /home/timar/online/ios/Mobile/Resources/Settings.bundle/en.lproj/Root.strings
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 22:35+0100\n"
+"POT-Creation-Date: 2019-04-13 21:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.3.0\n"
 
-#: Root.plist
+#: App+info
 msgid "App info"
 msgstr ""
 
-#: Root.plist
+#: Version
 msgid "Version"
 msgstr ""
 
-#: Root.plist
+#: Settings
 msgid "Settings"
 msgstr ""
 
-#: Root.plist
+#: Empty+tile+cache+each+time
 msgid "Empty tile cache each time"
 msgstr ""
 
-#: Root.plist
+#: Template+list+URL
 msgid "Template list URL"
 msgstr ""
-
