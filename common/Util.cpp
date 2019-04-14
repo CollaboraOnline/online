@@ -304,16 +304,16 @@ namespace Util
         return true;
     }
 
-    std::string encodeId(const unsigned number, const int padding)
+    std::string encodeId(const std::uint64_t number, const int padding)
     {
         std::ostringstream oss;
         oss << std::hex << std::setw(padding) << std::setfill('0') << number;
         return oss.str();
     }
 
-    unsigned decodeId(const std::string& str)
+    std::uint64_t decodeId(const std::string& str)
     {
-        unsigned id = 0;
+        std::uint64_t id = 0;
         std::stringstream ss;
         ss << std::hex << str;
         ss >> id;
@@ -684,7 +684,7 @@ namespace Util
     }
 
     static std::map<std::string, std::string> AnonymizedStrings;
-    static std::atomic<unsigned> AnonymizationSalt(0);
+    static std::atomic<unsigned> AnonymizationCounter(0);
     static std::mutex AnonymizedMutex;
 
     void mapAnonymized(const std::string& plain, const std::string& anonymized)
@@ -701,7 +701,7 @@ namespace Util
         AnonymizedStrings[plain] = anonymized;
     }
 
-    std::string anonymize(const std::string& text)
+    std::string anonymize(const std::string& text, const std::uint64_t nAnonymizationSalt)
     {
         {
             std::unique_lock<std::mutex> lock(AnonymizedMutex);
@@ -716,15 +716,26 @@ namespace Util
             }
         }
 
-        // We just need something irreversible, short, and
-        // quite simple.
-        std::size_t hash = 0;
+        // Modified 64-bit FNV-1a to add salting.
+        // For the algorithm and the magic numbers, see http://isthe.com/chongo/tech/comp/fnv/
+        std::uint64_t hash = 0xCBF29CE484222325LL;
+        hash ^= nAnonymizationSalt;
+        hash *= 0x100000001b3ULL;
         for (const char c : text)
-            hash += c;
+        {
+            hash ^= static_cast<std::uint64_t>(c);
+            hash *= 0x100000001b3ULL;
+        }
+
+        hash ^= nAnonymizationSalt;
+        hash *= 0x100000001b3ULL;
 
         // Generate the anonymized string. The '#' is to hint that it's anonymized.
-        // Prepend with salt to make it unique, in case we get collisions (which we will, eventually).
-        const std::string res = '#' + Util::encodeId(AnonymizationSalt++, 0) + '#' + Util::encodeId(hash, 0) + '#';
+        // Prepend with count to make it unique within a single process instance,
+        // in case we get collisions (which we will, eventually). N.B.: Identical
+        // strings likely to have different prefixes when logged in WSD process vs. Kit.
+        const std::string res
+            = '#' + Util::encodeId(AnonymizationCounter++, 0) + '#' + Util::encodeId(hash, 0) + '#';
         mapAnonymized(text, res);
         return res;
     }
@@ -739,7 +750,7 @@ namespace Util
         return filename;
     }
 
-    std::string anonymizeUrl(const std::string& url)
+    std::string anonymizeUrl(const std::string& url, const std::uint64_t nAnonymizationSalt)
     {
         std::string base;
         std::string filename;
@@ -747,7 +758,7 @@ namespace Util
         std::string params;
         std::tie(base, filename, ext, params) = Util::splitUrl(url);
 
-        return base + Util::anonymize(filename) + ext + params;
+        return base + Util::anonymize(filename, nAnonymizationSalt) + ext + params;
     }
 
     std::string getHttpTimeNow()

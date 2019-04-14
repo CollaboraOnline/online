@@ -74,9 +74,9 @@ namespace Util
     /// Hex to unsigned char
     bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data);
     /// Encode an integral ID into a string, with padding support.
-    std::string encodeId(const unsigned number, const int padding = 5);
+    std::string encodeId(const std::uint64_t number, const int padding = 5);
     /// Decode an integral ID from a string.
-    unsigned decodeId(const std::string& str);
+    std::uint64_t decodeId(const std::string& str);
 
     bool windowingAvailable();
 
@@ -779,14 +779,14 @@ int main(int argc, char**argv)
 
     /// Anonymize a sensitive string to avoid leaking it.
     /// Called on strings to be logged or exposed.
-    std::string anonymize(const std::string& text);
+    std::string anonymize(const std::string& text, const std::uint64_t nAnonymizationSalt);
 
     /// Sets the anonymized version of a given plain-text string.
     /// After this, 'anonymize(plain)' will return 'anonymized'.
     void mapAnonymized(const std::string& plain, const std::string& anonymized);
 
     /// Anonymize the basename of filenames only, preserving the path and extension.
-    std::string anonymizeUrl(const std::string& url);
+    std::string anonymizeUrl(const std::string& url, const std::uint64_t nAnonymizationSalt);
 
     /// Extract and return the filename given a url or path.
     std::string getFilenameFromURL(const std::string& url);

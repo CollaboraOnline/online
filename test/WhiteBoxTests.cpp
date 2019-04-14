@@ -669,35 +669,67 @@ void WhiteBoxTests::testJson()
 void WhiteBoxTests::testAnonymization()
 {
     static const std::string name = "some name with space";
-    CPPUNIT_ASSERT_EQUAL(std::string("#0#77d#"), Util::anonymizeUrl(name));
-    Util::mapAnonymized(name, name);
-    CPPUNIT_ASSERT_EQUAL(name, Util::anonymizeUrl(name));
-
     static const std::string filename = "filename.ext";
-    CPPUNIT_ASSERT_EQUAL(std::string("#1#341#.ext"), Util::anonymizeUrl(filename));
-    Util::mapAnonymized("filename", "filename");
-    CPPUNIT_ASSERT_EQUAL(name, Util::anonymizeUrl(name));
-
     static const std::string filenameTestx = "testx (6).odt";
-    CPPUNIT_ASSERT_EQUAL(std::string("#2#2df#.odt"), Util::anonymizeUrl(filenameTestx));
-    Util::mapAnonymized("testx (6)", "testx (6)");
-    CPPUNIT_ASSERT_EQUAL(filenameTestx, Util::anonymizeUrl(filenameTestx));
-
     static const std::string path = "/path/to/filename.ext";
-    CPPUNIT_ASSERT_EQUAL(path, Util::anonymizeUrl(path));
+    static const std::string plainUrl
+        = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
+          "736_ocgdpzbkm39u?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_token_ttl=0&"
+          "permission=edit";
+    static const std::string fileUrl = "http://localhost/owncloud/index.php/apps/richdocuments/"
+                                       "wopi/files/736_ocgdpzbkm39u/"
+                                       "secret.odt?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&"
+                                       "access_token_ttl=0&permission=edit";
 
-    static const std::string plainUrl = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/736_ocgdpzbkm39u?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_token_ttl=0&permission=edit";
-    const std::string urlAnonymized = Util::replace(plainUrl, "736_ocgdpzbkm39u", "#3#5a1#");
-    CPPUNIT_ASSERT_EQUAL(urlAnonymized, Util::anonymizeUrl(plainUrl));
+    std::uint64_t nAnonymizationSalt = 1111111111182589933;
+
+    CPPUNIT_ASSERT_EQUAL(std::string("#0#5e45aef91248a8aa#"),
+                         Util::anonymizeUrl(name, nAnonymizationSalt));
+    CPPUNIT_ASSERT_EQUAL(std::string("#1#8f8d95bd2a202d00#.odt"),
+                         Util::anonymizeUrl(filenameTestx, nAnonymizationSalt));
+    CPPUNIT_ASSERT_EQUAL(std::string("/path/to/#2#5c872b2d82ecc8a0#.ext"),
+                         Util::anonymizeUrl(path, nAnonymizationSalt));
+    CPPUNIT_ASSERT_EQUAL(
+        std::string("http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
+                    "#3#22c6f0caad277666#?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_"
+                    "token_ttl=0&permission=edit"),
+        Util::anonymizeUrl(plainUrl, nAnonymizationSalt));
+    CPPUNIT_ASSERT_EQUAL(
+        std::string("http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
+                    "736_ocgdpzbkm39u/"
+                    "#4#294f0dfb18f6a80b#.odt?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_"
+                    "token_ttl=0&permission=edit"),
+        Util::anonymizeUrl(fileUrl, nAnonymizationSalt));
+
+    nAnonymizationSalt = 0;
+
+    CPPUNIT_ASSERT_EQUAL(std::string("#0#5e45aef91248a8aa#"), Util::anonymizeUrl(name, nAnonymizationSalt));
+    Util::mapAnonymized(name, name);
+    CPPUNIT_ASSERT_EQUAL(name, Util::anonymizeUrl(name, nAnonymizationSalt));
+
+    CPPUNIT_ASSERT_EQUAL(std::string("#2#5c872b2d82ecc8a0#.ext"),
+                         Util::anonymizeUrl(filename, nAnonymizationSalt));
+    Util::mapAnonymized("filename", "filename"); // Identity map of the filename without extension.
+    CPPUNIT_ASSERT_EQUAL(filename, Util::anonymizeUrl(filename, nAnonymizationSalt));
+
+    CPPUNIT_ASSERT_EQUAL(std::string("#1#8f8d95bd2a202d00#.odt"),
+                         Util::anonymizeUrl(filenameTestx, nAnonymizationSalt));
+    Util::mapAnonymized("testx (6)",
+                        "testx (6)"); // Identity map of the filename without extension.
+    CPPUNIT_ASSERT_EQUAL(filenameTestx, Util::anonymizeUrl(filenameTestx, nAnonymizationSalt));
+
+    CPPUNIT_ASSERT_EQUAL(path, Util::anonymizeUrl(path, nAnonymizationSalt));
+
+    const std::string urlAnonymized = Util::replace(plainUrl, "736_ocgdpzbkm39u", "#3#22c6f0caad277666#");
+    CPPUNIT_ASSERT_EQUAL(urlAnonymized, Util::anonymizeUrl(plainUrl, nAnonymizationSalt));
     Util::mapAnonymized("736_ocgdpzbkm39u", "736_ocgdpzbkm39u");
-    CPPUNIT_ASSERT_EQUAL(plainUrl, Util::anonymizeUrl(plainUrl));
+    CPPUNIT_ASSERT_EQUAL(plainUrl, Util::anonymizeUrl(plainUrl, nAnonymizationSalt));
 
-    static const std::string fileUrl = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/736_ocgdpzbkm39u/secret.odt?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_token_ttl=0&permission=edit";
-    const std::string urlAnonymized2 = Util::replace(fileUrl, "secret", "#4#286#");
-    CPPUNIT_ASSERT_EQUAL(urlAnonymized2, Util::anonymizeUrl(fileUrl));
+    const std::string urlAnonymized2 = Util::replace(fileUrl, "secret", "#4#294f0dfb18f6a80b#");
+    CPPUNIT_ASSERT_EQUAL(urlAnonymized2, Util::anonymizeUrl(fileUrl, nAnonymizationSalt));
     Util::mapAnonymized("secret", "736_ocgdpzbkm39u");
     const std::string urlAnonymized3 = Util::replace(fileUrl, "secret", "736_ocgdpzbkm39u");
-    CPPUNIT_ASSERT_EQUAL(urlAnonymized3, Util::anonymizeUrl(fileUrl));
+    CPPUNIT_ASSERT_EQUAL(urlAnonymized3, Util::anonymizeUrl(fileUrl, nAnonymizationSalt));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);

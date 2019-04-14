@@ -709,6 +709,7 @@ std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
 bool LOOLWSD::AnonymizeUserData = false;
+std::uint64_t LOOLWSD::AnonymizationSalt = 82589933;
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 unsigned LOOLWSD::MaxConnections;
@@ -991,7 +992,12 @@ void LOOLWSD::initialize(Application& self)
 
     LOG_INF("Anonymization of user-data is " << (AnonymizeUserData ? "enabled." : "disabled."));
     if (AnonymizeUserData)
-        setenv("LOOL_ANONYMIZE_USER_DATA", "1", true);
+    {
+        // Get the salt, if set, otherwise default, and set as envar, so the kits inherit it.
+        AnonymizationSalt = getConfigValue<std::uint64_t>(conf, "logging.anonymize.anonymization_salt", 82589933);
+        const std::string sAnonymizationSalt = std::to_string(AnonymizationSalt);
+        setenv("LOOL_ANONYMIZATION_SALT", sAnonymizationSalt.c_str(), true);
+    }
 
     {
         std::string proto = getConfigValue<std::string>(conf, "net.proto", "");
