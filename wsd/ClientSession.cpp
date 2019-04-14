@@ -695,7 +695,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             std::string encodedUserExtraInfo;
             Poco::URI::encode(getUserExtraInfo(), "", encodedUserExtraInfo);
-            oss << " authorextrainfo=" << encodedUserExtraInfo; //TODO: could this include PII?
+            oss << " authorextrainfo=" << encodedUserExtraInfo; //TODO: could this include user-data?
         }
 
         oss << " readonly=" << isReadOnly();

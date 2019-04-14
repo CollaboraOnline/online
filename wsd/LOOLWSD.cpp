@@ -708,8 +708,7 @@ std::string LOOLWSD::HostIdentifier;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
-bool LOOLWSD::AnonymizeFilenames = false;
-bool LOOLWSD::AnonymizeUsernames = false;
+bool LOOLWSD::AnonymizeUserData = false;
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
 unsigned LOOLWSD::MaxConnections;
@@ -790,8 +789,9 @@ void LOOLWSD::initialize(Application& self)
             { "file_server_root_path", "loleaflet/.." },
             { "lo_jail_subpath", "lo" },
             { "lo_template_path", LO_PATH },
-            { "logging.anonymize.filenames", "false" },
-            { "logging.anonymize.usernames", "false" },
+            { "logging.anonymize.filenames", "false" }, // Deprecated.
+            { "logging.anonymize.usernames", "false" }, // Deprecated.
+            // { "logging.anonymize.anonymize_user_data", "false" }, // Do not set to fallback on filename/username.
             { "logging.color", "true" },
             { "logging.file.property[0]", "loolwsd.log" },
             { "logging.file.property[0][@name]", "path" },
@@ -938,28 +938,41 @@ void LOOLWSD::initialize(Application& self)
     }
 
     // Get anonymization settings.
-#if LOOLWSD_ANONYMIZE_USERNAMES
-    AnonymizeUsernames = true;
+#if LOOLWSD_ANONYMIZE_USER_DATA
+    AnonymizeUserData = true;
+    LOG_INF("Anonymization of user-data is permanently enabled.");
 #else
-    AnonymizeUsernames = getConfigValue<bool>(conf, "logging.anonymize.usernames", false);
-#endif
+    LOG_INF("Anonymization of user-data is configurable.");
+    bool haveAnonymizeUserDataConfig = false;
+    if (getSafeConfig(conf, "logging.anonymize.anonymize_user_data", AnonymizeUserData))
+        haveAnonymizeUserDataConfig = true;
 
-#if LOOLWSD_ANONYMIZE_FILENAMES
-    AnonymizeFilenames = true;
-#else
-    AnonymizeFilenames = getConfigValue<bool>(conf, "logging.anonymize.filenames", false);
-#endif
-
-    if ((AnonymizeFilenames || AnonymizeUsernames) && LogLevel == "trace")
+    bool anonymizeFilenames = false;
+    bool anonymizeUsernames = false;
+    if (getSafeConfig(conf, "logging.anonymize.usernames", anonymizeFilenames) ||
+        getSafeConfig(conf, "logging.anonymize.filenames", anonymizeUsernames))
     {
-        if (getConfigValue<bool>(conf, "logging.anonymize.allow_logging_pii", false))
+        LOG_WRN("NOTE: both logging.anonymize.usernames and logging.anonymize.filenames are deprecated and superseded by "
+                "logging.anonymize.anonymize_user_data. Please remove username and filename entries from the config and use only anonymize_user_data.");
+
+        if (haveAnonymizeUserDataConfig)
+            LOG_WRN("Since logging.anonymize.anonymize_user_data is provided (" << AnonymizeUserData << ") in the config, it will be used.");
+        else
         {
-            LOG_WRN("Enabling trace logging while anonymization is enabled due to logging.anonymize.allow_logging_pii setting. "
-                    "This will leak personally identifiable information!");
+            AnonymizeUserData = (anonymizeFilenames || anonymizeUsernames);
+        }
+    }
+#endif
+
+    if (AnonymizeUserData && LogLevel == "trace")
+    {
+        if (getConfigValue<bool>(conf, "logging.anonymize.allow_logging_user_data", false))
+        {
+            LOG_WRN("Enabling trace logging while anonymization is enabled due to logging.anonymize.allow_logging_user_data setting. "
+                    "This will leak user-data!");
 
             // Disable anonymization as it's useless now.
-            AnonymizeFilenames = false;
-            AnonymizeUsernames = false;
+            AnonymizeUserData = false;
         }
         else
         {
@@ -976,11 +989,9 @@ void LOOLWSD::initialize(Application& self)
         }
     }
 
-    if (AnonymizeFilenames)
-        setenv("LOOL_ANONYMIZE_FILENAMES", "1", true);
-
-    if (AnonymizeUsernames)
-        setenv("LOOL_ANONYMIZE_USERNAMES", "1", true);
+    LOG_INF("Anonymization of user-data is " << (AnonymizeUserData ? "enabled." : "disabled."));
+    if (AnonymizeUserData)
+        setenv("LOOL_ANONYMIZE_USER_DATA", "1", true);
 
     {
         std::string proto = getConfigValue<std::string>(conf, "net.proto", "");

@@ -887,7 +887,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
     const std::string newFilename = Util::getFilenameFromURL(uri);
     const std::string fileId = Util::getFilenameFromURL(_docKey);
-    if (LOOLWSD::AnonymizeFilenames)
+    if (LOOLWSD::AnonymizeUserData)
         LOG_DBG("New filename [" << LOOLWSD::anonymizeUrl(newFilename) << "] will be known by its fileId [" << fileId << "]");
 
     Util::mapAnonymized(newFilename, fileId);

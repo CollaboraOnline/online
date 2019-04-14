@@ -53,8 +53,7 @@
             <property name="flush" desc="Enable/disable flushing after logging each line. May harm performance. Note that without flushing after each line, the log lines from the different processes will not appear in chronological order.">false</property>
         </file>
         <anonymize>
-            <filenames type="bool" desc="Enable to anonymize/obfuscate filenames in logs. If default is true, it was forced at compile-time and cannot be disabled." default="@LOOLWSD_ANONYMIZE_FILENAMES@">@LOOLWSD_ANONYMIZE_FILENAMES@</filenames>
-            <usernames type="bool" desc="Enable to anonymize/obfuscate usernames in logs. If default is true, it was forced at compile-time and cannot be disabled." default="@LOOLWSD_ANONYMIZE_USERNAMES@">@LOOLWSD_ANONYMIZE_USERNAMES@</usernames>
+            <anonymize_user_data type="bool" desc="Enable to anonymize/obfuscate of user data in logs. If default is true, it was forced at compile-time and cannot be disabled." default="@LOOLWSD_ANONYMIZE_USER_DATA@">@LOOLWSD_ANONYMIZE_USER_DATA@</anonymize_user_data>
         </anonymize>
     </logging>
 

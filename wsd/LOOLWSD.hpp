@@ -66,8 +66,7 @@ public:
     static std::string LOKitVersion;
     static std::string HostIdentifier; ///< A unique random hash that identifies this server
     static std::string LogLevel;
-    static bool AnonymizeFilenames;
-    static bool AnonymizeUsernames;
+    static bool AnonymizeUserData;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
 #if !MOBILEAPP
@@ -155,14 +154,14 @@ public:
     /// Anonymize the basename of filenames, preserving the path and extension.
     static std::string anonymizeUrl(const std::string& url)
     {
-        return AnonymizeFilenames ? Util::anonymizeUrl(url) : url;
+        return AnonymizeUserData ? Util::anonymizeUrl(url) : url;
     }
 
     /// Anonymize user names and IDs.
     /// Will use the Obfuscated User ID if one is provied via WOPI.
     static std::string anonymizeUsername(const std::string& username)
     {
-        return AnonymizeUsernames ? Util::anonymize(username) : username;
+        return AnonymizeUserData ? Util::anonymize(username) : username;
     }
 
     /// get correct server URL with protocol + port number for this running server

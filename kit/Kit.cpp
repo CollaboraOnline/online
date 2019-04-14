@@ -112,8 +112,7 @@ using std::size_t;
 class Document;
 static std::shared_ptr<Document> document;
 #ifndef BUILDING_TESTS
-static bool AnonymizeFilenames = false;
-static bool AnonymizeUsernames = false;
+static bool AnonymizeUserData = false;
 static std::string ObfuscatedFileId;
 #endif
 
@@ -2236,7 +2235,7 @@ protected:
             logger << _socketName << ": recv [";
             for (const std::string& token : tokens)
             {
-                // Don't log PII, there are anonymized versions that get logged instead.
+                // Don't log user-data, there are anonymized versions that get logged instead.
                 if (Util::startsWith(token, "jail") ||
                     Util::startsWith(token, "author") ||
                     Util::startsWith(token, "name") ||
@@ -2468,10 +2467,8 @@ void lokit_main(
         LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after Kit initialization.");
     }
 
-    AnonymizeFilenames = std::getenv("LOOL_ANONYMIZE_FILENAMES") != nullptr;
-    LOG_INF("Filename anonymization is " << (AnonymizeFilenames ? "enabled." : "disabled."));
-    AnonymizeUsernames = std::getenv("LOOL_ANONYMIZE_USERNAMES") != nullptr;
-    LOG_INF("Username anonymization is " << (AnonymizeUsernames ? "enabled." : "disabled."));
+    AnonymizeUserData = std::getenv("LOOL_ANONYMIZE_USER_DATA") != nullptr;
+    LOG_INF("User-data anonymization is " << (AnonymizeUserData ? "enabled." : "disabled."));
 
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
@@ -2490,8 +2487,7 @@ void lokit_main(
     Path jailPath;
     bool bRunInsideJail = !noCapabilities;
 #else
-    AnonymizeFilenames = false;
-    AnonymizeUsernames = false;
+    AnonymizeUserData = false;
 #endif // MOBILEAPP
 
     try
@@ -2783,7 +2779,7 @@ void lokit_main(
 std::string anonymizeUrl(const std::string& url)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeFilenames ? Util::anonymizeUrl(url) : url;
+    return AnonymizeUserData ? Util::anonymizeUrl(url) : url;
 #else
     return url;
 #endif
@@ -2877,7 +2873,7 @@ bool globalPreinit(const std::string &loTemplate)
 std::string anonymizeUsername(const std::string& username)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeUsernames ? Util::anonymize(username) : username;
+    return AnonymizeUserData ? Util::anonymize(username) : username;
 #else
     return username;
 #endif
