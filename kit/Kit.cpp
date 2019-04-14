@@ -114,6 +114,7 @@ class Document;
 static std::shared_ptr<Document> document;
 #ifndef BUILDING_TESTS
 static bool AnonymizeUserData = false;
+static uint64_t AnonymizationSalt = 82589933;
 static std::string ObfuscatedFileId;
 #endif
 
@@ -2278,7 +2279,13 @@ void lokit_main(
         LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after Kit initialization.");
     }
 
-    AnonymizeUserData = std::getenv("LOOL_ANONYMIZE_USER_DATA") != nullptr;
+    const char* pAnonymizationSalt = std::getenv("LOOL_ANONYMIZATION_SALT");
+    if (pAnonymizationSalt)
+    {
+        AnonymizationSalt = std::stoull(std::string(pAnonymizationSalt));
+        AnonymizeUserData = true;
+    }
+
     LOG_INF("User-data anonymization is " << (AnonymizeUserData ? "enabled." : "disabled."));
 
     assert(!childRoot.empty());
@@ -2587,7 +2594,7 @@ void lokit_main(
 std::string anonymizeUrl(const std::string& url)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeUserData ? Util::anonymizeUrl(url) : url;
+    return AnonymizeUserData ? Util::anonymizeUrl(url, AnonymizationSalt) : url;
 #else
     return url;
 #endif
@@ -2669,7 +2676,7 @@ bool globalPreinit(const std::string &loTemplate)
 std::string anonymizeUsername(const std::string& username)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeUserData ? Util::anonymize(username) : username;
+    return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
 #else
     return username;
 #endif

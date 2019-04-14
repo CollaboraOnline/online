@@ -65,6 +65,7 @@ public:
     static std::string LOKitVersion;
     static std::string LogLevel;
     static bool AnonymizeUserData;
+    static std::uint64_t AnonymizationSalt;
     static std::atomic<unsigned> NumConnections;
     static bool TileCachePersistent;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
@@ -141,14 +142,14 @@ public:
     /// Anonymize the basename of filenames, preserving the path and extension.
     static std::string anonymizeUrl(const std::string& url)
     {
-        return AnonymizeUserData ? Util::anonymizeUrl(url) : url;
+        return AnonymizeUserData ? Util::anonymizeUrl(url, AnonymizationSalt) : url;
     }
 
     /// Anonymize user names and IDs.
     /// Will use the Obfuscated User ID if one is provied via WOPI.
     static std::string anonymizeUsername(const std::string& username)
     {
-        return AnonymizeUserData ? Util::anonymize(username) : username;
+        return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
     }
 
     int innerMain();
@@ -184,6 +185,7 @@ private:
 
         void operator()(int& value) { value = _config.getInt(_name); }
         void operator()(unsigned int& value) { value = _config.getUInt(_name); }
+        void operator()(unsigned long& value) { value = _config.getUInt64(_name); }
         void operator()(bool& value) { value = _config.getBool(_name); }
         void operator()(std::string& value) { value = _config.getString(_name); }
         void operator()(double& value) { value = _config.getDouble(_name); }
