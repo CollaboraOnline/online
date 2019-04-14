@@ -36,6 +36,7 @@
 #include <iomanip>
 #include <iostream>
 #include <mutex>
+#include <unordered_map>
 #include <random>
 #include <sstream>
 #include <string>
@@ -683,7 +684,7 @@ namespace Util
         return std::make_tuple(base, filename, ext, params);
     }
 
-    static std::map<std::string, std::string> AnonymizedStrings;
+    static std::unordered_map<std::string, std::string> AnonymizedStrings;
     static std::atomic<unsigned> AnonymizationCounter(0);
     static std::mutex AnonymizedMutex;
 
@@ -692,8 +693,7 @@ namespace Util
         if (plain.empty() || anonymized.empty())
             return;
 
-        auto &log = Log::logger();
-        if (log.trace() && plain != anonymized)
+        if (Log::traceEnabled() && plain != anonymized)
             LOG_TRC("Anonymizing [" << plain << "] -> [" << anonymized << "].");
 
         std::unique_lock<std::mutex> lock(AnonymizedMutex);
@@ -709,8 +709,7 @@ namespace Util
             const auto it = AnonymizedStrings.find(text);
             if (it != AnonymizedStrings.end())
             {
-                auto &log = Log::logger();
-                if (log.trace() && text != it->second)
+                if (Log::traceEnabled() && text != it->second)
                     LOG_TRC("Found anonymized [" << text << "] -> [" << it->second << "].");
                 return it->second;
             }
