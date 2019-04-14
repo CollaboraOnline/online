@@ -507,7 +507,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     Poco::JSON::Object::Ptr object;
     if (JsonUtil::parseJSON(wopiResponse, object))
     {
-        if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
+        if (LOOLWSD::AnonymizeUserData)
             LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): anonymizing...");
         else
             LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
@@ -519,7 +519,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "TemplateSaveAs", templateSaveAs);
 
         // Anonymize key values.
-        if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
+        if (LOOLWSD::AnonymizeUserData)
         {
             Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(getUri().toString()));
 
@@ -533,11 +533,11 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
             // Set anonymized version of the above fields before logging.
             // Note: anonymization caches the result, so we don't need to store here.
-            if (LOOLWSD::AnonymizeFilenames)
+            if (LOOLWSD::AnonymizeUserData)
                 object->set("BaseFileName", LOOLWSD::anonymizeUrl(filename));
 
             // If obfuscatedUserId is provided, then don't log the originals and use it.
-            if (LOOLWSD::AnonymizeUsernames && obfuscatedUserId.empty())
+            if (LOOLWSD::AnonymizeUserData && obfuscatedUserId.empty())
             {
                 object->set("OwnerId", LOOLWSD::anonymizeUsername(ownerId));
                 object->set("UserId", LOOLWSD::anonymizeUsername(userId));
@@ -551,14 +551,11 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             // Remove them for performance reasons; they aren't needed anymore.
             object->remove("ObfuscatedUserId");
 
-            if (LOOLWSD::AnonymizeFilenames)
+            if (LOOLWSD::AnonymizeUserData)
             {
                 object->remove("BaseFileName");
                 object->remove("TemplateSaveAs");
-            }
 
-            if (LOOLWSD::AnonymizeUsernames)
-            {
                 object->remove("OwnerId");
                 object->remove("UserId");
                 object->remove("UserFriendlyName");
@@ -595,7 +592,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     }
     else
     {
-        if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
+        if (LOOLWSD::AnonymizeUserData)
             wopiResponse = "obfuscated";
 
         LOG_ERR("WOPI::CheckFileInfo (" << callDuration.count() * 1000. <<
@@ -790,7 +787,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
 
         if (Log::infoEnabled())
         {
-            if (LOOLWSD::AnonymizeFilenames)
+            if (LOOLWSD::AnonymizeUserData)
             {
                 Poco::JSON::Object::Ptr object;
                 if (JsonUtil::parseJSON(responseString, object))

@@ -55,13 +55,9 @@ AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],
                              [Enable debugging, link with debugging version of Poco libraries]))
 
-AC_ARG_ENABLE([anonymize-usernames],
-              AS_HELP_STRING([--enable-anonymize-usernames],
-                             [Enable anonymization/obfuscation of usernames in logs]))
-
-AC_ARG_ENABLE([anonymize-filenames],
-              AS_HELP_STRING([--enable-anonymize-filenames],
-                             [Enable anonymization/obfuscation of filenames in logs]))
+AC_ARG_ENABLE([anonymization],
+              AS_HELP_STRING([--enable-anonymization],
+                             [Enable anonymization/obfuscation of user-data in logs]))
 
 AC_ARG_ENABLE([iosapp],
               AS_HELP_STRING([--enable-iosapp],
@@ -178,8 +174,7 @@ ENABLE_DEBUG=
 LOOLWSD_LOGLEVEL="warning"
 LOOLWSD_LOG_TO_FILE="false"
 LOOLWSD_LOGFILE="/var/log/loolwsd.log"
-LOOLWSD_ANONYMIZE_FILENAMES=false
-LOOLWSD_ANONYMIZE_USERNAMES=false
+LOOLWSD_ANONYMIZE_USER_DATA=false
 LOLEAFLET_LOGGING="false"
 debug_msg="secure mode: product build"
 anonym_msg=""
@@ -189,8 +184,7 @@ if test "$enable_debug" = "yes"; then
    LOOLWSD_LOGLEVEL="trace"
    LOOLWSD_LOG_TO_FILE="true"
    LOOLWSD_LOGFILE="/tmp/loolwsd.log"
-   LOOLWSD_ANONYMIZE_FILENAMES=false
-   LOOLWSD_ANONYMIZE_USERNAMES=false
+   LOOLWSD_ANONYMIZE_USER_DATA=false
    LOLEAFLET_LOGGING="true"
    debug_msg="low security debugging mode"
 else
@@ -206,22 +200,15 @@ if test -n "$with_logfile" ; then
 fi
 AC_SUBST(LOOLWSD_LOGFILE)
 
-if test "$enable_anonymize_filenames" = "yes" ; then
-   LOOLWSD_ANONYMIZE_FILENAMES=true
-   anonym_msg="filenames anonymized; "
+if test "$enable_anonymization" = "yes" ; then
+   LOOLWSD_ANONYMIZE_USER_DATA=true
+   anonym_msg="anonymization of user-data is enabled"
 fi
-AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_FILENAMES],[$LOOLWSD_ANONYMIZE_FILENAMES],[Enable permanent filenames anonymization in logs])
-AC_SUBST(LOOLWSD_ANONYMIZE_FILENAMES)
-
-if test "$enable_anonymize_usernames" = "yes" ; then
-   LOOLWSD_ANONYMIZE_USERNAMES=true
-   anonym_msg="${anonym_msg}usernames anonymized; "
-fi
-AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_USERNAMES],[$LOOLWSD_ANONYMIZE_USERNAMES],[Enable permanent usernames anonymization in logs])
-AC_SUBST(LOOLWSD_ANONYMIZE_USERNAMES)
+AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_USER_DATA],[$LOOLWSD_ANONYMIZE_USER_DATA],[Enable permanent anonymization in logs])
+AC_SUBST(LOOLWSD_ANONYMIZE_USER_DATA)
 
 if test -z "$anonym_msg";  then
-  anonym_msg="no anonymization of usernames or filenames"
+  anonym_msg="anonymization of user-data is disabled"
 fi
 
 APP_NAME="LOOL"
