@@ -9,9 +9,11 @@
 
 package org.libreoffice.androidapp;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Build;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     final static String TAG = "MainActivity";
 
     private static final String ASSETS_EXTRACTED_PREFS_KEY = "ASSETS_EXTRACTED";
-    private static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 777;
+    private static final int PERMISSION_READ_EXTERNAL_STORAGE = 777;
 
     private File mTempFile = null;
 
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private WebView mWebView;
 
     private boolean isDocEditable = false;
-    private boolean isDocDebuggable = true;
+    private boolean isDocDebuggable = BuildConfig.DEBUG;
 
     private static boolean copyFromAssets(AssetManager assetManager,
                                           String fromAssetPath, String targetDir) {
@@ -184,8 +186,37 @@ public class MainActivity extends AppCompatActivity {
                 WebView.setWebContentsDebuggingEnabled(true);
             }
         }
+    }
 
-        loadDocument();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.i(TAG, "asking for read storage permission");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    PERMISSION_READ_EXTERNAL_STORAGE);
+        } else {
+            loadDocument();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_READ_EXTERNAL_STORAGE:
+                if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    loadDocument();
+                } else {
+                    Toast.makeText(this, getString(R.string.storage_permission_required), Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     private boolean copyFileToTemp() {
