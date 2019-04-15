@@ -399,14 +399,11 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onIME: function (e) {
-		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
+		if (e.type === 'compositionstart') {
 			this._isComposing = true; // we are starting composing with IME
-			if (e.originalEvent.data.length > 0) {
-				this._map._docLayer._postCompositionEvent(0, 'input', e.originalEvent.data);
-			}
-		}
-
-		if (e.type === 'compositionend') {
+		} else if (e.type === 'compositionupdate') {
+			this._map._docLayer._postCompositionEvent(0, 'input', e.originalEvent.data);
+		} else if (e.type === 'compositionend') {
 			this._isComposing = false; // stop of composing with IME
 			// get the composited char codes
 			// clear the input now - best to do this ASAP so the input
