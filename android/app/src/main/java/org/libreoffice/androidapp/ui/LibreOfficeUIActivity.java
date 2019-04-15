@@ -60,6 +60,8 @@ import org.libreoffice.androidapp.LibreOfficeApplication;
 import org.libreoffice.androidapp.LocaleHelper;
 import org.libreoffice.androidapp.MainActivity;
 import org.libreoffice.androidapp.R;
+import org.libreoffice.androidapp.SettingsActivity;
+import org.libreoffice.androidapp.SettingsListenerModel;
 import org.libreoffice.androidapp.storage.DocumentProviderFactory;
 import org.libreoffice.androidapp.storage.DocumentProviderSettingsActivity;
 import org.libreoffice.androidapp.storage.IDocumentProvider;
@@ -98,7 +100,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LibreOfficeUIActivity extends AppCompatActivity implements /*SettingsListenerModel.OnSettingsPreferenceChangedListener,*/ View.OnClickListener {
+public class LibreOfficeUIActivity extends AppCompatActivity implements SettingsListenerModel.OnSettingsPreferenceChangedListener, View.OnClickListener {
     private String LOGTAG = LibreOfficeUIActivity.class.getSimpleName();
     private SharedPreferences prefs;
     private int filterMode = FileUtilities.ALL;
@@ -176,8 +178,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         PreferenceManager.setDefaultValues(this, R.xml.documentprovider_preferences, false);
         readPreferences();
 
-        //TODO finish importing settings
-//        SettingsListenerModel.getInstance().setListener(this);
+        SettingsListenerModel.getInstance().setListener(this);
 
         // Registering the USB detect broadcast receiver
         IntentFilter filter = new IntentFilter();
@@ -563,8 +564,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
                 // a different thread
                 try {
                     return document[0].getDocument();
-                }
-                catch (final RuntimeException e) {
+                } catch (final RuntimeException e) {
                     final Activity activity = LibreOfficeUIActivity.this;
                     activity.runOnUiThread(new Runnable() {
                         @Override
@@ -619,7 +619,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         layout.addView(warningText);
         //check if the file exists when showing the create dialog
         File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
-        warningText.setVisibility(tempFile.exists()?View.VISIBLE:View.GONE);
+        warningText.setVisibility(tempFile.exists() ? View.VISIBLE : View.GONE);
 
         builder.setView(layout);
 
@@ -657,12 +657,16 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             @Override
             public void onTextChanged(CharSequence c, int start, int before, int count) {
                 File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
-                warningText.setVisibility(tempFile.exists()?View.VISIBLE:View.GONE);
+                warningText.setVisibility(tempFile.exists() ? View.VISIBLE : View.GONE);
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
         });
 
         builder.show();
@@ -671,9 +675,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
 
     /**
      * Creates a new file at the specified path, by copying an empty template to that location.
-     * @param path the complete path (including the file name) where the file will be created
-     * @param extension is required to know what template should be used when creating the document
      *
+     * @param path      the complete path (including the file name) where the file will be created
+     * @param extension is required to know what template should be used when creating the document
      * @return Uri of newFile if newFile is successfully created else null
      */
     private Uri createNewFile(final String path, final String extension) {
@@ -683,7 +687,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
         OutputStream newFileStream = null;
         try {
             //read the template and copy it to the new file
-            templateFileStream = getAssets().open("templates/untitled"+extension);
+            templateFileStream = getAssets().open("templates/untitled" + extension);
             newFileStream = new FileOutputStream(newFile);
             byte[] buffer = new byte[1024];
             int length;
@@ -918,8 +922,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
             }
             return true;
             case R.id.action_settings:
-                //TODO import the settings activity
-//                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
 
             default:
@@ -962,12 +965,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements /*Settin
     }
 
 
-    //TODO finish importing settings
-//    @Override
-//    public void settingsPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//        readPreferences();
-//        refreshView();
-//    }
+    @Override
+    public void settingsPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        readPreferences();
+        refreshView();
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

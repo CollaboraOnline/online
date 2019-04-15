@@ -1,6 +1,8 @@
 <resources>
     <!--string name="app_name" definition is deliberately missing here, it is filled in in build.gradle.-->
 
+    <string name="app_name_settings">LibreOffice Viewer Settings</string>
+    <string name="app_about_name"><b>LibreOffice Viewer \'Beta\'</b></string>
     <string name="app_version">Version: %1$s\nBuild ID: %2$s</string>
     <string name="app_description">LibreOffice Viewer is a document viewer based on LibreOffice.</string>
     <string name="app_credits">https://www.libreoffice.org</string>
@@ -11,6 +13,25 @@
     <string name="file_exists_warning">A file with this name already exists, and it will be overwritten.</string>
     <string name="file_creation_failed">File creation failed</string>
     <string name="storage_permission_required">Storage permission is required</string>
+
+    <string name="list_view">List</string>
+    <string name="grid_view">Grid</string>
+    <string name="pref_category_explorer">File Explorer Settings</string>
+    <string name="pref_category_general">General</string>
+    <string name="pref_experimental_editing">Experimental Mode</string>
+    <string name="pref_experimental_editing_summary">Enable the experimental editing mode. Use at your own risk.</string>
+    <string name="pref_show_hidden_files">Hidden Files/Folders</string>
+    <string name="pref_show_hidden_files_summary">Enable to show hidden files/folders</string>
+    <string name="pref_developer_mode">Developer Mode</string>
+    <string name="pref_developer_mode_summary">Enable developer mode where you can send UNO commands within app. Use at your own risk.</string>
+    <string name="pref_sort_summary">Select how to order files: A-Z, by size or by date.</string>
+    <string name="pref_viewmode_summary">View files as a grid or in a list.</string>
+    <string name="pref_file_explorer_title">File explorer layout</string>
+    <string name="pref_sort_title">File Order</string>
+    <string name="pref_filter_title">Default File Filter</string>
+    <string name="pref_filter_summary">Set which file filter should be used by default.</string>
+    <string name="display_language">Display Language</string>
+    <string name="display_language_summary">Set the default display language</string>
 
     <string name="about_license">Show License</string>
     <string name="about_notice">Show Notice</string>
