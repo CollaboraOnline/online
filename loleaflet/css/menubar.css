@@ -15,7 +15,7 @@
     height: 30px; /* on mouseover menubar items, border emerges */
     background: #efefef;
     position: static;
-    margin-left: 10px;
+    padding-left: 10px;
     width: auto;
 }
 
