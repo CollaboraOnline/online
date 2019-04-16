@@ -42,26 +42,23 @@ public class AboutDialogFragment extends DialogFragment {
         TextView textView = messageView.findViewById(R.id.about_credits);
         int defaultColor = textView.getTextColors().getDefaultColor();
         textView.setTextColor(defaultColor);
+        textView.setText(getResources().getString(R.string.info_url));
 
-        // Take care of placeholders in the version and vendor text views.
+        // Take care of placeholders in the version text view.
         TextView versionView = messageView.findViewById(R.id.about_version);
-        TextView vendorView = messageView.findViewById(R.id.about_vendor);
         try
         {
             String versionName = getActivity().getPackageManager()
                     .getPackageInfo(getActivity().getPackageName(), 0).versionName;
             String[] tokens = versionName.split("/");
-            if (tokens.length == 3)
+            if (tokens.length >= 2)
             {
                 String version = String.format(versionView.getText().toString().replace("\n", "<br/>"),
-                        tokens[0], "<a href=\"https://hub.libreoffice.org/git-core/" + tokens[1] + "\">" + tokens[1] + "</a>");
+                        tokens[0], "<a href=\"https://hub.libreoffice.org/git-online/" + tokens[1] + "\">" + tokens[1] + "</a>");
                 @SuppressWarnings("deprecation") // since 24 with additional option parameter
                 Spanned versionString = Html.fromHtml(version);
                 versionView.setText(versionString);
                 versionView.setMovementMethod(LinkMovementMethod.getInstance());
-                String vendor = vendorView.getText().toString();
-                vendor = vendor.replace("$VENDOR", tokens[2]);
-                vendorView.setText(vendor);
             }
             else
                 throw new PackageManager.NameNotFoundException();
@@ -69,8 +66,18 @@ public class AboutDialogFragment extends DialogFragment {
         catch (PackageManager.NameNotFoundException e)
         {
             versionView.setText("");
-            vendorView.setText("");
         }
+
+        // Take care of some placeholders
+        TextView descriptionView = messageView.findViewById(R.id.about_description);
+        String description = descriptionView.getText().toString();
+        description = description.replace("$APP_NAME", getResources().getString(R.string.app_name));
+        descriptionView.setText(description);
+
+        TextView vendorView = messageView.findViewById(R.id.about_vendor);
+        String vendor = vendorView.getText().toString();
+        vendor = vendor.replace("$VENDOR", getResources().getString(R.string.vendor));
+        vendorView.setText(vendor);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder .setIcon(R.drawable.lo_icon)

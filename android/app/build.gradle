@@ -6,15 +6,17 @@ apply from: 'liboSettings.gradle'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId 'org.libreoffice.androidapp'
+        // applicationId defined in liboSettings.gradle
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        // versionName defined in liboSettings.gradle
     }
     buildTypes {
         debug {
-            resValue "string", "app_name", "${liboAppName}"
+            resValue "string", "app_name", "${liboAppName} Debug"
+            resValue "string", "vendor", "${liboVendor}"
+            resValue "string", "info_url", "${liboInfoURL}"
             ndk {
                 //abiFilters "x86", "armeabi-v7a", "armeabi"
                 abiFilters "armeabi-v7a"
@@ -23,6 +25,8 @@ android {
         }
         release {
             resValue "string", "app_name", "${liboAppName}"
+            resValue "string", "vendor", "${liboVendor}"
+            resValue "string", "info_url", "${liboInfoURL}"
             ndk {
                 abiFilters "armeabi-v7a"
             }
