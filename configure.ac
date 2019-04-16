@@ -98,6 +98,16 @@ AC_ARG_WITH([app-name],
               AS_HELP_STRING([--with-app-name=<name>],
                              [Set the user-visible name of the app you build.]))
 
+AC_ARG_WITH(vendor,
+    AS_HELP_STRING([--with-vendor="John the Builder"],
+        [Set vendor of the build.]),
+,)
+
+AC_ARG_WITH(info-url,
+    AS_HELP_STRING([--with-info-url="https://john-the-builder.org"],
+        [Set the info url of the build.]),
+,)
+
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
                              [Disable use of linux/seccomp.h header when kernel on target system does not support it.
@@ -326,6 +336,32 @@ if test -n "$with_app_name"; then
 fi
 AC_DEFINE_UNQUOTED([APP_NAME],["$APP_NAME"],[The user-visible name of the app you build.])
 AC_SUBST(APP_NAME)
+
+VENDOR=
+AC_MSG_CHECKING([for vendor])
+if test -z "$with_vendor" -o "$with_vendor" = "no"; then
+    VENDOR="$USERNAME"
+
+    if test -z "$VENDOR"; then
+        VENDOR="$USER"
+    fi
+
+    if test -z "$VENDOR"; then
+        VENDOR="`id -u -n`"
+    fi
+
+    AC_MSG_RESULT([not set, using $VENDOR])
+else
+    VENDOR="$with_vendor"
+    AC_MSG_RESULT([$VENDOR])
+fi
+AC_SUBST(VENDOR)
+
+INFO_URL='https://www.libreoffice.org'
+if test -n "$with_info_url" -a "$with_info_url" != "no"; then
+    INFO_URL="$with_info_url"
+fi
+AC_SUBST(INFO_URL)
 
 ENABLE_IOSAPP=
 IOSAPP_BUNDLE_VERSION=

@@ -10,36 +10,41 @@
               android:padding="20dip">
 
     <TextView
-        android:id="@+id/about_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="true"
-        android:text="@string/app_version"
-        android:textSize="18sp"/>
-
-    <TextView
         android:id="@+id/about_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_description"
-        android:textSize="18sp"/>
+        android:textAlignment="center"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/about_credits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autoLink="web"
-        android:paddingBottom="20dip"
-        android:paddingTop="20dip"
-        android:text="@string/app_credits"
-        android:textSize="18sp"/>
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/about_vendor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true"
         android:text="@string/app_vendor"
-        android:textSize="18sp"/>
+        android:textAlignment="center"
+        android:textIsSelectable="true"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_version"
+        android:textAlignment="center"
+        android:textIsSelectable="true"
+        android:textSize="14sp" />
+
 </LinearLayout>
 </ScrollView>
