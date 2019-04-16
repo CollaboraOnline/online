@@ -1,3 +1,12 @@
+/* -*- Mode: Java; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.libreoffice.androidapp;
 
 import android.content.Intent;
@@ -26,29 +35,28 @@ import org.libreoffice.androidapp.ui.LibreOfficeUIActivity;
  */
 public class ShowHTMLActivity extends AppCompatActivity {
 
-    private WebView mWebView;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_html);
 
-        mWebView = findViewById(R.id.browser);
+        WebView mWebView = findViewById(R.id.browser);
         mWebView.setWebViewClient(new WebViewClient());
-        mWebView.loadUrl("file:///android_asset/"+getIntent().getStringExtra("path"));
+        mWebView.loadUrl("file:///android_asset/" + getIntent().getStringExtra("path"));
 
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getBaseContext(), LibreOfficeUIActivity.class);
+                Intent intent = new Intent(getBaseContext(), LibreOfficeUIActivity.class);
                 startActivity(intent);
             }
         });
     }
 
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
