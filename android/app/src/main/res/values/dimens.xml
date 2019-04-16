@@ -5,5 +5,4 @@
     <dimen name="file_icon_width">32dp</dimen>
     <dimen name="new_doc_fab_tweak_top">-11dp</dimen>
     <dimen name="new_doc_fab_tweak_bottom">-7dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
 </resources>

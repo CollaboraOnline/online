@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- View Mode names,values -->
-<integer-array name="FilterTypeValues">
-        <item >-1</item>
-        <item >0</item>
-        <item >1</item>
-        <item >2</item>
-    </integer-array>
     <string-array name="FilterTypeStringValues">
         <item >-1</item>
         <item >0</item>
