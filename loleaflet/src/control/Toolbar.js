@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global $ window vex brandProductName _ */
+/* global $ window vex sanitizeUrl brandProductName brandProductURL _ */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -265,9 +265,13 @@ L.Map.include({
 		} else {
 			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
 		}
+		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://libreoffice.org';
 		content.find('#product-name').text(productName);
 		var productString = _('This version of %productName is powered by');
-		content.find('#product-string').text(productString.replace('%productName', productName));
+		var productNameWithURL = '<a href="' + sanitizeUrl.sanitizeUrl(productURL) +
+								 '" target="_blank">' + productName + '</a>';
+		content.find('#product-string').html(productString.replace('%productName', productNameWithURL));
+
 		var w;
 		var iw = window.innerWidth;
 		if (iw < 768) {
