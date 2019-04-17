@@ -528,9 +528,11 @@ int main(int argc, char** argv)
         return Application::EXIT_SOFTWARE;
     }
 
-    // Enable built in profiling dumps
+    // Set various options we need.
+    std::string options = "unipoll";
     if (Log::logger().trace())
-        ::setenv("SAL_PROFILEZONE_EVENTS", "1", 0);
+        options += ":profile_events";
+    ::setenv("SAL_LOK_OPTIONS", options.c_str(), 0);
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))
