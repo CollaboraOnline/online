@@ -168,7 +168,7 @@ sub consume($$$$$$$$$)
             $time = $time - $dur_us;
             push @events, "{\"pid\":$pid, \"tid\":$tid, \"ts\":$time, \"dur\":$dur_us, \"ph\":\"X\", \"name\":\"$msg\", \"args\":{ \"ms\":$dur_ms } }";
         } else {
-            die "Unknown prof message: '$message'";
+            die "Unknown prof message: '$message' at line $lineno";
         }
         return;
     }
@@ -261,7 +261,7 @@ sub parseProfileFrames($$$$$)
             #       print STDERR "Profile frame '$line'\n";
             # FIXME: silly to complicate and then re-parse this I guess ...
             my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime($secs);
-            my $time = sprintf("%.2d:%.2d:%02.6f", $hour, $min, "$sec.$fractsecs");
+            my $time = sprintf("%.2d:%.2d:%09.6f", $hour, $min, "$sec.$fractsecs");
 #           print STDERR "time '$time' from '$secs' - " . time() . "\n";
             consume($lineno, $proc, $pid, $tid, $time, $emitter, 'PROF', $realmsg, '');
         }
