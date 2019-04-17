@@ -301,7 +301,7 @@ public:
                     Log::to_string(_owner) << " but called from " <<
                     std::this_thread::get_id() << " (" << Util::getThreadId() << ").");
 
-        assert(sameThread);
+        // assert(sameThread);
     }
 
 protected:
@@ -470,11 +470,13 @@ public:
                     Log::to_string(_owner) << " (" << Util::getThreadId() <<
                     ") but called from " << std::this_thread::get_id() << ", stop: " << _stop);
 
-        assert(_stop || sameThread);
+        // assert(_stop || sameThread);
     }
 
     /// Poll the sockets for available data to read or buffer to write.
-    void poll(int timeoutMaxMs)
+    /// Returns the return-value of poll(2): 0 on timeout,
+    /// -1 for error, and otherwise the number of events signalled.
+    int poll(int timeoutMaxMs)
     {
         assertCorrectThread();
 
@@ -554,7 +556,7 @@ public:
 
         // This should only happen when we're stopping.
         if (_pollSockets.size() != size)
-            return;
+            return rc;
 
         // Fire the poll callbacks and remove dead fds.
         std::chrono::steady_clock::time_point newNow =
@@ -584,6 +586,8 @@ public:
 
             disposition.execute();
         }
+
+        return rc;
     }
 
     /// Write to a wakeup descriptor

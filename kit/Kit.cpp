@@ -2253,7 +2253,7 @@ protected:
             logger << _socketName << ": recv [";
             for (const std::string& token : tokens)
             {
-                // Don't log user-data, there are anonymized versions that get logged instead.
+                // Don't log PII, there are anonymized versions that get logged instead.
                 if (Util::startsWith(token, "jail") ||
                     Util::startsWith(token, "author") ||
                     Util::startsWith(token, "name") ||
@@ -2300,6 +2300,7 @@ protected:
             LOG_TRC("Setting TerminationFlag due to 'exit' command from parent.");
             TerminationFlag = true;
             document.reset();
+            SocketPoll::wakeupWorld();
         }
         else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
                 tokens[0] == "paintwindow" || tokens[0] == "resizewindow" ||
@@ -2342,6 +2343,78 @@ protected:
 void documentViewCallback(const int type, const char* payload, void* data)
 {
     Document::ViewCallback(type, payload, data);
+}
+
+/// Called by LOK main-loop
+int pollCallback(void* pData, int timeoutUs)
+{
+    if (!pData)
+        return 0;
+
+    if (TerminationFlag)
+    {
+        LOG_TRC("Termination of unipoll mainloop flagged");
+        return -1;
+    }
+
+    // The maximum number of extra events to process beyond the first.
+    //FIXME: When processing more than one event, full-document
+    //FIXME: invalidations happen (for some reason), so disable for now.
+    int maxExtraEvents = 0;
+    int eventsSignalled = 0;
+
+    int timeoutMs = timeoutUs / 1000;
+
+    SocketPoll* pSocketPoll = reinterpret_cast<SocketPoll*>(pData);
+    if (timeoutMs < 0)
+    {
+        // Flush at most 1 + maxExtraEvents, or return when nothing left.
+        while (pSocketPoll->poll(0) > 0 && maxExtraEvents-- > 0)
+            ++eventsSignalled;
+    }
+    else
+    {
+        const auto startTime = std::chrono::steady_clock::now();
+        do
+        {
+            // Flush at most maxEvents+1, or return when nothing left.
+            if (pSocketPoll->poll(timeoutMs) <= 0)
+                break;
+
+            const auto now = std::chrono::steady_clock::now();
+            const auto elapsedTimeMs
+                = std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime)
+                .count();
+            if (elapsedTimeMs >= timeoutMs)
+                break;
+
+            timeoutMs -= elapsedTimeMs;
+            ++eventsSignalled;
+        }
+        while (maxExtraEvents-- > 0);
+    }
+
+#if !MOBILEAPP
+    if (document && document->purgeSessions() == 0)
+    {
+        LOG_INF("Last session discarded. Setting TerminationFlag");
+        TerminationFlag = true;
+        return -1;
+    }
+#endif
+
+    // Report the number of events we processsed.
+    return eventsSignalled;
+}
+
+/// Called by LOK main-loop
+void wakeCallback(void* pData)
+{
+    if (pData)
+    {
+        SocketPoll* pSocketPoll = reinterpret_cast<SocketPoll*>(pData);
+        pSocketPoll->wakeup();
+    }
 }
 
 #ifndef BUILDING_TESTS
@@ -2539,13 +2612,14 @@ void lokit_main(
         std::string tmpSubdir = Util::createRandomTmpDir();
         ::setenv("TMPDIR", tmpSubdir.c_str(), 1);
 
+        LibreOfficeKit *kit;
         {
             const char *instdir = instdir_path.c_str();
             const char *userdir = userdir_url.c_str();
 #ifndef KIT_IN_PROCESS
-            LibreOfficeKit* kit = UnitKit::get().lok_init(instdir, userdir);
+            kit = UnitKit::get().lok_init(instdir, userdir);
 #else
-            LibreOfficeKit* kit = nullptr;
+            kit = nullptr;
 #ifdef FUZZER
             if (LOOLWSD::DummyLOK)
                 kit = dummy_lok_init_2(instdir, userdir);
@@ -2660,7 +2734,13 @@ void lokit_main(
         }
 #endif
 
-        while (!TerminationFlag)
+        if (!LIBREOFFICEKIT_HAS(kit, runLoop))
+        {
+            LOG_ERR("Kit is missing Unipoll API");
+            std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
+            std::_Exit(Application::EXIT_SOFTWARE);
+        }
+        else
         {
             mainKit.poll(SocketPoll::DefaultPollTimeoutMs);
 
@@ -2673,11 +2753,20 @@ void lokit_main(
 #endif
         }
 
+        LOG_INF("Kit unipoll loop run");
+
+        loKit->runLoop(pollCallback, wakeCallback, &mainKit);
+
         LOG_INF("Kit poll terminated.");
 
 #if MOBILEAPP
         SocketPoll::wakeupWorld();
 #endif
+
+        // Trap the signal handler, if invoked,
+        // to prevent exiting.
+        LOG_INF("Process finished.");
+        Log::shutdown();
 
         // Let forkit handle the jail cleanup.
     }
