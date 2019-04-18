@@ -451,6 +451,30 @@ L.Control.LokDialog = L.Control.extend({
 			              // Keep map active while user is playing with window.
 			              this._map.lastActiveTime = Date.now();
 		              }, this);
+		L.DomEvent.on(dlgInput, 'paste', function(e) {
+			var clipboardData = e.clipboardData || window.clipboardData;
+			var data, blob;
+
+			L.DomEvent.preventDefault(e);
+			if (clipboardData) {
+				data = clipboardData.getData('text/plain') || clipboardData.getData('Text');
+				if (data) {
+					var cmd = {
+						MimeType: {
+							type: 'string',
+							value: 'mimetype=text/plain;charset=utf-8'
+						},
+						Data: {
+							type: '[]byte',
+							value: data
+						}
+					};
+
+					blob = new Blob(['windowcommand ' + id + ' paste ', encodeURIComponent(JSON.stringify(cmd))]);
+					this._map._socket.sendMessage(blob);
+				}
+			}
+		}, this);
 		L.DomEvent.on(dlgInput, 'contextmenu', function() {
 			return false;
 		});
