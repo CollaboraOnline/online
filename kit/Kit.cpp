@@ -506,9 +506,10 @@ class PngCache
         }
     }
 
+public:
     /// Lookup an entry in the cache and store the data in output.
     /// Returns true on success, otherwise false.
-    bool cacheTest(const uint64_t hash, std::vector<char>& output)
+    bool copyFromCache(const uint64_t hash, std::vector<char>& output)
     {
         if (hash)
         {
@@ -529,11 +530,11 @@ class PngCache
         return false;
     }
 
-    bool cacheEncodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
-                                   int width, int height,
-                                   int bufferWidth, int bufferHeight,
-                                   std::vector<char>& output, LibreOfficeKitTileMode mode,
-                                   TileBinaryHash hash, TileWireId wid, TileWireId /*oldWid*/)
+    bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
+                              int width, int height,
+                              int bufferWidth, int bufferHeight,
+                              std::vector<char>& output, LibreOfficeKitTileMode mode,
+                              TileBinaryHash hash, TileWireId wid, TileWireId /*oldWid*/)
     {
         LOG_DBG("PNG cache with hash " << hash << " missed.");
 /*
@@ -568,7 +569,6 @@ class PngCache
             return false;
     }
 
-public:
     PngCache()
     {
         clearCache();
@@ -588,20 +588,6 @@ public:
             _wireToHash.emplace(wid, id);
         }
         return wid;
-    }
-
-    bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
-                              int width, int height,
-                              int bufferWidth, int bufferHeight,
-                              std::vector<char>& output, LibreOfficeKitTileMode mode,
-                              TileBinaryHash hash, TileWireId wid, TileWireId oldWid)
-    {
-        if (cacheTest(hash, output))
-            return true;
-
-        return cacheEncodeSubBufferToPNG(pixmap, startX, startY, width, height,
-                                         bufferWidth, bufferHeight, output, mode,
-                                         hash, wid, oldWid);
     }
 };
 
@@ -1076,21 +1062,24 @@ public:
                 continue;
             }
 
-            if (_docWatermark)
-                _docWatermark->blending(pixmap.data(), offsetX, offsetY,
-                                        pixmapWidth, pixmapHeight,
-                                        pixelWidth, pixelHeight,
-                                        mode);
-
-            if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY,
-                                                pixelWidth, pixelHeight,
-                                                pixmapWidth, pixmapHeight, output, mode,
-                                                hash, wireId, oldWireId))
+            if (!_pngCache.copyFromCache(hash, output))
             {
-                //FIXME: Return error.
-                //sendTextFrame("error: cmd=tile kind=failure");
-                LOG_ERR("Failed to encode tile into PNG.");
-                return;
+                if (_docWatermark)
+                    _docWatermark->blending(pixmap.data(), offsetX, offsetY,
+                                            pixmapWidth, pixmapHeight,
+                                            pixelWidth, pixelHeight,
+                                            mode);
+
+                if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY,
+                                                    pixelWidth, pixelHeight,
+                                                    pixmapWidth, pixmapHeight, output, mode,
+                                                    hash, wireId, oldWireId))
+                {
+                    // FIXME: Return error.
+                    // sendTextFrame("error: cmd=tile kind=failure");
+                    LOG_ERR("Failed to encode tile into PNG.");
+                    return;
+                }
             }
 
             const size_t imgSize = output.size() - oldSize;
