@@ -2,7 +2,7 @@ bin_PROGRAMS = mobile
 
 include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/kit -I${top_srcdir}/wsd -I${top_srcdir}
 
-warning_flags = -Wall -Werror -Wno-parentheses -Wno-sign-compare -Wno-unused-variable -Wno-stringop-overflow
+warning_flags = -Wall -Werror -Wno-parentheses -Wno-sign-compare -Wno-unused-variable
 define_flags = -DMOBILEAPP=1
 
 AM_CPPFLAGS = -pthread \
