@@ -9,6 +9,7 @@ AM_CPPFLAGS = -pthread \
               -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' \
               -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' \
               -DTOPSRCDIR='"'$(realpath ${top_srcdir})'"' \
+              -DGTKAPP \
               ${define_flags} \
               ${warning_flags} \
               ${include_paths} \
