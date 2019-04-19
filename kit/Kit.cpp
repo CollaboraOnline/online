@@ -590,18 +590,6 @@ public:
         return wid;
     }
 
-    bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
-                           std::vector<char>& output, LibreOfficeKitTileMode mode,
-                           TileBinaryHash hash, TileWireId wid, TileWireId oldWid)
-    {
-        if (cacheTest(hash, output))
-            return true;
-
-        return cacheEncodeSubBufferToPNG(pixmap, 0, 0, width, height,
-                                         width, height, output, mode,
-                                         hash, wid, oldWid);
-    }
-
     bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
                               int width, int height,
                               int bufferWidth, int bufferHeight,
@@ -986,82 +974,21 @@ public:
 
     void renderTile(const std::vector<std::string>& tokens)
     {
-        TileDesc tile = TileDesc::parse(tokens);
-
-        size_t pixmapDataSize = 4 * tile.getWidth() * tile.getHeight();
-        std::vector<unsigned char> pixmap;
-        pixmap.resize(pixmapDataSize);
-
-        std::unique_lock<std::mutex> lock(_documentMutex);
-        if (!_loKitDocument)
-        {
-            LOG_ERR("Tile rendering requested before loading document.");
-            return;
-        }
-
-        if (_loKitDocument->getViewsCount() <= 0)
-        {
-            LOG_ERR("Tile rendering requested without views.");
-            return;
-        }
-
-        const double area = tile.getWidth() * tile.getHeight();
-        Timestamp timestamp;
-        _loKitDocument->paintPartTile(pixmap.data(), tile.getPart(),
-                                      tile.getWidth(), tile.getHeight(),
-                                      tile.getTilePosX(), tile.getTilePosY(),
-                                      tile.getTileWidth(), tile.getTileHeight());
-        const Poco::Timestamp::TimeDiff elapsed = timestamp.elapsed();
-        LOG_TRC("paintTile at (" << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() <<
-                ") " << "ver: " << tile.getVersion() << " rendered in " << (elapsed/1000.) <<
-                " ms (" << area / elapsed << " MP/s).");
-        const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
-
-        const TileBinaryHash hash = Png::hashBuffer(pixmap.data(), tile.getWidth(), tile.getHeight());
-        TileWireId wid = _pngCache.hashToWireId(hash);
-        TileWireId oldWireId = tile.getOldWireId();
-
-        tile.setWireId(wid);
-
-        if (hash != 0 && oldWireId == wid)
-        {
-            // The tile content is identical to what the client already has, so skip it
-            LOG_TRC("Match oldWireId==wid (" << wid << " for hash " << hash << "); unchanged");
-            return;
-        }
-
-        // Send back the request with all optional parameters given in the request.
-        std::string response = ADD_DEBUG_RENDERID(tile.serialize("tile:")) + "\n";
-
-        int pixelWidth = tile.getWidth();
-        int pixelHeight = tile.getHeight();
-
-        if (_docWatermark)
-            _docWatermark->blending(pixmap.data(), 0, 0, pixelWidth, pixelHeight, pixelWidth, pixelHeight, mode);
-
-        std::shared_ptr<std::vector<char>> output = std::make_shared<std::vector<char>>();
-        output->reserve(response.size() + pixmapDataSize);
-        output->resize(response.size());
-        std::memcpy(output->data(), response.data(), response.size());
-
-        if (!_pngCache.encodeBufferToPNG(pixmap.data(), tile.getWidth(), tile.getHeight(), *output, mode, hash, wid, oldWireId))
-        {
-            //FIXME: Return error.
-            //sendTextFrame("error: cmd=tile kind=failure");
-
-            LOG_ERR("Failed to encode tile into PNG.");
-            return;
-        }
-
-        LOG_TRC("Sending render-tile response (" << output->size() << " bytes) for: " << response);
-        postMessage(output, WSOpCode::Binary);
+        TileCombined tileCombined(TileDesc::parse(tokens));
+        renderTiles(tileCombined, false);
     }
 
     void renderCombinedTiles(const std::vector<std::string>& tokens)
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
+        renderTiles(tileCombined, true);
+    }
+
+    void renderTiles(TileCombined &tileCombined, bool combined)
+    {
         auto& tiles = tileCombined.getTiles();
 
+        // Calculate the area we cover
         Util::Rectangle renderArea;
         std::vector<Util::Rectangle> tileRecs;
         tileRecs.reserve(tiles.size());
@@ -1103,6 +1030,7 @@ public:
             return;
         }
 
+        // Render the whole area
         const double area = pixmapWidth * pixmapHeight;
         Timestamp timestamp;
         LOG_TRC("Calling paintPartTile(" << (void*)pixmap.data() << ")");
@@ -1120,6 +1048,7 @@ public:
         std::vector<char> output;
         output.reserve(pixmapSize);
 
+        // Compress the area as tiles
         size_t tileIndex = 0;
         for (Util::Rectangle& tileRect : tileRecs)
         {
@@ -1154,7 +1083,8 @@ public:
                                         mode);
 
             if (!_pngCache.encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY,
-                                                pixelWidth, pixelHeight, pixmapWidth, pixmapHeight, output, mode,
+                                                pixelWidth, pixelHeight,
+                                                pixmapWidth, pixmapHeight, output, mode,
                                                 hash, wireId, oldWireId))
             {
                 //FIXME: Return error.
@@ -1182,8 +1112,13 @@ public:
             return;
         }
 
-        const auto tileMsg = ADD_DEBUG_RENDERID(tileCombined.serialize("tilecombine:")) + "\n";
-        LOG_TRC("Sending back painted tiles for " << tileMsg);
+        std::string tileMsg;
+        if (combined)
+            tileMsg = ADD_DEBUG_RENDERID(tileCombined.serialize("tilecombine:")) + "\n";
+        else
+            tileMsg = ADD_DEBUG_RENDERID(tiles[0].serialize("tile:")) + "\n";
+
+        LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
 
         std::shared_ptr<std::vector<char>> response = std::make_shared<std::vector<char>>();
         response->resize(tileMsg.size() + output.size());
