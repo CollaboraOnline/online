@@ -29,7 +29,9 @@ class ServerSocket : public Socket
 public:
     ServerSocket(Socket::Type type, SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
         Socket(type),
+#if !MOBILEAPP
         _type(type),
+#endif
         _clientPoller(clientPoller),
         _sockFactory(std::move(sockFactory))
     {
@@ -90,7 +92,9 @@ public:
     }
 
 private:
+#if !MOBILEAPP
     Socket::Type _type;
+#endif
     SocketPoll& _clientPoller;
 protected:
     std::shared_ptr<SocketFactory> _sockFactory;

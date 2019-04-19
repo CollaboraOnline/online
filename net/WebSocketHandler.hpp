@@ -36,9 +36,11 @@ private:
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
     bool _isClient;
+#if !MOBILEAPP
     bool _isMasking;
     bool _inFragmentBlock;
     bool _isManualDefrag;
+#endif
 
 protected:
     struct WSFrameMask
@@ -60,14 +62,16 @@ public:
     ///                 defragmentation should be handled inside message handler (true) or the message handler
     ///                 should be called after all fragments of a message were received and the message
     ///                 was defragmented (false).
-    WebSocketHandler(bool isClient = false, bool isMasking = true, bool isManualDefrag = false) :
-        _lastPingSentTime(std::chrono::steady_clock::now()),
-        _pingTimeUs(0),
-        _shuttingDown(false),
-        _isClient(isClient),
-        _isMasking(isClient && isMasking),
-        _inFragmentBlock(false),
-        _isManualDefrag(isManualDefrag)
+    WebSocketHandler(bool isClient = false, bool isMasking = true, bool isManualDefrag = false)
+        : _lastPingSentTime(std::chrono::steady_clock::now())
+        , _pingTimeUs(0)
+        , _shuttingDown(false)
+        , _isClient(isClient)
+#if !MOBILEAPP
+        , _isMasking(isClient && isMasking)
+        , _inFragmentBlock(false)
+        , _isManualDefrag(isManualDefrag)
+#endif
     {
     }
 
@@ -76,17 +80,19 @@ public:
     /// socket: the TCP socket which received the upgrade request
     /// request: the HTTP upgrade request to WebSocket
     WebSocketHandler(const std::weak_ptr<StreamSocket>& socket,
-                     const Poco::Net::HTTPRequest& request) :
-        _socket(socket),
-        _lastPingSentTime(std::chrono::steady_clock::now() -
-                  std::chrono::milliseconds(PingFrequencyMs) -
-                  std::chrono::milliseconds(InitialPingDelayMs)),
-        _pingTimeUs(0),
-        _shuttingDown(false),
-        _isClient(false),
-        _isMasking(false),
-        _inFragmentBlock(false),
-        _isManualDefrag(false)
+                     const Poco::Net::HTTPRequest& request)
+        : _socket(socket)
+        , _lastPingSentTime(std::chrono::steady_clock::now() -
+                            std::chrono::milliseconds(PingFrequencyMs) -
+                            std::chrono::milliseconds(InitialPingDelayMs))
+        , _pingTimeUs(0)
+        , _shuttingDown(false)
+        , _isClient(false)
+#if !MOBILEAPP
+        , _isMasking(false)
+        , _inFragmentBlock(false)
+        , _isManualDefrag(false)
+#endif
     {
         upgradeToWebSocket(request);
     }
@@ -154,7 +160,9 @@ public:
             socket->getInBuffer().clear();
         }
         _wsPayload.clear();
+#if !MOBILEAPP
         _inFragmentBlock = false;
+#endif
         _shuttingDown = false;
     }
 
