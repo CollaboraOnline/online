@@ -250,15 +250,14 @@ private:
     TileCombined(int part, int width, int height,
                  const std::string& tilePositionsX, const std::string& tilePositionsY,
                  int tileWidth, int tileHeight, const std::string& vers,
-                 const std::string& imgSizes, int id,
+                 const std::string& imgSizes,
                  const std::string& oldWireIds,
                  const std::string& wireIds) :
         _part(part),
         _width(width),
         _height(height),
         _tileWidth(tileWidth),
-        _tileHeight(tileHeight),
-        _id(id)
+        _tileHeight(tileHeight)
     {
         if (_part < 0 ||
             _width <= 0 ||
@@ -326,7 +325,7 @@ private:
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
 
-            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, imgSize, id, false);
+            _tiles.emplace_back(_part, _width, _height, x, y, _tileWidth, _tileHeight, ver, imgSize, -1, false);
             _tiles.back().setOldWireId(oldWireId);
             _tiles.back().setWireId(wireId);
         }
@@ -396,11 +395,6 @@ public:
         }
         oss.seekp(-1, std::ios_base::cur); // See beow.
 
-        if (_id >= 0)
-        {
-            oss << " id=" << _id;
-        }
-
         // Make sure we don't return a potential trailing comma that
         // we have seeked back over but not overwritten after all.
         return oss.str().substr(0, oss.tellp());
@@ -412,9 +406,6 @@ public:
         // We don't expect undocumented fields and
         // assume all values to be int.
         std::map<std::string, int> pairs;
-
-        // Optional.
-        pairs["id"] = -1;
 
         std::string tilePositionsX;
         std::string tilePositionsY;
@@ -467,8 +458,7 @@ public:
         return TileCombined(pairs["part"], pairs["width"], pairs["height"],
                             tilePositionsX, tilePositionsY,
                             pairs["tilewidth"], pairs["tileheight"],
-                            versions,
-                            imgSizes, pairs["id"], oldwireIds, wireIds);
+                            versions, imgSizes, oldwireIds, wireIds);
     }
 
     /// Deserialize a TileDesc from a string format.
@@ -499,7 +489,18 @@ public:
         vers.seekp(-1, std::ios_base::cur); // Remove last comma.
         return TileCombined(tiles[0].getPart(), tiles[0].getWidth(), tiles[0].getHeight(),
                             xs.str(), ys.str(), tiles[0].getTileWidth(), tiles[0].getTileHeight(),
-                            vers.str(), "", -1, oldhs.str(), hs.str());
+                            vers.str(), "", oldhs.str(), hs.str());
+    }
+
+    /// To support legacy / under-used renderTile
+    TileCombined(const TileDesc &desc)
+    {
+        _part = desc.getPart();
+        _width = desc.getWidth();
+        _height = desc.getHeight();
+        _tileWidth = desc.getTileWidth();
+        _tileHeight = desc.getTileHeight();
+        _tiles.push_back(desc);
     }
 
 private:
@@ -509,7 +510,6 @@ private:
     int _height;
     int _tileWidth;
     int _tileHeight;
-    int _id;
 };
 
 #endif
