@@ -363,7 +363,14 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:ResetAttributes'},
 				{uno: '.uno:FormatCellDialog'},
 				{uno: '.uno:PageFormatDialog'},
-				{uno: '.uno:ConditionalFormatManagerDialog'}
+				{name: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:ConditionalFormatDialog'},
+					{uno: '.uno:ColorScaleFormatDialog'},
+					{uno: '.uno:DataBarFormatDialog'},
+					{uno: '.uno:IconSetFormatDialog'},
+					{uno: '.uno:CondDateFormatDialog'},
+					{type: 'separator'},
+					{uno: '.uno:ConditionalFormatManagerDialog'}]},
 			]},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
