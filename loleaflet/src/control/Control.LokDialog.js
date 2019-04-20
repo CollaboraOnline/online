@@ -661,7 +661,7 @@ L.Control.LokDialog = L.Control.extend({
 			// tdf#124235: At least in the iOS app, multiplying with
 			// L.getDpiScaleFactor() below causes the child of a combo box to be
 			// displaced from the fixed part. I see the same problem also when using
-			// Safari on a Retuna Mac against normal online. But as I don't know whether
+			// Safari on a Retina Mac against normal online. But as I don't know whether
 			// it happens also for other browsers on other platforms on hidpi displays,
 			// I will fix this for the iOS app only for now.
 			if (!window.ThisIsTheiOSApp) {
