@@ -48,6 +48,12 @@ using namespace LOOLProtocol;
 
 using Poco::JSON::Object;
 
+#if ENABLE_DEBUG
+#  define ADD_DEBUG_RENDERID (" renderid=cached\n")
+#else
+#  define ADD_DEBUG_RENDERID ("\n")
+#endif
+
 void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
 {
     assert(docBroker && "Invalid DocumentBroker instance.");
@@ -1335,11 +1341,7 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile)
     {
-#if ENABLE_DEBUG
-        const std::string response = tile.serialize("tile:") + " renderid=cached\n";
-#else
-        const std::string response = tile.serialize("tile:") + '\n';
-#endif
+        const std::string response = tile.serialize("tile:", ADD_DEBUG_RENDERID);
         session->sendTile(response, cachedTile);
         return;
     }
@@ -1452,7 +1454,6 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     float tilesOnFlyUpperLimit = 0;
     if (normalizedVisArea.hasSurface() && session->getTileWidthInTwips() != 0 && session->getTileHeightInTwips() != 0)
     {
-
         const int tilesFitOnWidth = std::ceil(normalizedVisArea.getRight() / session->getTileWidthInTwips()) -
                                     std::ceil(normalizedVisArea.getLeft() / session->getTileWidthInTwips()) + 1;
         const int tilesFitOnHeight = std::ceil(normalizedVisArea.getBottom() / session->getTileHeightInTwips()) -
@@ -1500,11 +1501,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             if (cachedTile)
             {
                 //TODO: Combine the response to reduce latency.
-#if ENABLE_DEBUG
-                const std::string response = tile.serialize("tile:") + " renderid=cached\n";
-#else
-                const std::string response = tile.serialize("tile:") + "\n";
-#endif
+                const std::string response = tile.serialize("tile:", ADD_DEBUG_RENDERID);
                 session->sendTile(response, cachedTile);
             }
             else

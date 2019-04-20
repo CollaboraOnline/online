@@ -29,20 +29,21 @@ typedef uint64_t TileBinaryHash;
 class TileDesc
 {
 public:
-    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth, int tileHeight, int ver, int imgSize, int id, bool broadcast) :
-        _part(part),
-        _width(width),
-        _height(height),
-        _tilePosX(tilePosX),
-        _tilePosY(tilePosY),
-        _tileWidth(tileWidth),
-        _tileHeight(tileHeight),
-        _ver(ver),
-        _imgSize(imgSize),
-        _id(id),
-        _broadcast(broadcast),
-        _oldWireId(0),
-        _wireId(0)
+    TileDesc(int part, int width, int height, int tilePosX, int tilePosY, int tileWidth,
+             int tileHeight, int ver, int imgSize, int id, bool broadcast)
+        : _part(part)
+        , _width(width)
+        , _height(height)
+        , _tilePosX(tilePosX)
+        , _tilePosY(tilePosY)
+        , _tileWidth(tileWidth)
+        , _tileHeight(tileHeight)
+        , _ver(ver)
+        , _imgSize(imgSize)
+        , _id(id)
+        , _broadcast(broadcast)
+        , _oldWireId(0)
+        , _wireId(0)
     {
         if (_part < 0 ||
             _width <= 0 ||
@@ -138,7 +139,8 @@ public:
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
-    std::string serialize(const std::string& prefix = "") const
+    std::string serialize(const std::string& prefix = std::string(),
+                          const std::string& suffix = std::string()) const
     {
         std::ostringstream oss;
         oss << prefix
@@ -170,6 +172,7 @@ public:
             oss << " broadcast=yes";
         }
 
+        oss << suffix;
         return oss.str();
     }
 
@@ -351,7 +354,8 @@ public:
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
-    std::string serialize(const std::string& prefix = "") const
+    std::string serialize(const std::string& prefix = std::string(),
+                          const std::string& suffix = std::string()) const
     {
         std::ostringstream oss;
         oss << prefix
@@ -397,15 +401,19 @@ public:
         oss.seekp(-1, std::ios_base::cur); // Ditto
 
         oss << " wid=";
+
+        bool comma = false;
         for (const auto& tile : _tiles)
         {
-            oss << tile.getWireId() << ',';
-        }
-        oss.seekp(-1, std::ios_base::cur); // See beow.
+            if (comma)
+                oss << ',';
 
-        // Make sure we don't return a potential trailing comma that
-        // we have seeked back over but not overwritten after all.
-        return oss.str().substr(0, oss.tellp());
+            oss << tile.getWireId();
+            comma = true;
+        }
+
+        oss << suffix;
+        return oss.str();
     }
 
     /// Deserialize a TileDesc from a tokenized string.
