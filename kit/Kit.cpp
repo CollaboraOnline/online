@@ -29,8 +29,10 @@
 #include <climits>
 #include <condition_variable>
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <memory>
+#include <string>
 #include <sstream>
 #include <thread>
 
@@ -1102,8 +1104,7 @@ public:
 
         LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
 
-        std::shared_ptr<std::vector<char>> response = std::make_shared<std::vector<char>>();
-        response->resize(tileMsg.size() + output.size());
+        std::shared_ptr<std::vector<char>> response = std::make_shared<std::vector<char>>(tileMsg.size() + output.size());
         std::copy(tileMsg.begin(), tileMsg.end(), response->begin());
         std::copy(output.begin(), output.end(), response->begin() + tileMsg.size());
 
