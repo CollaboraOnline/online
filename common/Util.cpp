@@ -499,7 +499,7 @@ namespace Util
         return replace(r, "\n", " / ");
     }
 
-    static __thread char ThreadName[32] = {0};
+    static thread_local char ThreadName[32] = {0};
 
     void setThreadName(const std::string& s)
     {
@@ -539,7 +539,7 @@ namespace Util
     }
 
 #ifdef __linux
-    static __thread pid_t ThreadTid = 0;
+    static thread_local pid_t ThreadTid = 0;
 
     pid_t getThreadId()
 #else
