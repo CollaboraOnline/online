@@ -430,7 +430,6 @@ private:
             return _wireId;
         }
     } ;
-
     size_t _cacheSize;
     static const size_t CacheSizeSoftLimit = (1024 * 4 * 32); // 128k of cache
     static const size_t CacheSizeHardLimit = CacheSizeSoftLimit * 2;
@@ -474,9 +473,9 @@ private:
             for (auto it = _cache.begin(); it != _cache.end(); ++it)
                 avgHits += it->second.getHitCount();
 
-            LOG_DBG("cache " << _cache.size() << " items total size " <<
-                    _cacheSize << " current hits " << avgHits << ", total hit rate " <<
-                    (_cacheHits * 100. / _cacheTests) << "% at balance start");
+            LOG_DBG("PNG cache has " << _cache.size() << " items, total size " <<
+                    _cacheSize << ", current hits " << avgHits << ", total hit rate " <<
+                    (_cacheHits * 100. / _cacheTests) << "% at balance start.");
             avgHits /= _cache.size();
 
             for (auto it = _cache.begin(); it != _cache.end();)
@@ -502,8 +501,8 @@ private:
                 }
             }
 
-            LOG_DBG("cache " << _cache.size() << " items total size " <<
-                    _cacheSize << " after balance");
+            LOG_DBG("PNG cache has " << _cache.size() << " items, total size " <<
+                    _cacheSize << " after balance.");
         }
     }
 

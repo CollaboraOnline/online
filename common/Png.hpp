@@ -173,7 +173,9 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
 
     totalDuration += duration;
     nCalls += 1;
-    LOG_TRC("Average PNG compression time after " << std::to_string(nCalls) << " calls: " << (totalDuration / static_cast<double>(nCalls)));
+    LOG_TRC("PNG compression took " << duration << " ms (" << output.size()
+                                    << " bytes). Average after " << std::to_string(nCalls)
+                                    << " calls: " << (totalDuration / static_cast<double>(nCalls)));
 
     png_destroy_write_struct(&png_ptr, &info_ptr);
 
