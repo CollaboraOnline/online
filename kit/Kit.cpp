@@ -121,9 +121,9 @@ static std::string ObfuscatedFileId;
 #endif
 
 #if ENABLE_DEBUG
-#  define ADD_DEBUG_RENDERID(s) ((s)+ " renderid=" + Util::UniqueId())
+#  define ADD_DEBUG_RENDERID (" renderid=" + Util::UniqueId() + '\n')
 #else
-#  define ADD_DEBUG_RENDERID(s) (s)
+#  define ADD_DEBUG_RENDERID ("\n")
 #endif
 
 #ifndef MOBILEAPP
@@ -1098,9 +1098,9 @@ public:
 
         std::string tileMsg;
         if (combined)
-            tileMsg = ADD_DEBUG_RENDERID(tileCombined.serialize("tilecombine:")) + "\n";
+            tileMsg = tileCombined.serialize("tilecombine:", ADD_DEBUG_RENDERID);
         else
-            tileMsg = ADD_DEBUG_RENDERID(tiles[0].serialize("tile:")) + "\n";
+            tileMsg = tiles[0].serialize("tile:", ADD_DEBUG_RENDERID);
 
         LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
 
