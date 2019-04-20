@@ -357,27 +357,33 @@ public:
     std::string serialize(const std::string& prefix = std::string(),
                           const std::string& suffix = std::string()) const
     {
+        return serialize(prefix, suffix, _tiles);
+    }
+
+    std::string serialize(const std::string& prefix, const std::string &suffix,
+                          const std::vector<TileDesc> &tiles) const
+    {
         std::ostringstream oss;
         oss << prefix
             << " part=" << _part
             << " width=" << _width
             << " height=" << _height
             << " tileposx=";
-        for (const auto& tile : _tiles)
+        for (const auto& tile : tiles)
         {
             oss << tile.getTilePosX() << ',';
         }
         oss.seekp(-1, std::ios_base::cur); // Seek back over last comma, overwritten below.
 
         oss << " tileposy=";
-        for (const auto& tile : _tiles)
+        for (const auto& tile : tiles)
         {
             oss << tile.getTilePosY() << ',';
         }
         oss.seekp(-1, std::ios_base::cur); // Ditto.
 
         oss << " imgsize=";
-        for (const auto& tile : _tiles)
+        for (const auto& tile : tiles)
         {
             oss << tile.getImgSize() << ','; // Ditto.
         }
@@ -387,14 +393,14 @@ public:
             << " tileheight=" << _tileHeight;
 
         oss << " ver=";
-        for (const auto& tile : _tiles)
+        for (const auto& tile : tiles)
         {
             oss << tile.getVersion() << ',';
         }
         oss.seekp(-1, std::ios_base::cur); // Ditto.
 
         oss << " oldwid=";
-        for (const auto& tile : _tiles)
+        for (const auto& tile : tiles)
         {
             oss << tile.getOldWireId() << ',';
         }
@@ -403,7 +409,7 @@ public:
         oss << " wid=";
 
         bool comma = false;
-        for (const auto& tile : _tiles)
+        for (const auto& tile : tiles)
         {
             if (comma)
                 oss << ',';
