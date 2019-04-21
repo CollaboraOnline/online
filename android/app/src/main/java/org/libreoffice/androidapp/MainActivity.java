@@ -11,11 +11,13 @@ package org.libreoffice.androidapp;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,12 +35,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,9 +53,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String ASSETS_EXTRACTED_PREFS_KEY = "ASSETS_EXTRACTED";
     private static final int PERMISSION_READ_EXTERNAL_STORAGE = 777;
 
+    private static final String KEY_PROVIDER_ID = "providerID";
+    private static final String KEY_DOCUMENT_URI = "documentUri";
+    private static final String KEY_IS_EDITABLE = "isEditable";
+    private static final String KEY_INTENT_URI = "intentUri";
+
     private File mTempFile = null;
 
     private int providerId;
+
+    @Nullable
     private URI documentUri;
 
     private String urlToLoad;
@@ -133,8 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
-
         AssetManager assetManager = getResources().getAssets();
 
         ApplicationInfo applicationInfo = getApplicationInfo();
@@ -152,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
                 isDocEditable = false;
                 Toast.makeText(this, getResources().getString(R.string.temp_file_saving_disabled), Toast.LENGTH_SHORT).show();
                 if (copyFileToTemp() && mTempFile != null) {
-                    urlToLoad = mTempFile.toURI().toString();
+                    documentUri = mTempFile.toURI();
+                    urlToLoad = documentUri.toString();
                     Log.d(TAG, "SCHEME_CONTENT: getPath(): " + getIntent().getData().getPath());
                 } else {
                     // TODO: can't open the file
@@ -168,6 +178,24 @@ public class MainActivity extends AppCompatActivity {
                 documentUri = (URI) getIntent().getSerializableExtra(
                         "org.libreoffice.document_uri");
             }
+        } else if (savedInstanceState != null) {
+            getIntent().setAction(Intent.ACTION_VIEW)
+                    .setData(Uri.parse(savedInstanceState.getString(KEY_INTENT_URI)));
+            urlToLoad = getIntent().getData().toString();
+            providerId = savedInstanceState.getInt(KEY_PROVIDER_ID);
+            if (savedInstanceState.getString(KEY_DOCUMENT_URI) != null) {
+                try {
+                    documentUri = new URI(savedInstanceState.getString(KEY_DOCUMENT_URI));
+                    urlToLoad = documentUri.toString();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+            isDocEditable = savedInstanceState.getBoolean(KEY_IS_EDITABLE);
+        } else {
+            //User can't reach here but if he/she does then
+            Toast.makeText(this, getString(R.string.failed_to_load_file), Toast.LENGTH_SHORT).show();
+            finish();
         }
 
         createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
@@ -200,6 +228,18 @@ public class MainActivity extends AppCompatActivity {
         } else {
             loadDocument();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_INTENT_URI, getIntent().getData().toString());
+        outState.putInt(KEY_PROVIDER_ID, providerId);
+        if (documentUri != null) {
+            outState.putString(KEY_DOCUMENT_URI, documentUri.toString());
+        }
+        //If this activity was opened via contentUri
+        outState.putBoolean(KEY_IS_EDITABLE, isDocEditable);
     }
 
     @Override
@@ -270,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadDocument() {
         String finalUrlToLoad = "file:///android_asset/dist/loleaflet.html?file_path=" +
-                urlToLoad+"&closebutton=1";
+                urlToLoad + "&closebutton=1";
         if (isDocEditable) {
             finalUrlToLoad += "&permission=edit";
         } else {
