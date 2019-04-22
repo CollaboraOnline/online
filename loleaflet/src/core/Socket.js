@@ -810,20 +810,22 @@ L.Socket = L.Class.extend({
 			this._map.fire('docloaded', {status: true});
 		}
 
-		// these can arrive very early during the startup
-		if (textMsg.startsWith('statusindicatorstart:')) {
-			this._map.fire('statusindicator', {statusType : 'start'});
-			return;
-		}
-		else if (textMsg.startsWith('statusindicatorsetvalue:')) {
-			var value = textMsg.match(/\d+/g)[0];
-			this._map.fire('statusindicator', {statusType : 'setvalue', value : value});
-			return;
-		}
-		else if (textMsg.startsWith('statusindicatorfinish:')) {
-			this._map.fire('statusindicator', {statusType : 'finish'});
-			this._map._fireInitComplete('statusindicatorfinish');
-			return;
+		// These can arrive very early during the startup, and never again.
+		if (textMsg.startsWith('statusindicator')) {
+			if (textMsg.startsWith('statusindicatorstart:')) {
+				this._map.fire('statusindicator', {statusType : 'start'});
+				return;
+			}
+			else if (textMsg.startsWith('statusindicatorsetvalue:')) {
+				var value = textMsg.match(/\d+/g)[0];
+				this._map.fire('statusindicator', {statusType : 'setvalue', value : value});
+				return;
+			}
+			else if (textMsg.startsWith('statusindicatorfinish:')) {
+				this._map.fire('statusindicator', {statusType : 'finish'});
+				this._map._fireInitComplete('statusindicatorfinish');
+				return;
+			}
 		}
 
 		if (this._map._docLayer) {

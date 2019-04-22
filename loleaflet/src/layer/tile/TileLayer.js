@@ -359,7 +359,11 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onMessage: function (textMsg, img) {
-		if (textMsg.startsWith('commandvalues:')) {
+		// 'tile:' is the most common message type; keep this the first.
+		if (textMsg.startsWith('tile:')) {
+			this._onTileMsg(textMsg, img);
+		}
+		else if (textMsg.startsWith('commandvalues:')) {
 			this._onCommandValuesMsg(textMsg);
 		}
 		else if (textMsg.startsWith('cursorvisible:')) {
@@ -446,9 +450,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('textselectionstart:')) {
 			this._onTextSelectionStartMsg(textMsg);
-		}
-		else if (textMsg.startsWith('tile:')) {
-			this._onTileMsg(textMsg, img);
 		}
 		else if (textMsg.startsWith('windowpaint:')) {
 			this._onDialogPaintMsg(textMsg, img);
@@ -812,7 +813,7 @@ L.TileLayer = L.GridLayer.extend({
 		//first time document open, set last cursor position
 		if (this.lastCursorPos.lat === 0 && this.lastCursorPos.lng === 0)
 			this.lastCursorPos = cursorPos;
-		
+
 		var updateCursor = false;
 		if ((this.lastCursorPos.lat !== cursorPos.lat) || (this.lastCursorPos.lng !== cursorPos.lng)) {
 			updateCursor = true;
