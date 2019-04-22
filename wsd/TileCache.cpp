@@ -371,7 +371,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
             const std::string fileName = tileIterator.path().getFileName();
             if (intersectsTile(fileName, part, x, y, width, height))
             {
-                LOG_DBG("Removing tile: " << tileIterator.path().toString());
+                LOG_TRC("Removing tile: " << tileIterator.path().toString());
                 FileUtil::removeFile(tileIterator.path());
             }
         }
