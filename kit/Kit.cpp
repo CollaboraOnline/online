@@ -1080,6 +1080,11 @@ public:
 
             LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldWireId=" <<
                     tiles[tileIndex].getOldWireId() << ", hash=" << hash << " wireId: " << wireId << " in " << imgSize << " bytes.");
+            if (imgSize == 0)
+            {
+                LOG_ERR("Encoded 0-sized tile!");
+                assert(!"0-sized tile enocded!");
+            }
             tiles[tileIndex].setWireId(wireId);
             tiles[tileIndex].setImgSize(imgSize);
             tileIndex++;
