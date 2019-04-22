@@ -15,6 +15,7 @@
 		BE00F8A821396585001CE2D4 /* images in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89E21396585001CE2D4 /* images */; };
 		BE00F8B5213ED543001CE2D4 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B4213ED543001CE2D4 /* libiconv.tbd */; };
 		BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B6213ED573001CE2D4 /* libz.tbd */; };
+		BE18C7DE226DE09A001AD27E /* Branding in Resources */ = {isa = PBXBuildFile; fileRef = BE18C7DD226DE09A001AD27E /* Branding */; };
 		BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5B9213FE29900E0826C /* Log.cpp */; };
 		BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */; };
 		BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BB213FE29900E0826C /* Session.cpp */; };
@@ -75,6 +76,7 @@
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BE18C7DD226DE09A001AD27E /* Branding */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Branding; path = Mobile/Branding; sourceTree = SOURCE_ROOT; };
 		BE34D10F218B66B600815297 /* docsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh.cxx; path = "../../ios-device/sw/source/uibase/app/docsh.cxx"; sourceTree = "<group>"; };
 		BE34D110218B66B600815297 /* docstyle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docstyle.cxx; path = "../../ios-device/sw/source/uibase/app/docstyle.cxx"; sourceTree = "<group>"; };
 		BE34D111218B66B600815297 /* docshdrw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docshdrw.cxx; path = "../../ios-device/sw/source/uibase/app/docshdrw.cxx"; sourceTree = "<group>"; };
@@ -670,6 +672,7 @@
 		BE00F8922139494E001CE2D4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BE18C7DD226DE09A001AD27E /* Branding */,
 				BEB0E5D821C7CA800085A0CF /* Settings.bundle */,
 				BE80E46721B7066C00859C97 /* Templates */,
 				BE80E43121AD92F600859C97 /* Fonts */,
@@ -1704,6 +1707,7 @@
 				BE8D773D2136762600AC58EA /* LaunchScreen.storyboard in Resources */,
 				BE00F8A121396585001CE2D4 /* bundle.css in Resources */,
 				BE8D85CF214055F3009F1860 /* udkapi.rdb in Resources */,
+				BE18C7DE226DE09A001AD27E /* Branding in Resources */,
 				BE8D85D5214055F3009F1860 /* unorc in Resources */,
 				BE8D85D1214055F3009F1860 /* services.rdb in Resources */,
 				BE00F8A021396585001CE2D4 /* loleaflet.html in Resources */,

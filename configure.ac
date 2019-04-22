@@ -82,6 +82,12 @@ AC_ARG_WITH([iosapp-fonts],
                              [Point to a directory containing .ttf or .otf files to be bundled in the iOS app (and
                               thus installed on the device for use of the LO core code).]))
 
+AC_ARG_WITH([iosapp-branding],
+              AS_HELP_STRING([--with-iosapp-branding=<path>],
+                             [Point to a directory containing a branding.css file and possibly other files it references,
+                              to be bundled and used by the iOS app. The directory structure is copied to
+                              "loleaflet/dist/branding" and that directory ends upp in the app bundle as "branding".]))
+
 AC_ARG_ENABLE([gtkapp],
               AS_HELP_STRING([--enable-gtkapp],
                              [Use in a tree where the only purpose is to build the gtk+ "app" that is supposed
@@ -730,6 +736,18 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
                                cp "$fname" ios/Mobile/Fonts
                                echo '<string>Fonts/'$(basename $fname)'</string>'
                             done`
+          fi
+          rm -rf ios/Mobile/Branding
+          mkdir ios/Mobile/Branding
+          if test "$with_iosapp_branding" != no -a -d "$with_iosapp_branding"; then
+              AC_MSG_NOTICE([copying branding files])
+              mkdir -p loleaflet/dist/branding
+              (cd "$with_iosapp_branding" && tar cf - .) | (cd ios/Mobile/Branding && tar xf -)
+          else
+              # A Branding/branding.css file must exist, it is
+              # referenced unconditionally in loleaflet.html in the
+              # iOS app.
+              touch ios/Mobile/Branding/branding.css
           fi
        fi
       ])

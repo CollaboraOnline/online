@@ -86,6 +86,8 @@ ifelse(MOBILEAPP,[true],
   ])]dnl
 )dnl
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
+ifelse(IOSAPP,[true],
+  [<link rel="stylesheet" href="Branding/branding.css">])
 ifelse(MOBILEAPP,[true],
   [<link rel="localizations" href="l10n/uno-localizations-override.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
