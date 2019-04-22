@@ -1395,7 +1395,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
         // Forward to child to render.
         const std::string req = newTileCombined.serialize("tilecombine");
-        LOG_DBG("Sending residual tilecombine: " << req);
+        LOG_TRC("Sending uncached residual tilecombine request to Kit: " << req);
         _childProcess->sendTextFrame(req);
     }
 
@@ -1527,7 +1527,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 
             // Forward to child to render.
             const std::string req = newTileCombined.serialize("tilecombine");
-            LOG_DBG("Some of the tiles were not prerendered. Sending residual tilecombine: " << req);
+            LOG_TRC("Some of the tiles were not prerendered. Sending residual tilecombine: " << req);
             _childProcess->sendTextFrame(req);
         }
     }

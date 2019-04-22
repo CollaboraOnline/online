@@ -311,7 +311,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
     {
         if (intersectsTile(it->first, part, x, y, width, height))
         {
-            LOG_DBG("Removing tile: " << it->first.serialize());
+            LOG_TRC("Removing tile: " << it->first.serialize());
             it = _cache.erase(it);
         }
         else
