@@ -312,6 +312,13 @@ public class MainActivity extends AppCompatActivity {
         updatePreferences();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "Stop LOOLWSD instance");
+        postMobileMessage("BYE");
+    }
+
     private void loadDocument() {
         String finalUrlToLoad = "file:///android_asset/dist/loleaflet.html?file_path=" +
                 urlToLoad + "&closebutton=1";
