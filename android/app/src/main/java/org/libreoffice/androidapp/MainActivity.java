@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String ASSETS_EXTRACTED_PREFS_KEY = "ASSETS_EXTRACTED";
     private static final int PERMISSION_READ_EXTERNAL_STORAGE = 777;
+    private static final String KEY_ENABLE_SHOW_DEBUG_INFO = "ENABLE_SHOW_DEBUG_INFO";
 
     private static final String KEY_PROVIDER_ID = "providerID";
     private static final String KEY_DOCUMENT_URI = "documentUri";
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String urlToLoad;
     private WebView mWebView;
+    private SharedPreferences sPrefs;
 
     private boolean isDocEditable = false;
     private boolean isDocDebuggable = BuildConfig.DEBUG;
@@ -129,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updatePreferences() {
-        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (sPrefs.getInt(ASSETS_EXTRACTED_PREFS_KEY, 0) != BuildConfig.VERSION_CODE) {
             if (copyFromAssets(getAssets(), "unpack", getApplicationInfo().dataDir)) {
                 sPrefs.edit().putInt(ASSETS_EXTRACTED_PREFS_KEY, BuildConfig.VERSION_CODE).apply();
@@ -140,11 +141,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         updatePreferences();
 
         setContentView(R.layout.activity_main);
 
         AssetManager assetManager = getResources().getAssets();
+
+        isDocDebuggable = sPrefs.getBoolean(KEY_ENABLE_SHOW_DEBUG_INFO, false) && BuildConfig.DEBUG;
 
         ApplicationInfo applicationInfo = getApplicationInfo();
         String dataDir = applicationInfo.dataDir;
