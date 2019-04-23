@@ -2,7 +2,7 @@ This is a GTK+ Webkit app that is intended to work similarly enough to
 the iOS app being developed in the "ios" folder, and the Android app
 being developed in the "android" folder, that (some kinds of) problems
 in them also show up in this app, and can be investigated by people
-with no Android, Mac, oriOS device.
+with no Android, Mac, or iOS device.
 
 How to build this:
 
