@@ -155,6 +155,8 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     if (!trace)
         trace = strdup("warning");
 
+    setenv("SAL_LOK_OPTIONS", "unipoll", 0);
+
     Log::initialize("Mobile", trace, false, false, {});
     Util::setThreadName("main");
 
