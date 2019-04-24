@@ -170,7 +170,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_isRectangleValid: function(rect) {
 		rect = rect.split(',');
-		return (parseInt(rect[0]) >= 0 && parseInt(rect[1]) >= 0 &&
+		return (!isNaN(parseInt(rect[0])) && !isNaN(parseInt(rect[1])) &&
 				parseInt(rect[2]) >= 0 && parseInt(rect[3]) >= 0);
 	},
 
