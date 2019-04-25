@@ -115,7 +115,8 @@ function onClick(e, id, item, subItem) {
 		throw new Error('unknown id: ' + id);
 	}
 	var docLayer = map._docLayer;
-	if (id !== 'zoomin' && id !== 'zoomout') {
+	// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
+	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout') {
 		map.focus();
 	}
 	if (item.disabled) {
