@@ -16,7 +16,10 @@ L.Map.include({
 					button.hide();
 					that._enterEditMode('edit');
 					that.fire('editorgotfocus');
-					that.focus();
+					// In the iOS app, just clicking the mobile-edit-button is
+					// not reason enough to pop up the on-screen keyboard.
+					if (!window.ThisIsTheiOSApp)
+						that.focus();
 				});
 
 				// temporarily, before the user touches the floating action button
