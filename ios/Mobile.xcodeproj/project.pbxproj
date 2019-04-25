@@ -10,7 +10,6 @@
 		BE00F8A021396585001CE2D4 /* loleaflet.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89621396585001CE2D4 /* loleaflet.html */; };
 		BE00F8A121396585001CE2D4 /* bundle.css in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89721396585001CE2D4 /* bundle.css */; };
 		BE00F8A321396585001CE2D4 /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89921396585001CE2D4 /* bundle.js */; };
-		BE00F8A621396585001CE2D4 /* loading.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89C21396585001CE2D4 /* loading.html */; };
 		BE00F8A721396585001CE2D4 /* loleaflet-help.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89D21396585001CE2D4 /* loleaflet-help.html */; };
 		BE00F8A821396585001CE2D4 /* images in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89E21396585001CE2D4 /* images */; };
 		BE00F8B5213ED543001CE2D4 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B4213ED543001CE2D4 /* libiconv.tbd */; };
@@ -71,7 +70,6 @@
 		BE00F89621396585001CE2D4 /* loleaflet.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = loleaflet.html; path = ../../../loleaflet/dist/loleaflet.html; sourceTree = "<group>"; };
 		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = ../../../loleaflet/dist/bundle.css; sourceTree = "<group>"; };
 		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../loleaflet/dist/bundle.js; sourceTree = "<group>"; };
-		BE00F89C21396585001CE2D4 /* loading.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = loading.html; path = ../../../loleaflet/dist/loading.html; sourceTree = "<group>"; };
 		BE00F89D21396585001CE2D4 /* loleaflet-help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "loleaflet-help.html"; path = "../../../loleaflet/dist/loleaflet-help.html"; sourceTree = "<group>"; };
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
@@ -693,7 +691,6 @@
 				BE00F89721396585001CE2D4 /* bundle.css */,
 				BE00F89921396585001CE2D4 /* bundle.js */,
 				BE00F89E21396585001CE2D4 /* images */,
-				BE00F89C21396585001CE2D4 /* loading.html */,
 				BE00F89D21396585001CE2D4 /* loleaflet-help.html */,
 				BE00F89621396585001CE2D4 /* loleaflet.html */,
 			);
@@ -1720,7 +1717,6 @@
 				BE8D85CB214055F3009F1860 /* share in Resources */,
 				BE80E46821B7066D00859C97 /* Templates in Resources */,
 				BEB0E5D921C7CA800085A0CF /* Settings.bundle in Resources */,
-				BE00F8A621396585001CE2D4 /* loading.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
