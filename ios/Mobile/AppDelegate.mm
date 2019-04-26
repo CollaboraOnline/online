@@ -49,6 +49,10 @@ static void download(NSURL *source, NSURL *destination) {
                                 " with " << [[location absoluteString] UTF8String] <<
                                 ": " << [[error description] UTF8String]);
                     }
+                } else if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]]) {
+                    LOG_ERR("Failed to download " <<
+                            [[source absoluteString] UTF8String] <<
+                            ": response code " << [(NSHTTPURLResponse*)response statusCode]);
                 } else if (error != nil) {
                     LOG_ERR("Failed to download " <<
                             [[source absoluteString] UTF8String] <<
@@ -126,6 +130,17 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
                                     if ([templateDate compare:cachedTemplateDate] == NSOrderedDescending) {
                                         downloadTemplate(url, fileForTemplate);
                                     }
+                                } else if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]]) {
+                                    LOG_ERR("Failed to get HEAD of " <<
+                                            [[url absoluteString] UTF8String] <<
+                                            ": response code " << [(NSHTTPURLResponse*)response statusCode]);
+                                } else if (error != nil) {
+                                    LOG_ERR("Failed to get HEAD of " <<
+                                            [[url absoluteString] UTF8String] <<
+                                            ": " << [[error description] UTF8String]);
+                                } else {
+                                    LOG_ERR("Failed to get HEAD of " <<
+                                            [[url absoluteString] UTF8String]);
                                 }
                             }] resume];
                 } else {
@@ -182,6 +197,17 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                         if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200)
                             updateTemplates(data, response);
+                        else if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]])
+                            LOG_ERR("Failed to download " <<
+                                    [[url absoluteString] UTF8String] <<
+                                    ": response code " << [(NSHTTPURLResponse*)response statusCode]);
+                        else if (error != nil)
+                            LOG_ERR("Failed to download " <<
+                                    [[url absoluteString] UTF8String] <<
+                                    ": " << [[error description] UTF8String]);
+                        else
+                            LOG_ERR("Failed to download " <<
+                                    [[url absoluteString] UTF8String]);
                     }] resume];
         }
     }
