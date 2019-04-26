@@ -89,47 +89,50 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         // Allow comment lines staring with a hash sign.
         if (*p != '#') {
             const int length = endOfLine - p;
-            std::vector<char> buf(length+1);
-            std::memcpy(buf.data(), p, length);
-            buf[length] = 0;
+            // Allow empty lines
+            if (length > 0) {
+                std::vector<char> buf(length+1);
+                std::memcpy(buf.data(), p, length);
+                buf[length] = 0;
 
-            NSString *line = [NSString stringWithUTF8String:buf.data()];
+                NSString *line = [NSString stringWithUTF8String:buf.data()];
 
-            NSURL *url = [NSURL URLWithString:line];
-            NSString *baseName = [url lastPathComponent];
+                NSURL *url = [NSURL URLWithString:line];
+                NSString *baseName = [url lastPathComponent];
 
-            NSString *hash = [[NSData dataWithBytes:buf.data() length:length] base64EncodedStringWithOptions:0];
-            [urlHashes addObject:hash];
+                NSString *hash = [[NSData dataWithBytes:buf.data() length:length] base64EncodedStringWithOptions:0];
+                [urlHashes addObject:hash];
 
-            NSString *directoryForTemplate = [downloadedTemplates stringByAppendingString:hash];
+                NSString *directoryForTemplate = [downloadedTemplates stringByAppendingString:hash];
 
-            NSURL *fileForTemplate = [NSURL fileURLWithPath:[directoryForTemplate stringByAppendingString:[@"/" stringByAppendingString:baseName]]];
+                NSURL *fileForTemplate = [NSURL fileURLWithPath:[directoryForTemplate stringByAppendingString:[@"/" stringByAppendingString:baseName]]];
 
-            // If we have that template, check whether it is up-to-date
-            BOOL isDirectory;
-            if ([[NSFileManager defaultManager] fileExistsAtPath:directoryForTemplate isDirectory:&isDirectory] &&
-                isDirectory) {
-                NSMutableURLRequest *req = [[NSURLRequest requestWithURL:url] mutableCopy];
-                [req setHTTPMethod:@"HEAD"];
-                [[[NSURLSession sharedSession] dataTaskWithRequest:req
-                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                            if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200) {
-                                NSString *lastModified = [[(NSHTTPURLResponse*)response allHeaderFields] objectForKey:@"Last-Modified"];
-                                NSDateFormatter *df = [[NSDateFormatter alloc] init];
-                                df.dateFormat = @"EEE, dd MMM yyyy HH:mm:ss z";
-                                NSDate *templateDate = [df dateFromString:lastModified];
+                // If we have that template, check whether it is up-to-date
+                BOOL isDirectory;
+                if ([[NSFileManager defaultManager] fileExistsAtPath:directoryForTemplate isDirectory:&isDirectory] &&
+                    isDirectory) {
+                    NSMutableURLRequest *req = [[NSURLRequest requestWithURL:url] mutableCopy];
+                    [req setHTTPMethod:@"HEAD"];
+                    [[[NSURLSession sharedSession] dataTaskWithRequest:req
+                                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200) {
+                                    NSString *lastModified = [[(NSHTTPURLResponse*)response allHeaderFields] objectForKey:@"Last-Modified"];
+                                    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                                    df.dateFormat = @"EEE, dd MMM yyyy HH:mm:ss z";
+                                    NSDate *templateDate = [df dateFromString:lastModified];
 
-                                NSDate *cachedTemplateDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:[fileForTemplate path] error:nil] objectForKey:NSFileModificationDate];
+                                    NSDate *cachedTemplateDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:[fileForTemplate path] error:nil] objectForKey:NSFileModificationDate];
 
-                                if ([templateDate compare:cachedTemplateDate] == NSOrderedDescending) {
-                                    downloadTemplate(url, fileForTemplate);
+                                    if ([templateDate compare:cachedTemplateDate] == NSOrderedDescending) {
+                                        downloadTemplate(url, fileForTemplate);
+                                    }
                                 }
-                            }
-                        }] resume];
-            } else {
-                // Else download it.
-                [[NSFileManager defaultManager] createDirectoryAtPath:directoryForTemplate withIntermediateDirectories:YES attributes:nil error:nil];
-                downloadTemplate(url, fileForTemplate);
+                            }] resume];
+                } else {
+                    // Else download it.
+                    [[NSFileManager defaultManager] createDirectoryAtPath:directoryForTemplate withIntermediateDirectories:YES attributes:nil error:nil];
+                    downloadTemplate(url, fileForTemplate);
+                }
             }
         }
         if (endOfLine < endOfData)
