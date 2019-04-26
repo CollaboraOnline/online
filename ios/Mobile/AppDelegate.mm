@@ -130,6 +130,10 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
 
                                         NSDate *cachedTemplateDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:[fileForTemplate path] error:nil] objectForKey:NSFileModificationDate];
 
+                                        LOG_INF("Template at " << [[url absoluteString] UTF8String] << " timestamp: "
+                                                << [[templateDate descriptionWithLocale:nil] UTF8String] << ", cached template timestamp: "
+                                                << [[cachedTemplateDate descriptionWithLocale:nil] UTF8String]);
+
                                         if ([templateDate compare:cachedTemplateDate] == NSOrderedDescending) {
                                             downloadTemplate(url, fileForTemplate);
                                         }
