@@ -102,51 +102,55 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
                 NSString *line = [NSString stringWithUTF8String:buf.data()];
 
                 NSURL *url = [NSURL URLWithString:line];
-                NSString *baseName = [url lastPathComponent];
+                if (url == nil)
+                    LOG_ERR("Invalid URL in template file: " << [line UTF8String]);
+                else {
+                    NSString *baseName = [url lastPathComponent];
 
-                NSString *hash = [[NSData dataWithBytes:buf.data() length:length] base64EncodedStringWithOptions:0];
-                [urlHashes addObject:hash];
+                    NSString *hash = [[NSData dataWithBytes:buf.data() length:length] base64EncodedStringWithOptions:0];
+                    [urlHashes addObject:hash];
 
-                NSString *directoryForTemplate = [downloadedTemplates stringByAppendingString:hash];
+                    NSString *directoryForTemplate = [downloadedTemplates stringByAppendingString:hash];
 
-                NSURL *fileForTemplate = [NSURL fileURLWithPath:[directoryForTemplate stringByAppendingString:[@"/" stringByAppendingString:baseName]]];
+                    NSURL *fileForTemplate = [NSURL fileURLWithPath:[directoryForTemplate stringByAppendingString:[@"/" stringByAppendingString:baseName]]];
 
-                // If we have that template, check whether it is up-to-date
-                BOOL isDirectory;
-                if ([[NSFileManager defaultManager] fileExistsAtPath:directoryForTemplate isDirectory:&isDirectory] &&
-                    isDirectory) {
-                    NSMutableURLRequest *req = [[NSURLRequest requestWithURL:url] mutableCopy];
-                    [req setHTTPMethod:@"HEAD"];
-                    [[[NSURLSession sharedSession] dataTaskWithRequest:req
-                                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200) {
-                                    NSString *lastModified = [[(NSHTTPURLResponse*)response allHeaderFields] objectForKey:@"Last-Modified"];
-                                    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-                                    df.dateFormat = @"EEE, dd MMM yyyy HH:mm:ss z";
-                                    NSDate *templateDate = [df dateFromString:lastModified];
+                    // If we have that template, check whether it is up-to-date
+                    BOOL isDirectory;
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:directoryForTemplate isDirectory:&isDirectory] &&
+                        isDirectory) {
+                        NSMutableURLRequest *req = [[NSURLRequest requestWithURL:url] mutableCopy];
+                        [req setHTTPMethod:@"HEAD"];
+                        [[[NSURLSession sharedSession] dataTaskWithRequest:req
+                                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                    if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200) {
+                                        NSString *lastModified = [[(NSHTTPURLResponse*)response allHeaderFields] objectForKey:@"Last-Modified"];
+                                        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                                        df.dateFormat = @"EEE, dd MMM yyyy HH:mm:ss z";
+                                        NSDate *templateDate = [df dateFromString:lastModified];
 
-                                    NSDate *cachedTemplateDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:[fileForTemplate path] error:nil] objectForKey:NSFileModificationDate];
+                                        NSDate *cachedTemplateDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:[fileForTemplate path] error:nil] objectForKey:NSFileModificationDate];
 
-                                    if ([templateDate compare:cachedTemplateDate] == NSOrderedDescending) {
-                                        downloadTemplate(url, fileForTemplate);
+                                        if ([templateDate compare:cachedTemplateDate] == NSOrderedDescending) {
+                                            downloadTemplate(url, fileForTemplate);
+                                        }
+                                    } else if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]]) {
+                                        LOG_ERR("Failed to get HEAD of " <<
+                                                [[url absoluteString] UTF8String] <<
+                                                ": response code " << [(NSHTTPURLResponse*)response statusCode]);
+                                    } else if (error != nil) {
+                                        LOG_ERR("Failed to get HEAD of " <<
+                                                [[url absoluteString] UTF8String] <<
+                                                ": " << [[error description] UTF8String]);
+                                    } else {
+                                        LOG_ERR("Failed to get HEAD of " <<
+                                                [[url absoluteString] UTF8String]);
                                     }
-                                } else if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]]) {
-                                    LOG_ERR("Failed to get HEAD of " <<
-                                            [[url absoluteString] UTF8String] <<
-                                            ": response code " << [(NSHTTPURLResponse*)response statusCode]);
-                                } else if (error != nil) {
-                                    LOG_ERR("Failed to get HEAD of " <<
-                                            [[url absoluteString] UTF8String] <<
-                                            ": " << [[error description] UTF8String]);
-                                } else {
-                                    LOG_ERR("Failed to get HEAD of " <<
-                                            [[url absoluteString] UTF8String]);
-                                }
-                            }] resume];
-                } else {
-                    // Else download it.
-                    [[NSFileManager defaultManager] createDirectoryAtPath:directoryForTemplate withIntermediateDirectories:YES attributes:nil error:nil];
-                    downloadTemplate(url, fileForTemplate);
+                                }] resume];
+                    } else {
+                        // Else download it.
+                        [[NSFileManager defaultManager] createDirectoryAtPath:directoryForTemplate withIntermediateDirectories:YES attributes:nil error:nil];
+                        downloadTemplate(url, fileForTemplate);
+                    }
                 }
             }
         }
