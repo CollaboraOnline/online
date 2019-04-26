@@ -492,7 +492,16 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         const Poco::URI& uriPublic = session->getPublicUri();
         LOG_DBG("Loading, and creating new storage instance for URI [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
 
-        _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
+        try
+        {
+            _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
+        }
+        catch (...)
+        {
+            session->sendMessage("loadstorage: failed");
+            throw;
+        }
+
         if (_storage == nullptr)
         {
             // We should get an exception, not null.
