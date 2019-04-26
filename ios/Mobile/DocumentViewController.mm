@@ -84,6 +84,12 @@
     [self dismissViewControllerAnimated:YES completion:^ {
             [self.document closeWithCompletionHandler:^(BOOL success){
                     LOG_TRC("close completion handler gets " << (success?"YES":"NO"));
+                    [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"debug"];
+                    [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"lool"];
+                    [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"error"];
+                    self.webView.configuration.userContentController = nil;
+                    [self.webView removeFromSuperview];
+                    self.webView = nil;
                     }];
     }];
 }

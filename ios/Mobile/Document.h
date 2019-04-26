@@ -20,7 +20,7 @@
     int fakeClientFd;
 }
 
-@property (strong) DocumentViewController *viewController;
+@property (weak) DocumentViewController *viewController;
 
 - (void)send2JS:(const char*)buffer length:(int)length;
 
