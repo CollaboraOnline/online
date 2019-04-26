@@ -2765,10 +2765,11 @@ Editor to WOPI host
 		    can be shown. <br/>
 		    Accompanying keys: <i>Features</i>: This client's capabilities.
 		    Supported values are: <i>VersionStates</i>. Tells the host that client supports different version states. See <a href="#loleaflet-postmessage-versioning">Version Restore</a> for more details.<br/>
-		    When Status is Document_Loaded, document has been completely
+		    When Status is <i>Document_Loaded</i>, document has been completely
 		    loaded and host can also start using PostMessage API.<br/>
 		    Accompanying keys:
-		    <i>DocumentLoadedTime</i>
+			<i>DocumentLoadedTime</i><br/>
+			When Status is <i>Failed</i>, document hasn't been loaded but host can show the loleaflet frame to present an error for a user.
 		</td>
 	</tr>
 </table>

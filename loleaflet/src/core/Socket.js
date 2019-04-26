@@ -281,6 +281,17 @@ L.Socket = L.Class.extend({
 			this._map.fire('wopiprops', wopiInfo);
 			return;
 		}
+		else if (textMsg.startsWith('loadstorage: ')) {
+			if (textMsg.substring(textMsg.indexOf(':') + 2) === 'failed') {
+				console.debug('Loading document from a storage failed');
+				this._map.fire('postMessage', {
+					msgId: 'App_LoadingStatus',
+					args: {
+						Status: 'Failed'
+					}
+				});
+			}
+		}
 		else if (textMsg.startsWith('lastmodtime: ')) {
 			var time = textMsg.substring(textMsg.indexOf(' ') + 1);
 			this._map.updateModificationIndicator(time);
