@@ -54,9 +54,6 @@ namespace Log
 
     char* prefix(char* buffer, std::size_t len, const char* level);
 
-    /// Starts logging by generating the prefix and returning an oss.
-    std::ostringstream& beginLog(const char* level);
-
     inline bool traceEnabled() { return logger().trace(); }
     inline bool debugEnabled() { return logger().debug(); }
     inline bool infoEnabled() { return logger().information(); }
@@ -240,29 +237,31 @@ namespace Log
 #define LOG_FILE_NAME(f) (strrchr(f, '/')+1)
 #endif
 
-#define LOG_END(LOG, FILEP)                                                                        \
-    do                                                                                             \
-    {                                                                                              \
-        if (FILEP)                                                                                 \
-            LOG << "| " << LOG_FILE_NAME(__FILE__) << ':' << __LINE__;                             \
+#define LOG_END(LOG, FILEP)                             \
+    do                                                  \
+    {                                                   \
+        if (FILEP)                                      \
+            LOG << "| " << LOG_FILE_NAME(__FILE__) << ':' << __LINE__; \
     } while (false)
 
 #ifdef __ANDROID__
 
-#define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                        \
-    std::ostringstream& oss_ = Log::beginLog(LVL);                                                    \
-    oss_ << X;                                                                                     \
-    LOG_END(oss_, FILEP);                                                                          \
+#define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                 \
+    char b_[1024];                                                                          \
+    std::ostringstream oss_(Log::prefix(b_, sizeof(b_) - 1, LVL), std::ostringstream::ate); \
+    oss_ << std::boolalpha << X;                                                            \
+    LOG_END(oss_, FILEP);                                                                   \
     ((void)__android_log_print(ANDROID_LOG_DEBUG, "loolwsd", "%s %s", LVL, oss_.str().c_str()))
 
 #else
 
-#define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                        \
-    Poco::Message m_(LOG.name(), "", Poco::Message::PRIO_##PRIO);                                  \
-    std::ostringstream& oss_ = Log::beginLog(LVL);                                                    \
-    oss_ << X;                                                                                     \
-    LOG_END(oss_, FILEP);                                                                          \
-    m_.setText(oss_.str());                                                                        \
+#define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                 \
+    Poco::Message m_(LOG.name(), "", Poco::Message::PRIO_##PRIO);                           \
+    char b_[1024];                                                                          \
+    std::ostringstream oss_(Log::prefix(b_, sizeof(b_) - 1, LVL), std::ostringstream::ate); \
+    oss_ << std::boolalpha << X;                                                            \
+    LOG_END(oss_, FILEP);                                                                   \
+    m_.setText(oss_.str());                                                                 \
     LOG.log(m_);
 
 #endif

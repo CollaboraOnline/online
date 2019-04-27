@@ -126,22 +126,6 @@ namespace Log
         return buffer;
     }
 
-    // Reuse the same buffer to minimize memory fragmentation.
-    static thread_local std::ostringstream Oss;
-
-    std::ostringstream& beginLog(const char* level)
-    {
-        // Reset the oss.
-        Oss.clear();
-        Oss.str(std::string());
-        Oss.seekp(0);
-
-        // Output the prefix.
-        char buffer[1024];
-        Oss << Log::prefix(buffer, sizeof(buffer) - 1, level) << std::boolalpha;
-        return Oss;
-    }
-
     void signalLogPrefix()
     {
         char buffer[1024];
