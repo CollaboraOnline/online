@@ -134,10 +134,11 @@ namespace Log
     // Reuse the same buffer to minimize memory fragmentation.
     static thread_local std::ostringstream Oss;
 
-    std::ostringstream& begin(const char* level)
+    std::ostringstream& beginLog(const char* level)
     {
         // Reset the oss.
         Oss.clear();
+        Oss.str(std::string());
         Oss.seekp(0);
 
         // Output the prefix.
