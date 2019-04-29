@@ -204,12 +204,6 @@ var deps = {
 		desc: 'Canvas backend for vector layers.'
 	},
 
-	GeoJSON: {
-		src: ['layer/GeoJSON.js'],
-		deps: ['Polygon', 'Circle', 'CircleMarker', 'Marker', 'FeatureGroup'],
-		desc: 'GeoJSON layer, parses the data and adds corresponding layers above.'
-	},
-
 	MapDrag: {
 		src: ['dom/DomEvent.js',
 		      'dom/Draggable.js',

@@ -332,8 +332,6 @@ L.Handler.PathTransform = L.Handler.extend({
 	_updateHandlers: function() {
 		var handlersGroup = this._handlersGroup;
 
-		this._rectShape = this._rect.toGeoJSON();
-
 		if (this._handleLine) {
 			this._handlersGroup.removeLayer(this._handleLine);
 		}
@@ -764,13 +762,8 @@ L.Handler.PathTransform = L.Handler.extend({
 	* @return {L.Polygon}
 	*/
 	_getBoundingPolygon: function() {
-		if (this._rectShape) {
-			return L.GeoJSON.geometryToLayer(
-				this._rectShape, this.options.boundsOptions);
-		} else {
-			return new L.Rectangle(
+		return new L.Rectangle(
 			this._path.getBounds(), this.options.boundsOptions);
-		}
 	},
 
 
