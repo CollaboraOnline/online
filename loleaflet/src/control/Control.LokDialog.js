@@ -270,6 +270,10 @@ L.Control.LokDialog = L.Control.extend({
 				this._onDialogChildClose(parent);
 			else
 				this._onDialogClose(e.id, false);
+		} else if (e.action === 'hide') {
+			$('#' + strId).parent().css({display: 'none'});
+		} else if (e.action === 'show') {
+			$('#' + strId).parent().css({display: 'block'});
 		}
 	},
 
