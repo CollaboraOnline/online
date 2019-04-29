@@ -96,6 +96,8 @@ protected:
     std::shared_ptr<SocketFactory> _sockFactory;
 };
 
+#ifndef MOBILEAPP
+
 /// A non-blocking, streaming Unix Domain Socket for local use
 class LocalServerSocket : public ServerSocket
 {
@@ -111,6 +113,8 @@ public:
 private:
     std::string _name;
 };
+
+#endif
 
 #endif
 

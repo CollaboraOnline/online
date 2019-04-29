@@ -2924,12 +2924,14 @@ public:
         SocketPoll::InhibitThreadChecks = true;
 
         os << "LOOLWSDServer:\n"
+#ifndef MOBILEAPP
            << "  Ports: server " << ClientPortNumber
            <<          " prisoner " << MasterLocation << "\n"
            << "  SSL: " << (LOOLWSD::isSSLEnabled() ? "https" : "http") << "\n"
            << "  SSL-Termination: " << (LOOLWSD::isSSLTermination() ? "yes" : "no") << "\n"
            << "  Security " << (LOOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
                             << (LOOLWSD::NoSeccomp ? "no" : "") << " api lockdown\n"
+#endif
            << "  TerminationFlag: " << TerminationFlag << "\n"
            << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
            << "  NewChildren: " << NewChildren.size() << "\n"
