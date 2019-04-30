@@ -193,7 +193,7 @@ public:
 
     /// Writes the contents of the file back to the source.
     /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
-    virtual SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename) = 0;
+    virtual SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) = 0;
 
     static size_t getFileSize(const std::string& filename);
 
@@ -274,7 +274,7 @@ public:
 
     std::string loadStorageFileToLocal(const Authorization& auth) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 
 private:
     /// True if the jailed file is not linked but copied.
@@ -329,6 +329,8 @@ public:
                      const TriState disableChangeTrackingShow,
                      const TriState disableChangeTrackingRecord,
                      const TriState hideChangeTrackingControls,
+                     const bool supportsRename,
+                     const bool userCanRename,
                      const std::chrono::duration<double> callDuration)
             : _userId(userid),
               _obfuscatedUserId(obfuscatedUserId),
@@ -352,6 +354,8 @@ public:
               _disableChangeTrackingShow(disableChangeTrackingShow),
               _disableChangeTrackingRecord(disableChangeTrackingRecord),
               _hideChangeTrackingControls(hideChangeTrackingControls),
+              _supportsRename(supportsRename),
+              _userCanRename(userCanRename),
               _callDuration(callDuration)
             {
                 _userExtraInfo = userExtraInfo;
@@ -396,6 +400,10 @@ public:
         bool getEnableInsertRemoteImage() const { return _enableInsertRemoteImage; }
 
         bool getEnableShare() const { return _enableShare; }
+
+        bool getSupportsRename() const { return _supportsRename; }
+
+        bool getUserCanRename() const { return _userCanRename; }
 
         std::string& getHideUserList() { return _hideUserList; }
 
@@ -456,6 +464,10 @@ public:
         TriState _disableChangeTrackingRecord;
         /// If we should hide change-tracking commands for this user.
         TriState _hideChangeTrackingControls;
+        /// If WOPI host supports rename
+        bool _supportsRename;
+        /// If user is allowed to rename the document
+        bool _userCanRename;
 
         /// Time it took to call WOPI's CheckFileInfo
         std::chrono::duration<double> _callDuration;
@@ -470,7 +482,7 @@ public:
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal(const Authorization& auth) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
@@ -500,7 +512,7 @@ public:
 
     std::string loadStorageFileToLocal(const Authorization& auth) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 
 private:
     std::unique_ptr<AuthBase> _authAgent;

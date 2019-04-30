@@ -24,6 +24,8 @@ L.Map.WOPI = L.Handler.extend({
 	EnableShare: false,
 	HideUserList: null,
 	CallPythonScriptSource: null,
+	SupportsRename: false,
+	UserCanRename: false,
 
 	_appLoadedConditions: {
 		docloaded: false,
@@ -79,6 +81,8 @@ L.Map.WOPI = L.Handler.extend({
 		this.DisableInactiveMessages = !!wopiInfo['DisableInactiveMessages'];
 		this.UserCanNotWriteRelative = !!wopiInfo['UserCanNotWriteRelative'];
 		this.EnableInsertRemoteImage = !!wopiInfo['EnableInsertRemoteImage'];
+		this.SupportsRename = !!wopiInfo['SupportsRename'];
+		this.UserCanRename = !!wopiInfo['UserCanRename'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
 		if (wopiInfo['HideUserList'])
 			this.HideUserList = wopiInfo['HideUserList'].split(',');
