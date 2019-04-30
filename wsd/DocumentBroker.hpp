@@ -246,7 +246,7 @@ public:
 
     /// Save As the document to Storage.
     /// @param saveAsPath Absolute path to the jailed file.
-    bool saveAsToStorage(const std::string& sesionId, const std::string& saveAsPath, const std::string& saveAsFilename);
+    bool saveAsToStorage(const std::string& sesionId, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename);
 
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
@@ -370,7 +370,7 @@ private:
     void terminateChild(const std::string& closeReason);
 
     /// Saves the doc to the storage.
-    bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "", const std::string& saveAsPath = std::string(), const std::string& saveAsFilename = std::string());
+    bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "", const std::string& saveAsPath = std::string(), const std::string& saveAsFilename = std::string(), const bool isRename = false);
 
     /// True iff a save is in progress (requested but not completed).
     bool isSaving() const { return _lastSaveResponseTime < _lastSaveRequestTime; }

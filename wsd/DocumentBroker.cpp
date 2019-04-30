@@ -573,6 +573,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         wopiInfo->set("EnableInsertRemoteImage", wopifileinfo->getEnableInsertRemoteImage());
         wopiInfo->set("EnableShare", wopifileinfo->getEnableShare());
         wopiInfo->set("HideUserList", wopifileinfo->getHideUserList());
+        wopiInfo->set("SupportsRename", wopifileinfo->getSupportsRename());
+        wopiInfo->set("UserCanRename", wopifileinfo->getUserCanRename());
         if (wopifileinfo->getHideChangeTrackingControls() != WopiStorage::WOPIFileInfo::TriState::Unset)
             wopiInfo->set("HideChangeTrackingControls", wopifileinfo->getHideChangeTrackingControls() == WopiStorage::WOPIFileInfo::TriState::True);
 
@@ -795,16 +797,16 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
     return res;
 }
 
-bool DocumentBroker::saveAsToStorage(const std::string& sessionId, const std::string& saveAsPath, const std::string& saveAsFilename)
+bool DocumentBroker::saveAsToStorage(const std::string& sessionId, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename)
 {
     assertCorrectThread();
 
-    return saveToStorageInternal(sessionId, true, "", saveAsPath, saveAsFilename);
+    return saveToStorageInternal(sessionId, true, "", saveAsPath, saveAsFilename, isRename);
 }
 
 bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
                                            bool success, const std::string& result,
-                                           const std::string& saveAsPath, const std::string& saveAsFilename)
+                                           const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename)
 {
     assertCorrectThread();
 
@@ -817,7 +819,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     // notify the waiting thread, if any.
     LOG_TRC("Saving to storage docKey [" << _docKey << "] for session [" << sessionId <<
             "]. Success: " << success << ", result: " << result);
-    if (!success && result == "unmodified")
+    if (!success && result == "unmodified" && !isRename)
     {
         LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
@@ -854,7 +856,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
     // If the file timestamp hasn't changed, skip saving.
     const Poco::Timestamp newFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
-    if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime)
+    if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime && !isRename)
     {
         // Nothing to do.
         LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << _docKey <<
@@ -866,10 +868,10 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
     assert(_storage && _tileCache);
-    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename);
+    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename, isRename);
     if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
-        if (!isSaveAs)
+        if (!isSaveAs && !isRename)
         {
             // Saved and stored; update flags.
             setModified(false);
@@ -888,6 +890,19 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
             // Resume polling.
             _poll->wakeup();
+        }
+        else if (isRename)
+        {
+            // encode the name
+            const std::string filename = storageSaveResult.getSaveAsName();
+            const std::string url = Poco::URI(storageSaveResult.getSaveAsUrl()).toString();
+            std::string encodedName;
+            Poco::URI::encode(filename, "", encodedName);
+            const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
+
+            std::ostringstream oss;
+            oss << "renamefile: " << "filename=" << encodedName << " url=" << url;
+            broadcastMessage(oss.str());
         }
         else
         {
@@ -936,7 +951,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     {
         //TODO: Should we notify all clients?
         LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << uriAnonym << "]. Notifying client.");
-        it->second->sendTextFrame("error: cmd=storage kind=savefailed");
+        std::ostringstream oss;
+        oss << "error: cmd=storage kind=" << (isRename ? "renamefailed" : "savefailed");
+        it->second->sendTextFrame(oss.str());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED)
     {
