@@ -1331,7 +1331,15 @@ function onSearchKeyDown(e) {
 function documentNameConfirm() {
 	var value = $('#document-name-input').val();
 	if (value !== null && value != '' && value != map['wopi'].BaseFileName) {
-		map.saveAs(value);
+		if (map['wopi'].UserCanRename && map['wopi'].SupportsRename) {
+			// file name must be without the extension
+			if (value.lastIndexOf('.') > 0)
+				value = value.substr(0, value.lastIndexOf('.'));
+			map.renameFile(value);
+		} else {
+			// saveAs for rename
+			map.saveAs(value);
+		}
 	}
 	map._onGotFocus();
 }
