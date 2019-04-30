@@ -107,6 +107,14 @@ L.Map.include({
 			'options=' + options);
 	},
 
+	renameFile: function (filename) {
+		if (!filename) {
+			return;
+		}
+		this.showBusy(_('Renaming...'), false);
+		this._socket.sendMessage('renamefile filename=' + encodeURIComponent(filename));
+	},
+
 	applyStyle: function (style, familyName) {
 		if (!style || !familyName) {
 			this.fire('error', {cmd: 'setStyle', kind: 'incorrectparam'});

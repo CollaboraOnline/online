@@ -178,7 +178,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "uploadsigneddocument" &&
              tokens[0] != "exportsignanduploaddocument" &&
              tokens[0] != "rendershapeselection" &&
-             tokens[0] != "removesession")
+             tokens[0] != "removesession" &&
+             tokens[0] != "renamefile")
     {
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
@@ -368,6 +369,19 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
         docBroker->broadcastMessage(firstLine);
         docBroker->removeSession(sessionId);
+    }
+    else if (tokens[0] == "renamefile") {
+        std::string encodedWopiFilename;
+        if (!getTokenString(tokens[1], "filename", encodedWopiFilename))
+        {
+            LOG_ERR("Bad syntax for: " << firstLine);
+            sendTextFrame("error: cmd=renamefile kind=syntax");
+            return false;
+        }
+        std::string wopiFilename;
+        Poco::URI::decode(encodedWopiFilename, wopiFilename);
+        docBroker->saveAsToStorage(getId(), "", wopiFilename, true);
+        return true;
     }
     else
     {
@@ -826,7 +840,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             {
                 // this also sends the saveas: result
                 LOG_TRC("Save-as path: " << resultURL.getPath());
-                docBroker->saveAsToStorage(getId(), resultURL.getPath(), wopiFilename);
+                docBroker->saveAsToStorage(getId(), resultURL.getPath(), wopiFilename, false);
             }
             else
                 sendTextFrame("error: cmd=storage kind=savefailed");

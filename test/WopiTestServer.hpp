@@ -92,6 +92,10 @@ public:
     {
     }
 
+    virtual void assertRenameFileRequest(const Poco::Net::HTTPRequest& /*request*/)
+    {
+    }
+
 protected:
     /// Here we act as a WOPI server, so that we have a server that responds to
     /// the wopi requests without additional expensive setup.
@@ -166,13 +170,22 @@ protected:
         else if (request.getMethod() == "POST" && (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1"))
         {
             LOG_INF("Fake wopi host request, handling PutRelativeFile: " << uriReq.getPath());
-
-            CPPUNIT_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
-
-            assertPutRelativeFileRequest(request);
-
             std::string wopiURL = helpers::getTestServerURI() + "/something wopi/files/1?access_token=anything";
-            std::string content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
+            std::string content;
+
+            if(request.get("X-WOPI-Override") == std::string("PUT_RELATIVE"))
+            {
+                CPPUNIT_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
+                assertPutRelativeFileRequest(request);
+                content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
+            }
+            else
+            {
+                // rename file; response should be the file name without the url and the extension
+                CPPUNIT_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
+                assertRenameFileRequest(request);
+                content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
+            }
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
