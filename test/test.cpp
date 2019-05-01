@@ -18,6 +18,7 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/TestResult.h>
+#include <cppunit/TestFailure.h>
 #include <cppunit/TestResultCollector.h>
 #include <cppunit/TestRunner.h>
 #include <cppunit/TextTestProgressListener.h>
@@ -143,6 +144,13 @@ bool runClientTests(bool standalone, bool verbose)
     CPPUNIT_NS::CompilerOutputter outputter(&result, std::cerr);
     outputter.setNoWrap();
     outputter.write();
+
+    const std::deque<CPPUNIT_NS::TestFailure *> &failures = result.failures();
+    if (!envar && failures.size() > 0)
+    {
+        std::cerr << "\nTo reproduce the first test failure use:\n\n";
+        std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" ./run_unit.sh)\n\n";
+    }
 
     return result.wasSuccessful();
 }
