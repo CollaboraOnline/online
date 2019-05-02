@@ -182,16 +182,23 @@ L.Map.Keyboard = L.Handler.extend({
 		this._map.off('compositionstart compositionupdate compositionend textInput', this._onIME, this);
 	},
 
+	/*
+	 * Returns true whenever the key event shall be ignored.
+	 * This means shift+insert and shift+delete (or "insert or delete when holding
+	 * shift down"). Those events are handled elsewhere to trigger "cut" and 
+	 * "paste" events, and need to be ignored in order to avoid double-handling them.
+	 */
 	_ignoreKeyEvent: function(e) {
-		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
-		if (shift && (e.originalEvent.keyCode === 45 || e.originalEvent.keyCode === 46)) {
-			// don't handle shift+insert, shift+delete
-			// These are converted to 'cut', 'paste' events which are
-			// automatically handled by us, so avoid double-handling
-			return true;
+		var shift = e.originalEvent.shiftKey;
+		if ('key' in e.originalEvent) {
+			var key = e.originalEvent.key;
+			return (shift && (key === 'Delete' || key === 'Insert'));
+		} else {
+			// keyCode is not reliable in AZERTY/DVORAK keyboard layouts, is used
+			// only as a fallback for MSIE8.
+			var keyCode = e.originalEvent.keyCode;
+			return (shift && (keyCode === 45 || keyCode === 46));
 		}
-
-		return false;
 	},
 
 	_setPanOffset: function (pan) {
