@@ -101,6 +101,10 @@ NODE_MODULES_JS =\
 	node_modules/vex-js/js/vex.dialog.js \
 	node_modules/@braintree/sanitize-url/dist.js
 
+LOLEAFLET_LIBS_JS =\
+	jquery.mCustomScrollbar.js \
+	w2ui-1.5.rc1.js
+
 if !ENABLE_MOBILEAPP
 NODE_MODULES_JS +=\
 	node_modules/l10n-for-node/l10n.js
@@ -108,6 +112,9 @@ endif
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
 NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
+
+LOLEAFLET_LIBS_JS_SRC = $(patsubst %.js,$(srcdir)/js/%.js,$(LOLEAFLET_LIBS_JS))
+LOLEAFLET_LIBS_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(LOLEAFLET_LIBS_JS))
 
 LOLEAFLET_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
 
@@ -177,8 +184,7 @@ $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(builddir)/dist/jquery.mCustomScrollbar.js \
-	$(builddir)/dist/w2ui-1.5.rc1.js
+	$(LOLEAFLET_LIBS_JS_DST)
 	@touch $@
 else
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
@@ -202,14 +208,12 @@ $(builddir)/dist/global.js: $(srcdir)/js/global.js
 
 $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
-	$(srcdir)/js/jquery.mCustomScrollbar.js \
-	$(srcdir)/js/w2ui-1.5.rc1.js
+	$(LOLEAFLET_LIBS_JS_SRC)
 	@echo "Uglify loleaflet js files..."
 	NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
 		$(L10N_IOS_ALL_JS) \
 		$(NODE_MODULES_JS) \
-		$(srcdir)/js/jquery.mCustomScrollbar.js \
-		$(srcdir)/js/w2ui-1.5.rc1.js \
+		$(LOLEAFLET_LIBS_JS_SRC) \
 		$(builddir)/build/dist/loleaflet-src.js \
 		--output $@
 endif
@@ -227,8 +231,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DBUNDLE_CSS="$(abs_builddir)/dist/bundle.css" \
 		-DGLOBAL_JS="$(abs_builddir)/dist/global.js" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
-		jquery.mCustomScrollbar.js \
-		w2ui-1.5.rc1.js \
+		$(LOLEAFLET_LIBS_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js))" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
