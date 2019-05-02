@@ -2739,6 +2739,7 @@ void HTTPWSTest::testRenderShapeSelectionImpress()
         }
 
         sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
         sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
         CPPUNIT_ASSERT(!responseSVG.empty());
@@ -2746,8 +2747,7 @@ void HTTPWSTest::testRenderShapeSelectionImpress()
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
-        const std::vector<char> expectedSVG = helpers::readDataFromFile("shapes_impress.svg");
-        CPPUNIT_ASSERT(expectedSVG == responseSVG);
+        CPPUNIT_ASSERT(svgMatch(testname, responseSVG, "shapes_impress.svg"));
     }
     catch (const Poco::Exception& exc)
     {
@@ -2767,6 +2767,7 @@ void HTTPWSTest::testRenderShapeSelectionWriter()
 
         // Select the shape with SHIFT + F4
         sendKeyPress(socket, 0, 771 | skShift, testname);
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
         sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
         CPPUNIT_ASSERT(!responseSVG.empty());
@@ -2774,8 +2775,7 @@ void HTTPWSTest::testRenderShapeSelectionWriter()
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
-        const std::vector<char> expectedSVG = helpers::readDataFromFile("shape_writer.svg");
-        CPPUNIT_ASSERT(expectedSVG == responseSVG);
+        CPPUNIT_ASSERT(svgMatch(testname, responseSVG, "shapes_writer.svg"));
     }
     catch (const Poco::Exception& exc)
     {
@@ -2795,6 +2795,7 @@ void HTTPWSTest::testRenderShapeSelectionWriterImage()
 
         // Select the shape with SHIFT + F4
         sendKeyPress(socket, 0, 771 | skShift, testname);
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
         sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
         CPPUNIT_ASSERT(!responseSVG.empty());
@@ -2802,8 +2803,7 @@ void HTTPWSTest::testRenderShapeSelectionWriterImage()
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
-        const std::vector<char> expectedSVG = helpers::readDataFromFile("non_shape_writer_image.svg");
-        CPPUNIT_ASSERT(expectedSVG == responseSVG);
+        CPPUNIT_ASSERT(svgMatch(testname, responseSVG, "non_shape_writer_image.svg"));
     }
     catch (const Poco::Exception& exc)
     {
