@@ -651,6 +651,30 @@ inline void getServerVersion(std::shared_ptr<LOOLWebSocket>& socket,
 
 }
 
+inline bool svgMatch(const char *testname, const std::vector<char> &response, const char *templateFile)
+{
+    const std::vector<char> expectedSVG = helpers::readDataFromFile(templateFile);
+    if (expectedSVG != response)
+    {
+        TST_LOG_BEGIN("Svg mismatch: response is\n");
+        if(response.empty())
+            TST_LOG_APPEND("<empty>");
+        else
+            TST_LOG_APPEND(std::string(response.data(), response.size()));
+        TST_LOG_APPEND("\nvs. expected (from '" << templateFile << "' :\n");
+        TST_LOG_APPEND(std::string(expectedSVG.data(), expectedSVG.size()));
+        std::string newName = templateFile;
+        newName += ".new";
+        TST_LOG_APPEND("Updated template writing to: " << newName << "\n");
+        TST_LOG_END;
+        FILE *of = fopen(Poco::Path(TDOC, newName).toString().c_str(), "w");
+        fwrite(response.data(), response.size(), 1, of);
+        fclose(of);
+        return false;
+    }
+    return true;
+}
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
