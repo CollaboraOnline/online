@@ -36,19 +36,19 @@
  <g class="Page">
   <g class="com.sun.star.drawing.CustomShape">
    <g id="id1">
-    <rect class="BoundingBox" stroke="none" fill="none" x="7310" y="6216" width="3367" height="8262"/><desc>150</desc><desc>139</desc><desc>133</desc><desc>132</desc><desc>111</desc>
-    <path fill="rgb(114,159,207)" stroke="none" d="M 7311,14474 L 7311,7057 8151,6218 10673,6218 10673,13633 9832,14474 7311,14474 Z M 7311,6218 L 7311,6218 Z M 10673,14474 L 10673,14474 Z"/><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,14474 L 7311,7057 8151,6218 10673,6218 10673,13633 9832,14474 7311,14474 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,6218 L 7311,6218 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 10673,14474 L 10673,14474 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>133</desc><desc>132</desc><desc>111</desc>
-    <path fill="rgb(139,176,217)" stroke="none" d="M 7311,7057 L 8151,6218 10673,6218 9832,7057 7311,7057 Z M 7311,6218 L 7311,6218 Z M 10673,14474 L 10673,14474 Z"/><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,7057 L 8151,6218 10673,6218 9832,7057 7311,7057 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,6218 L 7311,6218 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 10673,14474 L 10673,14474 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>133</desc><desc>132</desc><desc>111</desc>
-    <path fill="rgb(91,127,166)" stroke="none" d="M 9832,14474 L 9832,7057 10673,6218 10673,13633 9832,14474 Z M 7311,6218 L 7311,6218 Z M 10673,14474 L 10673,14474 Z"/><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 9832,14474 L 9832,7057 10673,6218 10673,13633 9832,14474 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,6218 L 7311,6218 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 10673,14474 L 10673,14474 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc>
+    <rect class="BoundingBox" stroke="none" fill="none" x="7310" y="6216" width="3367" height="8262"/>
+    <path fill="rgb(114,159,207)" stroke="none" d="M 7311,14474 L 7311,7057 8151,6218 10673,6218 10673,13633 9832,14474 7311,14474 Z M 7311,6218 L 7311,6218 Z M 10673,14474 L 10673,14474 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,14474 L 7311,7057 8151,6218 10673,6218 10673,13633 9832,14474 7311,14474 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,6218 L 7311,6218 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 10673,14474 L 10673,14474 Z"/>
+    <path fill="rgb(139,176,217)" stroke="none" d="M 7311,7057 L 8151,6218 10673,6218 9832,7057 7311,7057 Z M 7311,6218 L 7311,6218 Z M 10673,14474 L 10673,14474 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,7057 L 8151,6218 10673,6218 9832,7057 7311,7057 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,6218 L 7311,6218 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 10673,14474 L 10673,14474 Z"/>
+    <path fill="rgb(91,127,166)" stroke="none" d="M 9832,14474 L 9832,7057 10673,6218 10673,13633 9832,14474 Z M 7311,6218 L 7311,6218 Z M 10673,14474 L 10673,14474 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 9832,14474 L 9832,7057 10673,6218 10673,13633 9832,14474 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 7311,6218 L 7311,6218 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 10673,14474 L 10673,14474 Z"/>
    </g>
   </g>
  </g>
