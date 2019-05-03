@@ -43,10 +43,12 @@ wsd_sources = \
             ../common/Log.cpp \
             ../common/Protocol.cpp \
             ../common/Session.cpp \
+            ../common/SpookyV2.cpp \
             ../common/Util.cpp \
             ../common/MessageQueue.cpp \
             ../common/Authorization.cpp \
             ../kit/Kit.cpp \
+            ../kit/TestStubs.cpp \
             ../wsd/Auth.cpp \
             ../wsd/TileCache.cpp \
             ../wsd/TestStubs.cpp \

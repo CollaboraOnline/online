@@ -79,6 +79,15 @@ public:
         return get_impl();
     }
 
+    /// Get a message without waiting
+    Payload pop()
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+        if (!_queue.size())
+            return Payload();
+        return get_impl();
+    }
+
     /// Thread safe removal of all the pending messages.
     void clear()
     {
