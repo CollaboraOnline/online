@@ -2334,9 +2334,7 @@ int pollCallback(void* pData, int timeoutUs)
         return 0;
 
     // The maximum number of extra events to process beyond the first.
-    //FIXME: When processing more than one event, full-document
-    //FIXME: invalidations happen (for some reason), so disable for now.
-    int maxExtraEvents = 0;
+    int maxExtraEvents = 15;
     int eventsSignalled = 0;
 
     int timeoutMs = timeoutUs / 1000;
@@ -2367,7 +2365,7 @@ int pollCallback(void* pData, int timeoutUs)
             timeoutMs -= elapsedTimeMs;
             ++eventsSignalled;
         }
-        while (maxExtraEvents-- > 0);
+        while (!TerminationFlag && maxExtraEvents-- > 0);
     }
 
     if (document)
