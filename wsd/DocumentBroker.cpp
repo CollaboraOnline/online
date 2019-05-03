@@ -340,7 +340,7 @@ void DocumentBroker::pollThread()
 
         if (false)
             ;
-#ifndef MOBILEAPP
+#if !MOBILEAPP
         // Remove idle documents after 1 hour.
         else if ((isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs))
         {

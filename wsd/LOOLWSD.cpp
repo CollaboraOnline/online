@@ -187,7 +187,7 @@ Socket::Type ClientPortProto = Socket::Type::All;
 /// INET address to listen on
 ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 
-#ifndef MOBILEAPP
+#if !MOBILEAPP
 /// UDS address for kits to connect to.
 std::string MasterLocation;
 #endif
@@ -2925,7 +2925,7 @@ public:
         SocketPoll::InhibitThreadChecks = true;
 
         os << "LOOLWSDServer:\n"
-#ifndef MOBILEAPP
+#if !MOBILEAPP
            << "  Ports: server " << ClientPortNumber
            <<          " prisoner " << MasterLocation << "\n"
            << "  SSL: " << (LOOLWSD::isSSLEnabled() ? "https" : "http") << "\n"
