@@ -158,7 +158,7 @@ bool runClientTests(bool standalone, bool verbose)
 // Versions assuming a single user, on a single machine
 #ifndef UNIT_CLIENT_TESTS
 
-std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = false)
+std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = true)
 {
     std::vector<int> pids;
 

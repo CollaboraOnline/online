@@ -3377,7 +3377,11 @@ std::vector<int> LOOLWSD::getKitPids()
     {
         std::unique_lock<std::mutex> lock(DocBrokersMutex);
         for (const auto &it : DocBrokers)
-            pids.push_back(it.second->getPid());
+        {
+            int pid = it.second->getPid();
+            if (pid > 0)
+                pids.push_back(pid);
+        }
     }
     return pids;
 }

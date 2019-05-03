@@ -331,7 +331,7 @@ public:
     void childSocketTerminated();
 
     /// Get the PID of the associated child process
-    Poco::Process::PID getPid() const { return _childProcess->getPid(); }
+    Poco::Process::PID getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
 
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
     std::unique_lock<std::mutex> getDeferredLock() { return std::unique_lock<std::mutex>(_mutex, std::defer_lock); }
