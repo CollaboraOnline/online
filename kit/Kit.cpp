@@ -433,13 +433,15 @@ class PngCache
     size_t _cacheSize;
     static const size_t CacheSizeSoftLimit = (1024 * 4 * 32); // 128k of cache
     static const size_t CacheSizeHardLimit = CacheSizeSoftLimit * 2;
+    static const size_t CacheWidHardLimit = 4096;
     size_t _cacheHits;
     size_t _cacheTests;
     TileWireId _nextId;
     DeltaGenerator _deltaGen;
 
-    std::map< TileBinaryHash, CacheEntry > _cache;
-    std::map< TileWireId, TileBinaryHash > _wireToHash;
+    std::unordered_map< TileBinaryHash, CacheEntry > _cache;
+    // This uses little storage so can be much larger
+    std::unordered_map< TileBinaryHash, TileWireId > _hashToWireId;
 
     void clearCache(bool logStats = false)
     {
@@ -447,6 +449,7 @@ class PngCache
             LOG_DBG("cache clear " << _cache.size() << " items total size " <<
                     _cacheSize << " current hits " << _cacheHits);
         _cache.clear();
+        _hashToWireId.clear();
         _cacheSize = 0;
         _cacheHits = 0;
         _cacheTests = 0;
@@ -486,11 +489,6 @@ class PngCache
                     // Shrink cache when we exceed the size to maximize
                     // the chance of hitting these entries in the future.
                     _cacheSize -= it->second.getData()->size();
-
-                    auto wIt = _wireToHash.find(it->second.getWireId());
-                    assert(wIt != _wireToHash.end());
-                    _wireToHash.erase(wIt);
-
                     it = _cache.erase(it);
                 }
                 else
@@ -503,6 +501,20 @@ class PngCache
 
             LOG_DBG("cache " << _cache.size() << " items total size " <<
                     _cacheSize << " after balance");
+        }
+
+        if (_hashToWireId.size() > CacheWidHardLimit)
+        {
+            LOG_DBG("Clear half of wid cache of size " << _hashToWireId.size());
+            TileWireId max = _nextId - CacheWidHardLimit/2;
+            for (auto it = _hashToWireId.begin(); it != _hashToWireId.end();)
+            {
+                if (it->second < max)
+                    it = _hashToWireId.erase(it);
+                else
+                    ++it;
+            }
+            LOG_DBG("Wid cache is now size " << _hashToWireId.size());
         }
     }
 
@@ -574,18 +586,18 @@ public:
         clearCache();
     }
 
-    TileWireId hashToWireId(TileBinaryHash id)
+    TileWireId hashToWireId(TileBinaryHash hash)
     {
         TileWireId wid;
-        if (id == 0)
+        if (hash == 0)
             return 0;
-        auto it = _cache.find(id);
-        if (it != _cache.end())
-            wid = it->second.getWireId();
+        auto it = _hashToWireId.find(hash);
+        if (it != _hashToWireId.end())
+            wid = it->second;
         else
         {
             wid = createNewWireId();
-            _wireToHash.emplace(wid, id);
+            _hashToWireId.emplace(hash, wid);
         }
         return wid;
     }
