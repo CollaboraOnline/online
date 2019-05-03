@@ -858,7 +858,7 @@ public:
 /// per process. But for security reasons don't.
 /// However, we could have a loolkit instance
 /// per user or group of users (a trusted circle).
-class Document : public Runnable, public DocumentManagerInterface
+class Document : public DocumentManagerInterface
 {
 public:
     /// We have two types of password protected documents
@@ -898,7 +898,10 @@ public:
                 "] and id [" << _docId << "].");
         assert(_loKit);
 
-        _callbackThread.start(*this);
+#if !MOBILEAPP
+        _lastMemStatsTime = std::chrono::steady_clock::now();
+        sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
+#endif
     }
 
     ~Document()
@@ -912,12 +915,11 @@ public:
         _stop = true;
 
         _tileQueue->put("eof");
-        _callbackThread.join();
     }
 
     const std::string& getUrl() const { return _url; }
 
-    /// Post the message in the correct thread.
+    /// Post the message - in the unipoll world we're in the right thread anyway
     bool postMessage(const std::shared_ptr<std::vector<char>>& message, const WSOpCode code) const
     {
         LOG_TRC("postMessage called with: " << getAbbreviatedMessage(message->data(), message->size()));
@@ -927,7 +929,7 @@ public:
             return false;
         }
 
-        _socketPoll.addCallback([=] { _websocketHandler->sendMessage(message->data(), message->size(), code); });
+        _websocketHandler->sendMessage(message->data(), message->size(), code);
         return true;
     }
 
@@ -1989,35 +1991,16 @@ private:
         return std::string();
     }
 
-    void run() override
+public:
+    void drainQueue(const std::chrono::steady_clock::time_point &now)
     {
-        Util::setThreadName("lokit_" + _docId);
-
-        LOG_DBG("Thread started.");
-#if !MOBILEAPP
-        // Update memory stats and editor every 5 seconds.
-        const int memStatsPeriodMs = 5000;
-        auto lastMemStatsTime = std::chrono::steady_clock::now();
-        sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
-#endif
         try
         {
-            while (!_stop && !TerminationFlag)
+            while (true)
             {
-                const TileQueue::Payload input = _tileQueue->get(POLL_TIMEOUT_MS * 2);
-                if (input.empty())
-                {
-#if !MOBILEAPP
-                    auto duration = (std::chrono::steady_clock::now() - lastMemStatsTime);
-                    std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-                    if (durationMs > memStatsPeriodMs)
-                    {
-                        sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
-                        lastMemStatsTime = std::chrono::steady_clock::now();
-                    }
-#endif
-                    continue;
-                }
+                const TileQueue::Payload input = _tileQueue->pop();
+                if (input.size() <= 0)
+                    break;
 
                 LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
 
@@ -2120,6 +2103,17 @@ private:
                     LOG_ERR("Unexpected request: [" << LOOLProtocol::getAbbreviatedMessage(input) << "].");
                 }
             }
+
+#if !MOBILEAPP
+            std::chrono::milliseconds::rep durationMs =
+                std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastMemStatsTime).count();
+            // Update memory stats and editor every 5 seconds.
+            if (durationMs > 5000)
+            {
+                sendTextFrame(Util::getMemoryStats(ProcSMapsFile));
+                _lastMemStatsTime = std::chrono::steady_clock::now();
+            }
+#endif
         }
         catch (const std::exception& exc)
         {
@@ -2129,10 +2123,9 @@ private:
         {
             LOG_FTL("QueueHandler::run: Unknown exception");
         }
-
-        LOG_DBG("Thread finished.");
     }
 
+private:
     /// Return access to the lok::Office instance.
     std::shared_ptr<lok::Office> getLOKit() override
     {
@@ -2214,6 +2207,7 @@ private:
     std::map<int, int> _speedCount;
     /// For showing disconnected user info in the doc repair dialog.
     std::map<int, UserInfo> _sessionUserInfo;
+    std::chrono::steady_clock::time_point _lastMemStatsTime;
     Poco::Thread _callbackThread;
 };
 
@@ -2285,7 +2279,6 @@ protected:
 
             if (!document)
             {
-                // Creating the Document object starts a thread running Document::run().
                 document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, _socketPoll, shared_from_this());
             }
 
@@ -2345,7 +2338,7 @@ void documentViewCallback(const int type, const char* payload, void* data)
     Document::ViewCallback(type, payload, data);
 }
 
-/// Called by LOK main-loop
+/// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* pData, int timeoutUs)
 {
     if (!pData)
@@ -2393,6 +2386,9 @@ int pollCallback(void* pData, int timeoutUs)
         }
         while (maxExtraEvents-- > 0);
     }
+
+    if (document)
+        document->drainQueue(std::chrono::steady_clock::now());
 
 #if !MOBILEAPP
     if (document && document->purgeSessions() == 0)
