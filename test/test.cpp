@@ -149,7 +149,11 @@ bool runClientTests(bool standalone, bool verbose)
     if (!envar && failures.size() > 0)
     {
         std::cerr << "\nTo reproduce the first test failure use:\n\n";
+#ifndef UNIT_CLIENT_TESTS
         std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" ./run_unit.sh)\n\n";
+#else
+        std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" make check)\n\n";
+#endif
     }
 
     return result.wasSuccessful();
