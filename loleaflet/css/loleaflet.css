@@ -435,3 +435,16 @@ body {
 	bottom: 40px !important;
 	right: 10px !important;
 }
+/* Vex dialogs */
+.vex-open .vex-overlay {
+	z-index: 1001; /* required to be displayed over the document  */
+}
+.vex-open .vex-idle { /* dialog shown when user is idle */
+	background: rgba(0, 0, 0, 0)!important;
+	font-size: xx-large!important;
+	color: #fff!important;
+	text-align: center!important;
+}
+.vex-open .vex-idle .vex-dialog-buttons {
+	display: none!important;
+}

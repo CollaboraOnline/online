@@ -309,11 +309,7 @@ L.Socket = L.Class.extend({
 			var commandresult = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			if (commandresult['command'] === 'savetostorage' && commandresult['success']) {
 				// Close any open confirmation dialogs
-				if (vex.dialogID > 0) {
-					var id = vex.dialogID;
-					vex.dialogID = -1;
-					vex.close(id);
-				}
+				vex.closeAll();
 			}
 			return;
 		}
@@ -358,11 +354,7 @@ L.Socket = L.Class.extend({
 					if (socket.connected()) {
 						// We're connected: cancel timer and dialog.
 						clearTimeout(vex.timer);
-						if (vex.dialogID > 0) {
-							var id = vex.dialogID;
-							vex.dialogID = -1;
-							vex.close(id);
-						}
+						vex.closeAll();
 						return;
 					}
 
@@ -408,52 +400,26 @@ L.Socket = L.Class.extend({
 			}
 
 			// Close any open dialogs first.
-			if (vex.dialogID > 0) {
-				id = vex.dialogID;
-				vex.dialogID = -1;
-				vex.close(id);
-			}
+			vex.closeAll();
 
 			var message = '';
 			if (!this._map['wopi'].DisableInactiveMessages) {
 				message = msg;
 			}
 
-			var options = $.extend({}, vex.defaultOptions, {
-				contentCSS: {'background':'rgba(0, 0, 0, 0)',
-				             'font-size': 'xx-large',
-				             'color': '#fff',
-				             'text-align': 'center'},
-				content: message
+			var dialogOpened = vex.dialog.open({
+				message: message,
+				contentClassName: 'vex-idle'
 			});
-			options.id = vex.globalID;
-			vex.dialogID = options.id;
-			vex.globalID += 1;
-			options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
-				vex: options
-			});
-			options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
-				vex: options
-			});
-
-			options.$vex.append(options.$vexOverlay);
-
-			options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).text(options.content).data({
-				vex: options
-			});
-			options.$vex.append(options.$vexContent);
 
 			if (textMsg === 'idle' || textMsg === 'oom') {
 				var map = this._map;
-				options.$vex.bind('click.vex', function() {
+				dialogOpened.contentEl.onclick = function() {
 					console.debug('idleness: reactivating');
 					map._documentIdle = false;
 					return map._activate();
-				});
+				};
 			}
-
-			$(options.appendLocation).append(options.$vex);
-			vex.setupBodyClassName(options.$vex);
 
 			if (postMsgData['Reason']) {
 				// Tell WOPI host about it which should handle this situation
@@ -489,37 +455,30 @@ L.Socket = L.Class.extend({
 			{
 				storageError = errorMessages.storage.documentconflict;
 
-				// TODO: We really really need to factor this out duplicate dialog code logic everywhere
-				// Close any open dialogs first.
-				if (vex.dialogID > 0) {
-					id = vex.dialogID;
-					vex.dialogID = -1;
-					vex.close(id);
-				}
+				vex.closeAll();
 
 				vex.dialog.open({
 					message: _('Document has been changed in storage. What would you like to do with your unsaved changes?'),
 					escapeButtonCloses: false,
 					overlayClosesOnClick: false,
-					contentCSS: { width: '600px' },
 					buttons: [
 						$.extend({}, vex.dialog.buttons.YES, { text: _('Discard'),
-						                                      click: function($vexContent) {
-							                                      $vexContent.data().vex.value = 'discard';
-							                                      vex.close($vexContent.data().vex.id);
+						                                      click: function() {
+							                                      this.value = 'discard';
+							                                      this.close();
 						                                      }}),
 						$.extend({}, vex.dialog.buttons.YES, { text: _('Overwrite'),
-						                                      click: function($vexContent) {
-							                                      $vexContent.data().vex.value = 'overwrite';
-							                                      vex.close($vexContent.data().vex.id);
+						                                      click: function() {
+							                                      this.value = 'overwrite';
+							                                      this.close();
 						                                      }}),
 						$.extend({}, vex.dialog.buttons.YES, { text: _('Save to new file'),
-						                                      click: function($vexContent) {
-							                                      $vexContent.data().vex.value = 'saveas';
-							                                      vex.close($vexContent.data().vex.id);
+						                                      click: function() {
+							                                      this.value = 'saveas';
+							                                      this.close();
 						                                      }})
 					],
-					callback: L.bind(function(value) {
+					callback: function(value) {
 						if (value === 'discard') {
 							// They want to refresh the page and load document again for all
 							this.sendMessage('closedocument');
@@ -533,9 +492,11 @@ L.Socket = L.Class.extend({
 								this._map.saveAs(filename);
 							}
 						}
-					}, this)
+					},
+					afterOpen: function() {
+						this.contentEl.style.width = '600px';
+					}
 				});
-				vex.dialogID = vex.globalID - 1;
 
 				return;
 			}
@@ -708,11 +669,7 @@ L.Socket = L.Class.extend({
 				// We're connected: cancel timer and dialog.
 				this.ReconnectCount = 0;
 				clearTimeout(vex.timer);
-				if (vex.dialogID > 0) {
-					id = vex.dialogID;
-					vex.dialogID = -1;
-					vex.close(id);
-				}
+				vex.closeAll();
 			}
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {

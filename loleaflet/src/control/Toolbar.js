@@ -194,13 +194,15 @@ L.Map.include({
 		var map = this;
 		$.get('loleaflet-help.html', function(data) {
 			vex.open({
-				content: data,
+				unsafeContent: data,
 				showCloseButton: true,
 				escapeButtonCloses: true,
 				overlayClosesOnClick: true,
-				contentCSS: {width: w + 'px'},
 				buttons: {},
-				afterOpen: function($vexContent) {
+				afterOpen: function() {
+					var that = this;
+					var $vexContent = $(this.contentEl);
+					this.contentEl.style.width = w + 'px'
 					map.enable(false);
 					// Display help according to document opened
 					if (map.getDocType() === 'text') {
@@ -232,14 +234,12 @@ L.Map.include({
 						translatableContent[i].firstChild.nodeValue = translatableContent[i].firstChild.nodeValue.toLocaleString();
 					}
 
-					$('.vex-content').attr('tabindex', -1);
-					$('.vex-content').focus();
+					$vexContent.attr('tabindex', -1);
+					$vexContent.focus();
 					// workaround for https://github.com/HubSpot/vex/issues/43
 					$('.vex-overlay').css({ 'pointer-events': 'none'});
-					$('.vex').click(function() {
-						vex.close($vexContent.data().vex.id);
-					});
-					$('.vex-content').click(function(e) {
+					$vexContent.one('click', function(e) {
+						that.close();
 						e.stopPropagation();
 					});
 				},
@@ -277,21 +277,21 @@ L.Map.include({
 			}
 		};
 		vex.open({
-			content: content,
+			unsafeContent: content[0].outerHTML,
 			showCloseButton: true,
 			escapeButtonCloses: true,
 			overlayClosesOnClick: true,
-			contentCSS: { width: w + 'px'},
 			buttons: {},
-			afterOpen: function($vexContent) {
+			afterOpen: function() {
+				var that = this;
+				this.contentEl.style.width = w + 'px';
+				var $vexContent = $(this.contentEl);
 				map.enable(false);
 				$(window).bind('keyup.vex', handler);
 				// workaround for https://github.com/HubSpot/vex/issues/43
 				$('.vex-overlay').css({ 'pointer-events': 'none'});
-				$('.vex').click(function() {
-					vex.close($vexContent.data().vex.id);
-				});
-				$('.vex-content').click(function(e) {
+				$vexContent.one('click', function(e) {
+					that.close();
 					e.stopPropagation();
 				});
 			},
