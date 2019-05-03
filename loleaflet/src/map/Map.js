@@ -16,6 +16,14 @@ function moveObjectVertically(obj, diff) {
 	}
 }
 
+function isAnyVexDialogActive() {
+	var res = false;
+	for (var vexId in vex.getAll()) {
+		res = res || vex.getById(vexId).isOpen;
+	}
+	return res;
+}
+
 /* global closebutton vex revHistoryEnabled $ _ */
 L.Map = L.Evented.extend({
 
@@ -98,8 +106,6 @@ L.Map = L.Evented.extend({
 		this._serverRecycling = false;
 		this._documentIdle = false;
 		this._helpTarget = null; // help page that fits best the current context
-
-		vex.dialogID = -1;
 
 		this.callInitHooks();
 
@@ -995,19 +1001,19 @@ L.Map = L.Evented.extend({
 					this._docLayer._requestNewTiles();
 				}
 
-				if (vex.dialogID > 0) {
-					var id = vex.dialogID;
+				if (isAnyVexDialogActive()) {
+					for (var vexId in vex.getAll()) {
+						var opts = vex.getById(vexId).options;
+						if (!opts.overlayClosesOnClick || !opts.escapeButtonCloses) {
+							return false;
+						}
+					}
 
-					var options = vex.getVexByID(id).data().vex;
-					if (!options.overlayClosesOnClick || !options.escapeButtonCloses)
-						return false;
-
-					vex.dialogID = -1;
 					this._startInactiveTimer();
 					if (!L.Browser.mobile) {
 						this.focus();
 					}
-					return vex.close(id);
+					return vex.closeAll();
 				}
 			} else {
 				this.loadDocument();
@@ -1040,36 +1046,18 @@ L.Map = L.Evented.extend({
 			message = _('Inactive document - please click to resume editing');
 		}
 
-		var options = $.extend({}, vex.defaultOptions, {
-			contentCSS: {'background':'rgba(0, 0, 0, 0)',
-			             'font-size': 'xx-large',
-				     'color': '#fff',
-				     'text-align': 'center'},
-			content: message
+		vex.open({
+			content: message,
+			contentClassName: 'vex-idle',
+			afterOpen: function() {
+				var $vexContent = $(this.contentEl);
+				$vexContent.bind('click.vex', function() {
+					console.debug('_dim: click.vex function');
+					return map._activate();
+				});
+			},
+			showCloseButton: false
 		});
-		options.id = vex.globalID;
-		vex.dialogID = options.id;
-		vex.globalID += 1;
-		options.$vex = $('<div>').addClass(vex.baseClassNames.vex).addClass(options.className).css(options.css).data({
-			vex: options
-		});
-		options.$vexOverlay = $('<div>').addClass(vex.baseClassNames.overlay).addClass(options.overlayClassName).css(options.overlayCSS).data({
-			vex: options
-		});
-
-		options.$vex.bind('click.vex', function() {
-			console.debug('_dim: click.vex function');
-			return map._activate();
-		});
-		options.$vex.append(options.$vexOverlay);
-
-		options.$vexContent = $('<div>').addClass(vex.baseClassNames.content).addClass(options.contentClassName).css(options.contentCSS).text(options.content).data({
-			vex: options
-		});
-		options.$vex.append(options.$vexContent);
-
-		$(options.appendLocation).append(options.$vex);
-		vex.setupBodyClassName(options.$vex);
 
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
 		console.debug('_dim: sending userinactive');
@@ -1108,7 +1096,7 @@ L.Map = L.Evented.extend({
 		console.debug('_deactivate:');
 		clearTimeout(vex.timer);
 
-		if (!this._active || vex.dialogID > 0) {
+		if (!this._active || isAnyVexDialogActive()) {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;

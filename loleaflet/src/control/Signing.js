@@ -229,7 +229,8 @@ function verignNewIdentity(newIdentity) {
 				escapeButtonCloses: true,
 				overlayClosesOnClick: true,
 				buttons: {},
-				afterOpen: function($vexContent) {
+				afterOpen: function() {
+					var $vexContent = $(this.contentEl);
 					var container = $vexContent.find('#image-container');
 					var image = $('<img style="display: block; margin-left: auto; margin-right: auto"/>');
 					image.attr('src', result.data.image);
@@ -479,9 +480,11 @@ L.Map.include({
 				showCloseButton: true,
 				escapeButtonCloses: true,
 				overlayClosesOnClick: true,
-				contentCSS: { width: w + 'px' },
 				buttons: {},
-				afterOpen: function($vexContent) {
+				afterOpen: function() {
+					var that = this;
+					this.contentEl.style.width = w + 'px';
+					var $vexContent = $(this.contentEl);
 					$('#select-identity').text(_('Select identity:'));
 					$('#login-qr').text(_('Login from mobile'));
 					$('#recover-from-email').text(_('Recover from email'));
@@ -494,18 +497,18 @@ L.Map.include({
 							button.css('background-color', identities[key].identityColor);
 							button.click({ key: key }, function(current) {
 								selectedIdentityKey = current.data.key;
-								vex.close($vexContent.data().vex.id);
+								that.close();
 							});
 							identitiesDiv.append(button);
 						}
 					});
 					$('#login-qr').click(function() {
 						loginWithQR = true;
-						vex.close($vexContent.data().vex.id);
+						that.close();
 					});
 					$('#recover-from-email').click(function() {
 						recoverFromEmail = true;
-						vex.close($vexContent.data().vex.id);
+						that.close();
 					});
 				},
 				afterClose: function () {

@@ -12,10 +12,10 @@ L.Control.AlertDialog = L.Control.extend({
 	},
 
 	_onError: function(e) {
-		if (vex.dialogID > 0 && !this._map._fatal) {
+		if (!this._map._fatal) {
 			// TODO. queue message errors and pop-up dialogs
 			// Close other dialogs before presenting a new one.
-			vex.close(vex.dialogID);
+			vex.closeAll();
 		}
 
 		if (e.msg) {
@@ -44,8 +44,7 @@ L.Control.AlertDialog = L.Control.extend({
 					className: 'vex-dialog-button-primary',
 					click: function openClick () {
 						window.open(url, '_blank');
-						vex.close(vex.dialogID);
-						vex.dialogID = 0;
+						vex.closeAll();
 					}
 				});
 			}
@@ -56,8 +55,7 @@ L.Control.AlertDialog = L.Control.extend({
 				className: 'vex-dialog-button-secondary',
 				click: function editClick () {
 					e.map.toggleCommandState('HyperlinkDialog');
-					vex.close(vex.dialogID);
-					vex.dialogID = 0;
+					vex.closeAll();
 				}
 			});
 
@@ -77,9 +75,6 @@ L.Control.AlertDialog = L.Control.extend({
 			msg = msg.replace('%1', e.cmd);
 			vex.dialog.alert(msg);
 		}
-
-		// Remember the current dialog ID to close it later.
-		vex.dialogID = vex.globalID - 1;
 	}
 });
 

@@ -74,9 +74,9 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/editor.css \
 	$(srcdir)/css/jquery.mCustomScrollbar.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
-	$(builddir)/node_modules/vex-js/css/vex.css \
-	$(builddir)/node_modules/vex-js/css/vex-theme-plain.css \
-	$(builddir)/node_modules/vex-js/css/vex-theme-bottom-right-corner.css \
+	$(builddir)/node_modules/vex-js/dist/css/vex.css \
+	$(builddir)/node_modules/vex-js/dist/css/vex-theme-plain.css \
+	$(builddir)/node_modules/vex-js/dist/css/vex-theme-bottom-right-corner.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
 	$(srcdir)/css/menubar.css \
@@ -96,8 +96,7 @@ NODE_MODULES_JS =\
 	node_modules/autolinker/dist/Autolinker.js \
 	node_modules/json-js/json2.js \
 	node_modules/select2/dist/js/select2.js \
-	node_modules/vex-js/js/vex.js \
-	node_modules/vex-js/js/vex.dialog.js \
+	node_modules/vex-js/dist/js/vex.combined.js \
 	node_modules/@braintree/sanitize-url/dist.js
 
 LOLEAFLET_LIBS_JS =\
