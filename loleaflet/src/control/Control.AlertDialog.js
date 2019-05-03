@@ -32,9 +32,9 @@ L.Control.AlertDialog = L.Control.extend({
 
 			if (!isLinkValid) {
 				messageText = window.errorMessages.invalidLink;
-				messageText = messageText.replace('%url', url);
 			}
 
+			messageText = messageText.replace('%url', url);
 			var buttonsList = [];
 
 			if (isLinkValid) {
