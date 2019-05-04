@@ -62,7 +62,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:ControlCodes'}
+				{uno: '.uno:ControlCodes'},
+				{type: 'separator'},
+				{uno: '.uno:Sidebar'}
 			]
 			},
 			{name: _UNO('.uno:InsertMenu', 'text'), type: 'menu', menu: [
@@ -347,7 +349,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SearchDialog'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', mobileapp: false, menu: [
-				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'}
+				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
+				{type: 'separator'},
+				{uno: '.uno:Sidebar'}
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},

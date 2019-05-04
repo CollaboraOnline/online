@@ -238,7 +238,7 @@ L.Map = L.Evented.extend({
                     // This triggers all sidebar decks, so they would
                     // be loaded and show rather quickly on first use.
                     // Also, triggers sidebar window creation in the client.
-					map._socket.sendMessage('uno .uno:ViewSidebarStyles');
+					map._socket.sendMessage('uno .uno:Sidebar');
 					map._socket.sendMessage('uno .uno:Sidebar');
 				}, 200);
 			}

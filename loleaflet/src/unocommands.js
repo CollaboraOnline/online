@@ -221,6 +221,7 @@ var unoCommandsArray = {
 	ShowRow:{spreadsheet:{context:_('Sho~w Rows'),menu:_('~Show'),},},
 	ShowTrackedChanges:{text:{menu:_('~Show'),},},
 	Shrink:{global:{menu:_('Decrease Size'),},},
+	Sidebar:{global:{menu:_('Sidebar'),},},
 	SlideMenu:{presentation:{menu:_('S~lide'),},},
 	SmallCaps:{global:{menu:_('Small capitals'),},},
 	SortAscending:{spreadsheet:{menu:_('Sort Ascending'),},},
