@@ -361,6 +361,7 @@ void cleanupDocBrokers()
 /// -1 for error.
 static int forkChildren(const int number)
 {
+    LOG_TRC("Request forkit to spawn " << number << " new child(ren)");
     Util::assertIsLocked(NewChildrenMutex);
 
     if (number > 0)
@@ -1490,6 +1491,9 @@ void LOOLWSD::autoSave(const std::string& docKey)
 void PrisonerPoll::wakeupHook()
 {
 #if !MOBILEAPP
+    LOG_TRC("PrisonerPoll - wakes up with " << NewChildren.size() <<
+            " new children and " << DocBrokers.size() << " brokers and " <<
+            OutstandingForks << " kits forking");
     if (!LOOLWSD::checkAndRestoreForKit())
     {
         // No children have died.
