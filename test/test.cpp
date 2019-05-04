@@ -82,17 +82,24 @@ bool isStandalone()
 }
 
 static std::mutex errorMutex;
+static bool IsVerbose = false;
 static std::stringstream errors;
 
 void tstLog(const std::ostringstream &stream)
 {
-    std::lock_guard<std::mutex> lock(errorMutex);
-    errors << stream.str();
+    if (IsVerbose)
+        std::cerr << stream.str() << std::endl;
+    else
+    {
+        std::lock_guard<std::mutex> lock(errorMutex);
+        errors << stream.str();
+    }
 }
 
 // returns true on success
 bool runClientTests(bool standalone, bool verbose)
 {
+    IsVerbose = verbose;
     IsStandalone = standalone;
 
     CPPUNIT_NS::TestResult controller;
@@ -129,7 +136,6 @@ bool runClientTests(bool standalone, bool verbose)
 
     if (!verbose)
     {
-        // redirect std::cerr temporarily
         runner.run(controller);
 
         // output the errors we got during the testing
@@ -150,7 +156,7 @@ bool runClientTests(bool standalone, bool verbose)
     {
         std::cerr << "\nTo reproduce the first test failure use:\n\n";
 #ifndef UNIT_CLIENT_TESTS
-        std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" ./run_unit.sh)\n\n";
+        std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" ./run_unit.sh --verbose)\n\n";
 #else
         std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" make check)\n\n";
 #endif
