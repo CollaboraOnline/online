@@ -1983,15 +1983,18 @@ private:
     }
 
 public:
+    bool hasQueued()
+    {
+        return !_tileQueue->isEmpty();
+    }
+
     void drainQueue(const std::chrono::steady_clock::time_point &now)
     {
         try
         {
-            while (true)
+            while (hasQueued())
             {
                 const TileQueue::Payload input = _tileQueue->pop();
-                if (input.size() <= 0)
-                    break;
 
                 LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
 
@@ -2327,71 +2330,99 @@ void documentViewCallback(const int type, const char* payload, void* data)
     Document::ViewCallback(type, payload, data);
 }
 
+class KitSocketPoll : public SocketPoll
+{
+    std::chrono::steady_clock::time_point _pollEnd;
+public:
+    KitSocketPoll() :
+        SocketPoll("kit")
+    {
+    }
+
+    // process pending message-queue events.
+    void drainQueue(const std::chrono::steady_clock::time_point &now)
+    {
+        if (document)
+            document->drainQueue(now);
+    }
+
+    // called from inside poll, inside a wakeup
+    void wakeupHook()
+    {
+        _pollEnd = std::chrono::steady_clock::now();
+    }
+
+    // a LOK compatible poll function merging the functions.
+    // returns the number of events signalled
+    int kitPoll(int timeoutUs)
+    {
+        if (TerminationFlag)
+        {
+            LOG_TRC("Termination of unipoll mainloop flagged");
+            return -1;
+        }
+
+        // The maximum number of extra events to process beyond the first.
+        int maxExtraEvents = 15;
+        int eventsSignalled = 0;
+
+        int timeoutMs = timeoutUs / 1000;
+
+        if (timeoutMs < 0)
+        {
+            // Flush at most 1 + maxExtraEvents, or return when nothing left.
+            while (poll(0) > 0 && maxExtraEvents-- > 0)
+                ++eventsSignalled;
+        }
+        else
+        {
+            // Flush at most maxEvents+1, or return when nothing left.
+            _pollEnd = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutUs);
+            do
+            {
+                if (poll(timeoutMs) <= 0)
+                    break;
+
+                const auto now = std::chrono::steady_clock::now();
+                drainQueue(now);
+
+                timeoutMs = std::chrono::duration_cast<std::chrono::milliseconds>(_pollEnd - now).count();
+                ++eventsSignalled;
+            }
+            while (timeoutMs > 0 && !TerminationFlag && maxExtraEvents-- > 0);
+        }
+
+        drainQueue(std::chrono::steady_clock::now());
+
+#if !MOBILEAPP
+        if (document && document->purgeSessions() == 0)
+        {
+            LOG_INF("Last session discarded. Setting TerminationFlag");
+            TerminationFlag = true;
+            return -1;
+        }
+#endif
+        // Report the number of events we processsed.
+        return eventsSignalled;
+    }
+};
+
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* pData, int timeoutUs)
 {
     if (!pData)
         return 0;
-
-    // The maximum number of extra events to process beyond the first.
-    int maxExtraEvents = 15;
-    int eventsSignalled = 0;
-
-    int timeoutMs = timeoutUs / 1000;
-
-    SocketPoll* pSocketPoll = reinterpret_cast<SocketPoll*>(pData);
-    if (timeoutMs < 0)
-    {
-        // Flush at most 1 + maxExtraEvents, or return when nothing left.
-        while (pSocketPoll->poll(0) > 0 && maxExtraEvents-- > 0)
-            ++eventsSignalled;
-    }
     else
-    {
-        const auto startTime = std::chrono::steady_clock::now();
-        do
-        {
-            // Flush at most maxEvents+1, or return when nothing left.
-            if (pSocketPoll->poll(timeoutMs) <= 0)
-                break;
-
-            const auto now = std::chrono::steady_clock::now();
-            const auto elapsedTimeMs
-                = std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime)
-                .count();
-            if (elapsedTimeMs >= timeoutMs)
-                break;
-
-            timeoutMs -= elapsedTimeMs;
-            ++eventsSignalled;
-        }
-        while (!TerminationFlag && maxExtraEvents-- > 0);
-    }
-
-    if (document)
-        document->drainQueue(std::chrono::steady_clock::now());
-
-#if !MOBILEAPP
-    if (document && document->purgeSessions() == 0)
-    {
-        LOG_INF("Last session discarded. Setting TerminationFlag");
-        TerminationFlag = true;
-        return -1;
-    }
-#endif
-
-    // Report the number of events we processsed.
-    return eventsSignalled;
+        return reinterpret_cast<KitSocketPoll*>(pData)->kitPoll(timeoutUs);
 }
 
 /// Called by LOK main-loop
 void wakeCallback(void* pData)
 {
-    if (pData)
-    {
-        SocketPoll* pSocketPoll = reinterpret_cast<SocketPoll*>(pData);
-        pSocketPoll->wakeup();
-    }
+    if (!pData)
+        return;
+    else
+        return reinterpret_cast<KitSocketPoll*>(pData)->wakeup();
 }
 
 #ifndef BUILDING_TESTS
@@ -2687,7 +2718,7 @@ void lokit_main(
 
 #endif // MOBILEAPP
 
-        SocketPoll mainKit("kit");
+        KitSocketPoll mainKit;
         mainKit.runOnClientThread(); // We will do the polling on this thread.
 
         std::shared_ptr<SocketHandlerInterface> websocketHandler =

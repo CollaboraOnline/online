@@ -88,6 +88,13 @@ public:
         return get_impl();
     }
 
+    /// Anything in the queue ?
+    bool isEmpty()
+    {
+        std::unique_lock<std::mutex> lock(_mutex);
+        return _queue.size() == 0;
+    }
+
     /// Thread safe removal of all the pending messages.
     void clear()
     {
