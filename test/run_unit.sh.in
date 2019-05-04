@@ -98,6 +98,12 @@ if test "z$tst" == "z"; then
                                  --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
                                  --o:admin_console.username=admin --o:admin_console.password=admin \
                                  > "$tst_log" 2>&1 &
+     if test "z${SLEEPFORDEBUGGER}${SLEEPKITFORDEBUGGER}" != "z"; then
+	  echo "sleeping for debugger"
+          sleep ${SLEEPFORDEBUGGER:-0}
+          sleep ${SLEEPKITFORDEBUGGER:-0}
+     fi
+
      echo "  executing test"
 
      oldpath=`pwd`
@@ -111,8 +117,10 @@ if test "z$tst" == "z"; then
 	 retval=1
      fi
 
-     echo "killing $!"
-     kill $!
+     if test "z${SLEEPFORDEBUGGER}${SLEEPKITFORDEBUGGER}" == "z"; then
+         echo "killing $!"
+         kill $!
+     fi
 
      exit $retval
 
