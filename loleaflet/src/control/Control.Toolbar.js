@@ -824,6 +824,8 @@ function initNormalToolbar() {
 		{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: 'InsertSymbol'},
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
+		{type: 'button',  id: 'sidebar', img: 'sidebar_modify_page', hint: _UNO('.uno:Sidebar', '', true), uno: '.uno:Sidebar', hidden: true},
+		{type: 'break', id: 'breaksidebar', hidden: true},
 		{type: 'button',  id: 'fold',  img: 'fold', desktop: true, mobile: false, hidden: true},
 		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, iosapptablet: false, hidden: true}
 	];
@@ -1350,7 +1352,7 @@ function onDocLayerInit() {
 		toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
 			'numberformatcurrency', 'numberformatpercent',
 			'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
-			'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor');
+			'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
 		toolbarUp.remove('styles');
 
 		statusbar.remove('prev', 'next', 'prevnextbreak');
@@ -1416,7 +1418,7 @@ function onDocLayerInit() {
 	case 'text':
 		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
-			'breakindent', 'inserttable', 'insertannotation', 'backcolor');
+			'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
 
 		if (!_inMobileMode()) {
 			statusbar.insert('left', [

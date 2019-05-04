@@ -66,7 +66,9 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:ControlCodes'},
 				{type: 'separator'},
-				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'}
+				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
+				{type: 'separator'},
+				{uno: '.uno:Sidebar'}
 			]
 			},
 			{name: _UNO('.uno:InsertMenu', 'text'), type: 'menu', menu: [
@@ -357,7 +359,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SearchDialog'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', mobileapp: false, menu: [
-				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'}
+				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
+				{type: 'separator'},
+				{uno: '.uno:Sidebar'}
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
