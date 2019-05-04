@@ -136,6 +136,9 @@ void HTTPCrashTest::testCrashKit()
     {
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
+        TST_LOG("Allowing time for kits to spawn and connect to wsd to get cleanly killed");
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
         TST_LOG("Killing loolkit instances.");
 
         killLoKitProcesses();
