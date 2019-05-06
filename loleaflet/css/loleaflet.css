@@ -437,14 +437,17 @@ body {
 }
 /* Vex dialogs */
 .vex-open .vex-overlay {
-	z-index: 1001; /* required to be displayed over the document  */
+	/* TODO: remove specific z-index from our codebase
+	so that the following line can also be removed */
+	z-index: 1001;
 }
-.vex-open .vex-idle { /* dialog shown when user is idle */
+/* dialog shown when user is idle */
+.vex-open .loleaflet-user-idle {
 	background: rgba(0, 0, 0, 0)!important;
 	font-size: xx-large!important;
 	color: #fff!important;
 	text-align: center!important;
 }
-.vex-open .vex-idle .vex-dialog-buttons {
+.vex-open .loleaflet-user-idle .vex-dialog-buttons {
 	display: none!important;
 }

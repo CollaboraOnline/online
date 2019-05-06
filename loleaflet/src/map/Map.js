@@ -4,18 +4,6 @@
  */
 
 /* global vex $ _ */
-function moveObjectVertically(obj, diff) {
-	if (obj) {
-		var prevTop = obj.css('top');
-		if (prevTop) {
-			prevTop = parseInt(prevTop.slice(0, -2)) + diff;
-		}
-		else {
-			prevTop = 0 + diff;
-		}
-		obj.css({'top': String(prevTop) + 'px'});
-	}
-}
 
 function isAnyVexDialogActive() {
 	var res = false;
@@ -917,7 +905,7 @@ L.Map = L.Evented.extend({
 		}
 
 		console.debug('_dim:');
-		if (!this._socket.connected()) {
+		if (!this._socket.connected() || isAnyVexDialogActive()) {
 			return;
 		}
 
@@ -932,7 +920,7 @@ L.Map = L.Evented.extend({
 
 		vex.open({
 			content: message,
-			contentClassName: 'vex-idle',
+			contentClassName: 'loleaflet-user-idle',
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				$vexContent.bind('click.vex', function() {
