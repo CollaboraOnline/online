@@ -256,7 +256,7 @@
 	background-position: bottom;
 }
 
-@media (max-width: 768px),(max-device-height: 768px) {
+@media (max-width: 767px),(max-device-height: 767px) {
     .document-logo {
         width: 35px;
         height: 38px;

@@ -139,7 +139,7 @@ body {
 	}
 }
 
-@media (max-width: 768px),(max-device-height: 768px) {
+@media (max-width: 767px),(max-device-height: 767px) {
 	/* Show slidesorter beyond 768px only */
 	#presentation-controls-wrapper {
 	display: none;
