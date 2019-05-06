@@ -104,6 +104,12 @@ struct _LibreOfficeKitClass
                            const int nCertificateBinarySize,
                            const unsigned char* pPrivateKeyBinary,
                            const int nPrivateKeyBinarySize);
+
+    /// @see lok::Office::runLoop()
+    void (*runLoop) (LibreOfficeKit* pThis,
+                     LibreOfficeKitPollCallback pPollCallback,
+                     LibreOfficeKitWakeCallback pWakeCallback,
+                     void* pData);
 };
 
 #define LIBREOFFICEKIT_DOCUMENT_HAS(pDoc,member) LIBREOFFICEKIT_HAS_MEMBER(LibreOfficeKitDocumentClass,member,(pDoc)->pClass->nSize)
@@ -327,18 +333,6 @@ struct _LibreOfficeKitDocumentClass
                             const int x, const int y,
                             const int width, const int height,
                             const double dpiscale);
-
-#ifdef IOS
-    /// @see lok::Document::paintTileToCGContext().
-    void (*paintTileToCGContext) (LibreOfficeKitDocument* pThis,
-                                  void* rCGContext,
-                                  const int nCanvasWidth,
-                                  const int nCanvasHeight,
-                                  const int nTilePosX,
-                                  const int nTilePosY,
-                                  const int nTileWidth,
-                                  const int nTileHeight);
-#endif // IOS
 
 // CERTIFICATE AND SIGNING
 
