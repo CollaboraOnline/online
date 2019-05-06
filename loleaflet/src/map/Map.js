@@ -1048,7 +1048,7 @@ L.Map = L.Evented.extend({
 
 		vex.open({
 			content: message,
-			contentClassName: 'vex-idle',
+			contentClassName: 'loleaflet-user-idle',
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				$vexContent.bind('click.vex', function() {
