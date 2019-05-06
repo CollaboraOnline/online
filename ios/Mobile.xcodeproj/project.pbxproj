@@ -415,6 +415,66 @@
 		BE51F51622491766005129DC /* view1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = view1.cxx; path = "../../ios-device/sw/source/uibase/uiview/view1.cxx"; sourceTree = "<group>"; };
 		BE51F51722491766005129DC /* swcli.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swcli.cxx; path = "../../ios-device/sw/source/uibase/uiview/swcli.cxx"; sourceTree = "<group>"; };
 		BE51F51822491766005129DC /* viewdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewdlg.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewdlg.cxx"; sourceTree = "<group>"; };
+		BE533496227C545B00D63ADE /* viewsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewsh.cxx; path = "../../ios-device/sw/source/core/view/viewsh.cxx"; sourceTree = "<group>"; };
+		BE533497227C545B00D63ADE /* viewimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewimp.cxx; path = "../../ios-device/sw/source/core/view/viewimp.cxx"; sourceTree = "<group>"; };
+		BE533498227C545B00D63ADE /* viewpg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewpg.cxx; path = "../../ios-device/sw/source/core/view/viewpg.cxx"; sourceTree = "<group>"; };
+		BE533499227C545B00D63ADE /* pagepreviewlayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pagepreviewlayout.cxx; path = "../../ios-device/sw/source/core/view/pagepreviewlayout.cxx"; sourceTree = "<group>"; };
+		BE53349A227C545B00D63ADE /* vdraw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vdraw.cxx; path = "../../ios-device/sw/source/core/view/vdraw.cxx"; sourceTree = "<group>"; };
+		BE53349B227C545B00D63ADE /* vnew.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vnew.cxx; path = "../../ios-device/sw/source/core/view/vnew.cxx"; sourceTree = "<group>"; };
+		BE53349C227C545B00D63ADE /* vprint.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = vprint.hxx; path = "../../ios-device/sw/source/core/view/vprint.hxx"; sourceTree = "<group>"; };
+		BE53349D227C545B00D63ADE /* vprint.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vprint.cxx; path = "../../ios-device/sw/source/core/view/vprint.cxx"; sourceTree = "<group>"; };
+		BE53349E227C545B00D63ADE /* printdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printdata.cxx; path = "../../ios-device/sw/source/core/view/printdata.cxx"; sourceTree = "<group>"; };
+		BE53352F227C54CD00D63ADE /* objectformatterlayfrm.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = objectformatterlayfrm.hxx; path = "../../ios-device/sw/source/core/layout/objectformatterlayfrm.hxx"; sourceTree = "<group>"; };
+		BE533530227C54CD00D63ADE /* flycnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = flycnt.cxx; path = "../../ios-device/sw/source/core/layout/flycnt.cxx"; sourceTree = "<group>"; };
+		BE533531227C54CD00D63ADE /* layouter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = layouter.cxx; path = "../../ios-device/sw/source/core/layout/layouter.cxx"; sourceTree = "<group>"; };
+		BE533532227C54CD00D63ADE /* fly.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fly.cxx; path = "../../ios-device/sw/source/core/layout/fly.cxx"; sourceTree = "<group>"; };
+		BE533533227C54CD00D63ADE /* dbg_lay.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbg_lay.cxx; path = "../../ios-device/sw/source/core/layout/dbg_lay.cxx"; sourceTree = "<group>"; };
+		BE533534227C54CD00D63ADE /* calcmove.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = calcmove.cxx; path = "../../ios-device/sw/source/core/layout/calcmove.cxx"; sourceTree = "<group>"; };
+		BE533535227C54CD00D63ADE /* anchoredobject.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = anchoredobject.cxx; path = "../../ios-device/sw/source/core/layout/anchoredobject.cxx"; sourceTree = "<group>"; };
+		BE533536227C54CD00D63ADE /* flypos.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = flypos.cxx; path = "../../ios-device/sw/source/core/layout/flypos.cxx"; sourceTree = "<group>"; };
+		BE533537227C54CD00D63ADE /* frmtool.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frmtool.cxx; path = "../../ios-device/sw/source/core/layout/frmtool.cxx"; sourceTree = "<group>"; };
+		BE533538227C54CD00D63ADE /* ftnfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ftnfrm.cxx; path = "../../ios-device/sw/source/core/layout/ftnfrm.cxx"; sourceTree = "<group>"; };
+		BE533539227C54CD00D63ADE /* objectformatter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objectformatter.cxx; path = "../../ios-device/sw/source/core/layout/objectformatter.cxx"; sourceTree = "<group>"; };
+		BE53353A227C54CD00D63ADE /* flyincnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = flyincnt.cxx; path = "../../ios-device/sw/source/core/layout/flyincnt.cxx"; sourceTree = "<group>"; };
+		BE53353B227C54CD00D63ADE /* flowfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = flowfrm.cxx; path = "../../ios-device/sw/source/core/layout/flowfrm.cxx"; sourceTree = "<group>"; };
+		BE53353C227C54CD00D63ADE /* objectformattertxtfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objectformattertxtfrm.cxx; path = "../../ios-device/sw/source/core/layout/objectformattertxtfrm.cxx"; sourceTree = "<group>"; };
+		BE53353D227C54CD00D63ADE /* objstmpconsiderwrapinfl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objstmpconsiderwrapinfl.cxx; path = "../../ios-device/sw/source/core/layout/objstmpconsiderwrapinfl.cxx"; sourceTree = "<group>"; };
+		BE53353E227C54CD00D63ADE /* pagedesc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pagedesc.cxx; path = "../../ios-device/sw/source/core/layout/pagedesc.cxx"; sourceTree = "<group>"; };
+		BE53353F227C54CE00D63ADE /* trvlfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = trvlfrm.cxx; path = "../../ios-device/sw/source/core/layout/trvlfrm.cxx"; sourceTree = "<group>"; };
+		BE533540227C54CE00D63ADE /* virtoutp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = virtoutp.cxx; path = "../../ios-device/sw/source/core/layout/virtoutp.cxx"; sourceTree = "<group>"; };
+		BE533541227C54CE00D63ADE /* dumpfilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dumpfilter.cxx; path = "../../ios-device/sw/source/core/layout/dumpfilter.cxx"; sourceTree = "<group>"; };
+		BE533542227C54CE00D63ADE /* ssfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ssfrm.cxx; path = "../../ios-device/sw/source/core/layout/ssfrm.cxx"; sourceTree = "<group>"; };
+		BE533543227C54CE00D63ADE /* tabfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabfrm.cxx; path = "../../ios-device/sw/source/core/layout/tabfrm.cxx"; sourceTree = "<group>"; };
+		BE533544227C54CE00D63ADE /* anchoreddrawobject.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = anchoreddrawobject.cxx; path = "../../ios-device/sw/source/core/layout/anchoreddrawobject.cxx"; sourceTree = "<group>"; };
+		BE533545227C54CE00D63ADE /* pagechg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pagechg.cxx; path = "../../ios-device/sw/source/core/layout/pagechg.cxx"; sourceTree = "<group>"; };
+		BE533546227C54CE00D63ADE /* swselectionlist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swselectionlist.cxx; path = "../../ios-device/sw/source/core/layout/swselectionlist.cxx"; sourceTree = "<group>"; };
+		BE533547227C54CE00D63ADE /* virtoutp.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = virtoutp.hxx; path = "../../ios-device/sw/source/core/layout/virtoutp.hxx"; sourceTree = "<group>"; };
+		BE533548227C54CE00D63ADE /* wsfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wsfrm.cxx; path = "../../ios-device/sw/source/core/layout/wsfrm.cxx"; sourceTree = "<group>"; };
+		BE533549227C54CE00D63ADE /* paintfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = paintfrm.cxx; path = "../../ios-device/sw/source/core/layout/paintfrm.cxx"; sourceTree = "<group>"; };
+		BE53354A227C54CE00D63ADE /* layhelp.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = layhelp.hxx; path = "../../ios-device/sw/source/core/layout/layhelp.hxx"; sourceTree = "<group>"; };
+		BE53354B227C54CE00D63ADE /* flylay.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = flylay.cxx; path = "../../ios-device/sw/source/core/layout/flylay.cxx"; sourceTree = "<group>"; };
+		BE53354C227C54CE00D63ADE /* newfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = newfrm.cxx; path = "../../ios-device/sw/source/core/layout/newfrm.cxx"; sourceTree = "<group>"; };
+		BE53354D227C54CE00D63ADE /* findfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = findfrm.cxx; path = "../../ios-device/sw/source/core/layout/findfrm.cxx"; sourceTree = "<group>"; };
+		BE53354E227C54CE00D63ADE /* objectformatterlayfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objectformatterlayfrm.cxx; path = "../../ios-device/sw/source/core/layout/objectformatterlayfrm.cxx"; sourceTree = "<group>"; };
+		BE53354F227C54CE00D63ADE /* sortedobjs.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sortedobjs.cxx; path = "../../ios-device/sw/source/core/layout/sortedobjs.cxx"; sourceTree = "<group>"; };
+		BE533550227C54CF00D63ADE /* atrfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = atrfrm.cxx; path = "../../ios-device/sw/source/core/layout/atrfrm.cxx"; sourceTree = "<group>"; };
+		BE533551227C54CF00D63ADE /* layact.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = layact.cxx; path = "../../ios-device/sw/source/core/layout/layact.cxx"; sourceTree = "<group>"; };
+		BE533552227C54CF00D63ADE /* laycache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = laycache.cxx; path = "../../ios-device/sw/source/core/layout/laycache.cxx"; sourceTree = "<group>"; };
+		BE533553227C54CF00D63ADE /* objectformattertxtfrm.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = objectformattertxtfrm.hxx; path = "../../ios-device/sw/source/core/layout/objectformattertxtfrm.hxx"; sourceTree = "<group>"; };
+		BE533554227C54CF00D63ADE /* sectfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sectfrm.cxx; path = "../../ios-device/sw/source/core/layout/sectfrm.cxx"; sourceTree = "<group>"; };
+		BE533555227C54CF00D63ADE /* movedfwdfrmsbyobjpos.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = movedfwdfrmsbyobjpos.cxx; path = "../../ios-device/sw/source/core/layout/movedfwdfrmsbyobjpos.cxx"; sourceTree = "<group>"; };
+		BE533556227C54CF00D63ADE /* softpagebreak.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = softpagebreak.cxx; path = "../../ios-device/sw/source/core/layout/softpagebreak.cxx"; sourceTree = "<group>"; };
+		BE533557227C54CF00D63ADE /* objstmpconsiderwrapinfl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = objstmpconsiderwrapinfl.hxx; path = "../../ios-device/sw/source/core/layout/objstmpconsiderwrapinfl.hxx"; sourceTree = "<group>"; };
+		BE533558227C54CF00D63ADE /* unusedf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unusedf.cxx; path = "../../ios-device/sw/source/core/layout/unusedf.cxx"; sourceTree = "<group>"; };
+		BE533559227C54CF00D63ADE /* colfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = colfrm.cxx; path = "../../ios-device/sw/source/core/layout/colfrm.cxx"; sourceTree = "<group>"; };
+		BE53355A227C54CF00D63ADE /* hffrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hffrm.cxx; path = "../../ios-device/sw/source/core/layout/hffrm.cxx"; sourceTree = "<group>"; };
+		BE53355E227C7FAD00D63ADE /* BitmapTools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapTools.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapTools.cxx"; sourceTree = "<group>"; };
+		BE53355F227C7FAD00D63ADE /* checksum.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = checksum.cxx; path = "../../ios-device/vcl/source/bitmap/checksum.cxx"; sourceTree = "<group>"; };
+		BE533560227C7FAD00D63ADE /* BitmapSymmetryCheck.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSymmetryCheck.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapSymmetryCheck.cxx"; sourceTree = "<group>"; };
+		BE533561227C7FAD00D63ADE /* bitmapfilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmapfilter.cxx; path = "../../ios-device/vcl/source/bitmap/bitmapfilter.cxx"; sourceTree = "<group>"; };
+		BE533562227C7FAD00D63ADE /* bitmapscalesuper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmapscalesuper.cxx; path = "../../ios-device/vcl/source/bitmap/bitmapscalesuper.cxx"; sourceTree = "<group>"; };
+		BE533563227C7FAD00D63ADE /* BitmapProcessor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapProcessor.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapProcessor.cxx"; sourceTree = "<group>"; };
+		BE533564227C7FAD00D63ADE /* BitmapScaleConvolution.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapScaleConvolution.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapScaleConvolution.cxx"; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -925,6 +985,7 @@
 		BE34D10C218B667400815297 /* sw */ = {
 			isa = PBXGroup;
 			children = (
+				BE533494227C542200D63ADE /* core */,
 				BE34D10D218B668100815297 /* uibase */,
 			);
 			name = sw;
@@ -1414,6 +1475,96 @@
 			name = uiview;
 			sourceTree = "<group>";
 		};
+		BE533494227C542200D63ADE /* core */ = {
+			isa = PBXGroup;
+			children = (
+				BE53352E227C54B400D63ADE /* layout */,
+				BE533495227C543E00D63ADE /* view */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+		BE533495227C543E00D63ADE /* view */ = {
+			isa = PBXGroup;
+			children = (
+				BE533499227C545B00D63ADE /* pagepreviewlayout.cxx */,
+				BE53349E227C545B00D63ADE /* printdata.cxx */,
+				BE53349A227C545B00D63ADE /* vdraw.cxx */,
+				BE533497227C545B00D63ADE /* viewimp.cxx */,
+				BE533498227C545B00D63ADE /* viewpg.cxx */,
+				BE533496227C545B00D63ADE /* viewsh.cxx */,
+				BE53349B227C545B00D63ADE /* vnew.cxx */,
+				BE53349D227C545B00D63ADE /* vprint.cxx */,
+				BE53349C227C545B00D63ADE /* vprint.hxx */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		BE53352E227C54B400D63ADE /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				BE533544227C54CE00D63ADE /* anchoreddrawobject.cxx */,
+				BE533535227C54CD00D63ADE /* anchoredobject.cxx */,
+				BE533550227C54CF00D63ADE /* atrfrm.cxx */,
+				BE533534227C54CD00D63ADE /* calcmove.cxx */,
+				BE533559227C54CF00D63ADE /* colfrm.cxx */,
+				BE533533227C54CD00D63ADE /* dbg_lay.cxx */,
+				BE533541227C54CE00D63ADE /* dumpfilter.cxx */,
+				BE53354D227C54CE00D63ADE /* findfrm.cxx */,
+				BE53353B227C54CD00D63ADE /* flowfrm.cxx */,
+				BE533532227C54CD00D63ADE /* fly.cxx */,
+				BE533530227C54CD00D63ADE /* flycnt.cxx */,
+				BE53353A227C54CD00D63ADE /* flyincnt.cxx */,
+				BE53354B227C54CE00D63ADE /* flylay.cxx */,
+				BE533536227C54CD00D63ADE /* flypos.cxx */,
+				BE533537227C54CD00D63ADE /* frmtool.cxx */,
+				BE533538227C54CD00D63ADE /* ftnfrm.cxx */,
+				BE53355A227C54CF00D63ADE /* hffrm.cxx */,
+				BE533551227C54CF00D63ADE /* layact.cxx */,
+				BE533552227C54CF00D63ADE /* laycache.cxx */,
+				BE53354A227C54CE00D63ADE /* layhelp.hxx */,
+				BE533531227C54CD00D63ADE /* layouter.cxx */,
+				BE533555227C54CF00D63ADE /* movedfwdfrmsbyobjpos.cxx */,
+				BE53354C227C54CE00D63ADE /* newfrm.cxx */,
+				BE533539227C54CD00D63ADE /* objectformatter.cxx */,
+				BE53354E227C54CE00D63ADE /* objectformatterlayfrm.cxx */,
+				BE53352F227C54CD00D63ADE /* objectformatterlayfrm.hxx */,
+				BE53353C227C54CD00D63ADE /* objectformattertxtfrm.cxx */,
+				BE533553227C54CF00D63ADE /* objectformattertxtfrm.hxx */,
+				BE53353D227C54CD00D63ADE /* objstmpconsiderwrapinfl.cxx */,
+				BE533557227C54CF00D63ADE /* objstmpconsiderwrapinfl.hxx */,
+				BE533545227C54CE00D63ADE /* pagechg.cxx */,
+				BE53353E227C54CD00D63ADE /* pagedesc.cxx */,
+				BE533549227C54CE00D63ADE /* paintfrm.cxx */,
+				BE533554227C54CF00D63ADE /* sectfrm.cxx */,
+				BE533556227C54CF00D63ADE /* softpagebreak.cxx */,
+				BE53354F227C54CE00D63ADE /* sortedobjs.cxx */,
+				BE533542227C54CE00D63ADE /* ssfrm.cxx */,
+				BE533546227C54CE00D63ADE /* swselectionlist.cxx */,
+				BE533543227C54CE00D63ADE /* tabfrm.cxx */,
+				BE53353F227C54CE00D63ADE /* trvlfrm.cxx */,
+				BE533558227C54CF00D63ADE /* unusedf.cxx */,
+				BE533540227C54CE00D63ADE /* virtoutp.cxx */,
+				BE533547227C54CE00D63ADE /* virtoutp.hxx */,
+				BE533548227C54CE00D63ADE /* wsfrm.cxx */,
+			);
+			name = layout;
+			sourceTree = "<group>";
+		};
+		BE53355D227C7F7C00D63ADE /* bitmap */ = {
+			isa = PBXGroup;
+			children = (
+				BE533561227C7FAD00D63ADE /* bitmapfilter.cxx */,
+				BE533563227C7FAD00D63ADE /* BitmapProcessor.cxx */,
+				BE533564227C7FAD00D63ADE /* BitmapScaleConvolution.cxx */,
+				BE533562227C7FAD00D63ADE /* bitmapscalesuper.cxx */,
+				BE533560227C7FAD00D63ADE /* BitmapSymmetryCheck.cxx */,
+				BE53355E227C7FAD00D63ADE /* BitmapTools.cxx */,
+				BE53355F227C7FAD00D63ADE /* checksum.cxx */,
+			);
+			name = bitmap;
+			sourceTree = "<group>";
+		};
 		BE58E1312187938700249358 /* headless */ = {
 			isa = PBXGroup;
 			children = (
@@ -1755,11 +1906,12 @@
 			isa = PBXGroup;
 			children = (
 				BE93D421216CAA59007A39F4 /* app */,
-				BE7AECFE2239B76F00B117D2 /* ios */,
+				BE53355D227C7F7C00D63ADE /* bitmap */,
 				BE7AECE32239692A00B117D2 /* control */,
 				BEB0E5DA21CA7C330085A0CF /* filter */,
 				BEF7F1B12236AFCC00CB3AEA /* gdi */,
 				BE58E1312187938700249358 /* headless */,
+				BE7AECFE2239B76F00B117D2 /* ios */,
 				BEB0E5E721D642420085A0CF /* outdev */,
 				BEB0E5DF21CA9DA20085A0CF /* quartz */,
 				BE34D140218CF87D00815297 /* window */,
