@@ -586,6 +586,20 @@ inline void sendText(std::shared_ptr<LOOLWebSocket>& socket, const std::string& 
     }
 }
 
+inline void saveTileAs(const std::vector<char> &tileResponse,
+                       const std::string &filename,
+                       const std::string &testname)
+{
+    const std::string firstLine = LOOLProtocol::getFirstLine(tileResponse);
+    std::vector<char> res(tileResponse.begin() + firstLine.size() + 1, tileResponse.end());
+    std::stringstream streamRes;
+    std::copy(res.begin(), res.end(), std::ostream_iterator<char>(streamRes));
+    std::fstream outStream(filename, std::ios::out);
+    outStream.write(res.data(), res.size());
+    outStream.close();
+    TST_LOG("Saved [" << firstLine << "] to [" << filename << "]");
+}
+
 inline std::vector<char> getTileAndSave(std::shared_ptr<LOOLWebSocket>& socket,
                                         const std::string& req,
                                         const std::string& filename,
@@ -603,12 +617,7 @@ inline std::vector<char> getTileAndSave(std::shared_ptr<LOOLWebSocket>& socket,
     std::copy(res.begin(), res.end(), std::ostream_iterator<char>(streamRes));
 
     if (!filename.empty())
-    {
-        std::fstream outStream(filename, std::ios::out);
-        outStream.write(res.data(), res.size());
-        outStream.close();
-        TST_LOG("Saved [" << firstLine << "] to [" << filename << "]");
-    }
+        saveTileAs(tile, filename, testname);
 
     return res;
 }
