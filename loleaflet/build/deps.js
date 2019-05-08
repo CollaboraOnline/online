@@ -59,7 +59,10 @@ var deps = {
 	},
 
 	CalcTileLayer: {
-		src: ['layer/tile/CalcTileLayer.js'],
+		src: [
+			'layer/tile/CalcTileLayer.js',
+			'layer/BackgroundColor.js',
+		],
 		desc: 'Calc tile layer.',
 		deps: ['TileLayer']
 	},
