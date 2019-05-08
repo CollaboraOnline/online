@@ -113,6 +113,12 @@ If set to a non-empty string, is used for rendering a watermark-like text on eac
 
 **Note:** It is possible to just hide print, save, export options while still being able to access them from other hosts using PostMessage API (see [loleaflet/reference.html](https://www.collaboraoffice.com/collabora-online-editor-api-reference/))
 
+PostMessage extensions
+--------------------------------------
+
+### App_LoadingStatus
+Was extended with field 'Status' with 'Document_Loaded' value when document was loaded successfully and 'Failed' in other case.
+
 Alternative authentication possibility
 --------------------------------------
 
