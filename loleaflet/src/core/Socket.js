@@ -824,6 +824,9 @@ L.Socket = L.Class.extend({
 						tileHeightTwips: tileHeightTwips,
 						docType: command.type
 					});
+					if (!this._map.options.backgroundLayer) {
+						this._map.options.backgroundLayer = new L.CalcBackground().addTo(this._map);
+					}
 				}
 				else {
 					if (command.type === 'presentation' &&
