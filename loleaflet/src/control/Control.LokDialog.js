@@ -248,8 +248,8 @@ L.Control.LokDialog = L.Control.extend({
 			height = parseInt(e.size.split(',')[1]);
 		}
 
-		var left = 0;
-		var top = 0;
+		var left;
+		var top;
 		if (e.position) {
 			left = parseInt(e.position.split(',')[0]);
 			top = parseInt(e.position.split(',')[1]);
@@ -257,14 +257,19 @@ L.Control.LokDialog = L.Control.extend({
 
 		if (e.action === 'created') {
 			if (e.winType === 'dialog') {
+				// When left/top are invalid, the dialog shows in the center.
 				this._launchDialog(e.id, left, top, width, height, e.title);
 			} else if (e.winType === 'deck') {
-				this._launchSidebar(e.id, left, top, width, height);
+				this._launchSidebar(e.id, width, height);
 			} else if (e.winType === 'child') {
 				var parentId = parseInt(e.parentId);
 				if (!this._isOpen(parentId))
 					return;
 
+				if (!left)
+					left = 0;
+				if (!top)
+					top = 0;
 				this._removeDialogChild(parentId);
 				this._dialogs[parentId].childid = e.id;
 				this._dialogs[parentId].childwidth = width;
@@ -501,12 +506,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._sendPaintWindow(id, this._createRectStr(id));
 	},
 
-	_launchSidebar: function(id, left, top, width, height) {
-
-		if (!left)
-			left = 0;
-		if (!top)
-			top = 0;
+	_launchSidebar: function(id, width, height) {
 
 		if ((window.mode.isMobile() || window.mode.isTablet())
 		    && this._map._permission != 'edit')
@@ -571,8 +571,8 @@ L.Control.LokDialog = L.Control.extend({
 			id: id,
 			strId: strId,
 			isSidebar: true,
-			left: left,
-			top: top,
+			left: 0,
+			top: 0,
 			width: width,
 			height: height,
 			cursor: null,
