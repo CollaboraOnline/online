@@ -2762,6 +2762,8 @@ void HTTPWSTest::testRenderShapeSelectionImpress()
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
+        stripDescriptions(responseSVG);
+
         CPPUNIT_ASSERT(svgMatch(testname, responseSVG, "shapes_impress.svg"));
     }
     catch (const Poco::Exception& exc)
