@@ -36,18 +36,18 @@
  <g ooo:name="page1" class="Page">
   <g class="com.sun.star.drawing.CustomShape">
    <g id="id3">
-    <rect class="BoundingBox" stroke="none" fill="none" x="3301" y="5333" width="8385" height="6607"/><desc>150</desc><desc>139</desc><desc>133</desc><desc>132</desc><desc>111</desc>
-    <path fill="rgb(114,159,207)" stroke="none" d="M 7493,11938 L 3302,11938 3302,5334 11684,5334 11684,11938 7493,11938 Z"/><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 7493,11938 L 3302,11938 3302,5334 11684,5334 11684,11938 7493,11938 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc>
+    <rect class="BoundingBox" stroke="none" fill="none" x="3301" y="5333" width="8385" height="6607"/>
+    <path fill="rgb(114,159,207)" stroke="none" d="M 7493,11938 L 3302,11938 3302,5334 11684,5334 11684,11938 7493,11938 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 7493,11938 L 3302,11938 3302,5334 11684,5334 11684,11938 7493,11938 Z"/>
    </g>
   </g>
   <g class="com.sun.star.drawing.CustomShape">
    <g id="id4">
-    <rect class="BoundingBox" stroke="none" fill="none" x="14477" y="4571" width="9656" height="8386"/><desc>150</desc><desc>139</desc><desc>133</desc><desc>132</desc><desc>111</desc>
-    <path fill="rgb(114,159,207)" stroke="none" d="M 19304,4572 C 22040,4572 24130,6387 24130,8763 24130,11139 22040,12954 19304,12954 16568,12954 14478,11139 14478,8763 14478,6387 16568,4572 19304,4572 Z M 14478,4572 L 14478,4572 Z M 24131,12955 L 24131,12955 Z"/><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 19304,4572 C 22040,4572 24130,6387 24130,8763 24130,11139 22040,12954 19304,12954 16568,12954 14478,11139 14478,8763 14478,6387 16568,4572 19304,4572 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 14478,4572 L 14478,4572 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc><desc>139</desc><desc>132</desc><desc>512: XPATHSTROKE_SEQ_BEGIN</desc><desc>132</desc><desc>133</desc><desc>109</desc>
-    <path fill="none" stroke="rgb(52,101,164)" d="M 24131,12955 L 24131,12955 Z"/><desc>512: XPATHSTROKE_SEQ_END</desc><desc>140</desc>
+    <rect class="BoundingBox" stroke="none" fill="none" x="14477" y="4571" width="9656" height="8386"/>
+    <path fill="rgb(114,159,207)" stroke="none" d="M 19304,4572 C 22040,4572 24130,6387 24130,8763 24130,11139 22040,12954 19304,12954 16568,12954 14478,11139 14478,8763 14478,6387 16568,4572 19304,4572 Z M 14478,4572 L 14478,4572 Z M 24131,12955 L 24131,12955 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 19304,4572 C 22040,4572 24130,6387 24130,8763 24130,11139 22040,12954 19304,12954 16568,12954 14478,11139 14478,8763 14478,6387 16568,4572 19304,4572 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 14478,4572 L 14478,4572 Z"/>
+    <path fill="none" stroke="rgb(52,101,164)" d="M 24131,12955 L 24131,12955 Z"/>
    </g>
   </g>
  </g>
