@@ -607,7 +607,6 @@ L.Control.LokDialog = L.Control.extend({
 	_setupWindowEvents: function(id, canvas, dlgInput) {
 		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(canvas, 'mousemove', function(e) {
-			this._map.lastActiveTime = Date.now();
 			this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
 			// Keep map active while user is playing with sidebar/dialog.
 			this._map.lastActiveTime = Date.now();
@@ -744,23 +743,31 @@ L.Control.LokDialog = L.Control.extend({
 
 	_postWindowCompositionEvent: function(winid, type, text) {
 		this._map._docLayer._postCompositionEvent(winid, type, text);
+		// Keep map active while user is playing with sidebar/dialog.
+		this._map.lastActiveTime = Date.now();
 	},
 
 	_postWindowMouseEvent: function(type, winid, x, y, count, buttons, modifier) {
 		this._map._socket.sendMessage('windowmouse id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' count=' + count +
 		                              ' buttons=' + buttons + ' modifier=' + modifier);
+		// Keep map active while user is playing with sidebar/dialog.
+		this._map.lastActiveTime = Date.now();
 	},
 
 	_postWindowGestureEvent: function(winid, type, x, y, offset) {
 		console.log('x ' + x + ' y ' + y + ' o ' + offset);
 		this._map._socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
+		// Keep map active while user is playing with sidebar/dialog.
+		this._map.lastActiveTime = Date.now();
 	},
 
 	_postWindowKeyboardEvent: function(winid, type, charcode, keycode) {
 		this._map._socket.sendMessage('windowkey id=' + winid + ' type=' + type +
 		                              ' char=' + charcode + ' key=' + keycode);
+		// Keep map active while user is playing with sidebar/dialog.
+		this._map.lastActiveTime = Date.now();
 	},
 
 	_onSidebarClose: function(dialogId) {
@@ -992,7 +999,6 @@ L.Control.LokDialog = L.Control.extend({
 				}
 				firstTouchPositionX = null;
 				firstTouchPositionY = null;
-
 			}
 			else if (e.type === 'touchmove')
 			{
