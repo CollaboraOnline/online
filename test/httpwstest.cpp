@@ -2830,6 +2830,8 @@ void HTTPWSTest::testRenderShapeSelectionWriterImage()
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
+        stripDescriptions(responseSVG);
+
         CPPUNIT_ASSERT(svgMatch(testname, responseSVG, "non_shape_writer_image.svg"));
     }
     catch (const Poco::Exception& exc)
