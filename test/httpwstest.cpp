@@ -52,6 +52,31 @@
 
 using namespace helpers;
 
+namespace
+{
+/**
+ * Strips <desc>...</desc> strings from an SVG, some of which are only in debug builds, so breaks
+ * comparison with a fixed reference.
+ */
+void stripDescriptions(std::vector<char>& svg)
+{
+    while (true)
+    {
+        std::string startDesc("<desc>");
+        auto itStart = std::search(svg.begin(), svg.end(), startDesc.begin(), startDesc.end());
+        if (itStart == svg.end())
+            return;
+
+        std::string endDesc("</desc>");
+        auto itEnd = std::search(svg.begin(), svg.end(), endDesc.begin(), endDesc.end());
+        if (itEnd == svg.end())
+            return;
+
+        svg.erase(itStart, itEnd + endDesc.size());
+    }
+}
+}
+
 /// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
@@ -2774,6 +2799,8 @@ void HTTPWSTest::testRenderShapeSelectionWriter()
         auto it = std::find(responseSVG.begin(), responseSVG.end(),'\n');
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
+
+        stripDescriptions(responseSVG);
 
         CPPUNIT_ASSERT(svgMatch(testname, responseSVG, "shapes_writer.svg"));
     }
