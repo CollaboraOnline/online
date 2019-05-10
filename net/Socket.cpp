@@ -376,7 +376,7 @@ void ServerSocket::dumpState(std::ostream& os)
 void SocketDisposition::execute()
 {
     // We should have hard ownership of this socket.
-    // assert(_socket->getThreadOwner() == std::this_thread::get_id());
+    assert(_socket->getThreadOwner() == std::this_thread::get_id());
     if (_socketMove)
     {
         // Drop pretentions of ownership before _socketMove.
