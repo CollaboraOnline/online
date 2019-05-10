@@ -91,6 +91,7 @@ NODE_MODULES_JS =\
 	node_modules/hammerjs/hammer.min.js \
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
+	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
 	node_modules/jquery-ui/jquery-ui.js \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
 	node_modules/autolinker/dist/Autolinker.js \
@@ -100,7 +101,6 @@ NODE_MODULES_JS =\
 	node_modules/@braintree/sanitize-url/dist.js
 
 LOLEAFLET_LIBS_JS =\
-	jquery.contextMenu.js \
 	jquery.mCustomScrollbar.js \
 	w2ui-1.5.rc1.js
 
