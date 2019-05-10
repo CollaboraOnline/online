@@ -873,7 +873,6 @@ public:
              const std::string& docId,
              const std::string& url,
              std::shared_ptr<TileQueue> tileQueue,
-             SocketPoll& /*socketPoll*/,
              const std::shared_ptr<WebSocketHandler>& websocketHandler)
       : _loKit(loKit),
         _jailId(jailId),
@@ -2209,16 +2208,14 @@ class KitWebSocketHandler final : public WebSocketHandler, public std::enable_sh
     std::string _socketName;
     std::shared_ptr<lok::Office> _loKit;
     std::string _jailId;
-    SocketPoll& _socketPoll;
 
 public:
-    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId, SocketPoll& socketPoll) :
+    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId) :
         WebSocketHandler(/* isClient = */ true, /* isMasking */ false),
         _queue(std::make_shared<TileQueue>()),
         _socketName(socketName),
         _loKit(loKit),
-        _jailId(jailId),
-        _socketPoll(socketPoll)
+        _jailId(jailId)
     {
     }
 
@@ -2269,9 +2266,7 @@ protected:
             LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
 
             if (!document)
-            {
-                document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, _socketPoll, shared_from_this());
-            }
+                document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, shared_from_this());
 
             // Validate and create session.
             if (!(url == document->getUrl() && document->createSession(sessionId)))
@@ -2720,7 +2715,7 @@ void lokit_main(
         mainKit.runOnClientThread(); // We will do the polling on this thread.
 
         std::shared_ptr<SocketHandlerInterface> websocketHandler =
-            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit);
+            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId);
 #if !MOBILEAPP
         mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler);
 #else
