@@ -873,7 +873,7 @@ public:
              const std::string& docId,
              const std::string& url,
              std::shared_ptr<TileQueue> tileQueue,
-             SocketPoll& socketPoll,
+             SocketPoll& /*socketPoll*/,
              const std::shared_ptr<WebSocketHandler>& websocketHandler)
       : _loKit(loKit),
         _jailId(jailId),
@@ -882,7 +882,6 @@ public:
         _url(url),
         _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
         _tileQueue(std::move(tileQueue)),
-        _socketPoll(socketPoll),
         _websocketHandler(websocketHandler),
         _docPassword(""),
         _haveDocPassword(false),
@@ -904,7 +903,7 @@ public:
 #endif
     }
 
-    ~Document()
+    virtual ~Document()
     {
         LOG_INF("~Document dtor for [" << _docKey <<
                 "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
@@ -2163,7 +2162,6 @@ private:
 
     std::shared_ptr<lok::Document> _loKitDocument;
     std::shared_ptr<TileQueue> _tileQueue;
-    SocketPoll& _socketPoll;
     std::shared_ptr<WebSocketHandler> _websocketHandler;
 
     std::mutex _pngMutex;
