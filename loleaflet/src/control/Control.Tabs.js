@@ -20,7 +20,7 @@ L.Control.Tabs = L.Control.extend({
 		}
 		setTimeout(function() {
 			$('.spreadsheet-tab').contextMenu(e.perm === 'edit');
-		}, 1000);
+		}, 100);
 
 		if (window.mode.isMobile() == true) {
 			if (e.perm === 'edit') {
@@ -38,36 +38,28 @@ L.Control.Tabs = L.Control.extend({
 		this._initialized = true;
 		this._tabsInitialized = false;
 		this._spreadsheetTabs = {};
+		this._tabForContextMenu = 0;
 		var map = this._map;
 		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
-		L.DomEvent.on(this._tabsCont, 'touchstart',
-			function (e) {
-				if (e && e.touches.length > 1) {
-					L.DomEvent.preventDefault(e);
-				}
-			},
-			this);
 
 		$.contextMenu({
 			selector: '.spreadsheet-tab',
 			className: 'loleaflet-font',
-			callback: function(key, options) {
-				var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
-
+			callback: (function(key) {
 				if (key === 'insertsheetbefore') {
-					map.insertPage(nPos);
+					map.insertPage(this._tabForContextMenu);
 				}
 				if (key === 'insertsheetafter') {
-					map.insertPage(nPos + 1);
+					map.insertPage(this._tabForContextMenu + 1);
 				}
-			},
+			}).bind(this),
 			items: {
 				'insertsheetbefore': {name: _('Insert sheet before this')},
 				'insertsheetafter': {name: _('Insert sheet after this')},
 				'deletesheet': {name: _UNO('.uno:Remove', 'spreadsheet', true),
-						callback: function(key, options) {
-							var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
+						callback: (function(key, options) {
+							var nPos = this._tabForContextMenu;
 							vex.dialog.confirm({
 								message: _('Are you sure you want to delete sheet, %sheet% ?').replace('%sheet%', options.$trigger.text()),
 								callback: function(data) {
@@ -76,11 +68,11 @@ L.Control.Tabs = L.Control.extend({
 									}
 								}
 							});
-						}
+						}).bind(this)
 				 },
 				'renamesheet': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
-							callback: function(key, options) {
-								var nPos = parseInt(options.$trigger.attr('id').split('spreadsheet-tab')[1]);
+							callback: (function(key, options) {
+								var nPos = this._tabForContextMenu;
 								vex.dialog.open({
 									message: _('Enter new sheet name'),
 									input: '<input name="sheetname" type="text" value="' + options.$trigger.text() + '" required />',
@@ -88,18 +80,19 @@ L.Control.Tabs = L.Control.extend({
 										map.renamePage(data.sheetname, nPos);
 									}
 								});
-							}},
+							}).bind(this)
+				} ,
 				'showsheets': {
 					name: _UNO('.uno:Show', 'spreadsheet', true),
-					callback: function() {
+					callback: (function() {
 						map.showPage();
-					}
+					}).bind(this)
 				},
 				'hiddensheets': {
 					name: _UNO('.uno:Hide', 'spreadsheet', true),
-					callback: function() {
+					callback: (function() {
 						map.hidePage();
-					}
+					}).bind(this)
 				}
 			},
 			zIndex: 1000
@@ -138,7 +131,16 @@ L.Control.Tabs = L.Control.extend({
 					if (e.hiddenParts.indexOf(i) !== -1)
 						continue;
 					var id = 'spreadsheet-tab' + i;
-					var tab = L.DomUtil.create('div', 'spreadsheet-tab', ssTabScroll);
+					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
+					L.DomEvent.enableLongTap(tab);
+					
+					L.DomEvent.on(tab, 'contextmenu', function(j) {
+						return function() {
+							this._tabForContextMenu = j;
+							$('spreadsheet-tab' + j).contextMenu();
+						}
+					}(i).bind(this));
+					
 					tab.textContent = e.partNames[i];
 					tab.id = id;
 
