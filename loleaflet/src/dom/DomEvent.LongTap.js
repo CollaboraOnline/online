@@ -53,8 +53,8 @@ L.DomEvent.enableLongTap = function enableLongTap(el, tolerance, timeout) {
 			return;
 		}
 
-		var first = ev.touches[0],
-		    target = first.target;
+		var first = ev.touches[0];
+		var target = first.target;
 
 		startPos = newPos = L.point(first.clientX, first.clientY);
 
@@ -93,8 +93,8 @@ L.DomEvent.enableLongTap = function enableLongTap(el, tolerance, timeout) {
 		});
 
 		if (fireClick && ev && ev.changedTouches) {
-			var first = ev.changedTouches[0],
-			    target = first.target;
+			var first = ev.changedTouches[0];
+			var target = first.target;
 
 			if (target && target.tagName && el.tagName.toLowerCase() === 'a') {
 				L.DomUtil.removeClass(target, 'leaflet-active');
