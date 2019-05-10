@@ -83,7 +83,7 @@ public:
     Payload pop()
     {
         std::unique_lock<std::mutex> lock(_mutex);
-        if (!_queue.size())
+        if (_queue.empty())
             return Payload();
         return get_impl();
     }
@@ -92,7 +92,7 @@ public:
     bool isEmpty()
     {
         std::unique_lock<std::mutex> lock(_mutex);
-        return _queue.size() == 0;
+        return _queue.empty();
     }
 
     /// Thread safe removal of all the pending messages.

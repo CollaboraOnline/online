@@ -470,7 +470,7 @@ public:
                     Log::to_string(_owner) << " (" << Util::getThreadId() <<
                     ") but called from " << std::this_thread::get_id() << ", stop: " << _stop);
 
-        // assert(_stop || sameThread);
+        assert(_stop || sameThread);
     }
 
     /// Poll the sockets for available data to read or buffer to write.
