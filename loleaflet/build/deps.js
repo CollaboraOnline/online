@@ -356,6 +356,8 @@ var deps = {
 
 	ControlTabs: {
 		src: ['control/Control.js',
+		      'dom/DomEvent.js',
+		      'dom/DomEvent.LongTap.js',
 		      'control/Control.Tabs.js'],
 		heading: 'Controls',
 		desc: 'Tabs for switching sheets'
