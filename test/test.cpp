@@ -198,10 +198,10 @@ std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = tru
                     {
                         switch (tokens[2].c_str()[0])
                         {
-                            // Dead marker for old and new kernels.
+                        // Dead & zombie markers for old and new kernels.
                         case 'x':
                         case 'X':
-                            // Don't ignore zombies.
+                        case 'Z':
                             break;
                         default:
                             pids.push_back(pid);
