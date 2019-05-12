@@ -230,8 +230,12 @@ L.Map = L.Evented.extend({
 		// This becomes true if document was ever modified by the user
 		this._everModified = false;
 
-		// Document is completely loaded or not
+		// Document is completely loaded or not.
 		this._docLoaded = false;
+
+		// Unlike _docLoaded, this is flagged only once,
+		// after we receive status for the first time.
+		this._docLoadedOnce = false;
 
 		this.on('commandstatechanged', function(e) {
 			if (e.commandName === '.uno:ModifiedStatus')
@@ -256,7 +260,7 @@ L.Map = L.Evented.extend({
 			this.initializeModificationIndicator();
 
 			// Show sidebar.
-			if (this._docLayer && !window.mode.isMobile() && !window.mode.isTablet() &&
+			if (this._docLayer && !this._docLoadedOnce && !window.mode.isMobile() && !window.mode.isTablet() &&
 				(this._docLayer._docType === 'spreadsheet' || this._docLayer._docType === 'text')) {
 				// Let the first page finish loading then load the sidebar.
 				var map = this;
@@ -267,6 +271,11 @@ L.Map = L.Evented.extend({
 					map._socket.sendMessage('uno .uno:Sidebar');
 					map._socket.sendMessage('uno .uno:Sidebar');
 				}, 200);
+			}
+
+			// We have loaded.
+			if (!this._docLoadedOnce) {
+				this._docLoadedOnce = this._docLoaded;
 			}
 		}, this);
 	},
