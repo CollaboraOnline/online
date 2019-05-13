@@ -61,6 +61,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
 				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:ControlCodes'}
 			]
@@ -646,12 +647,12 @@ L.Control.Menubar = L.Control.extend({
 			var aItem = this;
 			var type = $(aItem).data('type');
 			var id = $(aItem).data('id');
+			var constChecked = 'lo-menu-item-checked';
 			if (self._map._permission === 'edit') {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
 					var data, lang;
 					var constUno = 'uno';
 					var constState = 'stateChangeHandler';
-					var constChecked = 'lo-menu-item-checked';
 					var constLanguage = '.uno:LanguageStatus';
 					var constPageHeader = '.uno:InsertPageHeader';
 					var constPageFooter = '.uno:InsertPageFooter';
@@ -693,6 +694,12 @@ L.Control.Menubar = L.Control.extend({
 						var index = self.options.allowedViewModeActions.indexOf('fullscreen');
 						if (index > 0) {
 							self.options.allowedViewModeActions.splice(index, 1);
+						}
+					} else if (id === 'showruler') {
+						if (self._map.isRulerVisible()) {
+							$(aItem).addClass(constChecked);
+						} else {
+							$(aItem).removeClass(constChecked);
 						}
 					} else {
 						$(aItem).removeClass('disabled');
@@ -751,6 +758,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.setZoom(this._map.options.zoom);
 		} else if (id === 'fullscreen') {
 			L.toggleFullScreen();
+		} else if (id === 'showruler') {
+			this._map.toggleRuler();
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
 			this._map.fire('fullscreen');
 		} else if (id === 'insertpage') {

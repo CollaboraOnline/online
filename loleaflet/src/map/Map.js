@@ -1506,6 +1506,27 @@ L.Map = L.Evented.extend({
 			this.showMenubar();
 		else
 			this.hideMenubar();
+	},
+
+	showRuler: function() {
+		$('.loleaflet-ruler').show();
+		$('#map').addClass('hasruler');
+	},
+
+	hideRuler: function() {
+		$('.loleaflet-ruler').hide();
+		$('#map').removeClass('hasruler');
+	},
+
+	toggleRuler: function() {
+		if (this.isRulerVisible())
+			this.hideRuler();
+		else
+			this.showRuler();
+	},
+
+	isRulerVisible: function() {
+		return $('.loleaflet-ruler').is(':visible');
 	}
 });
 

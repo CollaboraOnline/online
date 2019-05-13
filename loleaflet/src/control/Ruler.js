@@ -26,6 +26,7 @@ L.Control.Ruler = L.Control.extend({
 		map.on('docsize', this._updatePaintTimer, this);
 		map.on('scrolloffset resize', this._fixOffset, this);
 		map.on('updatepermission', this._changeInteractions, this);
+		$('#map').addClass('hasruler');
 		this._map = map;
 
 		return this._initLayout();
