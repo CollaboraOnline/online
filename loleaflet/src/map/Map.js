@@ -1457,36 +1457,49 @@ L.Map = L.Evented.extend({
 				IsFollowEditor: followEditor}});
 	},
 
+	showMenubar: function() {
+		if (!this.isMenubarHidden())
+			return;
+		$('.main-nav').css({'display': ''});
+		if (closebutton && !window.mode.isTablet()) {
+			$('#closebuttonwrapper').css({'display': ''});
+		}
+
+		var obj = $('.unfold');
+		obj.removeClass('w2ui-icon unfold');
+		obj.addClass('w2ui-icon fold');
+
+		moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
+		moveObjectVertically($('#document-container'), 36);
+		moveObjectVertically($('#presentation-controls-wrapper'), 36);
+	},
+
+	hideMenubar: function() {
+		if (this.isMenubarHidden())
+			return;
+		$('.main-nav').css({'display': 'none'});
+		if (closebutton) {
+			$('#closebuttonwrapper').css({'display': 'none'});
+		}
+
+		var obj = $('.fold');
+		obj.removeClass('w2ui-icon fold');
+		obj.addClass('w2ui-icon unfold');
+
+		moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
+		moveObjectVertically($('#document-container'), -36);
+		moveObjectVertically($('#presentation-controls-wrapper'), -36);
+	},
+
+	isMenubarHidden: function() {
+		return $('.main-nav').css('display') === 'none';
+	},
+
 	toggleMenubar: function() {
-		var obj = null;
-		if ($('.main-nav').css('display') === 'none') {
-			$('.main-nav').css({'display': ''});
-			if (closebutton && !window.mode.isTablet()) {
-				$('#closebuttonwrapper').css({'display': ''});
-			}
-
-			obj = $('.unfold');
-			obj.removeClass('w2ui-icon unfold');
-			obj.addClass('w2ui-icon fold');
-
-			moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
-			moveObjectVertically($('#document-container'), 36);
-			moveObjectVertically($('#presentation-controls-wrapper'), 36);
-		}
-		else {
-			$('.main-nav').css({'display': 'none'});
-			if (closebutton) {
-				$('#closebuttonwrapper').css({'display': 'none'});
-			}
-
-			obj = $('.fold');
-			obj.removeClass('w2ui-icon fold');
-			obj.addClass('w2ui-icon unfold');
-
-			moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
-			moveObjectVertically($('#document-container'), -36);
-			moveObjectVertically($('#presentation-controls-wrapper'), -36);
-		}
+		if (this.isMenubarHidden())
+			this.showMenubar();
+		else
+			this.hideMenubar();
 	}
 });
 
