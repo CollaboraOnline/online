@@ -30,6 +30,10 @@
 	cursor: default;
 }
 
+.hasruler {
+	padding-top: 16px;
+}
+
 .scroll-container .mCSB_scrollTools.mCSB_1_scrollbar {
 	position: absolute;
 	z-index: 1000;
