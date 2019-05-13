@@ -801,6 +801,7 @@ L.Map = L.Evented.extend({
 
 	focus: function () {
 		this._clipboardContainer.focus();
+		this._onEditorGotFocus();
 	},
 
 	setHelpTarget: function(page) {
