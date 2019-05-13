@@ -207,6 +207,12 @@ L.Map.WOPI = L.Handler.extend({
 				w2ui['toolbar-up'].hide(msg.Values.id);
 			}
 		}
+		else if (msg.MessageId === 'Show_Menubar') {
+			this._map.showMenubar();
+		}
+		else if (msg.MessageId === 'Hide_Menubar') {
+			this._map.hideMenubar();
+		}
 		else if (msg.MessageId === 'Set_Settings') {
 			if (msg.Values) {
 				var alwaysActive = msg.Values.AlwaysActive;
