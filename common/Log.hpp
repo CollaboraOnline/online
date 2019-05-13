@@ -45,8 +45,10 @@ namespace Log
     /// Returns the underlying logging system.
     Poco::Logger& logger();
 
+#if !MOBILEAPP
     /// Shutdown and release the logging system.
     void shutdown();
+#endif
 
     char* prefix(char* buffer, std::size_t len, const char* level);
 

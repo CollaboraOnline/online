@@ -204,6 +204,7 @@ namespace Log
                        : Poco::Logger::get(Source.getInited() ? Source.getName() : std::string());
     }
 
+#if !MOBILEAPP
     void shutdown()
     {
         logger().shutdown();
@@ -214,6 +215,7 @@ namespace Log
         std::flush(std::cerr);
         fflush(stderr);
     }
+#endif
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
