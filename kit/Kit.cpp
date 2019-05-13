@@ -2747,14 +2747,14 @@ void lokit_main(
 
 #if MOBILEAPP
         SocketPoll::wakeupWorld();
-#endif
-
+#else
         // Trap the signal handler, if invoked,
         // to prevent exiting.
         LOG_INF("Process finished.");
         Log::shutdown();
 
         // Let forkit handle the jail cleanup.
+#endif
     }
     catch (const Exception& exc)
     {
