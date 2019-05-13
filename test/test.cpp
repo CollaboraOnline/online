@@ -164,11 +164,14 @@ bool runClientTests(bool standalone, bool verbose)
 // Versions assuming a single user, on a single machine
 #ifndef UNIT_CLIENT_TESTS
 
-std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = true)
+std::vector<int> getProcPids(const char* exec_filename)
 {
     std::vector<int> pids;
 
-    // Crash all lokit processes.
+    // Ensure we're in the same group.
+    int grp = getpgrp();
+
+    // Get all lokit processes.
     for (auto it = Poco::DirectoryIterator(std::string("/proc")); it != Poco::DirectoryIterator(); ++it)
     {
         try
@@ -192,24 +195,24 @@ std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = tru
                 std::string statString;
                 Poco::StreamCopier::copyToString(stat, statString);
                 Poco::StringTokenizer tokens(statString, " ");
-                if (tokens.count() > 3 && tokens[1] == exec_filename)
+                if (tokens.count() > 6 && tokens[1] == exec_filename)
                 {
-                    if (ignoreZombies)
+                    // We could have several make checks running at once.
+                    int kidGrp = std::atoi(tokens[4].c_str());
+                    if (kidGrp != grp)
+                        continue;
+
+                    switch (tokens[2].c_str()[0])
                     {
-                        switch (tokens[2].c_str()[0])
-                        {
-                        // Dead & zombie markers for old and new kernels.
-                        case 'x':
-                        case 'X':
-                        case 'Z':
-                            break;
-                        default:
-                            pids.push_back(pid);
-                            break;
-                        }
-                    }
-                    else
+                    // Dead & zombie markers for old and new kernels.
+                    case 'x':
+                    case 'X':
+                    case 'Z':
+                        break;
+                    default:
                         pids.push_back(pid);
+                        break;
+                    }
                 }
             }
         }
@@ -231,7 +234,7 @@ std::vector<int> getKitPids()
 
 int getLoolKitProcessCount()
 {
-    return getProcPids("(loolkit)", true).size();
+    return getProcPids("(loolkit)").size();
 }
 
 std::vector<int> getForKitPids()
