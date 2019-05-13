@@ -2743,7 +2743,7 @@ void lokit_main(
 
         loKit->runLoop(pollCallback, wakeCallback, &mainKit);
 
-        LOG_INF("Kit poll terminated.");
+        LOG_INF("Kit unipoll loop run terminated.");
 
 #if MOBILEAPP
         SocketPoll::wakeupWorld();
