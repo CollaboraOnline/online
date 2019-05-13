@@ -117,6 +117,12 @@
                                      '*');
       }
 
+      function ShowMenubar(visible) {
+        var messageId = visible ? 'Show_Menubar' : 'Hide_Menubar';
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        window.frames[0].postMessage(JSON.stringify({'MessageId': messageId}), '*');
+      }
+
       // This function is invoked when the iframe posts a message back.
 
       function receiveMessage(event) {
@@ -172,7 +178,7 @@
   </head>
 
   <body style="user-select: none;">
-
+    <h3>Calc functions</h3>
     <p>
       <form id="cell-colour-form">
 	Cell: (<input type="number" name="x" min="0" max="20" value="0">, <input type="number" name="y" min="0" max="20" value="0">),
@@ -198,6 +204,15 @@
     <form id="delete-named-range-form">
       Click <button onclick="callDeleteNamedRange(); return false;">here</button> to delete the named range called <input type="text" name="name">
     </form>
+
+    <h3>UI modification</h3>
+    <form id="menubar-toggle">
+      <button onclick="ShowMenubar(false); return false;">Hide Menubar</button>
+      <button onclick="ShowMenubar(true); return false;">Show Menubar</button>
+    </form>
+
+
+    <h3>Document frame</h3>
 
     <!-- The hostname and pathnames below are obviously specific to my
     personal environment and need to be changed appropriately. Also
