@@ -263,6 +263,12 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Hide_Menubar') {
 			this._map.hideMenubar();
 		}
+		else if (msg.MessageId === 'Show_Ruler') {
+			this._map.showRuler();
+		}
+		else if (msg.MessageId === 'Hide_Ruler') {
+			this._map.hideRuler();
+		}
 		else if (msg.MessageId === 'Set_Settings') {
 			if (msg.Values) {
 				var alwaysActive = msg.Values.AlwaysActive;
