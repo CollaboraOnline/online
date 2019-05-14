@@ -255,6 +255,7 @@ var unoCommandsArray = {
 	UpdateCurIndex:{text:{context:_('Update index'),menu:_('Current ~Index'),},},
 	Validation:{spreadsheet:{menu:_('~Validity...'),},},
 	ViewMenu:{global:{menu:_('~View'),},},
+	Watermark:{text:{menu:_('Watermark...'),},},
 	WordCountDialog:{text:{menu:_('~Word Count'),},},
 	WrapAnchorOnly:{text:{menu:_('~First Paragraph'),},},
 	WrapContour:{text:{menu:_('~Contour'),},},

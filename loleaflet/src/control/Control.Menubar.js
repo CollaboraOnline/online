@@ -185,6 +185,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:PageDialog'},
 				{uno: '.uno:EditRegion'},
 				{type: 'separator'},
+				{uno: '.uno:Watermark'},
+				{type: 'separator'},
 				{uno: '.uno:FormatColumns'},
 				{type: 'separator'},
 				{uno: '.uno:ResetAttributes'}
