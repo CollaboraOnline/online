@@ -17,6 +17,7 @@
 #import "ios.h"
 #import "FakeSocket.hpp"
 #import "Log.hpp"
+#import "SigUtil.hpp"
 #import "Util.hpp"
 
 #import "DocumentViewController.h"
@@ -200,6 +201,10 @@
                                            // FakeSocket as such is not a system resource so nothing
                                            // is saved by closing it.
                                            fakeSocketClose(self->closeNotificationPipeForForwardingThread[1]);
+
+                                           // Flag to make the inter-thread plumbing in the Online
+                                           // bits go away quicker.
+                                           MobileTerminationFlag = true;
 
                                            // Close our end of the fake socket connection to the
                                            // ClientSession thread, so that it terminates
