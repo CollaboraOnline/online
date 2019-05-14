@@ -189,6 +189,7 @@ var unoCommandsArray = {
 	RemoveTableOf:{text:{menu:_('Delete index'),},},
 	RenameTable:{spreadsheet:{menu:_('~Rename Sheet...'),},},
 	ReplyComment:{global:{menu:_('Reply Comment'),},},
+	ResolveComment:{global:{menu:_('Resolve Comment'),},},
 	ResetAttributes:{global:{menu:_('~Clear Direct Formatting'),},spreadsheet:{context:_('Clear Direct Formatting'),menu:_('Clear ~Direct Formatting'),},text:{context:_('Clear Direct Formatting'),menu:_('Clear ~Direct Formatting'),},},
 	RightPara:{global:{context:_('Align Right'),menu:_('Right'),},},
 	RotateLeft:{text:{menu:_('Rotate 90° ~Left'),},},

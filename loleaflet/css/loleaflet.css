@@ -319,6 +319,10 @@ body {
 	height: 18px;
 }
 
+.loleaflet-annotation-content-resolved {
+	color: green;
+}
+
 .loleaflet-annotation-edit {
 	margin: 3px 3px;
 	line-height: 1.4;

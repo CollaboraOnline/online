@@ -190,6 +190,13 @@ L.Annotation = L.Layer.extend({
 		}
 		this._author = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
 		var tbody = L.DomUtil.create('tbody', empty, this._author);
+		var rowResolved = L.DomUtil.create('tr', empty, tbody);
+		var tdResolved = L.DomUtil.create(tagTd, 'loleaflet-annotation-resolved', rowResolved);
+		var pResolved = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-resolved', tdResolved);
+		this._resolved = pResolved;
+
+		this._updateResolvedField(this._data.resolved);
+
 		var tr = L.DomUtil.create('tr', empty, tbody);
 		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
@@ -336,12 +343,21 @@ L.Annotation = L.Layer.extend({
 		this._map.fire('AnnotationReply', {annotation: this});
 	},
 
+	_onResolveClick: function (e) {
+		L.DomEvent.stopPropagation(e);
+		this._map.fire('AnnotationResolve', {annotation: this});
+	},
+
 	_updateLayout: function () {
 		var style = this._wrapper.style;
 		style.width = '';
 		style.whiteSpace = 'nowrap';
 
 		style.whiteSpace = '';
+	},
+
+	_updateResolvedField: function(state) {
+		$(this._resolved).text(state=='true' ? 'Resolved' : '');
 	},
 
 	_updateContent: function () {
@@ -357,6 +373,8 @@ L.Annotation = L.Layer.extend({
 		this._contentText.origText = this._data.text;
 		$(this._nodeModifyText).text(this._data.text);
 		$(this._contentAuthor).text(this._data.author);
+
+		this._updateResolvedField(this._data.resolved);
 		$(this._authorAvatarImg).attr('src', this._data.avatar);
 		var user = this._map.getViewId(this._data.author);
 		if (user >= 0) {

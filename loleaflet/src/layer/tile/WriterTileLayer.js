@@ -179,6 +179,10 @@ L.WriterTileLayer = L.TileLayer.extend({
 		this._annotations.reply(annotation);
 	},
 
+	onAnnotationResolve: function (annotation) {
+		this._annotations.resolve(annotation);
+	},
+
 	onChangeAccept: function(id) {
 		this._annotations.acceptChange(id);
 	},
