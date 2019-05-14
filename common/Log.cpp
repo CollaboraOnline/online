@@ -110,12 +110,9 @@ namespace Log
     char* prefix(char* buffer, const std::size_t len, const char* level)
     {
         const char *threadName = Util::getThreadName();
+        Poco::DateTime time;
 #ifdef __linux
         const long osTid = Util::getThreadId();
-#elif defined IOS
-        const auto osTid = pthread_mach_thread_np(pthread_self());
-#endif
-        Poco::DateTime time;
         snprintf(buffer, len, "%s-%.05lu %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
                     (Source.getInited() ? Source.getId().c_str() : "<shutdown>"),
                     osTid,
@@ -123,6 +120,17 @@ namespace Log
                     time.hour(), time.minute(), time.second(),
                     time.millisecond() * 1000 + time.microsecond(),
                     threadName, level);
+#elif defined IOS
+        uint64_t osTid;
+        pthread_threadid_np(nullptr, &osTid);
+        snprintf(buffer, len, "%s-%#.05llx %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
+                    (Source.getInited() ? Source.getId().c_str() : "<shutdown>"),
+                    osTid,
+                    time.year(), time.month(), time.day(),
+                    time.hour(), time.minute(), time.second(),
+                    time.millisecond() * 1000 + time.microsecond(),
+                    threadName, level);
+#endif
         return buffer;
     }
 
