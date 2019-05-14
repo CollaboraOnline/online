@@ -36,6 +36,8 @@ enum class LokEventTargetEnum
 class DocumentManagerInterface
 {
 public:
+    virtual ~DocumentManagerInterface()  {}
+
     /// Reqest loading a document, or a new view, if one exists.
     virtual bool onLoad(const std::string& sessionId,
                         const std::string& jailedFilePath,
