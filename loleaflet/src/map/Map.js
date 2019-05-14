@@ -1460,9 +1460,9 @@ L.Map = L.Evented.extend({
 	showMenubar: function() {
 		if (!this.isMenubarHidden())
 			return;
-		$('.main-nav').css({'display': ''});
+		$('.main-nav').show();
 		if (closebutton && !window.mode.isTablet()) {
-			$('#closebuttonwrapper').css({'display': ''});
+			$('#closebuttonwrapper').show();
 		}
 
 		var obj = $('.unfold');
@@ -1477,9 +1477,9 @@ L.Map = L.Evented.extend({
 	hideMenubar: function() {
 		if (this.isMenubarHidden())
 			return;
-		$('.main-nav').css({'display': 'none'});
+		$('.main-nav').hide();
 		if (closebutton) {
-			$('#closebuttonwrapper').css({'display': 'none'});
+			$('#closebuttonwrapper').hide();
 		}
 
 		var obj = $('.fold');
