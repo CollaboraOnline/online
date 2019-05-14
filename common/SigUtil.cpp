@@ -39,6 +39,10 @@
 std::atomic<bool> TerminationFlag(false);
 std::atomic<bool> DumpGlobalState(false);
 
+#if MOBILEAPP
+std::atomic<bool> MobileTerminationFlag(false);
+#endif
+
 #if !MOBILEAPP
 std::atomic<bool> ShutdownRequestFlag(false);
 

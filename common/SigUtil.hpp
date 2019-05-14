@@ -26,6 +26,10 @@ extern std::atomic<bool> TerminationFlag;
 /// Flag to dump internal state
 extern std::atomic<bool> DumpGlobalState;
 
+#if MOBILEAPP
+extern std::atomic<bool> MobileTerminationFlag;
+#endif
+
 #if !MOBILEAPP
 
 /// Mutex to trap signal handler, if any,
