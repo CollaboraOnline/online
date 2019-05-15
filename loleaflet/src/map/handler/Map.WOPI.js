@@ -136,7 +136,7 @@ L.Map.WOPI = L.Handler.extend({
 	},
 
 	_postMessageListener: function(e) {
-		if (!window.WOPIPostmessageReady) {
+		if (!window.WOPIPostmessageReady || (e.origin !== window.parent.origin)) {
 			return;
 		}
 
