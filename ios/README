@@ -18,24 +18,51 @@ there in instdir and workdir, but no app that can be run as such. (You
 can see a list of them in
 workdir/CustomTarget/ios/ios-all-static-libs.list)
 
-2) Do a separate clone of the online repo on macOS, but don't run any
-make or open the Mobile project there yet.
+2) Do a separate clone of the online repo on macOS, but don't do any
+autogen.sh, configure, or make, or open the Mobile Xcode project there
+yet. We call this the app folder.
 
-3) Either: do a separate clone of the online repo on Linux, run autogen.sh,
-and configure it with the --enable-iosapp option:
+3) Here the instructions split. tml uses the first way, mmeeks tried
+to use the second way. The paths will join again at step 4.
+
+EITHER:
+
+3a) On a Linux machine: Do a separate clone of the online repo, run
+autogen.sh, and configure it with the --enable-iosapp option:
 
 ./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice"
 
 Then run make. That will produce files in loleaflet/dist, nothing
-else. Copy those to the corresponding folder in the online clone
-from step 2. This is what I do:
+else. Copy those to the corresponding folder in the app folder from
+step 2. This is how I do it:
 
-make clean && make && tar cf - loleaflet/dist | ssh misan.local 'cd lo/online-ios-device && tar xvf -'
+make clean && make && tar cf - loleaflet/dist | ssh misan.local 'cd lo/online-ios-device && rm -rf loleaflet/dist && tar xvf -'
 
-where misan.local is the macOS machine where I build the app, in the
-~/lo/online-ios-device folder.
+where misan.local is the macOS machine where I build the app, and
+~/lo/online-ios-device is the app folder from step 2.
 
-3) Or: install brew: https://brew.sh/
+Then back to the Mac:
+
+As you were able to build LibreOffice in step 1, you must already have
+GNU autoconf installed on the Mac. Install also GNU automake and
+libtool. Preferrably from sources, to make sure a potential
+installation of brew or similar will not pollute your environment with
+unknown stuff.
+
+As GNU libtool will be needed only for a very minimal part of the
+build (running the autogen.sh script, but not anything else), it's
+safest to install it somewhere that is not in your $PATH. Let's say
+/opt/libtool. (Installing Automake in the default /usr/local, which is
+in $PATH, is less risky.)
+
+Run the autogen.sh script in the app folder, with GNU libtool
+available:
+
+PATH=/opt/libtool/bin:$PATH ./autogen.sh
+
+OR:
+
+3b) Install brew: https://brew.sh/
 
    Then:
 
@@ -45,31 +72,31 @@ sudo python -m ensurepip --default-pip
 sudo pip install polib lxml
 make ; make
 
-4) In the online folder form step 2, edit the
-ios/Mobile.xcodeproj/project.pbxproj file in your favourite text
-editor.
-
-Change LOSRCDIR and all instances of "../ios-device" to refer the the
-LibreOffice core source directory from step 1.
-
 Then run:
 
 ./autogen.sh
 
-and
+Now the instructions join again:
+
+4) In the app folder from step 2, edit the
+ios/Mobile.xcodeproj/project.pbxproj file in your favourite text
+editor. Change LOSRCDIR and all instances of "../ios-device" to refer
+the the LibreOffice core source directory from step 1.
+
+5) In the app folder, run:
 
 ./configure --enable-iosapp --with-iosapp-name="My Own Mobile LibreOffice" --with-lo-builddir=$HOME/lo/ios --with-poco-includes=/opt/ios-poco/include --with-poco-libs=/opt/ios-poco/lib
 
 The configure script puts the app name as the CFBundleDisplayName
-property into the ios/Mobile/Info.plist file, and set up some
+property into the ios/Mobile/Info.plist file, and sets up some
 symbolic links that point to the LibreOffice core source and build
-directories (which can be the same, of course).
+directories (which typically will be the same, of course).
 
-4) Before opening the Xcode project for the first time
+6) Before opening the Xcode project for the first time
    - seriously consider disabling source code indexing, this
    spawns a vast number of git processes, and consumes huge
    amounts of CPU & memory:
 
 	Xcode -> Preferences, "Source Control", uncheck "Enable Source Control"
 
-5) Now you can open the Mobile Xcode project, build it, and run it.
+7) Now you can open the Mobile Xcode project, build it, and run it.
