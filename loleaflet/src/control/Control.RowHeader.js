@@ -57,7 +57,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 			},
 			this);
 
-		this._startHeaderIndex = 0;
 		this._startOffset = 0;
 		this._position = 0;
 
@@ -165,7 +164,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	_onClearSelection: function () {
-		this.clearSelection(this._data);
+		this.clearSelection();
 	},
 
 	_onUpdateSelection: function (e) {
@@ -177,14 +176,14 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (end !== -1) {
 			end = this._twipsToPixels(end);
 		}
-		this.updateSelection(this._data, start, end);
+		this.updateSelection(start, end);
 	},
 
 	_onUpdateCurrentRow: function (e) {
-		var y = e.curY - this._startHeaderIndex;
+		var y = e.curY;
 		var h = this._twipsToPixels(e.height);
 		var slim = h <= 1;
-		this.updateCurrent(this._data, y, slim);
+		this.updateCurrent(y, slim);
 	},
 
 	_updateRowHeader: function () {
@@ -196,7 +195,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			return;
 
 		var ctx = this._canvasContext;
-		var content = entry.index + this._startHeaderIndex;
+		var content = entry.index;
 		var startOrt = this._canvasWidth - this._headerWidth;
 		var startPar = entry.pos - entry.size - this._startOffset;
 		var endPar = entry.pos - this._startOffset;
@@ -347,8 +346,9 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 	getHeaderEntryBoundingClientRect: function (index) {
 		var entry = this._mouseOverEntry;
-		if (index)
-			entry = this._data.get(index);
+		if (index) {
+			entry = this._tickMap.get(index);
+		}
 
 		if (!entry)
 			return;
@@ -375,26 +375,25 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (rows.length < 2)
 			return;
 
-		var headerEntry, index, iterator, height, pos;
-
 		var canvas = this._canvas;
 		this._setCanvasWidth();
 		this._setCanvasHeight();
 		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-		// update first header index and reset no more valid variables
-		this._startHeaderIndex = parseInt(rows[0].text);
+		// Reset state
 		this._current = -1;
 		this._selection.start = this._selection.end = -1;
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
 
-		// create header data handler instance
-		this._data = new L.Control.Header.DataImpl();
+		// create data structure for row heights
+		this._tickMap = new L.Control.Header.GapTickMap(
+			rows,
+			L.Util.bind(this._twipsToPixels, this)
+		);
 
 		// setup conversion routine
 		this.converter = L.Util.bind(converter, context);
-		this._data.converter = L.Util.bind(this._twipsToPixels, this);
 
 		// create group array
 		this._groupLevels = parseInt(rows[0].groupLevels);
@@ -402,28 +401,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		var startOffsetTw = parseInt(rows[0].size);
 		this._startOffset = this._twipsToPixels(startOffsetTw);
-
-		this._data.pushBack(0, {pos: startOffsetTw, size: 0});
-		var prevPos = startOffsetTw;
-		var nextIndex = parseInt(rows[1].text);
-		var last = rows.length - 1;
-
-		for (iterator = 1; iterator < last; iterator++) {
-			index = nextIndex;
-			pos = parseInt(rows[iterator].size);
-			nextIndex = parseInt(rows[iterator+1].text);
-			height = pos - prevPos;
-			prevPos = Math.round(pos + height * (nextIndex - index - 1));
-			index = index - this._startHeaderIndex;
-			headerEntry = {pos: pos, size: height};
-			this._data.pushBack(index, headerEntry);
-		}
-
-		// setup last header entry
-		index = nextIndex - this._startHeaderIndex;
-		pos = parseInt(rows[last].size);
-		height = pos - prevPos;
-		this._data.pushBack(index, {pos: pos, size: height});
 
 		// collect group controls data
 		if (rowGroups !== undefined && this._groups) {
@@ -437,12 +414,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this.resize(this._headerWidth);
 		}
 
-		// draw header
-		headerEntry = this._data.getFirst();
-		while (headerEntry) {
-			this.drawHeaderEntry(headerEntry, false);
-			headerEntry = this._data.getNext();
-		}
+		// Initial draw
+		this._tickMap.forEachGap(function(gap) {
+			this.drawHeaderEntry(gap, false);
+		}.bind(this));
 
 		// draw group controls
 		this.drawOutline();
@@ -477,7 +452,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (!this._mouseOverEntry)
 			return;
 
-		var row = this._mouseOverEntry.index + this._startHeaderIndex;
+		var row = this._mouseOverEntry.index;
 
 		var modifier = 0;
 		if (e.shiftKey) {
@@ -551,9 +526,9 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var clickedRow = this._mouseOverEntry;
 		if (clickedRow) {
 			var height = clickedRow.size;
-			var row = clickedRow.index + this._startHeaderIndex;
+			var row = clickedRow.index;
 
-			if (this._data.isZeroSize(clickedRow.index + 1)) {
+			if (this._tickMap.isZeroSize(clickedRow.index + 1)) {
 				row += 1;
 				height = 0;
 			}
@@ -584,7 +559,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			return;
 
 		if (clicks === 2) {
-			var row = this._mouseOverEntry.index + this._startHeaderIndex;
+			var row = this._mouseOverEntry.index;
 			var command = {
 				Row: {
 					type: 'long',

@@ -57,7 +57,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			},
 			this);
 
-		this._startHeaderIndex = 0;
 		this._startOffset = 0;
 		this._position = 0;
 
@@ -172,7 +171,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_onClearSelection: function () {
-		this.clearSelection(this._data);
+		this.clearSelection();
 	},
 
 	_onUpdateSelection: function (e) {
@@ -184,14 +183,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (end !== -1) {
 			end = this._twipsToPixels(end);
 		}
-		this.updateSelection(this._data, start, end);
+		this.updateSelection(start, end);
 	},
 
 	_onUpdateCurrentColumn: function (e) {
-		var x = e.curX - this._startHeaderIndex;
+		var x = e.curX;
 		var w = this._twipsToPixels(e.width);
 		var slim = w <= 1;
-		this.updateCurrent(this._data, x, slim);
+		this.updateCurrent(x, slim);
 	},
 
 	_updateColumnHeader: function () {
@@ -203,7 +202,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		var ctx = this._canvasContext;
-		var content = this._colIndexToAlpha(entry.index + this._startHeaderIndex);
+		var content = this._colIndexToAlpha(entry.index);
 		var startOrt = this._canvasHeight - this._headerHeight;
 		var startPar = entry.pos - entry.size - this._startOffset;
 		var endPar = entry.pos - this._startOffset;
@@ -358,8 +357,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 	getHeaderEntryBoundingClientRect: function (index) {
 		var entry = this._mouseOverEntry;
-		if (index)
-			entry = this._data.get(index);
+		if (index) {
+			entry = this._tickMap.getGap(index);
+		}
 
 		if (!entry)
 			return;
@@ -386,26 +386,25 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (columns.length < 2)
 			return;
 
-		var headerEntry, index, iterator, width, pos;
-
 		var canvas = this._canvas;
 		this._setCanvasWidth();
 		this._setCanvasHeight();
 		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-		// update first header index and reset no more valid variables
-		this._startHeaderIndex = parseInt(columns[0].text);
-		this._current = -1; // no more valid
-		this._selection.start = this._selection.end = -1; // no more valid
+		// Reset state
+		this._current = -1;
+		this._selection.start = this._selection.end = -1;
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
 
-		// create header data handler instance
-		this._data = new L.Control.Header.DataImpl();
+		// create data structure for column widths
+		this._tickMap = new L.Control.Header.GapTickMap(
+			columns,
+			L.Util.bind(this._twipsToPixels, this)
+		);
 
 		// setup conversion routine
 		this.converter = L.Util.bind(converter, context);
-		this._data.converter = L.Util.bind(this._twipsToPixels, this);
 
 		// create group array
 		this._groupLevels = parseInt(columns[0].groupLevels);
@@ -413,28 +412,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		var startOffsetTw = parseInt(columns[0].size);
 		this._startOffset = this._twipsToPixels(startOffsetTw);
-
-		this._data.pushBack(0, {pos: startOffsetTw, size: 0});
-		var prevPos = startOffsetTw;
-		var nextIndex = parseInt(columns[1].text);
-		var last = columns.length - 1;
-
-		for (iterator = 1; iterator < last; iterator++) {
-			index = nextIndex;
-			pos = parseInt(columns[iterator].size);
-			nextIndex = parseInt(columns[iterator+1].text);
-			width = pos - prevPos;
-			prevPos = Math.round(pos + width * (nextIndex - index - 1));
-			index = index - this._startHeaderIndex;
-			headerEntry = {pos: pos, size: width};
-			this._data.pushBack(index, headerEntry);
-		}
-
-		// setup last header entry
-		index = nextIndex - this._startHeaderIndex;
-		pos = parseInt(columns[last].size);
-		width = pos - prevPos;
-		this._data.pushBack(index, {pos: pos, size: width});
 
 		// collect group controls data
 		if (colGroups !== undefined && this._groups) {
@@ -448,12 +425,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this.resize(this._headerHeight);
 		}
 
-		// draw header
-		headerEntry = this._data.getFirst();
-		while (headerEntry) {
-			this.drawHeaderEntry(headerEntry, false);
-			headerEntry = this._data.getNext();
-		}
+		// Initial draw
+		this._tickMap.forEachGap(function(gap) {
+			this.drawHeaderEntry(gap, false);
+		}.bind(this));
 
 		// draw group controls
 		this.drawOutline();
@@ -514,7 +489,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (!this._mouseOverEntry)
 			return;
 
-		var col = this._mouseOverEntry.index + this._startHeaderIndex;
+		var col = this._mouseOverEntry.index;
 
 		var modifier = 0;
 		if (e.shiftKey) {
@@ -595,9 +570,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var clickedColumn = this._mouseOverEntry;
 		if (clickedColumn) {
 			var width = clickedColumn.size;
-			var column = clickedColumn.index + this._startHeaderIndex;
+			var column = clickedColumn.index;
 
-			if (this._data.isZeroSize(clickedColumn.index + 1)) {
+			if (this._tickMap.isZeroSize(clickedColumn.index + 1)) {
 				column += 1;
 				width = 0;
 			}
@@ -629,7 +604,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		if (clicks === 2) {
-			var column = this._mouseOverEntry.index + this._startHeaderIndex;
+			var column = this._mouseOverEntry.index;
 			var command = {
 				Col: {
 					type: 'unsigned short',
