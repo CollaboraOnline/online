@@ -1696,6 +1696,9 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
 
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
+    if (Log::traceEnabled() && Util::startsWith(message, "paste "))
+        LOG_TRC("Logging paste payload (" << message.size() << " bytes) '" << message << "' end paste");
+
     std::string msg = "child-" + viewId + ' ' + message;
 
     const auto it = _sessions.find(viewId);
