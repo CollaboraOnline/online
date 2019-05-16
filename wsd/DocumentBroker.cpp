@@ -742,7 +742,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         std::string localPathEncoded;
         Poco::URI::encode(localPath, "#", localPathEncoded);
         _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
-        _uriJailedAnonym = Poco::URI(Poco::URI("file://"), LOOLWSD::anonymizeUrl(localPath)).toString();
+        _uriJailedAnonym = Poco::URI(Poco::URI("file://"), LOOLWSD::anonymizeUrl(localPathEncoded)).toString();
 
         _filename = fileInfo.getFilename();
 
@@ -1165,6 +1165,11 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
         // some other type of storage somewhere). This message is not sent to all clients,
         // though, just to all sessions of this document.
         alertAllUsers("internal", "diskfull");
+        throw;
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("loading document exception: " << exc.what());
         throw;
     }
 

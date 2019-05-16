@@ -102,18 +102,21 @@ protected:
     virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message, std::shared_ptr<StreamSocket>& socket) override
     {
         Poco::URI uriReq(request.getURI());
+        Poco::RegularExpression regInfo("/wopi/files/[0-9]");
+        Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
         LOG_INF("Fake wopi host request: " << uriReq.toString());
 
         // CheckFileInfo
-        if (request.getMethod() == "GET" && (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1"))
+        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
             LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
 
             assertCheckFileInfoRequest(request);
 
             Poco::LocalDateTime now;
+            const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
-            fileInfo->set("BaseFileName", "hello.txt");
+            fileInfo->set("BaseFileName", fileName);
             fileInfo->set("Size", _fileContent.size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
@@ -145,7 +148,7 @@ protected:
             return true;
         }
         // GetFile
-        else if (request.getMethod() == "GET" && (uriReq.getPath() == "/wopi/files/0/contents" || uriReq.getPath() == "/wopi/files/1/contents"))
+        else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
         {
             LOG_INF("Fake wopi host request, handling GetFile: " << uriReq.getPath());
 
@@ -167,7 +170,7 @@ protected:
 
             return true;
         }
-        else if (request.getMethod() == "POST" && (uriReq.getPath() == "/wopi/files/0" || uriReq.getPath() == "/wopi/files/1"))
+        else if (request.getMethod() == "POST" && regInfo.match(uriReq.getPath()))
         {
             LOG_INF("Fake wopi host request, handling PutRelativeFile: " << uriReq.getPath());
             std::string wopiURL = helpers::getTestServerURI() + "/something wopi/files/1?access_token=anything";
@@ -201,7 +204,7 @@ protected:
 
             return true;
         }
-        else if (request.getMethod() == "POST" && (uriReq.getPath() == "/wopi/files/0/contents" || uriReq.getPath() == "/wopi/files/1/contents"))
+        else if (request.getMethod() == "POST" && regContent.match(uriReq.getPath()))
         {
             LOG_INF("Fake wopi host request, handling PutFile: " << uriReq.getPath());
 
