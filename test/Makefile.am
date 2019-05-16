@@ -20,7 +20,8 @@ noinst_LTLIBRARIES = \
 	unit-fuzz.la unit-oob.la unit-oauth.la \
 	unit-wopi.la unit-wopi-saveas.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-	unit-wopi-documentconflict.la unit_wopi_renamefile.la
+	unit-wopi-documentconflict.la unit_wopi_renamefile.la \
+	unit-wopi-loadencoded.la
 
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
@@ -108,6 +109,8 @@ unit_wopi_documentconflict_la_SOURCES = UnitWOPIDocumentConflict.cpp
 unit_wopi_documentconflict_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
 unit_wopi_renamefile_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
+unit_wopi_loadencoded_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -125,7 +128,8 @@ check-local:
 TESTS = unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
         unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-        unit-wopi-documentconflict.la unit_wopi_renamefile.la
+        unit-wopi-documentconflict.la unit_wopi_renamefile.la \
+	unit-wopi-loadencoded.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
 # TESTS += unit-storage.la
