@@ -75,6 +75,31 @@
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		BE18C7DD226DE09A001AD27E /* Branding */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Branding; path = Mobile/Branding; sourceTree = SOURCE_ROOT; };
+		BE28F880228CE04600C00C48 /* langselect.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = langselect.hxx; path = "../../ios-device/desktop/source/app/langselect.hxx"; sourceTree = "<group>"; };
+		BE28F881228CE04600C00C48 /* officeipcthread.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = officeipcthread.hxx; path = "../../ios-device/desktop/source/app/officeipcthread.hxx"; sourceTree = "<group>"; };
+		BE28F882228CE04600C00C48 /* opencl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = opencl.cxx; path = "../../ios-device/desktop/source/app/opencl.cxx"; sourceTree = "<group>"; };
+		BE28F883228CE04600C00C48 /* dispatchwatcher.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = dispatchwatcher.hxx; path = "../../ios-device/desktop/source/app/dispatchwatcher.hxx"; sourceTree = "<group>"; };
+		BE28F884228CE04600C00C48 /* desktopcontext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = desktopcontext.hxx; path = "../../ios-device/desktop/source/app/desktopcontext.hxx"; sourceTree = "<group>"; };
+		BE28F885228CE04600C00C48 /* cmdlinehelp.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = cmdlinehelp.hxx; path = "../../ios-device/desktop/source/app/cmdlinehelp.hxx"; sourceTree = "<group>"; };
+		BE28F886228CE04600C00C48 /* desktopcontext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = desktopcontext.cxx; path = "../../ios-device/desktop/source/app/desktopcontext.cxx"; sourceTree = "<group>"; };
+		BE28F887228CE04600C00C48 /* cmdlineargs.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cmdlineargs.cxx; path = "../../ios-device/desktop/source/app/cmdlineargs.cxx"; sourceTree = "<group>"; };
+		BE28F888228CE04600C00C48 /* updater.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = updater.cxx; path = "../../ios-device/desktop/source/app/updater.cxx"; sourceTree = "<group>"; };
+		BE28F889228CE04600C00C48 /* dispatchwatcher.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dispatchwatcher.cxx; path = "../../ios-device/desktop/source/app/dispatchwatcher.cxx"; sourceTree = "<group>"; };
+		BE28F88A228CE04600C00C48 /* userinstall.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = userinstall.hxx; path = "../../ios-device/desktop/source/app/userinstall.hxx"; sourceTree = "<group>"; };
+		BE28F88B228CE04600C00C48 /* check_ext_deps.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = check_ext_deps.cxx; path = "../../ios-device/desktop/source/app/check_ext_deps.cxx"; sourceTree = "<group>"; };
+		BE28F88C228CE04600C00C48 /* app.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = app.cxx; path = "../../ios-device/desktop/source/app/app.cxx"; sourceTree = "<group>"; };
+		BE28F88D228CE04600C00C48 /* crashreport.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = crashreport.cxx; path = "../../ios-device/desktop/source/app/crashreport.cxx"; sourceTree = "<group>"; };
+		BE28F88E228CE04600C00C48 /* updater.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = updater.hxx; path = "../../ios-device/desktop/source/app/updater.hxx"; sourceTree = "<group>"; };
+		BE28F88F228CE04600C00C48 /* cmdlineargs.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = cmdlineargs.hxx; path = "../../ios-device/desktop/source/app/cmdlineargs.hxx"; sourceTree = "<group>"; };
+		BE28F890228CE04600C00C48 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = main.c; path = "../../ios-device/desktop/source/app/main.c"; sourceTree = "<group>"; };
+		BE28F891228CE04700C00C48 /* appinit.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = appinit.cxx; path = "../../ios-device/desktop/source/app/appinit.cxx"; sourceTree = "<group>"; };
+		BE28F892228CE04700C00C48 /* sofficemain.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sofficemain.cxx; path = "../../ios-device/desktop/source/app/sofficemain.cxx"; sourceTree = "<group>"; };
+		BE28F893228CE04700C00C48 /* cmdlinehelp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cmdlinehelp.cxx; path = "../../ios-device/desktop/source/app/cmdlinehelp.cxx"; sourceTree = "<group>"; };
+		BE28F894228CE04700C00C48 /* officeipcthread.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = officeipcthread.cxx; path = "../../ios-device/desktop/source/app/officeipcthread.cxx"; sourceTree = "<group>"; };
+		BE28F895228CE04700C00C48 /* sofficemain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sofficemain.h; path = "../../ios-device/desktop/source/app/sofficemain.h"; sourceTree = "<group>"; };
+		BE28F896228CE04700C00C48 /* langselect.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = langselect.cxx; path = "../../ios-device/desktop/source/app/langselect.cxx"; sourceTree = "<group>"; };
+		BE28F897228CE04700C00C48 /* lockfile2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lockfile2.cxx; path = "../../ios-device/desktop/source/app/lockfile2.cxx"; sourceTree = "<group>"; };
+		BE28F898228CE04700C00C48 /* userinstall.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = userinstall.cxx; path = "../../ios-device/desktop/source/app/userinstall.cxx"; sourceTree = "<group>"; };
 		BE34D10F218B66B600815297 /* docsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh.cxx; path = "../../ios-device/sw/source/uibase/app/docsh.cxx"; sourceTree = "<group>"; };
 		BE34D110218B66B600815297 /* docstyle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docstyle.cxx; path = "../../ios-device/sw/source/uibase/app/docstyle.cxx"; sourceTree = "<group>"; };
 		BE34D111218B66B600815297 /* docshdrw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docshdrw.cxx; path = "../../ios-device/sw/source/uibase/app/docshdrw.cxx"; sourceTree = "<group>"; };
@@ -304,6 +329,39 @@
 		BE34D200219076CF00815297 /* dbfunc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbfunc3.cxx; path = "../../ios-device/sc/source/ui/view/dbfunc3.cxx"; sourceTree = "<group>"; };
 		BE43FD39222693F200376855 /* zcodec.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = zcodec.cxx; path = "../../ios-device/tools/source/zcodec/zcodec.cxx"; sourceTree = "<group>"; };
 		BE43FD4222286B0700376855 /* bootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bootstrap.cxx; path = "../../ios-device/sal/rtl/bootstrap.cxx"; sourceTree = "<group>"; };
+		BE484B50228CF36D001EE76C /* configitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configitem.cxx; path = "../../ios-device/unotools/source/config/configitem.cxx"; sourceTree = "<group>"; };
+		BE484B51228CF36D001EE76C /* itemholder1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = itemholder1.cxx; path = "../../ios-device/unotools/source/config/itemholder1.cxx"; sourceTree = "<group>"; };
+		BE484B52228CF36D001EE76C /* misccfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = misccfg.cxx; path = "../../ios-device/unotools/source/config/misccfg.cxx"; sourceTree = "<group>"; };
+		BE484B53228CF36D001EE76C /* options.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = options.cxx; path = "../../ios-device/unotools/source/config/options.cxx"; sourceTree = "<group>"; };
+		BE484B54228CF36D001EE76C /* historyoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = historyoptions.cxx; path = "../../ios-device/unotools/source/config/historyoptions.cxx"; sourceTree = "<group>"; };
+		BE484B55228CF36D001EE76C /* fontoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fontoptions.cxx; path = "../../ios-device/unotools/source/config/fontoptions.cxx"; sourceTree = "<group>"; };
+		BE484B56228CF36D001EE76C /* configpaths.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configpaths.cxx; path = "../../ios-device/unotools/source/config/configpaths.cxx"; sourceTree = "<group>"; };
+		BE484B57228CF36D001EE76C /* moduleoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moduleoptions.cxx; path = "../../ios-device/unotools/source/config/moduleoptions.cxx"; sourceTree = "<group>"; };
+		BE484B58228CF36D001EE76C /* eventcfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = eventcfg.cxx; path = "../../ios-device/unotools/source/config/eventcfg.cxx"; sourceTree = "<group>"; };
+		BE484B59228CF36D001EE76C /* extendedsecurityoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = extendedsecurityoptions.cxx; path = "../../ios-device/unotools/source/config/extendedsecurityoptions.cxx"; sourceTree = "<group>"; };
+		BE484B5A228CF36D001EE76C /* itemholder1.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = itemholder1.hxx; path = "../../ios-device/unotools/source/config/itemholder1.hxx"; sourceTree = "<group>"; };
+		BE484B5B228CF36D001EE76C /* printwarningoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printwarningoptions.cxx; path = "../../ios-device/unotools/source/config/printwarningoptions.cxx"; sourceTree = "<group>"; };
+		BE484B5C228CF36D001EE76C /* fltrcfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fltrcfg.cxx; path = "../../ios-device/unotools/source/config/fltrcfg.cxx"; sourceTree = "<group>"; };
+		BE484B5D228CF36D001EE76C /* securityoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = securityoptions.cxx; path = "../../ios-device/unotools/source/config/securityoptions.cxx"; sourceTree = "<group>"; };
+		BE484B5E228CF36D001EE76C /* defaultoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = defaultoptions.cxx; path = "../../ios-device/unotools/source/config/defaultoptions.cxx"; sourceTree = "<group>"; };
+		BE484B5F228CF36D001EE76C /* syslocaleoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = syslocaleoptions.cxx; path = "../../ios-device/unotools/source/config/syslocaleoptions.cxx"; sourceTree = "<group>"; };
+		BE484B60228CF36D001EE76C /* dynamicmenuoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dynamicmenuoptions.cxx; path = "../../ios-device/unotools/source/config/dynamicmenuoptions.cxx"; sourceTree = "<group>"; };
+		BE484B61228CF36D001EE76C /* pathoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pathoptions.cxx; path = "../../ios-device/unotools/source/config/pathoptions.cxx"; sourceTree = "<group>"; };
+		BE484B62228CF36D001EE76C /* useroptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = useroptions.cxx; path = "../../ios-device/unotools/source/config/useroptions.cxx"; sourceTree = "<group>"; };
+		BE484B63228CF36D001EE76C /* confignode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = confignode.cxx; path = "../../ios-device/unotools/source/config/confignode.cxx"; sourceTree = "<group>"; };
+		BE484B64228CF36D001EE76C /* viewoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewoptions.cxx; path = "../../ios-device/unotools/source/config/viewoptions.cxx"; sourceTree = "<group>"; };
+		BE484B65228CF36D001EE76C /* compatibility.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = compatibility.cxx; path = "../../ios-device/unotools/source/config/compatibility.cxx"; sourceTree = "<group>"; };
+		BE484B66228CF36D001EE76C /* docinfohelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docinfohelper.cxx; path = "../../ios-device/unotools/source/config/docinfohelper.cxx"; sourceTree = "<group>"; };
+		BE484B67228CF36D001EE76C /* configmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configmgr.cxx; path = "../../ios-device/unotools/source/config/configmgr.cxx"; sourceTree = "<group>"; };
+		BE484B68228CF36E001EE76C /* searchopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = searchopt.cxx; path = "../../ios-device/unotools/source/config/searchopt.cxx"; sourceTree = "<group>"; };
+		BE484B69228CF36E001EE76C /* optionsdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = optionsdlg.cxx; path = "../../ios-device/unotools/source/config/optionsdlg.cxx"; sourceTree = "<group>"; };
+		BE484B6A228CF36E001EE76C /* fontcfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fontcfg.cxx; path = "../../ios-device/unotools/source/config/fontcfg.cxx"; sourceTree = "<group>"; };
+		BE484B6B228CF36E001EE76C /* lingucfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lingucfg.cxx; path = "../../ios-device/unotools/source/config/lingucfg.cxx"; sourceTree = "<group>"; };
+		BE484B6C228CF36E001EE76C /* cmdoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cmdoptions.cxx; path = "../../ios-device/unotools/source/config/cmdoptions.cxx"; sourceTree = "<group>"; };
+		BE484B6D228CF36E001EE76C /* compatibilityviewoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = compatibilityviewoptions.cxx; path = "../../ios-device/unotools/source/config/compatibilityviewoptions.cxx"; sourceTree = "<group>"; };
+		BE484B6E228CF36E001EE76C /* configvaluecontainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configvaluecontainer.cxx; path = "../../ios-device/unotools/source/config/configvaluecontainer.cxx"; sourceTree = "<group>"; };
+		BE484B6F228CF36E001EE76C /* bootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bootstrap.cxx; path = "../../ios-device/unotools/source/config/bootstrap.cxx"; sourceTree = "<group>"; };
+		BE484B70228CF36E001EE76C /* saveopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = saveopt.cxx; path = "../../ios-device/unotools/source/config/saveopt.cxx"; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -708,6 +766,38 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE28F87F228CE02500C00C48 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				BE28F88C228CE04600C00C48 /* app.cxx */,
+				BE28F891228CE04700C00C48 /* appinit.cxx */,
+				BE28F88B228CE04600C00C48 /* check_ext_deps.cxx */,
+				BE28F887228CE04600C00C48 /* cmdlineargs.cxx */,
+				BE28F88F228CE04600C00C48 /* cmdlineargs.hxx */,
+				BE28F893228CE04700C00C48 /* cmdlinehelp.cxx */,
+				BE28F885228CE04600C00C48 /* cmdlinehelp.hxx */,
+				BE28F88D228CE04600C00C48 /* crashreport.cxx */,
+				BE28F886228CE04600C00C48 /* desktopcontext.cxx */,
+				BE28F884228CE04600C00C48 /* desktopcontext.hxx */,
+				BE28F889228CE04600C00C48 /* dispatchwatcher.cxx */,
+				BE28F883228CE04600C00C48 /* dispatchwatcher.hxx */,
+				BE28F896228CE04700C00C48 /* langselect.cxx */,
+				BE28F880228CE04600C00C48 /* langselect.hxx */,
+				BE28F897228CE04700C00C48 /* lockfile2.cxx */,
+				BE28F890228CE04600C00C48 /* main.c */,
+				BE28F894228CE04700C00C48 /* officeipcthread.cxx */,
+				BE28F881228CE04600C00C48 /* officeipcthread.hxx */,
+				BE28F882228CE04600C00C48 /* opencl.cxx */,
+				BE28F892228CE04700C00C48 /* sofficemain.cxx */,
+				BE28F895228CE04700C00C48 /* sofficemain.h */,
+				BE28F888228CE04600C00C48 /* updater.cxx */,
+				BE28F88E228CE04600C00C48 /* updater.hxx */,
+				BE28F898228CE04700C00C48 /* userinstall.cxx */,
+				BE28F88A228CE04600C00C48 /* userinstall.hxx */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
 		BE34D10C218B667400815297 /* sw */ = {
 			isa = PBXGroup;
 			children = (
@@ -860,6 +950,7 @@
 		BE34D182218CFC6C00815297 /* desktop */ = {
 			isa = PBXGroup;
 			children = (
+				BE28F87F228CE02500C00C48 /* app */,
 				BE34D183218CFC7200815297 /* lib */,
 			);
 			name = desktop;
@@ -1036,6 +1127,46 @@
 				BE43FD4222286B0700376855 /* bootstrap.cxx */,
 			);
 			name = rtl;
+			sourceTree = "<group>";
+		};
+		BE484B4F228CF355001EE76C /* config */ = {
+			isa = PBXGroup;
+			children = (
+				BE484B6F228CF36E001EE76C /* bootstrap.cxx */,
+				BE484B6C228CF36E001EE76C /* cmdoptions.cxx */,
+				BE484B65228CF36D001EE76C /* compatibility.cxx */,
+				BE484B6D228CF36E001EE76C /* compatibilityviewoptions.cxx */,
+				BE484B50228CF36D001EE76C /* configitem.cxx */,
+				BE484B67228CF36D001EE76C /* configmgr.cxx */,
+				BE484B63228CF36D001EE76C /* confignode.cxx */,
+				BE484B56228CF36D001EE76C /* configpaths.cxx */,
+				BE484B6E228CF36E001EE76C /* configvaluecontainer.cxx */,
+				BE484B5E228CF36D001EE76C /* defaultoptions.cxx */,
+				BE484B66228CF36D001EE76C /* docinfohelper.cxx */,
+				BE484B60228CF36D001EE76C /* dynamicmenuoptions.cxx */,
+				BE484B58228CF36D001EE76C /* eventcfg.cxx */,
+				BE484B59228CF36D001EE76C /* extendedsecurityoptions.cxx */,
+				BE484B5C228CF36D001EE76C /* fltrcfg.cxx */,
+				BE484B6A228CF36E001EE76C /* fontcfg.cxx */,
+				BE484B55228CF36D001EE76C /* fontoptions.cxx */,
+				BE484B54228CF36D001EE76C /* historyoptions.cxx */,
+				BE484B51228CF36D001EE76C /* itemholder1.cxx */,
+				BE484B5A228CF36D001EE76C /* itemholder1.hxx */,
+				BE484B6B228CF36E001EE76C /* lingucfg.cxx */,
+				BE484B52228CF36D001EE76C /* misccfg.cxx */,
+				BE484B57228CF36D001EE76C /* moduleoptions.cxx */,
+				BE484B53228CF36D001EE76C /* options.cxx */,
+				BE484B69228CF36E001EE76C /* optionsdlg.cxx */,
+				BE484B61228CF36D001EE76C /* pathoptions.cxx */,
+				BE484B5B228CF36D001EE76C /* printwarningoptions.cxx */,
+				BE484B70228CF36E001EE76C /* saveopt.cxx */,
+				BE484B68228CF36E001EE76C /* searchopt.cxx */,
+				BE484B5D228CF36D001EE76C /* securityoptions.cxx */,
+				BE484B5F228CF36D001EE76C /* syslocaleoptions.cxx */,
+				BE484B62228CF36D001EE76C /* useroptions.cxx */,
+				BE484B64228CF36D001EE76C /* viewoptions.cxx */,
+			);
+			name = config;
 			sourceTree = "<group>";
 		};
 		BE58E1312187938700249358 /* headless */ = {
@@ -1451,6 +1582,7 @@
 		BEA8CD7221959315009FE17E /* unotools */ = {
 			isa = PBXGroup;
 			children = (
+				BE484B4F228CF355001EE76C /* config */,
 				BEA8CD7321959321009FE17E /* i18n */,
 			);
 			name = unotools;
