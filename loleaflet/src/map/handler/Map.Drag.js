@@ -122,6 +122,17 @@ L.Map.Drag = L.Handler.extend({
 
 			if (!offset.x || !offset.y) {
 				map.fire('moveend');
+			} else {
+				offset = map._limitOffset(offset, map.options.maxBounds);
+
+				L.Util.requestAnimFrame(function () {
+					map.panBy(offset, {
+						duration: decelerationDuration,
+						easeLinearity: ease,
+						noMoveStart: true,
+						animate: true
+					});
+				});
 			}
 		}
 	}

@@ -562,7 +562,7 @@ L.Control.Header = L.Control.extend({
 			canvas.width = value * scale;
 			if (!isCorner)
 				this._canvasWidth = value;
-			console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
+// 			console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
 			canvas.height = value * scale;

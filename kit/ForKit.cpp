@@ -532,6 +532,7 @@ int main(int argc, char** argv)
     std::string options = "unipoll";
     if (Log::logger().trace())
         options += ":profile_events";
+//    options += ":sc_no_grid_bg"; // leave ths disabled for now, merged-cells needs more work.
     ::setenv("SAL_LOK_OPTIONS", options.c_str(), 0);
 
     // Initialize LoKit

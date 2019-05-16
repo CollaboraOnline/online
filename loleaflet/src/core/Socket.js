@@ -863,6 +863,7 @@ L.Socket = L.Class.extend({
 				});
 				if (!this._map.options.backgroundLayer) {
 					this._map.options.backgroundLayer = new L.CalcBackground().addTo(this._map);
+					(new L.CalcGridLines()).addTo(this._map);
 				}
 			}
 			else {

@@ -62,9 +62,9 @@ var deps = {
 			'layer/BackgroundColor.js',
 		],
 		desc: 'Calc tile layer.',
-		deps: ['TileLayer']
+		deps: ['TileLayer', 'CalcGridLines']
 	},
-
+	
 	ImageOverlay: {
 		src: ['layer/ImageOverlay.js'],
 		desc: 'Used to display an image over a particular rectangular area of the map.'
@@ -115,6 +115,11 @@ var deps = {
 		desc: 'Extends LayerGroup with mouse events and bindPopup method shared between layers.'
 	},
 
+	CalcGridLines: {
+		src: ['layer/CalcGridLines.js'],
+		desc: 'Calc background grid lines',
+		deps: ['ControlHeader', 'LayerGroup']
+	},
 
 	Path: {
 		src: [
