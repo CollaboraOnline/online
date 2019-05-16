@@ -362,6 +362,7 @@
 		BE484B6E228CF36E001EE76C /* configvaluecontainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configvaluecontainer.cxx; path = "../../ios-device/unotools/source/config/configvaluecontainer.cxx"; sourceTree = "<group>"; };
 		BE484B6F228CF36E001EE76C /* bootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bootstrap.cxx; path = "../../ios-device/unotools/source/config/bootstrap.cxx"; sourceTree = "<group>"; };
 		BE484B70228CF36E001EE76C /* saveopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = saveopt.cxx; path = "../../ios-device/unotools/source/config/saveopt.cxx"; sourceTree = "<group>"; };
+		BE484B71228D8622001EE76C /* DocumentBroker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DocumentBroker.hpp; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -1229,6 +1230,7 @@
 			children = (
 				BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */,
 				BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */,
+				BE484B71228D8622001EE76C /* DocumentBroker.hpp */,
 				BE5EB5D12140039100E0826C /* LOOLWSD.cpp */,
 				BE5EB5D521401E0F00E0826C /* Storage.cpp */,
 				BE5EB5CD213FE2D000E0826C /* TileCache.cpp */,
