@@ -30,7 +30,8 @@ sub insert($) {
 
 print "\
 window.LANG = window.getParameterByName('lang');
-window.webkit.messageHandlers.debug.postMessage('LANG is ' + window.LANG);
+
+//window.webkit.messageHandlers.debug.postMessage('LANG is ' + window.LANG);
 
 var onlylang = window.LANG;
 var hyphen = onlylang.indexOf('-');
