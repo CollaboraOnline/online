@@ -686,6 +686,7 @@ std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::ServiceRoot;
 std::string LOOLWSD::LOKitVersion;
+std::string LOOLWSD::HostIdentifier;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
@@ -3085,6 +3086,17 @@ private:
     }
 };
 
+std::string LOOLWSD::getVersionJSON()
+{
+    std::string version, hash;
+    Util::getVersionInfo(version, hash);
+    return
+        "{ \"Version\":  \"" + version + "\", "
+        "\"Hash\":     \"" + hash + "\", "
+        "\"Protocol\": \"" + GetProtocolVersion() + "\", "
+        "\"Id\":  \"" + HostIdentifier + "\" }";
+}
+
 static LOOLWSDServer srv;
 
 int LOOLWSD::innerMain()
@@ -3100,11 +3112,12 @@ int LOOLWSD::innerMain()
     Environment::set("LD_BIND_NOW", "1");
 
 #if !MOBILEAPP
+    HostIdentifier = Util::rng::getHexString(8);
     if (DisplayVersion)
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
-        LOG_INF("Loolwsd version details: " << version << " - " << hash);
+        LOG_INF("Loolwsd version details: " << version << " - " << hash << " - id " << HostIdentifier);
     }
 #endif
 #endif

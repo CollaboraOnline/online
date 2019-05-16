@@ -50,6 +50,10 @@ L.Socket = L.Class.extend({
 		this._msgQueue = [];
 	},
 
+	getWebSocketBaseURI: function(map) {
+		return map.options.server + map.options.serviceRoot + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws';
+	},
+
 	connect: function(socket) {
 		var map = this._map;
 		if (map.options.permission) {
@@ -70,8 +74,7 @@ L.Socket = L.Class.extend({
 			}
 
 			try {
-				var websocketURI = map.options.server + map.options.serviceRoot + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws' + wopiSrc;
-				this.socket = new WebSocket(websocketURI);
+				this.socket = new WebSocket(this.getWebSocketBaseURI(map) + wopiSrc);
 			} catch (e) {
 				// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).
 				// Detect this and hint the user.
@@ -283,6 +286,8 @@ L.Socket = L.Class.extend({
 			else {
 				$('#loolwsd-version').text(loolwsdVersionObj.Version);
 			}
+
+			$('#loolwsd-id').html('<p>' + this.getWebSocketBaseURI(this._map) + '</p><p>' + loolwsdVersionObj.Id + '</p>');
 
 			// TODO: For now we expect perfect match in protocol versions
 			if (loolwsdVersionObj.Protocol !== this.ProtocolVersionNumber) {

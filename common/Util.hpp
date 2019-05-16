@@ -46,6 +46,9 @@ namespace Util
         /// Generate an array of random characters.
         std::vector<char> getBytes(const size_t length);
 
+        /// Generate a string of random characters.
+        std::string getHexString(const size_t length);
+
         /// Generates a random string suitable for
         /// file/directory names.
         std::string getFilename(const size_t length);

@@ -63,6 +63,7 @@ public:
     static std::string FileServerRoot;
     static std::string ServiceRoot; ///< There are installations that need prefixing every page with some path.
     static std::string LOKitVersion;
+    static std::string HostIdentifier; ///< A unique random hash that identifies this server
     static std::string LogLevel;
     static bool AnonymizeUserData;
     static std::uint64_t AnonymizationSalt;
@@ -151,6 +152,8 @@ public:
     {
         return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
     }
+
+    static std::string getVersionJSON();
 
     int innerMain();
 
