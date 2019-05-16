@@ -42,6 +42,7 @@
 #include <thread>
 
 #include <Poco/Base64Encoder.h>
+#include <Poco/HexBinaryEncoder.h>
 #include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
 #include <Poco/Format.h>
@@ -96,6 +97,15 @@ namespace Util
             std::vector<char> v(length);
             _randBuf.readFromDevice(v.data(), v.size());
             return v;
+        }
+
+        /// Generate a string of random characters.
+        std::string getHexString(const size_t length)
+        {
+            std::stringstream ss;
+            Poco::HexBinaryEncoder hex(ss);
+            hex.write(getBytes(length).data(), length);
+            return ss.str().substr(0, length);
         }
 
         /// Generates a random string in Base64.

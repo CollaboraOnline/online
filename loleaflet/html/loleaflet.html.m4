@@ -183,6 +183,8 @@ ifelse(MOBILEAPP,[true],
       <div id="loolwsd-version"></div>
       <h3>LOKit</h3>
       <div id="lokit-version"></div>
+      <h3>Id</h3>
+      <div id="loolwsd-id"></div>
     </div>
 
     <script defer>

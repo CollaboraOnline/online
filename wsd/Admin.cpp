@@ -122,12 +122,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     else if (tokens[0] == "version")
     {
         // Send LOOL version information
-        std::string version, hash;
-        Util::getVersionInfo(version, hash);
-        std::string versionStr =
-            "{ \"Version\":  \"" + version + "\", " +
-            "\"Hash\":  \"" + hash  + "\" }";
-        sendTextFrame("loolserver " + versionStr);
+        sendTextFrame("loolserver " + LOOLWSD::getVersionJSON());
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
     }
