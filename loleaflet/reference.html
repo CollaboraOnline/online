@@ -3050,6 +3050,7 @@ WOPI host to editor
 		    <nobr>hint: &lt;string&gt;</nobr>
 		    <nobr>mobile: &lt;boolean&gt;</nobr>
 		    <nobr>label: &lt;string&gt;</nobr>
+		    <nobr>insertBefore: &lt;string&gt;</nobr>
 		</code></td>
 		<td>
 		  Inserts the button to the left of the top toolbar. Only thing
@@ -3071,7 +3072,10 @@ WOPI host to editor
 		  <code>label</code> When a readonly document is opened, we
 		  don't have the toolbar at all. In this case, this newly added
 		  button is present in file menubar. The text against this label
-		  is used as text of the menubar item.
+		  is used as text of the menubar item.<br/>
+		  <code>insertBefore</code> Specify the position where the button
+		  should be inserted.
+		  <code>insertBefore</code> is the button ID (see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>).
 		</td>
 	</tr>
 	<tr>
@@ -3081,9 +3085,7 @@ WOPI host to editor
 		</td>
 		<td>
 			Hides a button from the toolbar.<br/>
-		    <code>id</code> is the button ID as defined in the
-		    <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-		    function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+		    <code>id</code> is the button ID (see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>).
 		</td>
 	</tr>
 	<tr>
@@ -3093,9 +3095,7 @@ WOPI host to editor
 		</td>
 		<td>
 			Hides a button from the toolbar.<br/>
-			<code>id</code> is the button ID as defined in the
-			<a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-			function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+			<code>id</code> is the button ID (see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>).
 		</td>
 	</tr>
 	<tr>
@@ -3113,6 +3113,12 @@ WOPI host to editor
 		</td>
 	</tr>
 </table>
+
+<h5><a name="toolbar-button-ids">Finding toolbar button IDs</a></h5>
+<p>Toolbar button IDs are defined in the <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
+function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+Note that they usually don't change but there is no guarantee that they are stable.</p>
+
 Editor to WOPI host
 <table data-id='postmessage-misc-to-host'>
 	<tr>
