@@ -2503,6 +2503,16 @@ L.TileLayer = L.GridLayer.extend({
 				['text/plain', 'text/plain;charset=utf-8'],
 				['Text', 'text/plain;charset=utf-8']
 			];
+		} else if (navigator.platform.startsWith('Mac')) {
+			// Safari provides RTF clipboard content which doesn't contain the
+			// images.  We do not know where the content comes from, so let's
+			// always prefer HTML over RTF on Mac.
+			mimeTypes = [
+				['text/html', 'text/html'],
+				['text/rtf', 'text/rtf'],
+				['text/plain', 'text/plain;charset=utf-8'],
+				['Text', 'text/plain;charset=utf-8']
+			];
 		} else {
 			mimeTypes = [
 				['text/rtf', 'text/rtf'],
