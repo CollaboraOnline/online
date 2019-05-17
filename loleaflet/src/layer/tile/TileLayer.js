@@ -1545,6 +1545,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postKeyboardEvent: function(type, charcode, keycode) {
+		// console.log('==> _postKeyboardEvent type=' + type + ' charcode=' + charcode + ' keycode=' + keycode);
 		if (this._docType === 'spreadsheet' && this._prevCellCursor && type === 'input') {
 			if (keycode === 1030) { // PgUp
 				if (this._cellCursorOnPgUp) {
@@ -1570,6 +1571,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	// if winId=0, then event is posted on the document
 	_postCompositionEvent: function(winId, type, text) {
+		// console.log('==> _postCompositionEvent type=' + type + ' text="' + text + '"');
 		this._map._socket.sendMessage('textinput id=' + winId + ' type=' + type + ' text=' + encodeURIComponent(text));
 	},
 
