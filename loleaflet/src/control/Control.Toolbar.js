@@ -698,22 +698,6 @@ function initNormalToolbar() {
 		{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
 		{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: 'FormatPaintbrush', mobile: false},
 		{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes', mobile: false},
-		{type: 'break', id: 'breakundo', mobile: false},
-		{type: 'menu-radio', id: 'zoom', text: '100%',
-			selected: 'zoom100',
-			mobile: false, tablet: false,
-			items: [
-				{ id: 'zoom50', text: '50%', scale: 6},
-				{ id: 'zoom60', text: '60%', scale: 7},
-				{ id: 'zoom70', text: '70%', scale: 8},
-				{ id: 'zoom85', text: '85%', scale: 9},
-				{ id: 'zoom100', text: '100%', scale: 10},
-				{ id: 'zoom120', text: '120%', scale: 11},
-				{ id: 'zoom150', text: '150%', scale: 12},
-				{ id: 'zoom175', text: '175%', scale: 13},
-				{ id: 'zoom200', text: '200%', scale: 14}
-			]
-		},
 		{type: 'break', mobile: false, tablet: false,},
 		{type: 'html', id: 'styles',
 			html: '<select class="styles-select"><option>Default Style</option></select>',
@@ -1024,7 +1008,21 @@ function initNormalToolbar() {
 				{type: 'break', id: 'prevnextbreak'},
 				{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
 				{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
-				{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>', mobile: false},
+				{type: 'menu-radio', id: 'zoom', text: '100%',
+					selected: 'zoom100',
+					mobile: false,
+					items: [
+						{ id: 'zoom50', text: '50%', scale: 6},
+						{ id: 'zoom60', text: '60%', scale: 7},
+						{ id: 'zoom70', text: '70%', scale: 8},
+						{ id: 'zoom85', text: '85%', scale: 9},
+						{ id: 'zoom100', text: '100%', scale: 10},
+						{ id: 'zoom120', text: '120%', scale: 11},
+						{ id: 'zoom150', text: '150%', scale: 12},
+						{ id: 'zoom175', text: '175%', scale: 13},
+						{ id: 'zoom200', text: '200%', scale: 14}
+					]
+				},
 				{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
 			],
 			onClick: function (e) {
@@ -1413,7 +1411,7 @@ function onDocLayerInit() {
 
 		statusbar.remove('prev', 'next', 'prevnextbreak');
 
-		toolbarUp.set('zoom', {
+		statusbar.set('zoom', {
 			items: [
 				{ id: 'zoom100', text: '100%', scale: 10},
 				{ id: 'zoom200', text: '200%', scale: 14}
@@ -2213,9 +2211,7 @@ function updateUserListCount() {
 		userlistItem.text = noUser;
 	}
 
-	var zoomlevel = $('#zoomlevel').html();
 	w2ui['actionbar'].refresh();
-	$('#zoomlevel').html(zoomlevel);
 
 	if (count > 1) {
 		$('#tb_actionbar_item_userlist').show();
@@ -2360,8 +2356,7 @@ function setupToolbar(e) {
 			zoomPercent = Math.round(zoomRatio * 100) + '%';
 			break;
 		}
-		$('#zoomlevel').html(zoomPercent);
-		w2ui['editbar'].set('zoom', {text: zoomPercent, selected: zoomSelected});
+		w2ui['actionbar'].set('zoom', {text: zoomPercent, selected: zoomSelected});
 	});
 
 	map.on('celladdress', function (e) {
