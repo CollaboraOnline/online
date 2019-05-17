@@ -18,6 +18,9 @@ L.Control.MobileInput = L.Control.extend({
 		});
 
 		this._cursorHandler.on('dragend', this.onDragEnd, this);
+		this._currentKeysDown = {};
+		this._ignoreKeypress = false;
+		this._isMobileSafariOriOSApp = window.ThisIsTheiOSApp || navigator.platform === 'iPad' || navigator.platform === 'iPhone';
 	},
 
 	onAdd: function () {
@@ -101,11 +104,12 @@ L.Control.MobileInput = L.Control.extend({
 		this._textArea.setAttribute('spellcheck', 'false');
 		L.DomEvent.on(this._textArea, stopEvents, L.DomEvent.stopPropagation)
 			.on(this._textArea, 'keydown keypress keyup', this.onKeyEvents, this)
-			.on(this._textArea, 'compositionstart compositionupdate compositionend', this.onCompEvents, this)
 			.on(this._textArea, 'textInput', this.onTextInput, this)
-			.on(this._textArea, 'input', this.onInput, this)
 			.on(this._textArea, 'focus', this.onGotFocus, this)
 			.on(this._textArea, 'blur', this.onLostFocus, this);
+		if (!this._isMobileSafariOriOSApp)
+			L.DomEvent.on(this._textArea, 'compositionstart compositionupdate compositionend', this.onCompEvents, this)
+				.on(this._textArea, 'input', this.onInput, this);
 	},
 
 	_getSurrogatePair: function(codePoint) {
@@ -122,6 +126,7 @@ L.Control.MobileInput = L.Control.extend({
 		    unoKeyCode = handler._toUNOKeyCode(keyCode);
 
 		this._keyHandled = this._keyHandled || false;
+		// console.log('==> onKeyEvents: ' + e.type + ':' + e.key + ' keyCode=' + keyCode + ' charCode=' + charCode + ' unoKeyCode=' + unoKeyCode + ' _keyHandled=' + this._keyHandled + ' _isComposing=' + this._isComposing)
 		if (this._isComposing) {
 			if (keyCode === 229 && charCode === 0) {
 				return;
@@ -139,10 +144,40 @@ L.Control.MobileInput = L.Control.extend({
 			// key ignored
 		}
 		else if (e.type === 'keydown') {
+			if (this._isMobileSafariOriOSApp) {
+				if (!this._currentKeysDown[e.key])
+					this._currentKeysDown[e.key] = 1;
+				else
+					this._currentKeysDown[e.key]++;
+				if (this._currentKeysDown[e.key] > 1)
+					this._ignoreKeypress = true;
+			}
 			this._keyHandled = false;
+			// console.log('    _keyHandled := false');
 			if (handler.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 				this._lastInput = unoKeyCode;
+			}
+		}
+		else if (this._isMobileSafariOriOSApp &&
+			 e.type === 'keypress') {
+			if (!this._ignoreKeypress) {
+				// e.key can be longer than one, for instance if you press a dead diacritic
+				// key followed by a letter that it can't combine with, like ¨ t => '¨t'.
+				// But e.key is longer than one also in the case of control keys where for
+				// instance e.key == 'Enter'. Detect the latter by comparing e.key against
+				// e.code.
+				if (e.key !== e.code) {
+					var i;
+					for (i = 0; i < e.key.length; ++i) {
+						docLayer._postKeyboardEvent('input', e.key[i].charCodeAt(), 0);
+						docLayer._postKeyboardEvent('up', e.key[i].charCodeAt(), 0);
+					}
+				}
+				else {
+					docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
+					docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
+				}
 			}
 		}
 		else if ((e.type === 'keypress') && (!handler.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
@@ -167,20 +202,29 @@ L.Control.MobileInput = L.Control.extend({
 			}
 			this._lastInput = unoKeyCode;
 			this._keyHandled = true;
+			// console.log('    _keyHandled := true');
 		}
 		else if (e.type === 'keyup') {
-			if (charCode <= 0xFFFF) {
+			if (this._isMobileSafariOriOSApp) {
+				// Yes, forget all keys that are pressed at the same time as soon as one
+				// of them goes up. This seems to match what events the system sends.
+				this._currentKeysDown = {};
+			}
+			else if (!this._ignoreKeypress && charCode <= 0xFFFF) {
 				// For non-BMP characters we generated both 'input' and 'up' events
 				// above already.
 				docLayer._postKeyboardEvent('up', charCode, unoKeyCode);
 			}
+			this._ignoreKeypress = false;
 			this._lastInput = null;
 			this._keyHandled = true;
+			// console.log('    _keyHandled := true');
 		}
 		L.DomEvent.stopPropagation(e);
 	},
 
 	onCompEvents: function (e) {
+		// console.log('==> onCompEvents: ' + e.type);
 		var map = this._map;
 
 		if (e.type === 'compositionstart' || e.type === 'compositionupdate') {
@@ -197,6 +241,7 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onTextInput: function (e) {
+		// console.log('==> onTextInput: _keyHandled=' + this._keyHandled);
 		if (!this._keyHandled) {
 			this._textData = e.data;
 			this._textArea.value = '';
@@ -206,6 +251,7 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onInput: function (e) {
+		// console.log('==> onInput: inputType=' + e.inputType);
 		var backSpace = this._map.keyboard._toUNOKeyCode(8);
 		var i;
 
