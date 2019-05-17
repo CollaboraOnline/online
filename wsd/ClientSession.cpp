@@ -87,6 +87,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return false;
     }
 
+    if (tokens.size() < 1)
+    {
+        sendTextFrame("error: cmd=empty kind=unknown");
+        return false;
+    }
+
     LOOLWSD::dumpIncomingTrace(docBroker->getJailId(), getId(), firstLine);
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
@@ -97,7 +103,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     if (tokens[0] == "loolclient")
     {
-        if (tokens.size() < 1)
+        if (tokens.size() < 2)
         {
             sendTextFrame("error: cmd=loolclient kind=badprotocolversion");
             return false;
