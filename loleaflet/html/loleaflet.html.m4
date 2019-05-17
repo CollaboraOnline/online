@@ -154,10 +154,9 @@ ifelse(MOBILEAPP,[true],
       <p id="product-string"></p>
       <h3>LOOLWSD</h3>
       <div id="loolwsd-version"></div>
+      <div id="loolwsd-id"></div>
       <h3>LOKit</h3>
       <div id="lokit-version"></div>
-      <h3>Id</h3>
-      <div id="loolwsd-id"></div>
       <p>Copyright _YEAR_, Collabora Productivity Limited.</p>
     </div>
 

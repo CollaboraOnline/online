@@ -287,7 +287,10 @@ L.Socket = L.Class.extend({
 				$('#loolwsd-version').text(loolwsdVersionObj.Version);
 			}
 
-			$('#loolwsd-id').html('<p>' + this.getWebSocketBaseURI(this._map) + '</p><p>' + loolwsdVersionObj.Id + '</p>');
+			var idUri = this._map.options.server + this._map.options.serviceRoot + '/hosting/discovery';
+			idUri = idUri.replace(/^ws:/, 'http:');
+			idUri = idUri.replace(/^wss:/, 'https:');
+			$('#loolwsd-id').html('<a href="' + idUri + '">' + loolwsdVersionObj.Id + '</a>');
 
 			// TODO: For now we expect perfect match in protocol versions
 			if (loolwsdVersionObj.Protocol !== this.ProtocolVersionNumber) {
