@@ -645,6 +645,17 @@ inline std::string getLaunchURI(const std::string &document)
     return oss.str();
 }
 
+inline std::string getServiceURI(const std::string &sub)
+{
+    std::ostringstream oss;
+
+    oss << getLaunchBase("");
+    oss << LOOLWSD::ServiceRoot;
+    oss << sub;
+
+    return oss.str();
+}
+
 inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 {
     std::string user = config.getString("admin_console.username", "");
@@ -1152,13 +1163,16 @@ void LOOLWSD::initialize(Application& self)
     std::cerr << "\nLaunch one of these in your browser:\n\n"
               << "    Writer:  " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
               << "    Calc:    " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
-              << "    Impress: " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << '\n'
-              << std::endl;
+              << "    Impress: " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << std::endl;
 
     const std::string adminURI = getAdminURI(config());
     if (!adminURI.empty())
-        std::cerr << "\nOr for the Admin Console:\n\n"
-                  << adminURI << '\n' << std::endl;
+        std::cerr << "\nOr for the admin, capabilities & discovery:\n\n"
+                  << adminURI << "\n"
+                  << getServiceURI("/hosting/capabilities") << "\n"
+                  << getServiceURI("/hosting/discovery") << "\n";
+
+    std::cerr << std::endl;
 #endif
 
 #endif
@@ -2260,7 +2274,7 @@ private:
         auto socket = _socket.lock();
         socket->send(oss.str());
         socket->shutdown();
-        LOG_INF("Sent cpabilities.json successfully.");
+        LOG_INF("Sent capabilities.json successfully.");
     }
 
     void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request)
