@@ -16,7 +16,7 @@ module.exports = {
     "ui": {
         "port": 3001
     },
-    "files": ["loleaflet/dist/**/*.css", "loleaflet/dist/**/*.js"],
+    "files": ["loleaflet/dist/**/*.css", "loleaflet/dist/**/*.js", "loleaflet/dist/*.html"],
     "watchEvents": [
         "change"
     ],

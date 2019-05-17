@@ -252,7 +252,11 @@ $(builddir)/dist/images/%: $(srcdir)/images/%
 
 $(builddir)/dist/%.html: $(srcdir)/html/%.html
 	@mkdir -p $(dir $@)
-	@cp $< $@
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		`cp $< $@`; \
+	else \
+		`ln -sf $(abs_srcdir)/$< $@`; \
+	fi
 
 $(builddir)/dist/src/%.js: $(srcdir)/src/%.js
 	@mkdir -p $(dir $@)
