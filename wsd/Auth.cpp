@@ -137,7 +137,8 @@ bool JWTAuth::verify(const std::string& accessToken)
         Poco::JSON::Object::Ptr object = result.extract<Poco::JSON::Object::Ptr>();
         std::time_t decodedExptime = object->get("exp").convert<std::time_t>();
 
-        std::time_t curtime = Poco::Timestamp().epochTime();
+        std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+        std::time_t curtime = std::chrono::system_clock::to_time_t(now);
         if (curtime > decodedExptime)
         {
             LOG_INF("JWTAuth:verify: JWT expired; curtime:" << curtime << ", exp:" << decodedExptime);
@@ -170,7 +171,8 @@ const std::string JWTAuth::createHeader()
 
 const std::string JWTAuth::createPayload()
 {
-    const std::time_t curtime = Poco::Timestamp().epochTime();
+    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+    std::time_t curtime = std::chrono::system_clock::to_time_t(now);
     const std::string exptime = std::to_string(curtime + 1800);
 
     // TODO: Some sane code to represent JSON objects
