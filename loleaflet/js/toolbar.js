@@ -1011,9 +1011,8 @@ function initNormalToolbar(toolItems) {
 			tooltip: 'top',
 			items: [
 				{type: 'html',  id: 'search',
-				 html: '<div style="padding: 3px 10px;" class="loleaflet-font">' +
-				 ' ' + _('Search:') +
-				 '    <input size="10" id="search-input"' +
+				 html: '<div style="padding: 3px 5px 3px 10px;" class="loleaflet-font">' +
+				 '<input size="15" id="search-input" placeholder="' + _('Search') + '"' +
 				 'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
 				 '</div>'
 				},
