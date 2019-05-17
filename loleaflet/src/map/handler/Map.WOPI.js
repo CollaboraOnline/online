@@ -169,8 +169,10 @@ L.Map.WOPI = L.Handler.extend({
 							$('html > head').append('<style/>');
 						$('html > head > style').append('.w2ui-icon.' + msg.Values.id + '{background: url(' + msg.Values.imgurl + ') no-repeat center !important; }');
 
+						// Position: Either specified by the caller, or defaulting to first position (before save)
+						var insertBefore = msg.Values.insertBefore || 'save';
 						// add the item to the toolbar
-						w2ui['editbar'].insert('save', [
+						w2ui['editbar'].insert(insertBefore, [
 							{
 								type: 'button',
 								id: msg.Values.id,
@@ -184,7 +186,7 @@ L.Map.WOPI = L.Handler.extend({
 							// Add to our list of items to preserve when in mobile mode
 							// FIXME: Wrap the toolbar in a class so that we don't make use
 							// global variables and functions like this
-							var idx = toolbarUpMobileItems.indexOf('save');
+							var idx = toolbarUpMobileItems.indexOf(insertBefore);
 							toolbarUpMobileItems.splice(idx, 0, msg.Values.id);
 						}
 					}
