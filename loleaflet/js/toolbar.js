@@ -116,6 +116,9 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {
 		map.zoomOut(1);
 	}
+	else if (item.scale) {
+		map.setZoom(item.scale);
+	}
 	else if (id === 'zoomreset') {
 		map.setZoom(map.options.zoom);
 	}
@@ -1050,7 +1053,21 @@ function initNormalToolbar(toolItems) {
 				{type: 'break', id: 'prevnextbreak'},
 				{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
 				{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
-				{type: 'html',    id: 'zoomlevel', html: '<div id="zoomlevel" class="loleaflet-font">100%</div>', mobile: false},
+				{type: 'menu-radio', id: 'zoom', text: '100%',
+					selected: 'zoom100',
+					mobile: false,
+					items: [
+						{ id: 'zoom50', text: '50%', scale: 6},
+						{ id: 'zoom60', text: '60%', scale: 7},
+						{ id: 'zoom70', text: '70%', scale: 8},
+						{ id: 'zoom85', text: '85%', scale: 9},
+						{ id: 'zoom100', text: '100%', scale: 10},
+						{ id: 'zoom120', text: '120%', scale: 11},
+						{ id: 'zoom150', text: '150%', scale: 12},
+						{ id: 'zoom175', text: '175%', scale: 13},
+						{ id: 'zoom200', text: '200%', scale: 14}
+					]
+				},
 				{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
 			],
 			onClick: function (e) {
@@ -1441,6 +1458,13 @@ function onDocLayerInit() {
 				]}
 			]);
 		}
+
+		statusbar.set('zoom', {
+			items: [
+				{ id: 'zoom100', text: '100%', scale: 10},
+				{ id: 'zoom200', text: '200%', scale: 14}
+			]
+		});
 
 		// Remove irrelevant toolbars
 		$('#presentation-toolbar').hide();
@@ -2124,9 +2148,7 @@ function updateUserListCount() {
 		userlistItem.text = noUser;
 	}
 
-	var zoomlevel = $('#zoomlevel').html();
 	w2ui['toolbar-down'].refresh();
-	$('#zoomlevel').html(zoomlevel);
 }
 
 function escapeHtml(input) {
@@ -2233,9 +2255,24 @@ function setupToolbar(e) {
 	});
 
 	map.on('zoomend', function () {
-		var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
-		var zoomPercent = Math.round(zoomRatio * 100);
-		$('#zoomlevel').html(zoomPercent + '%');
+		var zoomPercent = 100;
+		var zoomSelected = null;
+		switch (map.getZoom()) {
+		case 6:  zoomPercent =  50; zoomSelected = 'zoom50'; break;
+		case 7:  zoomPercent =  60; zoomSelected = 'zoom60'; break;
+		case 8:  zoomPercent =  70; zoomSelected = 'zoom70'; break;
+		case 9:  zoomPercent =  85; zoomSelected = 'zoom85'; break;
+		case 10: zoomPercent = 100; zoomSelected = 'zoom100'; break;
+		case 11: zoomPercent = 120; zoomSelected = 'zoom120'; break;
+		case 12: zoomPercent = 150; zoomSelected = 'zoom150'; break;
+		case 13: zoomPercent = 175; zoomSelected = 'zoom175'; break;
+		case 14: zoomPercent = 200; zoomSelected = 'zoom200'; break;
+		default:
+			var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
+			zoomPercent = Math.round(zoomRatio * 100) + '%';
+			break;
+		}
+		w2ui['toolbar-down'].set('zoom', {text: zoomPercent, selected: zoomSelected});
 	});
 
 	map.on('celladdress', function (e) {
