@@ -36,9 +36,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Cut'},
-				{uno: '.uno:Copy'},
-				{uno: '.uno:Paste'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'},
@@ -255,9 +255,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Cut'},
-				{uno: '.uno:Copy'},
-				{uno: '.uno:Paste'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
@@ -343,9 +343,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Cut'},
-				{uno: '.uno:Copy'},
-				{uno: '.uno:Paste'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
@@ -793,6 +793,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.remove();
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
+		} else if (id === 'warn-copy-paste') {
+			vex.dialog.alert(_('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+P</b>: For pasting.</li></ul></p>'));
 		}
 		// Inform the host if asked
 		if ($(item).data('postmessage') === 'true') {
