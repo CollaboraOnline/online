@@ -57,46 +57,32 @@ L.Control.LokDialog = L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
 
-	onPan: function (ev, dialogID) {
+	onPan: function (ev) {
 		var id = toZoomTargetId(ev.target.id);
 		var target = findZoomTarget(id);
 
 		if (target) {
-			if (ev.pointers.length == 1) {
-				var delta = -ev.deltaY;
-				if (ev.type == 'panstart') {
-					var rect = ev.target.getBoundingClientRect();
-					firstTouchPositionX = ev.center.x - rect.x;
-					firstTouchPositionY = ev.center.y - rect.y;
-					this._postWindowGestureEvent(dialogID, 'panBegin', firstTouchPositionX, firstTouchPositionY, delta);
-				}
-				else if (ev.type == 'panstop') {
-					this._postWindowGestureEvent(dialogID, 'panEnd', firstTouchPositionX, firstTouchPositionY, delta);
-					firstTouchPositionX = null;
-					firstTouchPositionY = null;
-				}
-				else {
-					this._postWindowGestureEvent(dialogID, 'panUpdate', firstTouchPositionX, firstTouchPositionY, delta);
-				}
-			}
-			else {
-				var newX = target.initialState.startX + ev.deltaX;
-				var newY = target.initialState.startY + ev.deltaY;
+			var newX = target.initialState.startX + ev.deltaX;
+			var newY = target.initialState.startY + ev.deltaY;
 
-				// Don't allow to put dialog outside the view
-				if (window.mode.isDesktop() &&
-					(newX < -target.width/2 || newY < -target.height/2
-					|| newX > window.innerWidth - target.width/2
-					|| newY > window.innerHeight - target.height/2))
-					return;
+			// Don't allow to put dialog outside the view
+			if (window.mode.isDesktop() &&
+				(newX < -target.width/2 || newY < -target.height/2
+				|| newX > window.innerWidth - target.width/2
+				|| newY > window.innerHeight - target.height/2))
+				return;
 
-				target.transformation.translate = {
-					x: newX,
-					y: newY
-				};
+			target.transformation.translate = {
+				x: newX,
+				y: newY
+			};
 
-				updateTransformation(target);
-			}
+			target.transformation.translate = {
+				x: newX,
+				y: newY
+			};
+
+			updateTransformation(target);
 		}
 	},
 
