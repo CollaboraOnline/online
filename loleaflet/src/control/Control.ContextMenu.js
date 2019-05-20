@@ -20,8 +20,7 @@ L.Control.ContextMenu = L.Control.extend({
 			 * in following list is just for reference and ease of locating uno command
 			 * from context menu structure.
 			 */
-			general: ['Cut', 'Copy', 'Paste', 'PasteSpecialMenu', 'PasteUnformatted',
-					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
+			general: ['NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
 					  'OpenHyperlinkOnCursor', 'CopyHyperlinkLocation', 'RemoveHyperlink',
 					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
 					  'SetAnchorToChar', 'SetAnchorToFrame',
@@ -126,18 +125,6 @@ L.Control.ContextMenu = L.Control.extend({
 				// Get the translated text associated with the command
 				itemName = _UNO(item.command, docType, true);
 
-				switch (commandName) {
-				case 'Cut':
-					itemName = _('Internal Cut');
-					break;
-				case 'Copy':
-					itemName = _('Internal Copy');
-					break;
-				case 'Paste':
-					itemName = _('Internal Paste');
-					break;
-				}
-
 				contextMenu[item.command] = {
 					name: _(itemName)
 				};
@@ -155,9 +142,6 @@ L.Control.ContextMenu = L.Control.extend({
 				isLastItemText = true;
 			} else if (item.type === 'menu') {
 				itemName = item.text;
-				if (itemName.replace('~', '') === 'Paste Special') {
-					itemName = _('Internal Paste Special');
-				}
 				var submenu = this._createContextMenuStructure(item);
 				// ignore submenus with all items disabled
 				if (Object.keys(submenu).length === 0) {
