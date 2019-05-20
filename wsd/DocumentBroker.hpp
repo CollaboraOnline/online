@@ -48,13 +48,6 @@ public:
 
     bool continuePolling() override
     {
-#if MOBILEAPP
-        if (MobileTerminationFlag)
-        {
-            MobileTerminationFlag = false;
-            return false;
-        }
-#endif
         return SocketPoll::continuePolling() && !TerminationFlag;
     }
 };

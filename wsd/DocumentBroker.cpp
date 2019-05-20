@@ -146,6 +146,19 @@ public:
     {
     }
 
+    bool continuePolling() override
+    {
+#if MOBILEAPP
+        if (MobileTerminationFlag)
+        {
+            LOG_TRC("Noticed MobileTerminationFlag.");
+            MobileTerminationFlag = false;
+            return false;
+        }
+#endif
+        return TerminatingPoll::continuePolling();
+    }
+
     virtual void pollingThread()
     {
         // Delegate to the docBroker.
