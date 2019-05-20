@@ -805,7 +805,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		} else if (!window.ThisIsAMobileApp && id === 'warn-copy-paste') {
-			var self = this;
+			var self = this ;
 			vex.dialog.alert({
 				unsafeMessage: _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>'),
 				callback: function () {
