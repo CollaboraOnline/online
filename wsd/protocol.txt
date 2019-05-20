@@ -340,15 +340,6 @@ invalidatetiles: part=<partNumber> x=<x> y=<y> width=<width> height=<height>
 
 invalidatetiles: EMPTY
 
-nextmessage: size=<byteSize>
-
-    <byteSize> is the size, in bytes, of the next message, in case it
-    is "large". (In practice, nextmessage: messages precede each tile:
-    message). Can be ignored by clients using an API that can read
-    arbitrarily large buffers from a WebSocket (like JavaScript), but
-    must be handled by clients that cannot (like those using Poco
-    1.6.0.
-
 pong rendercount=<num>
 
     sent in reply to a 'ping' message, where <num> is the total number
@@ -526,15 +517,6 @@ errortoall: cmd=<command> kind=<kind> [code=<error_code>]
 
     Causes the parent to send the corresponding error: message to all
     clients.
-
-nextmessage: size=<upperlimit>
-
-    each tile: message sent from the child to the parent is preceded
-    by a nextmessage: message that gives an upper limit on the size of
-    the tile: message that will follow. (We assume it is only tile:
-    messages that can be "large".) Once we depend on Poco 1.6.1, where
-    one doesn't need to use a pre-allocated buffer when receiving
-    WebSocket messages, this will go away.
 
 saveas: url=<url> filename=<filename>
 
