@@ -363,6 +363,25 @@
 		BE484B6F228CF36E001EE76C /* bootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bootstrap.cxx; path = "../../ios-device/unotools/source/config/bootstrap.cxx"; sourceTree = "<group>"; };
 		BE484B70228CF36E001EE76C /* saveopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = saveopt.cxx; path = "../../ios-device/unotools/source/config/saveopt.cxx"; sourceTree = "<group>"; };
 		BE484B71228D8622001EE76C /* DocumentBroker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DocumentBroker.hpp; sourceTree = "<group>"; };
+		BE484B732292AF96001EE76C /* frmload.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frmload.cxx; path = "../../ios-device/sfx2/source/view/frmload.cxx"; sourceTree = "<group>"; };
+		BE484B742292AF96001EE76C /* sfxbasecontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sfxbasecontroller.cxx; path = "../../ios-device/sfx2/source/view/sfxbasecontroller.cxx"; sourceTree = "<group>"; };
+		BE484B752292AF96001EE76C /* frame.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cxx; path = "../../ios-device/sfx2/source/view/frame.cxx"; sourceTree = "<group>"; };
+		BE484B762292AF96001EE76C /* viewsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewsh.cxx; path = "../../ios-device/sfx2/source/view/viewsh.cxx"; sourceTree = "<group>"; };
+		BE484B772292AF96001EE76C /* printer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printer.cxx; path = "../../ios-device/sfx2/source/view/printer.cxx"; sourceTree = "<group>"; };
+		BE484B782292AF96001EE76C /* viewfrm.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfrm.cxx; path = "../../ios-device/sfx2/source/view/viewfrm.cxx"; sourceTree = "<group>"; };
+		BE484B792292AF96001EE76C /* impviewframe.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = impviewframe.hxx; path = "../../ios-device/sfx2/source/view/impviewframe.hxx"; sourceTree = "<group>"; };
+		BE484B7A2292AF96001EE76C /* frame2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frame2.cxx; path = "../../ios-device/sfx2/source/view/frame2.cxx"; sourceTree = "<group>"; };
+		BE484B7B2292AF96001EE76C /* lokcharthelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lokcharthelper.cxx; path = "../../ios-device/sfx2/source/view/lokcharthelper.cxx"; sourceTree = "<group>"; };
+		BE484B7C2292AF96001EE76C /* ipclient.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ipclient.cxx; path = "../../ios-device/sfx2/source/view/ipclient.cxx"; sourceTree = "<group>"; };
+		BE484B7D2292AF96001EE76C /* viewfrm2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfrm2.cxx; path = "../../ios-device/sfx2/source/view/viewfrm2.cxx"; sourceTree = "<group>"; };
+		BE484B7E2292AF96001EE76C /* viewimp.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = viewimp.hxx; path = "../../ios-device/sfx2/source/view/viewimp.hxx"; sourceTree = "<group>"; };
+		BE484B7F2292AF96001EE76C /* impframe.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = impframe.hxx; path = "../../ios-device/sfx2/source/view/impframe.hxx"; sourceTree = "<group>"; };
+		BE484B802292AF96001EE76C /* userinputinterception.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = userinputinterception.cxx; path = "../../ios-device/sfx2/source/view/userinputinterception.cxx"; sourceTree = "<group>"; };
+		BE484B812292AF97001EE76C /* viewprn.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewprn.cxx; path = "../../ios-device/sfx2/source/view/viewprn.cxx"; sourceTree = "<group>"; };
+		BE484B822292AF97001EE76C /* classificationcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = classificationcontroller.cxx; path = "../../ios-device/sfx2/source/view/classificationcontroller.cxx"; sourceTree = "<group>"; };
+		BE484B832292AF97001EE76C /* viewfac.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfac.cxx; path = "../../ios-device/sfx2/source/view/viewfac.cxx"; sourceTree = "<group>"; };
+		BE484B842292AF97001EE76C /* lokhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lokhelper.cxx; path = "../../ios-device/sfx2/source/view/lokhelper.cxx"; sourceTree = "<group>"; };
+		BE484B852292AF97001EE76C /* classificationhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = classificationhelper.cxx; path = "../../ios-device/sfx2/source/view/classificationhelper.cxx"; sourceTree = "<group>"; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -1170,6 +1189,32 @@
 			name = config;
 			sourceTree = "<group>";
 		};
+		BE484B722292AF73001EE76C /* view */ = {
+			isa = PBXGroup;
+			children = (
+				BE484B822292AF97001EE76C /* classificationcontroller.cxx */,
+				BE484B852292AF97001EE76C /* classificationhelper.cxx */,
+				BE484B752292AF96001EE76C /* frame.cxx */,
+				BE484B7A2292AF96001EE76C /* frame2.cxx */,
+				BE484B732292AF96001EE76C /* frmload.cxx */,
+				BE484B7F2292AF96001EE76C /* impframe.hxx */,
+				BE484B792292AF96001EE76C /* impviewframe.hxx */,
+				BE484B7C2292AF96001EE76C /* ipclient.cxx */,
+				BE484B7B2292AF96001EE76C /* lokcharthelper.cxx */,
+				BE484B842292AF97001EE76C /* lokhelper.cxx */,
+				BE484B772292AF96001EE76C /* printer.cxx */,
+				BE484B742292AF96001EE76C /* sfxbasecontroller.cxx */,
+				BE484B802292AF96001EE76C /* userinputinterception.cxx */,
+				BE484B832292AF97001EE76C /* viewfac.cxx */,
+				BE484B782292AF96001EE76C /* viewfrm.cxx */,
+				BE484B7D2292AF96001EE76C /* viewfrm2.cxx */,
+				BE484B7E2292AF96001EE76C /* viewimp.hxx */,
+				BE484B812292AF97001EE76C /* viewprn.cxx */,
+				BE484B762292AF96001EE76C /* viewsh.cxx */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
 		BE58E1312187938700249358 /* headless */ = {
 			isa = PBXGroup;
 			children = (
@@ -1501,6 +1546,7 @@
 			children = (
 				BE8C03932242BA480048B7EA /* appl */,
 				BE93D43D216D5568007A39F4 /* doc */,
+				BE484B722292AF73001EE76C /* view */,
 			);
 			name = sfx2;
 			sourceTree = "<group>";
