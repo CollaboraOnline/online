@@ -161,7 +161,7 @@ public:
 #if MOBILEAPP
         if (MobileTerminationFlag)
         {
-            LOG_ERR("===> Noticed MobileTerminationFlag");
+            LOG_TRC("Noticed MobileTerminationFlag.");
             MobileTerminationFlag = false;
             return false;
         }
