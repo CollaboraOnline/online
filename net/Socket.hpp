@@ -1118,10 +1118,6 @@ protected:
 #if !MOBILEAPP
         return ::write(getFD(), buf, len);
 #else
-        struct pollfd p;
-        p.fd = getFD();
-        p.events = POLLOUT;
-        fakeSocketPoll(&p, 1, -1);
         return fakeSocketWrite(getFD(), buf, len);
 #endif
     }
