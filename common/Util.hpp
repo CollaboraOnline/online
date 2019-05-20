@@ -858,6 +858,9 @@ int main(int argc, char**argv)
             _value = value;
         }
     };
+
+    //// Return current time in HTTP format.
+    std::string getHttpTimeNow();
 } // end namespace Util
 
 #endif

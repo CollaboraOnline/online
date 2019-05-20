@@ -46,6 +46,7 @@
 #include "LOOLWSD.hpp"
 #include <Log.hpp>
 #include <Protocol.hpp>
+#include <Util.hpp>
 
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPBasicCredentials;
@@ -369,7 +370,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             }
 
             response.set("User-Agent", HTTP_AGENT_STRING);
-            response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+            response.set("Date", Util::getHttpTimeNow());
 
             bool gzip = request.hasToken("Accept-Encoding", "gzip");
             const std::string *content;
@@ -438,7 +439,7 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
     std::ostringstream oss;
     oss << "HTTP/1.1 " << errorCode << "\r\n"
         << "Content-Type: text/html charset=UTF-8\r\n"
-        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+        << "Date: " << Util::getHttpTimeNow() << "\r\n"
         << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
         << extraHeader
         << "\r\n";
@@ -659,8 +660,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
-        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-        << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+        << "Date: " << Util::getHttpTimeNow() << "\r\n"
+        << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
         << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
         << "Cache-Control:max-age=11059200\r\n"
         << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
@@ -829,7 +830,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     response.add("Referrer-Policy", "no-referrer");
     response.add("X-Content-Type-Options", "nosniff");
     response.set("User-Agent", HTTP_AGENT_STRING);
-    response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+    response.set("Date", Util::getHttpTimeNow());
 
     response.setContentType("text/html");
     response.setChunkedTransferEncoding(false);

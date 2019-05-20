@@ -2034,7 +2034,7 @@ private:
             LOG_ERR("Looks like SSL/TLS traffic on plain http port");
             std::ostringstream oss;
             oss << "HTTP/1.1 400\r\n"
-                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "Date: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: 0\r\n"
                 << "\r\n";
@@ -2133,7 +2133,7 @@ private:
                     // Bad request.
                     std::ostringstream oss;
                     oss << "HTTP/1.1 400\r\n"
-                        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                        << "Date: " << Util::getHttpTimeNow() << "\r\n"
                         << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                         << "Content-Length: 0\r\n"
                         << "\r\n";
@@ -2148,7 +2148,7 @@ private:
             // Bad request.
             std::ostringstream oss;
             oss << "HTTP/1.1 400\r\n"
-                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "Date: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: LOOLWSD WOPI Agent\r\n"
                 << "Content-Length: 0\r\n"
                 << "\r\n";
@@ -2197,7 +2197,7 @@ private:
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
-            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
             << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: " << responseString.size() << "\r\n"
             << "Content-Type: " << mimeType << "\r\n"
@@ -2241,7 +2241,7 @@ private:
         // TODO: Refactor this to some common handler.
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
-            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
             << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: " << xml.size() << "\r\n"
             << "Content-Type: text/xml\r\n"
@@ -2263,7 +2263,7 @@ private:
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
-            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
             << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: " << capabilities.size() << "\r\n"
             << "Content-Type: application/json\r\n"
@@ -2285,7 +2285,7 @@ private:
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
-            << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
             << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
             << "Content-Length: " << responseString.size() << "\r\n"
             << "Content-Type: " << mimeType << "\r\n"
@@ -2345,7 +2345,7 @@ private:
                 LOG_TRC("Conversion not allowed from this address");
                 std::ostringstream oss;
                 oss << "HTTP/1.1 403\r\n"
-                    << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                    << "Date: " << Util::getHttpTimeNow() << "\r\n"
                     << "User-Agent: " << HTTP_AGENT_STRING << "\r\n"
                     << "Content-Length: 0\r\n"
                     << "\r\n";

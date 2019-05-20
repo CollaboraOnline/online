@@ -728,6 +728,17 @@ namespace Util
 
         return base + Util::anonymize(filename) + ext + params;
     }
+
+    std::string getHttpTimeNow()
+    {
+        char time_now[50];
+        std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+        std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+        std::tm now_tm = *std::gmtime(&now_c);
+        strftime(time_now, 50, "%a, %d %b %Y %T", &now_tm);
+
+        return time_now;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
