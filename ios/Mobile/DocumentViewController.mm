@@ -44,6 +44,11 @@
 
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // Prevent the WebView from scrolling. Sadly I couldn't figure out how to do it in the JS,
+    // so the problem is still there when using Online from Mobile Safari.
+    self.webView.scrollView.scrollEnabled = NO;
+
     [self.view addSubview:self.webView];
 
     self.webView.navigationDelegate = self;
