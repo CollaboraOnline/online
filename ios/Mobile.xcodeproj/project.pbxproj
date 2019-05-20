@@ -307,6 +307,68 @@
 		BE34D200219076CF00815297 /* dbfunc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbfunc3.cxx; path = "../../ios-device/sc/source/ui/view/dbfunc3.cxx"; sourceTree = "<group>"; };
 		BE43FD39222693F200376855 /* zcodec.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = zcodec.cxx; path = "../../ios-device/tools/source/zcodec/zcodec.cxx"; sourceTree = "<group>"; };
 		BE43FD4222286B0700376855 /* bootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bootstrap.cxx; path = "../../ios-device/sal/rtl/bootstrap.cxx"; sourceTree = "<group>"; };
+		BE484B86229320E8001EE76C /* types.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = types.cxx; path = "../../ios-device/comphelper/source/misc/types.cxx"; sourceTree = "<group>"; };
+		BE484B87229320E9001EE76C /* graphicmimetype.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicmimetype.cxx; path = "../../ios-device/comphelper/source/misc/graphicmimetype.cxx"; sourceTree = "<group>"; };
+		BE484B88229320E9001EE76C /* logging.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = logging.cxx; path = "../../ios-device/comphelper/source/misc/logging.cxx"; sourceTree = "<group>"; };
+		BE484B89229320E9001EE76C /* comphelper_module.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = comphelper_module.cxx; path = "../../ios-device/comphelper/source/misc/comphelper_module.cxx"; sourceTree = "<group>"; };
+		BE484B8A229320E9001EE76C /* instancelocker.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = instancelocker.cxx; path = "../../ios-device/comphelper/source/misc/instancelocker.cxx"; sourceTree = "<group>"; };
+		BE484B8B229320E9001EE76C /* synchronousdispatch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = synchronousdispatch.cxx; path = "../../ios-device/comphelper/source/misc/synchronousdispatch.cxx"; sourceTree = "<group>"; };
+		BE484B8C229320E9001EE76C /* docpasswordhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docpasswordhelper.cxx; path = "../../ios-device/comphelper/source/misc/docpasswordhelper.cxx"; sourceTree = "<group>"; };
+		BE484B8D229320E9001EE76C /* SelectionMultiplex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SelectionMultiplex.cxx; path = "../../ios-device/comphelper/source/misc/SelectionMultiplex.cxx"; sourceTree = "<group>"; };
+		BE484B8E229320E9001EE76C /* sequenceashashmap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sequenceashashmap.cxx; path = "../../ios-device/comphelper/source/misc/sequenceashashmap.cxx"; sourceTree = "<group>"; };
+		BE484B8F229320E9001EE76C /* accessiblecomponenthelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessiblecomponenthelper.cxx; path = "../../ios-device/comphelper/source/misc/accessiblecomponenthelper.cxx"; sourceTree = "<group>"; };
+		BE484B90229320E9001EE76C /* dispatchcommand.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dispatchcommand.cxx; path = "../../ios-device/comphelper/source/misc/dispatchcommand.cxx"; sourceTree = "<group>"; };
+		BE484B91229320E9001EE76C /* interaction.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = interaction.cxx; path = "../../ios-device/comphelper/source/misc/interaction.cxx"; sourceTree = "<group>"; };
+		BE484B92229320E9001EE76C /* proxyaggregation.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = proxyaggregation.cxx; path = "../../ios-device/comphelper/source/misc/proxyaggregation.cxx"; sourceTree = "<group>"; };
+		BE484B93229320E9001EE76C /* accimplaccess.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accimplaccess.cxx; path = "../../ios-device/comphelper/source/misc/accimplaccess.cxx"; sourceTree = "<group>"; };
+		BE484B94229320E9001EE76C /* evtmethodhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = evtmethodhelper.cxx; path = "../../ios-device/comphelper/source/misc/evtmethodhelper.cxx"; sourceTree = "<group>"; };
+		BE484B95229320E9001EE76C /* instancelocker.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = instancelocker.hxx; path = "../../ios-device/comphelper/source/misc/instancelocker.hxx"; sourceTree = "<group>"; };
+		BE484B96229320E9001EE76C /* fileurl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fileurl.cxx; path = "../../ios-device/comphelper/source/misc/fileurl.cxx"; sourceTree = "<group>"; };
+		BE484B97229320E9001EE76C /* servicedecl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servicedecl.cxx; path = "../../ios-device/comphelper/source/misc/servicedecl.cxx"; sourceTree = "<group>"; };
+		BE484B98229320E9001EE76C /* weak.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = weak.cxx; path = "../../ios-device/comphelper/source/misc/weak.cxx"; sourceTree = "<group>"; };
+		BE484B99229320E9001EE76C /* documentinfo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = documentinfo.cxx; path = "../../ios-device/comphelper/source/misc/documentinfo.cxx"; sourceTree = "<group>"; };
+		BE484B9A229320E9001EE76C /* accessibleeventnotifier.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessibleeventnotifier.cxx; path = "../../ios-device/comphelper/source/misc/accessibleeventnotifier.cxx"; sourceTree = "<group>"; };
+		BE484B9B229320E9001EE76C /* configurationhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configurationhelper.cxx; path = "../../ios-device/comphelper/source/misc/configurationhelper.cxx"; sourceTree = "<group>"; };
+		BE484B9C229320EA001EE76C /* numbers.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = numbers.cxx; path = "../../ios-device/comphelper/source/misc/numbers.cxx"; sourceTree = "<group>"; };
+		BE484B9D229320EA001EE76C /* accessiblecontexthelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessiblecontexthelper.cxx; path = "../../ios-device/comphelper/source/misc/accessiblecontexthelper.cxx"; sourceTree = "<group>"; };
+		BE484B9E229320EA001EE76C /* anytostring.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = anytostring.cxx; path = "../../ios-device/comphelper/source/misc/anytostring.cxx"; sourceTree = "<group>"; };
+		BE484B9F229320EA001EE76C /* syntaxhighlight.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = syntaxhighlight.cxx; path = "../../ios-device/comphelper/source/misc/syntaxhighlight.cxx"; sourceTree = "<group>"; };
+		BE484BA0229320EA001EE76C /* simplefileaccessinteraction.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = simplefileaccessinteraction.cxx; path = "../../ios-device/comphelper/source/misc/simplefileaccessinteraction.cxx"; sourceTree = "<group>"; };
+		BE484BA1229320EA001EE76C /* sequence.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sequence.cxx; path = "../../ios-device/comphelper/source/misc/sequence.cxx"; sourceTree = "<group>"; };
+		BE484BA2229320EA001EE76C /* solarmutex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = solarmutex.cxx; path = "../../ios-device/comphelper/source/misc/solarmutex.cxx"; sourceTree = "<group>"; };
+		BE484BA3229320EA001EE76C /* mimeconfighelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mimeconfighelper.cxx; path = "../../ios-device/comphelper/source/misc/mimeconfighelper.cxx"; sourceTree = "<group>"; };
+		BE484BA4229320EA001EE76C /* sharedmutex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sharedmutex.cxx; path = "../../ios-device/comphelper/source/misc/sharedmutex.cxx"; sourceTree = "<group>"; };
+		BE484BA5229320EA001EE76C /* configuration.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configuration.cxx; path = "../../ios-device/comphelper/source/misc/configuration.cxx"; sourceTree = "<group>"; };
+		BE484BA6229320EA001EE76C /* profilezone.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = profilezone.cxx; path = "../../ios-device/comphelper/source/misc/profilezone.cxx"; sourceTree = "<group>"; };
+		BE484BA7229320EA001EE76C /* storagehelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = storagehelper.cxx; path = "../../ios-device/comphelper/source/misc/storagehelper.cxx"; sourceTree = "<group>"; };
+		BE484BA8229320EA001EE76C /* string.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = string.cxx; path = "../../ios-device/comphelper/source/misc/string.cxx"; sourceTree = "<group>"; };
+		BE484BA9229320EA001EE76C /* officerestartmanager.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = officerestartmanager.hxx; path = "../../ios-device/comphelper/source/misc/officerestartmanager.hxx"; sourceTree = "<group>"; };
+		BE484BAA229320EA001EE76C /* threadpool.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = threadpool.cxx; path = "../../ios-device/comphelper/source/misc/threadpool.cxx"; sourceTree = "<group>"; };
+		BE484BAB229320EB001EE76C /* scopeguard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scopeguard.cxx; path = "../../ios-device/comphelper/source/misc/scopeguard.cxx"; sourceTree = "<group>"; };
+		BE484BAC229320EB001EE76C /* evtlistenerhlp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = evtlistenerhlp.cxx; path = "../../ios-device/comphelper/source/misc/evtlistenerhlp.cxx"; sourceTree = "<group>"; };
+		BE484BAD229320EB001EE76C /* namedvaluecollection.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = namedvaluecollection.cxx; path = "../../ios-device/comphelper/source/misc/namedvaluecollection.cxx"; sourceTree = "<group>"; };
+		BE484BAE229320EB001EE76C /* componentmodule.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = componentmodule.cxx; path = "../../ios-device/comphelper/source/misc/componentmodule.cxx"; sourceTree = "<group>"; };
+		BE484BAF229320EB001EE76C /* backupfilehelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = backupfilehelper.cxx; path = "../../ios-device/comphelper/source/misc/backupfilehelper.cxx"; sourceTree = "<group>"; };
+		BE484BB0229320EB001EE76C /* hash.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hash.cxx; path = "../../ios-device/comphelper/source/misc/hash.cxx"; sourceTree = "<group>"; };
+		BE484BB1229320EB001EE76C /* docpasswordrequest.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docpasswordrequest.cxx; path = "../../ios-device/comphelper/source/misc/docpasswordrequest.cxx"; sourceTree = "<group>"; };
+		BE484BB2229320EB001EE76C /* accessibletexthelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessibletexthelper.cxx; path = "../../ios-device/comphelper/source/misc/accessibletexthelper.cxx"; sourceTree = "<group>"; };
+		BE484BB3229320EB001EE76C /* asyncnotification.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = asyncnotification.cxx; path = "../../ios-device/comphelper/source/misc/asyncnotification.cxx"; sourceTree = "<group>"; };
+		BE484BB4229320EB001EE76C /* anycompare.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = anycompare.cxx; path = "../../ios-device/comphelper/source/misc/anycompare.cxx"; sourceTree = "<group>"; };
+		BE484BB5229320EB001EE76C /* accessiblekeybindinghelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessiblekeybindinghelper.cxx; path = "../../ios-device/comphelper/source/misc/accessiblekeybindinghelper.cxx"; sourceTree = "<group>"; };
+		BE484BB6229320EB001EE76C /* stillreadwriteinteraction.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stillreadwriteinteraction.cxx; path = "../../ios-device/comphelper/source/misc/stillreadwriteinteraction.cxx"; sourceTree = "<group>"; };
+		BE484BB7229320EB001EE76C /* getexpandeduri.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = getexpandeduri.cxx; path = "../../ios-device/comphelper/source/misc/getexpandeduri.cxx"; sourceTree = "<group>"; };
+		BE484BB8229320EC001EE76C /* weakeventlistener.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = weakeventlistener.cxx; path = "../../ios-device/comphelper/source/misc/weakeventlistener.cxx"; sourceTree = "<group>"; };
+		BE484BB9229320EC001EE76C /* componentbase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = componentbase.cxx; path = "../../ios-device/comphelper/source/misc/componentbase.cxx"; sourceTree = "<group>"; };
+		BE484BBA229320EC001EE76C /* automationinvokedzone.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = automationinvokedzone.cxx; path = "../../ios-device/comphelper/source/misc/automationinvokedzone.cxx"; sourceTree = "<group>"; };
+		BE484BBB229320EC001EE76C /* listenernotification.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = listenernotification.cxx; path = "../../ios-device/comphelper/source/misc/listenernotification.cxx"; sourceTree = "<group>"; };
+		BE484BBC229320EC001EE76C /* numberedcollection.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = numberedcollection.cxx; path = "../../ios-device/comphelper/source/misc/numberedcollection.cxx"; sourceTree = "<group>"; };
+		BE484BBD229320EC001EE76C /* base64.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = base64.cxx; path = "../../ios-device/comphelper/source/misc/base64.cxx"; sourceTree = "<group>"; };
+		BE484BBE229320EC001EE76C /* random.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = random.cxx; path = "../../ios-device/comphelper/source/misc/random.cxx"; sourceTree = "<group>"; };
+		BE484BBF229320EC001EE76C /* comphelper_services.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = comphelper_services.cxx; path = "../../ios-device/comphelper/source/misc/comphelper_services.cxx"; sourceTree = "<group>"; };
+		BE484BC0229320EC001EE76C /* officerestartmanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = officerestartmanager.cxx; path = "../../ios-device/comphelper/source/misc/officerestartmanager.cxx"; sourceTree = "<group>"; };
+		BE484BC1229320EC001EE76C /* accessibleselectionhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessibleselectionhelper.cxx; path = "../../ios-device/comphelper/source/misc/accessibleselectionhelper.cxx"; sourceTree = "<group>"; };
+		BE484BC2229320EC001EE76C /* serviceinfohelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = serviceinfohelper.cxx; path = "../../ios-device/comphelper/source/misc/serviceinfohelper.cxx"; sourceTree = "<group>"; };
+		BE484BC3229320EC001EE76C /* accessiblewrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessiblewrapper.cxx; path = "../../ios-device/comphelper/source/misc/accessiblewrapper.cxx"; sourceTree = "<group>"; };
 		BE51F4A82248F39D005129DC /* buttontoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = buttontoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/buttontoolbarcontroller.cxx"; sourceTree = "<group>"; };
 		BE51F4A92248F39D005129DC /* menubarwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menubarwrapper.cxx; path = "../../ios-device/framework/source/uielement/menubarwrapper.cxx"; sourceTree = "<group>"; };
 		BE51F4AA2248F39D005129DC /* comboboxtoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = comboboxtoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/comboboxtoolbarcontroller.cxx"; sourceTree = "<group>"; };
@@ -2074,6 +2136,68 @@
 		BEA8CDC22199AC80009FE17E /* misc */ = {
 			isa = PBXGroup;
 			children = (
+				BE484B8F229320E9001EE76C /* accessiblecomponenthelper.cxx */,
+				BE484B9D229320EA001EE76C /* accessiblecontexthelper.cxx */,
+				BE484B9A229320E9001EE76C /* accessibleeventnotifier.cxx */,
+				BE484BB5229320EB001EE76C /* accessiblekeybindinghelper.cxx */,
+				BE484BC1229320EC001EE76C /* accessibleselectionhelper.cxx */,
+				BE484BB2229320EB001EE76C /* accessibletexthelper.cxx */,
+				BE484BC3229320EC001EE76C /* accessiblewrapper.cxx */,
+				BE484B93229320E9001EE76C /* accimplaccess.cxx */,
+				BE484BB4229320EB001EE76C /* anycompare.cxx */,
+				BE484B9E229320EA001EE76C /* anytostring.cxx */,
+				BE484BB3229320EB001EE76C /* asyncnotification.cxx */,
+				BE484BBA229320EC001EE76C /* automationinvokedzone.cxx */,
+				BE484BAF229320EB001EE76C /* backupfilehelper.cxx */,
+				BE484BBD229320EC001EE76C /* base64.cxx */,
+				BE484B89229320E9001EE76C /* comphelper_module.cxx */,
+				BE484BBF229320EC001EE76C /* comphelper_services.cxx */,
+				BE484BB9229320EC001EE76C /* componentbase.cxx */,
+				BE484BAE229320EB001EE76C /* componentmodule.cxx */,
+				BE484BA5229320EA001EE76C /* configuration.cxx */,
+				BE484B9B229320E9001EE76C /* configurationhelper.cxx */,
+				BE484B90229320E9001EE76C /* dispatchcommand.cxx */,
+				BE484B8C229320E9001EE76C /* docpasswordhelper.cxx */,
+				BE484BB1229320EB001EE76C /* docpasswordrequest.cxx */,
+				BE484B99229320E9001EE76C /* documentinfo.cxx */,
+				BE484BAC229320EB001EE76C /* evtlistenerhlp.cxx */,
+				BE484B94229320E9001EE76C /* evtmethodhelper.cxx */,
+				BE484B96229320E9001EE76C /* fileurl.cxx */,
+				BE484BB7229320EB001EE76C /* getexpandeduri.cxx */,
+				BE484B87229320E9001EE76C /* graphicmimetype.cxx */,
+				BE484BB0229320EB001EE76C /* hash.cxx */,
+				BE484B8A229320E9001EE76C /* instancelocker.cxx */,
+				BE484B95229320E9001EE76C /* instancelocker.hxx */,
+				BE484B91229320E9001EE76C /* interaction.cxx */,
+				BE484BBB229320EC001EE76C /* listenernotification.cxx */,
+				BE484B88229320E9001EE76C /* logging.cxx */,
+				BE484BA3229320EA001EE76C /* mimeconfighelper.cxx */,
+				BE484BAD229320EB001EE76C /* namedvaluecollection.cxx */,
+				BE484BBC229320EC001EE76C /* numberedcollection.cxx */,
+				BE484B9C229320EA001EE76C /* numbers.cxx */,
+				BE484BC0229320EC001EE76C /* officerestartmanager.cxx */,
+				BE484BA9229320EA001EE76C /* officerestartmanager.hxx */,
+				BE484BA6229320EA001EE76C /* profilezone.cxx */,
+				BE484B92229320E9001EE76C /* proxyaggregation.cxx */,
+				BE484BBE229320EC001EE76C /* random.cxx */,
+				BE484BAB229320EB001EE76C /* scopeguard.cxx */,
+				BE484B8D229320E9001EE76C /* SelectionMultiplex.cxx */,
+				BE484BA1229320EA001EE76C /* sequence.cxx */,
+				BE484B8E229320E9001EE76C /* sequenceashashmap.cxx */,
+				BE484B97229320E9001EE76C /* servicedecl.cxx */,
+				BE484BC2229320EC001EE76C /* serviceinfohelper.cxx */,
+				BE484BA4229320EA001EE76C /* sharedmutex.cxx */,
+				BE484BA0229320EA001EE76C /* simplefileaccessinteraction.cxx */,
+				BE484BA2229320EA001EE76C /* solarmutex.cxx */,
+				BE484BB6229320EB001EE76C /* stillreadwriteinteraction.cxx */,
+				BE484BA7229320EA001EE76C /* storagehelper.cxx */,
+				BE484BA8229320EA001EE76C /* string.cxx */,
+				BE484B8B229320E9001EE76C /* synchronousdispatch.cxx */,
+				BE484B9F229320EA001EE76C /* syntaxhighlight.cxx */,
+				BE484BAA229320EA001EE76C /* threadpool.cxx */,
+				BE484B86229320E8001EE76C /* types.cxx */,
+				BE484B98229320E9001EE76C /* weak.cxx */,
+				BE484BB8229320EC001EE76C /* weakeventlistener.cxx */,
 				BEA8CDC32199AC9D009FE17E /* lok.cxx */,
 			);
 			name = misc;
