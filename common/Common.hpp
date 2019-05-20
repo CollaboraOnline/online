@@ -40,10 +40,10 @@ constexpr const char LO_JAIL_SUBPATH[] = "lo";
 constexpr const char CAPABILITIES_END_POINT[] = "/hosting/capabilities";
 
 /// The HTTP response User-Agent.
-constexpr const char* HTTP_AGENT_STRING = "LOOLWSD HTTP Agent " LOOLWSD_VERSION;
+#define HTTP_AGENT_STRING "LOOLWSD HTTP Agent " LOOLWSD_VERSION
 
 /// The WOPI User-Agent.
-constexpr const char* WOPI_AGENT_STRING = "LOOLWSD WOPI Agent " LOOLWSD_VERSION;
+#define WOPI_AGENT_STRING "LOOLWSD WOPI Agent " LOOLWSD_VERSION
 
 // The client port number, both loolwsd and the kits have this.
 extern int ClientPortNumber;

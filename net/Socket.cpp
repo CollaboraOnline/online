@@ -296,7 +296,7 @@ void SocketPoll::clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocke
         "Cache-Control:no-cache\r\n"
         "Pragma:no-cache\r\n"
         "Sec-WebSocket-Version:13\r\n"
-        "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+        "User-Agent: " WOPI_AGENT_STRING "\r\n"
         "\r\n";
     socket->send(oss.str());
     websocketHandler->onConnect(socket);

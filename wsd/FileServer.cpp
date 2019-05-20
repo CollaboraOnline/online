@@ -356,13 +356,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                     Poco::DateTime now;
                     Poco::DateTime later(now.utcTime(), int64_t(1000)*1000 * 60 * 60 * 24 * 128);
                     oss << "HTTP/1.1 304 Not Modified\r\n"
-                        << "Date: " << Poco::DateTimeFormatter::format(
+                        "Date: " << Poco::DateTimeFormatter::format(
                             now, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                        << "Expires: " << Poco::DateTimeFormatter::format(
+                        "Expires: " << Poco::DateTimeFormatter::format(
                             later, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                        << "Cache-Control: max-age=11059200\r\n"
-                        << "\r\n";
+                        "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                        "Cache-Control: max-age=11059200\r\n"
+                        "\r\n";
                     socket->send(oss.str());
                     socket->shutdown();
                     return;
@@ -438,16 +438,16 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
     const std::string& path = requestUri.getPath();
     std::ostringstream oss;
     oss << "HTTP/1.1 " << errorCode << "\r\n"
-        << "Content-Type: text/html charset=UTF-8\r\n"
-        << "Date: " << Util::getHttpTimeNow() << "\r\n"
-        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+        "Content-Type: text/html charset=UTF-8\r\n"
+        "Date: " << Util::getHttpTimeNow() << "\r\n"
+        "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
         << extraHeader
         << "\r\n";
     if (!shortMessage.empty())
     {
         oss << "<h1>Error: " << shortMessage << "</h1>"
-            << "<p>" << longMessage << " " << path << "</p>"
-            << "<p>Please contact your system administrator.</p>";
+            "<p>" << longMessage << " " << path << "</p>"
+            "<p>Please contact your system administrator.</p>";
     }
     socket->send(oss.str());
 }
@@ -660,27 +660,27 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
-        << "Date: " << Util::getHttpTimeNow() << "\r\n"
-        << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-        << "Cache-Control:max-age=11059200\r\n"
-        << "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
-        << "Content-Length: " << preprocess.size() << "\r\n"
-        << "Content-Type: " << mimeType << "\r\n"
-        << "X-Content-Type-Options: nosniff\r\n"
-        << "X-XSS-Protection: 1; mode=block\r\n"
-        << "Referrer-Policy: no-referrer\r\n";
+        "Date: " << Util::getHttpTimeNow() << "\r\n"
+        "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+        "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+        "Cache-Control:max-age=11059200\r\n"
+        "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
+        "Content-Length: " << preprocess.size() << "\r\n"
+        "Content-Type: " << mimeType << "\r\n"
+        "X-Content-Type-Options: nosniff\r\n"
+        "X-XSS-Protection: 1; mode=block\r\n"
+        "Referrer-Policy: no-referrer\r\n";
 
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
-           << "frame-src 'self' blob: " << documentSigningURL << "; "
-           << "connect-src 'self' " << host << "; "
-           << "script-src 'unsafe-inline' 'self'; "
-           << "style-src 'self' 'unsafe-inline'; "
-           << "font-src 'self' data:; "
-           << "object-src blob:; ";
+           "frame-src 'self' blob: " << documentSigningURL << "; "
+           "connect-src 'self' " << host << "; "
+           "script-src 'unsafe-inline' 'self'; "
+           "style-src 'self' 'unsafe-inline'; "
+           "font-src 'self' data:; "
+           "object-src blob:; ";
 
     // Frame ancestors: Allow loolwsd host, wopi host and anything configured.
     std::string configFrameAncestor = config.getString("net.frame_ancestors", "");

@@ -132,11 +132,11 @@ protected:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: " << responseString.size() << "\r\n"
-                << "Content-Type: " << mimeType << "\r\n"
-                << "\r\n"
+                "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "Content-Length: " << responseString.size() << "\r\n"
+                "Content-Type: " << mimeType << "\r\n"
+                "\r\n"
                 << responseString;
 
             socket->send(oss.str());
@@ -155,11 +155,11 @@ protected:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: " << _fileContent.size() << "\r\n"
-                << "Content-Type: " << mimeType << "\r\n"
-                << "\r\n"
+                "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "Content-Length: " << _fileContent.size() << "\r\n"
+                "Content-Type: " << mimeType << "\r\n"
+                "\r\n"
                 << _fileContent;
 
             socket->send(oss.str());
@@ -189,11 +189,11 @@ protected:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: " << content.size() << "\r\n"
-                << "Content-Type: application/json\r\n"
-                << "\r\n"
+                "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "Content-Length: " << content.size() << "\r\n"
+                "Content-Type: application/json\r\n"
+                "\r\n"
                 << content;
 
             socket->send(oss.str());
@@ -216,9 +216,9 @@ protected:
                 {
                     std::ostringstream oss;
                     oss << "HTTP/1.1 409 Conflict\r\n"
-                        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                        << "\r\n"
-                        << "{\"LOOLStatusCode\":" << static_cast<int>(LOOLStatusCode::DocChanged) << "}";
+                        "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                        "\r\n"
+                        "{\"LOOLStatusCode\":" << static_cast<int>(LOOLStatusCode::DocChanged) << "}";
 
                     socket->send(oss.str());
                     socket->shutdown();
@@ -235,9 +235,9 @@ protected:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "\r\n"
-                << "{\"LastModifiedTime\": \"" << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::ISO8601_FRAC_FORMAT) << "\" }";
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "\r\n"
+                "{\"LastModifiedTime\": \"" << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::ISO8601_FRAC_FORMAT) << "\" }";
 
             socket->send(oss.str());
             socket->shutdown();

@@ -2034,10 +2034,10 @@ private:
             LOG_ERR("Looks like SSL/TLS traffic on plain http port");
             std::ostringstream oss;
             oss << "HTTP/1.1 400\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: 0\r\n"
-                << "\r\n";
+                "Date: " << Util::getHttpTimeNow() << "\r\n"
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "Content-Length: 0\r\n"
+                "\r\n";
             socket->send(oss.str());
             socket->shutdown();
             return;
@@ -2133,10 +2133,10 @@ private:
                     // Bad request.
                     std::ostringstream oss;
                     oss << "HTTP/1.1 400\r\n"
-                        << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                        << "Content-Length: 0\r\n"
-                        << "\r\n";
+                        "Date: " << Util::getHttpTimeNow() << "\r\n"
+                        "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                        "Content-Length: 0\r\n"
+                        "\r\n";
                     socket->send(oss.str());
                     socket->shutdown();
                     return;
@@ -2197,11 +2197,11 @@ private:
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
-            << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: " << responseString.size() << "\r\n"
-            << "Content-Type: " << mimeType << "\r\n"
-            << "\r\n";
+            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+            "User-Agent: " WOPI_AGENT_STRING "\r\n"
+            "Content-Length: " << responseString.size() << "\r\n"
+            "Content-Type: " << mimeType << "\r\n"
+            "\r\n";
 
         if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
         {
@@ -2241,12 +2241,12 @@ private:
         // TODO: Refactor this to some common handler.
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
-            << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: " << xml.size() << "\r\n"
-            << "Content-Type: text/xml\r\n"
-            << "X-Content-Type-Options: nosniff\r\n"
-            << "\r\n"
+            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+            "User-Agent: " WOPI_AGENT_STRING "\r\n"
+            "Content-Length: " << xml.size() << "\r\n"
+            "Content-Type: text/xml\r\n"
+            "X-Content-Type-Options: nosniff\r\n"
+            "\r\n"
             << xml;
 
         std::shared_ptr<StreamSocket> socket = _socket.lock();
@@ -2263,12 +2263,12 @@ private:
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
-            << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: " << capabilities.size() << "\r\n"
-            << "Content-Type: application/json\r\n"
-            << "X-Content-Type-Options: nosniff\r\n"
-            << "\r\n"
+            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+            "User-Agent: " WOPI_AGENT_STRING "\r\n"
+            "Content-Length: " << capabilities.size() << "\r\n"
+            "Content-Type: application/json\r\n"
+            "X-Content-Type-Options: nosniff\r\n"
+            "\r\n"
             << capabilities;
 
         auto socket = _socket.lock();
@@ -2285,11 +2285,11 @@ private:
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
-            << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: " << responseString.size() << "\r\n"
-            << "Content-Type: " << mimeType << "\r\n"
-            << "\r\n";
+            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+            "User-Agent: " WOPI_AGENT_STRING "\r\n"
+            "Content-Length: " << responseString.size() << "\r\n"
+            "Content-Type: " << mimeType << "\r\n"
+            "\r\n";
 
         if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
         {
@@ -2345,10 +2345,10 @@ private:
                 LOG_TRC("Conversion not allowed from this address");
                 std::ostringstream oss;
                 oss << "HTTP/1.1 403\r\n"
-                    << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                    << "User-Agent: " << HTTP_AGENT_STRING << "\r\n"
-                    << "Content-Length: 0\r\n"
-                    << "\r\n";
+                    "Date: " << Util::getHttpTimeNow() << "\r\n"
+                    "User-Agent: " HTTP_AGENT_STRING "\r\n"
+                    "Content-Length: 0\r\n"
+                    "\r\n";
                 socket->send(oss.str());
                 socket->shutdown();
                 return;
