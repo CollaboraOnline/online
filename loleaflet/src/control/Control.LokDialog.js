@@ -58,9 +58,19 @@ L.Control.LokDialog = L.Control.extend({
 		var target = findZoomTarget(id);
 
 		if (target) {
+			var newX = target.initialState.startX + ev.deltaX;
+			var newY = target.initialState.startY + ev.deltaY;
+
+			// Don't allow to put dialog outside the view
+			if (window.mode.isDesktop() &&
+				(newX < -target.width/2 || newY < -target.height/2
+				|| newX > window.innerWidth - target.width/2
+				|| newY > window.innerHeight - target.height/2))
+				return;
+
 			target.transformation.translate = {
-				x: target.initialState.startX + ev.deltaX,
-				y: target.initialState.startY + ev.deltaY
+				x: newX,
+				y: newY
 			};
 
 			updateTransformation(target);
@@ -522,7 +532,7 @@ L.Control.LokDialog = L.Control.extend({
 			removeZoomTarget(targetId);
 		}
 
-		zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state});
+		zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state, width:width, height: height});
 
 		var hammerAll = new Hammer(canvas);
 		hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
