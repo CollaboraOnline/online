@@ -159,7 +159,7 @@ public:
         return TerminatingPoll::continuePolling();
     }
 
-    virtual void pollingThread()
+    void pollingThread() override
     {
         // Delegate to the docBroker.
         _docBroker.pollThread();
