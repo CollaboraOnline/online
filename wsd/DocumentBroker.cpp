@@ -1950,13 +1950,18 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
 ConvertToBroker::~ConvertToBroker()
 {
     NumConverters--;
-    if (!_uriOrig.empty())
+    removeFile(_uriOrig);
+}
+
+void ConvertToBroker::removeFile(const std::string &uriOrig)
+{
+    if (!uriOrig.empty())
     {
         // Remove source file and directory
-        Poco::Path path = _uriOrig;
+        Poco::Path path = uriOrig;
         Poco::File(path).remove();
         Poco::File(path.makeParent()).remove();
-        FileUtil::removeFile(_uriOrig);
+        FileUtil::removeFile(uriOrig);
     }
 }
 
