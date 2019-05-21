@@ -21,6 +21,11 @@ L.Control.MobileInput = L.Control.extend({
 		this._currentKeysDown = {};
 		this._ignoreKeypress = false;
 		this._isMobileSafariOriOSApp = window.ThisIsTheiOSApp || navigator.platform === 'iPad' || navigator.platform === 'iPhone';
+
+		// The value of _keyHandled after a complete input sequence of a plain character,
+		// before the next character input, is true, so surely it should then be true from
+		// the start, before the first character input?
+		this._keyHandled = true;
 	},
 
 	onAdd: function () {
@@ -105,6 +110,7 @@ L.Control.MobileInput = L.Control.extend({
 		L.DomEvent.on(this._textArea, stopEvents, L.DomEvent.stopPropagation)
 			.on(this._textArea, 'keydown keypress keyup', this.onKeyEvents, this)
 			.on(this._textArea, 'textInput', this.onTextInput, this)
+			.on(this._textArea, 'paste', this.onPaste, this)
 			.on(this._textArea, 'focus', this.onGotFocus, this)
 			.on(this._textArea, 'blur', this.onLostFocus, this);
 		if (!this._isMobileSafariOriOSApp)
@@ -241,13 +247,30 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	onTextInput: function (e) {
-		// console.log('==> onTextInput: _keyHandled=' + this._keyHandled);
+		// console.log('==> onTextInput: "' + e.data + '" _keyHandled=' + this._keyHandled);
 		if (!this._keyHandled) {
 			this._textData = e.data;
 			this._textArea.value = '';
 		}
 
 		L.DomEvent.stopPropagation(e);
+	},
+
+	onPaste: function (e) {
+		var i;
+		for (i = 0; i < e.clipboardData.items.length; ++i) {
+			if (e.clipboardData.items[i].kind === 'string' && e.clipboardData.items[i].type === 'text/plain') {
+				var map = this._map;
+				e.clipboardData.items[i].getAsString(function (s) {
+					var k;
+					for (k = 0; k < s.length; ++k) {
+						map._docLayer._postKeyboardEvent('input', s[k].charCodeAt(), 0);
+						map._docLayer._postKeyboardEvent('up', s[k].charCodeAt(), 0);
+					}
+				});
+				break;
+			}
+		}
 	},
 
 	onInput: function (e) {
