@@ -484,6 +484,9 @@ public:
 
     /// How many live conversions are running.
     static size_t getInstanceCount();
+
+    /// Cleanup path and its parent
+    static void removeFile(const std::string &uri);
 };
 
 #endif
