@@ -4,6 +4,22 @@
  */
 
 /* global vex $ _ */
+
+
+function moveObjectVertically(obj, diff) {
+	if (obj) {
+		var prevTop = obj.css('top');
+		if (prevTop) {
+			prevTop = parseInt(prevTop.slice(0, -2)) + diff;
+		}
+		else {
+			prevTop = 0 + diff;
+		}
+		obj.css({'top': String(prevTop) + 'px'});
+	}
+}
+
+
 L.Map = L.Evented.extend({
 
 	options: {
@@ -1281,9 +1297,6 @@ L.Map = L.Evented.extend({
 		if (!this.isMenubarHidden())
 			return;
 		$('.main-nav').css({'display': ''});
-		if (closebutton && !window.mode.isTablet()) {
-			$('#closebuttonwrapper').css({'display': ''});
-		}
 
 		var obj = $('.unfold');
 		obj.removeClass('w2ui-icon unfold');
@@ -1298,9 +1311,6 @@ L.Map = L.Evented.extend({
 		if (this.isMenubarHidden())
 			return;
 		$('.main-nav').css({'display': 'none'});
-		if (closebutton) {
-			$('#closebuttonwrapper').css({'display': 'none'});
-		}
 
 		var obj = $('.fold');
 		obj.removeClass('w2ui-icon fold');
