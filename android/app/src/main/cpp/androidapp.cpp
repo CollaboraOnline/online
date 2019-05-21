@@ -44,6 +44,8 @@ JNI_OnLoad(JavaVM* vm, void*) {
         return JNI_ERR; // JNI version not supported.
     }
 
+    Log::initialize("Mobile", "trace", false, false, {});
+
     return JNI_VERSION_1_6;
 }
 
@@ -245,7 +247,6 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
 
     fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
 
-    Log::initialize("Mobile", "trace", false, false, {});
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)
