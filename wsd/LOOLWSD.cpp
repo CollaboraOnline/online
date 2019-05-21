@@ -572,6 +572,9 @@ class ConvertToPartHandler : public PartHandler
 public:
     std::string getFilename() const { return _filename; }
 
+    /// Afterwards someone else is responsible for cleaning that up.
+    void takeFile() { _filename.clear(); }
+
     ConvertToPartHandler(bool convertTo = false)
         : _convertTo(convertTo)
     {
@@ -579,6 +582,11 @@ public:
 
     virtual ~ConvertToPartHandler()
     {
+        if (!_filename.empty())
+        {
+            LOG_TRC("Remove un-handled temporary file '" << _filename << "'");
+            ConvertToBroker::removeFile(_filename);
+        }
     }
 
     virtual void handlePart(const MessageHeader& header, std::istream& stream) override
@@ -2377,6 +2385,7 @@ private:
 
                     LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
                     auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey);
+                    handler.takeFile();
 
                     cleanupDocBrokers();
 
