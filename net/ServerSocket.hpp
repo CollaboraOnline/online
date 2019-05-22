@@ -107,7 +107,7 @@ class LocalServerSocket : public ServerSocket
 {
 public:
     LocalServerSocket(SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
-        ServerSocket(Socket::Type::Unix, clientPoller, sockFactory)
+        ServerSocket(Socket::Type::Unix, clientPoller, std::move(sockFactory))
     {
     }
     virtual bool bind(Type, int) override { assert(false); return false; }
