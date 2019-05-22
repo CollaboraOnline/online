@@ -91,7 +91,8 @@ public:
 
     bool expectString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, std::string str)
     {
-        char buffer[str.size() + 64] = { 0, };
+        char buffer[str.size() + 64];
+        memset(&buffer, 0, sizeof(buffer));
         int got = socket->receiveBytes(buffer, str.size());
         if (got != (int)str.size() ||
             strncmp(buffer, str.c_str(), got))
