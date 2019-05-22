@@ -1461,7 +1461,8 @@ private:
                 const std::string& renderOpts,
                 const bool haveDocPassword,
                 const std::string& lang,
-                const std::string& watermarkText) override
+                const std::string& watermarkText,
+                const std::string& docTemplate) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -1490,7 +1491,7 @@ private:
 
         try
         {
-            if (!load(session, uri, uriAnonym, userName, userNameAnonym, docPassword, renderOpts, haveDocPassword, lang, watermarkText))
+            if (!load(session, uri, uriAnonym, userName, userNameAnonym, docPassword, renderOpts, haveDocPassword, lang, watermarkText, docTemplate))
             {
                 return false;
             }
@@ -1738,7 +1739,8 @@ private:
                                         const std::string& renderOpts,
                                         const bool haveDocPassword,
                                         const std::string& lang,
-                                        const std::string& watermarkText)
+                                        const std::string& watermarkText,
+                                        const std::string& docTemplate)
     {
         const std::string sessionId = session->getId();
 
@@ -1769,7 +1771,7 @@ private:
 
             LOG_DBG("Calling lokit::documentLoad(" << uriAnonym << ", \"" << options << "\").");
             Timestamp timestamp;
-            _loKitDocument.reset(_loKit->documentLoad(uri.c_str(), options.c_str()));
+            _loKitDocument.reset(_loKit->documentLoad(docTemplate.empty() ? uri.c_str() : docTemplate.c_str(), options.c_str()));
             LOG_DBG("Returned lokit::documentLoad(" << uriAnonym << ") in " << (timestamp.elapsed() / 1000.) << "ms.");
 #ifdef IOS
             // The iOS app (and the Android one) has max one document open at a time, so we can keep

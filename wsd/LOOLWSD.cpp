@@ -2840,6 +2840,9 @@ private:
         // Supports the TemplateSaveAs in CheckFileInfo?
         capabilities->set("hasTemplateSaveAs", true);
 
+        // Supports the TemplateSource in CheckFileInfo?
+        capabilities->set("hasTemplateSource", true);
+
         // Hint to encourage use on mobile devices
         capabilities->set("hasMobileSupport", true);
 

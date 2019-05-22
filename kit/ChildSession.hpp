@@ -48,7 +48,8 @@ public:
                         const std::string& renderOpts,
                         const bool haveDocPassword,
                         const std::string& lang,
-                        const std::string& watermarkText) = 0;
+                        const std::string& watermarkText,
+                        const std::string& docTemplate) = 0;
 
     /// Unload a client session, which unloads the document
     /// if it is the last and only.

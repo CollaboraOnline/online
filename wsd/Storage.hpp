@@ -189,7 +189,7 @@ public:
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
-    virtual std::string loadStorageFileToLocal(const Authorization& auth) = 0;
+    virtual std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) = 0;
 
     /// Writes the contents of the file back to the source.
     /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
@@ -272,7 +272,7 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    std::string loadStorageFileToLocal(const Authorization& auth) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
 
     SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 
@@ -312,6 +312,7 @@ public:
                      const std::string& userExtraInfo,
                      const std::string& watermarkText,
                      const std::string& templateSaveAs,
+                     const std::string& templateSource,
                      const bool userCanWrite,
                      const std::string& postMessageOrigin,
                      const bool hidePrintOption,
@@ -338,6 +339,7 @@ public:
               _username(username),
               _watermarkText(watermarkText),
               _templateSaveAs(templateSaveAs),
+              _templateSource(templateSource),
               _userCanWrite(userCanWrite),
               _postMessageOrigin(postMessageOrigin),
               _hidePrintOption(hidePrintOption),
@@ -372,6 +374,8 @@ public:
         const std::string& getWatermarkText() const { return _watermarkText; }
 
         const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
+
+        const std::string& getTemplateSource() const { return _templateSource; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
 
@@ -432,6 +436,8 @@ public:
         std::string _watermarkText;
         /// In case we want to use this file as a template, it should be first re-saved under this name (using PutRelativeFile).
         std::string _templateSaveAs;
+        /// In case we want to use this file as a template.
+        std::string _templateSource;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property
@@ -486,7 +492,7 @@ public:
     std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth);
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
-    std::string loadStorageFileToLocal(const Authorization& auth) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
 
     SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 
@@ -516,7 +522,7 @@ public:
     // Implement me
     // WebDAVFileInfo getWebDAVFileInfo(const Poco::URI& uriPublic);
 
-    std::string loadStorageFileToLocal(const Authorization& auth) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
 
     SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 

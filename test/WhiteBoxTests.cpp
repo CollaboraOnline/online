@@ -502,7 +502,8 @@ public:
                 const std::string& /*renderOpts*/,
                 const bool /*haveDocPassword*/,
                 const std::string& /*lang*/,
-                const std::string& /*watermarkText*/) override
+                const std::string& /*watermarkText*/,
+                const std::string& /*docTemplate*/) override
     {
         return false;
     }

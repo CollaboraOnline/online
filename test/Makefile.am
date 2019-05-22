@@ -9,7 +9,7 @@ check_PROGRAMS = test fakesockettest
 
 noinst_PROGRAMS = test fakesockettest unittest
 
-AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\" \
+AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
 noinst_LTLIBRARIES = \
@@ -21,8 +21,7 @@ noinst_LTLIBRARIES = \
 	unit-wopi.la unit-wopi-saveas.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
 	unit-wopi-documentconflict.la unit_wopi_renamefile.la \
-	unit-wopi-loadencoded.la
-
+	unit-wopi-loadencoded.la unit-wopi-temp.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS)
@@ -114,6 +113,8 @@ unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
 unit_wopi_renamefile_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
 unit_wopi_loadencoded_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
+unit_wopi_temp_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -134,7 +135,7 @@ TESTS = unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
         unit-wopi-documentconflict.la unit_wopi_renamefile.la \
 	unit-http.la \
-	unit-wopi-loadencoded.la
+	unit-wopi-loadencoded.la unit-wopi-temp.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
 # TESTS += unit-storage.la
