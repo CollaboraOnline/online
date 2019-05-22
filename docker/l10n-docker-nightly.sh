@@ -40,15 +40,6 @@ if [ -z "$LIBREOFFICE_BUILD_TARGET" ]; then
 fi;
 echo "LibreOffice build target: '$LIBREOFFICE_BUILD_TARGET'"
 
-# check if we have jake
-which jake || { cat << EOF
-
-jake is not installed, get it like:
-
-  npm install -g jake
-EOF
-exit 1 ; }
-
 # do everything in the builddir
 SRCDIR=$(realpath `dirname $0`)
 INSTDIR="$SRCDIR/instdir"

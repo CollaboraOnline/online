@@ -7,10 +7,6 @@ This is the client part of LibreOffice Online.  For the server part, see the
 Build dependencies
 ------------------
 
-First you need to install 'jake'.  As root, do:
-
-    npm install -g jake
-
 npm is provided by the nodejs package.
 
 npm should be at least 2.14, if not 3.x. Use `npm -v` to find the current version.
@@ -353,7 +349,6 @@ Contributing
 
 Code conventions:
 
-    * 'jake lint' should be run before commiting
     * files should have unix line terminators (LF)
     * tools to convert files: dos2unix or fromdos
 
