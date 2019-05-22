@@ -534,8 +534,8 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
         return false;
     }
 
-    std::string timestamp;
-    parseDocOptions(tokens, part, timestamp);
+    std::string timestamp, doctemplate;
+    parseDocOptions(tokens, part, timestamp, doctemplate);
 
     std::string renderOpts;
     if (!getDocOptions().empty())
@@ -556,7 +556,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
     const bool loaded = _docManager.onLoad(getId(), getJailedFilePath(), getJailedFilePathAnonym(),
                                            getUserName(), getUserNameAnonym(),
                                            getDocPassword(), renderOpts, getHaveDocPassword(),
-                                           getLang(), getWatermarkText());
+                                           getLang(), getWatermarkText(), doctemplate);
     if (!loaded || _viewId < 0)
     {
         LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << "].");
@@ -565,6 +565,17 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     LOG_INF("Created new view with viewid: [" << _viewId << "] for username: [" <<
             getUserNameAnonym() << "] in session: [" << getId() << "].");
+
+    if (!doctemplate.empty())
+    {
+        std::string url = getJailedFilePath();
+        bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, nullptr);
+        if (!success)
+        {
+            LOG_ERR("Failed to save template [" << getJailedFilePath() << "].");
+            return false;
+        }
+    }
 
     getLOKitDocument()->setView(_viewId);
 

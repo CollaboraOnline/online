@@ -518,6 +518,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     std::string userId, username;
     std::string userExtraInfo;
     std::string watermarkText;
+    std::string templateSource;
 
 #if !MOBILEAPP
     std::chrono::duration<double> getInfoCallDuration(0);
@@ -529,6 +530,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
         watermarkText = wopifileinfo->getWatermarkText();
+        templateSource = wopifileinfo->getTemplateSource();
 
         if (!wopifileinfo->getUserCanWrite() ||
             LOOLWSD::IsViewFileExtension(wopiStorage->getFileExtension()))
@@ -562,6 +564,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
         if (!wopifileinfo->getTemplateSaveAs().empty())
             wopiInfo->set("TemplateSaveAs", wopifileinfo->getTemplateSaveAs());
+
+        if (!templateSource.empty())
+                wopiInfo->set("TemplateSource", templateSource);
 
         wopiInfo->set("HidePrintOption", wopifileinfo->getHidePrintOption());
         wopiInfo->set("HideSaveOption", wopifileinfo->getHideSaveOption());
@@ -675,7 +680,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
-        std::string localPath = _storage->loadStorageFileToLocal(session->getAuthorization());
+        std::string localPath = _storage->loadStorageFileToLocal(session->getAuthorization(), templateSource);
 
 #if !MOBILEAPP
         // Check if we have a prefilter "plugin" for this document format
@@ -748,7 +753,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         _filename = fileInfo.getFilename();
 
         // Use the local temp file's timestamp.
-        _lastFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
+        _lastFileModifiedTime = templateSource.empty() ? Poco::File(_storage->getRootFilePath()).getLastModified() :
+                Poco::Timestamp::fromEpochTime(0);
 
         bool dontUseCache = false;
 #if MOBILEAPP
