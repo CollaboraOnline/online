@@ -17,7 +17,7 @@
 echo "Trying if sudo works without a password"
 echo
 echo "If you get a password prompt now, break, and fix your setup using 'sudo visudo'; add something like:"
-echo "yourusername ALL=(ALL) NOPASSWD: ALL"
+echo "yourusername ALL=(ALL) NOPASSWD: /sbin/setcap"
 echo
 sudo echo "works"
 
