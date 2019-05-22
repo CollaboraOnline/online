@@ -184,6 +184,9 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'backcolor' && typeof e.color !== 'undefined') {
 		onColorPick(id, e.color)
 	}
+	else if (id === 'backgroundcolor' && typeof e.color !== 'undefined') {
+		onColorPick(id, e.color)
+	}
 	else if (id === 'sum') {
 		map.sendUnoCommand('.uno:AutoSum');
 	}
@@ -585,10 +588,19 @@ function onColorPick(id, color) {
 		command[fontcolor].value = color;
 		var uno = '.uno:' + fontcolor;
 	}
+	// "backcolor" can be used in Writer and Impress and translates to "Highlighting" while
+	// "backgroundcolor" can be used in Writer and Calc and translates to "Background color".
 	else if (id === 'backcolor') {
 		backcolor = {'text': 'BackColor',
-					 'spreadsheet': 'BackgroundColor',
 					 'presentation': 'CharBackColor'}[map.getDocType()];
+		command[backcolor] = {};
+		command[backcolor].type = 'long';
+		command[backcolor].value = color;
+		uno = '.uno:' + backcolor;
+	}
+	else if (id === 'backgroundcolor') {
+		backcolor = {'text': 'BackgroundColor',
+					 'spreadsheet': 'BackgroundColor'}[map.getDocType()];
 		command[backcolor] = {};
 		command[backcolor].type = 'long';
 		command[backcolor].value = color;
@@ -629,7 +641,8 @@ function createToolbar() {
 		{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout', disabled: true},
 		{type: 'break', id: 'breakformatting'},
 		{type: 'text-color',  id: 'fontcolor', hint: _UNO('.uno:FontColor')},
-		{type: 'color',  id: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
+		{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor')},
+		{type: 'color',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor')},
 		{type: 'break', id: 'breakcolor'},
 		{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara', unosheet: 'AlignLeft', disabled: true},
 		{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true), uno: 'CenterPara', unosheet: 'AlignHorizontalCenter', disabled: true},
@@ -1395,7 +1408,7 @@ function onDocLayerInit() {
 
 	switch (docType) {
 	case 'spreadsheet':
-		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering');
+		toolbarUp.remove('inserttable', 'styles', 'justifypara', 'defaultbullet', 'defaultnumbering', 'break-numbering', 'backcolor');
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id:'break1'},
@@ -1434,7 +1447,7 @@ function onDocLayerInit() {
 
 		break;
 	case 'text':
-		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
+		toolbarUp.remove('wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset', 'backgroundcolor');
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
@@ -1467,7 +1480,7 @@ function onDocLayerInit() {
 		if (!map['wopi'].HideExportOption) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset', 'backgroundcolor');
 		if (!_useSimpleUI()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
@@ -1489,7 +1502,7 @@ function onDocLayerInit() {
 
 		break;
 	case 'drawing':
-		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset');
+		toolbarUp.remove('insertannotation', 'wraptextseparator', 'wraptext', 'togglemergecells', 'break-toggle', 'numberformatcurrency', 'numberformatpercent', 'numberformatdecimal', 'numberformatdate', 'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'sortascending', 'sortdescending', 'setborderstyle', 'conditionalformaticonset', 'backgroundcolor');
 
 		// Remove irrelevant toolbars
 		$('#formulabar').hide();
