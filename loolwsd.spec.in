@@ -99,13 +99,13 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/bin/loolforkit
 /usr/bin/loolconvert
 /usr/bin/loolconfig
-/usr/share/loolwsd/discovery.xml
-/usr/share/loolwsd/favicon.ico
-/usr/share/loolwsd/loleaflet
-/usr/share/doc/loolwsd/README
-/usr/share/doc/loolwsd/README.vars
-/usr/share/doc/loolwsd/protocol.txt
-/usr/share/doc/loolwsd/reference.md
+/usr/share/libreoffice-online/discovery.xml
+/usr/share/libreoffice-online/favicon.ico
+/usr/share/libreoffice-online/loleaflet
+/usr/share/doc/libreoffice-online/README
+/usr/share/doc/libreoffice-online/README.vars
+/usr/share/doc/libreoffice-online/protocol.txt
+/usr/share/doc/libreoffice-online/reference.md
 /usr/share/man/man1/loolwsd.1
 /usr/share/man/man1/loolforkit.1
 /usr/share/man/man1/loolconvert.1
@@ -122,8 +122,8 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 
 %config(noreplace) /etc/cron.d/loolwsd.cron
 %config(noreplace) /etc/pam.d/loolwsd
-%config(noreplace) %attr(640, lool, root) /etc/loolwsd/loolwsd.xml
-%config /etc/loolwsd/loolkitconfig.xcu
+%config(noreplace) %attr(640, lool, root) /etc/libreoffice-online/loolwsd.xml
+%config /etc/libreoffice-online/loolkitconfig.xcu
 
 %doc README
 
