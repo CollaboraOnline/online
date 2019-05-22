@@ -1846,9 +1846,7 @@ private:
         try
         {
 #if !MOBILEAPP
-            size_t requestSize = 0;
-
-            if (!socket->parseHeader("Prisoner", message, request, &requestSize))
+            if (!socket->parseHeader("Prisoner", message, request))
                 return;
 
             LOG_TRC("Child connection with URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
@@ -2061,16 +2059,23 @@ private:
             return;
         }
 
-        Poco::MemoryInputStream message(&socket->getInBuffer()[0],
-                                        socket->getInBuffer().size());;
+        Poco::MemoryInputStream startmessage(&socket->getInBuffer()[0],
+                                             socket->getInBuffer().size());;
         Poco::Net::HTTPRequest request;
-        size_t requestSize = 0;
 
-        if (!socket->parseHeader("Client", message, request, &requestSize))
+        StreamSocket::MessageMap map;
+        if (!socket->parseHeader("Client", startmessage, request, &map))
             return;
 
         try
         {
+            // We may need to re-write the chunks moving the inBuffer.
+            socket->compactChunks(&map);
+            Poco::MemoryInputStream message(&socket->getInBuffer()[0],
+                                            socket->getInBuffer().size());
+            // update the read cursor - headers are not altered by chunks.
+            message.seekg(startmessage.tellg(), std::ios::beg);
+
             // Check and remove the ServiceRoot from the request.getURI()
             if (!Util::startsWith(request.getURI(), LOOLWSD::ServiceRoot))
                 throw BadRequestException("The request does not start with prefix: " + LOOLWSD::ServiceRoot);
@@ -2181,7 +2186,7 @@ private:
 
         // if we succeeded - remove the request from our input buffer
         // we expect one request per socket
-        socket->eraseFirstInputBytes(requestSize);
+        socket->eraseFirstInputBytes(map);
 #else
         Poco::Net::HTTPRequest request;
         handleClientWsUpgrade(request, std::string(socket->getInBuffer().data(), socket->getInBuffer().size()), disposition);
@@ -2346,7 +2351,8 @@ private:
         return "application/octet-stream";
     }
 
-    void handlePostRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
+    void handlePostRequest(const Poco::Net::HTTPRequest& request,
+                           Poco::MemoryInputStream& message,
                            SocketDisposition &disposition)
     {
         LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(request.getURI()) << "]");

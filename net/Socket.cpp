@@ -627,14 +627,21 @@ std::string LocalServerSocket::bind()
     return "";
 }
 
+// For a verbose life, tweak here:
+#if 0
+#  define LOG_CHUNK(X) LOG_TRC(X)
+#else
+#  define LOG_CHUNK(X)
+#endif
+
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,
                                Poco::Net::HTTPRequest &request,
-                               size_t *requestSize)
+                               MessageMap *map)
 {
     LOG_TRC("#" << getFD() << " handling incoming " << _inBuffer.size() << " bytes.");
 
-    assert(!requestSize || *requestSize == 0);
+    assert(!map || (map->_headerSize == 0 && map->_messageSize == 0));
 
     // Find the end of the header, if any.
     static const std::string marker("\r\n\r\n");
@@ -648,8 +655,11 @@ bool StreamSocket::parseHeader(const char *clientName,
 
     // Skip the marker.
     itBody += marker.size();
-    if (requestSize)
-        *requestSize = static_cast<size_t>(itBody - _inBuffer.begin());
+    if (map) // a reasonable guess so far
+    {
+        map->_headerSize = static_cast<size_t>(itBody - _inBuffer.begin());
+        map->_messageSize = map->_headerSize;
+    }
 
     try
     {
@@ -680,6 +690,8 @@ bool StreamSocket::parseHeader(const char *clientName,
             LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
             return false;
         }
+        if (map)
+            map->_messageSize += contentLength;
 
         if (request.getExpectContinue() && !_sentHTTPContinue)
         {
@@ -688,6 +700,79 @@ bool StreamSocket::parseHeader(const char *clientName,
             send("HTTP/1.1 100 Continue\r\n\r\n",
                  sizeof("HTTP/1.1 100 Continue\r\n\r\n") - 1);
             _sentHTTPContinue = true;
+        }
+
+        if (request.getChunkedTransferEncoding())
+        {
+            // keep the header
+            if (map)
+                map->_spans.push_back(std::pair<size_t, size_t>(0, itBody - _inBuffer.begin()));
+
+            int chunk = 0;
+            while (itBody != _inBuffer.end())
+            {
+                auto chunkStart = itBody;
+
+                // skip whitespace
+                for (; itBody != _inBuffer.end() && isascii(*itBody) && isspace(*itBody); ++itBody)
+                    ; // skip.
+
+                // each chunk is preceeded by its length in hex.
+                size_t chunkLen = 0;
+                for (; itBody != _inBuffer.end(); ++itBody)
+                {
+                    int digit = Util::hexDigitFromChar(*itBody);
+                    if (digit >= 0)
+                        chunkLen = chunkLen * 16 + digit;
+                    else
+                        break;
+                }
+
+                LOG_CHUNK("Chunk of length " << chunkLen);
+
+                for (; itBody != _inBuffer.end() && *itBody != '\n'; ++itBody)
+                    ; // skip to end of line
+
+                if (itBody != _inBuffer.end())
+                    itBody++; /* \n */;
+
+                // skip the chunk.
+                auto chunkOffset = itBody - _inBuffer.begin();
+                auto chunkAvailable = _inBuffer.size() - chunkOffset;
+
+                if (chunkLen == 0) // we're complete.
+                {
+                    map->_messageSize = chunkOffset;
+                    return true;
+                }
+
+                if (chunkLen > chunkAvailable + 2)
+                {
+                    LOG_DBG("Not enough content yet in chunk " << chunk <<
+                            " starting at offset " << (chunkStart - _inBuffer.begin()) <<
+                            " chunk len: " << chunkLen << ", available: " << chunkAvailable);
+                    return false;
+                }
+                itBody += chunkLen;
+
+                map->_spans.push_back(std::pair<size_t,size_t>(chunkOffset, chunkLen));
+
+                if (*itBody != '\r' || *(itBody + 1) != '\n')
+                {
+                    LOG_ERR("Missing \\r\\n at end of chunk " << chunk << " of length " << chunkLen);
+                    LOG_CHUNK("Chunk " << chunk << " is: \n" << Util::dumpHex("", "", chunkStart, itBody + 1, false));
+                    return false; // TODO: throw something sensible in this case
+                }
+                else
+                {
+                    LOG_CHUNK("Chunk " << chunk << " is: \n" << Util::dumpHex("", "", chunkStart, itBody + 1, false));
+                }
+
+                itBody+=2;
+                chunk++;
+            }
+            LOG_TRC("Not enough chunks yet, so far " << chunk << " chunks of total length " << (itBody - _inBuffer.begin()));
+            return false;
         }
     }
     catch (const Poco::Exception& exc)
@@ -704,6 +789,39 @@ bool StreamSocket::parseHeader(const char *clientName,
         // TODO: timeout if we never get enough.
         return false;
     }
+
+    return true;
+}
+
+bool StreamSocket::compactChunks(MessageMap *map)
+{
+    assert (map);
+    if (!map->_spans.size())
+        return false; // single message.
+
+    LOG_CHUNK("Pre-compact " << map->_spans.size() << " chunks: \n" <<
+              Util::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
+
+    char *first = &_inBuffer[0];
+    char *dest = first;
+    for (auto &span : map->_spans)
+    {
+        std::memmove(dest, &_inBuffer[span.first], span.second);
+        dest += span.second;
+    }
+
+    // Erase the duplicate bits.
+    size_t newEnd = dest - first;
+    size_t gap = map->_messageSize - newEnd;
+    _inBuffer.erase(_inBuffer.begin() + newEnd, _inBuffer.begin() + map->_messageSize);
+
+    LOG_CHUNK("Post-compact with erase of " << newEnd << " to " << map->_messageSize << " giving: \n" <<
+              Util::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
+
+    // shrink our size to fit
+    map->_messageSize -= gap;
+
+    dumpState(std::cerr);
 
     return true;
 }
