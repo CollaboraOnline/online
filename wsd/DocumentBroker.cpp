@@ -1957,11 +1957,14 @@ void ConvertToBroker::removeFile(const std::string &uriOrig)
 {
     if (!uriOrig.empty())
     {
-        // Remove source file and directory
-        Poco::Path path = uriOrig;
-        Poco::File(path).remove();
-        Poco::File(path.makeParent()).remove();
-        FileUtil::removeFile(uriOrig);
+        try {
+            // Remove source file and directory
+            Poco::Path path = uriOrig;
+            Poco::File(path).remove();
+            Poco::File(path.makeParent()).remove();
+        } catch (const std::exception &ex) {
+            LOG_ERR("Error while removing conversion temporary: '" << uriOrig << "' - " << ex.what());
+        }
     }
 }
 
