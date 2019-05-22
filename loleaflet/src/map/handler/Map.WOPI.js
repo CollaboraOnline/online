@@ -175,10 +175,12 @@ L.Map.WOPI = L.Handler.extend({
 						w2ui['editbar'].insert(insertBefore, [
 							{
 								type: 'button',
+								uno: msg.Values.unoCommand,
 								id: msg.Values.id,
 								img: msg.Values.id,
 								hint: _(msg.Values.hint), /* "Try" to localize ! */
-								postmessage: true /* Notify the host back when button is clicked */
+								/* Notify the host back when button is clicked (only when unoCommand is not set) */
+								postmessage: !msg.Values.hasOwnProperty('unoCommand')
 							}
 						]);
 						if (msg.Values.mobile)

@@ -3096,12 +3096,14 @@ Editor to WOPI host
 		    <nobr>mobile: &lt;boolean&gt;</nobr><br/>
 		    <nobr>label: &lt;string&gt;</nobr><br/>
 		    <nobr>insertBefore: &lt;string&gt;</nobr><br/>
+		    <nobr>unoCommand: &lt;string&gt;</nobr><br/>
 		</code></td>
 		<td>
-		  Inserts the button to the left of the top toolbar. Only thing
-		  that it does is response to click events based on which hosts
-		  can act accordingly. It responds
-		  with <code>Clicked_Button</code> post message event.<br/>
+		  Inserts a button to the top toolbar.
+
+		  It responds with <code>Clicked_Button</code> post message event
+		  on which hosts can react accordingly
+		  (except when the <code>unoCommand</code> property is set).<br/>
 		  <code>id</code> parameter is a unique id of the toolbar
 		  button. It is recommended to prefix such ids given here with
 		  some host namespace so that it doesn't conflict with existing
@@ -3121,6 +3123,9 @@ Editor to WOPI host
 		  <code>insertBefore</code> Specify the position where the button
 		  should be inserted.
 		  <code>insertBefore</code> is the button ID (see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>).
+		  <code>unoCommand</code> UNO Command to be executed on button click
+		  (<a href="https://wiki.documentfoundation.org/Development/DispatchCommands">Reference</a>). When this property
+		  is set, no 'Clicked_Button' response is sent. The button click will be handled by LibreOffice.
 		</td>
 	</tr>
 	<tr>
