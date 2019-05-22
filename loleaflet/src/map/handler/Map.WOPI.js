@@ -140,7 +140,14 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
-		var msg = JSON.parse(e.data);
+		var msg;
+		try {
+			msg = JSON.parse(e.data);
+		} catch (e) {
+			console.error(e);
+			return;
+		}
+
 		if (msg.MessageId === 'Host_PostmessageReady') {
 			// We already have a listener for this in loleaflet.html, so ignore it here
 			return;
