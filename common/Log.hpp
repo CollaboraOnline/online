@@ -15,6 +15,7 @@
 
 #include <cstddef>
 #include <functional>
+#include <iostream>
 #include <thread>
 #include <sstream>
 #include <string>
@@ -341,6 +342,7 @@ namespace Log
 #define LOG_FTL(X)                                  \
     do                                              \
     {                                               \
+        std::cerr << X << std::endl;                \
         auto &log_ = Log::logger();                 \
         if (log_.fatal())                           \
         {                                           \
