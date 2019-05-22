@@ -272,7 +272,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), "LocalHost#" + std::to_string(LastLocalStorageId++)}));
 }
 
-std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
+std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/, const std::string& /*templateUri*/)
 {
 #ifndef MOBILEAPP
     // /chroot/jailId/user/doc/childId/file.ext
@@ -515,6 +515,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     std::string userExtraInfo;
     std::string watermarkText;
     std::string templateSaveAs;
+    std::string templateSource;
     bool canWrite = false;
     bool enableOwnerTermination = false;
     std::string postMessageOrigin;
@@ -549,6 +550,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "UserId", userId);
         JsonUtil::findJSONValue(object, "UserFriendlyName", userName);
         JsonUtil::findJSONValue(object, "TemplateSaveAs", templateSaveAs);
+        JsonUtil::findJSONValue(object, "TemplateSource", templateSource);
 
         // Anonymize key values.
         if (LOOLWSD::AnonymizeFilenames || LOOLWSD::AnonymizeUsernames)
@@ -587,6 +589,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             {
                 object->remove("BaseFileName");
                 object->remove("TemplateSaveAs");
+                object->remove("TemplateSource");
             }
 
             if (LOOLWSD::AnonymizeUsernames)
@@ -643,8 +646,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     setFileInfo(FileInfo({filename, ownerId, modifiedTime, size}));
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
-        {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, canWrite,
-         postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
+        {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, templateSource,
+         canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
          enableOwnerTermination, disablePrint, disableExport, disableCopy,
          disableInactiveMessages, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,
          hideUserList, disableChangeTrackingShow, disableChangeTrackingRecord,
@@ -652,7 +655,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
-std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
+std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri)
 {
     // WOPI URI to download files ends in '/contents'.
     // Add it here to get the payload instead of file info.
@@ -673,6 +676,17 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
     Poco::URI uriObjectAnonym(getUri());
     uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
     const std::string uriAnonym = uriObjectAnonym.toString();
+
+    if (!templateUri.empty())
+    {
+        // template are created in kit process, so just obtain a reference
+        setRootFilePath(Poco::Path(getLocalRootPath(), getFileInfo().getFilename()).toString());
+        setRootFilePathAnonym(LOOLWSD::anonymizeUrl(getRootFilePath()));
+        LOG_INF("Template reference " << getRootFilePathAnonym());
+
+        setLoaded(true);
+        return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
+    }
 
     LOG_DBG("Wopi requesting: " << uriAnonym);
 
@@ -955,7 +969,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     return saveResult;
 }
 
-std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/)
+std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/, const std::string& /*templateUri*/)
 {
     // TODO: implement webdav GET.
     setLoaded(true);

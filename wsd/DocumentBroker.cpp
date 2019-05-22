@@ -290,7 +290,6 @@ void DocumentBroker::pollThread()
 
             if (_childProcess)
                 _childProcess->terminate();
-
             stop("Load timed out");
             continue;
         }
@@ -513,6 +512,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     std::string userId, username;
     std::string userExtraInfo;
     std::string watermarkText;
+    std::string templateSource;
 
 #ifndef MOBILEAPP
     std::chrono::duration<double> getInfoCallDuration(0);
@@ -524,6 +524,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
         watermarkText = wopifileinfo->getWatermarkText();
+        templateSource = wopifileinfo->getTemplateSource();
 
         if (!wopifileinfo->getUserCanWrite() ||
             LOOLWSD::IsViewFileExtension(wopiStorage->getFileExtension()))
@@ -557,6 +558,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
         if (!wopifileinfo->getTemplateSaveAs().empty())
             wopiInfo->set("TemplateSaveAs", wopifileinfo->getTemplateSaveAs());
+
+        if (!templateSource.empty())
+                wopiInfo->set("TemplateSource", templateSource);
 
         wopiInfo->set("HidePrintOption", wopifileinfo->getHidePrintOption());
         wopiInfo->set("HideSaveOption", wopifileinfo->getHideSaveOption());
@@ -673,7 +677,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
-        std::string localPath = _storage->loadStorageFileToLocal(session->getAuthorization());
+        std::string localPath = _storage->loadStorageFileToLocal(session->getAuthorization(), templateSource);
 
 #ifndef MOBILEAPP
         // Check if we have a prefilter "plugin" for this document format
@@ -746,7 +750,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         _filename = fileInfo.getFilename();
 
         // Use the local temp file's timestamp.
-        _lastFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
+        _lastFileModifiedTime = templateSource.empty() ? Poco::File(_storage->getRootFilePath()).getLastModified() :
+                Poco::Timestamp::fromEpochTime(0);
         _tileCache.reset(new TileCache(_storage->getUriString(), _lastFileModifiedTime, _cacheRoot, LOOLWSD::TileCachePersistent));
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
@@ -1454,7 +1459,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
 
     LOG_TRC("TileCombined request for " << tileCombined.serialize());
 
-    // Check which newly requested tiles needs rendering.
+    // Check which newly requested tiles need rendering.
     std::vector<TileDesc> tilesNeedsRendering;
     for (auto& tile : tileCombined.getTiles())
     {
@@ -1537,7 +1542,6 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     float tilesOnFlyUpperLimit = 0;
     if (normalizedVisArea.hasSurface() && session->getTileWidthInTwips() != 0 && session->getTileHeightInTwips() != 0)
     {
-
         const int tilesFitOnWidth = std::ceil(normalizedVisArea.getRight() / session->getTileWidthInTwips()) -
                                     std::ceil(normalizedVisArea.getLeft() / session->getTileWidthInTwips()) + 1;
         const int tilesFitOnHeight = std::ceil(normalizedVisArea.getBottom() / session->getTileHeightInTwips()) -

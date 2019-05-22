@@ -463,9 +463,9 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
     LOG_INF("Requesting document load from child.");
     try
     {
-        std::string timestamp;
+        std::string timestamp, doctemplate;
         int loadPart = -1;
-        parseDocOptions(tokens, loadPart, timestamp);
+        parseDocOptions(tokens, loadPart, timestamp, doctemplate);
 
         std::ostringstream oss;
         oss << "load";
@@ -521,6 +521,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         if (!getDocOptions().empty())
         {
             oss << " options=" << getDocOptions();
+        }
+
+        if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
+        {
+            oss << " template=" << _wopiFileInfo->getTemplateSource();
         }
 
         return forwardToChild(oss.str(), docBroker);
@@ -989,6 +994,13 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             setViewLoaded();
             docBroker->setLoaded();
+            // Wopi post load actions
+            if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
+            {
+                std::string result;
+                LOG_DBG("Saving template [" << _wopiFileInfo->getTemplateSource() << "] to storage");
+                docBroker->saveToStorage(getId(), true, result);
+            }
 
             for(auto &token : tokens)
             {
