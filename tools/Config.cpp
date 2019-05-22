@@ -280,7 +280,7 @@ int Config::main(const std::vector<std::string>& args)
 
         changed = true;
 #else
-        std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/libreoffice-online/loolwsd.xml." << std::endl;
+        std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/loolwsd/loolwsd.xml." << std::endl;
         return Application::EXIT_UNAVAILABLE;
 #endif
     }

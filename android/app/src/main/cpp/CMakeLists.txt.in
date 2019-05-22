@@ -21,7 +21,7 @@ add_library(androidapp SHARED
             ../../../../../wsd/Storage.cpp
             ../../../../../wsd/TileCache.cpp)
 
-target_compile_definitions(androidapp PRIVATE LOOLWSD_CONFIGDIR="/etc/libreoffice-online") # TODO somewhere in assets maybe?
+target_compile_definitions(androidapp PRIVATE LOOLWSD_CONFIGDIR="/etc/loolwsd") # TODO somewhere in assets maybe?
 
 target_include_directories(androidapp PRIVATE
                            .                     # path to androidapp.h
