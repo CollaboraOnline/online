@@ -17,7 +17,7 @@ noinst_LTLIBRARIES = \
 	unit-timeout.la unit-prefork.la \
 	unit-storage.la unit-client.la \
 	unit-admin.la unit-tilecache.la \
-	unit-fuzz.la unit-oob.la unit-oauth.la \
+	unit-fuzz.la unit-oob.la unit-http.la unit-oauth.la \
 	unit-wopi.la unit-wopi-saveas.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
 	unit-wopi-documentconflict.la unit_wopi_renamefile.la
@@ -86,6 +86,7 @@ fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
 unit_oob_la_SOURCES = UnitOOB.cpp
+unit_http_la_SOURCES = UnitHTTP.cpp
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
@@ -127,7 +128,8 @@ check-local:
 TESTS = unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
         unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-        unit-wopi-documentconflict.la unit_wopi_renamefile.la
+        unit-wopi-documentconflict.la unit_wopi_renamefile.la \
+	unit-http.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
 # TESTS += unit-storage.la

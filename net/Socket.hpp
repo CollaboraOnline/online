@@ -801,6 +801,7 @@ public:
         _bytesRecvd(0),
         _wsState(WSState::HTTP),
         _closed(false),
+        _sentHTTPContinue(false),
         _shutdownSignalled(false)
     {
         LOG_DBG("StreamSocket ctor #" << fd);
@@ -1153,6 +1154,9 @@ protected:
 
     /// True if we are already closed.
     bool _closed;
+
+    /// True if we've received a Continue in response to an Expect: 100-continue
+    bool _sentHTTPContinue;
 
     /// True when shutdown was requested via shutdown().
     bool _shutdownSignalled;

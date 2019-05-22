@@ -680,6 +680,15 @@ bool StreamSocket::parseHeader(const char *clientName,
             LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
             return false;
         }
+
+        if (request.getExpectContinue() && !_sentHTTPContinue)
+        {
+            LOG_TRC("#" << getFD() << " got Expect: 100-continue, sending Continue");
+            // FIXME: should validate authentication headers early too.
+            send("HTTP/1.1 100 Continue\r\n\r\n",
+                 sizeof("HTTP/1.1 100 Continue\r\n\r\n") - 1);
+            _sentHTTPContinue = true;
+        }
     }
     catch (const Poco::Exception& exc)
     {
