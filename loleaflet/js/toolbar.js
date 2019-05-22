@@ -91,23 +91,23 @@ function onClick(e, id, item, subItem) {
 		var toolbar = w2ui['editbar'];
 		item = toolbar.get(id);
 	}
-	else if (w2ui.formulabar.get(id) !== null) {
-		toolbar = w2ui.formulabar;
+	else if ('formulabar' in w2ui && w2ui['formulabar'].get(id) !== null) {
+		toolbar = w2ui['formulabar'];
 		item = toolbar.get(id);
 	}
 	else if ('document-signing-bar' in w2ui && w2ui['document-signing-bar'].get(id) !== null) {
 		toolbar = w2ui['document-signing-bar'];
 		item = toolbar.get(id);
 	}
-	else if (w2ui['actionbar'].get(id) !== null) {
+	else if ('actionbar' in w2ui && w2ui['actionbar'].get(id) !== null) {
 		toolbar = w2ui['actionbar'];
 		item = toolbar.get(id);
 	}
-	else if (w2ui['spreadsheet-toolbar'].get(id) !== null) {
+	else if ('spreadsheet-toolbar' in w2ui && w2ui['spreadsheet-toolbar'].get(id) !== null) {
 		toolbar = w2ui['spreadsheet-toolbar'];
 		item = toolbar.get(id);
 	}
-	else if (w2ui['presentation-toolbar'].get(id) !== null) {
+	else if ('presentation-toolbar' in w2ui && w2ui['presentation-toolbar'].get(id) !== null) {
 		toolbar = w2ui['presentation-toolbar'];
 		item = toolbar.get(id);
 	}
