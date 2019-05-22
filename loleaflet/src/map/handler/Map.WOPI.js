@@ -206,7 +206,7 @@ L.Map.WOPI = L.Handler.extend({
 				}
 			}
 		}
-		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button') {
+		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button' || msg.MessageId === 'Remove_Button') {
 			if (!msg.Values) {
 				console.error('Property "Values" not set');
 				return;
@@ -225,8 +225,10 @@ L.Map.WOPI = L.Handler.extend({
 			}
 			if (msg.MessageId === 'Show_Button') {
 				w2ui['editbar'].show(msg.Values.id);
-			} else {
+			} else if (msg.MessageId === 'Hide_Button') {
 				w2ui['editbar'].hide(msg.Values.id);
+			} else {
+				w2ui['editbar'].remove(msg.Values.id);
 			}
 		}
 		else if (msg.MessageId === 'Show_Menubar') {
