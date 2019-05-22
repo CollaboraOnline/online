@@ -13,6 +13,7 @@
 
 #include <helpers.hpp>
 #include <Poco/Util/Application.h>
+#include <Poco/Net/StreamSocket.h>
 #include <Poco/Net/StringPartSource.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -37,9 +38,9 @@ public:
         config.setBool("ssl.enable", true);
     }
 
-    // FIXME: can hook with (UnitWSD::get().handleHttpRequest(request, message, socket)) ...
-    void invokeTest() override
+    void testContinue()
     {
+        std::cerr << "testContinue\n";
         for (int i = 0; i < 3; ++i)
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(Poco::URI(helpers::getTestServerURI())));
@@ -81,9 +82,135 @@ public:
                 return;
             }
         }
-        // Give those convertors time to save and cleanup.
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }
 
+    void writeString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, std::string str)
+    {
+        socket->sendBytes(str.c_str(), str.size());
+    }
+
+    bool expectString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, std::string str)
+    {
+        char buffer[str.size() + 64] = { 0, };
+        int got = socket->receiveBytes(buffer, str.size());
+        if (got != (int)str.size() ||
+            strncmp(buffer, str.c_str(), got))
+        {
+            std::cerr << "testChunks got " << got << " mismatching strings '" << buffer << " vs. expected '" << str << "'\n";
+            exitTest(TestResult::Failed);
+            return false;
+        }
+        else
+            return true;
+    }
+
+    void testChunks()
+    {
+        std::cerr << "testChunks\n";
+
+        std::shared_ptr<Poco::Net::StreamSocket> socket = helpers::createRawSocket();
+
+        writeString(
+            socket,
+            "POST /lool/convert-to/txt HTTP/1.1\r\n"
+            "Host: localhost:9980\r\n"
+            "User-Agent: looltests/1.2.3\r\n"
+            "Accept: */*\r\n"
+            "Expect: 100-continue\r\n"
+            "Transfer-Encoding: chunked\r\n"
+            "Content-Type: multipart/form-data; "
+            "boundary=------------------------5a0cd5c881663db4\r\n\r\n");
+        if (!expectString(
+                socket,
+                "HTTP/1.1 100 Continue\r\n\r\n"))
+            return;
+
+#define START_CHUNK_HEX(len) len "\r\n"
+#define END_CHUNK "\r\n"
+        writeString(
+            socket,
+            START_CHUNK_HEX("8A")
+            "--------------------------5a0cd5c881663db4\r\n"
+            "Content-Disposition: form-data; name=\"data\"; filename=\"test.txt\"\r\n"
+            "Content-Type: text/plain\r\n"
+            "\r\n"
+            END_CHUNK
+
+            START_CHUNK_HEX("12")
+            "This is some text."
+            END_CHUNK
+
+            START_CHUNK_HEX("1")
+            "\n"
+            END_CHUNK
+
+            "  4 room:for expansion!! cf. leading spaces and nasies <>!\"\'?=)\r\n"
+            "And "
+            END_CHUNK
+
+            START_CHUNK_HEX("1")
+            "s"
+            END_CHUNK
+
+            START_CHUNK_HEX("a")
+            "ome more.\n"
+            END_CHUNK
+            );
+        writeString(
+            socket,
+            START_CHUNK_HEX("30")
+            "\r\n"
+            "--------------------------5a0cd5c881663db4--\r\n"
+            END_CHUNK);
+
+        writeString(socket, START_CHUNK_HEX("0"));
+
+        char buffer[4096] = { 0, };
+        int got = socket->receiveBytes(buffer, 4096);
+        std::string start =
+            "HTTP/1.0 200 OK\r\n"
+            "Content-Disposition: attachment; filename=\"test.txt\"\r\n";
+
+        if (strncmp(buffer, start.c_str(), start.size()))
+        {
+            std::cerr << "missing pre-amble " << got << " '" << buffer << " vs. expected '" << start << "'\n";
+            exitTest(TestResult::Failed);
+            return;
+        }
+
+        // TODO: check content-length etc.
+
+        const char *ptr = strstr(buffer, "\r\n\r\n");
+        if (!ptr)
+        {
+            std::cerr << "missing separator " << got << " '" << buffer << "\n";
+            exitTest(TestResult::Failed);
+            return;
+        }
+
+        // Oddly we need another read to get the content.
+        got = socket->receiveBytes(buffer, 4096);
+        if (got >=0 )
+            buffer[got] = '\0';
+        else
+        {
+            std::cerr << "No content returned " << got << "\n";
+            exitTest(TestResult::Failed);
+            return;
+        }
+
+        if (strcmp(buffer, "\357\273\277This is some text.\nAnd some more.\n"))
+        {
+            std::cerr << "unexpected file content " << got << " '" << buffer << "\n";
+            exitTest(TestResult::Failed);
+            return;
+        }
+    }
+
+    void invokeTest() override
+    {
+        testChunks();
+        testContinue();
         std::cerr << "All tests passed.\n";
         exitTest(TestResult::Ok);
     }

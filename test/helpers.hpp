@@ -21,6 +21,8 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/StreamSocket.h>
+#include <Poco/Net/SecureStreamSocket.h>
 #include <Poco/Net/Socket.h>
 #include <Poco/Path.h>
 #include <Poco/StringTokenizer.h>
@@ -175,18 +177,33 @@ Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
 #endif
 }
 
+inline int getClientPort()
+{
+    static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
+    return clientPort? atoi(clientPort) : DEFAULT_CLIENT_PORT_NUMBER;
+}
+
+inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
+{
+    return
+#if ENABLE_SSL
+        std::make_shared<Poco::Net::SecureStreamSocket>
+#else
+        std::make_shared<Poco::Net::StreamSocket>
+#endif
+            (Poco::Net::SocketAddress("127.0.0.1", getClientPort()));
+}
+
 inline
 std::string const & getTestServerURI()
 {
-    static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
-
     static std::string serverURI(
 #if ENABLE_SSL
             "https://127.0.0.1:"
 #else
             "http://127.0.0.1:"
 #endif
-            + (clientPort? std::string(clientPort) : std::to_string(DEFAULT_CLIENT_PORT_NUMBER)));
+            + std::to_string(getClientPort()));
 
     return serverURI;
 }
