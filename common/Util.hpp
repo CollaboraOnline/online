@@ -162,6 +162,18 @@ namespace Util
     // Extract all json entries into a map.
     std::map<std::string, std::string> JsonToMap(const std::string& jsonString);
 
+    inline int hexDigitFromChar(char c)
+    {
+        if (c >= '0' && c <= '9')
+            return c - '0';
+        else if (c >= 'a' && c <= 'f')
+            return c - 'a' + 10;
+        else if (c >= 'A' && c <= 'F')
+            return c - 'A' + 10;
+        else
+            return -1;
+    }
+
     /// Dump a lineof data as hex
     inline std::string stringifyHexLine(
                             const std::vector<char> &buffer,
@@ -228,6 +240,17 @@ namespace Util
             os << "\n";
         }
         os.flush();
+    }
+
+    inline std::string dumpHex (const char *legend, const char *prefix,
+                                const std::vector<char>::iterator &startIt,
+                                const std::vector<char>::iterator &endIt,
+                                bool skipDup = true, const unsigned int width = 32)
+    {
+        std::ostringstream oss;
+        std::vector<char> data(startIt, endIt);
+        dumpHex(oss, legend, prefix, data, skipDup, width);
+        return oss.str();
     }
 
     /// Trim spaces from the left. Just spaces.
