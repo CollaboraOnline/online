@@ -230,6 +230,9 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'backcolor' && typeof e.color !== 'undefined') {
 		onColorPick(id, e.color)
 	}
+	else if (id === 'backgroundcolor' && typeof e.color !== 'undefined') {
+		onColorPick(id, e.color)
+	}
 	else if (id === 'sum') {
 		map.sendUnoCommand('.uno:AutoSum');
 	}
@@ -637,10 +640,19 @@ function onColorPick(id, color) {
 		command[fontcolor].value = color;
 		var uno = '.uno:' + fontcolor;
 	}
+	// "backcolor" can be used in Writer and Impress and translates to "Highlighting" while
+	// "backgroundcolor" can be used in Writer and Calc and translates to "Background color".
 	else if (id === 'backcolor') {
 		backcolor = {'text': 'BackColor',
-					 'spreadsheet': 'BackgroundColor',
 					 'presentation': 'CharBackColor'}[map.getDocType()];
+		command[backcolor] = {};
+		command[backcolor].type = 'long';
+		command[backcolor].value = color;
+		uno = '.uno:' + backcolor;
+	}
+	else if (id === 'backgroundcolor') {
+		backcolor = {'text': 'BackgroundColor',
+					 'spreadsheet': 'BackgroundColor'}[map.getDocType()];
 		command[backcolor] = {};
 		command[backcolor].type = 'long';
 		command[backcolor].value = color;
@@ -746,7 +758,8 @@ function initNormalToolbar() {
 		{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
 		{type: 'break', id: 'breakformatting'},
 		{type: 'text-color',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
-		{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
+		{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor'), hidden: true},
+		{type: 'color',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor'), hidden: true},
 		{type: 'break' , id: 'breakcolor', mobile:false},
 		{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara', hidden: true, unosheet: 'AlignLeft', disabled: true},
 		{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true), uno: 'CenterPara', hidden: true, unosheet: 'AlignHorizontalCenter', disabled: true},
@@ -1395,7 +1408,7 @@ function onDocLayerInit() {
 		toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
 			'numberformatcurrency', 'numberformatpercent',
 			'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
-			'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting');
+			'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor');
 		toolbarUp.remove('styles');
 
 		statusbar.remove('prev', 'next', 'prevnextbreak');
@@ -1462,7 +1475,7 @@ function onDocLayerInit() {
 	case 'text':
 		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
-			'breakindent', 'inserttable', 'insertannotation');
+			'breakindent', 'inserttable', 'insertannotation', 'backcolor');
 
 		if (!_inMobileMode()) {
 			statusbar.insert('left', [
@@ -1520,7 +1533,7 @@ function onDocLayerInit() {
 		// FALLTHROUGH intended
 	case 'drawing':
 		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttable');
+			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttable', 'backcolor');
 		statusbar.show('prev', 'next');
 
 		$('#presentation-toolbar').show();

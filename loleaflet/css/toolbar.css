@@ -550,6 +550,7 @@ button.leaflet-control-search-next
 .w2ui-icon.strikeout{ background: url('images/lc_strikeout.svg') no-repeat center !important; }
 .w2ui-icon.textcolor{ background: url('images/lc_color.svg') no-repeat center !important; }
 .w2ui-icon.backcolor{ background: url('images/lc_backcolor.svg') no-repeat center !important; }
+.w2ui-icon.backgroundcolor{ background: url('images/lc_backgroundcolor.svg') no-repeat center !important; }
 .w2ui-icon.alignleft{ background: url('images/lc_alignleft.svg') no-repeat center !important; }
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
 .w2ui-icon.alignright{ background: url('images/lc_alignright.svg') no-repeat center !important; }
