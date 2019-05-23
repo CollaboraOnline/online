@@ -251,8 +251,13 @@ namespace FileUtil
             return hookResult;
 #endif
 
-        // we should be able to run just OK with 5GB
-        constexpr int64_t ENOUGH_SPACE = int64_t(5)*1024*1024*1024;
+        // we should be able to run just OK with 5GB for production or 1GB for development
+#if ENABLE_DEBUG
+        const int64_t gb(1);
+#else
+        const int64_t gb(5);
+#endif
+        constexpr int64_t ENOUGH_SPACE = gb*1024*1024*1024;
 
 #ifdef __linux
         struct statfs sfs;
