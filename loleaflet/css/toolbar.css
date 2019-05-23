@@ -559,6 +559,7 @@ button.leaflet-control-search-next
 .w2ui-icon.bullet{ background: url('images/lc_defaultbullet.svg') no-repeat center !important; }
 .w2ui-icon.incrementindent{ background: url('images/lc_decrementlevel.svg') no-repeat center !important; }
 .w2ui-icon.decrementindent{ background: url('images/lc_decrementindent.svg') no-repeat center !important; }
+.w2ui-icon.text{ background: url('images/lc_text.svg') no-repeat center !important; }
 .w2ui-icon.annotation{ background: url('images/lc_showannotations.svg') no-repeat center !important; }
 .w2ui-icon.inserttable{ background: url('images/lc_inserttable.svg') no-repeat center !important; }
 .w2ui-icon.insertgraphic{ background: url('images/lc_gallery.svg') no-repeat center !important; }
