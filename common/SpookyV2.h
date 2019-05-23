@@ -26,6 +26,9 @@
 // slower than MD5.
 //
 
+#ifndef INCLUDED_SPOOKYV2_H
+#define INCLUDED_SPOOKYV2_H
+
 #include <stddef.h>
 
 #ifdef _MSC_VER
@@ -295,5 +298,4 @@ private:
     uint8  m_remainder;          // length of unhashed data stashed in m_data
 };
 
-
-
+#endif // INCLUDED_SPOOKYV2_H

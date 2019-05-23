@@ -9,23 +9,22 @@ check_PROGRAMS = test fakesockettest
 
 noinst_PROGRAMS = test fakesockettest unittest
 
-AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\" \
+AM_CXXFLAGS = -fPIC -DPIC $(CPPUNIT_CFLAGS) -DTDOC=\"$(top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
-noinst_LTLIBRARIES = \
-	unit-convert.la unit-typing.la \
-	unit-timeout.la unit-prefork.la \
-	unit-storage.la unit-client.la \
-	unit-admin.la unit-tilecache.la \
-	unit-fuzz.la unit-oob.la unit-http.la unit-oauth.la \
-	unit-wopi.la unit-wopi-saveas.la \
-	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-	unit-wopi-documentconflict.la unit_wopi_renamefile.la \
-	unit-wopi-loadencoded.la
+noinst_PROGRAMS += \
+	unit-convert.so unit-typing.so \
+	unit-timeout.so unit-prefork.so \
+	unit-storage.so unit-client.so \
+	unit-admin.so unit-tilecache.so \
+	unit-fuzz.so unit-oob.so unit-http.so unit-oauth.so \
+	unit-wopi.so unit-wopi-saveas.so \
+	unit-wopi-ownertermination.so unit-wopi-versionrestore.so \
+	unit-wopi-documentconflict.so unit_wopi_renamefile.so \
+	unit-wopi-loadencoded.so
 
 
-MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
-AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS)
+AM_LDFLAGS = -pthread $(ZLIB_LIBS)
 
 if ENABLE_SSL
 AM_LDFLAGS += -lssl -lcrypto
@@ -60,11 +59,16 @@ if ENABLE_SSL
 wsd_sources += ../net/Ssl.cpp
 endif
 
+WsdSources.cpp :
+	for F in $(wsd_sources); do \
+		echo '#include "'$$F'"'; \
+	done >WsdSources.cpp
+
 test_base_source = \
 	TileQueueTests.cpp \
 	WhiteBoxTests.cpp \
 	DeltaTests.cpp \
-	$(wsd_sources)
+	WsdSources.cpp
 
 test_all_source = \
 	$(test_base_source) \
@@ -86,36 +90,54 @@ fakesockettest_SOURCES = fakesockettest.cpp ../net/FakeSocket.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
-unit_oob_la_SOURCES = UnitOOB.cpp
-unit_http_la_SOURCES = UnitHTTP.cpp
-unit_fuzz_la_SOURCES = UnitFuzz.cpp
-unit_admin_la_SOURCES = UnitAdmin.cpp
-unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
-unit_client_la_SOURCES = UnitClient.cpp ${test_all_source}
-unit_client_la_LIBADD = $(CPPUNIT_LIBS)
-unit_typing_la_SOURCES = UnitTyping.cpp
-unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
-unit_convert_la_SOURCES = UnitConvert.cpp
-unit_timeout_la_SOURCES = UnitTimeout.cpp
-unit_prefork_la_SOURCES = UnitPrefork.cpp
-unit_storage_la_SOURCES = UnitStorage.cpp
-unit_tilecache_la_SOURCES = UnitTileCache.cpp
-unit_oauth_la_SOURCES = UnitOAuth.cpp
-unit_oauth_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_la_SOURCES = UnitWOPI.cpp
-unit_wopi_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
-unit_wopi_saveas_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_ownertermination_la_SOURCES = UnitWopiOwnertermination.cpp
-unit_wopi_ownertermination_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_versionrestore_la_SOURCES = UnitWOPIVersionRestore.cpp
-unit_wopi_versionrestore_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_documentconflict_la_SOURCES = UnitWOPIDocumentConflict.cpp
-unit_wopi_documentconflict_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
-unit_wopi_renamefile_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
-unit_wopi_loadencoded_la_LIBADD = $(CPPUNIT_LIBS)
+unit_oob_so_SOURCES = UnitOOB.cpp
+unit_oob_so_LDFLAGS = -shared
+unit_http_so_SOURCES = UnitHTTP.cpp
+unit_http_so_LDFLAGS = -shared
+unit_fuzz_so_SOURCES = UnitFuzz.cpp
+unit_fuzz_so_LDFLAGS = -shared
+unit_admin_so_SOURCES = UnitAdmin.cpp
+unit_admin_so_LDFLAGS = -shared
+unit_admin_so_LDADD = $(CPPUNIT_LIBS)
+unit_client_so_SOURCES = UnitClient.cpp ${test_all_source}
+unit_client_so_LDFLAGS = -shared
+unit_client_so_LDADD = $(CPPUNIT_LIBS)
+unit_typing_so_SOURCES = UnitTyping.cpp
+unit_typing_so_LDFLAGS = -shared
+unit_typing_so_LDADD = $(CPPUNIT_LIBS)
+unit_convert_so_SOURCES = UnitConvert.cpp
+unit_convert_so_LDFLAGS = -shared
+unit_timeout_so_SOURCES = UnitTimeout.cpp
+unit_timeout_so_LDFLAGS = -shared
+unit_prefork_so_SOURCES = UnitPrefork.cpp
+unit_prefork_so_LDFLAGS = -shared
+unit_storage_so_SOURCES = UnitStorage.cpp
+unit_storage_so_LDFLAGS = -shared
+unit_tilecache_so_SOURCES = UnitTileCache.cpp
+unit_tilecache_so_LDFLAGS = -shared
+unit_oauth_so_SOURCES = UnitOAuth.cpp
+unit_oauth_so_LDFLAGS = -shared $(CPPUNIT_LIBS)
+unit_wopi_so_SOURCES = UnitWOPI.cpp
+unit_wopi_so_LDFLAGS = -shared
+unit_wopi_so_LDADD = $(CPPUNIT_LIBS)
+unit_wopi_saveas_so_SOURCES = UnitWOPISaveAs.cpp
+unit_wopi_saveas_so_LDFLAGS = -shared
+unit_wopi_saveas_so_LDADD = $(CPPUNIT_LIBS)
+unit_wopi_ownertermination_so_SOURCES = UnitWopiOwnertermination.cpp
+unit_wopi_ownertermination_so_LDFLAGS = -shared
+unit_wopi_ownertermination_so_LDADD = $(CPPUNIT_LIBS)
+unit_wopi_versionrestore_so_SOURCES = UnitWOPIVersionRestore.cpp
+unit_wopi_versionrestore_so_LDFLAGS = -shared
+unit_wopi_versionrestore_so_LDADD = $(CPPUNIT_LIBS)
+unit_wopi_documentconflict_so_SOURCES = UnitWOPIDocumentConflict.cpp
+unit_wopi_documentconflict_so_LDFLAGS = -shared
+unit_wopi_documentconflict_so_LDADD = $(CPPUNIT_LIBS)
+unit_wopi_renamefile_so_SOURCES = UnitWOPIRenameFile.cpp
+unit_wopi_renamefile_so_LDFLAGS = -shared
+unit_wopi_renamefile_so_LDADD = $(CPPUNIT_LIBS)
+unit_wopi_loadencoded_so_SOURCES = UnitWOPILoadEncoded.cpp
+unit_wopi_loadencoded_so_LDFLAGS = -shared
+unit_wopi_loadencoded_so_LDADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -131,21 +153,21 @@ check-local:
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
 
-TESTS = unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la \
-	unit-timeout.la unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
-        unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-        unit-wopi-documentconflict.la unit_wopi_renamefile.la \
-	unit-http.la \
-	unit-wopi-loadencoded.la
-# TESTS = unit-client.la
-# TESTS += unit-admin.la
-# TESTS += unit-storage.la
+TESTS = unit-typing.so unit-convert.so unit-prefork.so unit-tilecache.so \
+	unit-timeout.so unit-oauth.so unit-wopi.so unit-wopi-saveas.so \
+        unit-wopi-ownertermination.so unit-wopi-versionrestore.so \
+        unit-wopi-documentconflict.so unit_wopi_renamefile.so \
+	unit-http.so \
+	unit-wopi-loadencoded.so
+# TESTS = unit-client.so
+# TESTS += unit-admin.so
+# TESTS += unit-storage.so
 else
 TESTS = ${top_builddir}/test/test
 endif
 
-TEST_EXTENSIONS = .la
-LA_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
+TEST_EXTENSIONS = .so
+SO_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
 
 EXTRA_DIST = data/delta-text.png data/delta-text2.png data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh
 

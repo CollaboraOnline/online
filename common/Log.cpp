@@ -109,10 +109,10 @@ namespace Log
 
     char* prefix(char* buffer, const std::size_t len, const char* level)
     {
-        const char *threadName = Util::getThreadName();
+        const char *threadName = ::Util::getThreadName();
         Poco::DateTime time;
 #ifdef __linux
-        const long osTid = Util::getThreadId();
+        const long osTid = ::Util::getThreadId();
         snprintf(buffer, len, "%s-%.05lu %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
                     (Source.getInited() ? Source.getId().c_str() : "<shutdown>"),
                     osTid,

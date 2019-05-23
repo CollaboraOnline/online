@@ -33,7 +33,6 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
-using Poco::Net::Socket;
 using Poco::Net::WebSocket;
 
 namespace IoUtil

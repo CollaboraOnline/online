@@ -44,21 +44,17 @@ where misan.local is the macOS machine where I build the app, and
 Then back to the Mac:
 
 As you were able to build LibreOffice in step 1, you must already have
-GNU autoconf installed on the Mac. Install also GNU automake and
-libtool. Preferrably from sources, to make sure a potential
-installation of brew or similar will not pollute your environment with
-unknown stuff.
+GNU autoconf installed on the Mac. Install also GNU automake.
+Preferrably from sources, to make sure a potential installation of
+brew or similar will not pollute your environment with unknown stuff.
 
-As GNU libtool will be needed only for a very minimal part of the
-build (running the autogen.sh script, but not anything else), it's
-safest to install it somewhere that is not in your $PATH. Let's say
-/opt/libtool. (Installing Automake in the default /usr/local, which is
-in $PATH, is less risky.)
+Installing autoconf and automake in the default /usr/local, which is
+in $PATH, is not really risky. (Unlike some other GNUish tools, like
+libtool and pkg-config, which might mess up your LibreOffice build.)
 
-Run the autogen.sh script in the app folder, with GNU libtool
-available:
+Run the autogen.sh script in the app folder:
 
-PATH=/opt/libtool/bin:$PATH ./autogen.sh
+./autogen.sh
 
 OR:
 
@@ -66,7 +62,7 @@ OR:
 
    Then:
 
-brew install libtool npm
+brew install npm
 ./autogen.sh
 sudo python -m ensurepip --default-pip
 sudo pip install polib lxml

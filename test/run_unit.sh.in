@@ -21,7 +21,7 @@ verbose=''
 
 print_help ()
 {
-    echo "Usage: run_unit.sh --test-name <name.la> [OPTIONS]"
+    echo "Usage: run_unit.sh --test-name <name.so> [OPTIONS]"
     echo "Runs a specified unit test"
     echo ""
     echo "   --log-file <file>   Log output to this file - default /dev/stderr"
@@ -51,8 +51,8 @@ echo
 echo "Running ${tst}"
 echo "	$cmd_line"
 
-# drop .la suffix
-tst=`echo $tst | sed s/\.la//`;
+# drop .so suffix
+tst=`echo $tst | sed s/\.so//`;
 
 if test "z$tst" != "z" && test "z$CPPUNIT_TEST_NAME" != "z"; then
     # $tst is not empty, but $CPPUNIT_TEST_NAME is set, exit early if they
@@ -134,7 +134,7 @@ else # newer unit tests.
                                    --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
                                    --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
                                    --o:admin_console.username=admin --o:admin_console.password=admin \
-                                   --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log"; then
+                                   --unitlib="${abs_top_builddir}/test/$tst.so" 2> "$tst_log"; then
         echo "Test $tst passed."
         echo ":test-result: PASS $tst" >> $test_output
     else
@@ -150,7 +150,7 @@ else # newer unit tests.
         echo "         --o:ssl.cert_file_path=\"${abs_top_builddir}/etc/cert.pem\" \\"
         echo "         --o:ssl.ca_file_path=\"${abs_top_builddir}/etc/ca-chain.cert.pem\" \\"
         echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
-        echo "         --unitlib=\"${abs_top_builddir}/test/.libs/$tst.so\""
+        echo "         --unitlib=\"${abs_top_builddir}/test/$tst.so\""
 	echo ""
 	echo "   $ less $tst_log # for detailed failure log files"
         echo "============================================================="

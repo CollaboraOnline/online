@@ -4,9 +4,9 @@ Makefile
 Makefile.in
 *.log
 *.trs
-.libs
-*.la
-*.lo
+*.so
 *.o
+fakesockettest
 test
 run_unit.sh
+WsdSources.cpp
