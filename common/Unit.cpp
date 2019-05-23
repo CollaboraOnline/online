@@ -151,8 +151,6 @@ UnitWSD::~UnitWSD()
 {
 }
 
-static bool isSSL = false;
-
 void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)
 {
     if (isUnitTesting())
@@ -164,9 +162,6 @@ void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)
         // Force console output - easier to debug.
         config.setBool("logging.file[@enable]", false);
     }
-    // else - a product run.
-
-    isSSL = config.getBool("ssl.enable", true) && !config.getBool("ssl.termination", false);
 }
 
 void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
