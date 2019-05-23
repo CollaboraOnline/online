@@ -366,9 +366,14 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return true;
     }
     else if (tokens[0] == "removesession") {
-        std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
-        docBroker->broadcastMessage(firstLine);
-        docBroker->removeSession(sessionId);
+        if (tokens.size() > 1 && (_isDocumentOwner || !isReadOnly()))
+        {
+            std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
+            docBroker->broadcastMessage(firstLine);
+            docBroker->removeSession(sessionId);
+        }
+        else
+            LOG_WRN("Readonly session '" << getId() << "' trying to kill another view");
     }
     else if (tokens[0] == "renamefile") {
         std::string encodedWopiFilename;

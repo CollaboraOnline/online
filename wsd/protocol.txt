@@ -236,6 +236,11 @@ rendershapeselection mimetype=<mimeType>
     Request rendering of selected shapes into an SVG format.
     By now only SVG mimetype is handled (image/svg+xml)
 
+removesession <viewid>
+
+    Requests the removal of a given view from the document. Lower
+    privilege views cannot remove higher ones, eg. a readonly view
+    can't remove an editor.
 
 server -> client
 ================
