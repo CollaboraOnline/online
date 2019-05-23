@@ -1055,7 +1055,7 @@ function initNormalToolbar() {
 									map['wopi'].HideUserList !== undefined &&
 									$.inArray('true', map['wopi'].HideUserList) < 0 &&
 									$.inArray('desktop', map['wopi'].HideUserList) < 0;
-				if (this.get('userlist').hidden == true && showInDesktop) {
+				if (this.get('userlist') && this.get('userlist').hidden == true && showInDesktop) {
 					this.show('userlist');
 					this.show('userlistbreak');
 					map.on('deselectuser', deselectUser);

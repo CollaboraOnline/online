@@ -240,6 +240,21 @@ L.Map.WOPI = L.Handler.extend({
 				w2ui['editbar'].remove(msg.Values.id);
 			}
 		}
+		if (msg.MessageId === 'Remove_Statusbar_Element') {
+			if (!msg.Values) {
+				console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				console.error('Property "Values.id" not set');
+				return;
+			}
+			if (!w2ui['actionbar'].get(msg.Values.id)) {
+				console.error('Statusbar element with id "' + msg.Values.id + '" not found.');
+				return;
+			}
+			w2ui['actionbar'].remove(msg.Values.id);
+		}
 		else if (msg.MessageId === 'Show_Menubar') {
 			this._map.showMenubar();
 		}
