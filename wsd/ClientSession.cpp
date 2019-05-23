@@ -217,8 +217,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return true;
     }
-    else if (tokens[0] == "versionrestore") {
-        if (tokens[1] == "prerestore") {
+    else if (tokens[0] == "versionrestore")
+    {
+        if (tokens.size() > 1 && tokens[1] == "prerestore")
+        {
             // green signal to WOPI host to restore the version *after* saving
             // any unsaved changes, if any, to the storage
             docBroker->closeDocument("versionrestore: prerestore_ack");
@@ -375,9 +377,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         else
             LOG_WRN("Readonly session '" << getId() << "' trying to kill another view");
     }
-    else if (tokens[0] == "renamefile") {
+    else if (tokens[0] == "renamefile")
+    {
         std::string encodedWopiFilename;
-        if (!getTokenString(tokens[1], "filename", encodedWopiFilename))
+        if (tokens.size() < 2 || !getTokenString(tokens[1], "filename", encodedWopiFilename))
         {
             LOG_ERR("Bad syntax for: " << firstLine);
             sendTextFrame("error: cmd=renamefile kind=syntax");
