@@ -3177,6 +3177,16 @@ Editor to WOPI host
 		</td>
 	</tr>
 	<tr>
+		<td><code><b>Remove_Statusbar_Element</b></code></td>
+		<td>
+			<code><nobr>id: &lt;string&gt;</nobr></code>
+		</td>
+		<td>
+			Removes an element from the statusbar.<br/>
+		    <code>id</code> is the element ID (see <a href="#statusbar-element-ids">Finding statusbar element IDs</a>).
+		</td>
+	</tr>
+	<tr>
 		<td><code><b>Hide_Menubar</b></code></td>
 		<td></td>
 		<td>
@@ -3194,7 +3204,12 @@ Editor to WOPI host
 
 <h5><a name="toolbar-button-ids">Finding toolbar button IDs</a></h5>
 <p>Toolbar button IDs are defined in the <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Toolbar.js">Control.Toolbar.js</a>.
+Note that they usually don't change but there is no guarantee that they are stable.</p>
+
+<h5><a name="statusbar-element-ids">Finding statusbar element IDs</a></h5>
+<p>Statusbar button IDs are defined in the <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=onDocLayerInit">onDocLayerInit</a>
+function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Toolbar.js">Control.Toolbar.js</a>.
 Note that they usually don't change but there is no guarantee that they are stable.</p>
 
 <h4>Editor to WOPI host</h4>
