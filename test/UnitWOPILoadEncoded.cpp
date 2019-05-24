@@ -42,7 +42,7 @@ public:
             {
                 initWebsocket("/wopi/files/3?access_token=anything");
 
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
                 SocketPoll::wakeupWorld();
 
                 _phase = Phase::CloseDoc;
@@ -50,7 +50,7 @@ public:
             }
             case Phase::CloseDoc:
             {
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "closedocument", testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", testName);
                 _phase = Phase::Polling;
                 break;
             }
