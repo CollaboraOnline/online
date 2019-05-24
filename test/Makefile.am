@@ -55,20 +55,24 @@ wsd_sources = \
             ../common/Unit.cpp \
             ../net/Socket.cpp
 
-if ENABLE_SSL
-wsd_sources += ../net/Ssl.cpp
-endif
 
 WsdSources.cpp :
 	for F in $(wsd_sources); do \
 		echo '#include "'$$F'"'; \
 	done >WsdSources.cpp
 
+Ssl.cpp :
+	echo '#include "../net/Ssl.cpp"' >Ssl.cpp
+
 test_base_source = \
 	TileQueueTests.cpp \
 	WhiteBoxTests.cpp \
 	DeltaTests.cpp \
 	WsdSources.cpp
+
+if ENABLE_SSL
+test_base_source += Ssl.cpp
+endif
 
 test_all_source = \
 	$(test_base_source) \
