@@ -1588,6 +1588,9 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
 
     session->resetWireIdMap();
 
+    if (!hasTileCache())
+        return;
+
     const std::string canceltiles = tileCache().cancelTiles(session);
     if (!canceltiles.empty())
     {
