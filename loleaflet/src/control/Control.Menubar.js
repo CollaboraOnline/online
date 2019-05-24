@@ -36,9 +36,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'},
@@ -251,9 +251,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
@@ -339,9 +339,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
@@ -786,8 +786,10 @@ L.Control.Menubar = L.Control.extend({
 			this._map.remove();
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
-		} else if (id === 'warn-copy-paste') {
+		} else if (!window.ThisIsAMobileApp && id === 'warn-copy-paste') {
 			vex.dialog.alert({unsafeMessage: _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>')});
+		} else if (window.ThisIsAMobileApp && $(item).data('mobileappuno')) {
+			this._map.sendUnoCommand($(item).data('mobileappuno'));
 		}
 		// Inform the host if asked
 		if ($(item).data('postmessage') === 'true') {
@@ -971,6 +973,9 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'action') {
 				$(aItem).data('type', 'action');
 				$(aItem).data('id', menu[i].id);
+				if (window.ThisIsAMobileApp && menu[i].mobileappuno) {
+					$(aItem).data('mobileappuno', menu[i].mobileappuno);
+				}
 			}
 
 			if (menu[i].tablet == false && window.mode.isTablet()) {
