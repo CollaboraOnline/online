@@ -36,6 +36,7 @@ L.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 	ReconnectCount: 0,
 	WasShownLimitDialog: false,
+	WSDServer: {},
 
 	getParameterValue: function (s) {
 		var i = s.indexOf('=');
@@ -275,25 +276,25 @@ L.Socket = L.Class.extend({
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('loolserver ')) {
 			// This must be the first message, unless we reconnect.
-			var loolwsdVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			var h = loolwsdVersionObj.Hash;
+			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				if (!window.ThisIsTheiOSApp) {
 					h = '<a target="_blank" href="https://hub.libreoffice.org/git-online/' + h + '">' + h + '</a>';
 				}
-				$('#loolwsd-version').html(loolwsdVersionObj.Version + ' (git hash: ' + h + ')');
+				$('#loolwsd-version').html(this.WSDServer.Version + ' (git hash: ' + h + ')');
 			}
 			else {
-				$('#loolwsd-version').text(loolwsdVersionObj.Version);
+				$('#loolwsd-version').text(this.WSDServer.Version);
 			}
 
 			var idUri = this._map.options.server + this._map.options.serviceRoot + '/hosting/discovery';
 			idUri = idUri.replace(/^ws:/, 'http:');
 			idUri = idUri.replace(/^wss:/, 'https:');
-			$('#loolwsd-id').html('<a href="' + idUri + '">' + loolwsdVersionObj.Id + '</a>');
+			$('#loolwsd-id').html('<a href="' + idUri + '">' + this.WSDServer.Id + '</a>');
 
 			// TODO: For now we expect perfect match in protocol versions
-			if (loolwsdVersionObj.Protocol !== this.ProtocolVersionNumber) {
+			if (this.WSDServer.Protocol !== this.ProtocolVersionNumber) {
 				this._map.fire('error', {msg: _('Unsupported server version.')});
 			}
 		}

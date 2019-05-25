@@ -256,6 +256,8 @@ namespace Util
         return oss.str();
     }
 
+    size_t findInVector(const std::vector<char>& tokens, const char *cstring);
+
     /// Trim spaces from the left. Just spaces.
     inline std::string& ltrim(std::string& s)
     {

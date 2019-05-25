@@ -41,15 +41,25 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	select: function() {
-		this._textArea.select();
+		window.getSelection().selectAllChildren(this._textArea);
+	},
+
+	resetToSelection: function() {
+		var sel = window.getSelection();
+		if (sel.anchorNode == this._textArea) {
+			// already selected, don't reset to plain-text from toString()
+		} else {
+			this.setValue(sel.toString());
+		}
 	},
 
 	getValue: function() {
-		return this._textArea.value;
+		return this._textArea.innerHTML;
 	},
 
 	setValue: function(val) {
-		this._textArea.value = val;
+		this._textArea.innerHTML = val;
+		this.select();
 	},
 
 	setLatLng: function (latlng) {
@@ -67,7 +77,8 @@ L.ClipboardContainer = L.Layer.extend({
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'clipboard-container');
 		this._container.id = 'doc-clipboard-container';
-		this._textArea = L.DomUtil.create('input', 'clipboard', this._container);
+		this._textArea = L.DomUtil.create('div', 'clipboard', this._container);
+		this._textArea.setAttribute('contenteditable', 'true');
 		this._textArea.setAttribute('type', 'text');
 		this._textArea.setAttribute('autocorrect', 'off');
 		this._textArea.setAttribute('autocapitalize', 'off');

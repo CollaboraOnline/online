@@ -739,6 +739,20 @@ namespace Util
 
         return base + Util::anonymize(filename, nAnonymizationSalt) + ext + params;
     }
+
+    size_t findInVector(const std::vector<char>& tokens, const char *cstring)
+    {
+        assert(cstring);
+        for (size_t i = 0; i < tokens.size(); ++i)
+        {
+            size_t j;
+            for (j = 0; i + j < tokens.size() && cstring[j] != '\0' && tokens[i + j] == cstring[j]; ++j)
+                ;
+            if (cstring[j] == '\0')
+                return i;
+        }
+        return std::string::npos;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

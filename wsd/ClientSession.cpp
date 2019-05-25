@@ -977,6 +977,24 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
             }
         }
+    } else if (tokens[0] == "textselectioncontent:") {
+        // Insert our meta origin if we can
+        payload->rewriteDataBody([](std::vector<char>& data) {
+                size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
+                if (pos != std::string::npos) // assume text/html
+                {
+                    // FIXME: expose other content types ? provide an RTF back-channel ? WOPISRC ?
+                    std::string origin = "<meta name=\"origin\" content=\"" + LOOLWSD::HostIdentifier + "\"/>\n";
+                    data.insert(data.begin() + pos, origin.begin(), origin.end());
+                    return true;
+                }
+                else
+                {
+                    LOG_DBG("Missing generator in textselectioncontent");
+                    return false;
+                }
+            });
+        return forwardToClient(payload);
     }
 
     if (!isDocPasswordProtected())

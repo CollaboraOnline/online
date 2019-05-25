@@ -13,6 +13,7 @@
 #include <atomic>
 #include <string>
 #include <vector>
+#include <functional>
 
 #include "Protocol.hpp"
 #include "Log.hpp"
@@ -116,6 +117,18 @@ public:
 
     /// Returns true if and only if the payload is considered Binary.
     bool isBinary() const { return _type == Type::Binary; }
+
+    /// Allows some in-line re-writing of the message
+    void rewriteDataBody(std::function<bool (std::vector<char> &)> func)
+    {
+        if (func(_data))
+        {
+            // Check - just the body.
+            assert(_firstLine == LOOLProtocol::getFirstLine(_data.data(), _data.size()));
+            assert(_abbr == _id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size()));
+            assert(_type == detectType());
+        }
+    }
 
 private:
 

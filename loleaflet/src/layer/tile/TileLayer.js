@@ -26,12 +26,18 @@ function hex2string(inData)
 }
 
 L.Compatibility = {
+	stripHTML: function(html) { // grim.
+		var tmp = document.createElement('div');
+		tmp.innerHTML = html;
+		return tmp.textContent || tmp.innerText || '';
+	},
+
 	clipboardSet: function (event, text) {
 		if (event.clipboardData) { // Standard
-			event.clipboardData.setData('text/plain', text);
+			event.clipboardData.setData('text/html', text);
 		}
-		else if (window.clipboardData) { // IE 11
-			window.clipboardData.setData('Text', text);
+		else if (window.clipboardData) { // IE 11 - poor clipboard API
+			window.clipboardData.setData('Text', this.stripHTML(text));
 		}
 	}
 };
@@ -1227,7 +1233,7 @@ L.TileLayer = L.GridLayer.extend({
 				clearTimeout(this._selectionContentRequest);
 			}
 			this._selectionContentRequest = setTimeout(L.bind(function () {
-				this._map._socket.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
+				this._map._socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
 		}
 		this._onUpdateTextSelection();
 	},
@@ -1267,6 +1273,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onTextSelectionContentMsg: function (textMsg) {
 		this._selectionTextContent = textMsg.substr(22);
+		this._map._clipboardContainer.setValue(this._selectionTextContent);
 	},
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
@@ -2463,18 +2470,32 @@ L.TileLayer = L.GridLayer.extend({
 		this._dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false);
 	},
 
+	_getMetaOrigin: function (html) {
+		var match = '<meta name="origin" content="';
+		var start = html.indexOf(match);
+		if (start < 0) {
+			return '';
+		}
+		var end = html.indexOf('"', start + match.length);
+		if (end < 0) {
+			return '';
+		}
+		return html.substring(start + match.length, end);
+	},
+
 	_dataTransferToDocument: function (dataTransfer, preferInternal) {
 		// for the paste, we might prefer the internal LOK's copy/paste
 		if (preferInternal === true) {
-			var pasteString = dataTransfer.getData('text/plain');
-			if (!pasteString) {
-				pasteString = dataTransfer.getData('Text'); // IE 11
-			}
-
-			if (pasteString && pasteString === this._selectionTextHash) {
+			var pasteHtml = dataTransfer.getData('text/html');
+			var meta = this._getMetaOrigin(pasteHtml);
+			var id = this._map._socket.WSDServer.Id;
+			if (meta == id) {
+				// Home from home: short-circuit internally.
 				this._map._socket.sendMessage('uno .uno:Paste');
 				return;
-			}
+			} else
+				console.log('Unusual origin mismatch on paste between: "' +
+					    meta + '" and "' + id);
 		}
 
 		var types = dataTransfer.types;
