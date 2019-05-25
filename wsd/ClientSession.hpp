@@ -55,6 +55,9 @@ public:
     /// Handle kit-to-client message.
     bool handleKitToClientMessage(const char* data, const int size);
 
+    /// Integer id of the view in the kit process, or -1 if unknown
+    int getKitViewId() const { return _kitViewId; }
+
     // sendTextFrame that takes std::string and string literal.
     using Session::sendTextFrame;
 
@@ -210,6 +213,9 @@ private:
     int _tileHeightPixel;
     int _tileWidthTwips;
     int _tileHeightTwips;
+
+    /// The integer id of the view in the Kit process
+    int _kitViewId;
 
     /// Client is using a text document?
     bool _isTextDocument;

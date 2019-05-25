@@ -2488,14 +2488,16 @@ L.TileLayer = L.GridLayer.extend({
 		if (preferInternal === true) {
 			var pasteHtml = dataTransfer.getData('text/html');
 			var meta = this._getMetaOrigin(pasteHtml);
-			var id = this._map._socket.WSDServer.Id;
+			var id = 'https://transient/' + this._map._socket.WSDServer.Id + '/' + this._viewId +
+			    '?WOPISrc=' + encodeURIComponent(this._map.options.doc);
+			// cf. ClientSession.cpp /textselectioncontent:/
 			if (meta == id) {
 				// Home from home: short-circuit internally.
 				this._map._socket.sendMessage('uno .uno:Paste');
 				return;
 			} else
-				console.log('Unusual origin mismatch on paste between: "' +
-					    meta + '" and "' + id);
+				console.log('Unusual origin mismatch on paste between:\n\t"' +
+					    meta + '" and\n\t"' + id + '"');
 		}
 
 		var types = dataTransfer.types;
