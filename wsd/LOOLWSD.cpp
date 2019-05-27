@@ -214,7 +214,7 @@ std::set<std::string> LOOLWSD::EditFileExtensions;
 
 #if MOBILEAPP
 
-// Or can this be retreieved in some other way?
+// Or can this be retrieved in some other way?
 int LOOLWSD::prisonerServerSocketFD;
 
 #else
