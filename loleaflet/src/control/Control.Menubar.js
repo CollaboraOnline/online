@@ -431,6 +431,7 @@ L.Control.Menubar = L.Control.extend({
 		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'help'],
 
 		allowedViewModeActions: [
+			'shareas', 'print', // file menu
 			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'print', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'closedocument', // file menu
