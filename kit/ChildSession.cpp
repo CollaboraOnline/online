@@ -569,7 +569,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
     if (!doctemplate.empty())
     {
         std::string url = getJailedFilePath();
-        bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, nullptr);
+        bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, "TakeOwnership");
         if (!success)
         {
             LOG_ERR("Failed to save template [" << getJailedFilePath() << "].");
