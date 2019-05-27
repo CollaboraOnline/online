@@ -600,9 +600,12 @@ protected:
         {
             size_t end = payload.size();
             payload.resize(end + dataLen);
-            char* wsData = &payload[end];
-            for (size_t i = 0; i < dataLen; ++i)
-                *wsData++ = data[i] ^ mask[i % 4];
+            if (dataLen > 0)
+            {
+                char* wsData = &payload[end];
+                for (size_t i = 0; i < dataLen; ++i)
+                    *wsData++ = data[i] ^ mask[i % 4];
+            }
         }
         else
             payload.insert(payload.end(), data, data + dataLen);
