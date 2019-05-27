@@ -608,6 +608,19 @@
 		BE7AECFD2239694800B117D2 /* throbber.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = throbber.cxx; path = "../../ios-device/vcl/source/control/throbber.cxx"; sourceTree = "<group>"; };
 		BE7AECFF2239B79600B117D2 /* dummies.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dummies.cxx; path = "../../ios-device/vcl/ios/dummies.cxx"; sourceTree = "<group>"; };
 		BE7AED002239B79600B117D2 /* iosinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iosinst.cxx; path = "../../ios-device/vcl/ios/iosinst.cxx"; sourceTree = "<group>"; };
+		BE7E679F229C83A000DE73C8 /* init.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = init.cxx; path = "../../ios-device/sw/source/core/bastyp/init.cxx"; sourceTree = "<group>"; };
+		BE7E67A0229C83A000DE73C8 /* proofreadingiterator.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = proofreadingiterator.cxx; path = "../../ios-device/sw/source/core/bastyp/proofreadingiterator.cxx"; sourceTree = "<group>"; };
+		BE7E67A1229C83A000DE73C8 /* swtypes.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swtypes.cxx; path = "../../ios-device/sw/source/core/bastyp/swtypes.cxx"; sourceTree = "<group>"; };
+		BE7E67A2229C83A000DE73C8 /* bparr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bparr.cxx; path = "../../ios-device/sw/source/core/bastyp/bparr.cxx"; sourceTree = "<group>"; };
+		BE7E67A3229C83A000DE73C8 /* calc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = calc.cxx; path = "../../ios-device/sw/source/core/bastyp/calc.cxx"; sourceTree = "<group>"; };
+		BE7E67A4229C83A000DE73C8 /* swrect.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swrect.cxx; path = "../../ios-device/sw/source/core/bastyp/swrect.cxx"; sourceTree = "<group>"; };
+		BE7E67A5229C83A100DE73C8 /* SwSmartTagMgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SwSmartTagMgr.cxx; path = "../../ios-device/sw/source/core/bastyp/SwSmartTagMgr.cxx"; sourceTree = "<group>"; };
+		BE7E67A6229C83A100DE73C8 /* tabcol.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabcol.cxx; path = "../../ios-device/sw/source/core/bastyp/tabcol.cxx"; sourceTree = "<group>"; };
+		BE7E67A7229C83A100DE73C8 /* checkit.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = checkit.cxx; path = "../../ios-device/sw/source/core/bastyp/checkit.cxx"; sourceTree = "<group>"; };
+		BE7E67A8229C83A100DE73C8 /* breakit.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = breakit.cxx; path = "../../ios-device/sw/source/core/bastyp/breakit.cxx"; sourceTree = "<group>"; };
+		BE7E67A9229C83A100DE73C8 /* swcache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swcache.cxx; path = "../../ios-device/sw/source/core/bastyp/swcache.cxx"; sourceTree = "<group>"; };
+		BE7E67AA229C83A100DE73C8 /* swregion.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swregion.cxx; path = "../../ios-device/sw/source/core/bastyp/swregion.cxx"; sourceTree = "<group>"; };
+		BE7E67AB229C83A100DE73C8 /* index.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = index.cxx; path = "../../ios-device/sw/source/core/bastyp/index.cxx"; sourceTree = "<group>"; };
 		BE80E43121AD92F600859C97 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Mobile/Fonts; sourceTree = SOURCE_ROOT; };
 		BE80E43421B562F500859C97 /* servicemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servicemanager.cxx; path = "../../ios-device/cppuhelper/source/servicemanager.cxx"; sourceTree = "<group>"; };
 		BE80E43521B562F500859C97 /* component_context.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component_context.cxx; path = "../../ios-device/cppuhelper/source/component_context.cxx"; sourceTree = "<group>"; };
@@ -1540,6 +1553,7 @@
 		BE533494227C542200D63ADE /* core */ = {
 			isa = PBXGroup;
 			children = (
+				BE7E679E229C838400DE73C8 /* bastyp */,
 				BE53352E227C54B400D63ADE /* layout */,
 				BE533495227C543E00D63ADE /* view */,
 			);
@@ -1771,6 +1785,26 @@
 				BE7AED002239B79600B117D2 /* iosinst.cxx */,
 			);
 			name = ios;
+			sourceTree = "<group>";
+		};
+		BE7E679E229C838400DE73C8 /* bastyp */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E67A2229C83A000DE73C8 /* bparr.cxx */,
+				BE7E67A8229C83A100DE73C8 /* breakit.cxx */,
+				BE7E67A3229C83A000DE73C8 /* calc.cxx */,
+				BE7E67A7229C83A100DE73C8 /* checkit.cxx */,
+				BE7E67AB229C83A100DE73C8 /* index.cxx */,
+				BE7E679F229C83A000DE73C8 /* init.cxx */,
+				BE7E67A0229C83A000DE73C8 /* proofreadingiterator.cxx */,
+				BE7E67A9229C83A100DE73C8 /* swcache.cxx */,
+				BE7E67A4229C83A000DE73C8 /* swrect.cxx */,
+				BE7E67AA229C83A100DE73C8 /* swregion.cxx */,
+				BE7E67A5229C83A100DE73C8 /* SwSmartTagMgr.cxx */,
+				BE7E67A1229C83A000DE73C8 /* swtypes.cxx */,
+				BE7E67A6229C83A100DE73C8 /* tabcol.cxx */,
+			);
+			name = bastyp;
 			sourceTree = "<group>";
 		};
 		BE80E43321B5629300859C97 /* cppuhelper */ = {
