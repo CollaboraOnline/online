@@ -2451,7 +2451,10 @@ private:
                     sent = true;
                 }
                 else
+                {
                     LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                    cleanupDocBrokers();
+                }
             }
 
             if (!sent)
@@ -2706,7 +2709,6 @@ private:
                 else
                 {
                     LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
-                    cleanupDocBrokers();
                 }
             }
             else
