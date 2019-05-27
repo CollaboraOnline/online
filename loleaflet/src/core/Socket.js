@@ -668,13 +668,10 @@ L.Socket = L.Class.extend({
 					this._map.fire('postMessage', {
 						msgId: 'File_Rename',
 						args: {
-							Values: {
-								NewName: command.filename
-							}
+							NewName: command.filename
 						}
 					});
 				}
-
 			}
 			// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 		}
@@ -921,6 +918,9 @@ L.Socket = L.Class.extend({
 			}
 			else if (tokens[i].substring(0, 5) === 'name=') {
 				command.name = tokens[i].substring(5);
+			}
+			else if (tokens[i].substring(0, 9) === 'filename=') {
+				command.filename = tokens[i].substring(9);
 			}
 			else if (tokens[i].substring(0, 5) === 'port=') {
 				command.port = tokens[i].substring(5);
