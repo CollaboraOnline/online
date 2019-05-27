@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-20 22:00+0200\n"
+"POT-Creation-Date: 2019-05-27 11:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -257,7 +257,7 @@ msgstr ""
 msgid "Jump to state"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2237
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2241
 msgid "You"
 msgstr ""
 
@@ -312,7 +312,7 @@ msgid "Repair"
 msgstr ""
 
 #: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:266
-#: src/control/Control.Toolbar.js:1012
+#: src/control/Control.Toolbar.js:1010
 msgid "Reset zoom"
 msgstr ""
 
@@ -362,7 +362,7 @@ msgstr ""
 msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:308 src/control/Control.Toolbar.js:965
+#: src/control/Control.Menubar.js:308 src/control/Control.Toolbar.js:963
 msgid "Fullscreen presentation"
 msgstr ""
 
@@ -390,7 +390,7 @@ msgstr ""
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
-"b>: For cutting.</li><li><b>Ctrl+P</b>: For pasting.</li></ul></p>"
+"b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
 
 #: src/control/Control.Scroll.Annotation.js:10
@@ -421,185 +421,185 @@ msgstr ""
 msgid "Are you sure you want to delete this page?"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:756
+#: src/control/Control.Toolbar.js:753
 msgid "Borders"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:764
+#: src/control/Control.Toolbar.js:761
 msgid "More..."
 msgstr ""
 
-#: src/control/Control.Toolbar.js:811
+#: src/control/Control.Toolbar.js:809
 msgid "Insert table"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:816
+#: src/control/Control.Toolbar.js:814
 msgid "Insert Local Image"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:820
+#: src/control/Control.Toolbar.js:818
 msgid "Insert shapes"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:893 src/control/Control.Toolbar.js:1449
+#: src/control/Control.Toolbar.js:891 src/control/Control.Toolbar.js:1461
 msgid "Sum"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:894
+#: src/control/Control.Toolbar.js:892
 msgid "Function"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:895 src/layer/marker/Annotation.js:181
+#: src/control/Control.Toolbar.js:893 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:896
+#: src/control/Control.Toolbar.js:894
 msgid "Accept"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:943
+#: src/control/Control.Toolbar.js:941
 msgid "First sheet"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:944
+#: src/control/Control.Toolbar.js:942
 msgid "Previous sheet"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:945
+#: src/control/Control.Toolbar.js:943
 msgid "Next sheet"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:946
+#: src/control/Control.Toolbar.js:944
 msgid "Last sheet"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:947
+#: src/control/Control.Toolbar.js:945
 msgid "Insert sheet"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:989
+#: src/control/Control.Toolbar.js:987
 msgid "Search"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:995
+#: src/control/Control.Toolbar.js:993
 msgid "Cancel the search"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1002
+#: src/control/Control.Toolbar.js:1000
 msgid "Always follow the editor"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1005
+#: src/control/Control.Toolbar.js:1003
 msgid "Current"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1068
+#: src/control/Control.Toolbar.js:1080
 msgid "%user has joined"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1069
+#: src/control/Control.Toolbar.js:1081
 msgid "%user has left"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1415
+#: src/control/Control.Toolbar.js:1427
 msgid "Number of Sheets"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1420
+#: src/control/Control.Toolbar.js:1432
 msgid "Selected range of cells"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1425 src/control/Control.Toolbar.js:1482
+#: src/control/Control.Toolbar.js:1437 src/control/Control.Toolbar.js:1494
 msgid "Entering text mode"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1430 src/control/Control.Toolbar.js:1492
-#: src/control/Control.Toolbar.js:1514
+#: src/control/Control.Toolbar.js:1442 src/control/Control.Toolbar.js:1504
+#: src/control/Control.Toolbar.js:1526
 msgid "Text Language"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1435 src/control/Control.Toolbar.js:1487
+#: src/control/Control.Toolbar.js:1447 src/control/Control.Toolbar.js:1499
 msgid "Selection Mode"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1440
+#: src/control/Control.Toolbar.js:1452
 msgid "Choice of functions"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1444
+#: src/control/Control.Toolbar.js:1456
 msgid "Average"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1445
+#: src/control/Control.Toolbar.js:1457
 msgid "CountA"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1446
+#: src/control/Control.Toolbar.js:1458
 msgid "Count"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1447
+#: src/control/Control.Toolbar.js:1459
 msgid "Maximum"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1448
+#: src/control/Control.Toolbar.js:1460
 msgid "Minimum"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1450
+#: src/control/Control.Toolbar.js:1462
 msgid "Selection count"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1451
+#: src/control/Control.Toolbar.js:1463
 msgid "None"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1472
+#: src/control/Control.Toolbar.js:1484
 msgid "Number of Pages"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1477
+#: src/control/Control.Toolbar.js:1489
 msgid "Word Counter"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1509
+#: src/control/Control.Toolbar.js:1521
 msgid "Number of Slides"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1542
+#: src/control/Control.Toolbar.js:1554
 msgid "%n users"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1543
+#: src/control/Control.Toolbar.js:1555
 msgid "1 user"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1544
+#: src/control/Control.Toolbar.js:1556
 msgid "0 users"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1845
+#: src/control/Control.Toolbar.js:1851
 msgid "Style"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1868
+#: src/control/Control.Toolbar.js:1874
 msgid "Font"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1907
+#: src/control/Control.Toolbar.js:1913
 msgid "Previous slide"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1908
+#: src/control/Control.Toolbar.js:1914
 msgid "Next slide"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1954
+#: src/control/Control.Toolbar.js:1960
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:2243
+#: src/control/Control.Toolbar.js:2247
 msgid "Readonly"
 msgstr ""
 
@@ -1004,6 +1004,6 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:297
+#: src/map/handler/Map.WOPI.js:308
 msgid "Creating copy..."
 msgstr ""
