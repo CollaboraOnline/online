@@ -14,6 +14,7 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <unordered_map>
 
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
@@ -35,10 +36,14 @@ using namespace LOOLProtocol;
 using Poco::Path;
 using Poco::StringTokenizer;
 
+static std::mutex SessionMapMutex;
+static std::unordered_map<std::string, std::weak_ptr<ClientSession>> SessionMap;
+
 ClientSession::ClientSession(const std::string& id,
                              const std::shared_ptr<DocumentBroker>& docBroker,
                              const Poco::URI& uriPublic,
-                             const bool readOnly) :
+                             const bool readOnly,
+                             const std::string& hostNoTrust) :
     Session("ToClient-" + id, id, readOnly),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
@@ -53,16 +58,61 @@ ClientSession::ClientSession(const std::string& id,
     _tileWidthTwips(0),
     _tileHeightTwips(0),
     _kitViewId(-1),
+    _hostNoTrust(hostNoTrust),
     _isTextDocument(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
 }
 
+// Can't take a reference in the constructor.
+void ClientSession::construct()
+{
+    std::unique_lock<std::mutex> lock(SessionMapMutex);
+    SessionMap[getId()] = shared_from_this();
+}
+
 ClientSession::~ClientSession()
 {
     const size_t curConnections = --LOOLWSD::NumConnections;
     LOG_INF("~ClientSession dtor [" << getName() << "], current number of connections: " << curConnections);
+
+    std::unique_lock<std::mutex> lock(SessionMapMutex);
+    SessionMap.erase(getId());
+}
+
+std::string ClientSession::getURIAndUpdateClipboardHash()
+{
+    std::string hash = Util::rng::getHexString(16);
+    {
+        std::unique_lock<std::mutex> lock(SessionMapMutex);
+        _clipboardKey = hash;
+    }
+
+    std::string encodedFrom;
+    Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
+    wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
+
+    std::string encodeChars = ",/?:@&=+$#"; // match JS encodeURIComponent
+    Poco::URI::encode(wopiSrc.toString(), encodeChars, encodedFrom);
+
+    std::string proto = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://";
+    std::string meta = proto + _hostNoTrust + "/clipboard/" + LOOLWSD::HostIdentifier +
+        "/" + std::to_string(getKitViewId()) + "?WOPISrc=" + encodedFrom + "&amp;tag=" + hash;
+    return meta;
+}
+
+// called infrequently
+std::shared_ptr<ClientSession> ClientSession::getByClipboardHash(std::string &key)
+{
+    std::unique_lock<std::mutex> lock(SessionMapMutex);
+    for (auto &it : SessionMap)
+    {
+        auto session = it.second.lock();
+        if (session && session->_clipboardKey == key)
+            return session;
+    }
+    return std::shared_ptr<ClientSession>();
 }
 
 void ClientSession::handleIncomingMessage(SocketDisposition &disposition)
@@ -986,14 +1036,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 // cf. TileLayer.js /_dataTransferToDocument/
                 if (pos != std::string::npos) // assume text/html
                 {
-                    // FIXME: expose other content types ? provide an RTF back-channel ?
-                    std::string encodedFrom;
-                    Poco::URI wopiSrc = docBroker->getPublicUri();
-                    wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
-                    // matching encodeURIComponent
-                    Poco::URI::encode(wopiSrc.toString(), ",/?:@&=+$#", encodedFrom);
-                    std::string meta = "https://transient/" + LOOLWSD::HostIdentifier + "/" +
-                        std::to_string(getKitViewId()) + "?WOPISrc=" + encodedFrom;
+                    std::string meta = getURIAndUpdateClipboardHash();
                     std::string origin = "<meta name=\"origin\" content=\"" + meta + "\"/>\n";
                     data.insert(data.begin() + pos, origin.begin(), origin.end());
                     return true;

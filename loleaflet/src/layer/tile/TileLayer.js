@@ -2480,46 +2480,97 @@ L.TileLayer = L.GridLayer.extend({
 		if (end < 0) {
 			return '';
 		}
-		return html.substring(start + match.length, end);
+		var meta = html.substring(start + match.length, end);
+
+		// quick sanity checks that it one of ours.
+		if (meta.indexOf('/clipboard/') > 0 &&
+		    meta.indexOf('&amp;tag=') > 0)
+			return meta;
+		else
+			console.log('Mis-understood foreign origin: "' + meta + '"');
+		return '';
 	},
 
 	_dataTransferToDocument: function (dataTransfer, preferInternal) {
+
+		// Look for our HTML meta magic.
+		//   cf. ClientSession.cpp /textselectioncontent:/
+		var pasteHtml = dataTransfer.getData('text/html');
+		var meta = this._getMetaOrigin(pasteHtml);
+		var id = this._map.options.webserver + this._map.options.serviceRoot +
+		    '/clipboard/' + this._map._socket.WSDServer.Id + '/' + this._viewId +
+		    '?WOPISrc=' + encodeURIComponent(this._map.options.doc);
+
 		// for the paste, we might prefer the internal LOK's copy/paste
-		if (preferInternal === true) {
-			var pasteHtml = dataTransfer.getData('text/html');
-			var meta = this._getMetaOrigin(pasteHtml);
-			var id = 'https://transient/' + this._map._socket.WSDServer.Id + '/' + this._viewId +
-			    '?WOPISrc=' + encodeURIComponent(this._map.options.doc);
-			// cf. ClientSession.cpp /textselectioncontent:/
-			if (meta == id) {
-				// Home from home: short-circuit internally.
-				this._map._socket.sendMessage('uno .uno:Paste');
-				return;
-			} else
-				console.log('Unusual origin mismatch on paste between:\n\t"' +
-					    meta + '" and\n\t"' + id + '"');
+		if (meta.startsWith(id) && preferInternal === true) {
+			// Home from home: short-circuit internally.
+			console.log('short-circuit, internal paste');
+			this._map._socket.sendMessage('uno .uno:Paste');
+			return;
 		}
 
-		var types = dataTransfer.types;
+		// Suck HTML content out of dataTransfer now while it feels like working.
+		var content = this._readContentSync(dataTransfer);
 
-		// first try to transfer images
-		// TODO if we have both Files and a normal mimetype, should we handle
-		// both, or prefer one or the other?
-		for (var t = 0; t < types.length; ++t) {
-			if (types[t] === 'Files') {
-				var files = dataTransfer.files;
-				for (var f = 0; f < files.length; ++f) {
-					var file = files[f];
-					if (file.type.match(/image.*/)) {
-						var reader = new FileReader();
-						reader.onload = this._onFileLoadFunc(file);
-						reader.readAsArrayBuffer(file);
+		// Images get a look in only if we have no content and are async
+		if (content == null && pasteHtml == '')
+		{
+			var types = dataTransfer.types;
+
+			console.log('Attempting to paste image(s)');
+
+			// first try to transfer images
+			// TODO if we have both Files and a normal mimetype, should we handle
+			// both, or prefer one or the other?
+			for (var t = 0; t < types.length; ++t) {
+				console.log('\ttype' + types[t]);
+				if (types[t] === 'Files') {
+					var files = dataTransfer.files;
+					for (var f = 0; f < files.length; ++f) {
+						var file = files[f];
+						if (file.type.match(/image.*/)) {
+							var reader = new FileReader();
+							reader.onload = this._onFileLoadFunc(file);
+							reader.readAsArrayBuffer(file);
+						}
 					}
 				}
 			}
+			return;
 		}
 
-		// now try various mime types
+		// Try Fetch the data directly ourselves instead.
+		if (meta != '') {
+			// FIXME: really should short-circuit on the server.
+			console.log('Doing async paste of data from remote origin\n\t"' + meta + '" is not\n\t"' + id + '"');
+			var tilelayer = this;
+			var oReq = new XMLHttpRequest();
+			oReq.onload = function() {
+				var arraybuffer = oReq.response;
+				if (oReq.status == 200) { // OK
+					var blob = new Blob(['paste mimetype=application/x-openoffice-embed-source-xml;windows_formatname="Star Embed Source (XML)"\n', arraybuffer]);
+					tilelayer._map._socket.sendMessage(blob);
+					console.log('Sent paste blob message');
+				} else {
+					console.log('Error code ' + oReq.status + ' fetching from URL "' + meta + '": ' + e + ' falling back to local.');
+					tilelayer._map._socket.sendMessage(content);
+				}
+			}
+			oReq.onerror = function(e) {
+				console.log('Error fetching from URL "' + meta + '": ' + e + ' falling back to local.');
+				tilelayer._map._socket.sendMessage(content);
+			};
+			oReq.open('GET', meta);
+			oReq.responseType = 'arraybuffer';
+			oReq.send();
+			// user abort - if they do stops paste.
+		} else {
+			console.log('Received a paste but nothing on the clipboard');
+		}
+	},
+
+	_readContentSync: function(dataTransfer) {
+		// Try various content mime types
 		var mimeTypes;
 		if (this._docType === 'spreadsheet') {
 			// FIXME apparently we cannot paste the text/html or text/rtf as
@@ -2547,15 +2598,15 @@ L.TileLayer = L.GridLayer.extend({
 			];
 		}
 
+		var types = dataTransfer.types;
 		for (var i = 0; i < mimeTypes.length; ++i) {
-			for (t = 0; t < types.length; ++t) {
+			for (var t = 0; t < types.length; ++t) {
 				if (mimeTypes[i][0] === types[t]) {
-					var blob = new Blob(['paste mimetype=' + mimeTypes[i][1] + '\n', dataTransfer.getData(types[t])]);
-					this._map._socket.sendMessage(blob);
-					return;
+					return new Blob(['paste mimetype=' + mimeTypes[i][1] + '\n', dataTransfer.getData(types[t])]);
 				}
 			}
 		}
+		return null;
 	},
 
 	_onFileLoadFunc: function(file) {

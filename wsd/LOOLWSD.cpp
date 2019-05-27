@@ -687,7 +687,7 @@ inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 
 #endif // MOBILEAPP
 
-std::atomic<unsigned> LOOLWSD::NextSessionId;
+std::atomic<uint64_t> LOOLWSD::NextSessionId;
 #ifndef KIT_IN_PROCESS
 std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
@@ -1762,7 +1762,8 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
                                                              const std::string& id,
                                                              const Poco::URI& uriPublic,
                                                              const std::shared_ptr<DocumentBroker>& docBroker,
-                                                             const bool isReadOnly)
+                                                             const bool isReadOnly,
+                                                             const std::string& hostNoTrust)
 {
     LOG_CHECK_RET(docBroker && "Null docBroker instance", nullptr);
     try
@@ -1778,7 +1779,10 @@ static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHand
         // In case of WOPI, if this session is not set as readonly, it might be set so
         // later after making a call to WOPI host which tells us the permission on files
         // (UserCanWrite param).
-        return std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly);
+        auto session = std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly, hostNoTrust);
+        session->construct();
+
+        return session;
     }
     catch (const std::exception& exc)
     {
@@ -2426,7 +2430,8 @@ private:
                 // Load the document.
                 // TODO: Move to DocumentBroker.
                 const bool isReadOnly = true;
-                std::shared_ptr<ClientSession> clientSession = createNewClientSession(nullptr, _id, uriPublic, docBroker, isReadOnly);
+                std::shared_ptr<ClientSession> clientSession = createNewClientSession(
+                    nullptr, _id, uriPublic, docBroker, isReadOnly, "nocliphost");
                 if (clientSession)
                 {
                     disposition.setMove([docBroker, clientSession, format]
@@ -2475,7 +2480,10 @@ private:
                     sent = true;
                 }
                 else
+                {
                     LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                    cleanupDocBrokers();
+                }
             }
 
             if (!sent)
@@ -2673,7 +2681,11 @@ private:
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
             if (docBroker)
             {
-                std::shared_ptr<ClientSession> clientSession = createNewClientSession(&ws, _id, uriPublic, docBroker, isReadOnly);
+                // We can send this back to whomever sent it to us though.
+                const std::string hostNoTrust = (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+
+                std::shared_ptr<ClientSession> clientSession = createNewClientSession(&ws, _id, uriPublic,
+                                                                                      docBroker, isReadOnly, hostNoTrust);
                 if (clientSession)
                 {
                     // Transfer the client socket to the DocumentBroker when we get back to the poll:
@@ -2730,7 +2742,6 @@ private:
                 else
                 {
                     LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
-                    cleanupDocBrokers();
                 }
             }
             else

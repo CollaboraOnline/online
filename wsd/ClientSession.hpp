@@ -33,9 +33,13 @@ public:
     ClientSession(const std::string& id,
                   const std::shared_ptr<DocumentBroker>& docBroker,
                   const Poco::URI& uriPublic,
-                  const bool isReadOnly = false);
-
+                  const bool isReadOnly,
+                  const std::string& hostNoTrust);
+    void construct();
     virtual ~ClientSession();
+
+    /// Lookup any session by id.
+    static std::shared_ptr<ClientSession> getById(const std::string &id);
 
     void handleIncomingMessage(SocketDisposition &) override;
 
@@ -132,7 +136,14 @@ public:
     void resetWireIdMap();
 
     bool isTextDocument() const { return _isTextDocument; }
+
+    /// Find clipboard for session
+    static std::shared_ptr<ClientSession> getByClipboardHash(std::string &key);
+
 private:
+
+    /// Create URI for transient clipboard content.
+    std::string getURIAndUpdateClipboardHash();
 
     /// SocketHandler: disconnection event.
     void onDisconnect() override;
@@ -217,8 +228,14 @@ private:
     /// The integer id of the view in the Kit process
     int _kitViewId;
 
+    /// Un-trusted hostname of our service from the client
+    const std::string _hostNoTrust;
+
     /// Client is using a text document?
     bool _isTextDocument;
+
+    /// Transient clipboard identifier - protected by SessionMapMutex
+    std::string _clipboardKey;
 
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
     std::list<std::pair<std::string, std::chrono::steady_clock::time_point>> _tilesOnFly;
