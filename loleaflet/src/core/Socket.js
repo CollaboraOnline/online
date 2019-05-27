@@ -742,13 +742,16 @@ L.Socket = L.Class.extend({
 				this._map.options.wopiSrc = encodeURIComponent(docUrl);
 				this._map.loadDocument();
 				this._map.sendInitUNOCommands();
-
-				this._map.fire('postMessage', {
-					msgId: 'File_Rename',
-					args: {
-						NewName: command.filename
-					}
-				});
+				
+				if (textMsg.startsWith('renamefile:')) {
+					this._map.fire('postMessage', {
+						msgId: 'File_Rename',
+						args: {
+							NewName: command.filename
+						}
+					});
+				}
+				
 			}
 			// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 		}
