@@ -109,6 +109,13 @@
     <string name="bad_directory">Invalid directory path</string>
     <string name="current_dir">Current Directory: %1$s</string>
 
+    <!-- Permission rationale alert dialog strings -->
+    <string name="title_permission_required">Permission Required</string>
+    <string name="reason_required_to_read_documents">Storage permission is required for reading your documents.</string>
+    <string name="positive_ok">OKAY</string>
+    <string name="negative_im_sure">I\'M SURE</string>
+    <string name="negative_cancel">CANCEL</string>
+
     <!-- Save Alert dialog strings -->
     <string name="action_cancel">Cancel</string>
 
