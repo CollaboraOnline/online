@@ -26,9 +26,11 @@ import android.graphics.drawable.Icon;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -1316,6 +1318,49 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                     setEditFABVisibility(View.VISIBLE);
                 } else {
                     setEditFABVisibility(View.INVISIBLE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        boolean showRationale = shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        androidx.appcompat.app.AlertDialog.Builder rationaleDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this)
+                                .setCancelable(false)
+                                .setTitle(getString(R.string.title_permission_required))
+                                .setMessage(getString(R.string.reason_required_to_read_documents));
+                        if (showRationale) {
+                            rationaleDialogBuilder.setPositiveButton(getString(R.string.positive_ok), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ActivityCompat.requestPermissions(LibreOfficeUIActivity.this,
+                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                            PERMISSION_WRITE_EXTERNAL_STORAGE);
+                                }
+                            })
+                                    .setNegativeButton(getString(R.string.negative_im_sure), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            LibreOfficeUIActivity.this.finish();
+                                        }
+                                    })
+                                    .create()
+                                    .show();
+                        } else {
+                            rationaleDialogBuilder.setPositiveButton(getString(R.string.positive_ok), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                    intent.setData(uri);
+                                    startActivity(intent);
+                                }
+                            })
+                                    .setNegativeButton(R.string.negative_cancel, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            LibreOfficeUIActivity.this.finish();
+                                        }
+                                    })
+                                    .create()
+                                    .show();
+                        }
+                    }
                 }
                 break;
             default:
