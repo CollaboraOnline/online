@@ -23,4 +23,20 @@ void ClientSession::traceTileBySend(const TileDesc& /*tile*/, bool /*deduplicate
 
 void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& /*data*/) {};
 
+ClientSession::~ClientSession() {}
+
+void ClientSession::performWrites() {}
+
+void ClientSession::onDisconnect() {}
+
+void ClientSession::dumpState(std::ostream& /*os*/) {}
+
+void ClientSession::setReadOnly() {}
+
+void ClientSession::handleIncomingMessage(SocketDisposition &) {}
+
+bool ClientSession::_handleInput(const char* /*buffer*/, int /*length*/) { return false; }
+
+int ClientSession::getPollEvents(std::chrono::steady_clock::time_point /* now */, int & /* timeoutMaxMs */) { return 0; }
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

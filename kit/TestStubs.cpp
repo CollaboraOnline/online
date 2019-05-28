@@ -17,5 +17,8 @@
 #include "ChildSession.hpp"
 
 void ChildSession::loKitCallback(const int /* type */, const std::string& /* payload */) {}
+void ChildSession::disconnect() {}
+bool ChildSession::_handleInput(const char* /*buffer*/, int /*length*/) { return false; }
+ChildSession::~ChildSession() {}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
