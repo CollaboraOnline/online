@@ -938,6 +938,25 @@ int main(int argc, char**argv)
     //// Convert time from ISO8061 fraction format
     std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName);
 
+    /// Automatically execute code at end of current scope.
+    /// Used for exception-safe code.
+    class ScopeGuard
+    {
+    public:
+        template <typename T>
+        explicit ScopeGuard(T const &func) : m_func(func) {}
+
+        ~ScopeGuard()
+        {
+            if (m_func)
+                m_func();
+        }
+    private:
+        ScopeGuard(const ScopeGuard &) = delete;
+        ScopeGuard &operator=(const ScopeGuard &) = delete;
+
+        std::function<void()> m_func;
+    };
 } // end namespace Util
 
 #endif

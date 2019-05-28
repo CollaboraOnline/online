@@ -1488,6 +1488,13 @@ private:
 
         // Flag and release lock.
         ++_isLoading;
+
+        Util::ScopeGuard g([this]() {
+            // Not loading.
+            --_isLoading;
+            _cvLoading.notify_one();
+        });
+
         lock.unlock();
 
         try
@@ -1495,15 +1502,12 @@ private:
             if (!load(session, renderOpts, docTemplate))
                 return false;
         }
-        catch (const std::exception& exc)
+        catch (const std::exception &exc)
         {
             LOG_ERR("Exception while loading url [" << uriAnonym <<
                     "] for session [" << sessionId << "]: " << exc.what());
             return false;
         }
-
-        --_isLoading;
-        _cvLoading.notify_one();
 
         return true;
     }
