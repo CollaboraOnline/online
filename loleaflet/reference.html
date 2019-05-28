@@ -2890,19 +2890,36 @@ Editor to WOPI Host
 		    <nobr>UserName: &lt;String&gt;</nobr>
 		    <nobr>Color: &lt;Number&gt;</nobr>
 		    <nobr>ReadOnly: &lt;Boolean&gt;</nobr>
+		    <nobr>Deprecated: true;</nobr>
 		</code></td>
 		<td>A new member is added. ViewId is unique integer
 		identifying a session/view. UserId is user identity. UserName is
 		display name of the user. Color is RGB color integer
-		value. ReadOnly tells if the new view is opened as readonly.
+		value. ReadOnly tells if the new view is opened as readonly.<br/>
+		This message is <strong>deprecated</strong>, instead implement just
+		handling of Views_List which holds the same payload as
+		<code>Get_Views_Resp</code>.
 		</td>
 	</tr>
 	<tr>
 		<td><code><b>View_Removed</b></code></td>
 		<td><code>
 		    <nobr>ViewId: &lt;Number&gt;</nobr>
+		    <nobr>Deprecated: true;</nobr>
 		</code></td>
-		<td>View with <code>ViewId</code> has closed the document.
+		<td>View with <code>ViewId</code> has closed the document.<br/>
+		This message is <strong>deprecated</strong>, instead implement just
+		handling of Get_Views_Resp and if you need the info which view has
+		been added / removed, check against the previous state.<br/>
+		This message is <strong>deprecated</strong>, instead implement just
+		handling of Views_List which holds the same payload as
+		<code>Get_Views_Resp</code>.
+		</td>
+	</tr>
+	<tr>
+		<td><code><b>Views_List</b></code></td>
+		<td>See <code>Get_Views_Resp</code>.</td>
+		<td>Complete information about the currently connected views.
 		</td>
 	</tr>
 	</table>
