@@ -975,7 +975,8 @@ bool ChildSession::getBinarySelection(const char* /*buffer*/, int /*length*/, co
     if (binSelection)
         std::memcpy(output.data() + header.size(), binSelection, binSize);
 
-    LOG_TRC("Sending binaryselectioncontent (" << binSize << " bytes) in: " <<
+    LOG_TRC("Sending binaryselectioncontent (" << binSize << " bytes) and hash " <<
+            SpookyHash::Hash64(binSelection, binSize, 0) << " in: " <<
             mimeType << " out: " << (mimeTypeOut ? mimeTypeOut : ""));
     sendBinaryFrame(output.data(), output.size());
     if (binSelection)
@@ -1011,6 +1012,7 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
 
         getLOKitDocument()->setView(_viewId);
 
+        LOG_TRC("Paste data of size " << size << " bytes and hash " << SpookyHash::Hash64(data, size, 0));
         if (!getLOKitDocument()->paste(mimeType.c_str(), data, size))
             LOG_WRN("Paste failed " << getLOKitLastError());
     }
