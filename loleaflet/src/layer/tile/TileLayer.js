@@ -2483,9 +2483,11 @@ L.TileLayer = L.GridLayer.extend({
 		var meta = html.substring(start + match.length, end);
 
 		// quick sanity checks that it one of ours.
-		if (meta.indexOf('/clipboard/') > 0 &&
-		    meta.indexOf('&amp;tag=') > 0)
-			return meta;
+		if (meta.indexOf('%2Fclipboard%3FWOPISrc%3D') > 0 &&
+		    meta.indexOf('%26ServerId%3D') > 0 &&
+		    meta.indexOf('%26ViewId%3D') > 0 &&
+		    meta.indexOf('%26Tag%3D') > 0)
+			return decodeURIComponent(meta);
 		else
 			console.log('Mis-understood foreign origin: "' + meta + '"');
 		return '';
@@ -2498,8 +2500,8 @@ L.TileLayer = L.GridLayer.extend({
 		var pasteHtml = dataTransfer.getData('text/html');
 		var meta = this._getMetaOrigin(pasteHtml);
 		var id = this._map.options.webserver + this._map.options.serviceRoot +
-		    '/clipboard/' + this._map._socket.WSDServer.Id + '/' + this._viewId +
-		    '?WOPISrc=' + encodeURIComponent(this._map.options.doc);
+		    '/clipboard?WOPISrc='+ encodeURIComponent(this._map.options.doc) +
+		    '&ServerId=' + this._map._socket.WSDServer.Id + '&ViewId=' + this._viewId;
 
 		// for the paste, we might prefer the internal LOK's copy/paste
 		if (meta.startsWith(id) && preferInternal === true) {
@@ -2545,10 +2547,11 @@ L.TileLayer = L.GridLayer.extend({
 			console.log('Doing async paste of data from remote origin\n\t"' + meta + '" is not\n\t"' + id + '"');
 			var tilelayer = this;
 			var oReq = new XMLHttpRequest();
-			oReq.onload = function() {
+			oReq.onload = function(e) {
 				var arraybuffer = oReq.response;
 				if (oReq.status == 200) { // OK
-					var blob = new Blob(['paste mimetype=application/x-openoffice-embed-source-xml;windows_formatname="Star Embed Source (XML)"\n', arraybuffer]);
+//					var blob = new Blob(['paste mimetype=application/x-openoffice-embed-source-xml;windows_formatname="Star Embed Source (XML)"\n', arraybuffer]);
+					var blob = new Blob(['paste mimetype=text/plain\n', arraybuffer]);
 					tilelayer._map._socket.sendMessage(blob);
 					console.log('Sent paste blob message');
 				} else {

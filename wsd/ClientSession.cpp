@@ -97,9 +97,16 @@ std::string ClientSession::getURIAndUpdateClipboardHash()
     Poco::URI::encode(wopiSrc.toString(), encodeChars, encodedFrom);
 
     std::string proto = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://";
-    std::string meta = proto + _hostNoTrust + "/clipboard/" + LOOLWSD::HostIdentifier +
-        "/" + std::to_string(getKitViewId()) + "?WOPISrc=" + encodedFrom + "&amp;tag=" + hash;
-    return meta;
+    std::string meta = proto + _hostNoTrust +
+        "/clipboard?WOPISrc=" + encodedFrom +
+        "&ServerId=" + LOOLWSD::HostIdentifier +
+        "&ViewId=" + std::to_string(getKitViewId()) +
+        "&Tag=" + hash;
+
+    std::string metaEncoded;
+    Poco::URI::encode(meta, encodeChars, metaEncoded);
+
+    return metaEncoded;
 }
 
 // called infrequently
@@ -1357,7 +1364,15 @@ void ClientSession::dumpState(std::ostream& os)
     os << "\t\tisReadOnly: " << isReadOnly()
        << "\n\t\tisDocumentOwner: " << _isDocumentOwner
        << "\n\t\tisAttached: " << _isAttached
-       << "\n\t\tkeyEvents: " << _keyEvents;
+       << "\n\t\tkeyEvents: " << _keyEvents
+//       << "\n\t\tvisibleArea: " << _clientVisibleArea
+       << "\n\t\tclientSelectedPart: " << _clientSelectedPart
+       << "\n\t\ttile size Pixel: " << _tileWidthPixel << "x" << _tileHeightPixel
+       << "\n\t\ttile size Twips: " << _tileWidthTwips << "x" << _tileHeightTwips
+       << "\n\t\tkit ViewId: " << _kitViewId
+       << "\n\t\thost (un-trusted): " << _hostNoTrust
+       << "\n\t\tisTextDocument: " << _isTextDocument
+       << "\n\t\tclipboardKey: " << _clipboardKey;
 
     std::shared_ptr<StreamSocket> socket = getSocket().lock();
     if (socket)
