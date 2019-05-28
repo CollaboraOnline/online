@@ -1437,9 +1437,8 @@ function onDocLayerInit() {
 					html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
 				{type: 'break', id: 'break4', tablet: false},
-				{
-					type: 'html', id: 'LanguageStatus', mobile: false, tablet: false,
-					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				{type: 'menu-radio', id: 'LanguageStatus',
+					mobile: false
 				},
 				{type: 'break', id: 'break5', tablet: false},
 				{
@@ -1499,9 +1498,8 @@ function onDocLayerInit() {
 					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="' + _('Selection Mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
 				{type: 'break', id: 'break7', mobile: false, tablet: false},
-				{
-					type: 'html', id: 'LanguageStatus', mobile: false, tablet: false,
-					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				{type: 'menu-radio', id: 'LanguageStatus',
+					mobile: false
 				},
 				{type: 'break', id: 'break8', mobile: false}
 			]);
@@ -1521,9 +1519,8 @@ function onDocLayerInit() {
 					html: '<div id="PageStatus" class="loleaflet-font" title="' + _('Number of Slides') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 				},
 				{type: 'break', id: 'break2', mobile: false, tablet: false},
-				{
-					type: 'html', id: 'LanguageStatus', mobile: false, tablet: false,
-					html: '<div id="LanguageStatus" class="loleaflet-font" title="' + _('Text Language') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+				{type: 'menu-radio', id: 'LanguageStatus',
+					mobile: false
 				},
 				{type: 'break', id: 'break8', mobile: false}
 			]);
@@ -1689,7 +1686,7 @@ function onCommandStateChanged(e) {
 		}
 	}
 	else if (commandName === '.uno:LanguageStatus') {
-		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(_(state)).parent().html());
+		statusbar.set('LanguageStatus', {text: _(state), selected: state});
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		if (e.state === 'true') {
@@ -1779,6 +1776,40 @@ function onCommandStateChanged(e) {
 			toolbarUp.uncheck(id);
 			toolbarUp.disable(id);
 		}
+	}
+}
+
+function onCommandValues(e) {
+	if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
+		var translated, neutral;
+		var constLang = '.uno:LanguageStatus?Language:string=';
+		var constDefault = 'Default_RESET_LANGUAGES';
+		var constNone = 'Default_LANGUAGE_NONE';
+		var resetLang = _('Reset to Default Language');
+		var noneLang = _('None (Do not check spelling)');
+		var languages = [];
+		e.commandValues.forEach(function (language) {
+			languages.push({ translated: _(language), neutral: language });
+		});
+		languages.sort(function (a, b) {
+			return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
+		});
+
+		var toolbaritems = [];
+		toolbaritems.push({ text: noneLang,
+		 id: 'nonelanguage',
+		 uno: constLang + constNone });
+
+
+		for (var lang in languages) {
+			translated = languages[lang].translated;
+			neutral = languages[lang].neutral;
+			toolbaritems.push({ id: neutral, text: translated, uno: constLang + encodeURIComponent('Default_' + neutral) });
+		}
+
+		toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
+
+		w2ui['actionbar'].set('LanguageStatus', {items: toolbaritems});
 	}
 }
 
@@ -2402,6 +2433,7 @@ function setupToolbar(e) {
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
 	map.on('commandstatechanged', onCommandStateChanged);
+	map.on('commandvalues', onCommandValues, this);
 }
 
 global.setupToolbar = setupToolbar;
