@@ -2550,10 +2550,9 @@ L.TileLayer = L.GridLayer.extend({
 			oReq.onload = function(e) {
 				var arraybuffer = oReq.response;
 				if (oReq.status == 200) { // OK
-//					var blob = new Blob(['paste mimetype=application/x-openoffice-embed-source-xml;windows_formatname="Star Embed Source (XML)"\n', arraybuffer]);
-					var blob = new Blob(['paste mimetype=text/plain\n', arraybuffer]);
+					var blob = new Blob(['paste mimetype=application/x-openoffice-embed-source-xml;windows_formatname="Star Embed Source (XML)"\n', arraybuffer]);
 					tilelayer._map._socket.sendMessage(blob);
-					console.log('Sent paste blob message');
+					console.log('Sent paste blob message of size ' + arraybuffer.byteLength);
 				} else {
 					console.log('Error code ' + oReq.status + ' fetching from URL "' + meta + '": ' + e + ' falling back to local.');
 					tilelayer._map._socket.sendMessage(content);

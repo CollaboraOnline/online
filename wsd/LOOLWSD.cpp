@@ -2158,7 +2158,7 @@ private:
                 if (request.getMethod() == HTTPRequest::HTTP_GET &&
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "clipboard")
                 {
-                    handleClipboardRequest(request);
+                    handleClipboardRequest(request, disposition);
                 }
                 else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
@@ -2324,7 +2324,7 @@ private:
         LOG_INF("Sent capabilities.json successfully.");
     }
 
-    void handleClipboardRequest(const Poco::Net::HTTPRequest& request)
+    void handleClipboardRequest(const Poco::Net::HTTPRequest& request, SocketDisposition &disposition)
     {
         LOG_DBG("Clipboard request: " << request.getURI());
 
@@ -2349,26 +2349,23 @@ private:
         {
             // Do things in the right thread.
             auto docBroker = session->getDocumentBroker();
-            docBroker->addCallback([=](){
-                    ;
+
+            disposition.setMove([docBroker, session]
+                                (const std::shared_ptr<Socket> &moveSocket)
+                {
+                    // Perform all of this after removing the socket
+
+                    // We no longer own this socket.
+                    moveSocket->setThreadOwner(std::thread::id(0));
+
+                    docBroker->addCallback([docBroker, moveSocket, session]()
+                        {
+                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            session->addClipboardSocket(streamSocket);
+                        });
                 });
+            LOG_TRC("queued binary clipboard content fetch");
 
-            std::string result = "Hello world !\n";
-
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: " << result.size() << "\r\n"
-                << "Content-Type: application/octet-stream\r\n"
-                << "X-Content-Type-Options: nosniff\r\n"
-                << "\r\n"
-                << result;
-
-            auto socket = _socket.lock();
-            socket->send(oss.str());
-            socket->shutdown();
-            LOG_INF("Sent clipboard content successfully.");
         } else {
             LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag);
 

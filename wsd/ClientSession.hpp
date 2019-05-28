@@ -140,6 +140,8 @@ public:
     /// Find clipboard for session
     static std::shared_ptr<ClientSession> getByClipboardHash(std::string &key);
 
+    void addClipboardSocket(const std::shared_ptr<StreamSocket> &socket);
+
 private:
 
     /// Create URI for transient clipboard content.
@@ -249,6 +251,9 @@ private:
 
     /// Store wireID's of the sent tiles inside the actual visible area
     std::map<std::string, TileWireId> _oldWireIds;
+
+    /// Sockets to send binary selection content to
+    std::vector<std::weak_ptr<StreamSocket>> _clipSockets;
 };
 
 

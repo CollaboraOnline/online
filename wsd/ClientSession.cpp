@@ -87,7 +87,8 @@ std::string ClientSession::getURIAndUpdateClipboardHash()
     {
         std::unique_lock<std::mutex> lock(SessionMapMutex);
         _clipboardKey = hash;
-    }
+        LOG_TRC("Clipboard key on [" << getId() << "] set to " << _clipboardKey);
+   }
 
     std::string encodedFrom;
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
@@ -117,9 +118,32 @@ std::shared_ptr<ClientSession> ClientSession::getByClipboardHash(std::string &ke
     {
         auto session = it.second.lock();
         if (session && session->_clipboardKey == key)
-            return session;
+        {
+            if (session->_wopiFileInfo &&
+                session->_wopiFileInfo->getDisableCopy())
+            {
+                LOG_WRN("Attempting copy from disabled session " << key);
+                break;
+            }
+            else
+                return session;
+        }
     }
     return std::shared_ptr<ClientSession>();
+}
+
+void ClientSession::addClipboardSocket(const std::shared_ptr<StreamSocket> &socket)
+{
+    // Move the socket into our DocBroker.
+    auto docBroker = getDocumentBroker();
+    docBroker->addSocketToPoll(socket);
+
+    LOG_TRC("Session [" << getId() << "] sending getbinaryselection");
+    const std::string gettext = "getbinaryselection mimetype=application/x-openoffice-embed-source-xml";
+    docBroker->forwardToChild(getId(), gettext);
+
+    // TESTME: onerror / socket cleanup.
+    _clipSockets.push_back(socket);
 }
 
 void ClientSession::handleIncomingMessage(SocketDisposition &disposition)
@@ -1036,6 +1060,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             }
         }
     } else if (tokens[0] == "textselectioncontent:") {
+
         // Insert our meta origin if we can
         payload->rewriteDataBody([=](std::vector<char>& data) {
                 size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
@@ -1055,6 +1080,39 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
             });
         return forwardToClient(payload);
+
+    } else if (tokens[0] == "binaryselectioncontent:") {
+
+        // for now just for remote sockets.
+        LOG_TRC("Got binary selection content to send to " << _clipSockets.size() << "sockets");
+        size_t header;
+        for (header = 0; header < payload->size();)
+            if (payload->data()[header++] == '\n')
+                break;
+        if (header < payload->size())
+        {
+            for (auto it : _clipSockets)
+            {
+                std::ostringstream oss;
+                oss << "HTTP/1.1 200 OK\r\n"
+                    << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                    << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                    << "Content-Length: " << (payload->size() - header) << "\r\n"
+                    << "Content-Type: application/octet-stream\r\n"
+                    << "X-Content-Type-Options: nosniff\r\n"
+                    << "\r\n";
+                oss.write(&payload->data()[header], payload->size() - header);
+                auto socket = it.lock();
+                socket->setSocketBufferSize(std::min(payload->size() + 256,
+                                                     size_t(Socket::MaximumSendBufferSize)));
+                socket->send(oss.str());
+                socket->shutdown();
+                LOG_INF("Sent clipboard content.");
+            }
+        }
+        else
+            LOG_DBG("Odd - no binary selection content");
+        _clipSockets.clear();
     }
 
     if (!isDocPasswordProtected())
@@ -1372,7 +1430,8 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tkit ViewId: " << _kitViewId
        << "\n\t\thost (un-trusted): " << _hostNoTrust
        << "\n\t\tisTextDocument: " << _isTextDocument
-       << "\n\t\tclipboardKey: " << _clipboardKey;
+       << "\n\t\tclipboardKey: " << _clipboardKey
+       << "\n\t\tclip sockets: " << _clipSockets.size();
 
     std::shared_ptr<StreamSocket> socket = getSocket().lock();
     if (socket)

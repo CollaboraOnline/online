@@ -53,6 +53,10 @@ gettextselection mimetype=<mimeType>
 
     Request selection's content
 
+getbinaryselection mimetype=<mimeType>
+
+    Request selection's content
+
 paste mimetype=<mimeType>
 <binaryPasteData>
 
@@ -390,9 +394,11 @@ statechanged: <key>=<value>
     Notifies client of state changed events of <key>.
     Eg: 'statechanged: .uno:Undo=enabled'
 
-textselectioncontent: <content>
-
+textselectioncontent:
     Current selection's content
+
+binaryselectioncontent mimetype=<type>
+<binary selection content>
 
 tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [wid=<wireId>]
 <binaryPngImage>

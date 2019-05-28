@@ -253,6 +253,7 @@ private:
     bool downloadAs(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool getChildId();
     bool getTextSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool getBinarySelection(const char* buffer, int length, const std::vector<std::string>& tokens);
     std::string getTextSelectionInternal(const std::string& mimeType);
     bool paste(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool insertFile(const char* buffer, int length, const std::vector<std::string>& tokens);
@@ -287,6 +288,18 @@ private:
     std::shared_ptr<lok::Document> getLOKitDocument()
     {
         return _docManager.getLOKitDocument();
+    }
+
+    std::string getLOKitLastError()
+    {
+        char *lastErr = _docManager.getLOKit()->getError();
+        std::string ret;
+        if (lastErr)
+        {
+            ret = std::string(lastErr, strlen(lastErr));
+            free (lastErr);
+        }
+        return ret;
     }
 
 private:
