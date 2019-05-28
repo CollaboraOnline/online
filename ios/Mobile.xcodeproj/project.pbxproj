@@ -621,6 +621,94 @@
 		BE7E67A9229C83A100DE73C8 /* swcache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swcache.cxx; path = "../../ios-device/sw/source/core/bastyp/swcache.cxx"; sourceTree = "<group>"; };
 		BE7E67AA229C83A100DE73C8 /* swregion.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swregion.cxx; path = "../../ios-device/sw/source/core/bastyp/swregion.cxx"; sourceTree = "<group>"; };
 		BE7E67AB229C83A100DE73C8 /* index.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = index.cxx; path = "../../ios-device/sw/source/core/bastyp/index.cxx"; sourceTree = "<group>"; };
+		BE7E67AE229D0F7F00DE73C8 /* DocumentTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DocumentTContext.hxx; path = "../../ios-device/xmloff/source/transform/DocumentTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67AF229D0F7F00DE73C8 /* PropertyActionsOOo.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PropertyActionsOOo.hxx; path = "../../ios-device/xmloff/source/transform/PropertyActionsOOo.hxx"; sourceTree = "<group>"; };
+		BE7E67B0229D0F7F00DE73C8 /* StyleOOoTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StyleOOoTContext.cxx; path = "../../ios-device/xmloff/source/transform/StyleOOoTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67B1229D0F8000DE73C8 /* TransformerTokenMap.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TransformerTokenMap.hxx; path = "../../ios-device/xmloff/source/transform/TransformerTokenMap.hxx"; sourceTree = "<group>"; };
+		BE7E67B2229D0F8000DE73C8 /* MetaTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MetaTContext.cxx; path = "../../ios-device/xmloff/source/transform/MetaTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67B3229D0F8000DE73C8 /* XMLFilterRegistration.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = XMLFilterRegistration.cxx; path = "../../ios-device/xmloff/source/transform/XMLFilterRegistration.cxx"; sourceTree = "<group>"; };
+		BE7E67B4229D0F8000DE73C8 /* PersMixedContentTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PersMixedContentTContext.hxx; path = "../../ios-device/xmloff/source/transform/PersMixedContentTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67B5229D0F8000DE73C8 /* EventMap.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = EventMap.hxx; path = "../../ios-device/xmloff/source/transform/EventMap.hxx"; sourceTree = "<group>"; };
+		BE7E67B6229D0F8000DE73C8 /* TransformerContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransformerContext.cxx; path = "../../ios-device/xmloff/source/transform/TransformerContext.cxx"; sourceTree = "<group>"; };
+		BE7E67B7229D0F8000DE73C8 /* CreateElemTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CreateElemTContext.hxx; path = "../../ios-device/xmloff/source/transform/CreateElemTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67B8229D0F8000DE73C8 /* DlgOASISTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DlgOASISTContext.hxx; path = "../../ios-device/xmloff/source/transform/DlgOASISTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67B9229D0F8000DE73C8 /* ChartPlotAreaOASISTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ChartPlotAreaOASISTContext.hxx; path = "../../ios-device/xmloff/source/transform/ChartPlotAreaOASISTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67BA229D0F8000DE73C8 /* CreateElemTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CreateElemTContext.cxx; path = "../../ios-device/xmloff/source/transform/CreateElemTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67BB229D0F8000DE73C8 /* EventMap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EventMap.cxx; path = "../../ios-device/xmloff/source/transform/EventMap.cxx"; sourceTree = "<group>"; };
+		BE7E67BC229D0F8000DE73C8 /* FlatTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlatTContext.cxx; path = "../../ios-device/xmloff/source/transform/FlatTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67BD229D0F8000DE73C8 /* ChartOOoTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChartOOoTContext.cxx; path = "../../ios-device/xmloff/source/transform/ChartOOoTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67BE229D0F8000DE73C8 /* DeepTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DeepTContext.hxx; path = "../../ios-device/xmloff/source/transform/DeepTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67BF229D0F8000DE73C8 /* ChartPlotAreaOOoTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChartPlotAreaOOoTContext.cxx; path = "../../ios-device/xmloff/source/transform/ChartPlotAreaOOoTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67C0229D0F8000DE73C8 /* Oasis2OOo.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Oasis2OOo.hxx; path = "../../ios-device/xmloff/source/transform/Oasis2OOo.hxx"; sourceTree = "<group>"; };
+		BE7E67C1229D0F8000DE73C8 /* MetaTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MetaTContext.hxx; path = "../../ios-device/xmloff/source/transform/MetaTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67C2229D0F8000DE73C8 /* PersAttrListTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PersAttrListTContext.hxx; path = "../../ios-device/xmloff/source/transform/PersAttrListTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67C3229D0F8000DE73C8 /* PropType.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PropType.hxx; path = "../../ios-device/xmloff/source/transform/PropType.hxx"; sourceTree = "<group>"; };
+		BE7E67C4229D0F8000DE73C8 /* RenameElemTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RenameElemTContext.cxx; path = "../../ios-device/xmloff/source/transform/RenameElemTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67C5229D0F8100DE73C8 /* RenameElemTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RenameElemTContext.hxx; path = "../../ios-device/xmloff/source/transform/RenameElemTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67C6229D0F8100DE73C8 /* StyleOASISTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StyleOASISTContext.hxx; path = "../../ios-device/xmloff/source/transform/StyleOASISTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67C7229D0F8100DE73C8 /* ProcAttrTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcAttrTContext.cxx; path = "../../ios-device/xmloff/source/transform/ProcAttrTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67C8229D0F8100DE73C8 /* TransformerBase.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TransformerBase.hxx; path = "../../ios-device/xmloff/source/transform/TransformerBase.hxx"; sourceTree = "<group>"; };
+		BE7E67C9229D0F8100DE73C8 /* ChartOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChartOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/ChartOASISTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67CA229D0F8100DE73C8 /* ActionMapTypesOOo.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ActionMapTypesOOo.hxx; path = "../../ios-device/xmloff/source/transform/ActionMapTypesOOo.hxx"; sourceTree = "<group>"; };
+		BE7E67CB229D0F8100DE73C8 /* MutableAttrList.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MutableAttrList.cxx; path = "../../ios-device/xmloff/source/transform/MutableAttrList.cxx"; sourceTree = "<group>"; };
+		BE7E67CC229D0F8100DE73C8 /* FormPropOOoTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FormPropOOoTContext.cxx; path = "../../ios-device/xmloff/source/transform/FormPropOOoTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67CD229D0F8100DE73C8 /* ControlOOoTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ControlOOoTContext.cxx; path = "../../ios-device/xmloff/source/transform/ControlOOoTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67CE229D0F8100DE73C8 /* FormPropOOoTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FormPropOOoTContext.hxx; path = "../../ios-device/xmloff/source/transform/FormPropOOoTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67CF229D0F8100DE73C8 /* ChartOASISTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ChartOASISTContext.hxx; path = "../../ios-device/xmloff/source/transform/ChartOASISTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67D0229D0F8100DE73C8 /* NotesTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NotesTContext.hxx; path = "../../ios-device/xmloff/source/transform/NotesTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67D1229D0F8100DE73C8 /* StyleOOoTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StyleOOoTContext.hxx; path = "../../ios-device/xmloff/source/transform/StyleOOoTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67D2229D0F8100DE73C8 /* PropertyActionsOASIS.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PropertyActionsOASIS.hxx; path = "../../ios-device/xmloff/source/transform/PropertyActionsOASIS.hxx"; sourceTree = "<group>"; };
+		BE7E67D3229D0F8100DE73C8 /* TransformerActions.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TransformerActions.hxx; path = "../../ios-device/xmloff/source/transform/TransformerActions.hxx"; sourceTree = "<group>"; };
+		BE7E67D4229D0F8100DE73C8 /* DocumentTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentTContext.cxx; path = "../../ios-device/xmloff/source/transform/DocumentTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67D5229D0F8100DE73C8 /* XMLFilterRegistration.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = XMLFilterRegistration.hxx; path = "../../ios-device/xmloff/source/transform/XMLFilterRegistration.hxx"; sourceTree = "<group>"; };
+		BE7E67D6229D0F8100DE73C8 /* FlatTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FlatTContext.hxx; path = "../../ios-device/xmloff/source/transform/FlatTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67D7229D0F8100DE73C8 /* IgnoreTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = IgnoreTContext.hxx; path = "../../ios-device/xmloff/source/transform/IgnoreTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67D8229D0F8100DE73C8 /* FamilyType.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FamilyType.hxx; path = "../../ios-device/xmloff/source/transform/FamilyType.hxx"; sourceTree = "<group>"; };
+		BE7E67D9229D0F8100DE73C8 /* PersAttrListTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PersAttrListTContext.cxx; path = "../../ios-device/xmloff/source/transform/PersAttrListTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67DA229D0F8200DE73C8 /* DeepTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DeepTContext.cxx; path = "../../ios-device/xmloff/source/transform/DeepTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67DB229D0F8200DE73C8 /* StyleOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StyleOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/StyleOASISTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67DC229D0F8200DE73C8 /* ControlOASISTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ControlOASISTContext.hxx; path = "../../ios-device/xmloff/source/transform/ControlOASISTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67DD229D0F8200DE73C8 /* TransformerActions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransformerActions.cxx; path = "../../ios-device/xmloff/source/transform/TransformerActions.cxx"; sourceTree = "<group>"; };
+		BE7E67DE229D0F8200DE73C8 /* ChartOOoTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ChartOOoTContext.hxx; path = "../../ios-device/xmloff/source/transform/ChartOOoTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67DF229D0F8200DE73C8 /* ProcAttrTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ProcAttrTContext.hxx; path = "../../ios-device/xmloff/source/transform/ProcAttrTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67E0229D0F8200DE73C8 /* MutableAttrList.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MutableAttrList.hxx; path = "../../ios-device/xmloff/source/transform/MutableAttrList.hxx"; sourceTree = "<group>"; };
+		BE7E67E1229D0F8200DE73C8 /* PropertyActionsOASIS.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyActionsOASIS.cxx; path = "../../ios-device/xmloff/source/transform/PropertyActionsOASIS.cxx"; sourceTree = "<group>"; };
+		BE7E67E2229D0F8200DE73C8 /* FrameOOoTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FrameOOoTContext.cxx; path = "../../ios-device/xmloff/source/transform/FrameOOoTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67E3229D0F8200DE73C8 /* Transformer.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Transformer.hxx; path = "../../ios-device/xmloff/source/transform/Transformer.hxx"; sourceTree = "<group>"; };
+		BE7E67E4229D0F8200DE73C8 /* OOo2Oasis.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OOo2Oasis.cxx; path = "../../ios-device/xmloff/source/transform/OOo2Oasis.cxx"; sourceTree = "<group>"; };
+		BE7E67E5229D0F8200DE73C8 /* TransformerActionInit.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TransformerActionInit.hxx; path = "../../ios-device/xmloff/source/transform/TransformerActionInit.hxx"; sourceTree = "<group>"; };
+		BE7E67E6229D0F8200DE73C8 /* PropertyActionsOOo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyActionsOOo.cxx; path = "../../ios-device/xmloff/source/transform/PropertyActionsOOo.cxx"; sourceTree = "<group>"; };
+		BE7E67E7229D0F8200DE73C8 /* TransformerBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransformerBase.cxx; path = "../../ios-device/xmloff/source/transform/TransformerBase.cxx"; sourceTree = "<group>"; };
+		BE7E67E8229D0F8200DE73C8 /* TransformerContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TransformerContext.hxx; path = "../../ios-device/xmloff/source/transform/TransformerContext.hxx"; sourceTree = "<group>"; };
+		BE7E67E9229D0F8200DE73C8 /* FrameOOoTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FrameOOoTContext.hxx; path = "../../ios-device/xmloff/source/transform/FrameOOoTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67EA229D0F8200DE73C8 /* FormPropOASISTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FormPropOASISTContext.hxx; path = "../../ios-device/xmloff/source/transform/FormPropOASISTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67EB229D0F8200DE73C8 /* AttrTransformerAction.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = AttrTransformerAction.hxx; path = "../../ios-device/xmloff/source/transform/AttrTransformerAction.hxx"; sourceTree = "<group>"; };
+		BE7E67EC229D0F8200DE73C8 /* ProcAddAttrTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ProcAddAttrTContext.hxx; path = "../../ios-device/xmloff/source/transform/ProcAddAttrTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67ED229D0F8300DE73C8 /* FrameOASISTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FrameOASISTContext.hxx; path = "../../ios-device/xmloff/source/transform/FrameOASISTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67EE229D0F8300DE73C8 /* ControlOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ControlOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/ControlOASISTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67EF229D0F8300DE73C8 /* TransformerTokenMap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransformerTokenMap.cxx; path = "../../ios-device/xmloff/source/transform/TransformerTokenMap.cxx"; sourceTree = "<group>"; };
+		BE7E67F0229D0F8300DE73C8 /* xof.component */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = xof.component; path = "../../ios-device/xmloff/source/transform/xof.component"; sourceTree = "<group>"; };
+		BE7E67F1229D0F8300DE73C8 /* Oasis2OOo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Oasis2OOo.cxx; path = "../../ios-device/xmloff/source/transform/Oasis2OOo.cxx"; sourceTree = "<group>"; };
+		BE7E67F2229D0F8300DE73C8 /* EventOOoTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = EventOOoTContext.hxx; path = "../../ios-device/xmloff/source/transform/EventOOoTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67F3229D0F8300DE73C8 /* IgnoreTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IgnoreTContext.cxx; path = "../../ios-device/xmloff/source/transform/IgnoreTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67F4229D0F8300DE73C8 /* TransformerAction.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TransformerAction.hxx; path = "../../ios-device/xmloff/source/transform/TransformerAction.hxx"; sourceTree = "<group>"; };
+		BE7E67F5229D0F8300DE73C8 /* EventOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EventOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/EventOASISTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67F6229D0F8300DE73C8 /* ChartPlotAreaOOoTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ChartPlotAreaOOoTContext.hxx; path = "../../ios-device/xmloff/source/transform/ChartPlotAreaOOoTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67F7229D0F8300DE73C8 /* EventOASISTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = EventOASISTContext.hxx; path = "../../ios-device/xmloff/source/transform/EventOASISTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67F8229D0F8300DE73C8 /* NotesTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NotesTContext.cxx; path = "../../ios-device/xmloff/source/transform/NotesTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67F9229D0F8300DE73C8 /* ControlOOoTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ControlOOoTContext.hxx; path = "../../ios-device/xmloff/source/transform/ControlOOoTContext.hxx"; sourceTree = "<group>"; };
+		BE7E67FA229D0F8300DE73C8 /* FormPropOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FormPropOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/FormPropOASISTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67FB229D0F8300DE73C8 /* MergeElemTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MergeElemTContext.cxx; path = "../../ios-device/xmloff/source/transform/MergeElemTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67FC229D0F8300DE73C8 /* ActionMapTypesOASIS.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ActionMapTypesOASIS.hxx; path = "../../ios-device/xmloff/source/transform/ActionMapTypesOASIS.hxx"; sourceTree = "<group>"; };
+		BE7E67FD229D0F8300DE73C8 /* DlgOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DlgOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/DlgOASISTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67FE229D0F8300DE73C8 /* EventOOoTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EventOOoTContext.cxx; path = "../../ios-device/xmloff/source/transform/EventOOoTContext.cxx"; sourceTree = "<group>"; };
+		BE7E67FF229D0F8300DE73C8 /* ElemTransformerAction.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ElemTransformerAction.hxx; path = "../../ios-device/xmloff/source/transform/ElemTransformerAction.hxx"; sourceTree = "<group>"; };
+		BE7E6800229D0F8300DE73C8 /* OOo2Oasis.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = OOo2Oasis.hxx; path = "../../ios-device/xmloff/source/transform/OOo2Oasis.hxx"; sourceTree = "<group>"; };
+		BE7E6801229D0F8400DE73C8 /* ChartPlotAreaOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChartPlotAreaOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/ChartPlotAreaOASISTContext.cxx"; sourceTree = "<group>"; };
+		BE7E6802229D0F8400DE73C8 /* PersMixedContentTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PersMixedContentTContext.cxx; path = "../../ios-device/xmloff/source/transform/PersMixedContentTContext.cxx"; sourceTree = "<group>"; };
+		BE7E6803229D0F8400DE73C8 /* MergeElemTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MergeElemTContext.hxx; path = "../../ios-device/xmloff/source/transform/MergeElemTContext.hxx"; sourceTree = "<group>"; };
+		BE7E6804229D0F8400DE73C8 /* FrameOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FrameOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/FrameOASISTContext.cxx"; sourceTree = "<group>"; };
+		BE7E6805229D0F8400DE73C8 /* ProcAddAttrTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcAddAttrTContext.cxx; path = "../../ios-device/xmloff/source/transform/ProcAddAttrTContext.cxx"; sourceTree = "<group>"; };
 		BE80E43121AD92F600859C97 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Mobile/Fonts; sourceTree = SOURCE_ROOT; };
 		BE80E43421B562F500859C97 /* servicemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servicemanager.cxx; path = "../../ios-device/cppuhelper/source/servicemanager.cxx"; sourceTree = "<group>"; };
 		BE80E43521B562F500859C97 /* component_context.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component_context.cxx; path = "../../ios-device/cppuhelper/source/component_context.cxx"; sourceTree = "<group>"; };
@@ -1807,6 +1895,109 @@
 			name = bastyp;
 			sourceTree = "<group>";
 		};
+		BE7E67AC229D0F5300DE73C8 /* xmloff */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E67AD229D0F6500DE73C8 /* transform */,
+			);
+			name = xmloff;
+			sourceTree = "<group>";
+		};
+		BE7E67AD229D0F6500DE73C8 /* transform */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E67FC229D0F8300DE73C8 /* ActionMapTypesOASIS.hxx */,
+				BE7E67CA229D0F8100DE73C8 /* ActionMapTypesOOo.hxx */,
+				BE7E67EB229D0F8200DE73C8 /* AttrTransformerAction.hxx */,
+				BE7E67C9229D0F8100DE73C8 /* ChartOASISTContext.cxx */,
+				BE7E67CF229D0F8100DE73C8 /* ChartOASISTContext.hxx */,
+				BE7E67BD229D0F8000DE73C8 /* ChartOOoTContext.cxx */,
+				BE7E67DE229D0F8200DE73C8 /* ChartOOoTContext.hxx */,
+				BE7E6801229D0F8400DE73C8 /* ChartPlotAreaOASISTContext.cxx */,
+				BE7E67B9229D0F8000DE73C8 /* ChartPlotAreaOASISTContext.hxx */,
+				BE7E67BF229D0F8000DE73C8 /* ChartPlotAreaOOoTContext.cxx */,
+				BE7E67F6229D0F8300DE73C8 /* ChartPlotAreaOOoTContext.hxx */,
+				BE7E67EE229D0F8300DE73C8 /* ControlOASISTContext.cxx */,
+				BE7E67DC229D0F8200DE73C8 /* ControlOASISTContext.hxx */,
+				BE7E67CD229D0F8100DE73C8 /* ControlOOoTContext.cxx */,
+				BE7E67F9229D0F8300DE73C8 /* ControlOOoTContext.hxx */,
+				BE7E67BA229D0F8000DE73C8 /* CreateElemTContext.cxx */,
+				BE7E67B7229D0F8000DE73C8 /* CreateElemTContext.hxx */,
+				BE7E67DA229D0F8200DE73C8 /* DeepTContext.cxx */,
+				BE7E67BE229D0F8000DE73C8 /* DeepTContext.hxx */,
+				BE7E67FD229D0F8300DE73C8 /* DlgOASISTContext.cxx */,
+				BE7E67B8229D0F8000DE73C8 /* DlgOASISTContext.hxx */,
+				BE7E67D4229D0F8100DE73C8 /* DocumentTContext.cxx */,
+				BE7E67AE229D0F7F00DE73C8 /* DocumentTContext.hxx */,
+				BE7E67FF229D0F8300DE73C8 /* ElemTransformerAction.hxx */,
+				BE7E67BB229D0F8000DE73C8 /* EventMap.cxx */,
+				BE7E67B5229D0F8000DE73C8 /* EventMap.hxx */,
+				BE7E67F5229D0F8300DE73C8 /* EventOASISTContext.cxx */,
+				BE7E67F7229D0F8300DE73C8 /* EventOASISTContext.hxx */,
+				BE7E67FE229D0F8300DE73C8 /* EventOOoTContext.cxx */,
+				BE7E67F2229D0F8300DE73C8 /* EventOOoTContext.hxx */,
+				BE7E67D8229D0F8100DE73C8 /* FamilyType.hxx */,
+				BE7E67BC229D0F8000DE73C8 /* FlatTContext.cxx */,
+				BE7E67D6229D0F8100DE73C8 /* FlatTContext.hxx */,
+				BE7E67FA229D0F8300DE73C8 /* FormPropOASISTContext.cxx */,
+				BE7E67EA229D0F8200DE73C8 /* FormPropOASISTContext.hxx */,
+				BE7E67CC229D0F8100DE73C8 /* FormPropOOoTContext.cxx */,
+				BE7E67CE229D0F8100DE73C8 /* FormPropOOoTContext.hxx */,
+				BE7E6804229D0F8400DE73C8 /* FrameOASISTContext.cxx */,
+				BE7E67ED229D0F8300DE73C8 /* FrameOASISTContext.hxx */,
+				BE7E67E2229D0F8200DE73C8 /* FrameOOoTContext.cxx */,
+				BE7E67E9229D0F8200DE73C8 /* FrameOOoTContext.hxx */,
+				BE7E67F3229D0F8300DE73C8 /* IgnoreTContext.cxx */,
+				BE7E67D7229D0F8100DE73C8 /* IgnoreTContext.hxx */,
+				BE7E67FB229D0F8300DE73C8 /* MergeElemTContext.cxx */,
+				BE7E6803229D0F8400DE73C8 /* MergeElemTContext.hxx */,
+				BE7E67B2229D0F8000DE73C8 /* MetaTContext.cxx */,
+				BE7E67C1229D0F8000DE73C8 /* MetaTContext.hxx */,
+				BE7E67CB229D0F8100DE73C8 /* MutableAttrList.cxx */,
+				BE7E67E0229D0F8200DE73C8 /* MutableAttrList.hxx */,
+				BE7E67F8229D0F8300DE73C8 /* NotesTContext.cxx */,
+				BE7E67D0229D0F8100DE73C8 /* NotesTContext.hxx */,
+				BE7E67F1229D0F8300DE73C8 /* Oasis2OOo.cxx */,
+				BE7E67C0229D0F8000DE73C8 /* Oasis2OOo.hxx */,
+				BE7E67E4229D0F8200DE73C8 /* OOo2Oasis.cxx */,
+				BE7E6800229D0F8300DE73C8 /* OOo2Oasis.hxx */,
+				BE7E67D9229D0F8100DE73C8 /* PersAttrListTContext.cxx */,
+				BE7E67C2229D0F8000DE73C8 /* PersAttrListTContext.hxx */,
+				BE7E6802229D0F8400DE73C8 /* PersMixedContentTContext.cxx */,
+				BE7E67B4229D0F8000DE73C8 /* PersMixedContentTContext.hxx */,
+				BE7E6805229D0F8400DE73C8 /* ProcAddAttrTContext.cxx */,
+				BE7E67EC229D0F8200DE73C8 /* ProcAddAttrTContext.hxx */,
+				BE7E67C7229D0F8100DE73C8 /* ProcAttrTContext.cxx */,
+				BE7E67DF229D0F8200DE73C8 /* ProcAttrTContext.hxx */,
+				BE7E67E1229D0F8200DE73C8 /* PropertyActionsOASIS.cxx */,
+				BE7E67D2229D0F8100DE73C8 /* PropertyActionsOASIS.hxx */,
+				BE7E67E6229D0F8200DE73C8 /* PropertyActionsOOo.cxx */,
+				BE7E67AF229D0F7F00DE73C8 /* PropertyActionsOOo.hxx */,
+				BE7E67C3229D0F8000DE73C8 /* PropType.hxx */,
+				BE7E67C4229D0F8000DE73C8 /* RenameElemTContext.cxx */,
+				BE7E67C5229D0F8100DE73C8 /* RenameElemTContext.hxx */,
+				BE7E67DB229D0F8200DE73C8 /* StyleOASISTContext.cxx */,
+				BE7E67C6229D0F8100DE73C8 /* StyleOASISTContext.hxx */,
+				BE7E67B0229D0F7F00DE73C8 /* StyleOOoTContext.cxx */,
+				BE7E67D1229D0F8100DE73C8 /* StyleOOoTContext.hxx */,
+				BE7E67E3229D0F8200DE73C8 /* Transformer.hxx */,
+				BE7E67F4229D0F8300DE73C8 /* TransformerAction.hxx */,
+				BE7E67E5229D0F8200DE73C8 /* TransformerActionInit.hxx */,
+				BE7E67DD229D0F8200DE73C8 /* TransformerActions.cxx */,
+				BE7E67D3229D0F8100DE73C8 /* TransformerActions.hxx */,
+				BE7E67E7229D0F8200DE73C8 /* TransformerBase.cxx */,
+				BE7E67C8229D0F8100DE73C8 /* TransformerBase.hxx */,
+				BE7E67B6229D0F8000DE73C8 /* TransformerContext.cxx */,
+				BE7E67E8229D0F8200DE73C8 /* TransformerContext.hxx */,
+				BE7E67EF229D0F8300DE73C8 /* TransformerTokenMap.cxx */,
+				BE7E67B1229D0F8000DE73C8 /* TransformerTokenMap.hxx */,
+				BE7E67B3229D0F8000DE73C8 /* XMLFilterRegistration.cxx */,
+				BE7E67D5229D0F8100DE73C8 /* XMLFilterRegistration.hxx */,
+				BE7E67F0229D0F8300DE73C8 /* xof.component */,
+			);
+			name = transform;
+			sourceTree = "<group>";
+		};
 		BE80E43321B5629300859C97 /* cppuhelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -2011,6 +2202,7 @@
 				BEB0E5E721D642420085A0CF /* outdev */,
 				BEB0E5DF21CA9DA20085A0CF /* quartz */,
 				BE34D140218CF87D00815297 /* window */,
+				BE7E67AC229D0F5300DE73C8 /* xmloff */,
 			);
 			name = vcl;
 			sourceTree = "<group>";
