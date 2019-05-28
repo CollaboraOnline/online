@@ -50,6 +50,8 @@ L.Map.WOPI = L.Handler.extend({
 
 		this._map.on('wopiprops', this._setWopiProps, this);
 		L.DomEvent.on(window, 'message', this._postMessageListener, this);
+
+		this._map.on('updateviewslist', function() { this._postViewsMessage('Views_List'); }, this);
 	},
 
 	removeHooks: function() {
@@ -62,6 +64,8 @@ L.Map.WOPI = L.Handler.extend({
 
 		this._map.off('wopiprops', this._setWopiProps, this);
 		L.DomEvent.off(window, 'message', this._postMessageListener, this);
+
+		this._map.off('updateviewslist');
 	},
 
 	_setWopiProps: function(wopiInfo) {
@@ -244,20 +248,7 @@ L.Map.WOPI = L.Handler.extend({
 			}
 		}
 		else if (msg.MessageId === 'Get_Views') {
-			var getMembersRespVal = [];
-			for (var viewInfoIdx in this._map._viewInfo) {
-				getMembersRespVal.push({
-					ViewId: viewInfoIdx,
-					UserName: this._map._viewInfo[viewInfoIdx].username,
-					UserId: this._map._viewInfo[viewInfoIdx].userid,
-					UserExtraInfo: this._map._viewInfo[viewInfoIdx].userextrainfo,
-					Color: this._map._viewInfo[viewInfoIdx].color,
-					ReadOnly: this._map._viewInfo[viewInfoIdx].readonly,
-					IsCurrentView: this._map._docLayer._viewId === parseInt(viewInfoIdx, 10)
-				});
-			}
-
-			this._postMessage({msgId: 'Get_Views_Resp', args: getMembersRespVal});
+			this._postViewsMessage('Get_Views_Resp');
 		}
 		else if (msg.MessageId === 'Action_Save') {
 			var dontTerminateEdit = msg.Values && msg.Values['DontTerminateEdit'];
@@ -356,6 +347,23 @@ L.Map.WOPI = L.Handler.extend({
 			};
 			window.parent.postMessage(JSON.stringify(msg), this.PostMessageOrigin);
 		}
+	},
+
+	_postViewsMessage: function(messageId) {
+		var getMembersRespVal = [];
+		for (var viewInfoIdx in this._map._viewInfo) {
+			getMembersRespVal.push({
+				ViewId: viewInfoIdx,
+				UserName: this._map._viewInfo[viewInfoIdx].username,
+				UserId: this._map._viewInfo[viewInfoIdx].userid,
+				UserExtraInfo: this._map._viewInfo[viewInfoIdx].userextrainfo,
+				Color: this._map._viewInfo[viewInfoIdx].color,
+				ReadOnly: this._map._viewInfo[viewInfoIdx].readonly,
+				IsCurrentView: this._map._docLayer._viewId === parseInt(viewInfoIdx, 10)
+			});
+		}
+
+		this._postMessage({msgId: messageId, args: getMembersRespVal});
 	}
 });
 

@@ -265,7 +265,7 @@ L.Map = L.Evented.extend({
 		if (viewInfo.userextrainfo !== undefined && viewInfo.userextrainfo.avatar !== undefined) {
 			this._viewInfoByUserName[viewInfo.username] = viewInfo;
 		}
-		this.fire('postMessage', {msgId: 'View_Added', args: {ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, UserExtraInfo: viewInfo.userextrainfo, Color: L.LOUtil.rgbToHex(viewInfo.color), ReadOnly: viewInfo.readonly}});
+		this.fire('postMessage', {msgId: 'View_Added', args: {Deprecated: true, ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, UserExtraInfo: viewInfo.userextrainfo, Color: L.LOUtil.rgbToHex(viewInfo.color), ReadOnly: viewInfo.readonly}});
 
 		// Fire last, otherwise not all events are handled correctly.
 		this.fire('addview', {viewId: viewInfo.id, username: viewInfo.username, extraInfo: viewInfo.userextrainfo, readonly: this.isViewReadOnly(viewInfo.id)});
@@ -277,7 +277,7 @@ L.Map = L.Evented.extend({
 		var username = this._viewInfo[viewid].username;
 		delete this._viewInfoByUserName[this._viewInfo[viewid].username];
 		delete this._viewInfo[viewid];
-		this.fire('postMessage', {msgId: 'View_Removed', args: {ViewId: viewid}});
+		this.fire('postMessage', {msgId: 'View_Removed', args: {Deprecated: true, ViewId: viewid}});
 
 		// Fire last, otherwise not all events are handled correctly.
 		this.fire('removeview', {viewId: viewid, username: username});

@@ -1067,6 +1067,10 @@ L.TileLayer = L.GridLayer.extend({
 				this._removeView(parseInt(viewInfoIdx));
 			}
 		}
+
+		// Sending postMessage about View_Added / View_Removed is
+		// deprecated, going forward we prefer sending the entire information.
+		this._map.fire('updateviewslist');
 	},
 
 	_onRenderFontMsg: function (textMsg, img) {
