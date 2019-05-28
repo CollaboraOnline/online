@@ -826,6 +826,10 @@ L.Socket = L.Class.extend({
 					tileHeightTwips = Math.round(tileHeightTwips * scale);
 				}
 
+				if (!this._map.options.focusLayer) {
+					this._map.options.focusLayer = new L.ObjectFocusDarkOverlay().addTo(this._map);
+				}
+
 				var docLayer = null;
 				if (command.type === 'text') {
 					docLayer = new L.WriterTileLayer('', {

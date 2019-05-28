@@ -646,6 +646,21 @@ L.TileLayer = L.GridLayer.extend({
 		if (textMsg.match('EMPTY')) {
 			this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+
+			this._map.fire('inplace', {off: true});
+		}
+		if (textMsg.match('INPLACE')) {
+			var x = this._map.latLngToLayerPoint(this._graphicSelection.getNorthWest()).x;
+			var y = this._map.latLngToLayerPoint(this._graphicSelection.getNorthWest()).y;
+			var w = this._map.latLngToLayerPoint(this._graphicSelection.getSouthEast()).x - x;
+			var h = this._map.latLngToLayerPoint(this._graphicSelection.getSouthEast()).y - y;
+
+			x = this._map.getPixelOrigin().x + x;
+			y = this._map.getPixelOrigin().y + y;
+
+			this._map.fire('inplace', {x: x, y: y, w: w, h: h});
+			this._graphicSelection = null;
+			this._onUpdateGraphicSelection();
 		}
 		else {
 			textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';

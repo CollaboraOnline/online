@@ -39,6 +39,7 @@ w2ui-toolbar {
     bottom: 33px;
     padding: 0;
     position: absolute;
+    z-index: 100;
 }
 
 #formulabar {
