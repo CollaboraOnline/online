@@ -821,6 +821,16 @@ L.TileLayer = L.GridLayer.extend({
 		if (textMsg.match('EMPTY')) {
 			this._resetSelectionRanges();
 		}
+		else if (textMsg.match('INPLACE')) {
+			var xTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthWest()).x;
+			var yTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthWest()).y;
+			var wTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthEast()).x - xTwips;
+			var hTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthEast()).y - yTwips;
+
+			this._map.fire('inplace', {x: xTwips, y: yTwips, w: wTwips, h: hTwips});
+			this._graphicSelection = null;
+			this._onUpdateGraphicSelection();
+		}
 		else {
 			textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
 			var msgData = JSON.parse(textMsg);
