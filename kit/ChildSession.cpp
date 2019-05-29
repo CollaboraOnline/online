@@ -997,15 +997,19 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
         return false;
     }
 
-    if (mimeType.find("") == 0)
+    bool fallback = false;
+    if (mimeType.find("application/x-openoffice-embed-source-xml") == 0)
     {
         LOG_TRC("Re-writing garbled mime-type " << mimeType);
         mimeType = "application/x-openoffice-embed-source-xml;windows_formatname=\"Star Embed Source (XML)\"";
+        fallback = true;
     }
 
     const std::string firstLine = getFirstLine(buffer, length);
     const char* data = buffer + firstLine.size() + 1;
     const int size = length - firstLine.size() - 1;
+    bool success = false;
+    std::string result = "pasteresult: ";
     if (size > 0)
     {
         std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
@@ -1013,9 +1017,17 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
         getLOKitDocument()->setView(_viewId);
 
         LOG_TRC("Paste data of size " << size << " bytes and hash " << SpookyHash::Hash64(data, size, 0));
-        if (!getLOKitDocument()->paste(mimeType.c_str(), data, size))
+        success = getLOKitDocument()->paste(mimeType.c_str(), data, size);
+        if (!success)
             LOG_WRN("Paste failed " << getLOKitLastError());
     }
+    if (success)
+        result += "success";
+    else if (fallback)
+        result += "fallback";
+    else
+        result += "fail";
+    sendTextFrame(result);
 
     return true;
 }

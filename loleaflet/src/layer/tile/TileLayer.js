@@ -493,6 +493,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('editor:')) {
 			this._updateEditor(textMsg);
 		}
+		else if (textMsg.startsWith('pasteresult:')) {
+			this._pasteResult(textMsg);
+		}
 		else if (textMsg.startsWith('validitylistbutton:')) {
 			this._onValidityListButtonMsg(textMsg);
 		}
@@ -2493,6 +2496,23 @@ L.TileLayer = L.GridLayer.extend({
 		return '';
 	},
 
+	// Sometimes our smart-paste fails & we need to try again.
+	_pasteResult : function(textMsg)
+	{
+		textMsg = textMsg.substring('pasteresult:'.length + 1);
+		console.log('Paste state: ' + textMsg);
+		if (textMsg == 'fallback') {
+			if (this._pasteFallback != null) {
+				console.log('Paste failed- falling back to HTML');
+				this._map._socket.sendMessage(this._pasteFallback);
+			} else {
+				console.log('No paste fallback present.');
+			}
+		}
+
+		this._pasteFallback = null;
+	},
+
 	_dataTransferToDocument: function (dataTransfer, preferInternal) {
 
 		// Look for our HTML meta magic.
@@ -2510,6 +2530,9 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._socket.sendMessage('uno .uno:Paste');
 			return;
 		}
+
+		console.log('Resetting paste fallback');
+		this._pasteFallback = null;
 
 		// Suck HTML content out of dataTransfer now while it feels like working.
 		var content = this._readContentSync(dataTransfer);
@@ -2541,10 +2564,12 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 
-		// Try Fetch the data directly ourselves instead.
-		if (meta != '') {
+		if (meta != '') { // in Smart server side paste mode ...
 			// FIXME: really should short-circuit on the server.
 			console.log('Doing async paste of data from remote origin\n\t"' + meta + '" is not\n\t"' + id + '"');
+
+			this._pasteFallback = content;
+
 			var tilelayer = this;
 			var oReq = new XMLHttpRequest();
 			oReq.onload = function(e) {
@@ -2556,18 +2581,24 @@ L.TileLayer = L.GridLayer.extend({
 				} else {
 					console.log('Error code ' + oReq.status + ' fetching from URL "' + meta + '": ' + e + ' falling back to local.');
 					tilelayer._map._socket.sendMessage(content);
+					this._pasteFallback = null;
 				}
 			}
 			oReq.onerror = function(e) {
 				console.log('Error fetching from URL "' + meta + '": ' + e + ' falling back to local.');
 				tilelayer._map._socket.sendMessage(content);
+				this._pasteFallback = null;
 			};
 			oReq.open('GET', meta);
 			oReq.responseType = 'arraybuffer';
 			oReq.send();
 			// user abort - if they do stops paste.
+		} else if (content != null) {
+			console.log('Normal HTML, so smart paste not possible');
+			tilelayer._map._socket.sendMessage(content);
+			this._pasteFallback = null;
 		} else {
-			console.log('Received a paste but nothing on the clipboard');
+			console.log('Nothing we can paste on the clipboard');
 		}
 	},
 
@@ -2575,9 +2606,9 @@ L.TileLayer = L.GridLayer.extend({
 		// Try various content mime types
 		var mimeTypes;
 		if (this._docType === 'spreadsheet') {
-			// FIXME apparently we cannot paste the text/html or text/rtf as
-			// produced by LibreOffice in Calc from some reason
 			mimeTypes = [
+				['text/rtf', 'text/rtf'],
+				['text/html', 'text/html'],
 				['text/plain', 'text/plain;charset=utf-8'],
 				['Text', 'text/plain;charset=utf-8']
 			];
