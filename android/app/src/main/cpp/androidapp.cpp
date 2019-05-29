@@ -15,6 +15,7 @@
 #include <thread>
 
 #include <FakeSocket.hpp>
+#include <Kit.hpp>
 #include <Log.hpp>
 #include <LOOLWSD.hpp>
 #include <Protocol.hpp>
@@ -217,6 +218,14 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
             fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
             // ???
+        }
+        else if (strcmp(string_value, "PRINT") == 0 && false /* FIXME disabled so far */)
+        {
+            // TODO this is just a sketch to check this compiles
+            std::string printFile = Util::createRandomTmpDir() + "/print.pdf";
+            getLOKDocument()->saveAs(printFile.c_str(), "pdf", nullptr);
+
+            // TODO more stuff here...
         }
         else
         {

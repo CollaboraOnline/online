@@ -38,7 +38,6 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
@@ -2168,7 +2167,7 @@ private:
     std::string _jailedUrl;
     std::string _renderOpts;
 
-    std::shared_ptr<lok::Document> _loKitDocument;
+    static std::shared_ptr<lok::Document> _loKitDocument;
     std::shared_ptr<TileQueue> _tileQueue;
     std::shared_ptr<WebSocketHandler> _websocketHandler;
 
@@ -2209,7 +2208,16 @@ private:
     std::map<int, UserInfo> _sessionUserInfo;
     std::chrono::steady_clock::time_point _lastMemStatsTime;
     Poco::Thread _callbackThread;
+
+    friend std::shared_ptr<lok::Document> getLOKDocument();
 };
+
+std::shared_ptr<lok::Document> Document::_loKitDocument = std::shared_ptr<lok::Document>();
+
+std::shared_ptr<lok::Document> getLOKDocument()
+{
+    return Document::_loKitDocument;
+}
 
 class KitWebSocketHandler final : public WebSocketHandler, public std::enable_shared_from_this<KitWebSocketHandler>
 {

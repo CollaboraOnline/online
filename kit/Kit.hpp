@@ -14,6 +14,9 @@
 
 #include <common/Util.hpp>
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #if MOBILEAPP
 
 #include "ClientSession.hpp"
@@ -131,6 +134,9 @@ std::string anonymizeUrl(const std::string& url);
 
 /// Anonymize usernames.
 std::string anonymizeUsername(const std::string& username);
+
+/// For the mobile, we need access to the document to perform eg. saveAs() for printing.
+std::shared_ptr<lok::Document> getLOKDocument();
 
 #endif
 
