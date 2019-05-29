@@ -709,6 +709,39 @@
 		BE7E6803229D0F8400DE73C8 /* MergeElemTContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MergeElemTContext.hxx; path = "../../ios-device/xmloff/source/transform/MergeElemTContext.hxx"; sourceTree = "<group>"; };
 		BE7E6804229D0F8400DE73C8 /* FrameOASISTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FrameOASISTContext.cxx; path = "../../ios-device/xmloff/source/transform/FrameOASISTContext.cxx"; sourceTree = "<group>"; };
 		BE7E6805229D0F8400DE73C8 /* ProcAddAttrTContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcAddAttrTContext.cxx; path = "../../ios-device/xmloff/source/transform/ProcAddAttrTContext.cxx"; sourceTree = "<group>"; };
+		BE7E681D229D7CD400DE73C8 /* iOSTransferable.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iOSTransferable.cxx; path = "../../ios-device/vcl/ios/iOSTransferable.cxx"; sourceTree = "<group>"; };
+		BE7E681E229D7CD400DE73C8 /* HtmlFmtFlt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HtmlFmtFlt.cxx; path = "../../ios-device/vcl/ios/HtmlFmtFlt.cxx"; sourceTree = "<group>"; };
+		BE7E681F229D7CD400DE73C8 /* clipboard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clipboard.cxx; path = "../../ios-device/vcl/ios/clipboard.cxx"; sourceTree = "<group>"; };
+		BE7E6820229D7CD400DE73C8 /* HtmlFmtFlt.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HtmlFmtFlt.hxx; path = "../../ios-device/vcl/ios/HtmlFmtFlt.hxx"; sourceTree = "<group>"; };
+		BE7E6821229D7CD400DE73C8 /* DataFlavorMapping.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DataFlavorMapping.cxx; path = "../../ios-device/vcl/ios/DataFlavorMapping.cxx"; sourceTree = "<group>"; };
+		BE7E6822229D7CD500DE73C8 /* DataFlavorMapping.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DataFlavorMapping.hxx; path = "../../ios-device/vcl/ios/DataFlavorMapping.hxx"; sourceTree = "<group>"; };
+		BE7E6823229D7CD500DE73C8 /* iOSTransferable.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = iOSTransferable.hxx; path = "../../ios-device/vcl/ios/iOSTransferable.hxx"; sourceTree = "<group>"; };
+		BE7E6824229D7CD500DE73C8 /* clipboard.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = clipboard.hxx; path = "../../ios-device/vcl/ios/clipboard.hxx"; sourceTree = "<group>"; };
+		BE7E6827229DAAB200DE73C8 /* dialogclosedlistener.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dialogclosedlistener.cxx; path = "../../ios-device/svtools/source/misc/dialogclosedlistener.cxx"; sourceTree = "<group>"; };
+		BE7E6828229DAAB300DE73C8 /* svtaccessiblefactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svtaccessiblefactory.cxx; path = "../../ios-device/svtools/source/misc/svtaccessiblefactory.cxx"; sourceTree = "<group>"; };
+		BE7E6829229DAAB300DE73C8 /* imagemgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imagemgr.cxx; path = "../../ios-device/svtools/source/misc/imagemgr.cxx"; sourceTree = "<group>"; };
+		BE7E682A229DAAB300DE73C8 /* embedhlp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = embedhlp.cxx; path = "../../ios-device/svtools/source/misc/embedhlp.cxx"; sourceTree = "<group>"; };
+		BE7E682B229DAAB300DE73C8 /* acceleratorexecute.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = acceleratorexecute.cxx; path = "../../ios-device/svtools/source/misc/acceleratorexecute.cxx"; sourceTree = "<group>"; };
+		BE7E682C229DAAB300DE73C8 /* transfer2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transfer2.cxx; path = "../../ios-device/svtools/source/misc/transfer2.cxx"; sourceTree = "<group>"; };
+		BE7E682D229DAAB300DE73C8 /* openfiledroptargetlistener.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = openfiledroptargetlistener.cxx; path = "../../ios-device/svtools/source/misc/openfiledroptargetlistener.cxx"; sourceTree = "<group>"; };
+		BE7E682E229DAAB300DE73C8 /* stringtransfer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stringtransfer.cxx; path = "../../ios-device/svtools/source/misc/stringtransfer.cxx"; sourceTree = "<group>"; };
+		BE7E682F229DAAB300DE73C8 /* bindablecontrolhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bindablecontrolhelper.cxx; path = "../../ios-device/svtools/source/misc/bindablecontrolhelper.cxx"; sourceTree = "<group>"; };
+		BE7E6830229DAAB300DE73C8 /* embedtransfer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = embedtransfer.cxx; path = "../../ios-device/svtools/source/misc/embedtransfer.cxx"; sourceTree = "<group>"; };
+		BE7E6831229DAAB300DE73C8 /* imap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imap.cxx; path = "../../ios-device/svtools/source/misc/imap.cxx"; sourceTree = "<group>"; };
+		BE7E6832229DAAB300DE73C8 /* transfer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transfer.cxx; path = "../../ios-device/svtools/source/misc/transfer.cxx"; sourceTree = "<group>"; };
+		BE7E6833229DAAB300DE73C8 /* imap2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imap2.cxx; path = "../../ios-device/svtools/source/misc/imap2.cxx"; sourceTree = "<group>"; };
+		BE7E6834229DAAB300DE73C8 /* cliplistener.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cliplistener.cxx; path = "../../ios-device/svtools/source/misc/cliplistener.cxx"; sourceTree = "<group>"; };
+		BE7E6835229DAAB300DE73C8 /* filechangedchecker.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = filechangedchecker.cxx; path = "../../ios-device/svtools/source/misc/filechangedchecker.cxx"; sourceTree = "<group>"; };
+		BE7E6836229DAAB300DE73C8 /* langhelp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = langhelp.cxx; path = "../../ios-device/svtools/source/misc/langhelp.cxx"; sourceTree = "<group>"; };
+		BE7E6837229DAAB300DE73C8 /* sampletext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sampletext.cxx; path = "../../ios-device/svtools/source/misc/sampletext.cxx"; sourceTree = "<group>"; };
+		BE7E6838229DAAB300DE73C8 /* imageresourceaccess.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imageresourceaccess.cxx; path = "../../ios-device/svtools/source/misc/imageresourceaccess.cxx"; sourceTree = "<group>"; };
+		BE7E6839229DAAB300DE73C8 /* unitconv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unitconv.cxx; path = "../../ios-device/svtools/source/misc/unitconv.cxx"; sourceTree = "<group>"; };
+		BE7E683A229DAAB300DE73C8 /* langtab.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = langtab.cxx; path = "../../ios-device/svtools/source/misc/langtab.cxx"; sourceTree = "<group>"; };
+		BE7E683B229DAAB400DE73C8 /* svtresid.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svtresid.cxx; path = "../../ios-device/svtools/source/misc/svtresid.cxx"; sourceTree = "<group>"; };
+		BE7E683C229DAAB400DE73C8 /* templatefoldercache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = templatefoldercache.cxx; path = "../../ios-device/svtools/source/misc/templatefoldercache.cxx"; sourceTree = "<group>"; };
+		BE7E683D229DAAB400DE73C8 /* dialogcontrolling.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dialogcontrolling.cxx; path = "../../ios-device/svtools/source/misc/dialogcontrolling.cxx"; sourceTree = "<group>"; };
+		BE7E683E229DAAB400DE73C8 /* imap3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imap3.cxx; path = "../../ios-device/svtools/source/misc/imap3.cxx"; sourceTree = "<group>"; };
+		BE7E683F229DAAB400DE73C8 /* ehdl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ehdl.cxx; path = "../../ios-device/svtools/source/misc/ehdl.cxx"; sourceTree = "<group>"; };
 		BE80E43121AD92F600859C97 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Mobile/Fonts; sourceTree = SOURCE_ROOT; };
 		BE80E43421B562F500859C97 /* servicemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servicemanager.cxx; path = "../../ios-device/cppuhelper/source/servicemanager.cxx"; sourceTree = "<group>"; };
 		BE80E43521B562F500859C97 /* component_context.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component_context.cxx; path = "../../ios-device/cppuhelper/source/component_context.cxx"; sourceTree = "<group>"; };
@@ -1811,6 +1844,7 @@
 				BE93D43C216D555C007A39F4 /* sfx2 */,
 				BE34D1892190712C00815297 /* sc */,
 				BE8C0370223FC4AC0048B7EA /* svl */,
+				BE7E6825229DAA8C00DE73C8 /* svtools */,
 				BEB0E5DC21CA93950085A0CF /* svx */,
 				BE34D10C218B667400815297 /* sw */,
 				BEB6524B216FD09400B8C09A /* tools */,
@@ -1869,6 +1903,14 @@
 		BE7AECFE2239B76F00B117D2 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BE7E681F229D7CD400DE73C8 /* clipboard.cxx */,
+				BE7E6824229D7CD500DE73C8 /* clipboard.hxx */,
+				BE7E6821229D7CD400DE73C8 /* DataFlavorMapping.cxx */,
+				BE7E6822229D7CD500DE73C8 /* DataFlavorMapping.hxx */,
+				BE7E681E229D7CD400DE73C8 /* HtmlFmtFlt.cxx */,
+				BE7E6820229D7CD400DE73C8 /* HtmlFmtFlt.hxx */,
+				BE7E681D229D7CD400DE73C8 /* iOSTransferable.cxx */,
+				BE7E6823229D7CD500DE73C8 /* iOSTransferable.hxx */,
 				BE7AECFF2239B79600B117D2 /* dummies.cxx */,
 				BE7AED002239B79600B117D2 /* iosinst.cxx */,
 			);
@@ -1996,6 +2038,46 @@
 				BE7E67F0229D0F8300DE73C8 /* xof.component */,
 			);
 			name = transform;
+			sourceTree = "<group>";
+		};
+		BE7E6825229DAA8C00DE73C8 /* svtools */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E6826229DAA9900DE73C8 /* misc */,
+			);
+			name = svtools;
+			sourceTree = "<group>";
+		};
+		BE7E6826229DAA9900DE73C8 /* misc */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E682B229DAAB300DE73C8 /* acceleratorexecute.cxx */,
+				BE7E682F229DAAB300DE73C8 /* bindablecontrolhelper.cxx */,
+				BE7E6834229DAAB300DE73C8 /* cliplistener.cxx */,
+				BE7E6827229DAAB200DE73C8 /* dialogclosedlistener.cxx */,
+				BE7E683D229DAAB400DE73C8 /* dialogcontrolling.cxx */,
+				BE7E683F229DAAB400DE73C8 /* ehdl.cxx */,
+				BE7E682A229DAAB300DE73C8 /* embedhlp.cxx */,
+				BE7E6830229DAAB300DE73C8 /* embedtransfer.cxx */,
+				BE7E6835229DAAB300DE73C8 /* filechangedchecker.cxx */,
+				BE7E6829229DAAB300DE73C8 /* imagemgr.cxx */,
+				BE7E6838229DAAB300DE73C8 /* imageresourceaccess.cxx */,
+				BE7E6831229DAAB300DE73C8 /* imap.cxx */,
+				BE7E6833229DAAB300DE73C8 /* imap2.cxx */,
+				BE7E683E229DAAB400DE73C8 /* imap3.cxx */,
+				BE7E6836229DAAB300DE73C8 /* langhelp.cxx */,
+				BE7E683A229DAAB300DE73C8 /* langtab.cxx */,
+				BE7E682D229DAAB300DE73C8 /* openfiledroptargetlistener.cxx */,
+				BE7E6837229DAAB300DE73C8 /* sampletext.cxx */,
+				BE7E682E229DAAB300DE73C8 /* stringtransfer.cxx */,
+				BE7E6828229DAAB300DE73C8 /* svtaccessiblefactory.cxx */,
+				BE7E683B229DAAB400DE73C8 /* svtresid.cxx */,
+				BE7E683C229DAAB400DE73C8 /* templatefoldercache.cxx */,
+				BE7E6832229DAAB300DE73C8 /* transfer.cxx */,
+				BE7E682C229DAAB300DE73C8 /* transfer2.cxx */,
+				BE7E6839229DAAB300DE73C8 /* unitconv.cxx */,
+			);
+			name = misc;
 			sourceTree = "<group>";
 		};
 		BE80E43321B5629300859C97 /* cppuhelper */ = {
