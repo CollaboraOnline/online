@@ -351,7 +351,8 @@ public:
 
         LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket frame code " << static_cast<unsigned>(code) <<
                 ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << payloadLen <<
-                ", residual socket data: " << socket->getInBuffer().size() << " bytes.");
+                ", residual socket data: " << socket->getInBuffer().size() << " bytes, unmasked data: "+
+                Util::stringifyHexLine(_wsPayload, 0, std::min((size_t)32, _wsPayload.size())));
 
         if (fin)
         {
