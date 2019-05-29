@@ -2747,19 +2747,19 @@ L.TileLayer = L.GridLayer.extend({
 		//   cf. ClientSession.cpp /textselectioncontent:/
 		var pasteHtml = dataTransfer.getData('text/html');
 		var meta = this._getMetaOrigin(pasteHtml);
-		var id = this._map.options.webserver + this._map.options.serviceRoot +
+		var id = // this._map.options.webserver + this._map.options.serviceRoot + - Disable for now.
 		    '/clipboard?WOPISrc='+ encodeURIComponent(this._map.options.doc) +
 		    '&ServerId=' + this._map._socket.WSDServer.Id + '&ViewId=' + this._viewId;
 
 		// for the paste, we might prefer the internal LOK's copy/paste
-		if (meta.startsWith(id) && preferInternal === true) {
+		if (meta.indexOf(id) > 0 && preferInternal === true) {
 			// Home from home: short-circuit internally.
 			console.log('short-circuit, internal paste');
 			this._map._socket.sendMessage('uno .uno:Paste');
 			return;
 		}
 
-		console.log('Resetting paste fallback');
+		console.log('Mismatching index\n\t"' + meta + '" vs. \n\t"' + id + '"');
 		this._pasteFallback = null;
 
 		// Suck HTML content out of dataTransfer now while it feels like working.

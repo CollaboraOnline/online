@@ -48,9 +48,19 @@ L.ClipboardContainer = L.Layer.extend({
 		window.getSelection().selectAllChildren(this._textArea);
 	},
 
+	onSafariClipboard: function(node) {
+		if (node == null)
+			return false;
+		if (node == this._textArea || this._container)
+			return true;
+		return this.onSafariClipboard(node.parentNode) ||
+			node.offsetParent == this._textArea;
+	},
+
 	resetToSelection: function() {
 		var sel = window.getSelection();
-		if (sel.anchorNode == this._textArea) {
+		if (sel.anchorNode == this._textArea ||
+		    this.onSafariClipboard(sel.anchorNode)) {
 			// already selected, don't reset to plain-text from toString()
 		} else {
 			this.setValue(sel.toString());
