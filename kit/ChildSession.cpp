@@ -922,12 +922,22 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
     const std::string firstLine = getFirstLine(buffer, length);
     const char* data = buffer + firstLine.size() + 1;
     const int size = length - firstLine.size() - 1;
+    bool success = false;
+    std::string result = "pasteresult: ";
     if (size > 0)
     {
         getLOKitDocument()->setView(_viewId);
 
-        getLOKitDocument()->paste(mimeType.c_str(), data, size);
+        LOG_TRC("Paste data of size " << size << " bytes and hash " << SpookyHash::Hash64(data, size, 0));
+        success = getLOKitDocument()->paste(mimeType.c_str(), data, size);
+        if (!success)
+            LOG_WRN("Paste failed " << getLOKitLastError());
     }
+    if (success)
+        result += "success";
+    else
+        result += "fallback";
+    sendTextFrame(result);
 
     return true;
 }

@@ -53,11 +53,11 @@ public:
     /// if it is the last and only.
     virtual void onUnload(const ChildSession& session) = 0;
 
+    /// Access to the Kit instance.
+    virtual std::shared_ptr<lok::Office> getLOKit() = 0;
+
     /// Access to the document instance.
     virtual std::shared_ptr<lok::Document> getLOKitDocument() = 0;
-
-    /// Access to the office instance.
-    virtual std::shared_ptr<lok::Office> getLOKit() = 0;
 
     /// Send updated view info to all active sessions.
     virtual void notifyViewInfo() = 0;
@@ -276,6 +276,18 @@ private:
     std::shared_ptr<lok::Document> getLOKitDocument()
     {
         return _docManager.getLOKitDocument();
+    }
+
+    std::string getLOKitLastError()
+    {
+        char *lastErr = _docManager.getLOKit()->getError();
+        std::string ret;
+        if (lastErr)
+        {
+            ret = std::string(lastErr, strlen(lastErr));
+            free (lastErr);
+        }
+        return ret;
     }
 
 private:

@@ -14,6 +14,7 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <unordered_map>
 
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
@@ -35,10 +36,14 @@ using namespace LOOLProtocol;
 using Poco::Path;
 using Poco::StringTokenizer;
 
+static std::mutex SessionMapMutex;
+static std::unordered_map<std::string, std::weak_ptr<ClientSession>> SessionMap;
+
 ClientSession::ClientSession(const std::string& id,
                              const std::shared_ptr<DocumentBroker>& docBroker,
                              const Poco::URI& uriPublic,
-                             const bool readOnly) :
+                             const bool readOnly,
+                             const std::string& hostNoTrust) :
     Session("ToClient-" + id, id, readOnly),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
@@ -52,16 +57,93 @@ ClientSession::ClientSession(const std::string& id,
     _tileHeightPixel(0),
     _tileWidthTwips(0),
     _tileHeightTwips(0),
+    _kitViewId(-1),
+    _hostNoTrust(hostNoTrust),
     _isTextDocument(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
 }
 
+// Can't take a reference in the constructor.
+void ClientSession::construct()
+{
+    std::unique_lock<std::mutex> lock(SessionMapMutex);
+    SessionMap[getId()] = shared_from_this();
+}
+
 ClientSession::~ClientSession()
 {
     const size_t curConnections = --LOOLWSD::NumConnections;
     LOG_INF("~ClientSession dtor [" << getName() << "], current number of connections: " << curConnections);
+
+    std::unique_lock<std::mutex> lock(SessionMapMutex);
+    SessionMap.erase(getId());
+}
+
+std::string ClientSession::getURIAndUpdateClipboardHash()
+{
+    std::string hash = Util::rng::getHexString(16);
+    {
+        std::unique_lock<std::mutex> lock(SessionMapMutex);
+        _clipboardKey = hash;
+        LOG_TRC("Clipboard key on [" << getId() << "] set to " << _clipboardKey);
+   }
+
+    std::string encodedFrom;
+    Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
+    wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
+
+    std::string encodeChars = ",/?:@&=+$#"; // match JS encodeURIComponent
+    Poco::URI::encode(wopiSrc.toString(), encodeChars, encodedFrom);
+
+    std::string proto = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://";
+    std::string meta = proto + _hostNoTrust +
+        "/clipboard?WOPISrc=" + encodedFrom +
+        "&ServerId=" + LOOLWSD::HostIdentifier +
+        "&ViewId=" + std::to_string(getKitViewId()) +
+        "&Tag=" + hash;
+
+    std::string metaEncoded;
+    Poco::URI::encode(meta, encodeChars, metaEncoded);
+
+    return metaEncoded;
+}
+
+// called infrequently
+std::shared_ptr<ClientSession> ClientSession::getByClipboardHash(std::string &key)
+{
+    std::unique_lock<std::mutex> lock(SessionMapMutex);
+    for (auto &it : SessionMap)
+    {
+        auto session = it.second.lock();
+        if (session && session->_clipboardKey == key)
+        {
+            if (session->_wopiFileInfo &&
+                session->_wopiFileInfo->getDisableCopy())
+            {
+                LOG_WRN("Attempting copy from disabled session " << key);
+                break;
+            }
+            else
+                return session;
+        }
+    }
+    return std::shared_ptr<ClientSession>();
+}
+
+void ClientSession::addClipboardSocket(const std::shared_ptr<StreamSocket> &socket)
+{
+    // Move the socket into our DocBroker.
+    auto docBroker = getDocumentBroker();
+    docBroker->addSocketToPoll(socket);
+
+    LOG_TRC("Session [" << getId() << "] sending getbinaryselection");
+    const std::string gettext = "getbinaryselection mimetype=application/x-openoffice-embed-source-xml";
+    docBroker->forwardToChild(getId(), gettext);
+
+    // TESTME: onerror / socket cleanup.
+    _clipSockets.push_back(socket);
 }
 
 void ClientSession::handleIncomingMessage(SocketDisposition &disposition)
@@ -949,6 +1031,60 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
             }
         }
+    } else if (tokens[0] == "textselectioncontent:") {
+
+        // Insert our meta origin if we can
+        payload->rewriteDataBody([=](std::vector<char>& data) {
+                size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
+
+                // cf. TileLayer.js /_dataTransferToDocument/
+                if (pos != std::string::npos) // assume text/html
+                {
+                    std::string meta = getURIAndUpdateClipboardHash();
+                    std::string origin = "<meta name=\"origin\" content=\"" + meta + "\"/>\n";
+                    data.insert(data.begin() + pos, origin.begin(), origin.end());
+                    return true;
+                }
+                else
+                {
+                    LOG_DBG("Missing generator in textselectioncontent");
+                    return false;
+                }
+            });
+        return forwardToClient(payload);
+
+    } else if (tokens[0] == "binaryselectioncontent:") {
+
+        // for now just for remote sockets.
+        LOG_TRC("Got binary selection content to send to " << _clipSockets.size() << "sockets");
+        size_t header;
+        for (header = 0; header < payload->size();)
+            if (payload->data()[header++] == '\n')
+                break;
+        if (header < payload->size())
+        {
+            for (auto it : _clipSockets)
+            {
+                std::ostringstream oss;
+                oss << "HTTP/1.1 200 OK\r\n"
+                    << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                    << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                    << "Content-Length: " << (payload->size() - header) << "\r\n"
+                    << "Content-Type: application/octet-stream\r\n"
+                    << "X-Content-Type-Options: nosniff\r\n"
+                    << "\r\n";
+                oss.write(&payload->data()[header], payload->size() - header);
+                auto socket = it.lock();
+                socket->setSocketBufferSize(std::min(payload->size() + 256,
+                                                     size_t(Socket::MaximumSendBufferSize)));
+                socket->send(oss.str());
+                socket->shutdown();
+                LOG_INF("Sent clipboard content.");
+            }
+        }
+        else
+            LOG_DBG("Odd - no binary selection content");
+        _clipSockets.clear();
     }
 
     if (!isDocPasswordProtected())
@@ -985,6 +1121,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 {
                     _isTextDocument = docType.find("text") != std::string::npos;
                 }
+
+                // Store our Kit ViewId
+                int viewId = -1;
+                if(getTokenInteger(token, "viewid", viewId))
+                    _kitViewId = viewId;
             }
 
             // Forward the status response to the client.
@@ -1260,7 +1401,16 @@ void ClientSession::dumpState(std::ostream& os)
     os << "\t\tisReadOnly: " << isReadOnly()
        << "\n\t\tisDocumentOwner: " << _isDocumentOwner
        << "\n\t\tisAttached: " << _isAttached
-       << "\n\t\tkeyEvents: " << _keyEvents;
+       << "\n\t\tkeyEvents: " << _keyEvents
+//       << "\n\t\tvisibleArea: " << _clientVisibleArea
+       << "\n\t\tclientSelectedPart: " << _clientSelectedPart
+       << "\n\t\ttile size Pixel: " << _tileWidthPixel << "x" << _tileHeightPixel
+       << "\n\t\ttile size Twips: " << _tileWidthTwips << "x" << _tileHeightTwips
+       << "\n\t\tkit ViewId: " << _kitViewId
+       << "\n\t\thost (un-trusted): " << _hostNoTrust
+       << "\n\t\tisTextDocument: " << _isTextDocument
+       << "\n\t\tclipboardKey: " << _clipboardKey
+       << "\n\t\tclip sockets: " << _clipSockets.size();
 
     std::shared_ptr<StreamSocket> socket = getSocket().lock();
     if (socket)

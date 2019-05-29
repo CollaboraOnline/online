@@ -32,9 +32,13 @@ public:
     ClientSession(const std::string& id,
                   const std::shared_ptr<DocumentBroker>& docBroker,
                   const Poco::URI& uriPublic,
-                  const bool isReadOnly = false);
-
+                  const bool isReadOnly,
+                  const std::string& hostNoTrust);
+    void construct();
     virtual ~ClientSession();
+
+    /// Lookup any session by id.
+    static std::shared_ptr<ClientSession> getById(const std::string &id);
 
     void handleIncomingMessage(SocketDisposition &) override;
 
@@ -53,6 +57,9 @@ public:
 
     /// Handle kit-to-client message.
     bool handleKitToClientMessage(const char* data, const int size);
+
+    /// Integer id of the view in the kit process, or -1 if unknown
+    int getKitViewId() const { return _kitViewId; }
 
     // sendTextFrame that takes std::string and string literal.
     using Session::sendTextFrame;
@@ -133,7 +140,16 @@ public:
     void resetWireIdMap();
 
     bool isTextDocument() const { return _isTextDocument; }
+
+    /// Find clipboard for session
+    static std::shared_ptr<ClientSession> getByClipboardHash(std::string &key);
+
+    void addClipboardSocket(const std::shared_ptr<StreamSocket> &socket);
+
 private:
+
+    /// Create URI for transient clipboard content.
+    std::string getURIAndUpdateClipboardHash();
 
     /// SocketHandler: disconnection event.
     void onDisconnect() override;
@@ -212,8 +228,17 @@ private:
     int _tileWidthTwips;
     int _tileHeightTwips;
 
+    /// The integer id of the view in the Kit process
+    int _kitViewId;
+
+    /// Un-trusted hostname of our service from the client
+    const std::string _hostNoTrust;
+
     /// Client is using a text document?
     bool _isTextDocument;
+
+    /// Transient clipboard identifier - protected by SessionMapMutex
+    std::string _clipboardKey;
 
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
     std::list<std::pair<std::string, std::chrono::steady_clock::time_point>> _tilesOnFly;
@@ -223,6 +248,9 @@ private:
 
     /// Store wireID's of the sent tiles inside the actual visible area
     std::map<std::string, TileWireId> _oldWireIds;
+
+    /// Sockets to send binary selection content to
+    std::vector<std::weak_ptr<StreamSocket>> _clipSockets;
 };
 
 

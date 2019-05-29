@@ -26,12 +26,18 @@ function hex2string(inData)
 }
 
 L.Compatibility = {
+	stripHTML: function(html) { // grim.
+		var tmp = document.createElement('div');
+		tmp.innerHTML = html;
+		return tmp.textContent || tmp.innerText || '';
+	},
+
 	clipboardSet: function (event, text) {
 		if (event.clipboardData) { // Standard
-			event.clipboardData.setData('text/plain', text);
+			event.clipboardData.setData('text/html', text);
 		}
-		else if (window.clipboardData) { // IE 11
-			window.clipboardData.setData('Text', text);
+		else if (window.clipboardData) { // IE 11 - poor clipboard API
+			window.clipboardData.setData('Text', this.stripHTML(text));
 		}
 	}
 };
@@ -520,6 +526,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('editor:')) {
 			this._updateEditor(textMsg);
+		}
+		else if (textMsg.startsWith('pasteresult:')) {
+			this._pasteResult(textMsg);
 		}
 		else if (textMsg.startsWith('validitylistbutton:')) {
 			this._onValidityListButtonMsg(textMsg);
@@ -1268,7 +1277,7 @@ L.TileLayer = L.GridLayer.extend({
 				clearTimeout(this._selectionContentRequest);
 			}
 			this._selectionContentRequest = setTimeout(L.bind(function () {
-				this._map._socket.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');}, this), 100);
+				this._map._socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
 		}
 		this._onUpdateTextSelection();
 	},
@@ -1308,6 +1317,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onTextSelectionContentMsg: function (textMsg) {
 		this._selectionTextContent = textMsg.substr(22);
+		this._map._clipboardContainer.setValue(this._selectionTextContent);
 	},
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
@@ -2691,45 +2701,113 @@ L.TileLayer = L.GridLayer.extend({
 		this._dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false);
 	},
 
-	_dataTransferToDocument: function (dataTransfer, preferInternal) {
-		// for the paste, we might prefer the internal LOK's copy/paste
-		if (preferInternal === true) {
-			var pasteString = dataTransfer.getData('text/plain');
-			if (!pasteString) {
-				pasteString = dataTransfer.getData('Text'); // IE 11
-			}
+	_getMetaOrigin: function (html) {
+		var match = '<meta name="origin" content="';
+		var start = html.indexOf(match);
+		if (start < 0) {
+			return '';
+		}
+		var end = html.indexOf('"', start + match.length);
+		if (end < 0) {
+			return '';
+		}
+		var meta = html.substring(start + match.length, end);
 
-			if (pasteString && pasteString === this._selectionTextHash) {
-				this._map._socket.sendMessage('uno .uno:Paste');
-				return;
+		// quick sanity checks that it one of ours.
+		if (meta.indexOf('%2Fclipboard%3FWOPISrc%3D') > 0 &&
+		    meta.indexOf('%26ServerId%3D') > 0 &&
+		    meta.indexOf('%26ViewId%3D') > 0 &&
+		    meta.indexOf('%26Tag%3D') > 0)
+			return decodeURIComponent(meta);
+		else
+			console.log('Mis-understood foreign origin: "' + meta + '"');
+		return '';
+	},
+
+	// Sometimes our smart-paste fails & we need to try again.
+	_pasteResult : function(textMsg)
+	{
+		textMsg = textMsg.substring('pasteresult:'.length + 1);
+		console.log('Paste state: ' + textMsg);
+		if (textMsg == 'fallback') {
+			if (this._pasteFallback != null) {
+				console.log('Paste failed- falling back to HTML');
+				this._map._socket.sendMessage(this._pasteFallback);
+			} else {
+				console.log('No paste fallback present.');
 			}
 		}
 
-		var types = dataTransfer.types;
+		this._pasteFallback = null;
+	},
 
-		// first try to transfer images
-		// TODO if we have both Files and a normal mimetype, should we handle
-		// both, or prefer one or the other?
-		for (var t = 0; t < types.length; ++t) {
-			if (types[t] === 'Files') {
-				var files = dataTransfer.files;
-				for (var f = 0; f < files.length; ++f) {
-					var file = files[f];
-					if (file.type.match(/image.*/)) {
-						var reader = new FileReader();
-						reader.onload = this._onFileLoadFunc(file);
-						reader.readAsArrayBuffer(file);
+	_dataTransferToDocument: function (dataTransfer, preferInternal) {
+
+		// Look for our HTML meta magic.
+		//   cf. ClientSession.cpp /textselectioncontent:/
+		var pasteHtml = dataTransfer.getData('text/html');
+		var meta = this._getMetaOrigin(pasteHtml);
+		var id = this._map.options.webserver + this._map.options.serviceRoot +
+		    '/clipboard?WOPISrc='+ encodeURIComponent(this._map.options.doc) +
+		    '&ServerId=' + this._map._socket.WSDServer.Id + '&ViewId=' + this._viewId;
+
+		// for the paste, we might prefer the internal LOK's copy/paste
+		if (meta.startsWith(id) && preferInternal === true) {
+			// Home from home: short-circuit internally.
+			console.log('short-circuit, internal paste');
+			this._map._socket.sendMessage('uno .uno:Paste');
+			return;
+		}
+
+		console.log('Resetting paste fallback');
+		this._pasteFallback = null;
+
+		// Suck HTML content out of dataTransfer now while it feels like working.
+		var content = this._readContentSync(dataTransfer);
+
+		// Images get a look in only if we have no content and are async
+		if (content == null && pasteHtml == '')
+		{
+			var types = dataTransfer.types;
+
+			console.log('Attempting to paste image(s)');
+
+			// first try to transfer images
+			// TODO if we have both Files and a normal mimetype, should we handle
+			// both, or prefer one or the other?
+			for (var t = 0; t < types.length; ++t) {
+				console.log('\ttype' + types[t]);
+				if (types[t] === 'Files') {
+					var files = dataTransfer.files;
+					for (var f = 0; f < files.length; ++f) {
+						var file = files[f];
+						if (file.type.match(/image.*/)) {
+							var reader = new FileReader();
+							reader.onload = this._onFileLoadFunc(file);
+							reader.readAsArrayBuffer(file);
+						}
 					}
 				}
 			}
+			return;
 		}
 
-		// now try various mime types
+		if (content != null) {
+			console.log('Normal HTML, so smart paste not possible');
+			this._map._socket.sendMessage(content);
+			this._pasteFallback = null;
+		} else {
+			console.log('Nothing we can paste on the clipboard');
+		}
+	},
+
+	_readContentSync: function(dataTransfer) {
+		// Try various content mime types
 		var mimeTypes;
 		if (this._docType === 'spreadsheet') {
-			// FIXME apparently we cannot paste the text/html or text/rtf as
-			// produced by LibreOffice in Calc from some reason
 			mimeTypes = [
+				['text/rtf', 'text/rtf'],
+				['text/html', 'text/html'],
 				['text/plain', 'text/plain;charset=utf-8'],
 				['Text', 'text/plain;charset=utf-8']
 			];
@@ -2752,15 +2830,15 @@ L.TileLayer = L.GridLayer.extend({
 			];
 		}
 
+		var types = dataTransfer.types;
 		for (var i = 0; i < mimeTypes.length; ++i) {
-			for (t = 0; t < types.length; ++t) {
+			for (var t = 0; t < types.length; ++t) {
 				if (mimeTypes[i][0] === types[t]) {
-					var blob = new Blob(['paste mimetype=' + mimeTypes[i][1] + '\n', dataTransfer.getData(types[t])]);
-					this._map._socket.sendMessage(blob);
-					return;
+					return new Blob(['paste mimetype=' + mimeTypes[i][1] + '\n', dataTransfer.getData(types[t])]);
 				}
 			}
 		}
+		return null;
 	},
 
 	_onFileLoadFunc: function(file) {

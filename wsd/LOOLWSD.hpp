@@ -45,7 +45,7 @@ public:
 
     // An Application is a singleton anyway,
     // so just keep these as statics.
-    static std::atomic<unsigned> NextSessionId;
+    static std::atomic<uint64_t> NextSessionId;
     static unsigned int NumPreSpawnedChildren;
     static bool NoCapsForKit;
     static bool NoSeccomp;
