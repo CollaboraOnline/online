@@ -565,6 +565,28 @@ L.Map = L.Evented.extend({
 		return this;
 	},
 
+	removeHandler: function(name) {
+		var handler = this[name];
+
+		if (!handler) {
+			return;
+		}
+
+		handler.disable();
+		for (var it = 0, len = this._handlers.length; it < len; ++it) {
+			if (this._handlers[it] == handler) {
+				this._handlers.splice(it, 1);
+				break;
+			}
+		}
+
+		if (this.options[name]) {
+			delete this.options[name];
+		}
+
+		delete this[name];
+	},
+
 	remove: function () {
 
 		this._initEvents(true);
