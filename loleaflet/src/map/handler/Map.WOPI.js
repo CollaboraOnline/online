@@ -150,7 +150,7 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
-		if (msg.MessageId === 'Host_GrabFocus') {
+		if (msg.MessageId === 'Grab_Focus') {
 			this._map.makeActive();
 			return;
 		}
