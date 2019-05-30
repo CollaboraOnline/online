@@ -902,7 +902,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         else if (isRename)
         {
             // encode the name
-            const std::string filename = storageSaveResult.getSaveAsName();
+            const std::string& filename = storageSaveResult.getSaveAsName();
             const std::string url = Poco::URI(storageSaveResult.getSaveAsUrl()).toString();
             std::string encodedName;
             Poco::URI::encode(filename, "", encodedName);
