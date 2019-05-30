@@ -982,6 +982,12 @@ L.Map = L.Evented.extend({
 			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
 	},
 
+	makeActive: function() {
+		console.log('Force active');
+		this.lastActiveTime = Date.now();
+		return this._activate();
+	},
+
 	_activate: function () {
 		if (this._serverRecycling || this._documentIdle) {
 			return false;
