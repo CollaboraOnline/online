@@ -2638,9 +2638,9 @@ L.TileLayer = L.GridLayer.extend({
 	_onCopy: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
+		console.log('Copy');
 		if (this._map._clipboardContainer.getValue() !== '') {
 			L.Compatibility.clipboardSet(e, this._map._clipboardContainer.getValue());
-			this._map._clipboardContainer.setValue('');
 		} else if (this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 
@@ -2654,9 +2654,9 @@ L.TileLayer = L.GridLayer.extend({
 	_onCut: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
+		console.log('Cut');
 		if (this._map._clipboardContainer.getValue() !== '') {
 			L.Compatibility.clipboardSet(e, this._map._clipboardContainer.getValue());
-			this._map._clipboardContainer.setValue('');
 		} else if (this._selectionTextContent) {
 			L.Compatibility.clipboardSet(e, this._selectionTextContent);
 
@@ -2670,7 +2670,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onPaste: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-
+		console.log('Paste');
 		if (e.clipboardData) { // Standard
 			this._dataTransferToDocument(e.clipboardData, /* preferInternal = */ true);
 		}

@@ -20,7 +20,8 @@ L.Control.ContextMenu = L.Control.extend({
 			 * in following list is just for reference and ease of locating uno command
 			 * from context menu structure.
 			 */
-			general: ['NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
+			general: ['Cut', 'Copy', 'Paste',
+					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
 					  'OpenHyperlinkOnCursor', 'CopyHyperlinkLocation', 'RemoveHyperlink',
 					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
 					  'SetAnchorToChar', 'SetAnchorToFrame',
@@ -82,7 +83,17 @@ L.Control.ContextMenu = L.Control.extend({
 			build: function() {
 				return {
 					callback: function(key) {
-						map.sendUnoCommand(key);
+						console.log ('FOO context menu key ' + key);
+						if (key === '.uno:Copy') {
+							if (!document.execCommand('copy'))
+								map._clipboardContainer.warnCopyPaste();
+						} else if (key === '.uno:Cut') {
+							if (!document.execCommand('cut'))
+								map._clipboardContainer.warnCopyPaste();
+						} else if (key === '.uno:Paste') {
+							if (!document.execCommand('paste'))
+								map._clipboardContainer.warnCopyPaste();
+						}
 						// Give the stolen focus back to map
 						map.focus();
 					},
@@ -143,6 +154,10 @@ L.Control.ContextMenu = L.Control.extend({
 				isLastItemText = true;
 			} else if (item.type === 'menu') {
 				itemName = item.text;
+				if (itemName.replace('~', '') === 'Paste Special') {
+					itemName = _('Paste Special');
+					continue; // Kill paste special for now.
+				}
 				var submenu = this._createContextMenuStructure(item);
 				// ignore submenus with all items disabled
 				if (Object.keys(submenu).length === 0) {
