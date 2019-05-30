@@ -17,6 +17,7 @@
 @end
 
 extern NSString *app_locale;
+extern BOOL empty_tile_cache;
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
 

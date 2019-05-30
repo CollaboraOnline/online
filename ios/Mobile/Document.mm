@@ -54,8 +54,8 @@
     if (fakeClientFd >= 0)
         return YES;
 
-    // If we are asked to empty the tile cache, do that now.
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"emptyTileCache"]) {
+    // If we are asked to empty the tile cache before loading each document, do that now.
+    if (empty_tile_cache) {
         [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithUTF8String:LOOLWSD_CACHEDIR] error:nil];
     }
 
