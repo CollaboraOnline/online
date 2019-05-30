@@ -1013,6 +1013,12 @@ L.Map = L.Evented.extend({
 		}
 	},
 
+	makeActive: function() {
+		console.log('Force active');
+		this.lastActiveTime = Date.now();
+		return this._activate();
+	},
+
 	_activate: function () {
 		if (this._serverRecycling || this._documentIdle) {
 			return false;

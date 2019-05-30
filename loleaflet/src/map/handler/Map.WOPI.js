@@ -150,6 +150,11 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
+		if (msg.MessageId === 'Host_GrabFocus') {
+			this._map.makeActive();
+			return;
+		}
+
 		// allow closing documents before they are completely loaded
 		if (msg.MessageId === 'Close_Session') {
 			this._map._socket.sendMessage('closedocument');
