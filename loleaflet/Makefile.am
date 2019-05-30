@@ -90,7 +90,7 @@ LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
 $(eval $(call file_targets,$(LOLEAFLET_CSS)))
 
 NODE_MODULES_JS =\
-	node_modules/hammerjs/hammer.min.js \
+	$(if $(ENABLE_DEBUG),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
