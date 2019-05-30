@@ -668,7 +668,11 @@ L.Control.Menubar = L.Control.extend({
 					var unoCommand = $(aItem).data(constUno);
 					var itemState = self._map[constState].getItemValue(unoCommand);
 					if (itemState === 'disabled') {
-						$(aItem).addClass('disabled');
+						if (unoCommand.startsWith('.uno:Paste')) {
+							console.log('dont disable paste based on server side data');
+						} else {
+							$(aItem).addClass('disabled');
+						}
 					} else {
 						$(aItem).removeClass('disabled');
 					}
