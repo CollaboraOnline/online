@@ -419,6 +419,16 @@
 		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE7E6807229D374500DE73C8 /* clipboard.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = clipboard.hxx; path = "../../ios-device/vcl/ios/clipboard.hxx"; sourceTree = "<group>"; };
+		BE7E6808229D374500DE73C8 /* iosinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iosinst.cxx; path = "../../ios-device/vcl/ios/iosinst.cxx"; sourceTree = "<group>"; };
+		BE7E6809229D374500DE73C8 /* dummies.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dummies.cxx; path = "../../ios-device/vcl/ios/dummies.cxx"; sourceTree = "<group>"; };
+		BE7E680A229D374500DE73C8 /* HtmlFmtFlt.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HtmlFmtFlt.hxx; path = "../../ios-device/vcl/ios/HtmlFmtFlt.hxx"; sourceTree = "<group>"; };
+		BE7E680B229D374500DE73C8 /* clipboard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clipboard.cxx; path = "../../ios-device/vcl/ios/clipboard.cxx"; sourceTree = "<group>"; };
+		BE7E680C229D374500DE73C8 /* iOSTransferable.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iOSTransferable.cxx; path = "../../ios-device/vcl/ios/iOSTransferable.cxx"; sourceTree = "<group>"; };
+		BE7E680D229D374500DE73C8 /* DataFlavorMapping.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DataFlavorMapping.hxx; path = "../../ios-device/vcl/ios/DataFlavorMapping.hxx"; sourceTree = "<group>"; };
+		BE7E680E229D374500DE73C8 /* iOSTransferable.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = iOSTransferable.hxx; path = "../../ios-device/vcl/ios/iOSTransferable.hxx"; sourceTree = "<group>"; };
+		BE7E680F229D374500DE73C8 /* DataFlavorMapping.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DataFlavorMapping.cxx; path = "../../ios-device/vcl/ios/DataFlavorMapping.cxx"; sourceTree = "<group>"; };
+		BE7E6810229D374500DE73C8 /* HtmlFmtFlt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HtmlFmtFlt.cxx; path = "../../ios-device/vcl/ios/HtmlFmtFlt.cxx"; sourceTree = "<group>"; };
 		BE80E43121AD92F600859C97 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Mobile/Fonts; sourceTree = SOURCE_ROOT; };
 		BE80E43421B562F500859C97 /* servicemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servicemanager.cxx; path = "../../ios-device/cppuhelper/source/servicemanager.cxx"; sourceTree = "<group>"; };
 		BE80E43521B562F500859C97 /* component_context.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component_context.cxx; path = "../../ios-device/cppuhelper/source/component_context.cxx"; sourceTree = "<group>"; };
@@ -1304,6 +1314,23 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
+		BE7E6806229D371B00DE73C8 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E680B229D374500DE73C8 /* clipboard.cxx */,
+				BE7E6807229D374500DE73C8 /* clipboard.hxx */,
+				BE7E680F229D374500DE73C8 /* DataFlavorMapping.cxx */,
+				BE7E680D229D374500DE73C8 /* DataFlavorMapping.hxx */,
+				BE7E6809229D374500DE73C8 /* dummies.cxx */,
+				BE7E6810229D374500DE73C8 /* HtmlFmtFlt.cxx */,
+				BE7E680A229D374500DE73C8 /* HtmlFmtFlt.hxx */,
+				BE7E6808229D374500DE73C8 /* iosinst.cxx */,
+				BE7E680C229D374500DE73C8 /* iOSTransferable.cxx */,
+				BE7E680E229D374500DE73C8 /* iOSTransferable.hxx */,
+			);
+			name = ios;
+			sourceTree = "<group>";
+		};
 		BE80E43321B5629300859C97 /* cppuhelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -1501,6 +1528,7 @@
 				BE93D421216CAA59007A39F4 /* app */,
 				BEB0E5DA21CA7C330085A0CF /* filter */,
 				BE58E1312187938700249358 /* headless */,
+				BE7E6806229D371B00DE73C8 /* ios */,
 				BEB0E5E721D642420085A0CF /* outdev */,
 				BEB0E5DF21CA9DA20085A0CF /* quartz */,
 				BE34D140218CF87D00815297 /* window */,
