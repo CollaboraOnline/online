@@ -42,18 +42,6 @@ if (underscore > 0) {
 
 if (false) {
     ;
-} else if (onlylang == 'am') {
-    window.LOCALIZATIONS = " . insert('am') . ";
-} else if (onlylang == 'ar') {
-    window.LOCALIZATIONS = " . insert('ar') . ";
-} else if (onlylang == 'bg') {
-    window.LOCALIZATIONS = " . insert('bg') . ";
-} else if (onlylang == 'ca') {
-    window.LOCALIZATIONS = " . insert('ca') . ";
-} else if (onlylang == 'cs') {
-    window.LOCALIZATIONS = " . insert('cs') . ";
-} else if (onlylang == 'cy') {
-    window.LOCALIZATIONS = " . insert('cy') . ";
 } else if (onlylang == 'da') {
     window.LOCALIZATIONS = " . insert('da') . ";
 } else if (onlylang == 'de') {
@@ -62,34 +50,28 @@ if (false) {
     window.LOCALIZATIONS = " . insert('el') . ";
 } else if (window.LANG == 'en_GB') {
     window.LOCALIZATIONS = " . insert('en_GB') . ";
-} else if (onlylang == 'eo') {
-    window.LOCALIZATIONS = " . insert('eo') . ";
 } else if (onlylang == 'es') {
     window.LOCALIZATIONS = " . insert('es') . ";
-} else if (onlylang == 'eu') {
-    window.LOCALIZATIONS = " . insert('eu') . ";
-} else if (onlylang == 'et') {
-    window.LOCALIZATIONS = " . insert('et') . ";
 } else if (onlylang == 'fr') {
     window.LOCALIZATIONS = " . insert('fr') . ";
-} else if (onlylang == 'gd') {
-    window.LOCALIZATIONS = " . insert('gd') . ";
-} else if (onlylang == 'gl') {
-    window.LOCALIZATIONS = " . insert('gl') . ";
-} else if (onlylang == 'hr') {
-    window.LOCALIZATIONS = " . insert('hr') . ";
 } else if (onlylang == 'hu') {
     window.LOCALIZATIONS = " . insert('hu') . ";
 } else if (onlylang == 'is') {
     window.LOCALIZATIONS = " . insert('is') . ";
 } else if (onlylang == 'it') {
     window.LOCALIZATIONS = " . insert('it') . ";
+} else if (onlylang == 'ja') {
+    window.LOCALIZATIONS = " . insert('ja') . ";
+} else if (onlylang == 'ko') {
+    window.LOCALIZATIONS = " . insert('ko') . ";
 } else if (onlylang == 'nb') {
     window.LOCALIZATIONS = " . insert('nb') . ";
 } else if (onlylang == 'nl') {
     window.LOCALIZATIONS = " . insert('nl') . ";
 } else if (onlylang == 'nn') {
     window.LOCALIZATIONS = " . insert('nn') . ";
+} else if (onlylang == 'pl') {
+    window.LOCALIZATIONS = " . insert('pl') . ";
 } else if (window.LANG == 'pt_BR') {
     window.LOCALIZATIONS = " . insert('pt_BR') . ";
 } else if (onlylang == 'pt') {
