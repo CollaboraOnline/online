@@ -27,6 +27,7 @@
 static LOOLWSD *loolwsd = nullptr;
 
 NSString *app_locale;
+BOOL empty_tile_cache;
 
 static void download(NSURL *source, NSURL *destination) {
     [[[NSURLSession sharedSession] downloadTaskWithURL:source
@@ -199,7 +200,20 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     // Look for the setting indicating the URL for a file containing a list of URLs for template
     // documents to download. If set, start a task to download it, and then to download the listed
     // templates.
-    NSString *templateListURL = [[NSUserDefaults standardUserDefaults] stringForKey:@"templateListURL"];
+
+    NSString *templateListURL = nil;
+
+    // First check managed configuration, if present
+    NSDictionary *managedConfig = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"com.apple.configuration.managed"];
+    if (managedConfig != nil) {
+        templateListURL = managedConfig[@"templateListURL"];
+        if (templateListURL != nil && ![templateListURL isKindOfClass:[NSString class]])
+            templateListURL = nil;
+    }
+
+    if (templateListURL == nil)
+        templateListURL = [[NSUserDefaults standardUserDefaults] stringForKey:@"templateListURL"];
+
     if (templateListURL != nil) {
         NSURL *url = [NSURL URLWithString:templateListURL];
         if (url != nil) {
