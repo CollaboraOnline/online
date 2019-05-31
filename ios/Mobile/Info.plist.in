@@ -390,6 +390,20 @@
                 <string>com.microsoft.powerpoint.ppt</string>
             </array>
         </dict>
+        <dict>
+            <key>CFBundleTypeIconFiles</key>
+            <array/>
+            <key>CFBundleTypeName</key>
+            <string>Visio Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.collabora.office.uti.vsd</string>
+            </array>
+        </dict>
     </array>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
@@ -514,6 +528,26 @@
             <dict>
                 <key>public.filename-extension</key>
                 <string>odp</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>public.data</string>
+            </array>
+            <key>UTTypeDescription</key>
+            <string>Visio Document</string>
+            <key>UTTypeIdentifier</key>
+            <string>com.collabora.office.uti.vsd</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <array>
+                    <string>vdx</string>
+                    <string>vsd</string>
+                    <string>vsdm</string>
+                    <string>vsdx</string>
+                </array>
             </dict>
         </dict>
     </array>
