@@ -292,6 +292,20 @@
             <key>CFBundleTypeIconFiles</key>
             <array/>
             <key>CFBundleTypeName</key>
+            <string>Lotus WordPro Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.collabora.office.uti.lwp</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeIconFiles</key>
+            <array/>
+            <key>CFBundleTypeName</key>
             <string>Plain Text</string>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
@@ -473,6 +487,21 @@
             <dict>
                 <key>public.filename-extension</key>
                 <string>fodt</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>public.data</string>
+            </array>
+            <key>UTTypeDescription</key>
+            <string>Lotus WordPro Document</string>
+            <key>UTTypeIdentifier</key>
+            <string>com.collabora.office.uti.lwp</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <string>lwp</string>
             </dict>
         </dict>
         <dict>
