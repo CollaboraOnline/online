@@ -5,10 +5,7 @@
 
 L.ObjectFocusDarkOverlay = L.Layer.extend({
 	onAdd: function() {
-	},
-
-	remove: function() {
-	},
+	}
 });
 
 // Libreoffice-specific functionality follows.
@@ -17,14 +14,10 @@ L.ObjectFocusDarkOverlay = L.Layer.extend({
  * A L.ObjectFocusDarkOverlay
  */
 L.ObjectFocusDarkOverlay = L.ObjectFocusDarkOverlay.extend({
-	onAdd: function(map) {
-		map.on('inplace', this._onStateChanged, this);
-	},
-
-	remove: function() {
-		this._map.off('inplace', this._onStateChanged, this);
+	onRemove: function() {
 		this._parts.clearLayers();
 		this._map.removeLayer(this._parts);
+		this._parts = null;
 	},
 
 	// coordinates are in Twips
@@ -47,14 +40,9 @@ L.ObjectFocusDarkOverlay = L.ObjectFocusDarkOverlay.extend({
 		this._parts.addLayer(part);
 	},
 
-	_onStateChanged: function(args) {
-		if (args.off && args.off === true) {
-			this._parts.clearLayers();
-			this._map.removeLayer(this._parts);
-			this._parts = null;
-			return;
-		}
-
+	// args: {x, y, w, h}
+	// defines area where the focused element is placed, values are in Twips
+	show: function(args) {
 		this._parts = new L.LayerGroup();
 		this._map.addLayer(this._parts);
 
