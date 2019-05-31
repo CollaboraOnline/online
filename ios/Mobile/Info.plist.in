@@ -465,6 +465,8 @@
             <array>
                 <string>public.data</string>
             </array>
+            <key>UTTypeDescription</key>
+            <string>OpenDocument Flat Text</string>
             <key>UTTypeIdentifier</key>
             <string>com.collabora.office.uti.fodt</string>
             <key>UTTypeTagSpecification</key>
