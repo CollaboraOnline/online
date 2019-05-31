@@ -219,14 +219,6 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
 
             // ???
         }
-        else if (strcmp(string_value, "PRINT") == 0 && false /* FIXME disabled so far */)
-        {
-            // TODO this is just a sketch to check this compiles
-            std::string printFile = Util::createRandomTmpDir() + "/print.pdf";
-            getLOKDocument()->saveAs(printFile.c_str(), "pdf", nullptr);
-
-            // TODO more stuff here...
-        }
         else
         {
             // As above
@@ -283,4 +275,14 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
     fakeClientFd = fakeSocketSocket();
 }
 
+extern "C"
+JNIEXPORT void JNICALL
+Java_org_libreoffice_androidapp_MainActivity_saveAs(JNIEnv *env, jobject instance,
+                                                    jstring fileUri_) {
+    const char *fileUri = env->GetStringUTFChars(fileUri_, 0);
+
+    getLOKDocument()->saveAs(fileUri, "pdf", nullptr);
+
+    env->ReleaseStringUTFChars(fileUri_, fileUri);
+}
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

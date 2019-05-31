@@ -81,7 +81,7 @@ L.Map.include({
 	},
 
 	print: function () {
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('PRINT');
 		} else {
 			this.showBusy(_('Downloading...'), false);
