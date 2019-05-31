@@ -126,6 +126,7 @@ public:
         std::atomic<int> liveTyping(0);
 
         // First some rendering load
+        threads.reserve(numRender);
         for (int i = 0; i < numRender; ++i)
             threads.emplace_back([&,i] {
                     std::mt19937 randDev(numRender * 257);
