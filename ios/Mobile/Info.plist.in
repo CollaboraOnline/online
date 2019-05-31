@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> <!-- -*- Mode: nXML; tab-width: 4; indent-tabs-mode: nil; nxml-child-indent:4 -*- -->
+<?xml version="1.0" encoding="UTF-8"?> <!-- -*- Mode: nXML; tab-width: 4; indent-tabs-mode: nil; nxml-child-indent:4; fill-column: 100 -*- -->
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
@@ -230,8 +230,16 @@
     <string>@APP_NAME@</string>
     <key>CFBundleDocumentTypes</key>
     <array>
-       <!-- Document sub-types are listed in order ODF, OOXML, MSO, other -->
-       <!-- Writer document types -->
+        <!-- Some of these then have entries in the UTExportedTypeDeclarations array, some in the
+             UTImportedTypeDeclarations array, but some in neither. Not sure I remember what the
+             exact intent has been, if there has been one. Actually this mess is more like the end
+             result of vague hacking until things kinda seem to work. There is sadly little clear
+             and exact documentation for this. It is especially hard to figure out what types are
+             pre-defined by the system and don't need to be mentioned in the
+             UTImportedTypeDeclarations array at all (and presumably even less in the
+             UTExportedTypeDeclarations one). -->
+        <!-- Document sub-types are listed in order ODF, OOXML, MSO, other -->
+        <!-- Writer document types -->
         <dict>
             <key>CFBundleTypeName</key>
             <string>OpenDocument Text</string>
@@ -280,7 +288,7 @@
                 <string>com.microsoft.word.doc</string>
             </array>
         </dict>
-       <dict>
+        <dict>
             <key>CFBundleTypeIconFiles</key>
             <array/>
             <key>CFBundleTypeName</key>
@@ -294,7 +302,7 @@
                 <string>public.text</string>
             </array>
         </dict>
-       <!-- Calc document types -->
+        <!-- Calc document types -->
         <dict>
             <key>CFBundleTypeIconFiles</key>
             <array/>
@@ -337,7 +345,7 @@
                 <string>com.microsoft.excel.xls</string>
             </array>
         </dict>
-       <!-- Impress document types -->
+        <!-- Impress document types -->
         <dict>
             <key>CFBundleTypeName</key>
             <string>OpenDocument Presentation</string>
@@ -434,6 +442,7 @@
     <true/>
     <key>UTExportedTypeDeclarations</key>
     <array>
+        <!-- Entries in same order as the corresponding CFBundleDocumentTypes entries -->
         <dict>
             <key>UTTypeConformsTo</key>
             <array>
@@ -521,6 +530,7 @@
     </array>
     <key>UTImportedTypeDeclarations</key>
     <array>
+        <!-- Also in same order as the corresponding CFBundleDocumentTypes entries -->
         <dict>
             <key>UTTypeConformsTo</key>
             <array>
