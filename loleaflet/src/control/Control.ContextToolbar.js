@@ -2,6 +2,7 @@
 /*
  * L.Control.ContextToolbar.
  */
+/* global _ */
 
 L.Control.ContextToolbar = L.Control.extend({
 	options: {
@@ -41,19 +42,41 @@ L.Control.ContextToolbar = L.Control.extend({
 		    onUp = 'mouseup',
 		    onDown = 'mousedown',
 		    stopEvents = 'touchstart touchmove touchend mousedown mousemove mouseout mouseover mouseup mousewheel click scroll',
-		    container = L.DomUtil.create('table', 'loleaflet-context-table', this._container),
-		    tbody = L.DomUtil.create('tbody', '', container),
+		    container;
+
+		if (window.ThisIsTheiOSApp)
+			container = L.DomUtil.create('table', 'loleaflet-ios-context-table', this._container);
+		else
+			container = L.DomUtil.create('table', 'loleaflet-context-table', this._container);
+
+		var tbody = L.DomUtil.create('tbody', '', container),
 		    tr = L.DomUtil.create('tr', '', tbody);
 
-		this._cut = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-cut', tr);
+		if (window.ThisIsTheiOSApp) {
+			this._leftroundedend = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-left', tr);
+			this._cut = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-first-and-middle-entry loleaflet-ios-context-cut', tr);
+			// We have at the moment no translations for the bare words "Cut", "Copy",
+			// and "Paste". Only for the menu entries that start with a tilde. So let's
+			// do a horrible hack: Look up those and remove the tilde from the
+			// translation.
+			this._cut.innerHTML = _('~Cut').replace(/~/, '');
+			this._copy = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-first-and-middle-entry loleaflet-ios-context-copy', tr);
+			this._copy.innerHTML = _('~Copy').replace(/~/, '');
+			this._paste = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-last-entry loleaflet-ios-context-paste', tr);
+			this._paste.innerHTML = _('~Paste').replace(/~/, '');
+			this._rightroundedend = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-right', tr);
+		}
+		else {
+			this._cut = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-cut', tr);
+			this._copy = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-copy', tr);
+			this._paste = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-paste', tr);
+		}
 		L.DomEvent.on(this._cut, stopEvents,  L.DomEvent.stopPropagation)
 			.on(this._cut, onDown, this.onMouseDown, this)
 			.on(this._cut, onUp, this.onMouseUp, this);
-		this._copy = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-copy', tr);
 		L.DomEvent.on(this._copy, stopEvents,  L.DomEvent.stopPropagation)
 			.on(this._copy, onDown, this.onMouseDown, this)
 			.on(this._copy, onUp, this.onMouseUp, this);
-		this._paste = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-paste', tr);
 		L.DomEvent.on(this._paste, stopEvents,  L.DomEvent.stopPropagation)
 			.on(this._paste, onDown, this.onMouseDown, this)
 			.on(this._paste, onUp, this.onMouseUp, this);
@@ -90,13 +113,16 @@ L.Control.ContextToolbar = L.Control.extend({
 	onMouseUp: function (e) {
 		var target = e.target || e.srcElement;
 
-		if (L.DomUtil.hasClass(target, 'loleaflet-context-cut')) {
+		if (L.DomUtil.hasClass(target, 'loleaflet-context-cut') ||
+		   L.DomUtil.hasClass(target, 'loleaflet-ios-context-cut')) {
 			this._map._socket.sendMessage('uno .uno:Cut');
 		}
-		else if (L.DomUtil.hasClass(target, 'loleaflet-context-copy')) {
+		else if (L.DomUtil.hasClass(target, 'loleaflet-context-copy') ||
+			L.DomUtil.hasClass(target, 'loleaflet-ios-context-copy')) {
 			this._map._socket.sendMessage('uno .uno:Copy');
 		}
-		else if (L.DomUtil.hasClass(target, 'loleaflet-context-paste')) {
+		else if (L.DomUtil.hasClass(target, 'loleaflet-context-paste') ||
+			L.DomUtil.hasClass(target, 'loleaflet-ios-context-paste')) {
 			this._map._socket.sendMessage('uno .uno:Paste');
 		}
 
