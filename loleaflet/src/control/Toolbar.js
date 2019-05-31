@@ -81,8 +81,8 @@ L.Map.include({
 	},
 
 	print: function () {
-		if (window.ThisIsTheiOSApp) {
-			window.webkit.messageHandlers.lool.postMessage('PRINT', '*');
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
+			window.postMobileMessage('PRINT');
 		} else {
 			this.showBusy(_('Downloading...'), false);
 			this.downloadAs('print.pdf', 'pdf', null, 'print');

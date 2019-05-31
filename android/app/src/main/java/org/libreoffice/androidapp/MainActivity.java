@@ -20,14 +20,16 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.util.Log;
-import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private String urlToLoad;
     private WebView mWebView;
     private SharedPreferences sPrefs;
+    private Handler mainHandler;
 
     private boolean isDocEditable = false;
     private boolean isDocDebuggable = BuildConfig.DEBUG;
@@ -218,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 WebView.setWebContentsDebuggingEnabled(true);
             }
         }
+        mainHandler = new Handler(getMainLooper());
     }
 
 
@@ -349,7 +353,9 @@ public class MainActivity extends AppCompatActivity {
     public void postMobileMessage(String message) {
         Log.d(TAG, "postMobileMessage: " + message);
 
-        postMobileMessageNative(message);
+        if (interceptMsgFromWebView(message)) {
+            postMobileMessageNative(message);
+        }
 
         // Going back to document browser on BYE (called when pressing the top left exit button)
         if (message.equals("BYE"))
@@ -389,6 +395,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * return true to pass the message to the native part and false to block the message
+     */
+    boolean interceptMsgFromWebView(String message) {
+        if (message.equals("PRINT")) {
+            mainHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    initiatePrint();
+                }
+            });
+            return false;
+        }
+        return true;
+    }
+
+    private void initiatePrint() {
+        PrintManager printManager = (PrintManager) getSystemService(PRINT_SERVICE);
+        PrintDocumentAdapter printAdapter = new PrintAdapter(MainActivity.this);
+        printManager.print("Document", printAdapter, new PrintAttributes.Builder().build());
+    }
+
+    public native void saveAs(String fileUri);
+
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
