@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:43+0200\n"
+"POT-Creation-Date: 2019-06-02 20:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-help-cy.po\n"
-"X-Pootle-Revision: 2340190\n"
+"X-Pootle-Revision: 3737521\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -56,7 +56,7 @@ msgstr "Ctrl + Alt + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:33-18
 msgid "Print (Download as PDF)"
-msgstr "Print (Llwytho i awr fel PDF)"
+msgstr "Argraffu (Llwytho i lawr fel PDF)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:33-68
 msgid "Ctrl + P"
@@ -135,7 +135,7 @@ msgstr "Ctrl + Alt + 5"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-18
 msgid "Superscript"
-msgstr "Isysgrif"
+msgstr "Uwchysgrif"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-56
@@ -145,7 +145,7 @@ msgstr "Ctrl + Shift + P"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-18
 msgid "Subscript"
-msgstr "Uwchysgrif"
+msgstr "Isysgrif"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-54
@@ -302,7 +302,7 @@ msgstr "Symud y cyrchwr gyda'r dewis i'r chwith"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-83
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-83
 msgid "Shift + Arrow Left"
-msgstr "Shift + Saeth Chwith"
+msgstr "Shift + Saeth i'r Chwith"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
@@ -312,12 +312,12 @@ msgstr "Mynd i ddechrau gair"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-70
 msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + Saeth Chwith"
+msgstr "Ctrl + Saeth i'r Chwith"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
 msgid "Select to the left word by word"
-msgstr "Dewis i'r gair chwith y ôl gair"
+msgstr "Dewis tua'r chwith fesul gair"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-76
@@ -332,7 +332,7 @@ msgstr "Symud cyrchwr i'r dde"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-69
 msgid "Arrow Right"
-msgstr "Saeth i'r Chwith"
+msgstr "Saeth i'r Dde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
@@ -342,7 +342,7 @@ msgstr "Symudwch y cyrchwr gyda'r dewis i'r dde"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-84
 msgid "Shift + Arrow Right"
-msgstr "Shift + Saeth Dde"
+msgstr "Shift + Saeth i'r Dde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-18
@@ -352,12 +352,12 @@ msgstr "Mynd i ddechrau'r gair nesaf"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-73
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-73
 msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + Saeth Dde"
+msgstr "Ctrl + Saeth i'r Dde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
 msgid "Select to the right word by word"
-msgstr "Dewis y gair de yn ôl gair"
+msgstr "Dewis tua'r dde fesul gair"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-77
@@ -397,7 +397,7 @@ msgstr "Ctrl + Saeth i Fyny"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
 msgid "Select to beginning of paragraph"
-msgstr "Dewis i ddechrau paragraff"
+msgstr "Dewis hyd at ddechrau paragraff"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-77
@@ -437,7 +437,7 @@ msgstr "Ctrl + Saeth i Lawr"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
 msgid "Select to end of paragraph"
-msgstr "Dewis i ddiwedd paragraff"
+msgstr "Dewis hyd at ddiwedd paragraff"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-71
@@ -457,7 +457,7 @@ msgstr "Cartref"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-18
 msgid "Go and select to the beginning of a line"
-msgstr "Mynd a dewis i ddechrau llinell"
+msgstr "Mynd a dewis hyd at ddechrau llinell"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-85
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-85
@@ -477,7 +477,7 @@ msgstr "Ctrl + Home"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Go and select text to start of document"
-msgstr "Mynd a dewis testun i gychwyn y ddogfen"
+msgstr "Mynd a dewis testun hyd at gychwyn y ddogfen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-83
@@ -497,7 +497,7 @@ msgstr "Diwedd"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-18
 msgid "Go and select to the end of a line"
-msgstr "Mynd a dewis i ddiwedd llinell"
+msgstr "Mynd a dewis hyd at ddiwedd llinell"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-79
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-79
@@ -517,7 +517,7 @@ msgstr "Ctrl + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Go and select text to end of document"
-msgstr "Mynd a dewis testun i ddiwedd ddogfen"
+msgstr "Mynd a dewis testun hyd at ddiwedd ddogfen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-82
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-81
@@ -574,7 +574,7 @@ msgstr "Shift + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:95-18
 msgid "Delete to beginning of word"
-msgstr "Dileu i ddechrau gair"
+msgstr "Dileu hyd at ddechrau gair"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:95-72
 msgid "Ctrl + Backspace"
@@ -582,7 +582,7 @@ msgstr "Ctrl + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Delete to end of word"
-msgstr "Dileu i ddiwedd gair"
+msgstr "Dileu hyd at ddiwedd gair"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-66
 msgid "Ctrl + Del"
@@ -590,7 +590,7 @@ msgstr "Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-18
 msgid "Delete to beginning of sentence"
-msgstr "Dileu i ddechrau'r frawddeg"
+msgstr "Dileu hyd at ddechrau'r frawddeg"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-76
 msgid "Ctrl + Shift + Backspace"
@@ -598,7 +598,7 @@ msgstr "Ctrl + Shift + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 msgid "Delete to end of sentence"
-msgstr "Dileu i ddiwedd brawddeg"
+msgstr "Dileu hyd at ddiwedd brawddeg"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-70
 msgid "Ctrl + Shift + Del"
@@ -927,11 +927,11 @@ msgstr "Bewis testun a llywio mewn blwch testun"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-18
 msgid "Go and select text to start of textbox"
-msgstr "Mynd a dewis testun i ar gychwyn y blwch testun"
+msgstr "Mynd a dewis testun hyd at gychwyn y blwch testun"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 msgid "Go and select text to end of textbox"
-msgstr "Mynd a dewis testun i ddiwedd blwch testun"
+msgstr "Mynd a dewis testun hyd at ddiwedd blwch testun"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:207-9
 msgid "Slide / draw page keyboard shortcuts"

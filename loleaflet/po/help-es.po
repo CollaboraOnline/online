@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:43+0200\n"
+"POT-Creation-Date: 2019-06-02 20:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
-"X-Pootle-Revision: 3084311\n"
+"X-Pootle-Revision: 3713610\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -91,7 +91,7 @@ msgstr "Ctrl + B"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-18
 msgid "Italic"
-msgstr "Bastardilla"
+msgstr "Itálica"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-51
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-51

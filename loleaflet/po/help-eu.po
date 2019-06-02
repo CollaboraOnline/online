@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:43+0200\n"
+"POT-Creation-Date: 2019-06-02 20:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-help-eu.po\n"
-"X-Pootle-Revision: 831113\n"
+"X-Pootle-Revision: 3858781\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -578,7 +578,7 @@ msgstr "Ezabatu hitzaren hasiera arte"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:95-72
 msgid "Ctrl + Backspace"
-msgstr "Ktrl + Atzera-tekla"
+msgstr "Ctrl + atzerako tekla"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Delete to end of word"
@@ -594,7 +594,7 @@ msgstr "Ezabatu esaldiaren hasierara arte"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-76
 msgid "Ctrl + Shift + Backspace"
-msgstr "Ktrl + Maius + Atzera-tekla"
+msgstr "Ctrl + ⇧ + atzerako tekla"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 msgid "Delete to end of sentence"

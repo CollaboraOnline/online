@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:42+0100\n"
+"POT-Creation-Date: 2019-06-02 20:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
-"X-Pootle-Revision: 3609200\n"
+"X-Pootle-Revision: 3847626\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -77,7 +77,7 @@ msgstr "Prijaté bajty"
 
 #: admin/admin.strings.js:20
 msgid "PID"
-msgstr "Identifikátor programu"
+msgstr "PID"
 
 #: admin/admin.strings.js:21
 msgid "Document"
@@ -119,7 +119,7 @@ msgstr "Graf procesora"
 msgid "Network Graph"
 msgstr "Graf siete"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:232
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:241
 msgid "Save"
 msgstr "Uložiť"
 
@@ -164,6 +164,10 @@ msgstr "Platnosť vypršala:"
 #: admin/admin.strings.js:41
 msgid "Refresh"
 msgstr "Obnoviť"
+
+#: admin/admin.strings.js:42
+msgid "Shutdown Server"
+msgstr "Vypnúť server"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -217,285 +221,17 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
-#: js/toolbar.js:154
-msgid "Are you sure you want to delete this page?"
-msgstr "Naozaj chcete túto stranu odstrániť?"
-
-#: js/toolbar.js:621
-msgid "Document repair"
-msgstr "Obnoviť dokument"
-
-#: js/toolbar.js:661
-msgid "Insert table"
-msgstr "Vložiť tabuľku"
-
-#: js/toolbar.js:663
-msgid "Borders"
-msgstr "Orámovanie"
-
-#: js/toolbar.js:671
-msgid "More..."
-msgstr "Viac..."
-
-#: js/toolbar.js:683
-msgid "Insert shapes"
-msgstr "Vložiť útvary"
-
-#: js/toolbar.js:690
-msgid "Insert Local Image"
-msgstr ""
-
-#: js/toolbar.js:718 js/toolbar.js:1041
-msgid "Always follow the editor"
-msgstr "Vždy nasledovať tohoto editora"
-
-#: js/toolbar.js:721 js/toolbar.js:1044
-msgid "Current"
-msgstr "Aktuálny"
-
-#: js/toolbar.js:746 js/toolbar.js:913 js/toolbar.js:1438
-msgid "Sum"
-msgstr "Súčet"
-
-#: js/toolbar.js:747 js/toolbar.js:914
-msgid "Function"
-msgstr "Funkcia"
-
-#: js/toolbar.js:748 js/toolbar.js:915 src/layer/marker/Annotation.js:171
-msgid "Cancel"
-msgstr "Zrušiť"
-
-#: js/toolbar.js:749 js/toolbar.js:916
-msgid "Accept"
-msgstr "Prijať"
-
-#: js/toolbar.js:782 js/toolbar.js:980
-msgid "First sheet"
-msgstr "Prvý hárok"
-
-#: js/toolbar.js:783 js/toolbar.js:981
-msgid "Previous sheet"
-msgstr "Predchádzajúci hárok"
-
-#: js/toolbar.js:784 js/toolbar.js:982
-msgid "Next sheet"
-msgstr "Nasledujúci hárok"
-
-#: js/toolbar.js:785 js/toolbar.js:983
-msgid "Last sheet"
-msgstr "Posledný hárok"
-
-#: js/toolbar.js:786 js/toolbar.js:984
-msgid "Insert sheet"
-msgstr "Vložiť hárok"
-
-#: js/toolbar.js:947
-msgid "Sign"
-msgstr ""
-
-#: js/toolbar.js:947 src/control/Control.Menubar.js:30
-msgid "Sign document"
-msgstr ""
-
-#: js/toolbar.js:948
-msgid "Upload"
-msgstr ""
-
-#: js/toolbar.js:948
-msgid "Upload document"
-msgstr ""
-
-#: js/toolbar.js:950
-msgid "Identity:"
-msgstr ""
-
-#: js/toolbar.js:951 js/toolbar.js:957
-msgid "N/A"
-msgstr ""
-
-#: js/toolbar.js:953
-msgid "Select passport"
-msgstr ""
-
-#: js/toolbar.js:954
-msgid "Passport: N/A"
-msgstr ""
-
-#: js/toolbar.js:956
-msgid "Status:"
-msgstr ""
-
-#: js/toolbar.js:959
-msgid "Logout"
-msgstr ""
-
-#: js/toolbar.js:960
-msgid "Login"
-msgstr ""
-
-#: js/toolbar.js:961
-msgid "Close"
-msgstr ""
-
-#: js/toolbar.js:1001 src/control/Control.Menubar.js:297
-msgid "Fullscreen presentation"
-msgstr "Prezentácia na celú obrazovku"
-
-#: js/toolbar.js:1025
-msgid "Search:"
-msgstr "Vyhľadať:"
-
-#: js/toolbar.js:1032
-msgid "Cancel the search"
-msgstr "Zrušiť vyhľadávanie"
-
-#: js/toolbar.js:1037
-msgid "No users"
-msgstr "Žiadni používatelia"
-
-#: js/toolbar.js:1051 src/control/Control.Menubar.js:63
-#: src/control/Control.Menubar.js:261
-msgid "Reset zoom"
-msgstr "Resetovať zväčšenie"
-
-#: js/toolbar.js:1095
-msgid "%user has joined"
-msgstr "%user sa pripojil"
-
-#: js/toolbar.js:1096
-msgid "%user has left"
-msgstr "%user sa odpojil"
-
-#: js/toolbar.js:1416
-msgid "Number of Sheets"
-msgstr "Počet hárkov"
-
-#: js/toolbar.js:1419
-msgid "Selected range of cells"
-msgstr "Vybraná oblasť buniek"
-
-#: js/toolbar.js:1422 js/toolbar.js:1461
-msgid "Entering text mode"
-msgstr "Prepínanie do textového režimu"
-
-#: js/toolbar.js:1425 js/toolbar.js:1467 js/toolbar.js:1494
-msgid "Text Language"
-msgstr "Jazyk textu"
-
-#: js/toolbar.js:1428 js/toolbar.js:1464
-msgid "Selection Mode"
-msgstr "Režim výberu"
-
-#: js/toolbar.js:1431
-msgid "Choice of functions"
-msgstr "Voľba funkcií"
-
-#: js/toolbar.js:1433
-msgid "Average"
-msgstr "Priemer"
-
-#: js/toolbar.js:1434
-msgid "CountA"
-msgstr "Počet hodnôt"
-
-#: js/toolbar.js:1435
-msgid "Count"
-msgstr "Počet"
-
-#: js/toolbar.js:1436
-msgid "Maximum"
-msgstr "Maximum"
-
-#: js/toolbar.js:1437
-msgid "Minimum"
-msgstr "Minimum"
-
-#: js/toolbar.js:1439
-msgid "Selection count"
-msgstr "Počet vybraných"
-
-#: js/toolbar.js:1440
-msgid "None"
-msgstr "Žiadne"
-
-#: js/toolbar.js:1455
-msgid "Number of Pages"
-msgstr "Počet strán"
-
-#: js/toolbar.js:1458
-msgid "Word Counter"
-msgstr "Počet slov"
-
-#: js/toolbar.js:1489
-msgid "Number of Slides"
-msgstr "Počet snímok"
-
-#: js/toolbar.js:1525
-msgid "%n users"
-msgstr "%n používateľov"
-
-#: js/toolbar.js:1526
-msgid "1 user"
-msgstr "1 používateľ"
-
-#: js/toolbar.js:1527
-msgid "0 users"
-msgstr "Žiadni používatelia"
-
-#: js/toolbar.js:1657
-msgid "Document saved"
-msgstr "Dokument uložený"
-
-#: js/toolbar.js:1807
-msgid "Style"
-msgstr "Štýl"
-
-#: js/toolbar.js:1829
-msgid "Font"
-msgstr "Písmo"
-
-#: js/toolbar.js:1862
-msgid "Previous slide"
-msgstr "Predchádzajúca snímka"
-
-#: js/toolbar.js:1863
-msgid "Next slide"
-msgstr "Nasledujúca snímka"
-
-#: js/toolbar.js:1925
-msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr ""
-"Konflikt medzi viacerými používateľmi pri rušení alebo obnove zmien. Na "
-"vyriešenie problému použite prosím obnovu dokumentu."
-
-#: js/toolbar.js:2159 src/control/Control.DocumentRepair.js:95
-msgid "You"
-msgstr "Vy"
-
-#: js/toolbar.js:2165
-msgid "Readonly"
-msgstr "Len na čítanie"
-
-#: src/control/Control.AlertDialog.js:28
+#: src/control/Control.AlertDialog.js:42
+msgid "Open link"
+msgstr "Otvoriť odkaz"
+
+#: src/control/Control.AlertDialog.js:53
+msgid "Edit"
+msgstr "Upraviť"
+
+#: src/control/Control.AlertDialog.js:73
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Server zaznamenal chybu %0 počas spracovania príkazu %1."
-
-#: src/control/Control.ContextMenu.js:131
-msgid "Internal Cut"
-msgstr "Vystrihnúť (interné)"
-
-#: src/control/Control.ContextMenu.js:134
-msgid "Internal Copy"
-msgstr "Kopírovať (interné)"
-
-#: src/control/Control.ContextMenu.js:137
-msgid "Internal Paste"
-msgstr "Vložiť (interné)"
-
-#: src/control/Control.ContextMenu.js:159
-msgid "Internal Paste Special"
-msgstr "Vložiť inak (interné)"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -509,7 +245,7 @@ msgstr "Typ"
 msgid "Index"
 msgstr "Register"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:226
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:230
 msgid "Comment"
 msgstr "Poznámka"
 
@@ -525,22 +261,27 @@ msgstr "Časová značka"
 msgid "Jump to state"
 msgstr "Prejsť na stav"
 
-#: src/control/Control.Menubar.js:21
-msgid "Share..."
-msgstr ""
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2241
+msgid "You"
+msgstr "Vy"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:235
-#: src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:326
+msgid "Share..."
+msgstr "Zdieľať..."
+
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:240
+#: src/control/Control.Menubar.js:328
 msgid "See revision history"
 msgstr "Zobraziť históriu revízií"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:236
-#: src/control/Control.Menubar.js:317
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:241
+#: src/control/Control.Menubar.js:329
 msgid "Download as"
 msgstr "Stiahnuť ako"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:237
-#: src/control/Control.Menubar.js:318
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:330
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokument (.pdf)"
 
@@ -560,76 +301,101 @@ msgstr "Dokument Word (.docx)"
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
-#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:247
-#: src/control/Control.Menubar.js:328
-msgid "Repair"
-msgstr "Opraviť"
+#: src/control/Control.Menubar.js:30 src/control/Signing.js:601
+msgid "Sign document"
+msgstr "Podpísať dokument"
 
-#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:264
-#: src/control/Control.Menubar.js:341
-msgid "Local Image..."
-msgstr ""
-
-#: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:87
-msgid "All"
-msgstr "Všetko"
-
-#: src/control/Control.Menubar.js:134
-msgid "Text orientation"
-msgstr "Orientácia textu"
-
-#: src/control/Control.Menubar.js:212 src/control/Control.Menubar.js:214
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:302
-#: src/control/Control.Menubar.js:396
-msgid "None (Do not check spelling)"
-msgstr "Žiadny (nekontrolovať pravopis)"
-
-#: src/control/Control.Menubar.js:224 src/control/Control.Menubar.js:305
-#: src/control/Control.Menubar.js:399
-msgid "Keyboard shortcuts"
-msgstr "Klávesové skratky"
-
-#: src/control/Control.Menubar.js:225 src/control/Control.Menubar.js:306
-#: src/control/Control.Menubar.js:400
-msgid "About"
-msgstr "O programe"
-
-#: src/control/Control.Menubar.js:227 src/control/Control.Menubar.js:308
-#: src/control/Control.Menubar.js:402
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:247
+#: src/control/Control.Menubar.js:335
 msgid "Close document"
 msgstr "Zavrieť dokument"
 
-#: src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:340
+msgid "Repair"
+msgstr "Opraviť"
+
+#: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:266
+#: src/control/Control.Toolbar.js:1010
+msgid "Reset zoom"
+msgstr "Resetovať zväčšenie"
+
+#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:269
+#: src/control/Control.Menubar.js:353
+msgid "Local Image..."
+msgstr "Lokálny obrázok..."
+
+#: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:88
+msgid "All"
+msgstr "Všetko"
+
+#: src/control/Control.Menubar.js:136
+msgid "Text orientation"
+msgstr "Orientácia textu"
+
+#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:218
+#: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:313
+#: src/control/Control.Menubar.js:418
+msgid "None (Do not check spelling)"
+msgstr "Žiadny (nekontrolovať pravopis)"
+
+#: src/control/Control.Menubar.js:228 src/control/Control.Menubar.js:316
+#: src/control/Control.Menubar.js:422
+msgid "Keyboard shortcuts"
+msgstr "Klávesové skratky"
+
+#: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:317
+#: src/control/Control.Menubar.js:423
+msgid "About"
+msgstr "O programe"
+
+#: src/control/Control.Menubar.js:231 src/control/Control.Menubar.js:319
+#: src/control/Control.Menubar.js:425 src/map/Map.js:312
+msgid "Last modification"
+msgstr "Posledná zmena"
+
+#: src/control/Control.Menubar.js:243
 msgid "ODF presentation (.odp)"
 msgstr "ODF prezentácia (.odp)"
 
-#: src/control/Control.Menubar.js:239
+#: src/control/Control.Menubar.js:244
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Prezentácia PowerPoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:240
+#: src/control/Control.Menubar.js:245
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Prezentácia PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.js:319
+#: src/control/Control.Menubar.js:308 src/control/Control.Toolbar.js:963
+msgid "Fullscreen presentation"
+msgstr "Prezentácia na celú obrazovku"
+
+#: src/control/Control.Menubar.js:331
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF tabuľkový dokument (.ods)"
 
-#: src/control/Control.Menubar.js:320
+#: src/control/Control.Menubar.js:332
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Tabuľkový dokument Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:321
+#: src/control/Control.Menubar.js:333
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Tabuľkový dokument Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:467
+#: src/control/Control.Menubar.js:492
 msgid "Reset to Default Language"
 msgstr "Nastaviť na predvolený jazyk"
 
-#: src/control/Control.Menubar.js:718
+#: src/control/Control.Menubar.js:763
 msgid "Are you sure you want to delete this slide?"
 msgstr "Naozaj chcete túto snímku odstrániť?"
+
+#: src/control/Control.Menubar.js:790
+msgid ""
+"<p>Your browser has very limited access to the clipboard, so use these "
+"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
+"b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
+msgstr ""
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -639,99 +405,364 @@ msgstr "Posunúť na komentár nahor"
 msgid "Scroll down annotations"
 msgstr "Posunúť na komentár nadol"
 
-#: src/control/Control.Tabs.js:55
+#: src/control/Control.Tabs.js:58
 msgid "Insert sheet before this"
 msgstr "Vložiť hárok pred"
 
-#: src/control/Control.Tabs.js:56
+#: src/control/Control.Tabs.js:59
 msgid "Insert sheet after this"
 msgstr "Vložiť hárok za"
 
-#: src/control/Control.Tabs.js:61
+#: src/control/Control.Tabs.js:64
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "Naozaj chcete odstrániť hárok %sheet% ?"
 
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:77
 msgid "Enter new sheet name"
 msgstr "Zadajte nový názov hárku"
 
-#: src/control/Signing.js:153 src/control/Signing.js:226
-msgid "PIN Code"
-msgstr ""
+#: src/control/Control.Toolbar.js:199
+msgid "Are you sure you want to delete this page?"
+msgstr "Naozaj chcete túto stranu odstrániť?"
 
-#: src/control/Signing.js:216
-msgid "Login from email or mobile number"
+#: src/control/Control.Toolbar.js:753
+msgid "Borders"
+msgstr "Orámovanie"
+
+#: src/control/Control.Toolbar.js:761
+msgid "More..."
+msgstr "Viac..."
+
+#: src/control/Control.Toolbar.js:809
+msgid "Insert table"
+msgstr "Vložiť tabuľku"
+
+#: src/control/Control.Toolbar.js:814
+msgid "Insert Local Image"
+msgstr "Vložiť lokálny obrázok"
+
+#: src/control/Control.Toolbar.js:818
+msgid "Insert shapes"
+msgstr "Vložiť útvary"
+
+#: src/control/Control.Toolbar.js:891 src/control/Control.Toolbar.js:1461
+msgid "Sum"
+msgstr "Súčet"
+
+#: src/control/Control.Toolbar.js:892
+msgid "Function"
+msgstr "Funkcia"
+
+#: src/control/Control.Toolbar.js:893 src/layer/marker/Annotation.js:181
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: src/control/Control.Toolbar.js:894
+msgid "Accept"
+msgstr "Prijať"
+
+#: src/control/Control.Toolbar.js:941
+msgid "First sheet"
+msgstr "Prvý hárok"
+
+#: src/control/Control.Toolbar.js:942
+msgid "Previous sheet"
+msgstr "Predchádzajúci hárok"
+
+#: src/control/Control.Toolbar.js:943
+msgid "Next sheet"
+msgstr "Nasledujúci hárok"
+
+#: src/control/Control.Toolbar.js:944
+msgid "Last sheet"
+msgstr "Posledný hárok"
+
+#: src/control/Control.Toolbar.js:945
+msgid "Insert sheet"
+msgstr "Vložiť hárok"
+
+#: src/control/Control.Toolbar.js:987
+#, fuzzy
+msgid "Search"
+msgstr "Vyhľadať:"
+
+#: src/control/Control.Toolbar.js:993
+msgid "Cancel the search"
+msgstr "Zrušiť vyhľadávanie"
+
+#: src/control/Control.Toolbar.js:1000
+msgid "Always follow the editor"
+msgstr "Vždy nasledovať tohoto editora"
+
+#: src/control/Control.Toolbar.js:1003
+msgid "Current"
+msgstr "Aktuálny"
+
+#: src/control/Control.Toolbar.js:1080
+msgid "%user has joined"
+msgstr "%user sa pripojil"
+
+#: src/control/Control.Toolbar.js:1081
+msgid "%user has left"
+msgstr "%user sa odpojil"
+
+#: src/control/Control.Toolbar.js:1427
+msgid "Number of Sheets"
+msgstr "Počet hárkov"
+
+#: src/control/Control.Toolbar.js:1432
+msgid "Selected range of cells"
+msgstr "Vybraná oblasť buniek"
+
+#: src/control/Control.Toolbar.js:1437 src/control/Control.Toolbar.js:1494
+msgid "Entering text mode"
+msgstr "Prepínanie do textového režimu"
+
+#: src/control/Control.Toolbar.js:1442 src/control/Control.Toolbar.js:1504
+#: src/control/Control.Toolbar.js:1526
+msgid "Text Language"
+msgstr "Jazyk textu"
+
+#: src/control/Control.Toolbar.js:1447 src/control/Control.Toolbar.js:1499
+msgid "Selection Mode"
+msgstr "Režim výberu"
+
+#: src/control/Control.Toolbar.js:1452
+msgid "Choice of functions"
+msgstr "Voľba funkcií"
+
+#: src/control/Control.Toolbar.js:1456
+msgid "Average"
+msgstr "Priemer"
+
+#: src/control/Control.Toolbar.js:1457
+msgid "CountA"
+msgstr "Počet hodnôt"
+
+#: src/control/Control.Toolbar.js:1458
+msgid "Count"
+msgstr "Počet"
+
+#: src/control/Control.Toolbar.js:1459
+msgid "Maximum"
+msgstr "Maximum"
+
+#: src/control/Control.Toolbar.js:1460
+msgid "Minimum"
+msgstr "Minimum"
+
+#: src/control/Control.Toolbar.js:1462
+msgid "Selection count"
+msgstr "Počet vybraných"
+
+#: src/control/Control.Toolbar.js:1463
+msgid "None"
+msgstr "Žiadne"
+
+#: src/control/Control.Toolbar.js:1484
+msgid "Number of Pages"
+msgstr "Počet strán"
+
+#: src/control/Control.Toolbar.js:1489
+msgid "Word Counter"
+msgstr "Počet slov"
+
+#: src/control/Control.Toolbar.js:1521
+msgid "Number of Slides"
+msgstr "Počet snímok"
+
+#: src/control/Control.Toolbar.js:1554
+msgid "%n users"
+msgstr "%n používateľov"
+
+#: src/control/Control.Toolbar.js:1555
+msgid "1 user"
+msgstr "1 používateľ"
+
+#: src/control/Control.Toolbar.js:1556
+msgid "0 users"
+msgstr "Počet používateľov: 0"
+
+#: src/control/Control.Toolbar.js:1851
+msgid "Style"
+msgstr "Štýl"
+
+#: src/control/Control.Toolbar.js:1874
+msgid "Font"
+msgstr "Písmo"
+
+#: src/control/Control.Toolbar.js:1913
+msgid "Previous slide"
+msgstr "Predchádzajúca snímka"
+
+#: src/control/Control.Toolbar.js:1914
+msgid "Next slide"
+msgstr "Nasledujúca snímka"
+
+#: src/control/Control.Toolbar.js:1960
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Konflikt medzi viacerými používateľmi pri rušení alebo obnove zmien. Na "
+"vyriešenie problému použite prosím obnovu dokumentu."
+
+#: src/control/Control.Toolbar.js:2247
+msgid "Readonly"
+msgstr "Len na čítanie"
+
+#: src/control/Signing.js:195
+msgid "Please enter the PIN Code"
+msgstr "Vložte PIN kód"
+
+#: src/control/Signing.js:214
+msgid "Error at login."
+msgstr "Chyba pri prihlasovaní"
 
 #: src/control/Signing.js:227
-msgid "Check your email"
-msgstr ""
+msgid "Please scan the code"
+msgstr "Zoskenujte kód"
 
-#: src/control/Signing.js:450
+#: src/control/Signing.js:242
+msgid "Couldn't get the QR code image."
+msgstr "Nepodarilo sa získať obrázok QR kódu"
+
+#: src/control/Signing.js:269
+msgid "Error when trying to restore access to identity."
+msgstr "Chyba pri pokuse o obnovenie prístupu k identite."
+
+#: src/control/Signing.js:275
+msgid "PIN Code"
+msgstr "PIN kód"
+
+#: src/control/Signing.js:276
+msgid "Please enter the PIN code from the EMail or SMS"
+msgstr "Vložte PIN kód z Emailu alebo SMS"
+
+#: src/control/Signing.js:296
+msgid "Login from email or mobile number"
+msgstr "Prihlásiť sa z e-mailu nebo mobilného čísla"
+
+#: src/control/Signing.js:329
+msgid "Select document type to upload"
+msgstr "Vybrať typ dokumentu na nahratie"
+
+#: src/control/Signing.js:330
+msgid "Type:"
+msgstr "Typ:"
+
+#: src/control/Signing.js:361 src/control/Signing.js:660
+msgid "Document uploaded."
+msgstr "Dokument nahraný."
+
+#: src/control/Signing.js:488
+msgid "Select identity:"
+msgstr "Vyberať identitu:"
+
+#: src/control/Signing.js:489
+msgid "Login from mobile"
+msgstr "Prihlásenie z mobilu"
+
+#: src/control/Signing.js:490
+msgid "Recover from email"
+msgstr "Obnova z e-mailu"
+
+#: src/control/Signing.js:598
+msgid "Select passport"
+msgstr "Zvoliť heslo"
+
+#: src/control/Signing.js:599
+msgid "Passport: N/A"
+msgstr "Heslo: N/A"
+
+#: src/control/Signing.js:601
+msgid "Sign"
+msgstr "Podpísať"
+
+#: src/control/Signing.js:603
+msgid "Status:"
+msgstr "Stav:"
+
+#: src/control/Signing.js:604
+msgid "N/A"
+msgstr "N/A"
+
+#: src/control/Signing.js:607
+msgid "Login"
+msgstr "Prihlásiť"
+
+#: src/control/Signing.js:608
+msgid "Close"
+msgstr "Zatvoriť"
+
+#: src/control/Signing.js:616
 msgid "Not Signed"
-msgstr ""
+msgstr "Nepodpísané"
 
-#: src/control/Signing.js:453
-msgid "Document signed and validated."
-msgstr ""
+#: src/control/Signing.js:619
+msgid "This document is digitally signed and the signature is valid."
+msgstr "Tento dokument je elektronicky podpísaný platným podpisom."
 
-#: src/control/Signing.js:454
+#: src/control/Signing.js:620
 msgid "Signed and validated"
-msgstr ""
+msgstr "Podepísané a validované"
 
-#: src/control/Signing.js:457
-msgid "Document signed but signature is broken."
-msgstr ""
+#: src/control/Signing.js:623
+msgid "This document has an invalid signature."
+msgstr "Tento dokument má neplatný podpis."
 
-#: src/control/Signing.js:458
+#: src/control/Signing.js:624
 msgid "Signature broken"
-msgstr ""
+msgstr "Podpis je poškodený"
 
-#: src/control/Signing.js:461
-msgid "Document signed but the document is already modified."
-msgstr ""
+#: src/control/Signing.js:627
+msgid "The signature was valid, but the document has been modified"
+msgstr "Podpis bol platný, ale dokument bol zmenený"
 
-#: src/control/Signing.js:462
+#: src/control/Signing.js:628
 msgid "Signed but document modified"
-msgstr ""
+msgstr "Podepísané, ale dokument bol zmenený"
 
-#: src/control/Signing.js:465
-msgid "Document signed but can not be validated."
-msgstr ""
+#: src/control/Signing.js:631
+msgid "The signature is OK, but the certificate could not be validated."
+msgstr "Podpis je platný, nemožno však overiť certifikát."
 
-#: src/control/Signing.js:466
+#: src/control/Signing.js:632
 msgid "Signed but not validated"
-msgstr ""
+msgstr "Podpísaný, ale nie je validovaný"
 
-#: src/control/Signing.js:469
-msgid "Document signed but not all files are signed."
-msgstr ""
+#: src/control/Signing.js:635
+msgid "The signature is OK, but the document is only partially signed"
+msgstr "Podpis je platný, ale dokument je podpísaný len čiastočne."
 
-#: src/control/Signing.js:470
+#: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
-msgstr ""
+msgstr "Podpísané, ale nie všetky súbory sú podpísané"
 
-#: src/control/Ruler.js:95
+#: src/control/Ruler.js:97
 msgid "Left Margin"
-msgstr ""
+msgstr "Ľavý okraj"
 
-#: src/control/Ruler.js:96
+#: src/control/Ruler.js:98
 msgid "Right Margin"
-msgstr ""
+msgstr "Pravý okraj"
 
-#: src/control/Toolbar.js:75 src/control/Toolbar.js:84
+#: src/control/Toolbar.js:75 src/control/Toolbar.js:87
 msgid "Downloading..."
 msgstr "Preberá sa…"
 
-#: src/control/Toolbar.js:99 src/map/Map.js:1039
+#: src/control/Toolbar.js:103 src/map/Map.js:1171
 msgid "Saving..."
 msgstr "Prebieha ukladanie..."
 
-#: src/control/Toolbar.js:255
+#: src/control/Toolbar.js:114
+msgid "Renaming..."
+msgstr ""
+
+#: src/control/Toolbar.js:278
 msgid "This version of %productName is powered by"
 msgstr "Táto verzia of %productName bola vytvorená"
 
-#: src/core/Socket.js:79
+#: src/core/Socket.js:56
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
@@ -743,37 +774,37 @@ msgstr ""
 "en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
-#: src/core/Socket.js:81
+#: src/core/Socket.js:58
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Vyskytol sa problém s pripojenín k LibreOffice Online :"
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:260
 msgid "Unsupported server version."
 msgstr "Nepodporovaná verzia servera."
 
-#: src/core/Socket.js:329
+#: src/core/Socket.js:323
 msgid "Session terminated by document owner"
 msgstr "Relácia ukončená vlastníkom dokumentu"
 
-#: src/core/Socket.js:333
+#: src/core/Socket.js:327
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Neaktívny dokument - kliknutím myšou dokument opätovne načítať a pokračovať "
 "v úprave "
 
-#: src/core/Socket.js:340
+#: src/core/Socket.js:334
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server sa vypína kvôli údržbe (zmeny budú automaticky uložené)"
 
-#: src/core/Socket.js:344
+#: src/core/Socket.js:338
 msgid "Oops, there is a problem connecting the document"
 msgstr "Nastal problém pri spájaní sa s dokumentom"
 
-#: src/core/Socket.js:348
+#: src/core/Socket.js:342
 msgid "Server is recycling and will be available shortly"
 msgstr "Server bude reštartovaný a o chvíľu bude opäť dostupný"
 
-#: src/core/Socket.js:379
+#: src/core/Socket.js:369
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -781,7 +812,7 @@ msgstr ""
 "Dokument v úložisku bol zmenený. Dokument sa načítava, vaša verzia bude "
 "uložená ako revízia."
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:375
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -789,7 +820,7 @@ msgstr ""
 "Obnovuje se staršia revízia. Všetky neuložené zmeny budú dostupné v histórii "
 "verzií."
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:464
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -797,39 +828,39 @@ msgstr ""
 "Dokument bol zmenený v úložisku. Čo chcete spraviť so svojimi neuloženými "
 "zmenami?"
 
-#: src/core/Socket.js:508
+#: src/core/Socket.js:468
 msgid "Discard"
 msgstr "Zahodiť"
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:473
 msgid "Overwrite"
 msgstr "Prepísať"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:478
 msgid "Save to new file"
 msgstr "Uložiť do nového súboru"
 
-#: src/core/Socket.js:586
+#: src/core/Socket.js:548
 msgid "Document requires password to view."
 msgstr "Na zobrazenie dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:589
+#: src/core/Socket.js:551
 msgid "Document requires password to modify."
 msgstr "Na úpravu dokumentu je potrebné heslo."
 
-#: src/core/Socket.js:591
+#: src/core/Socket.js:553
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Stlačením Zrušiť otvoriť v režime zobrazenia"
 
-#: src/core/Socket.js:595
+#: src/core/Socket.js:557
 msgid "Wrong password provided. Please try again."
 msgstr "Zadané nesprávne heslo, zopakujte."
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:680
 msgid "Connecting..."
 msgstr "Prebieha pripájanie…"
 
-#: src/core/Socket.js:860
+#: src/core/Socket.js:846
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -918,7 +949,16 @@ msgstr ""
 "Nepodarilo sa načítať dokument. Prosím preverte si, či je typ súboru "
 "podporovaný alebo či súbor nie je poškodený, a skúste to znova."
 
-#: src/errormessages.js:26
+#: src/errormessages.js:24
+msgid "Invalid link: '%url'"
+msgstr "Neplatný odkaz: '%url'"
+
+#: src/errormessages.js:25
+#, fuzzy
+msgid "You are leaving the editor, are you sure you want to visit %url?"
+msgstr "Opúšťate editor, naozaj chcete pokračovať?"
+
+#: src/errormessages.js:28
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -927,7 +967,7 @@ msgstr ""
 "Nepodarilo sa načítať dokument. Prosím kontaktujte správcu vášho sieťového "
 "úložiska (%storageserver)."
 
-#: src/errormessages.js:27
+#: src/errormessages.js:29
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -938,12 +978,12 @@ msgstr ""
 "priestoru. Dokument bude ďalej v režime len na čítanie. Ak chcete v práci "
 "pokračovať, kontaktuje prosím administrátora servera (%storageserver)."
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Dokument nemožno uložiť pre expiráciu alebo neplatnosť prístupového tokenu"
 
-#: src/errormessages.js:29
+#: src/errormessages.js:31
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -951,70 +991,69 @@ msgstr ""
 "Dokument nemožno uložiť. Skontrolujte svoje prístupové práva alebo "
 "kontaktujte administrátora servera."
 
-#: src/layer/marker/Annotation.js:201
+#: src/errormessages.js:32
+#, fuzzy
+msgid ""
+"Document cannot be renamed. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"Dokument nemožno uložiť. Skontrolujte svoje prístupové práva alebo "
+"kontaktujte administrátora servera."
+
+#: src/layer/marker/Annotation.js:210
 msgid "Accept change"
 msgstr "Akceptovať zmenu"
 
-#: src/layer/marker/Annotation.js:206
+#: src/layer/marker/Annotation.js:215
 msgid "Reject change"
 msgstr "Odmietnuť zmenu"
 
-#: src/layer/marker/Annotation.js:215
+#: src/layer/marker/Annotation.js:224
 msgid "Open menu"
 msgstr "Otvoriť menu"
 
-#: src/layer/marker/Annotation.js:235 src/layer/tile/TileLayer.js:199
+#: src/layer/marker/Annotation.js:244 src/layer/tile/TileLayer.js:203
 msgid "Reply"
 msgstr "Odpovedať"
 
-#: src/layer/tile/TileLayer.js:193
+#: src/layer/tile/TileLayer.js:197
 msgid "Modify"
 msgstr "Upraviť"
 
-#: src/layer/tile/TileLayer.js:205
+#: src/layer/tile/TileLayer.js:209
 msgid "Remove"
 msgstr "Odstrániť"
 
-#: src/map/Map.js:146
+#: src/map/Map.js:198
 msgid "Initializing..."
 msgstr "Prebieha inicializácia..."
 
-#: src/map/Map.js:911
+#: src/map/Map.js:347
+#, javascript-format
+msgid "%d seconds ago"
+msgstr "pred %d sekundami"
+
+#: src/map/Map.js:350
+#, javascript-format
+msgid "%d minutes ago"
+msgstr "pred %d minútami"
+
+#: src/map/Map.js:1052
 msgid "Inactive document - please click to resume editing"
 msgstr "Neaktívny dokument - na pokračovanie kliknite myšou"
 
-#: src/map/Map.js:1042
+#: src/map/Map.js:1174
 msgid "Loading..."
 msgstr "Načítava sa…"
 
-#: src/map/handler/Map.FileInserter.js:101
+#: src/map/handler/Map.FileInserter.js:105
 msgid "Uploading..."
 msgstr "Načítava sa…"
 
-#: src/map/handler/Map.WOPI.js:275
+#: src/map/handler/Map.WOPI.js:105
+msgid "Creating new file from template..."
+msgstr "Vytvára sa nový súbor zo šablóny..."
+
+#: src/map/handler/Map.WOPI.js:304
 msgid "Creating copy..."
-msgstr ""
-
-#~ msgid "Textwrap"
-#~ msgstr "Obtekanie textu"
-
-#~ msgid "No wrap"
-#~ msgstr "Bez obtekania"
-
-#~ msgid "Page wrap"
-#~ msgstr "Obtekanie strany"
-
-#~ msgid "Wrap anchor only"
-#~ msgstr "Obtekať len ukotvenie"
-
-#~ msgid "Ideal wrap"
-#~ msgstr "Ideálne obtekanie"
-
-#~ msgid "Left wrap"
-#~ msgstr "Obtekanie vľavo"
-
-#~ msgid "Right wrap"
-#~ msgstr "Obtekanie vpravo"
-
-#~ msgid "Wrap through"
-#~ msgstr "Obtekanie cez"
+msgstr "Vytváranie kópie..."

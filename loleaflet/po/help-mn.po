@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:43+0200\n"
+"POT-Creation-Date: 2019-06-02 20:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /mn/libo_online/loleaflet-help-mn.po\n"
-"X-Pootle-Revision: 3202826\n"
+"X-Pootle-Revision: 3847502\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -603,8 +603,9 @@ msgid "Delete to beginning of sentence"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-76
+#, fuzzy
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 msgid "Delete to end of sentence"
@@ -798,8 +799,9 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:128-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:212-93
+#, fuzzy
 msgid "Ctrl + Enter"
-msgstr ""
+msgstr "Ctrl + E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:129-18
 msgid "Column break (in multicolumnar text)"

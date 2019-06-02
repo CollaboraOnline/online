@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 22:43+0200\n"
+"POT-Creation-Date: 2019-06-02 20:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.3.0\n"
 "X-Pootle-Path: /gl/libo_online/loleaflet-help-gl.po\n"
-"X-Pootle-Revision: 2340323\n"
+"X-Pootle-Revision: 3698275\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -165,7 +165,7 @@ msgstr "Ctrl + M"
 #: html/loleaflet-help.html%2Bdiv.div.h2:49-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:170-9
 msgid "Paragraph formatting"
-msgstr "Formato do parágrafo "
+msgstr "Formato do parágrafo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
@@ -787,7 +787,7 @@ msgstr "Ctrl + Maiús. + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
 msgid "Insert non-breaking space"
-msgstr "Inserir espazo non quebrábel "
+msgstr "Inserir espazo non quebrábel"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-70
 msgid "Ctrl + Shift + Space"
