@@ -361,6 +361,11 @@ body {
 		background: url('images/lc_paste.svg') no-repeat center !important;
 }
 
+.loleaflet-ios-context-toolbar {
+	position: absolute;
+	float: none;
+}
+
 .loleaflet-ios-context-table {
 	color: white;
 	font-size: 15px;
