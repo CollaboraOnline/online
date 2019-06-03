@@ -36,7 +36,10 @@ L.Control.ContextToolbar = L.Control.extend({
 	},
 
 	_initLayout: function () {
-		this._container = L.DomUtil.create('div', 'loleaflet-context-toolbar');
+		if (window.ThisIsTheiOSApp)
+			this._container = L.DomUtil.create('div', 'loleaflet-ios-context-toolbar');
+		else
+			this._container = L.DomUtil.create('div', 'loleaflet-context-toolbar');
 
 		var tagTd = 'td',
 		    onUp = 'mouseup',
