@@ -685,6 +685,19 @@ L.Control.Menubar = L.Control.extend({
 						if (index > 0) {
 							self.options.allowedViewModeActions.splice(index, 1);
 						}
+					} else if (self._map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
+						if (id === 'deletepage') {
+							itemState = self._map['stateChangeHandler'].getItemValue('.uno:DeletePage');
+						} else if (id === 'insertpage') {
+							itemState = self._map['stateChangeHandler'].getItemValue('.uno:InsertPage');
+						} else {
+							itemState = self._map['stateChangeHandler'].getItemValue('.uno:DuplicatePage');
+						}
+						if (itemState === 'disabled') {
+							$(aItem).addClass('disabled');
+						} else {
+							$(aItem).removeClass('disabled');
+						}
 					} else {
 						$(aItem).removeClass('disabled');
 					}
