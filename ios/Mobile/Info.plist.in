@@ -573,5 +573,7 @@
     </array>
     <key>NSCameraUsageDescription</key>
     <string>$(PRODUCT_NAME) requires access to the camera in order for you to be able to take images to be inserted while editing a document.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>$(PRODUCT_NAME) requires access to the photo library in order for you to be able to insertt images into documents.</string>
 </dict>
 </plist>
