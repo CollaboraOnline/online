@@ -1223,13 +1223,18 @@ function onSearch() {
 }
 
 function onSearchKeyDown(e) {
+	var entry = L.DomUtil.get('search-input');
 	if ((e.keyCode === 71 && e.ctrlKey) || e.keyCode === 114 || e.keyCode === 13) {
 		if (e.shiftKey) {
-			map.search(L.DomUtil.get('search-input').value, true);
+			map.search(entry.value, true);
 		} else {
-			map.search(L.DomUtil.get('search-input').value);
+			map.search(entry.value);
 		}
 		e.preventDefault();
+	} else if (e.ctrlKey && e.keyCode === 70) {
+		entry.focus();
+		entry.select();
+		e.originalEvent.preventDefault();
 	} else if (e.keyCode === 27) {
 		_cancelSearch();
 	}
