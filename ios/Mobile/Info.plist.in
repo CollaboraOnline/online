@@ -622,6 +622,6 @@
         </dict>
     </array>
     <key>NSCameraUsageDescription</key>
-    <string>$(PRODUCT_NAME) camera use</string>
+    <string>$(PRODUCT_NAME) requires access to the camera in order for you to be able to take images to be inserted while editing a document.</string>
 </dict>
 </plist>
