@@ -95,7 +95,6 @@ using Poco::File;
 using Poco::JSON::Array;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
-using Poco::Runnable;
 using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::Timestamp;
@@ -104,7 +103,6 @@ using Poco::Util::Application;
 
 #ifndef BUILDING_TESTS
 using Poco::Path;
-using Poco::Process;
 #endif
 
 using namespace LOOLProtocol;
