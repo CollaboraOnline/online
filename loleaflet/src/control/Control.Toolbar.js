@@ -1732,6 +1732,9 @@ function onCommandStateChanged(e) {
 		if (_inMobileMode()) {
 			toolbarUp = statusbar;
 		}
+		if (map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
+			toolbarUp = w2ui['presentation-toolbar'];
+		}
 		if (state === 'enabled') {
 			toolbarUp.enable(id);
 		} else {
@@ -1997,6 +2000,24 @@ function onUpdatePermission(e) {
 				toolbar.enable(id);
 			});
 		}
+
+		presentationButtons.forEach(function(id) {
+			if (id === 'deletepage') {
+				var itemState = map['stateChangeHandler'].getItemValue('.uno:DeletePage');
+			} else if (id === 'insertpage') {
+				itemState = map['stateChangeHandler'].getItemValue('.uno:InsertPage');
+			} else if (id === 'duplicatepage') {
+				itemState = map['stateChangeHandler'].getItemValue('.uno:DuplicatePage');
+			} else {
+				itemState = 'enabled';
+			}
+
+			if (itemState === 'enabled') {
+				toolbar.enable(id);
+			} else {
+				toolbar.disable(id);
+			}
+		});
 
 		toolbar = w2ui['actionbar'];
 		if (toolbar) {
