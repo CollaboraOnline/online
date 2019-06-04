@@ -820,6 +820,10 @@ L.Map = L.Evented.extend({
 		this._clipboardContainer.focus();
 	},
 
+	hasFocus: function () {
+		return this._clipboardContainer.hasFocus();
+	},
+
 	setHelpTarget: function(page) {
 		this._helpTarget = page;
 	},
