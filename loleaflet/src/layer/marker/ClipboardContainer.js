@@ -32,12 +32,16 @@ L.ClipboardContainer = L.Layer.extend({
 		               this._map._handleDOMEvent, this._map);
 	},
 
-	focus: function(focus) {
+	focus: function (focus) {
 		if (focus === false) {
 			this._textArea.blur();
 		} else {
 			this._textArea.focus();
 		}
+	},
+
+	hasFocus: function () {
+		return this._textArea === document.activeElement;
 	},
 
 	select: function() {

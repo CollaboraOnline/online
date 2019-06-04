@@ -59,7 +59,7 @@ L.Control.MobileInput = L.Control.extend({
 		}
 	},
 
-	focus: function(focus) {
+	focus: function (focus) {
 		if (this._map._permission !== 'edit') {
 			return;
 		}
@@ -68,6 +68,10 @@ L.Control.MobileInput = L.Control.extend({
 		if (focus !== false) {
 			this._textArea.focus();
 		}
+	},
+
+	hasFocus: function () {
+		return this._textArea === document.activeElement;
 	},
 
 	select: function() {
@@ -87,7 +91,7 @@ L.Control.MobileInput = L.Control.extend({
 	},
 
 	showCursor: function () {
-		if (this._textArea === document.activeElement) {
+		if (this.hasFocus()) {
 			this.onGotFocus();
 		}
 	},
