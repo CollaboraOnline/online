@@ -855,7 +855,7 @@ public:
 /// per process. But for security reasons don't.
 /// However, we could have a loolkit instance
 /// per user or group of users (a trusted circle).
-class Document : public DocumentManagerInterface
+class Document final : public DocumentManagerInterface
 {
 public:
     /// We have two types of password protected documents
