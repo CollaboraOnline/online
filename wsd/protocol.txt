@@ -368,8 +368,7 @@ statechanged: <key>=<value>
     Notifies client of state changed events of <key>.
     Eg: 'statechanged: .uno:Undo=enabled'
 
-textselectioncontent: <content>
-
+textselectioncontent:
     Current selection's content
 
 tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [wid=<wireId>]
@@ -539,6 +538,15 @@ procmemstats: pid=<pid> pss=<pss in kb> dirty=<private dirty in kb>
     Memory information sent periodically to parent process by each of
     the kit processes.
 
+clipboardcontent:
+
+     in reply to a getclipboard: message.
+
+     mime_type\r\n
+     length\r\n
+     <binary selection content>
+     ...
+
 parent -> child
 ===============
 
@@ -546,6 +554,20 @@ child-<sessionId> <Payload Message>
 
     Forwarding message between a parent and its child session.
     The payload message is forwarded to the ChildSession.
+
+child-<sessionId> getclipboard:
+
+     fetches the clipboard for this view and returns
+     a clipboardcontent message.
+
+child-<sessionId> setclipboard:
+
+     Sets the clipboard content for this view.
+
+     mime_type\r\n
+     length\r\n
+     <binary selection content>
+     ...
 
 disconnect
 
@@ -555,6 +577,7 @@ disconnect
 exit
 
     Signals to the child that the process must end and exit.
+
 
 Admin console
 ===============

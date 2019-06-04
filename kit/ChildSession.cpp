@@ -253,6 +253,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "downloadas" ||
                tokens[0] == "getchildid" ||
                tokens[0] == "gettextselection" ||
+               tokens[0] == "getclipboard" ||
+               tokens[0] == "setclipboard" ||
                tokens[0] == "paste" ||
                tokens[0] == "insertfile" ||
                tokens[0] == "key" ||
@@ -295,9 +297,17 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         {
             return getChildId();
         }
-        else if (tokens[0] == "gettextselection")
+        else if (tokens[0] == "gettextselection") // deprecated.
         {
             return getTextSelection(buffer, length, tokens);
+        }
+        else if (tokens[0] == "getclipboard")
+        {
+            return getClipboard(buffer, length, tokens);
+        }
+        else if (tokens[0] == "setclipboard")
+        {
+            return setClipboard(buffer, length, tokens);
         }
         else if (tokens[0] == "paste")
         {
@@ -909,6 +919,60 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
     return true;
 }
 
+bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /* tokens */)
+{
+#if 0
+    // FIXME: re-implement me
+    std::string mimeType;
+
+    if (tokens.size() != 2 ||
+        !getTokenString(tokens[1], "mimetype", mimeType))
+    {
+        sendTextFrame("error: cmd=getbinaryselection kind=syntax");
+        return false;
+    }
+
+    size_t binSize = 0;
+    char* binSelection = nullptr;
+    char *mimeTypeOut = nullptr;
+    {
+        std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+        getLOKitDocument()->setView(_viewId);
+
+        binSelection = getLOKitDocument()->getBinarySelection(mimeType.c_str(), &binSize, &mimeTypeOut);
+    }
+
+    std::string header("clipboardcontent: mimetype=");
+    if (mimeTypeOut)
+        header += mimeTypeOut;
+    header += "\n";
+
+    std::vector<char> output;
+    output.resize(header.size() + binSize);
+    std::memcpy(output.data(), header.c_str(), header.size());
+    if (binSelection)
+        std::memcpy(output.data() + header.size(), binSelection, binSize);
+
+    LOG_TRC("Sending binaryselectioncontent (" << binSize << " bytes) in: " <<
+            mimeType << " out: " << (mimeTypeOut ? mimeTypeOut : ""));
+    sendBinaryFrame(output.data(), output.size());
+    if (binSelection)
+        free(binSelection);
+    if (mimeTypeOut)
+        free (mimeTypeOut);
+
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool ChildSession::setClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /* tokens */)
+{
+    // FIXME: implement me [!] ...
+    return false;
+}
+
 bool ChildSession::paste(const char* buffer, int length, const std::vector<std::string>& tokens)
 {
     std::string mimeType;
@@ -917,6 +981,12 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
     {
         sendTextFrame("error: cmd=paste kind=syntax");
         return false;
+    }
+
+    if (mimeType.find("") == 0)
+    {
+        LOG_TRC("Re-writing garbled mime-type " << mimeType);
+        mimeType = "application/x-openoffice-embed-source-xml;windows_formatname=\"Star Embed Source (XML)\"";
     }
 
     const std::string firstLine = getFirstLine(buffer, length);

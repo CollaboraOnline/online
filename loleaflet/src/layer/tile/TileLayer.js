@@ -2913,6 +2913,7 @@ L.TileLayer = L.GridLayer.extend({
 			];
 		}
 
+		// FIXME: send all of the types we have ... and do a web 'put' with them ...
 		var types = dataTransfer.types;
 		for (var i = 0; i < mimeTypes.length; ++i) {
 			for (var t = 0; t < types.length; ++t) {

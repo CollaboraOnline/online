@@ -2133,7 +2133,12 @@ private:
             else
             {
                 StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
+                if (request.getMethod() == HTTPRequest::HTTP_GET &&
+                    reqPathTokens.count() > 0 && reqPathTokens[0] == "clipboard")
+                {
+                    handleClipboardRequest(request, disposition);
+                }
+                else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
@@ -2297,6 +2302,73 @@ private:
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent capabilities.json successfully.");
+    }
+
+    void handleClipboardRequest(const Poco::Net::HTTPRequest& request, SocketDisposition &disposition)
+    {
+        LOG_DBG("Clipboard request: " << request.getURI());
+
+        Poco::URI requestUri(request.getURI());
+        Poco::URI::QueryParameters params = requestUri.getQueryParameters();
+        std::string serverId, viewId, tag;
+        for (auto it : params)
+        {
+            if (it.first == "ServerId")
+                serverId = it.second;
+            else if (it.first == "ViewId")
+                viewId = it.second;
+            else if (it.first == "Tag")
+                tag = it.second;
+        }
+        LOG_TRC("Clipboard request for us: " << serverId << " with tag " << tag);
+
+        // TODO: check WOPISrc too ...
+        // Lookup WOPISRC [!] ... with DocBroker bits etc. [!] ...
+
+        std::shared_ptr<ClientSession> session;
+        if (serverId == LOOLWSD::HostIdentifier &&
+            (session = ClientSession::getByClipboardHash(tag)))
+        {
+            // Do things in the right thread.
+            auto docBroker = session->getDocumentBroker();
+
+            disposition.setMove([docBroker, session]
+                                (const std::shared_ptr<Socket> &moveSocket)
+                {
+                    // Perform all of this after removing the socket
+
+                    // We no longer own this socket.
+                    moveSocket->setThreadOwner(std::thread::id(0));
+
+                    docBroker->addCallback([docBroker, moveSocket, session]()
+                        {
+                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            session->addClipboardSocket(streamSocket);
+                        });
+                });
+            LOG_TRC("queued binary clipboard content fetch");
+
+        } else {
+            LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag);
+
+            std::string message;
+            if (serverId != LOOLWSD::HostIdentifier)
+                message = "Cluster configuration error: mis-matching serverid " + serverId + " vs. " + LOOLWSD::HostIdentifier;
+            else
+                message = "Empty clipboard item / session tag " + tag;
+
+            // Bad request.
+            std::ostringstream oss;
+            oss << "HTTP/1.1 400\r\n"
+                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n"
+                << message;
+            auto socket = _socket.lock();
+            socket->send(oss.str());
+            socket->shutdown();
+        }
     }
 
     void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request)
