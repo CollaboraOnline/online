@@ -583,7 +583,10 @@ L.TileLayer = L.GridLayer.extend({
 		    encodeURIComponent(this._map.options.doc) + '/' + command.jail + '/' + command.dir + '/' + command.name + wopiSrc;
 
 		this._map.hideBusy();
-		if (command.id === 'print') {
+		if (this._map['wopi'].DownloadAsPostMessage) {
+			this._map.fire('postMessage', {msgId: 'Download_As', args: {Type: command.id, URL: url}});
+		}
+		else if (command.id === 'print') {
 			if (L.Browser.gecko || L.Browser.edge || this._map.options.print === false) {
 				// the print dialog doesn't work well on firefox
 				// due to a pdf.js issue - https://github.com/mozilla/pdf.js/issues/5397

@@ -322,6 +322,7 @@ public:
                      const bool disableExport,
                      const bool disableCopy,
                      const bool disableInactiveMessages,
+                     const bool downloadAsPostMessage,
                      const bool userCanNotWriteRelative,
                      const bool enableInsertRemoteImage,
                      const bool enableShare,
@@ -347,6 +348,7 @@ public:
               _disableExport(disableExport),
               _disableCopy(disableCopy),
               _disableInactiveMessages(disableInactiveMessages),
+              _downloadAsPostMessage(downloadAsPostMessage),
               _userCanNotWriteRelative(userCanNotWriteRelative),
               _enableInsertRemoteImage(enableInsertRemoteImage),
               _enableShare(enableShare),
@@ -394,6 +396,8 @@ public:
         bool getDisableCopy() const { return _disableCopy; }
 
         bool getDisableInactiveMessages() const { return _disableInactiveMessages; }
+
+        bool getDownloadAsPostMessage() const { return _downloadAsPostMessage; }
 
         bool getUserCanNotWriteRelative() const { return _userCanNotWriteRelative; }
 
@@ -448,6 +452,8 @@ public:
         bool _disableCopy;
         /// If WOPI host has allowed the loleaflet to show texts on the overlay informing about inactivity, or if the integration is handling that.
         bool _disableInactiveMessages;
+        /// For the (mobile) integrations, to indicate that the downloading for printing, exporting or slideshows should be intercepted and sent as a postMessage instead of handling directly.
+        bool _downloadAsPostMessage;
         /// If set to false, users can access the save-as functionality
         bool _userCanNotWriteRelative;
         /// If set to true, users can access the insert remote image functionality
