@@ -2540,7 +2540,6 @@ private:
                                 + JAILED_DOCUMENT_ROOT + tokens[4] + "/" + fileName);
             const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath.toString());
             LOG_INF("HTTP request for: " << filePathAnonym);
-            bool responded = false;
             if (filePath.isAbsolute() && File(filePath).exists())
             {
                 const Poco::URI postRequestUri(request.getURI());
@@ -2565,7 +2564,6 @@ private:
                 try
                 {
                     HttpHelper::sendFile(socket, filePath.toString(), contentType, response);
-                    responded = true;
                 }
                 catch (const Exception& exc)
                 {
@@ -2578,8 +2576,15 @@ private:
             else
             {
                 LOG_ERR("Download file [" << filePathAnonym << "] not found.");
+                std::ostringstream oss;
+                oss << "HTTP/1.1 404 Not Found\r\n"
+                    << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                    << "User-Agent: " << HTTP_AGENT_STRING << "\r\n"
+                    << "Content-Length: 0\r\n"
+                    << "\r\n";
+                socket->send(oss.str());
+                socket->shutdown();
             }
-            (void)responded;
             return;
         }
 
