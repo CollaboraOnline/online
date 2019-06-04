@@ -11,36 +11,13 @@ L.Map.CalcTap = L.Handler.extend({
 		}
 
 		if (!this._hammer) {
-			this._hammer = new Hammer(this._map._container);
+			this._hammer = new Hammer(this._map._mapPane);
 			this._hammer.get('swipe').set({
 				direction: Hammer.DIRECTION_ALL
 			});
 			this._hammer.get('pan').set({
 				direction: Hammer.DIRECTION_ALL
 			});
-
-			/*FIXME the sidebar shows after double tap*/
-			/*this._hammer = new Hammer.Manager(this._map._container, {
-				touchAction: 'none'
-			});
-
-			/*this._hammer.add(new Hammer.Tap({
-				event: 'doubletap',
-				taps: 2
-			}));
-			this._hammer.add(new Hammer.Press());
-			this._hammer.add(new Hammer.Tap());
-			this._hammer.add(new Hammer.Pan({
-				direction: Hammer.DIRECTION_ALL,
-				threshold: 10,
-				pointers: 1
-			}));
-			this._hammer.add(new Hammer.Swipe({
-				direction: Hammer.DIRECTION_ALL,
-				threshold: 5,
-				pointers: 1,
-				velocity: 0.3
-			}));*/
 		}
 		this._hammer.on('hammer.input', L.bind(this._onHammer, this));
 		this._hammer.on('tap', L.bind(this._onTap, this));
@@ -49,7 +26,7 @@ L.Map.CalcTap = L.Handler.extend({
 	},
 
 	removeHooks: function () {
-		//this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
+		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
 		this._hammer.off('press', L.bind(this._onPress, this));
 		this._hammer.off('tap', L.bind(this._onTap, this));
 		this._hammer.off('swipe', L.bind(this._onSwipe, this));
@@ -60,13 +37,13 @@ L.Map.CalcTap = L.Handler.extend({
 
 	_onPermission: function (e) {
 		if (e.perm == 'edit') {
-			//this._hammer.on('doubletap', L.bind(this._onDoubleTap, this));
+			this._hammer.on('doubletap', L.bind(this._onDoubleTap, this));
 			this._hammer.on('press', L.bind(this._onPress, this));
 			this._hammer.on('panstart', L.bind(this._onPanStart, this));
 			this._hammer.on('pan', L.bind(this._onPan, this));
 			this._hammer.on('panend', L.bind(this._onPanEnd, this));
 		} else {
-			//this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
+			this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
 			this._hammer.off('press', L.bind(this._onPress, this));
 			this._hammer.off('panstart', L.bind(this._onPanStart, this));
 			this._hammer.off('pan', L.bind(this._onPan, this));
@@ -75,7 +52,8 @@ L.Map.CalcTap = L.Handler.extend({
 	},
 
 	_onHammer: function (e) {
-		e.preventDefault();
+		L.DomEvent.preventDefault(e.srcEvent);
+		L.DomEvent.stopPropagation(e.srcEvent);
 	},
 
 	_onPress: function (e) {
@@ -99,7 +77,6 @@ L.Map.CalcTap = L.Handler.extend({
 
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
-		this._map.focus();
 	},
 
 	_onDoubleTap: function (e) {
@@ -109,8 +86,8 @@ L.Map.CalcTap = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
-		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
+		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map.focus();
 	},
 
@@ -142,7 +119,6 @@ L.Map.CalcTap = L.Handler.extend({
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
-		this._map.focus();
 	},
 
 	_onSwipe: function (e) {
