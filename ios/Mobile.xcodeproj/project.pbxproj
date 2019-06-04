@@ -1050,6 +1050,20 @@
 		BEB6524E216FD0CA00B8C09A /* stream.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stream.cxx; path = "../../ios-device/tools/source/stream/stream.cxx"; sourceTree = "<group>"; };
 		BEB6524F216FD0CA00B8C09A /* strmwnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmwnt.cxx; path = "../../ios-device/tools/source/stream/strmwnt.cxx"; sourceTree = "<group>"; };
 		BEB65250216FD0CA00B8C09A /* strmunx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmunx.cxx; path = "../../ios-device/tools/source/stream/strmunx.cxx"; sourceTree = "<group>"; };
+		BEEC453022A68111008E9F6C /* graphic.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphic.cxx; path = "../../ios-device/svtools/source/graphic/graphic.cxx"; sourceTree = "<group>"; };
+		BEEC453122A68112008E9F6C /* grfattr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grfattr.cxx; path = "../../ios-device/svtools/source/graphic/grfattr.cxx"; sourceTree = "<group>"; };
+		BEEC453222A68112008E9F6C /* descriptor.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = descriptor.hxx; path = "../../ios-device/svtools/source/graphic/descriptor.hxx"; sourceTree = "<group>"; };
+		BEEC453322A68112008E9F6C /* renderer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = renderer.cxx; path = "../../ios-device/svtools/source/graphic/renderer.cxx"; sourceTree = "<group>"; };
+		BEEC453422A68112008E9F6C /* graphicunofactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicunofactory.cxx; path = "../../ios-device/svtools/source/graphic/graphicunofactory.cxx"; sourceTree = "<group>"; };
+		BEEC453522A68112008E9F6C /* grfcache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grfcache.cxx; path = "../../ios-device/svtools/source/graphic/grfcache.cxx"; sourceTree = "<group>"; };
+		BEEC453622A68112008E9F6C /* descriptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = descriptor.cxx; path = "../../ios-device/svtools/source/graphic/descriptor.cxx"; sourceTree = "<group>"; };
+		BEEC453722A68112008E9F6C /* grfmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grfmgr.cxx; path = "../../ios-device/svtools/source/graphic/grfmgr.cxx"; sourceTree = "<group>"; };
+		BEEC453822A68112008E9F6C /* grfmgr2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grfmgr2.cxx; path = "../../ios-device/svtools/source/graphic/grfmgr2.cxx"; sourceTree = "<group>"; };
+		BEEC453922A68112008E9F6C /* graphic.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = graphic.hxx; path = "../../ios-device/svtools/source/graphic/graphic.hxx"; sourceTree = "<group>"; };
+		BEEC453A22A68112008E9F6C /* provider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = provider.cxx; path = "../../ios-device/svtools/source/graphic/provider.cxx"; sourceTree = "<group>"; };
+		BEEC453B22A68112008E9F6C /* grfcache.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = grfcache.hxx; path = "../../ios-device/svtools/source/graphic/grfcache.hxx"; sourceTree = "<group>"; };
+		BEEC453C22A68112008E9F6C /* transformer.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = transformer.hxx; path = "../../ios-device/svtools/source/graphic/transformer.hxx"; sourceTree = "<group>"; };
+		BEEC453D22A68112008E9F6C /* transformer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transformer.cxx; path = "../../ios-device/svtools/source/graphic/transformer.cxx"; sourceTree = "<group>"; };
 		BEF7F1B22236AFF700CB3AEA /* octree.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = octree.cxx; path = "../../ios-device/vcl/source/gdi/octree.cxx"; sourceTree = "<group>"; };
 		BEF7F1B32236AFF700CB3AEA /* salmisc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salmisc.cxx; path = "../../ios-device/vcl/source/gdi/salmisc.cxx"; sourceTree = "<group>"; };
 		BEF7F1B42236AFF700CB3AEA /* hatch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hatch.cxx; path = "../../ios-device/vcl/source/gdi/hatch.cxx"; sourceTree = "<group>"; };
@@ -2044,6 +2058,7 @@
 			isa = PBXGroup;
 			children = (
 				BE7E6826229DAA9900DE73C8 /* misc */,
+				BEEC452F22A680F6008E9F6C /* graphic */,
 			);
 			name = svtools;
 			sourceTree = "<group>";
@@ -2647,6 +2662,27 @@
 				BEB6524D216FD0CA00B8C09A /* vcompat.cxx */,
 			);
 			name = stream;
+			sourceTree = "<group>";
+		};
+		BEEC452F22A680F6008E9F6C /* graphic */ = {
+			isa = PBXGroup;
+			children = (
+				BEEC453622A68112008E9F6C /* descriptor.cxx */,
+				BEEC453222A68112008E9F6C /* descriptor.hxx */,
+				BEEC453022A68111008E9F6C /* graphic.cxx */,
+				BEEC453922A68112008E9F6C /* graphic.hxx */,
+				BEEC453422A68112008E9F6C /* graphicunofactory.cxx */,
+				BEEC453122A68112008E9F6C /* grfattr.cxx */,
+				BEEC453522A68112008E9F6C /* grfcache.cxx */,
+				BEEC453B22A68112008E9F6C /* grfcache.hxx */,
+				BEEC453722A68112008E9F6C /* grfmgr.cxx */,
+				BEEC453822A68112008E9F6C /* grfmgr2.cxx */,
+				BEEC453A22A68112008E9F6C /* provider.cxx */,
+				BEEC453322A68112008E9F6C /* renderer.cxx */,
+				BEEC453D22A68112008E9F6C /* transformer.cxx */,
+				BEEC453C22A68112008E9F6C /* transformer.hxx */,
+			);
+			name = graphic;
 			sourceTree = "<group>";
 		};
 		BEF7F1B12236AFCC00CB3AEA /* gdi */ = {
