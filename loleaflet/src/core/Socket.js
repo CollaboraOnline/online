@@ -763,18 +763,8 @@ L.Socket = L.Class.extend({
 						this._map.removeHandler('tap');
 						this._map.removeHandler('mouse');
 						this._map.removeHandler('touchZoom');
-						if (this._map.dragging.enabled()) {
-							this._map.dragging.disable();
-							L.Draggable.START = ['mousedown'];
-							L.Draggable.MOVE = {mousedown: 'mousemove'};
-							L.Draggable.END = {mousedown: 'mouseup'};
-							this._map.dragging.enable();
-						}
-						else {
-							L.Draggable.START = ['mousedown'];
-							L.Draggable.MOVE = {mousedown: 'mousemove'};
-							L.Draggable.END = {mousedown: 'mouseup'};
-						}
+						this._map.dragging.disable();
+						this._map.dragging._draggable._manualDrag = true;
 						L.DomEvent.off(this._map._container, 'mousedown mouseup mouseover mouseout mousemove click dblclick trplclick qdrplclick dragover drop scroll', this._map._handleDOMEvent, this._map);
 						this._map.addHandler('touchCalc', L.Map.CalcTap);
 						this._map.touchCalc.enable();
