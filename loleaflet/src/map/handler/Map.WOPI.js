@@ -19,6 +19,7 @@ L.Map.WOPI = L.Handler.extend({
 	DisableExport: false,
 	DisableCopy: false,
 	DisableInactiveMessages: false,
+	DownloadAsPostMessage: false,
 	UserCanNotWriteRelative: true,
 	EnableInsertRemoteImage: false,
 	EnableShare: false,
@@ -83,6 +84,7 @@ L.Map.WOPI = L.Handler.extend({
 		this.DisableExport = !!wopiInfo['DisableExport'];
 		this.DisableCopy = !!wopiInfo['DisableCopy'];
 		this.DisableInactiveMessages = !!wopiInfo['DisableInactiveMessages'];
+		this.DownloadAsPostMessage = !!wopiInfo['DownloadAsPostMessage'];
 		this.UserCanNotWriteRelative = !!wopiInfo['UserCanNotWriteRelative'];
 		this.EnableInsertRemoteImage = !!wopiInfo['EnableInsertRemoteImage'];
 		this.SupportsRename = !!wopiInfo['SupportsRename'];

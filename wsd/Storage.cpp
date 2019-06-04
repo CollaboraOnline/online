@@ -495,6 +495,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     bool disableExport = false;
     bool disableCopy = false;
     bool disableInactiveMessages = false;
+    bool downloadAsPostMessage = false;
     std::string lastModifiedTime;
     bool userCanNotWriteRelative = true;
     bool enableInsertRemoteImage = false;
@@ -582,6 +583,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "DisableExport", disableExport);
         JsonUtil::findJSONValue(object, "DisableCopy", disableCopy);
         JsonUtil::findJSONValue(object, "DisableInactiveMessages", disableInactiveMessages);
+        JsonUtil::findJSONValue(object, "DownloadAsPostMessage", downloadAsPostMessage);
         JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
         JsonUtil::findJSONValue(object, "UserCanNotWriteRelative", userCanNotWriteRelative);
         JsonUtil::findJSONValue(object, "EnableInsertRemoteImage", enableInsertRemoteImage);
@@ -616,7 +618,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, canWrite,
          postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
          enableOwnerTermination, disablePrint, disableExport, disableCopy,
-         disableInactiveMessages, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,
+         disableInactiveMessages, downloadAsPostMessage, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,
          hideUserList, disableChangeTrackingShow, disableChangeTrackingRecord,
          hideChangeTrackingControls, supportsRename, userCanRename, callDuration}));
 }

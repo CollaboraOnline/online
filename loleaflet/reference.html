@@ -3240,6 +3240,24 @@ Note that they usually don't change but there is no guarantee that they are stab
 		</td>
 	</tr>
 	<tr>
+		<td><code><b>Download_As</b></code></td>
+		<td><code>
+			<nobr>Type: 'print'|'slideshow'|'export'</nobr><br/>
+			<nobr>URL: &lt;string&gt;</nobr><br/>
+		</code></td>
+		<td>
+		  This event is emitted when the user chooses 'Print' or 'Show
+		  slideshow' or 'Download As [some type'] and the integration
+		  indicates via DownloadAsPostMessage in the CheckFileInfo that it
+		  wants to handle the downloading of pdf for printing or svg for
+		  slideshows or experted document.
+
+		  This is in situations when the integration cannot rely on browser's
+		  support for downloading like in mobile apps that use the Online in
+		  a WebView.
+		</td>
+	</tr>
+	<tr>
 		<td><code><b>UI_CreateFile</b></code></td>
 		<td></td>
 		<td>

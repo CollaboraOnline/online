@@ -98,6 +98,13 @@ Disables copying from the document in libreoffice online backend. Pasting into t
 ### DisableInactiveMessages
 Disables displaying of the explanation text on the overlay when the document becomes inactive or killed.  With this, the JS integration must provide the user with appropriate message when it gets Session_Closed or User_Idle postMessage's.
 
+### DownloadAsPostMessage
+Indicate that the integration wants to handle the downloading of pdf for printing or svg for slideshows or experted document, because it cannot rely on browser's support for downloading.
+
+When this is set to true, the user's eg. Print action will trigger a postMessage called Download_As, with the following JSON in the Values:
+
+    { Type: 'print'|'slideshow'|'export', URL: ...url you use for the actual downloading... }
+
 ### EnableOwnerTermination
 If set to true, it allows the document owner (the one with OwnerId =UserId) to send a 'closedocument' message (see protocol.txt)
 
