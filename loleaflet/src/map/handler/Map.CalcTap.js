@@ -21,6 +21,9 @@ L.Map.CalcTap = L.Handler.extend({
 		}
 		this._hammer.on('hammer.input', L.bind(this._onHammer, this));
 		this._hammer.on('tap', L.bind(this._onTap, this));
+		this._hammer.on('panstart', L.bind(this._onPanStart, this));
+		this._hammer.on('pan', L.bind(this._onPan, this));
+		this._hammer.on('panend', L.bind(this._onPanEnd, this));
 		this._map.on('updatepermission', this._onPermission, this);
 	},
 
@@ -37,15 +40,9 @@ L.Map.CalcTap = L.Handler.extend({
 		if (e.perm == 'edit') {
 			this._hammer.on('doubletap', L.bind(this._onDoubleTap, this));
 			this._hammer.on('press', L.bind(this._onPress, this));
-			this._hammer.on('panstart', L.bind(this._onPanStart, this));
-			this._hammer.on('pan', L.bind(this._onPan, this));
-			this._hammer.on('panend', L.bind(this._onPanEnd, this));
 		} else {
 			this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
 			this._hammer.off('press', L.bind(this._onPress, this));
-			this._hammer.off('panstart', L.bind(this._onPanStart, this));
-			this._hammer.off('pan', L.bind(this._onPan, this));
-			this._hammer.off('panend', L.bind(this._onPanEnd, this));
 		}
 	},
 
