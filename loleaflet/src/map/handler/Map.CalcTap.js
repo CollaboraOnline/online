@@ -21,7 +21,6 @@ L.Map.CalcTap = L.Handler.extend({
 		}
 		this._hammer.on('hammer.input', L.bind(this._onHammer, this));
 		this._hammer.on('tap', L.bind(this._onTap, this));
-		this._hammer.on('swipe', L.bind(this._onSwipe, this));
 		this._map.on('updatepermission', this._onPermission, this);
 	},
 
@@ -29,7 +28,6 @@ L.Map.CalcTap = L.Handler.extend({
 		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
 		this._hammer.off('press', L.bind(this._onPress, this));
 		this._hammer.off('tap', L.bind(this._onTap, this));
-		this._hammer.off('swipe', L.bind(this._onSwipe, this));
 		this._hammer.off('panstart', L.bind(this._onPanStart, this));
 		this._hammer.off('pan', L.bind(this._onPan, this));
 		this._hammer.off('panend', L.bind(this._onPanEnd, this));
@@ -73,6 +71,7 @@ L.Map.CalcTap = L.Handler.extend({
 			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
 		}
 
+		this._cellSelections = false;
 		e.preventDefault();
 	},
 
@@ -86,6 +85,7 @@ L.Map.CalcTap = L.Handler.extend({
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+		this._cellSelections = false;
 	},
 
 	_onDoubleTap: function (e) {
@@ -110,7 +110,12 @@ L.Map.CalcTap = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
+		if (this._map._docLayer._cellCursor.contains(latlng)) {
+			this._cellSelections = true;
+			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
+		} else {
+			this._map.dragging._draggable._onDown(this._constructFakeEvent(point, 'mousedown'));
+		}
 	},
 
 	_onPan: function (e) {
@@ -120,7 +125,11 @@ L.Map.CalcTap = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._map._docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 1, 0);
+		if (this._cellSelections) {
+			this._map._docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 1, 0);
+		} else {
+			this._map.dragging._draggable._onMove(this._constructFakeEvent(point, 'mousemove'));
+		}
 	},
 
 	_onPanEnd: function (e) {
@@ -130,14 +139,17 @@ L.Map.CalcTap = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+		if (this._cellSelections) {
+			this._cellSelections = false;
+			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+		} else {
+			this._map.dragging._draggable._onUp(this._constructFakeEvent(point, 'mouseup'));
+		}
 	},
 
-	_onSwipe: function (e) {
-		var evt = e.pointers[0];
-
-		var iniEvent = {
-			type: 'mousedown',
+	_constructFakeEvent: function (evt, type) {
+		var fakeEvt = {
+			type: type,
 			canBubble: false,
 			cancelable: true,
 			screenX: evt.screenX,
@@ -153,26 +165,6 @@ L.Map.CalcTap = L.Handler.extend({
 			preventDefault: function () {}
 		};
 
-		var endEvent = {
-			type: 'mousemove',
-			canBubble: false,
-			cancelable: true,
-			screenX: evt.screenX,
-			screenY: evt.screenY,
-			clientX: evt.clientX + e.deltaX,
-			clientY: evt.clientY + e.deltaY,
-			ctrlKey: false,
-			altKey: false,
-			shiftKey: false,
-			metaKey: false,
-			button: 0,
-			target: evt.target,
-			preventDefault: function () {}
-		};
-
-		this._map.dragging._draggable._onDown(iniEvent);
-		this._map.dragging._draggable._moved = true;
-		this._map.dragging._draggable._onMove(endEvent);
-		setTimeout(L.bind(this._map.dragging._draggable._onUp, this._map.dragging._draggable, endEvent), 0);
+		return fakeEvt;
 	}
 });
