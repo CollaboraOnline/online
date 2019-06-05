@@ -822,21 +822,16 @@ L.TileLayer = L.GridLayer.extend({
 			this._resetSelectionRanges();
 		}
 		else if (textMsg.match('INPLACE EXIT')) {
-			if (this._map.focusLayer) {
-				this._map.removeLayer(this._map.focusLayer);
-				this._map.focusLayer = null;
-			}
+			this._map.removeObjectFocusDarkOverlay();
 		}
 		else if (textMsg.match('INPLACE')) {
-			if (!this._map.focusLayer) {
-				this._map.focusLayer = new L.ObjectFocusDarkOverlay().addTo(this._map);
-
+			if (!this._map.hasObjectFocusDarkOverlay()) {
 				var xTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthWest()).x;
 				var yTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthWest()).y;
 				var wTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthEast()).x - xTwips;
 				var hTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthEast()).y - yTwips;
 
-				this._map.focusLayer.show({x: xTwips, y: yTwips, w: wTwips, h: hTwips});
+				this._map.addObjectFocusDarkOverlay(xTwips, yTwips, wTwips, hTwips);
 
 				this._graphicSelection = null;
 				this._onUpdateGraphicSelection();
