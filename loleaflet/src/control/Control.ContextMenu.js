@@ -50,6 +50,7 @@ L.Control.ContextMenu = L.Control.extend({
 	onAdd: function (map) {
 		this._prevMousePos = null;
 
+		map._contextMenu = this;
 		map.on('locontextmenu', this._onContextMenu, this);
 		map.on('mousedown', this._onMouseDown, this);
 		map.on('keydown', this._onKeyDown, this);
