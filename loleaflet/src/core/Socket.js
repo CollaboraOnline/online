@@ -761,6 +761,7 @@ L.Socket = L.Class.extend({
 					if (L.Browser.touch && !L.Browser.pointer) {
 						this._map.options.inertia = false;
 						this._map.removeHandler('tap');
+						this._map.removeHandler('mouse');
 						this._map.removeHandler('touchZoom');
 						if (this._map.dragging.enabled()) {
 							this._map.dragging.disable();

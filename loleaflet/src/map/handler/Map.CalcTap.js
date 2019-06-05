@@ -61,10 +61,11 @@ L.Map.CalcTap = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (this._map._docLayer.containsSelection(latlng)) {
+		if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
 			this._toolbar._pos = containerPoint;
 			this._toolbar.addTo(this._map);
 		} else {
+			this._toolbar.remove();
 			this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 			// send right click to trigger context menus
 			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
@@ -82,6 +83,7 @@ L.Map.CalcTap = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
+		this._toolbar.remove();
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
