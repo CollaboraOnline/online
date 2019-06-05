@@ -21,8 +21,9 @@
 	<redlining_as_comments desc="If true show red-lines as comments" type="bool" default="true">true</redlining_as_comments>
         <idle_timeout_secs desc="The maximum number of seconds before unloading an idle document. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
         <!-- Idle save and auto save are checked every 30 seconds -->
-        <idlesave_duration_secs desc="The number of idle seconds after which document, if modified, should be saved. Defaults to 30 seconds." type="uint" default="30">30</idlesave_duration_secs>
-        <autosave_duration_secs desc="The number of seconds after which document, if modified, should be saved. Defaults to 5 minutes." type="uint" default="300">300</autosave_duration_secs>
+        <!-- They are disabled when the value is zero or negative. -->
+        <idlesave_duration_secs desc="The number of idle seconds after which document, if modified, should be saved. Defaults to 30 seconds." type="int" default="30">30</idlesave_duration_secs>
+        <autosave_duration_secs desc="The number of seconds after which document, if modified, should be saved. Defaults to 5 minutes." type="int" default="300">300</autosave_duration_secs>
         <limit_virt_mem_kb desc="The maximum virtual memory allowed to each document process. 0 for unlimited, 1700 min." type="uint">0</limit_virt_mem_kb>
         <limit_data_mem_kb desc="The maximum memory data segment allowed to each document process. 0 for unlimited." type="uint">0</limit_data_mem_kb>
         <limit_stack_mem_kb desc="The maximum stack size allowed to each document process. 0 for unlimited." type="uint">8000</limit_stack_mem_kb>

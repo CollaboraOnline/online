@@ -1022,9 +1022,18 @@ bool DocumentBroker::autoSave(const bool force)
 
         static const int idleSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30) * 1000;
         static const int autoSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300) * 1000;
+        bool save = false;
+        // Zero or negative config value disables save.
         // Either we've been idle long enough, or it's auto-save time.
-        if (inactivityTimeMs >= idleSaveDurationMs ||
-            timeSinceLastSaveMs >= autoSaveDurationMs)
+        if (idleSaveDurationMs > 0 && inactivityTimeMs >= idleSaveDurationMs)
+        {
+            save = true;
+        }
+        if (autoSaveDurationMs > 0 && timeSinceLastSaveMs >= autoSaveDurationMs)
+        {
+            save = true;
+        }
+        if (save)
         {
             LOG_TRC("Sending timed save command for [" << _docKey << "].");
             sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
