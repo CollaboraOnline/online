@@ -38,6 +38,7 @@ L.Map.Mouse = L.Handler.extend({
 	},
 
 	_onMouseEvent: function (e) {
+		this._map.notifyActive();
 		var docLayer = this._map._docLayer;
 		if (!docLayer || (this._map.slideShow && this._map.slideShow.fullscreen) || this._map.rulerActive) {
 			return;

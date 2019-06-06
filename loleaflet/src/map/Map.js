@@ -1064,6 +1064,10 @@ L.Map = L.Evented.extend({
 		this._socket.sendMessage('userinactive');
 	},
 
+	notifyActive : function() {
+		this.lastActiveTime = Date.now();
+	},
+
 	_dimIfInactive: function () {
 		console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
 		if (this._docLoaded && // don't dim if document hasn't been loaded yet
@@ -1187,9 +1191,9 @@ L.Map = L.Evented.extend({
 	},
 
 	_handleDOMEvent: function (e) {
-		if (!this._docLayer || !this._loaded || !this._enabled || L.DomEvent._skipped(e)) { return; }
+		this.notifyActive();
 
-		this.lastActiveTime = Date.now();
+		if (!this._docLayer || !this._loaded || !this._enabled || L.DomEvent._skipped(e)) { return; }
 
 		// find the layer the event is propagating from
 		var target = this._targets[L.stamp(e.target || e.srcElement)],
