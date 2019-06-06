@@ -3,7 +3,7 @@
  * L.Map.CalcTap is used to enable mobile taps.
  */
 
-/* global Hammer */
+/* global Hammer $ */
 L.Map.CalcTap = L.Handler.extend({
 	addHooks: function () {
 		if (!this._toolbar) {
@@ -25,6 +25,19 @@ L.Map.CalcTap = L.Handler.extend({
 		this._hammer.on('pan', L.bind(this._onPan, this));
 		this._hammer.on('panend', L.bind(this._onPanEnd, this));
 		this._map.on('updatepermission', this._onPermission, this);
+
+		/// $.contextMenu does not support touch events so,
+		/// attach 'touchend' menu clicks event handler
+		if (this._hammer.input instanceof Hammer.TouchInput) {
+			var $doc = $(document);
+			$doc.on('touchend.contextMenu', '.context-menu-item', function (e) {
+				var $elem = $(this);
+
+				if ($elem.data().contextMenu.selector === '.leaflet-layer') {
+					$.contextMenu.handle.itemClick.apply(this, [e]);
+				}
+			});
+		}
 	},
 
 	removeHooks: function () {
