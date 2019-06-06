@@ -170,7 +170,7 @@ L.Map.WOPI = L.Handler.extend({
 				console.error('Property "Values.id" not set');
 				return;
 			}
-			var toolbar = w2ui['editbar'];
+			var toolbar = w2ui['toolbar-up'] ? w2ui['toolbar-up'] : (w2ui['actionbar'] ? w2ui['actionbar'] : w2ui['editbar']);
 			if (!toolbar || !toolbar.get(msg.Values.id)) {
 				console.error('Toolbar button with id "' + msg.Values.id + '" not found.');
 				return;
