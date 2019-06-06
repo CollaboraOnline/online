@@ -18,10 +18,12 @@ public class LibreOfficeApplication extends Application {
     private static Handler mainHandler;
 
     public LibreOfficeApplication() {
-        mainHandler = new Handler();
     }
 
     public static Handler getMainHandler() {
+        if (mainHandler == null)
+            mainHandler = new Handler();
+
         return mainHandler;
     }
 
