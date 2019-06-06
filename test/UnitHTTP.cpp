@@ -84,7 +84,7 @@ public:
         }
     }
 
-    void writeString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, std::string str)
+    void writeString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, const std::string& str)
     {
         socket->sendBytes(str.c_str(), str.size());
     }
