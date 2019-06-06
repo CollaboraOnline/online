@@ -234,6 +234,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onMouseDown: function () {
+		this._map.notifyActive();
 		if (this._map._permission === 'edit') {
 			return;
 		}
@@ -246,6 +247,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onKeyDown: function (e, keyEventFn, compEventFn, inputEle) {
+		this._map.notifyActive();
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
 		}
@@ -399,6 +401,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_onIME: function (e) {
+		this._map.notifyActive();
 		if (e.type === 'compositionstart') {
 			this._isComposing = true; // we are starting composing with IME
 		} else if (e.type === 'compositionupdate') {
