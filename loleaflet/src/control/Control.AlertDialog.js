@@ -66,7 +66,7 @@ L.Control.AlertDialog = L.Control.extend({
 				showCloseButton: true,
 				buttons: buttonsList,
 				callback: function() {},
-				beforeClose: function () {
+				afterClose: function () {
 					e.map.focus();
 					e.map.enable(true);
 				}
