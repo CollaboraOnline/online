@@ -254,9 +254,10 @@ public:
     /// Save the document if the document is modified.
     /// @param force when true, will force saving if there
     /// has been any recent activity after the last save.
+    /// @param dontSaveIfUnmodified when true, save will fail if the document is not modified.
     /// @return true if attempts to save or it also waits
     /// and receives save notification. Otherwise, false.
-    bool autoSave(const bool force);
+    bool autoSave(const bool force, const bool dontSaveIfUnmodified = true);
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     const std::string& getJailId() const { return _jailId; }
