@@ -229,6 +229,31 @@ L.Map.WOPI = L.Handler.extend({
 				w2ui['editbar'].hide(msg.Values.id);
 			}
 		}
+		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
+			if (!msg.Values) {
+				console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				console.error('Property "Values.id" not set');
+				return;
+			}
+			if (this._map._permission !== 'edit') {
+				console.log('Readonly mode - ignoring Hide_Menu_Item request.');
+				return;
+			}
+
+			if (!this._map.menubar || !this._map.menubar.hasItem(msg.Values.id)) {
+				console.error('Menu item with id "' + msg.Values.id + '" not found.');
+				return;
+			}
+
+			if (msg.MessageId === 'Show_Menu_Item') {
+				this._map.menubar.showItem(msg.Values.id);
+			} else {
+				this._map.menubar.hideItem(msg.Values.id);
+			}
+		}
 		else if (msg.MessageId === 'Set_Settings') {
 			if (msg.Values) {
 				var alwaysActive = msg.Values.AlwaysActive;

@@ -68,7 +68,9 @@ var map = L.map('map', {
 });
 
 ////// Controls /////
-map.addControl(L.control.menubar());
+var menubar = L.control.menubar();
+map.menubar = menubar;
+map.addControl(menubar);
 setupToolbar(map);
 map.addControl(L.control.scroll());
 map.addControl(L.control.alertDialog());

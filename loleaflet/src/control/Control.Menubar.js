@@ -1033,6 +1033,39 @@ L.Control.Menubar = L.Control.extend({
 		return itemList;
 	},
 
+	_getItems: function() {
+		return $(this._menubarCont).children().children('ul').children('li').add($(this._menubarCont).children('li'));
+	},
+
+	_getItem: function(targetId) {
+		var items = this._getItems();
+		var found = $(items).filter(function() {
+			var item = this;
+			var id = $(item).attr('id');
+			if (id && id == 'menu-' + targetId) {
+				return true;
+			}
+			return false
+		});
+		return found.length ? found : null;
+	},
+
+	hasItem: function(targetId) {
+		return this._getItem(targetId) != null;
+	},
+
+	hideItem: function(targetId) {
+		var item = this._getItem(targetId);
+		if (item)
+			$(item).css('display', 'none');
+	},
+
+	showItem: function(targetId) {
+		var item = this._getItem(targetId);
+		if (item)
+			$(item).css('display', '');
+	},
+
 	_initializeMenu: function(menu) {
 		var menuHtml = this._createMenu(menu);
 		for (var i in menuHtml) {
