@@ -386,9 +386,6 @@ L.Control.LokDialog = L.Control.extend({
 		// set the position of the cursor container element
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
-
-		// update the input as well
-		this._updateDialogInput(dlgId);
 	},
 
 	_createDialogCursor: function(dialogId) {
@@ -414,21 +411,9 @@ L.Control.LokDialog = L.Control.extend({
 		return dlgTextArea;
 	},
 
-	_updateDialogInput: function(dlgId) {
-		if (!this._dialogs[dlgId].input)
-			return;
-
-		var strId = this._toStrId(dlgId);
-		var left = parseInt(L.DomUtil.getStyle(this._dialogs[dlgId].cursor, 'left'));
-		var top = parseInt(L.DomUtil.getStyle(this._dialogs[dlgId].cursor, 'top'));
-		var dlgContainer = L.DomUtil.get(strId + '-clipboard-container');
-		L.DomUtil.setPosition(dlgContainer, new L.Point(left, top));
-	},
-
 	focus: function(dlgId, force) {
 		if (!force && (!this._isOpen(dlgId) || !this._dialogs[dlgId].input || !this._dialogs[dlgId].cursorVisible))
 			return;
-
 		if (this._dialogs[dlgId].cursorVisible)
 			this._dialogs[dlgId].input.focus();
 		else
@@ -649,6 +634,7 @@ L.Control.LokDialog = L.Control.extend({
 			// Keep map active while user is playing with sidebar/dialog.
 			this._map.lastActiveTime = Date.now();
 		}, this);
+
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stopPropagation(e);
 			var buttons = 0;
@@ -665,49 +651,17 @@ L.Control.LokDialog = L.Control.extend({
 			this.focus(id, !this._isSidebar(id));
 			// Keep map active while user is playing with sidebar/dialog.
 			this._map.lastActiveTime = Date.now();
+			dlgInput.focus();
 		}, this);
-		L.DomEvent.on(dlgInput,
-		              'keyup keypress keydown compositionstart compositionupdate compositionend textInput',
-		              function(e) {
-			              e.originalEvent = e; // _onKeyDown fn below requires real event in e.originalEvent
-			              this._map['keyboard']._onKeyDown(e,
-			                                         L.bind(this._postWindowKeyboardEvent,
-			                                                this,
-			                                                id),
-			                                         L.bind(this._postWindowCompositionEvent,
-			                                                this,
-			                                                id),
-			                                         dlgInput);
 
-			              // Keep map active while user is playing with sidebar/dialog.
-			              this._map.lastActiveTime = Date.now();
-		              }, this);
-		L.DomEvent.on(dlgInput, 'paste', function(e) {
-			var clipboardData = e.clipboardData || window.clipboardData;
-			var data, blob;
+		/// TODO: Instantiate a new Clipboardcontainer for each dialog. It
+		/// should be cleaner than relying on a global one.
 
-			L.DomEvent.preventDefault(e);
-			if (clipboardData) {
-				data = clipboardData.getData('text/plain') || clipboardData.getData('Text');
-				if (data) {
-					var cmd = {
-						MimeType: {
-							type: 'string',
-							value: 'mimetype=text/plain;charset=utf-8'
-						},
-						Data: {
-							type: '[]byte',
-							value: data
-						}
-					};
-
-					blob = new Blob(['windowcommand ' + id + ' paste ', unescape(encodeURIComponent(JSON.stringify(cmd)))]);
-					this._map._socket.sendMessage(blob);
-				}
-			}
-		}, this);
-		L.DomEvent.on(dlgInput, 'contextmenu', function() {
-			return false;
+		// Relay all keyboard-related events from this dialog's <input>
+		// to the map's ClipboardContainer.
+		var cc = this._map.getClipboardContainer();
+		L.DomEvent.on(dlgInput, 'compositionstart compositionend beforeinput paste input textInput', function(ev) {
+			cc.handleEventForWinId(ev, id);
 		});
 	},
 
@@ -779,12 +733,6 @@ L.Control.LokDialog = L.Control.extend({
 		updateTransformation(findZoomTarget(targetId));
 	},
 
-	_postWindowCompositionEvent: function(winid, type, text) {
-		this._map._docLayer._postCompositionEvent(winid, type, text);
-		// Keep map active while user is playing with sidebar/dialog.
-		this._map.lastActiveTime = Date.now();
-	},
-
 	_postWindowMouseEvent: function(type, winid, x, y, count, buttons, modifier) {
 		this._map._socket.sendMessage('windowmouse id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' count=' + count +
@@ -797,13 +745,6 @@ L.Control.LokDialog = L.Control.extend({
 		console.log('x ' + x + ' y ' + y + ' o ' + offset);
 		this._map._socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
-		// Keep map active while user is playing with sidebar/dialog.
-		this._map.lastActiveTime = Date.now();
-	},
-
-	_postWindowKeyboardEvent: function(winid, type, charcode, keycode) {
-		this._map._socket.sendMessage('windowkey id=' + winid + ' type=' + type +
-		                              ' char=' + charcode + ' key=' + keycode);
 		// Keep map active while user is playing with sidebar/dialog.
 		this._map.lastActiveTime = Date.now();
 	},
@@ -832,6 +773,12 @@ L.Control.LokDialog = L.Control.extend({
 		this._currentDeck = null;
 
 		$('#sidebar-dock-wrapper').css({display: ''});
+	},
+
+	_postWindowGestureEvent: function(winid, type, x, y, offset) {
+		console.log('x ' + x + ' y ' + y + ' o ' + offset);
+		this._map._socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
+		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
 	},
 
 	_onDialogClose: function(dialogId, notifyBackend) {

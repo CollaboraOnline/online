@@ -656,7 +656,8 @@ L.TileLayer = L.GridLayer.extend({
 		// of the clipboard container mid-composition will easily break it.
 		var formula = textMsg.substring(13);
 		if (!this._map['wopi'].DisableCopy) {
-			this._selectionTextContent = formula;
+			this._map._clipboardContainer.setValue(formula);
+			this._map._clipboardContainer.select();
 		}
 		this._lastFormula = formula;
 		this._map.fire('cellformula', {formula: formula});
@@ -1452,8 +1453,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onTextSelectionContentMsg: function (textMsg) {
 		this._selectionTextContent = textMsg.substr(22);
 		this._map._clipboardContainer.setValue(this._selectionTextContent);
-		// for test only
-		//this._onUploadOnLargeCopyPaste();
+		this._map._clipboardContainer.select();
 	},
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
@@ -1815,12 +1815,6 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._map._socket.sendMessage('key type=' + type +
 				' char=' + charcode + ' key=' + keycode);
-	},
-
-	// if winId=0, then event is posted on the document
-	_postCompositionEvent: function(winId, type, text) {
-		// console.log('==> _postCompositionEvent type=' + type + ' text="' + text + '"');
-		this._map._socket.sendMessage('textinput id=' + winId + ' type=' + type + ' text=' + encodeURIComponent(text));
 	},
 
 	_postSelectGraphicEvent: function(type, x, y) {

@@ -1,6 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /*
  * L.Map.Keyboard is handling keyboard interaction with the map, enabled by default.
+ *
+ * It handles keyboard interactions which are NOT text input, including those which
+ * don't require edit permissions (e.g. page scroll). Text input is handled
+ * at ClipboardContainer.
  */
 
 L.Map.mergeOptions({
@@ -123,7 +127,7 @@ L.Map.Keyboard = L.Handler.extend({
 	handleOnKeyDownKeys: {
 		// these keys need to be handled on keydown in order for them
 		// to work on chrome
-		8   : true, // backspace
+		// Backspace and Delete are handled at ClipboardContainer's 'beforeinput' handler.
 		9   : true, // tab
 		19  : true, // pause/break
 		20  : true, // caps lock
@@ -137,7 +141,6 @@ L.Map.Keyboard = L.Handler.extend({
 		39  : true, // right arrow
 		40  : true, // down arrow
 		45  : true, // insert
-		46  : true, // delete
 		113 : true  // f2
 	},
 
@@ -171,15 +174,11 @@ L.Map.Keyboard = L.Handler.extend({
 			container.tabIndex = '0';
 		}
 
-		this._map.on('mousedown', this._onMouseDown, this);
-		this._map.on('keydown keyup keypress', this._onKeyDown, this);
-		this._map.on('compositionstart compositionupdate compositionend textInput', this._onIME, this);
+		L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
 	},
 
 	removeHooks: function () {
-		this._map.off('mousedown', this._onMouseDown, this);
-		this._map.off('keydown keyup keypress', this._onKeyDown, this);
-		this._map.off('compositionstart compositionupdate compositionend textInput', this._onIME, this);
+		L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
 	},
 
 	/*
@@ -233,20 +232,30 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 	},
 
-	_onMouseDown: function () {
-		this._map.notifyActive();
-		if (this._map._permission === 'edit') {
-			return;
-		}
-		this._map.focus();
-	},
-
 	// Convert javascript key codes to UNO key codes.
 	_toUNOKeyCode: function (keyCode) {
 		return this.keymap[keyCode] || keyCode;
 	},
 
-	_onKeyDown: function (e, keyEventFn, compEventFn, inputEle) {
+	// Private onKeyDown - called only as a DOM event handler
+	// Calls the public onKeyDown(), but only if the event doesn't have
+	// a charCode property (set to something different than 0) - that ignores
+	// any 'beforeinput', 'keypress' and 'input' events that would add
+	// printable characters. Those are handled by ClipboardContainer.js.
+	_onKeyDown: function (ev) {
+		console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
+
+		if (ev.charCode == 0) {
+			this.onKeyDown(
+				{originalEvent: ev, type: ev.type}
+			);
+		}
+	},
+
+	// Public onKeyDown - called from LokDialog.js when there's a need
+	// to process keystrokes while in a dialog (which is outside of the map's DOM
+	// container)
+	onKeyDown: function (ev, keyEventFn) {
 		this._map.notifyActive();
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
@@ -256,19 +265,13 @@ L.Map.Keyboard = L.Handler.extend({
 			// default is to post keyboard events on the document
 			keyEventFn = L.bind(docLayer._postKeyboardEvent, docLayer);
 		}
-		if (!compEventFn) {
-			// document has winid=0
-			compEventFn = L.bind(docLayer._postCompositionEvent, docLayer, 0 /* winid */);
-		}
-		if (!inputEle) {
-			inputEle = this._map._clipboardContainer.activeElement();
-		}
+
 		this.modifier = 0;
-		var shift = e.originalEvent.shiftKey ? this.keyModifier.shift : 0;
-		var ctrl = e.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
-		var alt = e.originalEvent.altKey ? this.keyModifier.alt : 0;
-		var cmd = e.originalEvent.metaKey ? this.keyModifier.ctrl : 0;
-		var location = e.originalEvent.location;
+		var shift = ev.originalEvent.shiftKey ? this.keyModifier.shift : 0;
+		var ctrl = ev.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
+		var alt = ev.originalEvent.altKey ? this.keyModifier.alt : 0;
+		var cmd = ev.originalEvent.metaKey ? this.keyModifier.ctrl : 0;
+		var location = ev.originalEvent.location;
 		this._keyHandled = this._keyHandled || false;
 		this.modifier = shift | ctrl | alt | cmd;
 
@@ -276,7 +279,7 @@ L.Map.Keyboard = L.Handler.extend({
 		// Presence of AltGr is detected if previous Ctrl + Alt 'location' === 2 (i.e right)
 		// because Ctrl + Alt + <some char> won't give any 'location' information.
 		if (ctrl && alt) {
-			if (e.type === 'keydown' && location === 2) {
+			if (ev.type === 'keydown' && location === 2) {
 				this._prevCtrlAltLocation = location;
 				return;
 			}
@@ -286,7 +289,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 			if (this._prevCtrlAltLocation === 2 && location === 0) {
 				// and we got the final character
-				if (e.type === 'keypress') {
+				if (ev.type === 'keypress') {
 					ctrl = alt = this.modifier = 0;
 				}
 				else {
@@ -297,19 +300,13 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (ctrl || cmd) {
-			if (this._handleCtrlCommand(e)) {
+			if (this._handleCtrlCommand(ev)) {
 				return;
 			}
 		}
 
-		var charCode = e.originalEvent.charCode;
-		var keyCode = e.originalEvent.keyCode;
-
-		if (!this._isComposing && e.type === 'keyup') {
-			// not compositing and keyup, clear the input so it is ready
-			// for next word (or char only)
-			inputEle.value = '';
-		}
+		var charCode = ev.originalEvent.charCode;
+		var keyCode = ev.originalEvent.keyCode;
 
 		if ((this.modifier == this.keyModifier.alt || this.modifier == this.keyModifier.shift + this.keyModifier.alt) &&
 		    keyCode >= 48) {
@@ -320,9 +317,9 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// handle help - F1
-		if (e.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === 112) {
+		if (ev.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === 112) {
 			this._map.showHelp();
-			e.originalEvent.preventDefault();
+			ev.originalEvent.preventDefault();
 			return;
 		}
 
@@ -330,9 +327,9 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
-			if (e.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !docLayer._isCursorVisible))) {
+			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !docLayer._isCursorVisible))) {
 				keyEventFn('input', charCode, unoKeyCode);
-				e.originalEvent.preventDefault();
+				ev.originalEvent.preventDefault();
 				return;
 			}
 		}
@@ -340,17 +337,17 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map._permission === 'edit') {
 			docLayer._resetPreFetching();
 
-			if (this._ignoreKeyEvent(e)) {
+			if (this._ignoreKeyEvent(ev)) {
 				// key ignored
 			}
-			else if (e.type === 'keydown') {
+			else if (ev.type === 'keydown') {
 				this._keyHandled = false;
-
+				// console.log(e);
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					keyEventFn('input', charCode, unoKeyCode);
 				}
 			}
-			else if ((e.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
+			else if ((ev.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
 				if (charCode === keyCode && charCode !== 13) {
 					// Chrome sets keyCode = charCode for printable keys
 					// while LO requires it to be 0
@@ -365,78 +362,39 @@ L.Map.Keyboard = L.Handler.extend({
 				keyEventFn('input', charCode, unoKeyCode);
 				this._keyHandled = true;
 			}
-			else if (e.type === 'keyup') {
+			else if (ev.type === 'keyup') {
 				keyEventFn('up', charCode, unoKeyCode);
 				this._keyHandled = true;
 			}
 			if (keyCode === 9) {
 				// tab would change focus to other DOM elements
-				e.originalEvent.preventDefault();
+				ev.originalEvent.preventDefault();
 			}
 		}
-		else if (!this.modifier && (e.originalEvent.keyCode === 33 || e.originalEvent.keyCode === 34)) {
+		else if (!this.modifier && (ev.originalEvent.keyCode === 33 || ev.originalEvent.keyCode === 34)) {
 			// let the scrollbar handle page up / page down when viewing
 			return;
 		}
-		else if (e.type === 'keydown') {
-			var key = e.originalEvent.keyCode;
+		else if (ev.type === 'keydown') {
+			var key = ev.originalEvent.keyCode;
 			var map = this._map;
-			if (key in this._panKeys && !e.originalEvent.shiftKey) {
+			if (key in this._panKeys && !ev.originalEvent.shiftKey) {
 				if (map._panAnim && map._panAnim._inProgress) {
 					return;
 				}
 				map.fire('scrollby', {x: this._panKeys[key][0], y: this._panKeys[key][1]});
 			}
-			else if (key in this._panKeys && e.originalEvent.shiftKey &&
+			else if (key in this._panKeys && ev.originalEvent.shiftKey &&
 					docLayer._selections.getLayers().length !== 0) {
 				// if there is a selection and the user wants to modify it
 				keyEventFn('input', charCode, unoKeyCode);
 			}
 			else if (key in this._zoomKeys) {
-				map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);
+				map.setZoom(map.getZoom() + (ev.shiftKey ? 3 : 1) * this._zoomKeys[key]);
 			}
 		}
 
-		L.DomEvent.stopPropagation(e.originalEvent);
-	},
-
-	_onIME: function (e) {
-		this._map.notifyActive();
-		if (e.type === 'compositionstart') {
-			this._isComposing = true; // we are starting composing with IME
-		} else if (e.type === 'compositionupdate') {
-			this._map._docLayer._postCompositionEvent(0, 'input', e.originalEvent.data);
-		} else if (e.type === 'compositionend') {
-			this._isComposing = false; // stop of composing with IME
-			// get the composited char codes
-			// clear the input now - best to do this ASAP so the input
-			// is clear for the next word
-			this._map._clipboardContainer.setValue('');
-			// Set all keycodes to zero
-			this._map._docLayer._postCompositionEvent(0, 'end', e.originalEvent.data);
-		}
-
-		if (e.type === 'textInput' && !this._keyHandled && !this._isComposing) {
-			// Hack for making space and spell-check text insert work
-			// in Chrome (on Andorid) or Chrome with IME.
-			//
-			// Chrome (Android) IME triggers keyup/keydown input with
-			// code 229 when hitting space (as with all composiiton events)
-			// with addition to 'textinput' event, in which we only see that
-			// space was entered. Similar situation is also when inserting
-			// a soft-keyboard spell-check item - it is visible only with
-			// 'textinput' event (no composition event is fired).
-			// To make this work we need to insert textinput.data here..
-			//
-			// TODO: Maybe make sure this is only triggered when keydown has
-			// 229 code. Also we need to detect that composition was overriden
-			// (part or whole word deleted) with the spell-checked word. (for
-			// example: enter 'tar' and with spell-check correct that to 'rat')
-			var data = e.originalEvent.data;
-			for (var idx = 0; idx < data.length; idx++) {
-				this._map._docLayer._postKeyboardEvent('input', data[idx].charCodeAt(), 0);
-			}
-		}
+		L.DomEvent.stopPropagation(ev.originalEvent);
 	},
 
 	_handleCtrlCommand: function (e) {
@@ -445,13 +403,13 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 
 		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x' &&
-			/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120) {
+		/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120) {
 			e.originalEvent.preventDefault();
 			return true;
 		}
 
 		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.keyCode !== 88 &&
-			/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120 &&
+		/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120 &&
 			e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x') {
 			// not copy or paste
 			e.originalEvent.preventDefault();
@@ -531,7 +489,6 @@ L.Map.Keyboard = L.Handler.extend({
 		case 91: // Left Cmd (Safari)
 		case 93: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
-			this._map._clipboardContainer.resetToSelection();
 			this._map.focus();
 			this._map._clipboardContainer.select();
 			return true;
