@@ -45,7 +45,7 @@ JNI_OnLoad(JavaVM* vm, void*) {
         return JNI_ERR; // JNI version not supported.
     }
 
-    Log::initialize("Mobile", "trace", false, false, {});
+    Log::initialize("Mobile", "debug", false, false, {});
 
     return JNI_VERSION_1_6;
 }
