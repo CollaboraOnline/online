@@ -5,7 +5,10 @@
 
 /* global Hammer $ */
 L.Map.CalcTap = L.Handler.extend({
-	addHooks: function () {
+
+	initialize: function (map) {
+		L.Handler.prototype.initialize.call(this, map);
+
 		if (!this._toolbar) {
 			this._toolbar = L.control.contextToolbar();
 		}
@@ -19,12 +22,10 @@ L.Map.CalcTap = L.Handler.extend({
 				direction: Hammer.DIRECTION_ALL
 			});
 		}
-		this._hammer.on('hammer.input', L.bind(this._onHammer, this));
-		this._hammer.on('tap', L.bind(this._onTap, this));
-		this._hammer.on('panstart', L.bind(this._onPanStart, this));
-		this._hammer.on('pan', L.bind(this._onPan, this));
-		this._hammer.on('panend', L.bind(this._onPanEnd, this));
-		this._map.on('updatepermission', this._onPermission, this);
+
+		for (var events in L.Draggable.MOVE) {
+			L.DomEvent.on(document, L.Draggable.END[events], this._onDocUp, this);
+		}
 
 		/// $.contextMenu does not support touch events so,
 		/// attach 'touchend' menu clicks event handler
@@ -40,13 +41,25 @@ L.Map.CalcTap = L.Handler.extend({
 		}
 	},
 
+	addHooks: function () {
+		this._hammer.on('hammer.input', L.bind(this._onHammer, this));
+		this._hammer.on('tap', L.bind(this._onTap, this));
+		this._hammer.on('panstart', L.bind(this._onPanStart, this));
+		this._hammer.on('pan', L.bind(this._onPan, this));
+		this._hammer.on('panend', L.bind(this._onPanEnd, this));
+		this._map.on('updatepermission', this._onPermission, this);
+		this._onPermission({perm: this._map._permission});
+	},
+
 	removeHooks: function () {
-		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
-		this._hammer.off('press', L.bind(this._onPress, this));
+		this._hammer.off('hammer.input', L.bind(this._onHammer, this));
 		this._hammer.off('tap', L.bind(this._onTap, this));
 		this._hammer.off('panstart', L.bind(this._onPanStart, this));
 		this._hammer.off('pan', L.bind(this._onPan, this));
 		this._hammer.off('panend', L.bind(this._onPanEnd, this));
+		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
+		this._hammer.off('press', L.bind(this._onPress, this));
+		this._map.off('updatepermission', this._onPermission, this);
 	},
 
 	_onPermission: function (e) {
@@ -62,6 +75,12 @@ L.Map.CalcTap = L.Handler.extend({
 	_onHammer: function (e) {
 		L.DomEvent.preventDefault(e.srcEvent);
 		L.DomEvent.stopPropagation(e.srcEvent);
+	},
+
+	_onDocUp: function () {
+		if (!this._map.touchCalc.enabled()) {
+			this._map.touchCalc.enable();
+		}
 	},
 
 	_onPress: function (e) {
