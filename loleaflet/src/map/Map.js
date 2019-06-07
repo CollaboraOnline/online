@@ -140,15 +140,8 @@ L.Map = L.Evented.extend({
 		}
 		this._progressBar = L.progressOverlay(center, new L.point(150, 25));
 
-		if (L.Browser.mobile) {
-			this._clipboardContainer = L.control.mobileInput().addTo(this);
-			if (this.tap !== undefined) {
-				this._clipboardContainer._cursorHandler.on('up', this.tap._onCursorClick, this.tap);
-			}
-		} else {
-			this._clipboardContainer = L.clipboardContainer();
-			this.addLayer(this._clipboardContainer);
-		}
+		this._clipboardContainer = L.clipboardContainer();
+		this.addLayer(this._clipboardContainer);
 
 		// Avoid white bar on the bottom - force resize-detector to get full size
 		if (window.mode.isMobile()) {
@@ -802,6 +795,10 @@ L.Map = L.Evented.extend({
 		return this._container;
 	},
 
+	// Returns the instance of layer/marker/ClipboardContainer in this map.
+	getClipboardContainer: function getClipboardContainer() {
+		return this._clipboardContainer;
+	},
 
 	// TODO replace with universal implementation after refactoring projections
 
@@ -878,8 +875,12 @@ L.Map = L.Evented.extend({
 	},
 
 	focus: function () {
-		this._clipboardContainer.focus();
-		this._onEditorGotFocus();
+		// Clicking or otherwise focusing the map should focus on the clipboard
+		// container in order for the user to input text (and on-screen keyboards
+		// to pop-up), unless the document is read only.
+		if (this._permission === 'edit') {
+			this._clipboardContainer.focus();
+		}
 	},
 
 	hasFocus: function () {
@@ -1295,7 +1296,7 @@ L.Map = L.Evented.extend({
 		this._activeDialog = null;
 	},
 
-	// Our browser tab lost focus.
+	// Our browser tab got focus.
 	_onGotFocus: function () {
 		this._onEditorGotFocus();
 		this._activate();
@@ -1337,7 +1338,7 @@ L.Map = L.Evented.extend({
 
 		// find the layer the event is propagating from
 		var target = this._targets[L.stamp(e.target || e.srcElement)],
-			//type = e.type === 'keypress' && e.keyCode === 13 ? 'click' : e.type;
+		    //type = e.type === 'keypress' && e.keyCode === 13 ? 'click' : e.type;
 		    type = e.type;
 
 		// For touch devices, to pop-up the keyboard, it is required to call
