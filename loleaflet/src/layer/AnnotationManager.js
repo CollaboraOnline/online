@@ -243,8 +243,9 @@ L.AnnotationManager = L.Class.extend({
 
 	unselect: function () {
 		if (this._selected) {
-			if ($(this._selected._container).hasClass('annotation-active'))
+			if (this._selected && $(this._selected._container).hasClass('annotation-active'))
 				$(this._selected._container).removeClass('annotation-active');
+
 			this._selected = null;
 			this.update();
 		}
@@ -254,9 +255,15 @@ L.AnnotationManager = L.Class.extend({
 		if (annotation) {
 			// Select the root comment
 			var idx = this.getRootIndexOf(annotation._data.id);
+
+			if (this._selected && $(this._selected._container).hasClass('annotation-active'))
+				$(this._selected._container).removeClass('annotation-active');
+
 			this._selected = this._items[idx];
-			if (!$(this._selected._container).hasClass('annotation-active'))
+
+			if (this._selected && !$(this._selected._container).hasClass('annotation-active'))
 				$(this._selected._container).addClass('annotation-active');
+
 			this.update();
 		}
 	},
