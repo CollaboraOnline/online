@@ -2106,6 +2106,10 @@ L.TileLayer = L.GridLayer.extend({
 		if (e.type === 'drag') {
 			e.target.isDragged = true;
 
+			if (!e.originalEvent.pageX && !e.originalEvent.pageY) {
+				return;
+			}
+
 			// This is rather hacky, but it seems to be the only way to make the
 			// marker follow the mouse cursor if the document is autoscrolled under
 			// us. (This can happen when we're changing the selection if the cursor

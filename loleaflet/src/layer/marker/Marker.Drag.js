@@ -16,6 +16,7 @@ L.Handler.MarkerDrag = L.Handler.extend({
 		}
 
 		this._draggable.on({
+			down: this._onDown,
 			dragstart: this._onDragStart,
 			drag: this._onDrag,
 			dragend: this._onDragEnd,
@@ -27,6 +28,7 @@ L.Handler.MarkerDrag = L.Handler.extend({
 
 	removeHooks: function () {
 		this._draggable.off({
+			down: this._onDown,
 			dragstart: this._onDragStart,
 			drag: this._onDrag,
 			dragend: this._onDragEnd,
@@ -40,6 +42,10 @@ L.Handler.MarkerDrag = L.Handler.extend({
 
 	moved: function () {
 		return this._draggable && this._draggable._moved;
+	},
+
+	_onDown: function (e) {
+		this._marker.fire('down', e);
 	},
 
 	_onDragStart: function () {
