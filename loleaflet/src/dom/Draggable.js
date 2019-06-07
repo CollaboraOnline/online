@@ -137,7 +137,12 @@ L.Draggable = L.Evented.extend({
 
 		L.Util.cancelAnimFrame(this._animRequest);
 		this._lastEvent = e;
-		this._animRequest = L.Util.requestAnimFrame(this._updatePosition, this, true, this._dragStartTarget);
+
+		if (!this._manualDrag) {
+			this._animRequest = L.Util.requestAnimFrame(this._updatePosition, this, true, this._dragStartTarget);
+		} else {
+			this._updatePosition();
+		}
 	},
 
 	_updatePosition: function () {
