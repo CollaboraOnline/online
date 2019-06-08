@@ -52,10 +52,10 @@
             <action name="view" ext="sxd"/>
         </app>
         <app name="application/vnd.oasis.opendocument.graphics">
-            <action name="edit" ext="odg"/>
+            <action name="view" ext="odg"/>
         </app>
 	<app name="application/vnd.oasis.opendocument.graphics-flat-xml">
-            <action name="edit" ext="fodg"/>
+            <action name="view" ext="fodg"/>
         </app>
 
 	<!-- Chart documents -->
