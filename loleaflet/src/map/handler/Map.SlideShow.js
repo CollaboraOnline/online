@@ -24,8 +24,8 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onFullScreen: function () {
-		if (window.ThisIsTheiOSApp) {
-			window.webkit.messageHandlers.lool.postMessage('SLIDESHOW', '*');
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
+			window.postMobileMessage('SLIDESHOW');
 			return;
 		}
 		this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);

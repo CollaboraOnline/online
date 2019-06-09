@@ -18,8 +18,10 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.print.PrintAttributes;
@@ -45,6 +47,7 @@ import java.nio.channels.ReadableByteChannel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -360,9 +363,11 @@ public class MainActivity extends AppCompatActivity {
         // Going back to document browser on BYE (called when pressing the top left exit button)
         if (message.equals("BYE"))
             finish();
-    };
+    }
 
-    /** Call the post method form C++ */
+    /**
+     * Call the post method form C++
+     */
     public native void postMobileMessageNative(String message);
 
     /**
@@ -408,6 +413,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             return false;
+        } else if (message.equals("SLIDESHOW")) {
+            initiateSlideShow();
+            return false;
         }
         return true;
     }
@@ -418,7 +426,38 @@ public class MainActivity extends AppCompatActivity {
         printManager.print("Document", printAdapter, new PrintAttributes.Builder().build());
     }
 
-    public native void saveAs(String fileUri);
+    private void initiateSlideShow() {
+        final AlertDialog slideShowProgress = new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setView(R.layout.dialog_loading)
+                .create();
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                slideShowProgress.show();
+            }
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                Log.v(TAG, "saving svg for slideshow by " + Thread.currentThread().getName());
+                String slideShowFileUri = new File(getCacheDir(), "slideShow.svg").toURI().toString();
+                saveAs(slideShowFileUri, "svg");
+                return slideShowFileUri;
+            }
+
+            @Override
+            protected void onPostExecute(String slideShowFileUri) {
+                super.onPostExecute(slideShowFileUri);
+                slideShowProgress.dismiss();
+                Intent slideShowActIntent = new Intent(MainActivity.this, SlideShowActivity.class);
+                slideShowActIntent.putExtra(SlideShowActivity.SVG_URI_KEY, slideShowFileUri);
+                startActivity(slideShowActIntent);
+            }
+        }.execute();
+    }
+
+    public native void saveAs(String fileUri, String format);
 
 }
 

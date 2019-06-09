@@ -22,7 +22,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/LibreOfficeTheme">
-
+        <!-- SlideShow Activity -->
+        <activity android:name=".SlideShowActivity"
+            android:theme="@style/FullScreenStyle"
+            android:screenOrientation="sensorLandscape"/>
         <!-- Document Browser Activity -->
         <activity
             android:name=".ui.LibreOfficeUIActivity"
@@ -102,28 +105,27 @@
                 <data android:mimeType="image/svg+xml" />
             </intent-filter>
         </activity>
-
         <!-- Document Provider Settings Activity -->
-        <activity android:name=".storage.DocumentProviderSettingsActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:label="@string/storage_provider_settings">
+        <activity
+            android:name=".storage.DocumentProviderSettingsActivity"
+            android:label="@string/storage_provider_settings"
+            android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".storage.external.BrowserSelectorActivity"></activity>
+        <activity android:name=".storage.external.BrowserSelectorActivity" />
         <activity
             android:name=".storage.external.DirectoryBrowserActivity"
             android:label="@string/directory_browser_label"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ShowHTMLActivity"
-            android:label="@string/title_activity_show_html"></activity>
+            android:label="@string/title_activity_show_html" />
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:label="@string/app_name_settings">
-        </activity>
+            android:label="@string/app_name_settings"
+            android:theme="@style/Theme.AppCompat.Light" />
     </application>
 
 </manifest>
