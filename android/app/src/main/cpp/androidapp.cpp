@@ -278,11 +278,13 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
 extern "C"
 JNIEXPORT void JNICALL
 Java_org_libreoffice_androidapp_MainActivity_saveAs(JNIEnv *env, jobject instance,
-                                                    jstring fileUri_) {
+                                                    jstring fileUri_, jstring format_) {
     const char *fileUri = env->GetStringUTFChars(fileUri_, 0);
+    const char *format = env->GetStringUTFChars(format_, 0);
 
-    getLOKDocument()->saveAs(fileUri, "pdf", nullptr);
+    getLOKDocument()->saveAs(fileUri, format, nullptr);
 
     env->ReleaseStringUTFChars(fileUri_, fileUri);
+    env->ReleaseStringUTFChars(format_, format);
 }
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

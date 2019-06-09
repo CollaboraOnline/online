@@ -123,6 +123,9 @@
     <string name="create_new_document_title">Enter file name</string>
     <string name="action_create">CREATE</string>
 
+    <!-- Loading SlideShow Dialog Strings -->
+    <string name="loading">Loading...</string>
+
     <!-- Presentation Mode Strings -->
 
     <!-- Calc Header Menu Strings -->

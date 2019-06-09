@@ -24,7 +24,7 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onFullScreen: function () {
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('SLIDESHOW');
 			return;
 		}
