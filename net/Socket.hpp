@@ -473,12 +473,30 @@ public:
         assert(_stop || sameThread);
     }
 
+    /// Kit poll can be called from LOK's Yield in any thread, adapt to that.
+    void checkAndReThread()
+    {
+        if (InhibitThreadChecks)
+            return;
+        std::thread::id us = std::thread::id();
+        if (_owner == us)
+            return; // all well
+        LOG_DBG("Ununusual - SocketPoll used from a new thread");
+        _owner = us;
+        for (auto it : _pollSockets)
+            it->setThreadOwner(us);
+        // _newSockets are adapted as they are inserted.
+    }
+
     /// Poll the sockets for available data to read or buffer to write.
     /// Returns the return-value of poll(2): 0 on timeout,
     /// -1 for error, and otherwise the number of events signalled.
     int poll(int timeoutMaxMs)
     {
-        assertCorrectThread();
+        if (_runOnClientThread)
+            checkAndReThread();
+        else
+            assertCorrectThread();
 
         std::chrono::steady_clock::time_point now =
             std::chrono::steady_clock::now();
