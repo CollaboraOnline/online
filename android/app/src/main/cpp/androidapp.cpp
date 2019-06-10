@@ -174,6 +174,10 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
                                        // is saved by closing it.
                                        fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
 
+                                       // Flag to make the inter-thread plumbing in the Online
+                                       // bits go away quicker.
+                                       MobileTerminationFlag = true;
+
                                        // Close our end of the fake socket connection to the
                                        // ClientSession thread, so that it terminates
                                        fakeSocketClose(fakeClientFd);
