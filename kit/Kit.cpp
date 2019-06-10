@@ -768,7 +768,7 @@ public:
           _shutdown(false)
     {
         int maxConcurrency = 2;
-#if MOBILEAPP
+#if MOBILEAPP && !defined(GTKAPP)
 #  warning "Good defaults ? - 2 for iOS, 4 for Android ?"
 #else
         const char *max = getenv("MAX_CONCURRENCY");
