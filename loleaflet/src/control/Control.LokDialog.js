@@ -675,7 +675,7 @@ L.Control.LokDialog = L.Control.extend({
 		zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state, width:width, height: height});
 
 		var hammerAll = new Hammer(canvas);
-		hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+		hammerAll.add(new Hammer.Pan({ threshold: 30, pointers: 0 }));
 		hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
 
 		hammerAll.on('panstart panmove panstop', function(ev) {
