@@ -22,7 +22,7 @@
 
 #import "DocumentViewController.h"
 
-@interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler> {
+@interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate> {
     int closeNotificationPipeForForwardingThread[2];
 }
 
@@ -48,6 +48,11 @@
     // Prevent the WebView from scrolling. Sadly I couldn't figure out how to do it in the JS,
     // so the problem is still there when using Online from Mobile Safari.
     self.webView.scrollView.scrollEnabled = NO;
+
+    // Prevent the user from zooming the WebView by assigning ourselves as the delegate, and
+    // stopping any zoom attempt in scrollViewWillBeginZooming: below. (The zooming of the document
+    // contents is handled fully in JavaScript, the WebView has no knowledge of that.)
+    self.webView.scrollView.delegate = self;
 
     [self.view addSubview:self.webView];
 
@@ -352,6 +357,10 @@
     } else {
         LOG_ERR("Unrecognized kind of message received from WebView: " << [message.name UTF8String] << ":" << [message.body UTF8String]);
     }
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+    scrollView.pinchGestureRecognizer.enabled = NO;
 }
 
 @end
