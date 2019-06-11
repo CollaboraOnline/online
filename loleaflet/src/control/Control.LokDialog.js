@@ -60,6 +60,9 @@ L.Control.LokDialog = L.Control.extend({
 	dialogIdPrefix: 'lokdialog-',
 
 	onPan: function (ev) {
+		if (!draggedObject)
+			return;
+
 		var id = toZoomTargetId(draggedObject.id);
 		var target = findZoomTarget(id);
 
@@ -71,8 +74,9 @@ L.Control.LokDialog = L.Control.extend({
 			if (window.mode.isDesktop() &&
 				(newX < -target.width/2 || newY < -target.height/2
 				|| newX > window.innerWidth - target.width/2
-				|| newY > window.innerHeight - target.height/2))
+				|| newY > window.innerHeight - target.height/2)) {
 				return;
+			}
 
 			target.transformation.translate = {
 				x: newX,
@@ -618,8 +622,6 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_setupGestures: function(dialogContainer, id, canvas) {
-		var self = this;
-		var dialogID = id;
 		var targetId = toZoomTargetId(canvas.id);
 		var zoomTarget = $('#' + targetId).parent().get(0);
 		var titlebar = $('#' + targetId).prev().children().get(0);
@@ -661,23 +663,44 @@ L.Control.LokDialog = L.Control.extend({
 		if (findZoomTarget(targetId) != null) {
 			removeZoomTarget(targetId);
 		}
-
 		zoomTargets.push({key: targetId, value: zoomTarget, titlebar: titlebar, transformation: transformation, initialState: state, width:width, height: height});
 
-		var hammerAll = new Hammer(zoomTarget);
-		hammerAll.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
-		hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
+		var hammerTitlebar = new Hammer(titlebar);
+		hammerTitlebar.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
+		hammerTitlebar.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerTitlebar.get('pan')]);
 
-		hammerAll.on('panstart panmove panstop', function(ev) {
-			self.onPan(ev, dialogID);
-		});
-		hammerAll.on('pinchstart pinchmove', this.onPinch);
-		hammerAll.on('hammer.input', function(ev) {
+		hammerTitlebar.on('panstart', this.onPan);
+		hammerTitlebar.on('panmove', this.onPan);
+		hammerTitlebar.on('pinchstart pinchmove', this.onPinch);
+		hammerTitlebar.on('hammer.input', function(ev) {
 			if (ev.isFirst) {
 				draggedObject = ev.target;
 			}
 
-			if (ev.isFinal) {
+			if (ev.isFinal && draggedObject) {
+				var id = toZoomTargetId(draggedObject.id);
+				var target = findZoomTarget(id);
+				if (target) {
+					target.initialState.startX = target.transformation.translate.x;
+					target.initialState.startY = target.transformation.translate.y;
+				}
+				draggedObject = null;
+			}
+		});
+
+		var hammerContent = new Hammer(canvas);
+		hammerContent.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
+		hammerContent.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerContent.get('pan')]);
+
+		hammerContent.on('panstart', this.onPan);
+		hammerContent.on('panmove', this.onPan);
+		hammerContent.on('pinchstart pinchmove', this.onPinch);
+		hammerContent.on('hammer.input', function(ev) {
+			if (ev.isFirst) {
+				draggedObject = ev.target;
+			}
+
+			if (ev.isFinal && draggedObject) {
 				var id = toZoomTargetId(draggedObject.id);
 				var target = findZoomTarget(id);
 				if (target) {
