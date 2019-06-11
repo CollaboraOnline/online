@@ -105,5 +105,3 @@ L.Map.Scroll = L.Handler.extend({
 		}
 	}
 });
-
-L.Map.addInitHook('addHandler', 'scrollHandler', L.Map.Scroll);

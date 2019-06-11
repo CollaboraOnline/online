@@ -28,5 +28,3 @@ L.Map.DoubleClickZoom = L.Handler.extend({
 		}
 	}
 });
-
-L.Map.addInitHook('addHandler', 'doubleClickZoom', L.Map.DoubleClickZoom);

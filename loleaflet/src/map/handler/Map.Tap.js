@@ -144,7 +144,3 @@ L.Map.Tap = L.Handler.extend({
 		this._map._handleDOMEvent(simulatedEvent);
 	}
 });
-
-if (L.Browser.touch && !L.Browser.pointer) {
-	L.Map.addInitHook('addHandler', 'tap', L.Map.Tap);
-}

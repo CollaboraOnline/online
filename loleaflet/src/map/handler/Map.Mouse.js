@@ -245,5 +245,3 @@ L.Map.Mouse = L.Handler.extend({
 		}
 	}
 });
-
-L.Map.addInitHook('addHandler', 'mouse', L.Map.Mouse);
