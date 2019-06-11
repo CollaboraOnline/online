@@ -797,18 +797,6 @@ L.Socket = L.Class.extend({
 					});
 				}
 				else if (command.type === 'spreadsheet') {
-					// replace touch handler for mobile devices
-					if (L.Browser.touch && !L.Browser.pointer) {
-						this._map.options.inertia = false;
-						this._map.removeHandler('tap');
-						this._map.removeHandler('mouse');
-						this._map.removeHandler('touchZoom');
-						this._map.dragging.disable();
-						this._map.dragging._draggable._manualDrag = true;
-						L.DomEvent.off(this._map._container, 'mousedown mouseup mouseover mouseout mousemove click dblclick trplclick qdrplclick dragover drop scroll', this._map._handleDOMEvent, this._map);
-						this._map.addHandler('touchCalc', L.Map.CalcTap);
-						this._map.touchCalc.enable();
-					}
 					docLayer = new L.CalcTileLayer('', {
 						permission: this._map.options.permission,
 						tileWidthTwips: tileWidthTwips,
