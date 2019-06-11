@@ -80,7 +80,6 @@ cat > libreoffice/autogen.input << EOF
 --disable-ext-wiki-publisher
 --disable-firebird-sdbc
 --disable-gio
---disable-gstreamer-0-10
 --disable-gstreamer-1-0
 --disable-gtk
 --disable-gtk3
