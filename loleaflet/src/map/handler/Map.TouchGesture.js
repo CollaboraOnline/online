@@ -4,11 +4,11 @@
  */
 
 L.Map.mergeOptions({
-	touchCalc: true,
+	touchGesture: true,
 });
 
 /* global Hammer $ */
-L.Map.CalcTap = L.Handler.extend({
+L.Map.TouchGesture = L.Handler.extend({
 
 	initialize: function (map) {
 		L.Handler.prototype.initialize.call(this, map);
@@ -82,8 +82,8 @@ L.Map.CalcTap = L.Handler.extend({
 	},
 
 	_onDocUp: function () {
-		if (!this._map.touchCalc.enabled()) {
-			this._map.touchCalc.enable();
+		if (!this._map.touchGesture.enabled()) {
+			this._map.touchGesture.enable();
 		}
 	},
 
@@ -145,7 +145,7 @@ L.Map.CalcTap = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (this._map._docLayer._cellCursor.contains(latlng)) {
+		if (this._map._docLayer._cellCursor && this._map._docLayer._cellCursor.contains(latlng)) {
 			this._cellSelections = true;
 			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {

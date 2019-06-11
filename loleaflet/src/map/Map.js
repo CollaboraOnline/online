@@ -111,7 +111,7 @@ L.Map = L.Evented.extend({
 			this.options.inertia = false;
 			this.dragging._draggable._manualDrag = true;
 			this._mainEvents('off');
-			this.addHandler('touchCalc', L.Map.CalcTap);
+			this.addHandler('touchGesture', L.Map.TouchGesture);
 			this.addHandler('touchZoom', L.Map.TouchZoom);
 		} else {
 			this.addHandler('mouse', L.Map.Mouse);
