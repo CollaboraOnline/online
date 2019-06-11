@@ -52,6 +52,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('pan', L.bind(this._onPan, this));
 		this._hammer.on('panend', L.bind(this._onPanEnd, this));
 		this._map.on('updatepermission', this._onPermission, this);
+		this._map.on('input.press', this._onInputPress, this);
 		this._onPermission({perm: this._map._permission});
 	},
 
@@ -85,6 +86,13 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (!this._map.touchGesture.enabled()) {
 			this._map.touchGesture.enable();
 		}
+	},
+
+	_onInputPress: function (e) {
+		var pos = this._map.latLngToContainerPoint(e);
+		this._toolbar.remove();
+		this._toolbar._pos = pos;
+		this._toolbar.addTo(this._map);
 	},
 
 	_onPress: function (e) {

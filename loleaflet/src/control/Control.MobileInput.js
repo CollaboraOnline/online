@@ -2,6 +2,8 @@
 /*
  * L.Control.MobileInput.
  */
+
+/* global Hammer */
 L.Control.MobileInput = L.Control.extend({
 	options: {
 		position: 'topleft'
@@ -33,6 +35,11 @@ L.Control.MobileInput = L.Control.extend({
 		return this._container;
 	},
 
+	onPress: function (e) {
+		e.preventDefault();
+		this._map.fire('input.press', this._cursorHandler.getLatLng());
+	},
+
 	onDragEnd: function () {
 		var mousePos = this._map._docLayer._latLngToTwips(this._cursorHandler.getLatLng());
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
@@ -45,7 +52,13 @@ L.Control.MobileInput = L.Control.extend({
 			this._map.addLayer(this._map._docLayer._cursorMarker);
 			if (this._map._docLayer._selections.getLayers().length === 0) {
 				this._map.addLayer(this._cursorHandler);
+				this._hammer = new Hammer(this._cursorHandler._icon);
+				this._hammer.on('press', L.bind(this.onPress, this));
 			} else {
+				if (this._hammer) {
+					this._hammer.destroy();
+					this._hammer = undefined;
+				}
 				this._map.removeLayer(this._cursorHandler);
 			}
 		}
@@ -55,6 +68,10 @@ L.Control.MobileInput = L.Control.extend({
 		if (this._map._docLayer && this._map._docLayer._cursorMarker) {
 			this._textArea.value = '';
 			this._map.removeLayer(this._map._docLayer._cursorMarker);
+			if (this._hammer) {
+				this._hammer.destroy();
+				this._hammer = undefined;
+			}
 			this._map.removeLayer(this._cursorHandler);
 		}
 	},
