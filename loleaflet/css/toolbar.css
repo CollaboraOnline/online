@@ -598,7 +598,6 @@ button.leaflet-control-search-next
 .w2ui-icon.save{ background: url('images/lc_save.svg') no-repeat center !important; }
 .w2ui-icon.saveas{ background: url('images/lc_saveas.svg') no-repeat center !important; }
 .w2ui-icon.savemodified{ background: url('images/savemodified_large.svg') no-repeat center !important; }
-.w2ui-icon.insertfootnote{ background: url('images/lc_insertfootnote.svg') no-repeat center !important; }
 .w2ui-icon.zoomin{ background: url('images/plus.svg') no-repeat center !important; }
 .w2ui-icon.zoomout{ background: url('images/minus.svg') no-repeat center !important; }
 .w2ui-icon.zoomreset{ background: url('images/lc_view100.svg') no-repeat center !important; }
