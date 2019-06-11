@@ -30,11 +30,13 @@ function updateTransformation(target) {
 	}
 }
 
+var draggedObject = null;
+
 var zoomTargets = [];
 
 function findZoomTarget(id) {
 	for (var item in zoomTargets) {
-		if (zoomTargets[item].key === id) {
+		if (zoomTargets[item].key === id || zoomTargets[item].titlebar.id === id) {
 			return zoomTargets[item];
 		}
 	}
@@ -43,7 +45,7 @@ function findZoomTarget(id) {
 
 function removeZoomTarget(id) {
 	for (var item in zoomTargets) {
-		if (zoomTargets[item].key === id) {
+		if (zoomTargets[item].key === id || zoomTargets[item].titlebar.id === id) {
 			delete zoomTargets[item];
 		}
 	}
@@ -58,7 +60,7 @@ L.Control.LokDialog = L.Control.extend({
 	dialogIdPrefix: 'lokdialog-',
 
 	onPan: function (ev) {
-		var id = toZoomTargetId(ev.target.id);
+		var id = toZoomTargetId(draggedObject.id);
 		var target = findZoomTarget(id);
 
 		if (target) {
@@ -438,6 +440,7 @@ L.Control.LokDialog = L.Control.extend({
 			title: title ? title : '',
 			modal: false,
 			closeOnEscape: true,
+			draggable: false,
 			resizable: false,
 			dialogClass: dialogClass,
 			close: function() {
@@ -619,6 +622,7 @@ L.Control.LokDialog = L.Control.extend({
 		var dialogID = id;
 		var targetId = toZoomTargetId(canvas.id);
 		var zoomTarget = $('#' + targetId).parent().get(0);
+		var titlebar = $('#' + targetId).prev().children().get(0);
 
 		var ratio = 1.0;
 		var width = this._dialogs[id].width;
@@ -658,10 +662,10 @@ L.Control.LokDialog = L.Control.extend({
 			removeZoomTarget(targetId);
 		}
 
-		zoomTargets.push({key: targetId, value: zoomTarget, transformation: transformation, initialState: state, width:width, height: height});
+		zoomTargets.push({key: targetId, value: zoomTarget, titlebar: titlebar, transformation: transformation, initialState: state, width:width, height: height});
 
-		var hammerAll = new Hammer(canvas);
-		hammerAll.add(new Hammer.Pan({ threshold: 30, pointers: 0 }));
+		var hammerAll = new Hammer(zoomTarget);
+		hammerAll.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
 		hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
 
 		hammerAll.on('panstart panmove panstop', function(ev) {
@@ -669,13 +673,18 @@ L.Control.LokDialog = L.Control.extend({
 		});
 		hammerAll.on('pinchstart pinchmove', this.onPinch);
 		hammerAll.on('hammer.input', function(ev) {
+			if (ev.isFirst) {
+				draggedObject = ev.target;
+			}
+
 			if (ev.isFinal) {
-				var id = toZoomTargetId(ev.target.id);
+				var id = toZoomTargetId(draggedObject.id);
 				var target = findZoomTarget(id);
 				if (target) {
 					target.initialState.startX = target.transformation.translate.x;
 					target.initialState.startY = target.transformation.translate.y;
 				}
+				draggedObject = null;
 			}
 		});
 
