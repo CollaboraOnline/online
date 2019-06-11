@@ -563,5 +563,3 @@ L.Map.Keyboard = L.Handler.extend({
 		return false;
 	}
 });
-
-L.Map.addInitHook('addHandler', 'keyboard', L.Map.Keyboard);

@@ -3,6 +3,10 @@
  * L.Map.CalcTap is used to enable mobile taps.
  */
 
+L.Map.mergeOptions({
+	touchCalc: true,
+});
+
 /* global Hammer $ */
 L.Map.CalcTap = L.Handler.extend({
 
@@ -126,8 +130,8 @@ L.Map.CalcTap = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
-		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
+		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
 
 		if (!this._map.hasFocus()) {
 			setTimeout(L.bind(this._map.focus, this._map), 0);

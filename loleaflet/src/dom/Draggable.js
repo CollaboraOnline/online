@@ -28,7 +28,7 @@ L.Draggable = L.Evented.extend({
 	},
 
 	enable: function () {
-		if (this._enabled) { return; }
+		if (this._manualDrag || this._enabled) { return; }
 
 		L.DomEvent.on(this._dragStartTarget, L.Draggable.START.join(' '), this._onDown, this);
 
@@ -36,7 +36,7 @@ L.Draggable = L.Evented.extend({
 	},
 
 	disable: function () {
-		if (!this._enabled) { return; }
+		if (this._manualDrag || !this._enabled) { return; }
 
 		L.DomEvent.off(this._dragStartTarget, L.Draggable.START.join(' '), this._onDown, this);
 
@@ -80,8 +80,8 @@ L.Draggable = L.Evented.extend({
 		this.startOffset = this._startPoint.subtract(new L.Point(startBoundingRect.left, startBoundingRect.top));
 
 		L.DomEvent
-		    .on(document, L.Draggable.MOVE[e.type], this._onMove, this)
-		    .on(document, L.Draggable.END[e.type], this._onUp, this);
+			.on(document, L.Draggable.MOVE[e.type], this._onMove, this)
+			.on(document, L.Draggable.END[e.type], this._onUp, this);
 	},
 
 	_onMove: function (e) {

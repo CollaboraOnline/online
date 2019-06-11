@@ -109,6 +109,23 @@ L.Map = L.Evented.extend({
 
 		this.callInitHooks();
 
+		this.addHandler('keyboard', L.Map.Keyboard);
+		this.addHandler('dragging', L.Map.Drag);
+		if (L.Browser.touch && !L.Browser.pointer) {
+			//this.addHandler('tap', L.Map.Tap);
+			this.dragging.disable();
+			this.options.inertia = false;
+			this.dragging._draggable._manualDrag = true;
+			this._mainEvents('off');
+			this.addHandler('touchCalc', L.Map.CalcTap);
+			this.addHandler('touchZoom', L.Map.TouchZoom);
+		} else {
+			this.addHandler('mouse', L.Map.Mouse);
+			this.addHandler('boxZoom', L.Map.BoxZoom);
+			this.addHandler('scrollHandler', L.Map.Scroll);
+			this.addHandler('doubleClickZoom', L.Map.DoubleClickZoom);
+		}
+
 		if (this.options.imagePath) {
 			L.Icon.Default.imagePath = this.options.imagePath;
 		}
@@ -979,6 +996,11 @@ L.Map = L.Evented.extend({
 	},
 
 	// DOM event handling
+	_mainEvents: function (onOff) {
+		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
+			'mouseover mouseout mousemove dragover drop ' +
+			'trplclick qdrplclick', this._handleDOMEvent, this);
+	},
 
 	_initEvents: function (remove) {
 		if (!L.DomEvent) { return; }
@@ -989,9 +1011,7 @@ L.Map = L.Evented.extend({
 
 		var onOff = remove ? 'off' : 'on';
 
-		L.DomEvent[onOff](this._container, 'click dblclick mousedown mouseup ' +
-			'mouseover mouseout mousemove dragover drop ' +
-			'trplclick qdrplclick', this._handleDOMEvent, this);
+		this._mainEvents(onOff);
 
 		if (this.options.trackResize && this._resizeDetector.contentWindow) {
 			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);

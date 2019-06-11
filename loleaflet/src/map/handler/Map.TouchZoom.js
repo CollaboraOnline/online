@@ -120,5 +120,3 @@ L.Map.TouchZoom = L.Handler.extend({
 		return this._startCenter.add(centerOffset);
 	}
 });
-
-L.Map.addInitHook('addHandler', 'touchZoom', L.Map.TouchZoom);
