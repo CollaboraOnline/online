@@ -56,8 +56,8 @@ L.Marker = L.Layer.extend({
 	},
 
 	onDown: function () {
-		if (this._map && this._map.touchCalc) {
-			this._map.touchCalc.disable();
+		if (this._map && this._map.touchGesture) {
+			this._map.touchGesture.disable();
 		}
 	},
 

@@ -237,7 +237,7 @@ var deps = {
 		      'core/Handler.js',
 		      'map/handler/Map.TouchZoom.js',
 		      'map/handler/Map.Tap.js',
-		      'map/handler/Map.CalcTap.js'],
+		      'map/handler/Map.TouchGesture.js'],
 		deps: ['AnimationZoom'],
 		desc: 'Enables smooth touch zoom / tap / longhold / doubletap on iOS, IE10, Android.'
 	},
