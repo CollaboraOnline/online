@@ -807,6 +807,14 @@ L.AnnotationManager = L.Class.extend({
 			};
 		}
 
+		// What if this._initialLayoutData is still undefined when we get here? (I.e. if
+		// contentWrapperClass.length == 0.) No idea. Using
+		// this._initialLayoutData.menuWidth below will lead to an unhandled exception.
+		// Maybe best to just return then? Somebody who understands the code could fix this
+		// better, perhaps.
+		if (this._initialLayoutData === undefined)
+			return;
+
 		var menuClass = $('.loleaflet-annotation-menu');
 		if ((this._initialLayoutData.menuWidth === undefined) && menuClass.length > 0) {
 			this._initialLayoutData.menuWidth = parseInt(menuClass.css('width'));
