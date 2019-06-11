@@ -7,7 +7,7 @@ var unoCommandsArray = {
 	ArrangeFrameMenu:{text:{menu:_('Arrange'),},},
 	ArrangeMenu:{global:{menu:_('A~rrange'),},presentation:{menu:_('~Arrange'),},},
 	AutoFormatMenu:{text:{menu:_('AutoCorr~ect'),},},
-	BackColor:{text:{menu:_('Highlight Color'),},},
+	BackColor:{global:{menu:_('Highlight Color'),},},
 	BackgroundColor:{global:{menu:_('Background Color'),},},
 	Bold:{global:{menu:_('Bold'),},},
 	BringToFront:{global:{menu:_('~Bring to Front'),},},
