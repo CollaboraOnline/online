@@ -93,6 +93,8 @@ L.Control.ContextMenu = L.Control.extend({
 						} else if (key === '.uno:Paste') {
 							if (!document.execCommand('paste'))
 								map._clipboardContainer.warnCopyPaste();
+						} else {
+							map.sendUnoCommand(key);
 						}
 						// Give the stolen focus back to map
 						map.focus();
