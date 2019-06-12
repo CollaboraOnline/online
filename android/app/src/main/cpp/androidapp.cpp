@@ -52,7 +52,7 @@ JNI_OnLoad(JavaVM* vm, void*) {
 
 static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::vector<char>& buffer)
 {
-    LOG_TRC_NOFILE("Send to JS: " << LOOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
+    LOG_DBG("Send to JS: " << LOOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
 
     std::string js;
 
@@ -106,15 +106,15 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
     if (js.length() > SHOW_JS_MAXLEN)
         subjs += "...";
 
-    LOG_TRC_NOFILE( "Sending to JavaScript: " << subjs);
+    LOG_DBG("Sending to JavaScript: " << subjs);
 
     JNIEnv *env;
     jint res = javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
     if (res != JNI_OK) {
-        LOG_TRC_NOFILE("GetEnv need to attach thread");
+        LOG_DBG("GetEnv need to attach thread");
         res = javaVM->AttachCurrentThread(&env, nullptr);
         if (JNI_OK != res) {
-            LOG_TRC_NOFILE("Failed to AttachCurrentThread");
+            LOG_DBG("Failed to AttachCurrentThread");
             return;
         }
     }
@@ -132,7 +132,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
 
     if (string_value)
     {
-        LOG_TRC_NOFILE("From JS: lool: " << string_value);
+        LOG_DBG("From JS: lool: " << string_value);
 
         if (strcmp(string_value, "HULLO") == 0)
         {
@@ -202,7 +202,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
 
             // First we simply send it the URL. This corresponds to the GET request with Upgrade to
             // WebSocket.
-            LOG_TRC_NOFILE("Actually sending to Online:" << fileURL);
+            LOG_DBG("Actually sending to Online:" << fileURL);
 
             // Must do this in a thread, too, so that we can return to the GTK+ main loop
             std::thread([]
@@ -216,7 +216,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
         }
         else if (strcmp(string_value, "BYE") == 0)
         {
-            LOG_TRC_NOFILE("Document window terminating on JavaScript side. Closing our end of the socket.");
+            LOG_DBG("Document window terminating on JavaScript side. Closing our end of the socket.");
 
             // Close one end of the socket pair, that will wake up the forwarding thread above
             fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
@@ -247,7 +247,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
         }
     }
     else
-        LOG_TRC_NOFILE("From JS: lool: some object");
+        LOG_DBG("From JS: lool: some object");
 }
 
 extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager);
@@ -264,7 +264,7 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
 
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
-                                     LOG_TRC_NOFILE(line);
+                                     LOG_DBG(line);
                                  });
 
     std::thread([]
@@ -276,15 +276,17 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
                     Util::setThreadName("app");
                     while (true)
                     {
+                        LOG_DBG("Creating LOOLWSD");
                         loolwsd = new LOOLWSD();
                         loolwsd->run(1, argv);
                         delete loolwsd;
-                        LOG_TRC("One run of LOOLWSD completed");
+                        LOG_DBG("One run of LOOLWSD completed");
                         std::this_thread::sleep_for(std::chrono::milliseconds(100));
                     }
                 }).detach();
 
     fakeClientFd = fakeSocketSocket();
+    LOG_DBG("createLOOLWSD created fakeClientFd: " << fakeClientFd);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
