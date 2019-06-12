@@ -112,7 +112,6 @@ L.Map = L.Evented.extend({
 		this.addHandler('keyboard', L.Map.Keyboard);
 		this.addHandler('dragging', L.Map.Drag);
 		if (L.Browser.touch && !L.Browser.pointer) {
-			//this.addHandler('tap', L.Map.Tap);
 			this.dragging.disable();
 			this.options.inertia = false;
 			this.dragging._draggable._manualDrag = true;
