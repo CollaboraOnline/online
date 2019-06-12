@@ -3,7 +3,7 @@
  * L.Control.MobileInput.
  */
 
-/* global Hammer */
+/* global Hammer vex _ */
 L.Control.MobileInput = L.Control.extend({
 	options: {
 		position: 'topleft'
@@ -325,7 +325,17 @@ L.Control.MobileInput = L.Control.extend({
 		}
 
 		L.DomEvent.stopPropagation(e);
-	}
+	},
+
+	warnCopyPaste: function() {
+		var self = this;
+		vex.dialog.alert({
+			message: _('<p>Your browser has very limited access to the clipboard</p>'),
+			callback: function () {
+				self._map.focus();
+			}
+		});
+	},
 });
 
 L.control.mobileInput = function (options) {
