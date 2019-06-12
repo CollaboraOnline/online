@@ -483,7 +483,7 @@ public:
             return; // all well
         LOG_DBG("Ununusual - SocketPoll used from a new thread");
         _owner = us;
-        for (auto it : _pollSockets)
+        for (const auto& it : _pollSockets)
             it->setThreadOwner(us);
         // _newSockets are adapted as they are inserted.
     }
