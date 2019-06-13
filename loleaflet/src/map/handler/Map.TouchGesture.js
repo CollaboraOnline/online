@@ -133,7 +133,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._cellSelections = false;
 
 		if (!this._map.hasFocus()) {
-			setTimeout(L.bind(this._map.focus, this._map), 0);
+			this._map.focus();
 		}
 	},
 
