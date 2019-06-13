@@ -89,7 +89,7 @@ public:
         socket->sendBytes(str.c_str(), str.size());
     }
 
-    bool expectString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, std::string str)
+    bool expectString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, const std::string& str)
     {
         char buffer[str.size() + 64];
         memset(&buffer, 0, sizeof(buffer));
