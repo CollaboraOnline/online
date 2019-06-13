@@ -287,6 +287,7 @@ L.Control.LokDialog = L.Control.extend({
 			return;
 
 		if (e.action === 'invalidate') {
+			this.wasInvalidated = true;
 			var parent = this._getParentId(e.id);
 			var rectangle = e.rectangle;
 			if (parent) { // this is a floating window
@@ -665,6 +666,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 		zoomTargets.push({key: targetId, value: zoomTarget, titlebar: titlebar, transformation: transformation, initialState: state, width:width, height: height});
 
+		var that = this;
 		var hammerTitlebar = new Hammer(titlebar);
 		hammerTitlebar.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
 		hammerTitlebar.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerTitlebar.get('pan')]);
@@ -697,7 +699,13 @@ L.Control.LokDialog = L.Control.extend({
 		hammerContent.on('pinchstart pinchmove', this.onPinch);
 		hammerContent.on('hammer.input', function(ev) {
 			if (ev.isFirst) {
+				that.wasInvalidated = false;
 				draggedObject = ev.target;
+			}
+			else if (that.wasInvalidated) {
+				draggedObject = null;
+				that.wasInvalidated = false;
+				return;
 			}
 
 			if (ev.isFinal && draggedObject) {
