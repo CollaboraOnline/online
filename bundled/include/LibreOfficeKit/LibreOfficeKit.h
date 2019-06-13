@@ -328,18 +328,6 @@ struct _LibreOfficeKitDocumentClass
                             const int width, const int height,
                             const double dpiscale);
 
-#ifdef IOS
-    /// @see lok::Document::paintTileToCGContext().
-    void (*paintTileToCGContext) (LibreOfficeKitDocument* pThis,
-                                  void* rCGContext,
-                                  const int nCanvasWidth,
-                                  const int nCanvasHeight,
-                                  const int nTilePosX,
-                                  const int nTilePosY,
-                                  const int nTileWidth,
-                                  const int nTileHeight);
-#endif // IOS
-
 // CERTIFICATE AND SIGNING
 
     /// @see lok::Document::insertCertificate().
@@ -356,12 +344,27 @@ struct _LibreOfficeKitDocumentClass
 
     /// @see lok::Document::getSignatureState().
     int (*getSignatureState) (LibreOfficeKitDocument* pThis);
+// END CERTIFICATE AND SIGNING
 
     /// @see lok::Document::renderShapeSelection
     size_t (*renderShapeSelection)(LibreOfficeKitDocument* pThis, char** pOutput);
 
     /// @see lok::Document::createViewWithOptions().
     int (*createViewWithOptions) (LibreOfficeKitDocument* pThis, const char* pOptions);
+
+    /// @see lok::Document::postWindowGestureEvent().
+    void (*postWindowGestureEvent) (LibreOfficeKitDocument* pThis,
+                                  unsigned nWindowId,
+                                  const char* pType,
+                                  int nX,
+                                  int nY,
+                                  int nOffset);
+
+    /// @see lok::Document::selectPart().
+    void (*selectPart) (LibreOfficeKitDocument* pThis, int nPart, int nSelect);
+
+    /// @see lok::Document::moveSelectedParts().
+    void (*moveSelectedParts) (LibreOfficeKitDocument* pThis, int nPosition, bool bDuplicate);
 
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
