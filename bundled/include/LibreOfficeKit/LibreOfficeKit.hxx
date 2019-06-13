@@ -561,34 +561,6 @@ public:
         mpDoc->pClass->postWindowExtTextInputEvent(mpDoc, nWindowId, nType, pText);
     }
 
-#ifdef IOS
-    /**
-     * Renders a subset of the document to a Core Graphics context.
-     *
-     * Note that the buffer size and the tile size implicitly supports
-     * rendering at different zoom levels, as the number of rendered pixels and
-     * the rendered rectangle of the document are independent.
-     *
-     * @param rCGContext the CGContextRef, cast to a void*.
-     * @param nCanvasHeight number of pixels in a column of pBuffer.
-     * @param nTilePosX logical X position of the top left corner of the rendered rectangle, in TWIPs.
-     * @param nTilePosY logical Y position of the top left corner of the rendered rectangle, in TWIPs.
-     * @param nTileWidth logical width of the rendered rectangle, in TWIPs.
-     * @param nTileHeight logical height of the rendered rectangle, in TWIPs.
-     */
-    void paintTileToCGContext(void* rCGContext,
-                              const int nCanvasWidth,
-                              const int nCanvasHeight,
-                              const int nTilePosX,
-                              const int nTilePosY,
-                              const int nTileWidth,
-                              const int nTileHeight)
-    {
-        return mpDoc->pClass->paintTileToCGContext(mpDoc, rCGContext, nCanvasWidth, nCanvasHeight,
-                                                   nTilePosX, nTilePosY, nTileWidth, nTileHeight);
-    }
-#endif // IOS
-
     /**
      *  Insert certificate (in binary form) to the certificate store.
      */
@@ -631,6 +603,37 @@ public:
     size_t renderShapeSelection(char** pOutput)
     {
         return mpDoc->pClass->renderShapeSelection(mpDoc, pOutput);
+    }
+
+    /**
+     * Posts a gesture event to the window with given id.
+     *
+     * @param nWindowId
+     * @param pType Event type, like panStart, panEnd, panUpdate.
+     * @param nX horizontal position in document coordinates
+     * @param nY vertical position in document coordinates
+     * @param nOffset difference value from when the gesture started to current value
+     */
+    void postWindowGestureEvent(unsigned nWindowId,
+                              const char* pType,
+                              int nX, int nY, int nOffset)
+    {
+        return mpDoc->pClass->postWindowGestureEvent(mpDoc, nWindowId, pType, nX, nY, nOffset);
+    }
+
+    /// Set a part's selection mode.
+    /// nSelect is 0 to deselect, 1 to select, and 2 to toggle.
+    void selectPart(int nPart, int nSelect)
+    {
+        mpDoc->pClass->selectPart(mpDoc, nPart, nSelect);
+    }
+
+    /// Moves the selected pages/slides to a new position.
+    /// nPosition is the new position where the selection
+    /// should go. bDuplicate when true will copy instead of move.
+    void moveSelectedParts(int nPosition, bool bDuplicate)
+    {
+        mpDoc->pClass->moveSelectedParts(mpDoc, nPosition, bDuplicate);
     }
 
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
