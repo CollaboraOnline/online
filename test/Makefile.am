@@ -129,7 +129,7 @@ check-local:
 TESTS = unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
         unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-        unit-wopi-documentconflict.la unit_wopi_renamefile.la \
+        unit-wopi-documentconflict.la unit_wopi_renamefile.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
 # TESTS += unit-storage.la
