@@ -30,7 +30,6 @@ const int SHOW_JS_MAXLEN = 70;
 int loolwsd_server_socket_fd = -1;
 
 static std::string fileURL;
-static LOOLWSD *loolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
 static JavaVM* javaVM = nullptr;
@@ -275,7 +274,6 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
 
     std::thread([]
                 {
-                    assert(loolwsd == nullptr);
                     char *argv[2];
                     argv[0] = strdup("mobile");
                     argv[1] = nullptr;
@@ -283,9 +281,10 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
                     while (true)
                     {
                         LOG_DBG("Creating LOOLWSD");
-                        loolwsd = new LOOLWSD();
-                        loolwsd->run(1, argv);
-                        delete loolwsd;
+                        {
+                            std::unique_ptr<LOOLWSD> loolwsd(new LOOLWSD());
+                            loolwsd->run(1, argv);
+                        }
                         LOG_DBG("One run of LOOLWSD completed");
                         std::this_thread::sleep_for(std::chrono::milliseconds(100));
                     }
