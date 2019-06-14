@@ -134,6 +134,10 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
     {
         LOG_DBG("From JS: lool: " << string_value);
 
+        // we need a copy, because we can get a new one while we are still
+        // taking down the old one
+        const int currentFakeClientFd = fakeClientFd;
+
         if (strcmp(string_value, "HULLO") == 0)
         {
             // Now we know that the JS has started completely
@@ -141,7 +145,8 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
             // Contact the permanently (during app lifetime) listening LOOLWSD server
             // "public" socket
             assert(loolwsd_server_socket_fd != -1);
-            int rc = fakeSocketConnect(fakeClientFd, loolwsd_server_socket_fd);
+
+            int rc = fakeSocketConnect(currentFakeClientFd, loolwsd_server_socket_fd);
             assert(rc != -1);
 
             // Create a socket pair to notify the below thread when the document has been closed
@@ -152,13 +157,13 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
             jclass mainActivityClz = (jclass) env->NewGlobalRef(clz);
             jobject mainActivityObj = env->NewGlobalRef(instance);
 
-            std::thread([&mainActivityClz, &mainActivityObj]
+            std::thread([&mainActivityClz, &mainActivityObj, currentFakeClientFd]
                         {
                             Util::setThreadName("app2js");
                             while (true)
                             {
                                struct pollfd pollfd[2];
-                               pollfd[0].fd = fakeClientFd;
+                               pollfd[0].fd = currentFakeClientFd;
                                pollfd[0].events = POLLIN;
                                pollfd[1].fd = closeNotificationPipeForForwardingThread[1];
                                pollfd[1].events = POLLIN;
@@ -166,6 +171,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
                                {
                                    if (pollfd[1].revents == POLLIN)
                                    {
+                                       LOG_DBG("app2js: closing the sockets");
                                        // The code below handling the "BYE" fake Websocket
                                        // message has closed the other end of the
                                        // closeNotificationPipeForForwardingThread. Let's close
@@ -180,17 +186,17 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
 
                                        // Close our end of the fake socket connection to the
                                        // ClientSession thread, so that it terminates
-                                       fakeSocketClose(fakeClientFd);
+                                       fakeSocketClose(currentFakeClientFd);
 
                                        return;
                                    }
                                    if (pollfd[0].revents == POLLIN)
                                    {
-                                       int n = fakeSocketAvailableDataLength(fakeClientFd);
+                                       int n = fakeSocketAvailableDataLength(currentFakeClientFd);
                                        if (n == 0)
                                            return;
                                        std::vector<char> buf(n);
-                                       n = fakeSocketRead(fakeClientFd, buf.data(), n);
+                                       n = fakeSocketRead(currentFakeClientFd, buf.data(), n);
                                        send2JS(mainActivityClz, mainActivityObj, buf);
                                    }
                                }
@@ -205,13 +211,13 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
             LOG_DBG("Actually sending to Online:" << fileURL);
 
             // Must do this in a thread, too, so that we can return to the GTK+ main loop
-            std::thread([]
+            std::thread([=]
                         {
                             struct pollfd pollfd;
-                            pollfd.fd = fakeClientFd;
+                            pollfd.fd = currentFakeClientFd;
                             pollfd.events = POLLOUT;
                             fakeSocketPoll(&pollfd, 1, -1);
-                            fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+                            fakeSocketWrite(currentFakeClientFd, fileURL.c_str(), fileURL.size());
                         }).detach();
         }
         else if (strcmp(string_value, "BYE") == 0)
@@ -220,8 +226,6 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
 
             // Close one end of the socket pair, that will wake up the forwarding thread above
             fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
-
-            // ???
         }
         else if (strcmp(string_value, "PRINT") == 0 && false /* FIXME disabled so far */)
         {
@@ -238,10 +242,10 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
             std::thread([=]
                         {
                             struct pollfd pollfd;
-                            pollfd.fd = fakeClientFd;
+                            pollfd.fd = currentFakeClientFd;
                             pollfd.events = POLLOUT;
                             fakeSocketPoll(&pollfd, 1, -1);
-                            fakeSocketWrite(fakeClientFd, string_copy, strlen(string_copy));
+                            fakeSocketWrite(currentFakeClientFd, string_copy, strlen(string_copy));
                             free(string_copy);
                         }).detach();
         }
@@ -282,6 +286,8 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
                     {
                         LOG_DBG("Creating LOOLWSD");
                         {
+                            fakeClientFd = fakeSocketSocket();
+                            LOG_DBG("createLOOLWSD created fakeClientFd: " << fakeClientFd);
                             std::unique_ptr<LOOLWSD> loolwsd(new LOOLWSD());
                             loolwsd->run(1, argv);
                         }
@@ -289,9 +295,6 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
                         std::this_thread::sleep_for(std::chrono::milliseconds(100));
                     }
                 }).detach();
-
-    fakeClientFd = fakeSocketSocket();
-    LOG_DBG("createLOOLWSD created fakeClientFd: " << fakeClientFd);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
