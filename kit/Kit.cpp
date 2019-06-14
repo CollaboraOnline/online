@@ -2718,12 +2718,12 @@ void lokit_main(
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #else
-        LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
+        static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
 #endif
 
         assert(kit);
 
-        std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
+        static std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
         assert(loKit);
 
         LOOLWSD::LOKitVersion = loKit->getVersionInfo();
