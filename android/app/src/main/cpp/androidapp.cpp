@@ -34,6 +34,7 @@ static LOOLWSD *loolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
 static JavaVM* javaVM = nullptr;
+static bool lokInitialized = false;
 
 extern "C" JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM* vm, void*) {
@@ -256,9 +257,14 @@ extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstr
 extern "C" JNIEXPORT void JNICALL
 Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL)
 {
-    libreofficekit_initialize(env, dataDir, cacheDir, apkFile, assetManager);
-
     fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
+
+    // already initialized?
+    if (lokInitialized)
+        return;
+
+    lokInitialized = true;
+    libreofficekit_initialize(env, dataDir, cacheDir, apkFile, assetManager);
 
     Util::setThreadName("main");
 
