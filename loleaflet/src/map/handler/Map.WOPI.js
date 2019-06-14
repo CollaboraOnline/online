@@ -136,29 +136,51 @@ L.Map.WOPI = L.Handler.extend({
 	},
 
 	_postMessageListener: function(e) {
-		if (!window.WOPIPostmessageReady) {
-			return;
-		}
 
 		var msg = JSON.parse(e.data);
-		if (msg.MessageId === 'Host_PostmessageReady') {
-			// We already have a listener for this in loleaflet.html, so ignore it here
-			return;
-		}
 
-		// allow closing documents before they are completely loaded
-		if (msg.MessageId === 'Close_Session') {
-			this._map._socket.sendMessage('closedocument');
-			return;
+		// Exception: UI modification can be done before WOPIPostmessageReady was fullfiled
+		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button') {
+			if (!msg.Values) {
+				console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				console.error('Property "Values.id" not set');
+				return;
+			}
+			var toolbar = w2ui['editbar'];
+			if (!toolbar || !toolbar.get(msg.Values.id)) {
+				console.error('Toolbar button with id "' + msg.Values.id + '" not found.');
+				return;
+			}
+			if (msg.MessageId === 'Show_Button') {
+				toolbar.show(msg.Values.id);
+			} else {
+				toolbar.hide(msg.Values.id);
+			}
 		}
+		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
+			if (!msg.Values) {
+				console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				console.error('Property "Values.id" not set');
+				return;
+			}
+			if (!this._map.menubar || !this._map.menubar.hasItem(msg.Values.id)) {
+				console.error('Menu item with id "' + msg.Values.id + '" not found.');
+				return;
+			}
 
-		// For all other messages, warn if trying to interact before we are completely loaded
-		if (!this._appLoaded) {
-			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
-			return;
+			if (msg.MessageId === 'Show_Menu_Item') {
+				this._map.menubar.showItem(msg.Values.id);
+			} else {
+				this._map.menubar.hideItem(msg.Values.id);
+			}
 		}
-
-		if (msg.MessageId === 'Insert_Button') {
+		else if (msg.MessageId === 'Insert_Button') {
 			if (msg.Values) {
 				if (msg.Values.id && !w2ui['editbar'].get(msg.Values.id)
 				    && msg.Values.imgurl) {
@@ -195,55 +217,33 @@ L.Map.WOPI = L.Handler.extend({
 				}
 			}
 		}
-		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button') {
-			if (!msg.Values) {
-				console.error('Property "Values" not set');
-				return;
-			}
-			if (!msg.Values.id) {
-				console.error('Property "Values.id" not set');
-				return;
-			}
-			if (this._map._permission !== 'edit') {
-				console.log('No toolbar in readonly mode - ignoring request.');
-				return;
-			}
-			if (!w2ui['editbar'].get(msg.Values.id)) {
-				console.error('Toolbar button with id "' + msg.Values.id + '" not found.');
-				return;
-			}
-			if (msg.MessageId === 'Show_Button') {
-				w2ui['editbar'].show(msg.Values.id);
-			} else {
-				w2ui['editbar'].hide(msg.Values.id);
-			}
+		if (!window.WOPIPostmessageReady) {
+			return;
 		}
-		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
-			if (!msg.Values) {
-				console.error('Property "Values" not set');
-				return;
-			}
-			if (!msg.Values.id) {
-				console.error('Property "Values.id" not set');
-				return;
-			}
-			if (this._map._permission !== 'edit') {
-				console.log('Readonly mode - ignoring Hide_Menu_Item request.');
-				return;
-			}
 
-			if (!this._map.menubar || !this._map.menubar.hasItem(msg.Values.id)) {
-				console.error('Menu item with id "' + msg.Values.id + '" not found.');
-				return;
-			}
-
-			if (msg.MessageId === 'Show_Menu_Item') {
-				this._map.menubar.showItem(msg.Values.id);
-			} else {
-				this._map.menubar.hideItem(msg.Values.id);
-			}
+		if (msg.MessageId === 'Host_PostmessageReady') {
+			// We already have a listener for this in loleaflet.html, so ignore it here
+			return;
 		}
-		else if (msg.MessageId === 'Set_Settings') {
+
+		if (msg.MessageId === 'Grab_Focus') {
+			this._map.makeActive();
+			return;
+		}
+
+		// allow closing documents before they are completely loaded
+		if (msg.MessageId === 'Close_Session') {
+			this._map._socket.sendMessage('closedocument');
+			return;
+		}
+
+		// For all other messages, warn if trying to interact before we are completely loaded
+		if (!this._appLoaded) {
+			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
+			return;
+		}
+
+		if (msg.MessageId === 'Set_Settings') {
 			if (msg.Values) {
 				var alwaysActive = msg.Values.AlwaysActive;
 				this._map.options.alwaysActive = !!alwaysActive;
