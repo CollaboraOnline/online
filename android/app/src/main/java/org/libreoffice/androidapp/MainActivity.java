@@ -313,9 +313,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "Stop LOOLWSD instance");
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() - unload the document");
         postMobileMessageNative("BYE");
     }
 
