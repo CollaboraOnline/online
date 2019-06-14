@@ -142,7 +142,7 @@ L.Map.WOPI = L.Handler.extend({
 	},
 
 	_postMessageListener: function(e) {
-		if (!window.WOPIPostmessageReady || (e.origin !== window.parent.origin)) {
+		if (e.origin !== window.parent.origin) {
 			return;
 		}
 
@@ -154,29 +154,81 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
-		if (msg.MessageId === 'Host_PostmessageReady') {
-			// We already have a listener for this in loleaflet.html, so ignore it here
-			return;
-		}
-
-		if (msg.MessageId === 'Grab_Focus') {
-			this._map.makeActive();
-			return;
-		}
-
 		// allow closing documents before they are completely loaded
 		if (msg.MessageId === 'Close_Session') {
 			this._map._socket.sendMessage('closedocument');
 			return;
 		}
 
-		// For all other messages, warn if trying to interact before we are completely loaded
-		if (!this._appLoaded) {
-			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
-			return;
+		// Exception: UI modification can be done before WOPIPostmessageReady was fullfiled
+		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button' || msg.MessageId === 'Remove_Button') {
+			if (!msg.Values) {
+				console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				console.error('Property "Values.id" not set');
+				return;
+			}
+			var toolbar = w2ui['editbar'];
+			if (!toolbar || !toolbar.get(msg.Values.id)) {
+				console.error('Toolbar button with id "' + msg.Values.id + '" not found.');
+				return;
+			}
+			if (msg.MessageId === 'Show_Button') {
+				toolbar.show(msg.Values.id);
+			} else {
+				toolbar.hide(msg.Values.id);
+			}
 		}
+		else if (msg.MessageId === 'Remove_Statusbar_Element') {
+			if (!msg.Values) {
+				console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				console.error('Property "Values.id" not set');
+				return;
+			}
+			if (!w2ui['actionbar'].get(msg.Values.id)) {
+				console.error('Statusbar element with id "' + msg.Values.id + '" not found.');
+				return;
+			}
+			w2ui['actionbar'].remove(msg.Values.id);
+		}
+		else if (msg.MessageId === 'Show_Menubar') {
+			this._map.showMenubar();
+		}
+		else if (msg.MessageId === 'Hide_Menubar') {
+			this._map.hideMenubar();
+		}
+		else if (msg.MessageId === 'Show_Ruler') {
+			this._map.showRuler();
+		}
+		else if (msg.MessageId === 'Hide_Ruler') {
+			this._map.hideRuler();
+		}
+		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
+			if (!msg.Values) {
+				console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				console.error('Property "Values.id" not set');
+				return;
+			}
+			if (!this._map.menubar || !this._map.menubar.hasItem(msg.Values.id)) {
+				console.error('Menu item with id "' + msg.Values.id + '" not found.');
+				return;
+			}
 
-		if (msg.MessageId === 'Insert_Button') {
+			if (msg.MessageId === 'Show_Menu_Item') {
+				this._map.menubar.showItem(msg.Values.id);
+			} else {
+				this._map.menubar.hideItem(msg.Values.id);
+			}
+		}
+		else if (msg.MessageId === 'Insert_Button') {
 			if (msg.Values) {
 				if (msg.Values.id && !w2ui['editbar'].get(msg.Values.id)
 				    && msg.Values.imgurl) {
@@ -217,59 +269,35 @@ L.Map.WOPI = L.Handler.extend({
 				}
 			}
 		}
-		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button' || msg.MessageId === 'Remove_Button') {
-			if (!msg.Values) {
-				console.error('Property "Values" not set');
-				return;
-			}
-			if (!msg.Values.id) {
-				console.error('Property "Values.id" not set');
-				return;
-			}
-			if (this._map._permission !== 'edit') {
-				console.log('No toolbar in readonly mode - ignoring request.');
-				return;
-			}
-			if (!w2ui['editbar'].get(msg.Values.id)) {
-				console.error('Toolbar button with id "' + msg.Values.id + '" not found.');
-				return;
-			}
-			if (msg.MessageId === 'Show_Button') {
-				w2ui['editbar'].show(msg.Values.id);
-			} else if (msg.MessageId === 'Hide_Button') {
-				w2ui['editbar'].hide(msg.Values.id);
-			} else {
-				w2ui['editbar'].remove(msg.Values.id);
-			}
+
+		// All following actions must be done after initialization is completed.
+		if (!window.WOPIPostmessageReady) {
+			return;
 		}
-		if (msg.MessageId === 'Remove_Statusbar_Element') {
-			if (!msg.Values) {
-				console.error('Property "Values" not set');
-				return;
-			}
-			if (!msg.Values.id) {
-				console.error('Property "Values.id" not set');
-				return;
-			}
-			if (!w2ui['actionbar'].get(msg.Values.id)) {
-				console.error('Statusbar element with id "' + msg.Values.id + '" not found.');
-				return;
-			}
-			w2ui['actionbar'].remove(msg.Values.id);
+
+		if (msg.MessageId === 'Host_PostmessageReady') {
+			// We already have a listener for this in loleaflet.html, so ignore it here
+			return;
 		}
-		else if (msg.MessageId === 'Show_Menubar') {
-			this._map.showMenubar();
+
+		if (msg.MessageId === 'Grab_Focus') {
+			this._map.makeActive();
+			return;
 		}
-		else if (msg.MessageId === 'Hide_Menubar') {
-			this._map.hideMenubar();
+
+		// allow closing documents before they are completely loaded
+		if (msg.MessageId === 'Close_Session') {
+			this._map._socket.sendMessage('closedocument');
+			return;
 		}
-		else if (msg.MessageId === 'Show_Ruler') {
-			this._map.showRuler();
+
+		// For all other messages, warn if trying to interact before we are completely loaded
+		if (!this._appLoaded) {
+			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
+			return;
 		}
-		else if (msg.MessageId === 'Hide_Ruler') {
-			this._map.hideRuler();
-		}
-		else if (msg.MessageId === 'Set_Settings') {
+
+		if (msg.MessageId === 'Set_Settings') {
 			if (msg.Values) {
 				var alwaysActive = msg.Values.AlwaysActive;
 				this._map.options.alwaysActive = !!alwaysActive;
