@@ -936,7 +936,7 @@ namespace HttpHelper
 
 bool StreamSocket::sniffSSL() const
 {
-    // Only sniffing the first bytes of a sockte.
+    // Only sniffing the first bytes of a socket.
     if (_bytesSent > 0 || _bytesRecvd != _inBuffer.size() || _bytesRecvd < 6)
         return false;
 
