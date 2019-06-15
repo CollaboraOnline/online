@@ -53,27 +53,44 @@ L.Control.LokDialog = L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
 
-	onPan: function (ev) {
+	onPan: function (ev, dialogID) {
 		var id = toZoomTargetId(ev.target.id);
 		var target = findZoomTarget(id);
 
 		if (target) {
-			var newX = target.initialState.startX + ev.deltaX;
-			var newY = target.initialState.startY + ev.deltaY;
+			if (ev.pointers.length == 1) {
+				if (ev.type == 'panstart') {
+					firstTouchPositionX = ev.pointers[0].offsetX;
+					firstTouchPositionY = ev.pointers[0].offsetY;
+					this._postWindowGestureEvent(dialogID, 'panBegin', firstTouchPositionX, firstTouchPositionY, ev.deltaY);
+				}
+				else if (ev.type == 'panstop') {
+					this._postWindowGestureEvent(dialogID, 'panEnd', firstTouchPositionX, firstTouchPositionY, ev.deltaY);
+					firstTouchPositionX = null;
+					firstTouchPositionY = null;
+				}
+				else {
+					this._postWindowGestureEvent(dialogID, 'panUpdate', firstTouchPositionX, firstTouchPositionY, ev.deltaY);
+				}
+			}
+			else {
+				var newX = target.initialState.startX + ev.deltaX;
+				var newY = target.initialState.startY + ev.deltaY;
 
-			// Don't allow to put dialog outside the view
-			if (window.mode.isDesktop() &&
-				(newX < -target.width/2 || newY < -target.height/2
-				|| newX > window.innerWidth - target.width/2
-				|| newY > window.innerHeight - target.height/2))
-				return;
+				// Don't allow to put dialog outside the view
+				if (window.mode.isDesktop() &&
+					(newX < -target.width/2 || newY < -target.height/2
+					|| newX > window.innerWidth - target.width/2
+					|| newY > window.innerHeight - target.height/2))
+					return;
 
-			target.transformation.translate = {
-				x: newX,
-				y: newY
-			};
+				target.transformation.translate = {
+					x: newX,
+					y: newY
+				};
 
-			updateTransformation(target);
+				updateTransformation(target);
+			}
 		}
 	},
 
@@ -499,6 +516,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_setupGestures: function(id, canvas) {
+		var self = this;
+		var dialogID = id;
 		var targetId = toZoomTargetId(canvas.id);
 		var zoomTarget = $('#' + targetId).parent().get(0);
 
@@ -538,7 +557,9 @@ L.Control.LokDialog = L.Control.extend({
 		hammerAll.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
 		hammerAll.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([hammerAll.get('pan')]);
 
-		hammerAll.on('panstart panmove', this.onPan);
+		hammerAll.on('panstart panmove panstop', function(ev) {
+			self.onPan(ev, dialogID);
+		});
 		hammerAll.on('pinchstart pinchmove', this.onPinch);
 		hammerAll.on('hammer.input', function(ev) {
 			if (ev.isFinal) {
