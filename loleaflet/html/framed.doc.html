@@ -76,6 +76,12 @@
             });
       }
 
+      function disable_default_uiaction(action, disable) {
+        post({'MessageId': 'Disable_Default_UIAction',
+              'Values': { 'action': action, 'disable': disable }
+            });
+      }
+
       // This function is invoked when the iframe posts a message back.
 
       function receiveMessage(event) {
@@ -115,6 +121,8 @@
       <button onclick="show_commands('save'); return false;">Show Save Commands</button></br>
       <button onclick="hide_commands('print'); return false;">Hide Print Commands</button>
       <button onclick="show_commands('print'); return false;">Show Print Commands</button></br></br>
+      <button onclick="disable_default_uiaction('UI_Save', true); return false;">Disable default save action</button></br>
+      <button onclick="disable_default_uiaction('UI_Save', false); return false;">Enable default save action</button></br></br>
     </form>
 
     <!-- The hostname and pathnames below are obviously specific to my

@@ -105,7 +105,10 @@ function onClick(e, id, item, subItem) {
 		}
 	}
 	else if (id === 'save') {
-		map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
+		map.fire('postMessage', {msgId: 'UI_Save'});
+		if (!map._disableDefaultAction['UI_Save']) {
+			map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
+		}
 	}
 	else if (id === 'repair') {
 		map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');

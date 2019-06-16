@@ -325,6 +325,17 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.CallPythonScriptSource = e.source;
 			this._map.sendUnoCommand('vnd.sun.star.script:' + msg.ScriptFile + '$' + msg.Function + '?language=Python&location=share', msg.Values);
 		}
+		else if (msg.MessageId === 'Disable_Default_UIAction') {
+			// Disable the default handler and action for a UI command.
+			// When set to true, the given UI command will issue a postmessage
+			// only. For example, UI_Save will be issued for invoking the save
+			// command (from the menu, toolbar, or keyboard shortcut) and no
+			// action will take place if 'UI_Save' is disabled via
+			// the Disable_Default_UIAction command.
+			if (msg.Values && msg.Values.action && msg.Values.disable !== undefined) {
+				this._map._disableDefaultAction[msg.Values.action] = msg.Values.disable;
+			}
+		}
 	},
 
 	_postMessage: function(e) {

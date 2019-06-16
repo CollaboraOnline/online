@@ -95,6 +95,7 @@ L.Map = L.Evented.extend({
 		this._debugAlwaysActive = false; // disables the dimming / document inactivity when true
 		this._serverRecycling = false;
 		this._documentIdle = false;
+		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
 
 		vex.dialogID = -1;
 
