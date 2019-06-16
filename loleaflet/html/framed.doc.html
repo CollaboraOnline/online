@@ -46,6 +46,30 @@
             });
       }
 
+      function save() {
+        post({'MessageId': 'Action_Save',
+              'Values': { 'Notify': true, }
+            });
+      }
+
+      function hide_commands(id) {
+        post({'MessageId': 'Hide_Menu_Item',
+              'Values': { 'id': id, }
+            });
+        post({'MessageId': 'Hide_Button',
+              'Values': { 'id': id, }
+            });
+      }
+
+      function show_commands(id) {
+        post({'MessageId': 'Show_Menu_Item',
+              'Values': { 'id': id, }
+            });
+        post({'MessageId': 'Show_Button',
+              'Values': { 'id': id, }
+            });
+      }
+
       // This function is invoked when the iframe posts a message back.
 
       function receiveMessage(event) {
@@ -78,7 +102,12 @@
     </form>
 
     <form id="insert-text-form">
-      Click <button onclick="capitalize(); return false;">here</button> to capitalize selected text in the document:
+      Click <button onclick="capitalize(); return false;">here</button> to capitalize selected text in the document.</br></br>
+      <button onclick="save(); return false;">Save</button></br></br>
+      <button onclick="hide_commands('save'); return false;">Hide Save Commands</button>
+      <button onclick="show_commands('save'); return false;">Show Save Commands</button></br>
+      <button onclick="hide_commands('print'); return false;">Hide Print Commands</button>
+      <button onclick="show_commands('print'); return false;">Show Print Commands</button></br></br>
     </form>
 
     <!-- The hostname and pathnames below are obviously specific to my
