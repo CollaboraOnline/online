@@ -521,7 +521,14 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             if (tokens.size() > 2)
                 getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
 
-            docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0);
+            std::string extendedData;
+            if (tokens.size() > 3)
+                getTokenString(tokens[3], "extendedData", extendedData);
+
+            constexpr bool isAutosave = false;
+            constexpr bool isExitSave = false;
+            docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0,
+                                    isAutosave, isExitSave, extendedData);
         }
     }
     else if (tokens[0] == "savetostorage")
@@ -749,7 +756,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             std::string encodedUserExtraInfo;
             Poco::URI::encode(getUserExtraInfo(), "", encodedUserExtraInfo);
-            oss << " authorextrainfo=" << encodedUserExtraInfo; //TODO: could this include user-data?
+            oss << " authorextrainfo=" << encodedUserExtraInfo; //TODO: could this include PII?
         }
 
         oss << " readonly=" << isReadOnly();
