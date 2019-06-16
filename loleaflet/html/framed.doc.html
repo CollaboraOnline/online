@@ -10,9 +10,9 @@
 
      To test this, do 'make run', and then in your browser open the
      equivalent of
-     http://snorken.local:9980/loleaflet/3304e9093/framed.html if the
+     http://snorken.local:9980/loleaflet/3304e9093/framed.doc.html if the
      browser is running on a different machine, or
-     http://localhost:9980/loleaflet/3304e9093/framed.html if running
+     http://localhost:9980/loleaflet/3304e9093/framed.doc.html if running
      on the same machine.
 
 -->
@@ -24,34 +24,40 @@
 
     <script>
 
+      function post(msg) {
+        window.frames[0].postMessage(JSON.stringify(msg), '*');
+      }
+
       function insertText(text) {
-        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
-        window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
-                                                     'SendTime': Date.now(),
-                                                     'ScriptFile': 'InsertText.py',
-                                                     'Function': 'InsertText',
-                                                     'Values': { 'text': {'type': 'string', 'value': text}}
-                                                     }),
-                                     '*');
+        post({'MessageId': 'CallPythonScript',
+              'SendTime': Date.now(),
+              'ScriptFile': 'InsertText.py',
+              'Function': 'InsertText',
+              'Values': { 'text': {'type': 'string', 'value': text}}
+            });
       }
 
       function capitalize() {
-        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
-        window.frames[0].postMessage(JSON.stringify({'MessageId': 'CallPythonScript',
-                                                     'SendTime': Date.now(),
-                                                     'ScriptFile': 'Capitalise.py',
-                                                     'Function': 'capitalisePython',
-                                                     'Values': null
-                                                     }),
-                                     '*');
+        post({'MessageId': 'CallPythonScript',
+              'SendTime': Date.now(),
+              'ScriptFile': 'Capitalise.py',
+              'Function': 'capitalisePython',
+              'Values': null
+            });
       }
 
       // This function is invoked when the iframe posts a message back.
 
       function receiveMessage(event) {
+        console.log('==== framed.doc.html receiveMessage: ' + event.data);
         var msg = JSON.parse(event.data);
-        console.log('==== framed.html receiveMessage: ' + event.data);
-        console.log('                                 ' + msg);
+        if (msg && msg.MessageId == 'App_LoadingStatus') {
+          if (msg.Values) {
+            if (msg.Values.Status == 'Document_Loaded') {
+              window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+            }
+          }
+        }
       }
 
       // 'main' code of this <script> block, run when page is being
