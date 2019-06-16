@@ -137,7 +137,10 @@ function onClick(e, id, item, subItem) {
 		map.print();
 	}
 	else if (id === 'save') {
-		map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
+		map.fire('postMessage', {msgId: 'UI_Save'});
+		if (!map._disableDefaultAction['UI_Save']) {
+			map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
+		}
 	}
 	else if (id === 'repair') {
 		map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
@@ -296,7 +299,9 @@ function onClick(e, id, item, subItem) {
 			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
 			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
 		}
-		map.remove();
+		if (!map._disableDefaultAction['UI_Close']) {
+			map.remove();
+		}
 	}
 	else {
 		map.handleSigningClickEvent(id, item); // this handles a bunch of signing bar click events
@@ -2472,7 +2477,9 @@ $(document).ready(function() {
 	$('#closebutton').click(function() {
 		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
 		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-		map.remove();
+		if (!map._disableDefaultAction['UI_Close']) {
+			map.remove();
+		}
 	});
 
 	// Attach insert file action

@@ -502,7 +502,9 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._map._docLayer._viewId === viewId) {
 				this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
 				this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
-				this._map.remove();
+				if (!this._map._disableDefaultAction['UI_Close']) {
+					this._map.remove();
+				}
 			}
 		}
 	},
@@ -812,7 +814,7 @@ L.TileLayer = L.GridLayer.extend({
 		//first time document open, set last cursor position
 		if (this.lastCursorPos.lat === 0 && this.lastCursorPos.lng === 0)
 			this.lastCursorPos = cursorPos;
-		
+
 		var updateCursor = false;
 		if ((this.lastCursorPos.lat !== cursorPos.lat) || (this.lastCursorPos.lng !== cursorPos.lng)) {
 			updateCursor = true;

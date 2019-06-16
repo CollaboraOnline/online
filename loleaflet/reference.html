@@ -3183,6 +3183,47 @@ WOPI host to editor
 			<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
 		</td>
 	</tr>
+	<tr>
+		<td><code><b>Disable_Default_UIAction</b></code></td>
+		<td>
+			<code><nobr>action: &lt;string&gt;</nobr></code>
+			<code><nobr>disable: &lt;Boolean&gt;</nobr></code>
+		</td>
+		<td>
+			Disable the default handler and action for a UI command.<br/>
+
+			<code>action</code> is the action name to enable/disable the
+			default action for.<br/>
+
+			<code>disable</code> controls whether to disable (true) or
+			enable (false) the default action.<br/>
+
+			When set to true, the given UI command will only issue a postMessage
+			without invoking the default action, leaving it up to the client
+			to intercept the postMessage event and handle as necessary.
+			Notice that some actions do not have any default handler to
+			begin with (such as UI_SaveAs and UI_Share) and therefore this
+			will have no effect on them; they only issue postMessage notification
+			anyway without taking any action beyond that.<br/>
+
+			For example, UI_Save will be issued for invoking the save
+			command (from the menu, toolbar, or keyboard shortcut) and no
+			action will take place if 'UI_Save' is disabled via
+			the Disable_Default_UIAction command. Clients who disable
+			UI_Save should then issue Action_Save themselves, when and
+			if they desire to save the document.
+			Similarly, when disabling UI_Close, the document will not
+			close upon invoking the UI_Close action, instead a postMessage
+			notification will be issued and it will be up to the client
+			to issue Action_Close when they desire.<br/>
+
+			Clients must be careful not to issue duplicate actions when
+			the default handler is enabled, instead, they should only
+			issue actions themselves when the default is disabled.
+
+			Note: currently only UI_Save and UI_Close are supported.<br/>
+		</td>
+	</tr>
 </table>
 Editor to WOPI host
 <table data-id='postmessage-misc-to-host'>

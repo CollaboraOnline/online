@@ -726,7 +726,10 @@ L.Control.Menubar = L.Control.extend({
 	_executeAction: function(item) {
 		var id = $(item).data('id');
 		if (id === 'save') {
-			this._map.save(true, true);
+			this._map.fire('postMessage', {msgId: 'UI_Save'});
+			if (!this._map._disableDefaultAction['UI_Save']) {
+				this._map.save(true, true);
+			}
 		} else if (id === 'saveas') {
 			this._map.fire('postMessage', {msgId: 'UI_SaveAs'});
 		} else if (id === 'shareas') {
@@ -787,7 +790,9 @@ L.Control.Menubar = L.Control.extend({
 				this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
 				this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
 			}
-			this._map.remove();
+			if (!this._map._disableDefaultAction['UI_Close']) {
+				this._map.remove();
+			}
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		}
