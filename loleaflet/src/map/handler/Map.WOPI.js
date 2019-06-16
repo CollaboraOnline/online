@@ -314,6 +314,7 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Action_SaveAs') {
 			if (msg.Values) {
 				if (msg.Values.Filename !== null && msg.Values.Filename !== undefined) {
+					this._notifySave = msg.Values['Notify'];
 					this._map.showBusy(_('Creating copy...'), false);
 					this._map.saveAs(msg.Values.Filename);
 				}
