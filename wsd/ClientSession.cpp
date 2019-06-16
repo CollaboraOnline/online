@@ -81,9 +81,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     const std::vector<std::string> tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
     std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
-    if (!docBroker)
+    if (!docBroker || docBroker->isMarkedToDestroy())
     {
-        LOG_ERR("No DocBroker found. Terminating session " << getName());
+        LOG_ERR("No DocBroker found, or DocBroker marked to be destroyed. Terminating session " << getName());
         return false;
     }
 
