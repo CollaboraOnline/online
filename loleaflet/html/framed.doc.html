@@ -52,6 +52,12 @@
             });
       }
 
+      function closeDocument() {
+        post({'MessageId': 'Action_Close',
+              'Values': null
+            });
+      }
+
       function hide_commands(id) {
         post({'MessageId': 'Hide_Menu_Item',
               'Values': { 'id': id, }
@@ -103,7 +109,8 @@
 
     <form id="insert-text-form">
       Click <button onclick="capitalize(); return false;">here</button> to capitalize selected text in the document.</br></br>
-      <button onclick="save(); return false;">Save</button></br></br>
+      <button onclick="save(); return false;">Save</button>
+      <button onclick="closeDocument(); return false;">Close</button></br></br>
       <button onclick="hide_commands('save'); return false;">Hide Save Commands</button>
       <button onclick="show_commands('save'); return false;">Show Save Commands</button></br>
       <button onclick="hide_commands('print'); return false;">Hide Print Commands</button>
