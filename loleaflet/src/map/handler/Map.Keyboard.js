@@ -185,7 +185,7 @@ L.Map.Keyboard = L.Handler.extend({
 	/*
 	 * Returns true whenever the key event shall be ignored.
 	 * This means shift+insert and shift+delete (or "insert or delete when holding
-	 * shift down"). Those events are handled elsewhere to trigger "cut" and 
+	 * shift down"). Those events are handled elsewhere to trigger "cut" and
 	 * "paste" events, and need to be ignored in order to avoid double-handling them.
 	 */
 	_ignoreKeyEvent: function(e) {
@@ -539,8 +539,11 @@ L.Map.Keyboard = L.Handler.extend({
 			this._map.print();
 			return true;
 		case 83: // s
-			this._map.save(false /* An explicit save should terminate cell edit */,
-			               false /* An explicit save should save it again */);
+			this._map.fire('postMessage', {msgId: 'UI_Save'});
+			if (!this._map._disableDefaultAction['UI_Save']) {
+				this._map.save(false /* An explicit save should terminate cell edit */,
+				               false /* An explicit save should save it again */);
+			}
 			return true;
 		case 86: // v
 		case 118: // v (Safari)
