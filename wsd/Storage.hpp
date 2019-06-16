@@ -179,6 +179,7 @@ public:
     bool getIsAutosave() const { return _isAutosave; }
     void setIsExitSave(bool exitSave) { _isExitSave = exitSave; }
     bool isExitSave() const { return _isExitSave; }
+    void setExtendedData(const std::string& extendedData) { _extendedData = extendedData; }
 
     void setFileInfo(const FileInfo& fileInfo) { _fileInfo = fileInfo; }
 
@@ -211,6 +212,9 @@ protected:
     /// Returns the root path of the jail directory of docs.
     std::string getLocalRootPath() const;
 
+    /// Returns the client-provided extended data to send to the WOPI host.
+    const std::string& getExtendedData() const { return _extendedData; }
+
 private:
     const Poco::URI _uri;
     std::string _localStorePath;
@@ -228,6 +232,8 @@ private:
     bool _isAutosave;
     /// Saving on exit (when the document is cleaned up from memory)
     bool _isExitSave;
+    /// The client-provided saving extended data to send to the WOPI host.
+    std::string _extendedData;
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;

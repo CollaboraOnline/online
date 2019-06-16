@@ -268,9 +268,10 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Action_Save') {
 			var dontTerminateEdit = msg.Values && msg.Values['DontTerminateEdit'];
 			var dontSaveIfUnmodified = msg.Values && msg.Values['DontSaveIfUnmodified'];
+			var extendedData = msg.Values && msg.Values['ExtendedData'];
 			this._notifySave = msg.Values && msg.Values['Notify'];
 
-			this._map.save(dontTerminateEdit, dontSaveIfUnmodified);
+			this._map.save(dontTerminateEdit, dontSaveIfUnmodified, extendedData);
 		}
 		else if (msg.MessageId === 'Action_Close') {
 			this._map.remove();

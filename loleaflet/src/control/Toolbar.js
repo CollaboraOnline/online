@@ -143,10 +143,16 @@ L.Map.include({
 		}
 	},
 
-	save: function(dontTerminateEdit, dontSaveIfUnmodified) {
-		this._socket.sendMessage('save' +
-		                         ' dontTerminateEdit=' + (dontTerminateEdit ? 1 : 0) +
-		                         ' dontSaveIfUnmodified=' + (dontSaveIfUnmodified ? 1 : 0));
+	save: function(dontTerminateEdit, dontSaveIfUnmodified, extendedData) {
+		var msg = 'save' +
+					' dontTerminateEdit=' + (dontTerminateEdit ? 1 : 0) +
+					' dontSaveIfUnmodified=' + (dontSaveIfUnmodified ? 1 : 0);
+
+		if (extendedData !== undefined) {
+			msg += ' extendedData=' + extendedData;
+		}
+
+		this._socket.sendMessage(msg);
 	},
 
 	sendUnoCommand: function (command, json) {

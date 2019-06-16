@@ -266,7 +266,14 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (!isReadOnly() && tokens.size() > 2)
             getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
 
-        docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0);
+        std::string extendedData;
+        if (tokens.size() > 3)
+            getTokenString(tokens[3], "extendedData", extendedData);
+
+        constexpr bool isAutosave = false;
+        constexpr bool isExitSave = false;
+        docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0,
+                                isAutosave, isExitSave, extendedData);
     }
     else if (tokens[0] == "savetostorage")
     {
