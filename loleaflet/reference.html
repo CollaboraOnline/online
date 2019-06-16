@@ -2920,6 +2920,7 @@ WOPI host to editor
 		    <nobr>DontTerminateEdit: &lt;boolean&gt;</nobr>
 		    <nobr>DontSaveIfUnmodified: &lt;boolean&gt;</nobr>
 		    <nobr>Notify: &lt;boolean&gt;</nobr>
+		    <nobr>ExtendedData: &lt;String&gt;</nobr>
 		</code></td>
 		<td>Saves the document.<br/>
 		<code>DontTerminateEdit</code> is relevant for spreadsheets where saving
@@ -2928,10 +2929,16 @@ WOPI host to editor
 		user's editing session in spreadsheets.<br/>
 		<code>DontSaveIfUnmodified</code> prevents loolwsd to save the file back to storage if document is
 		unmodified (only cursor position changed etc.) but still saved. This can be helpful
-		to prevent creating unnecessary file revisions.
+		to prevent creating unnecessary file revisions.<br/>
 		<code>Notify</code> when present and set to true notifies the
 		host when document is saved. See <code>Action_Save_Resp</code>
-		for details.
+		for details.<br/>
+		<code>ExtendedData</code> optional data carried over to the WOPI host if provided
+		in the X-LOOL-WOPI-ExtendedData header. The contents are preserved as-is,
+		however, care must be taken to avoid using anything that HTTP headers do
+		not allow, also, special values such as new-line, null character, non-printable
+		characters, etc. are not allowed. The client can use this to pass multiple values
+		to the WOPI host which can then act on them.<br/>
 		</td>
 	</tr>
 	<tr>
