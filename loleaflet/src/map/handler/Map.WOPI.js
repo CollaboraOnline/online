@@ -272,6 +272,9 @@ L.Map.WOPI = L.Handler.extend({
 
 			this._map.save(dontTerminateEdit, dontSaveIfUnmodified);
 		}
+		else if (msg.MessageId === 'Action_Close') {
+			this._map.remove();
+		}
 		else if (msg.MessageId === 'Action_Print') {
 			this._map.print();
 		}
