@@ -48,7 +48,7 @@
 
       function save() {
         post({'MessageId': 'Action_Save',
-              'Values': { 'Notify': true, }
+              'Values': { 'Notify': true, 'ExtendedData': 'CustomFlag=CustomValue;AnotherFlag=AnotherValue' }
             });
       }
 
