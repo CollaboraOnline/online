@@ -65,6 +65,7 @@ L.Control.AlertDialog = L.Control.extend({
 				buttons: buttonsList,
 				callback: function() {},
 				afterClose: function () {
+					vex.dialogID = -1;
 					e.map.focus();
 					e.map.enable(true);
 				}
