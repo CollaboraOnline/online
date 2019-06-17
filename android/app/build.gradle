@@ -185,44 +185,44 @@ task createRCfiles {
 
     doLast {
         sofficerc.text = '''\
-            [Bootstrap]
-            Logo=1
-            NativeProgress=1
-            URE_BOOTSTRAP=file:///assets/program/fundamentalrc
-            HOME=$APP_DATA_DIR/cache
-            OSL_SOCKET_PATH=$APP_DATA_DIR/cache
-            '''.stripIndent()
+[Bootstrap]
+Logo=1
+NativeProgress=1
+URE_BOOTSTRAP=file:///assets/program/fundamentalrc
+HOME=$APP_DATA_DIR/cache
+OSL_SOCKET_PATH=$APP_DATA_DIR/cache
+'''.stripIndent()
 
         fundamentalrc.text = '''\
-            [Bootstrap]
-            LO_LIB_DIR=file://$APP_DATA_DIR/lib/
-            BRAND_BASE_DIR=file:///assets
-            BRAND_SHARE_SUBDIR=share
-            CONFIGURATION_LAYERS=xcsxcu:${BRAND_BASE_DIR}/share/registry res:${BRAND_BASE_DIR}/share/registry
-            URE_BIN_DIR=file:///assets/ure/bin/dir/nothing-here/we-can/exec-anyway
-            '''.stripIndent()
+[Bootstrap]
+LO_LIB_DIR=file://$APP_DATA_DIR/lib/
+BRAND_BASE_DIR=file:///assets
+BRAND_SHARE_SUBDIR=share
+CONFIGURATION_LAYERS=xcsxcu:${BRAND_BASE_DIR}/share/registry res:${BRAND_BASE_DIR}/share/registry
+URE_BIN_DIR=file:///assets/ure/bin/dir/nothing-here/we-can/exec-anyway
+'''.stripIndent()
 
         bootstraprc.text = '''\
-            [Bootstrap]
-            InstallMode=<installmode>
-            ProductKey=LibreOffice ''' + "${liboVersionMajor}.${liboVersionMinor}" + '''
-            UserInstallation=file://$APP_DATA_DIR
-            '''.stripIndent()
+[Bootstrap]
+InstallMode=<installmode>
+ProductKey=LibreOffice ''' + "${liboVersionMajor}.${liboVersionMinor}" + '''
+UserInstallation=file://$APP_DATA_DIR
+'''.stripIndent()
 
         unorc.text = '''\
-            [Bootstrap]
-            URE_INTERNAL_LIB_DIR=file://$APP_DATA_DIR/lib/
-            UNO_TYPES=file://$APP_DATA_DIR/program/udkapi.rdb file://$APP_DATA_DIR/program/offapi.rdb file://$APP_DATA_DIR/program/oovbaapi.rdb
-            UNO_SERVICES=file:///assets/program/services.rdb file:///assets/program/services/services.rdb
-            '''.stripIndent()
+[Bootstrap]
+URE_INTERNAL_LIB_DIR=file://$APP_DATA_DIR/lib/
+UNO_TYPES=file://$APP_DATA_DIR/program/udkapi.rdb file://$APP_DATA_DIR/program/offapi.rdb file://$APP_DATA_DIR/program/oovbaapi.rdb
+UNO_SERVICES=file:///assets/program/services.rdb file:///assets/program/services/services.rdb
+'''.stripIndent()
 
         versionrc.text = '''\
-            [Version]
-            AllLanguages=en-US
-            BuildVersion=
-            buildid=''' + "${liboGitFullCommit}" + '''
-            ReferenceOOoMajorMinor=4.1
-            '''.stripIndent()
+[Version]
+AllLanguages=en-US
+BuildVersion=
+buildid=''' + "${liboGitFullCommit}" + '''
+ReferenceOOoMajorMinor=4.1
+'''.stripIndent()
     }
 }
 
