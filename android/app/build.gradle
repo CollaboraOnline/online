@@ -135,8 +135,11 @@ task copyAssets(type: Copy) {
 }
 
 task createFullConfig(type: Copy) {
-    into 'src/main/assets/share/config/soffice.cfg'
-    from "${liboInstdir}/share/config/soffice.cfg"
+    description "copies various configuration bits into the apk"
+    into('src/main/assets/share/config')
+    from("${liboInstdir}/share/config") {
+        includes = ['soffice.cfg/**', 'images_colibre.zip']
+    }
 }
 
 task createStrippedConfig {
