@@ -157,7 +157,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
             jclass mainActivityClz = (jclass) env->NewGlobalRef(clz);
             jobject mainActivityObj = env->NewGlobalRef(instance);
 
-            std::thread([&mainActivityClz, &mainActivityObj, currentFakeClientFd]
+            std::thread([mainActivityClz, mainActivityObj, currentFakeClientFd]
                         {
                             Util::setThreadName("app2js");
                             while (true)
