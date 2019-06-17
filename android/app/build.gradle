@@ -197,6 +197,7 @@ task createRCfiles {
             [Bootstrap]
             LO_LIB_DIR=file://$APP_DATA_DIR/lib/
             BRAND_BASE_DIR=file:///assets
+            BRAND_SHARE_SUBDIR=share
             CONFIGURATION_LAYERS=xcsxcu:${BRAND_BASE_DIR}/share/registry res:${BRAND_BASE_DIR}/share/registry
             URE_BIN_DIR=file:///assets/ure/bin/dir/nothing-here/we-can/exec-anyway
             '''.stripIndent()
