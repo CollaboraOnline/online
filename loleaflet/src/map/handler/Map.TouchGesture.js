@@ -13,10 +13,6 @@ L.Map.TouchGesture = L.Handler.extend({
 	initialize: function (map) {
 		L.Handler.prototype.initialize.call(this, map);
 
-		if (!this._toolbar) {
-			this._toolbar = L.control.contextToolbar();
-		}
-
 		if (!this._hammer) {
 			this._hammer = new Hammer(this._map._mapPane);
 			this._hammer.get('swipe').set({
@@ -90,11 +86,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 	},
 
-	_onInputPress: function (e) {
-		var pos = this._map.latLngToContainerPoint(e);
-		this._toolbar.remove();
-		this._toolbar._pos = pos;
-		this._toolbar.addTo(this._map);
+	_onInputPress: function (/*e*/) {
+		//var pos = this._map.latLngToContainerPoint(e);
 	},
 
 	_onPress: function (e) {
@@ -104,16 +97,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
-			this._toolbar._pos = containerPoint;
-			this._toolbar.addTo(this._map);
-		} else {
-			this._toolbar.remove();
-			this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
-			// send right click to trigger context menus
-			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
-			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
-		}
+		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
+		// send right click to trigger context menus
+		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
+		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
 
 		this._cellSelections = false;
 		e.preventDefault();
@@ -126,7 +113,6 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._toolbar.remove();
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
