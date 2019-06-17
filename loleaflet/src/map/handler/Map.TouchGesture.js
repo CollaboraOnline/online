@@ -201,6 +201,8 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if (window.ThisIsTheiOSApp)
 			this._toolbar.remove();
+
+		this._map.fire('closepopups');
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);

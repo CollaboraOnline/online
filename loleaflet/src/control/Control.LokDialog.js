@@ -119,6 +119,7 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('opendialog', this._openDialog, this);
 		map.on('docloaded', this._docLoaded, this);
 		map.on('closepopup', this.onCloseCurrentPopUp, this);
+		map.on('closepopups', this._onClosePopups, this);
 		map.on('editorgotfocus', this._onEditorGotFocus, this);
 		L.DomEvent.on(document, 'mouseup', this.onCloseCurrentPopUp, this);
 	},
@@ -616,6 +617,14 @@ L.Control.LokDialog = L.Control.extend({
 		this._currentId = null;
 
 		removeZoomTarget(this._toStrId(dialogId));
+	},
+
+	_onClosePopups: function() {
+		for (var dialog in this._dialogs) {
+			if (this._dialogs[dialog].isSidebar != true) {
+				this._onDialogClose(this._dialogs[dialog].id, true);
+			}
+		}
 	},
 
 	onCloseCurrentPopUp: function() {

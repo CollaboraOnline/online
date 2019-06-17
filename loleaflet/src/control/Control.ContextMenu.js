@@ -55,12 +55,17 @@ L.Control.ContextMenu = L.Control.extend({
 		map.on('locontextmenu', this._onContextMenu, this);
 		map.on('mousedown', this._onMouseDown, this);
 		map.on('keydown', this._onKeyDown, this);
+		map.on('closepopups', this._onClosePopup, this);
+	},
+
+	_onClosePopup: function () {
+		$.contextMenu('destroy', '.leaflet-layer');
 	},
 
 	_onMouseDown: function(e) {
 		this._prevMousePos = {x: e.originalEvent.pageX, y: e.originalEvent.pageY};
 
-		$.contextMenu('destroy', '.leaflet-layer');
+		this._onClosePopup();
 	},
 
 	_onKeyDown: function(e) {
