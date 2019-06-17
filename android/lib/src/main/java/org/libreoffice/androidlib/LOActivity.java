@@ -10,6 +10,9 @@
 package org.libreoffice.androidlib;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipDescription;
+import android.content.ClipboardManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -23,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
@@ -82,6 +86,12 @@ public class LOActivity extends AppCompatActivity {
 
     private boolean isDocEditable = false;
     private boolean isDocDebuggable = BuildConfig.DEBUG;
+
+    private ClipboardManager clipboardManager;
+    private ClipData clipData;
+    private Thread nativeMsgThread;
+    private Handler nativeHandler;
+    private Looper nativeLooper;
 
     private ValueCallback<Uri[]> valueCallback;
     public static final int REQUEST_SELECT_FILE = 555;
@@ -282,6 +292,18 @@ public class LOActivity extends AppCompatActivity {
 
         mainHandler = new Handler(getMainLooper());
 
+        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        nativeMsgThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                nativeLooper = Looper.myLooper();
+                nativeHandler = new Handler(nativeLooper);
+                Looper.loop();
+            }
+        });
+        nativeMsgThread.start();
+
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onShowFileChooser(WebView mWebView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
@@ -406,6 +428,7 @@ public class LOActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "onDestroy() - we know we are leaving the document");
+        nativeLooper.quit();
         postMobileMessageNative("BYE");
     }
 
@@ -497,20 +520,62 @@ public class LOActivity extends AppCompatActivity {
     }
 
     /**
-     * return true to pass the message to the native part and false to block the message
+     * return true to pass the message to the native part or false to block the message
      */
     boolean interceptMsgFromWebView(String message) {
-        if (message.equals("PRINT")) {
-            mainHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    initiatePrint();
+        switch (message) {
+            case "PRINT":
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        LOActivity.this.initiatePrint();
+                    }
+                });
+                return false;
+            case "SLIDESHOW":
+                initiateSlideShow();
+                return false;
+            case "uno .uno:Paste":
+                clipData = clipboardManager.getPrimaryClip();
+                if (clipData != null) {
+                    if (clipData.getDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+                        final ClipData.Item clipItem = clipData.getItemAt(0);
+                        nativeHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                LOActivity.this.paste("text/plain;charset=utf-16", clipItem.getText().toString());
+                            }
+                        });
+                    }
+                    return false;
                 }
-            });
-            return false;
-        } else if (message.equals("SLIDESHOW")) {
-            initiateSlideShow();
-            return false;
+                break;
+            case "uno .uno:Copy": {
+                nativeHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String tempSelectedText = LOActivity.this.getTextSelection();
+                        if (!tempSelectedText.equals("")) {
+                            clipData = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, tempSelectedText);
+                            clipboardManager.setPrimaryClip(clipData);
+                        }
+                    }
+                });
+                break;
+            }
+            case "uno .uno:Cut": {
+                nativeHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String tempSelectedText = LOActivity.this.getTextSelection();
+                        if (!tempSelectedText.equals("")) {
+                            clipData = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, tempSelectedText);
+                            clipboardManager.setPrimaryClip(clipData);
+                        }
+                    }
+                });
+                break;
+            }
         }
         return true;
     }
@@ -526,34 +591,37 @@ public class LOActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setView(R.layout.lolib_dialog_loading)
                 .create();
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                slideShowProgress.show();
-            }
 
+        nativeHandler.post(new Runnable() {
             @Override
-            protected String doInBackground(Void... voids) {
+            public void run() {
+                LOActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        slideShowProgress.show();
+                    }
+                });
                 Log.v(TAG, "saving svg for slideshow by " + Thread.currentThread().getName());
-                String slideShowFileUri = new File(getCacheDir(), "slideShow.svg").toURI().toString();
-                saveAs(slideShowFileUri, "svg");
-                return slideShowFileUri;
+                final String slideShowFileUri = new File(LOActivity.this.getCacheDir(), "slideShow.svg").toURI().toString();
+                LOActivity.this.saveAs(slideShowFileUri, "svg");
+                LOActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        slideShowProgress.dismiss();
+                        Intent slideShowActIntent = new Intent(LOActivity.this, SlideShowActivity.class);
+                        slideShowActIntent.putExtra(SlideShowActivity.SVG_URI_KEY, slideShowFileUri);
+                        LOActivity.this.startActivity(slideShowActIntent);
+                    }
+                });
             }
-
-            @Override
-            protected void onPostExecute(String slideShowFileUri) {
-                super.onPostExecute(slideShowFileUri);
-                slideShowProgress.dismiss();
-                Intent slideShowActIntent = new Intent(LOActivity.this, SlideShowActivity.class);
-                slideShowActIntent.putExtra(SlideShowActivity.SVG_URI_KEY, slideShowFileUri);
-                startActivity(slideShowActIntent);
-            }
-        }.execute();
+        });
     }
 
     public native void saveAs(String fileUri, String format);
 
+    public native String getTextSelection();
+
+    public native void paste(String mimeType, String data);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

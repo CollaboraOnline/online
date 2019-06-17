@@ -36,7 +36,7 @@ L.Control.ContextToolbar = L.Control.extend({
 	},
 
 	_initLayout: function () {
-		if (window.ThisIsTheiOSApp)
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp)
 			this._container = L.DomUtil.create('div', 'loleaflet-ios-context-toolbar');
 		else
 			this._container = L.DomUtil.create('div', 'loleaflet-context-toolbar');
@@ -47,7 +47,7 @@ L.Control.ContextToolbar = L.Control.extend({
 		    stopEvents = 'touchstart touchmove touchend mousedown mousemove mouseout mouseover mouseup mousewheel click scroll',
 		    container;
 
-		if (window.ThisIsTheiOSApp)
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp)
 			container = L.DomUtil.create('table', 'loleaflet-ios-context-table', this._container);
 		else
 			container = L.DomUtil.create('table', 'loleaflet-context-table', this._container);
@@ -55,7 +55,7 @@ L.Control.ContextToolbar = L.Control.extend({
 		var tbody = L.DomUtil.create('tbody', '', container),
 		    tr = L.DomUtil.create('tr', '', tbody);
 
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
 			this._leftroundedend = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-left', tr);
 			this._cut = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-first-and-middle-entry loleaflet-ios-context-cut', tr);
 			this._cut.innerHTML = _UNO('.uno:Cut');
