@@ -21,6 +21,9 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._hammer.get('pan').set({
 				direction: Hammer.DIRECTION_ALL
 			});
+			this._hammer.get('pinch').set({
+				enable: true
+			});
 		}
 
 		for (var events in L.Draggable.MOVE) {
@@ -49,8 +52,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('panstart', L.bind(this._onPanStart, this));
 		this._hammer.on('pan', L.bind(this._onPan, this));
 		this._hammer.on('panend', L.bind(this._onPanEnd, this));
+		this._hammer.on('pinchstart pinchmove', L.bind(this._onPinch, this));
+		this._hammer.on('pinchend', L.bind(this._onPinchEnd, this));
 		this._map.on('updatepermission', this._onPermission, this);
-		this._map.on('input.press', this._onInputPress, this);
 		this._onPermission({perm: this._map._permission});
 	},
 
@@ -60,8 +64,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.off('panstart', L.bind(this._onPanStart, this));
 		this._hammer.off('pan', L.bind(this._onPan, this));
 		this._hammer.off('panend', L.bind(this._onPanEnd, this));
+		this._hammer.off('pinchstart pinchmove', L.bind(this._onPinch, this));
+		this._hammer.off('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
-		this._hammer.off('press', L.bind(this._onPress, this));
 		this._map.off('updatepermission', this._onPermission, this);
 	},
 
@@ -84,10 +89,6 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (!this._map.touchGesture.enabled()) {
 			this._map.touchGesture.enable();
 		}
-	},
-
-	_onInputPress: function (/*e*/) {
-		//var pos = this._map.latLngToContainerPoint(e);
 	},
 
 	_onPress: function (e) {
@@ -175,6 +176,24 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
 			this._map.dragging._draggable._onUp(this._constructFakeEvent(point, 'mouseup'));
+		}
+	},
+
+	_onPinch: function (e) {
+		if (this._map.getDocType() !== 'spreadsheet') {
+			this._center = this._map.mouseEventToLatLng({clientX: e.center.x, clientY: e.center.y});
+			this._zoom = this._map.getScaleZoom(e.scale);
+			this._map._animateZoom(this._center, this._zoom, false, true);
+		}
+	},
+
+	_onPinchEnd: function () {
+		if (this._map.getDocType() !== 'spreadsheet') {
+			var oldZoom = this._map.getZoom(),
+			    zoomDelta = this._zoom - oldZoom,
+			    finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
+
+			this._map._animateZoom(this._center, finalZoom, true, true);
 		}
 	},
 

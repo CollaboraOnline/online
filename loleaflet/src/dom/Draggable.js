@@ -79,9 +79,11 @@ L.Draggable = L.Evented.extend({
 		// for scrolling during cursor dragging.
 		this.startOffset = this._startPoint.subtract(new L.Point(startBoundingRect.left, startBoundingRect.top));
 
-		L.DomEvent
-			.on(document, L.Draggable.MOVE[e.type], this._onMove, this)
-			.on(document, L.Draggable.END[e.type], this._onUp, this);
+		if (!this._manualDrag) {
+			L.DomEvent
+				.on(document, L.Draggable.MOVE[e.type], this._onMove, this)
+				.on(document, L.Draggable.END[e.type], this._onUp, this);
+		}
 	},
 
 	_onMove: function (e) {
@@ -138,11 +140,7 @@ L.Draggable = L.Evented.extend({
 		L.Util.cancelAnimFrame(this._animRequest);
 		this._lastEvent = e;
 
-		if (!this._manualDrag) {
-			this._animRequest = L.Util.requestAnimFrame(this._updatePosition, this, true, this._dragStartTarget);
-		} else {
-			this._updatePosition();
-		}
+		this._animRequest = L.Util.requestAnimFrame(this._updatePosition, this, true, this._dragStartTarget);
 	},
 
 	_updatePosition: function () {
