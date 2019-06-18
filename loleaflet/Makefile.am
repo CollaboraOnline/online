@@ -151,9 +151,8 @@ build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 if ENABLE_ANDROIDAPP
 	@rm -rf $(abs_top_srcdir)/android/app/src/main/assets/dist
 	@cp -a $(builddir)/dist $(abs_top_srcdir)/android/app/src/main/assets/
-	@cp -a $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/android/app/src/main/assets/hello-world.odt
-	@cp -a $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/android/app/src/main/assets/hello-world.ods
-	@cp -a $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/android/app/src/main/assets/hello-world.odp
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(abs_top_srcdir)/android/app/src/main/assets/dist/ ; fi
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/toolbar-bg-logo.svg" $(abs_top_srcdir)/android/app/src/main/assets/dist/images/toolbar-bg.svg ; fi
 	@echo
 	@echo "Copied JS, HTML and CSS to the Android project (android/app/src/main/assets/dist)."
 	@echo
