@@ -117,7 +117,6 @@ L.Map = L.Evented.extend({
 			this.dragging._draggable._manualDrag = true;
 			this._mainEvents('off');
 			this.addHandler('touchGesture', L.Map.TouchGesture);
-			this.addHandler('touchZoom', L.Map.TouchZoom);
 		} else {
 			this.addHandler('mouse', L.Map.Mouse);
 			this.addHandler('boxZoom', L.Map.BoxZoom);
