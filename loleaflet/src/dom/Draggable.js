@@ -87,6 +87,10 @@ L.Draggable = L.Evented.extend({
 	},
 
 	_onMove: function (e) {
+		if (!this._startPoint) {
+			return;
+		}
+
 		if (e.touches && e.touches.length > 1) {
 			this._moved = true;
 			return;
