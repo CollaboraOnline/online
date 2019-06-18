@@ -17,6 +17,6 @@ ext {
 }
 android.defaultConfig {
     applicationId '@ANDROID_PACKAGE_NAME@'
-    versionCode 1
+    versionCode 18
     versionName '@LOOLWSD_VERSION@'
 }
