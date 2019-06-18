@@ -253,7 +253,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// Public handleEventForWinId - called from LokDialog.js when there's a need
 	// to process keystrokes while in a dialog (which is outside of the map's DOM
 	// container)
-	handleEventForWinId: function handleEventForWinId(ev, winId){
+	handleEventForWinId: function handleEventForWinId(ev, winId) {
 		var keyEventFn = function(type, charcode, keycode) {
 			return this._map._docLayer.postKeyboardEvent(type, charcode, keycode, winId);
 		}.bind(this);
