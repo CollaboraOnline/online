@@ -406,53 +406,55 @@ L.Map.Keyboard = L.Handler.extend({
 		L.DomEvent.stopPropagation(ev);
 	},
 
+	// Given a DOM keyboard event that happened while the Control key was depressed,
+	// triggers the appropriate action or lowsd message.
 	_handleCtrlCommand: function (e) {
 		// Control
-		if (e.originalEvent.keyCode == 17)
+		if (e.keyCode == 17)
 			return true;
 
-		if (e.type !== 'keydown' && e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x' &&
-		/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120) {
-			e.originalEvent.preventDefault();
+		if (e.type !== 'keydown' && e.key !== 'c' && e.key !== 'v' && e.key !== 'x' &&
+		/* Safari */ e.keyCode !== 99 && e.keyCode !== 118 && e.keyCode !== 120) {
+			e.preventDefault();
 			return true;
 		}
 
-		if (e.originalEvent.keyCode !== 67 && e.originalEvent.keyCode !== 86 && e.originalEvent.keyCode !== 88 &&
-		/* Safari */ e.originalEvent.keyCode !== 99 && e.originalEvent.keyCode !== 118 && e.originalEvent.keyCode !== 120 &&
-			e.originalEvent.key !== 'c' && e.originalEvent.key !== 'v' && e.originalEvent.key !== 'x') {
+		if (e.keyCode !== 67 && e.keyCode !== 86 && e.keyCode !== 88 &&
+		/* Safari */ e.keyCode !== 99 && e.keyCode !== 118 && e.keyCode !== 120 &&
+			e.key !== 'c' && e.key !== 'v' && e.key !== 'x') {
 			// not copy or paste
-			e.originalEvent.preventDefault();
+			e.preventDefault();
 		}
 
-		if (e.originalEvent.ctrlKey && e.originalEvent.shiftKey && e.originalEvent.key === '?') {
+		if (e.ctrlKey && e.shiftKey && e.key === '?') {
 			this._map.showLOKeyboardHelp();
-			e.originalEvent.preventDefault();
+			e.preventDefault();
 			return true;
 		}
 
-		if (e.originalEvent.ctrlKey && (e.originalEvent.key === 'z' || e.originalEvent.key === 'Z')) {
+		if (e.ctrlKey && (e.key === 'z' || e.key === 'Z')) {
 			this._map._socket.sendMessage('uno .uno:Undo');
-			e.originalEvent.preventDefault();
+			e.preventDefault();
 			return true;
 		}
 
-		if (e.originalEvent.ctrlKey && (e.originalEvent.key === 'y' || e.originalEvent.key === 'Y')) {
+		if (e.ctrlKey && (e.key === 'y' || e.key === 'Y')) {
 			this._map._socket.sendMessage('uno .uno:Redo');
-			e.originalEvent.preventDefault();
+			e.preventDefault();
 			return true;
 		}
 
-		if (e.originalEvent.altKey || e.originalEvent.shiftKey) {
+		if (e.altKey || e.shiftKey) {
 
 			// need to handle Ctrl + Alt + C separately for Firefox
-			if (e.originalEvent.key === 'c' && e.originalEvent.altKey) {
+			if (e.key === 'c' && e.altKey) {
 				this._map.insertComment();
 				return true;
 			}
 
 			// Ctrl + Alt
-			if (!e.originalEvent.shiftKey) {
-				switch (e.originalEvent.keyCode) {
+			if (!e.shiftKey) {
+				switch (e.keyCode) {
 				case 53: // 5
 					this._map._socket.sendMessage('uno .uno:Strikeout');
 					return true;
@@ -467,8 +469,8 @@ L.Map.Keyboard = L.Handler.extend({
 					this._map._socket.sendMessage('uno .uno:InsertEndnote');
 					return true;
 				}
-			} else if (e.originalEvent.altKey) {
-				switch (e.originalEvent.keyCode) {
+			} else if (e.altKey) {
+				switch (e.keyCode) {
 				case 68: // Ctrl + Shift + Alt + d for tile debugging mode
 					this._map._docLayer.toggleTileDebugMode();
 				}
@@ -477,7 +479,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return false;
 		}
 
-		switch (e.originalEvent.keyCode) {
+		switch (e.keyCode) {
 		case 51: // 3
 			if (this._map.getDocType() === 'spreadsheet') {
 				this._map._socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
@@ -527,8 +529,8 @@ L.Map.Keyboard = L.Handler.extend({
 			this._map._socket.sendMessage('uno .uno:SuperScript');
 			return true;
 		}
-		if (e.type === 'keypress' && (e.originalEvent.ctrlKey || e.originalEvent.metaKey) &&
-			(e.originalEvent.key === 'c' || e.originalEvent.key === 'v' || e.originalEvent.key === 'x')) {
+		if (e.type === 'keypress' && (e.ctrlKey || e.metaKey) &&
+			(e.key === 'c' || e.key === 'v' || e.key === 'x')) {
 			// need to handle this separately for Firefox
 			return true;
 		}
