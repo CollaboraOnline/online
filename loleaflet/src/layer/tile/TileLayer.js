@@ -1830,19 +1830,19 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (!winId) {
 			this._map._socket.sendMessage(
-				"key" +
-				" type=" + type +
-				" char=" + charCode +
-				" key=" + unoKeyCode +
-				"\n"
+				'key' +
+				' type=' + type +
+				' char=' + charCode +
+				' key=' + unoKeyCode +
+				'\n'
 			);
 		} else {
 			this._map._socket.sendMessage(
-				"windowkey id=" + winId +
-				" type=" + type +
-				" char=" + charCode +
-				" key=" + unoKeyCode +
-				"\n"
+				'windowkey id=' + winId +
+				' type=' + type +
+				' char=' + charCode +
+				' key=' + unoKeyCode +
+				'\n'
 			);
 		}
 	},
