@@ -16,7 +16,7 @@ ext {
     liboInfoURL         = '@INFO_URL@'
 }
 android.defaultConfig {
-    applicationId 'org.libreoffice.androidapp'
+    applicationId '@ANDROID_PACKAGE_NAME@'
     versionCode 1
     versionName '@LOOLWSD_VERSION@'
 }

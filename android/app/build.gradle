@@ -19,6 +19,8 @@ android {
                 //abiFilters "x86", "armeabi-v7a", "armeabi"
                 abiFilters "armeabi-v7a"
             }
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
             debuggable true
         }
         release {
@@ -28,7 +30,8 @@ android {
             ndk {
                 abiFilters "armeabi-v7a"
             }
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard-rules.pro'
         }
