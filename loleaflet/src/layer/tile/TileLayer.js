@@ -595,15 +595,28 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCellAddressMsg: function (textMsg) {
+		// When the user moves the focus to a different cell, a 'cellformula'
+		// message is received from lowsd, *then* a 'celladdress' message.
 		var address = textMsg.substring(13);
+		if (!this._map['wopi'].DisableCopy) {
+			this._map._clipboardContainer.setValue(this._lastFormula);
+			this._map._clipboardContainer.select();
+		}
 		this._map.fire('celladdress', {address: address});
 	},
 
 	_onCellFormulaMsg: function (textMsg) {
+		// When a 'cellformula' message from lowsd is received,
+		// store the text contents of the cell, but don't push
+		// them to the clipboard container (yet).
+		// This is done because lowsd will send several 'cellformula'
+		// messages during text composition, and resetting the contents
+		// of the clipboard container mid-composition will easily break it.
 		var formula = textMsg.substring(13);
 		if (!this._map['wopi'].DisableCopy) {
 			this._selectionTextContent = formula;
 		}
+		this._lastFormula = formula;
 		this._map.fire('cellformula', {formula: formula});
 	},
 
