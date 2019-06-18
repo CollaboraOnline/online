@@ -129,8 +129,6 @@ task copyAssets(type: Copy) {
         from "${liboInstdir}/share"
         // Filter data is needed by e.g. the drawingML preset shape import.
         includes = ['registry/**', 'filter/**']
-        // those two get processed by mobile-config.py
-        excludes = ['registry/main.xcd', 'registry/res/registry_en-US.xcd']
     }
 }
 
@@ -152,26 +150,6 @@ task createStrippedConfig {
         file("src/main/assets/share/config/soffice.cfg").mkdirs()
         // just empty file
         preserveDir.text = ""
-    }
-}
-
-
-task createStrippedConfigMain(type: Exec) {
-    dependsOn 'createStrippedConfig'
-    inputs.files "${liboInstdir}/share/registry/main.xcd", "${liboSrcRoot}/android/mobile-config.py"
-    outputs.file "src/main/assets/share/registry/main.xcd"
-    executable "${liboSrcRoot}/android/mobile-config.py"
-    args = ["${liboInstdir}/share/registry/main.xcd", "src/main/assets/share/registry/main.xcd"]
-}
-
-task createStrippedConfigRegistry(type: Exec) {
-    dependsOn 'createStrippedConfig'
-    inputs.files "${liboInstdir}/share/registry/res/registry_en-US.xcd", "${liboSrcRoot}/android/mobile-config.py"
-    outputs.file "src/main/assets/share/registry/res/registry_en-US.xcd"
-    executable "${liboSrcRoot}/android/mobile-config.py"
-    args = ["${liboInstdir}/share/registry/res/registry_en-US.xcd", "src/main/assets/share/registry/res/registry_en-US.xcd"]
-    doFirst {
-        file('src/main/assets/share/registry/res').mkdirs()
     }
 }
 
@@ -231,6 +209,4 @@ ReferenceOOoMajorMinor=4.1
 
 // creating the UI stuff is cheap, don't bother only applying it for the flavor..
 preBuild.dependsOn 'createRCfiles',
-        'createStrippedConfigMain',
-        'createStrippedConfigRegistry',
         'createFullConfig'
