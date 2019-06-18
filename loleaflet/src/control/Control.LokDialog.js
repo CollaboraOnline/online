@@ -658,10 +658,14 @@ L.Control.LokDialog = L.Control.extend({
 		/// should be cleaner than relying on a global one.
 
 		// Relay all keyboard-related events from this dialog's <input>
-		// to the map's ClipboardContainer.
+		// to the map's ClipboardContainer and the map's Keyboard handler.
 		var cc = this._map.getClipboardContainer();
+		var kh = this._map.keyboard;
 		L.DomEvent.on(dlgInput, 'compositionstart compositionend beforeinput paste input textInput', function(ev) {
 			cc.handleEventForWinId(ev, id);
+		});
+		L.DomEvent.on(dlgInput, 'keyup keypress keydown', function(ev) {
+			kh.handleEventForWinId(ev, id);
 		});
 	},
 
