@@ -118,11 +118,17 @@ L.ClipboardContainer = L.Layer.extend({
 
 	// Focus the textarea/contenteditable
 	focus: function() {
-		this._textArea.focus();
+		if (this._map._permission !== 'edit') {
+			console.log('EPIC HORRORS HERE');
+			return;
+		}
+		var that = this;
+		setTimeout(function() { that._textArea.focus(); }, 10);
 	},
 
 	blur: function() {
-		this._textArea.blur();
+		var that = this;
+		setTimeout(function() { that._textArea.blur(); }, 10);
 	},
 
 	// Marks the content of the textarea/contenteditable as selected,
