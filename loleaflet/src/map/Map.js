@@ -875,6 +875,7 @@ L.Map = L.Evented.extend({
 	},
 
 	focus: function () {
+		this._clipboardContainer.dontBlur = true;
 		// Clicking or otherwise focusing the map should focus on the clipboard
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
