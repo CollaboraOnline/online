@@ -273,13 +273,12 @@ L.Map = L.Evented.extend({
 		this.on('docloaded', function(e) {
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
-				// so that dim timer starts from now()
-				this.lastActiveTime = Date.now();
+				this.notifyActive();
 				if (!document.hasFocus()) {
-					this._deactivate();
-				} else {
-					this._activate();
+					this.fire('editorgotfocus');
+					this.focus();
 				}
+				this._activate();
 			} else if (this._docLayer) {
 				// remove the comments and changes
 				this._docLayer.clearAnnotations();
