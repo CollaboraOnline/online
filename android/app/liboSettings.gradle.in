@@ -17,6 +17,6 @@ ext {
 }
 android.defaultConfig {
     applicationId 'org.libreoffice.androidapp'
-    //versionCode project.hasProperty('cmdVersionCode') ? cmdVersionCode.toInteger() : 1
-    versionName '1.0/@LOOLWSD_VERSION@'
+    versionCode 1
+    versionName '@LOOLWSD_VERSION@'
 }

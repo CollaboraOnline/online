@@ -6,11 +6,9 @@ apply from: 'liboSettings.gradle'
 android {
     compileSdkVersion 28
     defaultConfig {
-        // applicationId defined in liboSettings.gradle
+        // applicationId, versionCode and versionName are defined in liboSettings.gradle
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        // versionName defined in liboSettings.gradle
     }
     buildTypes {
         debug {
