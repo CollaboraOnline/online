@@ -4,7 +4,7 @@
  * input events and clipboard selection.
  */
 
-/* global $ */
+/* global */
 
 L.ClipboardContainer = L.Layer.extend({
 
@@ -111,12 +111,8 @@ L.ClipboardContainer = L.Layer.extend({
 				this._queueInput(this._compositionText);
 			}
 			this._abortComposition();
-
-			/// TODO: make the round blue "mobile edit" button visible again.
-			$('#mobile-edit-button').show();
 		} else {
 			this._winId = 0;
-			$('#mobile-edit-button').hide();
 		}
 	},
 
