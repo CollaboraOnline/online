@@ -181,22 +181,13 @@ L.Map.Keyboard = L.Handler.extend({
 		L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
 	},
 
-	/*
-	 * Returns true whenever the key event shall be ignored.
-	 * This means shift+insert and shift+delete (or "insert or delete when holding
-	 * shift down"). Those events are handled elsewhere to trigger "cut" and
-	 * "paste" events, and need to be ignored in order to avoid double-handling them.
-	 */
-	_ignoreKeyEvent: function(e) {
-		var shift = e.originalEvent.shiftKey;
-		if ('key' in e.originalEvent) {
-			var key = e.originalEvent.key;
-			return (shift && (key === 'Delete' || key === 'Insert'));
-		} else {
-			// keyCode is not reliable in AZERTY/DVORAK keyboard layouts, is used
-			// only as a fallback for MSIE8.
-			var keyCode = e.originalEvent.keyCode;
-			return (shift && (keyCode === 45 || keyCode === 46));
+	_ignoreKeyEvent: function(ev) {
+		var shift = ev.shiftKey ? this.keyModifier.shift : 0;
+		if (shift && (ev.keyCode === 45 || ev.keyCode === 46)) {
+			// don't handle shift+insert, shift+delete
+			// These are converted to 'cut', 'paste' events which are
+			// automatically handled by us, so avoid double-handling
+			return true;
 		}
 	},
 
@@ -253,6 +244,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// _handleKeyEvent - checks if the given keyboard event shall trigger
 	// a message to lowsd, and calls the given keyEventFn(type, charcode, keycode)
 	// callback if so.
+	// Called from private _onKeyDown
 	_handleKeyEvent: function (ev, keyEventFn) {
 		this._map.notifyActive();
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
