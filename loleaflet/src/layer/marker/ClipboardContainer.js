@@ -102,13 +102,48 @@ L.ClipboardContainer = L.Layer.extend({
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'clipboard-container');
 		this._container.id = 'doc-clipboard-container';
-		this._textArea = L.DomUtil.create('div', 'clipboard', this._container);
-		this._textArea.setAttribute('contenteditable', 'true');
-		this._textArea.setAttribute('type', 'text');
-		this._textArea.setAttribute('autocorrect', 'off');
-		this._textArea.setAttribute('autocapitalize', 'off');
-		this._textArea.setAttribute('autocomplete', 'off');
-		this._textArea.setAttribute('spellcheck', 'false');
+
+		// The textarea allows the keyboard to pop up and so on.
+		// Note that the contents of the textarea are NOT deleted on each composed
+		// word, in order to make
+
+		if (L.Browser.safari) {
+			// Force a textarea on Safari. This is two-fold: Safari doesn't fire
+			// input/insertParagraph events on an empty&focused contenteditable,
+			// but does fire input/insertLineBreak on an empty&focused textarea;
+			// Safari on iPad would show bold/italic/underline native controls
+			// which cannot be handled with the current implementation.
+			this._textArea = L.DomUtil.create('textarea', 'clipboard', this._container);
+			this._textArea.setAttribute('autocorrect', 'off');
+			this._textArea.setAttribute('autocapitalize', 'off');
+			this._textArea.setAttribute('autocomplete', 'off');
+			this._textArea.setAttribute('spellcheck', 'false');
+		} else {
+			this._textArea = L.DomUtil.create('div', 'clipboard', this._container);
+			this._textArea.setAttribute('contenteditable', 'true');
+		}
+
+		this._setupStyles(false);
+	},
+
+	_setupStyles: function(debugOn) {
+		if (debugOn)
+		{
+			// Style for debugging
+			this._container.style.opacity = 0.5;
+			this._textArea.style.cssText = 'border:1px solid red !important';
+			this._textArea.style.width = '100px';
+			this._textArea.style.height= '20px';
+			this._textArea.style.overflow= 'display';
+		} else {
+			this._container.style.opacity = 0;
+			this._textArea.style.width = '1px';
+			this._textArea.style.height= '1px';
+		}
+	},
+
+	debug: function(debugOn) {
+		this._setupStyles(debugOn);
 	},
 
 	activeElement: function () {

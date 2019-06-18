@@ -3075,12 +3075,14 @@ L.TileLayer = L.GridLayer.extend({
 			this._debugInfo = new L.LayerGroup();
 			this._debugInfo2 = new L.LayerGroup();
 			this._debugAlwaysActive = new L.LayerGroup();
+			this._debugShowClipboard = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
 			this._map.addLayer(this._debugInfo);
 			this._map.addLayer(this._debugInfo2);
 			var overlayMaps = {
 				'Tile overlays': this._debugInfo,
 				'Screen overlays': this._debugInfo2,
+				'Show Clipboard': this._debugShowClipboard,
 				'Always active': this._debugAlwaysActive,
 				'Typing': this._debugTyper
 			};
@@ -3089,6 +3091,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.on('layeradd', function(e) {
 				if (e.layer === this._debugAlwaysActive) {
 					this._map._debugAlwaysActive = true;
+				} else if (e.layer === this._debugShowClipboard) {
+					this._map._clipboardContainer.debug(true);
 				} else if (e.layer === this._debugTyper) {
 					this._debugTypeTimeout();
 				} else if (e.layer === this._debugInfo2) {
@@ -3100,6 +3104,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.on('layerremove', function(e) {
 				if (e.layer === this._debugAlwaysActive) {
 					this._map._debugAlwaysActive = false;
+				} else if (e.layer === this._debugShowClipboard) {
+					this._map._clipboardContainer.debug(false);
 				} else if (e.layer === this._debugTyper) {
 					clearTimeout(this._debugTypeTimeoutId);
 				} else if (e.layer === this._debugInfo2) {
