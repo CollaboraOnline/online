@@ -76,6 +76,14 @@ L.ClipboardContainer = L.Layer.extend({
 			}),
 			draggable: true
 		}).on('dragend', this._onCursorHandlerDragEnd, this);
+
+		// Used for internal cut/copy/paste in the same document - to tell
+		// lowsd whether to use its internal clipboard state (rich text) or to send
+		// the browser contents (plaintext)
+		this._lastClipboardText = undefined;
+
+		// This variable prevents from hiding the keyboard just before focus call
+		this.dontBlur = false;
 	},
 
 	onAdd: function() {
@@ -114,6 +122,12 @@ L.ClipboardContainer = L.Layer.extend({
 
 	_onFocusBlur: function(ev) {
 // 		console.log(ev.type, performance.now(), ev);
+
+		if (this.dontBlur && ev.type == 'blur') {
+			this._map.focus();
+			this.dontBlur = false;
+			return;
+		}
 
 		if (this.dontBlur && ev.type == 'blur') {
 			this._map.focus();
@@ -172,13 +186,11 @@ L.ClipboardContainer = L.Layer.extend({
 			console.log('EPIC HORRORS HERE');
 			return;
 		}
-		var that = this;
-		setTimeout(function() { that._textArea.focus(); }, 10);
+		this._textArea.focus();
 	},
 
 	blur: function() {
-		var that = this;
-		setTimeout(function() { that._textArea.blur(); }, 10);
+		this._textArea.blur();
 	},
 
 	// Marks the content of the textarea/contenteditable as selected,
