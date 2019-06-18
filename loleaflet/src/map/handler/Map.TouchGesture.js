@@ -136,8 +136,12 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPanStart: function (e) {
-		var point = e.pointers[0],
-		    containerPoint = this._map.mouseEventToContainerPoint(point),
+		var point = e.pointers[0];
+		if (isNaN(point.x) || isNaN(point.y)) {
+			return;
+		}
+
+		var containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
@@ -151,8 +155,12 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPan: function (e) {
-		var point = e.pointers[0],
-		    containerPoint = this._map.mouseEventToContainerPoint(point),
+		var point = e.pointers[0];
+		if (isNaN(point.x) || isNaN(point.y)) {
+			return;
+		}
+
+		var containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
@@ -165,8 +173,12 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPanEnd: function (e) {
-		var point = e.pointers[0],
-		    containerPoint = this._map.mouseEventToContainerPoint(point),
+		var point = e.pointers[0];
+		if (isNaN(point.x) || isNaN(point.y)) {
+			return;
+		}
+
+		var containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
@@ -180,6 +192,10 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinch: function (e) {
+		if (isNaN(e.center.x) || isNaN(e.center.y)) {
+			return;
+		}
+
 		if (this._map.getDocType() !== 'spreadsheet') {
 			this._center = this._map.mouseEventToLatLng({clientX: e.center.x, clientY: e.center.y});
 			this._zoom = this._map.getScaleZoom(e.scale);
