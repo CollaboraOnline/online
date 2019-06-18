@@ -172,11 +172,13 @@ L.ClipboardContainer = L.Layer.extend({
 			console.log('EPIC HORRORS HERE');
 			return;
 		}
-		this._textArea.focus();
+		var that = this;
+		setTimeout(function() { that._textArea.focus(); }, 10);
 	},
 
 	blur: function() {
-		this._textArea.blur();
+		var that = this;
+		setTimeout(function() { that._textArea.blur(); }, 10);
 	},
 
 	// Marks the content of the textarea/contenteditable as selected,
