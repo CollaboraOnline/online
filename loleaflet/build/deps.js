@@ -229,7 +229,6 @@ var deps = {
 		      'dom/DomEvent.DoubleTap.js',
 		      'dom/DomEvent.Pointer.js',
 		      'core/Handler.js',
-		      'map/handler/Map.TouchZoom.js',
 		      'map/handler/Map.TouchGesture.js'],
 		deps: ['AnimationZoom'],
 		desc: 'Enables smooth touch zoom / tap / longhold / doubletap on iOS, IE10, Android.'
