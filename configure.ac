@@ -74,8 +74,8 @@ AC_ARG_WITH([iosapp-fonts],
                              [Point to a directory containing .ttf or .otf files to be bundled in the iOS app (and
                               thus installed on the device for use of the LO core code).]))
 
-AC_ARG_WITH([iosapp-branding],
-              AS_HELP_STRING([--with-iosapp-branding=<path>],
+AC_ARG_WITH([app-branding],
+              AS_HELP_STRING([--with-app-branding=<path>],
                              [Point to a directory containing a branding.css file and possibly other files it references,
                               to be bundled and used by the iOS app. The directory structure is copied to
                               "loleaflet/dist/branding" and that directory ends upp in the app bundle as "branding".]))
@@ -707,6 +707,12 @@ AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
 AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
 AC_LINK_FILES([loleaflet/node_shrinkwrap], [loleaflet/node_shrinkwrap])
 
+APP_BRANDING_DIR=
+if test "$with_app_branding" != no -a -d "$with_app_branding"; then
+    APP_BRANDING_DIR="$with_app_branding"
+fi
+AC_SUBST(APP_BRANDING_DIR)
+
 AS_IF([test "$ENABLE_IOSAPP" = "true"],
       [
        if test `uname -s` = "Darwin"; then
@@ -722,10 +728,10 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
           fi
           rm -rf ios/Mobile/Branding
           mkdir ios/Mobile/Branding
-          if test "$with_iosapp_branding" != no -a -d "$with_iosapp_branding"; then
+          if test -n "$APP_BRANDING_DIR" ; then
               AC_MSG_NOTICE([copying branding files])
               mkdir -p loleaflet/dist/branding
-              (cd "$with_iosapp_branding" && tar cf - .) | (cd ios/Mobile/Branding && tar xf -)
+              (cd "$APP_BRANDING_DIR" && tar cf - .) | (cd ios/Mobile/Branding && tar xf -)
           else
               # A Branding/branding.css file must exist, it is
               # referenced unconditionally in loleaflet.html in the
