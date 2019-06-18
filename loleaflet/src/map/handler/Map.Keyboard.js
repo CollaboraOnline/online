@@ -246,16 +246,25 @@ L.Map.Keyboard = L.Handler.extend({
 		console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
 
 		if (ev.charCode == 0) {
-			this.onKeyDown(
-				{originalEvent: ev, type: ev.type}
-			);
+			this._handleKeyEvent(ev);
 		}
 	},
 
-	// Public onKeyDown - called from LokDialog.js when there's a need
+	// Public handleEventForWinId - called from LokDialog.js when there's a need
 	// to process keystrokes while in a dialog (which is outside of the map's DOM
 	// container)
-	onKeyDown: function (ev, keyEventFn) {
+	handleEventForWinId: function handleEventForWinId(ev, winId){
+		var keyEventFn = function(type, charcode, keycode) {
+			return this._map._docLayer.postKeyboardEvent(type, charcode, keycode, winId);
+		}.bind(this);
+		return this._handleKeyEvent(ev, keyEventFn);
+	},
+
+	// _handleKeyEvent - checks if the given keyboard event shall trigger
+	// a message to lowsd, and calls the given keyEventFn(type, charcode, keycode)
+	// callback if so.
+	// Called from private _onKeyDown and public handleEventForWinId
+	_handleKeyEvent: function (ev, keyEventFn) {
 		this._map.notifyActive();
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
@@ -263,15 +272,15 @@ L.Map.Keyboard = L.Handler.extend({
 		var docLayer = this._map._docLayer;
 		if (!keyEventFn) {
 			// default is to post keyboard events on the document
-			keyEventFn = L.bind(docLayer._postKeyboardEvent, docLayer);
+			keyEventFn = L.bind(docLayer.postKeyboardEvent, docLayer);
 		}
 
 		this.modifier = 0;
-		var shift = ev.originalEvent.shiftKey ? this.keyModifier.shift : 0;
-		var ctrl = ev.originalEvent.ctrlKey ? this.keyModifier.ctrl : 0;
-		var alt = ev.originalEvent.altKey ? this.keyModifier.alt : 0;
-		var cmd = ev.originalEvent.metaKey ? this.keyModifier.ctrl : 0;
-		var location = ev.originalEvent.location;
+		var shift = ev.shiftKey ? this.keyModifier.shift : 0;
+		var ctrl = ev.ctrlKey ? this.keyModifier.ctrl : 0;
+		var alt = ev.altKey ? this.keyModifier.alt : 0;
+		var cmd = ev.metaKey ? this.keyModifier.ctrl : 0;
+		var location = ev.location;
 		this._keyHandled = this._keyHandled || false;
 		this.modifier = shift | ctrl | alt | cmd;
 
@@ -305,8 +314,8 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		var charCode = ev.originalEvent.charCode;
-		var keyCode = ev.originalEvent.keyCode;
+		var charCode = ev.charCode;
+		var keyCode = ev.keyCode;
 
 		if ((this.modifier == this.keyModifier.alt || this.modifier == this.keyModifier.shift + this.keyModifier.alt) &&
 		    keyCode >= 48) {
@@ -319,7 +328,7 @@ L.Map.Keyboard = L.Handler.extend({
 		// handle help - F1
 		if (ev.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === 112) {
 			this._map.showHelp();
-			ev.originalEvent.preventDefault();
+			ev.preventDefault();
 			return;
 		}
 
@@ -329,7 +338,7 @@ L.Map.Keyboard = L.Handler.extend({
 			unoKeyCode |= this.modifier;
 			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !docLayer._isCursorVisible))) {
 				keyEventFn('input', charCode, unoKeyCode);
-				ev.originalEvent.preventDefault();
+				ev.preventDefault();
 				return;
 			}
 		}
@@ -368,23 +377,23 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 			if (keyCode === 9) {
 				// tab would change focus to other DOM elements
-				ev.originalEvent.preventDefault();
+				ev.preventDefault();
 			}
 		}
-		else if (!this.modifier && (ev.originalEvent.keyCode === 33 || ev.originalEvent.keyCode === 34)) {
+		else if (!this.modifier && (keyCode === 33 || keyCode === 34)) {
 			// let the scrollbar handle page up / page down when viewing
 			return;
 		}
 		else if (ev.type === 'keydown') {
-			var key = ev.originalEvent.keyCode;
+			var key = ev.keyCode;
 			var map = this._map;
-			if (key in this._panKeys && !ev.originalEvent.shiftKey) {
+			if (key in this._panKeys && !ev.shiftKey) {
 				if (map._panAnim && map._panAnim._inProgress) {
 					return;
 				}
 				map.fire('scrollby', {x: this._panKeys[key][0], y: this._panKeys[key][1]});
 			}
-			else if (key in this._panKeys && ev.originalEvent.shiftKey &&
+			else if (key in this._panKeys && ev.shiftKey &&
 					docLayer._selections.getLayers().length !== 0) {
 				// if there is a selection and the user wants to modify it
 				keyEventFn('input', charCode, unoKeyCode);
@@ -394,7 +403,7 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		L.DomEvent.stopPropagation(ev.originalEvent);
+		L.DomEvent.stopPropagation(ev);
 	},
 
 	_handleCtrlCommand: function (e) {

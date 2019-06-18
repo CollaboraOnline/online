@@ -1792,16 +1792,31 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_postKeyboardEvent: function(type, charcode, keycode) {
-		// console.log('==> _postKeyboardEvent type=' + type + ' charcode=' + charcode + ' keycode=' + keycode);
-		if (this._docType === 'spreadsheet' && this._prevCellCursor && type === 'input') {
-			if (keycode === 1030) { // PgUp
+	// Given a character code and a UNO keycode, send a "key" message to lowsd.
+	//
+	// "type" is either "input" for key presses (akin to the DOM "keypress"
+	// / "beforeinput" events) and "up" for key releases (akin to the DOM
+	// "keyup" event).
+	//
+	// PageUp/PageDown are handled as special cases for spreadsheets - in
+	// addition of sending messages to lowsd, they move the cell cursor around.
+	//
+	// If "winId" is set, then a "windowkey" message is sent instead. This is
+	// done for LOK dialogs.
+	postKeyboardEvent: function(type, charCode, unoKeyCode, winId) {
+		if (
+			this._docType === 'spreadsheet' &&
+			this._prevCellCursor &&
+			type === 'input' &&
+			!winId
+		) {
+			if (unoKeyCode === 1030) { // PgUp
 				if (this._cellCursorOnPgUp) {
 					return;
 				}
 				this._cellCursorOnPgUp = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
 			}
-			else if (keycode === 1031) { // PgDn
+			else if (unoKeyCode === 1031) { // PgDn
 				if (this._cellCursorOnPgDn) {
 					return;
 				}
@@ -1813,8 +1828,23 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._sendClientVisibleArea();
 
-		this._map._socket.sendMessage('key type=' + type +
-				' char=' + charcode + ' key=' + keycode);
+		if (!winId) {
+			this._map._socket.sendMessage(
+				"key" +
+				" type=" + type +
+				" char=" + charCode +
+				" key=" + unoKeyCode +
+				"\n"
+			);
+		} else {
+			this._map._socket.sendMessage(
+				"windowkey id=" + winId +
+				" type=" + type +
+				" char=" + charCode +
+				" key=" + unoKeyCode +
+				"\n"
+			);
+		}
 	},
 
 	_postSelectGraphicEvent: function(type, x, y) {
@@ -3107,9 +3137,9 @@ L.TileLayer = L.GridLayer.extend({
 		var letter = this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length);
 		this._debugKeypressQueue.push(+new Date());
 		if (letter === '\n'.charCodeAt(0)) {
-			this._postKeyboardEvent('input', 0, 1280);
+			this.postKeyboardEvent('input', 0, 1280);
 		} else {
-			this._postKeyboardEvent('input', this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length), 0);
+			this.postKeyboardEvent('input', this._debugLorem.charCodeAt(this._debugLoremPos % this._debugLorem.length), 0);
 		}
 		this._debugLoremPos++;
 		this._debugTypeTimeoutId = setTimeout(L.bind(this._debugTypeTimeout, this), 50);

@@ -261,7 +261,7 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'acceptformula') {
 		// focus on map, and press enter
 		map.focus();
-		map._docLayer._postKeyboardEvent('input',
+		map._docLayer.postKeyboardEvent('input',
 						 map.keyboard.keyCodes.enter,
 						 map.keyboard._toUNOKeyCode(map.keyboard.keyCodes.enter));
 
