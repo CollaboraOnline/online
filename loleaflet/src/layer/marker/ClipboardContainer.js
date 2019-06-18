@@ -156,10 +156,13 @@ L.ClipboardContainer = L.Layer.extend({
 
 		this._map.notifyActive();
 
-		if (ev.type === 'blur' && this._isComposing) {
-			/// TODO: Set this._compositionText
-			this._queueInput(this._compositionText);
-			this._abortComposition(ev);
+		if (ev.type === 'blur') {
+			if (this._isComposing) {
+				this._queueInput(this._compositionText);
+			}
+			this._abortComposition();
+		} else {
+			this._winId = 0;
 		}
 	},
 
