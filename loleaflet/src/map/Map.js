@@ -446,6 +446,8 @@ L.Map = L.Evented.extend({
 			return this;
 		}
 		if (this._docLayer && this._docLayer._docType === 'spreadsheet') {
+			if (zoom != 10 && zoom != 14) // 100% or 200%
+				return this;
 			// for spreadsheets, when the document is smaller than the viewing area
 			// we want it to be glued to the row/column headers instead of being centered
 			this._docLayer._checkSpreadSheetBounds(zoom);
