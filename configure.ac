@@ -100,6 +100,11 @@ AC_ARG_ENABLE([androidapp],
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view.]))
 
+AC_ARG_WITH(android-package-name,
+    AS_HELP_STRING([--with-android-package-name="org.libreoffice.androidapp"],
+        [Set Android package name of the build.]),
+,)
+
 AC_ARG_WITH([app-name],
               AS_HELP_STRING([--with-app-name=<name>],
                              [Set the user-visible name of the app you build.]))
@@ -336,6 +341,24 @@ AC_SUBST(LIBPNG_INCLUDES)
 AC_SUBST(LIBPNG_LIBS)
 AC_SUBST(LOKIT_PATH)
 
+ENABLE_ANDROIDAPP=
+ANDROID_PACKAGE_NAME=
+if test "$enable_androidapp" = "yes"; then
+    ENABLE_ANDROIDAPP=true
+
+    AC_MSG_CHECKING([for Android package name])
+    if test -z "$with_android_package_name" -o "$with_android_package_name" = "no"; then
+        ANDROID_PACKAGE_NAME="org.libreoffice.androidapp"
+        AC_MSG_RESULT([not set, using $ANDROID_PACKAGE_NAME])
+    else
+        ANDROID_PACKAGE_NAME="$with_android_package_name"
+        AC_MSG_RESULT([$ANDROID_PACKAGE_NAME])
+    fi
+fi
+AC_SUBST(ENABLE_ANDROIDAPP)
+AM_CONDITIONAL([ENABLE_ANDROIDAPP], [test "$ENABLE_ANDROIDAPP" = "true"])
+AC_SUBST(ANDROID_PACKAGE_NAME)
+
 APP_NAME="LOOL"
 if test -n "$with_app_name"; then
    APP_NAME="$with_app_name"
@@ -496,13 +519,6 @@ AC_DEFINE_UNQUOTED([LO_PATH],["$LO_PATH"],[Path to LibreOffice installation])
 AC_SUBST(JAILS_PATH)
 AC_SUBST(SYSTEMPLATE_PATH)
 AM_CONDITIONAL(HAVE_LO_PATH,[test "$have_lo_path" = "true"])
-
-ENABLE_ANDROIDAPP=
-if test "$enable_androidapp" = "yes"; then
-   ENABLE_ANDROIDAPP=true
-fi
-AC_SUBST(ENABLE_ANDROIDAPP)
-AM_CONDITIONAL([ENABLE_ANDROIDAPP], [test "$ENABLE_ANDROIDAPP" = "true"])
 
 AS_IF([test -n "$with_poco_includes"],
       [CPPFLAGS="$CPPFLAGS -isystem ${with_poco_includes}"])
