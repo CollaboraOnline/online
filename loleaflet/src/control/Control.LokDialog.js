@@ -665,7 +665,9 @@ L.Control.LokDialog = L.Control.extend({
 			cc.handleEventForWinId(ev, id);
 		});
 		L.DomEvent.on(dlgInput, 'keyup keypress keydown', function(ev) {
-			kh.handleEventForWinId(ev, id);
+			if (ev.charCode == 0) {
+				kh.handleEventForWinId(ev, id);
+			}
 		});
 	},
 
