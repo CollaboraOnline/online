@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global $ window vex sanitizeUrl brandProductName brandProductURL _ */
+/* global $ window vex sanitizeUrl brandProductName brandProductURL _ Hammer */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -312,8 +312,16 @@ L.Map.include({
 			buttons: {},
 			afterOpen: function() {
 				var that = this;
-				this.contentEl.style.width = w + 'px';
+
 				var $vexContent = $(this.contentEl);
+				var hammer = new Hammer.Manager($vexContent.get(0));
+				hammer.add(new Hammer.Tap({ taps: 3 }));
+				hammer.on('tap', function() {
+					map._docLayer._debugInit();
+				});
+
+				this.contentEl.style.width = w + 'px';
+
 				map.enable(false);
 				$(window).bind('keyup.vex', handler);
 				// workaround for https://github.com/HubSpot/vex/issues/43
