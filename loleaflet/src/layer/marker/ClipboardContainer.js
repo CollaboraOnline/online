@@ -416,7 +416,7 @@ L.ClipboardContainer = L.Layer.extend({
 					// WebView-specific hack: when the user presses enter, textContent
 					// is empty instead of "\n", but a <br> is added to the
 					// contenteditable.
-					this._sendText("\n");
+					this._sendText('\n');
 				} else {
 					this._sendText(this._textArea.textContent);
 				}
