@@ -30,8 +30,8 @@ android {
             ndk {
                 abiFilters "armeabi-v7a"
             }
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false // FIXME disabled before we get a good proguardRules for callFakeWebsocketOnMessage calling from C++
+            shrinkResources false // FIXME cannot be enabled when minifyEnabled is turned off
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard-rules.pro'
         }
