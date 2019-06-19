@@ -404,16 +404,11 @@ L.ClipboardContainer = L.Layer.extend({
 		this._lastInputType = ev.inputType;
 
 		if (!('inputType' in ev)) {
-			if (this._isComposing) {
-				this._sendCompositionEvent('input', this._textArea.textContent);
-			} else {
-				// Legacy MSIE, Android WebView or FFX < 66, just send the contents of the
-				// container and clear it.
-				if (this._textArea.textContent.length !== 0) {
-					this._sendText(this._textArea.textContent);
-				}
-				this._emptyArea();
-			}
+			// Legacy MSIE or Android Webkit, just send the contents of the
+			// container and clear it.
+			this._sendText(this._textArea.textContent);
+			this._emptyArea();
+
 		} else if (ev.inputType === 'insertCompositionText') {
 			// The text being composed has changed.
 			// This is diferent from a 'compositionupdate' event: a 'compositionupdate'
