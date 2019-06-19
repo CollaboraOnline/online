@@ -45,6 +45,8 @@ JNI_OnLoad(JavaVM* vm, void*) {
         return JNI_ERR; // JNI version not supported.
     }
 
+    setenv("SAL_LOK_OPTIONS", "unipoll", 0);
+
     Log::initialize("Mobile", "debug", false, false, {});
 
     return JNI_VERSION_1_6;
