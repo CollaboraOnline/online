@@ -5,7 +5,11 @@ if ENABLE_MOBILEAPP
 if ENABLE_GTKAPP
 SUBDIRS = gtk loleaflet
 else
+if ENABLE_ANDROIDAPP
+SUBDIRS = android loleaflet
+else
 SUBDIRS = loleaflet
+endif
 endif
 
 else

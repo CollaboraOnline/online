@@ -745,6 +745,7 @@ AC_SUBST(IOSAPP_FONTS)
 AC_CONFIG_FILES([Makefile
                  android/app/liboSettings.gradle
                  android/app/src/main/cpp/CMakeLists.txt
+                 android/Makefile
                  gtk/Makefile
                  ios/config.h
                  ios/Mobile/Info.plist
