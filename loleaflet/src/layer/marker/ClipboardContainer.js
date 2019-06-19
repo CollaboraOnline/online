@@ -680,9 +680,8 @@ L.ClipboardContainer = L.Layer.extend({
 		// Chrome + AOSP does *not* send any "beforeinput" events when the
 		// textarea is empty. In that case, a 'keydown'+'keypress'+'keyup' sequence
 		// for charCode=8 is fired, and handled by the Map.Keyboard.js.
-		// NOTE: Ideally this should never happen, as the textarea/contenteditable
-		// is initialized with two non-breaking spaces when "emptied".
-		if (!this._hasInputType || (this._lastRangesString() === '0-0')) {
+		if ((this._winId === 0 && this._textArea.textContent.length === 0) ||
+			ev.findMyTextContentAre.length == 0) {
 			if (ev.inputType === 'deleteContentBackward') {
 				this._sendKeyEvent(8, 1283);
 			} else if (ev.inputType === 'deleteContentForward') {
