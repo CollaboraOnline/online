@@ -108,6 +108,7 @@ L.ClipboardContainer = L.Layer.extend({
 		onoff(this._textArea, 'cut copy', this._onCutCopy, this);
 		onoff(this._textArea, 'paste', this._onPaste, this);
 		onoff(this._textArea, 'input', this._onInput, this);
+		onoff(this._textArea, 'keyup', this._onKeyUp, this);
 		onoff(this._textArea, 'textInput', this._onTextInput, this);
 
 		// Debug
@@ -427,6 +428,7 @@ L.ClipboardContainer = L.Layer.extend({
 		} else if (ev.inputType === 'deleteContentForward') {
 			// Send a UNO 'delete' keystroke
 			this._sendKeyEvent(46, 1286);
+			this._emptyArea();
 
 		} else if (ev.inputType === 'insertReplacementText') {
 			// Happens only in Safari (both iOS and OS X) with autocorrect/spellcheck
@@ -498,11 +500,33 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	// Empties the textarea / contenteditable element.
-	/// TODO: Add two blank spaces and position the editing caret between them.
-	/// That should help retain fuctionality re: delete, move.
 	_emptyArea: function _emptyArea() {
 		if (L.Browser.safari) {
 			this._textArea.value = '';
+		} else if (this._lastInputType) {
+			// Add two non-breaking spaces to the textarea/contenteditable,
+			// but only after we can be sure that this browser doesn't
+			// use legacy 'input' events, i.e. when the last 'input' event
+			// did have a 'inputType' property.
+			// FIXME: How to *reliably* check support for InputEvents in the browser
+			// before receiving the first one???
+			//
+			// Note: 0xA0 is 160, which is the character code for non-breaking space:
+			// https://www.fileformat.info/info/unicode/char/00a0/index.htm
+			// Using normal spaces would make FFX/Gecko collapse them into an
+			// empty string.
+			this._textArea.innerText = '\xa0\xa0';
+
+			var textNode = this._textArea.childNodes[0];
+			var range = document.createRange();
+			range.setStart(textNode , 1);
+			range.setEnd(textNode , 1);
+			range.collapse(true);
+			var sel = window.getSelection();
+			sel.removeAllRanges();
+			sel.addRange(range);
+			range.detach();
+
 		} else {
 			this._textArea.innerText = '';
 			this._textArea.innerHTML = '';
@@ -531,8 +555,11 @@ L.ClipboardContainer = L.Layer.extend({
 		// Chrome + AOSP does *not* send any "beforeinput" events when the
 		// textarea is empty. In that case, a 'keydown'+'keypress'+'keyup' sequence
 		// for charCode=8 is fired, and handled by the Map.Keyboard.js.
-		if ((this._winId === 0 && this._textArea.textContent.length === 0) ||
-			ev.findMyTextContentAre.length == 0) {
+		// NOTE: Ideally this should never happen, as the textarea/contenteditable
+		// is initialized with two non-breaking spaces when "emptied".
+		if ((this._winId === 0 && this._textArea.textContent.length === 0)
+			/* || ev.findMyTextContentAre.length == 0 */
+		) {
 			if (ev.inputType === 'deleteContentBackward') {
 				this._sendKeyEvent(8, 1283);
 			} else if (ev.inputType === 'deleteContentForward') {
@@ -687,6 +714,15 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 
 		event.preventDefault();
+	},
+
+	// Check arrow keys on 'keyup' event; using 'ArrowLeft' or 'ArrowRight'
+	// shall empty the textarea, to prevent FFX/Gecko from ever not having
+	// whitespace around the caret.
+	_onKeyUp: function _onKeyUp(ev) {
+		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
+			this._emptyArea();
+		}
 	},
 
 	// Handles the given DOMEvent as if it was sent to the textarea/contenteditable,
