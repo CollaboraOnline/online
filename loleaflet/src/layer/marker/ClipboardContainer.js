@@ -651,8 +651,10 @@ L.ClipboardContainer = L.Layer.extend({
 	// particularly when the textarea/contenteditable is empty, but
 	// only in some configurations.
 	_onBeforeInput: function _onBeforeInput(ev) {
-		var selection = window.getSelection().toString();
 		this._lastRanges = ev.getTargetRanges();
+		// 		console.log('onBeforeInput range: ', ev.inputType, ranges,
+		// 					ranges[0] && ranges[0].startOffset,
+		// 					ranges[0] && ranges[0].endOffset);
 
 		this._lastBeforeInputType = ev.inputType;
 		this._selectionLengthAtBeforeInput = selection.length;
