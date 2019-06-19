@@ -1,5 +1,6 @@
 clean-local:
 	rm -rf $(abs_top_srcdir)/android/app/src/main/assets/*
+	rm -rf app/build
 
 all-local: app/src/main/assets/templates/untitled.odg \
 	   app/src/main/assets/templates/untitled.odp \
