@@ -411,7 +411,7 @@ L.ClipboardContainer = L.Layer.extend({
 			} else {
 				if (
 					this._textArea.textContent.length === 0 &&
-					this._textArea.textContent.innerHTML.indexOf('<br>') !== -1
+					this._textArea.innerHTML.indexOf('<br>') !== -1
 				) {
 					// WebView-specific hack: when the user presses enter, textContent
 					// is empty instead of "\n", but a <br> is added to the
