@@ -12,6 +12,16 @@
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keepclassmembers class LOOLMessageHandler {
+   public *;
+}
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# Keep also method that we are calling back from the JNI
+-keepclassmembers class MainActivity {
+   void callFakeWebsocketOnMessage(java.lang.String);
+}
