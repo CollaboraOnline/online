@@ -727,13 +727,9 @@ L.ClipboardContainer = L.Layer.extend({
 	// The approach here is to use "compositionend" events *only in Chrome* to mark
 	// the composing text as committed to the text area.
 	_onCompositionEnd: function _onCompositionEnd(ev) {
-		this._map.notifyActive();
 		// Check for standard chrome, and check heuristically for embedded Android
 		// WebView (without chrome user-agent string)
-		if (
-			L.Browser.chrome ||
-			(L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit && !L.Browser.gecko)
-		) {
+		if (L.Browser.chrome || (L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit)) {
 			if (this._lastInputType === 'insertCompositionText') {
 // 				console.log('Queuing input because android webview');
 				this._queueInput(ev.data);
