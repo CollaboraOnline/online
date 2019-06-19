@@ -112,7 +112,7 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
 
     JNIEnv *env;
     jint res = javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
-    if (res != JNI_OK) {
+    if (res == JNI_EDETACHED) {
         LOG_DBG("GetEnv need to attach thread");
         res = javaVM->AttachCurrentThread(&env, nullptr);
         if (JNI_OK != res) {
@@ -120,10 +120,23 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
             return;
         }
     }
+    else if (res == JNI_EVERSION) {
+        LOG_DBG("GetEnv version not supported");
+        return;
+    }
+    else if (res != JNI_OK) {
+        LOG_DBG("GetEnv another error");
+        return;
+    }
 
     jstring jstr = env->NewStringUTF(js.c_str());
     jmethodID callFakeWebsocket = env->GetMethodID(mainActivityClz, "callFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
     env->CallVoidMethod(mainActivityObj, callFakeWebsocket, jstr);
+
+    if (env->ExceptionCheck())
+        env->ExceptionDescribe();
+
+    javaVM->DetachCurrentThread();
 }
 
 /// Handle a message from JavaScript.
