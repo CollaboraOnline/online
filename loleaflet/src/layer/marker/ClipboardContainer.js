@@ -584,7 +584,9 @@ L.ClipboardContainer = L.Layer.extend({
 	// the composing text as committed to the text area.
 	_onCompositionEnd: function _onCompositionEnd(ev) {
 
-		if (L.Browser.chrome) {
+		// Check for standard chrome, and check heuristically for embedded Android
+		// WebView (without chrome user-agent string)
+		if (L.Browser.chrome || (L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit)) {
 			if (this._lastInputType === 'insertCompositionText') {
 				this._queueInput(ev.data);
 				// 				this._IMEPopup.remove();
