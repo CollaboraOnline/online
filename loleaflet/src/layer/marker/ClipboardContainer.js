@@ -306,8 +306,9 @@ L.ClipboardContainer = L.Layer.extend({
 		var previousInputType = this._lastInputType;
 		this._lastInputType = ev.inputType;
 
-		if (L.Browser.ielt9 && !('inputType' in ev)) {
-			// Legacy MSIE, just send the contents of the container and clear it.
+		if (!('inputType' in ev)) {
+			// Legacy MSIE or Android Webkit, just send the contents of the
+			// container and clear it.
 			this._sendText(this._textArea.textContent);
 			this._emptyArea();
 
