@@ -307,12 +307,22 @@ L.ClipboardContainer = L.Layer.extend({
 		this._lastInputType = ev.inputType;
 
 		if (!('inputType' in ev)) {
-			// Legacy MSIE or Android Webkit, just send the contents of the
+			// Legacy MSIE or Android WebView, just send the contents of the
 			// container and clear it.
 			if (this._isComposing) {
 				this._sendCompositionEvent('input', this._textArea.textContent);
 			} else {
-				this._sendText(this._textArea.textContent);
+				if (
+					this._textArea.textContent.length === 0 &&
+					this._textArea.textContent.innerHTML.indexOf('<br>') !== -1
+				) {
+					// WebView-specific hack: when the user presses enter, textContent
+					// is empty instead of "\n", but a <br> is added to the
+					// contenteditable.
+					this._sendText("\n");
+				} else {
+					this._sendText(this._textArea.textContent);
+				}
 				this._emptyArea();
 			}
 		} else if (ev.inputType === 'insertCompositionText') {
