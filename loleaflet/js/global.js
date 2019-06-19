@@ -127,7 +127,7 @@
 		}
 
 		global.socket.onmessage = function (event) {
-			if (global.L && global.socket instanceof global.L.Socket) {
+			if (typeof global.socket._onMessage === 'function') {
 				global.socket._onMessage(event);
 			} else {
 				global.queueMsg.push(event.data);
