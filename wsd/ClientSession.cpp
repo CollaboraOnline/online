@@ -134,13 +134,16 @@ std::shared_ptr<ClientSession> ClientSession::getByClipboardHash(std::string &ke
 
 void ClientSession::addClipboardSocket(const std::shared_ptr<StreamSocket> &socket)
 {
+    // FIXME: Ash: we need to store whether this is a
+    // download-everything, or an individual
+    // 'download' and/or providing our helpful / user page.
+
     // Move the socket into our DocBroker.
     auto docBroker = getDocumentBroker();
     docBroker->addSocketToPoll(socket);
 
     LOG_TRC("Session [" << getId() << "] sending getbinaryselection");
-    const std::string gettext = "getbinaryselection mimetype=application/x-openoffice-embed-source-xml";
-    docBroker->forwardToChild(getId(), gettext);
+    docBroker->forwardToChild(getId(), "getclipboard");
 
     // TESTME: onerror / socket cleanup.
     _clipSockets.push_back(socket);
@@ -1053,10 +1056,14 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             });
         return forwardToClient(payload);
 
-    } else if (tokens[0] == "binaryselectioncontent:") {
+    } else if (tokens[0] == "clipboardcontent:") {
+
+        // FIXME: Ash: we need to return different content depending
+        // on whether this is a download-everything, or an individual
+        // 'download' and/or providing our helpful / user page.
 
         // for now just for remote sockets.
-        LOG_TRC("Got binary selection content to send to " << _clipSockets.size() << "sockets");
+        LOG_TRC("Got clipboard content to send to " << _clipSockets.size() << "sockets");
         size_t header;
         for (header = 0; header < payload->size();)
             if (payload->data()[header++] == '\n')
@@ -1079,11 +1086,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                                                      size_t(Socket::MaximumSendBufferSize)));
                 socket->send(oss.str());
                 socket->shutdown();
-                LOG_INF("Sent clipboard content.");
+                LOG_INF("Queued clipboard content for send.");
             }
         }
         else
-            LOG_DBG("Odd - no binary selection content");
+            LOG_DBG("Unusual: requested clipboard content, but have none");
         _clipSockets.clear();
     }
 

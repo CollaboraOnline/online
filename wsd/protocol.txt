@@ -542,8 +542,8 @@ clipboardcontent:
 
      in reply to a getclipboard: message.
 
-     mime_type\r\n
-     length\r\n
+     mime_type\n
+     length\n
      <binary selection content>
      ...
 
@@ -557,15 +557,15 @@ child-<sessionId> <Payload Message>
 
 child-<sessionId> getclipboard:
 
-     fetches the clipboard for this view and returns
+     fetches the complete clipboard for this view and returns
      a clipboardcontent message.
 
 child-<sessionId> setclipboard:
 
      Sets the clipboard content for this view.
 
-     mime_type\r\n
-     length\r\n
+     mime_type\n
+     length\n
      <binary selection content>
      ...
 

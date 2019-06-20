@@ -21,6 +21,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <inttypes.h>
 
 #include <memory.h>
 
@@ -725,6 +726,26 @@ int main(int argc, char**argv)
     std::pair<std::string, std::string> splitLast(const std::string& s, const char delimeter = ' ', bool removeDelim = true)
     {
         return splitLast(s.c_str(), s.size(), delimeter, removeDelim);
+    }
+
+    /// Append a length bytes to a vector, or strlen of data as a C string if not provided
+    /// returns count of bytes appended.
+    inline void vectorAppend(std::vector<char> &vector, const char *data, ssize_t length = -1)
+    {
+        size_t vlen = vector.size();
+        size_t dataLen = length;
+        if (length < 0)
+            dataLen = strlen(data);
+        vector.resize(vlen+dataLen);
+        std::memcpy(vector.data() + vlen, data, dataLen);
+    }
+
+    /// Append a number as hexadecimal to a vector
+    inline void vectorAppendHex(std::vector<char> &vector, uint64_t number)
+    {
+        char output[32];
+        sprintf(output, "%" PRIu64, number);
+        vectorAppend(vector, output);
     }
 
     /// Splits a URL into path (with protocol), filename, extension, parameters.

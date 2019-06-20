@@ -2343,6 +2343,9 @@ private:
                     docBroker->addCallback([docBroker, moveSocket, session]()
                         {
                             auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+
+                            // FIXME: we need to pass whether this is an individual
+                            // 'download' and/or user page too.
                             session->addClipboardSocket(streamSocket);
                         });
                 });

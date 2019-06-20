@@ -921,50 +921,58 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
 
 bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /* tokens */)
 {
-#if 0
-    // FIXME: re-implement me
-    std::string mimeType;
+    const char **pMimeTypes = nullptr; // fetch all for now.
+    size_t       nOutCount = 0;
+    char       **pOutMimeTypes = nullptr;
+    size_t      *pOutSizes = nullptr;
+    char       **pOutStreams = nullptr;
 
-    if (tokens.size() != 2 ||
-        !getTokenString(tokens[1], "mimetype", mimeType))
-    {
-        sendTextFrame("error: cmd=getbinaryselection kind=syntax");
-        return false;
-    }
-
-    size_t binSize = 0;
-    char* binSelection = nullptr;
-    char *mimeTypeOut = nullptr;
+    bool success = false;
     {
         std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
         getLOKitDocument()->setView(_viewId);
 
-        binSelection = getLOKitDocument()->getBinarySelection(mimeType.c_str(), &binSize, &mimeTypeOut);
+        success = getLOKitDocument()->getSelection(pMimeTypes, &nOutCount, &pOutMimeTypes,
+                                                   &pOutSizes, &pOutStreams);
     }
 
-    std::string header("clipboardcontent: mimetype=");
-    if (mimeTypeOut)
-        header += mimeTypeOut;
-    header += "\n";
+    if (!success || nOutCount == 0)
+    {
+        LOG_WRN("Get clipboard failed " << getLOKitLastError());
+        sendTextFrame("clipboardcontent: error");
+//      sendTextFrame("error: cmd=getclipboard kind=syntax");
+        return false;
+    }
+
+    size_t outGuess = 32;
+    for (size_t i = 0; i < nOutCount; ++i)
+        outGuess += pOutSizes[i] + strlen(pOutMimeTypes[i]) + 10;
 
     std::vector<char> output;
-    output.resize(header.size() + binSize);
-    std::memcpy(output.data(), header.c_str(), header.size());
-    if (binSelection)
-        std::memcpy(output.data() + header.size(), binSelection, binSize);
+    output.reserve(outGuess);
 
-    LOG_TRC("Sending binaryselectioncontent (" << binSize << " bytes) in: " <<
-            mimeType << " out: " << (mimeTypeOut ? mimeTypeOut : ""));
+    Util::vectorAppend(output, "clipboardcontent:\n");
+    LOG_TRC("Building clipboardcontent: " << nOutCount << "items");
+    for (size_t i = 0; i < nOutCount; ++i)
+    {
+        LOG_TRC("\t[" << i << " - type " << pOutMimeTypes[i] << " size " << pOutSizes[i]);
+        Util::vectorAppend(output, pOutMimeTypes[i]);
+        free(pOutMimeTypes[i]);
+        Util::vectorAppend(output, "\n", 1);
+        Util::vectorAppendHex(output, pOutSizes[i]);
+        Util::vectorAppend(output, "\n", 1);
+        Util::vectorAppend(output, pOutStreams[i], pOutSizes[i]);
+        free(pOutStreams[i]);
+        Util::vectorAppend(output, "\n", 1);
+    }
+    free(pOutSizes);
+    free(pOutMimeTypes);
+    free(pOutStreams);
+
+    LOG_TRC("Sending clipboardcontent of size " << output.size() << " bytes");
     sendBinaryFrame(output.data(), output.size());
-    if (binSelection)
-        free(binSelection);
-    if (mimeTypeOut)
-        free (mimeTypeOut);
 
     return true;
-#else
-    return false;
-#endif
 }
 
 bool ChildSession::setClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /* tokens */)

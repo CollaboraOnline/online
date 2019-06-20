@@ -13,7 +13,7 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
 noinst_LTLIBRARIES = \
-	unit-convert.la unit-typing.la \
+	unit-convert.la unit-typing.la unit-copy-paste.la \
 	unit-timeout.la unit-prefork.la \
 	unit-storage.la unit-client.la \
 	unit-admin.la unit-tilecache.la \
@@ -94,6 +94,8 @@ unit_client_la_SOURCES = UnitClient.cpp ${test_all_source}
 unit_client_la_LIBADD = $(CPPUNIT_LIBS)
 unit_typing_la_SOURCES = UnitTyping.cpp
 unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
+unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
+unit_copy_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
@@ -138,6 +140,7 @@ TESTS = unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la \
         unit-wopi-documentconflict.la unit_wopi_renamefile.la \
 	unit-http.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
+# TESTS = unit-copy-paste.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
 # TESTS += unit-storage.la
