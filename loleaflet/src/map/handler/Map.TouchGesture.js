@@ -24,13 +24,27 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._hammer.get('pinch').set({
 				enable: true
 			});
+
+			if (L.Browser.touch) {
+				L.DomEvent.on(this._map._mapPane, 'touchstart touchmove touchend touchcancel', L.DomEvent.preventDefault);
+			}
+
+			if (Hammer.prefixed(window, 'PointerEvent') !== undefined) {
+				L.DomEvent.on(this._map._mapPane, 'pointerdown pointermove pointerup pointercancel', L.DomEvent.preventDefault);
+			}
+
+			// IE10 has prefixed support, and case-sensitive
+			if (window.MSPointerEvent && !window.PointerEvent) {
+				L.DomEvent.on(this._map._mapPane, 'MSPointerDown MSPointerMove MSPointerUp MSPointerCancel', L.DomEvent.preventDefault);
+			}
+
+			L.DomEvent.on(this._map._mapPane, 'mousedown mousemove mouseup', L.DomEvent.preventDefault);
+			L.DomEvent.on(document, 'contextmenu', L.DomEvent.preventDefault);
 		}
 
 		for (var events in L.Draggable.MOVE) {
 			L.DomEvent.on(document, L.Draggable.END[events], this._onDocUp, this);
 		}
-
-		L.DomEvent.on(document, 'contextmenu', L.DomEvent.preventDefault);
 
 		/// $.contextMenu does not support touch events so,
 		/// attach 'touchend' menu clicks event handler
