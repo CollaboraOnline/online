@@ -48,6 +48,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -603,63 +604,75 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     // Opens an Input dialog to get the name of new file
     private void createNewFileInputDialog(final String defaultFileName, final String newDocumentType, final String extension) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.create_new_document_title);
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_create_file, null);
 
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        //file name input
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        // file name input
+        final EditText input = (EditText)view.findViewById(R.id.fileName);
         input.setText(defaultFileName);
-        layout.addView(input);
 
-        //warning text to notify the user that such a file already exists
-        final TextView warningText = new TextView(this);
-        warningText.setText(getString(R.string.file_exists_warning));
-        layout.addView(warningText);
-        //check if the file exists when showing the create dialog
+        // warning text to notify the user that such a file already exists
+        final TextView warningText = (TextView)view.findViewById(R.id.overwriteWarning);
+
+        // check if the file exists when showing the create dialog
         File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
         warningText.setVisibility(tempFile.exists() ? View.VISIBLE : View.GONE);
 
-        builder.setView(layout);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.create_new_document_title)
+            .setView(view)
+            .setPositiveButton(tempFile.exists() ? R.string.action_overwrite : R.string.action_create, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    final String path = currentDirectory.getUri().getPath() + input.getText().toString();
+                    Uri newDocUri = createNewFile(path, extension);
+                    if (newDocUri != null) {
+                        Intent i = new Intent(Intent.ACTION_VIEW, newDocUri);
 
-        builder.setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final String path = currentDirectory.getUri().getPath() + input.getText().toString();
-                Uri newDocUri = createNewFile(path, extension);
-                if (newDocUri != null) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, newDocUri);
-                    String packageName = getApplicationContext().getPackageName();
-                    ComponentName componentName = new ComponentName(packageName,
-                            MainActivity.class.getName());
-                    i.setComponent(componentName);
-                    i.putExtra("org.libreoffice.document_provider_id",
-                            documentProvider.getId());
-                    i.putExtra("org.libreoffice.document_uri",
-                            newDocUri);
-                    startActivity(i);
-                } else {
-                    Toast.makeText(LibreOfficeUIActivity.this, getString(R.string.file_creation_failed), Toast.LENGTH_SHORT).show();
+                        String packageName = getApplicationContext().getPackageName();
+                        ComponentName componentName = new ComponentName(packageName, MainActivity.class.getName());
+                        i.setComponent(componentName);
+
+                        i.putExtra("org.libreoffice.document_provider_id", documentProvider.getId());
+                        i.putExtra("org.libreoffice.document_uri", newDocUri);
+
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(LibreOfficeUIActivity.this, getString(R.string.file_creation_failed), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            })
+            .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
 
-        builder.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        final AlertDialog alertDialog = builder.show();
 
-        //check if a file with this name already exists and notify the user
+        // check if a file with this name already exists and notify the user
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence c, int start, int before, int count) {
+                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                boolean emptyInput = input.getText().toString().isEmpty();
+
                 File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
-                warningText.setVisibility(tempFile.exists() ? View.VISIBLE : View.GONE);
+                if (!emptyInput && tempFile.exists()) {
+                    warningText.setVisibility(View.VISIBLE);
+                    positiveButton.setText(R.string.action_overwrite);
+                }
+                else {
+                    warningText.setVisibility(View.GONE);
+                    positiveButton.setText(R.string.action_create);
+                }
+
+                // hide the button completely if empty
+                if (emptyInput)
+                    positiveButton.setVisibility(View.GONE);
+                else
+                    positiveButton.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -670,10 +683,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
         });
-
-        builder.show();
     }
-
 
     /**
      * Creates a new file at the specified path, by copying an empty template to that location.
