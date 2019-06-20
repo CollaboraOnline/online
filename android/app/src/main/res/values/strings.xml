@@ -9,7 +9,7 @@
     <string name="no_recent_items">No recent items</string>
     <string name="no_items">No items</string>
     <string name="temp_file_saving_disabled">This file is read-only, saving is disabled.</string>
-    <string name="file_exists_warning">A file with this name already exists, and it will be overwritten.</string>
+    <string name="file_exists_warning">A file with this name already exists, and will be overwritten.</string>
     <string name="file_creation_failed">File creation failed</string>
     <string name="storage_permission_required">Storage permission is required</string>
     <string name="failed_to_load_file">Failed to determine the file to load</string>
@@ -120,8 +120,10 @@
     <string name="action_cancel">Cancel</string>
 
     <!-- Create New Document Dialog Strings -->
-    <string name="create_new_document_title">Enter file name</string>
-    <string name="action_create">CREATE</string>
+    <string name="create_new_document_title">Create New Document</string>
+    <string name="enter_filename">Please enter the file name:</string>
+    <string name="action_create">Create</string>
+    <string name="action_overwrite">Overwrite</string>
 
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Loading...</string>
