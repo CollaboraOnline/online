@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-02 20:32+0200\n"
+"POT-Creation-Date: 2019-06-20 11:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /en_GB/libo_online/loleaflet-ui-en_GB.po\n"
-"X-Pootle-Revision: 3847318\n"
+"X-Pootle-Revision: 3865272\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -389,11 +389,15 @@ msgid "Are you sure you want to delete this slide?"
 msgstr "Are you sure you want to delete this slide?"
 
 #: src/control/Control.Menubar.js:790
+#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
+"<p>Your browser has very limited access to the clipboard, so use these "
+"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>:"
+" For cutting.</li><li><b>Ctrl+P</b>: For pasting.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -480,9 +484,8 @@ msgid "Insert sheet"
 msgstr "Insert sheet"
 
 #: src/control/Control.Toolbar.js:987
-#, fuzzy
 msgid "Search"
-msgstr "Search:"
+msgstr "Search"
 
 #: src/control/Control.Toolbar.js:993
 msgid "Cancel the search"
@@ -747,13 +750,13 @@ msgstr "Right Margin"
 msgid "Downloading..."
 msgstr "Downloading..."
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1171
+#: src/control/Toolbar.js:103 src/map/Map.js:1175
 msgid "Saving..."
 msgstr "Saving..."
 
 #: src/control/Toolbar.js:114
 msgid "Renaming..."
-msgstr ""
+msgstr "Renaming..."
 
 #: src/control/Toolbar.js:278
 msgid "This version of %productName is powered by"
@@ -952,9 +955,8 @@ msgid "Invalid link: '%url'"
 msgstr "Invalid link: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid "You are leaving the editor, are you sure you want to visit %url?"
-msgstr "You are leaving the editor, are you sure you want to proceed?"
+msgstr "You are leaving the editor, are you sure you want to visit %url?"
 
 #: src/errormessages.js:28
 #, javascript-format
@@ -989,12 +991,11 @@ msgstr ""
 "server administrator."
 
 #: src/errormessages.js:32
-#, fuzzy
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Document cannot be saved. Check your permissions or contact the storage "
+"Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
 
 #: src/layer/marker/Annotation.js:210
@@ -1039,7 +1040,7 @@ msgstr "%d minutes ago"
 msgid "Inactive document - please click to resume editing"
 msgstr "Inactive document - please click to resume editing"
 
-#: src/map/Map.js:1174
+#: src/map/Map.js:1178
 msgid "Loading..."
 msgstr "Loading…"
 

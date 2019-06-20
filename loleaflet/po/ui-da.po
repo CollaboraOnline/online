@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-02 20:32+0200\n"
+"POT-Creation-Date: 2019-06-20 11:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-ui-da.po\n"
-"X-Pootle-Revision: 3848523\n"
+"X-Pootle-Revision: 3859654\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -485,7 +485,6 @@ msgid "Insert sheet"
 msgstr "Indsæt ark"
 
 #: src/control/Control.Toolbar.js:987
-#, fuzzy
 msgid "Search"
 msgstr "Søg:"
 
@@ -753,7 +752,7 @@ msgstr "Højre margin"
 msgid "Downloading..."
 msgstr "Downloader..."
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1171
+#: src/control/Toolbar.js:103 src/map/Map.js:1175
 msgid "Saving..."
 msgstr "Gemmer..."
 
@@ -1045,7 +1044,7 @@ msgstr "%d minutter siden"
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dokument - klik for at genoptage redigering"
 
-#: src/map/Map.js:1174
+#: src/map/Map.js:1178
 msgid "Loading..."
 msgstr "Indlæser..."
 

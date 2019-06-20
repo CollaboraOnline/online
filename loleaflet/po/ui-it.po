@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-02 20:32+0200\n"
+"POT-Creation-Date: 2019-06-20 11:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /it/libo_online/loleaflet-ui-it.po\n"
-"X-Pootle-Revision: 3847419\n"
+"X-Pootle-Revision: 3869042\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -395,11 +395,16 @@ msgid "Are you sure you want to delete this slide?"
 msgstr "Vuoi davvero eliminare questa diapositiva?"
 
 #: src/control/Control.Menubar.js:790
+#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
+"<p>il tuo browser ha un accesso molto limitato agli appunti; usa queste "
+"scorciatoie da tastiera:<ul><li><b>Ctrl+C</b> per "
+"copiare</li><li><b>Ctrl+X</b> per tagliare</li><li><b>Ctrl+P</b> per "
+"incollare</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -486,9 +491,8 @@ msgid "Insert sheet"
 msgstr "Inserisci foglio"
 
 #: src/control/Control.Toolbar.js:987
-#, fuzzy
 msgid "Search"
-msgstr "Cerca:"
+msgstr "Cerca"
 
 #: src/control/Control.Toolbar.js:993
 msgid "Cancel the search"
@@ -755,13 +759,13 @@ msgstr "Margine destro"
 msgid "Downloading..."
 msgstr "Scaricamento in corso..."
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1171
+#: src/control/Toolbar.js:103 src/map/Map.js:1175
 msgid "Saving..."
 msgstr "Salvataggio in corso..."
 
 #: src/control/Toolbar.js:114
 msgid "Renaming..."
-msgstr ""
+msgstr "Rinomina..."
 
 #: src/control/Toolbar.js:278
 msgid "This version of %productName is powered by"
@@ -960,9 +964,8 @@ msgid "Invalid link: '%url'"
 msgstr "Collegamento non valido: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid "You are leaving the editor, are you sure you want to visit %url?"
-msgstr "Stai uscendo dall'editor, vuoi davvero procedere?"
+msgstr "Stai uscendo dall'editor, vuoi davvero visitare \"%url\"?"
 
 #: src/errormessages.js:28
 #, javascript-format
@@ -1000,14 +1003,12 @@ msgstr ""
 "archiviazione."
 
 #: src/errormessages.js:32
-#, fuzzy
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Impossibile salvare il documento nello spazio di archiviazione. Verifica i "
-"tuoi permessi o contatta l'amministratore del server dello spazio di "
-"archiviazione."
+"Impossibile rinominare il documento. Verifica i tuoi permessi o contatta "
+"l'amministratore del server."
 
 #: src/layer/marker/Annotation.js:210
 msgid "Accept change"
@@ -1051,7 +1052,7 @@ msgstr "%d minuti fa"
 msgid "Inactive document - please click to resume editing"
 msgstr "Documento inattivo - fai clic per riprendere le modifiche"
 
-#: src/map/Map.js:1174
+#: src/map/Map.js:1178
 msgid "Loading..."
 msgstr "Caricamento in corso..."
 
