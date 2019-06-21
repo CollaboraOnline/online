@@ -287,6 +287,16 @@ else
 fi
 AC_SUBST(CUSTOM_ICONS_DIRECTORY)
 
+AC_MSG_CHECKING([for custom icon theme])
+CUSTOM_ICONS_DIRECTORY=
+if test -d "$with_icon_theme"; then
+    CUSTOM_ICONS_DIRECTORY=`readlink -f $with_icon_theme`
+    AC_MSG_RESULT([$CUSTOM_ICONS_DIRECTORY])
+else
+    AC_MSG_RESULT([no])
+fi
+AC_SUBST(CUSTOM_ICONS_DIRECTORY)
+
 ENABLE_GTKAPP=
 if test "$enable_gtkapp" = "yes"; then
    ENABLE_GTKAPP=true
