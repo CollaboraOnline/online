@@ -133,14 +133,12 @@ check-local:
 	./run_unit.sh --log-file test.log --trs-file test.trs
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
-
-TESTS = unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la \
-	unit-timeout.la unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
+TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
+        unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
         unit-wopi-documentconflict.la unit_wopi_renamefile.la \
 	unit-http.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
-# TESTS = unit-copy-paste.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
 # TESTS += unit-storage.la

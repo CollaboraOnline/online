@@ -747,7 +747,7 @@ int main(int argc, char**argv)
     inline void vectorAppendHex(std::vector<char> &vector, uint64_t number)
     {
         char output[32];
-        sprintf(output, "%" PRIu64, number);
+        sprintf(output, "%" PRIx64, number);
         vectorAppend(vector, output);
     }
 

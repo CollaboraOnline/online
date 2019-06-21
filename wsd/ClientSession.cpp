@@ -1095,6 +1095,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         else
             LOG_DBG("Unusual: requested clipboard content, but have none");
         _clipSockets.clear();
+        return true;
     }
 
     if (!isDocPasswordProtected())

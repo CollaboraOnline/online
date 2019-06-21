@@ -28,6 +28,46 @@
 
 using namespace Poco::Net;
 
+struct CopyPasteData
+{
+    std::vector<std::string> _mimeTypes;
+    std::vector<std::string> _content;
+    CopyPasteData()
+    {
+    }
+    bool read(std::istream& inStream)
+    {
+        while (!inStream.eof())
+        {
+            std::string mime, hexLen, newline;
+            std::getline(inStream, mime, '\n');
+            std::getline(inStream, hexLen, '\n');
+            std::cerr << "mime: '" << mime << "' - hexlen '" << hexLen << "'\n";
+            uint64_t len = strtoll( hexLen.c_str(), nullptr, 16 );
+            std::string content(len, ' ');
+            inStream.read(&content[0], len);
+            std::getline(inStream, newline, '\n');
+            if (newline.length() > 0)
+            {
+                std::cerr << "trailing stream content expecting newline: '" << newline <<
+                    "' - len " << hexLen << " == " << len << " read - " << content.length() << "\n";
+                return false;
+            }
+            if (mime.length() > 0)
+            {
+                _mimeTypes.push_back(mime);
+                _content.push_back(content);
+            }
+        }
+        return true;
+    }
+    size_t size()
+    {
+        assert(_mimeTypes.size() == _content.size());
+        return _mimeTypes.size();
+    }
+};
+
 // Inside the WSD process
 class UnitCopyPaste : public UnitWSD
 {
@@ -73,7 +113,7 @@ public:
         std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
         session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
         session->sendRequest(request);
-        session->receiveResponse(response);
+        std::istream& responseStream = session->receiveResponse(response);
 
         if (response.getStatus() != HTTPResponse::HTTP_OK)
         {
@@ -81,6 +121,15 @@ public:
             exitTest(TestResult::Failed);
             return;
         }
+
+        CPPUNIT_ASSERT_EQUAL(std::string("application/octet-stream"), response.getContentType());
+        CopyPasteData clipboard;
+        CPPUNIT_ASSERT(clipboard.read(responseStream));
+        CPPUNIT_ASSERT_EQUAL(std::string("application/octet-stream"), response.getContentType());
+        std::cerr << "Clipboard with " << clipboard.size() << " entries\n";
+        for (size_t i = 0; i < clipboard.size(); ++i)
+            std::cerr << "\t[" << i << "] - size " << clipboard._content[i].size() <<
+                " type: '" << clipboard._mimeTypes[i] << "'\n";
 
         std::cerr << "CopyPaste tests succeeded" << std::endl;
         exitTest(TestResult::Ok);
