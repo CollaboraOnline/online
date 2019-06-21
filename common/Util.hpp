@@ -50,6 +50,9 @@ namespace Util
         /// Generate a string of random characters.
         std::string getHexString(const size_t length);
 
+        /// Generate a hard random string of characters.
+        std::string getHardRandomHexString(const size_t length);
+
         /// Generates a random string suitable for
         /// file/directory names.
         std::string getFilename(const size_t length);

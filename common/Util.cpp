@@ -108,6 +108,27 @@ namespace Util
             return ss.str().substr(0, length);
         }
 
+        /// Generate a string of harder random characters.
+        std::string getHardRandomHexString(const size_t length)
+        {
+            std::stringstream ss;
+            Poco::HexBinaryEncoder hex(ss);
+
+            // a poor fallback but something.
+            std::vector<char> random = getBytes(length);
+            int fd = open("/dev/urandom", O_RDONLY);
+            int len;
+            if (fd < 0 ||
+                (len = read(fd, random.data(), length)) < 0 ||
+                size_t(len) < length)
+            {
+                LOG_ERR("failed to read " << length << " hard random bytes, got " << len << " for hash: " << errno);
+            }
+            close(fd);
+            hex.write(random.data(), length);
+            return ss.str().substr(0, length);
+        }
+
         /// Generates a random string in Base64.
         /// Note: May contain '/' characters.
         std::string getB64String(const size_t length)
