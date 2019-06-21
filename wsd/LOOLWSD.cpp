@@ -3370,6 +3370,8 @@ void LOOLWSD::cleanup()
     }
 #endif
 #endif
+    Socket::InhibitThreadChecks = true;
+    SocketPoll::InhibitThreadChecks = true;
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -3384,6 +3386,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
         returnValue = innerMain();
     } catch (const std::runtime_error& e) {
         LOG_FTL(e.what());
+        cleanup();
         throw;
     } catch (...) {
         cleanup();
