@@ -84,7 +84,10 @@ L.ClipboardContainer = L.Layer.extend({
 
 	setValue: function(val) {
 		this._textArea.innerHTML = val;
-		this.select();
+		// the select call causes the text area to grab focus
+		// since it is a source of possible focus lost issues (like the search input field)
+		// we disable it as a temporary workaround
+		//this.select();
 	},
 
 	setLatLng: function (latlng) {
