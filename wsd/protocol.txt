@@ -265,6 +265,12 @@ lokitversion <JSON string>
          "ProductExtension": ".0.0.alpha0",
          "BuildId": "<full 40 char git hash>"}
 
+clipboardhash: <hash>
+
+    Send access token for web clipboard use, may arrive periodically
+    Current and previous hash remain valid for that period, always use
+    the latest.
+
 contextmenu: <json description of the context menu>
 
     When the user right-clicks in the document, the content of the context

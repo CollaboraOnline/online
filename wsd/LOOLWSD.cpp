@@ -2314,10 +2314,12 @@ private:
 
         Poco::URI requestUri(request.getURI());
         Poco::URI::QueryParameters params = requestUri.getQueryParameters();
-        std::string serverId, viewId, tag;
+        std::string docKey, serverId, viewId, tag;
         for (auto it : params)
         {
-            if (it.first == "ServerId")
+            if (it.first == "WOPISrc")
+                docKey = it.second;
+            else if (it.first == "ServerId")
                 serverId = it.second;
             else if (it.first == "ViewId")
                 viewId = it.second;
@@ -2329,34 +2331,36 @@ private:
         // TODO: check WOPISrc too ...
         // Lookup WOPISRC [!] ... with DocBroker bits etc. [!] ...
 
-        std::shared_ptr<ClientSession> session;
-        if (serverId == LOOLWSD::HostIdentifier &&
-            (session = ClientSession::getByClipboardHash(tag)))
+        if (serverId != LOOLWSD::HostIdentifier)
+        {
+            LOG_ERR("Invalid clipboard request: " << serverId << " mismatches with " <<
+                    LOOLWSD::HostIdentifier << " potential HA / cluster mis-configuration");
+        }
+
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+        auto docBrokerIt = DocBrokers.find(docKey);
+        if (docBrokerIt != DocBrokers.end() &&
+            serverId == LOOLWSD::HostIdentifier)
         {
             // Do things in the right thread.
-            auto docBroker = session->getDocumentBroker();
+            auto docBroker = docBrokerIt->second;
 
-            disposition.setMove([docBroker, session]
-                                (const std::shared_ptr<Socket> &moveSocket)
+            disposition.setMove([=] (const std::shared_ptr<Socket> &moveSocket)
                 {
-                    // Perform all of this after removing the socket
-
                     // We no longer own this socket.
                     moveSocket->setThreadOwner(std::thread::id(0));
 
-                    docBroker->addCallback([docBroker, moveSocket, session]()
+                    // Perform all of this after removing the socket
+                    docBroker->addCallback([=]()
                         {
                             auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-
-                            // FIXME: we need to pass whether this is an individual
-                            // 'download' and/or user page too.
-                            session->addClipboardSocket(streamSocket);
+                            docBroker->handleClipboardGetRequest(streamSocket, viewId, tag);
                         });
                 });
-            LOG_TRC("queued binary clipboard content fetch");
-
+            LOG_TRC("queued clipboard action on docBroker fetch");
         } else {
-            LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag);
+            LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag <<
+                    " and broker: " << (docBrokerIt == DocBrokers.end() ? "not" : "") << "found");
 
             std::string message;
             if (serverId != LOOLWSD::HostIdentifier)

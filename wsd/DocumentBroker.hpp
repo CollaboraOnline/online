@@ -313,6 +313,8 @@ public:
     void cancelTileRequests(const std::shared_ptr<ClientSession>& session);
     void handleTileResponse(const std::vector<char>& payload);
     void handleTileCombinedResponse(const std::vector<char>& payload);
+    void handleClipboardGetRequest(const std::shared_ptr<StreamSocket> &socket,
+                                   const std::string &viewId, const std::string &tag);
 
     bool isMarkedToDestroy() const { return _markToDestroy || _stop; }
 

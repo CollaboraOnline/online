@@ -274,11 +274,12 @@ void DocumentBroker::pollThread()
     uint64_t adminSent = 0;
     uint64_t adminRecv = 0;
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
+    auto last30SecCheckTime = std::chrono::steady_clock::now();
+    auto lastClipboardHashUpdateTime = std::chrono::steady_clock::now();
 
     int limit_load_secs = LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
     auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
-    auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
@@ -340,9 +341,16 @@ void DocumentBroker::pollThread()
             last30SecCheckTime = std::chrono::steady_clock::now();
         }
 
+#if !MOBILEAPP
+        if (std::chrono::duration_cast<std::chrono::minutes>(now - lastClipboardHashUpdateTime).count() >= 2)
+        {
+            LOG_TRC("Rotating clipboard hashes");
+            for (auto& it : _sessions)
+                it.second->rotateClipboardHash(true);
+        }
+
         if (false)
             ;
-#if !MOBILEAPP
         // Remove idle documents after 1 hour.
         else if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
         {
@@ -1504,6 +1512,31 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     lock.unlock();
     lock.release();
     sendRequestedTiles(session);
+}
+
+void DocumentBroker::handleClipboardGetRequest(const std::shared_ptr<StreamSocket> &socket,
+                                               const std::string &viewId, const std::string &tag)
+{
+    for (auto& it : _sessions)
+    {
+        if (it.second->matchesClipboardKeys(viewId, tag))
+        {
+            it.second->handleClipboardGetRequest(socket);
+            return;
+        }
+    }
+    LOG_ERR("Could not find matching session to handle clipboard request for " << viewId << " tag: " << tag);
+
+    // Bad request.
+    std::ostringstream oss;
+    oss << "HTTP/1.1 400\r\n"
+        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+        << "User-Agent: LOOLWSD WOPI Agent\r\n"
+        << "Content-Length: 0\r\n"
+        << "\r\n"
+        << "Failed to find this clipboard";
+    socket->send(oss.str());
+    socket->shutdown();
 }
 
 void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)

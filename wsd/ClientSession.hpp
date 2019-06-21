@@ -144,15 +144,22 @@ public:
     /// Find clipboard for session
     static std::shared_ptr<ClientSession> getByClipboardHash(std::string &key);
 
-    void addClipboardSocket(const std::shared_ptr<StreamSocket> &socket);
+    /// Do we recognize this clipboard ?
+    bool matchesClipboardKeys(const std::string &viewId, const std::string &tag);
 
-private:
+    /// Handle a clipboard fetch / put request.
+    void handleClipboardGetRequest(const std::shared_ptr<StreamSocket> &socket);
 
     /// Create URI for transient clipboard content.
-    std::string getURIAndUpdateClipboardHash();
+    std::string getClipboardURI();
 
+    /// Generate and rotate a new clipboard hash, sending it if appropriate
+    void rotateClipboardHash(bool notifyClient);
+
+private:
     /// SocketHandler: disconnection event.
     void onDisconnect() override;
+
     /// Does SocketHandler: have data or timeouts to setup.
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
                       int & /* timeoutMaxMs */) override;
@@ -237,8 +244,8 @@ private:
     /// Client is using a text document?
     bool _isTextDocument;
 
-    /// Transient clipboard identifier - protected by SessionMapMutex
-    std::string _clipboardKey;
+    /// Rotating clipboard remote access identifiers - protected by SessionMapMutex
+    std::string _clipboardKeys[2];
 
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
     std::list<std::pair<std::string, std::chrono::steady_clock::time_point>> _tilesOnFly;

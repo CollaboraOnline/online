@@ -63,6 +63,10 @@ ClientSession::ClientSession(const std::string& id,
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
+
+    // populate with random values.
+    for (auto it : _clipboardKeys)
+        rotateClipboardHash(false);
 }
 
 // Can't take a reference in the constructor.
@@ -81,14 +85,23 @@ ClientSession::~ClientSession()
     SessionMap.erase(getId());
 }
 
-std::string ClientSession::getURIAndUpdateClipboardHash()
+void ClientSession::rotateClipboardHash(bool notifyClient)
 {
-    std::string hash = Util::rng::getHexString(16);
-    {
-        std::unique_lock<std::mutex> lock(SessionMapMutex);
-        _clipboardKey = hash;
-        LOG_TRC("Clipboard key on [" << getId() << "] set to " << _clipboardKey);
-   }
+    if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
+        return;
+
+    _clipboardKeys[1] = _clipboardKeys[0];
+    _clipboardKeys[0] = Util::rng::getHardRandomHexString(16);
+    LOG_TRC("Clipboard key on [" << getId() << "] set to " << _clipboardKeys[0] <<
+            " last was " << _clipboardKeys[1]);
+    if (notifyClient)
+        sendTextFrame("clipboardhash " + _clipboardKeys[0]);
+}
+
+std::string ClientSession::getClipboardURI()
+{
+    if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
+        return "";
 
     std::string encodedFrom;
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
@@ -102,7 +115,7 @@ std::string ClientSession::getURIAndUpdateClipboardHash()
         "/clipboard?WOPISrc=" + encodedFrom +
         "&ServerId=" + LOOLWSD::HostIdentifier +
         "&ViewId=" + std::to_string(getKitViewId()) +
-        "&Tag=" + hash;
+        "&Tag=" + _clipboardKeys[0];
 
     std::string metaEncoded;
     Poco::URI::encode(meta, encodeChars, metaEncoded);
@@ -110,39 +123,23 @@ std::string ClientSession::getURIAndUpdateClipboardHash()
     return metaEncoded;
 }
 
-// called infrequently
-std::shared_ptr<ClientSession> ClientSession::getByClipboardHash(std::string &key)
+bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const std::string &tag)
 {
-    std::unique_lock<std::mutex> lock(SessionMapMutex);
-    for (auto &it : SessionMap)
-    {
-        auto session = it.second.lock();
-        if (session && session->_clipboardKey == key)
-        {
-            if (session->_wopiFileInfo &&
-                session->_wopiFileInfo->getDisableCopy())
-            {
-                LOG_WRN("Attempting copy from disabled session " << key);
-                break;
-            }
-            else
-                return session;
-        }
-    }
-    return std::shared_ptr<ClientSession>();
+    // FIXME: check viewId for paranoia if we can.
+    for (auto &it : _clipboardKeys)
+        if (it == tag)
+            return true;
+    return false;
 }
 
-void ClientSession::addClipboardSocket(const std::shared_ptr<StreamSocket> &socket)
+void ClientSession::handleClipboardGetRequest(const std::shared_ptr<StreamSocket> &socket)
 {
-    // FIXME: Ash: we need to store whether this is a
-    // download-everything, or an individual
-    // 'download' and/or providing our helpful / user page.
-
     // Move the socket into our DocBroker.
     auto docBroker = getDocumentBroker();
     docBroker->addSocketToPoll(socket);
 
-    LOG_TRC("Session [" << getId() << "] sending getbinaryselection");
+    // FIXME: Ash handle both get and post here - as well as the clipboard page.
+    LOG_TRC("Session [" << getId() << "] sending getclipboard");
     docBroker->forwardToChild(getId(), "getclipboard");
 
     // TESTME: onerror / socket cleanup.
@@ -206,6 +203,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         sendTextFrame("loolserver " + LOOLWSD::getVersionJSON());
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
+        // Send clipboard key
+        rotateClipboardHash(true);
 
         return true;
     }
@@ -1043,7 +1042,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 // cf. TileLayer.js /_dataTransferToDocument/
                 if (pos != std::string::npos) // assume text/html
                 {
-                    std::string meta = getURIAndUpdateClipboardHash();
+                    std::string meta = getClipboardURI();
                     std::string origin = "<meta name=\"origin\" content=\"" + meta + "\"/>\n";
                     data.insert(data.begin() + pos, origin.begin(), origin.end());
                     return true;
@@ -1416,7 +1415,8 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tkit ViewId: " << _kitViewId
        << "\n\t\thost (un-trusted): " << _hostNoTrust
        << "\n\t\tisTextDocument: " << _isTextDocument
-       << "\n\t\tclipboardKey: " << _clipboardKey
+       << "\n\t\tclipboardKeys[0]: " << _clipboardKeys[0]
+       << "\n\t\tclipboardKeys[1]: " << _clipboardKeys[1]
        << "\n\t\tclip sockets: " << _clipSockets.size();
 
     std::shared_ptr<StreamSocket> socket = getSocket().lock();
