@@ -277,7 +277,6 @@ inline void checkSessionLimitsAndWarnClients()
 /// connected to any document.
 void alertAllUsersInternal(const std::string& msg)
 {
-
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
     LOG_INF("Alerting all users: [" << msg << "]");
@@ -3521,6 +3520,16 @@ void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& /* requ
         assert(false);
         break;
     }
+}
+
+std::vector<std::shared_ptr<DocumentBroker>> LOOLWSD::getBrokersTestOnly()
+{
+    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
+    std::vector<std::shared_ptr<DocumentBroker>> result;
+
+    for (auto& brokerIt : DocBrokers)
+        result.push_back(brokerIt.second);
+    return result;
 }
 
 std::vector<int> LOOLWSD::getKitPids()

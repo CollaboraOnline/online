@@ -40,6 +40,7 @@
 #include <Log.hpp>
 #include <Png.hpp>
 #include <Util.hpp>
+#include <Unit.hpp>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -1997,6 +1998,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     const std::string typeName = LOKitHelper::kitCallbackTypeToString(type);
     LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " <<
             typeName << " [" << payload << "].");
+
+    if (UnitKit::get().filterLoKitCallback(type, payload))
+        return;
 
     if (isCloseFrame())
     {

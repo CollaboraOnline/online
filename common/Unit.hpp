@@ -231,6 +231,12 @@ public:
         return false;
     }
 
+    /// hook and allow through clipboard authentication
+    virtual bool filterClipboardAuth(const std::string & /* serverId */, const std::string &/* tag */)
+    {
+        return false;
+    }
+
     // ---------------- WSD events ----------------
     virtual void onChildConnected(const int /* pid */, const std::string& /* sessionId */) {}
     /// When admin notify message is sent
@@ -277,6 +283,12 @@ public:
 
     /// Kit got a message
     virtual bool filterKitMessage(WebSocketHandler *, std::string &/* message */ )
+    {
+        return false;
+    }
+
+    /// LOKit (and some synthetic internal) callbacks
+    virtual bool filterLoKitCallback(const int /* type */, const std::string& /* payload */)
     {
         return false;
     }

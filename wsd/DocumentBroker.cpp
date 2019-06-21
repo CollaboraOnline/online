@@ -1952,6 +1952,14 @@ void ConvertToBroker::removeFile(const std::string &uriOrig)
     }
 }
 
+std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()
+{
+    std::vector<std::shared_ptr<ClientSession>> result;
+    for (auto& it : _sessions)
+        result.push_back(it.second);
+    return result;
+}
+
 void DocumentBroker::dumpState(std::ostream& os)
 {
     std::unique_lock<std::mutex> lock(_mutex);

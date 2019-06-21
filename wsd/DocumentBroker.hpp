@@ -360,6 +360,9 @@ public:
     /// Sets the initialization flag of a given initial setting.
     void setInitialSetting(const std::string& name);
 
+    /// For testing only [!]
+    std::vector<std::shared_ptr<ClientSession>> getSessionsTestOnlyUnsafe();
+
 private:
 
     /// Shutdown all client connections with the given reason.
