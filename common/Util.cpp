@@ -117,7 +117,7 @@ namespace Util
             // a poor fallback but something.
             std::vector<char> random = getBytes(length);
             int fd = open("/dev/urandom", O_RDONLY);
-            int len;
+            int len = 0;
             if (fd < 0 ||
                 (len = read(fd, random.data(), length)) < 0 ||
                 size_t(len) < length)
