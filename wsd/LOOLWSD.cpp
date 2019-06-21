@@ -2093,11 +2093,6 @@ private:
                 // File server
                 handleFileServerRequest(request, message);
             }
-            else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "clipboard")
-            {
-                // File server
-                handleFileServerRequest(request, message);
-            }
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
                 // Admin connections
@@ -2151,7 +2146,7 @@ private:
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
                          request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
                 {
-                    std::string decodedUri;
+                    std::string decodedUri; // WOPISrc
                     Poco::URI::decode(reqPathTokens[1], decodedUri);
                     handleClientWsUpgrade(request, decodedUri, disposition);
                 }
@@ -2314,11 +2309,11 @@ private:
 
         Poco::URI requestUri(request.getURI());
         Poco::URI::QueryParameters params = requestUri.getQueryParameters();
-        std::string docKey, serverId, viewId, tag;
+        std::string WOPISrc, serverId, viewId, tag;
         for (auto it : params)
         {
             if (it.first == "WOPISrc")
-                docKey = it.second;
+                WOPISrc = it.second;
             else if (it.first == "ServerId")
                 serverId = it.second;
             else if (it.first == "ViewId")
@@ -2328,25 +2323,22 @@ private:
         }
         LOG_TRC("Clipboard request for us: " << serverId << " with tag " << tag);
 
-        // TODO: check WOPISrc too ...
-        // Lookup WOPISRC [!] ... with DocBroker bits etc. [!] ...
+        const auto uriPublic = DocumentBroker::sanitizeURI(WOPISrc);
+        const auto docKey = DocumentBroker::getDocKey(uriPublic);
 
-        if (serverId != LOOLWSD::HostIdentifier)
+        std::shared_ptr<DocumentBroker> docBroker;
         {
-            LOG_ERR("Invalid clipboard request: " << serverId << " mismatches with " <<
-                    LOOLWSD::HostIdentifier << " potential HA / cluster mis-configuration");
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+            auto it = DocBrokers.find(docKey);
+            if (it != DocBrokers.end())
+                docBroker = it->second;
         }
-
-        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-        auto docBrokerIt = DocBrokers.find(docKey);
-        if (docBrokerIt != DocBrokers.end() &&
-            serverId == LOOLWSD::HostIdentifier)
+        if (docBroker && serverId == LOOLWSD::HostIdentifier)
         {
             // Do things in the right thread.
-            auto docBroker = docBrokerIt->second;
-
             disposition.setMove([=] (const std::shared_ptr<Socket> &moveSocket)
                 {
+                    LOG_TRC("Move clipboard request " << tag << " to docbroker thread");
                     // We no longer own this socket.
                     moveSocket->setThreadOwner(std::thread::id(0));
 
@@ -2360,7 +2352,7 @@ private:
             LOG_TRC("queued clipboard action on docBroker fetch");
         } else {
             LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag <<
-                    " and broker: " << (docBrokerIt == DocBrokers.end() ? "not" : "") << "found");
+                    " and broker: " << (docBroker ? "not" : "") << "found");
 
             std::string message;
             if (serverId != LOOLWSD::HostIdentifier)

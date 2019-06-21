@@ -18,6 +18,7 @@
 #include <wsd/ClientSession.hpp>
 #include <Poco/Timestamp.h>
 #include <Poco/StringTokenizer.h>
+#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/StringPartSource.h>
@@ -25,13 +26,14 @@
 
 #include <test.hpp>
 
+using namespace Poco::Net;
+
 // Inside the WSD process
 class UnitCopyPaste : public UnitWSD
 {
 public:
     UnitCopyPaste()
     {
-        setHasKitHooks();
     }
 
     void configure(Poco::Util::LayeredConfiguration& config) override
@@ -62,63 +64,32 @@ public:
             clientSession = sessions[0];
         }
 
-        Poco::URI clipURI(clientSession->getClipboardURI()); // nominally thread unsafe
+        std::string clipURIstr = clientSession->getClipboardURI(false); // nominally thread unsafe
+        std::cerr << "connect to " << clipURIstr << std::endl;
+        Poco::URI clipURI(clipURIstr);
 
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(clipURI));
+        HTTPResponse response;
+        HTTPRequest request(HTTPRequest::HTTP_GET, clipURI.getPathAndQuery());
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
         session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
+        session->sendRequest(request);
+        session->receiveResponse(response);
 
-#if 0 // for paste...
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to/pdf");
-        Poco::Net::HTMLForm form;
-        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-        form.set("format", "txt");
-        form.addPart("data", new Poco::Net::StringPartSource("Hello World Content", "text/plain", "foo.txt"));
-        form.prepareSubmit(request);
-        form.write(session->sendRequest(request));
-
-        Poco::Net::HTTPResponse response;
-        std::stringstream actualStream;
-        try {
-            session->receiveResponse(response);
-        } catch (Poco::Net::NoMessageException &) {
-            std::cerr << "No response as expected.\n";
-            exitTest(TestResult::Ok); // child should have timed out and been killed.
+        if (response.getStatus() != HTTPResponse::HTTP_OK)
+        {
+            std::cerr << "Error response for clipboard " << response.getReason();
+            exitTest(TestResult::Failed);
             return;
-        } // else
-        std::cerr << "Failed to terminate the sleeping kit\n";
-        exitTest(TestResult::Failed);
-#endif
-            exitTest(TestResult::Ok); // child should have timed out and been killed.
-    }
-};
+        }
 
-
-// Inside the forkit & kit processes - if we need it.
-class UnitKitCopyPaste : public UnitKit
-{
-public:
-    UnitKitCopyPaste()
-    {
-    }
-
-    void invokeForKitTest() override
-    {
-    }
-
-    bool filterKitMessage(WebSocketHandler *, std::string &) override
-    {
-        return false;
+        std::cerr << "CopyPaste tests succeeded" << std::endl;
+        exitTest(TestResult::Ok);
     }
 };
 
 UnitBase *unit_create_wsd(void)
 {
     return new UnitCopyPaste();
-}
-
-UnitBase *unit_create_kit(void)
-{
-    return new UnitKitCopyPaste();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

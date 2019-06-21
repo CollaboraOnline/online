@@ -98,7 +98,7 @@ void ClientSession::rotateClipboardHash(bool notifyClient)
         sendTextFrame("clipboardhash " + _clipboardKeys[0]);
 }
 
-std::string ClientSession::getClipboardURI()
+std::string ClientSession::getClipboardURI(bool encode)
 {
     if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
         return "";
@@ -116,6 +116,9 @@ std::string ClientSession::getClipboardURI()
         "&ServerId=" + LOOLWSD::HostIdentifier +
         "&ViewId=" + std::to_string(getKitViewId()) +
         "&Tag=" + _clipboardKeys[0];
+
+    if (!encode)
+        return meta;
 
     std::string metaEncoded;
     Poco::URI::encode(meta, encodeChars, metaEncoded);
@@ -788,6 +791,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 #endif
 
     const auto& tokens = payload->tokens();
+
     if (tokens[0] == "unocommandresult:")
     {
         const std::string stringMsg(buffer, length);

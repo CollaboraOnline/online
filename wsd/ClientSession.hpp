@@ -141,9 +141,6 @@ public:
 
     bool isTextDocument() const { return _isTextDocument; }
 
-    /// Find clipboard for session
-    static std::shared_ptr<ClientSession> getByClipboardHash(std::string &key);
-
     /// Do we recognize this clipboard ?
     bool matchesClipboardKeys(const std::string &viewId, const std::string &tag);
 
@@ -151,7 +148,7 @@ public:
     void handleClipboardGetRequest(const std::shared_ptr<StreamSocket> &socket);
 
     /// Create URI for transient clipboard content.
-    std::string getClipboardURI();
+    std::string getClipboardURI(bool encode = true);
 
     /// Generate and rotate a new clipboard hash, sending it if appropriate
     void rotateClipboardHash(bool notifyClient);
