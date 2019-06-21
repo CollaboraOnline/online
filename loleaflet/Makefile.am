@@ -242,6 +242,10 @@ $(builddir)/dist/plugins/%.js: $(srcdir)/plugins/%.js
 $(builddir)/dist/images/%: $(srcdir)/images/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
+	@if test -d '$(CUSTOM_ICONS_DIRECTORY)'; then \
+		`cp -r "$(CUSTOM_ICONS_DIRECTORY)"/* $(builddir)/dist/images/`; \
+	fi
+
 
 $(builddir)/dist/%.html: $(srcdir)/html/%.html
 	@mkdir -p $(dir $@)

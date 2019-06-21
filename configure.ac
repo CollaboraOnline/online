@@ -83,6 +83,10 @@ AC_ARG_ENABLE([gtkapp],
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view. See gtk/README.]))
 
+AC_ARG_WITH([icon-theme],
+              AS_HELP_STRING([--with-icon-theme=<path>],
+                             [Path to custom icon theme (similiar to loleflet/images).]))
+
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
                              [Disable use of linux/seccomp.h header when kernel on target system does not support it.
@@ -272,6 +276,16 @@ fi
 AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
 AC_SUBST(IOSAPP_NAME)
+
+AC_MSG_CHECKING([for custom icon theme])
+CUSTOM_ICONS_DIRECTORY=
+if test -d "$with_icon_theme"; then
+    CUSTOM_ICONS_DIRECTORY=`readlink -f $with_icon_theme`
+    AC_MSG_RESULT([$CUSTOM_ICONS_DIRECTORY])
+else
+    AC_MSG_RESULT([no])
+fi
+AC_SUBST(CUSTOM_ICONS_DIRECTORY)
 
 ENABLE_GTKAPP=
 if test "$enable_gtkapp" = "yes"; then
