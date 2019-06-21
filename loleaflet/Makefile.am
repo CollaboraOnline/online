@@ -30,6 +30,8 @@ JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(b
 
 LOLEAFLET_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
 LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(builddir)/dist/%,$(LOLEAFLET_IMAGES_SRC))
+LOLEAFLET_IMAGES_CUSTOM_SRC = $(shell find $(CUSTOM_ICONS_DIRECTORY) -name '*.*')
+LOLEAFLET_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(builddir)/dist/images/%,$(LOLEAFLET_IMAGES_CUSTOM_SRC))
 
 LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
 if !ENABLE_IOSAPP
@@ -140,6 +142,7 @@ endif
 build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
 	$(LOLEAFLET_IMAGES_DST) \
+	$(LOLEAFLET_IMAGES_CUSTOM_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
@@ -244,6 +247,10 @@ $(builddir)/dist/plugins/%.js: $(srcdir)/plugins/%.js
 	else \
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
+
+$(builddir)/dist/images/%: $(CUSTOM_ICONS_DIRECTORY)/%
+	@mkdir -p $(dir $@)
+	@cp $< $@
 
 $(builddir)/dist/images/%: $(srcdir)/images/%
 	@mkdir -p $(dir $@)
