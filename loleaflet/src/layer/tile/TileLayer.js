@@ -2748,47 +2748,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false);
 	},
 
-	_readContentSync: function(dataTransfer) {
-		// Try various content mime types
-		var mimeTypes;
-		if (this._docType === 'spreadsheet') {
-			mimeTypes = [
-				['text/rtf', 'text/rtf'],
-				['text/html', 'text/html'],
-				['text/plain', 'text/plain;charset=utf-8'],
-				['Text', 'text/plain;charset=utf-8']
-			];
-		} else if (navigator.platform.startsWith('Mac')) {
-			// Safari provides RTF clipboard content which doesn't contain the
-			// images.  We do not know where the content comes from, so let's
-			// always prefer HTML over RTF on Mac.
-			mimeTypes = [
-				['text/html', 'text/html'],
-				['text/rtf', 'text/rtf'],
-				['text/plain', 'text/plain;charset=utf-8'],
-				['Text', 'text/plain;charset=utf-8']
-			];
-		} else {
-			mimeTypes = [
-				['text/rtf', 'text/rtf'],
-				['text/html', 'text/html'],
-				['text/plain', 'text/plain;charset=utf-8'],
-				['Text', 'text/plain;charset=utf-8']
-			];
-		}
-
-		// FIXME: send all of the types we have ... and do a web 'put' with them ...
-		var types = dataTransfer.types;
-		for (var i = 0; i < mimeTypes.length; ++i) {
-			for (var t = 0; t < types.length; ++t) {
-				if (mimeTypes[i][0] === types[t]) {
-					return new Blob(['paste mimetype=' + mimeTypes[i][1] + '\n', dataTransfer.getData(types[t])]);
-				}
-			}
-		}
-		return null;
-	},
-
 	_onFileLoadFunc: function(file) {
 		var socket = this._map._socket;
 		return function(e) {

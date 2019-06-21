@@ -76,6 +76,19 @@ L.Clipboard = {
 		this._pasteFallback = null;
 	},
 
+	_readContentSync: function(dataTransfer) {
+		var content = ['paste '];
+		var types = dataTransfer.types;
+		for (var t = 0; t < types.length; ++t) {
+			var data = dataTransfer.getData(types[t]);
+			content.push('mimetype=' + types[t] + '\n');
+			content.push('length=' + data.length + '\n');
+			content.push(data);
+			content.push('\n');
+		}
+		return new Blob(content);
+	},
+
 	dataTransferToDocument: function (dataTransfer, preferInternal) {
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
