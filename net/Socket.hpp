@@ -97,8 +97,8 @@ public:
 class Socket
 {
 public:
-    static const int DefaultSendBufferSize = 16 * 1024;
-    static const int MaximumSendBufferSize = 128 * 1024;
+    static constexpr int DefaultSendBufferSize = 16 * 1024;
+    static constexpr int MaximumSendBufferSize = 128 * 1024;
     static std::atomic<bool> InhibitThreadChecks;
 
     enum Type { IPv4, IPv6, All, Unix };

@@ -291,9 +291,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
         const std::string endPoint = requestSegments[requestSegments.size() - 1];
-        if (endPoint == loleafletHtml)
+        if (endPoint == loleafletHtml || endPoint == "clipboard.html")
         {
-            preprocessFile(request, message, socket);
+            preprocessFile(request, message, socket, endPoint);
             return;
         }
 
@@ -571,9 +571,11 @@ constexpr char BRANDING[] = "branding";
 constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
-void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message,
+                                                const std::shared_ptr<StreamSocket>& socket, const std::string& endPoint)
 {
-    const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+    const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://")
+                    + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
     // Is this a file we read at startup - if not; its not for serving.
@@ -786,6 +788,25 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     oss << "\r\n"
         << preprocess;
+
+    if (endPoint == "clipboard.html")
+    {
+        // Handle the clipboard request.
+        //FIXME: the request should contain the key to the document.
+        //FIXME: get the formats and list the links in the result.
+        // for (each format)
+        std::ostringstream ossClipboard;
+        ossClipboard <<
+            "<tr>"
+            "    <td id=\"clipboard-formats-row\">"
+            "        <a href=\"downloadhtml\">Copy as HTML</a>"
+            "    </td>"
+            "</tr>";
+
+        preprocess = oss.str();
+        Poco::replaceInPlace(preprocess, std::string("%CLIPBOARD_LINKS%"), ossClipboard.str());
+        oss.str(preprocess);
+    }
 
     socket->send(oss.str());
     LOG_DBG("Sent file: " << relPath << ": " << preprocess);

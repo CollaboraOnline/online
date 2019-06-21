@@ -2094,6 +2094,11 @@ private:
                 // File server
                 handleFileServerRequest(request, message);
             }
+            else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "clipboard")
+            {
+                // File server
+                handleFileServerRequest(request, message);
+            }
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
                 // Admin connections

@@ -20,7 +20,8 @@ class FileServerRequestHandler
 {
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
 
-    static void preprocessFile(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket);
+    static void preprocessFile(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
+                                const std::shared_ptr<StreamSocket>& socket, const std::string& endPoint);
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket);
 public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.

@@ -890,7 +890,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             }
             else
                 return false;
-         }
+        }
     }
 #if !MOBILEAPP
     else if (tokens.size() == 3 && tokens[0] == "saveas:")
