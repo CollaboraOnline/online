@@ -341,6 +341,7 @@ pot:
 		src/layer/marker/Annotation.js \
 		src/layer/tile/TileLayer.js \
 		src/map/Map.js \
+		src/map/Clipboard.js \
 		src/map/handler/Map.FileInserter.js \
 		src/map/handler/Map.WOPI.js
 

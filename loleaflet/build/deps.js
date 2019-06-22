@@ -23,6 +23,7 @@ var deps = {
 		      'geo/crs/CRS.js',
 		      'geo/crs/CRS.Simple.js',
 		      'map/Map.js',
+		      'map/Clipboard.js',
 		      'layer/Layer.js'
 		      ],
 		desc: 'The core of the library, including OOP, events, DOM facilities, basic units, projections (EPSG:3857 and EPSG:4326) and the base Map class.'

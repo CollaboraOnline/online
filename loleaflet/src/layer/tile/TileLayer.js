@@ -25,23 +25,6 @@ function hex2string(inData)
 	return hexified.join('');
 }
 
-L.Compatibility = {
-	stripHTML: function(html) { // grim.
-		var tmp = document.createElement('div');
-		tmp.innerHTML = html;
-		return tmp.textContent || tmp.innerText || '';
-	},
-
-	clipboardSet: function (event, text) {
-		if (event.clipboardData) { // Standard
-			event.clipboardData.setData('text/html', text);
-		}
-		else if (window.clipboardData) { // IE 11 - poor clipboard API
-			window.clipboardData.setData('Text', this.stripHTML(text));
-		}
-	}
-};
-
 L.TileLayer = L.GridLayer.extend({
 
 	options: {
