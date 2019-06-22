@@ -112,6 +112,24 @@ public:
         return true;
     }
 
+    bool fetchClipboardAssert(const std::string &clipURI,
+                              const std::string &mimeType,
+                              const std::string &content)
+    {
+        std::shared_ptr<ClipboardData> clipboard;
+        try {
+            clipboard = getClipboard(clipURI);
+        } catch (ParseError &err) {
+            std::cerr << "parse error " << err.toString() << std::endl;
+            exitTest(TestResult::Failed);
+            return false;
+        }
+
+        if (!assertClipboard(clipboard, mimeType, content))
+            return false;
+        return true;
+    }
+
     void invokeTest() override
     {
         std::string testname = "copypaste";
@@ -134,35 +152,30 @@ public:
         }
 
         std::string clipURI = clientSession->getClipboardURI(false); // nominally thread unsafe
-        std::shared_ptr<ClipboardData> clipboard;
-        try {
-            clipboard = getClipboard(clipURI);
-        } catch (ParseError &err) {
-            std::cerr << "parse error " << err.toString() << std::endl;
-            exitTest(TestResult::Failed);
-            return;
-        }
 
-        // Empty cell so ...
-        if (!assertClipboard(clipboard, "text/plain;charset=utf-8", ""))
+        // In an empty cell
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", ""))
             return;
 
+        // Check existing content
+        helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
+        std::string oneColumn = "2\n3\n5\n";
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", oneColumn))
+            return;
+
+        // Inject some content
         std::string text = "This is some content?&*/\\!!";
         helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
         helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
 
-        try {
-            clipboard = getClipboard(clipURI);
-        } catch (ParseError &err) {
-            std::cerr << "parse error " << err.toString() << std::endl;
-            exitTest(TestResult::Failed);
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8",
+                                  text + "\t\t\n" + "\t\t\n" + "\t\t\n" + "\t\t2\n\t\t3\n\t\t5\n"))
             return;
-        }
 
-        std::string existing = "2\t\n3\t\n5";
-        if (!assertClipboard(clipboard, "text/plain;charset=utf-8", existing + "\t" + text + "\n"))
-            return;
+        // Now try pushing some new clipboard content ...
+
 
         std::cerr << "CopyPaste tests succeeded" << std::endl;
         exitTest(TestResult::Ok);
