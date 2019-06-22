@@ -1800,15 +1800,13 @@ L.TileLayer = L.GridLayer.extend({
 	//
 	// PageUp/PageDown are handled as special cases for spreadsheets - in
 	// addition of sending messages to lowsd, they move the cell cursor around.
-	//
-	// If "winId" is set, then a "windowkey" message is sent instead. This is
-	// done for LOK dialogs.
-	postKeyboardEvent: function(type, charCode, unoKeyCode, winId) {
+	postKeyboardEvent: function(type, charCode, unoKeyCode) {
+		var winId = this._map.getWinId();
 		if (
 			this._docType === 'spreadsheet' &&
 			this._prevCellCursor &&
 			type === 'input' &&
-			!winId
+			winId === 0
 		) {
 			if (unoKeyCode === 1030) { // PgUp
 				if (this._cellCursorOnPgUp) {
@@ -1828,7 +1826,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._sendClientVisibleArea();
 
-		if (!winId) {
+		if (winId === 0) {
 			this._map._socket.sendMessage(
 				'key' +
 				' type=' + type +

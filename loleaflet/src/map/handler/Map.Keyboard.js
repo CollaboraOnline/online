@@ -250,20 +250,9 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 	},
 
-	// Public handleEventForWinId - called from LokDialog.js when there's a need
-	// to process keystrokes while in a dialog (which is outside of the map's DOM
-	// container)
-	handleEventForWinId: function handleEventForWinId(ev, winId) {
-		var keyEventFn = function(type, charcode, keycode) {
-			return this._map._docLayer.postKeyboardEvent(type, charcode, keycode, winId);
-		}.bind(this);
-		return this._handleKeyEvent(ev, keyEventFn);
-	},
-
 	// _handleKeyEvent - checks if the given keyboard event shall trigger
 	// a message to lowsd, and calls the given keyEventFn(type, charcode, keycode)
 	// callback if so.
-	// Called from private _onKeyDown and public handleEventForWinId
 	_handleKeyEvent: function (ev, keyEventFn) {
 		this._map.notifyActive();
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
