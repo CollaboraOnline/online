@@ -108,6 +108,9 @@ L.Map = L.Evented.extend({
 		this._documentIdle = false;
 		this._helpTarget = null; // help page that fits best the current context
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
+		this._winId = 0;
+
+		vex.dialogID = -1;
 
 		this.callInitHooks();
 
@@ -800,6 +803,18 @@ L.Map = L.Evented.extend({
 		return this._clipboardContainer;
 	},
 
+	// We have one global winId that controls what window (dialog, sidebar, or
+	// the main document) has the actual focus.  0 means the document.
+	setWinId: function (id) {
+		console.log('winId set to: ' + id);
+		this._winId = id;
+	},
+
+	// Getter for the winId, see setWinId() for more.
+	getWinId: function () {
+		return this._winId;
+	},
+
 	// TODO replace with universal implementation after refactoring projections
 
 	getZoomScale: function (toZoom, fromZoom) {
@@ -1281,6 +1296,7 @@ L.Map = L.Evented.extend({
 	_onEditorGotFocus: function() {
 		if (!this._loaded) { return; }
 
+		var map = this;
 		var doclayer = this._docLayer;
 		if (doclayer)
 		{
@@ -1290,6 +1306,7 @@ L.Map = L.Evented.extend({
 			// jumping from the old position to the new one
 			setTimeout(function () {
 				console.debug('apply focus change in timeout');
+				map.setWinId(0);
 				doclayer._updateCursorAndOverlay();
 			}, 300);
 		}

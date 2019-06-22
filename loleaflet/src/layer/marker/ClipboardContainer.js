@@ -46,12 +46,6 @@ L.ClipboardContainer = L.Layer.extend({
 		// the events, a timer is needed to check for the right conditions.
 		this._abortCompositionTimeout = undefined;
 
-		// Window ID for the 'textinput' websocket messages to be sent.
-		// Default is 0, meaning "the document". If different than 0, then
-		// the message means that a character has been typed e.g. on a LOK dialog
-		// and not on the document itself.
-		this._winId = 0;
-
 		// Under-caret orange marker.
 		this._cursorHandler = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
@@ -121,8 +115,6 @@ L.ClipboardContainer = L.Layer.extend({
 				this._queueInput(this._compositionText);
 			}
 			this._abortComposition();
-		} else {
-			this._winId = 0;
 		}
 	},
 
@@ -276,7 +268,6 @@ L.ClipboardContainer = L.Layer.extend({
 			data: ev.data,
 			key: ev.key,
 			isComposing: ev.isComposing,
-			winId: this._winId
 		};
 
 		if (this._lastRanges[0] && 'startOffset' in this._lastRanges[0] && 'endOffset' in this._lastRanges[0]) {
@@ -557,7 +548,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// for charCode=8 is fired, and handled by the Map.Keyboard.js.
 		// NOTE: Ideally this should never happen, as the textarea/contenteditable
 		// is initialized with two non-breaking spaces when "emptied".
-		if ((this._winId === 0 && this._textArea.textContent.length === 0)
+		if ((this._map.getWinId() === 0 && this._textArea.textContent.length === 0)
 			/* || ev.findMyTextContentAre.length == 0 */
 		) {
 			if (ev.inputType === 'deleteContentBackward') {
@@ -725,49 +716,18 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 	},
 
-	// Handles the given DOMEvent as if it was sent to the textarea/contenteditable,
-	// overriding the value of WinId during the handling.
-	// This shall be called from LokDialog to dispatch events to other
-	// clipboard containers into this one.
-	handleEventForWinId: function handleEventForWinId(ev, winId) {
-		this._winId = winId;
-		switch (ev.type) {
-		case 'compositionstart':
-			this._onCompositionStart(ev);
-			break;
-		case 'compositionend':
-			this._onCompositionEnd(ev);
-			break;
-		case 'beforeinput':
-			this._onBeforeInput(ev);
-			break;
-		case 'paste':
-			this._onPaste(ev);
-			break;
-		case 'input':
-			this._onInput(ev);
-			break;
-		case 'textInput':
-			this._onTextInput(ev);
-			break;
-		}
-		// 		this._textArea.dispatchEvent(ev);
-		// 		this._winId = 0;
-	},
-
-
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
 	// "type" is either "input" for updates or "end" for commits.
 	_sendCompositionEvent: function _sendCompositionEvent(type, text) {
-		this._map._socket.sendMessage('textinput id=' + this._winId + ' type=' + type + ' text=' + encodeURIComponent(text));
+		this._map._socket.sendMessage('textinput id=' + this._map.getWinId() + ' type=' + type + ' text=' + encodeURIComponent(text));
 	},
 
 	// Tiny helper - encapsulates sending a 'key' or 'windowkey' websocket message
 	_sendKeyEvent: function _sendKeyEvent(charCode, unoKeyCode) {
-		if (this._winId === 0) {
+		if (this._map.getWinId() === 0) {
 			this._map._socket.sendMessage('key type=input char=' + charCode + ' key=' + unoKeyCode + '\n');
 		} else {
-			this._map._socket.sendMessage('windowkey id='+this._winId +' type=input char=' + charCode + ' key=' + unoKeyCode + '\n');
+			this._map._socket.sendMessage('windowkey id=' + this._map.getWinId() + ' type=input char=' + charCode + ' key=' + unoKeyCode + '\n');
 		}
 	},
 

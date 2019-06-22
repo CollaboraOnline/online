@@ -396,28 +396,10 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
-	_createDialogInput: function(dialogId) {
-		var id = this._toIntId(dialogId);
-		var clipDlgContainer = L.DomUtil.create('div', 'clipboard-container', L.DomUtil.get(dialogId));
-		clipDlgContainer.id = dialogId + '-clipboard-container';
-		var dlgTextArea = L.DomUtil.create('input', 'clipboard', clipDlgContainer);
-		dlgTextArea.setAttribute('type', 'text');
-		dlgTextArea.setAttribute('autocorrect', 'off');
-		dlgTextArea.setAttribute('autocapitalize', 'off');
-		dlgTextArea.setAttribute('autocomplete', 'off');
-		dlgTextArea.setAttribute('spellcheck', 'false');
-		this._dialogs[id].input = dlgTextArea;
-
-		return dlgTextArea;
-	},
-
 	focus: function(dlgId, force) {
-		if (!force && (!this._isOpen(dlgId) || !this._dialogs[dlgId].input || !this._dialogs[dlgId].cursorVisible))
+		if (!force && (!this._isOpen(dlgId) || !this._dialogs[dlgId].cursorVisible))
 			return;
-		if (this._dialogs[dlgId].cursorVisible)
-			this._dialogs[dlgId].input.focus();
-		else
-			this._dialogs[dlgId].input.blur();
+		this._map.setWinId(dlgId);
 	},
 
 	_setCanvasWidthHeight: function(canvas, width, height) {
@@ -500,7 +482,6 @@ L.Control.LokDialog = L.Control.extend({
 			width: width,
 			height: height,
 			cursor: null,
-			input: null,
 			title: title
 		};
 
@@ -508,9 +489,8 @@ L.Control.LokDialog = L.Control.extend({
 		$('.lokdialog_container button.ui-dialog-titlebar-close').attr('tabindex', '-1').blur();
 
 		this._createDialogCursor(strId);
-		var dlgInput = this._createDialogInput(strId);
-		this._setupWindowEvents(id, dialogCanvas, dlgInput);
-		this._setupGestures(dialogContainer, id, dialogCanvas);
+		this._setupWindowEvents(id, dialogCanvas/*, dlgInput*/);
+		this._setupGestures(id, dialogCanvas);
 
 		this._currentId = id;
 		this._sendPaintWindow(id, this._createRectStr(id));
@@ -586,7 +566,6 @@ L.Control.LokDialog = L.Control.extend({
 			width: width,
 			height: height,
 			cursor: null,
-			input: null,
 			child: null, // One child, typically drop-down list
 			title: null  // Never used for sidebars
 		};
@@ -594,8 +573,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._currentDeck = this._dialogs[id];
 
 		this._createDialogCursor(strId);
-		var dlgInput = this._createDialogInput(strId);
-		this._setupWindowEvents(id, panelCanvas, dlgInput);
+		this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
 
 		L.DomEvent.on(panelContainer, 'resize', function() {
 			// Don't resize the window as we handle overflowing with scrollbars.
@@ -627,7 +605,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 	},
 
-	_setupWindowEvents: function(id, canvas, dlgInput) {
+	_setupWindowEvents: function(id, canvas/*, dlgInput*/) {
 		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(canvas, 'mousemove', function(e) {
 			this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
@@ -648,27 +626,8 @@ L.Control.LokDialog = L.Control.extend({
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
-			this.focus(id, !this._isSidebar(id));
-			// Keep map active while user is playing with sidebar/dialog.
-			this._map.lastActiveTime = Date.now();
-			dlgInput.focus();
+			//dlgInput.focus();
 		}, this);
-
-		/// TODO: Instantiate a new Clipboardcontainer for each dialog. It
-		/// should be cleaner than relying on a global one.
-
-		// Relay all keyboard-related events from this dialog's <input>
-		// to the map's ClipboardContainer and the map's Keyboard handler.
-		var cc = this._map.getClipboardContainer();
-		var kh = this._map.keyboard;
-		L.DomEvent.on(dlgInput, 'compositionstart compositionend beforeinput paste input textInput', function(ev) {
-			cc.handleEventForWinId(ev, id);
-		});
-		L.DomEvent.on(dlgInput, 'keyup keypress keydown', function(ev) {
-			if (ev.charCode == 0) {
-				kh.handleEventForWinId(ev, id);
-			}
-		});
 	},
 
 	_setupGestures: function(dialogContainer, id, canvas) {
