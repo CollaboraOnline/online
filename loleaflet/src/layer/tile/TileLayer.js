@@ -460,7 +460,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._onTextSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
-			this._onTextSelectionContentMsg(textMsg);
+			this._map._clip.setTextSelectionContent(textMsg.substr(22));
 		}
 		else if (textMsg.startsWith('textselectionend:')) {
 			this._onTextSelectionEndMsg(textMsg);
@@ -511,7 +511,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._updateEditor(textMsg);
 		}
 		else if (textMsg.startsWith('pasteresult:')) {
-			this._pasteResult(textMsg);
+			this._map._clip.pasteResult(textMsg.substring('pasteresult: '.length));
 		}
 		else if (textMsg.startsWith('validitylistbutton:')) {
 			this._onValidityListButtonMsg(textMsg);
@@ -582,8 +582,7 @@ L.TileLayer = L.GridLayer.extend({
 		// message is received from lowsd, *then* a 'celladdress' message.
 		var address = textMsg.substring(13);
 		if (!this._map['wopi'].DisableCopy) {
-			this._map._clipboardContainer.setValue(this._lastFormula);
-			this._map._clipboardContainer.select();
+			this._clip.setSelection(this._lastFormula);
 		}
 		this._map.fire('celladdress', {address: address});
 	},
@@ -782,7 +781,7 @@ L.TileLayer = L.GridLayer.extend({
 					dragInfo.range2 = dragDir.x * dragDir.x + dragDir.y * dragDir.y;
 				}
 			}
-			
+
 			// defaults
 			var extraInfo = this._graphicSelection.extraInfo;
 			if (extraInfo.isDraggable === undefined)
@@ -798,6 +797,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg) {
 				this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 			}
+			this._onShapeSelection();
 		}
 
 		this._onUpdateGraphicSelection();
@@ -1687,6 +1687,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateGraphicSelection();
 		this._cellCursor = null;
 		this._onUpdateCellCursor();
+		this._clip.clearSelection();
 	},
 
 	containsSelection: function (latlng) {
@@ -2704,45 +2705,19 @@ L.TileLayer = L.GridLayer.extend({
 	_onCopy: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		console.log('Copy');
-		if (this._map._clipboardContainer.getValue() !== '') {
-			L.Compatibility.clipboardSet(e, this._map._clipboardContainer.getValue());
-		} else if (this._selectionTextContent) {
-			L.Compatibility.clipboardSet(e, this._selectionTextContent);
-
-			// remember the copied text, for rich copy/paste inside a document
-			this._selectionTextHash = this._selectionTextContent;
-		}
-
-		this._map._socket.sendMessage('uno .uno:Copy');
+		this._map._clip.copy(e);
 	},
 
 	_onCut: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		console.log('Cut');
-		if (this._map._clipboardContainer.getValue() !== '') {
-			L.Compatibility.clipboardSet(e, this._map._clipboardContainer.getValue());
-		} else if (this._selectionTextContent) {
-			L.Compatibility.clipboardSet(e, this._selectionTextContent);
-
-			// remember the copied text, for rich copy/paste inside a document
-			this._selectionTextHash = this._selectionTextContent;
-		}
-
-		this._map._socket.sendMessage('uno .uno:Cut');
+		this._map._clip.cut(e);
 	},
 
 	_onPaste: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		console.log('Paste');
-		if (e.clipboardData) { // Standard
-			this._dataTransferToDocument(e.clipboardData, /* preferInternal = */ true);
-		}
-		else if (window.clipboardData) { // IE 11
-			this._dataTransferToDocument(window.clipboardData, /* preferInternal = */ true);
-		}
+		this._map._clip.paste(e);
 	},
 
 	_onDragOver: function (e) {
@@ -2764,107 +2739,7 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 
-		this._dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false);
-	},
-
-	_getMetaOrigin: function (html) {
-		var match = '<meta name="origin" content="';
-		var start = html.indexOf(match);
-		if (start < 0) {
-			return '';
-		}
-		var end = html.indexOf('"', start + match.length);
-		if (end < 0) {
-			return '';
-		}
-		var meta = html.substring(start + match.length, end);
-
-		// quick sanity checks that it one of ours.
-		if (meta.indexOf('%2Fclipboard%3FWOPISrc%3D') > 0 &&
-		    meta.indexOf('%26ServerId%3D') > 0 &&
-		    meta.indexOf('%26ViewId%3D') > 0 &&
-		    meta.indexOf('%26Tag%3D') > 0)
-			return decodeURIComponent(meta);
-		else
-			console.log('Mis-understood foreign origin: "' + meta + '"');
-		return '';
-	},
-
-	// Sometimes our smart-paste fails & we need to try again.
-	_pasteResult : function(textMsg)
-	{
-		textMsg = textMsg.substring('pasteresult:'.length + 1);
-		console.log('Paste state: ' + textMsg);
-		if (textMsg == 'fallback') {
-			if (this._pasteFallback != null) {
-				console.log('Paste failed- falling back to HTML');
-				this._map._socket.sendMessage(this._pasteFallback);
-			} else {
-				console.log('No paste fallback present.');
-			}
-		}
-
-		this._pasteFallback = null;
-	},
-
-	_dataTransferToDocument: function (dataTransfer, preferInternal) {
-
-		// Look for our HTML meta magic.
-		//   cf. ClientSession.cpp /textselectioncontent:/
-		var pasteHtml = dataTransfer.getData('text/html');
-		var meta = this._getMetaOrigin(pasteHtml);
-		var id = // this._map.options.webserver + this._map.options.serviceRoot + - Disable for now.
-		    '/clipboard?WOPISrc='+ encodeURIComponent(this._map.options.doc) +
-		    '&ServerId=' + this._map._socket.WSDServer.Id + '&ViewId=' + this._viewId;
-
-		// for the paste, we might prefer the internal LOK's copy/paste
-		if (meta.indexOf(id) > 0 && preferInternal === true) {
-			// Home from home: short-circuit internally.
-			console.log('short-circuit, internal paste');
-			this._map._socket.sendMessage('uno .uno:Paste');
-			return;
-		}
-
-		console.log('Mismatching index\n\t"' + meta + '" vs. \n\t"' + id + '"');
-		this._pasteFallback = null;
-
-		// Suck HTML content out of dataTransfer now while it feels like working.
-		var content = this._readContentSync(dataTransfer);
-
-		// Images get a look in only if we have no content and are async
-		if (content == null && pasteHtml == '')
-		{
-			var types = dataTransfer.types;
-
-			console.log('Attempting to paste image(s)');
-
-			// first try to transfer images
-			// TODO if we have both Files and a normal mimetype, should we handle
-			// both, or prefer one or the other?
-			for (var t = 0; t < types.length; ++t) {
-				console.log('\ttype' + types[t]);
-				if (types[t] === 'Files') {
-					var files = dataTransfer.files;
-					for (var f = 0; f < files.length; ++f) {
-						var file = files[f];
-						if (file.type.match(/image.*/)) {
-							var reader = new FileReader();
-							reader.onload = this._onFileLoadFunc(file);
-							reader.readAsArrayBuffer(file);
-						}
-					}
-				}
-			}
-			return;
-		}
-
-		if (content != null) {
-			console.log('Normal HTML, so smart paste not possible');
-			this._map._socket.sendMessage(content);
-			this._pasteFallback = null;
-		} else {
-			console.log('Nothing we can paste on the clipboard');
-		}
+		this._map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false);
 	},
 
 	_readContentSync: function(dataTransfer) {
