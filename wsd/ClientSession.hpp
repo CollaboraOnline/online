@@ -153,7 +153,7 @@ public:
     std::string getClipboardURI(bool encode = true);
 
     /// Generate and rotate a new clipboard hash, sending it if appropriate
-    void rotateClipboardHash(bool notifyClient);
+    void rotateClipboardKey(bool notifyClient);
 
 private:
     /// SocketHandler: disconnection event.

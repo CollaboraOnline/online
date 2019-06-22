@@ -344,9 +344,9 @@ void DocumentBroker::pollThread()
 #if !MOBILEAPP
         if (std::chrono::duration_cast<std::chrono::minutes>(now - lastClipboardHashUpdateTime).count() >= 2)
         {
-            LOG_TRC("Rotating clipboard hashes");
+            LOG_TRC("Rotating clipboard keys");
             for (auto& it : _sessions)
-                it.second->rotateClipboardHash(true);
+                it.second->rotateClipboardKey(true);
         }
 
         if (false)

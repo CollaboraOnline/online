@@ -66,7 +66,7 @@ ClientSession::ClientSession(const std::string& id,
 
     // populate with random values.
     for (auto it : _clipboardKeys)
-        rotateClipboardHash(false);
+        rotateClipboardKey(false);
 }
 
 // Can't take a reference in the constructor.
@@ -85,7 +85,7 @@ ClientSession::~ClientSession()
     SessionMap.erase(getId());
 }
 
-void ClientSession::rotateClipboardHash(bool notifyClient)
+void ClientSession::rotateClipboardKey(bool notifyClient)
 {
     if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
         return;
@@ -95,7 +95,7 @@ void ClientSession::rotateClipboardHash(bool notifyClient)
     LOG_TRC("Clipboard key on [" << getId() << "] set to " << _clipboardKeys[0] <<
             " last was " << _clipboardKeys[1]);
     if (notifyClient)
-        sendTextFrame("clipboardhash " + _clipboardKeys[0]);
+        sendTextFrame("clipboardkey: " + _clipboardKeys[0]);
 }
 
 std::string ClientSession::getClipboardURI(bool encode)
@@ -225,7 +225,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
         // Send clipboard key
-        rotateClipboardHash(true);
+        rotateClipboardKey(true);
 
         return true;
     }
