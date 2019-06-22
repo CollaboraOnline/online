@@ -990,7 +990,7 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
         return false;
     }
 
-    if (mimeType.find("") == 0)
+    if (mimeType.find("application/x-openoffice-embed-source-xml") == 0)
     {
         LOG_TRC("Re-writing garbled mime-type " << mimeType);
         mimeType = "application/x-openoffice-embed-source-xml;windows_formatname=\"Star Embed Source (XML)\"";

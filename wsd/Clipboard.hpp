@@ -32,7 +32,6 @@ struct ClipboardData
             std::string mime, hexLen, newline;
             std::getline(inStream, mime, '\n');
             std::getline(inStream, hexLen, '\n');
-            std::cerr << "mime: '" << mime << "' - hexlen '" << hexLen << "'\n";
             uint64_t len = strtoll( hexLen.c_str(), nullptr, 16 );
             std::string content(len, ' ');
             inStream.read(&content[0], len);

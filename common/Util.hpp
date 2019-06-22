@@ -249,6 +249,14 @@ namespace Util
         os.flush();
     }
 
+    inline void dumpHex (std::ostream &os, const char *legend, const char *prefix,
+                         const std::string &str, bool skipDup = true,
+                         const unsigned int width = 32)
+    {
+        std::vector<char> buffer(str.begin(), str.end());
+        dumpHex(os, legend, prefix, buffer, skipDup, width);
+    }
+
     inline std::string dumpHex (const char *legend, const char *prefix,
                                 const std::vector<char>::iterator &startIt,
                                 const std::vector<char>::iterator &endIt,

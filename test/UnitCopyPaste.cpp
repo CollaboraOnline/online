@@ -44,6 +44,19 @@ public:
         config.setBool("ssl.enable", true);
     }
 
+    std::string getRawClipboard(const std::string &clipURIstr)
+    {
+        Poco::URI clipURI(clipURIstr);
+
+        HTTPResponse response;
+        HTTPRequest request(HTTPRequest::HTTP_GET, clipURI.getPathAndQuery());
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
+        session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
+        session->sendRequest(request);
+        std::istream& responseStream = session->receiveResponse(response);
+        return std::string(std::istreambuf_iterator<char>(responseStream), {});
+    }
+
     std::shared_ptr<ClipboardData> getClipboard(const std::string &clipURIstr)
     {
         std::cerr << "connect to " << clipURIstr << std::endl;
@@ -72,11 +85,11 @@ public:
         return clipboard;
     }
 
-
     bool assertClipboard(const std::shared_ptr<ClipboardData> &clipboard,
                          const std::string &mimeType, const std::string &content)
     {
         bool failed = false;
+
         std::string value;
         if (!clipboard || !clipboard->findType(mimeType, value))
         {
@@ -85,7 +98,10 @@ public:
         }
         else if (value != content)
         {
-            std::cerr << "clipboard contet mismatch '" << value << "' vs ' " << content << "'\n";
+            std::cerr << "clipboard content mismatch " << value.length() << " vs. " << content.length() << "\n";
+            sleep (1); // output settle.
+            Util::dumpHex(std::cerr, "\tclipboard:\n", "", value);
+            Util::dumpHex(std::cerr, "\tshould be:\n", "", content);
             failed = true;
         }
         if (failed)
@@ -128,7 +144,24 @@ public:
         }
 
         // Empty cell so ...
-        if (!assertClipboard(clipboard, "text/plain;charset=utf-16", ""))
+        if (!assertClipboard(clipboard, "text/plain;charset=utf-8", ""))
+            return;
+
+        std::string text = "This is some content?&*/\\!!";
+        helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
+        helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
+
+        try {
+            clipboard = getClipboard(clipURI);
+        } catch (ParseError &err) {
+            std::cerr << "parse error " << err.toString() << std::endl;
+            exitTest(TestResult::Failed);
+            return;
+        }
+
+        std::string existing = "2\t\n3\t\n5";
+        if (!assertClipboard(clipboard, "text/plain;charset=utf-8", existing + "\t" + text + "\n"))
             return;
 
         std::cerr << "CopyPaste tests succeeded" << std::endl;
