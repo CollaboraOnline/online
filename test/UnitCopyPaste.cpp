@@ -15,6 +15,7 @@
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
 #include <wsd/LOOLWSD.hpp>
+#include <wsd/Clipboard.hpp>
 #include <wsd/ClientSession.hpp>
 #include <Poco/Timestamp.h>
 #include <Poco/StringTokenizer.h>
@@ -27,46 +28,6 @@
 #include <test.hpp>
 
 using namespace Poco::Net;
-
-struct CopyPasteData
-{
-    std::vector<std::string> _mimeTypes;
-    std::vector<std::string> _content;
-    CopyPasteData()
-    {
-    }
-    bool read(std::istream& inStream)
-    {
-        while (!inStream.eof())
-        {
-            std::string mime, hexLen, newline;
-            std::getline(inStream, mime, '\n');
-            std::getline(inStream, hexLen, '\n');
-            std::cerr << "mime: '" << mime << "' - hexlen '" << hexLen << "'\n";
-            uint64_t len = strtoll( hexLen.c_str(), nullptr, 16 );
-            std::string content(len, ' ');
-            inStream.read(&content[0], len);
-            std::getline(inStream, newline, '\n');
-            if (newline.length() > 0)
-            {
-                std::cerr << "trailing stream content expecting newline: '" << newline <<
-                    "' - len " << hexLen << " == " << len << " read - " << content.length() << "\n";
-                return false;
-            }
-            if (mime.length() > 0)
-            {
-                _mimeTypes.push_back(mime);
-                _content.push_back(content);
-            }
-        }
-        return true;
-    }
-    size_t size()
-    {
-        assert(_mimeTypes.size() == _content.size());
-        return _mimeTypes.size();
-    }
-};
 
 // Inside the WSD process
 class UnitCopyPaste : public UnitWSD
@@ -81,6 +42,58 @@ public:
         UnitWSD::configure(config);
         // force HTTPS - to test harder
         config.setBool("ssl.enable", true);
+    }
+
+    std::shared_ptr<ClipboardData> getClipboard(const std::string &clipURIstr)
+    {
+        std::cerr << "connect to " << clipURIstr << std::endl;
+        Poco::URI clipURI(clipURIstr);
+
+        HTTPResponse response;
+        HTTPRequest request(HTTPRequest::HTTP_GET, clipURI.getPathAndQuery());
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
+        session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
+        session->sendRequest(request);
+        std::istream& responseStream = session->receiveResponse(response);
+
+        if (response.getStatus() != HTTPResponse::HTTP_OK)
+        {
+            std::cerr << "Error response for clipboard " << response.getReason();
+            exitTest(TestResult::Failed);
+            return std::shared_ptr<ClipboardData>();
+        }
+
+        CPPUNIT_ASSERT_EQUAL(std::string("application/octet-stream"), response.getContentType());
+
+        auto clipboard = std::make_shared<ClipboardData>();
+        clipboard->read(responseStream);
+        clipboard->dumpState(std::cerr);
+
+        return clipboard;
+    }
+
+
+    bool assertClipboard(const std::shared_ptr<ClipboardData> &clipboard,
+                         const std::string &mimeType, const std::string &content)
+    {
+        bool failed = false;
+        std::string value;
+        if (!clipboard || !clipboard->findType(mimeType, value))
+        {
+            std::cerr << "missing clipboard or missing clipboard mime type '" << mimeType << "'\n";
+            failed = true;
+        }
+        else if (value != content)
+        {
+            std::cerr << "clipboard contet mismatch '" << value << "' vs ' " << content << "'\n";
+            failed = true;
+        }
+        if (failed)
+        {
+            exitTest(TestResult::Failed);
+            return false;
+        }
+        return true;
     }
 
     void invokeTest() override
@@ -104,32 +117,19 @@ public:
             clientSession = sessions[0];
         }
 
-        std::string clipURIstr = clientSession->getClipboardURI(false); // nominally thread unsafe
-        std::cerr << "connect to " << clipURIstr << std::endl;
-        Poco::URI clipURI(clipURIstr);
-
-        HTTPResponse response;
-        HTTPRequest request(HTTPRequest::HTTP_GET, clipURI.getPathAndQuery());
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
-        session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
-        session->sendRequest(request);
-        std::istream& responseStream = session->receiveResponse(response);
-
-        if (response.getStatus() != HTTPResponse::HTTP_OK)
-        {
-            std::cerr << "Error response for clipboard " << response.getReason();
+        std::string clipURI = clientSession->getClipboardURI(false); // nominally thread unsafe
+        std::shared_ptr<ClipboardData> clipboard;
+        try {
+            clipboard = getClipboard(clipURI);
+        } catch (ParseError &err) {
+            std::cerr << "parse error " << err.toString() << std::endl;
             exitTest(TestResult::Failed);
             return;
         }
 
-        CPPUNIT_ASSERT_EQUAL(std::string("application/octet-stream"), response.getContentType());
-        CopyPasteData clipboard;
-        CPPUNIT_ASSERT(clipboard.read(responseStream));
-        CPPUNIT_ASSERT_EQUAL(std::string("application/octet-stream"), response.getContentType());
-        std::cerr << "Clipboard with " << clipboard.size() << " entries\n";
-        for (size_t i = 0; i < clipboard.size(); ++i)
-            std::cerr << "\t[" << i << "] - size " << clipboard._content[i].size() <<
-                " type: '" << clipboard._mimeTypes[i] << "'\n";
+        // Empty cell so ...
+        if (!assertClipboard(clipboard, "text/plain;charset=utf-16", ""))
+            return;
 
         std::cerr << "CopyPaste tests succeeded" << std::endl;
         exitTest(TestResult::Ok);

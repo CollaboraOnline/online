@@ -174,6 +174,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
               wsd/ClientSession.hpp \
+              wsd/Clipboard.hpp \
               wsd/DocumentBroker.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \

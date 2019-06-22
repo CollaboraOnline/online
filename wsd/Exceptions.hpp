@@ -73,6 +73,14 @@ class ServiceUnavailableException : public LoolException
 public:
     using LoolException::LoolException;
 };
+
+/// Badly formed data we are parsing
+class ParseError : public LoolException
+{
+public:
+    using LoolException::LoolException;
+};
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
