@@ -76,7 +76,6 @@ public:
                 form.write(session->sendRequest(request));
 
                 Poco::Net::HTTPResponse response;
-                std::stringstream actualStream;
                 try {
                     session->receiveResponse(response);
                 } catch (Poco::Net::NoMessageException &) {

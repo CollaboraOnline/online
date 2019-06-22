@@ -130,6 +130,43 @@ public:
         return true;
     }
 
+    bool setClipboard(const std::string &clipURIstr, const std::string &rawData,
+                      HTTPResponse::HTTPStatus expected)
+    {
+        std::cerr << "connect to " << clipURIstr << std::endl;
+        Poco::URI clipURI(clipURIstr);
+
+        std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
+        Poco::URI clipURIPoco(clipURI);
+        HTTPRequest request(HTTPRequest::HTTP_POST, clipURIPoco.getPathAndQuery());
+        HTMLForm form;
+        form.setEncoding(HTMLForm::ENCODING_MULTIPART);
+        form.set("format", "txt");
+        form.addPart("data", new StringPartSource(rawData, "application/octet-stream", "clipboard"));
+        form.prepareSubmit(request);
+        form.write(session->sendRequest(request));
+
+        HTTPResponse response;
+        std::stringstream actualStream;
+        try {
+            session->receiveResponse(response);
+        } catch (NoMessageException &) {
+            std::cerr << "No response from setting clipboard.\n";
+            exitTest(TestResult::Failed);
+            return false;
+        }
+
+        if (response.getStatus() != expected)
+        {
+            std::cerr << "Error response for clipboard "<< response.getStatus() <<
+                " != expected " << expected << "\n";
+            exitTest(TestResult::Failed);
+            return false;
+        }
+
+        return true;
+    }
+
     void invokeTest() override
     {
         std::string testname = "copypaste";
@@ -175,9 +212,15 @@ public:
             return;
 
         // Now try pushing some new clipboard content ...
+        std::string clipData =
+            "text/plain;charset=utf-8\n"
+            "a\n" // hex
+            "1234567890\n";
 
+//        if (!setClipboard(clipURI, clipData, HTTPResponse::HTTP_OK))
+//          return;
 
-        std::cerr << "CopyPaste tests succeeded" << std::endl;
+        std::cerr << "Clipboard tests succeeded" << std::endl;
         exitTest(TestResult::Ok);
     }
 };
