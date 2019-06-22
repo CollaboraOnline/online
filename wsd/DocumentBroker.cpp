@@ -1514,14 +1514,15 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     sendRequestedTiles(session);
 }
 
-void DocumentBroker::handleClipboardGetRequest(const std::shared_ptr<StreamSocket> &socket,
-                                               const std::string &viewId, const std::string &tag)
+void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
+                                            const std::string &viewId, const std::string &tag,
+                                            const std::shared_ptr<std::string> &data)
 {
     for (auto& it : _sessions)
     {
         if (it.second->matchesClipboardKeys(viewId, tag))
         {
-            it.second->handleClipboardGetRequest(socket);
+            it.second->handleClipboardRequest(type, socket, data);
             return;
         }
     }

@@ -1942,6 +1942,24 @@ private:
     }
 };
 
+/// For clipboard setting
+class ClipboardPartHandler : public PartHandler
+{
+    std::shared_ptr<std::string> _data; // large.
+
+public:
+    std::shared_ptr<std::string> getData() const { return _data; }
+
+    ClipboardPartHandler() { }
+
+    virtual void handlePart(const MessageHeader& /* header */, std::istream& stream) override
+    {
+        std::istreambuf_iterator<char> eos;
+        _data = std::make_shared<std::string>(std::istreambuf_iterator<char>(stream), eos);
+        LOG_TRC("Clipboard stream from part header stored of size " << _data->length());
+    }
+};
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher : public SocketHandlerInterface
 {
@@ -2132,10 +2150,9 @@ private:
             else
             {
                 StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                if (request.getMethod() == HTTPRequest::HTTP_GET &&
-                    reqPathTokens.count() > 0 && reqPathTokens[0] == "clipboard")
+                if (reqPathTokens.count() > 0 && reqPathTokens[0] == "clipboard")
                 {
-                    handleClipboardRequest(request, disposition);
+                    handleClipboardRequest(request, message, disposition);
                 }
                 else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
@@ -2303,7 +2320,9 @@ private:
         LOG_INF("Sent capabilities.json successfully.");
     }
 
-    void handleClipboardRequest(const Poco::Net::HTTPRequest& request, SocketDisposition &disposition)
+    void handleClipboardRequest(const Poco::Net::HTTPRequest& request,
+                                Poco::MemoryInputStream& message,
+                                SocketDisposition &disposition)
     {
         LOG_DBG("Clipboard request: " << request.getURI());
 
@@ -2335,6 +2354,17 @@ private:
         }
         if (docBroker && serverId == LOOLWSD::HostIdentifier)
         {
+            std::shared_ptr<std::string> data;
+            DocumentBroker::ClipboardRequest type;
+            if (request.getMethod() == HTTPRequest::HTTP_GET)
+                type = DocumentBroker::CLIP_REQUEST_GET;
+            else
+            {
+                type = DocumentBroker::CLIP_REQUEST_SET;
+                ClipboardPartHandler handler;
+                HTMLForm form(request, message, handler);
+                data = handler.getData();
+            }
             // Do things in the right thread.
             disposition.setMove([=] (const std::shared_ptr<Socket> &moveSocket)
                 {
@@ -2346,19 +2376,19 @@ private:
                     docBroker->addCallback([=]()
                         {
                             auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-                            docBroker->handleClipboardGetRequest(streamSocket, viewId, tag);
+                            docBroker->handleClipboardRequest(type, streamSocket, viewId, tag, data);
                         });
                 });
-            LOG_TRC("queued clipboard action on docBroker fetch");
+            LOG_TRC("queued clipboard command " << type << " on docBroker fetch");
         } else {
             LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag <<
                     " and broker: " << (docBroker ? "not" : "") << "found");
 
-            std::string message;
+            std::string errMsg;
             if (serverId != LOOLWSD::HostIdentifier)
-                message = "Cluster configuration error: mis-matching serverid " + serverId + " vs. " + LOOLWSD::HostIdentifier;
+                errMsg = "Cluster configuration error: mis-matching serverid " + serverId + " vs. " + LOOLWSD::HostIdentifier;
             else
-                message = "Empty clipboard item / session tag " + tag;
+                errMsg = "Empty clipboard item / session tag " + tag;
 
             // Bad request.
             std::ostringstream oss;
@@ -2367,7 +2397,7 @@ private:
                 << "User-Agent: LOOLWSD WOPI Agent\r\n"
                 << "Content-Length: 0\r\n"
                 << "\r\n"
-                << message;
+                << errMsg;
             auto socket = _socket.lock();
             socket->send(oss.str());
             socket->shutdown();

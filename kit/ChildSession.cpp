@@ -41,6 +41,7 @@
 #include <Png.hpp>
 #include <Util.hpp>
 #include <Unit.hpp>
+#include <Clipboard.hpp>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -974,8 +975,36 @@ bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const st
     return true;
 }
 
-bool ChildSession::setClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /* tokens */)
+bool ChildSession::setClipboard(const char* buffer, int length, const std::vector<std::string>& /* tokens */)
 {
+    try {
+        ClipboardData data;
+        Poco::MemoryInputStream stream(buffer, length);
+
+        std::string command; // skip command
+        std::getline(stream, command, '\n');
+
+        data.read(stream);
+
+        size_t nInCount = data.size();
+        size_t pInSizes[nInCount] = { 0, };
+        const char *pInMimeTypes[nInCount];
+        const char *pInStreams[nInCount];
+
+        for (size_t i = 0; i < nInCount; ++i)
+        {
+            pInSizes[i] = data._content[i].length();
+            pInStreams[i] = data._content[i].c_str();
+            pInMimeTypes[i] = data._mimeTypes[i].c_str();
+        }
+
+        if (!getLOKitDocument()->setClipboard(nInCount, pInMimeTypes, pInSizes, pInStreams))
+            LOG_ERR("set clipboard returned failure");
+        else
+            LOG_TRC("set clipboard succeeded");
+    } catch (...) {
+        LOG_ERR("set clipboard failed with exception");
+    }
     // FIXME: implement me [!] ...
     return false;
 }

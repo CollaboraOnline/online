@@ -145,7 +145,9 @@ public:
     bool matchesClipboardKeys(const std::string &viewId, const std::string &tag);
 
     /// Handle a clipboard fetch / put request.
-    void handleClipboardGetRequest(const std::shared_ptr<StreamSocket> &socket);
+    void handleClipboardRequest(DocumentBroker::ClipboardRequest     type,
+                                const std::shared_ptr<StreamSocket> &socket,
+                                const std::shared_ptr<std::string>  &data);
 
     /// Create URI for transient clipboard content.
     std::string getClipboardURI(bool encode = true);

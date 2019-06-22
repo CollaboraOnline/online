@@ -174,7 +174,6 @@ wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
               wsd/ClientSession.hpp \
-              wsd/Clipboard.hpp \
               wsd/DocumentBroker.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
@@ -188,6 +187,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/UserMessages.hpp
 
 shared_headers = common/Common.hpp \
+                 common/Clipboard.hpp \
                  common/Crypto.hpp \
                  common/JsonUtil.hpp \
                  common/IoUtil.hpp \

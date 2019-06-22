@@ -135,18 +135,36 @@ bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const st
     return false;
 }
 
-void ClientSession::handleClipboardGetRequest(const std::shared_ptr<StreamSocket> &socket)
+void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     type,
+                                           const std::shared_ptr<StreamSocket> &socket,
+                                           const std::shared_ptr<std::string>  &data)
 {
     // Move the socket into our DocBroker.
     auto docBroker = getDocumentBroker();
     docBroker->addSocketToPoll(socket);
 
-    // FIXME: Ash handle both get and post here - as well as the clipboard page.
-    LOG_TRC("Session [" << getId() << "] sending getclipboard");
-    docBroker->forwardToChild(getId(), "getclipboard");
+    if (type == DocumentBroker::CLIP_REQUEST_GET)
+    {
+        LOG_TRC("Session [" << getId() << "] sending getclipboard");
+        docBroker->forwardToChild(getId(), "getclipboard");
+        _clipSockets.push_back(socket);
+    }
+    else // REQUEST_SET
+    {
+        // FIXME: manage memory more efficiently.
+        LOG_TRC("Session [" << getId() << "] sending setclipboard");
+        docBroker->forwardToChild(getId(), "setclipboard\n" + *data);
 
-    // TESTME: onerror / socket cleanup.
-    _clipSockets.push_back(socket);
+        // FIXME: work harder for error detection ?
+        std::ostringstream oss;
+        oss << "HTTP/1.1 200 OK\r\n"
+            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+            << "Content-Length: 0\r\n"
+            << "\r\n";
+        socket->send(oss.str());
+        socket->shutdown();
+    }
 }
 
 void ClientSession::handleIncomingMessage(SocketDisposition &disposition)

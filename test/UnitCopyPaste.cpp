@@ -15,7 +15,7 @@
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
 #include <wsd/LOOLWSD.hpp>
-#include <wsd/Clipboard.hpp>
+#include <common/Clipboard.hpp>
 #include <wsd/ClientSession.hpp>
 #include <Poco/Timestamp.h>
 #include <Poco/StringTokenizer.h>
@@ -207,18 +207,24 @@ public:
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
         helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
 
-        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8",
-                                  text + "\t\t\n" + "\t\t\n" + "\t\t\n" + "\t\t2\n\t\t3\n\t\t5\n"))
+        std::string existing = "\t\t\n" "\t\t\n" "\t\t\n" "\t\t2\n\t\t3\n\t\t5\n";
+
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", text + existing))
             return;
 
         // Now try pushing some new clipboard content ...
-        std::string clipData =
-            "text/plain;charset=utf-8\n"
-            "a\n" // hex
-            "1234567890\n";
+        std::string newcontent = "1234567890";
+        std::stringstream clipData;
+        clipData << "text/plain;charset=utf-8\n"
+                 << std::hex << newcontent.length() << "\n"
+                 << newcontent << "\n";
 
-//        if (!setClipboard(clipURI, clipData, HTTPResponse::HTTP_OK))
-//          return;
+        if (!setClipboard(clipURI, clipData.str(), HTTPResponse::HTTP_OK))
+            return;
+        helpers::sendTextFrame(socket, "uno .uno:Paste", testname);
+
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", newcontent + existing))
+            return;
 
         std::cerr << "Clipboard tests succeeded" << std::endl;
         exitTest(TestResult::Ok);
