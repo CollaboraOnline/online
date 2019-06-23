@@ -186,6 +186,18 @@ L.Clipboard = {
 	setTextSelectionContent: function(text) {
 		this.setSelection(text);
 	},
+
+	// complexselection: message
+	onComplexSelection: function (text) {
+		// Put in the clipboard a helpful explanation of what the user should do.
+		// Currently we don't have a payload, though we might in the future
+		text = _('Please use the following link to download the selection from you document and paste into other applications on your device')
+									+ ': '; //FIXME: MISSING URL
+		this.setSelection(text);
+
+		//TODO: handle complex selection download.
+	},
+
 };
 
 L.clipboard = function(map) {

@@ -51,7 +51,9 @@ getchildid
 
 gettextselection mimetype=<mimeType>
 
-    Request selection's content
+    Request selection's content, which is returned via 'textselectioncontent', if the selection is text-only and relatively small.
+    However, for selections containing images and other embedded objects, or if the selection is a large text blob,
+    the response is 'complexselection'.
 
 paste mimetype=<mimeType>
 <binaryPasteData>
@@ -375,7 +377,14 @@ statechanged: <key>=<value>
     Eg: 'statechanged: .uno:Undo=enabled'
 
 textselectioncontent:
-    Current selection's content
+
+    Current selection's content, only for text-only selections of a reasonably limited size.
+    For complex selection and large texts, selectioncontent message is returned.
+
+complexselection:
+
+    Complex selections with embedded objects and large text selections need special export handling.
+    This response signifies that the payload is large and/or complex and needs to be retrieved via the clipboard API.
 
 tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [wid=<wireId>]
 <binaryPngImage>
