@@ -71,6 +71,14 @@ fi
 
 ( cd online && git fetch --all && git checkout -f $ONLINE_BRANCH && git pull -r ) || exit 1
 
+# online-branding repo
+
+if test ! -d online-branding; then
+    git clone git@gitlab.collabora.com:productivity/online-branding.git || echo "Warning: online-branding.git was not cloned. Lack of permissions?"
+fi
+
+( cd online-branding && git pull -r && git checkout master ) || echo "Warning: pull from online-branding.git cannot be performed. Lack of permissions?"
+
 ##### LibreOffice #####
 
 # build LibreOffice
@@ -93,6 +101,16 @@ chrpath -r '$ORIGIN' "$INSTDIR"/opt/libreoffice/program/libcairo.so.2
 
 # copy stuff
 ( cd online && DESTDIR="$INSTDIR" make install ) || exit 1
+
+# CODE branding
+mkdir -p $INSTDIR/usr/share/loolwsd/loleaflet/dist/images
+mkdir -p $INSTDIR/opt/collaboraoffice6.0/share/theme_definitions/online
+cp -a online-branding/online-theme/* $INSTDIR/opt/collaboraoffice6.0/share/theme_definitions/online
+# FIXME branding-CODE.css ??
+cp -a online-branding/branding.css $INSTDIR/usr/share/loolwsd/loleaflet/dist/branding.css
+cp -a online-branding/branding-CODE.js $INSTDIR/usr/share/loolwsd/loleaflet/dist/branding.js
+cp -a online-branding/toolbar-bg-CODE-path-minified.svg $INSTDIR/usr/share/loolwsd/loleaflet/dist/images/toolbar-bg.svg
+
 
 # Create new docker image
 if [ -z "$NO_DOCKER_IMAGE" ]; then
