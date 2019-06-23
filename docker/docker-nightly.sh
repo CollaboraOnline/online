@@ -74,7 +74,7 @@ fi
 ##### LibreOffice #####
 
 # build LibreOffice
-( cd libreoffice && ./autogen.sh --with-distro=CPLinux-LOKit) || exit 1
+( cd libreoffice && ./autogen.sh --with-distro=CPLinux-LOKit --without-package-format --disable-symbols ) || exit 1
 ( cd libreoffice && make $LIBREOFFICE_BUILD_TARGET ) || exit 1
 
 # copy stuff
