@@ -21,7 +21,7 @@ ONLINE_BRANCH=distro/collabora/collabora-online-4
 echo "Trying if sudo works without a password"
 echo
 echo "If you get a password prompt now, break, and fix your setup using 'sudo visudo'; add something like:"
-echo "yourusername ALL=(ALL) NOPASSWD: ALL"
+echo "yourusername ALL=(ALL) NOPASSWD: /sbin/setcap"
 echo
 sudo echo "works"
 
@@ -30,7 +30,7 @@ if [ -z "$DOCKER_HUB_REPO" ]; then
   DOCKER_HUB_REPO="collabora/code"
 fi;
 if [ -z "$DOCKER_HUB_TAG" ]; then
-  DOCKER_HUB_TAG=""
+  DOCKER_HUB_TAG="4.1-snapshot"
 fi;
 echo "Using Docker Hub Repository: '$DOCKER_HUB_REPO' with tag '$DOCKER_HUB_TAG'."
 
@@ -43,15 +43,6 @@ if [ -z "$LIBREOFFICE_BUILD_TARGET" ]; then
   LIBREOFFICE_BUILD_TARGET=""
 fi;
 echo "LibreOffice build target: '$LIBREOFFICE_BUILD_TARGET'"
-
-# check if we have jake
-which jake || { cat << EOF
-
-jake is not installed, get it like:
-
-  npm install -g jake
-EOF
-exit 1 ; }
 
 # do everything in the builddir
 SRCDIR=$(realpath `dirname $0`)
@@ -71,75 +62,19 @@ if test ! -d libreoffice ; then
     git clone https://git.libreoffice.org/core libreoffice || exit 1
 fi
 
-( cd libreoffice && git checkout $LIBREOFFICE_BRANCH && ./g pull -r ) || exit 1
+( cd libreoffice && git fetch --all && git checkout $LIBREOFFICE_BRANCH && ./g pull -r ) || exit 1
 
 # online repo
 if test ! -d online ; then
     git clone https://git.libreoffice.org/online online || exit 1
-    ( cd online && ./autogen.sh ) || exit 1
 fi
 
-( cd online && git checkout -f $ONLINE_BRANCH && git pull -r ) || exit 1
+( cd online && git fetch --all && git checkout -f $ONLINE_BRANCH && git pull -r ) || exit 1
 
 ##### LibreOffice #####
 
 # build LibreOffice
-cat > libreoffice/autogen.input << EOF
---disable-cups
---disable-dbus
---disable-dconf
---disable-epm
---disable-evolution2
---disable-ext-nlpsolver
---disable-ext-wiki-publisher
---disable-firebird-sdbc
---disable-gio
---disable-gstreamer-0-10
---disable-gstreamer-1-0
---disable-gtk
---disable-gtk3
---disable-qt5
---disable-kde5
---disable-odk
---disable-online-update
---disable-pdfimport
---disable-postgresql-sdbc
---disable-report-builder
---disable-scripting-beanshell
---disable-scripting-javascript
---disable-sdremote
---disable-sdremote-bluetooth
---enable-extension-integration
---enable-mergelibs
---enable-python=internal
---enable-release-build
---with-external-dict-dir=/usr/share/hunspell
---with-external-hyph-dir=/usr/share/hyphen
---with-external-thes-dir=/usr/share/mythes
---with-fonts
---with-galleries=no
---with-lang=ALL
---with-linker-hash-style=both
---with-system-dicts
---with-system-zlib
---with-theme=colibre
---without-branding
---without-help
---without-java
---without-junit
---with-myspell-dicts
---without-package-format
---without-system-cairo
---without-system-jars
---without-system-jpeg
---without-system-libpng
---without-system-libxml
---without-system-openssl
---without-system-poppler
---without-system-postgresql
-EOF
-
-( cd libreoffice && ./autogen.sh ) || exit 1
+( cd libreoffice && ./autogen.sh --with-distro=CPLinux-LOKit) || exit 1
 ( cd libreoffice && make $LIBREOFFICE_BUILD_TARGET ) || exit 1
 
 # copy stuff
@@ -152,6 +87,7 @@ chrpath -r '$ORIGIN' "$INSTDIR"/opt/libreoffice/program/libcairo.so.2
 ##### loolwsd & loleaflet #####
 
 # build
+( cd online && ./autogen.sh ) || exit 1
 ( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/libreoffice/include --with-lo-path="$INSTDIR"/opt/libreoffice $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
 ( cd online && make -j 8) || exit 1
 
