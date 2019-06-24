@@ -46,6 +46,10 @@ L.ClipboardContainer = L.Layer.extend({
 		// the events, a timer is needed to check for the right conditions.
 		this._abortCompositionTimeout = undefined;
 
+		// Defines whether to use a <input type=textarea> (when true) or a
+		// <div contenteditable> (when false)
+		this._legacyArea = L.Browser.safari;
+
 		// Under-caret orange marker.
 		this._cursorHandler = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
@@ -134,7 +138,7 @@ L.ClipboardContainer = L.Layer.extend({
 	// Marks the content of the textarea/contenteditable as selected,
 	// for system clipboard interaction.
 	select: function select() {
-		if (L.Browser.safari) {
+		if (this._legacyArea) {
 			this._textArea.select();
 		} else {
 			// As per https://stackoverflow.com/a/6150060/4768502
@@ -157,7 +161,7 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	getValue: function() {
-		if (L.Browser.safari) {
+		if (this._legacyArea) {
 			return this._textArea.value;
 		} else {
 			return this._textArea.textContent;
@@ -166,7 +170,7 @@ L.ClipboardContainer = L.Layer.extend({
 
 	setValue: function(val) {
 		// console.log('clipboard setValue: ', val);
-		if (L.Browser.safari) {
+		if (this._legacyArea) {
 			var tmp = document.createElement('div');
 			tmp.innerHTML = val;
 			this._textArea.value = tmp.textContent || tmp.innerText || '';
@@ -190,7 +194,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// Note that the contents of the textarea are NOT deleted on each composed
 		// word, in order to make
 
-		if (L.Browser.safari) {
+		if (this._legacyArea) {
 			// Force a textarea on Safari. This is two-fold: Safari doesn't fire
 			// input/insertParagraph events on an empty&focused contenteditable,
 			// but does fire input/insertLineBreak on an empty&focused textarea;
@@ -492,9 +496,7 @@ L.ClipboardContainer = L.Layer.extend({
 
 	// Empties the textarea / contenteditable element.
 	_emptyArea: function _emptyArea() {
-		if (L.Browser.safari) {
-			this._textArea.value = '';
-		} else if (this._lastInputType) {
+		if (this._lastInputType) {
 			// Add two non-breaking spaces to the textarea/contenteditable,
 			// but only after we can be sure that this browser doesn't
 			// use legacy 'input' events, i.e. when the last 'input' event
@@ -518,9 +520,11 @@ L.ClipboardContainer = L.Layer.extend({
 			sel.addRange(range);
 			range.detach();
 
-		} else {
+		} else if (this._legacyArea) {
 			this._textArea.innerText = '';
 			this._textArea.innerHTML = '';
+		} else {
+			this._textArea.value = '';
 		}
 		// 		L.DomUtil.empty(this._textArea);
 	},
@@ -640,7 +644,11 @@ L.ClipboardContainer = L.Layer.extend({
 	// Very difficult to handle right now, so the strategy is to panic and
 	// empty the text area.
 	_abortComposition: function _abortComposition() {
-		this._isComposing = false;
+		if (this._isComposing) {
+			this._sendCompositionEvent('input', '');
+// 			this._sendCompositionEvent('end', '');
+			this._isComposing = false;
+		}
 		this._emptyArea();
 	},
 
