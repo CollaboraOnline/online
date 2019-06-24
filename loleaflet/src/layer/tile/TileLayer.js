@@ -732,7 +732,6 @@ L.TileLayer = L.GridLayer.extend({
 			if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg) {
 				this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 			}
-			this._onShapeSelection();
 		}
 
 		this._onUpdateGraphicSelection();
@@ -2686,14 +2685,6 @@ L.TileLayer = L.GridLayer.extend({
 		e.preventDefault();
 
 		this._map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false);
-	},
-
-	_onFileLoadFunc: function(file) {
-		var socket = this._map._socket;
-		return function(e) {
-			var blob = new Blob(['paste mimetype=' + file.type + '\n', e.target.result]);
-			socket.sendMessage(blob);
-		};
 	},
 
 	_onDragStart: function () {

@@ -102,6 +102,75 @@ L.Clipboard = L.Class.extend({
 		return new Blob(content);
 	},
 
+	// Abstract async post & download for our progress wrappers
+	// type: GET or POST
+	// url:  where to get / send the data
+	// optionalFormData: used for POST for form data
+	// completeFn: called on completion - with response.
+	// progressFn: allows splitting the progress bar up.
+	_doAsyncDownload: function(type,url,optionalFormData,completeFn,progressFn) {
+		var that = this;
+		var request = new XMLHttpRequest();
+		request.timeout = 20 * 1000; // 20 secs ...
+
+		that._startProgress();
+		that._downloadProgress._onStartDownload();
+		request.onload = function() {
+			that._downloadProgress._onComplete();
+			that._downloadProgress._onClose();
+			completeFn(this.response);
+		}
+		request.onerror = function() {
+			that._downloadProgress._onComplete();
+			that._downloadProgress._onClose();
+		}
+
+		request.upload.addEventListener('progress', function (e) {
+			if (e.lengthComputable) {
+				var percent = progressFn(e.loaded / e.total * 100);
+				var progress = { statusType: 'setvalue', value: percent };
+				that._downloadProgress._onUpdateProgress(progress);
+			}
+		}, false);
+		request.open(type, url, true /* isAsync */);
+		request.responseType = 'blob';
+		if (optionalFormData !== null)
+			request.send(optionalFormData);
+		else
+			request.send();
+	},
+
+	// FIXME: timestamp in the links ? old / un-responsive servers (?)
+	_dataTransferDownloadAndPasteAsync: function(dataTransfer, src, dest) {
+		var that = this;
+		that._doAsyncDownload(
+			'GET', src, null,
+			function(response) {
+				console.log('download done - response ' + response);
+				var formData = new FormData();
+				formData.append('data', response, 'clipboard');
+				that._doAsyncDownload(
+					'POST', dest, formData,
+					function() {
+						console.log('up-load done, now paste');
+						that._map._socket.sendMessage('uno .uno:Paste')
+					},
+					function(progress) { return 50 + progress/2; }
+				);
+			},
+			function(progress) { return progress/2; }
+		);
+	},
+
+	// FIXME: do we want this really ?
+	_onFileLoadFunc: function(file) {
+		var socket = this._map._socket;
+		return function(e) {
+			var blob = new Blob(['paste mimetype=' + file.type + '\n', e.target.result]);
+			socket.sendMessage(blob);
+		};
+	},
+
 	dataTransferToDocument: function (dataTransfer, preferInternal) {
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
@@ -126,13 +195,22 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		this._startProgress();
-		this._downloadProgress._onStartDownload();
+		var destination = this.getMetaBase() + this.getMetaPath();
+
+		// Do we have a remote Online we can suck rich data from ?
+		if (meta !== '')
+		{
+			this._dataTransferDownloadAndPasteAsync(
+				dataTransfer, meta, destination);
+			return;
+		}
 
 		console.log('Mismatching index\n\t"' + meta + '" vs. \n\t"' + id + '"');
 
 		// Suck HTML content out of dataTransfer now while it feels like working.
 		var content = this._readContentSync(dataTransfer);
+
+		// FIXME: do we want this section ?
 
 		// Images get a look in only if we have no content and are async
 		if (content == null && pasteHtml == '')
@@ -168,26 +246,12 @@ L.Clipboard = L.Class.extend({
 			formData.append('file', content);
 
 			var that = this;
-			var request = new XMLHttpRequest();
-
-			request.onreadystatechange = function() {
-				if (request.status == 200 && request.readyState == 4) {
-					that._map._socket.sendMessage('uno .uno:Paste');
-					that._downloadProgress._onComplete();
-					that._downloadProgress._onClose();
-				}
-			}
-
-			request.upload.addEventListener('progress', function (e) {
-				if (e.lengthComputable) {
-					var progress = { statusType: 'setvalue', value: e.loaded / e.total * 100 };
-					that._downloadProgress._onUpdateProgress(progress);
-				}
-			}, false);
-
-			var isAsync = true;
-			request.open('POST', id, isAsync);
-			request.send(formData);
+			this._doAsyncDownload('POST', destination, formData,
+					      function() {
+						      that._map._socket.sendMessage('uno .uno:Paste');
+					      },
+					      function(progress) { return progress; }
+					     );
 		} else {
 			console.log('Nothing we can paste on the clipboard');
 		}
@@ -201,6 +265,8 @@ L.Clipboard = L.Class.extend({
 		} else if (t === 'complex') {
 			console.log('Copy/Cut with complex/graphical selection');
 			text = this.getStubHtml();
+			// FIXME: Marco -> we need to pop up our magic 'download'
+			// button here I think ...
 		} else {
 			console.log('Copy/Cut with simple text selection');
 			text = this._selectionContent;
@@ -209,8 +275,8 @@ L.Clipboard = L.Class.extend({
 		if (e.clipboardData) { // Standard
 			e.clipboardData.setData('text/html', text);
 			console.log('Put "' + text + '" on the clipboard');
-		}
-		else if (window.clipboardData) { // IE 11 - poor clipboard API
+
+		} else if (window.clipboardData) { // IE 11 - poor clipboard API
 			window.clipboardData.setData('Text', this.stripHTML(text));
 		}
 	},

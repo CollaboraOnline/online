@@ -2364,11 +2364,14 @@ private:
                 ClipboardPartHandler handler;
                 HTMLForm form(request, message, handler);
                 data = handler.getData();
+                if (!data || data->length() == 0)
+                    LOG_ERR("Invalid zero size set clipboard content");
             }
             // Do things in the right thread.
             disposition.setMove([=] (const std::shared_ptr<Socket> &moveSocket)
                 {
-                    LOG_TRC("Move clipboard request " << tag << " to docbroker thread");
+                    LOG_TRC("Move clipboard request " << tag << " to docbroker thread with data: " <<
+                            (data ? data->length() : 0) << " bytes");
                     // We no longer own this socket.
                     moveSocket->setThreadOwner(std::thread::id(0));
 
