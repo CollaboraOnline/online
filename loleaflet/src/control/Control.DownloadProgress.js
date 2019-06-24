@@ -72,10 +72,18 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._value.innerHTML = value + '%';
 	},
 
+	_setProgressCursor: function() {
+		$('#map').css('cursor', 'progress');
+	},
+
+	_setNormalCursor: function() {
+		$('#map').css('cursor', 'default');
+	},
+
 	_onStartDownload: function () {
 		//if (!this._uri)
 		//	return;
-		$('#map').css('cursor', 'progress');
+		this._setProgressCursor();
 		this._started = true;
 		this.setValue(0);
 		this._content.removeChild(this._downloadButton);
@@ -93,7 +101,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_onComplete: function () {
-		$('#map').css('cursor', 'default');
+		this._setNormalCursor();
 		this._complete = true;
 		this._content.removeChild(this._progress);
 		this._content.style.width  = '150px';
@@ -106,6 +114,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_onClose: function () {
+		this._setNormalCursor();
 		this._cancelDownload();
 		if (this._content.contains(this._confirmPasteButton))
 			this._content.removeChild(this._confirmPasteButton);
@@ -120,6 +129,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_cancelDownload: function () {
+		this._setNormalCursor();
 		if (!this._started || this._complete)
 			return;
 		// TODO: insert code for cancelling an async download
