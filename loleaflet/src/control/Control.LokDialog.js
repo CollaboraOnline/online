@@ -400,6 +400,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (!force && (!this._isOpen(dlgId) || !this._dialogs[dlgId].cursorVisible))
 			return;
 		this._map.setWinId(dlgId);
+		this._map.getClipboardContainer().focus();
 	},
 
 	_setCanvasWidthHeight: function(canvas, width, height) {
