@@ -953,8 +953,11 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._setFollowing(false, null);
 		}
 		this._map.lastActionByUser = false;
-		if (!this._map._isFocused && this._map._permission === 'edit') {
+
+		if (!this._map._isFocused && (modifierViewId === this._viewId) && (this._map.getWinId === 0) && (this._map._permission === 'edit')) {
 			// Regain cursor if we had been out of focus and now have input.
+			// (only if it is our own cursor and the input is actually not
+			// going into a dialog)
 			this._map.fire('editorgotfocus');
 		}
 
