@@ -146,16 +146,19 @@ L.Clipboard = L.Class.extend({
 			var formData = new FormData();
 			formData.append('file', content);
 
-			var request = new XMLHttpRequest();
-			request.open('POST', id);
-			request.send(formData);
-
 			var that = this;
+			var request = new XMLHttpRequest();
+
 			request.onreadystatechange = function() {
-				if (request.status == 200) {
+				if (request.status == 200 && request.readyState == 4) {
+					console.log(request);
 					that._map._socket.sendMessage('uno .uno:Paste');
 				}
 			}
+
+			var isAsync = true;
+			request.open('POST', id, isAsync);
+			request.send(formData);
 
 			this._pasteFallback = null;
 		} else {
