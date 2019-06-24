@@ -77,12 +77,12 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_readContentSync: function(dataTransfer) {
-		var content = ['paste '];
+		var content = [];
 		var types = dataTransfer.types;
 		for (var t = 0; t < types.length; ++t) {
 			var data = dataTransfer.getData(types[t]);
 			content.push('mimetype=' + types[t] + '\n');
-			content.push('length=' + data.length + '\n');
+			content.push('length=' + data.length.toString(16) + '\n');
 			content.push(data);
 			content.push('\n');
 		}
@@ -94,9 +94,10 @@ L.Clipboard = L.Class.extend({
 		//   cf. ClientSession.cpp /textselectioncontent:/
 		var pasteHtml = dataTransfer.getData('text/html');
 		var meta = this._getMetaOrigin(pasteHtml);
-		var id = // this._map.options.webserver + this._map.options.serviceRoot + - Disable for now.
+		var id = this._map.options.webserver + this._map.options.serviceRoot +
 		    '/clipboard?WOPISrc='+ encodeURIComponent(this._map.options.doc) +
-		    '&ServerId=' + this._map._socket.WSDServer.Id + '&ViewId=' + this._viewId;
+			'&ServerId=' + this._map._socket.WSDServer.Id + '&ViewId=' + this._viewId +
+			'&Tag=' + this._accessKey;
 
 		// for the paste, we might prefer the internal LOK's copy/paste
 		if (meta.indexOf(id) > 0 && preferInternal === true) {
@@ -141,7 +142,16 @@ L.Clipboard = L.Class.extend({
 
 		if (content != null) {
 			console.log('Normal HTML, so smart paste not possible');
-			this._map._socket.sendMessage(content);
+
+			var formData = new FormData();
+			formData.append('file', content);
+
+			var request = new XMLHttpRequest();
+			request.open('POST', id);
+			request.send(formData);
+
+			this._map._socket.sendMessage('uno .uno:Paste');
+
 			this._pasteFallback = null;
 		} else {
 			console.log('Nothing we can paste on the clipboard');
