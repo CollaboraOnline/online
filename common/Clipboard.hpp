@@ -32,16 +32,19 @@ struct ClipboardData
             std::string mime, hexLen, newline;
             std::getline(inStream, mime, '\n');
             std::getline(inStream, hexLen, '\n');
-            uint64_t len = strtoll( hexLen.c_str(), nullptr, 16 );
-            std::string content(len, ' ');
-            inStream.read(&content[0], len);
-            if (inStream.fail())
-                throw ParseError("error during reading the stream with length: " + hexLen);
-            std::getline(inStream, newline, '\n');
-            if (mime.length() > 0)
+            if (mime.length() && hexLen.length() && !inStream.fail())
             {
-                _mimeTypes.push_back(mime);
-                _content.push_back(content);
+                uint64_t len = strtoll( hexLen.c_str(), nullptr, 16 );
+                std::string content(len, ' ');
+                inStream.read(&content[0], len);
+                if (inStream.fail())
+                    throw ParseError("error during reading the stream");
+                std::getline(inStream, newline, '\n');
+                if (mime.length() > 0)
+                {
+                    _mimeTypes.push_back(mime);
+                    _content.push_back(content);
+                }
             }
         }
     }
