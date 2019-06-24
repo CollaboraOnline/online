@@ -37,6 +37,9 @@ L.ClipboardContainer = L.Layer.extend({
 		// some other scenarios.
 		this._lastInputType = '';
 
+		// Capability check.
+		this._hasInputType = window.InputEvent && ('inputType' in window.InputEvent.prototype);
+
 		// The "normal" order of composition events is:
 		// - compositionstart
 		// - compositionupdate
@@ -320,7 +323,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._lastInputType = ev.inputType;
 
 		if (!('inputType' in ev)) {
-			// Legacy MSIE or Android WebView, just send the contents of the
+			// Legacy MSIE, Android WebView or FFX < 66, just send the contents of the
 			// container and clear it.
 			if (this._isComposing) {
 				this._sendCompositionEvent('input', this._textArea.textContent);
@@ -508,21 +511,25 @@ L.ClipboardContainer = L.Layer.extend({
 
 	// Empties the textarea / contenteditable element.
 	_emptyArea: function _emptyArea() {
-		if (this._lastInputType) {
+		if (this._hasInputType) {
 			// Add two non-breaking spaces to the textarea/contenteditable,
 			// but only after we can be sure that this browser doesn't
 			// use legacy 'input' events, i.e. when the last 'input' event
 			// did have a 'inputType' property.
-			// FIXME: How to *reliably* check support for InputEvents in the browser
-			// before receiving the first one???
 			//
 			// Note: 0xA0 is 160, which is the character code for non-breaking space:
 			// https://www.fileformat.info/info/unicode/char/00a0/index.htm
 			// Using normal spaces would make FFX/Gecko collapse them into an
 			// empty string.
-			this._textArea.innerText = '\xa0\xa0';
+			var textNode;
+			if (this._legacyArea) {
+				this._textArea.value = '\xa0\xa0';
+				textNode = this._textArea;
+			} else {
+				this._textArea.innerText = '\xa0\xa0';
+				textNode = this._textArea.childNodes[0];
+			}
 
-			var textNode = this._textArea.childNodes[0];
 			var range = document.createRange();
 			range.setStart(textNode , 1);
 			range.setEnd(textNode , 1);
@@ -533,10 +540,10 @@ L.ClipboardContainer = L.Layer.extend({
 			range.detach();
 
 		} else if (this._legacyArea) {
+			this._textArea.value = '';
+		} else {
 			this._textArea.innerText = '';
 			this._textArea.innerHTML = '';
-		} else {
-			this._textArea.value = '';
 		}
 		// 		L.DomUtil.empty(this._textArea);
 	},
