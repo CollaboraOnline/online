@@ -1103,29 +1103,28 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         for (header = 0; header < payload->size();)
             if (payload->data()[header++] == '\n')
                 break;
-        if (header < payload->size())
+        bool empty = header >= payload->size();
+        for (auto it : _clipSockets)
         {
-            for (auto it : _clipSockets)
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: " << (empty ? 0 : (payload->size() - header)) << "\r\n"
+                << "Content-Type: application/octet-stream\r\n"
+                << "X-Content-Type-Options: nosniff\r\n"
+                << "\r\n";
+            auto socket = it.lock();
+            if (!empty)
             {
-                std::ostringstream oss;
-                oss << "HTTP/1.1 200 OK\r\n"
-                    << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                    << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                    << "Content-Length: " << (payload->size() - header) << "\r\n"
-                    << "Content-Type: application/octet-stream\r\n"
-                    << "X-Content-Type-Options: nosniff\r\n"
-                    << "\r\n";
                 oss.write(&payload->data()[header], payload->size() - header);
-                auto socket = it.lock();
                 socket->setSocketBufferSize(std::min(payload->size() + 256,
                                                      size_t(Socket::MaximumSendBufferSize)));
-                socket->send(oss.str());
-                socket->shutdown();
-                LOG_INF("Queued clipboard content for send.");
             }
+            socket->send(oss.str());
+            socket->shutdown();
+            LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
         }
-        else
-            LOG_DBG("Unusual: requested clipboard content, but have none");
         _clipSockets.clear();
         return true;
     }

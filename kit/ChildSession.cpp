@@ -998,6 +998,8 @@ bool ChildSession::setClipboard(const char* buffer, int length, const std::vecto
             pInMimeTypes[i] = data._mimeTypes[i].c_str();
         }
 
+        getLOKitDocument()->setView(_viewId);
+
         if (!getLOKitDocument()->setClipboard(nInCount, pInMimeTypes, pInSizes, pInStreams))
             LOG_ERR("set clipboard returned failure");
         else

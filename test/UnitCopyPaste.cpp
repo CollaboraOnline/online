@@ -57,7 +57,8 @@ public:
         return std::string(std::istreambuf_iterator<char>(responseStream), {});
     }
 
-    std::shared_ptr<ClipboardData> getClipboard(const std::string &clipURIstr)
+    std::shared_ptr<ClipboardData> getClipboard(const std::string &clipURIstr,
+                                                HTTPResponse::HTTPStatus expected)
     {
         std::cerr << "connect to " << clipURIstr << std::endl;
         Poco::URI clipURI(clipURIstr);
@@ -67,22 +68,37 @@ public:
         std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
         session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
         session->sendRequest(request);
-        std::istream& responseStream = session->receiveResponse(response);
+        std::cerr << "sent request.\n";
 
-        if (response.getStatus() != HTTPResponse::HTTP_OK)
-        {
-            std::cerr << "Error response for clipboard " << response.getReason();
+        try {
+            std::istream& responseStream = session->receiveResponse(response);
+
+            if (response.getStatus() != expected)
+            {
+                std::cerr << "Error: response for clipboard status mismatch " <<
+                    response.getStatus() << " != " << expected << " reason: " << response.getReason();
+                exitTest(TestResult::Failed);
+                return std::shared_ptr<ClipboardData>();
+            }
+
+            if (response.getContentType() != "application/octet-stream")
+            {
+                std::cerr << "Error: mismatching content type for clipboard: " << response.getContentType() << "\n";
+                exitTest(TestResult::Failed);
+                return std::shared_ptr<ClipboardData>();
+            }
+
+            auto clipboard = std::make_shared<ClipboardData>();
+            clipboard->read(responseStream);
+            clipboard->dumpState(std::cerr);
+
+            std::cerr << "got response\n";
+            return clipboard;
+        } catch (Poco::Exception &e) {
+            std::cerr << "Poco exception: " << e.message() << "\n";
             exitTest(TestResult::Failed);
             return std::shared_ptr<ClipboardData>();
         }
-
-        CPPUNIT_ASSERT_EQUAL(std::string("application/octet-stream"), response.getContentType());
-
-        auto clipboard = std::make_shared<ClipboardData>();
-        clipboard->read(responseStream);
-        clipboard->dumpState(std::cerr);
-
-        return clipboard;
     }
 
     bool assertClipboard(const std::shared_ptr<ClipboardData> &clipboard,
@@ -91,14 +107,19 @@ public:
         bool failed = false;
 
         std::string value;
+
+        // allow empty clipboards
+        if (clipboard && mimeType =="" && clipboard->size() == 0)
+            return true;
+
         if (!clipboard || !clipboard->findType(mimeType, value))
         {
-            std::cerr << "missing clipboard or missing clipboard mime type '" << mimeType << "'\n";
+            std::cerr << "Error: missing clipboard or missing clipboard mime type '" << mimeType << "'\n";
             failed = true;
         }
         else if (value != content)
         {
-            std::cerr << "clipboard content mismatch " << value.length() << " vs. " << content.length() << "\n";
+            std::cerr << "Error: clipboard content mismatch " << value.length() << " vs. " << content.length() << "\n";
             sleep (1); // output settle.
             Util::dumpHex(std::cerr, "\tclipboard:\n", "", value);
             Util::dumpHex(std::cerr, "\tshould be:\n", "", content);
@@ -114,13 +135,18 @@ public:
 
     bool fetchClipboardAssert(const std::string &clipURI,
                               const std::string &mimeType,
-                              const std::string &content)
+                              const std::string &content,
+                              HTTPResponse::HTTPStatus expected = HTTPResponse::HTTP_OK)
     {
         std::shared_ptr<ClipboardData> clipboard;
         try {
-            clipboard = getClipboard(clipURI);
+            clipboard = getClipboard(clipURI, expected);
         } catch (ParseError &err) {
-            std::cerr << "parse error " << err.toString() << std::endl;
+            std::cerr << "Error: parse error " << err.toString() << std::endl;
+            exitTest(TestResult::Failed);
+            return false;
+        } catch (...) {
+            std::cerr << "Error: unknown exception during read / parse\n";
             exitTest(TestResult::Failed);
             return false;
         }
@@ -151,14 +177,14 @@ public:
         try {
             session->receiveResponse(response);
         } catch (NoMessageException &) {
-            std::cerr << "No response from setting clipboard.\n";
+            std::cerr << "Error: No response from setting clipboard.\n";
             exitTest(TestResult::Failed);
             return false;
         }
 
         if (response.getStatus() != expected)
         {
-            std::cerr << "Error response for clipboard "<< response.getStatus() <<
+            std::cerr << "Error: response for clipboard "<< response.getStatus() <<
                 " != expected " << expected << "\n";
             exitTest(TestResult::Failed);
             return false;
@@ -167,9 +193,35 @@ public:
         return true;
     }
 
+    std::string getSessionClipboardURI(size_t session)
+    {
+            std::shared_ptr<DocumentBroker> broker;
+            std::shared_ptr<ClientSession> clientSession;
+
+            std::vector<std::shared_ptr<DocumentBroker>> brokers = LOOLWSD::getBrokersTestOnly();
+            assert(brokers.size() > 0);
+            broker = brokers[0];
+            auto sessions = broker->getSessionsTestOnlyUnsafe();
+            assert(sessions.size() > 0 && session < sessions.size());
+            clientSession = sessions[session];
+
+            return clientSession->getClipboardURI(false); // nominally thread unsafe
+    }
+
+    std::string buildClipboardText(const std::string &text)
+    {
+        std::stringstream clipData;
+        clipData << "text/plain;charset=utf-8\n"
+                 << std::hex << text.length() << "\n"
+                 << text << "\n";
+        return clipData.str();
+    }
+
     void invokeTest() override
     {
         std::string testname = "copypaste";
+
+        try {
 
         // Load a doc with the cursor saved at a top row.
         std::string documentPath, documentURL;
@@ -177,35 +229,30 @@ public:
         std::shared_ptr<LOOLWebSocket> socket =
             helpers::loadDocAndGetSocket(Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
-        std::shared_ptr<DocumentBroker> broker;
-        std::shared_ptr<ClientSession> clientSession;
-        {
-            std::vector<std::shared_ptr<DocumentBroker>> brokers = LOOLWSD::getBrokersTestOnly();
-            assert(brokers.size() > 0);
-            broker = brokers[0];
-            auto sessions = broker->getSessionsTestOnlyUnsafe();
-            assert(sessions.size() > 0);
-            clientSession = sessions[0];
-        }
+        std::string clipURI = getSessionClipboardURI(0);
 
-        std::string clipURI = clientSession->getClipboardURI(false); // nominally thread unsafe
-
-#if 0
-        // In an empty cell
-        helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
-        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", ""))
+        std::cerr << "Fetch empty clipboard content\n";
+        if (!fetchClipboardAssert(clipURI, "", ""))
             return;
-#endif
 
         // Check existing content
+        std::cerr << "Fetch pristine content\n";
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
         helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
         std::string oneColumn = "2\n3\n5\n";
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", oneColumn))
             return;
 
-        // Inject some content
+        std::cerr << "Open second connection\n";
+        std::shared_ptr<LOOLWebSocket> socket2 =
+            helpers::loadDocAndGetSocket(Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+        std::string clipURI2 = getSessionClipboardURI(1);
+
+        std::cerr << "Check no clipboard content\n";
+        if (!fetchClipboardAssert(clipURI2, "", ""))
+            return;
+
+        std::cerr << "Inject content\n";
         helpers::sendTextFrame(socket, "uno .uno:Deselect", testname);
         std::string text = "This is some content?&*/\\!!";
         helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
@@ -216,29 +263,44 @@ public:
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + text + "\n"))
             return;
 
-        // Now try pushing some new clipboard content ...
-        std::string newcontent = "1234567890";
-        std::stringstream clipData;
-        clipData << "text/plain;charset=utf-8\n"
-                 << std::hex << newcontent.length() << "\n"
-                 << newcontent << "\n";
+        std::cerr << "re-check no clipboard content\n";
+        if (!fetchClipboardAssert(clipURI2, "", ""))
+            return;
 
+        std::cerr << "Push new clipboard content\n";
+        std::string newcontent = "1234567890";
         helpers::sendTextFrame(socket, "uno .uno:Deselect", testname);
-        if (!setClipboard(clipURI, clipData.str(), HTTPResponse::HTTP_OK))
+        if (!setClipboard(clipURI, buildClipboardText(newcontent), HTTPResponse::HTTP_OK))
             return;
         helpers::sendTextFrame(socket, "uno .uno:Paste", testname);
 
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", newcontent))
             return;
 
-        // No how do we look in total ?
+        std::cerr << "Check the result.\n";
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
         helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + newcontent + "\n"))
             return;
 
+        std::cerr << "Setup clipboards:\n";
+        if (!setClipboard(clipURI2, buildClipboardText("kippers"), HTTPResponse::HTTP_OK))
+            return;
+        if (!setClipboard(clipURI, buildClipboardText("herring"), HTTPResponse::HTTP_OK))
+            return;
+        std::cerr << "Fetch clipboards:\n";
+        if (!fetchClipboardAssert(clipURI2, "text/plain;charset=utf-8", "kippers"))
+            return;
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", "herring"))
+            return;
+
         std::cerr << "Clipboard tests succeeded" << std::endl;
         exitTest(TestResult::Ok);
+
+        } catch (...) {
+            std::cerr << "Error: exception failure during tests" << std::endl;
+            exitTest(TestResult::Failed);
+        }
     }
 };
 
