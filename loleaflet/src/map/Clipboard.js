@@ -150,7 +150,12 @@ L.Clipboard = L.Class.extend({
 			request.open('POST', id);
 			request.send(formData);
 
-			this._map._socket.sendMessage('uno .uno:Paste');
+			var that = this;
+			request.onreadystatechange = function() {
+				if (request.status == 200) {
+					that._map._socket.sendMessage('uno .uno:Paste');
+				}
+			}
 
 			this._pasteFallback = null;
 		} else {
