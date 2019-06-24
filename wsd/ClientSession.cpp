@@ -153,17 +153,31 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     {
         // FIXME: manage memory more efficiently.
         LOG_TRC("Session [" << getId() << "] sending setclipboard");
-        docBroker->forwardToChild(getId(), "setclipboard\n" + *data);
+        if (data.get())
+        {
+            docBroker->forwardToChild(getId(), "setclipboard\n" + *data);
 
-        // FIXME: work harder for error detection ?
-        std::ostringstream oss;
-        oss << "HTTP/1.1 200 OK\r\n"
-            << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-            << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-            << "Content-Length: 0\r\n"
-            << "\r\n";
-        socket->send(oss.str());
-        socket->shutdown();
+            // FIXME: work harder for error detection ?
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n";
+            socket->send(oss.str());
+            socket->shutdown();
+        }
+        else
+        {
+            std::ostringstream oss;
+            oss << "HTTP/1.1 400 Bad Request\r\n"
+                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n";
+            socket->send(oss.str());
+            socket->shutdown();
+        }
     }
 }
 
