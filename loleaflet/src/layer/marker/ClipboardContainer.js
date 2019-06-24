@@ -300,6 +300,19 @@ L.ClipboardContainer = L.Layer.extend({
 		L.DomUtil.setPosition(this._container, pos);
 	},
 
+	// Return the content of _lastRanges as a string.
+	_lastRangesString: function() {
+		if (
+			this._lastRanges[0] &&
+			'startOffset' in this._lastRanges[0] &&
+			'endOffset' in this._lastRanges[0]
+		) {
+			return this._lastRanges[0].startOffset + '-' + this._lastRanges[0].endOffset;
+		}
+
+		return undefined;
+	},
+
 	// Generic handle attached to most text area events, just for debugging purposes.
 	_onEvent: function _onEvent(ev) {
 		var msg = {
@@ -310,14 +323,7 @@ L.ClipboardContainer = L.Layer.extend({
 			isComposing: ev.isComposing
 		};
 
-		if (
-			this._lastRanges[0] &&
-			'startOffset' in this._lastRanges[0] &&
-			'endOffset' in this._lastRanges[0]
-		) {
-			msg.lastRanges =
-				this._lastRanges[0].startOffset + '-' + this._lastRanges[0].endOffset;
-		}
+		msg.lastRanges = this._lastRangesString();
 
 		if (ev.type === 'input') {
 			msg.inputType = ev.inputType;
@@ -583,7 +589,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// for charCode=8 is fired, and handled by the Map.Keyboard.js.
 		// NOTE: Ideally this should never happen, as the textarea/contenteditable
 		// is initialized with two non-breaking spaces when "emptied".
-		if (this._map.getWinId() === 0 && !this._hasInputType) {
+		if (!this._hasInputType || (this._lastRangesString() === '0-0')) {
 			if (ev.inputType === 'deleteContentBackward') {
 				this._sendKeyEvent(8, 1283);
 			} else if (ev.inputType === 'deleteContentForward') {
