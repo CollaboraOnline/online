@@ -2,7 +2,7 @@
 /*
  * L.TileLayer is used for standard xyz-numbered tile layers.
  */
-/* global $ _ Uint8ClampedArray Uint8Array */
+/* global $ _ vex Uint8ClampedArray Uint8Array */
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
@@ -688,6 +688,46 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_onDownloadOnLargeCopyPaste: function () {
+		if (!this._downloadProgress) {
+			this._warnFirstLargeCopyPaste();
+			this._downloadProgress = L.control.downloadProgress();
+		}
+		if (!this._downloadProgress.isVisible()) {
+			this._downloadProgress.addTo(this._map);
+			this._downloadProgress.show();
+		}
+		else {
+			this._warnLargeCopyPasteAlreadyStarted();
+			//this._downloadProgress._onComplete();
+		}
+	},
+
+	_warnFirstLargeCopyPaste: function () {
+		var self = this;
+		vex.dialog.alert({
+			message: _('<p>When copying larger pieces of your document, to share them with other applications ' +
+				       'on your device for security reasons, please select the "Start download" button below. ' +
+				       'A progress bar will show you the download advance. When it is complete select ' +
+				       'the "Confirm copy to clipboard" button in order to copy the downloaded data to your clipboard. ' +
+				       'At any time you can cancel the download by selecting the top right "X" button.</p>'),
+			callback: function () {
+				self._map.focus();
+			}
+		});
+	},
+
+	_warnLargeCopyPasteAlreadyStarted: function () {
+		var self = this;
+		vex.dialog.alert({
+			message: _('<p>A download  due to a large copy/paste operation has already started. ' +
+				       'Please, wait for the current download to complete before starting a new one</p>'),
+			callback: function () {
+				self._map.focus();
+			}
+		});
+	},
+
 	_onGraphicSelectionMsg: function (textMsg) {
 		if (textMsg.match('EMPTY')) {
 			this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
@@ -1318,6 +1358,8 @@ L.TileLayer = L.GridLayer.extend({
 	_onTextSelectionContentMsg: function (textMsg) {
 		this._selectionTextContent = textMsg.substr(22);
 		this._map._clipboardContainer.setValue(this._selectionTextContent);
+		// for test only
+		//this._onDownloadOnLargeCopyPaste();
 	},
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {

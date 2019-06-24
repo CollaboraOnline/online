@@ -328,6 +328,7 @@ pot:
 		src/control/Control.AlertDialog.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
+		src/control/Control.DownloadProgress.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.Tabs.js \

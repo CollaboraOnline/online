@@ -342,6 +342,13 @@ var deps = {
 		desc: 'Document Repair'
 	},
 
+	ControlDownloadProgress: {
+		src: ['control/Control.js',
+			'control/Control.DownloadProgress.js'],
+		heading: 'Controls',
+		desc: 'Download Progress'
+	},
+
 	ControlContextmenu: {
 		src: ['control/Control.js',
 		      'control/Control.ContextMenu.js'],

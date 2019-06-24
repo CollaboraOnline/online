@@ -714,6 +714,41 @@ input.clipboard {
 	margin: 0 auto;
 	}
 
+.leaflet-paste-progress {
+	background: #ebebeb;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	border-radius: 4px;
+	height: 14px;
+	margin: 5px 0 0;
+	}
+
+.leaflet-paste-progress > span {
+	position: relative;
+	float: left;
+	margin: 0 -1px;
+	height: 100%;
+	text-align: right;
+	background: #5c3dcc;
+	border: 1px solid;
+	border-color: #4422bf #5435c4;
+	border-radius: 4px;
+	background-image: -webkit-linear-gradient(top, #745dc6, #6549cc 70%, #5c3dcc);
+	background-image: -moz-linear-gradient(top, #745dc6, #6549cc 70%, #5c3dcc);
+	background-image: -o-linear-gradient(top, #745dc6, #6549cc 70%, #5c3dcc);
+	background-image: linear-gradient(to bottom, #745dc6, #6549cc 70%, #5c3dcc);
+	-webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+	}
+
+.leaflet-paste-progress > span > span {
+	padding: 0 4px;
+	font-size: 10px;
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.4);
+	}
+
 .leaflet-progress {
 	background: #ebebeb;
 	border-left: 1px solid transparent;
