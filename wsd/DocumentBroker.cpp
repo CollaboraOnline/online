@@ -347,6 +347,7 @@ void DocumentBroker::pollThread()
             LOG_TRC("Rotating clipboard keys");
             for (auto& it : _sessions)
                 it.second->rotateClipboardKey(true);
+            lastClipboardHashUpdateTime = now;
         }
 
         if (false)
