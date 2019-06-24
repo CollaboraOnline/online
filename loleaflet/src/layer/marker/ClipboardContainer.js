@@ -80,7 +80,16 @@ L.ClipboardContainer = L.Layer.extend({
 			this.update();
 		}
 
+		this._emptyArea();
+
 		L.DomEvent.on(this._textArea, 'focus blur', this._onFocusBlur, this);
+
+		// Do not wait for a 'focus' event to attach events if the
+		// textarea/contenteditable is already focused (due to the autofocus
+		// HTML attribute, the browser focusing it on DOM creation, or whatever)
+		if (document.activeElement === this._textArea) {
+			this._onFocusBlur({type: 'focus'});
+		}
 
 		this._map.on('mousedown touchstart', this._abortComposition, this);
 	},
@@ -211,9 +220,11 @@ L.ClipboardContainer = L.Layer.extend({
 			this._textArea.setAttribute('autocapitalize', 'off');
 			this._textArea.setAttribute('autocomplete', 'off');
 			this._textArea.setAttribute('spellcheck', 'false');
+			this._textArea.setAttribute('autofocus', 'true');
 		} else {
 			this._textArea = L.DomUtil.create('div', 'clipboard', this._container);
 			this._textArea.setAttribute('contenteditable', 'true');
+			this._textArea.setAttribute('autofocus', 'true');
 		}
 
 		this._setupStyles(false);
@@ -310,9 +321,9 @@ L.ClipboardContainer = L.Layer.extend({
 		L.Log.log(payload.toString(), 'INPUT');
 
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
-		// 		if (this._map._docLayer && this._map._docLayer._debug) {
+		// if (this._map._docLayer && this._map._docLayer._debug) {
 		console.log2(+new Date()+ ' %cINPUT%c: '+ type + '%c', 'background:#bfb;color:black', 'color:green', 'color:black', JSON.stringify(payload));
-		// 		}
+		// }
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
@@ -521,23 +532,23 @@ L.ClipboardContainer = L.Layer.extend({
 			// https://www.fileformat.info/info/unicode/char/00a0/index.htm
 			// Using normal spaces would make FFX/Gecko collapse them into an
 			// empty string.
-			var textNode;
 			if (this._legacyArea) {
 				this._textArea.value = '\xa0\xa0';
-				textNode = this._textArea;
+				/// TODO: Check that this selection method works with MSIE11
+				///
+				this._textArea.setSelectionRange(1, 1);
 			} else {
 				this._textArea.innerText = '\xa0\xa0';
-				textNode = this._textArea.childNodes[0];
+				var textNode = this._textArea.childNodes[0];
+				var range = document.createRange();
+				range.setStart(textNode , 1);
+				range.setEnd(textNode , 1);
+				range.collapse(true);
+				var sel = window.getSelection();
+				sel.removeAllRanges();
+				sel.addRange(range);
+				range.detach();
 			}
-
-			var range = document.createRange();
-			range.setStart(textNode , 1);
-			range.setEnd(textNode , 1);
-			range.collapse(true);
-			var sel = window.getSelection();
-			sel.removeAllRanges();
-			sel.addRange(range);
-			range.detach();
 
 		} else if (this._legacyArea) {
 			this._textArea.value = '';
@@ -545,7 +556,6 @@ L.ClipboardContainer = L.Layer.extend({
 			this._textArea.innerText = '';
 			this._textArea.innerHTML = '';
 		}
-		// 		L.DomUtil.empty(this._textArea);
 	},
 
 	// The getTargetRanges() method usually returns an empty array,
@@ -558,10 +568,6 @@ L.ClipboardContainer = L.Layer.extend({
 	// only in some configurations.
 	_onBeforeInput: function _onBeforeInput(ev) {
 		this._lastRanges = ev.getTargetRanges();
-		// 		console.log('onBeforeInput range: ', ev.inputType, ranges,
-		// 					ranges[0] && ranges[0].startOffset,
-		// 					ranges[0] && ranges[0].endOffset);
-
 
 		// When trying to delete (i.e. backspace) on an empty textarea, the input event
 		// won't be fired afterwards. Handle backspace here instead.
@@ -571,9 +577,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// for charCode=8 is fired, and handled by the Map.Keyboard.js.
 		// NOTE: Ideally this should never happen, as the textarea/contenteditable
 		// is initialized with two non-breaking spaces when "emptied".
-		if ((this._map.getWinId() === 0 && this._textArea.textContent.length === 0)
-		/* || ev.findMyTextContentAre.length == 0 */
-		) {
+		if ((this._map.getWinId() === 0 && !this._hasInputType)) {
 			if (ev.inputType === 'deleteContentBackward') {
 				this._sendKeyEvent(8, 1283);
 			} else if (ev.inputType === 'deleteContentForward') {
@@ -599,9 +603,7 @@ L.ClipboardContainer = L.Layer.extend({
 			this._queuedInput = text;
 		}
 
-
-
-		console.log('_queueInput', text, ' queue is now:', {text: this._queuedInput});
+		//console.log('_queueInput', text, ' queue is now:', {text: this._queuedInput});
 		this._queueTimer = setTimeout(this._sendQueued.bind(this), 50);
 	},
 
@@ -612,8 +614,7 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	_sendQueued: function _sendQueued() {
-		console.log('Sending to lowsd (queued): ', {text: this._queuedInput});
-		// 		this._map._socket.sendMessage('paste mimetype=text/plain\n' + this._queuedInput);
+		// console.log('Sending to lowsd (queued): ', {text: this._queuedInput});
 		this._sendText(this._queuedInput);
 		this._clearQueued();
 	},
@@ -638,8 +639,6 @@ L.ClipboardContainer = L.Layer.extend({
 		if (L.Browser.chrome || (L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit)) {
 			if (this._lastInputType === 'insertCompositionText') {
 				this._queueInput(ev.data);
-				// 				this._IMEPopup.remove();
-				// 				this._IMEPopup.setContent('');
 			} else {
 				// Ended a composition without user input, abort.
 				// This happens on Chrome+GBoard when autocompleting a word
@@ -674,7 +673,7 @@ L.ClipboardContainer = L.Layer.extend({
 	_abortComposition: function _abortComposition() {
 		if (this._isComposing) {
 			this._sendCompositionEvent('input', '');
-			// 			this._sendCompositionEvent('end', '');
+			// this._sendCompositionEvent('end', '');
 			this._isComposing = false;
 		}
 		this._emptyArea();
