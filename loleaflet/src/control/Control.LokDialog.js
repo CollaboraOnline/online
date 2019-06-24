@@ -742,8 +742,11 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogClose: function(dialogId, notifyBackend) {
+		this._map.setWinId(0);
+
 		if (window.ThisIsTheiOSApp)
 			w2ui['editbar'].enable('closemobile');
+
 		if (notifyBackend)
 			this._sendCloseWindow(dialogId);
 		$('#' + this._toStrId(dialogId)).remove();
