@@ -691,7 +691,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onDownloadOnLargeCopyPaste: function () {
 		if (!this._downloadProgress) {
-			this._warnFirstLargeCopy();
+			this._warnFirstLargeCopyPaste();
 			this._downloadProgress = L.control.downloadProgress();
 		}
 		if (!this._downloadProgress.isVisible()) {
@@ -704,22 +704,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_onUploadOnLargeCopyPaste: function () {
-		if (!this._uploadProgress) {
-			this._warnFirstLargePaste();
-			this._uploadProgress = L.control.uploadProgress();
-		}
-		if (!this._uploadProgress.isVisible()) {
-			this._uploadProgress.addTo(this._map);
-			this._uploadProgress.show();
-		}
-		else {
-			this._warnLargeCopyPasteAlreadyStarted();
-			//this._uploadProgress._onComplete();
-		}
-	},
-
-	_warnFirstLargeCopy: function () {
+	_warnFirstLargeCopyPaste: function () {
 		var self = this;
 		vex.dialog.alert({
 			message: _('<p>When copying larger pieces of your document, to share them with other applications ' +
@@ -736,21 +721,8 @@ L.TileLayer = L.GridLayer.extend({
 	_warnLargeCopyPasteAlreadyStarted: function () {
 		var self = this;
 		vex.dialog.alert({
-			message: _('<p>A download or upload  due to a large copy/paste operation has already started. ' +
-				       'Please, wait for the current operation to complete before starting a new one</p>'),
-			callback: function () {
-				self._map.focus();
-			}
-		});
-	},
-
-	_warnFirstLargePaste: function () {
-		var self = this;
-		vex.dialog.alert({
-			message: _('<p>When pasting larger pieces of a document from another application ' +
-				       'on your device for security reasons, please select the "Start upload" button below. ' +
-				       'A progress bar will show you the upload advance. ' +
-				       'At any time you can cancel the upload by selecting the top right "X" button.</p>'),
+			message: _('<p>A download  due to a large copy/paste operation has already started. ' +
+				       'Please, wait for the current download to complete before starting a new one</p>'),
 			callback: function () {
 				self._map.focus();
 			}
