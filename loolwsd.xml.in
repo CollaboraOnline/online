@@ -80,6 +80,8 @@
         <host desc="The IPv4 loopback (localhost) address.">127\.0\.0\.1</host>
         <host desc="Ditto, but as IPv4-mapped IPv6 address">::ffff:127\.0\.0\.1</host>
         <host desc="The IPv6 loopback (localhost) address.">::1</host>
+        <host desc="The IPv4 private 172.17.0.0/16 subnet (Docker).">172\.17\.[0-9]{1,3}\.[0-9]{1,3}</host>
+        <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:172\.17\.[0-9]{1,3}\.[0-9]{1,3}</host>
       </post_allow>
       <frame_ancestors desc="Specify who is allowed to embed the LO Online iframe (loolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
     </net>
