@@ -3,7 +3,7 @@
  * L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
-/* global _ */
+/* global _ vex */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -227,6 +227,46 @@ L.Clipboard = L.Class.extend({
 		this.setSelection(text);
 
 		//TODO: handle complex selection download.
+	},
+
+	_onDownloadOnLargeCopyPaste: function () {
+		if (!this._downloadProgress) {
+			this._warnFirstLargeCopyPaste();
+			this._downloadProgress = L.control.downloadProgress();
+		}
+		if (!this._downloadProgress.isVisible()) {
+			this._downloadProgress.addTo(this._map);
+			this._downloadProgress.show();
+		}
+		else {
+			this._warnLargeCopyPasteAlreadyStarted();
+			//this._downloadProgress._onComplete();
+		}
+	},
+
+	_warnFirstLargeCopyPaste: function () {
+		var self = this;
+		vex.dialog.alert({
+			message: _('<p>When copying larger pieces of your document, to share them with other applications ' +
+				       'on your device for security reasons, please select the "Start download" button below. ' +
+				       'A progress bar will show you the download advance. When it is complete select ' +
+				       'the "Confirm copy to clipboard" button in order to copy the downloaded data to your clipboard. ' +
+				       'At any time you can cancel the download by selecting the top right "X" button.</p>'),
+			callback: function () {
+				self._map.focus();
+			}
+		});
+	},
+
+	_warnLargeCopyPasteAlreadyStarted: function () {
+		var self = this;
+		vex.dialog.alert({
+			message: _('<p>A download  due to a large copy/paste operation has already started. ' +
+				       'Please, wait for the current download to complete before starting a new one</p>'),
+			callback: function () {
+				self._map.focus();
+			}
+		});
 	},
 
 });
