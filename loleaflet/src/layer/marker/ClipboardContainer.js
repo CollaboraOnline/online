@@ -320,7 +320,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._lastInputType = ev.inputType;
 
 		if (!('inputType' in ev)) {
-			// Legacy MSIE or Android WebView, just send the contents of the
+			// Legacy MSIE, Android WebView or FFX < 66, just send the contents of the
 			// container and clear it.
 			if (this._isComposing) {
 				this._sendCompositionEvent('input', this._textArea.textContent);
@@ -533,10 +533,10 @@ L.ClipboardContainer = L.Layer.extend({
 			range.detach();
 
 		} else if (this._legacyArea) {
+			this._textArea.value = '';
+		} else {
 			this._textArea.innerText = '';
 			this._textArea.innerHTML = '';
-		} else {
-			this._textArea.value = '';
 		}
 		// 		L.DomUtil.empty(this._textArea);
 	},
