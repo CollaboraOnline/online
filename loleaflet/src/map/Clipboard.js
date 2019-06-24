@@ -3,13 +3,13 @@
  * L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
-/* global */
+/* global _ */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
 // We keep track of the current selection content if it is simple
 // So we can do synchronous copy/paste in the callback if possible.
-L.Clipboard = {
+L.Clipboard = L.Class.extend({
 	initialize: function(map) {
 		this._map = map;
 		this._selectionContent = '';
@@ -211,7 +211,7 @@ L.Clipboard = {
 		//TODO: handle complex selection download.
 	},
 
-};
+});
 
 L.clipboard = function(map) {
 	return new L.Clipboard(map);
