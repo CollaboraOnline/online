@@ -109,7 +109,12 @@ cp -a online-branding/online-theme/* $INSTDIR/opt/collaboraoffice6.0/share/theme
 # FIXME branding-CODE.css ??
 cp -a online-branding/branding.css $INSTDIR/usr/share/loolwsd/loleaflet/dist/branding.css
 cp -a online-branding/branding-CODE.js $INSTDIR/usr/share/loolwsd/loleaflet/dist/branding.js
-cp -a online-branding/toolbar-bg-CODE-path-minified.svg $INSTDIR/usr/share/loolwsd/loleaflet/dist/images/toolbar-bg.svg
+cp -a online-branding/toolbar-bg-CODE-logo.svg $INSTDIR/usr/share/loolwsd/loleaflet/dist/images/toolbar-bg.svg
+for i in `grep -o images/.*svg online-branding/branding.css | sed -e "s/images\///" | grep -v toolbar-bg.svg`
+do
+    cp -a online-branding/$i $INSTDIR/usr/share/loolwsd/loleaflet/dist/images/
+done
+
 
 
 # Create new docker image
