@@ -79,12 +79,21 @@ L.Clipboard = L.Class.extend({
 	_readContentSync: function(dataTransfer) {
 		var content = [];
 		var types = dataTransfer.types;
-		for (var t = 0; t < types.length; ++t) {
-			var data = dataTransfer.getData(types[t]);
-			content.push(types[t] + '\n');
+		var data = null;
+		if (types == null) { // IE
+			data = dataTransfer.getData('text');
+			content.push('text/plain\n');
 			content.push(data.length.toString(16) + '\n');
 			content.push(data);
 			content.push('\n');
+		} else {
+			for (var t = 0; t < types.length; ++t) {
+				data = dataTransfer.getData(types[t]);
+				content.push((types[t] == 'text' ? 'text/plain' : types[t]) + '\n');
+				content.push(data.length.toString(16) + '\n');
+				content.push(data);
+				content.push('\n');
+			}
 		}
 		return new Blob(content);
 	},
@@ -95,7 +104,12 @@ L.Clipboard = L.Class.extend({
 		this._startProgress();
 		this._downloadProgress._onStartDownload();
 
-		var pasteHtml = dataTransfer.getData('text/html');
+		var pasteHtml = null;
+		if (dataTransfer.types == null) { // IE
+			pasteHtml = dataTransfer.getData('text');
+		} else {
+			pasteHtml = dataTransfer.getData('text/html');
+		}
 		var meta = this._getMetaOrigin(pasteHtml);
 		var id = this._map.options.webserver + this._map.options.serviceRoot +
 		    '/clipboard?WOPISrc='+ encodeURIComponent(this._map.options.doc) +
