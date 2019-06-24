@@ -932,7 +932,7 @@ bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const st
     bool success = false;
     getLOKitDocument()->setView(_viewId);
 
-    success = getLOKitDocument()->getSelection(pMimeTypes, &nOutCount, &pOutMimeTypes,
+    success = getLOKitDocument()->getClipboard(pMimeTypes, &nOutCount, &pOutMimeTypes,
                                                &pOutSizes, &pOutStreams);
 
     if (!success || nOutCount == 0)

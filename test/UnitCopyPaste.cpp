@@ -190,9 +190,13 @@ public:
 
         std::string clipURI = clientSession->getClipboardURI(false); // nominally thread unsafe
 
+#if 0
         // In an empty cell
+        helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", ""))
             return;
+#endif
 
         // Check existing content
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
@@ -202,14 +206,14 @@ public:
             return;
 
         // Inject some content
+        helpers::sendTextFrame(socket, "uno .uno:Deselect", testname);
         std::string text = "This is some content?&*/\\!!";
         helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
         helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
 
-        std::string existing = "\t\t\n" "\t\t\n" "\t\t\n" "\t\t2\n\t\t3\n\t\t5\n";
-
-        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", text + existing))
+        std::string existing = "2\t\n3\t\n5\t";
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + text + "\n"))
             return;
 
         // Now try pushing some new clipboard content ...
@@ -219,11 +223,18 @@ public:
                  << std::hex << newcontent.length() << "\n"
                  << newcontent << "\n";
 
+        helpers::sendTextFrame(socket, "uno .uno:Deselect", testname);
         if (!setClipboard(clipURI, clipData.str(), HTTPResponse::HTTP_OK))
             return;
         helpers::sendTextFrame(socket, "uno .uno:Paste", testname);
 
-        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", newcontent + existing))
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", newcontent))
+            return;
+
+        // No how do we look in total ?
+        helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + newcontent + "\n"))
             return;
 
         std::cerr << "Clipboard tests succeeded" << std::endl;
