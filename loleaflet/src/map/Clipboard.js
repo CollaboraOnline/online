@@ -81,8 +81,8 @@ L.Clipboard = L.Class.extend({
 		var types = dataTransfer.types;
 		for (var t = 0; t < types.length; ++t) {
 			var data = dataTransfer.getData(types[t]);
-			content.push('mimetype=' + types[t] + '\n');
-			content.push('length=' + data.length.toString(16) + '\n');
+			content.push(types[t] + '\n');
+			content.push(data.length.toString(16) + '\n');
 			content.push(data);
 			content.push('\n');
 		}

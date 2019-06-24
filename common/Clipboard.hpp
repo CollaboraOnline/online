@@ -35,10 +35,9 @@ struct ClipboardData
             uint64_t len = strtoll( hexLen.c_str(), nullptr, 16 );
             std::string content(len, ' ');
             inStream.read(&content[0], len);
+            if (inStream.fail())
+                throw ParseError("error during reading the stream with length: " + hexLen);
             std::getline(inStream, newline, '\n');
-            if (newline.length() > 0)
-                throw ParseError("trailing stream content expecting plain newline got: '" +
-                                 newline + "' length: " + hexLen);
             if (mime.length() > 0)
             {
                 _mimeTypes.push_back(mime);
