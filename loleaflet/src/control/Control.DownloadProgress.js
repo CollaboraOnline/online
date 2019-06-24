@@ -2,7 +2,7 @@
 /*
  * L.Control.DownloadProgress.
  */
-/* global _ */
+/* global _ $ */
 L.Control.DownloadProgress = L.Control.extend({
 	options: {
 		position: 'bottomright'
@@ -75,6 +75,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	_onStartDownload: function () {
 		//if (!this._uri)
 		//	return;
+		$('#map').css('cursor', 'progress');
 		this._started = true;
 		this.setValue(0);
 		this._content.removeChild(this._downloadButton);
@@ -92,6 +93,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_onComplete: function () {
+		$('#map').css('cursor', 'default');
 		this._complete = true;
 		this._content.removeChild(this._progress);
 		this._content.style.width  = '150px';

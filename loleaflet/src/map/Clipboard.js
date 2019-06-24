@@ -155,6 +155,7 @@ L.Clipboard = L.Class.extend({
 			request.onreadystatechange = function() {
 				if (request.status == 200 && request.readyState == 4) {
 					that._map._socket.sendMessage('uno .uno:Paste');
+					that._downloadProgress._onComplete();
 					that._downloadProgress._onClose();
 				}
 			}
