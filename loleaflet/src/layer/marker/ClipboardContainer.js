@@ -120,12 +120,19 @@ L.ClipboardContainer = L.Layer.extend({
 		onoff(this._textArea, 'paste', this._onPaste, this);
 		onoff(this._textArea, 'input', this._onInput, this);
 		onoff(this._textArea, 'keyup', this._onKeyUp, this);
-		onoff(this._textArea, 'textInput', this._onTextInput, this);
+
+		if (L.Browser.ie) {
+			onoff(this._textArea, 'textinput', this._onMSIETextInput, this);
+			onoff(this._textArea, 'keydown', this._onMSIEKeyDown, this);
+		}
+		if (L.Browser.edge) {
+			onoff(this._textArea, 'keydown', this._onEdgeKeyDown, this);
+		}
 
 		// Debug
 		onoff(
 			this._textArea,
-			'copy cut compositionstart compositionupdate compositionend select selectionstart selectionchange keydown keypress keyup beforeinput textInput input',
+			'copy cut compositionstart compositionupdate compositionend select selectionstart selectionchange keydown keypress keyup beforeinput textInput textinput input',
 			this._onEvent,
 			this
 		);
@@ -191,7 +198,7 @@ L.ClipboardContainer = L.Layer.extend({
 		if (this._legacyArea) {
 			var tmp = document.createElement('div');
 			tmp.innerHTML = val;
-			this._textArea.value = tmp.textContent || tmp.innerText || '';
+			this._textArea.value = tmp.innerText || tmp.textContent || '';
 		} else {
 			this._textArea.innerHTML = val;
 		}
@@ -234,7 +241,7 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	_setupStyles: function(debugOn) {
-		if (debugOn || true) {
+		if (debugOn) {
 			// Style for debugging
 			this._container.style.opacity = 0.5;
 			this._textArea.style.cssText = 'border:1px solid red !important';
@@ -331,15 +338,15 @@ L.ClipboardContainer = L.Layer.extend({
 		L.Log.log(payload.toString(), 'INPUT');
 
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
-		// if (this._map._docLayer && this._map._docLayer._debug) {
-		console.log2(
-			+new Date() + ' %cINPUT%c: ' + type + '%c',
-			'background:#bfb;color:black',
-			'color:green',
-			'color:black',
-			JSON.stringify(payload)
-		);
-		// }
+		if (this._map._docLayer && this._map._docLayer._debug) {
+			console.log2(
+				+new Date() + ' %cINPUT%c: ' + type + '%c',
+				'background:#bfb;color:black',
+				'color:green',
+				'color:black',
+				JSON.stringify(payload)
+			);
+		}
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
@@ -491,10 +498,9 @@ L.ClipboardContainer = L.Layer.extend({
 	// any other "input" events which would add text to the area (e.g. "insertText")
 	// "textInput" events are used in MSIE, since the "input" events do not hold
 	// information about the text added to the area.
-	_onTextInput: function _onInput(ev) {
-		if (L.Browser.ie) {
-			this._queueInput(ev.data);
-		}
+	// In MSIE11, the event is "textinput" (all lowercase).
+	_onMSIETextInput: function _onInput(ev) {
+		this._queueInput(ev.data);
 	},
 
 	// Sends the given (UTF-8) string of text to lowsd, as IME (text composition)
@@ -741,9 +747,9 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 
 		if (event.clipboardData) {
-			event.clipboardData.setData('Text', plaintext); // non-IE11
+			event.clipboardData.setData('text/plain', plaintext); // non-IE11
 		} else if (window.clipboardData) {
-			window.clipboardData.setData('text/plain', plaintext); // IE 11
+			window.clipboardData.setData('Text', plaintext); // IE 11
 		} else {
 			console.warn('Could not set the clipboard contents to plain text.');
 			return;
@@ -758,6 +764,37 @@ L.ClipboardContainer = L.Layer.extend({
 	_onKeyUp: function _onKeyUp(ev) {
 		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
 			this._emptyArea();
+		}
+	},
+
+	// MSIE11 doesn't send any "textinput" events on enter, delete or backspace.
+	// To handle those, an event handler is added to the "keydown" event (which repeats)
+	_onMSIEKeyDown: function _onMSIEKeyDown(ev) {
+		if (!ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
+			if (ev.key === 'Delete' || ev.key === 'Del') {
+				this._sendKeyEvent(46, 1286);
+				this._emptyArea();
+			} else if (ev.key === 'Backspace') {
+				this._sendKeyEvent(8, 1283);
+				this._emptyArea();
+			} else if (ev.key === 'Enter') {
+				this._queueInput('\n');
+				this._emptyArea();
+			}
+		}
+	},
+
+	// Edge18 doesn't send any "input" events on delete or backspace.
+	// To handle those, an event handler is added to the "keydown" event (which repeats)
+	_onEdgeKeyDown: function _onEdgeKeyDown(ev) {
+		if (!ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
+			if (ev.key === 'Delete' || ev.key === 'Del') {
+				this._sendKeyEvent(46, 1286);
+				this._emptyArea();
+			} else if (ev.key === 'Backspace') {
+				this._sendKeyEvent(8, 1283);
+				this._emptyArea();
+			}
 		}
 	},
 
