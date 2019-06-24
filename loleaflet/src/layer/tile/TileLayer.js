@@ -516,9 +516,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('editor:')) {
 			this._updateEditor(textMsg);
 		}
-		else if (textMsg.startsWith('pasteresult:')) {
-			this._map._clip.pasteResult(textMsg.substring('pasteresult: '.length));
-		}
 		else if (textMsg.startsWith('validitylistbutton:')) {
 			this._onValidityListButtonMsg(textMsg);
 		}
@@ -1625,7 +1622,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateGraphicSelection();
 		this._cellCursor = null;
 		this._onUpdateCellCursor();
-		this._clip.clearSelection();
+		this._map._clip.clearSelection();
 	},
 
 	containsSelection: function (latlng) {
@@ -2640,16 +2637,27 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_selectionType: function() {
+		if (this._graphicSelection !== null &&
+		    !this._isEmptyRectangle(this._graphicSelection)) {
+			return 'complex'; // FIXME: Ash - complex ...
+		} else if (this._selections.getLayers().length > 0) {
+			return 'simpletext';
+		} else {
+			return null;
+		}
+	},
+
 	_onCopy: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		this._map._clip.copy(e);
+		this._map._clip.copy(e, this._selectionType());
 	},
 
 	_onCut: function (e) {
 		e = e.originalEvent;
 		e.preventDefault();
-		this._map._clip.cut(e);
+		this._map._clip.cut(e, this._selectionType());
 	},
 
 	_onPaste: function (e) {

@@ -13,8 +13,7 @@ L.Clipboard = L.Class.extend({
 	initialize: function(map) {
 		this._map = map;
 		this._selectionContent = '';
-		this._selected = '';
-		this._accessKey = '';
+		this._accessKey = [ '', '' ];
 	},
 
 	stripHTML: function(html) { // grim.
@@ -23,17 +22,39 @@ L.Clipboard = L.Class.extend({
 		return tmp.textContent || tmp.innerText || '';
 	},
 
-	clipboardSet: function(event, text) {
-		if (event.clipboardData) { // Standard
-			event.clipboardData.setData('text/html', text);
-		}
-		else if (window.clipboardData) { // IE 11 - poor clipboard API
-			window.clipboardData.setData('Text', this.stripHTML(text));
-		}
+	setKey: function(key) {
+		if (this._accessKey[0] === key)
+			return;
+		this._accessKey[1] = this._accessKey[0];
+		this._accessKey[0] = key;
 	},
 
-	setKey: function(key) {
-		this._accessKey = key;
+	getMetaBase: function() {
+		return this._map.options.webserver + this._map.options.serviceRoot;
+	},
+
+	getMetaPath: function(idx) {
+		if (!idx)
+			idx = 0;
+		return '/clipboard?WOPISrc='+ encodeURIComponent(this._map.options.doc) +
+			'&ServerId=' + this._map._socket.WSDServer.Id +
+			'&ViewId=' + this._map._docLayer._viewId +
+			'&Tag=' + this._accessKey[idx];
+	},
+
+	getStubHtml: function() {
+		var lang = 'en_US'; // FIXME: l10n
+		var encodedOrigin = encodeURIComponent(this.getMetaPath());
+		return '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
+			'<html>\n' +
+			'  <head>\n' +
+			'     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
+			'     <meta name="origin" content="' + encodedOrigin + '"/>\n' +
+			'  </head>\n' +
+			'  <body lang="' + lang + ' dir="ltr">\n' +
+			'    <p>' + _('When pasting outside the suite it is necessary to first click the \'download\' button') + '</p>\n' +
+			'  </body>\n' +
+			'</html>';
 	},
 
 	_getMetaOrigin: function (html) {
@@ -49,7 +70,7 @@ L.Clipboard = L.Class.extend({
 		var meta = html.substring(start + match.length, end);
 
 		// quick sanity checks that it one of ours.
-		if (meta.indexOf('%2Fclipboard%3FWOPISrc%3D') > 0 &&
+		if (meta.indexOf('%2Fclipboard%3FWOPISrc%3D') >= 0 &&
 		    meta.indexOf('%26ServerId%3D') > 0 &&
 		    meta.indexOf('%26ViewId%3D') > 0 &&
 		    meta.indexOf('%26Tag%3D') > 0)
@@ -57,23 +78,6 @@ L.Clipboard = L.Class.extend({
 		else
 			console.log('Mis-understood foreign origin: "' + meta + '"');
 		return '';
-	},
-
-	// FIXME: used ? - sometimes our smart-paste fails & we need to try again.
-	// pasteresult: message
-	pasteResult : function(state)
-	{
-		console.log('Paste state: ' + state);
-		if (state === 'fallback') {
-			if (this._pasteFallback != null) {
-				console.log('Paste failed- falling back to HTML');
-				this._map._socket.sendMessage(this._pasteFallback);
-			} else {
-				console.log('No paste fallback present.');
-			}
-		}
-
-		this._pasteFallback = null;
 	},
 
 	_readContentSync: function(dataTransfer) {
@@ -101,8 +105,6 @@ L.Clipboard = L.Class.extend({
 	dataTransferToDocument: function (dataTransfer, preferInternal) {
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
-		this._startProgress();
-		this._downloadProgress._onStartDownload();
 
 		var pasteHtml = null;
 		if (dataTransfer.types == null) { // IE
@@ -111,21 +113,23 @@ L.Clipboard = L.Class.extend({
 			pasteHtml = dataTransfer.getData('text/html');
 		}
 		var meta = this._getMetaOrigin(pasteHtml);
-		var id = this._map.options.webserver + this._map.options.serviceRoot +
-		    '/clipboard?WOPISrc='+ encodeURIComponent(this._map.options.doc) +
-			'&ServerId=' + this._map._socket.WSDServer.Id + '&ViewId=' + this._viewId +
-			'&Tag=' + this._accessKey;
+		var id = this.getMetaPath(0);
+		var idOld = this.getMetaPath(1);
 
-		// for the paste, we might prefer the internal LOK's copy/paste
-		if (meta.indexOf(id) > 0 && preferInternal === true) {
+		// for the paste, we always prefer the internal LOK's copy/paste
+		if (preferInternal === true &&
+		    (meta.indexOf(id) >= 0 || meta.indexOf(idOld) >= 0))
+		{
 			// Home from home: short-circuit internally.
 			console.log('short-circuit, internal paste');
 			this._map._socket.sendMessage('uno .uno:Paste');
 			return;
 		}
 
+		this._startProgress();
+		this._downloadProgress._onStartDownload();
+
 		console.log('Mismatching index\n\t"' + meta + '" vs. \n\t"' + id + '"');
-		this._pasteFallback = null;
 
 		// Suck HTML content out of dataTransfer now while it feels like working.
 		var content = this._readContentSync(dataTransfer);
@@ -184,38 +188,42 @@ L.Clipboard = L.Class.extend({
 			var isAsync = true;
 			request.open('POST', id, isAsync);
 			request.send(formData);
-
-			this._pasteFallback = null;
 		} else {
 			console.log('Nothing we can paste on the clipboard');
 		}
 	},
 
-	copy: function(e) {
-		console.log('Copy');
-		if (this._map._clipboardContainer.getValue() !== '') {
-			this.clipboardSet(e, this._map._clipboardContainer.getValue());
-		} else if (this._selectionTextContent) {
-			this.clipboardSet(e, this._selectionTextContent);
-
-			// remember the copied text, for rich copy/paste inside a document
-			this._selectionTextHash = this._selectionTextContent;
+	populateClipboard: function(e,t) {
+		var text;
+		if (t === null) {
+			console.log('Copy/Cut with no selection!');
+			text = this.getStubHtml();
+		} else if (t === 'complex') {
+			console.log('Copy/Cut with complex/graphical selection');
+			text = this.getStubHtml();
+		} else {
+			console.log('Copy/Cut with simple text selection');
+			text = this._selectionContent;
 		}
 
+		if (e.clipboardData) { // Standard
+			e.clipboardData.setData('text/html', text);
+			console.log('Put "' + text + '" on the clipboard');
+		}
+		else if (window.clipboardData) { // IE 11 - poor clipboard API
+			window.clipboardData.setData('Text', this.stripHTML(text));
+		}
+	},
+
+	copy: function(e,t) {
+		console.log('Copy');
+		this.populateClipboard(e,t);
 		this._map._socket.sendMessage('uno .uno:Copy');
 	},
 
-	cut: function(e) {
+	cut: function(e,t) {
 		console.log('Cut');
-		if (this._map._clipboardContainer.getValue() !== '') {
-			this.clipboardSet(e, this._map._clipboardContainer.getValue());
-		} else if (this._selectionTextContent) {
-			this.clipboardSet(e, this._selectionTextContent);
-
-			// remember the copied text, for rich copy/paste inside a document
-			this._selectionTextHash = this._selectionTextContent;
-		}
-
+		this.populateClipboard(e,t);
 		this._map._socket.sendMessage('uno .uno:Cut');
 	},
 
@@ -231,7 +239,6 @@ L.Clipboard = L.Class.extend({
 
 	clearSelection: function() {
 		this._selectionContent = '';
-		this._selected = '';
 	},
 
 	setSelection: function(content) {
@@ -248,7 +255,7 @@ L.Clipboard = L.Class.extend({
 		// Put in the clipboard a helpful explanation of what the user should do.
 		// Currently we don't have a payload, though we might in the future
 		text = _('Please use the following link to download the selection from you document and paste into other applications on your device')
-									+ ': '; //FIXME: MISSING URL
+			+ ': '; //FIXME: MISSING URL
 		this.setSelection(text);
 
 		//TODO: handle complex selection download.
