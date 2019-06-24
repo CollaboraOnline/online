@@ -273,7 +273,7 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('clipboardkey: ')) {
 			var key = textMsg.substring('clipboardkey: '.length);
-			this._map._clipboard.setKey(key);
+			this._map._clip.setKey(key);
 		}
 		else if (textMsg.startsWith('perm:')) {
 			var perm = textMsg.substring('perm:'.length);
