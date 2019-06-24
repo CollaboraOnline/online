@@ -8,14 +8,15 @@
 # -- Available env vars --
 # * DOCKER_HUB_REPO - which Docker Hub repo to use
 # * DOCKER_HUB_TAG  - which Docker Hub tag to create
-# * LIBREOFFICE_BRANCH  - which core branch to build
+# * CORE_BRANCH  - which core branch to build
 # * ONLINE_BRANCH - which online branch to build
-# * LIBREOFFICE_BUILD_TARGET - which make target to run (in core repo)
 # * ONLINE_EXTRA_BUILD_OPTIONS - extra build options for online
 # * NO_DOCKER_IMAGE - if set, don't build the docker image itself, just do all the preps
 
-LIBREOFFICE_BRANCH=distro/collabora/cp-6.0
+CORE_BRANCH=distro/collabora/cp-6.0
 ONLINE_BRANCH=distro/collabora/collabora-online-4
+DOCKER_HUB_REPO=collabora/code
+DOCKER_HUB_TAG=4.1-snapshot
 
 # check we can sudo without asking a pwd
 echo "Trying if sudo works without a password"
@@ -25,24 +26,9 @@ echo "yourusername ALL=(ALL) NOPASSWD: /sbin/setcap"
 echo
 sudo echo "works"
 
-# Check env variables
-if [ -z "$DOCKER_HUB_REPO" ]; then
-  DOCKER_HUB_REPO="collabora/code"
-fi;
-if [ -z "$DOCKER_HUB_TAG" ]; then
-  DOCKER_HUB_TAG="4.1-snapshot"
-fi;
+echo "Building core branch '$CORE_BRANCH'"
+echo "Building online branch '$ONLINE_BRANCH'"
 echo "Using Docker Hub Repository: '$DOCKER_HUB_REPO' with tag '$DOCKER_HUB_TAG'."
-
-if [ -z "$LIBREOFFICE_BRANCH" ]; then
-  LIBREOFFICE_BRANCH="master"
-fi;
-echo "Building branch '$LIBREOFFICE_BRANCH'"
-
-if [ -z "$LIBREOFFICE_BUILD_TARGET" ]; then
-  LIBREOFFICE_BUILD_TARGET=""
-fi;
-echo "LibreOffice build target: '$LIBREOFFICE_BUILD_TARGET'"
 
 # do everything in the builddir
 SRCDIR=$(realpath `dirname $0`)
@@ -57,12 +43,12 @@ mkdir -p "$INSTDIR"
 
 ##### cloning & updating #####
 
-# libreoffice repo
-if test ! -d libreoffice ; then
-    git clone https://git.libreoffice.org/core libreoffice || exit 1
+# core repo
+if test ! -d core ; then
+    git clone https://git.libreoffice.org/core core || exit 1
 fi
 
-( cd libreoffice && git fetch --all && git checkout $LIBREOFFICE_BRANCH && ./g pull -r ) || exit 1
+( cd core && git fetch --all && git checkout $CORE_BRANCH && ./g pull -r ) || exit 1
 
 # online repo
 if test ! -d online ; then
@@ -79,24 +65,24 @@ fi
 
 ( cd online-branding && git pull -r && git checkout master ) || echo "Warning: pull from online-branding.git cannot be performed. Lack of permissions?"
 
-##### LibreOffice #####
+##### core #####
 
-# build LibreOffice
-( cd libreoffice && ./autogen.sh --with-distro=CPLinux-LOKit --without-package-format --disable-symbols ) || exit 1
-( cd libreoffice && make $LIBREOFFICE_BUILD_TARGET ) || exit 1
+# build core
+( cd core && ./autogen.sh --with-distro=CPLinux-LOKit --without-package-format --disable-symbols ) || exit 1
+( cd core && make ) || exit 1
 
 # copy stuff
 mkdir -p "$INSTDIR"/opt/
-cp -a libreoffice/instdir "$INSTDIR"/opt/libreoffice
+cp -a core/instdir "$INSTDIR"/opt/collaboraoffice6.0
 
 # FIXME fix RPATH of libcairo
-chrpath -r '$ORIGIN' "$INSTDIR"/opt/libreoffice/program/libcairo.so.2
+chrpath -r '$ORIGIN' "$INSTDIR"/opt/collaboraoffice6.0/program/libcairo.so.2
 
-##### loolwsd & loleaflet #####
+##### online #####
 
 # build
 ( cd online && ./autogen.sh ) || exit 1
-( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/libreoffice/include --with-lo-path="$INSTDIR"/opt/libreoffice --with-app-name="Collabora Online Development Edition" $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
+( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/core/include --with-lo-path="$INSTDIR"/opt/collaboraoffice6.0 --with-app-name="Collabora Online Development Edition" $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
 ( cd online && make -j 8) || exit 1
 
 # copy stuff
@@ -114,8 +100,6 @@ for i in `grep -o images/.*svg online-branding/branding.css | sed -e "s/images\/
 do
     cp -a online-branding/$i $INSTDIR/usr/share/loolwsd/loleaflet/dist/images/
 done
-
-
 
 # Create new docker image
 if [ -z "$NO_DOCKER_IMAGE" ]; then
