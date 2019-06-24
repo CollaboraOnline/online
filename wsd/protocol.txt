@@ -583,7 +583,7 @@ auth jwt=<jwtToken>
     Authenticate the client with provided jwtToken. This is necessary before any
     other command.
 
-subscribe <space seperated list of commands>
+subscribe <space separated list of commands>
 
     Where list of commands are the ones that client wants to get notified
     about. For eg. 'subscribe adddoc rmdoc'
