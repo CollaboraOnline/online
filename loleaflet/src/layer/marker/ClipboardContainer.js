@@ -9,7 +9,6 @@
 L.ClipboardContainer = L.Layer.extend({
 
 	initialize: function () {
-		this._initLayout();
 
 		// Queued input - this shall be sent to lowsd after a short timeout,
 		// and might be canceled in the event of a 'deleteContentBackward'
@@ -21,6 +20,8 @@ L.ClipboardContainer = L.Layer.extend({
 		// Needed for a edge case in Chrome+AOSP where an
 		// "input/deleteContentBackward" event is fired with "isComposing" set
 		// to false even though it happens *before* a "compositionend" event.
+		// Also for some cases in desktop Safari when an InputEvent doesn't have a "isComposing"
+		// property (and therefore evaluates to "undefined")
 		this._isComposing = false;
 
 		// Stores the range(s) of the last 'beforeinput' event, so that the input event
@@ -49,6 +50,8 @@ L.ClipboardContainer = L.Layer.extend({
 		// Defines whether to use a <input type=textarea> (when true) or a
 		// <div contenteditable> (when false)
 		this._legacyArea = L.Browser.safari;
+
+		this._initLayout();
 
 		// Under-caret orange marker.
 		this._cursorHandler = L.marker(new L.LatLng(0, 0), {
@@ -210,16 +213,23 @@ L.ClipboardContainer = L.Layer.extend({
 			this._textArea.setAttribute('contenteditable', 'true');
 		}
 
-		// Style for debugging
-// 		this._container.style.opacity = 0.5;
-// 		this._textArea.style.cssText = 'border:1px solid red !important';
-// 		this._textArea.style.width = '100px';
-// 		this._textArea.style.height= '20px';
-// 		this._textArea.style.overflow= 'display';
+		this._setupStyles(false);
+	},
 
-		this._container.style.opacity = 0;
-		this._textArea.style.width = '1px';
-		this._textArea.style.height= '1px';
+	_setupStyles: function(debugOn) {
+		if (debugOn || true)
+		{
+			// Style for debugging
+			this._container.style.opacity = 0.5;
+			this._textArea.style.cssText = 'border:1px solid red !important';
+			this._textArea.style.width = '100px';
+			this._textArea.style.height= '20px';
+			this._textArea.style.overflow= 'display';
+		} else {
+			this._container.style.opacity = 0;
+			this._textArea.style.width = '1px';
+			this._textArea.style.height= '1px';
+		}
 	},
 
 	activeElement: function () {
@@ -297,9 +307,9 @@ L.ClipboardContainer = L.Layer.extend({
 		L.Log.log(payload.toString(), 'INPUT');
 
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
-		if (this._map._docLayer && this._map._docLayer._debug) {
-			console.log2(+new Date()+ ' %cINPUT%c: '+ type + '%c', 'background:#bfb;color:black', 'color:green', 'color:black', JSON.stringify(payload));
-		}
+		// 		if (this._map._docLayer && this._map._docLayer._debug) {
+		console.log2(+new Date()+ ' %cINPUT%c: '+ type + '%c', 'background:#bfb;color:black', 'color:green', 'color:black', JSON.stringify(payload));
+		// 		}
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
@@ -344,7 +354,7 @@ L.ClipboardContainer = L.Layer.extend({
 
 			clearTimeout(this._abortCompositionTimeout);
 
-			if (!ev.isComposing) {
+			if (!this._isComposing) {
 				// FFX/Gecko: Regardless of on-screen keyboard, there is a
 				// input/insertCompositionText with isComposing=false *after*
 				// the compositionend event.
@@ -374,7 +384,7 @@ L.ClipboardContainer = L.Layer.extend({
 				return;
 			}
 
-			if (!ev.isComposing) {
+			if (!this._isComposing) {
 				this._queueInput(ev.data);
 			}
 		} else if (ev.inputType === 'insertParagraph') {
@@ -428,16 +438,18 @@ L.ClipboardContainer = L.Layer.extend({
 		} else if (ev.inputType === 'insertReplacementText') {
 			// Happens only in Safari (both iOS and OS X) with autocorrect/spellcheck
 			// FIXME: It doesn't provide any info about how much to replace!
+			// This is currently disabled by means of using a <input type=textarea
+			// autocorrect=off> in Safari.
 			/// TODO: Send a specific message to lowsd to find the last word and
 			/// replace it with the given one.
 
-		} else if (ev.inputType === 'deleteCompositionText' || ev.inputType === 'insertFromComposition') {
+		} else if (ev.inputType === 'deleteCompositionText') {
 			// Safari on OS X is extra nice about composition - it notifies the
-			// browser whenever the composition text should be deleted, and
-			// when the composgeographicition should be inserted/commited into
-			// the contents.
-			// This implementation handles text inserted from composition
-			// only in 'insertText' and 'insertCompositionText', so this is a no-op.
+			// browser whenever the composition text should be deleted.
+		} else if (ev.inputType === 'insertFromComposition') {
+			// Observed only on desktop Safari just before a "compositionend"
+			// TODO: Check if the
+			this._queueInput(ev.data);
 		} else if (ev.inputType === 'deleteByCut') {
 			// Called when Ctrl+X'ing
 			this._abortComposition();
@@ -553,7 +565,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// NOTE: Ideally this should never happen, as the textarea/contenteditable
 		// is initialized with two non-breaking spaces when "emptied".
 		if ((this._map.getWinId() === 0 && this._textArea.textContent.length === 0)
-			/* || ev.findMyTextContentAre.length == 0 */
+		/* || ev.findMyTextContentAre.length == 0 */
 		) {
 			if (ev.inputType === 'deleteContentBackward') {
 				this._sendKeyEvent(8, 1283);
@@ -629,6 +641,15 @@ L.ClipboardContainer = L.Layer.extend({
 			}
 		}
 
+		// Check for Safari; it fires composition events on typing diacritics with dead keys.
+		if (L.Browser.Safari) {
+			if (this._lastInputType === 'insertFromComposition') {
+				this._queueInput(ev.data);
+			} else {
+				this._abortComposition();
+			}
+		}
+
 		// Tell lowsd to exit composition mode when the composition is empty
 		// This happens when deleting the whole word being composed, e.g.
 		// swipe a word then press backspace.
@@ -646,7 +667,7 @@ L.ClipboardContainer = L.Layer.extend({
 	_abortComposition: function _abortComposition() {
 		if (this._isComposing) {
 			this._sendCompositionEvent('input', '');
-// 			this._sendCompositionEvent('end', '');
+			// 			this._sendCompositionEvent('end', '');
 			this._isComposing = false;
 		}
 		this._emptyArea();
@@ -662,7 +683,7 @@ L.ClipboardContainer = L.Layer.extend({
 
 		// TODO: handle internal selection here (compare pasted plaintext with the
 		// last copied/cut plaintext, send a UNO 'paste' command over websockets if so.
-// 		if (this._lastClipboardText === ...etc...
+		// 		if (this._lastClipboardText === ...etc...
 
 		var pasteString;
 		if (ev.clipboardData) {
