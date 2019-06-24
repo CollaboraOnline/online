@@ -7,9 +7,7 @@
 /* global */
 
 L.ClipboardContainer = L.Layer.extend({
-
-	initialize: function () {
-
+	initialize: function() {
 		// Queued input - this shall be sent to lowsd after a short timeout,
 		// and might be canceled in the event of a 'deleteContentBackward'
 		// input event, to account for predictive keyboard behaviour.
@@ -38,7 +36,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._lastInputType = '';
 
 		// Capability check.
-		this._hasInputType = window.InputEvent && ('inputType' in window.InputEvent.prototype);
+		this._hasInputType = window.InputEvent && 'inputType' in window.InputEvent.prototype;
 
 		// The "normal" order of composition events is:
 		// - compositionstart
@@ -74,18 +72,27 @@ L.ClipboardContainer = L.Layer.extend({
 		this.dontBlur = false;
 	},
 
-	onAdd: function () {
+	onAdd: function() {
 		if (this._container) {
 			this.getPane().appendChild(this._container);
 			this.update();
 		}
 
+		this._emptyArea();
+
 		L.DomEvent.on(this._textArea, 'focus blur', this._onFocusBlur, this);
+
+		// Do not wait for a 'focus' event to attach events if the
+		// textarea/contenteditable is already focused (due to the autofocus
+		// HTML attribute, the browser focusing it on DOM creation, or whatever)
+		if (document.activeElement === this._textArea) {
+			this._onFocusBlur({ type: 'focus' });
+		}
 
 		this._map.on('mousedown touchstart', this._abortComposition, this);
 	},
 
-	onRemove: function () {
+	onRemove: function() {
 		if (this._container) {
 			this.getPane().removeChild(this._container);
 		}
@@ -116,7 +123,12 @@ L.ClipboardContainer = L.Layer.extend({
 		onoff(this._textArea, 'textInput', this._onTextInput, this);
 
 		// Debug
-		onoff(this._textArea, 'copy cut compositionstart compositionupdate compositionend select selectionstart selectionchange keydown keypress keyup beforeinput textInput input', this._onEvent, this);
+		onoff(
+			this._textArea,
+			'copy cut compositionstart compositionupdate compositionend select selectionstart selectionchange keydown keypress keyup beforeinput textInput input',
+			this._onEvent,
+			this
+		);
 
 		this._map.notifyActive();
 
@@ -185,14 +197,14 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 	},
 
-	update: function () {
+	update: function() {
 		if (this._container && this._map && this._latlng) {
 			var position = this._map.latLngToLayerPoint(this._latlng).round();
 			this._setPos(position);
 		}
 	},
 
-	_initLayout: function () {
+	_initLayout: function() {
 		this._container = L.DomUtil.create('div', 'clipboard-container');
 		this._container.id = 'doc-clipboard-container';
 
@@ -211,37 +223,42 @@ L.ClipboardContainer = L.Layer.extend({
 			this._textArea.setAttribute('autocapitalize', 'off');
 			this._textArea.setAttribute('autocomplete', 'off');
 			this._textArea.setAttribute('spellcheck', 'false');
+			this._textArea.setAttribute('autofocus', 'true');
 		} else {
 			this._textArea = L.DomUtil.create('div', 'clipboard', this._container);
 			this._textArea.setAttribute('contenteditable', 'true');
+			this._textArea.setAttribute('autofocus', 'true');
 		}
 
 		this._setupStyles(false);
 	},
 
 	_setupStyles: function(debugOn) {
-		if (debugOn || true)
-		{
+		if (debugOn || true) {
 			// Style for debugging
 			this._container.style.opacity = 0.5;
 			this._textArea.style.cssText = 'border:1px solid red !important';
 			this._textArea.style.width = '100px';
-			this._textArea.style.height= '20px';
-			this._textArea.style.overflow= 'display';
+			this._textArea.style.height = '20px';
+			this._textArea.style.overflow = 'display';
 		} else {
 			this._container.style.opacity = 0;
 			this._textArea.style.width = '1px';
-			this._textArea.style.height= '1px';
+			this._textArea.style.height = '1px';
 		}
 	},
 
-	activeElement: function () {
+	debug: function(debugOn) {
+		this._setupStyles(debugOn);
+	},
+
+	activeElement: function() {
 		return this._textArea;
 	},
 
 	// Displays the caret and the under-caret marker.
 	// Fetches the coordinates of the caret from the map's doclayer.
-	showCursor: function () {
+	showCursor: function() {
 		if (!this._map._docLayer._cursorMarker) {
 			return;
 		}
@@ -264,7 +281,7 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	// Hides the caret and the under-caret marker.
-	hideCursor: function () {
+	hideCursor: function() {
 		if (!this._map._docLayer._cursorMarker) {
 			return;
 		}
@@ -272,23 +289,27 @@ L.ClipboardContainer = L.Layer.extend({
 		this._map.removeLayer(this._cursorHandler);
 	},
 
-	_setPos: function (pos) {
+	_setPos: function(pos) {
 		L.DomUtil.setPosition(this._container, pos);
 	},
 
 	// Generic handle attached to most text area events, just for debugging purposes.
 	_onEvent: function _onEvent(ev) {
-
 		var msg = {
 			type: ev.type,
 			inputType: ev.inputType,
 			data: ev.data,
 			key: ev.key,
-			isComposing: ev.isComposing,
+			isComposing: ev.isComposing
 		};
 
-		if (this._lastRanges[0] && 'startOffset' in this._lastRanges[0] && 'endOffset' in this._lastRanges[0]) {
-			msg.lastRanges = this._lastRanges[0].startOffset + '-' + this._lastRanges[0].endOffset;
+		if (
+			this._lastRanges[0] &&
+			'startOffset' in this._lastRanges[0] &&
+			'endOffset' in this._lastRanges[0]
+		) {
+			msg.lastRanges =
+				this._lastRanges[0].startOffset + '-' + this._lastRanges[0].endOffset;
 		}
 
 		if (ev.type === 'input') {
@@ -298,7 +319,7 @@ L.ClipboardContainer = L.Layer.extend({
 		if ('key' in ev) {
 			msg.key = ev.key;
 			msg.keyCode = ev.keyCode;
-			msg.code= ev.code;
+			msg.code = ev.code;
 			msg.which = ev.which;
 		}
 
@@ -310,9 +331,15 @@ L.ClipboardContainer = L.Layer.extend({
 		L.Log.log(payload.toString(), 'INPUT');
 
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
-		// 		if (this._map._docLayer && this._map._docLayer._debug) {
-		console.log2(+new Date()+ ' %cINPUT%c: '+ type + '%c', 'background:#bfb;color:black', 'color:green', 'color:black', JSON.stringify(payload));
-		// 		}
+		// if (this._map._docLayer && this._map._docLayer._debug) {
+		console.log2(
+			+new Date() + ' %cINPUT%c: ' + type + '%c',
+			'background:#bfb;color:black',
+			'color:green',
+			'color:black',
+			JSON.stringify(payload)
+		);
+		// }
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
@@ -349,9 +376,7 @@ L.ClipboardContainer = L.Layer.extend({
 			// composition.
 
 			// Abort composition when going back for spellchecking, FFX/Gecko
-			if (L.Browser.gecko && (
-				previousInputType === 'deleteContentBackward'
-			)) {
+			if (L.Browser.gecko && previousInputType === 'deleteContentBackward') {
 				return;
 			}
 
@@ -371,7 +396,6 @@ L.ClipboardContainer = L.Layer.extend({
 				// Tell lowsd about the current text being composed
 				this._sendCompositionEvent('input', ev.data);
 			}
-
 		} else if (ev.inputType === 'insertText') {
 			// Non-composed text has been added to the text area.
 
@@ -379,7 +403,8 @@ L.ClipboardContainer = L.Layer.extend({
 			// one-letter word will fire a input/insertText with that word
 			// right after a compositionend + input/insertCompositionText.
 			// In that case, ignore the
-			if (L.Browser.gecko &&
+			if (
+				L.Browser.gecko &&
 				ev.data.length === 1 &&
 				previousInputType === 'insertCompositionText' &&
 				ev.data === this._queuedInput
@@ -422,7 +447,7 @@ L.ClipboardContainer = L.Layer.extend({
 			if (l >= count) {
 				this._queuedInput = this._queuedInput.substring(0, l - count);
 			} else {
-				for (var i = 0; i< count; i++) {
+				for (var i = 0; i < count; i++) {
 					// Send a UNO backspace keystroke per glyph to be deleted
 					this._sendKeyEvent(8, 1283);
 				}
@@ -437,7 +462,6 @@ L.ClipboardContainer = L.Layer.extend({
 			// Send a UNO 'delete' keystroke
 			this._sendKeyEvent(46, 1286);
 			this._emptyArea();
-
 		} else if (ev.inputType === 'insertReplacementText') {
 			// Happens only in Safari (both iOS and OS X) with autocorrect/spellcheck
 			// FIXME: It doesn't provide any info about how much to replace!
@@ -445,7 +469,6 @@ L.ClipboardContainer = L.Layer.extend({
 			// autocorrect=off> in Safari.
 			/// TODO: Send a specific message to lowsd to find the last word and
 			/// replace it with the given one.
-
 		} else if (ev.inputType === 'deleteCompositionText') {
 			// Safari on OS X is extra nice about composition - it notifies the
 			// browser whenever the composition text should be deleted.
@@ -477,14 +500,11 @@ L.ClipboardContainer = L.Layer.extend({
 	// Sends the given (UTF-8) string of text to lowsd, as IME (text composition)
 	// messages
 	_sendText: function _sendText(text) {
-
 		this._fancyLog('send-text-to-lowsd', text);
 
 		// MSIE/Edge cannot compare a string to "\n" for whatever reason,
 		// so compare charcode as well
-		if (text === '\n' ||
-				(text.length === 1 && text.charCodeAt(0) === 13)
-		) {
+		if (text === '\n' || (text.length === 1 && text.charCodeAt(0) === 13)) {
 			// The composition messages doesn't play well with just a line break,
 			// therefore send a keystroke.
 			this._sendKeyEvent(13, 1280);
@@ -496,8 +516,8 @@ L.ClipboardContainer = L.Layer.extend({
 
 			var parts = text.split(/[\n\r]/);
 			var l = parts.length;
-			for (var i=0; i<l; i++) {
-				if (i!== 0) {
+			for (var i = 0; i < l; i++) {
+				if (i !== 0) {
 					this._sendKeyEvent(13, 1280);
 					this._emptyArea();
 				}
@@ -521,31 +541,29 @@ L.ClipboardContainer = L.Layer.extend({
 			// https://www.fileformat.info/info/unicode/char/00a0/index.htm
 			// Using normal spaces would make FFX/Gecko collapse them into an
 			// empty string.
-			var textNode;
 			if (this._legacyArea) {
 				this._textArea.value = '\xa0\xa0';
-				textNode = this._textArea;
+				/// TODO: Check that this selection method works with MSIE11
+				///
+				this._textArea.setSelectionRange(1, 1);
 			} else {
 				this._textArea.innerText = '\xa0\xa0';
-				textNode = this._textArea.childNodes[0];
+				var textNode = this._textArea.childNodes[0];
+				var range = document.createRange();
+				range.setStart(textNode, 1);
+				range.setEnd(textNode, 1);
+				range.collapse(true);
+				var sel = window.getSelection();
+				sel.removeAllRanges();
+				sel.addRange(range);
+				range.detach();
 			}
-
-			var range = document.createRange();
-			range.setStart(textNode , 1);
-			range.setEnd(textNode , 1);
-			range.collapse(true);
-			var sel = window.getSelection();
-			sel.removeAllRanges();
-			sel.addRange(range);
-			range.detach();
-
 		} else if (this._legacyArea) {
 			this._textArea.value = '';
 		} else {
 			this._textArea.innerText = '';
 			this._textArea.innerHTML = '';
 		}
-		// 		L.DomUtil.empty(this._textArea);
 	},
 
 	// The getTargetRanges() method usually returns an empty array,
@@ -558,10 +576,6 @@ L.ClipboardContainer = L.Layer.extend({
 	// only in some configurations.
 	_onBeforeInput: function _onBeforeInput(ev) {
 		this._lastRanges = ev.getTargetRanges();
-		// 		console.log('onBeforeInput range: ', ev.inputType, ranges,
-		// 					ranges[0] && ranges[0].startOffset,
-		// 					ranges[0] && ranges[0].endOffset);
-
 
 		// When trying to delete (i.e. backspace) on an empty textarea, the input event
 		// won't be fired afterwards. Handle backspace here instead.
@@ -571,9 +585,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// for charCode=8 is fired, and handled by the Map.Keyboard.js.
 		// NOTE: Ideally this should never happen, as the textarea/contenteditable
 		// is initialized with two non-breaking spaces when "emptied".
-		if ((this._map.getWinId() === 0 && this._textArea.textContent.length === 0)
-		/* || ev.findMyTextContentAre.length == 0 */
-		) {
+		if (this._map.getWinId() === 0 && !this._hasInputType) {
 			if (ev.inputType === 'deleteContentBackward') {
 				this._sendKeyEvent(8, 1283);
 			} else if (ev.inputType === 'deleteContentForward') {
@@ -583,7 +595,6 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	_queueInput: function _queueInput(text) {
-
 		if (text === null) {
 			// Chrome sends a input/insertText with 'null' event data when
 			// typing a newline quickly after typing text.
@@ -592,28 +603,27 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 
 		if (this._queuedInput !== '') {
-			console.warn('Text input already queued - recieving composition end events too fast!');
+			console.warn(
+				'Text input already queued - recieving composition end events too fast!'
+			);
 			this._queuedInput += text;
 			clearTimeout(this._queueTimer);
 		} else {
 			this._queuedInput = text;
 		}
 
-
-
-		console.log('_queueInput', text, ' queue is now:', {text: this._queuedInput});
+		//console.log('_queueInput', text, ' queue is now:', {text: this._queuedInput});
 		this._queueTimer = setTimeout(this._sendQueued.bind(this), 50);
 	},
 
 	_clearQueued: function _clearQueued() {
-		console.log('Cleared queued:', {text: this._queuedInput});
+		console.log('Cleared queued:', { text: this._queuedInput });
 		clearTimeout(this._queueTimer);
 		this._queuedInput = '';
 	},
 
 	_sendQueued: function _sendQueued() {
-		console.log('Sending to lowsd (queued): ', {text: this._queuedInput});
-		// 		this._map._socket.sendMessage('paste mimetype=text/plain\n' + this._queuedInput);
+		// console.log('Sending to lowsd (queued): ', {text: this._queuedInput});
 		this._sendText(this._queuedInput);
 		this._clearQueued();
 	},
@@ -632,14 +642,14 @@ L.ClipboardContainer = L.Layer.extend({
 	// The approach here is to use "compositionend" events *only in Chrome* to mark
 	// the composing text as committed to the text area.
 	_onCompositionEnd: function _onCompositionEnd(ev) {
-
 		// Check for standard chrome, and check heuristically for embedded Android
 		// WebView (without chrome user-agent string)
-		if (L.Browser.chrome || (L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit)) {
+		if (
+			L.Browser.chrome ||
+			(L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit)
+		) {
 			if (this._lastInputType === 'insertCompositionText') {
 				this._queueInput(ev.data);
-				// 				this._IMEPopup.remove();
-				// 				this._IMEPopup.setContent('');
 			} else {
 				// Ended a composition without user input, abort.
 				// This happens on Chrome+GBoard when autocompleting a word
@@ -674,7 +684,7 @@ L.ClipboardContainer = L.Layer.extend({
 	_abortComposition: function _abortComposition() {
 		if (this._isComposing) {
 			this._sendCompositionEvent('input', '');
-			// 			this._sendCompositionEvent('end', '');
+			// this._sendCompositionEvent('end', '');
 			this._isComposing = false;
 		}
 		this._emptyArea();
@@ -683,7 +693,6 @@ L.ClipboardContainer = L.Layer.extend({
 	// Override the system default for pasting into the textarea/contenteditable,
 	// and paste into the document instead.
 	_onPaste: function _onPaste(ev) {
-
 		// Prevent the event's default - in this case, prevent the clipboard contents
 		// from being added to the hidden textarea and firing 'input'/'textInput' events.
 		ev.preventDefault();
@@ -755,15 +764,32 @@ L.ClipboardContainer = L.Layer.extend({
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
 	// "type" is either "input" for updates or "end" for commits.
 	_sendCompositionEvent: function _sendCompositionEvent(type, text) {
-		this._map._socket.sendMessage('textinput id=' + this._map.getWinId() + ' type=' + type + ' text=' + encodeURIComponent(text));
+		this._map._socket.sendMessage(
+			'textinput id=' +
+				this._map.getWinId() +
+				' type=' +
+				type +
+				' text=' +
+				encodeURIComponent(text)
+		);
 	},
 
 	// Tiny helper - encapsulates sending a 'key' or 'windowkey' websocket message
 	_sendKeyEvent: function _sendKeyEvent(charCode, unoKeyCode) {
 		if (this._map.getWinId() === 0) {
-			this._map._socket.sendMessage('key type=input char=' + charCode + ' key=' + unoKeyCode + '\n');
+			this._map._socket.sendMessage(
+				'key type=input char=' + charCode + ' key=' + unoKeyCode + '\n'
+			);
 		} else {
-			this._map._socket.sendMessage('windowkey id=' + this._map.getWinId() + ' type=input char=' + charCode + ' key=' + unoKeyCode + '\n');
+			this._map._socket.sendMessage(
+				'windowkey id=' +
+					this._map.getWinId() +
+					' type=input char=' +
+					charCode +
+					' key=' +
+					unoKeyCode +
+					'\n'
+			);
 		}
 	},
 
@@ -774,6 +800,6 @@ L.ClipboardContainer = L.Layer.extend({
 	}
 });
 
-L.clipboardContainer = function () {
+L.clipboardContainer = function() {
 	return new L.ClipboardContainer();
 };
