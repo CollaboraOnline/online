@@ -605,10 +605,10 @@ L.ClipboardContainer = L.Layer.extend({
 			// Chrome sends a input/insertText with 'null' event data when
 			// typing a newline quickly after typing text.
 			console.warn('Tried to queue null text! Maybe a lost newline?');
-			return;
+			this._queuedInput += '\n';
+			clearTimeout(this._queueTimer);
 		}
-
-		if (this._queuedInput !== '') {
+		else if (this._queuedInput !== '') {
 			console.warn(
 				'Text input already queued - recieving composition end events too fast!'
 			);
