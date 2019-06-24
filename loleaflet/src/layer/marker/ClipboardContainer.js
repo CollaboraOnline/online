@@ -307,9 +307,9 @@ L.ClipboardContainer = L.Layer.extend({
 		L.Log.log(payload.toString(), 'INPUT');
 
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
-// 		if (this._map._docLayer && this._map._docLayer._debug) {
-			console.log2(+new Date()+ ' %cINPUT%c: '+ type + '%c', 'background:#bfb;color:black', 'color:green', 'color:black', JSON.stringify(payload));
-// 		}
+		// 		if (this._map._docLayer && this._map._docLayer._debug) {
+		console.log2(+new Date()+ ' %cINPUT%c: '+ type + '%c', 'background:#bfb;color:black', 'color:green', 'color:black', JSON.stringify(payload));
+		// 		}
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
@@ -446,7 +446,7 @@ L.ClipboardContainer = L.Layer.extend({
 		} else if (ev.inputType === 'deleteCompositionText') {
 			// Safari on OS X is extra nice about composition - it notifies the
 			// browser whenever the composition text should be deleted.
-		} else if ( ev.inputType === 'insertFromComposition') {
+		} else if (ev.inputType === 'insertFromComposition') {
 			// Observed only on desktop Safari just before a "compositionend"
 			// TODO: Check if the
 			this._queueInput(ev.data);
@@ -565,7 +565,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// NOTE: Ideally this should never happen, as the textarea/contenteditable
 		// is initialized with two non-breaking spaces when "emptied".
 		if ((this._map.getWinId() === 0 && this._textArea.textContent.length === 0)
-			/* || ev.findMyTextContentAre.length == 0 */
+		/* || ev.findMyTextContentAre.length == 0 */
 		) {
 			if (ev.inputType === 'deleteContentBackward') {
 				this._sendKeyEvent(8, 1283);
@@ -642,7 +642,7 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 
 		// Check for Safari; it fires composition events on typing diacritics with dead keys.
-		if (L.Browser.Safari ) {
+		if (L.Browser.Safari) {
 			if (this._lastInputType === 'insertFromComposition') {
 				this._queueInput(ev.data);
 			} else {
@@ -667,7 +667,7 @@ L.ClipboardContainer = L.Layer.extend({
 	_abortComposition: function _abortComposition() {
 		if (this._isComposing) {
 			this._sendCompositionEvent('input', '');
-// 			this._sendCompositionEvent('end', '');
+			// 			this._sendCompositionEvent('end', '');
 			this._isComposing = false;
 		}
 		this._emptyArea();
@@ -683,7 +683,7 @@ L.ClipboardContainer = L.Layer.extend({
 
 		// TODO: handle internal selection here (compare pasted plaintext with the
 		// last copied/cut plaintext, send a UNO 'paste' command over websockets if so.
-// 		if (this._lastClipboardText === ...etc...
+		// 		if (this._lastClipboardText === ...etc...
 
 		var pasteString;
 		if (ev.clipboardData) {
