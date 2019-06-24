@@ -92,6 +92,9 @@ L.Clipboard = L.Class.extend({
 	dataTransferToDocument: function (dataTransfer, preferInternal) {
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
+		this._startProgress();
+		this._downloadProgress._onStartDownload();
+
 		var pasteHtml = dataTransfer.getData('text/html');
 		var meta = this._getMetaOrigin(pasteHtml);
 		var id = this._map.options.webserver + this._map.options.serviceRoot +
@@ -151,10 +154,17 @@ L.Clipboard = L.Class.extend({
 
 			request.onreadystatechange = function() {
 				if (request.status == 200 && request.readyState == 4) {
-					console.log(request);
 					that._map._socket.sendMessage('uno .uno:Paste');
+					that._downloadProgress._onClose();
 				}
 			}
+
+			request.upload.addEventListener('progress', function (e) {
+				if (e.lengthComputable) {
+					var progress = { statusType: 'setvalue', value: e.loaded / e.total * 100 };
+					that._downloadProgress._onUpdateProgress(progress);
+				}
+			}, false);
 
 			var isAsync = true;
 			request.open('POST', id, isAsync);
@@ -229,14 +239,20 @@ L.Clipboard = L.Class.extend({
 		//TODO: handle complex selection download.
 	},
 
-	_onDownloadOnLargeCopyPaste: function () {
+	_startProgress: function() {
 		if (!this._downloadProgress) {
-			this._warnFirstLargeCopyPaste();
 			this._downloadProgress = L.control.downloadProgress();
 		}
 		if (!this._downloadProgress.isVisible()) {
 			this._downloadProgress.addTo(this._map);
 			this._downloadProgress.show();
+		}
+	},
+
+	_onDownloadOnLargeCopyPaste: function () {
+		if (!this._downloadProgress) {
+			this._warnFirstLargeCopyPaste();
+			this._startProgress();
 		}
 		else {
 			this._warnLargeCopyPasteAlreadyStarted();
