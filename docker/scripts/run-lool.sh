@@ -36,10 +36,10 @@ perl -pi -e "s/<password (.*)>.*<\/password>/<password \1>${password}<\/password
 
 
 # Restart when /etc/loolwsd/loolwsd.xml changes
-[ -x /usr/bin/inotifywait -a /usr/bin/killall ] && (
+[ -x /usr/bin/inotifywait -a /usr/bin/pkill ] && (
 	/usr/bin/inotifywait -e modify /etc/loolwsd/loolwsd.xml
 	echo "$(ls -l /etc/loolwsd/loolwsd.xml) modified --> restarting"
-	/usr/bin/killall -1 loolwsd
+	pkill -f --signal 1 loolwsd
 ) &
 
 # Start loolwsd
