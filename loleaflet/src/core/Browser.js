@@ -17,6 +17,7 @@
 (function () {
 
 	var ua = navigator.userAgent.toLowerCase(),
+	    uv = navigator.vendor.toLowerCase(),
 	    doc = document.documentElement,
 
 	    ie = 'ActiveXObject' in window,
@@ -26,6 +27,7 @@
 	    android23 = ua.search('android [23]') !== -1,
 	    chrome    = ua.indexOf('chrome') !== -1,
 	    gecko     = ua.indexOf('gecko') !== -1  && !webkit && !window.opera && !ie,
+	    safari    = !chrome && (ua.indexOf('safari') !== -1 || uv.indexOf('apple') == 0),
 
 	    win = navigator.platform.indexOf('Win') === 0,
 
@@ -78,7 +80,7 @@
 
 		// @property safari: Boolean
 		// `true` for the Safari browser.
-		safari: !chrome && ua.indexOf('safari') !== -1,
+		safari: safari,
 
 
 		// @property win: Boolean
