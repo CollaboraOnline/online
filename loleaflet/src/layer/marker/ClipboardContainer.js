@@ -252,6 +252,12 @@ L.ClipboardContainer = L.Layer.extend({
 			this._container.style.opacity = 0;
 			this._textArea.style.width = '1px';
 			this._textArea.style.height = '1px';
+			this._textArea.style.caretColor = 'transparent';
+
+			// Setting the font-size to zero is the only reliable
+			// way to hide the caret in MSIE11, as the CSS "caret-color"
+			// property is not implemented.
+			this._textArea.style.fontSize = '0';
 		}
 	},
 
