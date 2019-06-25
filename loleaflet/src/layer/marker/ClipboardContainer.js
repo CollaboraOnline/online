@@ -35,6 +35,16 @@ L.ClipboardContainer = L.Layer.extend({
 		// some other scenarios.
 		this._lastInputType = '';
 
+		// Length of the document's selection when the last 'beforeinput' event was
+		// handled. Needed to catch and handle an edge case in Chrome where hitting
+		// either delete or backspace with active selection sends messages for both
+		// the input event and the keystrokes.
+		this._selectionLengthAtBeforeInput = 0;
+
+		// Idem to _lastInputType. Needed to handle the right keystroke on the edge case
+		// that this._selectionLengthAtBeforeInput helps catch.
+		this._lastBeforeInputType = '';
+
 		// Capability check.
 		this._hasInputType = window.InputEvent && 'inputType' in window.InputEvent.prototype;
 
@@ -70,6 +80,9 @@ L.ClipboardContainer = L.Layer.extend({
 
 		// This variable prevents from hiding the keyboard just before focus call
 		this.dontBlur = false;
+
+		// Debug flag, used in fancyLog(). See the debug() method.
+		this._isDebugOn = false;
 	},
 
 	onAdd: function() {
@@ -262,7 +275,8 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	debug: function(debugOn) {
-		this._setupStyles(debugOn);
+		this._setupStyles(!!debugOn);
+		this._isDebugOn = !!debugOn;
 	},
 
 	activeElement: function() {
@@ -350,7 +364,7 @@ L.ClipboardContainer = L.Layer.extend({
 		L.Log.log(payload.toString(), 'INPUT');
 
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
-		if (this._map._docLayer && this._map._docLayer._debug) {
+		if (this._isDebugOn) {
 			console.log2(
 				+new Date() + ' %cINPUT%c: ' + type + '%c',
 				'background:#bfb;color:black',
@@ -438,6 +452,21 @@ L.ClipboardContainer = L.Layer.extend({
 			if (this._isComposing) {
 				// deletion refers to the text being composing, noop
 				return;
+			}
+
+			// Chromium sends an input/deleteContentBackward event when pressing
+			// backspace *OR* delete when the contenteditable has some text selected.
+			// In this edge case, send "key type=input" to lowsd with the
+			// right keystroke, and skip sending one keystroke per deleted character;
+			// handler/Map.Keyboard.js will send the corresponding "key type=up" message.
+			if (this._selectionLengthAtBeforeInput) {
+				if (this._lastBeforeInputType === 'deleteContentForward') {
+					this._sendKeyEvent(46, 1286);
+					return;
+				} else if (this._lastBeforeInputType === 'deleteContentBackward') {
+					this._sendKeyEvent(8, 1283);
+					return;
+				}
 			}
 
 			// Delete text backwards - as many characters as indicated in the previous
@@ -579,13 +608,16 @@ L.ClipboardContainer = L.Layer.extend({
 	// The getTargetRanges() method usually returns an empty array,
 	// since the ranges are only valid at the "beforeinput" stage.
 	// Fetching this info for later is important, especially
-	// for Chrome+"input/deleteContentBackwards" events.
+	// for Chrome+"input/deleteContentBackward" events.
 	// Also, some deleteContentBackward/Forward input types
 	// only happen at 'beforeinput' and not at 'input' events,
 	// particularly when the textarea/contenteditable is empty, but
 	// only in some configurations.
 	_onBeforeInput: function _onBeforeInput(ev) {
 		this._lastRanges = ev.getTargetRanges();
+
+		this._lastBeforeInputType = ev.inputType;
+		this._selectionLengthAtBeforeInput = window.getSelection().toString().length;
 
 		// When trying to delete (i.e. backspace) on an empty textarea, the input event
 		// won't be fired afterwards. Handle backspace here instead.
@@ -627,7 +659,7 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	_clearQueued: function _clearQueued() {
-		console.log('Cleared queued:', { text: this._queuedInput });
+		// console.log('Cleared queued:', { text: this._queuedInput });
 		clearTimeout(this._queueTimer);
 		this._queuedInput = '';
 	},
