@@ -16,9 +16,9 @@ L.Map.include({
 					button.hide();
 					that._enterEditMode('edit');
 					that.fire('editorgotfocus');
-					// In the iOS app, just clicking the mobile-edit-button is
+					// In the iOS/android app, just clicking the mobile-edit-button is
 					// not reason enough to pop up the on-screen keyboard.
-					if (!window.ThisIsTheiOSApp)
+					if (!(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp))
 						that.focus();
 				});
 
