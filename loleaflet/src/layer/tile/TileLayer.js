@@ -261,6 +261,14 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewReset();
 		map.on('drag resize zoomend', this._updateScrollOffset, this);
 
+		if (window.isInternetExplorer) {
+			var tileLayer = this;
+			document.addEventListener('beforepaste', function() {
+				console.log('Before paste called !');
+				tileLayer._map._clipboardContainer.focus(true);
+			}, true);
+		}
+
 		map.on('copy', this._onCopy, this);
 		map.on('cut', this._onCut, this);
 		map.on('paste', this._onPaste, this);
@@ -2649,19 +2657,16 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCopy: function (e) {
 		e = e.originalEvent;
-		e.preventDefault();
 		this._map._clip.copy(e, this._selectionType());
 	},
 
 	_onCut: function (e) {
 		e = e.originalEvent;
-		e.preventDefault();
 		this._map._clip.cut(e, this._selectionType());
 	},
 
 	_onPaste: function (e) {
 		e = e.originalEvent;
-		e.preventDefault();
 		this._map._clip.paste(e);
 	},
 

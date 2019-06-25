@@ -32,6 +32,10 @@ if (host === '' && !window.ThisIsAMobileApp) {
 	vex.dialog.alert(errorMessages.emptyhosturl);
 }
 
+var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1
+			|| navigator.userAgent.toLowerCase().indexOf('trident') != -1);
+global.isInternetExplorer = isInternetExplorer;
+
 // loleaflet.js accesses these globals
 // TODO: Get rid of these globals
 global.closebutton = closebutton;

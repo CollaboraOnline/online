@@ -85,8 +85,8 @@ L.Clipboard = L.Class.extend({
 		var types = dataTransfer.types;
 		var data = null;
 		if (types == null) { // IE
-			data = dataTransfer.getData('text');
-			content.push('text/plain\n');
+			data = dataTransfer;
+			content.push('text/html\n');
 			content.push(data.length.toString(16) + '\n');
 			content.push(data);
 			content.push('\n');
@@ -177,7 +177,7 @@ L.Clipboard = L.Class.extend({
 
 		var pasteHtml = null;
 		if (dataTransfer.types == null) { // IE
-			pasteHtml = dataTransfer.getData('text');
+			pasteHtml = dataTransfer;
 		} else {
 			pasteHtml = dataTransfer.getData('text/html');
 		}
@@ -308,11 +308,13 @@ L.Clipboard = L.Class.extend({
 
 	copy: function(e,t) {
 		console.log('Copy');
+		e.preventDefault();
 		this.populateClipboard(e,t);
 		this._map._socket.sendMessage('uno .uno:Copy');
 	},
 
 	cut: function(e,t) {
+		e.preventDefault();
 		console.log('Cut');
 		this.populateClipboard(e,t);
 		this._map._socket.sendMessage('uno .uno:Cut');
@@ -321,10 +323,16 @@ L.Clipboard = L.Class.extend({
 	paste: function(e) {
 		console.log('Paste');
 		if (e.clipboardData) { // Standard
+			e.preventDefault();
 			this.dataTransferToDocument(e.clipboardData, /* preferInternal = */ true);
 		}
-		else if (window.clipboardData) { // IE 11
-			this.dataTransferToDocument(window.clipboardData, /* preferInternal = */ true);
+		else { // IE 11
+			console.log('Scrape the content from the clipboard in a timeout!');
+			var map = this._map;
+			setTimeout(function() {
+				console.log('Do paste in timeout');
+				map._clip.dataTransferToDocument(map._clipboardContainer.getValue(), /* preferInternal = */ true);
+			}, 1);
 		}
 	},
 
