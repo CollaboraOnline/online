@@ -381,7 +381,21 @@ L.Clipboard = L.Class.extend({
 		}
 	},
 
+	_userAlreadyWarned: function (warning) {
+		var currentViewId = this._map._docLayer._viewId;
+		var currentUser = this._map._viewInfo[currentViewId].username;
+		var itemKey = warning + '_' + currentUser;
+		if (!localStorage.getItem(itemKey)) {
+			localStorage.setItem(itemKey, '1');
+			return false;
+		}
+		return true;
+	},
+
 	_warnFirstLargeCopyPaste: function () {
+		if (this._userAlreadyWarned('warnedAboutLargeCopy'))
+			return;
+
 		var self = this;
 		vex.dialog.alert({
 			message: _('<p>When copying larger pieces of your document, to share them with other applications ' +
