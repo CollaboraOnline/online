@@ -921,19 +921,34 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
     return true;
 }
 
-bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& /* tokens */)
+bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens )
 {
-    const char **pMimeTypes = nullptr; // fetch all for now.
+    char **pMimeTypes = nullptr; // fetch all for now.
     size_t       nOutCount = 0;
     char       **pOutMimeTypes = nullptr;
     size_t      *pOutSizes = nullptr;
     char       **pOutStreams = nullptr;
 
+    bool hasMimeRequest = tokens.size() > 1;
+    if (hasMimeRequest)
+    {
+        int length = tokens[1].length();
+        pMimeTypes = new char*[1];
+        pMimeTypes[0] = new char[length];
+        strncpy(pMimeTypes[0], tokens[1].c_str(), length);
+    }
+
     bool success = false;
     getLOKitDocument()->setView(_viewId);
 
-    success = getLOKitDocument()->getClipboard(pMimeTypes, &nOutCount, &pOutMimeTypes,
+    success = getLOKitDocument()->getClipboard((const char**)pMimeTypes, &nOutCount, &pOutMimeTypes,
                                                &pOutSizes, &pOutStreams);
+
+    if (hasMimeRequest)
+    {
+        delete pMimeTypes[0];
+        delete pMimeTypes;
+    }
 
     if (!success || nOutCount == 0)
     {

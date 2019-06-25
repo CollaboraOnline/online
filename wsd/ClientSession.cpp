@@ -146,7 +146,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     if (type == DocumentBroker::CLIP_REQUEST_GET)
     {
         LOG_TRC("Session [" << getId() << "] sending getclipboard");
-        docBroker->forwardToChild(getId(), "getclipboard");
+        docBroker->forwardToChild(getId(), "getclipboard text/html");
         _clipSockets.push_back(socket);
     }
     else // REQUEST_SET
