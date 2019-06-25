@@ -923,7 +923,8 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
 
 bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens )
 {
-    char **pMimeTypes = nullptr; // fetch all for now.
+    const char **pMimeTypes = nullptr; // fetch all for now.
+    const char  *pOneType[2];
     size_t       nOutCount = 0;
     char       **pOutMimeTypes = nullptr;
     size_t      *pOutSizes = nullptr;
@@ -932,29 +933,21 @@ bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const st
     bool hasMimeRequest = tokens.size() > 1;
     if (hasMimeRequest)
     {
-        int length = tokens[1].length();
-        pMimeTypes = new char*[1];
-        pMimeTypes[0] = new char[length];
-        strncpy(pMimeTypes[0], tokens[1].c_str(), length);
+        pMimeTypes = pOneType;
+        pMimeTypes[0] = tokens[1].c_str();
+        pMimeTypes[1] = nullptr;
     }
 
     bool success = false;
     getLOKitDocument()->setView(_viewId);
 
-    success = getLOKitDocument()->getClipboard((const char**)pMimeTypes, &nOutCount, &pOutMimeTypes,
+    success = getLOKitDocument()->getClipboard(pMimeTypes, &nOutCount, &pOutMimeTypes,
                                                &pOutSizes, &pOutStreams);
-
-    if (hasMimeRequest)
-    {
-        delete pMimeTypes[0];
-        delete pMimeTypes;
-    }
 
     if (!success || nOutCount == 0)
     {
         LOG_WRN("Get clipboard failed " << getLOKitLastError());
         sendTextFrame("clipboardcontent: error");
-//      sendTextFrame("error: cmd=getclipboard kind=syntax");
         return false;
     }
 
