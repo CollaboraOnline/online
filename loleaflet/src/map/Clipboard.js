@@ -15,6 +15,10 @@ L.Clipboard = L.Class.extend({
 		this._selectionContent = '';
 		this._accessKey = [ '', '' ];
 		this._clipboardSerial = 0; // incremented on each operation
+
+		var that = this;
+		document.addEventListener(
+			'beforepaste', function(ev) { that.beforepaste(ev); });
 	},
 
 	stripHTML: function(html) { // grim.
@@ -81,24 +85,24 @@ L.Clipboard = L.Class.extend({
 		return '';
 	},
 
-	_readContentSync: function(dataTransfer) {
+	_encodeHtmlToBlob: function(data) {
+		var content = [];
+		content.push('text/html\n');
+		content.push(data.length.toString(16) + '\n');
+		content.push(data);
+		content.push('\n');
+		return new Blob(content);
+	},
+
+	_readContentToBlobSync: function(dataTransfer) {
 		var content = [];
 		var types = dataTransfer.types;
-		var data = null;
-		if (types == null) { // IE
-			data = dataTransfer;
-			content.push('text/html\n');
+		for (var t = 0; t < types.length; ++t) {
+			var data = dataTransfer.getData(types[t]);
+			content.push((types[t] == 'text' ? 'text/plain' : types[t]) + '\n');
 			content.push(data.length.toString(16) + '\n');
 			content.push(data);
 			content.push('\n');
-		} else {
-			for (var t = 0; t < types.length; ++t) {
-				data = dataTransfer.getData(types[t]);
-				content.push((types[t] == 'text' ? 'text/plain' : types[t]) + '\n');
-				content.push(data.length.toString(16) + '\n');
-				content.push(data);
-				content.push('\n');
-			}
 		}
 		return new Blob(content);
 	},
@@ -143,9 +147,10 @@ L.Clipboard = L.Class.extend({
 			request.send();
 	},
 
-	// FIXME: timestamp in the links ? old / un-responsive servers (?)
-	_dataTransferDownloadAndPasteAsync: function(dataTransfer, src, dest) {
+	// Suck the data from one server to another asynchronously ...
+	_dataTransferDownloadAndPasteAsync: function(src, dest) {
 		var that = this;
+		// FIXME: add a timestamp in the links (?) ignroe old / un-responsive servers (?)
 		that._doAsyncDownload(
 			'GET', src, null,
 			function(response) {
@@ -174,13 +179,13 @@ L.Clipboard = L.Class.extend({
 		};
 	},
 
-	dataTransferToDocument: function (dataTransfer, preferInternal) {
+	dataTransferToDocument: function (dataTransfer, preferInternal, htmlText) {
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
 
 		var pasteHtml = null;
-		if (dataTransfer.types == null) { // IE
-			pasteHtml = dataTransfer;
+		if (dataTransfer == null) { // IE
+			pasteHtml = htmlText;
 		} else {
 			pasteHtml = dataTransfer.getData('text/html');
 		}
@@ -203,20 +208,21 @@ L.Clipboard = L.Class.extend({
 		// Do we have a remote Online we can suck rich data from ?
 		if (meta !== '')
 		{
-			this._dataTransferDownloadAndPasteAsync(
-				dataTransfer, meta, destination);
+			console.log('Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"');
+			this._dataTransferDownloadAndPasteAsync(meta, destination);
 			return;
 		}
 
-		console.log('Mismatching index\n\t"' + meta + '" vs. \n\t"' + id + '"');
-
-		// Suck HTML content out of dataTransfer now while it feels like working.
-		var content = this._readContentSync(dataTransfer);
+		var content;
+		if (dataTransfer == null)
+			content = this._encodeHtmlToBlob(htmlText);
+		else // Suck HTML content out of dataTransfer now while it feels like working.
+			content = this._readContentSyncToBlob(dataTransfer);
 
 		// FIXME: do we want this section ?
 
 		// Images get a look in only if we have no content and are async
-		if (content == null && pasteHtml == '')
+		if (content == null && pasteHtml == '' && dataTransfer != null)
 		{
 			var types = dataTransfer.types;
 
@@ -289,21 +295,64 @@ L.Clipboard = L.Class.extend({
 		}
 	},
 
+	_createDummyDiv: function(htmlContent) {
+		var div = document.createElement('div');
+		div.setAttribute('style', 'user-select: text !important');
+		div.style.opacity = 0;
+		div.setAttribute('contenteditable', 'true');
+		div.setAttribute('type', 'text');
+		div.setAttribute('style', '-webkit-user-select: text !important');
+		div.innerHTML = htmlContent;
+
+		// so we get events to where we want them.
+		var parent = document.getElementById('map');
+		parent.appendChild(div);
+
+		return div;
+	},
+
+	// only used by IE.
+	beforepaste: function() {
+		console.log('Before paste');
+		if (!window.isInternetExplorer)
+			return;
+
+		console.log('IE11 madness ...'); // TESTME ...
+		var div = this._createDummyDiv('---copy-paste-canary---');
+		var sel = document.getSelection();
+		// we need to restore focus.
+		var active = document.activeElement;
+		// get a selection first - FIXME: use Ivan's 2 spaces on input.
+		var range = document.createRange();
+		range.selectNodeContents(div);
+		sel.removeAllRanges();
+		sel.addRange(range);
+		div.focus();
+
+		var that = this;
+		// Now we wait for paste ...
+		div.addEventListener('paste', function() {
+			// Can't get HTML until it is pasted ... so quick timeout
+			setTimeout(function() {
+				console.log('Content pasted');
+				that.dataTransferToDocument(null, false, div.innerHTML);
+				div.parentNode.removeChild(div);
+				// attempt to restore focus.
+				if (active == null)
+					that._map.focus();
+				else
+					active.focus();
+				that._map._clipboardContainer._abortComposition();
+				that._clipboardSerial++;
+			}, 0 /* ASAP */);
+		});
+	},
+
 	// Try-harder fallbacks for emitting cut/copy/paste events.
 	_execOnElement: function(operation) {
 		var serial = this._clipboardSerial;
 
-		// FIXME: re-use Ivan's 2 space div for on input.
-		var div = document.createElement('div');
-		div.setAttribute('style', 'user-select: text !important');
-		div.setAttribute('contenteditable', 'true');
-		div.setAttribute('type', 'text');
-		div.setAttribute('style', '-webkit-user-select: text !important');
-		div.textContent = 'dummy content';
-
-		// so we get events where we want them.
-		var parent = document.getElementById('map');
-		parent.appendChild(div);
+		var div = this._createDummyDiv('dummy content');
 
 		var that = this;
 		var listener = function(e) {
@@ -337,7 +386,7 @@ L.Clipboard = L.Class.extend({
 		div.removeEventListener('paste', listener);
 		div.removeEventListener('cut', listener);
 		div.removeEventListener('copy', listener);
-		parent.removeChild(div);
+		div.parentNode.removeChild(div);
 
 		// try to restore focus if we need to.
 		if (active !== null && active !== document.activeElement)
@@ -366,7 +415,7 @@ L.Clipboard = L.Class.extend({
 		}
 
 		console.log('failed to ' + operation);
-		this._map._clipboardContainer.warnCopyPaste();
+		this._warnCopyPaste();
 	},
 
 	// Pull UNO clipboard commands out from menus and normal user input.
@@ -404,20 +453,10 @@ L.Clipboard = L.Class.extend({
 		if (ev.clipboardData) { // Standard
 			ev.preventDefault();
 			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true);
-			this._map._clipboardContainer.abortComposition();
+			this._map._clipboardContainer._abortComposition();
 			this._clipboardSerial++;
 		}
-		else { // IE 11
-			console.log('Scrape the content from the clipboard in a timeout!');
-			var that = this;
-			setTimeout(function() {
-				console.log('Do paste in timeout');
-				that._map._clip.dataTransferToDocument(
-					that._map._clipboardContainer.getValue(), /* preferInternal = */ true);
-				this._map._clipboardContainer.abortComposition();
-				that._clipboardSerial++;
-			}, 1);
-		}
+		// else: IE 11 - code in beforepaste: above.
 	},
 
 	clearSelection: function() {
@@ -474,6 +513,22 @@ L.Clipboard = L.Class.extend({
 			return false;
 		}
 		return true;
+	},
+
+	_warnCopyPaste: function() {
+		var self = this;
+		var msg;
+		if (L.Browser.mobile) {
+			msg = _('<p>Your browser has very limited access to the clipboard</p>');
+		} else {
+			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>');
+		}
+		vex.dialog.alert({
+			message: msg,
+			callback: function () {
+				self._map.focus();
+			}
+		});
 	},
 
 	_warnFirstLargeCopyPaste: function () {

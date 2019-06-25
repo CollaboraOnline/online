@@ -261,14 +261,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewReset();
 		map.on('drag resize zoomend', this._updateScrollOffset, this);
 
-		if (window.isInternetExplorer) {
-			var tileLayer = this;
-			document.addEventListener('beforepaste', function() {
-				console.log('Before paste called !');
-				tileLayer._map._clipboardContainer.focus(true);
-			}, true);
-		}
-
 		map.on('copy', this._onCopy, this);
 		map.on('cut', this._onCut, this);
 		map.on('paste', this._onPaste, this);

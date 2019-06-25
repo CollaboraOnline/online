@@ -52,7 +52,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		confirmCopy.style.font = '13px/11px Tahoma, Verdana, sans-serif';
 		confirmCopy.style.alignment = 'center';
 		confirmCopy.style.height = 20 + 'px';
-		L.DomEvent.on(confirmCopy, 'click', this._onConfirmPasteAction, this);
+		L.DomEvent.on(confirmCopy, 'click', this._onConfirmCopyAction, this);
 	},
 
 	show: function () {
@@ -112,8 +112,8 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._content.appendChild(this._confirmPasteButton);
 	},
 
-	_onConfirmPasteAction: function () {
-		// TODO: insert code for performing data copy to clipboard
+	_onConfirmCopyAction: function (ev) {
+		this._map._clip.copy(ev);
 		this._map._clip._downloadProgress = null;
 		this._onClose();
 	},
@@ -129,14 +129,14 @@ L.Control.DownloadProgress = L.Control.extend({
 		this.remove();
 	},
 
-	_download: function	() {
+	_download: function () {
 		var that = this;
 		this._map._clip._doAsyncDownload(
 			'GET', that._uri, null,
 			function(response) {
 				console.log('download done - response ' + response);
-				that._map._clipboardContainer.setValue(response);
-				// TODO: set clipboard...
+				that._map._clip.setSelectionClip(response);
+				// TODO: swap to the 'copy' button (?)
 			},
 			function(progress) { return progress/2; }
 		);
@@ -185,7 +185,6 @@ L.Control.UploadProgress = L.Control.extend({
 		startUpload.style.alignment = 'center';
 		startUpload.style.height = 20 + 'px';
 		L.DomEvent.on(startUpload, 'click', this._onStartUpload, this);
-
 
 		// progress bar
 		this._progress = L.DomUtil.create('div', 'leaflet-paste-progress', null);
@@ -350,11 +349,6 @@ L.Control.CrossProgress = L.Control.extend({
 		}
 	},
 
-	_onConfirmPasteAction: function () {
-		// TODO: insert code for performing data copy to clipboard
-		this._onClose();
-	},
-
 	_onClose: function () {
 		this._cancelUpDownload();
 		if (this._content.contains(this._confirmPasteButton))
@@ -365,11 +359,11 @@ L.Control.CrossProgress = L.Control.extend({
 		this.remove();
 	},
 
-	_download: function	() {
+	_download: function () {
 		// TODO: insert code for starting an async download
 	},
 
-	_upload: function	() {
+	_upload: function () {
 		// TODO: insert code for starting an async upload
 	},
 
