@@ -83,19 +83,8 @@ L.Control.ContextMenu = L.Control.extend({
 			build: function() {
 				return {
 					callback: function(key) {
-						console.log ('FOO context menu key ' + key);
-						if (key === '.uno:Copy') {
-							if (!document.execCommand('copy'))
-								map._clipboardContainer.warnCopyPaste();
-						} else if (key === '.uno:Cut') {
-							if (!document.execCommand('cut'))
-								map._clipboardContainer.warnCopyPaste();
-						} else if (key === '.uno:Paste') {
-							if (!document.execCommand('paste'))
-								map._clipboardContainer.warnCopyPaste();
-						} else {
+						if (!map._clip.filterExecCopyPaste(key))
 							map.sendUnoCommand(key);
-						}
 						// Give the stolen focus back to map
 						map.focus();
 					},

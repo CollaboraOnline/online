@@ -272,12 +272,37 @@ L.Clipboard = L.Class.extend({
 			text = this._selectionContent;
 		}
 
+		var plainText = this.stripHTML(text);
 		if (e.clipboardData) { // Standard
+			e.clipboardData.setData('text/plain', plainText);
 			e.clipboardData.setData('text/html', text);
 			console.log('Put "' + text + '" on the clipboard');
 
 		} else if (window.clipboardData) { // IE 11 - poor clipboard API
-			window.clipboardData.setData('Text', this.stripHTML(text));
+			window.clipboardData.setData('Text', plainText);
+		}
+	},
+
+	// Pull UNO clipboard commands out of the stream we want to execute locally
+	// We re-emit these, to get good security event / credentials.
+	filterExecCopyPaste: function(cmd) {
+		if (cmd === '.uno:Copy') {
+			if (!document.execCommand('copy'))
+				this._map._clipboardContainer.warnCopyPaste();
+			console.log('filtered & re-emitted copy');
+			return true;
+		} else if (cmd === '.uno:Cut') {
+			if (!document.execCommand('cut'))
+				this._map._clipboardContainer.warnCopyPaste();
+			console.log('filtered & re-emitted cut');
+			return true;
+		} else if (cmd === '.uno:Paste') {
+			if (!document.execCommand('paste'))
+				this._map._clipboardContainer.warnCopyPaste();
+			console.log('filtered & re-emitted paste');
+			return true;
+		} else {
+			return false;
 		}
 	},
 

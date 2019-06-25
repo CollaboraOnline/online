@@ -830,6 +830,14 @@ L.Control.Menubar = L.Control.extend({
 		if (unoCommand.startsWith('.uno:InsertPageHeader') || unoCommand.startsWith('.uno:InsertPageFooter')) {
 			unoCommand = unoCommand + ($(item).hasClass('lo-menu-item-checked') ? 'On:bool=false' : 'On:bool=true');
 		}
+		else if (unoCommand.startsWith('.uno:SlideMasterPage')) {
+			// Toggle between showing master page and closing it.
+			unoCommand = ($(item).hasClass('lo-menu-item-checked') ? '.uno:CloseMasterView' : '.uno:SlideMasterPage');
+		}
+		else if (this._map._clip.filterExecCopyPaste(unoCommand)) {
+			return;
+		}
+
 		this._map.sendUnoCommand(unoCommand);
 	},
 
