@@ -14,6 +14,7 @@ L.Clipboard = L.Class.extend({
 		this._map = map;
 		this._selectionContent = '';
 		this._accessKey = [ '', '' ];
+		this._clipboardSerial = 0; // incremented on each operation
 	},
 
 	stripHTML: function(html) { // grim.
@@ -257,7 +258,8 @@ L.Clipboard = L.Class.extend({
 		}
 	},
 
-	populateClipboard: function(e,t) {
+	populateClipboard: function(ev) {
+		var t = this._map._docLayer._selectionType();
 		var text;
 		if (t === null) {
 			console.log('Copy/Cut with no selection!');
@@ -273,65 +275,143 @@ L.Clipboard = L.Class.extend({
 		}
 
 		var plainText = this.stripHTML(text);
-		if (e.clipboardData) { // Standard
-			e.clipboardData.setData('text/plain', plainText);
-			e.clipboardData.setData('text/html', text);
+		if (ev.clipboardData) { // Standard
+			ev.clipboardData.setData('text/plain', plainText);
+			ev.clipboardData.setData('text/html', text);
 			console.log('Put "' + text + '" on the clipboard');
+			this._clipboardSerial++;
 
 		} else if (window.clipboardData) { // IE 11 - poor clipboard API
-			window.clipboardData.setData('Text', plainText);
+			if (window.clipboardData.setData('Text', plainText))
+				this._clipboardSerial++;
 		}
 	},
 
-	// Pull UNO clipboard commands out of the stream we want to execute locally
-	// We re-emit these, to get good security event / credentials.
+	// Try-harder fallbacks for emitting cut/copy/paste events.
+	_execOnElement: function(operation) {
+		var serial = this._clipboardSerial;
+
+		// FIXME: re-use Ivan's 2 space div for on input.
+		var div = document.createElement('div');
+		div.setAttribute('style', 'user-select: text !important');
+		div.setAttribute('contenteditable', 'true');
+		div.setAttribute('type', 'text');
+		div.setAttribute('style', '-webkit-user-select: text !important');
+		div.textContent = 'dummy content';
+
+		// so we get events where we want them.
+		var parent = document.getElementById('doc-clipboard-container');
+		parent.appendChild(div);
+
+		var that = this;
+		var listener = function(e) {
+			e.preventDefault();
+			console.log('Got event ' + operation + ' on transient editable');
+			// forward with proper security credentials now.
+			that[operation].call(that, e);
+		};
+		div.addEventListener('copy', listener);
+		div.addEventListener('cut', listener);
+		div.addEventListener('paste', listener);
+
+		var success = false;
+		var active = null;
+		var sel = document.getSelection();
+		if (sel)
+		{
+			// selection can change focus.
+			active = document.activeElement;
+
+			// get a selection first - FIXME: use Ivan's 2 spaces on input.
+			var range = document.createRange();
+			range.selectNodeContents(div);
+			sel.removeAllRanges();
+			sel.addRange(range);
+
+			success = (document.execCommand(operation) &&
+				   serial !== this._clipboardSerial);
+		}
+		// cleanup
+		div.removeEventListener('paste', listener);
+		div.removeEventListener('cut', listener);
+		div.removeEventListener('copy', listener);
+		parent.removeChild(div);
+
+		// try to restore focus if we need to.
+		if (active !== null && active !== document.activeElement)
+			active.focus();
+
+		console.log('fallback ' + operation + ' ' + (success?'success':'fail'));
+
+		return success;
+	},
+
+	// Encourage browser(s) to actually execute the command
+	_execCopyCutPaste: function(operation) {
+		var serial = this._clipboardSerial;
+
+		// try execCommand.
+		if (document.execCommand(operation) &&
+		    serial !== this._clipboardSerial) {
+			console.log('copied successfully');
+			return;
+		}
+
+		// try a hidden div
+		if (this._execOnElement(operation)) {
+			console.log('copied on element successfully');
+			return;
+		}
+
+		console.log('failed to ' + operation);
+		this._map._clipboardContainer.warnCopyPaste();
+	},
+
+	// Pull UNO clipboard commands out from menus and normal user input.
+	// We try to massage and re-emit these, to get good security event / credentials.
 	filterExecCopyPaste: function(cmd) {
 		if (cmd === '.uno:Copy') {
-			if (!document.execCommand('copy'))
-				this._map._clipboardContainer.warnCopyPaste();
-			console.log('filtered & re-emitted copy');
-			return true;
+			this._execCopyCutPaste('copy');
 		} else if (cmd === '.uno:Cut') {
-			if (!document.execCommand('cut'))
-				this._map._clipboardContainer.warnCopyPaste();
-			console.log('filtered & re-emitted cut');
-			return true;
+			this._execCopyCutPaste('cut');
 		} else if (cmd === '.uno:Paste') {
-			if (!document.execCommand('paste'))
-				this._map._clipboardContainer.warnCopyPaste();
-			console.log('filtered & re-emitted paste');
-			return true;
+			this._execCopyCutPaste('paste');
 		} else {
 			return false;
 		}
+		console.log('filtered uno command ' + cmd);
+		return true;
 	},
 
-	copy: function(e,t) {
+	copy: function(ev) {
 		console.log('Copy');
-		e.preventDefault();
-		this.populateClipboard(e,t);
+		ev.preventDefault();
+		this.populateClipboard(ev);
 		this._map._socket.sendMessage('uno .uno:Copy');
 	},
 
-	cut: function(e,t) {
-		e.preventDefault();
+	cut: function(ev) {
 		console.log('Cut');
-		this.populateClipboard(e,t);
+		ev.preventDefault();
+		this.populateClipboard(ev);
 		this._map._socket.sendMessage('uno .uno:Cut');
 	},
 
-	paste: function(e) {
+	paste: function(ev) {
 		console.log('Paste');
-		if (e.clipboardData) { // Standard
-			e.preventDefault();
-			this.dataTransferToDocument(e.clipboardData, /* preferInternal = */ true);
+		if (ev.clipboardData) { // Standard
+			ev.preventDefault();
+			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true);
+			this._clipboardSerial++;
 		}
 		else { // IE 11
 			console.log('Scrape the content from the clipboard in a timeout!');
-			var map = this._map;
+			var that = this;
 			setTimeout(function() {
 				console.log('Do paste in timeout');
-				map._clip.dataTransferToDocument(map._clipboardContainer.getValue(), /* preferInternal = */ true);
+				that._map._clip.dataTransferToDocument(
+					that._map._clipboardContainer.getValue(), /* preferInternal = */ true);
+				that._clipboardSerial++;
 			}, 1);
 		}
 	},

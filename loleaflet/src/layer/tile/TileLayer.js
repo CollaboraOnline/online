@@ -2657,12 +2657,12 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCopy: function (e) {
 		e = e.originalEvent;
-		this._map._clip.copy(e, this._selectionType());
+		this._map._clip.copy(e);
 	},
 
 	_onCut: function (e) {
 		e = e.originalEvent;
-		this._map._clip.cut(e, this._selectionType());
+		this._map._clip.cut(e);
 	},
 
 	_onPaste: function (e) {
