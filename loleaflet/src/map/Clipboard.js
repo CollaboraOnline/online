@@ -404,6 +404,7 @@ L.Clipboard = L.Class.extend({
 		if (ev.clipboardData) { // Standard
 			ev.preventDefault();
 			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true);
+			this._map._clipboardContainer.abortComposition();
 			this._clipboardSerial++;
 		}
 		else { // IE 11
@@ -413,6 +414,7 @@ L.Clipboard = L.Class.extend({
 				console.log('Do paste in timeout');
 				that._map._clip.dataTransferToDocument(
 					that._map._clipboardContainer.getValue(), /* preferInternal = */ true);
+				this._map._clipboardContainer.abortComposition();
 				that._clipboardSerial++;
 			}, 1);
 		}
