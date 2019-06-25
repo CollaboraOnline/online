@@ -111,7 +111,6 @@ L.Clipboard = L.Class.extend({
 	_doAsyncDownload: function(type,url,optionalFormData,completeFn,progressFn) {
 		var that = this;
 		var request = new XMLHttpRequest();
-		request.timeout = 20 * 1000; // 20 secs ...
 
 		that._startProgress();
 		that._downloadProgress._onStartDownload();
@@ -133,6 +132,7 @@ L.Clipboard = L.Class.extend({
 			}
 		}, false);
 		request.open(type, url, true /* isAsync */);
+		request.timeout = 20 * 1000; // 20 secs ...
 		request.responseType = 'blob';
 		if (optionalFormData !== null)
 			request.send(optionalFormData);
