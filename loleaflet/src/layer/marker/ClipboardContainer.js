@@ -462,9 +462,11 @@ L.ClipboardContainer = L.Layer.extend({
 			if (this._selectionLengthAtBeforeInput) {
 				if (this._lastBeforeInputType === 'deleteContentForward') {
 					this._sendKeyEvent(46, 1286);
+					this._emptyArea();
 					return;
 				} else if (this._lastBeforeInputType === 'deleteContentBackward') {
 					this._sendKeyEvent(8, 1283);
+					this._emptyArea();
 					return;
 				}
 			}
