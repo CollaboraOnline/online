@@ -302,7 +302,7 @@ L.Clipboard = L.Class.extend({
 		div.textContent = 'dummy content';
 
 		// so we get events where we want them.
-		var parent = document.getElementById('doc-clipboard-container');
+		var parent = document.getElementById('map');
 		parent.appendChild(div);
 
 		var that = this;
