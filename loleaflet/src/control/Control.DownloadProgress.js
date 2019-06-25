@@ -80,14 +80,18 @@ L.Control.DownloadProgress = L.Control.extend({
 		$('#map').css('cursor', 'default');
 	},
 
-	_onStartDownload: function () {
-		//if (!this._uri)
-		//	return;
+	startProgressMode: function() {
 		this._setProgressCursor();
 		this._started = true;
 		this.setValue(0);
 		this._content.removeChild(this._downloadButton);
 		this._content.appendChild(this._progress);
+	},
+
+	_onStartDownload: function () {
+		if (!this._uri)
+			return;
+		this.startProgressMode();
 		this._download();
 	},
 
@@ -110,6 +114,7 @@ L.Control.DownloadProgress = L.Control.extend({
 
 	_onConfirmPasteAction: function () {
 		// TODO: insert code for performing data copy to clipboard
+		this._map._clip._downloadProgress = null;
 		this._onClose();
 	},
 
@@ -125,7 +130,16 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_download: function	() {
-		// TODO: insert code for starting an async download
+		var that = this;
+		this._map._clip._doAsyncDownload(
+			'GET', that._uri, null,
+			function(response) {
+				console.log('download done - response ' + response);
+				that._map._clipboardContainer.setValue(response);
+				// TODO: set clipboard...
+			},
+			function(progress) { return progress/2; }
+		);
 	},
 
 	_cancelDownload: function () {

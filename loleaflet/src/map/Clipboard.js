@@ -114,10 +114,12 @@ L.Clipboard = L.Class.extend({
 		var request = new XMLHttpRequest();
 
 		that._startProgress();
-		that._downloadProgress._onStartDownload();
+		that._downloadProgress.startProgressMode();
 		request.onload = function() {
 			that._downloadProgress._onComplete();
-			that._downloadProgress._onClose();
+			if (type == 'POST') {
+				that._downloadProgress._onClose();
+			}
 			completeFn(this.response);
 		}
 		request.onerror = function() {
@@ -267,8 +269,8 @@ L.Clipboard = L.Class.extend({
 		} else if (t === 'complex') {
 			console.log('Copy/Cut with complex/graphical selection');
 			text = this.getStubHtml();
-			// FIXME: Marco -> we need to pop up our magic 'download'
-			// button here I think ...
+			this._onDownloadOnLargeCopyPaste();
+			this._downloadProgress.setURI(this.getMetaBase() + this.getMetaPath());
 		} else {
 			console.log('Copy/Cut with simple text selection');
 			text = this._selectionContent;
@@ -446,8 +448,8 @@ L.Clipboard = L.Class.extend({
 		}
 		if (!this._downloadProgress.isVisible()) {
 			this._downloadProgress.addTo(this._map);
-			this._downloadProgress.show();
 		}
+		this._downloadProgress.show();
 	},
 
 	_onDownloadOnLargeCopyPaste: function () {
