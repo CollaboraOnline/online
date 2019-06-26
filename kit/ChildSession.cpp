@@ -993,6 +993,7 @@ bool ChildSession::setClipboard(const char* buffer, int length, const std::vecto
         std::getline(stream, command, '\n');
 
         data.read(stream);
+//        data.dumpState(std::cerr);
 
         size_t nInCount = data.size();
         size_t pInSizes[nInCount] = { 0, };

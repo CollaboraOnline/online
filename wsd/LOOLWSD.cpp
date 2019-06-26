@@ -2152,6 +2152,7 @@ private:
                 StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (reqPathTokens.count() > 0 && reqPathTokens[0] == "clipboard")
                 {
+//                    Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
                     handleClipboardRequest(request, message, disposition);
                 }
                 else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
