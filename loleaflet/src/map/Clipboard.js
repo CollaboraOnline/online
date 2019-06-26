@@ -63,7 +63,7 @@ L.Clipboard = L.Class.extend({
 			'     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
 			'     <meta name="origin" content="' + encodedOrigin + '"/>\n' +
 			'  </head>\n' +
-			'  <body lang="' + lang + ' dir="ltr">\n' +
+			'  <body lang="' + lang + '" dir="ltr">\n' +
 			'    <p>' + _('When pasting outside the suite it is necessary to first click the \'download\' button') + '</p>\n' +
 			'  </body>\n' +
 			'</html>';
@@ -106,12 +106,12 @@ L.Clipboard = L.Class.extend({
 		var content = [];
 		var types = dataTransfer.types;
 		for (var t = 0; t < types.length; ++t) {
-			if (types[t] == 'Files')
+			if (types[t] === 'Files')
 				continue; // images handled elsewhere.
 			var data = new Blob([dataTransfer.getData(types[t])]);
 			console.log('type ' + types[t] + ' length ' + data.size +
 				    ' -> 0x' + data.size.toString(16) + '\n');
-			content.push((types[t] == 'text' ? 'text/plain' : types[t]) + '\n');
+			content.push((types[t] === 'text' ? 'text/plain' : types[t]) + '\n');
 			content.push(data.size.toString(16) + '\n');
 			content.push(data);
 			content.push('\n');
@@ -133,15 +133,15 @@ L.Clipboard = L.Class.extend({
 		that._downloadProgress.startProgressMode();
 		request.onload = function() {
 			that._downloadProgress._onComplete();
-			if (type == 'POST') {
+			if (type === 'POST') {
 				that._downloadProgress._onClose();
 			}
 			completeFn(this.response);
-		}
+		};
 		request.onerror = function() {
 			that._downloadProgress._onComplete();
 			that._downloadProgress._onClose();
-		}
+		};
 
 		request.upload.addEventListener('progress', function (e) {
 			if (e.lengthComputable) {
@@ -234,7 +234,7 @@ L.Clipboard = L.Class.extend({
 		// FIXME: do we want this section ?
 
 		// Images get a look in only if we have no content and are async
-		if (content == null && pasteHtml == '' && dataTransfer != null)
+		if (content == null && pasteHtml === '' && dataTransfer != null)
 		{
 			var types = dataTransfer.types;
 
@@ -311,7 +311,7 @@ L.Clipboard = L.Class.extend({
 	_createDummyDiv: function(htmlContent) {
 		var div = document.createElement('div');
 		div.setAttribute('style', 'user-select: text !important');
-		div.style.opacity = 0;
+		div.style.opacity = '0';
 		div.setAttribute('contenteditable', 'true');
 		div.setAttribute('type', 'text');
 		div.setAttribute('style', '-webkit-user-select: text !important');
