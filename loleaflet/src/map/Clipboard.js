@@ -516,9 +516,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_userAlreadyWarned: function (warning) {
-		var currentViewId = this._map._docLayer._viewId;
-		var currentUser = this._map._viewInfo[currentViewId].username;
-		var itemKey = warning + '_' + currentUser;
+		var itemKey = warning;
 		if (!localStorage.getItem(itemKey)) {
 			localStorage.setItem(itemKey, '1');
 			return false;
