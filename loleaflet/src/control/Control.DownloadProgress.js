@@ -53,18 +53,25 @@ L.Control.DownloadProgress = L.Control.extend({
 		confirmCopy.style.alignment = 'center';
 		confirmCopy.style.height = 20 + 'px';
 		L.DomEvent.on(confirmCopy, 'click', this._onConfirmCopyAction, this);
-		this._closed = false;
 	},
 
 	show: function () {
+		console.log('DownloadProgress.show');
+		// better to init the following state variables here,
+		// since the widget could be re-used without having been destroyed
 		this._started = false;
 		this._complete = false;
+		this._closed = false;
 		this._content.appendChild(this._downloadButton);
 		this._container.style.visibility = '';
 	},
 
 	isClosed: function () {
 		return this._closed;
+	},
+
+	isStarted: function () {
+		return this._started;
 	},
 
 	setURI: function (uri) {
@@ -119,7 +126,6 @@ L.Control.DownloadProgress = L.Control.extend({
 
 	_onConfirmCopyAction: function () {
 		this._map._clip.filterExecCopyPaste('.uno:Copy');
-		this._map._clip._downloadProgress = null;
 		this._onClose();
 	},
 

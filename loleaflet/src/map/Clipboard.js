@@ -129,8 +129,11 @@ L.Clipboard = L.Class.extend({
 		var that = this;
 		var request = new XMLHttpRequest();
 
-		that._startProgress();
-		that._downloadProgress.startProgressMode();
+		// avoid to invoke the following code if the download widget depends on user interaction
+		if (!that._downloadProgress || !that._downloadProgress.isVisible()) {
+			that._startProgress();
+			that._downloadProgress.startProgressMode();
+		}
 		request.onload = function() {
 			that._downloadProgress._onComplete();
 			if (type === 'POST') {
@@ -505,11 +508,10 @@ L.Clipboard = L.Class.extend({
 			this._warnFirstLargeCopyPaste();
 			this._startProgress();
 		}
-		else {
+		else if (this._downloadProgress.isStarted()) {
 			// Need to show this only when a download is really in progress and we block it.
-			// Otherwise, it's easier to flasht the widget or something.
-			// this._warnLargeCopyPasteAlreadyStarted();
-			//this._downloadProgress._onComplete();
+			// Otherwise, it's easier to flash the widget or something.
+			this._warnLargeCopyPasteAlreadyStarted();
 		}
 	},
 
