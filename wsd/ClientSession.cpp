@@ -112,7 +112,7 @@ std::string ClientSession::getClipboardURI(bool encode)
 
     std::string proto = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://";
     std::string meta = proto + _hostNoTrust +
-        "/clipboard?WOPISrc=" + encodedFrom +
+        "/lool/clipboard?WOPISrc=" + encodedFrom +
         "&ServerId=" + LOOLWSD::HostIdentifier +
         "&ViewId=" + std::to_string(getKitViewId()) +
         "&Tag=" + _clipboardKeys[0];
