@@ -117,6 +117,8 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	_onComplete: function () {
+		if (this._complete)
+			return;
 		this._setNormalCursor();
 		this._complete = true;
 		this._content.removeChild(this._progress);
