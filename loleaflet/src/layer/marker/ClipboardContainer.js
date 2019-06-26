@@ -639,6 +639,8 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	_queueInput: function _queueInput(text) {
+		this._map.notifyActive();
+
 		if (text === null) {
 			// Chrome sends a input/insertText with 'null' event data when
 			// typing a newline quickly after typing text.
@@ -686,6 +688,7 @@ L.ClipboardContainer = L.Layer.extend({
 	// The approach here is to use "compositionend" events *only in Chrome* to mark
 	// the composing text as committed to the text area.
 	_onCompositionEnd: function _onCompositionEnd(ev) {
+		this._map.notifyActive();
 		// Check for standard chrome, and check heuristically for embedded Android
 		// WebView (without chrome user-agent string)
 		if (
@@ -800,6 +803,7 @@ L.ClipboardContainer = L.Layer.extend({
 	// shall empty the textarea, to prevent FFX/Gecko from ever not having
 	// whitespace around the caret.
 	_onKeyUp: function _onKeyUp(ev) {
+		this._map.notifyActive();
 		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
 			this._emptyArea();
 		}

@@ -1170,6 +1170,20 @@ L.Map = L.Evented.extend({
 		return false;
 	},
 
+	documentHidden: function(unknownValue) {
+		var hidden = unknownValue;
+		if (typeof document.hidden !== 'undefined') {
+			hidden = document.hidden;
+		} else if (typeof document.msHidden !== 'undefined') {
+			hidden = document.msHidden;
+		} else if (typeof document.webkitHidden !== 'undefined') {
+			hidden = document.webkitHidden;
+		} else {
+			console.debug('Unusual browser, cant determine if hidden');
+		}
+		return hidden;
+	},
+
 	_dim: function() {
 		if (this.options.alwaysActive || this._debugAlwaysActive === true) {
 			return;
@@ -1180,7 +1194,6 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		this._active = false;
 		clearTimeout(vex.timer);
 
 		if (window.ThisIsTheAndroidApp) {
@@ -1188,8 +1201,27 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		var message = '';
 		var map = this;
+		var inactiveMs = Date.now() - this.lastActiveTime;
+		var multiplier = 1;
+		if (!this.documentHidden(true))
+		{
+			console.debug('document visible');
+			multiplier = 4; // quadruple the grace period
+		}
+		if (inactiveMs <= this.options.outOfFocusTimeoutSecs * 1000 * multiplier) {
+			console.debug('had activity ' + inactiveMs + 'ms ago vs. threshold ' +
+				      (this.options.outOfFocusTimeoutSecs * 1000 * multiplier) +
+				      ' - so fending off the dim');
+			vex.timer = setTimeout(function() {
+				map._dim();
+			}, map.options.outOfFocusTimeoutSecs * 1000);
+			return;
+		}
+
+		this._active = false;
+
+		var message = '';
 		if (!map['wopi'].DisableInactiveMessages) {
 			message = _('Inactive document - please click to resume editing');
 		}
