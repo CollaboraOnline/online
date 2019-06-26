@@ -281,15 +281,16 @@ L.Clipboard = L.Class.extend({
 
 	populateClipboard: function(ev) {
 		var text;
-		if (this._selectionType === null) {
-			console.log('Copy/Cut with no selection!');
-			text = this.getStubHtml();
-		} else if (this._selectionType === 'complex') {
+		if (this._selectionType === 'complex' ||
+		    this._map._docLayer.hasGraphicSelection()) {
 			console.log('Copy/Cut with complex/graphical selection');
 			text = this.getStubHtml();
 			this._onDownloadOnLargeCopyPaste();
 			this._downloadProgress.setURI( // richer, bigger HTML ...
 				this.getMetaBase() + this.getMetaPath() + '&MimeType=text/html');
+		} else if (this._selectionType === null) {
+			console.log('Copy/Cut with no selection!');
+			text = this.getStubHtml();
 		} else {
 			console.log('Copy/Cut with simple text selection');
 			text = this._selectionContent;

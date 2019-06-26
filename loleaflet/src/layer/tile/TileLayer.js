@@ -2636,6 +2636,11 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	hasGraphicSelection: function() {
+		return (this._graphicSelection !== null &&
+			!this._isEmptyRectangle(this._graphicSelection));
+	},
+
 	_onCopy: function (e) {
 		e = e.originalEvent;
 		this._map._clip.copy(e);
