@@ -156,8 +156,36 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (this._map._docLayer._cellCursor && this._map._docLayer._cellCursor.contains(latlng)) {
+		var originalCellCursor = this._map._docLayer._cellCursor;
+		var increaseRatio = 0.40;
+		var increasedCellCursor = null;
+		if (originalCellCursor) {
+			increasedCellCursor = originalCellCursor.padVertically(increaseRatio);
+		}
+
+		if (increasedCellCursor && increasedCellCursor.contains(latlng)) {
 			this._cellSelections = true;
+
+			if (!originalCellCursor.contains(latlng)) {
+				var lat = latlng.lat;
+				var lng = latlng.lng;
+
+				var sw = originalCellCursor._southWest,
+				ne = originalCellCursor._northEast;
+				var heightBuffer = Math.abs(sw.lat - ne.lat) * increaseRatio;
+
+				if (lat < originalCellCursor.getSouthWest().lat) {
+					lat = lat + heightBuffer;
+				}
+
+				if (lat > originalCellCursor.getNorthEast().lat) {
+					lat = lat - heightBuffer;
+				}
+
+				latlng = new L.LatLng(lat, lng);
+				mousePos = this._map._docLayer._latLngToTwips(latlng);
+			}
+
 			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
 			this._map.dragging._draggable._onDown(this._constructFakeEvent(point, 'mousedown'));

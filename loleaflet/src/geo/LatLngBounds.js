@@ -60,6 +60,17 @@ L.LatLngBounds.prototype = {
 		        new L.LatLng(ne.lat + heightBuffer, ne.lng + widthBuffer));
 	},
 
+	// extend the bounds by a percentage
+	padVertically: function (bufferRatio) { // (Number) -> LatLngBounds
+		var sw = this._southWest,
+		ne = this._northEast,
+		heightBuffer = Math.abs(sw.lat - ne.lat) * bufferRatio;
+
+		return new L.LatLngBounds(
+		        new L.LatLng(sw.lat - heightBuffer, sw.lng),
+		        new L.LatLng(ne.lat + heightBuffer, ne.lng));
+	},
+
 	getCenter: function () { // -> LatLng
 		return new L.LatLng(
 		        (this._southWest.lat + this._northEast.lat) / 2,
