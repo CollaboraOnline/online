@@ -22,10 +22,16 @@ L.Clipboard = L.Class.extend({
 			'beforepaste', function(ev) { that.beforepaste(ev); });
 	},
 
-	stripHTML: function(html) { // grim.
+	// We can do a much better job when we fetch text/plain too.
+	stripHTML: function(html) {
 		var tmp = document.createElement('div');
 		tmp.innerHTML = html;
-		return tmp.textContent || tmp.innerText || '';
+		// attempt to cleanup unwanted elements
+		var styles = tmp.querySelectorAll('style');
+		for (var i = 0; i < styles.length; i++) {
+			styles[i].parentNode.removeChild(styles[i]);
+		}
+		return tmp.textContent.trim() || tmp.innerText.trim() || '';
 	},
 
 	setKey: function(key) {
