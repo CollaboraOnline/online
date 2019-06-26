@@ -220,6 +220,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
 		}
 
+		this._map.notifyActive();
 		e.preventDefault();
 	},
 

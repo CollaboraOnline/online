@@ -377,6 +377,7 @@ L.Socket = L.Class.extend({
 
 				var socket = this;
 				map = this._map;
+				clearTimeout(vex.timer);
 				vex.timer = setInterval(function() {
 					if (socket.connected()) {
 						// We're connected: cancel timer and dialog.
@@ -416,6 +417,7 @@ L.Socket = L.Class.extend({
 				// Reload the document
 				this._map._active = false;
 				map = this._map;
+				clearTimeout(vex.timer);
 				vex.timer = setInterval(function() {
 					try {
 						// Activate and cancel timer and dialogs.
@@ -592,10 +594,9 @@ L.Socket = L.Class.extend({
 				// The document is unloading. Have to wait a bit.
 				this._map._active = false;
 
-				if (this.ReconnectCount++ >= 10) {
-					clearTimeout(vex.timer);
+				clearTimeout(vex.timer);
+				if (this.ReconnectCount++ >= 10)
 					return; // Give up.
-				}
 
 				map = this._map;
 				vex.timer = setInterval(function() {
