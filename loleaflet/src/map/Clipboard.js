@@ -3,7 +3,7 @@
  * L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
-/* global _ vex */
+/* global _ vex brandProductName */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -57,16 +57,17 @@ L.Clipboard = L.Class.extend({
 	getStubHtml: function() {
 		var lang = 'en_US'; // FIXME: l10n
 		var encodedOrigin = encodeURIComponent(this.getMetaPath());
-		return '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
-			'<html>\n' +
-			'  <head>\n' +
-			'     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
-			'     <meta name="origin" content="' + encodedOrigin + '"/>\n' +
-			'  </head>\n' +
-			'  <body lang="' + lang + '" dir="ltr">\n' +
-			'    <p>' + _('When pasting outside the suite it is necessary to first click the \'download\' button') + '</p>\n' +
-			'  </body>\n' +
-			'</html>';
+		var stub = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
+		    '<html>\n' +
+		    '  <head>\n' +
+		    '     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
+		    '     <meta name="origin" content="' + encodedOrigin + '"/>\n' +
+		    '  </head>\n' +
+		    '  <body lang="' + lang + '" dir="ltr">\n' +
+		    '    <p>' + _('To paste outside %productName, please first click the \'download\' button') + '</p>\n' +
+		    '  </body>\n' +
+		    '</html>';
+		return this._substProductName(stub);
 	},
 
 	_getMetaOrigin: function (html) {
@@ -540,17 +541,23 @@ L.Clipboard = L.Class.extend({
 		});
 	},
 
+	_substProductName: function (msg) {
+		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
+		return msg.replace('%productName', productName);
+	},
+
 	_warnFirstLargeCopyPaste: function () {
 		if (this._userAlreadyWarned('warnedAboutLargeCopy'))
 			return;
 
 		var self = this;
+		var msg = _('<p>If you would like to share larger elements of your document with other applications ' +
+			    'it is necesary to first download them onto your device. To do that press the ' +
+			    '"Start download" button below, and when complete click "Confirm copy to clipboard".</p>' +
+			    '<p>If you are copy and pasting between documents inside %productName, ' +
+			    'there is no need to download.</p>');
 		vex.dialog.alert({
-			message: _('<p>When copying larger pieces of your document, to share them with other applications ' +
-				       'on your device for security reasons, please select the "Start download" button below. ' +
-				       'A progress bar will show you the download advance. When it is complete select ' +
-				       'the "Confirm copy to clipboard" button in order to copy the downloaded data to your clipboard. ' +
-				       'At any time you can cancel the download by selecting the top right "X" button.</p>'),
+			message: this._substProductName(msg),
 			callback: function () {
 				self._map.focus();
 			}
@@ -560,8 +567,8 @@ L.Clipboard = L.Class.extend({
 	_warnLargeCopyPasteAlreadyStarted: function () {
 		var self = this;
 		vex.dialog.alert({
-			message: _('<p>A download  due to a large copy/paste operation has already started. ' +
-				       'Please, wait for the current download to complete before starting a new one</p>'),
+			message: _('<p>A download due to a large copy/paste operation has already started. ' +
+				   'Please, wait for the current download or cancel it before starting a new one</p>'),
 			callback: function () {
 				self._map.focus();
 			}
