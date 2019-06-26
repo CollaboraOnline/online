@@ -143,10 +143,14 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     auto docBroker = getDocumentBroker();
     docBroker->addSocketToPoll(socket);
 
-    if (type == DocumentBroker::CLIP_REQUEST_GET)
+    std::string specific;
+    if (type == DocumentBroker::CLIP_REQUEST_GET_RICH_HTML_ONLY)
+        specific = " text/html";
+
+    if (type != DocumentBroker::CLIP_REQUEST_SET)
     {
-        LOG_TRC("Session [" << getId() << "] sending getclipboard");
-        docBroker->forwardToChild(getId(), "getclipboard text/html");
+        LOG_TRC("Session [" << getId() << "] sending getclipboard" + specific);
+        docBroker->forwardToChild(getId(), "getclipboard" + specific);
         _clipSockets.push_back(socket);
     }
     else // REQUEST_SET

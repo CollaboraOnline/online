@@ -585,7 +585,7 @@ L.TileLayer = L.GridLayer.extend({
 		// message is received from lowsd, *then* a 'celladdress' message.
 		var address = textMsg.substring(13);
 		if (!this._map['wopi'].DisableCopy) {
-			this._clip.setSelection(this._lastFormula);
+			this._map._clip.setSelection(this._lastFormula);
 		}
 		this._map.fire('celladdress', {address: address});
 	},

@@ -276,7 +276,8 @@ L.Clipboard = L.Class.extend({
 			console.log('Copy/Cut with complex/graphical selection');
 			text = this.getStubHtml();
 			this._onDownloadOnLargeCopyPaste();
-			this._downloadProgress.setURI(this.getMetaBase() + this.getMetaPath());
+			this._downloadProgress.setURI( // richer, bigger HTML ...
+				this.getMetaBase() + this.getMetaPath() + '&MimeType=text/html');
 		} else {
 			console.log('Copy/Cut with simple text selection');
 			text = this._selectionContent;

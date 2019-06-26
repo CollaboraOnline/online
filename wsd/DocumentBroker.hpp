@@ -316,7 +316,8 @@ public:
 
     enum ClipboardRequest {
         CLIP_REQUEST_SET,
-        CLIP_REQUEST_GET
+        CLIP_REQUEST_GET,
+        CLIP_REQUEST_GET_RICH_HTML_ONLY
     };
     void handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
                                 const std::string &viewId, const std::string &tag,

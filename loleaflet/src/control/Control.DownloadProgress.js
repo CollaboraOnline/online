@@ -134,9 +134,20 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._map._clip._doAsyncDownload(
 			'GET', that._uri, null,
 			function(response) {
-				console.log('download done - response ' + response);
-				that._map._clip.setSelectionClip(response);
-				// TODO: swap to the 'copy' button (?)
+				console.log('clipboard async download done');
+				// annoying async parse of the blob ...
+				var reader = new FileReader();
+				reader.onload = function() {
+					console.log('async clipboard parse done: ' + text.substring(0, 256))
+					var text = reader.result;
+					var idx = text.indexOf('<!DOCTYPE HTML');
+					if (idx > 0)
+						text = text.substring(idx, text.length());
+					that._map._clip.setSelection(text);
+					// TODO: now swap to the 'copy' button (?)
+				};
+				// TODO: failure to parse ? ...
+				reader.readAsText(response);
 			},
 			function(progress) { return progress/2; }
 		);

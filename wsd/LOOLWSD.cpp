@@ -2328,7 +2328,7 @@ private:
 
         Poco::URI requestUri(request.getURI());
         Poco::URI::QueryParameters params = requestUri.getQueryParameters();
-        std::string WOPISrc, serverId, viewId, tag;
+        std::string WOPISrc, serverId, viewId, tag, mime;
         for (auto it : params)
         {
             if (it.first == "WOPISrc")
@@ -2339,6 +2339,8 @@ private:
                 viewId = it.second;
             else if (it.first == "Tag")
                 tag = it.second;
+            else if (it.first == "MimeType")
+                mime = it.second;
         }
         LOG_TRC("Clipboard request for us: " << serverId << " with tag " << tag);
 
@@ -2357,7 +2359,12 @@ private:
             std::shared_ptr<std::string> data;
             DocumentBroker::ClipboardRequest type;
             if (request.getMethod() == HTTPRequest::HTTP_GET)
-                type = DocumentBroker::CLIP_REQUEST_GET;
+            {
+                if (mime == "text/html")
+                    type = DocumentBroker::CLIP_REQUEST_GET_RICH_HTML_ONLY;
+                else
+                    type = DocumentBroker::CLIP_REQUEST_GET;
+            }
             else
             {
                 type = DocumentBroker::CLIP_REQUEST_SET;
