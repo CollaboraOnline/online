@@ -501,7 +501,9 @@ L.Clipboard = L.Class.extend({
 			this._startProgress();
 		}
 		else {
-			this._warnLargeCopyPasteAlreadyStarted();
+			// Need to show this only when a download is really in progress and we block it.
+			// Otherwise, it's easier to flasht the widget or something.
+			// this._warnLargeCopyPasteAlreadyStarted();
 			//this._downloadProgress._onComplete();
 		}
 	},
