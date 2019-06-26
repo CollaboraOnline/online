@@ -85,10 +85,11 @@ L.Clipboard = L.Class.extend({
 		return '';
 	},
 
-	_encodeHtmlToBlob: function(data) {
+	_encodeHtmlToBlob: function(text) {
 		var content = [];
+		var data = new Blob([text]);
 		content.push('text/html\n');
-		content.push(data.length.toString(16) + '\n');
+		content.push(data.size.toString(16) + '\n');
 		content.push(data);
 		content.push('\n');
 		return new Blob(content);
@@ -98,13 +99,17 @@ L.Clipboard = L.Class.extend({
 		var content = [];
 		var types = dataTransfer.types;
 		for (var t = 0; t < types.length; ++t) {
-			var data = dataTransfer.getData(types[t]);
+			if (types[t] == 'Files')
+				continue; // images handled elsewhere.
+			var data = new Blob([dataTransfer.getData(types[t])]);
+			console.log('type ' + types[t] + ' length ' + data.size +
+				    ' -> 0x' + data.size.toString(16) + '\n');
 			content.push((types[t] == 'text' ? 'text/plain' : types[t]) + '\n');
-			content.push(data.length.toString(16) + '\n');
+			content.push(data.size.toString(16) + '\n');
 			content.push(data);
 			content.push('\n');
 		}
-		return new Blob(content);
+		return new Blob(content, {type : 'application/octet-stream', endings: 'transparent'});
 	},
 
 	// Abstract async post & download for our progress wrappers
