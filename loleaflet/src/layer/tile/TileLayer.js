@@ -585,7 +585,7 @@ L.TileLayer = L.GridLayer.extend({
 		// message is received from lowsd, *then* a 'celladdress' message.
 		var address = textMsg.substring(13);
 		if (!this._map['wopi'].DisableCopy) {
-			this._map._clip.setSelection(this._lastFormula);
+			this._map._clip.setTextSelectionContent(this._lastFormula);
 		}
 		this._map.fire('celladdress', {address: address});
 	},
@@ -2633,17 +2633,6 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.removeLayer(this._selectionHandles[key]);
 				this._selectionHandles[key].isDragged = false;
 			}
-		}
-	},
-
-	_selectionType: function() {
-		if (this._graphicSelection !== null &&
-		    !this._isEmptyRectangle(this._graphicSelection)) {
-			return 'complex'; // FIXME: Ash - complex ...
-		} else if (this._selections.getLayers().length > 0) {
-			return 'simpletext';
-		} else {
-			return null;
 		}
 	},
 

@@ -13,6 +13,7 @@ L.Clipboard = L.Class.extend({
 	initialize: function(map) {
 		this._map = map;
 		this._selectionContent = '';
+		this._selectionType = null;
 		this._accessKey = [ '', '' ];
 		this._clipboardSerial = 0; // incremented on each operation
 
@@ -273,12 +274,11 @@ L.Clipboard = L.Class.extend({
 	},
 
 	populateClipboard: function(ev) {
-		var t = this._map._docLayer._selectionType();
 		var text;
-		if (t === null) {
+		if (this._selectionType === null) {
 			console.log('Copy/Cut with no selection!');
 			text = this.getStubHtml();
-		} else if (t === 'complex') {
+		} else if (this._selectionType === 'complex') {
 			console.log('Copy/Cut with complex/graphical selection');
 			text = this.getStubHtml();
 			this._onDownloadOnLargeCopyPaste();
@@ -468,26 +468,19 @@ L.Clipboard = L.Class.extend({
 
 	clearSelection: function() {
 		this._selectionContent = '';
-	},
-
-	setSelection: function(content) {
-		this._selectionContent = content;
+		this._selectionType = null;
 	},
 
 	// textselectioncontent: message
 	setTextSelectionContent: function(text) {
-		this.setSelection(text);
+		this._selectionType = 'text';
+		this._selectionContent = text;
 	},
 
 	// complexselection: message
-	onComplexSelection: function (text) {
-		// Put in the clipboard a helpful explanation of what the user should do.
-		// Currently we don't have a payload, though we might in the future
-		text = _('Please use the following link to download the selection from you document and paste into other applications on your device')
-			+ ': '; //FIXME: MISSING URL
-		this.setSelection(text);
-
-		//TODO: handle complex selection download.
+	onComplexSelection: function (/*text*/) {
+		// Mark this selection as complex.
+		this._selectionType = 'complex';
 	},
 
 	_startProgress: function() {
@@ -501,7 +494,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_onDownloadOnLargeCopyPaste: function () {
-		if (!this._downloadProgress) {
+		if (!this._downloadProgress || this._downloadProgress.isClosed()) {
 			this._warnFirstLargeCopyPaste();
 			this._startProgress();
 		}

@@ -917,7 +917,31 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
         return false;
     }
 
-    sendTextFrame("textselectioncontent: " + getTextSelectionInternal(mimeType));
+    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+    {
+        const std::string selection = getTextSelectionInternal(mimeType);
+        if (selection.size() >= 1024 * 1024) // Don't return huge data.
+        {
+            // Flag complex data so the client will download async.
+            sendTextFrame("complexselection:");
+            return true;
+        }
+
+        sendTextFrame("textselectioncontent: " + selection);
+        return true;
+    }
+
+    std::string selection;
+    const int selectionType = getLOKitDocument()->getSelectionType();
+    if (selectionType == LOK_SELTYPE_LARGE_TEXT || selectionType == LOK_SELTYPE_COMPLEX ||
+        (selection = getTextSelectionInternal(mimeType)).size() >= 1024 * 1024) // Don't return huge data.
+    {
+        // Flag complex data so the client will download async.
+        sendTextFrame("complexselection:");
+        return true;
+    }
+
+    sendTextFrame("textselectioncontent: " + selection);
     return true;
 }
 
@@ -996,7 +1020,7 @@ bool ChildSession::setClipboard(const char* buffer, int length, const std::vecto
 //        data.dumpState(std::cerr);
 
         size_t nInCount = data.size();
-        size_t pInSizes[nInCount] = { 0, };
+        size_t pInSizes[nInCount];
         const char *pInMimeTypes[nInCount];
         const char *pInStreams[nInCount];
 

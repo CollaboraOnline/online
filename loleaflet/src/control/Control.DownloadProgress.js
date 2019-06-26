@@ -53,6 +53,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		confirmCopy.style.alignment = 'center';
 		confirmCopy.style.height = 20 + 'px';
 		L.DomEvent.on(confirmCopy, 'click', this._onConfirmCopyAction, this);
+		this._closed = false;
 	},
 
 	show: function () {
@@ -60,6 +61,10 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._complete = false;
 		this._content.appendChild(this._downloadButton);
 		this._container.style.visibility = '';
+	},
+
+	isClosed: function () {
+		return this._closed;
 	},
 
 	setURI: function (uri) {
@@ -112,8 +117,8 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._content.appendChild(this._confirmPasteButton);
 	},
 
-	_onConfirmCopyAction: function (ev) {
-		this._map._clip.copy(ev);
+	_onConfirmCopyAction: function () {
+		this._map._clip.filterExecCopyPaste('.uno:Copy');
 		this._map._clip._downloadProgress = null;
 		this._onClose();
 	},
@@ -127,6 +132,7 @@ L.Control.DownloadProgress = L.Control.extend({
 			this._content.removeChild(this._progress);
 		this._map.focus();
 		this.remove();
+		this._closed = true;
 	},
 
 	_download: function () {
@@ -138,12 +144,12 @@ L.Control.DownloadProgress = L.Control.extend({
 				// annoying async parse of the blob ...
 				var reader = new FileReader();
 				reader.onload = function() {
-					console.log('async clipboard parse done: ' + text.substring(0, 256))
 					var text = reader.result;
+					console.log('async clipboard parse done: ' + text.substring(0, 256))
 					var idx = text.indexOf('<!DOCTYPE HTML');
 					if (idx > 0)
-						text = text.substring(idx, text.length());
-					that._map._clip.setSelection(text);
+						text = text.substring(idx, text.length);
+					that._map._clip.setTextSelectionContent(text);
 					// TODO: now swap to the 'copy' button (?)
 				};
 				// TODO: failure to parse ? ...
