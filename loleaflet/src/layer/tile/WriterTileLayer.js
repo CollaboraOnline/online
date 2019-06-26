@@ -164,8 +164,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 				window.onClick(e, e.target, e.item, e.subItem);
 			},
 			onRefresh: function () {
-				$('#search-input').off('input', window.onSearch).on('input', window.onSearch);
-				$('#search-input').off('keydown', window.onSearchKeyDown).on('keydown', window.onSearchKeyDown);
+				window.setupSearchInput();
 			}
 		});
 

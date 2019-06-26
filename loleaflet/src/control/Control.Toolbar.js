@@ -95,8 +95,8 @@ function _cancelSearch() {
 		// odd, but on mobile we need to invoke it twice
 		toolbar.hide('cancelsearch');
 	}
-	else
-		map.focus();
+
+	map._onGotFocus();
 }
 
 function onClick(e, id, item, subItem) {
@@ -1185,8 +1185,7 @@ function initNormalToolbar() {
 			},
 			onRefresh: function() {
 				$('#tb_actionbar_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
-				$('#search-input').off('input', onSearch).on('input', onSearch);
-				$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
+				setupSearchInput();
 
 				var showInDesktop = map['wopi'].HideUserList !== null &&
 									map['wopi'].HideUserList !== undefined &&
@@ -1212,6 +1211,13 @@ function initNormalToolbar() {
 	toolbar.bind('touchstart', function() {
 		w2ui['actionbar'].touchStarted = true;
 	});
+}
+
+function setupSearchInput() {
+	$('#search-input').off('input', onSearchInput).on('input', onSearchInput);
+	$('#search-input').off('keypress', onSearchKeyPress).on('keypress', onSearchKeyPress);
+	$('#search-input').off('focus', onSearchFocus).on('focus', onSearchFocus);
+	$('#search-input').off('blur', onSearchBlur).on('blur', onSearchBlur);
 }
 
 var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
@@ -1266,7 +1272,7 @@ function unoCmdToToolbarId(commandname)
 	return id;
 }
 
-function onSearch() {
+function updateSearchButtons() {
 	var toolbar = _inMobileMode() ? w2ui['searchbar'] : w2ui['actionbar'];
 	// conditionally disabling until, we find a solution for tdf#108577
 	if (L.DomUtil.get('search-input').value === '') {
@@ -1275,15 +1281,21 @@ function onSearch() {
 		toolbar.hide('cancelsearch');
 	}
 	else {
-		if (map.getDocType() === 'text')
-			map.search(L.DomUtil.get('search-input').value, false, '', 0, true /* expand search */);
 		toolbar.enable('searchprev');
 		toolbar.enable('searchnext');
 		toolbar.show('cancelsearch');
 	}
 }
 
-function onSearchKeyDown(e) {
+function onSearchInput() {
+	updateSearchButtons();
+	if (map.getDocType() === 'text') {
+		// perform the immediate search in Writer
+		map.search(L.DomUtil.get('search-input').value, false, '', 0, true /* expand search */);
+	}
+}
+
+function onSearchKeyPress(e) {
 	var entry = L.DomUtil.get('search-input');
 	if ((e.keyCode === 71 && e.ctrlKey) || e.keyCode === 114 || e.keyCode === 13) {
 		if (e.shiftKey) {
@@ -1299,6 +1311,16 @@ function onSearchKeyDown(e) {
 	} else if (e.keyCode === 27) {
 		_cancelSearch();
 	}
+}
+
+function onSearchFocus() {
+	// hide the caret in the main document
+	map._onLostFocus();
+	updateSearchButtons();
+}
+
+function onSearchBlur() {
+	map._onGotFocus();
 }
 
 function documentNameConfirm() {
@@ -2609,7 +2631,6 @@ global.insertTable = insertTable;
 global.insertShapes = insertShapes;
 global.createShapesPanel = createShapesPanel;
 global.onUpdatePermission = onUpdatePermission;
-global.onSearch = onSearch;
-global.onSearchKeyDown = onSearchKeyDown;
+global.setupSearchInput = setupSearchInput;
 
 }(window));
