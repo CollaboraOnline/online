@@ -94,7 +94,7 @@ L.Clipboard = L.Class.extend({
 		return new Blob(content);
 	},
 
-	_readContentToBlobSync: function(dataTransfer) {
+	_readContentSyncToBlob: function(dataTransfer) {
 		var content = [];
 		var types = dataTransfer.types;
 		for (var t = 0; t < types.length; ++t) {
@@ -257,6 +257,7 @@ L.Clipboard = L.Class.extend({
 			var that = this;
 			this._doAsyncDownload('POST', destination, formData,
 					      function() {
+						      console.log('Posted ' + content.size + ' bytes successfully');
 						      that._map._socket.sendMessage('uno .uno:Paste');
 					      },
 					      function(progress) { return progress; }
