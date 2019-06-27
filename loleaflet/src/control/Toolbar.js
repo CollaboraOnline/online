@@ -317,7 +317,7 @@ L.Map.include({
 				var hammer = new Hammer.Manager($vexContent.get(0));
 				hammer.add(new Hammer.Tap({ taps: 3 }));
 				hammer.on('tap', function() {
-					map._docLayer._debugInit();
+					map._docLayer.toggleTileDebugMode();
 				});
 
 				this.contentEl.style.width = w + 'px';
