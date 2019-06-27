@@ -89,11 +89,7 @@ L.SVGGroup = L.Layer.extend({
 			this._showEmbeddedSVG();
 		}
 
-		var data = {
-			originalEvent: evt,
-			containerPoint: this._map.mouseEventToContainerPoint(evt)
-		};
-		this.dragging._onDrag(data);
+		this.dragging._onDrag(evt);
 	},
 
 	_onDragEnd: function(evt) {
