@@ -9,9 +9,15 @@ L.Map.mergeOptions({
 
 /* global Hammer $ */
 L.Map.TouchGesture = L.Handler.extend({
+	statics: {
+		MAP: 1,
+		CURSOR: 2,
+		GRAPHIC: 4
+	},
 
 	initialize: function (map) {
 		L.Handler.prototype.initialize.call(this, map);
+		this._state = L.Map.TouchGesture.MAP;
 
 		if (!this._hammer) {
 			this._hammer = new Hammer(this._map._mapPane);
@@ -103,8 +109,30 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onHammer: function (e) {
-		L.DomEvent.preventDefault(e.srcEvent);
-		L.DomEvent.stopPropagation(e.srcEvent);
+		this._map.notifyActive();
+		if (e.isFirst) {
+			var point = e.pointers[0],
+			    containerPoint = this._map.mouseEventToContainerPoint(point),
+			    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
+			    latlng = this._map.layerPointToLatLng(layerPoint);
+
+			if (this._map._docLayer._graphicMarker && this._map._docLayer._graphicMarker.getBounds().contains(latlng)) {
+				this._state = L.Map.TouchGesture.GRAPHIC;
+			} else if (this._map._docLayer._cellCursor && this._map._docLayer._cellCursor.contains(latlng)) {
+				this._state = L.Map.TouchGesture.CURSOR;
+			} else {
+				this._state = L.Map.TouchGesture.MAP;
+			}
+		}
+
+		if (e.isLast && this._state !== L.Map.TouchGesture.MAP) {
+			this._state = L.Map.TouchGesture.hitTest.MAP;
+		}
+
+		if ($(e.srcEvent.target).has(this._map._mapPane)) {
+			L.DomEvent.preventDefault(e.srcEvent);
+			L.DomEvent.stopPropagation(e.srcEvent);
+		}
 	},
 
 	_onDocUp: function () {
@@ -125,7 +153,6 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
 
-		this._cellSelections = false;
 		e.preventDefault();
 	},
 
@@ -139,7 +166,6 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
-		this._cellSelections = false;
 
 		if (!this._map.hasFocus()) {
 			this._map.focus();
@@ -183,8 +209,6 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 
 		if (increasedCellCursor && increasedCellCursor.contains(latlng)) {
-			this._cellSelections = true;
-
 			if (!originalCellCursor.contains(latlng)) {
 				var lat = latlng.lat;
 				var lng = latlng.lng;
@@ -204,7 +228,11 @@ L.Map.TouchGesture = L.Handler.extend({
 				latlng = new L.LatLng(lat, lng);
 				mousePos = this._map._docLayer._latLngToTwips(latlng);
 			}
+		}
 
+		if (this._state === L.Map.TouchGesture.GRAPHIC) {
+			this._map._docLayer._graphicMarker._onDragStart(e.srcEvent);
+		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
 			this._map.dragging._draggable._onDown(this._constructFakeEvent(point, 'mousedown'));
@@ -218,7 +246,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (this._cellSelections) {
+		if (this._state === L.Map.TouchGesture.GRAPHIC) {
+			this._map._docLayer._graphicMarker._onDrag(e.srcEvent);
+		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
 			this._map.dragging._draggable._onMove(this._constructFakeEvent(point, 'mousemove'));
@@ -232,8 +262,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (this._cellSelections) {
-			this._cellSelections = false;
+		if (this._state === L.Map.TouchGesture.GRAPHIC) {
+			this._map._docLayer._graphicMarker._onDragEnd(e.srcEvent);
+		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
 			this._map.dragging._draggable._onUp(this._constructFakeEvent(point, 'mouseup'));

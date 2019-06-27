@@ -1848,7 +1848,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.isDragged = true;
 			this._graphicMarker._startPos = aPos;
 		}
-		else if (e.type === 'graphicmoveend') {
+		else if (e.type === 'graphicmoveend' && this._graphicMarker._startPos) {
 			var deltaPos = aPos.subtract(this._graphicMarker._startPos);
 			if (deltaPos.x === 0 && deltaPos.y === 0) {
 				this._graphicMarker.isDragged = false;
