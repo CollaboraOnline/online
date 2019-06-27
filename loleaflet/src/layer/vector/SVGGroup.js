@@ -6,18 +6,17 @@
 L.SVGGroup = L.Layer.extend({
 
 	options: {
-		noClip: true
-	},
-
-	lastTouchEvent: {
-		clientX: 0,
-		clientY: 0
+		noClip: true,
+		manualDrag: false
 	},
 
 	initialize: function (bounds, options) {
 		L.setOptions(this, options);
 		this._bounds = bounds;
 		this._rect = L.rectangle(bounds, this.options);
+		if (L.Browser.touch && !L.Browser.pointer) {
+			this.options.manualDrag = true;
+		}
 
 		this.on('dragstart scalestart rotatestart', this._showEmbeddedSVG, this);
 		this.on('dragend scaleend rotateend', this._hideEmbeddedSVG, this);
@@ -40,8 +39,10 @@ L.SVGGroup = L.Layer.extend({
 			L.DomUtil.remove(this._rect._path);
 			this._svg = this._path.appendChild(doc.lastChild);
 			this._svg.setAttribute('pointer-events', 'visiblePainted');
-			L.DomEvent.on(this._svg, 'mousedown', this._onDragStart, this);
 			this._dragShape = this._svg;
+			if (!this.options.manualDrag) {
+				L.DomEvent.on(this._svg, 'mousedown', this._onDragStart, this);
+			}
 		}
 
 		this._svg.setAttribute('opacity', 0);
@@ -52,12 +53,7 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	_onDragStart: function(evt) {
-		if (evt.type === 'touchstart') {
-			this.lastTouchEvent.clientX = evt.touches[0].clientX;
-			this.lastTouchEvent.clientY = evt.touches[0].clientY;
-		}
-
-		if (!this._dragShape || !this.dragging)
+		if (!this._map || !this._dragShape || !this.dragging)
 			return;
 
 		if (!this._map)
@@ -65,12 +61,11 @@ L.SVGGroup = L.Layer.extend({
 
 		this._moved = false;
 
-		L.DomEvent.on(this._dragShape, 'mousemove', this._onDrag, this);
-		L.DomEvent.on(this._dragShape, 'mouseup', this._onDragEnd, this);
-		L.DomEvent.on(this._dragShape, 'mouseout', this._onDragEnd, this);
-
-		L.DomEvent.on(this._dragShape, 'touchmove', this._onDrag, this);
-		L.DomEvent.on(this._dragShape, 'touchend', this._onDragEnd, this);
+		if (!this.options.manualDrag) {
+			L.DomEvent.on(this._dragShape, 'mousemove', this._onDrag, this);
+			L.DomEvent.on(this._dragShape, 'mouseup', this._onDragEnd, this);
+			L.DomEvent.on(this._dragShape, 'mouseout', this._onDragEnd, this);
+		}
 
 		var data = {
 			originalEvent: evt,
@@ -83,12 +78,7 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	_onDrag: function(evt) {
-		if (evt.type === 'touchmove') {
-			this.lastTouchEvent.clientX = evt.touches[0].clientX;
-			this.lastTouchEvent.clientY = evt.touches[0].clientY;
-		}
-
-		if (!this._dragShape || !this.dragging)
+		if (!this._map || !this._dragShape || !this.dragging)
 			return;
 
 		if (!this._map)
@@ -107,17 +97,14 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	_onDragEnd: function(evt) {
-		if (evt.type === 'touchend' && evt.touches.length == 0)
-			evt.touches[0] = {clientX: this.lastTouchEvent.clientX, clientY: this.lastTouchEvent.clientY};
-
-		if (!this._dragShape || !this.dragging)
+		if (!this._map || !this._dragShape || !this.dragging)
 			return;
-		L.DomEvent.off(this._dragShape, 'mousemove', this._onDrag, this);
-		L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
-		L.DomEvent.off(this._dragShape, 'mouseout', this._onDragEnd, this);
 
-		L.DomEvent.off(this._dragShape, 'touchmove', this._onDrag, this);
-		L.DomEvent.off(this._dragShape, 'touchend', this._onDragEnd, this);
+		if (!this.options.manualDrag) {
+			L.DomEvent.off(this._dragShape, 'mousemove', this._onDrag, this);
+			L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
+			L.DomEvent.off(this._dragShape, 'mouseout', this._onDragEnd, this);
+		}
 
 		this._moved = false;
 		this._hideEmbeddedSVG();
@@ -127,7 +114,7 @@ L.SVGGroup = L.Layer.extend({
 			this.fire('graphicmoveend', {pos: pos});
 		}
 
-		if (evt.type === 'mouseup')
+		if (this.options.manualDrag || evt.type === 'mouseup')
 			this.dragging._onDragEnd(evt);
 	},
 
@@ -164,8 +151,10 @@ L.SVGGroup = L.Layer.extend({
 			L.DomUtil.addClass(this._path, 'leaflet-control-buttons-disabled');
 			this._path.appendChild(this._rect._path);
 			this._dragShape = this._rect._path;
-			L.DomEvent.on(this._rect._path, 'mousedown', this._onDragStart, this);
-			L.DomEvent.on(this._rect._path, 'touchstart', this._onDragStart, this);
+
+			if (!this.options.manualDrag) {
+				L.DomEvent.on(this._rect._path, 'mousedown', this._onDragStart, this);
+			}
 		}
 		this._update();
 	},
