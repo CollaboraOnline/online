@@ -437,6 +437,12 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
+		if (e.ctrlKey && (e.key === 'f' || e.key === 'F')) {
+			this._map.fire('focussearch');
+			e.preventDefault();
+			return true;
+		}
+
 		if (e.altKey || e.shiftKey) {
 
 			// need to handle Ctrl + Alt + C separately for Firefox

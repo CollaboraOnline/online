@@ -2418,14 +2418,10 @@ function setupToolbar(e) {
 		$('#current-editor').text(e.username);
 	});
 
-	map.on('keydown', function (e) {
-		if (e.originalEvent.ctrlKey && !e.originalEvent.altKey &&
-		   (e.originalEvent.key === 'f' || e.originalEvent.key === 'F')) {
-			var entry = L.DomUtil.get('search-input');
-			entry.focus();
-			entry.select();
-			e.originalEvent.preventDefault();
-		}
+	map.on('focussearch', function () {
+		var entry = L.DomUtil.get('search-input');
+		entry.focus();
+		entry.select();
 	});
 
 	map.on('hyperlinkclicked', function (e) {
