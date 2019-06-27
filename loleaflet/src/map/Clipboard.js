@@ -16,6 +16,7 @@ L.Clipboard = L.Class.extend({
 		this._selectionType = null;
 		this._accessKey = [ '', '' ];
 		this._clipboardSerial = 0; // incremented on each operation
+		this._failedTimer = null;
 
 		var that = this;
 		document.addEventListener(
@@ -432,8 +433,35 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		console.log('failed to ' + operation);
-		this._warnCopyPaste();
+		// see if we have help for paste
+		if (operation === 'paste')
+		{
+			if (window.top.webkit &&
+			    window.top.webkit.messageHandlers &&
+			    window.top.webkit.messageHandlers.RichDocumentsMobileInterface) {
+				console.log('We have richdocuments !');
+				window.top.webkit.messageHandlers.RichDocumentsMobileInterface.postMessage(operation);
+			} else if (window.top.RichDocumentsMobileInterface &&
+				   window.top.RichDocumentsMobileInterface.paste) {
+				console.log('We have richdocuments !');
+				window.top.RichDocumentsMobileInterface.paste();
+			} else {
+				console.log('No richdocuments');
+			}
+		}
+
+		// wait and see if we get some help
+		var that = this;
+		clearTimeout(this._failedTimer);
+		setTimeout(function() {
+			if (that._clipboardSerial !== serial)
+				console.log('successful ' + operation);
+			else
+			{
+				console.log('help did not arive for ' + operation);
+				that._warnCopyPaste();
+			}
+		}, 150 /* ms */)
 	},
 
 	// Pull UNO clipboard commands out from menus and normal user input.
@@ -529,7 +557,7 @@ L.Clipboard = L.Class.extend({
 		var self = this;
 		var msg;
 		if (L.Browser.mobile) {
-			msg = _('<p>Your browser has very limited access to the clipboard</p>');
+			msg = _('<p>Please use the copy/paste buttons on your on-screen keyboard.</p>');
 		} else {
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>');
 		}
