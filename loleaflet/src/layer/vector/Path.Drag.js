@@ -89,8 +89,10 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			L.DomUtil.removeClass(this._path._path, L.Handler.PathDrag.DRAGGING_CLS);
 		}
 
-		L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
-		L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
+		if (!this._path.options.manualDrag) {
+			L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
+			L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
+		}
 	},
 
 	/**
@@ -115,9 +117,12 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		L.DomEvent.stop(evt.originalEvent);
 
 		L.DomUtil.addClass(this._path._renderer._container, 'leaflet-interactive');
-		L.DomEvent
-			.on(document, MOVE[eventType], this._onDrag,    this)
-			.on(document, END[eventType],  this._onDragEnd, this);
+
+		if (!this._path.options.manualDrag) {
+			L.DomEvent
+				.on(document, MOVE[eventType], this._onDrag,    this)
+				.on(document, END[eventType],  this._onDragEnd, this);
+		}
 
 		if (this._path._map.dragging.enabled()) {
 			// I guess it's required because mousdown gets simulated with a delay
@@ -140,6 +145,9 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 	* @param  {L.MouseEvent} evt
 	*/
 	_onDrag: function(evt) {
+		if (!this._startPoint)
+			return;
+
 		L.DomEvent.stop(evt);
 
 		var first = (evt.touches && evt.touches.length >= 1 ? evt.touches[0] : evt);
@@ -223,8 +231,10 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			this._path._transform(null);
 		}
 
-		L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
-		L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
+		if (!this._path.options.manualDrag) {
+			L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
+			L.DomEvent.off(document, 'mouseup touchend',    this._onDragEnd, this);
+		}
 
 		this._restoreCoordGetters();
 
@@ -253,7 +263,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			this._path._map.dragging.enable();
 		}
 
-		if (!moved) {
+		if (!this._path.options.manualDrag && !moved) {
 			this._path._map._handleDOMEvent(this._mouseDown);
 			this._path._map._handleDOMEvent(evt)
 		}
@@ -400,5 +410,4 @@ var fnInitHook = function() {
 	}
 };
 
-L.Path.addInitHook(fnInitHook);
 L.SVGGroup.addInitHook(fnInitHook);
