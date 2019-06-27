@@ -835,7 +835,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.max_concurrency", "4" },
             { "per_document.redlining_as_comments", "true" },
             { "per_view.idle_timeout_secs", "900" },
-            { "per_view.out_of_focus_timeout_secs", "60" },
+            { "per_view.out_of_focus_timeout_secs", "120" },
             { "security.capabilities", "true" },
             { "security.seccomp", "true" },
             { "server_name", "" },
