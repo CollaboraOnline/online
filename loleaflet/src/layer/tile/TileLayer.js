@@ -905,8 +905,13 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 
-		// Graphics are by default complex selections.
-		this._map._clip.onComplexSelection();
+		// Graphics are by default complex selections, unless Core tells us otherwise.
+		this._map._clip.onComplexSelection('');
+		if (this._selectionContentRequest) {
+			clearTimeout(this._selectionContentRequest);
+		}
+		this._selectionContentRequest = setTimeout(L.bind(function () {
+			this._map._socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
 
 		this._onUpdateGraphicSelection();
 	},
