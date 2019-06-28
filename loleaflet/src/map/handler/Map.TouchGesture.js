@@ -167,6 +167,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			return;
 		}
 
+		this._map.fire('closepopups');
+
 		if (window.ThisIsTheiOSApp) {
 			// console.log('==> ' + e.timeStamp);
 			if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
