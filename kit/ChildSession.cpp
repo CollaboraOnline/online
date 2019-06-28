@@ -984,7 +984,7 @@ bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const st
 
     // FIXME: extra 'content' is necessary for Message parsing.
     Util::vectorAppend(output, "clipboardcontent: content\n");
-    LOG_TRC("Building clipboardcontent: " << nOutCount << "items");
+    LOG_TRC("Building clipboardcontent: " << nOutCount << " items");
     for (size_t i = 0; i < nOutCount; ++i)
     {
         LOG_TRC("\t[" << i << " - type " << pOutMimeTypes[i] << " size " << pOutSizes[i]);

@@ -734,6 +734,9 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 
+		// Graphics are by default complex selections.
+		this._map._clip.onComplexSelection();
+
 		this._onUpdateGraphicSelection();
 	},
 
