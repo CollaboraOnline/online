@@ -64,8 +64,6 @@ L.Map.TouchGesture = L.Handler.extend({
 			L.DomEvent.on(document, L.Draggable.END[events], this._onDocUp, this);
 		}
 
-		L.DomEvent.on(document, 'contextmenu', L.DomEvent.preventDefault);
-
 		/// $.contextMenu does not support touch events so,
 		/// attach 'touchend' menu clicks event handler
 		if (this._hammer.input instanceof Hammer.TouchInput) {
@@ -164,6 +162,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
+
+		if (this._state === L.Map.TouchGesture.MARKER) {
+			return;
+		}
 
 		if (window.ThisIsTheiOSApp) {
 			// console.log('==> ' + e.timeStamp);
