@@ -299,10 +299,19 @@ L.Clipboard = L.Class.extend({
 		if (this._selectionType === 'complex' ||
 		    this._map._docLayer.hasGraphicSelection()) {
 			console.log('Copy/Cut with complex/graphical selection');
-			text = this.getStubHtml();
-			this._onDownloadOnLargeCopyPaste();
-			this._downloadProgress.setURI( // richer, bigger HTML ...
-				this.getMetaBase() + this.getMetaPath() + '&MimeType=text/html');
+			if (this._selectionType === 'text' && this._selectionContent !== '')
+			{ // back here again having downloaded it ...
+				text = this._selectionContent;
+				console.log('Use downloaded selection.');
+			}
+			else
+			{
+				console.log('Downloaded that selection.');
+				text = this.getStubHtml();
+				this._onDownloadOnLargeCopyPaste();
+				this._downloadProgress.setURI( // richer, bigger HTML ...
+					this.getMetaBase() + this.getMetaPath() + '&MimeType=text/html');
+			}
 		} else if (this._selectionType === null) {
 			console.log('Copy/Cut with no selection!');
 			text = this.getStubHtml();

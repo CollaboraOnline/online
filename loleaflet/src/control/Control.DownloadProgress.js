@@ -121,7 +121,8 @@ L.Control.DownloadProgress = L.Control.extend({
 			return;
 		this._setNormalCursor();
 		this._complete = true;
-		this._content.removeChild(this._progress);
+		if (this._content.contains(this._progress))
+			this._content.removeChild(this._progress);
 		this._content.style.width  = '150px';
 		this._content.appendChild(this._confirmPasteButton);
 	},
@@ -159,7 +160,6 @@ L.Control.DownloadProgress = L.Control.extend({
 					if (idx > 0)
 						text = text.substring(idx, text.length);
 					that._map._clip.setTextSelectionContent(text);
-					that._onComplete();
 				};
 				// TODO: failure to parse ? ...
 				reader.readAsText(response);
