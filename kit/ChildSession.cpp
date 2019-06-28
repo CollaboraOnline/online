@@ -917,7 +917,8 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
         return false;
     }
 
-    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
+    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT &&
+        getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_SPREADSHEET)
     {
         const std::string selection = getTextSelectionInternal(mimeType);
         if (selection.size() >= 1024 * 1024) // Don't return huge data.
