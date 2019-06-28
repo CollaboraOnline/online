@@ -56,7 +56,7 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		// edge handlers
 		handlerOptions: {
-			radius:      5,
+			radius:      L.Browser.touch && !L.Browser.pointer ? 10 : 5,
 			fillColor:   '#ffffff',
 			color:       '#202020',
 			fillOpacity: 1,
@@ -81,7 +81,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			setCursor: true
 		},
 		// rotation handle length
-		handleLength: 20,
+		handleLength: L.Browser.touch && !L.Browser.pointer ? 40 : 20,
 
 		// maybe I'll add skewing in the future
 		edgesCount:   4,
@@ -238,6 +238,18 @@ L.Handler.PathTransform = L.Handler.extend({
 		return this;
 	},
 
+	/**
+	* @param  {L.Point}   point
+	*/
+	getMarker: function(point) {
+		for (var i = 0, len = this._handlers.length; i < len; i++) {
+			var handler = this._handlers[i];
+			if (handler._containsPoint(point)) {
+				return handler;
+			}
+		}
+		return undefined;
+	},
 
 	/**
 	* Update the polygon and handlers preview, no reprojection
@@ -609,6 +621,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	* @param  {Event} evt
 	*/
 	_onRotate: function(evt) {
+		if (!this._rect || !this._rotationStart) {
+			return;
+		}
 		var pos = evt.layerPoint;
 		var previous = this._rotationStart;
 		var origin   = this._rotationOriginPt;
@@ -633,6 +648,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	* @param  {Event} evt
 	*/
 	_onRotateEnd: function(evt) {
+		if (!this._rect || !this._rotationStart) {
+			return;
+		}
 		var pos = evt.layerPoint;
 		var previous = this._rotationStart;
 		var origin = this._rotationOriginPt;
@@ -650,6 +668,8 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		this._apply();
 		this._path.fire('rotateend', { layer: this._path, rotation: angle });
+
+		this._rotationStart = undefined;
 	},
 
 
@@ -704,6 +724,10 @@ L.Handler.PathTransform = L.Handler.extend({
 	* @param  {Event} evt
 	*/
 	_onScale: function(evt) {
+		if (!this._rect || !this._scaleOrigin) {
+			return;
+		}
+
 		var originPoint = this._originMarker._point;
 		var ratioX, ratioY;
 
@@ -738,6 +762,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	* @param  {Event} evt
 	*/
 	_onScaleEnd: function(/*evt*/) {
+		if (!this._rect || !this._scaleOrigin) {
+			return;
+		}
 		this._activeMarker.removeEventParent(this._map);
 		this._map
 			.off('mousemove', this._onScale,    this)
@@ -766,6 +793,8 @@ L.Handler.PathTransform = L.Handler.extend({
 			scale: this._scale.clone(),
 			pos: this._getPoints()[index]
 		});
+
+		this._scaleOrigin = undefined;
 	},
 
 
@@ -869,13 +898,6 @@ L.Handler.PathTransform = L.Handler.extend({
 			translate: L.point(matrix[4], matrix[5]),
 			layer: this._path
 		});
-	}
-});
-
-
-L.Path.addInitHook(function() {
-	if (this.options.transform) {
-		this.transform = new L.Handler.PathTransform(this, this.options.transform);
 	}
 });
 
