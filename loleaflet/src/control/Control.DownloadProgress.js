@@ -138,7 +138,8 @@ L.Control.DownloadProgress = L.Control.extend({
 			this._content.removeChild(this._confirmPasteButton);
 		if (this._content.contains(this._progress))
 			this._content.removeChild(this._progress);
-		this._map.focus();
+		if (this._map)
+			this._map.focus();
 		this.remove();
 		this._closed = true;
 	},
@@ -158,7 +159,7 @@ L.Control.DownloadProgress = L.Control.extend({
 					if (idx > 0)
 						text = text.substring(idx, text.length);
 					that._map._clip.setTextSelectionContent(text);
-					// TODO: now swap to the 'copy' button (?)
+					that._onComplete();
 				};
 				// TODO: failure to parse ? ...
 				reader.readAsText(response);

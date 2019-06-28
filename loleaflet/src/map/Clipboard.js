@@ -293,6 +293,9 @@ L.Clipboard = L.Class.extend({
 
 	populateClipboard: function(ev) {
 		var text;
+
+		this._stopHideDownload();
+
 		if (this._selectionType === 'complex' ||
 		    this._map._docLayer.hasGraphicSelection()) {
 			console.log('Copy/Cut with complex/graphical selection');
@@ -462,7 +465,11 @@ L.Clipboard = L.Class.extend({
 		clearTimeout(this._failedTimer);
 		setTimeout(function() {
 			if (that._clipboardSerial !== serial)
+			{
 				console.log('successful ' + operation);
+				if (operation === 'paste')
+					this._stopHideDownload();
+			}
 			else
 			{
 				console.log('help did not arive for ' + operation);
@@ -509,6 +516,7 @@ L.Clipboard = L.Class.extend({
 			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, null, usePasteKeyEvent);
 			this._map._clipboardContainer._abortComposition();
 			this._clipboardSerial++;
+			this._stopHideDownload();
 		}
 		// else: IE 11 - code in beforepaste: above.
 	},
@@ -516,6 +524,15 @@ L.Clipboard = L.Class.extend({
 	clearSelection: function() {
 		this._selectionContent = '';
 		this._selectionType = null;
+		// If no other copy/paste things occurred then ...
+		var that = this;
+		var serial = this._clipboardSerial;
+		if (!this._hideDownloadTimer)
+			this._hideDownloadTimer = setTimeout(function() {
+				that._hideDownloadTimer = null;
+				if (serial == that._clipboardSerial)
+					that._stopHideDownload();
+			}, 1000 * 15);
 	},
 
 	// textselectioncontent: message
@@ -550,6 +567,18 @@ L.Clipboard = L.Class.extend({
 			// Otherwise, it's easier to flash the widget or something.
 			this._warnLargeCopyPasteAlreadyStarted();
 		}
+	},
+
+	// useful if we did an internal paste already and don't want that.
+	_stopHideDownload: function() {
+		clearTimeout(this._hideDownloadTimer);
+		this._hideDownloadTimer = null;
+
+		if (!this._downloadProgress ||
+		    !this._downloadProgress.isVisible() ||
+		    this._downloadProgress.isClosed())
+			return;
+		this._downloadProgress._onClose();
 	},
 
 	_userAlreadyWarned: function (warning) {
