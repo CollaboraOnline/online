@@ -288,7 +288,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._dialogs[e.id].cursorVisible = e.visible === 'true';
 			if (this._dialogs[e.id].cursorVisible) {
 				$('#' + strId + '-cursor').css({display: 'block'});
-				this._map._onLostFocus();
+				this._map.onEditorLostFocus(this);
 			}
 			else {
 				$('#' + strId + '-cursor').css({display: 'none'});

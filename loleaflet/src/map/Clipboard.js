@@ -196,7 +196,7 @@ L.Clipboard = L.Class.extend({
 		};
 	},
 
-	dataTransferToDocument: function (dataTransfer, preferInternal, htmlText) {
+	dataTransferToDocument: function (dataTransfer, preferInternal, htmlText, usePasteKeyEvent) {
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
 
@@ -273,12 +273,19 @@ L.Clipboard = L.Class.extend({
 
 			var that = this;
 			this._doAsyncDownload('POST', destination, formData,
-					      function() {
-						      console.log('Posted ' + content.size + ' bytes successfully');
-						      that._map._socket.sendMessage('uno .uno:Paste');
-					      },
-					      function(progress) { return progress; }
-					     );
+							function() {
+								console.log('Posted ' + content.size + ' bytes successfully');
+								if (usePasteKeyEvent) {
+									// paste into dialog
+									var KEY_PASTE = 1299;
+									that._map._clipboardContainer._sendKeyEvent(0, KEY_PASTE);
+								} else {
+									// paste into document
+									that._map._socket.sendMessage('uno .uno:Paste');
+								}
+							},
+							function(progress) { return progress; }
+					    );
 		} else {
 			console.log('Nothing we can paste on the clipboard');
 		}
@@ -498,7 +505,8 @@ L.Clipboard = L.Class.extend({
 		console.log('Paste');
 		if (ev.clipboardData) { // Standard
 			ev.preventDefault();
-			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true);
+			var usePasteKeyEvent = ev.usePasteKeyEvent;
+			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, null, usePasteKeyEvent);
 			this._map._clipboardContainer._abortComposition();
 			this._clipboardSerial++;
 		}

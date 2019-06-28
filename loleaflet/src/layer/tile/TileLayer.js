@@ -2656,7 +2656,14 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onPaste: function (e) {
 		e = e.originalEvent;
-		this._map._clip.paste(e);
+		if (!this._map._activeDialog) {
+			// Paste in document
+			this._map._clip.paste(e);
+		} else {
+			// Paste in dialog
+			e.usePasteKeyEvent = true;
+			this._map._clip.paste(e);
+		}
 	},
 
 	_onDragOver: function (e) {
