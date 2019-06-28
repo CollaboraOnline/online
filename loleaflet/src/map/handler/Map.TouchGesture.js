@@ -25,6 +25,12 @@ L.Map.TouchGesture = L.Handler.extend({
 				enable: true
 			});
 
+			var singleTap = this._hammer.get('tap');
+			var doubleTap = this._hammer.get('doubletap');
+			var tripleTap = new Hammer.Tap({event: 'tripletap', taps: 3 });
+			this._hammer.add(tripleTap);
+			tripleTap.recognizeWith([doubleTap, singleTap]);
+
 			if (L.Browser.touch) {
 				L.DomEvent.on(this._map._mapPane, 'touchstart touchmove touchend touchcancel', L.DomEvent.preventDefault);
 			}
@@ -68,6 +74,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('panend', L.bind(this._onPanEnd, this));
 		this._hammer.on('pinchstart pinchmove', L.bind(this._onPinch, this));
 		this._hammer.on('pinchend', L.bind(this._onPinchEnd, this));
+		this._hammer.on('tripletap', L.bind(this._onTripleTap, this));
 		this._map.on('updatepermission', this._onPermission, this);
 		this._onPermission({perm: this._map._permission});
 	},
@@ -81,6 +88,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.off('pinchstart pinchmove', L.bind(this._onPinch, this));
 		this._hammer.off('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
+		this._hammer.off('tripletap', L.bind(this._onTripleTap, this));
 		this._map.off('updatepermission', this._onPermission, this);
 	},
 
@@ -147,6 +155,17 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+	},
+
+	_onTripleTap: function (e) {
+		var point = e.pointers[0],
+		    containerPoint = this._map.mouseEventToContainerPoint(point),
+		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
+		    latlng = this._map.layerPointToLatLng(layerPoint),
+		    mousePos = this._map._docLayer._latLngToTwips(latlng);
+
+		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 8192);
+		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 8192);
 	},
 
 	_onPanStart: function (e) {
