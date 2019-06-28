@@ -2114,11 +2114,15 @@ public:
         }
         catch (const std::exception& exc)
         {
-            LOG_ERR("QueueHandler::run: Exception: " << exc.what());
+            LOG_FTL("QueueHandler::run: Exception: " << exc.what());
+            Log::shutdown();
+            std::_Exit(Application::EXIT_SOFTWARE);
         }
         catch (...)
         {
             LOG_FTL("QueueHandler::run: Unknown exception");
+            Log::shutdown();
+            std::_Exit(Application::EXIT_SOFTWARE);
         }
     }
 
