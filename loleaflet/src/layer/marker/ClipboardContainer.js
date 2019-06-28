@@ -102,7 +102,7 @@ L.ClipboardContainer = L.Layer.extend({
 			this._onFocusBlur({ type: 'focus' });
 		}
 
-		this._map.on('mousedown touchstart', this._abortComposition, this);
+		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
 	},
 
 	onRemove: function() {
@@ -111,7 +111,8 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 		L.DomEvent.off(this._textArea, 'focus blur', this._onFocusBlur, this);
 
-		this._map.off('mousedown touchstart', this._abortComposition, this);
+		L.DomEvent.off(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
+
 		this._map.removeLayer(this._cursorHandler);
 	},
 
@@ -734,7 +735,7 @@ L.ClipboardContainer = L.Layer.extend({
 	_abortComposition: function _abortComposition() {
 		if (this._isComposing) {
 			this._sendCompositionEvent('input', '');
-			// this._sendCompositionEvent('end', '');
+			this._sendCompositionEvent('end', '');
 			this._isComposing = false;
 		}
 		this._emptyArea();
