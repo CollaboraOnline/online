@@ -182,6 +182,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:OutlineBullet'},
 				{uno: '.uno:PageDialog'},
 				{type: 'separator'},
+				{uno: '.uno:FormatLine'},
 				{uno: '.uno:FormatArea'},
 				{type: 'separator'},
 				{uno: '.uno:Watermark'},
@@ -367,6 +368,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatCellDialog'},
 				{uno: '.uno:PageFormatDialog'},
 				{type: 'separator'},
+				{uno: '.uno:FormatLine'},
 				{uno: '.uno:FormatArea'},
 				{type: 'separator'},
 				{name: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'), type: 'menu', menu: [
