@@ -87,10 +87,28 @@
       function receiveMessage(event) {
         console.log('==== framed.doc.html receiveMessage: ' + event.data);
         var msg = JSON.parse(event.data);
-        if (msg && msg.MessageId == 'App_LoadingStatus') {
+        if (!msg) {
+          return;
+        }
+        if (msg.MessageId == 'App_LoadingStatus') {
           if (msg.Values) {
             if (msg.Values.Status == 'Document_Loaded') {
               window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+            }
+          }
+        } else if (msg.MessageId == 'Doc_ModifiedStatus') {
+          if (msg.Values) {
+            if (msg.Values.Modified == true) {
+              document.getElementById("ModifiedStatus").innerHTML = "Modified";
+            }
+            else {
+              document.getElementById("ModifiedStatus").innerHTML = "Saved";
+            }
+          }
+        } else if (msg.MessageId == 'Action_Save_Resp') {
+          if (msg.Values) {
+            if (msg.Values.success == true) {
+              document.getElementById("ModifiedStatus").innerHTML = "Saved";
             }
           }
         }
@@ -124,6 +142,10 @@
       <button onclick="disable_default_uiaction('UI_Save', true); return false;">Disable default save action</button></br>
       <button onclick="disable_default_uiaction('UI_Save', false); return false;">Enable default save action</button></br></br>
     </form>
+
+    <p>Modified Status:
+    <span id="ModifiedStatus">Saved</span>
+    </p>
 
     <!-- The hostname and pathnames below are obviously specific to my
     personal environment and need to be changed appropriately. Also
