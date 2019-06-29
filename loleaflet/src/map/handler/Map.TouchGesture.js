@@ -323,7 +323,11 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map.getDocType() !== 'spreadsheet') {
 			this._center = this._map.mouseEventToLatLng({clientX: e.center.x, clientY: e.center.y});
 			this._zoom = this._map.getScaleZoom(e.scale);
-			this._map._animateZoom(this._center, this._zoom, false, true);
+
+			L.Util.cancelAnimFrame(this._animRequest);
+			this._animRequest = L.Util.requestAnimFrame(function () {
+				this._map._animateZoom(this._center, this._zoom, false, true);
+			}, this, true, this._map._container);
 		}
 	},
 
@@ -333,6 +337,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			    zoomDelta = this._zoom - oldZoom,
 			    finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
 
+			L.Util.cancelAnimFrame(this._animRequest);
 			this._map._animateZoom(this._center, finalZoom, true, true);
 		}
 	},
