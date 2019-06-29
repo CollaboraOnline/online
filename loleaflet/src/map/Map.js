@@ -209,8 +209,12 @@ L.Map = L.Evented.extend({
 		this._docLoaded = false;
 
 		this.on('commandstatechanged', function(e) {
-			if (e.commandName === '.uno:ModifiedStatus')
+			if (e.commandName === '.uno:ModifiedStatus') {
 				this._everModified = this._everModified || (e.state === 'true');
+
+				// Fire an event to let the client know whether the document needs saving or not.
+				this.fire('postMessage', {msgId: 'Doc_ModifiedStatus', args: { Modified: e.state === 'true' }});
+			}
 		}, this);
 
 		this.on('docloaded', function(e) {

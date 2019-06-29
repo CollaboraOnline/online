@@ -3261,6 +3261,21 @@ Editor to WOPI host
 		Response to this query is sent via <code>Action_SaveAs</code> message.
 		</td>
 	</tr>
+	<tr>
+		<td><code><b>Doc_ModifiedStatus</b></code></td>
+		<td></td>
+		<td>
+		Notification to update the modified status of the document.
+		Values.Modified will be true, if the document has been modified
+		since the last save, otherwise, it will be false if the document
+		has been saved.
+
+		Note that this notification may be published without a change
+		from the prior value, so care must be taken to check the Values.Modified
+		value and not assume the notifiaction itself implies the
+		modified state of the document on its own.
+		</td>
+	</tr>
 </table>
 
 <h3 id='loleaflet-postmessage-python'>Calling Python scripts</h3>
