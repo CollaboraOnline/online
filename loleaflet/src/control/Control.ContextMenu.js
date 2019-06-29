@@ -27,7 +27,7 @@ L.Control.ContextMenu = L.Control.extend({
 					  'WrapMenu', 'WrapOff', 'WrapOn', 'WrapIdeal', 'WrapLeft', 'WrapRight', 'WrapThrough',
 					  'WrapThroughTransparent', 'WrapContour', 'WrapAnchorOnly',
 					  'ArrangeFrameMenu', 'ArrangeMenu', 'BringToFront', 'ObjectForwardOne', 'ObjectBackOne', 'SendToBack',
-					  'RotateMenu', 'RotateLeft', 'RotateRight', 'FormatLine', 'FormatArea'],
+					  'RotateMenu', 'RotateLeft', 'RotateRight', 'TransformDialog', 'FormatLine', 'FormatArea'],
 
 			text: ['TableInsertMenu',
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
@@ -39,7 +39,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog'],
 
-			presentation: ['TransformDialog'],
+			presentation: [],
 			drawing: []
 		}
 		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
