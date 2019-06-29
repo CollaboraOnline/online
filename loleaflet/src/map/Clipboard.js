@@ -477,7 +477,7 @@ L.Clipboard = L.Class.extend({
 			{
 				console.log('successful ' + operation);
 				if (operation === 'paste')
-					this._stopHideDownload();
+					that._stopHideDownload();
 			}
 			else
 			{
