@@ -98,8 +98,9 @@ L.Point.prototype = {
 	equals: function (point) {
 		point = L.point(point);
 
-		return point.x === this.x &&
-		       point.y === this.y;
+		// Proper ieee 754 equality comparison.
+		return Math.abs(point.x - this.x) < Number.EPSILON &&
+			   Math.abs(point.y - this.y) < Number.EPSILON;
 	},
 
 	contains: function (point) {

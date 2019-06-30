@@ -62,7 +62,7 @@ L.Annotation = L.Layer.extend({
 	},
 
 	setLatLng: function (latlng, skipCheckBounds) {
-		if (this._latlng != latlng) {
+		if (!this._latlng.equals(latlng)) {
 			this._skipCheckBounds = !!skipCheckBounds;
 			this._latlng = latlng;
 			this._updatePosition();
