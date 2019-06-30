@@ -71,6 +71,7 @@ L.Annotation = L.Layer.extend({
 		return this;
 	},
 
+	/// Returns two points: the top-left (min) and the bottom-right (max).
 	getBounds: function () {
 		var point = this._map.latLngToLayerPoint(this._latlng);
 		return L.bounds(point, point.add(L.point(this._container.offsetWidth, this._container.offsetHeight)));
@@ -85,7 +86,7 @@ L.Annotation = L.Layer.extend({
 		this._contentNode.style.display = '';
 		this._nodeModify.style.display = 'none';
 		this._nodeReply.style.display = 'none';
-		if (this._data.textSelected && !this._map.hasLayer(this._data.textSelected)) {
+		if (this._data.textSelected && this._map.hasLayer && !this._map.hasLayer(this._data.textSelected)) {
 			this._map.addLayer(this._data.textSelected);
 		}
 	},
@@ -105,10 +106,10 @@ L.Annotation = L.Layer.extend({
 	},
 
 	edit: function () {
-		this._container.style.visibility = '';
-		this._contentNode.style.display = 'none';
 		this._nodeModify.style.display = '';
 		this._nodeReply.style.display = 'none';
+		this._container.style.visibility = '';
+		this._contentNode.style.display = 'none';
 		return this;
 	},
 

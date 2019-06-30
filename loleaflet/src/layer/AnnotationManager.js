@@ -294,12 +294,14 @@ L.AnnotationManager = L.Class.extend({
 		if (!this._map || this._map.animatingZoom || this._items.length === 0) {
 			return;
 		}
-		var maxBounds = this._map.getLayerMaxBounds();
+
 		var thisBounds = this.getBounds();
 		if (!thisBounds)
 			return;
-		var margin = this._items[0].getMargin();
+
+		var maxBounds = this._map.getLayerMaxBounds();
 		if (!maxBounds.contains(thisBounds)) {
+			var margin = this._items[0].getMargin();
 			var docBounds = this._map.getLayerDocBounds();
 			var delta = L.point(Math.max(thisBounds.max.x - docBounds.max.x, 0), Math.max(thisBounds.max.y - docBounds.max.y, 0));
 			if (delta.x > 0) {
