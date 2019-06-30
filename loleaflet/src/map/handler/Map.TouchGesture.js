@@ -57,7 +57,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			}
 
 			L.DomEvent.on(this._map._mapPane, 'mousedown mousemove mouseup', L.DomEvent.preventDefault);
-			L.DomEvent.on(document, 'contextmenu', L.DomEvent.preventDefault);
+			L.DomEvent.on(document, 'contextmenu touchmove', L.DomEvent.preventDefault);
 		}
 
 		for (var events in L.Draggable.MOVE) {
