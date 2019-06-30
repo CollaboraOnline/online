@@ -18,6 +18,7 @@ L.AnnotationManager = L.Class.extend({
 		this._items = [];
 		this._hiddenItems = 0;
 		this._selected = null;
+		this._lastSelected = null; // Used to detect if selection changed.
 		L.setOptions(this, options);
 		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
 		this._map.on('zoomend', this._onAnnotationZoom, this);
@@ -459,7 +460,15 @@ L.AnnotationManager = L.Class.extend({
 			this._map.addLayer(this._arrow);
 
 			latlng = this._map.unproject(L.point(posX, posY));
-			(new L.PosAnimation()).run(this._items[selectIndexFirst]._container, this._map.latLngToLayerPoint(latlng));
+			var annotationCoords = this._map.latLngToLayerPoint(latlng);
+			if (this._selected != this._lastSelected) {
+				this._lastSelected = this._selected;
+				// Scroll to bring the comments in view, which will trigger layouting again.
+				this._map.fire('scrollto', {x: annotationCoords.x, y: annotationCoords.y - this.options.marginY, calledFromInvalidateCursorMsg: false});
+				return;
+			}
+
+			(new L.PosAnimation()).run(this._items[selectIndexFirst]._container, annotationCoords);
 			this._items[selectIndexFirst].setLatLng(latlng, /*skip check bounds*/ true);
 			layoutBounds = this._items[selectIndexFirst].getBounds();
 
@@ -572,7 +581,6 @@ L.AnnotationManager = L.Class.extend({
 				me.doLayout(zoom);
 			}, 250 /* ms */);
 		} // else - avoid excessive re-layout
-
 	},
 
 	add: function (comment) {
