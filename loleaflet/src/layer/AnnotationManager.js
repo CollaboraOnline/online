@@ -218,22 +218,19 @@ L.AnnotationManager = L.Class.extend({
 		if (this._items.length <= 0 || this._items.length === this._hiddenItems)
 			return null;
 
-		var allCommentsBounds;
-		var idx = 0;
-		while (!allCommentsBounds) {
-			if (this._items[idx].isVisible())
-				allCommentsBounds = this._items[0].getBounds();
-			idx++;
+		var allCommentsBounds = null;
+		for (var idx = 0; idx < this._items.length; ++idx) {
+			if (this._items[idx].isVisible()) {
+				if (!allCommentsBounds) {
+					allCommentsBounds = this._items[idx].getBounds();
+				} else {
+					var bounds = this._items[idx].getBounds();
+					allCommentsBounds.extend(bounds.min);
+					allCommentsBounds.extend(bounds.max);
+				}
+			}
 		}
-
-		for (; idx < this._items.length; idx++) {
-			if (!this._items[idx].isVisible())
-				continue;
-			var bounds = this._items[idx].getBounds();
-			allCommentsBounds.extend(bounds.min);
-			allCommentsBounds.extend(bounds.max);
-		}
-		return allCommentsBounds
+		return allCommentsBounds;
 	},
 
 	removeItem: function (id) {

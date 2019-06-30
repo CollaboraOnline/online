@@ -222,8 +222,10 @@ L.Control.Scroll = L.Control.extend({
 			console.debug('_onUpdateSize: Ignore the scroll !');
 			this._ignoreScroll = true;
 		}
-		L.DomUtil.setStyle(this._mockDoc, 'width', e.x + 'px');
-		L.DomUtil.setStyle(this._mockDoc, 'height', e.y + 'px');
+
+		// Use the rounded pixel values as it makes little sense to use fractional pixels.
+		L.DomUtil.setStyle(this._mockDoc, 'width', newDocWidth + 'px');
+		L.DomUtil.setStyle(this._mockDoc, 'height', newDocHeight + 'px');
 
 		// custom scrollbar plugin checks automatically for content height changes but not for content width changes
 		// so we need to update scrollbars explicitly; moreover we want to avoid to have 'update' invoked twice
