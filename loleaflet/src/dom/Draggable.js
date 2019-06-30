@@ -199,5 +199,6 @@ L.Draggable = L.Evented.extend({
 		}
 
 		this._moving = false;
+		this._startPoint = undefined;
 	}
 });
