@@ -390,6 +390,7 @@ L.GridLayer = L.Layer.extend({
 		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
 		bottomRight = bottomRight.multiplyBy(scale);
 		if (extraSize) {
+			// extraSize is unscalled.
 			bottomRight = bottomRight.add(extraSize);
 		}
 		bottomRight = this._map.unproject(bottomRight);
@@ -402,8 +403,11 @@ L.GridLayer = L.Layer.extend({
 
 		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
 			this._docHeightTwips / this._tileHeightTwips);
-		scrollPixelLimits = extraSize ? scrollPixelLimits.multiplyBy(this._tileSize).add(extraSize.multiplyBy(scale)) :
-			scrollPixelLimits.multiplyBy(this._tileSize);
+		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize);
+		if (extraSize) {
+			// extraSize is unscalled.
+			scrollPixelLimits = scrollPixelLimits.add(extraSize);
+		}
 		this._docPixelSize = {x: scrollPixelLimits.x, y: scrollPixelLimits.y};
 		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
 	},
