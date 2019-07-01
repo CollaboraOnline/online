@@ -84,7 +84,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('panstart', L.bind(this._onPanStart, this));
 		this._hammer.on('pan', L.bind(this._onPan, this));
 		this._hammer.on('panend', L.bind(this._onPanEnd, this));
-		this._hammer.on('pinchstart pinchmove', L.bind(this._onPinch, this));
+		this._hammer.on('pinchstart', L.bind(this._onPinchStart, this));
+		this._hammer.on('pinchmove', L.bind(this._onPinch, this));
 		this._hammer.on('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.on('tripletap', L.bind(this._onTripleTap, this));
 		if (window.ThisIsTheiOSApp)
@@ -99,7 +100,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.off('panstart', L.bind(this._onPanStart, this));
 		this._hammer.off('pan', L.bind(this._onPan, this));
 		this._hammer.off('panend', L.bind(this._onPanEnd, this));
-		this._hammer.off('pinchstart pinchmove', L.bind(this._onPinch, this));
+		this._hammer.off('pinchstart', L.bind(this._onPinchStart, this));
+		this._hammer.off('pinchmove', L.bind(this._onPinch, this));
 		this._hammer.off('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
 		this._hammer.off('tripletap', L.bind(this._onTripleTap, this));
@@ -325,9 +327,21 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 	},
 
-	_onPinch: function (e) {
+	_onPinchStart: function (e) {
 		if (this._map.getDocType() !== 'spreadsheet') {
-			this._center = this._map.mouseEventToLatLng({clientX: e.center.x, clientY: e.center.y});
+			this._pinchStartCenter = {x: e.center.x, y: e.center.y};
+		}
+	},
+
+	_onPinch: function (e) {
+		if (!this._pinchStartCenter)
+			return;
+
+		if (this._map.getDocType() !== 'spreadsheet') {
+			// we need to invert the offset or the map is moved in the opposite direction
+			var offset = {x: e.center.x - this._pinchStartCenter.x, y: e.center.y - this._pinchStartCenter.y};
+			var center = {x: this._pinchStartCenter.x - offset.x, y: this._pinchStartCenter.y - offset.y};
+			this._center = this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y});
 			this._zoom = this._map.getScaleZoom(e.scale);
 
 			L.Util.cancelAnimFrame(this._animRequest);
