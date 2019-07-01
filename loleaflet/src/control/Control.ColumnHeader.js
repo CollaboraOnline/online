@@ -198,7 +198,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
 	},
 
-	drawHeaderEntry: function (entry, isOver, isHighlighted) {
+	drawHeaderEntry: function (entry, isOver, isHighlighted, isCurrent) {
 		if (!entry)
 			return;
 
@@ -243,6 +243,18 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// draw background
 		ctx.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
 		ctx.fillRect(startPar, startOrt, width, height);
+		// draw resize handle
+		var handleSize = this._resizeHandleSize;
+		if (isCurrent && width > 2 * handleSize) {
+			var center = startPar + width - handleSize / 2;
+			var y = startOrt + 2;
+			var h = height - 4;
+			var size = 2;
+			var offset = 1;
+			ctx.fillStyle = '#BBBBBB';
+			ctx.fillRect(center - size - offset, y + 2, size, h - 4);
+			ctx.fillRect(center + offset, y + 2, size, h - 4);
+		}
 		// draw text content
 		ctx.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
 		ctx.font = this._font;
