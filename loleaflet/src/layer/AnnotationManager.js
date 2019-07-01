@@ -464,7 +464,7 @@ L.AnnotationManager = L.Class.extend({
 			if (this._selected != this._lastSelected) {
 				this._lastSelected = this._selected;
 				// Scroll to bring the comments in view, which will trigger layouting again.
-				this._map.fire('scrollto', {x: annotationCoords.x, y: annotationCoords.y - this.options.marginY, calledFromInvalidateCursorMsg: false});
+				this._map.fire('scrollto', {x: annotationCoords.x, y: annotationCoords.y, calledFromInvalidateCursorMsg: false});
 				return;
 			}
 
