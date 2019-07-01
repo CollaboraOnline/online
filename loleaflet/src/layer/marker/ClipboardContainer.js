@@ -451,26 +451,9 @@ L.ClipboardContainer = L.Layer.extend({
 			this._emptyArea();
 		} else if (ev.inputType === 'deleteContentBackward') {
 			if (this._isComposing) {
-				// deletion refers to the text being composing, noop
+				// deletion refers to the text being composed, noop
 				return;
 			}
-
-			// Chromium sends an input/deleteContentBackward event when pressing
-			// backspace *OR* delete when the contenteditable has some text selected.
-			// In this edge case, send "key type=input" to lowsd with the
-			// right keystroke, and skip sending one keystroke per deleted character;
-			// handler/Map.Keyboard.js will send the corresponding "key type=up" message.
-// 			if (this._selectionLengthAtBeforeInput) {
-// 				if (this._lastBeforeInputType === 'deleteContentForward') {
-// 					this._sendKeyEvent(46, 1286);
-// 					this._emptyArea();
-// 					return;
-// 				} else if (this._lastBeforeInputType === 'deleteContentBackward') {
-// 					this._sendKeyEvent(8, 1283);
-// 					this._emptyArea();
-// 					return;
-// 				}
-// 			}
 
 			// Delete text backwards - as many characters as indicated in the previous
 			// 'beforeinput' event
@@ -485,7 +468,9 @@ L.ClipboardContainer = L.Layer.extend({
 
 			// If there is queued input, cancel that first. This prevents race conditions
 			// in lowsd (compose-backspace-compose messages are handled as
-			// compose-compose-backspace)
+			// compose-compose-backspace).
+			// Deleting queued input happens when accepting an autocorrect suggestion;
+			// emptying the area in that case would break text composition workflow.
 			var l = this._queuedInput.length;
 			if (l >= count) {
 				this._queuedInput = this._queuedInput.substring(0, l - count);
@@ -494,12 +479,10 @@ L.ClipboardContainer = L.Layer.extend({
 					// Send a UNO backspace keystroke per glyph to be deleted
 					this._sendKeyEvent(8, 1283);
 				}
+
+				this._emptyArea();
 			}
 
-			// Empty the area and stop the event - this is needed so that Android+GBoard
-			// doesn't fire a compositionstart event when deleting back into a word
-			// that could be spellchecked.
-			this._emptyArea();
 			L.DomEvent.stop(ev);
 		} else if (ev.inputType === 'deleteContentForward') {
 			// Send a UNO 'delete' keystroke
@@ -819,9 +802,15 @@ L.ClipboardContainer = L.Layer.extend({
 	// Check arrow keys on 'keyup' event; using 'ArrowLeft' or 'ArrowRight'
 	// shall empty the textarea, to prevent FFX/Gecko from ever not having
 	// whitespace around the caret.
+	// Across browsers, arrow up/down / home / end would move the caret to
+	// the beginning/end of the textarea/contenteditable.
 	_onKeyUp: function _onKeyUp(ev) {
 		this._map.notifyActive();
-		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
+		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
+		    ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
+		    ev.key === 'Home' || ev.key === 'End' ||
+		    ev.key === 'PageUp' || ev.key === 'PageDown'
+		) {
 			this._emptyArea();
 		}
 	},
