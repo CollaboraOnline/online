@@ -63,8 +63,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._legacyArea = L.Browser.safari;
 
 		// Debug flag, used in fancyLog(). See the debug() method.
-// 		this._isDebugOn = false;
-		this._isDebugOn = true;
+		this._isDebugOn = false;
 
 		this._initLayout();
 
@@ -573,13 +572,13 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	// Empties the textarea / contenteditable element.
+	// If the browser supports the 'inputType' property on 'input' events, then
+	// add empty spaces to the textarea / contenteditable, in order to
+	// always catch deleteContentBackward/deleteContentForward input events
+	// (some combination of browser + input method don't fire those on an
+	// empty contenteditable).
 	_emptyArea: function _emptyArea() {
 		if (this._hasInputType) {
-			// Add two non-breaking spaces to the textarea/contenteditable,
-			// but only after we can be sure that this browser doesn't
-			// use legacy 'input' events, i.e. when the last 'input' event
-			// did have a 'inputType' property.
-			//
 			// Note: 0xA0 is 160, which is the character code for non-breaking space:
 			// https://www.fileformat.info/info/unicode/char/00a0/index.htm
 			// Using normal spaces would make FFX/Gecko collapse them into an
@@ -590,36 +589,26 @@ L.ClipboardContainer = L.Layer.extend({
 				///
 				this._textArea.setSelectionRange(1, 1);
 			} else {
-				// Nope, AOSP keyboard places the caret at the beginning when adding two
-				// blank spaces.
-// 				this._textArea.innerText = '\xa0\xa0';
-// 				this._textArea.innerText = '\xa0';
-				this._textArea.innerText = '-';
-// 				var textNode = this._textArea.childNodes[0];
-// 				var range = document.createRange();
-// 				range.setStart(textNode, 0);
-// 				range.setEnd(textNode, 0);
-// 				range.collapse(true);
-// 				var sel = window.getSelection();
-// 				sel.removeAllRanges();
-// 				sel.addRange(range);
-// 				range.detach();
+				// The strategy for a contenteditable is to add a space, select it,
+				// collapse the selection, then add two text nodes after and before
+				// the text node with the selection but with a delay of one frame.
+				// The frame delay is done in order to avoid the AOSP on-screen keyboard
+				// from moving the cursor caret around. On delete/backspace, AOSP
+				// keyboard would somehow ignore the selection ranges and move the caret
+				// before/after the empty spaces.
+				this._textArea.innerText = '\xa0';
 
+				var range = document.createRange();
+				range.selectNodeContents(this._textArea);
+				var sel = window.getSelection();
+				sel.removeAllRanges();
+				sel.addRange(range);
+				sel.collapse(this._textArea.childNodes[0]);
 
-			var range = document.createRange();
-			range.selectNodeContents(this._textArea);
-			var sel = window.getSelection();
-			sel.removeAllRanges();
-			sel.addRange(range);
-			sel.collapse(this._textArea.childNodes[0]);
-
-			// Add text nodes after and before the selected node.
-			L.Util.requestAnimFrame(function(){
-				this._textArea.prepend('+');
-				this._textArea.append('+');
-// 				this._textArea.prepend('\xa0');
-// 				this._textArea.append('\xa0');
-			}.bind(this));
+				L.Util.requestAnimFrame(function(){
+					this._textArea.prepend('\xa0');
+					this._textArea.append('\xa0');
+				}.bind(this));
 
 			}
 		} else if (this._legacyArea) {
