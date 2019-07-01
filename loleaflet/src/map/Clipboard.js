@@ -23,6 +23,13 @@ L.Clipboard = L.Class.extend({
 			'beforepaste', function(ev) { that.beforepaste(ev); });
 	},
 
+	compatRemoveNode: function(node) {
+		if (window.isInternetExplorer)
+			node.removeNode(true);
+		else // standard
+			node.parentNode.removeChild(node);
+	},
+
 	// We can do a much better job when we fetch text/plain too.
 	stripHTML: function(html) {
 		var tmp = document.createElement('div');
@@ -30,7 +37,7 @@ L.Clipboard = L.Class.extend({
 		// attempt to cleanup unwanted elements
 		var styles = tmp.querySelectorAll('style');
 		for (var i = 0; i < styles.length; i++) {
-			styles[i].parentNode.removeChild(styles[i]);
+			this.compatRemoveNode(styles[i]);
 		}
 		return tmp.textContent.trim() || tmp.innerText.trim() || '';
 	},
@@ -374,7 +381,7 @@ L.Clipboard = L.Class.extend({
 			setTimeout(function() {
 				console.log('Content pasted');
 				that.dataTransferToDocument(null, false, div.innerHTML);
-				div.parentNode.removeChild(div);
+				this.compatRemoveNode(div);
 				// attempt to restore focus.
 				if (active == null)
 					that._map.focus();
@@ -424,7 +431,7 @@ L.Clipboard = L.Class.extend({
 		div.removeEventListener('paste', listener);
 		div.removeEventListener('cut', listener);
 		div.removeEventListener('copy', listener);
-		div.parentNode.removeChild(div);
+		this.compatRemoveNode(div);
 
 		// try to restore focus if we need to.
 		if (active !== null && active !== document.activeElement)
