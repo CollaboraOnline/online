@@ -18,6 +18,7 @@ L.Control.Header = L.Control.extend({
 		this._canvasHeight = 0;
 		this._clicks = 0;
 		this._current = -1;
+		this._resizeHandleSize = 15;
 		this._selection = {start: -1, end: -1};
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
@@ -119,12 +120,16 @@ L.Control.Header = L.Control.extend({
 		L.DomEvent.on(element, 'mousedown', this._onMouseDown, this);
 	},
 
-	select: function (entry) {
-		this.drawHeaderEntry(entry, /*isOver=*/false, /*isHighlighted=*/true);
+	select: function (entry, isCurrent) {
+		this.drawHeaderEntry(entry, /*isOver=*/false, /*isHighlighted=*/true, isCurrent);
 	},
 
 	unselect: function (entry) {
-		this.drawHeaderEntry(entry, /*isOver=*/false, /*isHighlighted=*/false);
+		this.drawHeaderEntry(entry, /*isOver=*/false, /*isHighlighted=*/false, false);
+	},
+
+	isHeaderSelected: function (index) {
+		return index === this._current;
 	},
 
 	isHighlighted: function (index) {
@@ -151,7 +156,7 @@ L.Control.Header = L.Control.extend({
 		// after clearing selection, we need to select the header entry for the current cursor position,
 		// since we can't be sure that the selection clearing is due to click on a cell
 		// different from the one where the cursor is already placed
-		this.select(data.get(this._current));
+		this.select(data.get(this._current), true);
 	},
 
 	updateSelection: function(data, start, end) {
@@ -182,7 +187,7 @@ L.Control.Header = L.Control.extend({
 				itStart = entry.index;
 			}
 			if (selected) {
-				this.select(entry);
+				this.select(entry, false);
 			}
 			if (x0 <= end && end <= x1) {
 				itEnd = entry.index;
@@ -246,7 +251,7 @@ L.Control.Header = L.Control.extend({
 			this.unselect(data.get(this._current));
 			// no selection when the cell cursor is slim
 			if (entry && !zeroSizeEntry)
-				this.select(entry);
+				this.select(entry, true);
 		}
 		this._current = entry && !zeroSizeEntry ? entry.index : -1;
 	},
@@ -272,7 +277,8 @@ L.Control.Header = L.Control.extend({
 		this._overHeaderArea = false;
 
 		if (this._mouseOverEntry) {
-			this.drawHeaderEntry(this._mouseOverEntry, /*isOver: */ false);
+			var mouseOverIsCurrent = (this._mouseOverEntry.index == this._current);
+			this.drawHeaderEntry(this._mouseOverEntry, /*isOver: */ false, null, mouseOverIsCurrent);
 			this._lastMouseOverIndex = this._mouseOverEntry.index + this._startHeaderIndex; // used by context menu
 			this._mouseOverEntry = null;
 		}
@@ -303,6 +309,9 @@ L.Control.Header = L.Control.extend({
 			if (pos > start && pos <= end) {
 				mouseOverIndex = entry.index;
 				var resizeAreaStart = Math.max(start, end - 3);
+				if (this.isHeaderSelected(entry.index)) {
+					resizeAreaStart = end - this._resizeHandleSize;
+				}
 				isMouseOverResizeArea = (pos > resizeAreaStart);
 				break;
 			}
@@ -310,8 +319,12 @@ L.Control.Header = L.Control.extend({
 		}
 
 		if (mouseOverIndex && (!this._mouseOverEntry || mouseOverIndex !== this._mouseOverEntry.index)) {
-			this.drawHeaderEntry(this._mouseOverEntry, false);
-			this.drawHeaderEntry(entry, true);
+			var mouseOverIsCurrent = false;
+			if (this._mouseOverEntry != null) {
+				mouseOverIsCurrent = (this._mouseOverEntry.index == this._current);
+			}
+			this.drawHeaderEntry(this._mouseOverEntry, false, null, mouseOverIsCurrent);
+			this.drawHeaderEntry(entry, true, null, entry.index == this._current);
 			this._mouseOverEntry = entry;
 		}
 
