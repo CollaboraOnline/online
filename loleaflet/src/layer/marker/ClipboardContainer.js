@@ -63,7 +63,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._legacyArea = L.Browser.safari;
 
 		// Debug flag, used in fancyLog(). See the debug() method.
-		this._isDebugOn = false;
+		this._isDebugOn = true;
 
 		this._initLayout();
 
@@ -75,9 +75,6 @@ L.ClipboardContainer = L.Layer.extend({
 			}),
 			draggable: true
 		}).on('dragend', this._onCursorHandlerDragEnd, this);
-
-		// This variable prevents from hiding the keyboard just before focus call
-		this.dontBlur = false;
 	},
 
 	onAdd: function() {
@@ -98,6 +95,9 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 
 		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
+		// 		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', function(ev) {
+		// 			this._fancyLog(ev.type);
+		// 		}, this);
 	},
 
 	onRemove: function() {
@@ -138,6 +138,13 @@ L.ClipboardContainer = L.Layer.extend({
 			onoff(this._textArea, 'keydown', this._onEdgeKeyDown, this);
 		}
 
+		// Stock android browsers (using an embedded WebView) wihout an InputEvent
+		// implementation behave similar to MSIE in regards to "enter" & "delete"
+		// keypresses
+		if (L.Browser.android && L.Browser.chrome && !('InputEvent' in window)) {
+			onoff(this._textArea, 'keydown', this._onMSIEKeyDown, this);
+		}
+
 		// Debug
 		onoff(
 			this._textArea,
@@ -149,6 +156,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._map.notifyActive();
 
 		if (ev.type === 'blur' && this._isComposing) {
+			/// TODO: Set this._compositionText
 			this._queueInput(this._compositionText);
 			this._abortComposition(ev);
 		}
@@ -451,26 +459,9 @@ L.ClipboardContainer = L.Layer.extend({
 			this._emptyArea();
 		} else if (ev.inputType === 'deleteContentBackward') {
 			if (this._isComposing) {
-				// deletion refers to the text being composing, noop
+				// deletion refers to the text being composed, noop
 				return;
 			}
-
-			// Chromium sends an input/deleteContentBackward event when pressing
-			// backspace *OR* delete when the contenteditable has some text selected.
-			// In this edge case, send "key type=input" to lowsd with the
-			// right keystroke, and skip sending one keystroke per deleted character;
-			// handler/Map.Keyboard.js will send the corresponding "key type=up" message.
-// 			if (this._selectionLengthAtBeforeInput) {
-// 				if (this._lastBeforeInputType === 'deleteContentForward') {
-// 					this._sendKeyEvent(46, 1286);
-// 					this._emptyArea();
-// 					return;
-// 				} else if (this._lastBeforeInputType === 'deleteContentBackward') {
-// 					this._sendKeyEvent(8, 1283);
-// 					this._emptyArea();
-// 					return;
-// 				}
-// 			}
 
 			// Delete text backwards - as many characters as indicated in the previous
 			// 'beforeinput' event
@@ -485,7 +476,9 @@ L.ClipboardContainer = L.Layer.extend({
 
 			// If there is queued input, cancel that first. This prevents race conditions
 			// in lowsd (compose-backspace-compose messages are handled as
-			// compose-compose-backspace)
+			// compose-compose-backspace).
+			// Deleting queued input happens when accepting an autocorrect suggestion;
+			// emptying the area in that case would break text composition workflow.
 			var l = this._queuedInput.length;
 			if (l >= count) {
 				this._queuedInput = this._queuedInput.substring(0, l - count);
@@ -494,12 +487,10 @@ L.ClipboardContainer = L.Layer.extend({
 					// Send a UNO backspace keystroke per glyph to be deleted
 					this._sendKeyEvent(8, 1283);
 				}
+
+				this._emptyArea();
 			}
 
-			// Empty the area and stop the event - this is needed so that Android+GBoard
-			// doesn't fire a compositionstart event when deleting back into a word
-			// that could be spellchecked.
-			this._emptyArea();
 			L.DomEvent.stop(ev);
 		} else if (ev.inputType === 'deleteContentForward') {
 			// Send a UNO 'delete' keystroke
@@ -596,6 +587,9 @@ L.ClipboardContainer = L.Layer.extend({
 				// from moving the cursor caret around. On delete/backspace, AOSP
 				// keyboard would somehow ignore the selection ranges and move the caret
 				// before/after the empty spaces.
+
+				/// FIXME: The aforementioned strategy makes Android + GBoard + Firefox fail:
+				/// trying to press the "ArrowLeft" or "ArrowUp" keys in the
 				this._textArea.innerText = '\xa0';
 
 				var range = document.createRange();
@@ -605,7 +599,7 @@ L.ClipboardContainer = L.Layer.extend({
 				sel.addRange(range);
 				sel.collapse(this._textArea.childNodes[0]);
 
-				L.Util.requestAnimFrame(function(){
+				L.Util.requestAnimFrame(function() {
 					this._textArea.prepend('\xa0');
 					this._textArea.append('\xa0');
 				}.bind(this));
@@ -709,9 +703,10 @@ L.ClipboardContainer = L.Layer.extend({
 		// WebView (without chrome user-agent string)
 		if (
 			L.Browser.chrome ||
-			(L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit)
+			(L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit && !L.Browser.gecko)
 		) {
 			if (this._lastInputType === 'insertCompositionText') {
+				console.log('Queuing input because android webview');
 				this._queueInput(ev.data);
 			} else {
 				// Ended a composition without user input, abort.
@@ -819,14 +814,21 @@ L.ClipboardContainer = L.Layer.extend({
 	// Check arrow keys on 'keyup' event; using 'ArrowLeft' or 'ArrowRight'
 	// shall empty the textarea, to prevent FFX/Gecko from ever not having
 	// whitespace around the caret.
+	// Across browsers, arrow up/down / home / end would move the caret to
+	// the beginning/end of the textarea/contenteditable.
 	_onKeyUp: function _onKeyUp(ev) {
 		this._map.notifyActive();
-		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
+		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
+		    ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
+		    ev.key === 'Home' || ev.key === 'End' ||
+		    ev.key === 'PageUp' || ev.key === 'PageDown'
+		) {
 			this._emptyArea();
 		}
 	},
 
 	// MSIE11 doesn't send any "textinput" events on enter, delete or backspace.
+	// (Idem for old-ish stock android browsers which do not implement InputEvents)
 	// To handle those, an event handler is added to the "keydown" event (which repeats)
 	_onMSIEKeyDown: function _onMSIEKeyDown(ev) {
 		if (!ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
