@@ -614,11 +614,12 @@ L.ClipboardContainer = L.Layer.extend({
 			if (this._textArea.childNodes.length === 1) {
 				this._textArea.childNodes[0].data = '';
 			} else if (this._textArea.childNodes.length > 1) {
+				this._textArea.innerText = '';
+				this._textArea.innerHTML = '';
 				// Sanity check, should never be reached.
-				throw new Error('Unexpected: more than one text node inside the contenteditable.');
+				// True - but for now - lets not kill the world in this case ...
+//				throw new Error('Unexpected: more than one text node inside the contenteditable.');
 			}
-// 			this._textArea.innerText = '';
-// 			this._textArea.innerHTML = '';
 		}
 	},
 
@@ -854,18 +855,11 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 	},
 
-	// Edge18 doesn't send any "input" events on delete or backspace.
+	// Edge18 doesn't send any "input" events on delete or backspace
 	// To handle those, an event handler is added to the "keydown" event (which repeats)
 	_onEdgeKeyDown: function _onEdgeKeyDown(ev) {
-		if (!ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
-			if (ev.key === 'Delete' || ev.key === 'Del') {
-				this._sendKeyEvent(46, 1286);
-				this._emptyArea();
-			} else if (ev.key === 'Backspace') {
-				this._sendKeyEvent(8, 1283);
-				this._emptyArea();
-			}
-		}
+		// FIXME: we need enter too - share with above method ?
+		this._onMSIEKeyDown(ev);
 	},
 
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
