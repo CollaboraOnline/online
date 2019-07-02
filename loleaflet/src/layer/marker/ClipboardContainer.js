@@ -274,7 +274,7 @@ L.ClipboardContainer = L.Layer.extend({
 			this._textArea.style.height = '1px';
 			this._textArea.style.caretColor = 'transparent';
 
-			if (window.isInternetExplorer)
+			if (window.isInternetExplorer || L.Browser.edge)
 			{
 				// Setting the font-size to zero is the only reliable
 				// way to hide the caret in MSIE11, as the CSS "caret-color"
