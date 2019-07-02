@@ -208,7 +208,12 @@ L.WriterTileLayer = L.TileLayer.extend({
 	},
 
 	onAnnotationModify: function (annotation) {
-		this._annotations.modify(annotation);
+		if (window.mode.isMobile() || window.mode.isTablet) {
+			var that = this;
+			this.newAnnotationVex(annotation, function(annotation) { that._annotations._onAnnotationSave(annotation); }, /* isMod */ true);
+		} else {
+			this._annotations.modify(annotation);
+		}
 	},
 
 	onAnnotationRemove: function (id) {

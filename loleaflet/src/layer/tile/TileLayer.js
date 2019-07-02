@@ -354,13 +354,24 @@ L.TileLayer = L.GridLayer.extend({
 		return newEvent;
 	},
 
-	newAnnotationVex: function(comment, addCommentFn) {
+	newAnnotationVex: function(comment, addCommentFn, isMod) {
 		var that = this;
+
+		var commentData = null;
+		var content = '';
+		if (comment.author) {
+			// New comment - full data
+			commentData = comment;
+		} else {
+			// Modification
+			commentData = comment._data;
+			content = commentData.text;
+		}
 
 		var dialog = vex.dialog.open({
 			message: '',
 			input: [
-				'<textarea name="comment" content="' + comment.text + '" class="loleaflet-annotation-textarea" style="max-width: 400px" required />'
+				'<textarea name="comment" class="loleaflet-annotation-textarea" style="max-width: 400px" required>' + content + '</textarea>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
@@ -368,10 +379,19 @@ L.TileLayer = L.GridLayer.extend({
 			],
 			callback: function (data) {
 				if (data) {
-					that._draft = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(that._map);
-					that._draft._data.text = data.comment;
+					var annotation = null;
+					if (isMod) {
+						annotation = comment;
+					} else {
+						annotation = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(that._map);
+						that._draft = annotation;
+					}
+
+					annotation._data.text = data.comment;
 					comment.text = data.comment;
-					addCommentFn.call(that, {annotation: that._draft}, comment);
+
+					// FIXME: Unify annotation code in all modules...
+					addCommentFn.call(that, {annotation: annotation}, comment);
 				}
 			}
 		});
@@ -392,18 +412,20 @@ L.TileLayer = L.GridLayer.extend({
 		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
 
-		$(this._nodeModifyText).text(comment.text);
-		$(this._contentAuthor).text(comment.author);
-		$(this._authorAvatarImg).attr('src', comment.avatar);
-		var user = this._map.getViewId(comment.author);
+		$(this._nodeModifyText).text(commentData.text);
+		$(this._contentAuthor).text(commentData.author);
+		$(this._authorAvatarImg).attr('src', commentData.avatar);
+		var user = this._map.getViewId(commentData.author);
 		if (user >= 0) {
 			var color = L.LOUtil.rgbToHex(this._map.getViewColor(user));
 			$(this._authorAvatarImg).css('border-color', color);
 		}
 
-		var d = new Date(comment.dateTime.replace(/,.*/, 'Z'));
-		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-		$(this._contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString(String.locale, dateOptions));
+		if (commentData.dateTime) {
+			var d = new Date(commentData.dateTime.replace(/,.*/, 'Z'));
+			var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+			$(this._contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString(String.locale, dateOptions));
+		}
 
 		dialog.contentEl.insertBefore(this._author, dialog.contentEl.childNodes[0]);
 
