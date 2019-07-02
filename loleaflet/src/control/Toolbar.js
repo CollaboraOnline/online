@@ -313,6 +313,11 @@ L.Map.include({
 			afterOpen: function() {
 				var that = this;
 
+				var touchGesture = map['touchGesture'];
+				if (touchGesture && touchGesture._hammer) {
+					touchGesture._hammer.off('tripletap', L.bind(touchGesture._onTripleTap, touchGesture));
+				}
+
 				var $vexContent = $(this.contentEl);
 				var hammer = new Hammer.Manager($vexContent.get(0));
 				hammer.add(new Hammer.Tap({ taps: 3 }));
@@ -332,7 +337,11 @@ L.Map.include({
 				});
 			},
 			beforeClose: function () {
-				$(window).unbind('keyup.vex', handler)
+				$(window).unbind('keyup.vex', handler);
+				var touchGesture = map['touchGesture'];
+				if (touchGesture && touchGesture._hammer) {
+					touchGesture._hammer.on('tripletap', L.bind(touchGesture._onTripleTap, touchGesture));
+				}
 				map.enable(true);
 				map.focus();
 			}
