@@ -36,6 +36,31 @@
 		for (var i = 0; i < methods.length; i++) {
 			console[methods[i]] = function() {};
 		}
+	} else {
+		window.onerror = function (msg, src, row, col, err) {
+			var data = {
+				userAgent: navigator.userAgent.toLowerCase(),
+				vendor: navigator.vendor.toLowerCase(),
+				message: msg,
+				source: src,
+				line: row,
+				column: col
+			}, desc = err.message || {}, stack = err.stack || {};
+			var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
+			if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
+				global.socket.send(log);
+			} else if (global.socket && (global.socket instanceof global.L.Socket) && global.socket.connected()) {
+				global.socket.sendMessage(log);
+			} else {
+				var req = new XMLHttpRequest();
+				var url = global.location.protocol + '//' + global.location.host + global.location.pathname.match(/.*\//) + 'logging.html';
+				req.open('POST', url, true);
+				req.setRequestHeader('Content-type','application/json; charset=utf-8');
+				req.send(log);
+			}
+
+			return false;
+		}
 	}
 
 	// fix jquery-ui

@@ -284,13 +284,28 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         std::vector<std::string> requestSegments;
         requestUri.getPathSegments(requestSegments);
         const std::string relPath = getRequestPathname(request);
+        const std::string endPoint = requestSegments[requestSegments.size() - 1];
+        const auto& config = Application::instance().config();
+
+        if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
+        {
+            const std::string loleafletLogging = config.getString("loleaflet_logging", "false");
+            if (loleafletLogging != "false")
+            {
+                LOG_ERR(message.rdbuf());
+
+                std::ostringstream oss;
+                response.write(oss);
+                socket->send(oss.str());
+                return;
+            }
+        }
+
         // Is this a file we read at startup - if not; its not for serving.
         if (requestSegments.size() < 1 || FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
-        const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string endPoint = requestSegments[requestSegments.size() - 1];
         if (endPoint == loleafletHtml || endPoint == "clipboard.html")
         {
             preprocessFile(request, message, socket, endPoint);

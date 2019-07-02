@@ -361,6 +361,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return true;
     }
+
+    if (tokens[0] == "jserror")
+    {
+        LOG_ERR(std::string(buffer, length));
+        return true;
+    }
     else if (tokens[0] == "load")
     {
         if (getDocURL() != "")
