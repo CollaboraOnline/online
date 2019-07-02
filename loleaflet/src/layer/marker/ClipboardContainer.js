@@ -142,7 +142,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// Stock android browsers (using an embedded WebView) wihout an InputEvent
 		// implementation behave similar to MSIE in regards to "enter" & "delete"
 		// keypresses
-		if (L.Browser.android && L.Browser.chrome && !('InputEvent' in window)) {
+		if (L.Browser.android && L.Browser.mobileWebkit3d && !('InputEvent' in window)) {
 			onoff(this._textArea, 'keydown', this._onMSIEKeyDown, this);
 		}
 
