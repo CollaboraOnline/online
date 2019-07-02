@@ -370,6 +370,12 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	_fancyLog: function _fancyLog(type, payload) {
+		// Avoid unhelpful exceptions
+		if (payload === undefined)
+			payload = 'undefined';
+		else if (payload === null)
+			payload = 'null';
+
 		// Save to downloadable log
 		L.Log.log(payload.toString(), 'INPUT');
 
