@@ -14,22 +14,27 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	newAnnotation: function (comment) {
-		var annotations = this._annotations[this._selectedPart];
-		var annotation;
-		for (var key in annotations) {
-			if (this._cellCursor.contains(annotations[key]._annotation._data.cellPos)) {
-				annotation = annotations[key];
-				break;
+		if (window.mode.isMobile()) {
+			var that = this;
+			this.newAnnotationVex(comment, function(annotation) { that._onAnnotationSave(annotation); });
+		} else {
+			var annotations = this._annotations[this._selectedPart];
+			var annotation;
+			for (var key in annotations) {
+				if (this._cellCursor.contains(annotations[key]._annotation._data.cellPos)) {
+					annotation = annotations[key];
+					break;
+				}
 			}
-		}
 
-		if (!annotation) {
-			comment.cellPos = this._cellCursor;
-			annotation = this.createAnnotation(comment);
-			annotation._annotation._tag = annotation;
-			this.showAnnotation(annotation);
+			if (!annotation) {
+				comment.cellPos = this._cellCursor;
+				annotation = this.createAnnotation(comment);
+				annotation._annotation._tag = annotation;
+				this.showAnnotation(annotation);
+			}
+			annotation.editAnnotation();
 		}
-		annotation.editAnnotation();
 	},
 
 	createAnnotation: function (comment) {
@@ -277,7 +282,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	hideAnnotation: function (annotation) {
-		this._map.removeLayer(annotation);
+		if (annotation)
+			this._map.removeLayer(annotation);
 	},
 
 	showAnnotations: function () {

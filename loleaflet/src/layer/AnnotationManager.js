@@ -846,7 +846,9 @@ L.AnnotationManager = L.Class.extend({
 				}
 			};
 			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
-			this._map.removeLayer(this.removeItem(e.annotation._data.id));
+			var item = this.removeItem(e.annotation._data.id);
+			if (item)
+				this._map.removeLayer(item);
 		} else if (e.annotation._data.trackchange) {
 			comment = {
 				ChangeTrackingId: {

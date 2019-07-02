@@ -6,6 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
+/* global vex $ L _ */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -350,6 +351,60 @@ L.TileLayer = L.GridLayer.extend({
 			false, false, false, false, 0, null
 		);
 		return newEvent;
+	},
+
+	newAnnotationVex: function(comment, addCommentFn) {
+		var that = this;
+
+		var dialog = vex.dialog.open({
+			message: '',
+			input: [
+				'<textarea name="comment" content="' + comment.text + '" class="loleaflet-annotation-textarea" style="max-width: 400px" required />'
+			].join(''),
+			buttons: [
+				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+			],
+			callback: function (data) {
+				if (data) {
+					that._draft = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(that._map);
+					that._draft._data.text = data.comment;
+					comment.text = data.comment;
+					addCommentFn.call(that, {annotation: that._draft}, comment);
+				}
+			}
+		});
+
+		var tagTd = 'td',
+		empty = '',
+		tagDiv = 'div';
+		this._author = L.DomUtil.create('table', 'loleaflet-annotation-table');
+		var tbody = L.DomUtil.create('tbody', empty, this._author);
+		var tr = L.DomUtil.create('tr', empty, tbody);
+		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
+		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
+		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+		imgAuthor.setAttribute('src', L.Icon.Default.imagePath + '/user.png');
+		imgAuthor.setAttribute('width', 32);
+		imgAuthor.setAttribute('height', 32);
+		this._authorAvatarImg = imgAuthor;
+		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
+		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
+
+		$(this._nodeModifyText).text(comment.text);
+		$(this._contentAuthor).text(comment.author);
+		$(this._authorAvatarImg).attr('src', comment.avatar);
+		var user = this._map.getViewId(comment.author);
+		if (user >= 0) {
+			var color = L.LOUtil.rgbToHex(this._map.getViewColor(user));
+			$(this._authorAvatarImg).css('border-color', color);
+		}
+
+		var d = new Date(comment.dateTime.replace(/,.*/, 'Z'));
+		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+		$(this._contentDate).text((isNaN(d.getTime()) || this._map.getDocType() === 'spreadsheet')? comment.dateTime: d.toLocaleDateString(String.locale, dateOptions));
+
+		dialog.get(0).insertBefore(this._author, dialog.get(0).childNodes[0]);
 	},
 
 	clearAnnotations: function() {
