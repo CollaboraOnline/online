@@ -22,7 +22,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 		this.onAnnotationCancel();
 
-		if (window.mode.isMobile()) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this.newAnnotationVex(comment, this.onAnnotationSave);
 		} else {
 			this._draft = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(this._map);

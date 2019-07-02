@@ -405,9 +405,9 @@ L.TileLayer = L.GridLayer.extend({
 		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 		$(this._contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString(String.locale, dateOptions));
 
-		dialog.get(0).insertBefore(this._author, dialog.get(0).childNodes[0]);
+		dialog.contentEl.insertBefore(this._author, dialog.contentEl.childNodes[0]);
 
-		dialog.find('textarea').focus();
+		$(dialog.contentEl).find('textarea').focus();
 	},
 
 	clearAnnotations: function() {

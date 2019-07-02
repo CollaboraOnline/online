@@ -21,7 +21,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 		if (comment.anchorPos) {
 			this._annotations.modify(this._annotations.add(comment));
 		}
-		if (window.mode.isMobile()) {
+		if (window.mode.isMobile() || window.mode.isTablet) {
 			var that = this;
 			this.newAnnotationVex(comment, function(annotation) { that._annotations._onAnnotationSave(annotation); });
 		}
