@@ -63,7 +63,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._legacyArea = L.Browser.safari;
 
 		// Debug flag, used in fancyLog(). See the debug() method.
-		this._isDebugOn = false;
+		this._isDebugOn = true;
 
 		this._initLayout();
 
@@ -75,9 +75,6 @@ L.ClipboardContainer = L.Layer.extend({
 			}),
 			draggable: true
 		}).on('dragend', this._onCursorHandlerDragEnd, this);
-
-		// This variable prevents from hiding the keyboard just before focus call
-		this.dontBlur = false;
 	},
 
 	onAdd: function() {
@@ -98,6 +95,9 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 
 		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
+		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', function(){
+			this._fancyLog(ev.type);
+		}, this);
 	},
 
 	onRemove: function() {
@@ -138,6 +138,13 @@ L.ClipboardContainer = L.Layer.extend({
 			onoff(this._textArea, 'keydown', this._onEdgeKeyDown, this);
 		}
 
+		// Stock android browsers (using an embedded WebView) wihout an InputEvent
+		// implementation behave similar to MSIE in regards to "enter" & "delete"
+		// keypresses
+		if (L.Browser.android && L.Browser.chrome && !('InputEvent' in window)) {
+			onoff(this._textArea, 'keydown', this._onMSIEKeyDown, this);
+		}
+
 		// Debug
 		onoff(
 			this._textArea,
@@ -149,6 +156,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._map.notifyActive();
 
 		if (ev.type === 'blur' && this._isComposing) {
+			/// TODO: Set this._compositionText
 			this._queueInput(this._compositionText);
 			this._abortComposition(ev);
 		}
@@ -579,6 +587,9 @@ L.ClipboardContainer = L.Layer.extend({
 				// from moving the cursor caret around. On delete/backspace, AOSP
 				// keyboard would somehow ignore the selection ranges and move the caret
 				// before/after the empty spaces.
+
+				/// FIXME: The aforementioned strategy makes Android + GBoard + Firefox fail:
+				/// trying to press the "ArrowLeft" or "ArrowUp" keys in the
 				this._textArea.innerText = '\xa0';
 
 				var range = document.createRange();
@@ -692,9 +703,10 @@ L.ClipboardContainer = L.Layer.extend({
 		// WebView (without chrome user-agent string)
 		if (
 			L.Browser.chrome ||
-			(L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit)
+			(L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit && !L.Browser.gecko)
 		) {
 			if (this._lastInputType === 'insertCompositionText') {
+				console.log('Queuing input because android webview');
 				this._queueInput(ev.data);
 			} else {
 				// Ended a composition without user input, abort.
@@ -816,6 +828,7 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	// MSIE11 doesn't send any "textinput" events on enter, delete or backspace.
+	// (Idem for old-ish stock android browsers which do not implement InputEvents)
 	// To handle those, an event handler is added to the "keydown" event (which repeats)
 	_onMSIEKeyDown: function _onMSIEKeyDown(ev) {
 		if (!ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
