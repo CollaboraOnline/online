@@ -11,7 +11,7 @@ var map;
 
 // has to match small screen size requirement
 function _inMobileMode() {
-	return L.Browser.mobile && $('#main-menu').css('display') === 'none';
+	return L.Browser.mobile && screen.width < 768;
 }
 
 // mobile device with big screen size
