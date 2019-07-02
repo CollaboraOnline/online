@@ -63,7 +63,8 @@ L.ClipboardContainer = L.Layer.extend({
 		this._legacyArea = L.Browser.safari;
 
 		// Debug flag, used in fancyLog(). See the debug() method.
-		this._isDebugOn = true;
+// 		this._isDebugOn = true;
+		this._isDebugOn = false;
 
 		this._initLayout();
 
@@ -112,7 +113,7 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	_onFocusBlur: function(ev) {
-		console.log(ev.type, performance.now(), ev);
+// 		console.log(ev.type, performance.now(), ev);
 
 		if (this.dontBlur && ev.type == 'blur') {
 			this._map.focus();
@@ -706,7 +707,7 @@ L.ClipboardContainer = L.Layer.extend({
 			(L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit && !L.Browser.gecko)
 		) {
 			if (this._lastInputType === 'insertCompositionText') {
-				console.log('Queuing input because android webview');
+// 				console.log('Queuing input because android webview');
 				this._queueInput(ev.data);
 			} else {
 				// Ended a composition without user input, abort.
