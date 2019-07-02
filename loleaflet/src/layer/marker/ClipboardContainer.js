@@ -609,8 +609,16 @@ L.ClipboardContainer = L.Layer.extend({
 		} else if (this._legacyArea) {
 			this._textArea.value = '';
 		} else {
-			this._textArea.innerText = '';
-			this._textArea.innerHTML = '';
+			// In order to empty a contenteditable when the two-spaces-hack is not
+			// in place, access its first text node child and empty it.
+			if (this._textArea.childNodes.length === 1) {
+				this._textArea.childNodes[0].data = '';
+			} else if (this._textArea.childNodes.length > 1) {
+				// Sanity check, should never be reached.
+				throw new Error('Unexpected: more than one text node inside the contenteditable.');
+			}
+// 			this._textArea.innerText = '';
+// 			this._textArea.innerHTML = '';
 		}
 	},
 
