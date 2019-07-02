@@ -153,11 +153,9 @@ L.ClipboardContainer = L.Layer.extend({
 
 		this._map.notifyActive();
 
-		if (ev.type === 'blur') {
-			if (this._isComposing) {
-				this._queueInput(this._compositionText);
-			}
-			this._abortComposition();
+		if (ev.type === 'blur' && this._isComposing) {
+			this._queueInput(this._compositionText);
+			this._abortComposition(ev);
 		}
 	},
 
@@ -524,7 +522,7 @@ L.ClipboardContainer = L.Layer.extend({
 			this._queueInput(ev.data);
 		} else if (ev.inputType === 'deleteByCut') {
 			// Called when Ctrl+X'ing
-			this._abortComposition();
+			this._abortComposition(ev);
 		} else {
 			console.error('Unhandled type of input event!!', ev.inputType, ev);
 			throw new Error('Unhandled type of input event!');
@@ -705,7 +703,7 @@ L.ClipboardContainer = L.Layer.extend({
 				// Ended a composition without user input, abort.
 				// This happens on Chrome+GBoard when autocompleting a word
 				// then entering a punctuation mark.
-				this._abortComposition();
+				this._abortComposition(ev);
 			}
 		}
 
@@ -714,7 +712,7 @@ L.ClipboardContainer = L.Layer.extend({
 			if (this._lastInputType === 'insertFromComposition') {
 				this._queueInput(ev.data);
 			} else {
-				this._abortComposition();
+				this._abortComposition(ev);
 			}
 		}
 
@@ -732,7 +730,8 @@ L.ClipboardContainer = L.Layer.extend({
 	// on a timeout.
 	// Very difficult to handle right now, so the strategy is to panic and
 	// empty the text area.
-	_abortComposition: function _abortComposition() {
+	_abortComposition: function _abortComposition(ev) {
+		this._fancyLog('abort-composition', ev.type);
 		if (this._isComposing) {
 			this._sendCompositionEvent('input', '');
 			this._sendCompositionEvent('end', '');
