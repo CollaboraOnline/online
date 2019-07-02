@@ -62,6 +62,10 @@ L.ClipboardContainer = L.Layer.extend({
 		// <div contenteditable> (when false)
 		this._legacyArea = L.Browser.safari;
 
+		// Debug flag, used in fancyLog(). See the debug() method.
+// 		this._isDebugOn = false;
+		this._isDebugOn = true;
+
 		this._initLayout();
 
 		// Under-caret orange marker.
@@ -73,16 +77,8 @@ L.ClipboardContainer = L.Layer.extend({
 			draggable: true
 		}).on('dragend', this._onCursorHandlerDragEnd, this);
 
-		// Used for internal cut/copy/paste in the same document - to tell
-		// lowsd whether to use its internal clipboard state (rich text) or to send
-		// the browser contents (plaintext)
-		this._lastClipboardText = undefined;
-
 		// This variable prevents from hiding the keyboard just before focus call
 		this.dontBlur = false;
-
-		// Debug flag, used in fancyLog(). See the debug() method.
-		this._isDebugOn = false;
 	},
 
 	onAdd: function() {
@@ -153,11 +149,9 @@ L.ClipboardContainer = L.Layer.extend({
 
 		this._map.notifyActive();
 
-		if (ev.type === 'blur') {
-			if (this._isComposing) {
-				this._queueInput(this._compositionText);
-			}
-			this._abortComposition();
+		if (ev.type === 'blur' && this._isComposing) {
+			this._queueInput(this._compositionText);
+			this._abortComposition(ev);
 		}
 	},
 
@@ -251,17 +245,21 @@ L.ClipboardContainer = L.Layer.extend({
 			this._textArea.setAttribute('autofocus', 'true');
 		}
 
-		this._setupStyles(false);
+		this._setupStyles();
 	},
 
-	_setupStyles: function(debugOn) {
-		if (debugOn) {
+	_setupStyles: function() {
+		if (this._isDebugOn) {
 			// Style for debugging
 			this._container.style.opacity = 0.5;
 			this._textArea.style.cssText = 'border:1px solid red !important';
-			this._textArea.style.width = '100px';
-			this._textArea.style.height = '20px';
+			this._textArea.style.width = '120px';
+			this._textArea.style.height = '50px';
 			this._textArea.style.overflow = 'display';
+
+			this._textArea.style.fontSize = '30px';
+			this._textArea.style.position = 'relative';
+			this._textArea.style.left = '10px';
 		} else {
 			this._container.style.opacity = 0;
 			this._textArea.style.width = '1px';
@@ -279,8 +277,8 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	debug: function(debugOn) {
-		this._setupStyles(!!debugOn);
 		this._isDebugOn = !!debugOn;
+		this._setupStyles();
 	},
 
 	activeElement: function() {
@@ -463,17 +461,17 @@ L.ClipboardContainer = L.Layer.extend({
 			// In this edge case, send "key type=input" to lowsd with the
 			// right keystroke, and skip sending one keystroke per deleted character;
 			// handler/Map.Keyboard.js will send the corresponding "key type=up" message.
-			if (this._selectionLengthAtBeforeInput) {
-				if (this._lastBeforeInputType === 'deleteContentForward') {
-					this._sendKeyEvent(46, 1286);
-					this._emptyArea();
-					return;
-				} else if (this._lastBeforeInputType === 'deleteContentBackward') {
-					this._sendKeyEvent(8, 1283);
-					this._emptyArea();
-					return;
-				}
-			}
+// 			if (this._selectionLengthAtBeforeInput) {
+// 				if (this._lastBeforeInputType === 'deleteContentForward') {
+// 					this._sendKeyEvent(46, 1286);
+// 					this._emptyArea();
+// 					return;
+// 				} else if (this._lastBeforeInputType === 'deleteContentBackward') {
+// 					this._sendKeyEvent(8, 1283);
+// 					this._emptyArea();
+// 					return;
+// 				}
+// 			}
 
 			// Delete text backwards - as many characters as indicated in the previous
 			// 'beforeinput' event
@@ -524,7 +522,7 @@ L.ClipboardContainer = L.Layer.extend({
 			this._queueInput(ev.data);
 		} else if (ev.inputType === 'deleteByCut') {
 			// Called when Ctrl+X'ing
-			this._abortComposition();
+			this._abortComposition(ev);
 		} else {
 			console.error('Unhandled type of input event!!', ev.inputType, ev);
 			throw new Error('Unhandled type of input event!');
@@ -592,16 +590,37 @@ L.ClipboardContainer = L.Layer.extend({
 				///
 				this._textArea.setSelectionRange(1, 1);
 			} else {
-				this._textArea.innerText = '\xa0\xa0';
-				var textNode = this._textArea.childNodes[0];
-				var range = document.createRange();
-				range.setStart(textNode, 1);
-				range.setEnd(textNode, 1);
-				range.collapse(true);
-				var sel = window.getSelection();
-				sel.removeAllRanges();
-				sel.addRange(range);
-				range.detach();
+				// Nope, AOSP keyboard places the caret at the beginning when adding two
+				// blank spaces.
+// 				this._textArea.innerText = '\xa0\xa0';
+// 				this._textArea.innerText = '\xa0';
+				this._textArea.innerText = '-';
+// 				var textNode = this._textArea.childNodes[0];
+// 				var range = document.createRange();
+// 				range.setStart(textNode, 0);
+// 				range.setEnd(textNode, 0);
+// 				range.collapse(true);
+// 				var sel = window.getSelection();
+// 				sel.removeAllRanges();
+// 				sel.addRange(range);
+// 				range.detach();
+
+
+			var range = document.createRange();
+			range.selectNodeContents(this._textArea);
+			var sel = window.getSelection();
+			sel.removeAllRanges();
+			sel.addRange(range);
+			sel.collapse(this._textArea.childNodes[0]);
+
+			// Add text nodes after and before the selected node.
+			L.Util.requestAnimFrame(function(){
+				this._textArea.prepend('+');
+				this._textArea.append('+');
+// 				this._textArea.prepend('\xa0');
+// 				this._textArea.append('\xa0');
+			}.bind(this));
+
 			}
 		} else if (this._legacyArea) {
 			this._textArea.value = '';
@@ -620,10 +639,14 @@ L.ClipboardContainer = L.Layer.extend({
 	// particularly when the textarea/contenteditable is empty, but
 	// only in some configurations.
 	_onBeforeInput: function _onBeforeInput(ev) {
+		var selection = window.getSelection().toString();
 		this._lastRanges = ev.getTargetRanges();
 
 		this._lastBeforeInputType = ev.inputType;
-		this._selectionLengthAtBeforeInput = window.getSelection().toString().length;
+		this._selectionLengthAtBeforeInput = selection.length;
+
+		this._fancyLog('beforeinput selection', window.getSelection().toString());
+		this._fancyLog('beforeinput range', this._lastRangesString());
 
 		// When trying to delete (i.e. backspace) on an empty textarea, the input event
 		// won't be fired afterwards. Handle backspace here instead.
@@ -705,7 +728,7 @@ L.ClipboardContainer = L.Layer.extend({
 				// Ended a composition without user input, abort.
 				// This happens on Chrome+GBoard when autocompleting a word
 				// then entering a punctuation mark.
-				this._abortComposition();
+				this._abortComposition(ev);
 			}
 		}
 
@@ -714,7 +737,7 @@ L.ClipboardContainer = L.Layer.extend({
 			if (this._lastInputType === 'insertFromComposition') {
 				this._queueInput(ev.data);
 			} else {
-				this._abortComposition();
+				this._abortComposition(ev);
 			}
 		}
 
@@ -732,7 +755,8 @@ L.ClipboardContainer = L.Layer.extend({
 	// on a timeout.
 	// Very difficult to handle right now, so the strategy is to panic and
 	// empty the text area.
-	_abortComposition: function _abortComposition() {
+	_abortComposition: function _abortComposition(ev) {
+		this._fancyLog('abort-composition', ev.type);
 		if (this._isComposing) {
 			this._sendCompositionEvent('input', '');
 			this._sendCompositionEvent('end', '');
