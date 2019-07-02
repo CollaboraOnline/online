@@ -95,9 +95,9 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 
 		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
-		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', function(){
-			this._fancyLog(ev.type);
-		}, this);
+		// 		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', function(ev) {
+		// 			this._fancyLog(ev.type);
+		// 		}, this);
 	},
 
 	onRemove: function() {
@@ -599,7 +599,7 @@ L.ClipboardContainer = L.Layer.extend({
 				sel.addRange(range);
 				sel.collapse(this._textArea.childNodes[0]);
 
-				L.Util.requestAnimFrame(function(){
+				L.Util.requestAnimFrame(function() {
 					this._textArea.prepend('\xa0');
 					this._textArea.append('\xa0');
 				}.bind(this));
