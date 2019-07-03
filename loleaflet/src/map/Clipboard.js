@@ -125,7 +125,10 @@ L.Clipboard = L.Class.extend({
 			content.push(data);
 			content.push('\n');
 		}
-		return new Blob(content, {type : 'application/octet-stream', endings: 'transparent'});
+		if (content.length > 0)
+			return new Blob(content, {type : 'application/octet-stream', endings: 'transparent'});
+		else
+			return null;
 	},
 
 	// Abstract async post & download for our progress wrappers
