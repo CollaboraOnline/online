@@ -197,13 +197,22 @@ L.Clipboard = L.Class.extend({
 		);
 	},
 
-	// FIXME: do we want this really ?
 	_onFileLoadFunc: function(file) {
 		var socket = this._map._socket;
 		return function(e) {
 			var blob = new Blob(['paste mimetype=' + file.type + '\n', e.target.result]);
 			socket.sendMessage(blob);
 		};
+	},
+
+	_asyncReadPasteImage: function(file) {
+		if (file.type.match(/image.*/)) {
+			var reader = new FileReader();
+			reader.onload = this._onFileLoadFunc(file);
+			reader.readAsArrayBuffer(file);
+			return true;
+		}
+		return false;
 	},
 
 	dataTransferToDocument: function (dataTransfer, preferInternal, htmlText, usePasteKeyEvent) {
@@ -262,14 +271,13 @@ L.Clipboard = L.Class.extend({
 				console.log('\ttype' + types[t]);
 				if (types[t] === 'Files') {
 					var files = dataTransfer.files;
-					for (var f = 0; f < files.length; ++f) {
-						var file = files[f];
-						if (file.type.match(/image.*/)) {
-							var reader = new FileReader();
-							reader.onload = this._onFileLoadFunc(file);
-							reader.readAsArrayBuffer(file);
-						}
+					if (files !== null)
+					{
+						for (var f = 0; f < files.length; ++f)
+							this._asyncReadPasteImage(files[f])
 					}
+					else // IE / Edge
+						this._asyncReadPasteImage(dataTransfer.items[t].getAsFile());
 				}
 			}
 			return;
