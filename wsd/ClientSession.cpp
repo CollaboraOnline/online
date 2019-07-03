@@ -554,8 +554,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             !getTokenInteger(tokens[3], "width", width) ||
             !getTokenInteger(tokens[4], "height", height))
         {
-            sendTextFrame("error: cmd=clientvisiblearea kind=syntax");
-            return false;
+            // Be forgiving and log instead of disconnecting.
+            // sendTextFrame("error: cmd=clientvisiblearea kind=syntax");
+            LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
+            return true;
         }
         else
         {
@@ -628,8 +630,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
             !getTokenInteger(tokens[4], "tiletwipheight", tileTwipHeight))
         {
-            sendTextFrame("error: cmd=clientzoom kind=syntax");
-            return false;
+            // Be forgiving and log instead of disconnecting.
+            // sendTextFrame("error: cmd=clientzoom kind=syntax");
+            LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
+            return true;
         }
         else
         {
@@ -647,8 +651,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (tokens.size() != 2 ||
             !getTokenString(tokens[1], "tile", tileID))
         {
-            sendTextFrame("error: cmd=tileprocessed kind=syntax");
-            return false;
+            // Be forgiving and log instead of disconnecting.
+            // sendTextFrame("error: cmd=tileprocessed kind=syntax");
+            LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
+            return true;
         }
 
         auto iter = std::find_if(_tilesOnFly.begin(), _tilesOnFly.end(),
@@ -868,7 +874,8 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
     catch (const std::exception& exc)
     {
         LOG_ERR("Failed to process tilecombine command: " << exc.what());
-        return sendTextFrame("error: cmd=tile kind=invalid");
+        // Be forgiving and log instead of disconnecting.
+        // return sendTextFrame("error: cmd=tile kind=invalid");
     }
 
     return true;

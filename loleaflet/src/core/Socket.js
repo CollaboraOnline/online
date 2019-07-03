@@ -216,9 +216,31 @@ L.Socket = L.Class.extend({
 		return strBytes;
 	},
 
+	// Returns true if, and only if, we are ready to start loading
+	// the tiles and rendering the document.
+	_isReady: function() {
+		if (window.bundlejsLoaded == false || window.fullyLoadedAndReady == false) {
+			return false;
+		}
+
+		if (typeof this._map == 'undefined' ||
+			isNaN(this._map.options.tileWidthTwips) ||
+			isNaN(this._map.options.tileHeightTwips)) {
+			return false;
+		}
+
+		var center = this._map.getCenter();
+		if (isNaN(center.lat) || isNaN(center.lng) || isNaN(this._map.getZoom())) {
+			return false;
+		}
+
+		return true;
+	},
+
 	_onMessage: function (e) {
 		var imgBytes, index, textMsg, img;
 
+		console.info('onMessage: window.fullyLoadedAndReady: ' + window.fullyLoadedAndReady + ', bundlejsLoaded: ' + window.bundlejsLoaded);
 		if (typeof (e.data) === 'string') {
 			textMsg = e.data;
 		}
@@ -751,68 +773,7 @@ L.Socket = L.Class.extend({
 		}
 
 		if (textMsg.startsWith('status:')) {
-			if (!this._map._docLayer) {
-				// first status message, we need to create the document layer
-				var tileWidthTwips = this._map.options.tileWidthTwips;
-				var tileHeightTwips = this._map.options.tileHeightTwips;
-				if (this._map.options.zoom !== this._map.options.defaultZoom) {
-					var scale = this._map.options.crs.scale(this._map.options.defaultZoom - this._map.options.zoom);
-					tileWidthTwips = Math.round(tileWidthTwips * scale);
-					tileHeightTwips = Math.round(tileHeightTwips * scale);
-				}
-
-				var docLayer = null;
-				if (command.type === 'text') {
-					docLayer = new L.WriterTileLayer('', {
-						permission: this._map.options.permission,
-						tileWidthTwips: tileWidthTwips,
-						tileHeightTwips: tileHeightTwips,
-						docType: command.type
-					});
-				}
-				else if (command.type === 'spreadsheet') {
-					docLayer = new L.CalcTileLayer('', {
-						permission: this._map.options.permission,
-						tileWidthTwips: tileWidthTwips,
-						tileHeightTwips: tileHeightTwips,
-						docType: command.type
-					});
-					if (!this._map.options.backgroundLayer) {
-						this._map.options.backgroundLayer = new L.CalcBackground().addTo(this._map);
-					}
-				}
-				else {
-					if (command.type === 'presentation' &&
-					    this._map.options.defaultZoom === this._map.options.zoom) {
-						// If we have a presentation document and the zoom level has not been set
-						// in the options, resize the document so that it fits the viewing area.
-						// FIXME: Should this 256 be window.tileSize? Unclear to me.
-						var verticalTiles = this._map.getSize().y / 256;
-						tileWidthTwips = Math.round(command.height / verticalTiles);
-						tileHeightTwips = Math.round(command.height / verticalTiles);
-					}
-					docLayer = new L.ImpressTileLayer('', {
-						permission: this._map.options.permission,
-						tileWidthTwips: tileWidthTwips,
-						tileHeightTwips: tileHeightTwips,
-						docType: command.type
-					});
-				}
-
-				this._map._docLayer = docLayer;
-				this._map.addLayer(docLayer);
-				this._map.fire('doclayerinit');
-			}
-			else if (this._reconnecting) {
-				// we are reconnecting ...
-				this._reconnecting = false;
-				this._map._docLayer._resetClientVisArea();
-				this._map._docLayer._requestNewTiles();
-				this._map.fire('statusindicator', {statusType: 'reconnected'});
-				this._map.setPermission(this._map.options.permission);
-			}
-
-			this._map.fire('docloaded', {status: true});
+			this._onStatusMsg(textMsg, command);
 		}
 
 		// These can arrive very early during the startup, and never again.
@@ -835,6 +796,84 @@ L.Socket = L.Class.extend({
 
 		if (this._map._docLayer) {
 			this._map._docLayer._onMessage(textMsg, img);
+		}
+	},
+
+	_onStatusMsg: function(textMsg, command) {
+
+		if (!this._isReady()) {
+			// Retry in a bit.
+			var that = this;
+			setTimeout(function() {
+				that._onStatusMsg(textMsg, command);
+			}, 100);
+			return;
+		}
+
+		if (!this._map._docLayer) {
+			// first status message, we need to create the document layer
+			var tileWidthTwips = this._map.options.tileWidthTwips;
+			var tileHeightTwips = this._map.options.tileHeightTwips;
+			if (this._map.options.zoom !== this._map.options.defaultZoom) {
+				var scale = this._map.options.crs.scale(this._map.options.defaultZoom - this._map.options.zoom);
+				tileWidthTwips = Math.round(tileWidthTwips * scale);
+				tileHeightTwips = Math.round(tileHeightTwips * scale);
+			}
+
+			var docLayer = null;
+			if (command.type === 'text') {
+				docLayer = new L.WriterTileLayer('', {
+					permission: this._map.options.permission,
+					tileWidthTwips: tileWidthTwips,
+					tileHeightTwips: tileHeightTwips,
+					docType: command.type
+				});
+			}
+			else if (command.type === 'spreadsheet') {
+				docLayer = new L.CalcTileLayer('', {
+					permission: this._map.options.permission,
+					tileWidthTwips: tileWidthTwips,
+					tileHeightTwips: tileHeightTwips,
+					docType: command.type
+				});
+				if (!this._map.options.backgroundLayer) {
+					this._map.options.backgroundLayer = new L.CalcBackground().addTo(this._map);
+				}
+			}
+			else {
+				if (command.type === 'presentation' &&
+					this._map.options.defaultZoom === this._map.options.zoom) {
+					// If we have a presentation document and the zoom level has not been set
+					// in the options, resize the document so that it fits the viewing area.
+					// FIXME: Should this 256 be window.tileSize? Unclear to me.
+					var verticalTiles = this._map.getSize().y / 256;
+					tileWidthTwips = Math.round(command.height / verticalTiles);
+					tileHeightTwips = Math.round(command.height / verticalTiles);
+				}
+				docLayer = new L.ImpressTileLayer('', {
+					permission: this._map.options.permission,
+					tileWidthTwips: tileWidthTwips,
+					tileHeightTwips: tileHeightTwips,
+					docType: command.type
+				});
+			}
+
+			this._map._docLayer = docLayer;
+			this._map.addLayer(docLayer);
+			this._map.fire('doclayerinit');
+		}
+		else if (this._reconnecting) {
+			// we are reconnecting ...
+			this._reconnecting = false;
+			this._map._docLayer._resetClientVisArea();
+			this._map._docLayer._requestNewTiles();
+			this._map.fire('statusindicator', {statusType: 'reconnected'});
+			this._map.setPermission(this._map.options.permission);
+		}
+
+		this._map.fire('docloaded', {status: true});
+		if (this._map._docLayer) {
+			this._map._docLayer._onMessage(textMsg);
 		}
 	},
 

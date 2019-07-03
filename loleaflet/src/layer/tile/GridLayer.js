@@ -718,8 +718,10 @@ L.GridLayer = L.Layer.extend({
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
 		var size = new L.Point(visibleArea.getSize().x, visibleArea.getSize().y);
-		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x) + ' y=' + Math.round(visibleTopLeft.y) +
-			' width=' + Math.round(size.x) + ' height=' + Math.round(size.y);
+		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x)
+					+ ' y=' + Math.round(visibleTopLeft.y)
+					+ ' width=' + Math.round(size.x)
+					+ ' height=' + Math.round(size.y);
 
 		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
 			// Visible area is dirty, update it on the server

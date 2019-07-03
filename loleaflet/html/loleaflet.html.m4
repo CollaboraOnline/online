@@ -71,6 +71,13 @@ var Base64ToArrayBuffer = function(base64Str) {
   }
   return ab;
 }
+
+  window.bundlejsLoaded = false;
+  window.fullyLoadedAndReady = false;
+  window.addEventListener('load', function() {
+    window.fullyLoadedAndReady = true;
+  }, false);
+
 </script>
 
 ifelse(MOBILEAPP,[true],
