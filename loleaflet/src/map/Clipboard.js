@@ -17,6 +17,7 @@ L.Clipboard = L.Class.extend({
 		this._accessKey = [ '', '' ];
 		this._clipboardSerial = 0; // incremented on each operation
 		this._failedTimer = null;
+		this._dummyDivName = 'copy-paste-dummy-div';
 
 		var that = this;
 		document.addEventListener(
@@ -352,7 +353,15 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_createDummyDiv: function(htmlContent) {
-		var div = document.createElement('div');
+		var div = null;
+		if (window.isInternetExplorer)
+		{	// work-around very odd behavior and non-removal of div
+			// could use for other browsers potentially ...
+			div = document.getElementById(this._dummyDivName);
+		}
+		if (div === null)
+			div = document.createElement('div');
+		div.setAttribute('id', this._dummyDivName);
 		div.setAttribute('style', 'user-select: text !important');
 		div.style.opacity = '0';
 		div.setAttribute('contenteditable', 'true');
@@ -390,9 +399,9 @@ L.Clipboard = L.Class.extend({
 		div.addEventListener('paste', function() {
 			// Can't get HTML until it is pasted ... so quick timeout
 			setTimeout(function() {
-				console.log('Content pasted');
-				that.dataTransferToDocument(null, false, div.innerHTML);
-				that.compatRemoveNode(div);
+				var tmpDiv = document.getElementById(that._dummyDivName);
+				that.dataTransferToDocument(null, false, tmpDiv.innerHTML);
+				that.compatRemoveNode(tmpDiv);
 				// attempt to restore focus.
 				if (active == null)
 					that._map.focus();
