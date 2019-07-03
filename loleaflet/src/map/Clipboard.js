@@ -392,7 +392,7 @@ L.Clipboard = L.Class.extend({
 			setTimeout(function() {
 				console.log('Content pasted');
 				that.dataTransferToDocument(null, false, div.innerHTML);
-				this.compatRemoveNode(div);
+				that.compatRemoveNode(div);
 				// attempt to restore focus.
 				if (active == null)
 					that._map.focus();
