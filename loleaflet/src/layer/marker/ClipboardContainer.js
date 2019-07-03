@@ -674,6 +674,25 @@ L.ClipboardContainer = L.Layer.extend({
 		this._fancyLog('beforeinput selection', window.getSelection().toString());
 		this._fancyLog('beforeinput range', this._lastRangesString());
 
+		// FIXME: a hack - this assumes that nothing changed / no auto-correction inside the Kit.
+		var seltext = window.getSelection();
+		if (!this._isComposing && seltext && seltext.toString() && seltext.toString().length)
+		{
+			var len = seltext.toString().length;
+			console.log2('Horror meeks3 hack - delete ' + len + ' chars "' + this._queudInput + '"');
+			if (this._queuedInput)
+			{
+				var size = this._queuedInput.length;
+				var redux = Math.min(size, len);
+				this._queuedInput = this._queuedInput.slice(0,-redux);
+				len -= redux;
+				console.log2('Horror meeks3 hack - removed ' + redux + ' from queued input to "' + this._queuedInput + '"');
+			}
+			// FIXME: this is the more hacky bit - if the Kit changed under us.
+			for (var i = 0; i < len; ++i)
+				this._sendKeyEvent(8, 1283);
+		}
+
 		// When trying to delete (i.e. backspace) on an empty textarea, the input event
 		// won't be fired afterwards. Handle backspace here instead.
 
