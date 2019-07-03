@@ -290,6 +290,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		this._topAnnotation[this._selectedPart] = 0;
 		this._selectedAnnotation = undefined;
 		this._draft = null;
+
+		map.on('updatemaxbounds', this._onUpdateMaxBounds, this);
+	},
+
+	onRemove: function (map) {
+		map.off('updatemaxbounds', this._onUpdateMaxBounds, this);
 	},
 
 	onAnnotationCancel: function () {
@@ -747,5 +753,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			extraSize = annotations && annotations.length > 0 ? this.extraSize : null;
 		}
 		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, extraSize, {panInside: false});
+	},
+
+	_onUpdateMaxBounds: function (e) {
+		this._updateMaxBounds(e.sizeChanged, e.extraSize);
 	}
 });
