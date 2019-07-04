@@ -152,6 +152,9 @@ public:
     /// Create URI for transient clipboard content.
     std::string getClipboardURI(bool encode = true);
 
+    /// Adds and/or modified the copied payload before sending on to the client.
+    void postProcessCopyPayload(std::shared_ptr<Message> payload);
+
     /// Generate and rotate a new clipboard hash, sending it if appropriate
     void rotateClipboardKey(bool notifyClient);
 

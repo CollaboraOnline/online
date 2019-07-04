@@ -806,6 +806,28 @@ void ClientSession::performWrites()
     LOG_TRC(getName() << " ClientSession: performed write.");
 }
 
+void ClientSession::postProcessCopyPayload(std::shared_ptr<Message> payload)
+{
+    // Insert our meta origin if we can
+    payload->rewriteDataBody([=](std::vector<char>& data) {
+            const size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
+
+            // cf. TileLayer.js /_dataTransferToDocument/
+            if (pos != std::string::npos) // assume text/html
+            {
+                const std::string meta = getClipboardURI();
+                const std::string origin = "<meta name=\"origin\" content=\"" + meta + "\"/>\n";
+                data.insert(data.begin() + pos, origin.begin(), origin.end());
+                return true;
+            }
+            else
+            {
+                LOG_DBG("Missing generator in textselectioncontent/clipboardcontent payload.");
+                return false;
+            }
+        });
+}
+
 bool ClientSession::handleKitToClientMessage(const char* buffer, const int length)
 {
     const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
@@ -1075,24 +1097,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
     } else if (tokens[0] == "textselectioncontent:") {
 
-        // Insert our meta origin if we can
-        payload->rewriteDataBody([=](std::vector<char>& data) {
-                size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
-
-                // cf. TileLayer.js /_dataTransferToDocument/
-                if (pos != std::string::npos) // assume text/html
-                {
-                    std::string meta = getClipboardURI();
-                    std::string origin = "<meta name=\"origin\" content=\"" + meta + "\"/>\n";
-                    data.insert(data.begin() + pos, origin.begin(), origin.end());
-                    return true;
-                }
-                else
-                {
-                    LOG_DBG("Missing generator in textselectioncontent");
-                    return false;
-                }
-            });
+        postProcessCopyPayload(payload);
         return forwardToClient(payload);
 
     } else if (tokens[0] == "clipboardcontent:") {
@@ -1103,11 +1108,14 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
         // for now just for remote sockets.
         LOG_TRC("Got clipboard content to send to " << _clipSockets.size() << "sockets");
+
+        postProcessCopyPayload(payload);
+
         size_t header;
         for (header = 0; header < payload->size();)
             if (payload->data()[header++] == '\n')
                 break;
-        bool empty = header >= payload->size();
+        const bool empty = header >= payload->size();
         for (auto it : _clipSockets)
         {
             std::ostringstream oss;
