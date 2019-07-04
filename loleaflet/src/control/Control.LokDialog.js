@@ -543,8 +543,9 @@ L.Control.LokDialog = L.Control.extend({
 			offsetY = -(height - window.screen.height) / 2;
 		}
 
-		// FIXME. window.mode.isMobile() return false
-		if (L.Browser.mobile() && screen.width < 768 && height < window.screen.height) {
+		// on mobile, force the positioning to the top, so that it is not
+		// covered by the virtual keyboard
+		if (window.mode.isMobile()) {
 			$(dialogContainer).dialog('option', 'position', { my: 'left top', at: 'let top', of: window });
 			offsetY = 0;
 		}
