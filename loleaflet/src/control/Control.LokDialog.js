@@ -23,6 +23,10 @@ function updateTransformation(target) {
 		target.value.style.webkitTransform = value;
 		target.value.style.mozTransform = value;
 		target.value.style.transform = value;
+
+		if (target.transformation.origin) {
+			target.value.style[L.DomUtil.TRANSFORM_ORIGIN] = target.transformation.origin;
+		}
 	}
 }
 
@@ -543,13 +547,6 @@ L.Control.LokDialog = L.Control.extend({
 			offsetY = -(height - window.screen.height) / 2;
 		}
 
-		// on mobile, force the positioning to the top, so that it is not
-		// covered by the virtual keyboard
-		if (window.mode.isMobile()) {
-			$(dialogContainer).dialog('option', 'position', { my: 'left top', at: 'let top', of: window });
-			offsetY = 0;
-		}
-
 		var state = {
 			startX: offsetX,
 			startY: offsetY,
@@ -563,6 +560,14 @@ L.Control.LokDialog = L.Control.extend({
 			ry: 0,
 			rz: 0
 		};
+
+		// on mobile, force the positioning to the top, so that it is not
+		// covered by the virtual keyboard
+		if (window.mode.isMobile()) {
+			$(dialogContainer).dialog('option', 'position', { my: 'left top', at: 'let top', of: '#document-container' });
+			transformation.origin = 'center top';
+			transformation.translate.y = 0;
+		}
 
 		if (findZoomTarget(targetId) != null) {
 			removeZoomTarget(targetId);
