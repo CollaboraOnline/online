@@ -808,7 +808,9 @@ L.AnnotationManager = L.Class.extend({
 
 	_onAnnotationCancel: function (e) {
 		if (e.annotation._data.id === 'new') {
-			this._map.removeLayer(this.removeItem(e.annotation._data.id));
+			var layer = this.removeItem(e.annotation._data.id);
+			if (layer)
+				this._map.removeLayer(layer);
 			this.updateDocBounds();
 		}
 		if (this._selected === e.annotation) {
