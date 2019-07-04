@@ -508,7 +508,7 @@ L.Control.LokDialog = L.Control.extend({
 
 		this._createDialogCursor(strId);
 		this._setupWindowEvents(id, dialogCanvas/*, dlgInput*/);
-		this._setupGestures(id, dialogCanvas);
+		this._setupGestures(dialogContainer, id, dialogCanvas);
 
 		this._currentId = id;
 		this._sendPaintWindow(id, this._createRectStr(id));
