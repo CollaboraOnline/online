@@ -59,18 +59,20 @@ L.Control.LokDialog = L.Control.extend({
 
 		if (target) {
 			if (ev.pointers.length == 1) {
+				var delta = -ev.deltaY;
 				if (ev.type == 'panstart') {
-					firstTouchPositionX = ev.pointers[0].offsetX;
-					firstTouchPositionY = ev.pointers[0].offsetY;
-					this._postWindowGestureEvent(dialogID, 'panBegin', firstTouchPositionX, firstTouchPositionY, ev.deltaY);
+					var rect = ev.target.getBoundingClientRect();
+					firstTouchPositionX = ev.center.x - rect.x;
+					firstTouchPositionY = ev.center.y - rect.y;
+					this._postWindowGestureEvent(dialogID, 'panBegin', firstTouchPositionX, firstTouchPositionY, delta);
 				}
 				else if (ev.type == 'panstop') {
-					this._postWindowGestureEvent(dialogID, 'panEnd', firstTouchPositionX, firstTouchPositionY, ev.deltaY);
+					this._postWindowGestureEvent(dialogID, 'panEnd', firstTouchPositionX, firstTouchPositionY, delta);
 					firstTouchPositionX = null;
 					firstTouchPositionY = null;
 				}
 				else {
-					this._postWindowGestureEvent(dialogID, 'panUpdate', firstTouchPositionX, firstTouchPositionY, ev.deltaY);
+					this._postWindowGestureEvent(dialogID, 'panUpdate', firstTouchPositionX, firstTouchPositionY, delta);
 				}
 			}
 			else {
