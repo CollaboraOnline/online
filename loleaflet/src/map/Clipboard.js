@@ -482,17 +482,21 @@ L.Clipboard = L.Class.extend({
 		// see if we have help for paste
 		if (operation === 'paste')
 		{
-			if (window.top.webkit &&
-			    window.top.webkit.messageHandlers &&
-			    window.top.webkit.messageHandlers.RichDocumentsMobileInterface) {
-				console.log('We have richdocuments !');
-				window.top.webkit.messageHandlers.RichDocumentsMobileInterface.postMessage(operation);
-			} else if (window.top.RichDocumentsMobileInterface &&
-				   window.top.RichDocumentsMobileInterface.paste) {
-				console.log('We have richdocuments !');
-				window.top.RichDocumentsMobileInterface.paste();
-			} else {
-				console.log('No richdocuments');
+			try {
+				if (window.top.webkit &&
+				    window.top.webkit.messageHandlers &&
+				    window.top.webkit.messageHandlers.RichDocumentsMobileInterface) {
+					console.log('We have richdocuments !');
+					window.top.webkit.messageHandlers.RichDocumentsMobileInterface.postMessage(operation);
+				} else if (window.top.RichDocumentsMobileInterface &&
+					   window.top.RichDocumentsMobileInterface.paste) {
+					console.log('We have richdocuments !');
+					window.top.RichDocumentsMobileInterface.paste();
+				} else {
+					console.log('No richdocuments');
+				}
+			} catch (error) {
+				console.warn('Cannot paste: ' + error);
 			}
 		}
 
