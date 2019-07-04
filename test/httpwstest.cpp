@@ -102,6 +102,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPaste);
+    CPPUNIT_TEST(testTiff);
     CPPUNIT_TEST(testPasteBlank);
     CPPUNIT_TEST(testLargePaste);
     CPPUNIT_TEST(testRenderingOptions);
@@ -162,6 +163,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testReloadWhileDisconnecting();
     void testExcelLoad();
     void testPaste();
+    void testTiff();
     void testPasteBlank();
     void testLargePaste();
     void testRenderingOptions();
@@ -920,6 +922,23 @@ void HTTPWSTest::testPaste()
         const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(expected, selection);
     }
+}
+
+void HTTPWSTest::testTiff()
+{
+    const char* testname = "tiff ";
+
+    // Load a document which has a TIFF image in it.
+    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("tiff.odt", _uri, testname);
+
+    // Select the image.
+    sendTextFrame(socket, "uno .uno:JumpToNextFrame", testname);
+    sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
+
+    // Make sure we can get an SVG representation of the image; this failed as the TIFF import was
+    // broken.
+    const std::string content = assertResponseString(socket, "shapeselectioncontent:", testname);
+    CPPUNIT_ASSERT(Util::startsWith(content, "shapeselectioncontent:\n"));
 }
 
 void HTTPWSTest::testPasteBlank()
