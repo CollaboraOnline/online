@@ -259,16 +259,15 @@ L.ClipboardContainer = L.Layer.extend({
 			// Safari on iPad would show bold/italic/underline native controls
 			// which cannot be handled with the current implementation.
 			this._textArea = L.DomUtil.create('textarea', 'clipboard', this._container);
-			this._textArea.setAttribute('autocorrect', 'off');
-			this._textArea.setAttribute('autocapitalize', 'off');
-			this._textArea.setAttribute('autocomplete', 'off');
-			this._textArea.setAttribute('spellcheck', 'false');
-			this._textArea.setAttribute('autofocus', 'true');
 		} else {
 			this._textArea = L.DomUtil.create('div', 'clipboard', this._container);
 			this._textArea.setAttribute('contenteditable', 'true');
-			this._textArea.setAttribute('autofocus', 'true');
 		}
+		this._textArea.setAttribute('autocapitalize', 'off');
+		this._textArea.setAttribute('autofocus', 'true');
+		this._textArea.setAttribute('autocorrect', 'off');
+		this._textArea.setAttribute('autocomplete', 'off');
+		this._textArea.setAttribute('spellcheck', 'false');
 
 		this._setupStyles();
 	},
