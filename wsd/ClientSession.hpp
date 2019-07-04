@@ -44,13 +44,21 @@ public:
 
     void setReadOnly() override;
 
-    /// Returns true if this session is added to a DocBroker.
-    bool isAttached() const { return _isAttached; }
-    void setAttached() { _isAttached = true; }
+    enum SessionState {
+        DETACHED,        // initial
+        LOADING,         // attached to a DocBroker & waiting for load
+        LIVE,            // Document is loaded & editable or viewable.
+        WAIT_DISCONNECT  // closed and waiting for Kit's disconnected message
+    };
 
     /// Returns true if this session has loaded a view (i.e. we got status message).
-    bool isViewLoaded() const { return _isViewLoaded; }
-    void setViewLoaded() { _isViewLoaded = true; }
+    bool isViewLoaded() const { return _state == SessionState::LIVE; }
+
+    /// returns true if we're waiting for the kit to acknowledge disconnect.
+    bool inWaitDisconnected() const { return _state == SessionState::WAIT_DISCONNECT; }
+
+    /// transition to a new state
+    void setState(SessionState newState);
 
     void setDocumentOwner(const bool documentOwner) { _isDocumentOwner = documentOwner; }
     bool isDocumentOwner() const { return _isDocumentOwner; }
@@ -60,6 +68,9 @@ public:
 
     /// Integer id of the view in the kit process, or -1 if unknown
     int getKitViewId() const { return _kitViewId; }
+
+    /// Disconnect the session and do final cleanup, @returns true if we should not wait.
+    bool disconnectFromKit();
 
     // sendTextFrame that takes std::string and string literal.
     using Session::sendTextFrame;
@@ -147,6 +158,7 @@ public:
     /// Handle a clipboard fetch / put request.
     void handleClipboardRequest(DocumentBroker::ClipboardRequest     type,
                                 const std::shared_ptr<StreamSocket> &socket,
+                                const std::string                   &tag,
                                 const std::shared_ptr<std::string>  &data);
 
     /// Create URI for transient clipboard content.
@@ -154,6 +166,9 @@ public:
 
     /// Adds and/or modified the copied payload before sending on to the client.
     void postProcessCopyPayload(std::shared_ptr<Message> payload);
+
+    /// Returns true if we're expired waiting for a clipboard and should be removed
+    bool staleWaitDisconnect(const std::chrono::steady_clock::time_point &now);
 
     /// Generate and rotate a new clipboard hash, sending it if appropriate
     void rotateClipboardKey(bool notifyClient);
@@ -211,11 +226,11 @@ private:
     /// The socket to which the converted (saveas) doc is sent.
     std::shared_ptr<StreamSocket> _saveAsSocket;
 
-    /// If we are added to a DocBroker.
-    bool _isAttached;
+    /// The phase of our lifecycle that we're in.
+    SessionState _state;
 
-    /// If we have loaded a view.
-    bool _isViewLoaded;
+    /// Time of last state transition
+    std::chrono::steady_clock::time_point _lastStateTime;
 
     /// Wopi FileInfo object
     std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiFileInfo;

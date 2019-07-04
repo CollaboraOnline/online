@@ -13,9 +13,13 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <mutex>
+
 #include <stdlib.h>
 #include <Log.hpp>
 #include <Exceptions.hpp>
+#include <Poco/MemoryStream.h>
 
 struct ClipboardData
 {
@@ -75,6 +79,66 @@ struct ClipboardData
         }
         value = "";
         return false;
+    }
+};
+
+/// Used to store expired view's clipboards
+class ClipboardCache
+{
+    std::mutex _mutex;
+    struct Entry {
+        std::chrono::steady_clock::time_point _inserted;
+        std::shared_ptr<std::string> _rawData; // big.
+    };
+    // clipboard key -> data
+    std::unordered_map<std::string, Entry> _cache;
+public:
+    ClipboardCache()
+    {
+    }
+
+    void insertClipboard(const std::string key[2],
+                         const char *data, size_t size)
+    {
+        if (size == 0)
+        {
+            LOG_TRC("clipboard cache - ignores empty clipboard data");
+            return;
+        }
+        Entry ent;
+        ent._inserted = std::chrono::steady_clock::now();
+        ent._rawData = std::make_shared<std::string>(data, size);
+        LOG_TRC("insert cached clipboard: " + key[0] + " and " + key[1]);
+        std::lock_guard<std::mutex> lock(_mutex);
+        _cache[key[0]] = ent;
+        _cache[key[1]] = ent;
+    }
+
+    std::shared_ptr<std::string> getClipboard(const std::string &key)
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        std::shared_ptr<std::string> data;
+        auto it = _cache.find(key);
+        if (it != _cache.end())
+            data = it->second._rawData;
+        return data;
+    }
+
+    void checkexpiry()
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        auto now = std::chrono::steady_clock::now();
+        LOG_TRC("check expiry of cached clipboards");
+        for (auto it = _cache.begin(); it != _cache.end();)
+        {
+            if (std::chrono::duration_cast<std::chrono::minutes>(now - it->second._inserted).count() >= 10)
+            {
+                LOG_TRC("expiring expiry of cached clipboard: " + it->first);
+                it = _cache.erase(it);
+            }
+            else
+                ++it;
+        }
     }
 };
 

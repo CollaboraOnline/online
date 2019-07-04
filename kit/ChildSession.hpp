@@ -233,6 +233,8 @@ public:
 
     using Session::sendTextFrame;
 
+    bool getClipboard(const char* buffer, int length, const std::vector<std::string>& tokens);
+
 private:
     bool loadDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
 
@@ -245,7 +247,6 @@ private:
     bool downloadAs(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool getChildId();
     bool getTextSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
-    bool getClipboard(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool setClipboard(const char* buffer, int length, const std::vector<std::string>& tokens);
     std::string getTextSelectionInternal(const std::string& mimeType);
     bool paste(const char* buffer, int length, const std::vector<std::string>& tokens);

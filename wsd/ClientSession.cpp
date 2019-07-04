@@ -27,6 +27,7 @@
 #include <common/Common.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
+#include <common/Clipboard.hpp>
 #include <common/Session.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
@@ -48,8 +49,7 @@ ClientSession::ClientSession(const std::string& id,
     _docBroker(docBroker),
     _uriPublic(uriPublic),
     _isDocumentOwner(false),
-    _isAttached(false),
-    _isViewLoaded(false),
+    _state(SessionState::DETACHED),
     _keyEvents(1),
     _clientVisibleArea(0, 0, 0, 0),
     _clientSelectedPart(-1),
@@ -67,6 +67,9 @@ ClientSession::ClientSession(const std::string& id,
     // populate with random values.
     for (auto it : _clipboardKeys)
         rotateClipboardKey(false);
+
+    // get timestamp set
+    setState(SessionState::DETACHED);
 }
 
 // Can't take a reference in the constructor.
@@ -85,9 +88,79 @@ ClientSession::~ClientSession()
     SessionMap.erase(getId());
 }
 
+static const char *stateToString(ClientSession::SessionState s)
+{
+    switch (s)
+    {
+    case ClientSession::SessionState::DETACHED:        return "detached";
+    case ClientSession::SessionState::LOADING:         return "loading";
+    case ClientSession::SessionState::LIVE:            return "live";
+    case ClientSession::SessionState::WAIT_DISCONNECT: return "wait_disconnect";
+    }
+    return "invalid";
+}
+
+void ClientSession::setState(SessionState newState)
+{
+    LOG_TRC("ClientSession: transition from " << stateToString(_state) <<
+            " to " << stateToString(newState));
+    switch (newState)
+    {
+    case SessionState::DETACHED:
+        assert(_state == SessionState::DETACHED);
+        break;
+    case SessionState::LOADING:
+        assert(_state == SessionState::DETACHED);
+        break;
+    case SessionState::LIVE:
+        assert(_state == SessionState::LIVE ||
+               _state == SessionState::LOADING);
+        break;
+    case SessionState::WAIT_DISCONNECT:
+        assert(_state == SessionState::LOADING ||
+               _state == SessionState::LIVE);
+        break;
+    }
+    _state = newState;
+    _lastStateTime = std::chrono::steady_clock::now();
+}
+
+bool ClientSession::disconnectFromKit()
+{
+    assert(_state != SessionState::WAIT_DISCONNECT);
+    auto docBroker = getDocumentBroker();
+    if (_state == SessionState::LIVE && docBroker)
+    {
+        setState(SessionState::WAIT_DISCONNECT);
+
+        LOG_TRC("request/rescue clipboard on disconnect for " << getId());
+        // rescue clipboard before shutdown.
+        docBroker->forwardToChild(getId(), "getclipboard");
+
+        // handshake nicely; so wait for 'disconnected'
+        docBroker->forwardToChild(getId(), "disconnect");
+
+        return false;
+    }
+
+    return true; // just get on with it
+}
+
+// Allow 20secs for the clipboard and disconection to come.
+bool ClientSession::staleWaitDisconnect(const std::chrono::steady_clock::time_point &now)
+{
+    if (_state != SessionState::WAIT_DISCONNECT)
+        return false;
+    return std::chrono::duration_cast<std::chrono::seconds>(now - _lastStateTime).count() >= 20;
+}
+
 void ClientSession::rotateClipboardKey(bool notifyClient)
 {
     if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
+        return;
+
+    if (_state != SessionState::LIVE &&   // editing
+        _state != SessionState::DETACHED) // constructor
         return;
 
     _clipboardKeys[1] = _clipboardKeys[0];
@@ -135,13 +208,38 @@ bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const st
     return false;
 }
 
+
 void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     type,
                                            const std::shared_ptr<StreamSocket> &socket,
+                                           const std::string                   &tag,
                                            const std::shared_ptr<std::string>  &data)
 {
     // Move the socket into our DocBroker.
     auto docBroker = getDocumentBroker();
     docBroker->addSocketToPoll(socket);
+
+    if (_state == SessionState::WAIT_DISCONNECT)
+    {
+        LOG_TRC("Clipboard request " << tag << " for disconnecting session");
+        if (docBroker->lookupSendClipboardTag(socket, tag, false))
+            return; // the getclipboard already completed.
+        if (type == DocumentBroker::CLIP_REQUEST_SET)
+        {
+            std::ostringstream oss;
+            oss << "HTTP/1.1 400 Bad Request\r\n"
+                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n";
+            socket->send(oss.str());
+            socket->shutdown();
+        }
+        else // will be handled during shutdown
+        {
+            LOG_TRC("Clipboard request " << tag << " queued for shutdown");
+            _clipSockets.push_back(socket);
+        }
+    }
 
     std::string specific;
     if (type == DocumentBroker::CLIP_REQUEST_GET_RICH_HTML_ONLY)
@@ -1107,7 +1205,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         // 'download' and/or providing our helpful / user page.
 
         // for now just for remote sockets.
-        LOG_TRC("Got clipboard content to send to " << _clipSockets.size() << "sockets");
+        LOG_TRC("Got clipboard content of size " << payload->size() << " to send to " <<
+                _clipSockets.size() << " sockets in state " << stateToString(_state));
 
         postProcessCopyPayload(payload);
 
@@ -1116,6 +1215,13 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             if (payload->data()[header++] == '\n')
                 break;
         const bool empty = header >= payload->size();
+
+        // final cleanup ...
+        if (!empty && _state == SessionState::WAIT_DISCONNECT &&
+            (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
+            LOOLWSD::SavedClipboards->insertClipboard(
+                _clipboardKeys, &payload->data()[header], payload->size() - header);
+
         for (auto it : _clipSockets)
         {
             std::ostringstream oss;
@@ -1139,6 +1245,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         _clipSockets.clear();
         return true;
+    } else if (tokens[0] == "disconnected:") {
+
+        LOG_INF("End of disconnection handshake for " << getId());
+        docBroker->finalRemoveSession(getId());
+        return true;
     }
 
     if (!isDocPasswordProtected())
@@ -1149,7 +1260,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens[0] == "status:")
         {
-            setViewLoaded();
+            setState(ClientSession::SessionState::LIVE);
             docBroker->setLoaded();
             // Wopi post load actions
             if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
@@ -1454,7 +1565,7 @@ void ClientSession::dumpState(std::ostream& os)
 
     os << "\t\tisReadOnly: " << isReadOnly()
        << "\n\t\tisDocumentOwner: " << _isDocumentOwner
-       << "\n\t\tisAttached: " << _isAttached
+       << "\n\t\tstate: " << stateToString(_state)
        << "\n\t\tkeyEvents: " << _keyEvents
 //       << "\n\t\tvisibleArea: " << _clientVisibleArea
        << "\n\t\tclientSelectedPart: " << _clientSelectedPart

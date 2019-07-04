@@ -983,7 +983,7 @@ public:
             // session is being removed.
             for (auto it = _sessions.cbegin(); it != _sessions.cend(); )
             {
-                if (it->second->isCloseFrame())
+               if (it->second->isCloseFrame())
                 {
                     deadSessions.push_back(it->second);
                     it = _sessions.erase(it);
@@ -1901,6 +1901,10 @@ private:
                         _editorId = -1;
                     }
                     LOG_DBG("Removing ChildSession [" << sessionId << "].");
+
+                    // Tell them we're going quietly.
+                    session->sendTextFrame("disconnected:");
+
                     _sessions.erase(it);
                     const size_t count = _sessions.size();
                     LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren") <<

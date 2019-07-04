@@ -104,6 +104,7 @@ using Poco::Net::PartHandler;
 #include "Auth.hpp"
 #include "ClientSession.hpp"
 #include <Common.hpp>
+#include <Clipboard.hpp>
 #include <Crypto.hpp>
 #include <DelaySocket.hpp>
 #include "DocumentBroker.hpp"
@@ -721,6 +722,7 @@ static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
+std::unique_ptr<ClipboardCache> LOOLWSD::SavedClipboards;
 
 /// This thread polls basic web serving, and handling of
 /// websockets before upgrade: when upgraded they go to the
@@ -1154,6 +1156,8 @@ void LOOLWSD::initialize(Application& self)
     }
 
 #if !MOBILEAPP
+    SavedClipboards.reset(new ClipboardCache());
+
     FileServerRequestHandler::initialize();
 #endif
 
@@ -2152,7 +2156,7 @@ private:
                 StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
                 if (reqPathTokens.count() > 1 && reqPathTokens[0] == "lool" && reqPathTokens[1] == "clipboard")
                 {
-//                    Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
+                    Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
                     handleClipboardRequest(request, message, disposition);
                 }
                 else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
@@ -2325,7 +2329,8 @@ private:
                                 Poco::MemoryInputStream& message,
                                 SocketDisposition &disposition)
     {
-        LOG_DBG("Clipboard request: " << request.getURI());
+        LOG_DBG("Clipboard " << ((request.getMethod() == HTTPRequest::HTTP_GET) ? "GET" : "POST") <<
+                " request: " << request.getURI());
 
         Poco::URI requestUri(request.getURI());
         Poco::URI::QueryParameters params = requestUri.getQueryParameters();
@@ -2391,7 +2396,10 @@ private:
                         });
                 });
             LOG_TRC("queued clipboard command " << type << " on docBroker fetch");
-        } else {
+        }
+        // fallback to persistent clipboards if we can
+        else if (!DocumentBroker::lookupSendClipboardTag(_socket.lock(), tag, false))
+        {
             LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag <<
                     " and broker: " << (docBroker ? "not" : "") << "found");
 

@@ -109,7 +109,7 @@ public:
         std::string value;
 
         // allow empty clipboards
-        if (clipboard && mimeType =="" && clipboard->size() == 0)
+        if (clipboard && mimeType == "" && content == "")
             return true;
 
         if (!clipboard || !clipboard->findType(mimeType, value))
@@ -205,7 +205,9 @@ public:
             assert(sessions.size() > 0 && session < sessions.size());
             clientSession = sessions[session];
 
-            return clientSession->getClipboardURI(false); // nominally thread unsafe
+            std::string tag = clientSession->getClipboardURI(false); // nominally thread unsafe
+            std::cerr << "Got tag '" << tag << "' for session " << session << "\n";
+            return tag;
     }
 
     std::string buildClipboardText(const std::string &text)
@@ -289,6 +291,18 @@ public:
         if (!setClipboard(clipURI, buildClipboardText("herring"), HTTPResponse::HTTP_OK))
             return;
         std::cerr << "Fetch clipboards:\n";
+        if (!fetchClipboardAssert(clipURI2, "text/plain;charset=utf-8", "kippers"))
+            return;
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", "herring"))
+            return;
+
+        std::cerr << "Close sockets:\n";
+        socket->shutdown();
+        socket2->shutdown();
+
+        sleep(1); // paranoia.
+
+        std::cerr << "Fetch clipboards after shutdown:\n";
         if (!fetchClipboardAssert(clipURI2, "text/plain;charset=utf-8", "kippers"))
             return;
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", "herring"))

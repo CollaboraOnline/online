@@ -231,6 +231,9 @@ public:
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
 
+    /// Hard removes a session by ID, only for ClientSession.
+    void finalRemoveSession(const std::string& id);
+
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
 
@@ -322,6 +325,8 @@ public:
     void handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
                                 const std::string &viewId, const std::string &tag,
                                 const std::shared_ptr<std::string> &data);
+    static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
+                                       const std::string &tag, bool sendError = false);
 
     bool isMarkedToDestroy() const { return _markToDestroy || _stop; }
 
@@ -401,8 +406,8 @@ private:
     /// Loads a new session and adds to the sessions container.
     size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
 
-    /// Removes a session by ID. Returns the new number of sessions.
-    size_t removeSessionInternal(const std::string& id);
+    /// Starts the Kit <-> DocumentBroker shutdown handshake
+    void disconnectSessionInternal(const std::string& id);
 
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);

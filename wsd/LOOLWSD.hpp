@@ -28,6 +28,7 @@
 class ChildProcess;
 class TraceFileWriter;
 class DocumentBroker;
+class ClipboardCache;
 
 std::shared_ptr<ChildProcess> getNewChild_Blocks(
 #if MOBILEAPP
@@ -69,6 +70,7 @@ public:
     static bool AnonymizeUsernames;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
+    static std::unique_ptr<ClipboardCache> SavedClipboards;
     static std::set<std::string> EditFileExtensions;
     static unsigned MaxConnections;
     static unsigned MaxDocuments;

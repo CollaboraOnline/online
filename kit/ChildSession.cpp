@@ -946,7 +946,7 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
     return true;
 }
 
-bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens )
+bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
 {
     const char **pMimeTypes = nullptr; // fetch all for now.
     const char  *pOneType[2];

@@ -35,6 +35,7 @@
 #include "TileCache.hpp"
 #include <common/Log.hpp>
 #include <common/Message.hpp>
+#include <common/Clipboard.hpp>
 #include <common/Protocol.hpp>
 #include <common/Unit.hpp>
 #include <common/FileUtil.hpp>
@@ -343,10 +344,23 @@ void DocumentBroker::pollThread()
 
 #if !MOBILEAPP
         if (std::chrono::duration_cast<std::chrono::minutes>(now - lastClipboardHashUpdateTime).count() >= 2)
+        for (auto &it : _sessions)
+        {
+            if (it.second->staleWaitDisconnect(now))
+            {
+                std::string id = it.second->getId();
+                LOG_WRN("Unusual, Kit session " + id + " failed its disconnect handshake, killing");
+                finalRemoveSession(id);
+                break; // it invalid.
+            }
+        }
+
+        if (std::chrono::duration_cast<std::chrono::minutes>(now - lastClipboardHashUpdateTime).count() >= 5)
         {
             LOG_TRC("Rotating clipboard keys");
-            for (auto& it : _sessions)
+            for (auto &it : _sessions)
                 it.second->rotateClipboardKey(true);
+
             lastClipboardHashUpdateTime = now;
         }
 
@@ -810,7 +824,7 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
     // If marked to destroy, or session is disconnected, remove.
     const auto it = _sessions.find(sessionId);
     if (_markToDestroy || (it != _sessions.end() && it->second->isCloseFrame()))
-        removeSessionInternal(sessionId);
+        disconnectSessionInternal(sessionId);
 
     // If marked to destroy, then this was the last session.
     if (_markToDestroy || _sessions.empty())
@@ -1025,7 +1039,8 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     for (auto& sessionIt : _sessions)
     {
         // Save the document using an editable session, or first ...
-        if (savingSessionId.empty() || !sessionIt.second->isReadOnly())
+        if (savingSessionId.empty() ||
+            (!sessionIt.second->isReadOnly() && !sessionIt.second->inWaitDisconnected()))
         {
             savingSessionId = sessionIt.second->getId();
         }
@@ -1211,7 +1226,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
 
     // Add and attach the session.
     _sessions.emplace(session->getId(), session);
-    session->setAttached();
+    session->setState(ClientSession::SessionState::LOADING);
 
     const size_t count = _sessions.size();
     LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
@@ -1247,7 +1262,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
         // If last editable, save and don't remove until after uploading to storage.
         if (!lastEditableSession || !autoSave(isPossiblyModified(), dontSaveIfUnmodified))
-            removeSessionInternal(id);
+            disconnectSessionInternal(id);
     }
     catch (const std::exception& ex)
     {
@@ -1257,7 +1272,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
     return _sessions.size();
 }
 
-size_t DocumentBroker::removeSessionInternal(const std::string& id)
+void DocumentBroker::disconnectSessionInternal(const std::string& id)
 {
     assertCorrectThread();
     try
@@ -1272,10 +1287,51 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
             LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
 
+            LOG_TRC("Disconnect session internal " << id);
+
+            bool hardDisconnect;
+            if (it->second->inWaitDisconnected())
+            {
+                LOG_TRC("hard disconnecting while waiting for disconnected handshake.");
+                hardDisconnect = true;
+            }
+            else
+            {
+                hardDisconnect = it->second->disconnectFromKit();
+
+                // Let the child know the client has disconnected.
+                const std::string msg("child-" + id + " disconnect");
+                _childProcess->sendTextFrame(msg);
+            }
+
+            if (hardDisconnect)
+                finalRemoveSession(id);
+            // else wait for disconnected.
+        }
+        else
+        {
+            LOG_TRC("Session [" << id << "] not found to disconnect from docKey [" <<
+                    _docKey << "]. Have " << _sessions.size() << " sessions.");
+        }
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Error while disconnecting session [" << id << "]: " << ex.what());
+    }
+}
+
+void DocumentBroker::finalRemoveSession(const std::string& id)
+{
+    assertCorrectThread();
+    try
+    {
+        auto it = _sessions.find(id);
+        if (it != _sessions.end())
+        {
             const bool readonly = (it->second ? it->second->isReadOnly() : false);
 
             // Remove. The caller must have a reference to the session
-            // in question, lest we destroy from underneith them.
+            // in question, lest we destroy from underneath them.
             _sessions.erase(it);
             const size_t count = _sessions.size();
 
@@ -1291,11 +1347,7 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
                 LOG_END(logger, true);
             }
 
-            // Let the child know the client has disconnected.
-            const std::string msg("child-" + id + " disconnect");
-            _childProcess->sendTextFrame(msg);
-
-            return count;
+            return;
         }
         else
         {
@@ -1307,8 +1359,6 @@ size_t DocumentBroker::removeSessionInternal(const std::string& id)
     {
         LOG_ERR("Error while removing session [" << id << "]: " << ex.what());
     }
-
-    return _sessions.size();
 }
 
 void DocumentBroker::addCallback(const SocketPoll::CallbackFn& fn)
@@ -1333,7 +1383,8 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
     LOG_DBG("Alerting all users of [" << _docKey << "]: " << msg);
     for (auto& it : _sessions)
     {
-        it.second->enqueueSendMessage(payload);
+        if (!it.second->inWaitDisconnected())
+            it.second->enqueueSendMessage(payload);
     }
 }
 
@@ -1421,7 +1472,8 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     {
         for (auto& it: _sessions)
         {
-            tileCache().subscribeToTileRendering(tile, it.second);
+            if (!it.second->inWaitDisconnected())
+                tileCache().subscribeToTileRendering(tile, it.second);
         }
     }
     else
@@ -1515,19 +1567,34 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     sendRequestedTiles(session);
 }
 
-void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
-                                            const std::string &viewId, const std::string &tag,
-                                            const std::shared_ptr<std::string> &data)
+/// lookup in global clipboard cache and send response, send error if missing if @sendError
+bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
+                                            const std::string &tag, bool sendError)
 {
-    for (auto& it : _sessions)
+    LOG_TRC("Clipboard request " << tag << " not for a live session - check cache.");
+    std::shared_ptr<std::string> saved =
+        LOOLWSD::SavedClipboards->getClipboard(tag);
+    if (saved)
     {
-        if (it.second->matchesClipboardKeys(viewId, tag))
-        {
-            it.second->handleClipboardRequest(type, socket, data);
-            return;
-        }
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: " << saved->length() << "\r\n"
+                << "Content-Type: application/octet-stream\r\n"
+                << "X-Content-Type-Options: nosniff\r\n"
+                << "\r\n";
+            oss.write(saved->c_str(), saved->length());
+            socket->setSocketBufferSize(std::min(saved->length() + 256,
+                                                 size_t(Socket::MaximumSendBufferSize)));
+            socket->send(oss.str());
+            socket->shutdown();
+            LOG_INF("Found and queued clipboard response for send of size " << saved->length());
+            return true;
     }
-    LOG_ERR("Could not find matching session to handle clipboard request for " << viewId << " tag: " << tag);
+
+    if (!sendError)
+        return false;
 
     // Bad request.
     std::ostringstream oss;
@@ -1539,6 +1606,24 @@ void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::s
         << "Failed to find this clipboard";
     socket->send(oss.str());
     socket->shutdown();
+
+    return false;
+}
+
+void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
+                                            const std::string &viewId, const std::string &tag,
+                                            const std::shared_ptr<std::string> &data)
+{
+    for (auto& it : _sessions)
+    {
+        if (it.second->matchesClipboardKeys(viewId, tag))
+        {
+            it.second->handleClipboardRequest(type, socket, tag, data);
+            return;
+        }
+    }
+    if (!lookupSendClipboardTag(socket, tag, true))
+        LOG_ERR("Could not find matching session to handle clipboard request for " << viewId << " tag: " << tag);
 }
 
 void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)
@@ -1724,7 +1809,8 @@ bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
     {
         if (it.second->getId() != id &&
             it.second->isViewLoaded() &&
-            !it.second->isReadOnly())
+            !it.second->isReadOnly() &&
+            !it.second->inWaitDisconnected())
         {
             // This is a loaded session that is non-readonly.
             return true;
@@ -1820,9 +1906,10 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
             // Broadcast to all.
             // Events could cause the removal of sessions.
             std::map<std::string, std::shared_ptr<ClientSession>> sessions(_sessions);
-            for (const auto& pair : sessions)
+            for (const auto& it : _sessions)
             {
-                pair.second->handleKitToClientMessage(data, size);
+                if (!it.second->inWaitDisconnected())
+                    it.second->handleKitToClientMessage(data, size);
             }
         }
         else
@@ -1862,11 +1949,16 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
         std::shared_ptr<ClientSession> session = pair.second;
         try
         {
-            // Notify the client and disconnect.
-            session->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
+            if (session->inWaitDisconnected())
+                finalRemoveSession(session->getId());
+            else
+            {
+                // Notify the client and disconnect.
+                session->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
 
-            // Remove session, save, and mark to destroy.
-            removeSession(session->getId());
+                // Remove session, save, and mark to destroy.
+                removeSession(session->getId());
+            }
         }
         catch (const std::exception& exc)
         {
