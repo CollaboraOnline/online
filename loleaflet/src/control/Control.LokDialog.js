@@ -453,7 +453,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._createDialogCursor(strId);
 		var dlgInput = this._createDialogInput(strId);
 		this._setupWindowEvents(id, dialogCanvas, dlgInput);
-		this._setupGestures(id, dialogCanvas);
+		this._setupGestures(dialogContainer, id, dialogCanvas);
 
 		this._currentId = id;
 		this._sendPaintWindow(id, this._createRectStr(id));
@@ -525,7 +525,7 @@ L.Control.LokDialog = L.Control.extend({
 		});
 	},
 
-	_setupGestures: function(id, canvas) {
+	_setupGestures: function(dialogContainer, id, canvas) {
 		var self = this;
 		var dialogID = id;
 		var targetId = toZoomTargetId(canvas.id);
@@ -541,6 +541,12 @@ L.Control.LokDialog = L.Control.extend({
 			ratio = window.screen.width / (width + 40);
 			offsetX = -(width - window.screen.width) / 2;
 			offsetY = -(height - window.screen.height) / 2;
+		}
+
+		// FIXME. window.mode.isMobile() return false
+		if (L.Browser.mobile() && screen.width < 768 && height < window.screen.height) {
+			$(dialogContainer).dialog('option', 'position', { my: 'left top', at: 'let top', of: window });
+			offsetY = 0;
 		}
 
 		var state = {
