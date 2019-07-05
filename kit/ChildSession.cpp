@@ -1038,6 +1038,8 @@ bool ChildSession::setClipboard(const char* buffer, int length, const std::vecto
             LOG_ERR("set clipboard returned failure");
         else
             LOG_TRC("set clipboard succeeded");
+    } catch (const std::exception& ex) {
+        LOG_ERR("set clipboard failed with exception: " << ex.what());
     } catch (...) {
         LOG_ERR("set clipboard failed with exception");
     }

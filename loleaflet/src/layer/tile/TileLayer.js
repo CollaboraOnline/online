@@ -2685,7 +2685,10 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 
-		this._map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false);
+		// Always capture the html content separate as we may lose it when we
+		// pass the clipboard data to a different context (async calls, f.e.).
+		var htmlText = e.dataTransfer.getData('text/html');
+		this._map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false, htmlText);
 	},
 
 	_onDragStart: function () {
