@@ -63,14 +63,25 @@ L.Clipboard = L.Class.extend({
 			'&Tag=' + this._accessKey[idx];
 	},
 
-	getStubHtml: function() {
+	// Returns the marker used to identify stub messages.
+	_getHtmlStubMarker: function() {
+		return '<title>Stub HTML Message</title>';
+	},
+
+	// Returns true if the argument is a stub html.
+	_isStubHtml: function(text) {
+		return text.indexOf(this._getHtmlStubMarker()) > 0;
+	},
+
+	_getStubHtml: function() {
 		var lang = 'en_US'; // FIXME: l10n
 		var encodedOrigin = encodeURIComponent(this.getMetaPath());
 		var stub = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
 		    '<html>\n' +
 		    '  <head>\n' +
-		    '     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
-		    '     <meta name="origin" content="' + encodedOrigin + '"/>\n' +
+		    '    ' + this._getHtmlStubMarker() + '\n' +
+		    '    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
+		    '    <meta name="origin" content="' + encodedOrigin + '"/>\n' +
 		    '  </head>\n' +
 		    '  <body lang="' + lang + '" dir="ltr">\n' +
 		    '    <p>' + _('To paste outside %productName, please first click the \'download\' button') + '</p>\n' +
@@ -138,45 +149,61 @@ L.Clipboard = L.Class.extend({
 	// optionalFormData: used for POST for form data
 	// completeFn: called on completion - with response.
 	// progressFn: allows splitting the progress bar up.
-	_doAsyncDownload: function(type,url,optionalFormData,completeFn,progressFn) {
-		var that = this;
-		var request = new XMLHttpRequest();
+	_doAsyncDownload: function(type,url,optionalFormData,completeFn,progressFn,onErrorFn) {
+		try {
+			var that = this;
+			var request = new XMLHttpRequest();
 
-		// avoid to invoke the following code if the download widget depends on user interaction
-		if (!that._downloadProgress || !that._downloadProgress.isVisible()) {
-			that._startProgress();
-			that._downloadProgress.startProgressMode();
-		}
-		request.onload = function() {
-			that._downloadProgress._onComplete();
-			if (type === 'POST') {
+			// avoid to invoke the following code if the download widget depends on user interaction
+			if (!that._downloadProgress || !that._downloadProgress.isVisible()) {
+				that._startProgress();
+				that._downloadProgress.startProgressMode();
+			}
+			request.onload = function() {
+				that._downloadProgress._onComplete();
+				if (type === 'POST') {
+					that._downloadProgress._onClose();
+				}
+
+				// For some reason 400 error from the server doesn't
+				// invoke onerror callback, but we do get here with
+				// size==0, which signifies no response from the server.
+				// So we check the status code instead.
+				if (this.status == 200) {
+					completeFn(this.response);
+				} else if (onErrorFn) {
+					onErrorFn(this.response);
+				}
+			};
+			request.onerror = function() {
+				if (onErrorFn)
+					onErrorFn();
+				that._downloadProgress._onComplete();
 				that._downloadProgress._onClose();
-			}
-			completeFn(this.response);
-		};
-		request.onerror = function() {
-			that._downloadProgress._onComplete();
-			that._downloadProgress._onClose();
-		};
+			};
 
-		request.upload.addEventListener('progress', function (e) {
-			if (e.lengthComputable) {
-				var percent = progressFn(e.loaded / e.total * 100);
-				var progress = { statusType: 'setvalue', value: percent };
-				that._downloadProgress._onUpdateProgress(progress);
-			}
-		}, false);
-		request.open(type, url, true /* isAsync */);
-		request.timeout = 20 * 1000; // 20 secs ...
-		request.responseType = 'blob';
-		if (optionalFormData !== null)
-			request.send(optionalFormData);
-		else
-			request.send();
+			request.upload.addEventListener('progress', function (e) {
+				if (e.lengthComputable) {
+					var percent = progressFn(e.loaded / e.total * 100);
+					var progress = { statusType: 'setvalue', value: percent };
+					that._downloadProgress._onUpdateProgress(progress);
+				}
+			}, false);
+			request.open(type, url, true /* isAsync */);
+			request.timeout = 20 * 1000; // 20 secs ...
+			request.responseType = 'blob';
+			if (optionalFormData !== null)
+				request.send(optionalFormData);
+			else
+				request.send();
+		} catch (error) {
+			if (onErrorFn)
+				onErrorFn();
+		}
 	},
 
 	// Suck the data from one server to another asynchronously ...
-	_dataTransferDownloadAndPasteAsync: function(src, dest) {
+	_dataTransferDownloadAndPasteAsync: function(src, dest, fallbackHtml) {
 		var that = this;
 		// FIXME: add a timestamp in the links (?) ignroe old / un-responsive servers (?)
 		that._doAsyncDownload(
@@ -194,7 +221,37 @@ L.Clipboard = L.Class.extend({
 					function(progress) { return 50 + progress/2; }
 				);
 			},
-			function(progress) { return progress/2; }
+			function(progress) { return progress/2; },
+			function() {
+				console.log('failed to download clipboard using fallback html');
+
+				// If it's the stub, avoid pasting.
+				if (that._isStubHtml(fallbackHtml))
+				{
+					// Let the user know they haven't really copied document content.
+					vex.dialog.alert({
+						message: _('Failed to download clipboard, please re-copy'),
+						callback: function () {
+							that._map.focus();
+						}
+					});
+					return;
+				}
+
+				var formData = new FormData();
+				formData.append('data', new Blob([fallbackHtml]), 'clipboard');
+				that._doAsyncDownload(
+					'POST', dest, formData,
+					function() {
+						console.log('up-load of fallback done, now paste');
+						that._map._socket.sendMessage('uno .uno:Paste')
+					},
+					function(progress) { return 50 + progress/2; },
+					function() {
+						that.dataTransferToDocumentFallback(null, fallbackHtml);
+					}
+				);
+			}
 		);
 	},
 
@@ -220,13 +277,7 @@ L.Clipboard = L.Class.extend({
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
 
-		var pasteHtml = null;
-		if (dataTransfer == null) { // IE
-			pasteHtml = htmlText;
-		} else {
-			pasteHtml = dataTransfer.getData('text/html');
-		}
-		var meta = this._getMetaOrigin(pasteHtml);
+		var meta = this._getMetaOrigin(htmlText);
 		var id = this.getMetaPath(0);
 		var idOld = this.getMetaPath(1);
 
@@ -240,26 +291,36 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		var destination = this.getMetaBase() + this.getMetaPath();
-
 		// Do we have a remote Online we can suck rich data from ?
 		if (meta !== '')
 		{
 			console.log('Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"');
-			this._dataTransferDownloadAndPasteAsync(meta, destination);
+			var destination = this.getMetaBase() + this.getMetaPath();
+			this._dataTransferDownloadAndPasteAsync(meta, destination, htmlText);
 			return;
 		}
 
+		// Fallback.
+		this.dataTransferToDocumentFallback(dataTransfer, htmlText, usePasteKeyEvent);
+	},
+
+	dataTransferToDocumentFallback: function(dataTransfer, htmlText, usePasteKeyEvent) {
+
 		var content;
-		if (dataTransfer == null)
-			content = this._encodeHtmlToBlob(htmlText);
-		else // Suck HTML content out of dataTransfer now while it feels like working.
+		if (dataTransfer) {
+			// Suck HTML content out of dataTransfer now while it feels like working.
 			content = this._readContentSyncToBlob(dataTransfer);
+		}
+
+		// Fallback on the html.
+		if (!content) {
+			content = this._encodeHtmlToBlob(htmlText);
+		}
 
 		// FIXME: do we want this section ?
 
 		// Images get a look in only if we have no content and are async
-		if (content == null && pasteHtml === '' && dataTransfer != null)
+		if (content == null && htmlText === '' && dataTransfer != null)
 		{
 			var types = dataTransfer.types;
 
@@ -291,6 +352,7 @@ L.Clipboard = L.Class.extend({
 			formData.append('file', content);
 
 			var that = this;
+			var destination = this.getMetaBase() + this.getMetaPath();
 			this._doAsyncDownload('POST', destination, formData,
 							function() {
 								console.log('Posted ' + content.size + ' bytes successfully');
@@ -326,14 +388,14 @@ L.Clipboard = L.Class.extend({
 			else
 			{
 				console.log('Downloaded that selection.');
-				text = this.getStubHtml();
+				text = this._getStubHtml();
 				this._onDownloadOnLargeCopyPaste();
 				this._downloadProgress.setURI( // richer, bigger HTML ...
 					this.getMetaBase() + this.getMetaPath() + '&MimeType=text/html');
 			}
 		} else if (this._selectionType === null) {
 			console.log('Copy/Cut with no selection!');
-			text = this.getStubHtml();
+			text = this._getStubHtml();
 		} else {
 			console.log('Copy/Cut with simple text selection');
 			text = this._selectionContent;
@@ -400,7 +462,7 @@ L.Clipboard = L.Class.extend({
 			// Can't get HTML until it is pasted ... so quick timeout
 			setTimeout(function() {
 				var tmpDiv = document.getElementById(that._dummyDivName);
-				that.dataTransferToDocument(null, false, tmpDiv.innerHTML);
+				that.dataTransferToDocument(null, /* preferInternal = */ false, tmpDiv.innerHTML);
 				that.compatRemoveNode(tmpDiv);
 				// attempt to restore focus.
 				if (active == null)
@@ -553,8 +615,11 @@ L.Clipboard = L.Class.extend({
 		if (ev.clipboardData) { // Standard
 			ev.preventDefault();
 			var usePasteKeyEvent = ev.usePasteKeyEvent;
-			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, null, usePasteKeyEvent);
-			this._map._clipboardContainer._abortComposition();
+			// Always capture the html content separate as we may lose it when we
+			// pass the clipboard data to a different context (async calls, f.e.).
+			var htmlText = ev.clipboardData.getData('text/html');
+			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, htmlText, usePasteKeyEvent);
+			this._map._clipboardContainer._abortComposition(ev);
 			this._clipboardSerial++;
 			this._stopHideDownload();
 		}
