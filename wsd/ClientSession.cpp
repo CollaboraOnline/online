@@ -160,7 +160,7 @@ void ClientSession::rotateClipboardKey(bool notifyClient)
         return;
 
     if (_state != SessionState::LIVE &&   // editing
-        _state != SessionState::DETACHED) // constructor
+        _state != SessionState::LOADING) // handshake with client
         return;
 
     _clipboardKeys[1] = _clipboardKeys[0];
