@@ -1110,12 +1110,13 @@ public:
 
                 auto& log = Log::logger();
                 if (log.trace() && len > 0) {
-                    LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len << " bytes.");
+                    LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len <<
+                            " bytes of " << _outBuffer.size() << " bytes buffered.");
                     // log.dump("", &_outBuffer[0], len);
                 }
 
                 if (len <= 0 && errno != EAGAIN && errno != EWOULDBLOCK)
-                    LOG_SYS("#" << getFD() << ": Wrote outgoing data " << len << " bytes.");
+                    LOG_SYS("#" << getFD() << ": Socket write returned " << len);
             }
             while (len < 0 && errno == EINTR);
 

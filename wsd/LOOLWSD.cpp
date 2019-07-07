@@ -2401,7 +2401,7 @@ private:
         else if (!DocumentBroker::lookupSendClipboardTag(_socket.lock(), tag, false))
         {
             LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag <<
-                    " and broker: " << (docBroker ? "not" : "") << "found");
+                    " and broker: " << (docBroker ? "" : "not ") << "found");
 
             std::string errMsg;
             if (serverId != LOOLWSD::HostIdentifier)
