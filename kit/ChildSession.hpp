@@ -235,6 +235,8 @@ public:
 
     bool getClipboard(const char* buffer, int length, const std::vector<std::string>& tokens);
 
+    virtual void disconnect() override;
+
 private:
     bool loadDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
 
@@ -273,7 +275,6 @@ private:
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
 
-    virtual void disconnect() override;
     virtual bool _handleInput(const char* buffer, int length) override;
 
     std::shared_ptr<lok::Document> getLOKitDocument()

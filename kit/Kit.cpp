@@ -1905,6 +1905,9 @@ private:
                     // Tell them we're going quietly.
                     session->sendTextFrame("disconnected:");
 
+                    // Disconnect to gracefully flush and close the socket.
+                    session->disconnect();
+
                     _sessions.erase(it);
                     const size_t count = _sessions.size();
                     LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren") <<
