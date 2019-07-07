@@ -2,6 +2,7 @@
 /*
 * Control.Header
 */
+/* global L Hammer */
 
 L.Control.Header = L.Control.extend({
 	options: {
@@ -24,6 +25,7 @@ L.Control.Header = L.Control.extend({
 		this._lastMouseOverIndex = undefined;
 		this._hitResizeArea = false;
 		this._overHeaderArea = false;
+		this._hammer = null;
 
 		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
 
@@ -117,6 +119,14 @@ L.Control.Header = L.Control.extend({
 	},
 
 	mouseInit: function (element) {
+		var self = this;
+		if (this._hammer == null) {
+			this._hammer = new Hammer(element);
+			this._hammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+			this._hammer.on('panstart panmove panend', function (event) {
+				self._onPan(event);
+			});
+		}
 		L.DomEvent.on(element, 'mousedown', this._onMouseDown, this);
 	},
 
@@ -256,11 +266,95 @@ L.Control.Header = L.Control.extend({
 		this._current = entry && !zeroSizeEntry ? entry.index : -1;
 	},
 
+	_onPan: function (event) {
+		if (event.pointerType != 'touch')
+			return;
+
+		if (event.type == 'panstart')
+			this._onPanStart(event);
+		else if (event.type == 'panmove') {
+			this._onPanMove(event);
+		}
+		else if (event.type == 'panend') {
+			this._onPanEnd(event);
+		}
+	},
+
+	_entryAtPoint: function(point) {
+		var position = this._getParallelPos(point);
+		position = position - this._position;
+
+		var eachEntry = this._data.getFirst();
+		while (eachEntry) {
+			var start = eachEntry.pos - eachEntry.size;
+			var end = eachEntry.pos;
+			if (position > start && position <= end) {
+				var resizeAreaStart = Math.max(start, end - 3);
+				if (this.isHeaderSelected(eachEntry.index)) {
+					resizeAreaStart = end - this._resizeHandleSize;
+				}
+				var isMouseOverResizeArea = (position > resizeAreaStart);
+				return {entry: eachEntry, hit: isMouseOverResizeArea};
+			}
+			eachEntry = this._data.getNext();
+		}
+		return null;
+	},
+
+	_onPanStart: function (event) {
+		if (this._hitOutline(event))
+			return;
+
+		var target = event.target || event.srcElement;
+		if (!target)
+			return false;
+
+		var result = this._entryAtPoint(this._hammerEventToCanvasPos(this._canvas, event));
+		if (!result)
+			return false;
+
+		this._mouseOverEntry = result.entry;
+		var rectangle = this.getHeaderEntryBoundingClientRect(result.entry.index);
+		if (!rectangle)
+			return;
+
+		L.DomUtil.disableImageDrag();
+		L.DomUtil.disableTextSelection();
+
+		this._start = new L.Point(rectangle.left, rectangle.top);
+		this._offset = new L.Point(rectangle.right - event.center.x, rectangle.bottom - event.center.y);
+		this._item = target;
+		this.onDragStart(this._item, this._start, this._offset, {clientX: event.center.x, clientY: event.center.y});
+	},
+
+	_onPanMove: function (event) {
+		this.onDragMove(this._item, this._start, this._offset, {clientX: event.center.x, clientY: event.center.y});
+	},
+
+	_onPanEnd: function (event) {
+		L.DomUtil.enableImageDrag();
+		L.DomUtil.enableTextSelection();
+
+		this.onDragEnd(this._item, this._start, this._offset, {clientX: event.center.x, clientY: event.center.y});
+
+		this._mouseOverEntry = null;
+		this._item = this._start = this._offset = null;
+		this._dragging = false;
+	},
+
 	_mouseEventToCanvasPos: function(canvas, evt) {
 		var rect = canvas.getBoundingClientRect();
 		return {
 			x: evt.clientX - rect.left,
 			y: evt.clientY - rect.top
+		};
+	},
+
+	_hammerEventToCanvasPos: function(canvas, event) {
+		var rect = canvas.getBoundingClientRect();
+		return {
+			x: event.center.x - rect.left,
+			y: event.center.y - rect.top
 		};
 	},
 
@@ -297,25 +391,15 @@ L.Control.Header = L.Control.extend({
 			this._overHeaderArea = true;
 		}
 
+		var mouseOverIndex = this._mouseOverEntry ? this._mouseOverEntry.index : null;
 		var isMouseOverResizeArea = false;
-		var pos = this._getParallelPos(this._mouseEventToCanvasPos(this._canvas, e));
-		pos = pos - this._position;
+		var result = this._entryAtPoint(this._mouseEventToCanvasPos(this._canvas, e));
 
-		var mouseOverIndex = this._mouseOverEntry ? this._mouseOverEntry.index : undefined;
 		var entry = this._data.getFirst();
-		while (entry) {
-			var start = entry.pos - entry.size;
-			var end = entry.pos;
-			if (pos > start && pos <= end) {
-				mouseOverIndex = entry.index;
-				var resizeAreaStart = Math.max(start, end - 3);
-				if (this.isHeaderSelected(entry.index)) {
-					resizeAreaStart = end - this._resizeHandleSize;
-				}
-				isMouseOverResizeArea = (pos > resizeAreaStart);
-				break;
-			}
-			entry = this._data.getNext();
+		if (result) {
+			isMouseOverResizeArea = result.hit;
+			mouseOverIndex = result.entry.index;
+			entry = result.entry;
 		}
 
 		if (mouseOverIndex && (!this._mouseOverEntry || mouseOverIndex !== this._mouseOverEntry.index)) {
@@ -441,7 +525,7 @@ L.Control.Header = L.Control.extend({
 		this._offset = new L.Point(rect.right - e.clientX, rect.bottom - e.clientY);
 		this._item = target;
 
-		this.onDragStart(this.item, this._start, this._offset, e);
+		this.onDragStart(this._item, this._start, this._offset, e);
 	},
 
 	_onMouseMoveForDragging: function (e) {
