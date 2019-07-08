@@ -694,7 +694,9 @@ bool StreamSocket::parseHeader(const char *clientName,
         if (map)
             map->_messageSize += contentLength;
 
-        if (request.getExpectContinue() && !_sentHTTPContinue)
+        const std::string& expect = request.get("Expect", "");
+        bool getExpectContinue =  !expect.empty() && Poco::icompare(expect, "100-continue") == 0;
+        if (getExpectContinue && !_sentHTTPContinue)
         {
             LOG_TRC("#" << getFD() << " got Expect: 100-continue, sending Continue");
             // FIXME: should validate authentication headers early too.
