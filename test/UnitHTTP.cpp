@@ -19,6 +19,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/StreamCopier.h>
 
 #include <Log.hpp>
 #include <Util.hpp>
@@ -52,10 +53,10 @@ public:
             switch(i)
             {
             case 0:
-                request.setExpectContinue(false);
+                request.erase("Expect");
                 break;
             case 1:
-                request.setExpectContinue(true);
+                request.set("Expect", "100-continue");
                 break;
             default:
                 break;
