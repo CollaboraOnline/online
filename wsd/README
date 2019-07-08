@@ -16,7 +16,7 @@ location of your choice.
 
 On openSUSE, you can use:
 
-    zypper ar http://download.opensuse.org/repositories/devel:/libraries:/c_c++/openSUSE_13.2/devel:libraries:c_c++.repo
+    zypper ar http://download.opensuse.org/repositories/devel:/libraries:/c_c++/openSUSE_Leap_15.1/devel:libraries:c_c++.repo
     zypper in poco-devel libcap-progs
 
 On Debian 8 (Linux x86_64) you can use in /etc/apt/sources.list:
