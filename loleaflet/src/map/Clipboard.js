@@ -550,15 +550,21 @@ L.Clipboard = L.Class.extend({
 				    window.top.webkit.messageHandlers.RichDocumentsMobileInterface) {
 					console.log('We have richdocuments !');
 					window.top.webkit.messageHandlers.RichDocumentsMobileInterface.postMessage(operation);
-				} else if (window.top.RichDocumentsMobileInterface &&
-					   window.top.RichDocumentsMobileInterface.paste) {
+				} else
+					console.log('No webkit messageHandlers');
+			} catch (error) {
+				console.warn('Cannot access webkit hook: ' + error);
+			}
+
+			try {
+				if (window.top.RichDocumentsMobileInterface &&
+				    window.top.RichDocumentsMobileInterface.paste) {
 					console.log('We have richdocuments !');
 					window.top.RichDocumentsMobileInterface.paste();
-				} else {
-					console.log('No richdocuments');
-				}
+				} else
+					console.log('No RichDocumentsMobileInterface');
 			} catch (error) {
-				console.warn('Cannot paste: ' + error);
+				console.warn('Cannot access RichDocumentsMobileInterface hook: ' + error);
 			}
 		}
 
