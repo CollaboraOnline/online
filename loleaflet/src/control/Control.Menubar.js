@@ -543,6 +543,12 @@ L.Control.Menubar = L.Control.extend({
 		var docType = this._map.getDocType();
 		if (docType === 'text') {
 			this._initializeMenu(this.options.text);
+			if (window.ThisIsTheiOSApp) {
+				// The sidebar initially thinks it is visible but actually it isn't,
+				// so to make its internal state match its visible state, toggle it
+				// to be non-visible.
+				this._map.sendUnoCommand('.uno:Sidebar')
+			}
 		} else if (docType === 'spreadsheet') {
 			this._initializeMenu(this.options.spreadsheet);
 		} else if (docType === 'presentation' || docType === 'drawing') {
