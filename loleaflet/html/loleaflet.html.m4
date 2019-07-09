@@ -88,6 +88,8 @@ ifelse(MOBILEAPP,[true],
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
 ifelse(IOSAPP,[true],
   [<link rel="stylesheet" href="Branding/branding.css">])
+ifelse(ANDROIDAPP,[true],
+  [<link rel="stylesheet" href="branding.css">])
 ifelse(MOBILEAPP,[true],
   [
    ifelse(IOSAPP,[true],
