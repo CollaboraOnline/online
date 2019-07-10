@@ -294,7 +294,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "signdocument" ||
                tokens[0] == "uploadsigneddocument" ||
                tokens[0] == "exportsignanduploaddocument" ||
-               tokens[0] == "rendershapeselection");
+               tokens[0] == "rendershapeselection" ||
+               tokens[0] == "removetextcontext");
 
         if (tokens[0] == "clientzoom")
         {
@@ -413,6 +414,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "rendershapeselection")
         {
             return renderShapeSelection(buffer, length, tokens);
+        }
+        else if (tokens[0] == "removetextcontext")
+        {
+            return removeTextContext(buffer, length, tokens);
         }
         else
         {
@@ -2090,6 +2095,27 @@ bool ChildSession::renderShapeSelection(const char* /*buffer*/, int /*length*/, 
     {
         LOG_ERR("Failed to renderShapeSelection for view #" << _viewId);
     }
+
+    return true;
+}
+
+bool ChildSession::removeTextContext(const char* /*buffer*/, int /*length*/,
+                                     const std::vector<std::string>& tokens)
+{
+    int id, before, after;
+    std::string text;
+    if (tokens.size() < 4 ||
+        !getTokenInteger(tokens[1], "id", id) || id < 0 ||
+        !getTokenInteger(tokens[2], "before", before) ||
+        !getTokenInteger(tokens[3], "after", after))
+    {
+        sendTextFrame("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
+        return false;
+    }
+
+    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+    getLOKitDocument()->setView(_viewId);
+    getLOKitDocument()->removeTextContext(id, before, after);
 
     return true;
 }
