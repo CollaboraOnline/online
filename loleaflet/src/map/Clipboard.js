@@ -375,7 +375,7 @@ L.Clipboard = L.Class.extend({
 	populateClipboard: function(ev) {
 		var text;
 
-		this._stopHideDownload();
+//		this._stopHideDownload(); - this confuses the borwser ruins copy/cut on iOS
 
 		if (this._selectionType === 'complex' ||
 		    this._map._docLayer.hasGraphicSelection()) {
