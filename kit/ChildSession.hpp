@@ -276,6 +276,7 @@ private:
     bool uploadSignedDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool exportSignAndUploadDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
     bool renderShapeSelection(const char* buffer, int length, const std::vector<std::string>& tokens);
+    bool removeTextContext(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens);
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
 

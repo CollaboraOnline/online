@@ -515,11 +515,7 @@ L.ClipboardContainer = L.Layer.extend({
 			if (l >= count) {
 				this._queuedInput = this._queuedInput.substring(0, l - count);
 			} else {
-				for (var i = 0; i < count; i++) {
-					// Send a UNO backspace keystroke per glyph to be deleted
-					this._sendKeyEvent(8, 1283);
-				}
-
+				this._removeTextContext(count, 0);
 				this._emptyArea();
 			}
 
@@ -911,6 +907,16 @@ L.ClipboardContainer = L.Layer.extend({
 	_onEdgeKeyDown: function _onEdgeKeyDown(ev) {
 		// FIXME: we need enter too - share with above method ?
 		this._onMSIEKeyDown(ev);
+	},
+
+	// Used in the deleteContentBackward for deleting multiple characters with a single message.
+	_removeTextContext: function _removeTextContext(before, after) {
+		this._map._socket.sendMessage(
+			'removetextcontext id=' +
+			this._map.getWinId() +
+			' before=' + before +
+			' after=' + after
+		);
 	},
 
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
