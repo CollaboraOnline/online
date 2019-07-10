@@ -354,9 +354,9 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', mobileapp: false, menu: [
-				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
-				{type: 'separator'},
+			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
+				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
+				{type: 'separator', mobileapp: false},
 				{uno: '.uno:Sidebar'}
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), type: 'menu', menu: [
@@ -551,6 +551,10 @@ L.Control.Menubar = L.Control.extend({
 			}
 		} else if (docType === 'spreadsheet') {
 			this._initializeMenu(this.options.spreadsheet);
+			if (window.ThisIsTheiOSApp) {
+				// As above.
+				this._map.sendUnoCommand('.uno:Sidebar');
+			}
 		} else if (docType === 'presentation' || docType === 'drawing') {
 			this._initializeMenu(this.options.presentation);
 		}
