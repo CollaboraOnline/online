@@ -137,11 +137,13 @@ L.Map.TouchGesture = L.Handler.extend({
 			} else {
 				this._state = L.Map.TouchGesture.MAP;
 			}
+			this._moving = false;
 		}
 
 		if (e.isLast && this._state !== L.Map.TouchGesture.MAP) {
 			this._state = L.Map.TouchGesture.hitTest.MAP;
 			this._marker = undefined;
+			this._moving = false;
 		}
 
 		if ($(e.srcEvent.target).has(this._map._mapPane)) {
@@ -163,7 +165,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (this._state === L.Map.TouchGesture.MARKER || this._state === L.Map.TouchGesture.GRAPHIC) {
+		if (this._moving) {
 			return;
 		}
 
@@ -292,8 +294,10 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if (this._state === L.Map.TouchGesture.MARKER) {
 			this._map._fireDOMEvent(this._map, point, 'mousemove');
+			this._moving = true;
 		} else if (this._state === L.Map.TouchGesture.GRAPHIC) {
 			this._map._docLayer._graphicMarker._onDrag(point);
+			this._moving = true;
 		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
@@ -310,8 +314,10 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if (this._state === L.Map.TouchGesture.MARKER) {
 			this._map._fireDOMEvent(this._map, point, 'mouseup');
+			this._moving = false;
 		} else if (this._state === L.Map.TouchGesture.GRAPHIC) {
 			this._map._docLayer._graphicMarker._onDragEnd(point);
+			this._moving = false;
 		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
