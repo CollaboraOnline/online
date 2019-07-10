@@ -547,7 +547,7 @@ L.Control.Menubar = L.Control.extend({
 				// The sidebar initially thinks it is visible but actually it isn't,
 				// so to make its internal state match its visible state, toggle it
 				// to be non-visible.
-				this._map.sendUnoCommand('.uno:Sidebar')
+				this._map.sendUnoCommand('.uno:Sidebar');
 			}
 		} else if (docType === 'spreadsheet') {
 			this._initializeMenu(this.options.spreadsheet);
