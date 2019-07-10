@@ -250,7 +250,7 @@ L.Map = L.Evented.extend({
 			this.initializeModificationIndicator();
 
 			// Show sidebar.
-			if (this._docLayer && !this._docLoadedOnce && !window.mode.isMobile() && !window.mode.isTablet() &&
+			if (this._docLayer && !this._docLoadedOnce &&
 				(this._docLayer._docType === 'spreadsheet' || this._docLayer._docType === 'text')) {
 				// Let the first page finish loading then load the sidebar.
 				var map = this;
@@ -259,7 +259,15 @@ L.Map = L.Evented.extend({
                     // be loaded and show rather quickly on first use.
                     // Also, triggers sidebar window creation in the client.
 					map._socket.sendMessage('uno .uno:Sidebar');
-					map._socket.sendMessage('uno .uno:Sidebar');
+
+					// HACK: The initial state of sidebar is that the core
+					// thinks it is shown, so the command has to be triggered
+					// once again for it to be visible on the desktop
+					// (because the first .uno:Sidebar has actually hidden
+					// that)
+					if (!window.mode.isMobile() && !window.mode.isTablet() && !window.ThisIsAMobileApp) {
+						map._socket.sendMessage('uno .uno:Sidebar');
+					}
 				}, 200);
 			}
 
