@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.androidapp;
+package org.libreoffice.androidlib;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

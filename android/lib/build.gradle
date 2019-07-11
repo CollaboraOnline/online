@@ -1,0 +1,210 @@
+apply plugin: 'com.android.library'
+
+// buildhost settings - paths and the like
+apply from: 'libSettings.gradle'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        debug {
+            ndk {
+                //abiFilters "x86", "armeabi-v7a", "armeabi"
+                abiFilters "armeabi-v7a"
+            }
+            debuggable true
+        }
+        release {
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+            minifyEnabled false // FIXME disabled before we get a good proguardRules for callFakeWebsocketOnMessage calling from C++
+            shrinkResources false // FIXME cannot be enabled when minifyEnabled is turned off
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            // let gradle pack the shared library into apk
+            jniLibs.srcDirs = ['src/main/cpp/lib']
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
+}
+
+task copyUnpackAssets(type: Copy) {
+    description "copies assets that need to be extracted on the device"
+    into 'src/main/assets/unpack'
+    into('program') {
+        from("${liboInstdir}/${liboEtcFolder}/types") {
+            includes = [
+                    "offapi.rdb",
+                    "oovbaapi.rdb"
+            ]
+        }
+        from("${liboInstdir}/${liboUreMiscFolder}") {
+            includes = ["types.rdb"]
+            rename 'types.rdb', 'udkapi.rdb'
+        }
+    }
+    into('user/fonts') {
+        from "${liboInstdir}/share/fonts/truetype"
+        // Note: restrict list of fonts due to size considerations - no technical reason anymore
+        // ToDo: fonts would be good candidate for using Expansion Files instead
+        includes = [
+                "Liberation*.ttf",
+                "Caladea-*.ttf",
+                "Carlito-*.ttf",
+                "Gen*.ttf",
+                "opens___.ttf"
+        ]
+    }
+    into('etc/fonts') {
+        from "${liboSrcRoot}/android/source/"
+        includes = ['fonts.conf']
+        filter {
+            String line ->
+                line.replaceAll(
+                    '@@APPLICATION_ID@@', new String("${android.defaultConfig.applicationId}")
+                ).replaceAll(
+                    // FIXME Avoid the Android system fonts for the moment,
+                    // the huge Noto Sans fonts have terrible impact on the 1st
+                    // start performance.
+                    // The real solution would be to either make fontconfig
+                    // faster, or at least find a way to avoid only the Noto
+                    // Sans, or present a progressbar or something.
+                    // For the moment, we just copy the Roboto font (needed
+                    // for the dialogs; see LOActivity.copyFonts()) and
+                    // remove the system fonts from the config.
+                    '<dir>/system/fonts</dir>', new String("")
+                )
+        }
+    }
+}
+
+task copyAssets(type: Copy) {
+    description "copies assets that can be accessed within the installed apk"
+    into 'src/main/assets'
+    from("${liboSrcRoot}/instdir/") {
+        includes = ["LICENSE.html", "NOTICE"]
+        rename "LICENSE.html", "license.html"
+        rename "NOTICE", "notice.txt"
+    }
+    from("${liboExampleDocument}") {
+        rename ".*", "example.odt"
+    }
+    into('program') {
+        from "${liboInstdir}/program"
+        includes = ['services.rdb', 'services/services.rdb']
+
+        into('resource') {
+            from "${liboInstdir}/${liboSharedResFolder}"
+            includes = ['*en-US.res']
+        }
+    }
+    into('share') {
+        from "${liboInstdir}/share"
+        // Filter data is needed by e.g. the drawingML preset shape import.
+        includes = ['registry/**', 'filter/**']
+    }
+}
+
+task createFullConfig(type: Copy) {
+    description "copies various configuration bits into the apk"
+    into('src/main/assets/share/config')
+    from("${liboInstdir}/share/config") {
+        includes = ['soffice.cfg/**', 'images_colibre.zip']
+    }
+}
+
+task createStrippedConfig {
+    def preserveDir = file("src/main/assets/share/config/soffice.cfg/empty")
+    outputs.dir "src/main/assets/share/registry/res"
+    outputs.file preserveDir
+
+    doLast {
+        file('src/main/assets/share/registry/res').mkdirs()
+        file("src/main/assets/share/config/soffice.cfg").mkdirs()
+        // just empty file
+        preserveDir.text = ""
+    }
+}
+
+task createRCfiles {
+    inputs.file "libSettings.gradle"
+    dependsOn copyUnpackAssets, copyAssets
+    def sofficerc = file('src/main/assets/unpack/program/sofficerc')
+    def fundamentalrc = file('src/main/assets/program/fundamentalrc')
+    def bootstraprc = file('src/main/assets/program/bootstraprc')
+    def unorc = file('src/main/assets/program/unorc')
+    def versionrc = file('src/main/assets/program/versionrc')
+
+    outputs.files sofficerc, fundamentalrc, unorc, bootstraprc, versionrc
+
+    doLast {
+        sofficerc.text = '''\
+[Bootstrap]
+Logo=1
+NativeProgress=1
+URE_BOOTSTRAP=file:///assets/program/fundamentalrc
+HOME=$APP_DATA_DIR/cache
+OSL_SOCKET_PATH=$APP_DATA_DIR/cache
+'''.stripIndent()
+
+        fundamentalrc.text = '''\
+[Bootstrap]
+LO_LIB_DIR=file://$APP_DATA_DIR/lib/
+BRAND_BASE_DIR=file:///assets
+BRAND_SHARE_SUBDIR=share
+CONFIGURATION_LAYERS=xcsxcu:${BRAND_BASE_DIR}/share/registry res:${BRAND_BASE_DIR}/share/registry
+URE_BIN_DIR=file:///assets/ure/bin/dir/nothing-here/we-can/exec-anyway
+'''.stripIndent()
+
+        bootstraprc.text = '''\
+[Bootstrap]
+InstallMode=<installmode>
+ProductKey=LibreOffice ''' + "${liboVersionMajor}.${liboVersionMinor}" + '''
+UserInstallation=file://$APP_DATA_DIR
+'''.stripIndent()
+
+        unorc.text = '''\
+[Bootstrap]
+URE_INTERNAL_LIB_DIR=file://$APP_DATA_DIR/lib/
+UNO_TYPES=file://$APP_DATA_DIR/program/udkapi.rdb file://$APP_DATA_DIR/program/offapi.rdb file://$APP_DATA_DIR/program/oovbaapi.rdb
+UNO_SERVICES=file:///assets/program/services.rdb file:///assets/program/services/services.rdb
+'''.stripIndent()
+
+        versionrc.text = '''\
+[Version]
+AllLanguages=en-US
+BuildVersion=
+buildid=''' + "${liboGitFullCommit}" + '''
+ReferenceOOoMajorMinor=4.1
+'''.stripIndent()
+    }
+}
+
+// creating the UI stuff is cheap, don't bother only applying it for the flavor..
+preBuild.dependsOn 'createRCfiles',
+        'createFullConfig'

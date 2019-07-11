@@ -95,9 +95,9 @@ ios/Mobile/Assets.xcassets/AppIcon.appiconset
 BUNDLE-VERSION
 
 # android stuff
-/android/app/src/main/assets/dist
-/android/app/src/main/assets/hello-world.od*
-/android/app/src/main/cpp/CMakeLists.txt
+/android/lib/src/main/assets/dist
+/android/lib/src/main/assets/hello-world.od*
+/android/lib/src/main/cpp/CMakeLists.txt
 
 # backup and temporary editor files: the only convenience rules allowed here.
 *~

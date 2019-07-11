@@ -743,8 +743,9 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
 AC_SUBST(IOSAPP_FONTS)
 
 AC_CONFIG_FILES([Makefile
-                 android/app/liboSettings.gradle
-                 android/app/src/main/cpp/CMakeLists.txt
+                 android/app/appSettings.gradle
+                 android/lib/libSettings.gradle
+                 android/lib/src/main/cpp/CMakeLists.txt
                  android/Makefile
                  gtk/Makefile
                  ios/config.h
