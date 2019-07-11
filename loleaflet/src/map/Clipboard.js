@@ -482,37 +482,41 @@ L.Clipboard = L.Class.extend({
 		var div = this._createDummyDiv('dummy content');
 
 		var that = this;
-		var listener = function(e) {
-			e.preventDefault();
-			console.log('Got event ' + operation + ' on transient editable');
+		var doInvoke = function(ev) {
+			console.log('Got event ' + ev.type + ' on transient editable');
 			// forward with proper security credentials now.
-			that[operation].call(that, e);
+			that[operation].call(that, ev);
+			ev.preventDefault();
+			ev.stopPropagation();
+			return false;
 		};
-		div.addEventListener('copy', listener);
-		div.addEventListener('cut', listener);
-		div.addEventListener('paste', listener);
+		var doSelect = function(ev) {
+			console.log('Got event ' + ev.type + ' on transient editable');
+			var sel = document.getSelection();
+			if (!sel)
+				return;
+
+			console.log('setup selection');
+			sel.removeAllRanges();
+			var rangeToSelect = document.createRange();
+			rangeToSelect.selectNodeContents(div);
+			sel.addRange(rangeToSelect);
+		};
+		document['on' + operation] = doInvoke;
+		document['onbefore' + operation] = doSelect;
 
 		var success = false;
 		var active = null;
-		var sel = document.getSelection();
-		if (sel)
-		{
-			// selection can change focus.
-			active = document.activeElement;
 
-			// get a selection first - FIXME: use Ivan's 2 spaces on input.
-			var range = document.createRange();
-			range.selectNodeContents(div);
-			sel.removeAllRanges();
-			sel.addRange(range);
+		// selection can change focus.
+		active = document.activeElement;
 
-			success = (document.execCommand(operation) &&
-				   serial !== this._clipboardSerial);
-		}
+		success = (document.execCommand(operation) &&
+			   serial !== this._clipboardSerial);
+
 		// cleanup
-		div.removeEventListener('paste', listener);
-		div.removeEventListener('cut', listener);
-		div.removeEventListener('copy', listener);
+//		document.removeEventListener('before' + operation, doSelect);
+//		document.removeEventListener(operation, doInvoke);
 		this.compatRemoveNode(div);
 
 		// try to restore focus if we need to.
