@@ -728,7 +728,8 @@ button.leaflet-control-search-next
 		padding: 2px;
 		display: block;
 		overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
-		width: 344px;
+		width: 100%;
+		height: 100%;
 }
 
 .insertshape-grid .row {
