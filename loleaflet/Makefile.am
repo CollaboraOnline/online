@@ -152,13 +152,13 @@ build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(builddir)/dist/loleaflet.html
 	@echo "build loleaflet completed"
 if ENABLE_ANDROIDAPP
-	@rm -rf $(abs_top_srcdir)/android/app/src/main/assets/dist
-	@cp -a $(builddir)/dist $(abs_top_srcdir)/android/app/src/main/assets/
-	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(abs_top_srcdir)/android/app/src/main/assets/dist/ ; else touch $(abs_top_srcdir)/android/app/src/main/assets/dist/branding.css ; fi
-	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/*.svg $(abs_top_srcdir)/android/app/src/main/assets/dist/images/ ; fi
-	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/toolbar-bg-logo.svg" $(abs_top_srcdir)/android/app/src/main/assets/dist/images/toolbar-bg.svg ; fi
+	@rm -rf $(abs_top_srcdir)/android/lib/src/main/assets/dist
+	@cp -a $(builddir)/dist $(abs_top_srcdir)/android/lib/src/main/assets/
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(abs_top_srcdir)/android/lib/src/main/assets/dist/ ; else touch $(abs_top_srcdir)/android/lib/src/main/assets/dist/branding.css ; fi
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/*.svg $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/ ; fi
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/toolbar-bg-logo.svg" $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/toolbar-bg.svg ; fi
 	@echo
-	@echo "Copied JS, HTML and CSS to the Android project (android/app/src/main/assets/dist)."
+	@echo "Copied JS, HTML and CSS to the Android project (android/lib/src/main/assets/dist)."
 	@echo
 	@echo "  Now you need to build the actual .apk from Android Studio:"
 	@echo "  Just open the 'android' subdir as a project there and build."

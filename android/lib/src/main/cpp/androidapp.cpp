@@ -55,7 +55,7 @@ JNI_OnLoad(JavaVM* vm, void*) {
     return JNI_VERSION_1_6;
 }
 
-static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::vector<char>& buffer)
+static void send2JS(jclass loActivityClz, jobject loActivityObj, const std::vector<char>& buffer)
 {
     LOG_DBG("Send to JS: " << LOOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
 
@@ -133,8 +133,8 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
     }
 
     jstring jstr = env->NewStringUTF(js.c_str());
-    jmethodID callFakeWebsocket = env->GetMethodID(mainActivityClz, "callFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
-    env->CallVoidMethod(mainActivityObj, callFakeWebsocket, jstr);
+    jmethodID callFakeWebsocket = env->GetMethodID(loActivityClz, "callFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
+    env->CallVoidMethod(loActivityObj, callFakeWebsocket, jstr);
 
     if (env->ExceptionCheck())
         env->ExceptionDescribe();
@@ -144,7 +144,7 @@ static void send2JS(jclass mainActivityClz, jobject mainActivityObj, const std::
 
 /// Handle a message from JavaScript.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env, jobject instance, jstring message)
+Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, jobject instance, jstring message)
 {
     const char *string_value = env->GetStringUTFChars(message, nullptr);
 
@@ -172,10 +172,10 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
 
             // Start another thread to read responses and forward them to the JavaScript
             jclass clz = env->GetObjectClass(instance);
-            jclass mainActivityClz = (jclass) env->NewGlobalRef(clz);
-            jobject mainActivityObj = env->NewGlobalRef(instance);
+            jclass loActivityClz = (jclass) env->NewGlobalRef(clz);
+            jobject loActivityObj = env->NewGlobalRef(instance);
 
-            std::thread([mainActivityClz, mainActivityObj, currentFakeClientFd]
+            std::thread([loActivityClz, loActivityObj, currentFakeClientFd]
                         {
                             Util::setThreadName("app2js");
                             while (true)
@@ -215,7 +215,7 @@ Java_org_libreoffice_androidapp_MainActivity_postMobileMessageNative(JNIEnv *env
                                            return;
                                        std::vector<char> buf(n);
                                        n = fakeSocketRead(currentFakeClientFd, buf.data(), n);
-                                       send2JS(mainActivityClz, mainActivityObj, buf);
+                                       send2JS(loActivityClz, loActivityObj, buf);
                                    }
                                }
                                else
@@ -268,7 +268,7 @@ extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstr
 
 /// Create the LOOLWSD instance.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL)
+Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL)
 {
     fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
 
@@ -309,7 +309,7 @@ Java_org_libreoffice_androidapp_MainActivity_createLOOLWSD(JNIEnv *env, jobject,
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_org_libreoffice_androidapp_MainActivity_saveAs(JNIEnv *env, jobject instance,
+Java_org_libreoffice_androidlib_LOActivity_saveAs(JNIEnv *env, jobject instance,
                                                     jstring fileUri_, jstring format_) {
     const char *fileUri = env->GetStringUTFChars(fileUri_, 0);
     const char *format = env->GetStringUTFChars(format_, 0);

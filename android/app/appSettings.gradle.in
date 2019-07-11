@@ -1,0 +1,12 @@
+ext {
+    liboWorkdir         = '@LOBUILDDIR@/workdir'
+    liboVersionMinor    = '@LOOLWSD_VERSION_MAJOR@'
+    liboAppName         = '@APP_NAME@'
+    liboVendor          = '@VENDOR@'
+    liboInfoURL         = '@INFO_URL@'
+}
+android.defaultConfig {
+    applicationId '@ANDROID_PACKAGE_NAME@'
+    versionCode 20
+    versionName '@LOOLWSD_VERSION@'
+}

@@ -1,22 +1,11 @@
 ext {
     liboSrcRoot         = '@LOBUILDDIR@'
-    liboWorkdir         = '@LOBUILDDIR@/workdir'
     liboInstdir         = '@LOBUILDDIR@/instdir'
     liboEtcFolder       = 'program'
     liboUreMiscFolder   = 'program'
     liboSharedResFolder = 'program/resource'
-    liboUREJavaFolder   = 'program/classes'
-    liboShareJavaFolder = 'program/classes'
     liboExampleDocument = '@LOBUILDDIR@/android/default-document/example.odt'
     liboVersionMajor    = '@LOOLWSD_VERSION_MAJOR@'
     liboVersionMinor    = '@LOOLWSD_VERSION_MAJOR@'
     liboGitFullCommit   = '@LOOLWSD_VERSION_HASH@'
-    liboAppName         = '@APP_NAME@'
-    liboVendor          = '@VENDOR@'
-    liboInfoURL         = '@INFO_URL@'
-}
-android.defaultConfig {
-    applicationId '@ANDROID_PACKAGE_NAME@'
-    versionCode 1
-    versionName '@LOOLWSD_VERSION@'
 }

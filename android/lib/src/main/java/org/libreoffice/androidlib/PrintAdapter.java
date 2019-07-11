@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package org.libreoffice.androidapp;
+package org.libreoffice.androidlib;
 
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -28,9 +28,9 @@ import java.util.Objects;
 public class PrintAdapter extends PrintDocumentAdapter {
 
     private File printDocFile;
-    private MainActivity mainActivity;
+    private LOActivity mainActivity;
 
-    PrintAdapter(MainActivity mainActivity) {
+    PrintAdapter(LOActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 
