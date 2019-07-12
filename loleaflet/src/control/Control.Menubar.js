@@ -71,7 +71,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
-                               {uno: '.uno:InsertSection'},
+				{uno: '.uno:InsertSection', id: 'insertsection'},
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertPageNumberField'},
 					{uno: '.uno:InsertPageCountField'},
