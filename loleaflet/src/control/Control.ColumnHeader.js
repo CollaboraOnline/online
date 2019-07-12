@@ -65,7 +65,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		L.DomEvent.addListener(this._cornerCanvas, 'click', this._onCornerHeaderClick, this);
 
 		var colHeaderObj = this;
-		$.contextMenu({
+		L.installContextMenu({
 			selector: '.spreadsheet-header-columns',
 			className: 'loleaflet-font',
 			items: {
