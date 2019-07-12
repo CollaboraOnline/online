@@ -188,6 +188,8 @@ L.installContextMenu = function(options) {
 		var keys = Object.keys(items);
 		for (var i = 0; i < keys.length; i++) {
 			var key = keys[i];
+			if (items[key] === undefined)
+				continue;
 			if (!items[key].isHtmlName) {
 				console.log('re-write name ' + items[key].name);
 				items[key].name = '<a href="#" class="context-menu-link">' + items[key].name + '</a';
