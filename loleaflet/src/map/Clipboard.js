@@ -479,15 +479,21 @@ L.Clipboard = L.Class.extend({
 	_execOnElement: function(operation) {
 		var serial = this._clipboardSerial;
 
-		var div = this._createDummyDiv('dummy content');
+		var div = this._createDummyDiv('<b style="font-weight:normal; background-color: transparent; color: transparent;"><span>&nbsp;&nbsp;</span></b>');
 
 		var that = this;
 		var doInvoke = function(ev) {
 			console.log('Got event ' + ev.type + ' on transient editable');
+
+			var checkSelect = document.getSelection();
+			if (checkSelect.isCollapsed)
+				console.log('Error: failed to select - cannot copy/paste');
+
 			// forward with proper security credentials now.
 			that[operation].call(that, ev);
 			ev.preventDefault();
 			ev.stopPropagation();
+
 			return false;
 		};
 		var doSelect = function(ev) {
@@ -501,6 +507,12 @@ L.Clipboard = L.Class.extend({
 			var rangeToSelect = document.createRange();
 			rangeToSelect.selectNodeContents(div);
 			sel.addRange(rangeToSelect);
+
+			var checkSelect = document.getSelection();
+			if (checkSelect.isCollapsed)
+				console.log('Error: failed to select - cannot copy/paste');
+
+			return false;
 		};
 		document['on' + operation] = doInvoke;
 		document['onbefore' + operation] = doSelect;
