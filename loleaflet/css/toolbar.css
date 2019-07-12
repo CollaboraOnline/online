@@ -726,3 +726,8 @@ tr.useritem > td.usercolor {
 tr.useritem > td > img {
     border-radius: 100px;
 }
+
+.context-menu-link {
+    text-decoration: none;
+    color: black;
+}

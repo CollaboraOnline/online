@@ -130,8 +130,8 @@ L.Control.ContextMenu = L.Control.extend({
 
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
-					name: '<a href="#">' +  _(itemName) + '</a',
-					isHtmlName: true
+					name: '<a href="#" class="context-menu-link">' +  _(itemName) + '</a',
+					isHtmlName: true,
 				};
 
 				if (item.checktype === 'checkmark') {
@@ -190,7 +190,7 @@ L.installContextMenu = function(options) {
 			var key = keys[i];
 			if (!items[key].isHtmlName) {
 				console.log('re-write name ' + items[key].name);
-				items[key].name = '<a href="#">' + items[key].name + '</a';
+				items[key].name = '<a href="#" class="context-menu-link">' + items[key].name + '</a';
 				items[key].isHtmlName = true;
 			}
 			rewrite(items[key].items);
