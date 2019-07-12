@@ -313,7 +313,7 @@ L.Clipboard = L.Class.extend({
 		}
 
 		// Fallback on the html.
-		if (!content) {
+		if (!content && htmlText != '') {
 			content = this._encodeHtmlToBlob(htmlText);
 		}
 
