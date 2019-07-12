@@ -261,9 +261,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewReset();
 		map.on('drag resize zoomend', this._updateScrollOffset, this);
 
-		map.on('copy', this._onCopy, this);
-		map.on('cut', this._onCut, this);
-		map.on('paste', this._onPaste, this);
 		map.on('dragover', this._onDragOver, this);
 		map.on('drop', this._onDrop, this);
 
@@ -2642,28 +2639,6 @@ L.TileLayer = L.GridLayer.extend({
 	hasGraphicSelection: function() {
 		return (this._graphicSelection !== null &&
 			!this._isEmptyRectangle(this._graphicSelection));
-	},
-
-	_onCopy: function (e) {
-		e = e.originalEvent;
-		this._map._clip.copy(e);
-	},
-
-	_onCut: function (e) {
-		e = e.originalEvent;
-		this._map._clip.cut(e);
-	},
-
-	_onPaste: function (e) {
-		e = e.originalEvent;
-		if (!this._map._activeDialog) {
-			// Paste in document
-			this._map._clip.paste(e);
-		} else {
-			// Paste in dialog
-			e.usePasteKeyEvent = true;
-			this._map._clip.paste(e);
-		}
 	},
 
 	_onDragOver: function (e) {
