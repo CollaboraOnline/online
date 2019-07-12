@@ -778,7 +778,7 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
           mkdir ios/Mobile/Branding
           if test -n "$APP_BRANDING_DIR" ; then
               AC_MSG_NOTICE([copying branding files])
-              mkdir -p loleaflet/dist/branding
+              mkdir -p ios/Mobile/Branding
               (cd "$APP_BRANDING_DIR" && tar cf - .) | (cd ios/Mobile/Branding && tar xf -)
           else
               # A Branding/branding.css file must exist, it is
