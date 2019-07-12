@@ -76,7 +76,7 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 
 		var contextMenu = this._createContextMenuStructure(obj);
-		$.contextMenu({
+		L.installContextMenu({
 			selector: '.leaflet-layer',
 			className: 'loleaflet-font',
 			trigger: 'none',
@@ -129,7 +129,9 @@ L.Control.ContextMenu = L.Control.extend({
 				itemName = _UNO(item.command, docType, true);
 
 				contextMenu[item.command] = {
-					name: _(itemName)
+					// Using 'click' and <a href='#' is vital for copy/paste security context.
+					name: '<a href="#">' +  _(itemName) + '</a',
+					isHtmlName: true
 				};
 
 				if (item.checktype === 'checkmark') {
@@ -175,4 +177,25 @@ L.Control.ContextMenu = L.Control.extend({
 
 L.control.contextMenu = function (options) {
 	return new L.Control.ContextMenu(options);
+};
+
+// Using 'click' and <a href='#' is vital for copy/paste security context.
+L.installContextMenu = function(options) {
+	options.itemClickEvent = 'click';
+	var rewrite = function(items) {
+		if (items === undefined)
+			return;
+		var keys = Object.keys(items);
+		for (var i = 0; i < keys.length; i++) {
+			var key = keys[i];
+			if (!items[key].isHtmlName) {
+				console.log('re-write name ' + items[key].name);
+				items[key].name = '<a href="#">' + items[key].name + '</a';
+				items[key].isHtmlName = true;
+			}
+			rewrite(items[key].items);
+		}
+	}
+	rewrite(options.items);
+	$.contextMenu(options);
 };

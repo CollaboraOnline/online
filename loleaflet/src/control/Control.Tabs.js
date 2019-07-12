@@ -43,7 +43,7 @@ L.Control.Tabs = L.Control.extend({
 		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
 
-		$.contextMenu({
+		L.installContextMenu({
 			selector: '.spreadsheet-tab',
 			className: 'loleaflet-font',
 			callback: (function(key) {

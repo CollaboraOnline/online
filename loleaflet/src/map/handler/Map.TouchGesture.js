@@ -62,7 +62,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		/// attach 'touchend' menu clicks event handler
 		if (this._hammer.input instanceof Hammer.TouchInput) {
 			var $doc = $(document);
-			$doc.on('touchend.contextMenu', '.context-menu-item', function (e) {
+			$doc.on('click.contextMenu', '.context-menu-item', function (e) {
 				var $elem = $(this);
 
 				if ($elem.data().contextMenu.selector === '.leaflet-layer') {

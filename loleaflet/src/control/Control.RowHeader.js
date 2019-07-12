@@ -62,7 +62,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._position = 0;
 
 		var rowHeaderObj = this;
-		$.contextMenu({
+		L.installContextMenu({
 			selector: '.spreadsheet-header-rows',
 			className: 'loleaflet-font',
 			items: {
