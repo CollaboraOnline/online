@@ -17,11 +17,47 @@ L.Clipboard = L.Class.extend({
 		this._accessKey = [ '', '' ];
 		this._clipboardSerial = 0; // incremented on each operation
 		this._failedTimer = null;
-		this._dummyDivName = 'copy-paste-dummy-div';
+		this._dummyDivName = 'copy-paste-container';
+
+		var div = document.createElement('div');
+		this._dummyDiv = div;
+
+		div.setAttribute('id', this._dummyDivName);
+		div.setAttribute('style', 'user-select: text !important');
+		div.style.opacity = '0';
+		div.setAttribute('contenteditable', 'true');
+		div.setAttribute('type', 'text');
+		div.setAttribute('style', 'position: fixed; left: 0px; top: -200px; width: 15000px; height: 200px; ' +
+				 'overflow: hidden; z-index: -1000, -webkit-user-select: text !important; display: block; ' +
+				 'font-size: 6pt">');
+
+		// so we get events to where we want them.
+		var parent = document.getElementById('map');
+		parent.appendChild(div);
+
+		// sensible default content.
+		this._resetDiv();
 
 		var that = this;
-		document.addEventListener(
-			'beforepaste', function(ev) { that.beforepaste(ev); });
+		var beforeSelect = function(ev) { return that._beforeSelect(ev); }
+		if (window.isInternetExplorer)
+		{
+			document.addEventListener('cut',   function(ev)   { return that.cut(ev); });
+			document.addEventListener('copy',  function(ev)   { return that.copy(ev); });
+			document.addEventListener('paste', function(ev)   { return that.paste(ev); });
+			document.addEventListener('beforecut', beforeSelect);
+			document.addEventListener('beforecopy', beforeSelect);
+			document.addEventListener('beforepaste', function(ev) { return that._beforePasteIE(ev); });
+		}
+		else
+		{
+			document.oncut = function(ev)   { return that.cut(ev); };
+			document.oncopy = function(ev)  { return that.copy(ev); };
+			document.onpaste = function(ev) { return that.paste(ev); };
+			document.onbeforecut = beforeSelect;
+			document.onbeforecopy = beforeSelect;
+			document.onbeforepaste = beforeSelect;
+		}
 	},
 
 	compatRemoveNode: function(node) {
@@ -372,8 +408,16 @@ L.Clipboard = L.Class.extend({
 		}
 	},
 
+	_checkSelection: function() {
+		var checkSelect = document.getSelection();
+		if (checkSelect && checkSelect.isCollapsed)
+			console.log('Error: collapsed selection - cannot copy/paste');
+	},
+
 	populateClipboard: function(ev) {
 		var text;
+
+		this._checkSelection();
 
 //		this._stopHideDownload(); - this confuses the borwser ruins copy/cut on iOS
 
@@ -414,108 +458,46 @@ L.Clipboard = L.Class.extend({
 		}
 	},
 
-	_createDummyDiv: function(htmlContent) {
-		var div = null;
-		if (window.isInternetExplorer)
-		{	// work-around very odd behavior and non-removal of div
-			// could use for other browsers potentially ...
-			div = document.getElementById(this._dummyDivName);
-		}
-		if (div === null)
-			div = document.createElement('div');
-		div.setAttribute('id', this._dummyDivName);
-		div.setAttribute('style', 'user-select: text !important');
-		div.style.opacity = '0';
-		div.setAttribute('contenteditable', 'true');
-		div.setAttribute('type', 'text');
-		div.setAttribute('style', '-webkit-user-select: text !important');
-		div.innerHTML = htmlContent;
-
-		// so we get events to where we want them.
-		var parent = document.getElementById('map');
-		parent.appendChild(div);
-
-		return div;
+	// only used by IE.
+	_beforePasteIE: function(ev) {
+		console.log('IE11 work ...');
+		this._beforeSelect(ev);
+		this._dummyDiv.focus();
+		// Now wait for the paste ...
 	},
 
-	// only used by IE.
-	beforepaste: function() {
-		console.log('Before paste');
-		if (!window.isInternetExplorer)
+	_beforeSelect: function(ev) {
+		console.log('Got event ' + ev.type + ' setting up selection');
+
+		this._resetDiv();
+
+		var sel = document.getSelection();
+		if (!sel)
 			return;
 
-		console.log('IE11 madness ...'); // TESTME ...
-		var div = this._createDummyDiv('---copy-paste-canary---');
-		var sel = document.getSelection();
-		// we need to restore focus.
-		var active = document.activeElement;
-		// get a selection first - FIXME: use Ivan's 2 spaces on input.
-		var range = document.createRange();
-		range.selectNodeContents(div);
 		sel.removeAllRanges();
-		sel.addRange(range);
-		div.focus();
+		var rangeToSelect = document.createRange();
+		rangeToSelect.selectNodeContents(this._dummyDiv);
+		sel.addRange(rangeToSelect);
 
-		var that = this;
-		// Now we wait for paste ...
-		div.addEventListener('paste', function() {
-			// Can't get HTML until it is pasted ... so quick timeout
-			setTimeout(function() {
-				var tmpDiv = document.getElementById(that._dummyDivName);
-				that.dataTransferToDocument(null, /* preferInternal = */ false, tmpDiv.innerHTML);
-				that.compatRemoveNode(tmpDiv);
-				// attempt to restore focus.
-				if (active == null)
-					that._map.focus();
-				else
-					active.focus();
-				that._map._clipboardContainer._abortComposition();
-				that._clipboardSerial++;
-			}, 0 /* ASAP */);
-		});
+		var checkSelect = document.getSelection();
+		if (checkSelect.isCollapsed)
+			console.log('Error: failed to select - cannot copy/paste');
+
+		return false;
+	},
+
+	_resetDiv: function() {
+		// cleanup the content:
+		this._dummyDiv.innerHTML =
+			'<b style="font-weight:normal; background-color: transparent; color: transparent;"><span>&nbsp;&nbsp;</span></b>';
 	},
 
 	// Try-harder fallbacks for emitting cut/copy/paste events.
 	_execOnElement: function(operation) {
 		var serial = this._clipboardSerial;
 
-		var div = this._createDummyDiv('<b style="font-weight:normal; background-color: transparent; color: transparent;"><span>&nbsp;&nbsp;</span></b>');
-
-		var that = this;
-		var doInvoke = function(ev) {
-			console.log('Got event ' + ev.type + ' on transient editable');
-
-			var checkSelect = document.getSelection();
-			if (checkSelect.isCollapsed)
-				console.log('Error: failed to select - cannot copy/paste');
-
-			// forward with proper security credentials now.
-			that[operation].call(that, ev);
-			ev.preventDefault();
-			ev.stopPropagation();
-
-			return false;
-		};
-		var doSelect = function(ev) {
-			console.log('Got event ' + ev.type + ' on transient editable');
-			var sel = document.getSelection();
-			if (!sel)
-				return;
-
-			console.log('setup selection');
-			sel.removeAllRanges();
-			var rangeToSelect = document.createRange();
-			rangeToSelect.selectNodeContents(div);
-			sel.addRange(rangeToSelect);
-
-			var checkSelect = document.getSelection();
-			if (checkSelect.isCollapsed)
-				console.log('Error: failed to select - cannot copy/paste');
-
-			return false;
-		};
-		document['on' + operation] = doInvoke;
-		document['onbefore' + operation] = doSelect;
+		this._resetDiv();
 
 		var success = false;
 		var active = null;
@@ -525,11 +507,6 @@ L.Clipboard = L.Class.extend({
 
 		success = (document.execCommand(operation) &&
 			   serial !== this._clipboardSerial);
-
-		// cleanup
-//		document.removeEventListener('before' + operation, doSelect);
-//		document.removeEventListener(operation, doInvoke);
-		this.compatRemoveNode(div);
 
 		// try to restore focus if we need to.
 		if (active !== null && active !== document.activeElement)
@@ -544,7 +521,7 @@ L.Clipboard = L.Class.extend({
 	_execCopyCutPaste: function(operation) {
 		var serial = this._clipboardSerial;
 
-		// try execCommand.
+		// try a direct execCommand.
 		if (document.execCommand(operation) &&
 		    serial !== this._clipboardSerial) {
 			console.log('copied successfully');
@@ -623,6 +600,7 @@ L.Clipboard = L.Class.extend({
 		ev.preventDefault();
 		this.populateClipboard(ev);
 		this._map._socket.sendMessage('uno .uno:Copy');
+		return false;
 	},
 
 	cut: function(ev) {
@@ -630,10 +608,34 @@ L.Clipboard = L.Class.extend({
 		ev.preventDefault();
 		this.populateClipboard(ev);
 		this._map._socket.sendMessage('uno .uno:Cut');
+		return false;
 	},
 
 	paste: function(ev) {
 		console.log('Paste');
+		if (this._map._activeDialog)
+			ev.usePasteKeyEvent = true;
+
+		var that = this;
+		if (window.isInternetExplorer)
+		{
+			var active = document.activeElement;
+			// Can't get HTML until it is pasted ... so quick timeout
+			setTimeout(function() {
+				var tmpDiv = document.getElementById(that._dummyDivName);
+				that.dataTransferToDocument(null, /* preferInternal = */ false, tmpDiv.innerHTML);
+				// attempt to restore focus.
+				if (active == null)
+					that._map.focus();
+				else
+					active.focus();
+				that._map._clipboardContainer._abortComposition(ev);
+				that._clipboardSerial++;
+			}, 0 /* ASAP */);
+			return false;
+		}
+
+
 		if (ev.clipboardData) { // Standard
 			ev.preventDefault();
 			var usePasteKeyEvent = ev.usePasteKeyEvent;
@@ -645,7 +647,7 @@ L.Clipboard = L.Class.extend({
 			this._clipboardSerial++;
 			this._stopHideDownload();
 		}
-		// else: IE 11 - code in beforepaste: above.
+		return false;
 	},
 
 	clearSelection: function() {

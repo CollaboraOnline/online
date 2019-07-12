@@ -16,7 +16,7 @@ L.ClipboardContainer = L.Layer.extend({
 			this.update();
 		}
 
-		L.DomEvent.on(this._textArea, 'copy cut paste ' +
+		L.DomEvent.on(this._textArea,
 		              'keydown keypress keyup ' +
 		              'compositionstart compositionupdate compositionend textInput',
 		              this._map._handleDOMEvent, this._map);
@@ -27,7 +27,7 @@ L.ClipboardContainer = L.Layer.extend({
 			this.getPane().removeChild(this._container);
 		}
 
-		L.DomEvent.off(this._textArea, 'copy cut paste ' +
+		L.DomEvent.off(this._textArea,
 		               'keydown keypress keyup ' +
 		               'compositionstart compositionupdate compositionend textInput',
 		               this._map._handleDOMEvent, this._map);
