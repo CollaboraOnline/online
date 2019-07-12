@@ -414,13 +414,8 @@ L.Clipboard = L.Class.extend({
 			console.log('Error: collapsed selection - cannot copy/paste');
 	},
 
-	populateClipboard: function(ev) {
+	_getHtmlForClipboard: function() {
 		var text;
-
-		this._checkSelection();
-
-//		this._stopHideDownload(); - this confuses the borwser ruins copy/cut on iOS
-
 		if (this._selectionType === 'complex' ||
 		    this._map._docLayer.hasGraphicSelection()) {
 			console.log('Copy/Cut with complex/graphical selection');
@@ -444,6 +439,24 @@ L.Clipboard = L.Class.extend({
 			console.log('Copy/Cut with simple text selection');
 			text = this._selectionContent;
 		}
+		return text;
+	},
+
+	// returns whether we shold stop processing the event
+	populateClipboard: function(ev) {
+		this._checkSelection();
+
+		if (window.isInternetExplorer)
+		{
+			var that = this;
+			setTimeout(function() { that._resetDiv(); }, 0);
+			this._clipboardSerial++; // we have no way of knowing of course.
+			// We let the browser copy from our div.
+			return false;
+		}
+
+		var text = this._getHtmlForClipboard();
+//		this._stopHideDownload(); - this confuses the borwser ruins copy/cut on iOS
 
 		var plainText = this.stripHTML(text);
 		if (ev.clipboardData) { // Standard
@@ -451,11 +464,9 @@ L.Clipboard = L.Class.extend({
 			ev.clipboardData.setData('text/html', text);
 			console.log('Put "' + text + '" on the clipboard');
 			this._clipboardSerial++;
-
-		} else if (window.clipboardData) { // IE 11 - poor clipboard API
-			if (window.clipboardData.setData('Text', plainText))
-				this._clipboardSerial++;
 		}
+
+		return true; // prevent default
 	},
 
 	// only used by IE.
@@ -466,23 +477,49 @@ L.Clipboard = L.Class.extend({
 		// Now wait for the paste ...
 	},
 
+	// Does the selection of text before an event comes in
 	_beforeSelect: function(ev) {
 		console.log('Got event ' + ev.type + ' setting up selection');
 
-		this._resetDiv();
+		if (window.isInternetExplorer && ev.type != 'paste')
+			// We need populate our content into the div for
+			// the brower to copy.
+			this._dummyDiv.innerHTML = this._getHtmlForClipboard();
+		else
+			// We need some spaces in there ...
+			this._resetDiv();
 
 		var sel = document.getSelection();
 		if (!sel)
 			return;
 
-		sel.removeAllRanges();
-		var rangeToSelect = document.createRange();
-		rangeToSelect.selectNodeContents(this._dummyDiv);
-		sel.addRange(rangeToSelect);
+		var selected = false;
+		var selectRange;
+		if (window.isInternetExplorer && ev.type != 'paste')
+		{
+			this._dummyDiv.focus();
 
-		var checkSelect = document.getSelection();
-		if (checkSelect.isCollapsed)
-			console.log('Error: failed to select - cannot copy/paste');
+			if (document.body.createTextRange) // Internet Explorer
+			{
+				console.log('Legacy IE11 selection');
+				selectRange = document.body.createTextRange();
+				selectRange.moveToElementText(this._dummyDiv);
+				selectRange.select();
+				selected = true;
+			}
+		}
+
+		if (!selected)
+		{
+			sel.removeAllRanges();
+			selectRange = document.createRange();
+			selectRange.selectNodeContents(this._dummyDiv);
+			sel.addRange(selectRange);
+
+			var checkSelect = document.getSelection();
+			if (checkSelect.isCollapsed)
+				console.log('Error: failed to select - cannot copy/paste');
+		}
 
 		return false;
 	},
@@ -595,21 +632,19 @@ L.Clipboard = L.Class.extend({
 		return true;
 	},
 
-	copy: function(ev) {
-		console.log('Copy');
-		ev.preventDefault();
-		this.populateClipboard(ev);
-		this._map._socket.sendMessage('uno .uno:Copy');
-		return false;
+	_doCopyCut: function(ev, unoName) {
+		console.log(unoName);
+		var preventDefault = this.populateClipboard(ev);
+		this._map._socket.sendMessage('uno .uno:' + unoName);
+		if (preventDefault) {
+			ev.preventDefault();
+			return false;
+		}
 	},
 
-	cut: function(ev) {
-		console.log('Cut');
-		ev.preventDefault();
-		this.populateClipboard(ev);
-		this._map._socket.sendMessage('uno .uno:Cut');
-		return false;
-	},
+	cut:  function(ev) { return this._doCopyCut(ev, 'Cut'); },
+
+	copy: function(ev) { return this._doCopyCut(ev, 'Copy'); },
 
 	paste: function(ev) {
 		console.log('Paste');
@@ -622,8 +657,7 @@ L.Clipboard = L.Class.extend({
 			var active = document.activeElement;
 			// Can't get HTML until it is pasted ... so quick timeout
 			setTimeout(function() {
-				var tmpDiv = document.getElementById(that._dummyDivName);
-				that.dataTransferToDocument(null, /* preferInternal = */ false, tmpDiv.innerHTML);
+				that.dataTransferToDocument(null, /* preferInternal = */ false, that._dummyDiv.innerHTML);
 				// attempt to restore focus.
 				if (active == null)
 					that._map.focus();
