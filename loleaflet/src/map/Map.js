@@ -190,6 +190,11 @@ L.Map = L.Evented.extend({
 			}
 		}, this);
 		this.on('doclayerinit', function() {
+			if (window._invalidateSize) {
+				this._size = new L.Point(0,0);
+				this._onResize();
+				delete window._invalidateSize;
+			}
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');
 			}
@@ -1021,6 +1026,10 @@ L.Map = L.Evented.extend({
 	},
 
 	_onResize: function () {
+		if (!this || !this._docLayer) {
+			window._invalidateSize = true;
+			return;
+		}
 		L.Util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = L.Util.requestAnimFrame(
 			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
