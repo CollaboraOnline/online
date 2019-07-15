@@ -201,7 +201,7 @@ public class LOActivity extends AppCompatActivity {
         sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         updatePreferences();
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.lolib_activity_main);
 
         AssetManager assetManager = getResources().getAssets();
 
@@ -480,7 +480,7 @@ public class LOActivity extends AppCompatActivity {
     private void initiateSlideShow() {
         final AlertDialog slideShowProgress = new AlertDialog.Builder(this)
                 .setCancelable(false)
-                .setView(R.layout.dialog_loading)
+                .setView(R.layout.lolib_dialog_loading)
                 .create();
         new AsyncTask<Void, Void, String>() {
             @Override
