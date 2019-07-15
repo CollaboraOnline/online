@@ -2705,6 +2705,10 @@ private:
                             catch (const std::exception& exc)
                             {
                                 LOG_ERR("Error while loading : " << exc.what());
+
+                                // Alert user about failed load
+                                const std::string msg = "error: cmd=storage kind=loadfailed";
+                                clientSession->sendMessage(msg);
                             }
                         });
                     });

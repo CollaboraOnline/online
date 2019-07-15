@@ -24,13 +24,23 @@ errorMessages.faileddocloading = _('Failed to load the document. Please ensure t
 errorMessages.invalidLink = _('Invalid link: \'%url\'');
 errorMessages.leaving = _('You are leaving the editor, are you sure you want to visit %url?');
 
-errorMessages.storage = {
-	loadfailed: _('Failed to read document from storage. Please contact your storage server (%storageserver) administrator.'),
-	savediskfull: _('Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing.'),
-	saveunauthorized: _('Document cannot be saved due to expired or invalid access token.'),
-	savefailed: _('Document cannot be saved. Check your permissions or contact the storage server administrator.'),
-	renamefailed: _('Document cannot be renamed. Check your permissions or contact the storage server administrator.')
-};
+if (window.ThisIsAMobileApp) {
+	errorMessages.storage = {
+		loadfailed: _('Failed to load document.'),
+		savediskfull: _('Save failed due to no disk space left. Document will now be read-only.'),
+		saveunauthorized: _('Document cannot be saved due to expired or invalid access token.'),
+		savefailed: _('Document cannot be saved.'),
+		renamefailed: _('Document cannot be renamed.')
+	};
+} else {
+	errorMessages.storage = {
+		loadfailed: _('Failed to read document from storage. Please contact your storage server (%storageserver) administrator.'),
+		savediskfull: _('Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing.'),
+		saveunauthorized: _('Document cannot be saved due to expired or invalid access token.'),
+		savefailed: _('Document cannot be saved. Check your permissions or contact the storage server administrator.'),
+		renamefailed: _('Document cannot be renamed. Check your permissions or contact the storage server administrator.')
+	};
+}
 
 if (typeof window !== 'undefined') {
 	window.errorMessages = errorMessages;
