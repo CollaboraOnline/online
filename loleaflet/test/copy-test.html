@@ -23,7 +23,13 @@
       <li id="aclass" data-event="both-aclass"><a class>Both AClass (fails on iOS)</a></li>
       <li/>
       <li/>
+      <li id="paste" data-event="paste"><a href="#">Paste</a></li>
+      <li/>
+      <li/>
     </ul>
+
+    <div id="clipcontent">
+    </div>
 </body>
   <script defer>
     var serial = 42;
@@ -102,6 +108,38 @@
     document.onbeforecopy = function(ev) {
         console.log('we have to select in a before copy event [!]');
         doSelect();
+    };
+
+    // --------- copy function ---------
+    var paste = document.getElementById('paste');
+    paste.onclick = function(ev) {
+
+        if (document.execCommand('paste'))
+            console.log('Paste succeeded');
+        else
+            console.log('Paste failed');
+    };
+
+    document.onpaste = function(ev) {
+        if (!ev.clipboardData) { // non-standard
+            console.log('No clipboard data');
+            return;
+        }
+
+        var dataTransfer = ev.clipboardData;
+        var types = dataTransfer.types;
+
+        console.log('We have ' + types.length + ' types');
+        for (var t = 0; t < types.length; ++t) {
+            var data = new Blob([dataTransfer.getData(types[t])]);
+            console.log('type ' + types[t] + ' length ' + data.size +
+			    ' -> 0x' + data.size.toString(16));
+            if (types[t].startsWith('text/'))
+                 console.log('data: ' + dataTransfer.getData(types[t]));
+        }
+
+        ev.preventDefault();
+        return false;
     };
 
     </script>
