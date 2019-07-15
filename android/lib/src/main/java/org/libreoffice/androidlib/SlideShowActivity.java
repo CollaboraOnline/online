@@ -31,7 +31,7 @@ public class SlideShowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_slide_show);
+        setContentView(R.layout.lolib_activity_slide_show);
         slideShowWebView = findViewById(R.id.slide_show_webView);
         if (savedInstanceState == null) {
             slidesSvgUri = getIntent().getStringExtra(SVG_URI_KEY);
