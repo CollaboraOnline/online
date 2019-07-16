@@ -313,6 +313,9 @@ L.Annotation = L.Layer.extend({
 		if (L.DomUtil.hasClass(target, 'loleaflet-annotation-menu') || L.DomUtil.hasClass(target, 'loleaflet-annotation-menu-redline')) {
 			$(target).contextMenu();
 			return;
+		} else if ((window.mode.isMobile() || window.mode.isTablet())
+			&& this._map.getDocType() == 'spreadsheet') {
+			this.hide();
 		}
 		L.DomEvent.stopPropagation(e);
 		this._map.fire('AnnotationClick', {annotation: this});

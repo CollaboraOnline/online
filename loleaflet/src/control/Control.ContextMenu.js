@@ -38,7 +38,8 @@ L.Control.ContextMenu = L.Control.extend({
 				   'UpdateCurIndex','RemoveTableOf',
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes'],
 
-			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog'],
+			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog',
+						  'ShowNote', 'DeleteNote'],
 
 			presentation: [],
 			drawing: []
@@ -92,10 +93,13 @@ L.Control.ContextMenu = L.Control.extend({
 			build: function() {
 				return {
 					callback: function(key) {
-						if (!map._clip.filterExecCopyPaste(key))
+						if (map.getDocType() == 'spreadsheet' && key == '.uno:ShowNote') {
+							map._docLayer.showAnnotationFromCurrentCell();
+						} else if (!map._clip.filterExecCopyPaste(key)) {
 							map.sendUnoCommand(key);
-						// Give the stolen focus back to map
-						map.focus();
+							// Give the stolen focus back to map
+							map.focus();
+						}
 					},
 					items: contextMenu
 				};
