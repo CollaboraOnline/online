@@ -95,6 +95,8 @@ L.Control.ContextMenu = L.Control.extend({
 					callback: function(key) {
 						if (map.getDocType() == 'spreadsheet' && key == '.uno:ShowNote') {
 							map._docLayer.showAnnotationFromCurrentCell();
+						} else if (map.getDocType() == 'spreadsheet' && key == '.uno:HideNote') {
+							map._docLayer.hideAnnotationFromCurrentCell();
 						} else if (!map._clip.filterExecCopyPaste(key)) {
 							map.sendUnoCommand(key);
 							// Give the stolen focus back to map
@@ -137,6 +139,11 @@ L.Control.ContextMenu = L.Control.extend({
 					!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
 					!(docType === 'drawing' && this.options.whitelist.drawing.indexOf(commandName) !== -1)) {
 					continue;
+				}
+
+				if (this._map.getDocType() == 'spreadsheet' && commandName == 'ShowNote') {
+					if (this._map._docLayer.isCurrentCellCommentShown())
+						item.command = '.uno:HideNote';
 				}
 
 				// Get the translated text associated with the command

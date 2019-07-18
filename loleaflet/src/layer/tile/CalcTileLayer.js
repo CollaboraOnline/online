@@ -320,6 +320,17 @@ L.CalcTileLayer = L.TileLayer.extend({
 		annotation.focus();
 	},
 
+	isCurrentCellCommentShown: function () {
+		var annotations = this._annotations[this._selectedPart];
+		for (var key in annotations) {
+			var annotation = annotations[key]._annotation;
+			if (this._cellCursor.contains(annotation._data.cellPos)) {
+				return this._map.hasLayer(annotation) && annotation.isVisible();
+			}
+		}
+		return false;
+	},
+
 	showAnnotationFromCurrentCell: function() {
 		var annotations = this._annotations[this._selectedPart];
 		for (var key in annotations) {
@@ -327,6 +338,17 @@ L.CalcTileLayer = L.TileLayer.extend({
 			if (this._cellCursor.contains(annotation._data.cellPos)) {
 				this._map.addLayer(annotation);
 				annotation.show();
+			}
+		}
+	},
+
+	hideAnnotationFromCurrentCell: function() {
+		var annotations = this._annotations[this._selectedPart];
+		for (var key in annotations) {
+			var annotation = annotations[key]._annotation;
+			if (this._cellCursor.contains(annotation._data.cellPos)) {
+				annotation.hide();
+				this._map.removeLayer(annotation);
 			}
 		}
 	},
