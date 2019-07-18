@@ -1023,8 +1023,6 @@ public:
                 " passwordProvided=" << _haveDocPassword <<
                 " password='" << _docPassword << "'");
 
-        Util::assertIsLocked(_documentMutex);
-
         if (_isDocPasswordProtected && _haveDocPassword)
         {
             // it means this is the second attempt with the wrong password; abort the load operation
@@ -1100,7 +1098,6 @@ public:
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<unsigned char> pixmap(pixmapSize, 0);
 
-        std::unique_lock<std::mutex> lock(_documentMutex);
         if (!_loKitDocument)
         {
             LOG_ERR("Tile rendering requested before loading document.");
@@ -1519,7 +1516,6 @@ private:
         const int viewId = session.getViewId();
         _tileQueue->removeCursorPosition(viewId);
 
-        std::unique_lock<std::mutex> lockLokDoc(_documentMutex);
         if (_loKitDocument == nullptr)
         {
             LOG_ERR("Unloading session [" << sessionId << "] without loKitDocument.");
@@ -1594,8 +1590,6 @@ private:
     /// Notify all views with the given message
     bool notifyAll(const std::string& msg) override
     {
-        Util::assertIsLocked(_documentMutex);
-
         // Broadcast updated viewinfo to all clients.
         return sendTextFrame("client-all " + msg);
     }
@@ -1603,8 +1597,6 @@ private:
     /// Notify all views of viewId and their associated usernames
     void notifyViewInfo() override
     {
-        Util::assertIsLocked(_documentMutex);
-
         // Get the list of view ids from the core
         const int viewCount = getLOKitDocument()->getViewsCount();
         std::vector<int> viewIds(viewCount);
@@ -1704,8 +1696,6 @@ private:
     // Get the color value for all author names from the core
     std::map<std::string, int> getViewColors()
     {
-        Util::assertIsLocked(_documentMutex);
-
         char* values = _loKitDocument->getCommandValues(".uno:TrackedChangeAuthors");
         const std::string colorValues = std::string(values == nullptr ? "" : values);
         std::free(values);
@@ -1755,8 +1745,6 @@ private:
         std::string options;
         if (!lang.empty())
             options = "Language=" + lang;
-
-        std::unique_lock<std::mutex> lock(_documentMutex);
 
         if (!_loKitDocument)
         {
@@ -2144,12 +2132,6 @@ private:
         return _loKitDocument;
     }
 
-    /// Return access to the lok::Document instance.
-    std::mutex& getDocumentMutex() override
-    {
-        return _documentMutex;
-    }
-
     std::string getObfuscatedFileId() override
     {
         return _obfuscatedFileId;
@@ -2188,10 +2170,6 @@ private:
 
     std::atomic<bool> _stop;
     mutable std::mutex _mutex;
-
-    /// Mutex guarding the lok::Document so that we can lock operations
-    /// like setting a view followed by a tile render, etc.
-    std::mutex _documentMutex;
 
     ThreadPool _pngPool;
 

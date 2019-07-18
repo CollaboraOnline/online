@@ -73,10 +73,6 @@ public:
     virtual std::map<int, UserInfo> getViewInfo() = 0;
     virtual std::mutex& getMutex() = 0;
 
-    /// Mutex guarding the document - so that we can lock operations like
-    /// setting a view followed by a tile render, etc.
-    virtual std::mutex& getDocumentMutex() = 0;
-
     virtual std::string getObfuscatedFileId() = 0;
 
     virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;

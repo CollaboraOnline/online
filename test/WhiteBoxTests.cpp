@@ -549,11 +549,6 @@ public:
         return _mutex;
     }
 
-    std::mutex& getDocumentMutex() override
-    {
-        return _mutex;
-    }
-
     std::string getObfuscatedFileId() override
     {
         return std::string();
