@@ -647,7 +647,7 @@ function createToolbar() {
 		{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout', disabled: true},
 		{type: 'break', id: 'breakformatting'},
 		{type: 'text-color',  id: 'fontcolor', hint: _UNO('.uno:FontColor')},
-		{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor')},
+		{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor', 'text')},
 		{type: 'color',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor')},
 		{type: 'break', id: 'breakcolor'},
 		{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara', unosheet: 'AlignLeft', disabled: true},
