@@ -124,27 +124,7 @@ L.Map.WOPI = L.Handler.extend({
 	},
 
 	_postMessageListener: function(e) {
-		if (!window.WOPIPostmessageReady) {
-			return;
-		}
-
 		var msg = JSON.parse(e.data);
-		if (msg.MessageId === 'Host_PostmessageReady') {
-			// We already have a listener for this in loleaflet.html, so ignore it here
-			return;
-		}
-
-		// allow closing documents before they are completely loaded
-		if (msg.MessageId === 'Close_Session') {
-			this._map._socket.sendMessage('closedocument');
-			return;
-		}
-
-		// For all other messages, warn if trying to interact before we are completely loaded
-		if (!this._appLoaded) {
-			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
-			return;
-		}
 
 		if (msg.MessageId === 'Insert_Button') {
 			if (msg.Values) {
@@ -239,7 +219,28 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Hide_Ruler') {
 			this._map.hideRuler();
 		}
-		else if (msg.MessageId === 'Set_Settings') {
+
+		if (!window.WOPIPostmessageReady) {
+			return;
+		}
+		if (msg.MessageId === 'Host_PostmessageReady') {
+			// We already have a listener for this in loleaflet.html, so ignore it here
+			return;
+		}
+
+		// allow closing documents before they are completely loaded
+		if (msg.MessageId === 'Close_Session') {
+			this._map._socket.sendMessage('closedocument');
+			return;
+		}
+
+		// For all other messages, warn if trying to interact before we are completely loaded
+		if (!this._appLoaded) {
+			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
+			return;
+		}
+
+		if (msg.MessageId === 'Set_Settings') {
 			if (msg.Values) {
 				var alwaysActive = msg.Values.AlwaysActive;
 				this._map.options.alwaysActive = !!alwaysActive;
