@@ -266,6 +266,8 @@ public:
     uint64_t getSentBytesTotal() { return _sentBytesTotal; }
     uint64_t getRecvBytesTotal() { return _recvBytesTotal; }
 
+    double getServerUptime();
+
     /// Document basic info list sorted by most idle time
     std::vector<DocBasicInfo> getDocumentsSortedByIdle() const;
 

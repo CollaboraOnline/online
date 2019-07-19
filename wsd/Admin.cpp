@@ -157,6 +157,9 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     else if (tokens[0] == "recv_bytes")
         sendTextFrame("recv_bytes " + std::to_string(model.getRecvBytesTotal() / 1024));
 
+    else if (tokens[0] == "uptime")
+        sendTextFrame("uptime " + std::to_string(model.getServerUptime()));
+
     else if (tokens[0] == "kill" && tokens.count() == 2)
     {
         try

@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <atomic>
+#include <chrono>
 #include <map>
 #include <set>
 #include <string>
@@ -74,6 +75,7 @@ public:
     static unsigned MaxDocuments;
     static std::string OverrideWatermark;
     static std::set<const Poco::Util::AbstractConfiguration*> PluginConfigurations;
+    static std::chrono::time_point<std::chrono::system_clock> StartTime;
 
     static std::vector<int> getKitPids();
 
