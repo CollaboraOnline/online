@@ -627,7 +627,6 @@ function hideTooltip(toolbar, id) {
 
 var stylesSelectValue;
 var fontsSelectValue;
-var fontsizesSelectValue;
 
 function createToolbar() {
 	var toolItems = [
@@ -639,7 +638,17 @@ function createToolbar() {
 		{type: 'break', id: 'breakundo', mobile: false},
 		{type: 'html',   id: 'styles', html: '<select class="styles-select"></select>', mobile: false},
 		{type: 'html',   id: 'fonts', html: '<select class="fonts-select"></select>', mobile: false},
-		{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>', mobile: false},
+		{type: 'html',   id: 'fontsizes', html: '<select class="fontsizes-select"></select>',
+			onRefresh: function (edata) {
+				if (!edata.item.html) {
+					edata.isCancelled = true;
+				} else {
+				$.extend(edata, { onComplete: function (e) {
+					$('.fontsizes-select').select2({ dropdownAutoWidth: true, width: 'auto'});
+					e.item.html = undefined;
+				}});
+			}
+		}, mobile: false},
 		{type: 'break', id: 'breakstyles', mobile: false},
 		{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold', disabled: true},
 		{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic', disabled: true},
@@ -1220,23 +1229,6 @@ function onDocumentNameFocus() {
 	map._onLostFocus();
 }
 
-function sortFontSizes() {
-	var oldVal = $('.fontsizes-select').val();
-	var selectList = $('.fontsizes-select option');
-	selectList.sort(function (a, b) {
-		a = parseFloat($(a).text() * 1);
-		b = parseFloat($(b).text() * 1);
-		if (a > b) {
-			return 1;
-		} else if (a < b) {
-			return -1;
-		}
-		return 0;
-	});
-	$('.fontsizes-select').html(selectList);
-	$('.fontsizes-select').val(oldVal).trigger('change');
-}
-
 function onStyleSelect(e) {
 	var style = e.target.value;
 	if (style.startsWith('.uno:')) {
@@ -1254,56 +1246,14 @@ function onStyleSelect(e) {
 	map.focus();
 }
 
-function updateFontSizeList(font) {
-	var oldSize = $('.fontsizes-select').val();
-	var found = false;
-	$('.fontsizes-select').find('option').remove();
-	var data = [''];
-	data = data.concat(map.getToolbarCommandValues('.uno:CharFontName')[font]);
-	$('.fontsizes-select').select2({
-		data: data,
-		placeholder: ' ',
-		//Allow manually entered font size.
-		createTag: function(query) {
-			return {
-				id: query.term,
-				text: query.term,
-				tag: true
-			};
-		},
-		tags: true
-	});
-	$('.fontsizes-select option').each(function (i, e) {
-		if ($(e).text() === oldSize) {
-			$('.fontsizes-select').val(oldSize).trigger('change');
-			found = true;
-			return;
-		}
-	});
-	if (!found) {
-		// we need to add the size
-		$('.fontsizes-select')
-			.append($('<option></option>')
-			.text(oldSize));
-	}
-	$('.fontsizes-select').val(oldSize).trigger('change');
-	sortFontSizes();
-}
-
 function onFontSelect(e) {
 	var font = e.target.value;
-	updateFontSizeList(font);
 	map.applyFont(font);
 	map.focus();
 }
 
 function onFontSizeSelect(e) {
-	var size = e.target.value;
-	var command = {};
-	$(e.target).find('option[data-select2-tag]').removeAttr('data-select2-tag');
-	map.applyFontSize(size);
-	var fontcolor = map.getDocType() === 'text' ? 'FontColor' : 'Color';
-	command[fontcolor] = {};
+	map.applyFontSize(e.target.value);
 	map.focus();
 }
 
@@ -1550,6 +1500,26 @@ function onDocLayerInit() {
 	updateUserListCount();
 	toolbarUp.refresh();
 	statusbar.refresh();
+
+	var data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
+		22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
+	$('.fontsizes-select').select2({
+		data: data,
+		placeholder: ' ',
+		//Allow manually entered font size.
+		createTag: function(query) {
+			return {
+				id: query.term,
+				text: query.term,
+				tag: true
+			};
+		},
+		tags: true,
+		sorter: function(data) { return data.sort(function(a, b) {
+			return parseFloat(a.text) - parseFloat(b.text);
+		})}
+	});
+	$('.fontsizes-select').on('select2:select', onFontSizeSelect);
 }
 
 function onCommandStateChanged(e) {
@@ -1598,7 +1568,6 @@ function onCommandStateChanged(e) {
 			value = this.value;
 			if (value.toLowerCase() === state.toLowerCase()) {
 				found = true;
-				updateFontSizeList(value);
 				return;
 			}
 		});
@@ -1615,21 +1584,19 @@ function onCommandStateChanged(e) {
 		if (state === '0') {
 			state = '';
 		}
+
 		$('.fontsizes-select option').each(function (i, e) {
 			if ($(e).text() === state) {
 				found = true;
-				return;
 			}
 		});
 		if (!found) {
 			// we need to add the size
 			$('.fontsizes-select')
-				.append($('<option></option>')
+				.append($('<option>')
 				.text(state).val(state));
 		}
-		fontsizesSelectValue = state;
 		$('.fontsizes-select').val(state).trigger('change');
-		sortFontSizes();
 	}
 	else if (commandName === '.uno:FontColor' || commandName === '.uno:Color') {
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
@@ -1884,19 +1851,6 @@ function updateCommandValues() {
 		});
 		$('.fonts-select').on('select2:select', onFontSelect);
 		$('.fonts-select').val(fontsSelectValue).trigger('change');
-	}
-
-	if ($('.fontsizes-select option').length === 0) {
-		$('.fontsizes-select').select2({
-			placeholder: ' ',
-			data: []
-		});
-
-		$('.fontsizes-select').on('select2:select', onFontSizeSelect);
-		if (fontsSelectValue) {
-			updateFontSizeList(fontsSelectValue);
-		}
-		$('.fontsizes-select').val(fontsizesSelectValue).trigger('change');
 	}
 }
 
