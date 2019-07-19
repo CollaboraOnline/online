@@ -31,9 +31,10 @@ int loolwsd_server_socket_fd = -1;
 
 static std::string fileURL;
 static int fakeClientFd;
-static int closeNotificationPipeForForwardingThread[2];
+static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
 static JavaVM* javaVM = nullptr;
 static bool lokInitialized = false;
+static std::mutex loolwsdRunningMutex;
 
 extern "C" JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM* vm, void*) {
@@ -142,6 +143,18 @@ static void send2JS(jclass loActivityClz, jobject loActivityObj, const std::vect
     javaVM->DetachCurrentThread();
 }
 
+/// Close the document.
+void closeDocument()
+{
+    // Close one end of the socket pair, that will wake up the forwarding thread that was contstructed in HULLO
+    if (fakeSocketClose(closeNotificationPipeForForwardingThread[0]) == 0)
+    {
+        LOG_DBG("Waiting for LOOLWSD to finish...");
+        std::unique_lock<std::mutex> lock(loolwsdRunningMutex);
+        LOG_DBG("LOOLWSD has finished.");
+    }
+}
+
 /// Handle a message from JavaScript.
 extern "C" JNIEXPORT void JNICALL
 Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, jobject instance, jstring message)
@@ -239,8 +252,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
         {
             LOG_DBG("Document window terminating on JavaScript side. Closing our end of the socket.");
 
-            // Close one end of the socket pair, that will wake up the forwarding thread above
-            fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+            closeDocument();
         }
         else
         {
@@ -270,7 +282,11 @@ Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject, j
 
     // already initialized?
     if (lokInitialized)
+    {
+        // close the previous document so that we can wait for the new HULLO
+        closeDocument();
         return;
+    }
 
     lokInitialized = true;
     libreofficekit_initialize(env, dataDir, cacheDir, apkFile, assetManager);
@@ -292,6 +308,7 @@ Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject, j
                     {
                         LOG_DBG("Creating LOOLWSD");
                         {
+                            std::unique_lock<std::mutex> lock(loolwsdRunningMutex);
                             fakeClientFd = fakeSocketSocket();
                             LOG_DBG("createLOOLWSD created fakeClientFd: " << fakeClientFd);
                             std::unique_ptr<LOOLWSD> loolwsd(new LOOLWSD());
