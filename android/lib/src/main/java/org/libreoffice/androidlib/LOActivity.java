@@ -396,7 +396,16 @@ public class LOActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause() - unload the document");
+        Log.d(TAG, "onPause() - hinting to save, we might need to return to the doc");
+
+        // A Save similar to an autosave
+        postMobileMessageNative("save dontTerminateEdit=true dontSaveIfUnmodified=true");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy() - we know we are leaving the document");
         postMobileMessageNative("BYE");
     }
 
