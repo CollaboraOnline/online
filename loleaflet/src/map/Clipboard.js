@@ -580,26 +580,10 @@ L.Clipboard = L.Class.extend({
 		if (operation === 'paste')
 		{
 			try {
-				if (window.top.webkit &&
-				    window.top.webkit.messageHandlers &&
-				    window.top.webkit.messageHandlers.RichDocumentsMobileInterface) {
-					console.log('We have richdocuments !');
-					window.top.webkit.messageHandlers.RichDocumentsMobileInterface.postMessage(operation);
-				} else
-					console.log('No webkit messageHandlers');
+				console.warn('Asked parent for a paste event');
+				this._map.fire('postMessage', {msgId: 'UI_Paste'});
 			} catch (error) {
-				console.warn('Cannot access webkit hook: ' + error);
-			}
-
-			try {
-				if (window.top.RichDocumentsMobileInterface &&
-				    window.top.RichDocumentsMobileInterface.paste) {
-					console.log('We have richdocuments !');
-					window.top.RichDocumentsMobileInterface.paste();
-				} else
-					console.log('No RichDocumentsMobileInterface');
-			} catch (error) {
-				console.warn('Cannot access RichDocumentsMobileInterface hook: ' + error);
+				console.warn('Failed to post-message: ' + error);
 			}
 		}
 
