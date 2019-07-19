@@ -11,6 +11,7 @@
 
 #include "AdminModel.hpp"
 
+#include <chrono>
 #include <memory>
 #include <set>
 #include <sstream>
@@ -731,6 +732,13 @@ void AdminModel::updateMemoryDirty(const std::string& docKey, int dirty)
         notify("propchange " + std::to_string(docIt->second.getPid()) +
                " mem " + std::to_string(dirty));
     }
+}
+
+double AdminModel::getServerUptime()
+{
+    auto currentTime = std::chrono::system_clock::now();
+    std::chrono::duration<double> uptime = currentTime - LOOLWSD::StartTime;
+    return uptime.count();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
