@@ -228,15 +228,12 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
             // WebSocket.
             LOG_DBG("Actually sending to Online:" << fileURL);
 
-            // Must do this in a thread, too, so that we can return to the GTK+ main loop
-            std::thread([=]
-                        {
-                            struct pollfd pollfd;
-                            pollfd.fd = currentFakeClientFd;
-                            pollfd.events = POLLOUT;
-                            fakeSocketPoll(&pollfd, 1, -1);
-                            fakeSocketWrite(currentFakeClientFd, fileURL.c_str(), fileURL.size());
-                        }).detach();
+            // Send the document URL to LOOLWSD to setup the docBroker URL
+            struct pollfd pollfd;
+            pollfd.fd = currentFakeClientFd;
+            pollfd.events = POLLOUT;
+            fakeSocketPoll(&pollfd, 1, -1);
+            fakeSocketWrite(currentFakeClientFd, fileURL.c_str(), fileURL.size());
         }
         else if (strcmp(string_value, "BYE") == 0)
         {
@@ -247,17 +244,16 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
         }
         else
         {
-            // As above
+            // Send the message to LOOLWSD
             char *string_copy = strdup(string_value);
-            std::thread([=]
-                        {
-                            struct pollfd pollfd;
-                            pollfd.fd = currentFakeClientFd;
-                            pollfd.events = POLLOUT;
-                            fakeSocketPoll(&pollfd, 1, -1);
-                            fakeSocketWrite(currentFakeClientFd, string_copy, strlen(string_copy));
-                            free(string_copy);
-                        }).detach();
+
+            struct pollfd pollfd;
+            pollfd.fd = currentFakeClientFd;
+            pollfd.events = POLLOUT;
+            fakeSocketPoll(&pollfd, 1, -1);
+            fakeSocketWrite(currentFakeClientFd, string_copy, strlen(string_copy));
+
+            free(string_copy);
         }
     }
     else
