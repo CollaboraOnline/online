@@ -338,6 +338,12 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 			}
 			else if ((ev.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
+				if (keyCode === 8 || keyCode === 46)
+				{
+					// handled generically in ClipboardContainer.js
+					console.log('Ignore backspace/delete keypress');
+					return;
+				}
 				if (charCode === keyCode && charCode !== 13) {
 					// Chrome sets keyCode = charCode for printable keys
 					// while LO requires it to be 0
