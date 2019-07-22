@@ -22,4 +22,7 @@
 <!-- Enable thumbnail generation by default (disabling saves CPU time) -->
 <item oor:path="/org.openoffice.Office.Common/Save/Document"><prop oor:name="GenerateThumbnail" oor:op="fuse"><value>true</value></prop></item>
 
+<!-- Disable the Ctrl+s shortcut, so that the user cannot trigger Save via the keyboard. -->
+<item oor:path="/org.openoffice.Office.Accelerators/PrimaryKeys/Global"><node oor:name="S_MOD1" oor:op="remove"/></item>
+
 </oor:items>
