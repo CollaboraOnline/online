@@ -185,6 +185,12 @@ L.ClipboardContainer = L.Layer.extend({
 		this._textArea.setAttribute('autocomplete', 'off');
 		this._textArea.setAttribute('spellcheck', 'false');
 
+		// Prevent automatic line breaks in the textarea. Without this,
+		// chromium/blink will trigger input/insertLineBreak events by
+		// just adding whitespace.
+		// See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#attr-wrap
+		this._textArea.setAttribute('wrap', 'off');
+
 		this._setupStyles();
 
 		this._emptyArea();
