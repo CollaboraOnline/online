@@ -13,11 +13,19 @@ L.ClipboardContainer = L.Layer.extend({
 		// compositionstart/compositionend events; unused
 		this._isComposing = false;
 
+		// We need to detect whether delete or backspace was
+		// pressed sometimes - consider '  foo' -> ' foo'
+		this._deleteHint = ''; // or 'delete' or 'backspace'
+
 		// Clearing the area can generate input events
 		this._ignoreInputCount = 0;
 
 		// Content
 		this._lastContent = []; // unicode characters
+		this._lastCursor = 1;   // last cursor position.
+
+		// Might need to be \xa0 in some legacy browsers ?
+		this._spaceChar = ' ';
 
 		// Debug flag, used in fancyLog(). See the debug() method.
 //		this._isDebugOn = true;
@@ -98,6 +106,7 @@ L.ClipboardContainer = L.Layer.extend({
 		onoff(this._textArea, 'compositionstart', this._onCompositionStart, this);
 		onoff(this._textArea, 'compositionupdate', this._onCompositionUpdate, this);
 		onoff(this._textArea, 'compositionend', this._onCompositionEnd, this);
+		onoff(this._textArea, 'keydown', this._onKeyDown, this);
 		onoff(this._textArea, 'keyup', this._onKeyUp, this);
 		onoff(this._textArea, 'copy cut paste', this._map._handleDOMEvent, this._map);
 
@@ -139,8 +148,6 @@ L.ClipboardContainer = L.Layer.extend({
 
 	getValue: function() {
 		var value = this._textArea.value;
-		// kill unwanted entities
-		value = value.replace(/&nbsp;/g, ' ');
 		return value;
 	},
 
@@ -315,6 +322,9 @@ L.ClipboardContainer = L.Layer.extend({
 			var state = this._isComposing ? 'C' : 'N';
 			state += ' ';
 
+			var textSel = this._textArea.selectionStart + '!' + this._textArea.selectionEnd;
+			state += textSel + ' ';
+
 			var sel = window.getSelection();
 			var content = this.getValue();
 			if (sel === null)
@@ -340,6 +350,8 @@ L.ClipboardContainer = L.Layer.extend({
 					content = content.slice(0, cursorPos) + '|' + content.slice(cursorPos);
 			}
 
+			state += '[' + this._deleteHint + '] ';
+
 			console.log2(
 				+ new Date() + ' %cINPUT%c: ' + state
 				+ '"' + content + '" ' + type + '%c ',
@@ -352,7 +364,7 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
-	_onInput: function _onInput(/* ev */) {
+	_onInput: function _onInput(ev) {
 		this._map.notifyActive();
 
 		if (this._ignoreInputCount > 0) {
@@ -360,19 +372,41 @@ L.ClipboardContainer = L.Layer.extend({
 			return;
 		}
 
+		if (ev.inputType) {
+			if (ev.inputType == 'deleteContentForward')
+				this._deleteHint = 'delete';
+			else if (ev.inputType == 'deleteContentBackward')
+				this._deleteHint = 'backspace';
+			else
+				this._deleteHint = '';
+		}
+
 		var content = this.getValueAsCodePoints();
+
+		var spaceChar = this._spaceChar.charCodeAt(0);
 
 		// We use a different leading and terminal space character
 		// to differentiate backspace from delete, then replace the character.
-		if (content[0] !== 16*10) { // missing initial non-breaking space.
+		if (content.length < 1 || content[0] !== spaceChar) { // missing initial space
 			console.log('Sending backspace');
 			this._removeTextContent(1, 0);
 			this._emptyArea();
 			return;
 		}
-		if (content[content.length-1] !== 32) { // missing trailing space.
+		if (content[content.length-1] !== spaceChar) { // missing trailing space.
 			console.log('Sending delete');
 			this._removeTextContent(0, 1);
+			this._emptyArea();
+			return;
+		}
+		if (content.length < 2) {
+			console.log('Missing terminal nodes: ' + this._deleteHint);
+			if (this._deleteHint == 'delete')
+				this._removeTextContent(0, 1);
+			else if (this._deleteHint == 'backspace')
+				this._removeTextContent(1, 0);
+			else
+				console.log('Cant detect delete or backspace');
 			this._emptyArea();
 			return;
 		}
@@ -389,18 +423,37 @@ L.ClipboardContainer = L.Layer.extend({
 			    '\tnew "' + String.fromCharCode.apply(null, content) + '" (' + content.length + ')' + '\n' +
 			    '\told "' + String.fromCharCode.apply(null, this._lastContent) + '" (' + this._lastContent.length + ')');
 
-		var remove = this._lastContent.length - matchTo;
-		if (remove > 0)
-			this._removeTextContent(remove, 0);
+		var removeBefore = this._lastContent.length - matchTo;
+		var removeAfter = 0;
+
+		if (this._lastContent.length > content.length)
+		{
+			// Pressing '<space><delete>' can delete our terminal space
+			// such that subsequent deletes will do nothing; need to
+			// detect and reset in this case.
+			if (this._deleteHint === 'delete')
+			{
+				removeBefore--;
+				removeAfter++;
+			}
+		}
+
+		if (removeBefore > 0 || removeAfter > 0)
+			this._removeTextContent(removeBefore, removeAfter);
 
 		var newText = content;
 		if (matchTo > 0)
 			newText = newText.slice(matchTo);
 
 		this._lastContent = content;
+		this._lastCursor = this._textArea.selectionStart;
 
 		if (newText.length > 0)
 			this._sendText(String.fromCharCode.apply(null, newText));
+
+		// was a 'delete' and we need to reset world.
+		if (removeAfter > 0)
+			this._emptyArea();
 	},
 
 	// Sends the given (UTF-8) string of text to lowsd, as IME (text composition)
@@ -451,15 +504,18 @@ L.ClipboardContainer = L.Layer.extend({
 		this._ignoreInputCount++;
 		// Note: 0xA0 is 160, which is the character code for non-breaking space:
 		// https://www.fileformat.info/info/unicode/char/00a0/index.htm
+
 		// Using normal spaces would make FFX/Gecko collapse them into an
 		// empty string.
+		// FIXME: is that true !? ...
 
 		console.log('Set old/lastContent to empty');
 		this._lastContent = [];
 
-		this._textArea.value = '\xa0 ';
+		this._textArea.value = this._spaceChar + this._spaceChar;
 		/// TODO: Check that this selection method works with MSIE11
 		this._textArea.setSelectionRange(1, 1);
+		this._lastCursor = 1;
 
 		this._ignoreInputCount--;
 	},
@@ -497,66 +553,13 @@ L.ClipboardContainer = L.Layer.extend({
 		this._emptyArea();
 	},
 
-	// Override the system default for pasting into the textarea/contenteditable,
-	// and paste into the document instead.
-	_onPaste: function _onPaste(ev) {
-		// Prevent the event's default - in this case, prevent the clipboard contents
-		// from being added to the hidden textarea and firing 'input'/'textInput' events.
-		ev.preventDefault();
-
-		// TODO: handle internal selection here (compare pasted plaintext with the
-		// last copied/cut plaintext, send a UNO 'paste' command over websockets if so.
-		// 		if (this._lastClipboardText === ...etc...
-
-		var pasteString;
-		if (ev.clipboardData) {
-			pasteString = ev.clipboardData.getData('text/plain'); // non-IE11
-		} else if (window.clipboardData) {
-			pasteString = window.clipboardData.getData('Text'); // IE 11
-		}
-
-		if (pasteString && pasteString === this._lastClipboardText) {
-			// If the pasted text is the same as the last copied/cut text,
-			// let lowsd use LOK's clipboard instead. This is done in order
-			// to keep formatting and non-text bits.
-			this._map._socket.sendMessage('uno .uno:Paste');
-			return;
-		}
-
-		// Let the TileLayer functionality take care of sending the
-		// DataTransfer from the event to lowsd.
-		this._map._docLayer._dataTransferToDocument(
-			ev.clipboardData || window.clipboardData /* IE11 */
-		);
-
-		this._abortComposition();
-	},
-
-	// Override the system default for cut & copy - ensure that the system clipboard
-	// receives *plain text* (instead of HTML/RTF), and save internal state.
-	// TODO: Change the 'gettextselection' command, so that it can fetch the HTML
-	// version of the copied text **maintaining typefaces**.
-	_onCutCopy: function _onCutCopy(ev) {
-		var plaintext = document.getSelection().toString();
-
-		this._lastClipboardText = plaintext;
-
-		if (ev.type === 'copy') {
-			this._map._socket.sendMessage('uno .uno:Copy');
-		} else if (ev.type === 'cut') {
-			this._map._socket.sendMessage('uno .uno:Cut');
-		}
-
-		if (event.clipboardData) {
-			event.clipboardData.setData('text/plain', plaintext); // non-IE11
-		} else if (window.clipboardData) {
-			window.clipboardData.setData('Text', plaintext); // IE 11
-		} else {
-			console.warn('Could not set the clipboard contents to plain text.');
-			return;
-		}
-
-		event.preventDefault();
+	_onKeyDown: function _onKeyDown(ev) {
+		if (ev.keyCode == 8)
+			this._deleteHint = 'backspace';
+		else if (ev.keyCode == 46)
+			this._deleteHint = 'delete';
+		else
+			this._deleteHint = '';
 	},
 
 	// Check arrow keys on 'keyup' event; using 'ArrowLeft' or 'ArrowRight'
