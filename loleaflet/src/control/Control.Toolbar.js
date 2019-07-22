@@ -362,6 +362,9 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'link') {
 		map.showHyperlinkDialog();
 	}
+	else if (id === 'languagecode') {
+		map.fire('languagedialog');
+	}
 	else {
 		map.handleSigningClickEvent(id, item); // this handles a bunch of signing bar click events
 	}
@@ -799,6 +802,7 @@ function initNormalToolbar() {
 				}
 			}, mobile: false},
 		{type: 'break', id: 'breakstyles', mobile: false, tablet: false },
+		{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false},
 		{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
 		{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
 		{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
@@ -1734,7 +1738,17 @@ function onCommandStateChanged(e) {
 		}
 	}
 	else if (commandName === '.uno:LanguageStatus') {
-		statusbar.set('LanguageStatus', {text: _(state), selected: state});
+		var code = state;
+		var language = _(state);
+
+		var split = code.split(';');
+		if (split.length > 1) {
+			language = _(split[0]);
+			code = split[1];
+		}
+
+		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(language).parent().html());
+		w2ui['editbar'].set('languagecode', {text: code});
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		if (e.state === 'true') {

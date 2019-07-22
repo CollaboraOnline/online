@@ -87,6 +87,7 @@ setupToolbar(map);
 map.addControl(L.control.scroll());
 map.addControl(L.control.alertDialog());
 map.addControl(L.control.mobileWizard());
+map.addControl(L.control.languageDialog());
 map.dialog = L.control.lokDialog();
 map.addControl(map.dialog);
 map.addControl(L.control.contextMenu());

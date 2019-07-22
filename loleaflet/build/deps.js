@@ -391,7 +391,8 @@ var deps = {
 			'control/Control.Infobar.js',
 			'control/ColorPicker.js',
 			'control/Control.JSDialogBuilder.js',
-			'control/Control.MobileWizard.js'],
+			'control/Control.MobileWizard.js',
+			'control/Control.LanguageDialog.js'],
 		heading: 'Controls',
 		desc: 'Handles vex dialogs for displaying alerts'
 	},

@@ -342,6 +342,7 @@ pot:
 		src/control/Control.DownloadProgress.js \
 		src/control/ColorPicker.js \
 		src/control/Control.JSDialogBuilder.js \
+		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.MobileWizard.js \
 		src/control/Control.Scroll.Annotation.js \
