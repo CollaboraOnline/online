@@ -517,7 +517,12 @@ L.Control.Menubar = L.Control.extend({
 			var languages  = [];
 
 			e.commandValues.forEach(function(language) {
-				languages.push({translated: _(language), neutral: language});
+				var split = language.split(';');
+				language = split[0];
+				var isoCode = '';
+				if (split.length > 1)
+					isoCode = split[1];
+				languages.push({translated: _(language), neutral: language, iso: isoCode});
 			});
 			languages.sort(function(a, b) {
 				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
