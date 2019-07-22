@@ -2,68 +2,25 @@
 /*
  * L.ClipboardContainer is the hidden textarea, which handles text
  * input events and clipboard selection.
+ *
  */
 
 /* global */
 
 L.ClipboardContainer = L.Layer.extend({
 	initialize: function() {
-		// Queued input - this shall be sent to lowsd after a short timeout,
-		// and might be canceled in the event of a 'deleteContentBackward'
-		// input event, to account for predictive keyboard behaviour.
-		this._queuedInput = '';
-		this._queueTimer = undefined;
-
-		// Flag to denote the composing state, derived from  compositionstart/compositionend events.
-		// Needed for a edge case in Chrome+AOSP where an
-		// "input/deleteContentBackward" event is fired with "isComposing" set
-		// to false even though it happens *before* a "compositionend" event.
-		// Also for some cases in desktop Safari when an InputEvent doesn't have a "isComposing"
-		// property (and therefore evaluates to "undefined")
+		// Flag to denote the composing state, derived from
+		// compositionstart/compositionend events; unused
 		this._isComposing = false;
 
-		// Stores the range(s) of the last 'beforeinput' event, so that the input event
-		// can access it.
-		this._lastRanges = [];
+		// Clearing the area can generate input events
+		this._ignoreInputCount = 0;
 
-		// Stores the data of the last 'compositionstart' event. Needed to abort
-		// composition when going back to spellcheck a word in FFX/Gecko + GBoard.
-		// 		this._lastCompositionStartData = [];
-
-		// Stores the type of the last 'input' event. Needed to abort composition
-		// when going back to spellcheck a word in FFX/Gecko + AnySoftKeyboard and
-		// some other scenarios.
-		this._lastInputType = '';
-
-		// Length of the document's selection when the last 'beforeinput' event was
-		// handled. Needed to catch and handle an edge case in Chrome where hitting
-		// either delete or backspace with active selection sends messages for both
-		// the input event and the keystrokes.
-		this._selectionLengthAtBeforeInput = 0;
-
-		// Idem to _lastInputType. Needed to handle the right keystroke on the edge case
-		// that this._selectionLengthAtBeforeInput helps catch.
-		this._lastBeforeInputType = '';
-
-		// Capability check.
-		this._hasInputType = window.InputEvent && 'inputType' in window.InputEvent.prototype;
-
-		// The "normal" order of composition events is:
-		// - compositionstart
-		// - compositionupdate
-		// - input/insertCompositionText
-		// But if the user goes back to a previous word for spellchecking, the browser
-		// might fire a compositionupdate *without* a corresponding input event later.
-		// In that case, the composition has to be aborted. Because of the order of
-		// the events, a timer is needed to check for the right conditions.
-		this._abortCompositionTimeout = undefined;
-
-		// Defines whether to use a <input type=textarea> (when true) or a
-		// <div contenteditable> (when false)
-		this._legacyArea = L.Browser.safari;
+		// Content
+		this._lastContent = []; // unicode characters
 
 		// Debug flag, used in fancyLog(). See the debug() method.
-// 		this._isDebugOn = true;
+//		this._isDebugOn = true;
 		this._isDebugOn = false;
 
 		this._initLayout();
@@ -77,13 +34,8 @@ L.ClipboardContainer = L.Layer.extend({
 			draggable: true
 		}).on('dragend', this._onCursorHandlerDragEnd, this);
 
-		// Used for internal cut/copy/paste in the same document - to tell
-		// lowsd whether to use its internal clipboard state (rich text) or to send
-		// the browser contents (plaintext)
-		this._lastClipboardText = undefined;
-
-		// This variable prevents from hiding the keyboard just before focus call
-		this.dontBlur = false;
+		var that = this;
+		this._selectionHandler = function(ev) { that._onEvent(ev); }
 	},
 
 	onAdd: function() {
@@ -104,9 +56,6 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 
 		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
-		// 		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', function(ev) {
-		// 			this._fancyLog(ev.type);
-		// 		}, this);
 	},
 
 	onRemove: function() {
@@ -121,62 +70,29 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	_onFocusBlur: function(ev) {
-// 		console.log(ev.type, performance.now(), ev);
-
-		if (this.dontBlur && ev.type == 'blur') {
-			this._map.focus();
-			this.dontBlur = false;
-			return;
-		}
-
-		if (this.dontBlur && ev.type == 'blur') {
-			this._map.focus();
-			this.dontBlur = false;
-			return;
-		}
+		this._fancyLog(ev.type, '');
 
 		var onoff = (ev.type == 'focus' ? L.DomEvent.on : L.DomEvent.off).bind(L.DomEvent);
 
-		onoff(this._textArea, 'compositionstart', this._onCompositionStart, this);
-		onoff(this._textArea, 'compositionend', this._onCompositionEnd, this);
-		onoff(this._textArea, 'beforeinput', this._onBeforeInput, this);
-		onoff(this._textArea, 'cut copy', this._onCutCopy, this);
-		onoff(this._textArea, 'paste', this._onPaste, this);
-		onoff(this._textArea, 'input', this._onInput, this);
-		onoff(this._textArea, 'keyup', this._onKeyUp, this);
-
-		if (L.Browser.ie) {
-			onoff(this._textArea, 'textinput', this._onMSIETextInput, this);
-			onoff(this._textArea, 'keydown', this._onMSIEKeyDown, this);
-		}
-		if (L.Browser.edge) {
-			onoff(this._textArea, 'keydown', this._onEdgeKeyDown, this);
-		}
-
-		// Stock android browsers (using an embedded WebView) wihout an InputEvent
-		// implementation behave similar to MSIE in regards to "enter" & "delete"
-		// keypresses
-		if (L.Browser.android && L.Browser.mobileWebkit3d && !('InputEvent' in window)) {
-			onoff(this._textArea, 'keydown', this._onMSIEKeyDown, this);
-		}
-
-		// Debug
+		// Debug - connect first for saner logging.
 		onoff(
 			this._textArea,
-			'copy cut compositionstart compositionupdate compositionend select selectionstart selectionchange keydown keypress keyup beforeinput textInput textinput input',
+			'copy cut compositionstart compositionupdate compositionend select keydown keypress keyup beforeinput textInput textinput input',
 			this._onEvent,
 			this
 		);
 
+		onoff(this._textArea, 'input', this._onInput, this);
+		onoff(this._textArea, 'compositionstart', this._onCompositionStart, this);
+		onoff(this._textArea, 'compositionupdate', this._onCompositionUpdate, this);
+		onoff(this._textArea, 'compositionend', this._onCompositionEnd, this);
+		onoff(this._textArea, 'keyup', this._onKeyUp, this);
+		onoff(this._textArea, 'copy cut paste', this._map._handleDOMEvent, this._map);
+
 		this._map.notifyActive();
 
-		if (ev.type === 'blur') {
-			if (this._isComposing) {
-				this._queueInput(this._compositionText);
-			}
-			this._abortComposition();
-		} else {
-			this._winId = 0;
+		if (ev.type === 'blur' && this._isComposing) {
+			this._abortComposition(ev);
 		}
 	},
 
@@ -196,16 +112,7 @@ L.ClipboardContainer = L.Layer.extend({
 	// Marks the content of the textarea/contenteditable as selected,
 	// for system clipboard interaction.
 	select: function select() {
-		if (this._legacyArea) {
-			this._textArea.select();
-		} else {
-			// As per https://stackoverflow.com/a/6150060/4768502
-			var range = document.createRange();
-			range.selectNodeContents(this._textArea);
-			var sel = window.getSelection();
-			sel.removeAllRanges();
-			sel.addRange(range);
-		}
+		this._textArea.select();
 	},
 
 	warnCopyPaste: function() {
@@ -219,11 +126,31 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	getValue: function() {
-		if (this._legacyArea) {
-			return this._textArea.value;
-		} else {
-			return this._textArea.textContent;
+		var value = this._textArea.value;
+		// kill unwanted entities
+		value = value.replace(/&nbsp;/g, ' ');
+		return value;
+	},
+
+	getValueAsCodePoints: function() {
+		var value = this.getValue();
+		var arr = [];
+		var code;
+		for (var i = 0; i < value.length; ++i)
+		{
+			code = value.charCodeAt(i);
+
+			// if it were not for IE11: "for (code of value)" does the job.
+			if (code >= 0xd800 && code <= 0xdbff) // handle UTF16 pairs.
+			{
+				// TESTME: harder ...
+				var high = (code - 0xd800) << 10;
+				code = value.charCodeAt(++i);
+				code = high + code - 0xdc00 + 0x100000;
+			}
+			arr.push(code);
 		}
+		return arr;
 	},
 
 	setValue: function(val) {
@@ -251,18 +178,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// The textarea allows the keyboard to pop up and so on.
 		// Note that the contents of the textarea are NOT deleted on each composed
 		// word, in order to make
-
-		if (this._legacyArea) {
-			// Force a textarea on Safari. This is two-fold: Safari doesn't fire
-			// input/insertParagraph events on an empty&focused contenteditable,
-			// but does fire input/insertLineBreak on an empty&focused textarea;
-			// Safari on iPad would show bold/italic/underline native controls
-			// which cannot be handled with the current implementation.
-			this._textArea = L.DomUtil.create('textarea', 'clipboard', this._container);
-		} else {
-			this._textArea = L.DomUtil.create('div', 'clipboard', this._container);
-			this._textArea.setAttribute('contenteditable', 'true');
-		}
+		this._textArea = L.DomUtil.create('textarea', 'clipboard', this._container);
 		this._textArea.setAttribute('autocapitalize', 'off');
 		this._textArea.setAttribute('autofocus', 'true');
 		this._textArea.setAttribute('autocorrect', 'off');
@@ -270,6 +186,8 @@ L.ClipboardContainer = L.Layer.extend({
 		this._textArea.setAttribute('spellcheck', 'false');
 
 		this._setupStyles();
+
+		this._emptyArea();
 	},
 
 	_setupStyles: function() {
@@ -346,34 +264,14 @@ L.ClipboardContainer = L.Layer.extend({
 		L.DomUtil.setPosition(this._container, pos);
 	},
 
-	// Return the content of _lastRanges as a string.
-	_lastRangesString: function() {
-		if (
-			this._lastRanges[0] &&
-			'startOffset' in this._lastRanges[0] &&
-			'endOffset' in this._lastRanges[0]
-		) {
-			return this._lastRanges[0].startOffset + '-' + this._lastRanges[0].endOffset;
-		}
-
-		return undefined;
-	},
-
 	// Generic handle attached to most text area events, just for debugging purposes.
 	_onEvent: function _onEvent(ev) {
 		var msg = {
-			type: ev.type,
 			inputType: ev.inputType,
 			data: ev.data,
 			key: ev.key,
 			isComposing: ev.isComposing
 		};
-
-		msg.lastRanges = this._lastRangesString();
-
-		if (ev.type === 'input') {
-			msg.inputType = ev.inputType;
-		}
 
 		if ('key' in ev) {
 			msg.key = ev.key;
@@ -381,7 +279,6 @@ L.ClipboardContainer = L.Layer.extend({
 			msg.code = ev.code;
 			msg.which = ev.which;
 		}
-
 		this._fancyLog(ev.type, msg);
 	},
 
@@ -397,8 +294,37 @@ L.ClipboardContainer = L.Layer.extend({
 
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
 		if (this._isDebugOn) {
+			var state = this._isComposing ? 'C' : 'N';
+			state += ' ';
+
+			var sel = window.getSelection();
+			var content = this.getValue();
+			if (sel === null)
+				state += '-1';
+			else
+			{
+				state += sel.rangeCount;
+
+				state += ' ';
+				var cursorPos = -1;
+				for (var i = 0; i < sel.rangeCount; ++i)
+				{
+					var range = sel.getRangeAt(i);
+					state += range.startOffset + '-' + range.endOffset + ' ';
+					if (cursorPos < 0)
+						cursorPos = range.startOffset;
+				}
+				if (sel.toString() !== '')
+					state += ': "' + sel.toString() + '" ';
+
+				// inject probable cursor
+				if (cursorPos >= 0)
+					content = content.slice(0, cursorPos) + '|' + content.slice(cursorPos);
+			}
+
 			console.log2(
-				+new Date() + ' %cINPUT%c: ' + type + '%c',
+				+ new Date() + ' %cINPUT%c: ' + state
+				+ '"' + content + '" ' + type + '%c ',
 				'background:#bfb;color:black',
 				'color:green',
 				'color:black',
@@ -408,153 +334,55 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
-	_onInput: function _onInput(ev) {
+	_onInput: function _onInput(/* ev */) {
 		this._map.notifyActive();
 
-		var previousInputType = this._lastInputType;
-		this._lastInputType = ev.inputType;
-
-		if (!('inputType' in ev)) {
-			// Legacy MSIE or Android WebView, just send the contents of the
-			// container and clear it.
-			if (this._isComposing) {
-				this._sendCompositionEvent('input', this._textArea.textContent);
-			} else {
-				if (
-					this._textArea.textContent.length === 0 &&
-					this._textArea.innerHTML.indexOf('<br>') !== -1
-				) {
-					// WebView-specific hack: when the user presses enter, textContent
-					// is empty instead of "\n", but a <br> is added to the
-					// contenteditable.
-					this._sendText('\n');
-				} else {
-					this._sendText(this._textArea.textContent);
-				}
-				this._emptyArea();
-			}
-		} else if (ev.inputType === 'insertCompositionText') {
-			// The text being composed has changed.
-			// This is diferent from a 'compositionupdate' event: a 'compositionupdate'
-			// event might be fired when going back to spellcheck a word, but an
-			// 'input/insertCompositionText' happens only when the user is adding to a
-			// composition.
-
-			// Abort composition when going back for spellchecking, FFX/Gecko
-			if (L.Browser.gecko && previousInputType === 'deleteContentBackward') {
-				return;
-			}
-
-			clearTimeout(this._abortCompositionTimeout);
-
-			if (!this._isComposing) {
-				// FFX/Gecko: Regardless of on-screen keyboard, there is a
-				// input/insertCompositionText with isComposing=false *after*
-				// the compositionend event.
-				this._queueInput(ev.data);
-			} else {
-				// Flush the queue
-				if (this._queuedInput !== '') {
-					this._sendQueued();
-				}
-
-				// Tell lowsd about the current text being composed
-				this._sendCompositionEvent('input', ev.data);
-			}
-		} else if (ev.inputType === 'insertText') {
-			// Non-composed text has been added to the text area.
-
-			// FFX+AOSP / FFX+AnySoftKeyboard edge case: Autocompleting a
-			// one-letter word will fire a input/insertText with that word
-			// right after a compositionend + input/insertCompositionText.
-			// In that case, ignore the
-			if (
-				L.Browser.gecko &&
-				ev.data.length === 1 &&
-				previousInputType === 'insertCompositionText' &&
-				ev.data === this._queuedInput
-			) {
-				return;
-			}
-
-			if (!this._isComposing) {
-				this._queueInput(ev.data);
-			}
-		} else if (ev.inputType === 'insertParagraph') {
-			// Happens on non-Safari on the contenteditable div.
-			this._queueInput('\n');
-			this._emptyArea();
-		} else if (ev.inputType === 'insertLineBreak') {
-			// Happens on Safari on the textarea.
-			this._queueInput('\n');
-			this._emptyArea();
-		} else if (ev.inputType === 'deleteContentBackward') {
-			if (this._isComposing) {
-				// deletion refers to the text being composed, noop
-				return;
-			}
-
-			// Delete text backwards - as many characters as indicated in the previous
-			// 'beforeinput' event
-
-			// These are sent e.g. by the GBoard keyboard when autocorrecting, meaning
-			// "I'm about to send another textInput event with the right word".
-
-			var count = 1;
-			if (this._lastRanges[0]) {
-				count = this._lastRanges[0].endOffset - this._lastRanges[0].startOffset;
-			}
-
-			// If there is queued input, cancel that first. This prevents race conditions
-			// in lowsd (compose-backspace-compose messages are handled as
-			// compose-compose-backspace).
-			// Deleting queued input happens when accepting an autocorrect suggestion;
-			// emptying the area in that case would break text composition workflow.
-			var l = this._queuedInput.length;
-			if (l >= count) {
-				this._queuedInput = this._queuedInput.substring(0, l - count);
-			} else {
-				this._removeTextContext(count, 0);
-				this._emptyArea();
-			}
-
-			L.DomEvent.stop(ev);
-		} else if (ev.inputType === 'deleteContentForward') {
-			// Send a UNO 'delete' keystroke
-			this._sendKeyEvent(46, 1286);
-			this._emptyArea();
-		} else if (ev.inputType === 'insertReplacementText') {
-			// Happens only in Safari (both iOS and OS X) with autocorrect/spellcheck
-			// FIXME: It doesn't provide any info about how much to replace!
-			// This is currently disabled by means of using a <input type=textarea
-			// autocorrect=off> in Safari.
-			/// TODO: Send a specific message to lowsd to find the last word and
-			/// replace it with the given one.
-		} else if (ev.inputType === 'deleteCompositionText') {
-			// Safari on OS X is extra nice about composition - it notifies the
-			// browser whenever the composition text should be deleted.
-		} else if (ev.inputType === 'insertFromComposition') {
-			// Observed only on desktop Safari just before a "compositionend"
-			// TODO: Check if the
-			this._queueInput(ev.data);
-		} else if (ev.inputType === 'deleteByCut') {
-			// Called when Ctrl+X'ing
-			this._abortComposition(ev);
-		} else {
-			console.error('Unhandled type of input event!!', ev.inputType, ev);
-			throw new Error('Unhandled type of input event!');
+		if (this._ignoreInputCount > 0) {
+			console.log('ignoring synthetic input ' + this._ignoreInputCount);
+			return;
 		}
-	},
 
-	// Chrome and MSIE (from 9 all the way up to Edge) send the non-standard
-	// "textInput" DOM event.
-	// In Chrome, this is fired *just before* the compositionend event, and *before*
-	// any other "input" events which would add text to the area (e.g. "insertText")
-	// "textInput" events are used in MSIE, since the "input" events do not hold
-	// information about the text added to the area.
-	// In MSIE11, the event is "textinput" (all lowercase).
-	_onMSIETextInput: function _onInput(ev) {
-		this._queueInput(ev.data);
+		var content = this.getValueAsCodePoints();
+
+		// We use a different leading and terminal space character
+		// to differentiate backspace from delete, then replace the character.
+		if (content[0] !== 16*10) { // missing initial non-breaking space.
+			console.log('Sending backspace');
+			this._removeTextContent(1, 0);
+			this._emptyArea();
+			return;
+		}
+		if (content[content.length-1] !== 32) { // missing trailing space.
+			console.log('Sending delete');
+			this._removeTextContent(0, 1);
+			this._emptyArea();
+			return;
+		}
+
+		// remove leading & tailing spaces.
+		content = content.slice(1, -1);
+
+		var matchTo = 0;
+		var sharedLength = Math.min(content.length, this._lastContent.length);
+		while (matchTo < sharedLength && content[matchTo] === this._lastContent[matchTo])
+			matchTo++;
+
+		console.log('Comparison matchAt ' + matchTo + '\n' +
+			    '\tnew "' + String.fromCharCode.apply(null, content) + '" (' + content.length + ')' + '\n' +
+			    '\told "' + String.fromCharCode.apply(null, this._lastContent) + '" (' + this._lastContent.length + ')');
+
+		var remove = this._lastContent.length - matchTo;
+		if (remove > 0)
+			this._removeTextContent(remove, 0);
+
+		var newText = content;
+		if (matchTo > 0)
+			newText = newText.slice(matchTo);
+
+		this._lastContent = content;
+
+		if (newText.length > 0)
+			this._sendText(String.fromCharCode.apply(null, newText));
 	},
 
 	// Sends the given (UTF-8) string of text to lowsd, as IME (text composition)
@@ -565,10 +393,14 @@ L.ClipboardContainer = L.Layer.extend({
 		// MSIE/Edge cannot compare a string to "\n" for whatever reason,
 		// so compare charcode as well
 		if (text === '\n' || (text.length === 1 && text.charCodeAt(0) === 13)) {
-			// The composition messages doesn't play well with just a line break,
-			// therefore send a keystroke.
-			this._sendKeyEvent(13, 1280);
-			this._emptyArea();
+			// we get a duplicate key-event on Gecko, oddly so drop it.
+			if (!L.Browser.gecko)
+			{
+				// The composition messages doesn't play well with just a line break,
+				// therefore send a keystroke.
+				this._sendKeyEvent(13, 1280);
+				this._emptyArea();
+			}
 		} else {
 			// The composition messages doesn't play well with line breaks inside
 			// the composed word (e.g. word and a newline are queued client-side
@@ -596,161 +428,34 @@ L.ClipboardContainer = L.Layer.extend({
 	// (some combination of browser + input method don't fire those on an
 	// empty contenteditable).
 	_emptyArea: function _emptyArea() {
-		if (this._hasInputType) {
-			// Note: 0xA0 is 160, which is the character code for non-breaking space:
-			// https://www.fileformat.info/info/unicode/char/00a0/index.htm
-			// Using normal spaces would make FFX/Gecko collapse them into an
-			// empty string.
-			if (this._legacyArea) {
-				this._textArea.value = '\xa0\xa0';
-				/// TODO: Check that this selection method works with MSIE11
-				///
-				this._textArea.setSelectionRange(1, 1);
-			} else {
-				// The strategy for a contenteditable is to add a space, select it,
-				// collapse the selection, then add two text nodes after and before
-				// the text node with the selection but with a delay of one frame.
-				// The frame delay is done in order to avoid the AOSP on-screen keyboard
-				// from moving the cursor caret around. On delete/backspace, AOSP
-				// keyboard would somehow ignore the selection ranges and move the caret
-				// before/after the empty spaces.
+		this._fancyLog('empty-area');
 
-				/// FIXME: The aforementioned strategy makes Android + GBoard + Firefox fail:
-				/// trying to press the "ArrowLeft" or "ArrowUp" keys in the
-				this._textArea.innerText = '\xa0';
+		this._ignoreInputCount++;
+		// Note: 0xA0 is 160, which is the character code for non-breaking space:
+		// https://www.fileformat.info/info/unicode/char/00a0/index.htm
+		// Using normal spaces would make FFX/Gecko collapse them into an
+		// empty string.
 
-				var range = document.createRange();
-				range.selectNodeContents(this._textArea);
-				var sel = window.getSelection();
-				sel.removeAllRanges();
-				sel.addRange(range);
-				sel.collapse(this._textArea.childNodes[0]);
+		console.log('Set old/lastContent to empty');
+		this._lastContent = [];
 
-				L.Util.requestAnimFrame(function() {
-					this._textArea.prepend('\xa0');
-					this._textArea.append('\xa0');
-				}.bind(this));
+		this._textArea.value = '\xa0 ';
+		/// TODO: Check that this selection method works with MSIE11
+		this._textArea.setSelectionRange(1, 1);
 
-			}
-		} else if (this._legacyArea) {
-			this._textArea.value = '';
-		} else {
-			// In order to empty a contenteditable when the two-spaces-hack is not
-			// in place, access its first text node child and empty it.
-			if (this._textArea.childNodes.length === 1) {
-				this._textArea.childNodes[0].data = '';
-			} else if (this._textArea.childNodes.length > 1) {
-				this._textArea.innerText = '';
-				this._textArea.innerHTML = '';
-				// Sanity check, should never be reached.
-				// True - but for now - lets not kill the world in this case ...
-//				throw new Error('Unexpected: more than one text node inside the contenteditable.');
-			}
-		}
-	},
-
-	// The getTargetRanges() method usually returns an empty array,
-	// since the ranges are only valid at the "beforeinput" stage.
-	// Fetching this info for later is important, especially
-	// for Chrome+"input/deleteContentBackward" events.
-	// Also, some deleteContentBackward/Forward input types
-	// only happen at 'beforeinput' and not at 'input' events,
-	// particularly when the textarea/contenteditable is empty, but
-	// only in some configurations.
-	_onBeforeInput: function _onBeforeInput(ev) {
-		this._lastRanges = ev.getTargetRanges();
-		// 		console.log('onBeforeInput range: ', ev.inputType, ranges,
-		// 					ranges[0] && ranges[0].startOffset,
-		// 					ranges[0] && ranges[0].endOffset);
-
-		this._lastBeforeInputType = ev.inputType;
-		this._selectionLengthAtBeforeInput = selection.length;
-
-		this._fancyLog('beforeinput selection', window.getSelection().toString());
-		this._fancyLog('beforeinput range', this._lastRangesString());
-
-		// FIXME: a hack - this assumes that nothing changed / no auto-correction inside the Kit.
-		// FIXME: only mobile for now to reduce risk ...
-		if (window.mode.isMobile() || window.mode.isTablet())
-		{
-			var seltext = window.getSelection();
-			if (!this._isComposing && seltext && seltext.toString() && seltext.toString().length > 0)
-			{
-				var len = seltext.toString().length;
-				this._fancyLog('selection overtype', seltext.toString() + ' len ' + len + ' chars "' + this._queuedInput + '"');
-				if (this._queuedInput)
-				{
-					var size = this._queuedInput.length;
-					var redux = Math.min(size, len);
-					this._queuedInput = this._queuedInput.slice(0,-redux);
-					len -= redux;
-					console.log2('queue overtype', 'removed ' + redux + ' from queued input to "' + this._queuedInput + '"');
-				}
-				// FIXME: this is the more hacky bit - if the Kit changed under us.
-				for (var i = 0; i < len; ++i)
-					this._sendKeyEvent(8, 1283);
-			}
-		}
-
-		// When trying to delete (i.e. backspace) on an empty textarea, the input event
-		// won't be fired afterwards. Handle backspace here instead.
-
-		// Chrome + AOSP does *not* send any "beforeinput" events when the
-		// textarea is empty. In that case, a 'keydown'+'keypress'+'keyup' sequence
-		// for charCode=8 is fired, and handled by the Map.Keyboard.js.
-		if ((this._winId === 0 && this._textArea.textContent.length === 0) ||
-			ev.findMyTextContentAre.length == 0) {
-			if (ev.inputType === 'deleteContentBackward') {
-				this._sendKeyEvent(8, 1283);
-			} else if (ev.inputType === 'deleteContentForward') {
-				this._sendKeyEvent(46, 1286);
-			}
-		}
-	},
-
-	_queueInput: function _queueInput(text) {
-		this._map.notifyActive();
-
-		if (text === null) {
-			// Chrome sends a input/insertText with 'null' event data when
-			// typing a newline quickly after typing text.
-			console.warn('Tried to queue null text! Maybe a lost newline?');
-			this._queuedInput += '\n';
-			clearTimeout(this._queueTimer);
-		}
-		else if (this._queuedInput !== '') {
-			console.warn(
-				'Text input already queued - recieving composition end events too fast!'
-			);
-			this._queuedInput += text;
-			clearTimeout(this._queueTimer);
-		} else {
-			this._queuedInput = text;
-		}
-
-		//console.log('_queueInput', text, ' queue is now:', {text: this._queuedInput});
-		this._queueTimer = setTimeout(this._sendQueued.bind(this), 50);
-	},
-
-	_clearQueued: function _clearQueued() {
-		// console.log('Cleared queued:', { text: this._queuedInput });
-		clearTimeout(this._queueTimer);
-		this._queuedInput = '';
-	},
-
-	_sendQueued: function _sendQueued() {
-		// console.log('Sending to lowsd (queued): ', {text: this._queuedInput});
-		this._sendText(this._queuedInput);
-		this._clearQueued();
+		this._ignoreInputCount--;
 	},
 
 	_onCompositionStart: function _onCompositionStart(/*ev*/) {
 		this._isComposing = true;
 	},
 
-	// 	_onCompositionUpdate: function _onCompositionUpdate(ev) {
-	// 		// Noop - handled at input/insertCompositionText instead.
-	// 	},
+	// Handled only in legacy situations ('input' events with an inputType
+	// property are preferred).
+	_onCompositionUpdate: function _onCompositionUpdate(ev) {
+		this._map.notifyActive();
+		this._onInput(ev);
+	},
 
 	// Chrome doesn't fire any "input/insertCompositionText" with "isComposing" set to false.
 	// Instead , it fires non-standard "textInput" events, but those can be tricky
@@ -758,37 +463,9 @@ L.ClipboardContainer = L.Layer.extend({
 	// The approach here is to use "compositionend" events *only in Chrome* to mark
 	// the composing text as committed to the text area.
 	_onCompositionEnd: function _onCompositionEnd(ev) {
-		// Check for standard chrome, and check heuristically for embedded Android
-		// WebView (without chrome user-agent string)
-		if (L.Browser.chrome || (L.Browser.android && L.Browser.webkit3d && !L.Browser.webkit)) {
-			if (this._lastInputType === 'insertCompositionText') {
-// 				console.log('Queuing input because android webview');
-				this._queueInput(ev.data);
-			} else {
-				// Ended a composition without user input, abort.
-				// This happens on Chrome+GBoard when autocompleting a word
-				// then entering a punctuation mark.
-				this._abortComposition(ev);
-			}
-		}
-
-		// Check for Safari; it fires composition events on typing diacritics with dead keys.
-		if (L.Browser.Safari) {
-			if (this._lastInputType === 'insertFromComposition') {
-				this._queueInput(ev.data);
-			} else {
-				this._abortComposition(ev);
-			}
-		}
-
-		// Tell lowsd to exit composition mode when the composition is empty
-		// This happens when deleting the whole word being composed, e.g.
-		// swipe a word then press backspace.
-		if (ev.data === '') {
-			this._sendCompositionEvent('input', '');
-		}
-
+		this._map.notifyActive();
 		this._isComposing = false;
+		this._onInput(ev);
 	},
 
 	// Called when the user goes back to a word to spellcheck or replace it,
@@ -797,11 +474,8 @@ L.ClipboardContainer = L.Layer.extend({
 	// empty the text area.
 	_abortComposition: function _abortComposition(ev) {
 		this._fancyLog('abort-composition', ev.type);
-		if (this._isComposing) {
-			this._sendCompositionEvent('input', '');
-			this._sendCompositionEvent('end', '');
+		if (this._isComposing)
 			this._isComposing = false;
-		}
 		this._emptyArea();
 	},
 
@@ -883,33 +557,14 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 	},
 
-	// MSIE11 doesn't send any "textinput" events on enter, delete or backspace.
-	// (Idem for old-ish stock android browsers which do not implement InputEvents)
-	// To handle those, an event handler is added to the "keydown" event (which repeats)
-	_onMSIEKeyDown: function _onMSIEKeyDown(ev) {
-		if (!ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
-			if (ev.key === 'Delete' || ev.key === 'Del') {
-				this._sendKeyEvent(46, 1286);
-				this._emptyArea();
-			} else if (ev.key === 'Backspace') {
-				this._sendKeyEvent(8, 1283);
-				this._emptyArea();
-			} else if (ev.key === 'Enter') {
-				this._queueInput('\n');
-				this._emptyArea();
-			}
-		}
-	},
+	// Used in the deleteContentBackward for deleting multiple characters with a single
+	// message.
+	// Will remove characters from the queue first, if there are any.
+	_removeTextContent: function _removeTextContent(before, after) {
+		console.log('Remove ' + before + ' before, and ' + after + ' after');
 
-	// Edge18 doesn't send any "input" events on delete or backspace
-	// To handle those, an event handler is added to the "keydown" event (which repeats)
-	_onEdgeKeyDown: function _onEdgeKeyDown(ev) {
-		// FIXME: we need enter too - share with above method ?
-		this._onMSIEKeyDown(ev);
-	},
-
-	// Used in the deleteContentBackward for deleting multiple characters with a single message.
-	_removeTextContext: function _removeTextContext(before, after) {
+		/// TODO: rename the event to 'removetextcontent' as soon as lowsd supports it
+		/// TODO: Ask Marco about it
 		this._map._socket.sendMessage(
 			'removetextcontext id=' +
 			this._map.getWinId() +
@@ -921,6 +576,7 @@ L.ClipboardContainer = L.Layer.extend({
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
 	// "type" is either "input" for updates or "end" for commits.
 	_sendCompositionEvent: function _sendCompositionEvent(type, text) {
+		console.log('sending to lowsd: ', type, text);
 		this._map._socket.sendMessage(
 			'textinput id=' +
 				this._map.getWinId() +
@@ -932,16 +588,22 @@ L.ClipboardContainer = L.Layer.extend({
 	},
 
 	// Tiny helper - encapsulates sending a 'key' or 'windowkey' websocket message
-	_sendKeyEvent: function _sendKeyEvent(charCode, unoKeyCode) {
+	// "type" can be "input" (default) or "up"
+	_sendKeyEvent: function _sendKeyEvent(charCode, unoKeyCode, type) {
+		if (!type) {
+			type = 'input';
+		}
 		if (this._map.getWinId() === 0) {
 			this._map._socket.sendMessage(
-				'key type=input char=' + charCode + ' key=' + unoKeyCode + '\n'
+				'key type=' + type + ' char=' + charCode + ' key=' + unoKeyCode + '\n'
 			);
 		} else {
 			this._map._socket.sendMessage(
 				'windowkey id=' +
 					this._map.getWinId() +
-					' type=input char=' +
+					' type=' +
+					type +
+					' char=' +
 					charCode +
 					' key=' +
 					unoKeyCode +
