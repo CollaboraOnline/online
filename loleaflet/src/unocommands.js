@@ -229,6 +229,7 @@ var unoCommandsArray = {
 	SpacePara1:{global:{menu:_('Line Spacing: 1'),},},
 	SpacePara15:{global:{menu:_('Line Spacing: 1.5'),},},
 	SpacePara2:{global:{menu:_('Line Spacing: 2'),},},
+	SpellDialog:{global:{menu:_('~Spelling...'),},},
 	SpellOnline:{global:{menu:_('~Automatic Spell Checking'),},},
 	SpellingAndGrammarDialog:{global:{menu:_('~Spelling...'),},},
 	SplitCell:{presentation:{menu:_('Split Cells'),},spreadsheet:{menu:_('Split Cells'),},text:{menu:_('Split Cells...'),},},

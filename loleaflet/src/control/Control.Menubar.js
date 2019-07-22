@@ -434,6 +434,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:ShowDetail'}]}
 			]},
 			{name: _UNO('.uno:ToolsMenu', 'spreadsheet'), id: 'tools', type: 'menu', menu: [
+				{uno: '.uno:SpellDialog'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
