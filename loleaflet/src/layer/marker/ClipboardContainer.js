@@ -25,8 +25,13 @@ L.ClipboardContainer = L.Layer.extend({
 		this._hasWorkingSelectionStart = undefined; // does it work ?
 		this._ignoreNextBackspace = false;
 
+		this._preSpaceChar = ' ';
 		// Might need to be \xa0 in some legacy browsers ?
-		this._spaceChar = ' ';
+		if (L.Browser.android && L.Browser.webkit) {
+			// fool GBoard into not auto-capitalizing constantly
+			this._preSpaceChar = '\xa0';
+		}
+		this._postSpaceChar = ' ';
 
 		// Debug flag, used in fancyLog(). See the debug() method.
 //		this._isDebugOn = true;
@@ -370,19 +375,23 @@ L.ClipboardContainer = L.Layer.extend({
 	// Backspaces and deletes at the beginning / end are filtered out, so
 	// we get a beforeinput, but no input for them. Sometimes we can end up
 	// in a state where we lost our leading / terminal chars and can't recover
-	_onBeforeInput: function _onBeforeInput(/* ev */) {
+	_onBeforeInput: function _onBeforeInput(ev) {
 		this._ignoreNextBackspace = false;
 		if (this._hasWorkingSelectionStart) {
 			var value = this._textArea.value;
-			if (value.length == 2 && value === this._spaceChar + this._spaceChar &&
+			if (value.length == 2 && value === this._preSpaceChar + this._postSpaceChar &&
 			    this._textArea.selectionStart === 0)
 			{
 				// It seems some inputs eg. GBoard can magically move the cursor from " | " to "|  "
 				console.log('Oh dear, gboard sabotaged our cursor position, fixing');
-				this._removeTextContent(1, 0);
+				// But when we detect the problem only emit a delete when we have one.
+				if (ev.inputType && ev.inputType === 'deleteContentBackward')
+				{
+					this._removeTextContent(1, 0);
+					// Having mended it we now get a real backspace on input (sometimes)
+					this._ignoreNextBackspace = true;
+				}
 				this._emptyArea();
-				// Having mended it we now get a real backspace on input (sometimes)
-				this._ignoreNextBackspace = true;
 			}
 		}
 	},
@@ -405,19 +414,24 @@ L.ClipboardContainer = L.Layer.extend({
 				this._deleteHint = '';
 		}
 
+		var ignoreBackspace = this._ignoreNextBackspace;
+		this._ignoreNextBackspace = false;
+
 		var content = this.getValueAsCodePoints();
 
-		var spaceChar = this._spaceChar.charCodeAt(0);
+		var preSpaceChar = this._preSpaceChar.charCodeAt(0);
+		var postSpaceChar = this._postSpaceChar.charCodeAt(0);
 
 		// We use a different leading and terminal space character
 		// to differentiate backspace from delete, then replace the character.
-		if (content.length < 1 || content[0] !== spaceChar) { // missing initial space
+		if (content.length < 1 || content[0] !== preSpaceChar) { // missing initial space
 			console.log('Sending backspace');
-			this._removeTextContent(1, 0);
+			if (!ignoreBackspace)
+				this._removeTextContent(1, 0);
 			this._emptyArea();
 			return;
 		}
-		if (content[content.length-1] !== spaceChar) { // missing trailing space.
+		if (content[content.length-1] !== postSpaceChar) { // missing trailing space.
 			console.log('Sending delete');
 			this._removeTextContent(0, 1);
 			this._emptyArea();
@@ -428,9 +442,8 @@ L.ClipboardContainer = L.Layer.extend({
 			if (this._deleteHint == 'backspace' ||
 			    this._textArea.selectionStart === 0)
 			{
-				if (!this._ignoreNextBackspace)
+				if (!ignoreBackspace)
 					this._removeTextContent(1, 0);
-				this._ignoreNextBackspace = false;
 			}
 			else if (this._deleteHint == 'delete' ||
 				 this._textArea.selectionStart === 1)
@@ -537,7 +550,7 @@ L.ClipboardContainer = L.Layer.extend({
 		console.log('Set old/lastContent to empty');
 		this._lastContent = [];
 
-		this._textArea.value = this._spaceChar + this._spaceChar;
+		this._textArea.value = this._preSpaceChar + this._postSpaceChar;
 		this._textArea.setSelectionRange(1, 1);
 		if (this._hasWorkingSelectionStart === undefined)
 			this._hasWorkingSelectionStart = (this._textArea.selectionStart === 1);
