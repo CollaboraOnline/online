@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/LibreOfficeTheme">
         <!-- SlideShow Activity -->
-        <activity android:name=".SlideShowActivity"
+        <activity android:name="org.libreoffice.androidlib.SlideShowActivity"
             android:theme="@style/FullScreenStyle"
             android:screenOrientation="sensorLandscape"/>
         <!-- Document Browser Activity -->
@@ -43,7 +43,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name="org.libreoffice.androidlib.LOActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
