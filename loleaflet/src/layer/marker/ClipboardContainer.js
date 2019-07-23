@@ -23,6 +23,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// Content
 		this._lastContent = []; // unicode characters
 		this._hasWorkingSelectionStart = undefined; // does it work ?
+		this._ignoreNextBackspace = false;
 
 		// Might need to be \xa0 in some legacy browsers ?
 		this._spaceChar = ' ';
@@ -322,6 +323,7 @@ L.ClipboardContainer = L.Layer.extend({
 		if (this._isDebugOn) {
 			var state = this._isComposing ? 'C' : 'N';
 			state += this._hasWorkingSelectionStart ? 'S' : '-';
+			state += this._ignoreNextBackspace ? 'I' : '-';
 			state += ' ';
 
 			var textSel = this._textArea.selectionStart + '!' + this._textArea.selectionEnd;
@@ -369,14 +371,18 @@ L.ClipboardContainer = L.Layer.extend({
 	// we get a beforeinput, but no input for them. Sometimes we can end up
 	// in a state where we lost our leading / terminal chars and can't recover
 	_onBeforeInput: function _onBeforeInput(/* ev */) {
+		this._ignoreNextBackspace = false;
 		if (this._hasWorkingSelectionStart) {
-			if (this._textArea.length == 2 &&
-			    this._textArea.value === this._spaceChar + this._spaceChar &&
+			var value = this._textArea.value;
+			if (value.length == 2 && value === this._spaceChar + this._spaceChar &&
 			    this._textArea.selectionStart === 0)
 			{
 				// It seems some inputs eg. GBoard can magically move the cursor from " | " to "|  "
 				console.log('Oh dear, gboard sabotaged our cursor position, fixing');
+				this._removeTextContent(1, 0);
 				this._emptyArea();
+				// Having mended it we now get a real backspace on input (sometimes)
+				this._ignoreNextBackspace = true;
 			}
 		}
 	},
@@ -421,7 +427,11 @@ L.ClipboardContainer = L.Layer.extend({
 			console.log('Missing terminal nodes: ' + this._deleteHint);
 			if (this._deleteHint == 'backspace' ||
 			    this._textArea.selectionStart === 0)
-				this._removeTextContent(1, 0);
+			{
+				if (!this._ignoreNextBackspace)
+					this._removeTextContent(1, 0);
+				this._ignoreNextBackspace = false;
+			}
 			else if (this._deleteHint == 'delete' ||
 				 this._textArea.selectionStart === 1)
 				this._removeTextContent(0, 1);
