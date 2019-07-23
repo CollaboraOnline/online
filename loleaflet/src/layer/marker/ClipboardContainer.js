@@ -389,10 +389,12 @@ L.ClipboardContainer = L.Layer.extend({
 		}
 		if (content.length < 2) {
 			console.log('Missing terminal nodes: ' + this._deleteHint);
-			if (this._deleteHint == 'delete')
-				this._removeTextContent(0, 1);
-			else if (this._deleteHint == 'backspace')
+			if (this._deleteHint == 'backspace' ||
+			    this._textArea.selectionStart === 0)
 				this._removeTextContent(1, 0);
+			else if (this._deleteHint == 'delete' ||
+				 this._textArea.selectionStart === 1)
+				this._removeTextContent(0, 1);
 			else
 				console.log('Cant detect delete or backspace');
 			this._emptyArea();
