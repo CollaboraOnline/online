@@ -64,7 +64,7 @@ public class LOActivity extends AppCompatActivity {
     final static String TAG = "LOActivity";
 
     private static final String ASSETS_EXTRACTED_PREFS_KEY = "ASSETS_EXTRACTED";
-    private static final int PERMISSION_READ_EXTERNAL_STORAGE = 777;
+    private static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 777;
     private static final String KEY_ENABLE_SHOW_DEBUG_INFO = "ENABLE_SHOW_DEBUG_INFO";
 
     private static final String KEY_PROVIDER_ID = "providerID";
@@ -327,11 +327,11 @@ public class LOActivity extends AppCompatActivity {
             }
         });
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "asking for read storage permission");
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    PERMISSION_READ_EXTERNAL_STORAGE);
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_WRITE_EXTERNAL_STORAGE);
         } else {
             loadDocument();
         }
@@ -352,7 +352,7 @@ public class LOActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case PERMISSION_READ_EXTERNAL_STORAGE:
+            case PERMISSION_WRITE_EXTERNAL_STORAGE:
                 if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     loadDocument();
                 } else {
