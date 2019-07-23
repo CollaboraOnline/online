@@ -86,6 +86,7 @@ public class LOActivity extends AppCompatActivity {
 
     private boolean isDocEditable = false;
     private boolean isDocDebuggable = BuildConfig.DEBUG;
+    private boolean documentLoaded = false;
 
     private ClipboardManager clipboardManager;
     private ClipData clipData;
@@ -218,18 +219,7 @@ public class LOActivity extends AppCompatActivity {
 
         setContentView(R.layout.lolib_activity_main);
 
-        AssetManager assetManager = getResources().getAssets();
-
         isDocDebuggable = sPrefs.getBoolean(KEY_ENABLE_SHOW_DEBUG_INFO, false) && BuildConfig.DEBUG;
-
-        ApplicationInfo applicationInfo = getApplicationInfo();
-        String dataDir = applicationInfo.dataDir;
-        Log.i(TAG, String.format("Initializing LibreOfficeKit, dataDir=%s\n", dataDir));
-
-        //redirectStdio(true);
-
-        String cacheDir = getApplication().getCacheDir().getAbsolutePath();
-        String apkFile = getApplication().getPackageResourcePath();
 
         if (getIntent().getData() != null) {
 
@@ -273,8 +263,6 @@ public class LOActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.failed_to_load_file), Toast.LENGTH_SHORT).show();
             finish();
         }
-
-        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
 
         mWebView = findViewById(R.id.browser);
 
@@ -421,7 +409,8 @@ public class LOActivity extends AppCompatActivity {
         Log.d(TAG, "onPause() - hinting to save, we might need to return to the doc");
 
         // A Save similar to an autosave
-        postMobileMessageNative("save dontTerminateEdit=true dontSaveIfUnmodified=true");
+        if (documentLoaded)
+            postMobileMessageNative("save dontTerminateEdit=true dontSaveIfUnmodified=true");
     }
 
     @Override
@@ -445,6 +434,18 @@ public class LOActivity extends AppCompatActivity {
     }
 
     private void loadDocument() {
+        // setup the LOOLWSD
+        ApplicationInfo applicationInfo = getApplicationInfo();
+        String dataDir = applicationInfo.dataDir;
+        Log.i(TAG, String.format("Initializing LibreOfficeKit, dataDir=%s\n", dataDir));
+
+        String cacheDir = getApplication().getCacheDir().getAbsolutePath();
+        String apkFile = getApplication().getPackageResourcePath();
+        AssetManager assetManager = getResources().getAssets();
+
+        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
+
+        // trigger the load of the document
         String finalUrlToLoad = "file:///android_asset/dist/loleaflet.html?file_path=" +
                 urlToLoad + "&closebutton=1";
         if (isDocEditable) {
@@ -456,6 +457,8 @@ public class LOActivity extends AppCompatActivity {
             finalUrlToLoad += "&debug=true";
         }
         mWebView.loadUrl(finalUrlToLoad);
+
+        documentLoaded = true;
     }
 
     static {
