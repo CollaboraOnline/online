@@ -19,6 +19,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		L.Handler.prototype.initialize.call(this, map);
 		this._state = L.Map.TouchGesture.MAP;
 
+		if (window.ThisIsTheiOSApp && !this._toolbar) {
+			this._toolbar = L.control.contextToolbar();
+		}
+
 		if (!this._hammer) {
 			this._hammer = new Hammer(this._map._mapPane);
 			this._hammer.get('swipe').set({
@@ -81,6 +85,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('pinchstart pinchmove', L.bind(this._onPinch, this));
 		this._hammer.on('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.on('tripletap', L.bind(this._onTripleTap, this));
+		if (window.ThisIsTheiOSApp)
+			this._map.on('input.press', this._onInputPressiOSOnly, this);
 		this._map.on('updatepermission', this._onPermission, this);
 		this._onPermission({perm: this._map._permission});
 	},
@@ -148,10 +154,23 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
-		// send right click to trigger context menus
-		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
-		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
+		if (window.ThisIsTheiOSApp) {
+			if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
+				this._toolbar._pos = containerPoint;
+				this._toolbar.addTo(this._map);
+			} else {
+				this._toolbar.remove();
+				this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
+				// send right click to trigger context menus
+				this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
+				this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
+			}
+		} else {
+			this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
+			// send right click to trigger context menus
+			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
+			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
+		}
 
 		e.preventDefault();
 	},
@@ -163,6 +182,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
+		if (window.ThisIsTheiOSApp)
+			this._toolbar.remove();
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
@@ -287,6 +308,13 @@ L.Map.TouchGesture = L.Handler.extend({
 
 			this._map._animateZoom(this._center, finalZoom, true, true);
 		}
+	},
+
+	_onInputPressiOSOnly: function (e) {
+		var pos = this._map.latLngToContainerPoint(e);
+		this._toolbar.remove();
+		this._toolbar._pos = pos;
+		this._toolbar.addTo(this._map);
 	},
 
 	_constructFakeEvent: function (evt, type) {
