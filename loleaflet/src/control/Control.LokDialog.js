@@ -386,6 +386,7 @@ L.Control.LokDialog = L.Control.extend({
 		// set the position of the cursor container element
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
+		this._map.getClipboardContainer().focus();
 	},
 
 	_createDialogCursor: function(dialogId) {
