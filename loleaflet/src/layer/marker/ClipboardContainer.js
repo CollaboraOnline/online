@@ -22,7 +22,7 @@ L.ClipboardContainer = L.Layer.extend({
 
 		// Content
 		this._lastContent = []; // unicode characters
-		this._lastCursor = 1;   // last cursor position.
+		this._hasWorkingSelectionStart = undefined; // does it work ?
 
 		// Might need to be \xa0 in some legacy browsers ?
 		this._spaceChar = ' ';
@@ -103,6 +103,7 @@ L.ClipboardContainer = L.Layer.extend({
 		);
 
 		onoff(this._textArea, 'input', this._onInput, this);
+		onoff(this._textArea, 'beforeinput', this._onBeforeInput, this);
 		onoff(this._textArea, 'compositionstart', this._onCompositionStart, this);
 		onoff(this._textArea, 'compositionupdate', this._onCompositionUpdate, this);
 		onoff(this._textArea, 'compositionend', this._onCompositionEnd, this);
@@ -320,6 +321,7 @@ L.ClipboardContainer = L.Layer.extend({
 		// Pretty-print on console (but only if "tile layer debug mode" is active)
 		if (this._isDebugOn) {
 			var state = this._isComposing ? 'C' : 'N';
+			state += this._hasWorkingSelectionStart ? 'S' : '-';
 			state += ' ';
 
 			var textSel = this._textArea.selectionStart + '!' + this._textArea.selectionEnd;
@@ -360,6 +362,22 @@ L.ClipboardContainer = L.Layer.extend({
 				'color:black',
 				JSON.stringify(payload)
 			);
+		}
+	},
+
+	// Backspaces and deletes at the beginning / end are filtered out, so
+	// we get a beforeinput, but no input for them. Sometimes we can end up
+	// in a state where we lost our leading / terminal chars and can't recover
+	_onBeforeInput: function _onBeforeInput(/* ev */) {
+		if (this._hasWorkingSelectionStart) {
+			if (this._textArea.length == 2 &&
+			    this._textArea.value === this._spaceChar + this._spaceChar &&
+			    this._textArea.selectionStart === 0)
+			{
+				// It seems some inputs eg. GBoard can magically move the cursor from " | " to "|  "
+				console.log('Oh dear, gboard sabotaged our cursor position, fixing');
+				this._emptyArea();
+			}
 		}
 	},
 
@@ -448,7 +466,6 @@ L.ClipboardContainer = L.Layer.extend({
 			newText = newText.slice(matchTo);
 
 		this._lastContent = content;
-		this._lastCursor = this._textArea.selectionStart;
 
 		if (newText.length > 0)
 			this._sendText(String.fromCharCode.apply(null, newText));
@@ -515,9 +532,11 @@ L.ClipboardContainer = L.Layer.extend({
 		this._lastContent = [];
 
 		this._textArea.value = this._spaceChar + this._spaceChar;
-		/// TODO: Check that this selection method works with MSIE11
 		this._textArea.setSelectionRange(1, 1);
-		this._lastCursor = 1;
+		if (this._hasWorkingSelectionStart === undefined)
+			this._hasWorkingSelectionStart = (this._textArea.selectionStart === 1);
+
+		this._fancyLog('empty-area-end');
 
 		this._ignoreInputCount--;
 	},
