@@ -25,6 +25,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import org.libreoffice.androidlib.LOActivity;
+
 public class AboutDialogFragment extends DialogFragment {
 
     private static final String DEFAULT_DOC_PATH = "/assets/example.odt";
@@ -103,7 +105,7 @@ public class AboutDialogFragment extends DialogFragment {
                 .setNeutralButton(R.string.about_moreinfo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        Intent intent = new Intent(getContext(), LOActivity.class);
                         intent.putExtra("URI", "file:///android_asset/example.odt");
                         startActivity(intent);
                         dialog.dismiss();

@@ -60,7 +60,6 @@ import com.google.android.material.navigation.NavigationView;
 import org.libreoffice.androidapp.AboutDialogFragment;
 import org.libreoffice.androidapp.LibreOfficeApplication;
 import org.libreoffice.androidapp.LocaleHelper;
-import org.libreoffice.androidapp.MainActivity;
 import org.libreoffice.androidapp.R;
 import org.libreoffice.androidapp.SettingsActivity;
 import org.libreoffice.androidapp.SettingsListenerModel;
@@ -68,6 +67,7 @@ import org.libreoffice.androidapp.storage.DocumentProviderFactory;
 import org.libreoffice.androidapp.storage.DocumentProviderSettingsActivity;
 import org.libreoffice.androidapp.storage.IDocumentProvider;
 import org.libreoffice.androidapp.storage.IFile;
+import org.libreoffice.androidlib.LOActivity;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -583,10 +583,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
                     String packageName = getApplicationContext().getPackageName();
                     ComponentName componentName = new ComponentName(packageName,
-                            MainActivity.class.getName());
+                            LOActivity.class.getName());
                     i.setComponent(componentName);
 
-                    // these extras allow to rebuild the IFile object in LOMainActivity
+                    // these extras allow to rebuild the IFile object in LOActivity
                     i.putExtra("org.libreoffice.document_provider_id",
                             documentProvider.getId());
                     i.putExtra("org.libreoffice.document_uri",
@@ -626,7 +626,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                         Intent i = new Intent(Intent.ACTION_VIEW, newDocUri);
 
                         String packageName = getApplicationContext().getPackageName();
-                        ComponentName componentName = new ComponentName(packageName, MainActivity.class.getName());
+                        ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
                         i.setComponent(componentName);
 
                         i.putExtra("org.libreoffice.document_provider_id", documentProvider.getId());
@@ -1149,7 +1149,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pathString));
                 String packageName = this.getApplicationContext().getPackageName();
-                ComponentName componentName = new ComponentName(packageName, MainActivity.class.getName());
+                ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
                 intent.setComponent(componentName);
 
                 ShortcutInfo shortcut = new ShortcutInfo.Builder(this, filename)
