@@ -338,10 +338,10 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 			}
 			else if ((ev.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
-				if (keyCode === 8 || keyCode === 46)
+				if (keyCode === 8 || keyCode === 46 || keyCode === 13)
 				{
 					// handled generically in ClipboardContainer.js
-					console.log('Ignore backspace/delete keypress');
+					console.log('Ignore backspace/delete/enter keypress');
 					return;
 				}
 				if (charCode === keyCode && charCode !== 13) {

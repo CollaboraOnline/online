@@ -493,14 +493,10 @@ L.ClipboardContainer = L.Layer.extend({
 		// MSIE/Edge cannot compare a string to "\n" for whatever reason,
 		// so compare charcode as well
 		if (text === '\n' || (text.length === 1 && text.charCodeAt(0) === 13)) {
-			// we get a duplicate key-event on Gecko, oddly so drop it.
-			if (!L.Browser.gecko)
-			{
-				// The composition messages doesn't play well with just a line break,
-				// therefore send a keystroke.
-				this._sendKeyEvent(13, 1280);
-				this._emptyArea();
-			}
+			// The composition messages doesn't play well with just a line break,
+			// therefore send a keystroke.
+			this._sendKeyEvent(13, 1280);
+			this._emptyArea();
 		} else {
 			// The composition messages doesn't play well with line breaks inside
 			// the composed word (e.g. word and a newline are queued client-side
