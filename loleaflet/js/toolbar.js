@@ -643,12 +643,12 @@ function createToolbar() {
 				if (!edata.item.html) {
 					edata.isCancelled = true;
 				} else {
-				$.extend(edata, { onComplete: function (e) {
-					$('.fontsizes-select').select2({ dropdownAutoWidth: true, width: 'auto'});
-					e.item.html = undefined;
-				}});
-			}
-		}, mobile: false},
+					$.extend(edata, { onComplete: function (e) {
+						$('.fontsizes-select').select2({ dropdownAutoWidth: true, width: 'auto'});
+						e.item.html = undefined;
+					}});
+				}
+			}, mobile: false},
 		{type: 'break', id: 'breakstyles', mobile: false},
 		{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold', disabled: true},
 		{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic', disabled: true},
