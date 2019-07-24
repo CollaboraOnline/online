@@ -120,11 +120,30 @@ L.Map.TouchGesture = L.Handler.extend({
 
 	_onHammer: function (e) {
 		this._map.notifyActive();
+
+		// Function/Formula Wizard keeps the formula cell active all the time,
+		// so the usual range selection doesn't work here.
+		// Instead, the cells are highlighted with a certain color and opacity
+		// to mark as selection. And that's why we are checking for it here.
+		// FIXME: JS-ify. This code is written by a C++ dev.
+		function getFuncWizRangeBounds (obj) {
+			for (var i in obj._map._layers) {
+				if (obj._map._layers[i].options && obj._map._layers[i].options.fillColor
+					&& obj._map._layers[i].options.fillOpacity) {
+					if (obj._map._layers[i].options.fillColor === '#ef0fff'
+						&& obj._map._layers[i].options.fillOpacity === 0.25) {
+						return obj._map._layers[i]._bounds;
+					}
+				}
+			}
+		}
+
 		if (e.isFirst) {
 			var point = e.pointers[0],
 			    containerPoint = this._map.mouseEventToContainerPoint(point),
 			    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
-			    latlng = this._map.layerPointToLatLng(layerPoint);
+			    latlng = this._map.layerPointToLatLng(layerPoint),
+			funcWizardRangeBounds = getFuncWizRangeBounds(this);
 
 			if (this._map._docLayer._graphicMarker) {
 				this._marker = this._map._docLayer._graphicMarker.transform.getMarker(layerPoint);
@@ -135,6 +154,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			} else if (this._map._docLayer._graphicMarker && this._map._docLayer._graphicMarker.getBounds().contains(latlng)) {
 				this._state = L.Map.TouchGesture.GRAPHIC;
 			} else if (this._map._docLayer._cellCursor && this._map._docLayer._cellCursor.contains(latlng)) {
+				this._state = L.Map.TouchGesture.CURSOR;
+			} else if (this._map._docLayer._cellCursor && funcWizardRangeBounds && funcWizardRangeBounds.contains(latlng)) {
 				this._state = L.Map.TouchGesture.CURSOR;
 			} else {
 				this._state = L.Map.TouchGesture.MAP;
