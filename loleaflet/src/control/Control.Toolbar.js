@@ -891,7 +891,8 @@ function initNormalToolbar() {
 		{type: 'button',  id: 'sidebar', img: 'sidebar_modify_page', hint: _UNO('.uno:Sidebar', '', true), uno: '.uno:Sidebar', hidden: true},
 		{type: 'break', id: 'breaksidebar', hidden: true},
 		{type: 'button',  id: 'fold',  img: 'fold', desktop: true, mobile: false, hidden: true},
-		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, iosapptablet: false, hidden: true}
+		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, iosapptablet: false, hidden: true},
+		{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false}
 	];
 
 	var toolbar = $('#toolbar-up');
