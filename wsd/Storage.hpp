@@ -14,6 +14,7 @@
 #include <set>
 #include <string>
 
+#include <Poco/JSON/Object.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
@@ -60,6 +61,189 @@ public:
         std::string _filename;
         std::string _ownerId;
         Poco::Timestamp _modifiedTime;
+    };
+
+    /// Class to store various bits of information about the file.
+    class WOPIFileInfo
+    {
+    public:
+        enum class TriState
+        {
+            False,
+            True,
+            Unset
+        };
+
+        WOPIFileInfo(const std::string& userid,
+                     const std::string& obfuscatedUserId,
+                     const std::string& username,
+                     const std::string& userExtraInfo,
+                     const std::string& watermarkText,
+                     const std::string& templateSaveAs,
+                     const std::string& templateSource,
+                     const bool userCanWrite,
+                     const std::string& postMessageOrigin,
+                     const bool hidePrintOption,
+                     const bool hideSaveOption,
+                     const bool hideExportOption,
+                     const bool enableOwnerTermination,
+                     const bool disablePrint,
+                     const bool disableExport,
+                     const bool disableCopy,
+                     const bool disableInactiveMessages,
+                     const bool downloadAsPostMessage,
+                     const bool userCanNotWriteRelative,
+                     const bool enableInsertRemoteImage,
+                     const bool enableShare,
+                     const std::string& hideUserList,
+                     const TriState disableChangeTrackingShow,
+                     const TriState disableChangeTrackingRecord,
+                     const TriState hideChangeTrackingControls,
+                     const bool supportsRename,
+                     const bool userCanRename)
+            : _userId(userid),
+              _obfuscatedUserId(obfuscatedUserId),
+              _username(username),
+              _watermarkText(watermarkText),
+              _templateSaveAs(templateSaveAs),
+              _templateSource(templateSource),
+              _userCanWrite(userCanWrite),
+              _postMessageOrigin(postMessageOrigin),
+              _hidePrintOption(hidePrintOption),
+              _hideSaveOption(hideSaveOption),
+              _hideExportOption(hideExportOption),
+              _enableOwnerTermination(enableOwnerTermination),
+              _disablePrint(disablePrint),
+              _disableExport(disableExport),
+              _disableCopy(disableCopy),
+              _disableInactiveMessages(disableInactiveMessages),
+              _downloadAsPostMessage(downloadAsPostMessage),
+              _userCanNotWriteRelative(userCanNotWriteRelative),
+              _enableInsertRemoteImage(enableInsertRemoteImage),
+              _enableShare(enableShare),
+              _hideUserList(hideUserList),
+              _disableChangeTrackingShow(disableChangeTrackingShow),
+              _disableChangeTrackingRecord(disableChangeTrackingRecord),
+              _hideChangeTrackingControls(hideChangeTrackingControls),
+              _supportsRename(supportsRename),
+              _userCanRename(userCanRename)
+            {
+                _userExtraInfo = userExtraInfo;
+            }
+
+        const std::string& getUserId() const { return _userId; }
+
+        const std::string& getUsername() const { return _username; }
+
+        const std::string& getUserExtraInfo() const { return _userExtraInfo; }
+
+        const std::string& getWatermarkText() const { return _watermarkText; }
+
+        const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
+
+        const std::string& getTemplateSource() const { return _templateSource; }
+
+        bool getUserCanWrite() const { return _userCanWrite; }
+
+        std::string& getPostMessageOrigin() { return _postMessageOrigin; }
+
+        void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
+
+        bool getHidePrintOption() const { return _hidePrintOption; }
+
+        bool getHideSaveOption() const { return _hideSaveOption; }
+
+        void setHideExportOption(bool hideExportOption) { _hideExportOption = hideExportOption; }
+
+        bool getHideExportOption() const { return _hideExportOption; }
+
+        bool getEnableOwnerTermination() const { return _enableOwnerTermination; }
+
+        bool getDisablePrint() const { return _disablePrint; }
+
+        bool getDisableExport() const { return _disableExport; }
+
+        bool getDisableCopy() const { return _disableCopy; }
+
+        bool getDisableInactiveMessages() const { return _disableInactiveMessages; }
+
+        bool getDownloadAsPostMessage() const { return _downloadAsPostMessage; }
+
+        bool getUserCanNotWriteRelative() const { return _userCanNotWriteRelative; }
+
+        bool getEnableInsertRemoteImage() const { return _enableInsertRemoteImage; }
+
+        bool getEnableShare() const { return _enableShare; }
+
+        bool getSupportsRename() const { return _supportsRename; }
+
+        bool getUserCanRename() const { return _userCanRename; }
+
+        std::string& getHideUserList() { return _hideUserList; }
+
+        TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
+
+        TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
+
+        TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
+
+    private:
+        /// User id of the user accessing the file
+        std::string _userId;
+        /// Obfuscated User id used for logging the UserId.
+        std::string _obfuscatedUserId;
+        /// Display Name of user accessing the file
+        std::string _username;
+        /// Extra info per user, typically mail and other links, as json.
+        std::string _userExtraInfo;
+        /// In case a watermark has to be rendered on each tile.
+        std::string _watermarkText;
+        /// In case we want to use this file as a template, it should be first re-saved under this name (using PutRelativeFile).
+        std::string _templateSaveAs;
+        /// In case we want to use this file as a template.
+        std::string _templateSource;
+        /// If user accessing the file has write permission
+        bool _userCanWrite;
+        /// WOPI Post message property
+        std::string _postMessageOrigin;
+        /// Hide print button from UI
+        bool _hidePrintOption;
+        /// Hide save button from UI
+        bool _hideSaveOption;
+        /// Hide 'Download as' button/menubar item from UI
+        bool _hideExportOption;
+        /// If WOPI host has enabled owner termination feature on
+        bool _enableOwnerTermination;
+        /// If WOPI host has allowed the user to print the document
+        bool _disablePrint;
+        /// If WOPI host has allowed the user to export the document
+        bool _disableExport;
+        /// If WOPI host has allowed the user to copy to/from the document
+        bool _disableCopy;
+        /// If WOPI host has allowed the loleaflet to show texts on the overlay informing about inactivity, or if the integration is handling that.
+        bool _disableInactiveMessages;
+        /// For the (mobile) integrations, to indicate that the downloading for printing, exporting or slideshows should be intercepted and sent as a postMessage instead of handling directly.
+        bool _downloadAsPostMessage;
+        /// If set to false, users can access the save-as functionality
+        bool _userCanNotWriteRelative;
+        /// If set to true, users can access the insert remote image functionality
+        bool _enableInsertRemoteImage;
+        /// If set to true, users can access the file share functionality
+        bool _enableShare;
+        /// If set to "true", user list on the status bar will be hidden
+        /// If set to "mobile" | "tablet" | "desktop", will be hidden on a specified device
+        /// (may be joint, delimited by commas eg. "mobile,tablet")
+        std::string _hideUserList;
+        /// If we should disable change-tracking visibility by default (meaningful at loading).
+        TriState _disableChangeTrackingShow;
+        /// If we should disable change-tracking ability by default (meaningful at loading).
+        TriState _disableChangeTrackingRecord;
+        /// If we should hide change-tracking commands for this user.
+        TriState _hideChangeTrackingControls;
+        /// If WOPI host supports rename
+        bool _supportsRename;
+        /// If user is allowed to rename the document
+        bool _userCanRename;
     };
 
     class SaveResult
@@ -185,6 +369,15 @@ public:
     /// Returns the basic information about the file.
     FileInfo& getFileInfo() { return _fileInfo; }
 
+    /// Returns the response of CheckFileInfo WOPI call for URI that was
+    /// provided during the initial creation of the WOPI storage.
+    /// Also extracts the basic file information from the response
+    /// which can then be obtained using getFileInfo()
+    virtual std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth) = 0;
+
+    /// Shared code that extracts the actual WOPIFileInfo from JSON.
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(Poco::JSON::Object::Ptr& object);
+
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
     /// Returns a local file path for the given URI.
@@ -249,28 +442,11 @@ public:
                 "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
     }
 
-    class LocalFileInfo
-    {
-    public:
-        LocalFileInfo(const std::string& userId,
-                      const std::string& username)
-            : _userId(userId),
-              _username(username)
-        {
-        }
-
-        const std::string& getUserId() const { return _userId; }
-        const std::string& getUsername() const { return _username; }
-
-    private:
-        std::string _userId;
-        std::string _username;
-    };
-
-    /// Returns the URI specific file data
-    /// Also stores the basic file information which can then be
-    /// obtained using getFileInfo method
-    std::unique_ptr<LocalFileInfo> getLocalFileInfo();
+    /// Returns the response of CheckFileInfo WOPI call for URI that was
+    /// provided during the initial creation of the WOPI storage.
+    /// Also extracts the basic file information from the response
+    /// which can then be obtained using getFileInfo()
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth) override;
 
     std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
 
@@ -296,200 +472,11 @@ public:
                 "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
     }
 
-    class WOPIFileInfo
-    {
-    public:
-        enum class TriState
-        {
-            False,
-            True,
-            Unset
-        };
-
-        WOPIFileInfo(const std::string& userid,
-                     const std::string& obfuscatedUserId,
-                     const std::string& username,
-                     const std::string& userExtraInfo,
-                     const std::string& watermarkText,
-                     const std::string& templateSaveAs,
-                     const std::string& templateSource,
-                     const bool userCanWrite,
-                     const std::string& postMessageOrigin,
-                     const bool hidePrintOption,
-                     const bool hideSaveOption,
-                     const bool hideExportOption,
-                     const bool enableOwnerTermination,
-                     const bool disablePrint,
-                     const bool disableExport,
-                     const bool disableCopy,
-                     const bool disableInactiveMessages,
-                     const bool downloadAsPostMessage,
-                     const bool userCanNotWriteRelative,
-                     const bool enableInsertRemoteImage,
-                     const bool enableShare,
-                     const std::string& hideUserList,
-                     const TriState disableChangeTrackingShow,
-                     const TriState disableChangeTrackingRecord,
-                     const TriState hideChangeTrackingControls,
-                     const bool supportsRename,
-                     const bool userCanRename,
-                     const std::chrono::duration<double> callDuration)
-            : _userId(userid),
-              _obfuscatedUserId(obfuscatedUserId),
-              _username(username),
-              _watermarkText(watermarkText),
-              _templateSaveAs(templateSaveAs),
-              _templateSource(templateSource),
-              _userCanWrite(userCanWrite),
-              _postMessageOrigin(postMessageOrigin),
-              _hidePrintOption(hidePrintOption),
-              _hideSaveOption(hideSaveOption),
-              _hideExportOption(hideExportOption),
-              _enableOwnerTermination(enableOwnerTermination),
-              _disablePrint(disablePrint),
-              _disableExport(disableExport),
-              _disableCopy(disableCopy),
-              _disableInactiveMessages(disableInactiveMessages),
-              _downloadAsPostMessage(downloadAsPostMessage),
-              _userCanNotWriteRelative(userCanNotWriteRelative),
-              _enableInsertRemoteImage(enableInsertRemoteImage),
-              _enableShare(enableShare),
-              _hideUserList(hideUserList),
-              _disableChangeTrackingShow(disableChangeTrackingShow),
-              _disableChangeTrackingRecord(disableChangeTrackingRecord),
-              _hideChangeTrackingControls(hideChangeTrackingControls),
-              _supportsRename(supportsRename),
-              _userCanRename(userCanRename),
-              _callDuration(callDuration)
-            {
-                _userExtraInfo = userExtraInfo;
-            }
-
-        const std::string& getUserId() const { return _userId; }
-
-        const std::string& getUsername() const { return _username; }
-
-        const std::string& getUserExtraInfo() const { return _userExtraInfo; }
-
-        const std::string& getWatermarkText() const { return _watermarkText; }
-
-        const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
-
-        const std::string& getTemplateSource() const { return _templateSource; }
-
-        bool getUserCanWrite() const { return _userCanWrite; }
-
-        std::string& getPostMessageOrigin() { return _postMessageOrigin; }
-
-        void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
-
-        bool getHidePrintOption() const { return _hidePrintOption; }
-
-        bool getHideSaveOption() const { return _hideSaveOption; }
-
-        void setHideExportOption(bool hideExportOption) { _hideExportOption = hideExportOption; }
-
-        bool getHideExportOption() const { return _hideExportOption; }
-
-        bool getEnableOwnerTermination() const { return _enableOwnerTermination; }
-
-        bool getDisablePrint() const { return _disablePrint; }
-
-        bool getDisableExport() const { return _disableExport; }
-
-        bool getDisableCopy() const { return _disableCopy; }
-
-        bool getDisableInactiveMessages() const { return _disableInactiveMessages; }
-
-        bool getDownloadAsPostMessage() const { return _downloadAsPostMessage; }
-
-        bool getUserCanNotWriteRelative() const { return _userCanNotWriteRelative; }
-
-        bool getEnableInsertRemoteImage() const { return _enableInsertRemoteImage; }
-
-        bool getEnableShare() const { return _enableShare; }
-
-        bool getSupportsRename() const { return _supportsRename; }
-
-        bool getUserCanRename() const { return _userCanRename; }
-
-        std::string& getHideUserList() { return _hideUserList; }
-
-        TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
-
-        TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
-
-        TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
-
-        std::chrono::duration<double> getCallDuration() const { return _callDuration; }
-
-    private:
-        /// User id of the user accessing the file
-        std::string _userId;
-        /// Obfuscated User id used for logging the UserId.
-        std::string _obfuscatedUserId;
-        /// Display Name of user accessing the file
-        std::string _username;
-        /// Extra info per user, typically mail and other links, as json.
-        std::string _userExtraInfo;
-        /// In case a watermark has to be rendered on each tile.
-        std::string _watermarkText;
-        /// In case we want to use this file as a template, it should be first re-saved under this name (using PutRelativeFile).
-        std::string _templateSaveAs;
-        /// In case we want to use this file as a template.
-        std::string _templateSource;
-        /// If user accessing the file has write permission
-        bool _userCanWrite;
-        /// WOPI Post message property
-        std::string _postMessageOrigin;
-        /// Hide print button from UI
-        bool _hidePrintOption;
-        /// Hide save button from UI
-        bool _hideSaveOption;
-        /// Hide 'Download as' button/menubar item from UI
-        bool _hideExportOption;
-        /// If WOPI host has enabled owner termination feature on
-        bool _enableOwnerTermination;
-        /// If WOPI host has allowed the user to print the document
-        bool _disablePrint;
-        /// If WOPI host has allowed the user to export the document
-        bool _disableExport;
-        /// If WOPI host has allowed the user to copy to/from the document
-        bool _disableCopy;
-        /// If WOPI host has allowed the loleaflet to show texts on the overlay informing about inactivity, or if the integration is handling that.
-        bool _disableInactiveMessages;
-        /// For the (mobile) integrations, to indicate that the downloading for printing, exporting or slideshows should be intercepted and sent as a postMessage instead of handling directly.
-        bool _downloadAsPostMessage;
-        /// If set to false, users can access the save-as functionality
-        bool _userCanNotWriteRelative;
-        /// If set to true, users can access the insert remote image functionality
-        bool _enableInsertRemoteImage;
-        /// If set to true, users can access the file share functionality
-        bool _enableShare;
-        /// If set to "true", user list on the status bar will be hidden
-        /// If set to "mobile" | "tablet" | "desktop", will be hidden on a specified device
-        /// (may be joint, delimited by commas eg. "mobile,tablet")
-        std::string _hideUserList;
-        /// If we should disable change-tracking visibility by default (meaningful at loading).
-        TriState _disableChangeTrackingShow;
-        /// If we should disable change-tracking ability by default (meaningful at loading).
-        TriState _disableChangeTrackingRecord;
-        /// If we should hide change-tracking commands for this user.
-        TriState _hideChangeTrackingControls;
-        /// If WOPI host supports rename
-        bool _supportsRename;
-        /// If user is allowed to rename the document
-        bool _userCanRename;
-
-        /// Time it took to call WOPI's CheckFileInfo
-        std::chrono::duration<double> _callDuration;
-    };
-
     /// Returns the response of CheckFileInfo WOPI call for URI that was
     /// provided during the initial creation of the WOPI storage.
     /// Also extracts the basic file information from the response
     /// which can then be obtained using getFileInfo()
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth);
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;

@@ -520,12 +520,17 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     std::string watermarkText;
     std::string templateSource;
 
-#if !MOBILEAPP
     std::chrono::duration<double> getInfoCallDuration(0);
-    WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
-    if (wopiStorage != nullptr)
+    // FIXME decrease one level indent as cleanup at some stage (when it does
+    // not cause trouble backporting)
     {
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAuthorization());
+        const auto startTime = std::chrono::steady_clock::now();
+
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = _storage->getWOPIFileInfo(session->getAuthorization());
+
+        getInfoCallDuration = (std::chrono::steady_clock::now() - startTime);
+        LOG_DBG("WOPI::CheckFileInfo (" << getInfoCallDuration.count() * 1000. << " ms)");
+
         userId = wopifileinfo->getUserId();
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
@@ -533,7 +538,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         templateSource = wopifileinfo->getTemplateSource();
 
         if (!wopifileinfo->getUserCanWrite() ||
-            LOOLWSD::IsViewFileExtension(wopiStorage->getFileExtension()))
+            LOOLWSD::IsViewFileExtension(_storage->getFileExtension()))
         {
             LOG_DBG("Setting the session as readonly");
             session->setReadOnly();
@@ -560,7 +565,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         if (wopifileinfo->getDisableExport())
             wopifileinfo->setHideExportOption(true);
 
-        wopiInfo->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
+        wopiInfo->set("BaseFileName", _storage->getFileInfo().getFilename());
 
         if (!wopifileinfo->getTemplateSaveAs().empty())
             wopiInfo->set("TemplateSaveAs", wopifileinfo->getTemplateSaveAs());
@@ -602,29 +607,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             session->setDocumentOwner(true);
         }
 
-        getInfoCallDuration = wopifileinfo->getCallDuration();
-
         // Pass the ownership to client session
         session->setWopiFileInfo(wopifileinfo);
     }
-    else
-#endif
-    {
-        LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
-        if (localStorage != nullptr)
-        {
-            std::unique_ptr<LocalStorage::LocalFileInfo> localfileinfo = localStorage->getLocalFileInfo();
-            userId = localfileinfo->getUserId();
-            username = localfileinfo->getUsername();
-
-            if (LOOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
-            {
-                LOG_DBG("Setting the session as readonly");
-                session->setReadOnly();
-            }
-        }
-    }
-
 
 #if ENABLE_SUPPORT_KEY
     if (!LOOLWSD::OverrideWatermark.empty())
@@ -771,7 +756,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     LOOLWSD::dumpNewSessionTrace(getJailId(), sessionId, _uriOrig, _storage->getRootFilePath());
 
     // Since document has been loaded, send the stats if its WOPI
-    if (wopiStorage != nullptr)
+    if (WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get()))
     {
         // Get the time taken to load the file from storage
         auto callDuration = wopiStorage->getWopiLoadDuration();
