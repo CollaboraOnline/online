@@ -256,20 +256,23 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
 
 std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 
-std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
+std::unique_ptr<StorageBase::WOPIFileInfo> LocalStorage::getWOPIFileInfo(const Authorization& /*auth*/)
 {
     const Poco::Path path = Poco::Path(getUri().getPath());
     LOG_DBG("Getting info for local uri [" << LOOLWSD::anonymizeUrl(getUri().toString()) << "], path [" << LOOLWSD::anonymizeUrl(path.toString()) << "].");
 
-    const auto& filename = path.getFileName();
     const Poco::File file = Poco::File(path);
-    const Poco::Timestamp lastModified = file.getLastModified();
-    const size_t size = file.getSize();
 
-    setFileInfo(FileInfo({filename, "localhost", lastModified, size}));
+    Poco::JSON::Object::Ptr object = new Poco::JSON::Object;
+    object->set("BaseFileName", path.getFileName());
+    object->set("OwnerId", "localhost");
+    object->set("LastModifiedTime", Poco::DateTimeFormatter::format(file.getLastModified(), Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+    object->set("Size", file.getSize());
+    object->set("UserId", "localhost" + std::to_string(LastLocalStorageId));
+    object->set("UserFriendlyName", "LocalHost#" + std::to_string(LastLocalStorageId++));
+    object->set("UserCanWrite", true);
 
-    // Set automatic userid and username
-    return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), "LocalHost#" + std::to_string(LastLocalStorageId++)}));
+    return StorageBase::getWOPIFileInfo(object);
 }
 
 std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/, const std::string& /*templateUri*/)
@@ -397,6 +400,13 @@ void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 #endif
 }
 
+} // anonymous namespace
+
+#endif
+
+namespace
+{
+
 Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::string& name)
 {
     Poco::Timestamp timestamp = Poco::Timestamp::fromEpochTime(0);
@@ -421,7 +431,9 @@ Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::st
 
 } // anonymous namespace
 
-std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
+#if !MOBILEAPP
+
+std::unique_ptr<StorageBase::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
 {
     // update the access_token to the one matching to the session
     Poco::URI uriObject(getUri());
@@ -431,7 +443,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << "].");
 
     std::string wopiResponse;
-    std::chrono::duration<double> callDuration(0);
     try
     {
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
@@ -439,15 +450,11 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         auth.authorizeRequest(request);
         addStorageDebugCookie(request);
 
-        const auto startTime = std::chrono::steady_clock::now();
-
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
-
-        callDuration = (std::chrono::steady_clock::now() - startTime);
 
         Log::StreamLogger logger = Log::trace();
         if (logger.enabled())
@@ -476,6 +483,28 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         throw;
     }
 
+    if (!LOOLWSD::AnonymizeUserData)
+        LOG_DBG("WOPI::CheckFileInfo response: " << wopiResponse);
+
+    Poco::JSON::Object::Ptr object;
+    if (!JsonUtil::parseJSON(wopiResponse, object))
+    {
+        if (LOOLWSD::AnonymizeUserData)
+            wopiResponse = "obfuscated";
+
+        LOG_ERR("WOPI::CheckFileInfo failed or no valid JSON payload returned. Access denied. "
+                "Original response: [" << wopiResponse << "].");
+
+        throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriAnonym);
+    }
+
+    return StorageBase::getWOPIFileInfo(object);
+}
+
+#endif
+
+std::unique_ptr<StorageBase::WOPIFileInfo> StorageBase::getWOPIFileInfo(Poco::JSON::Object::Ptr& object)
+{
     // Parse the response.
     std::string filename;
     size_t size = 0;
@@ -509,14 +538,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     WOPIFileInfo::TriState disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
     WOPIFileInfo::TriState hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
 
-    Poco::JSON::Object::Ptr object;
-    if (JsonUtil::parseJSON(wopiResponse, object))
+    // FIXME Decrease the indentation level here when it does not cause
+    // trouble backporting
     {
-        if (LOOLWSD::AnonymizeUserData)
-            LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): anonymizing...");
-        else
-            LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
-
         JsonUtil::findJSONValue(object, "BaseFileName", filename);
         JsonUtil::findJSONValue(object, "OwnerId", ownerId);
         JsonUtil::findJSONValue(object, "UserId", userId);
@@ -552,7 +576,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
             std::ostringstream oss;
             object->stringify(oss);
-            wopiResponse = oss.str();
+            std::string anonResponse = oss.str();
 
             // Remove them for performance reasons; they aren't needed anymore.
             object->remove("ObfuscatedUserId");
@@ -568,7 +592,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
                 object->remove("UserFriendlyName");
             }
 
-            LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
+            LOG_DBG("WOPI::CheckFileInfo anon response: " << anonResponse);
         }
 
         JsonUtil::findJSONValue(object, "Size", size);
@@ -600,17 +624,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         if (JsonUtil::findJSONValue(object, "HideChangeTrackingControls", booleanFlag))
             hideChangeTrackingControls = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
     }
-    else
-    {
-        if (LOOLWSD::AnonymizeUserData)
-            wopiResponse = "obfuscated";
-
-        LOG_ERR("WOPI::CheckFileInfo (" << callDuration.count() * 1000. <<
-                " ms) failed or no valid JSON payload returned. Access denied. "
-                "Original response: [" << wopiResponse << "].");
-
-        throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriAnonym);
-    }
 
     const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
     setFileInfo(FileInfo({filename, ownerId, modifiedTime, size}));
@@ -621,8 +634,10 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
          enableOwnerTermination, disablePrint, disableExport, disableCopy,
          disableInactiveMessages, downloadAsPostMessage, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,
          hideUserList, disableChangeTrackingShow, disableChangeTrackingRecord,
-         hideChangeTrackingControls, supportsRename, userCanRename, callDuration}));
+         hideChangeTrackingControls, supportsRename, userCanRename}));
 }
+
+#if !MOBILEAPP
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
 std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri)
