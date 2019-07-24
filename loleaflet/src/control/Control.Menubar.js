@@ -680,7 +680,7 @@ L.Control.Menubar = L.Control.extend({
 			var constChecked = 'lo-menu-item-checked';
 			if (self._map._permission === 'edit') {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
-					var data, lang;
+					var data, lang, languageAndCode;
 					var constUno = 'uno';
 					var constState = 'stateChangeHandler';
 					var constLanguage = '.uno:LanguageStatus';
@@ -699,7 +699,8 @@ L.Control.Menubar = L.Control.extend({
 					}
 					if (unoCommand.startsWith(constLanguage)) {
 						unoCommand = constLanguage;
-						lang = self._map[constState].getItemValue(unoCommand);
+						languageAndCode = self._map[constState].getItemValue(unoCommand);
+						lang = languageAndCode.split(';')[0];
 						data = decodeURIComponent($(aItem).data(constUno));
 						if (data.indexOf(lang) !== -1) {
 							$(aItem).addClass(constChecked);
