@@ -75,7 +75,11 @@ L.Control.LokDialog = L.Control.extend({
 				(newX < -target.width/2 || newY < -target.height/2
 				|| newX > window.innerWidth - target.width/2
 				|| newY > window.innerHeight - target.height/2)) {
-				return;
+				var dialog = $('.lokdialog_container');
+				var left = parseFloat(dialog.css('left'));
+				var top = parseFloat(dialog.css('top'));
+				newX = Math.max(newX, -left);
+				newY = Math.max(newY, -top);
 			}
 
 			target.transformation.translate = {
