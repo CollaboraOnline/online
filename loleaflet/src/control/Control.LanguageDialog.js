@@ -40,16 +40,22 @@ L.Control.LanguageDialog = L.Control.extend({
 		vex.closeAll();
 	},
 
-	_getSelectedLanguage: function() {
+	_getSelectedLanguageCode: function() {
 		var constState = 'stateChangeHandler';
 		var languageAndCode = this._map[constState].getItemValue('.uno:LanguageStatus');
-		var language = languageAndCode.split(';')[0];
-		return language;
+		var split = languageAndCode.split(';');
+		var code = '-';
+		if (split.length > 1)
+			code = split[1];
+		else
+			console.error('Language code not found');
+		return code;
 	},
 
 	_addItem: function(parent, language) {
-		var selectedLanguage = this._getSelectedLanguage();
+		var selectedLanguageCode = this._getSelectedLanguageCode();
 		var neutralLanguage = 'LANGUAGE_NONE';
+		var code = '';
 
 		var tr = L.DomUtil.create('tr', '', parent);
 		var td = L.DomUtil.create('td', '', tr);
@@ -57,13 +63,14 @@ L.Control.LanguageDialog = L.Control.extend({
 
 		if (language) {
 			neutralLanguage = language.neutral;
+			code = language.iso;
 			a.innerHTML = language.iso;
 		} else {
 			a.innerHTML = _('None (Do not check spelling)');
 		}
 
-		if (neutralLanguage.indexOf(selectedLanguage) !== -1
-			|| (selectedLanguage == '[None]' && !language)) {
+		if ((selectedLanguageCode != '-' && code.indexOf(selectedLanguageCode) !== -1)
+			|| (selectedLanguageCode == '-' && !language)) {
 			$(a).addClass('highlighted');
 		} else {
 			$(a).removeClass('highlighted');
