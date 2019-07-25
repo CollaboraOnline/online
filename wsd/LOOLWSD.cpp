@@ -718,6 +718,10 @@ std::string LOOLWSD::OverrideWatermark;
 std::set<const Poco::Util::AbstractConfiguration*> LOOLWSD::PluginConfigurations;
 std::chrono::time_point<std::chrono::system_clock> LOOLWSD::StartTime;
 
+#if MOBILEAPP
+std::string LOOLWSD::MobileFileInfo;
+#endif
+
 static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
@@ -2200,9 +2204,21 @@ private:
         socket->eraseFirstInputBytes(map);
 #else
         Poco::Net::HTTPRequest request;
-        // The 2nd parameter is the response to the HULLO message (which we
-        // respond with the path of the document)
-        handleClientWsUpgrade(request, std::string(socket->getInBuffer().data(), socket->getInBuffer().size()), disposition);
+
+        // This is the response to the HULLO message
+        // The first line is the document, the 2nd line (if it exists) the
+        // MobileFileInfo (equivalent to the CheckFileInfo response)
+        std::string fileURL(socket->getInBuffer().data(), socket->getInBuffer().size());
+        LOOLWSD::MobileFileInfo = "";
+
+        size_t newLine = fileURL.find("\n");
+        if (newLine != std::string::npos)
+        {
+            LOOLWSD::MobileFileInfo = fileURL.substr(newLine + 1);
+            fileURL.resize(newLine);
+        }
+
+        handleClientWsUpgrade(request, fileURL, disposition);
         socket->getInBuffer().clear();
 #endif
     }

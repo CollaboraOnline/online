@@ -71,6 +71,7 @@ public class LOActivity extends AppCompatActivity {
     private static final String KEY_DOCUMENT_URI = "documentUri";
     private static final String KEY_IS_EDITABLE = "isEditable";
     private static final String KEY_INTENT_URI = "intentUri";
+    private static final String KEY_FILE_INFO = "fileInfo";
 
     private File mTempFile = null;
 
@@ -83,6 +84,9 @@ public class LOActivity extends AppCompatActivity {
     private WebView mWebView;
     private SharedPreferences sPrefs;
     private Handler mainHandler;
+
+    /** If the document should be created from a template instead of loaded, this is the template. */
+    private String fileInfo;
 
     private boolean isDocEditable = false;
     private boolean isDocDebuggable = BuildConfig.DEBUG;
@@ -243,6 +247,7 @@ public class LOActivity extends AppCompatActivity {
                         "org.libreoffice.document_provider_id", 0);
                 documentUri = (URI) getIntent().getSerializableExtra(
                         "org.libreoffice.document_uri");
+                fileInfo = getIntent().getStringExtra("FileInfo");
             }
         } else if (savedInstanceState != null) {
             getIntent().setAction(Intent.ACTION_VIEW)
@@ -258,6 +263,7 @@ public class LOActivity extends AppCompatActivity {
                 }
             }
             isDocEditable = savedInstanceState.getBoolean(KEY_IS_EDITABLE);
+            fileInfo = savedInstanceState.getString(KEY_FILE_INFO);
         } else {
             //User can't reach here but if he/she does then
             Toast.makeText(this, getString(R.string.failed_to_load_file), Toast.LENGTH_SHORT).show();
@@ -335,6 +341,7 @@ public class LOActivity extends AppCompatActivity {
         }
         //If this activity was opened via contentUri
         outState.putBoolean(KEY_IS_EDITABLE, isDocEditable);
+        outState.putString(KEY_FILE_INFO, fileInfo);
     }
 
     @Override
@@ -443,7 +450,7 @@ public class LOActivity extends AppCompatActivity {
         String apkFile = getApplication().getPackageResourcePath();
         AssetManager assetManager = getResources().getAssets();
 
-        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
+        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad, fileInfo);
 
         // trigger the load of the document
         String finalUrlToLoad = "file:///android_asset/dist/loleaflet.html?file_path=" +
@@ -468,7 +475,7 @@ public class LOActivity extends AppCompatActivity {
     /**
      * Initialize the LOOLWSD to load 'loadFileURL'.
      */
-    public native void createLOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL);
+    public native void createLOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL, String loadFileInfo);
 
     /**
      * Passing messages from JS (instead of the websocket communication).

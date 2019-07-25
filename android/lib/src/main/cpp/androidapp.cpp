@@ -30,6 +30,7 @@ const int SHOW_JS_MAXLEN = 70;
 int loolwsd_server_socket_fd = -1;
 
 static std::string fileURL;
+static std::string fileInfo;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
 static JavaVM* javaVM = nullptr;
@@ -237,16 +238,24 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
                            assert(false);
                         }).detach();
 
-            // First we simply send it the URL. This corresponds to the GET request with Upgrade to
-            // WebSocket.
-            LOG_DBG("Actually sending to Online:" << fileURL);
+            // First we simply send it the URL. This corresponds to the GET
+            // request with Upgrade to WebSocket.
+            // The 2nd line of this is fileInfo that is a JSON, equivalent to
+            // the WOPI CheckFileInfo response.
+            std::string message = fileURL;
+            if (!fileInfo.empty())
+            {
+                message += '\n';
+                message += fileInfo;
+            }
+            LOG_DBG("Actually sending to Online:" << message);
 
             // Send the document URL to LOOLWSD to setup the docBroker URL
             struct pollfd pollfd;
             pollfd.fd = currentFakeClientFd;
             pollfd.events = POLLOUT;
             fakeSocketPoll(&pollfd, 1, -1);
-            fakeSocketWrite(currentFakeClientFd, fileURL.c_str(), fileURL.size());
+            fakeSocketWrite(currentFakeClientFd, message.c_str(), message.size());
         }
         else if (strcmp(string_value, "BYE") == 0)
         {
@@ -276,9 +285,20 @@ extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstr
 
 /// Create the LOOLWSD instance.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL)
+Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL, jstring loadFileInfo)
 {
-    fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
+    if (!loadFileURL)
+        return;
+
+    const char* pFileURL = env->GetStringUTFChars(loadFileURL, nullptr);
+    const char* pFileInfo = loadFileInfo? env->GetStringUTFChars(loadFileInfo, nullptr): "";
+
+    fileURL = std::string(pFileURL);
+    fileInfo = std::string(pFileInfo);
+
+    env->ReleaseStringUTFChars(loadFileURL, pFileURL);
+    if (loadFileInfo)
+        env->ReleaseStringUTFChars(loadFileInfo, pFileInfo);
 
     // already initialized?
     if (lokInitialized)
