@@ -136,6 +136,20 @@ public:
                other.getTilePosY() <= getTilePosY() + getTileHeight();
     }
 
+    bool canCombine(const TileDesc& other) const
+    {
+        if (!onSameRow(other))
+            return false;
+        int gridX = getTilePosX() / getTileWidth();
+        int gridXOther = other.getTilePosX() / other.getTileWidth();
+        int delta = gridX - gridXOther;
+        // a 4k screen - is sixteen 256 pixel wide tiles wide.
+        if (delta < -16 || delta > 16)
+            return false;
+        else
+            return true;
+    }
+
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
     std::string serialize(const std::string& prefix = "") const
