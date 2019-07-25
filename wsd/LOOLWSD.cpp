@@ -2200,6 +2200,8 @@ private:
         socket->eraseFirstInputBytes(map);
 #else
         Poco::Net::HTTPRequest request;
+        // The 2nd parameter is the response to the HULLO message (which we
+        // respond with the path of the document)
         handleClientWsUpgrade(request, std::string(socket->getInBuffer().data(), socket->getInBuffer().size()), disposition);
         socket->getInBuffer().clear();
 #endif
