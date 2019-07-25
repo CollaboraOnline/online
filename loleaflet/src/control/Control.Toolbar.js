@@ -2245,19 +2245,27 @@ function escapeHtml(input) {
 }
 
 function onAddView(e) {
+	var userlistItem = w2ui['actionbar'].get('userlist');
 	var username = escapeHtml(e.username);
-	$('#tb_actionbar_item_userlist')
-		.w2overlay({
-			class: 'loleaflet-font',
-			html: userJoinedPopupMessage.replace('%user', username),
-			style: 'padding: 5px'
-		});
-	clearTimeout(userPopupTimeout);
-	userPopupTimeout = setTimeout(function() {
-		$('#tb_actionbar_item_userlist').w2overlay('');
+	var showPopup = false;
+
+	if (userlistItem !== null)
+		showPopup = $(userlistItem.html).find('#userlist_table tbody tr').length > 0;
+
+	if (showPopup) {
+		$('#tb_actionbar_item_userlist')
+			.w2overlay({
+				class: 'loleaflet-font',
+				html: userJoinedPopupMessage.replace('%user', username),
+				style: 'padding: 5px'
+			});
 		clearTimeout(userPopupTimeout);
-		userPopupTimeout = null;
-	}, 3000);
+		userPopupTimeout = setTimeout(function() {
+			$('#tb_actionbar_item_userlist').w2overlay('');
+			clearTimeout(userPopupTimeout);
+			userPopupTimeout = null;
+		}, 3000);
+	}
 
 	var color = L.LOUtil.rgbToHex(map.getViewColor(e.viewId));
 	if (e.viewId === map._docLayer._viewId) {
@@ -2270,7 +2278,6 @@ function onAddView(e) {
 		username += ' (' +  _('Readonly') + ')';
 	}
 
-	var userlistItem = w2ui['actionbar'].get('userlist');
 	if (userlistItem !== null) {
 		var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
 		userlistItem.html = newhtml;
