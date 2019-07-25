@@ -76,6 +76,10 @@ public:
     static std::set<const Poco::Util::AbstractConfiguration*> PluginConfigurations;
     static std::chrono::time_point<std::chrono::system_clock> StartTime;
 
+#if MOBILEAPP
+    static std::string MobileFileInfo;
+#endif
+
     static std::vector<int> getKitPids();
 
     static std::string GenSessionId()

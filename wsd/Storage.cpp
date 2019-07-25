@@ -261,16 +261,30 @@ std::unique_ptr<StorageBase::WOPIFileInfo> LocalStorage::getWOPIFileInfo(const A
     const Poco::Path path = Poco::Path(getUri().getPath());
     LOG_DBG("Getting info for local uri [" << LOOLWSD::anonymizeUrl(getUri().toString()) << "], path [" << LOOLWSD::anonymizeUrl(path.toString()) << "].");
 
-    const Poco::File file = Poco::File(path);
+    Poco::JSON::Object::Ptr object;
+#if MOBILEAPP
+    LOG_DBG("MobileFileInfo: " << LOOLWSD::MobileFileInfo);
+    if (LOOLWSD::MobileFileInfo.empty() || !JsonUtil::parseJSON(LOOLWSD::MobileFileInfo, object))
+#endif
+        object = new Poco::JSON::Object;
 
-    Poco::JSON::Object::Ptr object = new Poco::JSON::Object;
     object->set("BaseFileName", path.getFileName());
     object->set("OwnerId", "localhost");
-    object->set("LastModifiedTime", Poco::DateTimeFormatter::format(file.getLastModified(), Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
-    object->set("Size", file.getSize());
+
+    const Poco::File file = Poco::File(path);
+    if (file.exists())
+    {
+        object->set("LastModifiedTime", Poco::DateTimeFormatter::format(file.getLastModified(), Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+        object->set("Size", file.getSize());
+    }
+
     object->set("UserId", "localhost" + std::to_string(LastLocalStorageId));
     object->set("UserFriendlyName", "LocalHost#" + std::to_string(LastLocalStorageId++));
     object->set("UserCanWrite", true);
+
+    std::ostringstream oss;
+    object->stringify(oss);
+    LOG_DBG("We have this fileInfo: " << oss.str());
 
     return StorageBase::getWOPIFileInfo(object);
 }
