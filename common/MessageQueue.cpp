@@ -510,7 +510,7 @@ TileQueue::Payload TileQueue::get_impl()
         LOG_TRC("Combining candidate: " << LOOLProtocol::getAbbreviatedMessage(msg));
 
         // Check if it's on the same row.
-        if (tiles[0].onSameRow(tile2))
+        if (tiles[0].canCombine(tile2))
         {
             tiles.emplace_back(tile2);
             getQueue().erase(getQueue().begin() + i);
