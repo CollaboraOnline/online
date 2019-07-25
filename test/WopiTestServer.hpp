@@ -57,6 +57,8 @@ protected:
         _fileLastModifiedTime = Poco::Timestamp();
     }
 
+    const Poco::Timestamp& getFileLastModifiedTime() const { return _fileLastModifiedTime; }
+
 public:
     WopiTestServer(std::string fileContent = "Hello, world")
         : _fileContent(std::move(fileContent))

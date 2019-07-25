@@ -47,14 +47,14 @@ public:
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", "test.odt");
             fileInfo->set("TemplateSource", std::string("http://127.0.0.1:") + std::to_string(helpers::getClientPort()) + "/test.ott"); // must be http, otherwise Neon in the core complains
-            fileInfo->set("Size", _fileContent.size());
+            fileInfo->set("Size", getFileContent().size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", "test");
             fileInfo->set("UserFriendlyName", "test");
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", Poco::DateTimeFormatter::format(Poco::DateTime(_fileLastModifiedTime), Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+            fileInfo->set("LastModifiedTime", Poco::DateTimeFormatter::format(Poco::DateTime(getFileLastModifiedTime()), Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
             fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
@@ -65,7 +65,7 @@ public:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "Last-Modified: " << Poco::DateTimeFormatter::format(getFileLastModifiedTime(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: " << responseString.size() << "\r\n"
                 << "Content-Type: " << mimeType << "\r\n"
@@ -113,7 +113,7 @@ public:
             oss << "HTTP/1.1 200 OK\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "\r\n"
-                << "{\"LastModifiedTime\": \"" << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::ISO8601_FRAC_FORMAT) << "\" }";
+                << "{\"LastModifiedTime\": \"" << Poco::DateTimeFormatter::format(getFileLastModifiedTime(), Poco::DateTimeFormat::ISO8601_FRAC_FORMAT) << "\" }";
 
             socket->send(oss.str());
             socket->shutdown();
@@ -139,7 +139,7 @@ public:
             {
                 initWebsocket("/wopi/files/10?access_token=anything");
 
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "load url=" + _wopiSrc, testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
                 SocketPoll::wakeupWorld();
 
                 _phase = Phase::SaveDoc;
@@ -147,7 +147,7 @@ public:
             }
             case Phase::CloseDoc:
             {
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "closedocument", testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", testName);
                 _phase = Phase::Polling;
                 break;
             }
