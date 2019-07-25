@@ -1095,6 +1095,10 @@ public:
         const size_t tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
         const size_t pixmapWidth = tilesByX * tileCombined.getWidth();
         const size_t pixmapHeight = tilesByY * tileCombined.getHeight();
+
+        if (pixmapWidth > 4096 || pixmapHeight > 4096)
+            LOG_WRN("Unusual extremely large tile combine of size " << pixmapWidth << "x" << pixmapHeight);
+
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<unsigned char> pixmap(pixmapSize, 0);
 
