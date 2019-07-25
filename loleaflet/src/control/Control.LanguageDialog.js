@@ -57,7 +57,7 @@ L.Control.LanguageDialog = L.Control.extend({
 
 		if (language) {
 			neutralLanguage = language.neutral;
-			a.innerHTML = language.translated;
+			a.innerHTML = language.iso;
 		} else {
 			a.innerHTML = _('None (Do not check spelling)');
 		}
