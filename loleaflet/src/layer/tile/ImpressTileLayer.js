@@ -391,6 +391,8 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	onAnnotationScrollDown: function () {
 		this._topAnnotation[this._selectedPart] = Math.min(++this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
 		this.onAnnotationCancel();
+		var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast());
+		this._map.fire('scrollby', {x: topRight.x, y: 0});
 	},
 
 	onAnnotationScrollUp: function () {
