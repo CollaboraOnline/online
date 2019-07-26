@@ -794,6 +794,10 @@ L.Socket = L.Class.extend({
 				return;
 			}
 		}
+		else if (textMsg.startsWith('viewinfo:')) {
+			this._onViewInfoMsg(textMsg);
+			return;
+		}
 
 		if (this._map._docLayer) {
 			this._map._docLayer._onMessage(textMsg, img);
@@ -897,6 +901,18 @@ L.Socket = L.Class.extend({
 		this._map.fire('docloaded', {status: true});
 		if (this._map._docLayer) {
 			this._map._docLayer._onMessage(textMsg);
+		}
+	},
+
+	_onViewInfoMsg: function(textMsg) {
+		if (this._map._docLayer) {
+			this._map._docLayer._onMessage(textMsg);
+		}
+		else {
+			var that = this;
+			setTimeout(function() {
+				that._onViewInfoMsg(textMsg);
+			}, 100);
 		}
 	},
 
