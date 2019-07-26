@@ -25,6 +25,9 @@
 #define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC    "test/data/hello-world.ods"
 #define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS "test/data/hello-world.odp"
 
+/* Default ciphers used, when not specified otherwise */
+#define DEFAULT_CIPHER_SET "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"
+
 // This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
 // parent process that listens on the TCP port and accepts connections from LOOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
@@ -1224,7 +1227,9 @@ void LOOLWSD::initializeSSL()
     const std::string ssl_ca_file_path = getPathFromConfig("ssl.ca_file_path");
     LOG_INF("SSL CA file: " << ssl_ca_file_path);
 
-    const std::string ssl_cipher_list = config().getString("ssl.cipher_list", "");
+    std::string ssl_cipher_list = config().getString("ssl.cipher_list", "");
+    if (ssl_cipher_list.empty())
+            ssl_cipher_list = DEFAULT_CIPHER_SET;
     LOG_INF("SSL Cipher list: " << ssl_cipher_list);
 
     // Initialize the non-blocking socket SSL.

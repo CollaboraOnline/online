@@ -30,8 +30,6 @@ extern "C"
     };
 }
 
-#define DEFAULT_CIPHER_SET "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"
-
 std::unique_ptr<SslContext> SslContext::Instance(nullptr);
 
 SslContext::SslContext(const std::string& certFilePath,
@@ -71,8 +69,10 @@ SslContext::SslContext(const std::string& certFilePath,
     // as we don't expect/support different servers in same process.
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
     _ctx = SSL_CTX_new(TLS_method());
+    SSL_CTX_set_min_proto_version(_ctx, TLS1_VERSION);
 #else
     _ctx = SSL_CTX_new(SSLv23_method());
+    SSL_CTX_set_options(_ctx, SSL_OP_NO_SSLv3);
 #endif
 
     // SSL_CTX_set_default_passwd_cb(_ctx, &privateKeyPassphraseCallback);
@@ -113,10 +113,7 @@ SslContext::SslContext(const std::string& certFilePath,
         }
 
         SSL_CTX_set_verify(_ctx, SSL_VERIFY_NONE, nullptr /*&verifyServerCallback*/);
-        std::string ciphers(cipherList);
-        if (ciphers.empty())
-            ciphers = DEFAULT_CIPHER_SET;
-        SSL_CTX_set_cipher_list(_ctx, ciphers.c_str());
+        SSL_CTX_set_cipher_list(_ctx, cipherList.c_str());
         SSL_CTX_set_verify_depth(_ctx, 9);
 
         // The write buffer may re-allocate, and we don't mind partial writes.
