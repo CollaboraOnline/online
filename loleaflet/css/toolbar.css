@@ -65,6 +65,10 @@ w2ui-toolbar {
     z-index: 1000;
 }
 
+.select2-container .select2-selection--single {
+    height: 100%;
+}
+
 .w2ui-scroll-left,
 .w2ui-scroll-right {
     z-index: 1000;
