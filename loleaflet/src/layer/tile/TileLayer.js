@@ -149,6 +149,30 @@ L.TileLayer = L.GridLayer.extend({
 			interactive: false
 		});
 
+		this._cellResizeMarkerStart = L.marker(new L.LatLng(0, 0), {
+			icon: L.divIcon({
+				className: 'spreadsheet-cell-resize-marker',
+				iconSize: null
+			}),
+			draggable: true
+		});
+
+		this._cellResizeMarkerEnd = L.marker(new L.LatLng(0, 0), {
+			icon: L.divIcon({
+				className: 'spreadsheet-cell-resize-marker',
+				iconSize: null
+			}),
+			draggable: true
+		});
+
+		this._cellAutofillMarker = L.marker(new L.LatLng(0, 0), {
+			icon: L.divIcon({
+				className: 'spreadsheet-cell-autofill-marker',
+				iconSize: null
+			}),
+			draggable: true
+		});
+
 		this._emptyTilesCount = 0;
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
@@ -286,6 +310,10 @@ L.TileLayer = L.GridLayer.extend({
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
+
+		this._cellResizeMarkerStart.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
+		this._cellResizeMarkerEnd.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
+		this._cellAutofillMarker.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 
 		map.setPermission(this.options.permission);
 
@@ -450,6 +478,12 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('textselectionstart:')) {
 			this._onTextSelectionStartMsg(textMsg);
+		}
+		else if (textMsg.startsWith('cellselectionarea:')) {
+			this._onCellSelectionAreaMsg(textMsg);
+		}
+		else if (textMsg.startsWith('cellautofillarea:')) {
+			this._onCellAutoFillAreaMsg(textMsg);
 		}
 		else if (textMsg.startsWith('windowpaint:')) {
 			this._onDialogPaintMsg(textMsg, img);
@@ -1343,6 +1377,37 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_onCellSelectionAreaMsg: function (textMsg) {
+		var strTwips = textMsg.match(/\d+/g);
+		if (strTwips != null && this._map._permission === 'edit') {
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+			var oldSelection = this._cellSelectionArea;
+			this._cellSelectionArea = new L.LatLngBounds(
+						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+
+			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
+		} else {
+			this._cellSelectionArea = null;
+		}
+	},
+
+	_onCellAutoFillAreaMsg: function (textMsg) {
+		var strTwips = textMsg.match(/\d+/g);
+		if (strTwips != null && this._map._permission === 'edit') {
+			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+			this._cellAutoFillArea = new L.LatLngBounds(
+						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+		} else {
+			this._cellAutoFillArea = null;
+		}
+	},
+
 	_onDialogPaintMsg: function(textMsg, img) {
 		var command = this._map._socket.parseServerCmd(textMsg);
 
@@ -2158,6 +2223,110 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	// Update dragged text selection.
+	_onCellResizeMarkerDrag: function (e) {
+		var buttonType = null;
+		if (e.type === 'dragstart') {
+			e.target.isDragged = true;
+
+			// handle scrolling
+			if (this._cellAutofillMarker === e.target) {
+				var autoFillPosition = this._latLngToTwips(this._cellAutoFillArea.getCenter());
+				this._postMouseEvent('buttondown', autoFillPosition.x, autoFillPosition.y, 1, 1, 0);
+				buttonType = 'move';
+			}
+		}
+		else if (e.type === 'drag') {
+			var event = e.originalEvent;
+			if (e.originalEvent.touches && e.originalEvent.touches.length > 0) {
+				event = e.originalEvent.touches[0];
+			}
+			if (!event.pageX && !event.pageY) {
+				return;
+			}
+
+			// handle scroling
+
+			// This is rather hacky, but it seems to be the only way to make the
+			// marker follow the mouse cursor if the document is autoscrolled under
+			// us. (This can happen when we're changing the selection if the cursor
+			// moves somewhere that is considered off screen.)
+
+			// Onscreen position of the cursor, i.e. relative to the browser window
+			var boundingrect = e.target._icon.getBoundingClientRect();
+			var cursorPos = L.point(boundingrect.left, boundingrect.top);
+			var expectedPos = L.point(event.pageX, event.pageY).subtract(e.target.dragging._draggable.startOffset);
+
+			// Dragging the selection handles vertically more than one line on a touch
+			// device is more or less impossible without this hack.
+			if (!(typeof e.originalEvent.type === 'string' && e.originalEvent.type === 'touchmove')) {
+				// If the map has been scrolled, but the cursor hasn't been updated yet, then
+				// the current mouse position differs.
+				if (!expectedPos.equals(cursorPos)) {
+					var correction = expectedPos.subtract(cursorPos);
+
+					e.target.dragging._draggable._startPoint = e.target.dragging._draggable._startPoint.add(correction);
+					e.target.dragging._draggable._startPos = e.target.dragging._draggable._startPos.add(correction);
+					e.target.dragging._draggable._newPos = e.target.dragging._draggable._newPos.add(correction);
+
+					e.target.dragging._draggable._updatePosition();
+				}
+			}
+			var containerPos = new L.Point(expectedPos.x - this._map._container.getBoundingClientRect().left,
+				expectedPos.y - this._map._container.getBoundingClientRect().top);
+
+			containerPos = containerPos.add(e.target.dragging._draggable.startOffset);
+			this._map.fire('handleautoscroll', {pos: containerPos, map: this._map});
+
+			// cell auto marker
+			if (this._cellAutofillMarker === e.target) {
+				buttonType = 'move';
+			}
+		} else if (e.type === 'dragend') {
+			e.target.isDragged = false;
+
+			// handle scrolling
+			this._map.focus();
+			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
+
+			// cell auto marker
+			if (this._cellAutofillMarker === e.target) {
+				buttonType = 'buttonup';
+			}
+		}
+
+		// modify the mouse position - move to center of the marker
+		var aMousePosition = e.target.getLatLng();
+		aMousePosition = this._map.project(aMousePosition);
+		var size;
+		if (this._cellResizeMarkerStart === e.target) {
+			size = this._cellResizeMarkerStart._icon.getBoundingClientRect();
+		}
+		else if (this._cellResizeMarkerEnd === e.target) {
+			size = this._cellResizeMarkerEnd._icon.getBoundingClientRect();
+		}
+		else if (this._cellAutofillMarker === e.target) {
+			size = this._cellAutofillMarker._icon.getBoundingClientRect();
+		}
+		aMousePosition = aMousePosition.add(new L.Point(size.width / 2, size.height / 2));
+		aMousePosition = this._map.unproject(aMousePosition);
+		aMousePosition = this._latLngToTwips(aMousePosition);
+
+		if (this._cellResizeMarkerStart === e.target) {
+			this._postSelectTextEvent('start', aMousePosition.x, aMousePosition.y);
+			if (e.type === 'dragend')
+				this._onUpdateCellResizeMarkers();
+		}
+		else if (this._cellResizeMarkerEnd === e.target) {
+			this._postSelectTextEvent('end', aMousePosition.x, aMousePosition.y);
+			if (e.type === 'dragend')
+				this._onUpdateCellResizeMarkers();
+		}
+		else if (this._cellAutofillMarker === e.target) {
+			this._postMouseEvent(buttonType, aMousePosition.x, aMousePosition.y, 1, 1, 0);
+		}
+	},
+
 	// Update group layer selection handler.
 	_onUpdateGraphicSelection: function () {
 		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
@@ -2219,6 +2388,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn) {
+		this._onUpdateCellResizeMarkers();
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			var mapBounds = this._map.getBounds();
 			if (!mapBounds.contains(this._cellCursor) && !this._cellCursorXY.equals(this._prevCellCursorXY)) {
@@ -2341,8 +2511,55 @@ L.TileLayer = L.GridLayer.extend({
 		return this._dropDownButton;
 	},
 
+	_onUpdateCellResizeMarkers: function () {
+		if (this._selections.getLayers().length !== 0 || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor))) {
+			if (this._isEmptyRectangle(this._cellSelectionArea) && this._isEmptyRectangle(this._cellCursor)) {
+				return;
+			}
+
+			var cellRectangle = this._cellSelectionArea ? this._cellSelectionArea : this._cellCursor;
+
+			if (!this._cellResizeMarkerStart.isDragged) {
+				this._map.addLayer(this._cellResizeMarkerStart);
+				var posStart = this._map.project(cellRectangle.getNorthWest());
+				var sizeStart = this._cellResizeMarkerStart._icon.getBoundingClientRect();
+				posStart = posStart.subtract(new L.Point(sizeStart.width / 2, sizeStart.height / 2));
+				posStart = this._map.unproject(posStart);
+				this._cellResizeMarkerStart.setLatLng(posStart);
+			}
+			if (!this._cellResizeMarkerEnd.isDragged) {
+				this._map.addLayer(this._cellResizeMarkerEnd);
+				var posEnd = this._map.project(cellRectangle.getSouthEast());
+				var sizeEnd = this._cellResizeMarkerEnd._icon.getBoundingClientRect();
+				posEnd = posEnd.subtract(new L.Point(sizeEnd.width / 2, sizeEnd.height / 2));
+				posEnd = this._map.unproject(posEnd);
+				this._cellResizeMarkerEnd.setLatLng(posEnd);
+			}
+			if (!this._cellAutofillMarker.isDragged) {
+				this._map.addLayer(this._cellAutofillMarker);
+				var cellAutoFillMarkerPoisition = cellRectangle.getCenter();
+				cellAutoFillMarkerPoisition.lat = cellRectangle.getSouth();
+				cellAutoFillMarkerPoisition = this._map.project(cellAutoFillMarkerPoisition);
+				var sizeAutoFill = this._cellAutofillMarker._icon.getBoundingClientRect();
+				cellAutoFillMarkerPoisition = cellAutoFillMarkerPoisition.subtract(new L.Point(sizeAutoFill.width / 2, sizeAutoFill.height / 2));
+				cellAutoFillMarkerPoisition = this._map.unproject(cellAutoFillMarkerPoisition);
+				this._cellAutofillMarker.setLatLng(cellAutoFillMarkerPoisition);
+			}
+		}
+		else {
+			this._map.removeLayer(this._cellResizeMarkerStart);
+			this._map.removeLayer(this._cellResizeMarkerEnd);
+			this._map.removeLayer(this._cellAutofillMarker);
+		}
+	},
+
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
+		if (this._docType === 'spreadsheet') {
+			this._onUpdateCellResizeMarkers();
+			return;
+		}
+
 		var startMarker, endMarker;
 		for (var key in this._selectionHandles) {
 			if (key === 'start') {

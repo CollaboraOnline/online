@@ -2240,6 +2240,12 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
         // these are not handled here.
         break;
+    case LOK_CALLBACK_CELL_SELECTION_AREA:
+        sendTextFrame("cellselectionarea: " + payload);
+        break;
+    case LOK_CALLBACK_CELL_AUTO_FILL_AREA:
+        sendTextFrame("cellautofillarea: " + payload);
+        break;
 
 #if !ENABLE_DEBUG
     // we want a compilation-time failure in the debug builds; but ERR in the

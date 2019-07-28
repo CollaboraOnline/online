@@ -133,6 +133,10 @@ namespace LOKitHelper
             return "SIGNATURE_STATUS";
         case LOK_CALLBACK_PROFILE_FRAME:
             return "PROFILE_FRAME";
+        case LOK_CALLBACK_CELL_SELECTION_AREA:
+            return "CELL_SELECTION_AREA";
+        case LOK_CALLBACK_CELL_AUTO_FILL_AREA:
+            return "CELL_AUTO_FILL_AREA";
        }
 
         assert(!"Missing LOK_CALLBACK type");
