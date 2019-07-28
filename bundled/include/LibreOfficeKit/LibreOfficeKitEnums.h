@@ -164,7 +164,7 @@ typedef enum
     /**
      * The size and/or the position of the graphic selection changed,
      * the rotation angle of the embedded graphic object, and a property list
-     * which can be used for informing the client about severl properties.
+     * which can be used for informing the client about several properties.
      *
      * Format is "x, y, width, height, angle, { list of properties }",
      * where angle is in 100th of degree, and the property list is optional.
@@ -195,7 +195,7 @@ typedef enum
      *      }
      *
      *      where the "svg" property is a string containing an svg document
-     *      which is a rapresentation of the pie segment.
+     *      which is a representation of the pie segment.
      */
     LOK_CALLBACK_GRAPHIC_SELECTION = 6,
 
@@ -593,6 +593,7 @@ typedef enum
      * "type" tells the type of the window the action is associated with
      *  - "dialog" - window is a dialog
      *  - "child" - window is a floating window (combo boxes, etc.)
+     *  - "deck" - window is a docked/floating deck (i.e. the sidebar)
      *
      * "action" can take following values:
      * - "created" - window is created in the backend, client can render it now
@@ -647,7 +648,23 @@ typedef enum
      * Profiling tracing information single string of multiple lines
      * containing <pid> <timestamp> and zone start/stop information
      */
-    LOK_CALLBACK_PROFILE_FRAME = 41
+    LOK_CALLBACK_PROFILE_FRAME = 41,
+
+    /**
+     * The position and size of the cell selection area. It is used to
+     * draw the selection handles for cells in Calc documents.
+     *
+     * Rectangle format is the same as LOK_CALLBACK_INVALIDATE_TILES.
+     */
+    LOK_CALLBACK_CELL_SELECTION_AREA = 42,
+
+    /**
+     * The position and size of the cell auto fill area. It is used to
+     * trigger auto fill functionality if that area is hit.
+     *
+     * Rectangle format is the same as LOK_CALLBACK_INVALIDATE_TILES.
+     */
+    LOK_CALLBACK_CELL_AUTO_FILL_AREA = 43,
 }
 LibreOfficeKitCallbackType;
 
