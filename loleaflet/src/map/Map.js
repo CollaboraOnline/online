@@ -203,6 +203,10 @@ L.Map = L.Evented.extend({
 				var interactiveRuler = this._permission === 'edit' ? true : false;
 				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
 			}
+			if (L.Browser.mobile)
+			{
+				this._socket.sendMessage('uno .uno:LOKSetMobile');
+			}
 		});
 		this.on('updatetoolbarcommandvalues', function(e) {
 			if (this.initComplete) {
