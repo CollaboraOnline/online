@@ -615,7 +615,7 @@ L.Control.LokDialog = L.Control.extend({
 		}, this);
 
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
-			L.DomEvent.stopPropagation(e);
+			L.DomEvent.stop(e);
 			var buttons = 0;
 			if (this._map['mouse']) {
 				buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
@@ -629,6 +629,12 @@ L.Control.LokDialog = L.Control.extend({
 			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
 			//dlgInput.focus();
 		}, this);
+
+		L.DomEvent.on(canvas, 'click', function(ev) {
+			// Clicking on the dialog's canvas shall not trigger any
+			// focus change - therefore the event is stopped and preventDefault()ed.
+			L.DomEvent.stop(ev);
+		});
 	},
 
 	_setupGestures: function(dialogContainer, id, canvas) {
