@@ -915,7 +915,7 @@ L.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			this._map._docLayer.removeAllViews();
 			this._map._docLayer._resetClientVisArea();
-			this._map._docLayer._graphicSelection = null;
+			this._map._docLayer._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 			this._map._docLayer._onUpdateGraphicSelection();
 		}
 

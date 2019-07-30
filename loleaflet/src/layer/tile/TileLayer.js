@@ -833,7 +833,7 @@ L.TileLayer = L.GridLayer.extend({
 
 				this._map.addObjectFocusDarkOverlay(xTwips, yTwips, wTwips, hTwips);
 
-				this._graphicSelection = null;
+				this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 				this._onUpdateGraphicSelection();
 			}
 		}
@@ -1819,7 +1819,7 @@ L.TileLayer = L.GridLayer.extend({
 		// hide the selection handles
 		this._onUpdateTextSelection();
 		// hide the graphic selection
-		this._graphicSelection = null;
+		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		this._onUpdateGraphicSelection();
 		this._cellCursor = null;
 		this._onUpdateCellCursor();
