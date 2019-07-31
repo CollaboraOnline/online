@@ -107,6 +107,9 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 	_onDragStart: function(evt) {
 		var eventType = evt.originalEvent._simulated ? 'touchstart' : evt.originalEvent.type;
 
+		if (!MOVE[eventType])
+			return;
+
 		this._mouseDown = evt.originalEvent;
 		this._mapDraggingWasEnabled = false;
 		this._startPoint = evt.containerPoint.clone();
