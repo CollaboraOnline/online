@@ -59,6 +59,10 @@ L.SVGGroup = L.Layer.extend({
 
 		if (!this._dragShape || !this.dragging)
 			return;
+
+		if (!this._map)
+			return;
+
 		this._moved = false;
 
 		L.DomEvent.on(this._dragShape, 'mousemove', this._onDrag, this);
@@ -85,6 +89,9 @@ L.SVGGroup = L.Layer.extend({
 		}
 
 		if (!this._dragShape || !this.dragging)
+			return;
+
+		if (!this._map)
 			return;
 
 		if (!this._moved) {
@@ -114,8 +121,11 @@ L.SVGGroup = L.Layer.extend({
 
 		this._moved = false;
 		this._hideEmbeddedSVG();
-		var pos = this._map.mouseEventToLatLng(evt);
-		this.fire('graphicmoveend', {pos: pos});
+
+		if (this._map) {
+			var pos = this._map.mouseEventToLatLng(evt);
+			this.fire('graphicmoveend', {pos: pos});
+		}
 
 		if (evt.type === 'mouseup')
 			this.dragging._onDragEnd(evt);
