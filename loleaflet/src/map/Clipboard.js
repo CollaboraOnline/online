@@ -657,7 +657,7 @@ L.Clipboard = L.Class.extend({
 			var active = document.activeElement;
 			// Can't get HTML until it is pasted ... so quick timeout
 			setTimeout(function() {
-				that.dataTransferToDocument(null, /* preferInternal = */ false, that._dummyDiv.innerHTML);
+				that.dataTransferToDocument(null, /* preferInternal = */ true, that._dummyDiv.innerHTML);
 				// attempt to restore focus.
 				if (active == null)
 					that._map.focus();
