@@ -1389,6 +1389,9 @@ void HTTPWSTest::testInactiveClient()
         SocketProcessor("Second ", socket2, [&](const std::string& msg)
                 {
                     const auto token = LOOLProtocol::getFirstToken(msg);
+                    // 'window:' is e.g. 'window: {"id":"4","action":"invalidate","rectangle":"0, 0,
+                    // 0, 0"}', which is probably fine, given that other invalidations are also
+                    // expected.
                     CPPUNIT_ASSERT_MESSAGE("unexpected message: " + msg,
                                             token == "cursorvisible:" ||
                                             token == "graphicselection:" ||
@@ -1405,7 +1408,8 @@ void HTTPWSTest::testInactiveClient()
                                             token == "viewcursorvisible:" ||
                                             token == "viewinfo:" ||
                                             token == "editor:" ||
-                                            token == "context:");
+                                            token == "context:" ||
+                                            token == "window:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");
