@@ -271,6 +271,17 @@ CPPUNIT_TEST_SUITE_REGISTRATION(FakeSocketTest);
 
 int main(int, char**)
 {
+    const char* envar = std::getenv("CPPUNIT_TEST_NAME");
+    std::string testName;
+    if (envar)
+    {
+        testName = std::string(envar);
+    }
+    if (!testName.empty() && testName != "FakeSocketTest")
+    {
+        return 0;
+    }
+
     CPPUNIT_NS::TestResult controller;
     CPPUNIT_NS::TestResultCollector result;
     controller.addListener(&result);
