@@ -463,8 +463,10 @@ L.AnnotationManager = L.Class.extend({
 			var annotationCoords = this._map.latLngToLayerPoint(latlng);
 			if (this._selected != this._lastSelected) {
 				this._lastSelected = this._selected;
+				var offsetX = this.options.marginX;
+				var offsetY = this.options.marginY + 16;
 				// Scroll to bring the comments in view, which will trigger layouting again.
-				this._map.fire('scrollto', {x: annotationCoords.x, y: annotationCoords.y, calledFromInvalidateCursorMsg: false});
+				this._map.fire('scrollto', {x: posX-offsetX, y: posY-offsetY, calledFromInvalidateCursorMsg: false});
 				return;
 			}
 
