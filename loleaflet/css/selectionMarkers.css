@@ -14,7 +14,7 @@
 
 .leaflet-cursor-handler {
 	margin-left: -12px;
-	width: 25px;
-	height: 41px;
+	width: 30px;
+	height: 44px;
 	background-image: url('images/cursor-handler.png');
 }
