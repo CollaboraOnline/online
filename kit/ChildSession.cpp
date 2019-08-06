@@ -928,13 +928,10 @@ bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const st
     char       **pOutStreams = nullptr;
 
     bool success = false;
-    {
-        std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
-        getLOKitDocument()->setView(_viewId);
+    getLOKitDocument()->setView(_viewId);
 
-        success = getLOKitDocument()->getSelection(pMimeTypes, &nOutCount, &pOutMimeTypes,
-                                                   &pOutSizes, &pOutStreams);
-    }
+    success = getLOKitDocument()->getSelection(pMimeTypes, &nOutCount, &pOutMimeTypes,
+                                               &pOutSizes, &pOutStreams);
 
     if (!success || nOutCount == 0)
     {
