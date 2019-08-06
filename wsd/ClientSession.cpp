@@ -159,8 +159,7 @@ void ClientSession::rotateClipboardKey(bool notifyClient)
     if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
         return;
 
-    if (_state != SessionState::LIVE &&   // editing
-        _state != SessionState::LOADING) // handshake with client
+    if (_state == SessionState::WAIT_DISCONNECT)
         return;
 
     _clipboardKeys[1] = _clipboardKeys[0];
@@ -201,6 +200,12 @@ std::string ClientSession::getClipboardURI(bool encode)
 
 bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const std::string &tag)
 {
+    if (tag.empty())
+    {
+        LOG_ERR("Invalid, empty clipboard tag");
+        return false;
+    }
+
     // FIXME: check viewId for paranoia if we can.
     for (auto &it : _clipboardKeys)
         if (it == tag)
