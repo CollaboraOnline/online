@@ -104,6 +104,17 @@ void ClientSession::setState(SessionState newState)
 {
     LOG_TRC("ClientSession: transition from " << stateToString(_state) <<
             " to " << stateToString(newState));
+
+    // we can get incoming messages while our disconnection is in transit.
+    if (_state == SessionState::WAIT_DISCONNECT)
+    {
+        if (newState != SessionState::WAIT_DISCONNECT)
+            LOG_WRN("Unusual race - attempts to transition from " <<
+                    stateToString(_state) << " to " <<
+                    stateToString(newState));
+        return;
+    }
+
     switch (newState)
     {
     case SessionState::DETACHED:
