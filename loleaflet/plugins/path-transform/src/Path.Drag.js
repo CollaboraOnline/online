@@ -115,7 +115,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		this._startPoint = evt.containerPoint.clone();
 		this._dragStartPoint = evt.containerPoint.clone();
 		this._matrix = [1, 0, 0, 1, 0, 0];
-		L.DomEvent.stop(evt.originalEvent);
+		if (!window.ThisIsTheiOSApp || this._path._map.getDocType() !== 'presentation')
+			L.DomEvent.stop(evt.originalEvent);
 
 		L.DomUtil.addClass(this._path._renderer._container, 'leaflet-interactive');
 		L.DomEvent
@@ -143,7 +144,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 	* @param  {L.MouseEvent} evt
 	*/
 	_onDrag: function(evt) {
-		L.DomEvent.stop(evt);
+		if (!window.ThisIsTheiOSApp || this._path._map.getDocType() !== 'presentation')
+			L.DomEvent.stop(evt);
 
 		var first = (evt.touches && evt.touches.length >= 1 ? evt.touches[0] : evt);
 		var containerPoint = this._path._map.mouseEventToContainerPoint(first);
@@ -214,7 +216,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 	* @param  {L.MouseEvent} evt
 	*/
 	_onDragEnd: function(evt) {
-		L.DomEvent.stop(evt);
+		if (!window.ThisIsTheiOSApp || this._path._map.getDocType() !== 'presentation')
+			L.DomEvent.stop(evt);
 		var containerPoint = this._path._map.mouseEventToContainerPoint(evt);
 		var moved = this.moved();
 
