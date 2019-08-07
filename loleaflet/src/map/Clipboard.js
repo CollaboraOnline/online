@@ -480,8 +480,11 @@ L.Clipboard = L.Class.extend({
 	// Does the selection of text before an event comes in
 	_beforeSelect: function(ev) {
 		console.log('Got event ' + ev.type + ' setting up selection');
+		this._beforeSelectImpl(ev.type);
+	},
 
-		if (window.isInternetExplorer && ev.type != 'paste')
+	_beforeSelectImpl: function(operation) {
+		if (window.isInternetExplorer && operation != 'paste')
 			// We need populate our content into the div for
 			// the brower to copy.
 			this._dummyDiv.innerHTML = this._getHtmlForClipboard();
@@ -495,7 +498,7 @@ L.Clipboard = L.Class.extend({
 
 		var selected = false;
 		var selectRange;
-		if (window.isInternetExplorer && ev.type != 'paste')
+		if (window.isInternetExplorer && operation != 'paste')
 		{
 			this._dummyDiv.focus();
 
@@ -559,6 +562,8 @@ L.Clipboard = L.Class.extend({
 		var serial = this._clipboardSerial;
 
 		// try a direct execCommand.
+		if (window.isInternetExplorer && operation != 'paste')
+			this._beforeSelectImpl(operation);
 		if (document.execCommand(operation) &&
 		    serial !== this._clipboardSerial) {
 			console.log('copied successfully');
