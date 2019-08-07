@@ -234,6 +234,10 @@ L.Util = {
 			cancelFn.call(window, id);
 		}
 	};
+
+	// on IE11 Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER are not supported
+	L.Util.MAX_SAFE_INTEGER = Math.pow(2, 53)-1;
+	L.Util.MIN_SAFE_INTEGER = -L.Util.MAX_SAFE_INTEGER;
 })();
 
 // shortcuts for most used utility functions
