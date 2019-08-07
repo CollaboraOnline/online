@@ -780,7 +780,7 @@ L.Clipboard = L.Class.extend({
 
 		var self = this;
 		var msg = _('<p>If you would like to share larger elements of your document with other applications ' +
-			    'it is necesary to first download them onto your device. To do that press the ' +
+			    'it is necessary to first download them onto your device. To do that press the ' +
 			    '"Start download" button below, and when complete click "Confirm copy to clipboard".</p>' +
 			    '<p>If you are copy and pasting between documents inside %productName, ' +
 			    'there is no need to download.</p>');
