@@ -1252,8 +1252,10 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             if (!empty)
             {
                 oss.write(&payload->data()[header], payload->size() - header);
+#if !MOBILEAPP
                 socket->setSocketBufferSize(std::min(payload->size() + 256,
                                                      size_t(Socket::MaximumSendBufferSize)));
+#endif
             }
             socket->send(oss.str());
             socket->shutdown();

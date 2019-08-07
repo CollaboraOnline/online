@@ -1946,6 +1946,8 @@ private:
     }
 };
 
+#if !MOBILEAPP
+
 /// For clipboard setting
 class ClipboardPartHandler : public PartHandler
 {
@@ -1963,6 +1965,8 @@ public:
         LOG_TRC("Clipboard stream from part header stored of size " << _data->length());
     }
 };
+
+#endif
 
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher : public SocketHandlerInterface

@@ -275,12 +275,12 @@ void DocumentBroker::pollThread()
     uint64_t adminSent = 0;
     uint64_t adminRecv = 0;
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
-    auto last30SecCheckTime = std::chrono::steady_clock::now();
     auto lastClipboardHashUpdateTime = std::chrono::steady_clock::now();
 
     int limit_load_secs = LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
     auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
+    auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !TerminationFlag)
@@ -1585,8 +1585,10 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
                 << "X-Content-Type-Options: nosniff\r\n"
                 << "\r\n";
             oss.write(saved->c_str(), saved->length());
+#if !MOBILEAPP
             socket->setSocketBufferSize(std::min(saved->length() + 256,
                                                  size_t(Socket::MaximumSendBufferSize)));
+#endif
             socket->send(oss.str());
             socket->shutdown();
             LOG_INF("Found and queued clipboard response for send of size " << saved->length());
