@@ -234,7 +234,7 @@ protected:
             std::streamsize size = request.getContentLength();
             char buffer[size];
             message.read(buffer, size);
-            setFileContent(buffer);
+            setFileContent(std::string(buffer, size));
 
             assertPutFileRequest(request);
 
