@@ -1313,7 +1313,7 @@ public:
 
     static void GlobalCallback(const int type, const char* p, void* data)
     {
-        if (TerminationFlag)
+        if (SigUtil::getTerminationFlag())
         {
             return;
         }
@@ -1350,7 +1350,7 @@ public:
 
     static void ViewCallback(const int type, const char* p, void* data)
     {
-        if (TerminationFlag)
+        if (SigUtil::getTerminationFlag())
         {
             return;
         }
@@ -1993,7 +1993,7 @@ public:
 
                 LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
 
-                if (_stop || TerminationFlag)
+                if (_stop || SigUtil::getTerminationFlag())
                 {
                     LOG_INF("_stop or TerminationFlag is set, breaking out of loop");
                     break;
@@ -2245,7 +2245,7 @@ protected:
         }
 
         // Note: Syntax or parsing errors here are unexpected and fatal.
-        if (TerminationFlag)
+        if (SigUtil::getTerminationFlag())
         {
             LOG_DBG("Too late, TerminationFlag is set, we're going down");
         }
@@ -2273,7 +2273,7 @@ protected:
         else if (tokens[0] == "exit")
         {
             LOG_TRC("Setting TerminationFlag due to 'exit' command from parent.");
-            TerminationFlag = true;
+            SigUtil::getTerminationFlag() = true;
             document.reset();
         }
         else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
@@ -2309,7 +2309,7 @@ protected:
     {
 #if !MOBILEAPP
         LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
-        TerminationFlag = true;
+        SigUtil::getTerminationFlag() = true;
 #endif
     }
 };
@@ -2345,7 +2345,7 @@ public:
     // returns the number of events signalled
     int kitPoll(int timeoutUs)
     {
-        if (TerminationFlag)
+        if (SigUtil::getTerminationFlag())
         {
             LOG_TRC("Termination of unipoll mainloop flagged");
             return -1;
@@ -2378,7 +2378,7 @@ public:
                 timeoutMs = std::chrono::duration_cast<std::chrono::milliseconds>(_pollEnd - now).count();
                 ++eventsSignalled;
             }
-            while (timeoutMs > 0 && !TerminationFlag && maxExtraEvents-- > 0);
+            while (timeoutMs > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
         }
 
         drainQueue(std::chrono::steady_clock::now());
@@ -2387,7 +2387,7 @@ public:
         if (document && document->purgeSessions() == 0)
         {
             LOG_INF("Last session discarded. Setting TerminationFlag");
-            TerminationFlag = true;
+            SigUtil::getTerminationFlag() = true;
             return -1;
         }
 #endif

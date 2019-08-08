@@ -77,13 +77,13 @@ public:
     bool pollAndDispatch()
     {
         std::string message;
-        const int ready = readLine(message, [](){ return TerminationFlag.load(); });
+        const int ready = readLine(message, [](){ return SigUtil::getTerminationFlag().load(); });
         if (ready <= 0)
         {
             // Termination is done via SIGTERM, which breaks the wait.
             if (ready < 0)
             {
-                if (TerminationFlag)
+                if (SigUtil::getTerminationFlag())
                 {
                     LOG_INF("Poll interrupted in " << getName() << " and TerminationFlag is set.");
                 }
@@ -221,7 +221,7 @@ static void cleanupChildren()
             LOG_INF("Child " << exitedChildPid << " has exited, will remove its jail [" << it->second << "].");
             jails.emplace_back(it->second);
             childJails.erase(it);
-            if (childJails.empty() && !TerminationFlag)
+            if (childJails.empty() && !SigUtil::getTerminationFlag())
             {
                 // We ran out of kits and we aren't terminating.
                 LOG_WRN("No live Kits exist, and we are not terminating yet.");
@@ -569,7 +569,7 @@ int main(int argc, char** argv)
     CommandDispatcher commandDispatcher(0);
     LOG_INF("ForKit process is ready.");
 
-    while (!TerminationFlag)
+    while (!SigUtil::getTerminationFlag())
     {
         UnitKit::get().invokeForKitTest();
 

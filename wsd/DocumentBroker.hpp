@@ -48,7 +48,7 @@ public:
 
     bool continuePolling() override
     {
-        return SocketPoll::continuePolling() && !TerminationFlag;
+        return SocketPoll::continuePolling() && !SigUtil::getTerminationFlag();
     }
 };
 

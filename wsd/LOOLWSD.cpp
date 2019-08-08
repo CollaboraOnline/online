@@ -1406,7 +1406,7 @@ bool LOOLWSD::checkAndRestoreForKit()
     if (ForKitProcId == -1)
     {
         // Fire the ForKit process for the first time.
-        if (!ShutdownRequestFlag && !TerminationFlag && !createForKit())
+        if (!ShutdownRequestFlag && !SigUtil::getTerminationFlag() && !createForKit())
         {
             // Should never fail.
             LOG_FTL("Failed to spawn loolforkit.");
@@ -1435,7 +1435,7 @@ bool LOOLWSD::checkAndRestoreForKit()
                 }
 
                 // Spawn a new forkit and try to dust it off and resume.
-                if (!ShutdownRequestFlag && !TerminationFlag && !createForKit())
+                if (!ShutdownRequestFlag && !SigUtil::getTerminationFlag() && !createForKit())
                 {
                     LOG_FTL("Failed to spawn forkit instance. Shutting down.");
                     SigUtil::requestShutdown();
@@ -1469,7 +1469,7 @@ bool LOOLWSD::checkAndRestoreForKit()
         {
             // No child processes.
             // Spawn a new forkit and try to dust it off and resume.
-            if (!ShutdownRequestFlag && !TerminationFlag && !createForKit())
+            if (!ShutdownRequestFlag && !SigUtil::getTerminationFlag() && !createForKit())
             {
                 LOG_FTL("Failed to spawn forkit instance. Shutting down.");
                 SigUtil::requestShutdown();
@@ -1547,7 +1547,7 @@ void PrisonerPoll::wakeupHook()
                 // block until the replay finishes
                 replayThread->join();
 
-                TerminationFlag = true;
+                SigUtil::getTerminationFlag() = true;
             }
 #endif
         }
@@ -1676,7 +1676,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
 
     cleanupDocBrokers();
 
-    if (TerminationFlag)
+    if (SigUtil::getTerminationFlag())
     {
         LOG_ERR("TerminationFlag set. Not loading new session [" << id << "]");
         return nullptr;
@@ -1706,7 +1706,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
         LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
     }
 
-    if (TerminationFlag)
+    if (SigUtil::getTerminationFlag())
     {
         LOG_ERR("TerminationFlag is set. Not loading new session [" << id << "]");
         return nullptr;
@@ -3100,7 +3100,7 @@ public:
            << "  Security " << (LOOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
                             << (LOOLWSD::NoSeccomp ? "no" : "") << " api lockdown\n"
 #endif
-           << "  TerminationFlag: " << TerminationFlag << "\n"
+           << "  TerminationFlag: " << SigUtil::getTerminationFlag() << "\n"
            << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
            << "  NewChildren: " << NewChildren.size() << "\n"
            << "  OutstandingForks: " << OutstandingForks << "\n"
@@ -3399,7 +3399,7 @@ int LOOLWSD::innerMain()
 
     const auto startStamp = std::chrono::steady_clock::now();
 
-    while (!TerminationFlag && !ShutdownRequestFlag)
+    while (!SigUtil::getTerminationFlag() && !ShutdownRequestFlag)
     {
         UnitWSD::get().invokeTest();
 
@@ -3430,14 +3430,14 @@ int LOOLWSD::innerMain()
     // Stop the listening to new connections
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownRequestFlag: " <<
-            ShutdownRequestFlag << ", TerminationFlag: " << TerminationFlag);
+            ShutdownRequestFlag << ", TerminationFlag: " << SigUtil::getTerminationFlag());
 
     // Wait until documents are saved and sessions closed.
     srv.stop();
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Cleaning up lingering documents.");
-    if (ShutdownRequestFlag || TerminationFlag)
+    if (ShutdownRequestFlag || SigUtil::getTerminationFlag())
     {
         // Don't stop the DocBroker, they will exit.
         const size_t sleepMs = 300;
@@ -3528,7 +3528,7 @@ void LOOLWSD::cleanup()
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
 #if MOBILEAPP
-    TerminationFlag = false;
+    SigUtil::getTerminationFlag() = false;
 #endif
 
     int returnValue;

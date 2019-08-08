@@ -189,7 +189,7 @@ void UnitBase::exitTest(TestResult result)
     _retValue = result == TestResult::Ok ?
         Poco::Util::Application::EXIT_OK :
         Poco::Util::Application::EXIT_SOFTWARE;
-    TerminationFlag = true;
+    SigUtil::getTerminationFlag() = true;
     SocketPoll::wakeupWorld();
 }
 

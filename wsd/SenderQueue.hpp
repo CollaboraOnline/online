@@ -40,7 +40,7 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        if (!TerminationFlag && deduplicate(item))
+        if (!SigUtil::getTerminationFlag() && deduplicate(item))
             _queue.push_back(item);
 
         return _queue.size();
@@ -51,7 +51,7 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
-        if (!_queue.empty() && !TerminationFlag)
+        if (!_queue.empty() && !SigUtil::getTerminationFlag())
         {
             item = _queue.front();
             _queue.pop_front();
@@ -59,7 +59,7 @@ public:
         }
         else
         {
-            if (TerminationFlag)
+            if (SigUtil::getTerminationFlag())
                 LOG_DBG("SenderQueue: TerminationFlag is set");
             return false;
         }

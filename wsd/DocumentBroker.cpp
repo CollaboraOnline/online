@@ -231,7 +231,7 @@ void DocumentBroker::pollThread()
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
         std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
     }
-    while (!_stop && _poll->continuePolling() && !TerminationFlag && !ShutdownRequestFlag);
+    while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() && !ShutdownRequestFlag);
 #else
     _childProcess = getNewChild_Blocks(getPublicUri().getPath());
 #endif
@@ -283,7 +283,7 @@ void DocumentBroker::pollThread()
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     // Main polling loop goodness.
-    while (!_stop && _poll->continuePolling() && !TerminationFlag)
+    while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
     {
         _poll->poll(SocketPoll::DefaultPollTimeoutMs);
 
@@ -388,7 +388,7 @@ void DocumentBroker::pollThread()
 
     LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
             _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
-            ", TerminationFlag: " << TerminationFlag << ", closeReason: " << _closeReason << ". Flushing socket.");
+            ", TerminationFlag: " << SigUtil::getTerminationFlag() << ", closeReason: " << _closeReason << ". Flushing socket.");
 
     if (_isModified)
     {
@@ -412,7 +412,7 @@ void DocumentBroker::pollThread()
 
     LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
             _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
-            ", TerminationFlag: " << TerminationFlag << ". Terminating child with reason: [" << _closeReason << "].");
+            ", TerminationFlag: " << SigUtil::getTerminationFlag() << ". Terminating child with reason: [" << _closeReason << "].");
 
     // Terminate properly while we can.
     terminateChild(_closeReason);

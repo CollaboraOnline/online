@@ -20,8 +20,11 @@ extern std::atomic<bool> ShutdownRequestFlag;
 static constexpr bool ShutdownRequestFlag(false);
 #endif
 
-/// Flag to stop pump loops.
-extern std::atomic<bool> TerminationFlag;
+namespace SigUtil
+{
+    /// Flag to stop pump loops.
+    std::atomic<bool>& getTerminationFlag();
+}
 
 /// Flag to dump internal state
 extern std::atomic<bool> DumpGlobalState;

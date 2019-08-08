@@ -38,7 +38,14 @@
 #include "Common.hpp"
 #include "Log.hpp"
 
-std::atomic<bool> TerminationFlag(false);
+static std::atomic<bool> TerminationFlag(false);
+namespace SigUtil
+{
+    std::atomic<bool>& getTerminationFlag()
+    {
+        return TerminationFlag;
+    }
+}
 std::atomic<bool> DumpGlobalState(false);
 
 #if MOBILEAPP
