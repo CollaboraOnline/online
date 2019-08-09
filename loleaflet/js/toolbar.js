@@ -2134,7 +2134,12 @@ function onCommandResult(e) {
 			// add the result reason string if failed
 			postMessageObj['result'] = e.result && e.result.value;
 		}
-		map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
+
+		if (window.ThisIsAMobileApp) {
+			window.postMobileMessage('SAVE ' + JSON.stringify(postMessageObj));
+		} else {
+			map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
+		}
 	}
 	else if ((commandName === '.uno:Undo' || commandName === '.uno:Redo') &&
 		e.success === true && e.result.value && !isNaN(e.result.value)) { /*UNDO_CONFLICT*/

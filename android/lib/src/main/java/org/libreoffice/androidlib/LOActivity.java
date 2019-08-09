@@ -533,7 +533,8 @@ public class LOActivity extends AppCompatActivity {
      * return true to pass the message to the native part or false to block the message
      */
     boolean interceptMsgFromWebView(String message) {
-        switch (message) {
+        String[] messageAndParam = message.split(" ", 2); // the command and the rest (that can potentially contain spaces too)
+        switch (messageAndParam[0]) {
             case "PRINT":
                 mainHandler.post(new Runnable() {
                     @Override
@@ -544,6 +545,9 @@ public class LOActivity extends AppCompatActivity {
                 return false;
             case "SLIDESHOW":
                 initiateSlideShow();
+                return false;
+            case "SAVE":
+                sendBroadcast(messageAndParam[0], messageAndParam[1]);
                 return false;
             case "uno .uno:Paste":
                 clipData = clipboardManager.getPrimaryClip();
@@ -626,6 +630,9 @@ public class LOActivity extends AppCompatActivity {
             }
         });
     }
+
+    /** Could be overridden if it's necessary to forward some callbacks elsewhere. */
+    public void sendBroadcast(String event, String data) {}
 
     public native void saveAs(String fileUri, String format);
 
