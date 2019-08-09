@@ -528,7 +528,8 @@ public class LOActivity extends AppCompatActivity {
      * return true to pass the message to the native part or false to block the message
      */
     boolean interceptMsgFromWebView(String message) {
-        switch (message) {
+        String[] messageAndParam = message.split(" ", 2); // the command and the rest (that can potentially contain spaces too)
+        switch (messageAndParam[0]) {
             case "PRINT":
                 mainHandler.post(new Runnable() {
                     @Override
@@ -540,47 +541,53 @@ public class LOActivity extends AppCompatActivity {
             case "SLIDESHOW":
                 initiateSlideShow();
                 return false;
-            case "uno .uno:Paste":
-                clipData = clipboardManager.getPrimaryClip();
-                if (clipData != null) {
-                    if (clipData.getDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                        final ClipData.Item clipItem = clipData.getItemAt(0);
+            case "SAVE":
+                sendBroadcast(messageAndParam[0], messageAndParam[1]);
+                return false;
+            case "uno":
+                switch (messageAndParam[1]) {
+                    case ".uno:Paste":
+                        clipData = clipboardManager.getPrimaryClip();
+                        if (clipData != null) {
+                            if (clipData.getDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+                                final ClipData.Item clipItem = clipData.getItemAt(0);
+                                nativeHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        LOActivity.this.paste("text/plain;charset=utf-16", clipItem.getText().toString());
+                                    }
+                                });
+                            }
+                            return false;
+                        }
+                        break;
+                    case ".uno:Copy": {
                         nativeHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                LOActivity.this.paste("text/plain;charset=utf-16", clipItem.getText().toString());
+                                String tempSelectedText = LOActivity.this.getTextSelection();
+                                if (!tempSelectedText.equals("")) {
+                                    clipData = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, tempSelectedText);
+                                    clipboardManager.setPrimaryClip(clipData);
+                                }
                             }
                         });
+                        break;
                     }
-                    return false;
+                    case ".uno:Cut": {
+                        nativeHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                String tempSelectedText = LOActivity.this.getTextSelection();
+                                if (!tempSelectedText.equals("")) {
+                                    clipData = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, tempSelectedText);
+                                    clipboardManager.setPrimaryClip(clipData);
+                                }
+                            }
+                        });
+                        break;
+                    }
                 }
-                break;
-            case "uno .uno:Copy": {
-                nativeHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String tempSelectedText = LOActivity.this.getTextSelection();
-                        if (!tempSelectedText.equals("")) {
-                            clipData = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, tempSelectedText);
-                            clipboardManager.setPrimaryClip(clipData);
-                        }
-                    }
-                });
-                break;
-            }
-            case "uno .uno:Cut": {
-                nativeHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String tempSelectedText = LOActivity.this.getTextSelection();
-                        if (!tempSelectedText.equals("")) {
-                            clipData = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, tempSelectedText);
-                            clipboardManager.setPrimaryClip(clipData);
-                        }
-                    }
-                });
-                break;
-            }
             case "DIM_SCREEN": {
                 mainHandler.post(new Runnable() {
                     @Override
@@ -639,6 +646,9 @@ public class LOActivity extends AppCompatActivity {
             }
         });
     }
+
+    /** Could be overridden if it's necessary to forward some callbacks elsewhere. */
+    public void sendBroadcast(String event, String data) {}
 
     public native void saveAs(String fileUri, String format);
 
