@@ -3141,10 +3141,10 @@ private:
 
         void wakeupHook() override
         {
-            if (DumpGlobalState)
+            if (SigUtil::getDumpGlobalState())
             {
                 dump_state();
-                DumpGlobalState = false;
+                SigUtil::getDumpGlobalState() = false;
             }
         }
     };

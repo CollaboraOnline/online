@@ -24,10 +24,10 @@ namespace SigUtil
 {
     /// Flag to stop pump loops.
     std::atomic<bool>& getTerminationFlag();
-}
 
-/// Flag to dump internal state
-extern std::atomic<bool> DumpGlobalState;
+    /// Flag to dump internal state
+    std::atomic<bool>& getDumpGlobalState();
+}
 
 #if MOBILEAPP
 extern std::atomic<bool> MobileTerminationFlag;
