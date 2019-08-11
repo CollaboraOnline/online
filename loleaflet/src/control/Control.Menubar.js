@@ -623,6 +623,7 @@ L.Control.Menubar = L.Control.extend({
 
 	onAdd: function (map) {
 		this._initialized = false;
+		this._hiddenItems = [];
 		this._menubarCont = L.DomUtil.get('main-menu');
 		this._initializeMenu(this.options.initial);
 
@@ -1264,6 +1265,10 @@ L.Control.Menubar = L.Control.extend({
 				$(aItem).css('display', 'none');
 			}
 
+			if (this._hiddenItems && this._hiddenItems.includes(menu[i].id)) {
+				$(aItem).css('display', 'none');
+			}
+
 			itemList.push(liItem);
 		}
 
@@ -1293,14 +1298,20 @@ L.Control.Menubar = L.Control.extend({
 
 	hideItem: function(targetId) {
 		var item = this._getItem(targetId);
-		if (item)
+		if (item) {
+			if (!this._hiddenItems.includes(targetId))
+				this._hiddenItems.push(targetId);
 			$(item).css('display', 'none');
+		}
 	},
 
 	showItem: function(targetId) {
 		var item = this._getItem(targetId);
-		if (item)
+		if (item) {
+			if (this._hiddenItems.includes(targetId))
+				this._hiddenItems.splice(this._hiddenItems.indexOf(targetId), 1);
 			$(item).css('display', '');
+		}
 	},
 
 	_initializeMenu: function(menu) {
