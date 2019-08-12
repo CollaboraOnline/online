@@ -264,7 +264,10 @@ public:
     virtual ~UnitKit();
     static UnitKit& get()
     {
-        assert(Global && Global->_type == UnitType::Kit);
+        assert(Global);
+#if !MOBILEAPP
+        assert(Global->_type == UnitType::Kit);
+#endif
         return *static_cast<UnitKit *>(Global);
     }
 
