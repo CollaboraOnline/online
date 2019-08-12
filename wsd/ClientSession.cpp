@@ -1557,7 +1557,7 @@ void ClientSession::onDisconnect()
             // respond with close frame
             shutdown();
         }
-        else if (!ShutdownRequestFlag)
+        else if (!SigUtil::getShutdownRequestFlag())
         {
             // something wrong, with internal exceptions
             LOG_TRC("Abnormal close handshake.");

@@ -1406,7 +1406,7 @@ bool LOOLWSD::checkAndRestoreForKit()
     if (ForKitProcId == -1)
     {
         // Fire the ForKit process for the first time.
-        if (!ShutdownRequestFlag && !SigUtil::getTerminationFlag() && !createForKit())
+        if (!SigUtil::getShutdownRequestFlag() && !SigUtil::getTerminationFlag() && !createForKit())
         {
             // Should never fail.
             LOG_FTL("Failed to spawn loolforkit.");
@@ -1435,7 +1435,7 @@ bool LOOLWSD::checkAndRestoreForKit()
                 }
 
                 // Spawn a new forkit and try to dust it off and resume.
-                if (!ShutdownRequestFlag && !SigUtil::getTerminationFlag() && !createForKit())
+                if (!SigUtil::getShutdownRequestFlag() && !SigUtil::getTerminationFlag() && !createForKit())
                 {
                     LOG_FTL("Failed to spawn forkit instance. Shutting down.");
                     SigUtil::requestShutdown();
@@ -1469,7 +1469,7 @@ bool LOOLWSD::checkAndRestoreForKit()
         {
             // No child processes.
             // Spawn a new forkit and try to dust it off and resume.
-            if (!ShutdownRequestFlag && !SigUtil::getTerminationFlag() && !createForKit())
+            if (!SigUtil::getShutdownRequestFlag() && !SigUtil::getTerminationFlag() && !createForKit())
             {
                 LOG_FTL("Failed to spawn forkit instance. Shutting down.");
                 SigUtil::requestShutdown();
@@ -3101,7 +3101,7 @@ public:
                             << (LOOLWSD::NoSeccomp ? "no" : "") << " api lockdown\n"
 #endif
            << "  TerminationFlag: " << SigUtil::getTerminationFlag() << "\n"
-           << "  isShuttingDown: " << ShutdownRequestFlag << "\n"
+           << "  isShuttingDown: " << SigUtil::getShutdownRequestFlag() << "\n"
            << "  NewChildren: " << NewChildren.size() << "\n"
            << "  OutstandingForks: " << OutstandingForks << "\n"
            << "  NumPreSpawnedChildren: " << LOOLWSD::NumPreSpawnedChildren << "\n";
@@ -3399,7 +3399,7 @@ int LOOLWSD::innerMain()
 
     const auto startStamp = std::chrono::steady_clock::now();
 
-    while (!SigUtil::getTerminationFlag() && !ShutdownRequestFlag)
+    while (!SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
     {
         UnitWSD::get().invokeTest();
 
@@ -3430,14 +3430,14 @@ int LOOLWSD::innerMain()
     // Stop the listening to new connections
     // and wait until sockets close.
     LOG_INF("Stopping server socket listening. ShutdownRequestFlag: " <<
-            ShutdownRequestFlag << ", TerminationFlag: " << SigUtil::getTerminationFlag());
+            SigUtil::getShutdownRequestFlag() << ", TerminationFlag: " << SigUtil::getTerminationFlag());
 
     // Wait until documents are saved and sessions closed.
     srv.stop();
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Cleaning up lingering documents.");
-    if (ShutdownRequestFlag || SigUtil::getTerminationFlag())
+    if (SigUtil::getShutdownRequestFlag() || SigUtil::getTerminationFlag())
     {
         // Don't stop the DocBroker, they will exit.
         const size_t sleepMs = 300;

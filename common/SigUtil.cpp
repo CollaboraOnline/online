@@ -54,10 +54,24 @@ namespace SigUtil
 
 #if MOBILEAPP
 std::atomic<bool> MobileTerminationFlag(false);
+namespace SigUtil
+{
+    bool getShutdownRequestFlag()
+    {
+        return ShutdownRequestFlag;
+    }
+}
 #endif
 
 #if !MOBILEAPP
-std::atomic<bool> ShutdownRequestFlag(false);
+static std::atomic<bool> ShutdownRequestFlag(false);
+namespace SigUtil
+{
+    std::atomic<bool>& getShutdownRequestFlag()
+    {
+        return ShutdownRequestFlag;
+    }
+}
 
 std::mutex SigHandlerTrap;
 

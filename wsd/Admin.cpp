@@ -191,7 +191,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     else if (tokens[0] == "shutdown")
     {
         LOG_INF("Shutdown requested by admin.");
-        ShutdownRequestFlag = true;
+        SigUtil::getShutdownRequestFlag() = true;
         SocketPoll::wakeupWorld();
         return;
     }
@@ -389,7 +389,7 @@ void Admin::pollingThread()
     lastMem = lastCPU;
     lastNet = lastCPU;
 
-    while (!isStop() && !SigUtil::getTerminationFlag() && !ShutdownRequestFlag)
+    while (!isStop() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
     {
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
 

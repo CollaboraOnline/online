@@ -231,7 +231,7 @@ void DocumentBroker::pollThread()
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
         std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
     }
-    while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() && !ShutdownRequestFlag);
+    while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag());
 #else
     _childProcess = getNewChild_Blocks(getPublicUri().getPath());
 #endif
@@ -324,9 +324,9 @@ void DocumentBroker::pollThread()
             continue;
         }
 
-        if (ShutdownRequestFlag || _closeRequest)
+        if (SigUtil::getShutdownRequestFlag() || _closeRequest)
         {
-            const std::string reason = ShutdownRequestFlag ? "recycling" : _closeReason;
+            const std::string reason = SigUtil::getShutdownRequestFlag() ? "recycling" : _closeReason;
             LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] for " << reason);
             if (!autoSave(isPossiblyModified()))
             {
@@ -387,7 +387,7 @@ void DocumentBroker::pollThread()
     }
 
     LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
-            _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
+            _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
             ", TerminationFlag: " << SigUtil::getTerminationFlag() << ", closeReason: " << _closeReason << ". Flushing socket.");
 
     if (_isModified)
@@ -411,7 +411,7 @@ void DocumentBroker::pollThread()
     }
 
     LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
-            _poll->continuePolling() << ", ShutdownRequestFlag: " << ShutdownRequestFlag <<
+            _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
             ", TerminationFlag: " << SigUtil::getTerminationFlag() << ". Terminating child with reason: [" << _closeReason << "].");
 
     // Terminate properly while we can.

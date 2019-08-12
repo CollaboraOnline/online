@@ -14,10 +14,18 @@
 #include <mutex>
 
 #if !MOBILEAPP
-/// Flag to commence clean shutdown
-extern std::atomic<bool> ShutdownRequestFlag;
+namespace SigUtil
+{
+    /// Flag to commence clean shutdown
+    std::atomic<bool>& getShutdownRequestFlag();
+}
 #else
 static constexpr bool ShutdownRequestFlag(false);
+namespace SigUtil
+{
+    /// Flag to commence clean shutdown
+    bool getShutdownRequestFlag();
+}
 #endif
 
 namespace SigUtil
