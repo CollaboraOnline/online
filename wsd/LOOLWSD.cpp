@@ -2795,8 +2795,12 @@ private:
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
             if (docBroker)
             {
+#if MOBILEAPP
+                const std::string hostNoTrust;
+#else
                 // We can send this back to whomever sent it to us though.
                 const std::string hostNoTrust = (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+#endif
 
                 std::shared_ptr<ClientSession> clientSession = createNewClientSession(&ws, _id, uriPublic,
                                                                                       docBroker, isReadOnly, hostNoTrust);
