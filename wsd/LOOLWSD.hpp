@@ -70,7 +70,9 @@ public:
     static bool AnonymizeUsernames;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
+#if !MOBILEAPP
     static std::unique_ptr<ClipboardCache> SavedClipboards;
+#endif
     static std::set<std::string> EditFileExtensions;
     static unsigned MaxConnections;
     static unsigned MaxDocuments;

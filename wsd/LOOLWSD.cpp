@@ -722,7 +722,9 @@ static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
+#if !MOBILEAPP
 std::unique_ptr<ClipboardCache> LOOLWSD::SavedClipboards;
+#endif
 
 /// This thread polls basic web serving, and handling of
 /// websockets before upgrade: when upgraded they go to the

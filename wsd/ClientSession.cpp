@@ -1216,6 +1216,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
     } else if (tokens[0] == "clipboardcontent:") {
 
+#if !MOBILEAPP // Most likely nothing of this makes sense in a mobile app
+
         // FIXME: Ash: we need to return different content depending
         // on whether this is a download-everything, or an individual
         // 'download' and/or providing our helpful / user page.
@@ -1252,15 +1254,14 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             if (!empty)
             {
                 oss.write(&payload->data()[header], payload->size() - header);
-#if !MOBILEAPP
                 socket->setSocketBufferSize(std::min(payload->size() + 256,
                                                      size_t(Socket::MaximumSendBufferSize)));
-#endif
             }
             socket->send(oss.str());
             socket->shutdown();
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
         }
+#endif
         _clipSockets.clear();
         return true;
     } else if (tokens[0] == "disconnected:") {
