@@ -2768,7 +2768,7 @@ void lokit_main(
     // to prevent exiting.
     LOG_INF("Process finished.");
     Log::shutdown();
-    std::unique_lock<std::mutex> lock(SigHandlerTrap);
+    std::unique_lock<std::mutex> lock(SigUtil::getSigHandlerTrap());
     std::_Exit(Application::EXIT_OK);
 
 #endif

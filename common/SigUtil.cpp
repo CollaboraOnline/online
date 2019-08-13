@@ -77,6 +77,11 @@ std::mutex SigHandlerTrap;
 
 namespace SigUtil
 {
+    std::mutex& getSigHandlerTrap()
+    {
+        return SigHandlerTrap;
+    }
+
     const char *signalName(const int signo)
     {
         switch (signo)

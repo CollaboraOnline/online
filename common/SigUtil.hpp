@@ -43,12 +43,12 @@ extern std::atomic<bool> MobileTerminationFlag;
 
 #if !MOBILEAPP
 
-/// Mutex to trap signal handler, if any,
-/// and prevent _Exit while collecting backtrace.
-extern std::mutex SigHandlerTrap;
-
 namespace SigUtil
 {
+    /// Mutex to trap signal handler, if any,
+    /// and prevent _Exit while collecting backtrace.
+    std::mutex& getSigHandlerTrap();
+
     /// Returns the name of the signal.
     const char* signalName(int signo);
 
