@@ -538,15 +538,13 @@ L.Map.Keyboard = L.Handler.extend({
 		case 80: // p
 			this._map.print();
 			return true;
-		// Explicitly disable the possiblity to Save via the keyboard
-		// (needs to be coupled with the loolkitconfig.xcu S_MOD1 disabling)
-		//case 83: // s
-		//	this._map.fire('postMessage', {msgId: 'UI_Save'});
-		//	if (!this._map._disableDefaultAction['UI_Save']) {
-		//		this._map.save(false /* An explicit save should terminate cell edit */,
-		//		               false /* An explicit save should save it again */);
-		//	}
-		//	return true;
+		case 83: // s
+			this._map.fire('postMessage', {msgId: 'UI_Save'});
+			if (!this._map._disableDefaultAction['UI_Save']) {
+				this._map.save(false /* An explicit save should terminate cell edit */,
+				               false /* An explicit save should save it again */);
+			}
+			return true;
 		case 86: // v
 		case 118: // v (Safari)
 			return true;
