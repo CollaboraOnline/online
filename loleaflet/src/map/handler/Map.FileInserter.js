@@ -3,7 +3,7 @@
  * L.Map.FileInserter is handling the fileInserter action
  */
 
-/* global _ Uint8Array */
+/* global _ Uint8Array errorMessages */
 
 L.Map.mergeOptions({
 	fileInserter: true
@@ -111,13 +111,15 @@ L.Map.FileInserter = L.Handler.extend({
 						socket.sendMessage('insertfile name=' + name + ' type=' + type);
 					}
 					else if (xmlHttp.status === 404) {
-						console.error(_('Uploading file to server failed, file not found.'));
+						map.fire('error', {msg: errorMessages.uploadfile.notfound});
 					}
 					else if (xmlHttp.status === 413) {
-						console.error(_('Uploading file to server failed, file is too large.'));
+						map.fire('error', {msg: errorMessages.uploadfile.toolarge});
 					}
 					else {
-						console.error('Uploading file to server failed with status: ' + xmlHttp.status + ': ' + xmlHttp.statusText);
+						var msg = _('Uploading file to server failed with status: %0');
+						msg.replace('%0', xmlHttp.status);
+						map.fire('error', {msg: msg});
 					}
 				}
 			};

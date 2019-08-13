@@ -42,6 +42,11 @@ if (window.ThisIsAMobileApp) {
 	};
 }
 
+errorMessages.uploadfile = {
+	notfound: _('Uploading file to server failed, file not found.'),
+	toolarge: _('Uploading file to server failed, the file is too large.')
+};
+
 if (typeof window !== 'undefined') {
 	window.errorMessages = errorMessages;
 }
