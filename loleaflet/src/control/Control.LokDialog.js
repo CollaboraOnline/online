@@ -397,11 +397,22 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
-	focus: function(dlgId, force) {
-		if (!force && (!this._isOpen(dlgId) || !this._dialogs[dlgId].cursorVisible))
-			return;
+	focus: function(dlgId) {
+		// In case of the sidebar we should be carefull about
+		// grabbing the focus from the main window.
+		if (this._dialogs[dlgId].isSidebar) {
+			// On mobile, grab the focus if the sidebar is visible.
+			if (window.mode.isMobile()) {
+				if (!this.mobileSidebarVisible)
+					return;
+			// On desktop, grab the focus only when there is a visible cursor on the sidebar.
+			} else if (!this._isOpen(dlgId) || !this._dialogs[dlgId].cursorVisible) {
+				return;
+			}
+		}
+
 		this._map.setWinId(dlgId);
-		if (this._isOpen(dlgId) && this._dialogs[dlgId].cursorVisible) {
+		if (this._dialogs[dlgId].cursorVisible) {
 			this._map.getClipboardContainer().focus();
 		}
 		else {
@@ -838,7 +849,7 @@ L.Control.LokDialog = L.Control.extend({
 			var container = L.DomUtil.get(strId);
 			if (container)
 				$(container).parent().show();
-			that.focus(parentId, !isSidebar);
+			that.focus(parentId);
 		};
 		img.src = imgData;
 	},
