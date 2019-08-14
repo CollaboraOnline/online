@@ -1325,7 +1325,7 @@ L.Control.Menubar = L.Control.extend({
 				$(aItem).css('display', 'none');
 			}
 
-			if (this._hiddenItems && this._hiddenItems.includes(menu[i].id)) {
+			if (this._hiddenItems && $.inArray(menu[i].id, this._hiddenItems) !== -1) {
 				$(aItem).css('display', 'none');
 			}
 
@@ -1359,7 +1359,7 @@ L.Control.Menubar = L.Control.extend({
 	hideItem: function(targetId) {
 		var item = this._getItem(targetId);
 		if (item) {
-			if (!this._hiddenItems.includes(targetId))
+			if ($.inArray(targetId, this._hiddenItems) == -1)
 				this._hiddenItems.push(targetId);
 			$(item).css('display', 'none');
 		}
@@ -1368,7 +1368,7 @@ L.Control.Menubar = L.Control.extend({
 	showItem: function(targetId) {
 		var item = this._getItem(targetId);
 		if (item) {
-			if (this._hiddenItems.includes(targetId))
+			if ($.inArray(targetId, this._hiddenItems) !== -1)
 				this._hiddenItems.splice(this._hiddenItems.indexOf(targetId), 1);
 			$(item).css('display', '');
 		}
