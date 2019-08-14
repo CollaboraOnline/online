@@ -45,7 +45,8 @@ var deps = {
 	},
 
 	TileLayer: {
-		src: ['layer/tile/TileLayer.js'],
+		src: ['layer/tile/TileLayer.js',
+			  'layer/tile/TileLayer.TableOverlay.js'],
 		desc: 'The base class for displaying tile layers on the map.',
 		deps: ['GridLayer']
 	},

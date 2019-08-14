@@ -2246,6 +2246,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_CELL_AUTO_FILL_AREA:
         sendTextFrame("cellautofillarea: " + payload);
         break;
+    case LOK_CALLBACK_TABLE_SELECTED:
+        sendTextFrame("tableselected: " + payload);
+        break;
 
 #if !ENABLE_DEBUG
     // we want a compilation-time failure in the debug builds; but ERR in the
