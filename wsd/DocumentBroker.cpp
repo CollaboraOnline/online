@@ -945,7 +945,6 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         // Make everyone readonly and tell everyone that storage is low on diskspace.
         for (const auto& sessionIt : _sessions)
         {
-            sessionIt.second->setReadOnly();
             sessionIt.second->sendTextFrame("error: cmd=storage kind=savediskfull");
         }
     }
