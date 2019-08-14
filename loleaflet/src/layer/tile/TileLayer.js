@@ -162,6 +162,8 @@ L.TileLayer = L.GridLayer.extend({
 			draggable: true
 		});
 
+		this._initializeTableOverlay();
+
 		this._emptyTilesCount = 0;
 		this._msgQueue = [];
 		this._toolbarCommandValues = {};
@@ -509,6 +511,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('graphicviewselection:')) {
 			this._onGraphicViewSelectionMsg(textMsg);
+		}
+		else if (textMsg.startsWith('tableselected:')) {
+			this._onTableSelectedMsg(textMsg);
 		}
 		else if (textMsg.startsWith('editor:')) {
 			this._updateEditor(textMsg);

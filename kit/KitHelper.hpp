@@ -137,6 +137,8 @@ namespace LOKitHelper
             return "CELL_SELECTION_AREA";
         case LOK_CALLBACK_CELL_AUTO_FILL_AREA:
             return "CELL_AUTO_FILL_AREA";
+        case LOK_CALLBACK_TABLE_SELECTED:
+            return "TABLE_SELECTED";
        }
 
         assert(!"Missing LOK_CALLBACK type");

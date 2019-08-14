@@ -340,6 +340,7 @@ pot:
 		src/errormessages.js \
 		src/layer/marker/Annotation.js \
 		src/layer/tile/TileLayer.js \
+		src/layer/tile/TileLayer.TableOverlay.js \
 		src/map/Map.js \
 		src/map/Clipboard.js \
 		src/map/handler/Map.FileInserter.js \

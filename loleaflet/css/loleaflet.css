@@ -41,6 +41,26 @@
 	-ms-filter: "alpha(opacity=100)" !important;
 }
 
+.table-column-resize-marker {
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 24px;
+	height: 24px;
+	background-image: url('images/table-column-resize-marker.svg');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.table-row-resize-marker {
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 24px;
+	height: 24px;
+	background-image: url('images/table-row-resize-marker.svg');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
 body {
 	margin: 0;
 	overflow: hidden;
