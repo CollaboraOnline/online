@@ -744,6 +744,12 @@ int main(int argc, char**argv)
     inline void vectorAppend(std::vector<char> &vector, const char *data, ssize_t length = -1)
     {
         size_t vlen = vector.size();
+
+        if (!data)
+        {
+            return;
+        }
+
         size_t dataLen = length;
         if (length < 0)
             dataLen = strlen(data);
