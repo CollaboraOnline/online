@@ -70,7 +70,7 @@ ChildSession::ChildSession(const std::string& id,
                            DocumentManagerInterface& docManager) :
     Session("ToMaster-" + id, id, false),
     _jailId(jailId),
-    _docManager(docManager),
+    _docManager(&docManager),
     _viewId(-1),
     _isDocLoaded(false),
     _copyToClipboard(false)
@@ -93,7 +93,10 @@ void ChildSession::disconnect()
 
         if (_viewId >= 0)
         {
-            _docManager.onUnload(*this);
+            if (_docManager)
+            {
+                _docManager->onUnload(*this);
+            }
         }
         else
         {
@@ -132,7 +135,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             curPart = getLOKitDocument()->getPart();
 
         // Notify all views about updated view info
-        _docManager.notifyViewInfo();
+        _docManager->notifyViewInfo();
 
         if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
         {
@@ -565,7 +568,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    const bool loaded = _docManager.onLoad(getId(), getJailedFilePath(), getJailedFilePathAnonym(),
+    const bool loaded = _docManager->onLoad(getId(), getJailedFilePath(), getJailedFilePathAnonym(),
                                            getUserName(), getUserNameAnonym(),
                                            getDocPassword(), renderOpts, getHaveDocPassword(),
                                            getLang(), getWatermarkText(), doctemplate);
@@ -607,8 +610,8 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
     }
 
     // Inform everyone (including this one) about updated view info
-    _docManager.notifyViewInfo();
-    sendTextFrame("editor: " + std::to_string(_docManager.getEditorId()));
+    _docManager->notifyViewInfo();
+    sendTextFrame("editor: " + std::to_string(_docManager->getEditorId()));
 
 
     LOG_INF("Loaded session " << getId());
@@ -750,7 +753,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, cons
                                         std::string(values == nullptr ? "" : values),
                                         std::string(undo == nullptr ? "" : undo));
         // json only contains view IDs, insert matching user names.
-        std::map<int, UserInfo> viewInfo = _docManager.getViewInfo();
+        std::map<int, UserInfo> viewInfo = _docManager->getViewInfo();
         insertUserNames(viewInfo, json);
         success = sendTextFrame("commandvalues: " + json);
         std::free(values);
@@ -848,7 +851,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
     }
 
     // Obfuscate the new name.
-    Util::mapAnonymized(Util::getFilenameFromURL(name), _docManager.getObfuscatedFileId());
+    Util::mapAnonymized(Util::getFilenameFromURL(name), _docManager->getObfuscatedFileId());
 
     getTokenString(tokens[3], "format", format);
 
@@ -1654,7 +1657,7 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
         std::vector<unsigned char> binaryCertificate = decodeBase64(extractCertificate(x509Certificate));
         std::vector<unsigned char> binaryPrivateKey = decodeBase64(extractPrivateKey(privateKey));
 
-        bResult = _docManager.getLOKit()->signDocument(aTempDocumentURL.c_str(),
+        bResult = _docManager->getLOKit()->signDocument(aTempDocumentURL.c_str(),
                         binaryCertificate.data(), binaryCertificate.size(),
                         binaryPrivateKey.data(), binaryPrivateKey.size());
 
@@ -2046,7 +2049,7 @@ void ChildSession::updateSpeed() {
         _cursorInvalidatedEvent.pop();
     }
     _cursorInvalidatedEvent.push(now);
-    _docManager.updateEditorSpeeds(_viewId, _cursorInvalidatedEvent.size());
+    _docManager->updateEditorSpeeds(_viewId, _cursorInvalidatedEvent.size());
 }
 
 int ChildSession::getSpeed() {

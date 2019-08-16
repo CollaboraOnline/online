@@ -221,19 +221,24 @@ public:
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
         const std::unique_lock<std::mutex> lock = getLock();
-        return _docManager.sendFrame(msg.data(), msg.size(), WSOpCode::Text);
+        return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Text);
     }
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
         const std::unique_lock<std::mutex> lock = getLock();
-        return _docManager.sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
+        return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
     }
 
     using Session::sendTextFrame;
 
     bool getClipboard(const char* buffer, int length, const std::vector<std::string>& tokens);
+
+    void resetDocManager()
+    {
+        _docManager = nullptr;
+    }
 
 private:
     bool loadDocument(const char* buffer, int length, const std::vector<std::string>& tokens);
@@ -278,12 +283,12 @@ private:
 
     std::shared_ptr<lok::Document> getLOKitDocument()
     {
-        return _docManager.getLOKitDocument();
+        return _docManager->getLOKitDocument();
     }
 
     std::string getLOKitLastError()
     {
-        char *lastErr = _docManager.getLOKit()->getError();
+        char *lastErr = _docManager->getLOKit()->getError();
         std::string ret;
         if (lastErr)
         {
@@ -295,7 +300,7 @@ private:
 
 private:
     const std::string _jailId;
-    DocumentManagerInterface& _docManager;
+    DocumentManagerInterface* _docManager;
 
     std::queue<std::chrono::steady_clock::time_point> _cursorInvalidatedEvent;
     const unsigned _eventStorageIntervalMs = 15*1000;

@@ -910,6 +910,11 @@ public:
         _stop = true;
 
         _tileQueue->put("eof");
+
+        for (const auto& session : _sessions)
+        {
+            session.second->resetDocManager();
+        }
     }
 
     const std::string& getUrl() const { return _url; }
