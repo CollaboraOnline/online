@@ -21,6 +21,7 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if (window.ThisIsTheiOSApp && !this._toolbar) {
 			this._toolbar = L.control.contextToolbar();
+			this._toolbarAdded = 0;
 		}
 
 		if (!this._hammer) {
@@ -157,10 +158,14 @@ L.Map.TouchGesture = L.Handler.extend({
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
 		if (window.ThisIsTheiOSApp) {
+			// console.log('==> ' + e.timeStamp);
 			if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
 				this._toolbar._pos = containerPoint;
+				// console.log('==> Adding context toolbar ' + e.timeStamp);
 				this._toolbar.addTo(this._map);
-			} else {
+				this._toolbarAdded = e.timeStamp;
+			} else if (this._toolbarAdded && e.timeStamp - this._toolbarAdded >= 1000) {
+				// console.log('==> Removing context toolbar ' + e.timeStamp);
 				this._toolbar.remove();
 				this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 				// send right click to trigger context menus
