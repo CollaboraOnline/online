@@ -109,12 +109,17 @@
 	}
 
 	global.queueMsg = [];
+	if (window.ThisIsTheiOSApp)
+		window.LANG = window.getParameterByName('lang');
 	if (global.socket && global.socket.readyState !== 3) {
 		global.socket.onopen = function () {
 			if (global.socket.readyState === 1) {
 				var ProtocolVersionNumber = '0.1';
 				global.socket.send('loolclient ' + ProtocolVersionNumber);
-				global.socket.send('load url=' + encodeURIComponent(global.docURL));
+				if (window.ThisIsTheiOSApp)
+					global.socket.send('load url=' + encodeURIComponent(global.docURL) + ' lang=' + window.LANG);
+				else
+					global.socket.send('load url=' + encodeURIComponent(global.docURL));
 			}
 		}
 

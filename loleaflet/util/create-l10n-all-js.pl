@@ -29,8 +29,6 @@ sub insert($) {
 # woefully incomplete translation is worse than no translation at all.
 
 print "\
-window.LANG = window.getParameterByName('lang');
-
 //window.postMobileDebug('LANG is ' + window.LANG);
 
 var onlylang = window.LANG;
