@@ -148,7 +148,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // the rectangle to invalidate; invalidating everything is sub-optimal
         if (_stateRecorder.isInvalidate())
         {
-            std::string payload = "0, 0, " + std::to_string(INT_MAX) + ", " + std::to_string(INT_MAX) + ", " + std::to_string(curPart);
+            const std::string payload = "0, 0, 1000000000, 1000000000, " + std::to_string(curPart);
             loKitCallback(LOK_CALLBACK_INVALIDATE_TILES, payload);
         }
 
@@ -157,7 +157,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             for (const auto& eventPair : viewPair.second)
             {
                 const RecordedEvent& event = eventPair.second;
-                LOG_TRC("Replaying missed view event: " <<  viewPair.first << " " << LOKitHelper::kitCallbackTypeToString(event.getType())
+                LOG_TRC("Replaying missed view event: " << viewPair.first << ' '
+                                                        << lokCallbackTypeToString(event.getType())
                                                         << ": " << event.getPayload());
                 loKitCallback(event.getType(), event.getPayload());
             }
@@ -166,7 +167,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         for (const auto& eventPair : _stateRecorder.getRecordedEvents())
         {
             const RecordedEvent& event = eventPair.second;
-            LOG_TRC("Replaying missed event: " << LOKitHelper::kitCallbackTypeToString(event.getType()) << ": " << event.getPayload());
+            LOG_TRC("Replaying missed event: " << lokCallbackTypeToString(event.getType()) << ": "
+                                               << event.getPayload());
             loKitCallback(event.getType(), event.getPayload());
         }
 
@@ -178,7 +180,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         for (const auto& event : _stateRecorder.getRecordedEventsVector())
         {
-            LOG_TRC("Replaying missed event (part of sequence): " << LOKitHelper::kitCallbackTypeToString(event.getType()) << ": " << event.getPayload());
+            LOG_TRC("Replaying missed event (part of sequence): " <<
+                    lokCallbackTypeToString(event.getType()) << ": " << event.getPayload());
             loKitCallback(event.getType(), event.getPayload());
         }
 
@@ -2066,7 +2069,7 @@ int ChildSession::getSpeed() {
 
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
-    const std::string typeName = LOKitHelper::kitCallbackTypeToString(type);
+    const char* const typeName = lokCallbackTypeToString(type);
     LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " <<
             typeName << " [" << payload << "].");
 
@@ -2187,12 +2190,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             const int parts = getLOKitDocument()->getParts();
             for (int i = 0; i < parts; ++i)
             {
-                sendTextFrame("invalidatetiles:"
-                              " part=" + std::to_string(i) +
-                              " x=0" +
-                              " y=0" +
-                              " width=" + std::to_string(INT_MAX) +
-                              " height=" + std::to_string(INT_MAX));
+                sendTextFrame("invalidatetiles: part=" + std::to_string(i) +
+                              " x=0 y=0 width=1000000000 height=1000000000");
             }
 
             getStatus("", 0);
@@ -2307,7 +2306,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     // we want a compilation-time failure in the debug builds; but ERR in the
     // log in the release ones
     default:
-        LOG_ERR("Unknown callback event (" << LOKitHelper::kitCallbackTypeToString(type) << "): " << payload);
+        LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
 #endif
     }
 }

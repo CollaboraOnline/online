@@ -378,6 +378,36 @@ struct _LibreOfficeKitDocumentClass
     /// @see lok::Document::createViewWithOptions().
     int (*createViewWithOptions) (LibreOfficeKitDocument* pThis, const char* pOptions);
 
+    /// @see lok::Document::selectPart().
+    void (*selectPart) (LibreOfficeKitDocument* pThis, int nPart, int nSelect);
+
+    /// @see lok::Document::moveSelectedParts().
+    void (*moveSelectedParts) (LibreOfficeKitDocument* pThis, int nPosition, bool bDuplicate);
+
+    /// Resize window with given id.
+    /// @see lok::Document::resizeWindow().
+    void (*resizeWindow) (LibreOfficeKitDocument* pThis, unsigned nWindowId,
+                          const int width, const int height);
+
+    /// Pass a nullptr terminated array of mime-type strings
+    /// @see lok::Document::getClipboard for more details
+    int (*getClipboard) (LibreOfficeKitDocument* pThis,
+                         const char **pMimeTypes,
+                         size_t      *pOutCount,
+                         char      ***pOutMimeTypes,
+                         size_t     **pOutSizes,
+                         char      ***pOutStreams);
+
+    /// @see lok::Document::setClipboard
+    int (*setClipboard) (LibreOfficeKitDocument* pThis,
+                         const size_t   nInCount,
+                         const char   **pInMimeTypes,
+                         const size_t  *pInSizes,
+                         const char   **pInStreams);
+
+    /// @see lok::Document::getSelectionType
+    int (*getSelectionType) (LibreOfficeKitDocument* pThis);
+
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
 

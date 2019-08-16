@@ -39,58 +39,8 @@ extern "C"
 {
     static void myCallback(int type, const char* payload, void*)
     {
-        std::cout << "Callback: ";
-        switch ((LibreOfficeKitCallbackType) type)
-        {
-#define CASE(x) case LOK_CALLBACK_##x: std::cout << #x; break
-            CASE(INVALIDATE_TILES);
-            CASE(INVALIDATE_VISIBLE_CURSOR);
-            CASE(TEXT_SELECTION);
-            CASE(TEXT_SELECTION_START);
-            CASE(TEXT_SELECTION_END);
-            CASE(CURSOR_VISIBLE);
-            CASE(GRAPHIC_SELECTION);
-            CASE(CELL_CURSOR);
-            CASE(CELL_FORMULA);
-            CASE(HYPERLINK_CLICKED);
-            CASE(MOUSE_POINTER);
-            CASE(STATE_CHANGED);
-            CASE(STATUS_INDICATOR_START);
-            CASE(STATUS_INDICATOR_SET_VALUE);
-            CASE(STATUS_INDICATOR_FINISH);
-            CASE(SEARCH_NOT_FOUND);
-            CASE(SEARCH_RESULT_SELECTION);
-            CASE(DOCUMENT_SIZE_CHANGED);
-            CASE(SET_PART);
-            CASE(UNO_COMMAND_RESULT);
-            CASE(DOCUMENT_PASSWORD);
-            CASE(DOCUMENT_PASSWORD_TO_MODIFY);
-            CASE(ERROR);
-            CASE(CONTEXT_MENU);
-            CASE(INVALIDATE_VIEW_CURSOR);
-            CASE(TEXT_VIEW_SELECTION);
-            CASE(CELL_VIEW_CURSOR);
-            CASE(GRAPHIC_VIEW_SELECTION);
-            CASE(VIEW_CURSOR_VISIBLE);
-            CASE(VIEW_LOCK);
-            CASE(REDLINE_TABLE_SIZE_CHANGED);
-            CASE(REDLINE_TABLE_ENTRY_MODIFIED);
-            CASE(COMMENT);
-            CASE(INVALIDATE_HEADER);
-            CASE(CELL_ADDRESS);
-            CASE(RULER_UPDATE);
-            CASE(WINDOW);
-            CASE(VALIDITY_LIST_BUTTON);
-            CASE(CLIPBOARD_CHANGED);
-            CASE(CONTEXT_CHANGED);
-            CASE(SIGNATURE_STATUS);
-            CASE(PROFILE_FRAME);
-            CASE(CELL_SELECTION_AREA);
-            CASE(CELL_AUTO_FILL_AREA);
-            CASE(TABLE_SELECTED);
-#undef CASE
-        }
-        std::cout << " payload: " << payload << std::endl;
+        std::cout << "Callback: " << lokCallbackTypeToString(type)
+                  << " payload: " << payload << std::endl;
     }
 }
 

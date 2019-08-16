@@ -188,7 +188,7 @@ public:
      *
      * @param nWindowid
      */
-    void postWindow(unsigned nWindowId, int nAction, const char* pData)
+    void postWindow(unsigned nWindowId, int nAction, const char* pData = nullptr)
     {
         return mpDoc->pClass->postWindow(mpDoc, nWindowId, nAction, pData);
     }
@@ -436,7 +436,7 @@ public:
     /**
      * Returns a json mapping of the possible values for the given command
      * e.g. {commandName: ".uno:StyleApply", commandValues: {"familyName1" : ["list of style names in the family1"], etc.}}
-     * @param pCommand a uno command for which the possible values are requested
+     * @param pCommand a UNO command for which the possible values are requested
      * @return {commandName: unoCmd, commandValues: {possible_values}}
      */
     char* getCommandValues(const char* pCommand)
@@ -676,7 +676,7 @@ public:
     /**
      * Gets an image of the selected shapes.
      * @param pOutput contains the result; use free to deallocate.
-     * @return the size ouf *pOutput in bytes.
+     * @return the size of *pOutput in bytes.
      */
     size_t renderShapeSelection(char** pOutput)
     {
@@ -698,6 +698,36 @@ public:
     {
         return mpDoc->pClass->postWindowGestureEvent(mpDoc, nWindowId, pType, nX, nY, nOffset);
     }
+
+    /// Set a part's selection mode.
+    /// nSelect is 0 to deselect, 1 to select, and 2 to toggle.
+    void selectPart(int nPart, int nSelect)
+    {
+        mpDoc->pClass->selectPart(mpDoc, nPart, nSelect);
+    }
+
+    /// Moves the selected pages/slides to a new position.
+    /// nPosition is the new position where the selection
+    /// should go. bDuplicate when true will copy instead of move.
+    void moveSelectedParts(int nPosition, bool bDuplicate)
+    {
+        mpDoc->pClass->moveSelectedParts(mpDoc, nPosition, bDuplicate);
+    }
+
+    /**
+     * Resize a window (dialog, popup, etc.) with give id.
+     *
+     * @param nWindowId
+     * @param width The width of the window.
+     * @param height The height of the window.
+     */
+    void resizeWindow(unsigned nWindowId,
+                      const int width,
+                      const int height)
+    {
+        return mpDoc->pClass->resizeWindow(mpDoc, nWindowId, width, height);
+    }
+
 #endif // defined LOK_USE_UNSTABLE_API || defined LIBO_INTERNAL_ONLY
 };
 
@@ -719,7 +749,7 @@ public:
     }
 
     /**
-     * Loads a document from an URL.
+     * Loads a document from a URL.
      *
      * @param pUrl the URL of the document to load
      * @param pFilterOptions options for the import filter, e.g. SkipImages.
