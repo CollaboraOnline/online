@@ -726,9 +726,12 @@ L.Control.Menubar = L.Control.extend({
 	_executeAction: function(item) {
 		var id = $(item).data('id');
 		if (id === 'save') {
-			this._map.fire('postMessage', {msgId: 'UI_Save'});
-			if (!this._map._disableDefaultAction['UI_Save']) {
-				this._map.save(true, true);
+			// Save only when not read-only.
+			if (this._map._permission !== 'readonly') {
+				this._map.fire('postMessage', {msgId: 'UI_Save'});
+				if (!this._map._disableDefaultAction['UI_Save']) {
+					this._map.save(true, true);
+				}
 			}
 		} else if (id === 'saveas') {
 			this._map.fire('postMessage', {msgId: 'UI_SaveAs'});
