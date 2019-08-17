@@ -539,10 +539,13 @@ L.Map.Keyboard = L.Handler.extend({
 			this._map.print();
 			return true;
 		case 83: // s
-			this._map.fire('postMessage', {msgId: 'UI_Save'});
-			if (!this._map._disableDefaultAction['UI_Save']) {
-				this._map.save(false /* An explicit save should terminate cell edit */,
-				               false /* An explicit save should save it again */);
+			// Save only when not read-only.
+			if (this._map._permission !== 'readonly') {
+				this._map.fire('postMessage', {msgId: 'UI_Save'});
+				if (!this._map._disableDefaultAction['UI_Save']) {
+					this._map.save(false /* An explicit save should terminate cell edit */,
+					               false /* An explicit save should save it again */);
+				}
 			}
 			return true;
 		case 86: // v

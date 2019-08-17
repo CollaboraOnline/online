@@ -141,9 +141,12 @@ function onClick(e, id, item, subItem) {
 		map.print();
 	}
 	else if (id === 'save') {
-		map.fire('postMessage', {msgId: 'UI_Save'});
-		if (!map._disableDefaultAction['UI_Save']) {
-			map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
+		// Save only when not read-only.
+		if (map._permission !== 'readonly') {
+			map.fire('postMessage', {msgId: 'UI_Save'});
+			if (!map._disableDefaultAction['UI_Save']) {
+				map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
+			}
 		}
 	}
 	else if (id === 'repair') {
