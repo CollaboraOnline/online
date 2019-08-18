@@ -49,6 +49,18 @@
 	background-image: url('images/table-column-resize-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
+	cursor: col-resize;
+}
+
+.table-column-resize-marker:hover {
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 24px;
+	height: 24px;
+	background-image: url('images/table-column-resize-marker-hover.svg');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	cursor: col-resize;
 }
 
 .table-row-resize-marker {
@@ -59,6 +71,18 @@
 	background-image: url('images/table-row-resize-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
+	cursor: row-resize;
+}
+
+.table-row-resize-marker:hover {
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 24px;
+	height: 24px;
+	background-image: url('images/table-row-resize-marker-hover.svg');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	cursor: row-resize;
 }
 
 body {

@@ -44,6 +44,16 @@ L.Handler.MarkerDrag = L.Handler.extend({
 		return this._draggable && this._draggable._moved;
 	},
 
+	freezeX: function (boolChoice) {
+		if (this._draggable)
+			this._draggable.freezeX(boolChoice);
+	},
+
+	freezeY: function (boolChoice) {
+		if (this._draggable)
+			this._draggable.freezeY(boolChoice);
+	},
+
 	_onDown: function (e) {
 		this._marker.fire('down', e);
 	},
