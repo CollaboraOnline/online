@@ -25,6 +25,16 @@ L.Draggable = L.Evented.extend({
 		this._element = element;
 		this._dragStartTarget = dragStartTarget || element;
 		this._preventOutline = preventOutline;
+		this._freezeX = false;
+		this._freezeY = false;
+	},
+
+	freezeX: function (boolChoice) {
+		this._freezeX = boolChoice;
+	},
+
+	freezeY: function (boolChoice) {
+		this._freezeY = boolChoice;
 	},
 
 	enable: function () {
@@ -139,6 +149,12 @@ L.Draggable = L.Evented.extend({
 		}
 
 		this._newPos = this._startPos.add(offset);
+
+		if (this._freezeY)
+			this._newPos.y = this._startPos.y
+		if (this._freezeX)
+			this._newPos.x = this._startPos.x
+
 		this._moving = true;
 
 		L.Util.cancelAnimFrame(this._animRequest);

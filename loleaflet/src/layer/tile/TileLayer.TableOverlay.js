@@ -19,6 +19,11 @@ L.TileLayer.include({
 			point = point.subtract(new L.Point(markerRect.width, markerRect.height / 2));
 		point = this._map.unproject(point);
 		marker.setLatLng(point);
+
+		if (marker._type.startsWith('column'))
+			marker.dragging.freezeY(true);
+		else
+			marker.dragging.freezeX(true);
 	},
 	_createMarker: function(markerType, entry, left, right) {
 		var className;
