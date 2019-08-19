@@ -522,9 +522,14 @@ L.ClipboardContainer = L.Layer.extend({
 		this._lastContent = [];
 
 		this._textArea.value = this._preSpaceChar + this._postSpaceChar;
-		this._textArea.setSelectionRange(1, 1);
-		if (this._hasWorkingSelectionStart === undefined)
-			this._hasWorkingSelectionStart = (this._textArea.selectionStart === 1);
+
+		// avoid setting the focus keyboard
+		if (document.activeElement === this._textArea) {
+			this._textArea.setSelectionRange(1, 1);
+
+			if (this._hasWorkingSelectionStart === undefined)
+				this._hasWorkingSelectionStart = (this._textArea.selectionStart === 1);
+		}
 
 		this._fancyLog('empty-area-end');
 

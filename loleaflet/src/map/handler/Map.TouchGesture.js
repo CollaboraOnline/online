@@ -239,7 +239,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 
-		if (!this._map.hasFocus()) {
+		if (this._state === L.Map.TouchGesture.MARKER || this._state === L.Map.TouchGesture.GRAPHIC) {
+			this._map._clipboardContainer.blur();
+		} else {
 			this._map.focus();
 		}
 	},
