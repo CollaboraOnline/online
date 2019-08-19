@@ -47,7 +47,10 @@ function _updateVisibilityForToolbar(toolbar) {
 	var toHide = [];
 
 	toolbar.items.forEach(function(item) {
-		if (((isMobile && item.mobile === false) || (isTablet && item.tablet === false) || (isDesktop && item.desktop === false) || (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
+		if (window.ThisIsTheiOSApp && isTablet && item.iosapptablet === false) {
+			toHide.push(item.id);
+		}
+		else if (((isMobile && item.mobile === false) || (isTablet && item.tablet === false) || (isDesktop && item.desktop === false) || (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
 			toHide.push(item.id);
 		}
 		else if (((isMobile && item.mobile === true) || (isTablet && item.tablet === true) || (isDesktop && item.desktop === true) || (window.ThisIsAMobileApp && item.mobilebrowser === true)) && item.hidden) {
@@ -818,7 +821,7 @@ function createToolbar() {
 		{type: 'button',  id: 'sidebar', img: 'sidebar_modify_page', hint: _UNO('.uno:Sidebar', '', true), uno: '.uno:Sidebar', hidden: true},
 		{type: 'break', id: 'breaksidebar', hidden: true},
 		{type: 'button',  id: 'fold',  img: 'fold', desktop: true, mobile: false, hidden: true},
-		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, hidden: true}
+		{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, iosapptablet: false, hidden: true}
 	];
 
 	if (_inMobileMode()) {
@@ -1733,7 +1736,7 @@ function onDocLayerInit() {
 	toolbarUp.refresh();
 	statusbar.refresh();
 
-	if (window.mode.isTablet()) {
+	if (!window.ThisIsTheiOSApp && window.mode.isTablet()) {
 		// Fold menubar by default
 		// FIXME: reuse toogleMenubar / use css
 		$('.main-nav').css({'display': 'none'});
