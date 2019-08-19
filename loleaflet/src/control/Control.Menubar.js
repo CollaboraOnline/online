@@ -563,7 +563,7 @@ L.Control.Menubar = L.Control.extend({
 		});
 		$('#main-menu').attr('tabindex', 0);
 
-		if (this._map._permission !== 'readonly') {
+		if (!window.ThisIsTheiOSApp && this._map._permission !== 'readonly') {
 			this._createFileIcon();
 		}
 	},
