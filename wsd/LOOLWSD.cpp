@@ -1030,7 +1030,6 @@ void LOOLWSD::initialize(Application& self)
 
 #if ENABLE_SSL
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
-#else
     LOOLWSD::SSLEnabled.set(false);
 #endif
 
@@ -1045,7 +1044,6 @@ void LOOLWSD::initialize(Application& self)
 
 #if ENABLE_SSL
     LOOLWSD::SSLTermination.set(getConfigValue<bool>(conf, "ssl.termination", true));
-#else
     LOOLWSD::SSLTermination.set(false);
 #endif
 
