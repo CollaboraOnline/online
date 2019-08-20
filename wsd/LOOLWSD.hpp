@@ -92,12 +92,20 @@ public:
 
     static bool isSSLEnabled()
     {
+#if ENABLE_SSL
         return LOOLWSD::SSLEnabled.get();
+#else
+        return false;
+#endif
     }
 
     static bool isSSLTermination()
     {
+#if ENABLE_SSL
         return LOOLWSD::SSLTermination.get();
+#else
+        return false;
+#endif
     }
 
     /// Return true iff extension is marked as view action in discovery.xml.
@@ -182,8 +190,10 @@ protected:
     void cleanup();
 
 private:
+#if ENABLE_SSL
     static Util::RuntimeConstant<bool> SSLEnabled;
     static Util::RuntimeConstant<bool> SSLTermination;
+#endif
 
     void initializeSSL();
     void displayHelp();
