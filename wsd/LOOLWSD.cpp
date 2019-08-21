@@ -1030,7 +1030,6 @@ void LOOLWSD::initialize(Application& self)
 
 #if ENABLE_SSL
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
-    LOOLWSD::SSLEnabled.set(false);
 #endif
 
     if (LOOLWSD::isSSLEnabled())
@@ -1044,7 +1043,6 @@ void LOOLWSD::initialize(Application& self)
 
 #if ENABLE_SSL
     LOOLWSD::SSLTermination.set(getConfigValue<bool>(conf, "ssl.termination", true));
-    LOOLWSD::SSLTermination.set(false);
 #endif
 
     std::string allowedLanguages(config().getString("allowed_languages"));
