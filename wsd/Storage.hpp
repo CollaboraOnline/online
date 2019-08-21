@@ -128,7 +128,8 @@ public:
         _isLoaded(false),
         _forceSave(false),
         _isUserModified(false),
-        _isAutosave(false)
+        _isAutosave(false),
+        _isExitSave(false)
     {
         LOG_DBG("Storage ctor: " << LOOLWSD::anonymizeUrl(uri.toString()));
     }
