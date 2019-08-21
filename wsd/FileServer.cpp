@@ -569,7 +569,8 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket)
 {
-    const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://") + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+    const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://")
+                    + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
     // Is this a file we read at startup - if not; its not for serving.
@@ -670,6 +671,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "X-XSS-Protection: 1; mode=block\r\n"
         << "Referrer-Policy: no-referrer\r\n";
 
+        const std::string reuseCookie = form.get("reuse_cookies_for_storage", "");
+        if (reuseCookie == "true")
+        {
+            NameValueCollection cookies;
+            request.getCookies(cookies);
+            std::ostringstream cookieTokens;
+
+            for (auto it = cookies.begin(); it != cookies.end(); it++)
+            {
+                cookieTokens << (*it).first << "=" << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
+            }
+            setenv("LOOL_REUSE_STORAGE_COOKIE", cookieTokens.str().c_str(), 1);
+        }
+
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.
     std::ostringstream cspOss;
@@ -720,6 +735,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         LOG_TRC("Denied all frame ancestors");
         cspOss << "img-src 'self' data: none;";
     }
+
     cspOss << "\r\n";
     // Append CSP to response headers too
     oss << cspOss.str();
