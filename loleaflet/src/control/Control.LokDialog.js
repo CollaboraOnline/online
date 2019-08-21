@@ -890,7 +890,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_resizeSidebar: function(strId, width) {
 		this._currentDeck.width = width;
-		if (width > 1) {
+		if (width > 1 && !window.mode.isMobile()) {
 			// Add extra space for scrollbar only when visible
 			width = width + 15;
 		}
