@@ -693,6 +693,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         "X-XSS-Protection: 1; mode=block\r\n"
         "Referrer-Policy: no-referrer\r\n";
 
+        const std::string reuseCookie = form.get("reuse_cookies_for_storage", "");
+        if (reuseCookie == "true")
+        {
+            NameValueCollection cookies;
+            request.getCookies(cookies);
+            std::ostringstream cookieTokens;
+
+            for (auto it = cookies.begin(); it != cookies.end(); it++)
+            {
+                cookieTokens << (*it).first << "=" << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
+            }
+            setenv("LOOL_REUSE_STORAGE_COOKIE", cookieTokens.str().c_str(), 1);
+        }
+
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.
     std::ostringstream cspOss;

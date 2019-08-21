@@ -422,6 +422,25 @@ void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 #endif
 }
 
+void addStorageReuseCookie(Poco::Net::HTTPRequest& request)
+{
+    if (std::getenv("LOOL_REUSE_STORAGE_COOKIE"))
+    {
+        Poco::Net::NameValueCollection nvcCookies;
+        std::vector<std::string> cookies = LOOLProtocol::tokenize(std::string(std::getenv("LOOL_REUSE_STORAGE_COOKIE")), ':');
+        for (auto cookie : cookies)
+        {
+            std::vector<std::string> cookieTokens = LOOLProtocol::tokenize(cookie, '=');
+            if (cookieTokens.size() == 2)
+            {
+                nvcCookies.add(cookieTokens[0], cookieTokens[1]);
+                LOG_TRC("Added storage reuse cookie [" << cookieTokens[0] << "=" << cookieTokens[1] << "].");
+            }
+        }
+        request.setCookies(nvcCookies);
+    }
+}
+
 } // anonymous namespace
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
@@ -441,7 +460,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         request.set("User-Agent", WOPI_AGENT_STRING);
         auth.authorizeRequest(request);
         addStorageDebugCookie(request);
-
+        addStorageReuseCookie(request);
         const auto startTime = std::chrono::steady_clock::now();
 
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
@@ -449,7 +468,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
-
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
         Log::StreamLogger logger = Log::trace();
@@ -661,6 +679,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, const
         request.set("User-Agent", WOPI_AGENT_STRING);
         auth.authorizeRequest(request);
         addStorageDebugCookie(request);
+        addStorageReuseCookie(request);
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
@@ -804,6 +823,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
         addStorageDebugCookie(request);
+        addStorageReuseCookie(request);
         std::ostream& os = psession->sendRequest(request);
 
         std::ifstream ifs(filePath);
