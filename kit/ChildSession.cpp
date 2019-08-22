@@ -862,6 +862,15 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
         filterOptions += std::string(",Watermark=") + getWatermarkText() + std::string("WATERMARKEND");
     }
 
+#ifdef IOS
+    NSArray<NSString *> *pathComponents = [[NSURL URLWithString:[NSString stringWithUTF8String:getDocURL().c_str()]] pathComponents];
+    NSString *baseName = [[pathComponents lastObject] stringByDeletingPathExtension];
+    NSURL *documentDirectory = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
+    NSURL *pdfURL = [documentDirectory URLByAppendingPathComponent:[baseName stringByAppendingString:@".pdf"]];
+    getLOKitDocument()->saveAs([[pdfURL absoluteString] UTF8String],
+                               format.empty() ? nullptr : format.c_str(),
+                               filterOptions.empty() ? nullptr : filterOptions.c_str());
+#else
     // The file is removed upon downloading.
     const std::string tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
     // Prevent user inputting anything funny here.
@@ -881,6 +890,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
 
     sendTextFrame("downloadas: jail=" + _jailId + " dir=" + tmpDir + " name=" + name +
                   " port=" + std::to_string(ClientPortNumber) + " id=" + id);
+#endif
     return true;
 }
 

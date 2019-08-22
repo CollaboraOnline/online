@@ -72,7 +72,8 @@ L.Map.include({
 			options = '';
 		}
 
-		this.showBusy(_('Downloading...'), false);
+		if (!window.ThisIsAMobileApp)
+			this.showBusy(_('Downloading...'), false);
 		this._socket.sendMessage('downloadas ' +
 			'name=' + encodeURIComponent(name) + ' ' +
 			'id=' + id + ' ' +

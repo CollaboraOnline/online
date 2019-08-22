@@ -27,6 +27,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
 					{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
 					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}]},
+				{name: _('Save as PDF'), id: 'downloadas-pdf', mobileapp: true, type: 'action'},
 				{name: _('Sign document'), id: 'signdocument', type: 'action'},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
@@ -991,6 +992,9 @@ L.Control.Menubar = L.Control.extend({
 
 			if (menu[i].type === 'menu') {
 				if (menu[i].mobileapp == false && window.ThisIsAMobileApp) {
+					continue;
+				}
+				if (menu[i].mobileapp == true && !window.ThisIsAMobileApp) {
 					continue;
 				}
 				var ulItem = L.DomUtil.create('ul', '', liItem);
