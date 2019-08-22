@@ -288,7 +288,7 @@ L.Control.Menubar = L.Control.extend({
                                {type: 'separator'},
                                {uno: '.uno:HeaderAndFooter'}]
 			},
-			{name: _UNO('.uno:FormatMenu', 'presentation'), type: 'menu', menu: [
+			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
 				{uno: '.uno:PageSetup'},
@@ -373,7 +373,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertSymbol'},
 				{uno: '.uno:EditHeaderAndFooter'}
 			]},
-			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:ResetAttributes'},
 				{uno: '.uno:FormatCellDialog'},
 				{uno: '.uno:PageFormatDialog'},
