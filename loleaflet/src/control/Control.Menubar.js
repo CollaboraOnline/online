@@ -27,6 +27,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
 					{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
 					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}]},
+				{name: _('Save as PDF'), id: 'downloadas-pdf', mobileapp: true, type: 'action'},
 				{name: _('Sign document'), id: 'signdocument', type: 'action'},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
@@ -250,6 +251,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
 					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
 					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'}]},
+				{name: _('Save as PDF'), id: 'downloadas-pdf', mobileapp: true, type: 'action'},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
@@ -338,6 +340,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
 					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action'},
 					{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]},
+				{name: _('Save as PDF'), id: 'downloadas-pdf', mobileapp: true, type: 'action'},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
@@ -994,6 +997,9 @@ L.Control.Menubar = L.Control.extend({
 
 			if (menu[i].type === 'menu') {
 				if (menu[i].mobileapp == false && window.ThisIsAMobileApp) {
+					continue;
+				}
+				if (menu[i].mobileapp == true && !window.ThisIsAMobileApp) {
 					continue;
 				}
 				var ulItem = L.DomUtil.create('ul', '', liItem);
