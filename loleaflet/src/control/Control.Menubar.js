@@ -252,6 +252,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
 					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
 					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'}]},
+				{name: _('Save as PDF'), id: 'downloadas-pdf', mobileapp: true, type: 'action'},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
@@ -340,6 +341,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
 					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action'},
 					{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]},
+				{name: _('Save as PDF'), id: 'downloadas-pdf', mobileapp: true, type: 'action'},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
