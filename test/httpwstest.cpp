@@ -1513,9 +1513,9 @@ void HTTPWSTest::getPartHashCodes(const std::string& testname,
 
     TST_LOG("Reading parts from [" << response << "].");
 
-    // Expected format is something like 'type= parts= current= width= height= viewid='.
+    // Expected format is something like 'type= parts= current= width= height= viewid= [hiddenparts=]'.
     Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
+    CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.count());
 
     const std::string type = tokens[0].substr(std::string("type=").size());
     CPPUNIT_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
