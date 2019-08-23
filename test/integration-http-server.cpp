@@ -336,7 +336,16 @@ void HTTPServerTest::testConvertTo()
     form.set("format", "txt");
     form.addPart("data", new Poco::Net::FilePartSource(srcPath));
     form.prepareSubmit(request);
-    form.write(session->sendRequest(request));
+    try
+    {
+        form.write(session->sendRequest(request));
+    }
+    catch (const std::exception& ex)
+    {
+        // In case the server is still starting up.
+        sleep(2);
+        form.write(session->sendRequest(request));
+    }
 
     Poco::Net::HTTPResponse response;
     std::stringstream actualStream;
@@ -375,7 +384,16 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
         form.set("format", "txt");
         form.addPart("data", new Poco::Net::FilePartSource(srcPath));
         form.prepareSubmit(request);
-        form.write(session->sendRequest(request));
+        try
+        {
+            form.write(session->sendRequest(request));
+        }
+        catch (const std::exception& ex)
+        {
+            // In case the server is still starting up.
+            sleep(2);
+            form.write(session->sendRequest(request));
+        }
 
         Poco::Net::HTTPResponse response;
         std::stringstream actualStream;
