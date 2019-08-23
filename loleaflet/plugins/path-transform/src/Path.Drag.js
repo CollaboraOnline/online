@@ -158,6 +158,9 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			}
 		}
 
+		if (this._startPoint === null)
+			return;
+
 		var x = containerPoint.x;
 		var y = containerPoint.y;
 
