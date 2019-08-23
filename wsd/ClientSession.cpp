@@ -243,7 +243,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         {
             std::ostringstream oss;
             oss << "HTTP/1.1 400 Bad Request\r\n"
-                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "Date: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: 0\r\n"
                 << "\r\n";
@@ -278,7 +278,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             // FIXME: work harder for error detection ?
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "Date: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: 0\r\n"
                 << "\r\n";
@@ -289,7 +289,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         {
             std::ostringstream oss;
             oss << "HTTP/1.1 400 Bad Request\r\n"
-                << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "Date: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: 0\r\n"
                 << "\r\n";
@@ -1296,7 +1296,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: " << (empty ? 0 : (payload->size() - header)) << "\r\n"
                 << "Content-Type: application/octet-stream\r\n"
