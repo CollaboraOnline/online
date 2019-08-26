@@ -1339,12 +1339,20 @@ function documentNameConfirm() {
 	var value = $('#document-name-input').val();
 	if (value !== null && value != '' && value != map['wopi'].BaseFileName) {
 		if (map['wopi'].UserCanRename && map['wopi'].SupportsRename) {
-			// file name must be without the extension
-			if (value.lastIndexOf('.') > 0)
-				value = value.substr(0, value.lastIndexOf('.'));
-			
-			map.sendUnoCommand('.uno:Save');
-			map._RenameFile = value;
+			if (value.lastIndexOf('.') > 0) {
+				var fname = map['wopi'].BaseFileName;
+				var ext =  fname.substr(fname.lastIndexOf('.')+1, fname.length);
+				// check format conversion
+				if (ext != value.substr(value.lastIndexOf('.')+1, value.length)) {
+					map.saveAs(value);
+				} else {
+					// same extension, just rename the file
+					// file name must be without the extension for rename
+					value = value.substr(0, value.lastIndexOf('.'));
+					map.sendUnoCommand('.uno:Save');
+					map._RenameFile = value;
+				}
+			}
 		} else {
 			// saveAs for rename
 			map.saveAs(value);
