@@ -773,6 +773,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             std::string encodedWatermarkText;
             Poco::URI::encode(getWatermarkText(), "", encodedWatermarkText);
             oss << " watermarkText=" << encodedWatermarkText;
+            oss << " watermarkOpacity=" << LOOLWSD::getConfigValue<double>("watermark.opacity", 0.2);
         }
 
         if (!getDocOptions().empty())

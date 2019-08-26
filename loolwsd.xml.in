@@ -107,6 +107,10 @@
       <capabilities desc="Should we require capabilities to isolate processes into chroot jails" type="bool" default="true">true</capabilities>
     </security>
 
+    <watermark>
+      <opacity desc="Opacity of on-screen watermark from 0.0 to 1.0" type="double" default="0.2"></opacity>
+    </watermark>
+
     <storage desc="Backend storage">
         <filesystem allow="false" />
         <wopi desc="Allow/deny wopi storage. Mutually exclusive with webdav." allow="true">

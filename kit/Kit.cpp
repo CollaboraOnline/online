@@ -593,7 +593,7 @@ public:
         , _font("Liberation Sans")
         , _width(0)
         , _height(0)
-        , _alphaLevel(0.2)
+        , _alphaLevel(session->getWatermarkOpacity())
     {
     }
 

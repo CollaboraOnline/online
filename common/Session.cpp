@@ -55,7 +55,8 @@ Session::Session(const std::string& name, const std::string& id, bool readOnly) 
     _isReadOnly(readOnly),
     _docPassword(""),
     _haveDocPassword(false),
-    _isDocPasswordProtected(false)
+    _isDocPasswordProtected(false),
+    _watermarkOpacity(0.2)
 {
 }
 
@@ -154,6 +155,11 @@ void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part,
         else if (name == "watermarkText")
         {
             Poco::URI::decode(value, _watermarkText);
+            ++offset;
+        }
+        else if (name == "watermarkOpacity")
+        {
+            _watermarkOpacity = std::stod(value);
             ++offset;
         }
         else if (name == "timestamp")
