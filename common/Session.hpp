@@ -102,7 +102,11 @@ public:
 
     const std::string& getDocOptions() const { return _docOptions; }
 
+    bool hasWatermark() const { return !_watermarkText.empty() && _watermarkOpacity > 0.0; }
+
     const std::string& getWatermarkText() const { return _watermarkText; }
+
+    double getWatermarkOpacity() const { return _watermarkOpacity; }
 
     const std::string& getLang() const { return _lang; }
 
@@ -202,6 +206,9 @@ private:
 
     /// In case a watermark has to be rendered on each tile.
     std::string _watermarkText;
+
+    /// Opacity in case a watermark has to be rendered on each tile.
+    double _watermarkOpacity;
 
     /// Language for the document based on what the user has in the UI.
     std::string _lang;
