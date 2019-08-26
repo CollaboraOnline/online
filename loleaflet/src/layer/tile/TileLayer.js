@@ -2540,15 +2540,20 @@ L.TileLayer = L.GridLayer.extend({
 				posEnd = this._map.unproject(posEnd);
 				this._cellResizeMarkerEnd.setLatLng(posEnd);
 			}
-			if (!this._cellAutofillMarker.isDragged) {
-				this._map.addLayer(this._cellAutofillMarker);
-				var cellAutoFillMarkerPoisition = cellRectangle.getCenter();
-				cellAutoFillMarkerPoisition.lat = cellRectangle.getSouth();
-				cellAutoFillMarkerPoisition = this._map.project(cellAutoFillMarkerPoisition);
-				var sizeAutoFill = this._cellAutofillMarker._icon.getBoundingClientRect();
-				cellAutoFillMarkerPoisition = cellAutoFillMarkerPoisition.subtract(new L.Point(sizeAutoFill.width / 2, sizeAutoFill.height / 2));
-				cellAutoFillMarkerPoisition = this._map.unproject(cellAutoFillMarkerPoisition);
-				this._cellAutofillMarker.setLatLng(cellAutoFillMarkerPoisition);
+			if (this._cellAutoFillArea) {
+				if (!this._cellAutofillMarker.isDragged) {
+					this._map.addLayer(this._cellAutofillMarker);
+					var cellAutoFillMarkerPoisition = cellRectangle.getCenter();
+					cellAutoFillMarkerPoisition.lat = cellRectangle.getSouth();
+					cellAutoFillMarkerPoisition = this._map.project(cellAutoFillMarkerPoisition);
+					var sizeAutoFill = this._cellAutofillMarker._icon.getBoundingClientRect();
+					cellAutoFillMarkerPoisition = cellAutoFillMarkerPoisition.subtract(new L.Point(sizeAutoFill.width / 2, sizeAutoFill.height / 2));
+					cellAutoFillMarkerPoisition = this._map.unproject(cellAutoFillMarkerPoisition);
+					this._cellAutofillMarker.setLatLng(cellAutoFillMarkerPoisition);
+				}
+				else if (this._cellAutofillMarker) {
+					this._map.removeLayer(this._cellAutofillMarker);
+				}
 			}
 		}
 		else {
@@ -2560,10 +2565,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update text selection handlers.
 	_onUpdateTextSelection: function () {
-		if (this._docType === 'spreadsheet') {
-			this._onUpdateCellResizeMarkers();
-			return;
-		}
+		this._onUpdateCellResizeMarkers();
 
 		var startMarker, endMarker;
 		for (var key in this._selectionHandles) {
