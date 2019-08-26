@@ -44,7 +44,6 @@
 		BE8D773A2136762600AC58EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE8D77392136762600AC58EA /* Assets.xcassets */; };
 		BE8D773D2136762600AC58EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE8D773B2136762600AC58EA /* LaunchScreen.storyboard */; };
 		BE8D77402136762600AC58EA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8D773F2136762600AC58EA /* main.m */; };
-		BE8D85C9214055F3009F1860 /* filter in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85BB214055F2009F1860 /* filter */; };
 		BE8D85CA214055F3009F1860 /* offapi.rdb in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85BC214055F2009F1860 /* offapi.rdb */; };
 		BE8D85CB214055F3009F1860 /* share in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85BD214055F2009F1860 /* share */; };
 		BE8D85CC214055F3009F1860 /* config in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85BE214055F2009F1860 /* config */; };
@@ -879,7 +878,6 @@
 		BE8D773C2136762600AC58EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE8D773E2136762600AC58EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE8D773F2136762600AC58EA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		BE8D85BB214055F2009F1860 /* filter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = filter; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/filter"; sourceTree = "<group>"; };
 		BE8D85BC214055F2009F1860 /* offapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = offapi.rdb; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/offapi.rdb"; sourceTree = "<group>"; };
 		BE8D85BD214055F2009F1860 /* share */ = {isa = PBXFileReference; lastKnownFileType = folder; name = share; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/share"; sourceTree = "<group>"; };
 		BE8D85BE214055F2009F1860 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/config"; sourceTree = "<group>"; };
@@ -1157,7 +1155,6 @@
 				BE80E46721B7066C00859C97 /* Templates */,
 				BE80E43121AD92F600859C97 /* Fonts */,
 				BE8D85BE214055F2009F1860 /* config */,
-				BE8D85BB214055F2009F1860 /* filter */,
 				BE8D85C6214055F3009F1860 /* fundamentalrc */,
 				BE8D85BC214055F2009F1860 /* offapi.rdb */,
 				BE8D85C0214055F2009F1860 /* oovbaapi.rdb */,
