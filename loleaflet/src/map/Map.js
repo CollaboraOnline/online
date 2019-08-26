@@ -1092,7 +1092,7 @@ L.Map = L.Evented.extend({
 		}
 
 		console.debug('_dim:');
-		if (!this._socket.connected()) {
+		if (!this._socket.connected() || isAnyVexDialogActive()) {
 			return;
 		}
 
