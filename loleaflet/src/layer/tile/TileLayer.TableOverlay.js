@@ -63,6 +63,7 @@ L.TileLayer.include({
 		this._map.addLayer(marker);
 		marker._type = markerType + '-' + entry.type;
 		marker._position = parseInt(entry.position);
+		marker._initialPosition = marker._position;
 		marker._min = parseInt(entry.min);
 		marker._max = parseInt(entry.max);
 		marker._index = parseInt(entry.index);
@@ -260,7 +261,6 @@ L.TileLayer.include({
 			e.target._topBorderPoint.lat = aLatLonPosition.lat;
 			e.target._bottomBorderPoint.lat = aLatLonPosition.lat;
 		}
-
 		e.target._position = newPosition;
 
 		var bounds = new L.LatLngBounds(e.target._topBorderPoint, e.target._bottomBorderPoint);
@@ -276,6 +276,9 @@ L.TileLayer.include({
 			this._map.removeLayer(this._rectangle);
 			this._rectangle = null;
 
+			var offset = newPosition - e.target._initialPosition;
+			e.target._initialPosition =  e.target._position;
+
 			var params = {
 				BorderType: {
 					type : 'string',
@@ -285,9 +288,9 @@ L.TileLayer.include({
 					type : 'uint16',
 					value : e.target._index
 				},
-				NewPosition: {
+				Offset: {
 					type : 'int32',
-					value : e.target._position
+					value : offset
 				}
 			}
 
