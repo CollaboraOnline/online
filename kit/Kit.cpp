@@ -588,13 +588,14 @@ public:
 class Watermark
 {
 public:
-    Watermark(const std::shared_ptr<lok::Document>& loKitDoc, const std::string& text)
+    Watermark(const std::shared_ptr<lok::Document>& loKitDoc, const std::string& text,
+    const std::shared_ptr<ChildSession> & session)
         : _loKitDoc(loKitDoc)
         , _text(text)
         , _font("Liberation Sans")
         , _width(0)
         , _height(0)
-        , _alphaLevel(0.2)
+        , _alphaLevel(session->getWatermarkOpacity())
     {
     }
 
@@ -1815,7 +1816,7 @@ private:
             _renderOpts = renderOpts;
 
             if (!watermarkText.empty())
-                _docWatermark.reset(new Watermark(_loKitDocument, watermarkText));
+                _docWatermark.reset(new Watermark(_loKitDocument, watermarkText, session));
         }
         else
         {
