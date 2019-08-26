@@ -579,10 +579,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-    const bool loaded = _docManager->onLoad(getId(), getJailedFilePath(), getJailedFilePathAnonym(),
-                                           getUserName(), getUserNameAnonym(),
-                                           getDocPassword(), renderOpts, getHaveDocPassword(),
-                                           getLang(), getWatermarkText(), doctemplate);
+    const bool loaded = _docManager->onLoad(getId(), getJailedFilePathAnonym(), renderOpts, doctemplate);
     if (!loaded || _viewId < 0)
     {
         LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << "].");

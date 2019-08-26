@@ -491,16 +491,10 @@ public:
         : _tileQueue(new TileQueue())
     {
     }
+
     bool onLoad(const std::string& /*sessionId*/,
-                const std::string& /*jailedFilePath*/,
-                const std::string& /*jailedFilePathAnonym*/,
-                const std::string& /*userName*/,
-                const std::string& /*userNameAnonym*/,
-                const std::string& /*docPassword*/,
+                const std::string& /*uriAnonym*/,
                 const std::string& /*renderOpts*/,
-                const bool /*haveDocPassword*/,
-                const std::string& /*lang*/,
-                const std::string& /*watermarkText*/,
                 const std::string& /*docTemplate*/) override
     {
         return false;

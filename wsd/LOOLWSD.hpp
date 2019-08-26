@@ -122,7 +122,7 @@ public:
     }
 
     /// Returns the value of the specified application configuration,
-    /// of the default, if one doesn't exist.
+    /// or the default, if one doesn't exist.
     template<typename T>
     static
     T getConfigValue(const std::string& name, const T def)

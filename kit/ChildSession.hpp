@@ -38,15 +38,8 @@ class DocumentManagerInterface
 public:
     /// Reqest loading a document, or a new view, if one exists.
     virtual bool onLoad(const std::string& sessionId,
-                        const std::string& jailedFilePath,
-                        const std::string& jailedFilePathAnonym,
-                        const std::string& userName,
-                        const std::string& userNameAnonym,
-                        const std::string& docPassword,
+                        const std::string& uriAnonym,
                         const std::string& renderOpts,
-                        const bool haveDocPassword,
-                        const std::string& lang,
-                        const std::string& watermarkText,
                         const std::string& docTemplate) = 0;
 
     /// Unload a client session, which unloads the document

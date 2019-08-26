@@ -586,9 +586,10 @@ public:
 class Watermark
 {
 public:
-    Watermark(const std::shared_ptr<lok::Document>& loKitDoc, const std::string& text)
+    Watermark(const std::shared_ptr<lok::Document>& loKitDoc,
+              const std::shared_ptr<ChildSession> & session)
         : _loKitDoc(loKitDoc)
-        , _text(text)
+        , _text(session->getWatermarkText())
         , _font("Liberation Sans")
         , _width(0)
         , _height(0)
@@ -1459,15 +1460,8 @@ private:
 
     /// Load a document (or view) and register callbacks.
     bool onLoad(const std::string& sessionId,
-                const std::string& uri,
                 const std::string& uriAnonym,
-                const std::string& userName,
-                const std::string& userNameAnonym,
-                const std::string& docPassword,
                 const std::string& renderOpts,
-                const bool haveDocPassword,
-                const std::string& lang,
-                const std::string& watermarkText,
                 const std::string& docTemplate) override
     {
         std::unique_lock<std::mutex> lock(_mutex);
@@ -1477,9 +1471,7 @@ private:
                 " sessions. Another load in progress: " << _isLoading);
 
         while (_isLoading)
-        {
             _cvLoading.wait(lock);
-        }
 
         // This shouldn't happen, but for sanity.
         const auto it = _sessions.find(sessionId);
@@ -1497,10 +1489,8 @@ private:
 
         try
         {
-            if (!load(session, uri, uriAnonym, userName, userNameAnonym, docPassword, renderOpts, haveDocPassword, lang, watermarkText, docTemplate))
-            {
+            if (!load(session, renderOpts, docTemplate))
                 return false;
-            }
         }
         catch (const std::exception& exc)
         {
@@ -1737,18 +1727,18 @@ private:
     }
 
     std::shared_ptr<lok::Document> load(const std::shared_ptr<ChildSession>& session,
-                                        const std::string& uri,
-                                        const std::string& uriAnonym,
-                                        const std::string& userName,
-                                        const std::string& userNameAnonym,
-                                        const std::string& docPassword,
                                         const std::string& renderOpts,
-                                        const bool haveDocPassword,
-                                        const std::string& lang,
-                                        const std::string& watermarkText,
                                         const std::string& docTemplate)
     {
         const std::string sessionId = session->getId();
+
+        const std::string& uri = session->getJailedFilePath();
+        const std::string& uriAnonym = session->getJailedFilePathAnonym();
+        const std::string& userName = session->getUserName();
+        const std::string& userNameAnonym = session->getUserNameAnonym();
+        const std::string& docPassword = session->getDocPassword();
+        const bool haveDocPassword = session->getHaveDocPassword();
+        const std::string& lang = session->getLang();
 
         std::string options;
         if (!lang.empty())
@@ -1816,8 +1806,8 @@ private:
             // No support for changing them after opening a document.
             _renderOpts = renderOpts;
 
-            if (!watermarkText.empty())
-                _docWatermark.reset(new Watermark(_loKitDocument, watermarkText));
+            if (session->hasWatermark())
+                _docWatermark.reset(new Watermark(_loKitDocument, session));
         }
         else
         {
