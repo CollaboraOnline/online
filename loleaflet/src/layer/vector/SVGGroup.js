@@ -11,7 +11,8 @@ L.SVGGroup = L.Layer.extend({
 
 	lastTouchEvent: {
 		clientX: 0,
-		clientY: 0
+		clientY: 0,
+		ignoreMouseOut: false
 	},
 
 	initialize: function (bounds, options) {
@@ -67,7 +68,8 @@ L.SVGGroup = L.Layer.extend({
 
 		L.DomEvent.on(this._dragShape, 'mousemove', this._onDrag, this);
 		L.DomEvent.on(this._dragShape, 'mouseup', this._onDragEnd, this);
-		L.DomEvent.on(this._dragShape, 'mouseout', this._onDragEnd, this);
+		if (!this.options.ignoreMouseOut)
+			L.DomEvent.on(this._dragShape, 'mouseout', this._onDragEnd, this);
 
 		L.DomEvent.on(this._dragShape, 'touchmove', this._onDrag, this);
 		L.DomEvent.on(this._dragShape, 'touchend', this._onDragEnd, this);
@@ -114,7 +116,8 @@ L.SVGGroup = L.Layer.extend({
 			return;
 		L.DomEvent.off(this._dragShape, 'mousemove', this._onDrag, this);
 		L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
-		L.DomEvent.off(this._dragShape, 'mouseout', this._onDragEnd, this);
+		if (!this.options.ignoreMouseOut)
+			L.DomEvent.off(this._dragShape, 'mouseout', this._onDragEnd, this);
 
 		L.DomEvent.off(this._dragShape, 'touchmove', this._onDrag, this);
 		L.DomEvent.off(this._dragShape, 'touchend', this._onDragEnd, this);
