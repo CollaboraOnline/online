@@ -656,6 +656,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     const std::string idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");
     Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), idleTimeoutSecs);
 
+    // Capture cookies so we can optionally reuse them for the storage requests.
+    {
+        NameValueCollection cookies;
+        request.getCookies(cookies);
+        std::ostringstream cookieTokens;
+        for (auto it = cookies.begin(); it != cookies.end(); it++)
+            cookieTokens << (*it).first << "=" << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
+
+        const std::string cookiesString = cookieTokens.str();
+        if (!cookiesString.empty())
+            LOG_DBG("Captured cookies: " << cookiesString);
+        Poco::replaceInPlace(preprocess, std::string("%REUSE_COOKIES%"), cookiesString);
+    }
+
     const std::string mimeType = "text/html";
 
     std::ostringstream oss;
@@ -670,20 +684,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         << "X-Content-Type-Options: nosniff\r\n"
         << "X-XSS-Protection: 1; mode=block\r\n"
         << "Referrer-Policy: no-referrer\r\n";
-
-        const std::string reuseCookie = form.get("reuse_cookies_for_storage", "");
-        if (reuseCookie == "true")
-        {
-            NameValueCollection cookies;
-            request.getCookies(cookies);
-            std::ostringstream cookieTokens;
-
-            for (auto it = cookies.begin(); it != cookies.end(); it++)
-            {
-                cookieTokens << (*it).first << "=" << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
-            }
-            setenv("LOOL_REUSE_STORAGE_COOKIE", cookieTokens.str().c_str(), 1);
-        }
 
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.

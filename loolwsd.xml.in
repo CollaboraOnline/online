@@ -18,7 +18,7 @@
     <per_document desc="Document-specific settings, including LO Core settings.">
         <max_concurrency desc="The maximum number of threads to use while processing a document." type="uint" default="4">4</max_concurrency>
         <document_signing_url desc="The endpoint URL of signing server, if empty the document signing is disabled" type="string" default="@VEREIGN_URL@">@VEREIGN_URL@</document_signing_url>
-	<redlining_as_comments desc="If true show red-lines as comments" type="bool" default="true">true</redlining_as_comments>
+        <redlining_as_comments desc="If true show red-lines as comments" type="bool" default="true">true</redlining_as_comments>
         <idle_timeout_secs desc="The maximum number of seconds before unloading an idle document. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
         <!-- Idle save and auto save are checked every 30 seconds -->
         <!-- They are disabled when the value is zero or negative. -->
@@ -29,7 +29,7 @@
         <limit_stack_mem_kb desc="The maximum stack size allowed to each document process. 0 for unlimited." type="uint">8000</limit_stack_mem_kb>
         <limit_file_size_mb desc="The maximum file size allowed to each document process to write. 0 for unlimited." type="uint">0</limit_file_size_mb>
         <limit_num_open_files desc="The maximum number of files allowed to each document process to open. 0 for unlimited." type="uint">0</limit_num_open_files>
-    <limit_load_secs desc="Maximum number of seconds to wait for a document load to succeed. 0 for unlimited." type="uint" default="100">100</limit_load_secs>
+        <limit_load_secs desc="Maximum number of seconds to wait for a document load to succeed. 0 for unlimited." type="uint" default="100">100</limit_load_secs>
     </per_document>
 
     <per_view desc="View-specific settings.">
@@ -116,6 +116,7 @@
             <host desc="Regex pattern of hostname to allow or deny." allow="true">192\.168\.[0-9]{1,3}\.[0-9]{1,3}</host>
             <host desc="Regex pattern of hostname to allow or deny." allow="false">192\.168\.1\.1</host>
             <max_file_size desc="Maximum document size in bytes to load. 0 for unlimited." type="uint">0</max_file_size>
+            <reuse_cookies desc="When enabled, cookies from the browser will be captured and set on WOPI requests." type="bool" default="false">false</reuse_cookies>
         </wopi>
         <webdav desc="Allow/deny webdav storage. Mutually exclusive with wopi." allow="false">
             <host desc="Hostname to allow" allow="false">localhost</host>

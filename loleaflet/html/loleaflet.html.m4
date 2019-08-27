@@ -169,6 +169,7 @@ ifelse(MOBILEAPP,[true],
       window.loleafletLogging = '%LOLEAFLET_LOGGING%';
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
+      window.reuseCookies = '%REUSE_COOKIES%';
       window.tileSize = 256;])
     </script>
   <script>

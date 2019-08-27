@@ -379,7 +379,7 @@ Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri)
         : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
 
-void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
+static void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 {
     (void) request;
 #if ENABLE_DEBUG
@@ -397,26 +397,26 @@ void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
 #endif
 }
 
-void addStorageReuseCookie(Poco::Net::HTTPRequest& request)
+static void addStorageReuseCookie(Poco::Net::HTTPRequest& request, const std::string& reuseStorageCookies)
 {
-    if (std::getenv("LOOL_REUSE_STORAGE_COOKIE"))
+    if (!reuseStorageCookies.empty())
     {
         Poco::Net::NameValueCollection nvcCookies;
-        std::vector<std::string> cookies = LOOLProtocol::tokenize(std::string(std::getenv("LOOL_REUSE_STORAGE_COOKIE")), ':');
+        std::vector<std::string> cookies = LOOLProtocol::tokenize(reuseStorageCookies, ':');
         for (auto cookie : cookies)
         {
             std::vector<std::string> cookieTokens = LOOLProtocol::tokenize(cookie, '=');
             if (cookieTokens.size() == 2)
             {
                 nvcCookies.add(cookieTokens[0], cookieTokens[1]);
-                LOG_TRC("Added storage reuse cookie [" << cookieTokens[0] << "=" << cookieTokens[1] << "].");
+                LOG_DBG("Added storage reuse cookie [" << cookieTokens[0] << "=" << cookieTokens[1] << "].");
             }
         }
         request.setCookies(nvcCookies);
     }
 }
 
-Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::string& name)
+static Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::string& name)
 {
     Poco::Timestamp timestamp = Poco::Timestamp::fromEpochTime(0);
     try
@@ -447,6 +447,16 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     auth.authorizeURI(uriObject);
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
 
+    std::string reuseStorageCookies;
+    for (const auto& param : uriObject.getQueryParameters())
+    {
+        if (param.first == "reuse_cookies")
+        {
+            reuseStorageCookies = param.second;
+            break;
+        }
+    }
+
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << "].");
 
     std::string wopiResponse;
@@ -457,7 +467,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         request.set("User-Agent", WOPI_AGENT_STRING);
         auth.authorizeRequest(request);
         addStorageDebugCookie(request);
-        addStorageReuseCookie(request);
+        if (_reuseCookies)
+            addStorageReuseCookie(request, reuseStorageCookies);
         const auto startTime = std::chrono::steady_clock::now();
 
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
@@ -649,6 +660,16 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
     uriObject.setPath(uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
+    std::string reuseStorageCookies;
+    for (const auto& param : uriObject.getQueryParameters())
+    {
+        if (param.first == "reuse_cookies")
+        {
+            reuseStorageCookies = param.second;
+            break;
+        }
+    }
+
     Poco::URI uriObjectAnonym(getUri());
     uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
     const std::string uriAnonym = uriObjectAnonym.toString();
@@ -664,7 +685,8 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth)
         request.set("User-Agent", WOPI_AGENT_STRING);
         auth.authorizeRequest(request);
         addStorageDebugCookie(request);
-        addStorageReuseCookie(request);
+        if (_reuseCookies)
+            addStorageReuseCookie(request, reuseStorageCookies);
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
@@ -729,6 +751,17 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     Poco::URI uriObject(getUri());
     uriObject.setPath(isSaveAs || isRename? uriObject.getPath(): uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
+
+    std::string reuseStorageCookies;
+    for (const auto& param : uriObject.getQueryParameters())
+    {
+        if (param.first == "reuse_cookies")
+        {
+            reuseStorageCookies = param.second;
+            break;
+        }
+    }
+
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
 
     LOG_INF("Uploading URI via WOPI [" << uriAnonym << "] from [" << filePathAnonym + "].");
@@ -805,7 +838,8 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
         addStorageDebugCookie(request);
-        addStorageReuseCookie(request);
+        if (_reuseCookies)
+            addStorageReuseCookie(request, reuseStorageCookies);
         std::ostream& os = psession->sendRequest(request);
 
         std::ifstream ifs(filePath);

@@ -290,10 +290,15 @@ public:
                 const std::string& localStorePath,
                 const std::string& jailPath) :
         StorageBase(uri, localStorePath, jailPath),
-        _wopiLoadDuration(0)
+        _wopiLoadDuration(0),
+        _reuseCookies(false)
     {
-        LOG_INF("WopiStorage ctor with localStorePath: [" << localStorePath <<
-                "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
+        const auto& app = Poco::Util::Application::instance();
+        _reuseCookies = app.config().getBool("storage.wopi.reuse_cookies", false);
+        LOG_INF("WopiStorage ctor with localStorePath: ["
+                << localStorePath << "], jailPath: [" << jailPath << "], uri: ["
+                << LOOLWSD::anonymizeUrl(uri.toString()) << "], reuseCookies: [" << _reuseCookies
+                << "].");
     }
 
     class WOPIFileInfo
@@ -490,6 +495,8 @@ public:
 private:
     // Time spend in loading the file from storage
     std::chrono::duration<double> _wopiLoadDuration;
+    /// Whether or not to re-use cookies from the browser for the WOPI requests.
+    bool _reuseCookies;
 };
 
 /// WebDAV protocol backed storage.

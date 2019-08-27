@@ -94,11 +94,15 @@
     var wopiSrc = getParameterByName('WOPISrc');
     var access_token = '%ACCESS_TOKEN%';
     var access_header = '%ACCESS_HEADER%';
+    var reuse_cookies = '%REUSE_COOKIES%';
     if (wopiSrc !== '' && access_token !== '') {
         wopiSrc += '?access_token=' + access_token;
     }
     else if (wopiSrc !== '' && access_header !== '') {
         wopiSrc += '?access_header=' + access_header;
+    }
+    else if (wopiSrc !== '' && reuse_cookies !== '') {
+        wopiSrc += '?reuse_cookies=' + reuse_cookies;
     }
 
     var host = '%HOST%';
