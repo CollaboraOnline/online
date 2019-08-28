@@ -298,6 +298,10 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._toolbar.remove();
 
 		this._map.fire('closepopups');
+		// unselect if anything is selected already
+		if (this._map._docLayer && this._map._docLayer._annotations && this._map._docLayer._annotations.unselect) {
+			this._map._docLayer._annotations.unselect();
+		}
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
