@@ -613,6 +613,7 @@ body {
 	bottom: 40px !important;
 	right: 10px !important;
 }
+
 /* Vex dialogs */
 .vex-open .vex-overlay {
 	/* TODO: remove specific z-index from our codebase

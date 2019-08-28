@@ -545,6 +545,9 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		}
+		else if (textMsg.startsWith('jsdialog:')) {
+			this._onJSDialogMsg(textMsg);
+		}
 	},
 
 	toggleTileDebugModeImpl: function() {
@@ -696,10 +699,29 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_resetSelectionRanges: function() {
+		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
+		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+	},
+
+	_openMobileWizard: function(data) {
+		this._map.fire('mobilewizard', data);
+	},
+
+	_closeMobileWizard: function() {
+		this._map.fire('closemobilewizard');
+	},
+
+	_onJSDialogMsg: function (textMsg) {
+		if (window.mode.isMobile()) {
+			var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
+			this._openMobileWizard(msgData);
+		}
+	},
+
 	_onGraphicSelectionMsg: function (textMsg) {
 		if (textMsg.match('EMPTY')) {
-			this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
-			this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+			this._resetSelectionRanges();
 		}
 		else {
 			textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';

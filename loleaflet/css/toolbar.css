@@ -736,3 +736,33 @@ tr.useritem > td > img {
     text-decoration: none;
     color: black;
 }
+
+#mobile-wizard-back {
+    background-image: url('images/lc_closedocmobile.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    height: 20px;
+}
+
+#mobile-wizard {
+    height: 45%;
+    width: 100%;
+    position: fixed;
+    bottom: 37px;
+    z-index: 1000;
+    background-color: white;
+}
+
+#mobile-wizard-content {
+    overflow: scroll;
+    position: absolute;
+    top: 30px;
+    bottom: 0px;
+    width: 100%;
+}
+
+#mobile-wizard-titlebar {
+    background-color: #F6F6F6;
+    height: 30px;
+}

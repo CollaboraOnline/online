@@ -178,6 +178,15 @@ ifelse(MOBILEAPP,[true],
     </div>
 
     <div id="toolbar-down" style="display: none"></div>
+    <div id="mobile-wizard" style="display: none">
+      <table id="mobile-wizard-titlebar" width="100%">
+        <tr>
+          <td id="mobile-wizard-back"></td>
+          <td id="mobile-wizard-title" class="ui-widget"></td>
+        </tr>
+      </table>
+      <div id="mobile-wizard-content">
+    </div>
 
     <!-- Remove if you don't want the About dialog -->
     <div id="about-dialog" style="display:none; text-align: center; user-select: text">

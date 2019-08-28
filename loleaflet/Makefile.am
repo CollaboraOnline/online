@@ -332,6 +332,7 @@ pot:
 		src/control/Control.DownloadProgress.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.MobileInput.js \
+		src/control/Control.MobileWizard.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
