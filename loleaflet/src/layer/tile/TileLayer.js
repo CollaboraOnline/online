@@ -405,6 +405,8 @@ L.TileLayer = L.GridLayer.extend({
 		$(this._contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString(String.locale, dateOptions));
 
 		dialog.get(0).insertBefore(this._author, dialog.get(0).childNodes[0]);
+
+		dialog.find('textarea').focus();
 	},
 
 	clearAnnotations: function() {
