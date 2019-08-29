@@ -64,9 +64,12 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
     return haveTests;
 }
 
+static bool IsDebugrun = false;
+
 int main(int argc, char** argv)
 {
     const bool verbose = (argc > 1 && std::string("--verbose") == argv[1]);
+    IsDebugrun = (argc > 2 && std::string("--debugrun") == argv[2]);
     const char* loglevel = verbose ? "trace" : "error";
 
     Log::initialize("tst", loglevel, true, false, {});
@@ -203,7 +206,8 @@ std::vector<int> getProcPids(const char* exec_filename)
                 {
                     // We could have several make checks running at once.
                     int kidGrp = std::atoi(tokens[4].c_str());
-                    if (kidGrp != grp)
+                    // Don't require matching grp for --debugrun invocations.
+                    if (kidGrp != grp && !IsDebugrun)
                         continue;
 
                     switch (tokens[2].c_str()[0])
