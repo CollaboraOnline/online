@@ -552,7 +552,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		L.PathTransform.pointOnLine(
 			map.latLngToLayerPoint(bottom),
 			map.latLngToLayerPoint(topPoint),
-		        (window.ThisIsAMobileApp ? this.options.handleLength * 3 : this.options.handleLength))
+			this.options.handleLength)
 		);
 
 		this._handleLine = new L.Polyline([topPoint, handlerPosition],

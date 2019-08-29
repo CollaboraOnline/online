@@ -14,8 +14,6 @@ L.CircleMarker = L.Path.extend({
 		L.setOptions(this, options);
 		this._latlng = L.latLng(latlng);
 		this._radius = this.options.radius;
-		if (window.ThisIsAMobileApp)
-			this._radius *= 3;
 	},
 
 	setLatLng: function (latlng) {
@@ -30,8 +28,6 @@ L.CircleMarker = L.Path.extend({
 
 	setRadius: function (radius) {
 		this.options.radius = this._radius = radius;
-		if (window.ThisIsAMobileApp)
-			this._radius *= 3;
 		return this.redraw();
 	},
 
