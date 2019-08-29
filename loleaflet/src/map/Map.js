@@ -1362,7 +1362,12 @@ L.Map = L.Evented.extend({
 
 	// Our browser tab got focus.
 	_onGotFocus: function () {
-		this._onEditorGotFocus();
+		if (this._activeDialog === null) {
+			this._onEditorGotFocus();
+		} else {
+			this._activeDialog.focus();
+		}
+
 		this._activate();
 	},
 
