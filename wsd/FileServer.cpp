@@ -460,8 +460,10 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
         << "\r\n";
     if (!shortMessage.empty())
     {
+        std::string pathSanitized;
+        Poco::URI::encode(path, "", pathSanitized);
         oss << "<h1>Error: " << shortMessage << "</h1>"
-            "<p>" << longMessage << " " << path << "</p>"
+            "<p>" << longMessage << ' ' << pathSanitized << "</p>"
             "<p>Please contact your system administrator.</p>";
     }
     socket->send(oss.str());
@@ -740,6 +742,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         LOG_TRC("Denied all frame ancestors");
         cspOss << "img-src 'self' data: none;";
     }
+
     cspOss << "\r\n";
     // Append CSP to response headers too
     oss << cspOss.str();
