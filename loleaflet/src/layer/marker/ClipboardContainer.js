@@ -507,7 +507,7 @@ L.ClipboardContainer = L.Layer.extend({
 	// always catch deleteContentBackward/deleteContentForward input events
 	// (some combination of browser + input method don't fire those on an
 	// empty contenteditable).
-	_emptyArea: function _emptyArea() {
+	_emptyArea: function _emptyArea(noSelect) {
 		this._fancyLog('empty-area');
 
 		this._ignoreInputCount++;
@@ -524,7 +524,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._textArea.value = this._preSpaceChar + this._postSpaceChar;
 
 		// avoid setting the focus keyboard
-		if (document.activeElement === this._textArea) {
+		if (!noSelect) {
 			this._textArea.setSelectionRange(1, 1);
 
 			if (this._hasWorkingSelectionStart === undefined)
@@ -566,7 +566,7 @@ L.ClipboardContainer = L.Layer.extend({
 		this._fancyLog('abort-composition', ev.type);
 		if (this._isComposing)
 			this._isComposing = false;
-		this._emptyArea();
+		this._emptyArea(document.activeElement !== this._textArea);
 	},
 
 	_onKeyDown: function _onKeyDown(ev) {
