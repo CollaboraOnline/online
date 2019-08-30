@@ -449,10 +449,10 @@ private:
     std::chrono::steady_clock::time_point _lastSaveResponseTime;
 
     /// The document's last-modified time on storage.
-    Poco::Timestamp _documentLastModifiedTime;
+    std::chrono::system_clock::time_point _documentLastModifiedTime;
 
     /// The jailed file last-modified time.
-    Poco::Timestamp _lastFileModifiedTime;
+    std::chrono::system_clock::time_point _lastFileModifiedTime;
 
     /// All session of this DocBroker by ID.
     std::map<std::string, std::shared_ptr<ClientSession> > _sessions;

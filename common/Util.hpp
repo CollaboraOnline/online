@@ -924,6 +924,16 @@ int main(int argc, char**argv)
 
     //// Return current time in HTTP format.
     std::string getHttpTimeNow();
+
+    //// Return timestamp of file
+    std::chrono::system_clock::time_point getFileTimestamp(std::string str_path);
+
+    //// Return time in ISO8061 fraction format
+    std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time);
+
+    //// Convert time from ISO8061 fraction format
+    std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName);
+
 } // end namespace Util
 
 #endif

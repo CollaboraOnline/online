@@ -69,7 +69,7 @@ namespace
 
 void sendLastModificationTime(const std::shared_ptr<Session>& session,
                               DocumentBroker* documentBroker,
-                              const Poco::Timestamp& documentLastModifiedTime)
+                              const std::chrono::system_clock::time_point& documentLastModifiedTime)
 {
     if (!session)
         return;
@@ -679,7 +679,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     {
         // Check if document has been modified by some external action
         LOG_TRC("Document modified time: " << fileInfo.getModifiedTime());
-        static const Poco::Timestamp Zero(Poco::Timestamp::fromEpochTime(0));
+        static const std::chrono::system_clock::time_point Zero;
         if (_documentLastModifiedTime != Zero &&
             fileInfo.getModifiedTime() != Zero &&
             _documentLastModifiedTime != fileInfo.getModifiedTime())
@@ -776,8 +776,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         _filename = fileInfo.getFilename();
 
         // Use the local temp file's timestamp.
-        _lastFileModifiedTime = templateSource.empty() ? Poco::File(_storage->getRootFilePath()).getLastModified() :
-                Poco::Timestamp::fromEpochTime(0);
+        _lastFileModifiedTime = templateSource.empty() ? Util::getFileTimestamp(_storage->getRootFilePath()) :
+                std::chrono::system_clock::time_point();
 
         bool dontUseCache = false;
 #if MOBILEAPP
@@ -894,12 +894,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uri);
 
     // If the file timestamp hasn't changed, skip saving.
-    const Poco::Timestamp newFileModifiedTime = Poco::File(_storage->getRootFilePath()).getLastModified();
+    const std::chrono::system_clock::time_point newFileModifiedTime = Util::getFileTimestamp(_storage->getRootFilePath());
     if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime && !isRename)
     {
         // Nothing to do.
+        auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>
+                                            (std::chrono::system_clock::now() - _lastFileModifiedTime);
         LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << _docKey <<
-                "]. File last modified " << _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
+                "]. File last modified " << timeInSec.count() << " seconds ago.");
         _poll->wakeup();
         return true;
     }
@@ -1108,7 +1110,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
     if (_sessions.find(sessionId) != _sessions.end())
     {
         // Invalidate the timestamp to force persisting.
-        _lastFileModifiedTime = Poco::Timestamp::fromEpochTime(0);
+        _lastFileModifiedTime = std::chrono::system_clock::time_point();
 
         // We do not want save to terminate editing mode if we are in edit mode now
 
@@ -1578,7 +1580,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
     {
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: " << saved->length() << "\r\n"
                 << "Content-Type: application/octet-stream\r\n"
@@ -1601,7 +1603,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
     // Bad request.
     std::ostringstream oss;
     oss << "HTTP/1.1 400\r\n"
-        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+        << "Date: " << Util::getHttpTimeNow() << "\r\n"
         << "User-Agent: LOOLWSD WOPI Agent\r\n"
         << "Content-Length: 0\r\n"
         << "\r\n"

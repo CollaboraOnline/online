@@ -34,7 +34,7 @@ public:
     public:
         FileInfo(const std::string& filename,
                  const std::string& ownerId,
-                 const Poco::Timestamp& modifiedTime,
+                 const std::chrono::system_clock::time_point& modifiedTime,
                  size_t /*size*/)
             : _filename(filename),
               _ownerId(ownerId),
@@ -52,14 +52,14 @@ public:
 
         const std::string& getOwnerId() const { return _ownerId; }
 
-        void setModifiedTime(const Poco::Timestamp& modifiedTime) { _modifiedTime = modifiedTime; }
+        void setModifiedTime(const std::chrono::system_clock::time_point& modifiedTime) { _modifiedTime = modifiedTime; }
 
-        const Poco::Timestamp& getModifiedTime() const { return _modifiedTime; }
+        const std::chrono::system_clock::time_point& getModifiedTime() const { return _modifiedTime; }
 
     private:
         std::string _filename;
         std::string _ownerId;
-        Poco::Timestamp _modifiedTime;
+        std::chrono::system_clock::time_point _modifiedTime;
     };
 
     class SaveResult
@@ -124,7 +124,7 @@ public:
         _uri(uri),
         _localStorePath(localStorePath),
         _jailPath(jailPath),
-        _fileInfo("", "lool", Poco::Timestamp::fromEpochTime(0), 0),
+        _fileInfo("", "lool", std::chrono::system_clock::time_point(), 0),
         _isLoaded(false),
         _forceSave(false),
         _isUserModified(false),

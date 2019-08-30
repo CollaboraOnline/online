@@ -38,6 +38,12 @@ inline std::ostream& operator<< (std::ostream& os, const Poco::Timestamp& ts)
     return os;
 }
 
+inline std::ostream& operator<< (std::ostream& os, const std::chrono::system_clock::time_point& ts)
+{
+    os << Util::getIso8601FracformatTime(ts);
+    return os;
+}
+
 namespace Log
 {
     /// Initialize the logging system.
@@ -196,6 +202,16 @@ namespace Log
         {
             lhs.getStream() << Poco::DateTimeFormatter::format(Poco::DateTime(rhs),
                                                            Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
+        }
+
+        return lhs;
+    }
+
+    inline StreamLogger& operator<<(StreamLogger& lhs, const std::chrono::system_clock::time_point& rhs)
+    {
+        if (lhs.enabled())
+        {
+            lhs.getStream() << Util::getIso8601FracformatTime(rhs);
         }
 
         return lhs;

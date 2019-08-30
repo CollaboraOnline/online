@@ -194,7 +194,7 @@ void TileCacheTests::testSimple()
 
     // Create TileCache and pretend the file was modified as recently as
     // now, so it discards the cached data.
-    TileCache tc("doc.ods", Poco::Timestamp());
+    TileCache tc("doc.ods", std::chrono::system_clock::time_point());
 
     int part = 0;
     int width = 256;

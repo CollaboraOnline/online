@@ -55,6 +55,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testAuthorization();
     void testJson();
     void testAnonymization();
+    void testTime();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -729,6 +730,34 @@ void WhiteBoxTests::testAnonymization()
     Util::mapAnonymized("secret", "736_ocgdpzbkm39u");
     const std::string urlAnonymized3 = Util::replace(fileUrl, "secret", "736_ocgdpzbkm39u");
     CPPUNIT_ASSERT_EQUAL(urlAnonymized3, Util::anonymizeUrl(fileUrl, nAnonymizationSalt));
+}
+
+void WhiteBoxTests::testTime()
+{
+    std::ostringstream oss;
+
+	std::chrono::system_clock::time_point t(std::chrono::nanoseconds(1567444337874777375));
+    CPPUNIT_ASSERT_EQUAL(std::string("2019-09-02T17:12:17.874777Z"), Util::getIso8601FracformatTime(t));
+
+    t = std::chrono::system_clock::time_point(std::chrono::nanoseconds(0));
+    CPPUNIT_ASSERT_EQUAL(std::string("1970-01-01T00:00:00.000000Z"), Util::getIso8601FracformatTime(t));
+
+    t = Util::iso8601ToTimestamp("2019-09-02T17:12:17.874777Z", "LastModifiedTime");
+    oss << t.time_since_epoch().count();
+    CPPUNIT_ASSERT_EQUAL(std::string("1567444337874777000"), oss.str());
+
+    t = Util::iso8601ToTimestamp("1970-01-01T00:00:00.000000Z", "LastModifiedTime");
+    oss << t.time_since_epoch().count();
+    CPPUNIT_ASSERT_EQUAL(std::string("0"), oss.str());
+
+    t = std::chrono::system_clock::now();
+    uint64_t t_in_micros = (t.time_since_epoch().count() / 1000) * 1000;
+    oss << t_in_micros;
+    std::string first = oss.str();
+    std::string s = Util::getIso8601FracformatTime(t);
+    t = Util::iso8601ToTimestamp(s, "LastModifiedTime");
+    oss << t.time_since_epoch().count();
+    CPPUNIT_ASSERT_EQUAL(first, oss.str());
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);

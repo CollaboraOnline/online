@@ -16,7 +16,6 @@
 #include <string>
 #include <unordered_map>
 
-#include <Poco/Timestamp.h>
 #include <Rectangle.hpp>
 
 #include "TileDesc.hpp"
@@ -83,7 +82,7 @@ public:
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
-    TileCache(const std::string& docURL, const Poco::Timestamp& modifiedTime, bool dontCache = false);
+    TileCache(const std::string& docURL, const std::chrono::system_clock::time_point& modifiedTime, bool dontCache = false);
     ~TileCache();
 
     /// Completely clear the cache contents.

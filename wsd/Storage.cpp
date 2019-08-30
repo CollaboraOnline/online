@@ -18,8 +18,6 @@
 #include <iconv.h>
 #include <string>
 
-#include <Poco/DateTime.h>
-#include <Poco/DateTimeParser.h>
 #include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
@@ -41,7 +39,6 @@
 #endif
 
 #include <Poco/StreamCopier.h>
-#include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 
 #include "Auth.hpp"
@@ -261,9 +258,10 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     const Poco::Path path = Poco::Path(getUri().getPath());
     LOG_DBG("Getting info for local uri [" << LOOLWSD::anonymizeUrl(getUri().toString()) << "], path [" << LOOLWSD::anonymizeUrl(path.toString()) << "].");
 
+    std::string str_path = path.toString();
     const auto& filename = path.getFileName();
     const Poco::File file = Poco::File(path);
-    const Poco::Timestamp lastModified = file.getLastModified();
+    std::chrono::high_resolution_clock::time_point lastModified = Util::getFileTimestamp(str_path);
     const size_t size = file.getSize();
 
     setFileInfo(FileInfo({filename, "localhost", lastModified, size}));
@@ -350,7 +348,9 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
 
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
-        getFileInfo().setModifiedTime(Poco::File(getUri().getPath()).getLastModified());
+        const Poco::Path path = Poco::Path(getUri().getPath());
+        std::string str_path = path.toString();
+        getFileInfo().setModifiedTime(Util::getFileTimestamp(str_path));
         LOG_TRC("New FileInfo modified time in storage " << getFileInfo().getModifiedTime());
     }
     catch (const Poco::Exception& exc)
@@ -395,28 +395,6 @@ void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
         }
     }
 #endif
-}
-
-Poco::Timestamp iso8601ToTimestamp(const std::string& iso8601Time, const std::string& name)
-{
-    Poco::Timestamp timestamp = Poco::Timestamp::fromEpochTime(0);
-    try
-    {
-        if (!iso8601Time.empty())
-        {
-            int timeZoneDifferential;
-            Poco::DateTime dateTime;
-            Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FRAC_FORMAT, iso8601Time, dateTime, timeZoneDifferential);
-            timestamp = dateTime.timestamp();
-        }
-    }
-    catch (const Poco::SyntaxException& exc)
-    {
-        LOG_WRN(name << " [" << iso8601Time << "] is in invalid format: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : "") << ". Returning " << timestamp);
-    }
-
-    return timestamp;
 }
 
 } // anonymous namespace
@@ -610,7 +588,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriAnonym);
     }
 
-    const Poco::Timestamp modifiedTime = iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
+    const std::chrono::system_clock::time_point modifiedTime = Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
     setFileInfo(FileInfo({filename, ownerId, modifiedTime, size}));
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
@@ -745,9 +723,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
             if (!getForceSave())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
-                request.set("X-LOOL-WOPI-Timestamp",
-                            Poco::DateTimeFormatter::format(Poco::DateTime(getFileInfo().getModifiedTime()),
-                                                            Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+                request.set("X-LOOL-WOPI-Timestamp", Util::getIso8601FracformatTime(getFileInfo().getModifiedTime()));
             }
         }
         else
@@ -855,7 +831,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
             {
                 const std::string lastModifiedTime = JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
                 LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
-                getFileInfo().setModifiedTime(iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime"));
+                getFileInfo().setModifiedTime(Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime"));
 
                 if (isSaveAs || isRename)
                 {

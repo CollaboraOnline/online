@@ -762,11 +762,11 @@ namespace Util
 
     std::string getHttpTimeNow()
     {
-        char time_now[50];
+        char time_now[64];
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t now_c = std::chrono::system_clock::to_time_t(now);
         std::tm now_tm = *std::gmtime(&now_c);
-        strftime(time_now, 50, "%a, %d %b %Y %T", &now_tm);
+        strftime(time_now, sizeof(time_now), "%a, %d %b %Y %T", &now_tm);
 
         return time_now;
     }
@@ -783,6 +783,62 @@ namespace Util
                 return i;
         }
         return std::string::npos;
+    }
+
+    std::chrono::system_clock::time_point getFileTimestamp(std::string str_path)
+    {
+        struct stat file;
+        stat(str_path.c_str(), &file);
+        std::chrono::seconds ns{file.st_mtime};
+        std::chrono::system_clock::time_point mod_time_point{ns};
+
+        return mod_time_point;
+    }
+
+    std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time){
+        char time_modified[64];
+        std::time_t lastModified_us_t = std::chrono::high_resolution_clock::to_time_t(time);
+        std::tm lastModified_tm = *std::gmtime(&lastModified_us_t);
+        strftime(time_modified, sizeof(time_modified), "%FT%T.", &lastModified_tm);
+
+        auto lastModified_s = std::chrono::time_point_cast<std::chrono::seconds>(time);
+
+        std::ostringstream oss;
+        oss << std::setfill('0')
+            << time_modified
+            << std::setw(6)
+            << (time - lastModified_s).count() / 1000
+            << "Z";
+
+        return oss.str();
+    }
+
+    std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName)
+    {
+        std::chrono::system_clock::time_point timestamp;
+        std::tm tm{};
+        std::istringstream iss(iso8601Time);
+        if (!(iss >> std::get_time(&tm, "%Y-%m-%dT%H:%M:%S")))
+        {
+            LOG_WRN(logName << " [" << iso8601Time << "] is in invalid format."
+                << "Returning " << timestamp.time_since_epoch().count());
+            return timestamp;
+        }
+        timestamp += std::chrono::seconds(timegm(&tm));
+        if (iss.eof())
+            return timestamp;
+        double us;
+        if (iss.peek() != '.' || !(iss >> us))
+        {
+            LOG_WRN(logName << " [" << iso8601Time << "] is in invalid format."
+                    << ". Returning " << timestamp.time_since_epoch().count());
+            return timestamp;
+        }
+        std::size_t seconds_us = us * std::chrono::system_clock::period::den / std::chrono::system_clock::period::num;
+
+        timestamp += std::chrono::system_clock::duration(seconds_us);
+
+        return timestamp;
     }
 }
 

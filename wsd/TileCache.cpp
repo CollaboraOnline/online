@@ -27,7 +27,6 @@
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 
 #include "ClientSession.hpp"
@@ -40,18 +39,17 @@
 using namespace LOOLProtocol;
 
 using Poco::StringTokenizer;
-using Poco::Timestamp;
 
 TileCache::TileCache(const std::string& docURL,
-                     const Timestamp& modifiedTime,
+                     const std::chrono::system_clock::time_point& modifiedTime,
                      bool dontCache) :
     _docURL(docURL),
     _dontCache(dontCache)
 {
 #ifndef BUILDING_TESTS
     LOG_INF("TileCache ctor for uri [" << LOOLWSD::anonymizeUrl(_docURL) <<
-            "], modifiedTime=" << (modifiedTime.raw()/1000000) <<
-            "], dontCache=" << _dontCache);
+            "], modifiedTime=" << std::chrono::duration_cast<std::chrono::seconds>
+							(modifiedTime.time_since_epoch()).count() << "], dontCache=" << _dontCache);
 #endif
     (void)modifiedTime;
 }
