@@ -416,7 +416,7 @@ connectLOKit(const Poco::URI& uri,
 }
 
 inline
-std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& testname, bool isView = true)
+std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& testname, bool isView = true, bool isAssert = true)
 {
     try
     {
@@ -426,7 +426,12 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const s
         std::shared_ptr<LOOLWebSocket> socket = connectLOKit(uri, request, response, testname);
 
         sendTextFrame(socket, "load url=" + documentURL, testname);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(*socket, testname, isView));
+        bool isLoaded = isDocumentLoaded(*socket, testname, isView);
+        if (!isLoaded && !isAssert)
+        {
+            return nullptr;
+        }
+        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isLoaded);
 
         TST_LOG("Loaded document [" << documentURL << "].");
         return socket;
@@ -441,13 +446,13 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const s
 }
 
 inline
-std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& testname, bool isView = true)
+std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& testname, bool isView = true, bool isAssert = true)
 {
     try
     {
         std::string documentPath, documentURL;
         getDocumentPathAndURL(docFilename, documentPath, documentURL, testname);
-        return loadDocAndGetSocket(uri, documentURL, testname, isView);
+        return loadDocAndGetSocket(uri, documentURL, testname, isView, isAssert);
     }
     catch (const Poco::Exception& exc)
     {

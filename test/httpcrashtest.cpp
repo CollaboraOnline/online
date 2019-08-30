@@ -198,7 +198,13 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
         // We expect the client connection to close.
         TST_LOG("Reconnect after kill.");
 
-        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket("empty.odt", _uri, testname);
+        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket("empty.odt", _uri, testname, /*isView=*/true, /*isAssert=*/false);
+        if (!socket2)
+        {
+            // In case still starting up.
+            sleep(2);
+            socket2 = loadDocAndGetSocket("empty.odt", _uri, testname);
+        }
         sendTextFrame(socket2, "status", testname);
         assertResponseString(socket2, "status:", testname);
     }
