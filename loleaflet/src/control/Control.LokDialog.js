@@ -329,7 +329,10 @@ L.Control.LokDialog = L.Control.extend({
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
 			$('#' + strId).remove();
-			this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
+			if (e.winType  === 'deck' || this._isSidebar(e.id))
+				this._launchSidebar(e.id, width, height);
+			else
+				this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
 				rectangle = e.rectangle.split(',');
