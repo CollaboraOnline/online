@@ -14,20 +14,13 @@
 #include <cassert>
 #include <climits>
 #include <cstdio>
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
-
-#include <Poco/DigestEngine.h>
-#include <Poco/DirectoryIterator.h>
-#include <Poco/Exception.h>
-#include <Poco/File.h>
-#include <Poco/Path.h>
-#include <Poco/StringTokenizer.h>
-#include <Poco/URI.h>
 
 #include "ClientSession.hpp"
 #include <Common.hpp>
@@ -37,8 +30,6 @@
 #include <common/FileUtil.hpp>
 
 using namespace LOOLProtocol;
-
-using Poco::StringTokenizer;
 
 TileCache::TileCache(const std::string& docURL,
                      const std::chrono::system_clock::time_point& modifiedTime,
@@ -326,15 +317,15 @@ void TileCache::invalidateTiles(const std::string& tiles)
 
 std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string& tiles)
 {
-    StringTokenizer tokens(tiles, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    std::vector<std::string> tokens = LOOLProtocol::tokenize(tiles);
 
-    assert(tokens[0] == "invalidatetiles:");
+    assert(tokens.size() > 0 && tokens[0] == "invalidatetiles:");
 
-    if (tokens.count() == 2 && tokens[1] == "EMPTY")
+    if (tokens.size() == 2 && tokens[1] == "EMPTY")
     {
         return std::pair<int, Util::Rectangle>(-1, Util::Rectangle(0, 0, INT_MAX, INT_MAX));
     }
-    else if (tokens.count() == 3 && tokens[1] == "EMPTY,")
+    else if (tokens.size() == 3 && tokens[1] == "EMPTY,")
     {
         int part = 0;
         if (stringToInteger(tokens[2], part))
@@ -345,7 +336,7 @@ std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string&
     else
     {
         int part, x, y, width, height;
-        if (tokens.count() == 6 &&
+        if (tokens.size() == 6 &&
             getTokenInteger(tokens[1], "part", part) &&
             getTokenInteger(tokens[2], "x", x) &&
             getTokenInteger(tokens[3], "y", y) &&
