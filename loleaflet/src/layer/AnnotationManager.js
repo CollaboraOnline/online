@@ -995,16 +995,10 @@ L.Map.include({
 		});
 	},
 
-	showResolvedComments: function(item) {
+	showResolvedComments: function(on) {
 		var unoCommand = '.uno:ShowResolvedAnnotations';
-		var on = $(item).hasClass('lo-menu-item-checked');
 		this.sendUnoCommand(unoCommand);
-		this._docLayer._annotations.setViewResolved(!on);
-		if (on) {
-			$(item).removeClass('lo-menu-item-checked');
-		} else {
-			$(item).addClass('lo-menu-item-checked');
-		}
+		this._docLayer._annotations.setViewResolved(on);
 	}
 });
 

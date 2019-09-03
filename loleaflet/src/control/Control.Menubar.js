@@ -744,6 +744,16 @@ L.Control.Menubar = L.Control.extend({
 						} else {
 							$(aItem).removeClass('disabled');
 						}
+					} else if (id === 'showresolved') {
+						if (self._map._docLayer._annotations._items.length === 0) {
+							$(aItem).addClass('disabled');
+						} else if (self._map._docLayer._annotations._showResolved) {
+							$(aItem).removeClass('disabled');
+							$(aItem).addClass(constChecked);
+						} else {
+							$(aItem).removeClass('disabled');
+							$(aItem).removeClass(constChecked);
+						}
 					} else {
 						$(aItem).removeClass('disabled');
 					}
@@ -802,7 +812,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
 			this._map.zoomIn(1);
 		} else if (id === 'showresolved') {
-			this._map.showResolvedComments(item);
+			this._map.showResolvedComments(!$(item).hasClass('lo-menu-item-checked'));
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
 			this._map.zoomOut(1);
 		} else if (id === 'zoomreset') {

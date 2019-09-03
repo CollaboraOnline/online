@@ -85,7 +85,10 @@ L.Control.Ruler = L.Control.extend({
 		if (this.options.margin1 == null || this.options.margin2 == null)
 			return;
 
-		if (this._map._docLayer._annotations._items.length === 0 || !this.options.marginSet)
+		if (this._map._docLayer._annotations._items.length === 0
+		|| this._map._docLayer._annotations._items.length
+		=== this._map._docLayer._annotations._hiddenItems
+		|| !this.options.marginSet)
 			this.options.extraSize = 0;
 
 		var classMajorSep = 'loleaflet-ruler-maj',
