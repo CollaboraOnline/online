@@ -168,12 +168,12 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_isOpen: function(id) {
-		return this._dialogs[id] &&
+		return (id in this._dialogs) && this._dialogs[id] &&
 			$('#' + this._toStrId(id)).length > 0;
 	},
 
 	_isSidebar: function(id) {
-		return this._dialogs[id].isSidebar;
+		return (id in this._dialogs) && this._dialogs[id].isSidebar;
 	},
 
 	// Given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323.
@@ -253,6 +253,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
+		console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
 		if (e.winType != undefined && e.winType !== 'dialog' && e.winType !== 'child' && e.winType !== 'deck') {
 			return;
 		}
@@ -659,7 +660,7 @@ L.Control.LokDialog = L.Control.extend({
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
-			this.focus(id, !this._dialogs[id].isSidebar);
+			this.focus(id, !this._isSidebar(id));
 			// Keep map active while user is playing with sidebar/dialog.
 			this._map.lastActiveTime = Date.now();
 		}, this);
@@ -806,12 +807,6 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onSidebarClose: function(dialogId) {
-		this._resizeSidebar(dialogId, 0);
-		$('#' + this._currentDeck.strId).remove();
-		this._map.focus();
-		delete this._dialogs[dialogId];
-		this._currentDeck = null;
-
 		//play slide animation to right if this is a mobile or tablet
 		if (L.Browser.mobile) {
 			var sidebar = $('#sidebar-dock-wrapper');
@@ -827,6 +822,14 @@ L.Control.LokDialog = L.Control.extend({
 				$('#toolbar-down').show();
 			});
 		}
+
+		this._resizeSidebar(dialogId, 0);
+		$('#' + this._currentDeck.strId).remove();
+		this._map.focus();
+		delete this._dialogs[dialogId];
+		this._currentDeck = null;
+
+		$('#sidebar-dock-wrapper').css({display: ''});
 	},
 
 	_onDialogClose: function(dialogId, notifyBackend) {
@@ -843,25 +846,24 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onClosePopups: function() {
-		for (var dialog in this._dialogs) {
-			if (this._dialogs[dialog].isSidebar != true) {
-				this._onDialogClose(this._dialogs[dialog].id, true);
+		for (var dialogId in this._dialogs) {
+			if (!this._isSidebar(dialogId)) {
+				this._onDialogClose(dialogId, true);
 			}
 		}
 	},
 
 	onCloseCurrentPopUp: function() {
 		// for title-less dialog only (context menu, pop-up)
-		if (!this._currentId || !this._isOpen(this._currentId) ||
-			this._dialogs[this._currentId].title || this._isSidebar(this._currentId))
-			return;
-		this._onDialogClose(this._currentId, true);
+		if (this._currentId && this._isOpen(this._currentId) &&
+			this._dialogs[this._currentId].title && !this._isSidebar(this._currentId))
+			this._onDialogClose(this._currentId, true);
 	},
 
 	_closeSidebar: function() {
-		for (var dialog in this._dialogs) {
-			if (this._dialogs[dialog].isSidebar == true) {
-				this._onSidebarClose(dialog);
+		for (var dialogId in this._dialogs) {
+			if (this._isSidebar(dialogId)) {
+				this._onSidebarClose(dialogId);
 			}
 		}
 		$('#sidebar-dock-wrapper').css({display: ''});
