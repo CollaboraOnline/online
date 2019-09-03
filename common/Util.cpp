@@ -797,7 +797,7 @@ namespace Util
 
     std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time){
         char time_modified[64];
-        std::time_t lastModified_us_t = std::chrono::high_resolution_clock::to_time_t(time);
+        std::time_t lastModified_us_t = std::chrono::system_clock::to_time_t(time);
         std::tm lastModified_tm = *std::gmtime(&lastModified_us_t);
         strftime(time_modified, sizeof(time_modified), "%FT%T.", &lastModified_tm);
 

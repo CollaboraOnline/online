@@ -261,7 +261,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     std::string str_path = path.toString();
     const auto& filename = path.getFileName();
     const Poco::File file = Poco::File(path);
-    std::chrono::high_resolution_clock::time_point lastModified = Util::getFileTimestamp(str_path);
+    std::chrono::system_clock::time_point lastModified = Util::getFileTimestamp(str_path);
     const size_t size = file.getSize();
 
     setFileInfo(FileInfo({filename, "localhost", lastModified, size}));
