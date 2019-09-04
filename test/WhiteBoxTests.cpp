@@ -40,6 +40,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAuthorization);
     CPPUNIT_TEST(testJson);
     CPPUNIT_TEST(testAnonymization);
+    CPPUNIT_TEST(testTime);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -746,16 +747,19 @@ void WhiteBoxTests::testTime()
     oss << t.time_since_epoch().count();
     CPPUNIT_ASSERT_EQUAL(std::string("1567444337874777000"), oss.str());
 
+    oss.str(std::string());
     t = Util::iso8601ToTimestamp("1970-01-01T00:00:00.000000Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
     CPPUNIT_ASSERT_EQUAL(std::string("0"), oss.str());
 
+    oss.str(std::string());
     t = std::chrono::system_clock::now();
     uint64_t t_in_micros = (t.time_since_epoch().count() / 1000) * 1000;
     oss << t_in_micros;
     std::string first = oss.str();
     std::string s = Util::getIso8601FracformatTime(t);
     t = Util::iso8601ToTimestamp(s, "LastModifiedTime");
+    oss.str(std::string());
     oss << t.time_since_epoch().count();
     CPPUNIT_ASSERT_EQUAL(first, oss.str());
 }
