@@ -25,6 +25,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <time.h>
 
 #include <atomic>
 #include <cassert>
@@ -816,24 +817,27 @@ namespace Util
     std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName)
     {
         std::chrono::system_clock::time_point timestamp;
-        std::tm tm{};
-        std::istringstream iss(iso8601Time);
-        if (!(iss >> std::get_time(&tm, "%Y-%m-%dT%H:%M:%S")))
+        std::tm tm;
+        const char *cstr = iso8601Time.c_str();
+        const char *trailing;
+        if (!(trailing = strptime(cstr, "%Y-%m-%dT%H:%M:%S", &tm)))
         {
             LOG_WRN(logName << " [" << iso8601Time << "] is in invalid format."
                 << "Returning " << timestamp.time_since_epoch().count());
             return timestamp;
         }
         timestamp += std::chrono::seconds(timegm(&tm));
-        if (iss.eof())
+        if (trailing[0] == '\0')
             return timestamp;
         double us;
-        if (iss.peek() != '.' || !(iss >> us))
+        if (trailing[0] != '.')
         {
             LOG_WRN(logName << " [" << iso8601Time << "] is in invalid format."
                     << ". Returning " << timestamp.time_since_epoch().count());
             return timestamp;
         }
+        char *end = nullptr;
+        us = strtod(trailing, &end);
         std::size_t seconds_us = us * std::chrono::system_clock::period::den / std::chrono::system_clock::period::num;
 
         timestamp += std::chrono::system_clock::duration(seconds_us);
