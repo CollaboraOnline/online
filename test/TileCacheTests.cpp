@@ -1041,7 +1041,9 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
         std::getline(istr, line);
 
         Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+#if defined CPPUNIT_ASSERT_GREATEREQUAL
         CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(6), tokens.count());
+#endif
 
         // Expected format is something like 'type= parts= current= width= height= [hiddenparts=]'.
         const std::string text = tokens[0].substr(type.size());
