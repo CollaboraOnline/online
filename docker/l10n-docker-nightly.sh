@@ -77,9 +77,6 @@ fi
 mkdir -p "$INSTDIR"/opt/
 cp -a libreoffice/instdir "$INSTDIR"/opt/libreoffice
 
-# FIXME fix RPATH of libcairo
-chrpath -r '$ORIGIN' "$INSTDIR"/opt/libreoffice/program/libcairo.so.2
-
 ##### loolwsd & loleaflet #####
 
 # build
