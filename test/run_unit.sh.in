@@ -26,6 +26,7 @@ print_help ()
     echo ""
     echo "   --log-file <file>   Log output to this file - default /dev/stderr"
     echo "   --trs-file <file>   Records the results of a test for automake (default /dev/stderr)"
+    echo "   --gdb               Run under gdb if enabled"
     echo "   --valgrind          Run under valgrind if enabled"
     echo "   --verbose           Print out more stuff - if you run out of things to read"
     exit 1
@@ -39,7 +40,8 @@ while test $# -gt 0; do
       --test-name) tst=$2; shift;;
       --log-file)  tst_log=$2; shift;;
       --trs-file)  test_output=$2; shift;;
-      --valgrind)  valgrind=$valgrind_cmd; shift;;
+      --gdb)       trace='gdb --args'; shift;;
+      --valgrind)  trace=$valgrind_cmd; shift;;
       --verbose)   verbose="--verbose";;
       --help)      print_help ;;
   -*) ;; # ignore
@@ -84,7 +86,7 @@ if test "z$tst" == "z"; then
      export LOOL_TEST_MASTER_PORT=9985
 
      echo "Executing external tests"
-     ${valgrind} \
+     ${trace} \
      ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
                                  --o:lo_template_path="$lo_path" \
                                  --o:child_root_path="$jails_path" \
@@ -106,7 +108,7 @@ if test "z$tst" == "z"; then
 
      oldpath=`pwd`
      cd "${abs_top_builddir}/test"
-     if eval ${valgrind} ./test ${verbose}; then
+     if eval ${trace} ./test ${verbose}; then
 	 echo "Test run_test.sh passed."
 	 echo ":test-result: PASS run_test.sh" >> $oldpath/$test_output
 	 retval=0
@@ -124,7 +126,7 @@ if test "z$tst" == "z"; then
 
 else # newer unit tests.
     echo "Running $tst | $tst_log ...";
-    if ${valgrind} \
+    if ${trace} \
        ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
                                    --o:lo_template_path="$lo_path" \
                                    --o:child_root_path="$jails_path" \
