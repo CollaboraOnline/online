@@ -22,4 +22,6 @@
 <!-- Enable thumbnail generation by default (disabling saves CPU time) -->
 <item oor:path="/org.openoffice.Office.Common/Save/Document"><prop oor:name="GenerateThumbnail" oor:op="fuse"><value>true</value></prop></item>
 
+<item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="SymbolStyle" oor:op="fuse"><value>colibre_svg</value></prop></item>
+
 </oor:items>
