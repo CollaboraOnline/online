@@ -316,8 +316,9 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:SlideMenu', 'presentation'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'},
-				{type: 'separator', id: 'fullscreen-presentation-separator'},
+				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'} ]
+			},
+			{name: _UNO('.uno:SlideShowMenu', 'presentation'), type: 'menu', menu: [
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
