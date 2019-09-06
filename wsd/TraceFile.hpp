@@ -91,7 +91,8 @@ public:
                     const bool compress,
                     const bool takeSnapshot,
                     const std::vector<std::string>& filters) :
-        _epochStart(Poco::Timestamp().epochMicroseconds()),
+        _epochStart(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now()
+                                                            .time_since_epoch()).count()),
         _recordOutgoing(recordOugoing),
         _compress(compress),
         _takeSnapshot(takeSnapshot),
@@ -258,7 +259,8 @@ private:
     {
         Util::assertIsLocked(_mutex);
 
-        const Poco::Int64 usec = Poco::Timestamp().epochMicroseconds() - _epochStart;
+        const Poco::Int64 usec = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono
+                                        ::system_clock::now().time_since_epoch()).count() - _epochStart;
         if (_compress)
         {
             _deflater.write(&delim, 1);

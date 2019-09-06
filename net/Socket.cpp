@@ -415,7 +415,7 @@ void StreamSocket::dumpState(std::ostream& os)
 void StreamSocket::send(Poco::Net::HTTPResponse& response)
 {
     response.set("User-Agent", HTTP_AGENT_STRING);
-    response.set("Date", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+    response.set("Date", Util::getHttpTimeNow());
 
     std::ostringstream oss;
     response.write(oss);
