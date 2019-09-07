@@ -1386,7 +1386,8 @@ void HTTPWSTest::testInactiveClient()
                                             token == "viewcursorvisible:" ||
                                             token == "viewinfo:" ||
                                             token == "editor:" ||
-                                            token == "context:");
+                                            token == "context:" ||
+                                            token == "tableselected:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");
