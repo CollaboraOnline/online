@@ -1409,7 +1409,8 @@ void HTTPWSTest::testInactiveClient()
                                             token == "viewinfo:" ||
                                             token == "editor:" ||
                                             token == "context:" ||
-                                            token == "window:");
+                                            token == "window:" ||
+                                            token == "tableselected:");
 
                     // End when we get state changed.
                     return (token != "statechanged:");
