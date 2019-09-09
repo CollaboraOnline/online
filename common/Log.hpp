@@ -59,6 +59,8 @@ namespace Log
 #if !MOBILEAPP
     /// Shutdown and release the logging system.
     void shutdown();
+    /// Was shutdown() called?
+    bool isShutdown();
 #endif
 
     char* prefix(char* buffer, std::size_t len, const char* level);
@@ -289,7 +291,7 @@ namespace Log
     do                                              \
     {                                               \
         auto &log_ = Log::logger();                 \
-        if (log_.trace())                           \
+        if (!Log::isShutdown() && log_.trace())     \
         {                                           \
             LOG_BODY_(log_, TRACE, "TRC", X, true); \
         }                                           \
@@ -299,7 +301,7 @@ namespace Log
     do                                              \
     {                                               \
         auto &log_ = Log::logger();                 \
-        if (log_.trace())                           \
+        if (!Log::isShutdown() && log_.trace())     \
         {                                           \
             LOG_BODY_(log_, TRACE, "TRC", X, false);\
         }                                           \
@@ -309,7 +311,7 @@ namespace Log
     do                                              \
     {                                               \
         auto &log_ = Log::logger();                 \
-        if (log_.debug())                           \
+        if (!Log::isShutdown() && log_.debug())     \
         {                                           \
             LOG_BODY_(log_, DEBUG, "DBG", X, true); \
         }                                           \
@@ -319,7 +321,7 @@ namespace Log
     do                                                    \
     {                                                     \
         auto &log_ = Log::logger();                       \
-        if (log_.information())                           \
+        if (!Log::isShutdown() && log_.information())     \
         {                                                 \
             LOG_BODY_(log_, INFORMATION, "INF", X, true); \
         }                                                 \
@@ -329,7 +331,7 @@ namespace Log
     do                                                \
     {                                                 \
         auto &log_ = Log::logger();                   \
-        if (log_.warning())                           \
+        if (!Log::isShutdown() && log_.warning())     \
         {                                             \
             LOG_BODY_(log_, WARNING, "WRN", X, true); \
         }                                             \
@@ -339,7 +341,7 @@ namespace Log
     do                                              \
     {                                               \
         auto &log_ = Log::logger();                 \
-        if (log_.error())                           \
+        if (!Log::isShutdown() && log_.error())     \
         {                                           \
             LOG_BODY_(log_, ERROR, "ERR", X, true); \
         }                                           \
@@ -349,7 +351,7 @@ namespace Log
     do                                                                                                                           \
     {                                                                                                                            \
         auto &log_ = Log::logger();                                                                                              \
-        if (log_.error())                                                                                                        \
+        if (!Log::isShutdown() && log_.error())                                                                                  \
         {                                                                                                                        \
             LOG_BODY_(log_, ERROR, "ERR", X << " (" << Util::symbolicErrno(errno) << ": " << std::strerror(errno) << ")", true); \
         }                                                                                                                        \
@@ -360,7 +362,7 @@ namespace Log
     {                                               \
         std::cerr << X << std::endl;                \
         auto &log_ = Log::logger();                 \
-        if (log_.fatal())                           \
+        if (!Log::isShutdown() && log_.fatal())     \
         {                                           \
             LOG_BODY_(log_, FATAL, "FTL", X, true); \
         }                                           \
@@ -370,7 +372,7 @@ namespace Log
     do                                                                                                                           \
     {                                                                                                                            \
         auto &log_ = Log::logger();                                                                                              \
-        if (log_.error())                                                                                                        \
+        if (!Log::isShutdown() && log_.error())                                                                                  \
         {                                                                                                                        \
             LOG_BODY_(log_, FATAL, "FTL", X << " (" << Util::symbolicErrno(errno) << ": " << std::strerror(errno) << ")", true); \
         }                                                                                                                        \

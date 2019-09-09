@@ -74,6 +74,7 @@ namespace Log
         Poco::Logger* getLogger() { return _logger; }
     };
     static StaticNameHelper Source;
+    bool IsShutdown = false;
 
     // We need a signal safe means of writing messages
     //   $ man 7 signal
@@ -216,6 +217,7 @@ namespace Log
     void shutdown()
     {
         logger().shutdown();
+        IsShutdown = true;
 
         // Flush
         std::flush(std::cout);
@@ -224,6 +226,11 @@ namespace Log
         fflush(stderr);
     }
 #endif
+
+    bool isShutdown()
+    {
+        return IsShutdown;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
