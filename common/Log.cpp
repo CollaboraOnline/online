@@ -216,7 +216,7 @@ namespace Log
 #if !MOBILEAPP
     void shutdown()
     {
-        logger().shutdown();
+        Poco::Logger::shutdown();
         IsShutdown = true;
 
         // Flush
