@@ -68,7 +68,7 @@ Requires:       libcap2 libpng12-0 %{fillup_prereq}
 %if 0%{?suse_version} >= 1300
 Requires:       systemd
 Requires:       libopenssl1_0_0 libpcre1 libz1
-Requires:       libPocoCrypto60 >= 1.9.0 libPocoFoundation60 >= 1.9.0 libPocoJSON60 >= 1.9.0 libPocoNet60 >= 1.9.0 libPocoNetSSL60 >= 1.9.0 libPocoUtil60 >= 1.9.0 libPocoXML60 >= 1.9.0
+Requires:       libPocoCrypto63 >= 1.9.3 libPocoFoundation63 >= 1.9.3 libPocoJSON63 >= 1.9.3 libPocoNet63 >= 1.9.3 libPocoNetSSL63 >= 1.9.3 libPocoUtil63 >= 1.9.3 libPocoXML63 >= 1.9.3
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
 # cd /opt/collaboraoffice6.0/program ; for i in soffice.bin *.so ;do ldd $i | grep '=>' | sed -e "s/^.*=> //" -e "s/ [(].*$//"; done | sort | uniq | xargs rpm -qf --qf="%{NAME}\n" | sort | uniq | grep -v collaboraoffice
 Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16
