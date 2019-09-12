@@ -21,6 +21,7 @@ noinst_LTLIBRARIES = \
 	unit-wopi.la unit-wopi-saveas.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
 	unit-wopi-documentconflict.la unit_wopi_renamefile.la \
+	unit-tiff-load.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
@@ -119,6 +120,8 @@ unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
 unit_wopi_loadencoded_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
 unit_wopi_temp_la_LIBADD = $(CPPUNIT_LIBS)
+unit_tiff_load_la_SOURCES = UnitTiffLoad.cpp
+unit_tiff_load_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -138,6 +141,7 @@ TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-t
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
         unit-wopi-documentconflict.la unit_wopi_renamefile.la \
 	unit-http.la \
+	unit-tiff-load.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
