@@ -7,33 +7,33 @@ Dependencies
 LibreOffice Online WebSocket server has the following dependencies:
 
 * libpng
-* Poco library: http://pocoproject.org/index.html.
+* Poco library: http://pocoproject.org/
 * libcap-progs
 
-If your Linux distro doesn't provide a Poco package (versions 1.7.x or
-1.8.x should work), you can build it yourself and install in a
-location of your choice.
+If your Linux distro doesn't provide a Poco package (versions 1.7.5 and
+newer should work), you can build it yourself and install in a
+location of your choice, or you can download packages from Collabora's
+website.
 
-On openSUSE, you can use:
+On openSUSE Leap 15.1, you can use:
 
     zypper ar http://download.opensuse.org/repositories/devel:/libraries:/c_c++/openSUSE_Leap_15.1/devel:libraries:c_c++.repo
     zypper in poco-devel libcap-progs
 
-On Debian 8 (Linux x86_64) you can use in /etc/apt/sources.list:
+Similar repos exist for other openSUSE and SLE releases.
 
-    deb https://www.collaboraoffice.com/apt-poco/ /
+Collabora provides Poco packages for Debian 8, Debian 9, Ubuntu 16.04 LTS,
+and CentOS 7 via the CODE (Collabora Online Development Edition) repositories.
+
+See: https://www.collaboraoffice.com/code/linux-packages/
 
 Building
 --------
 
 loolwsd uses autoconf/automake, so especially when building from .git
-(as opposed to from a distribution tarball) you need the usual fun:
+(as opposed to from a distribution tarball) you need to run:
 
-    libtoolize
-    aclocal
-    automake --add-missing
-    autoreconf
-    autoheader
+    ./autogen.sh
 
 and then
 
