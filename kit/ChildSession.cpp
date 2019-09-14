@@ -2288,18 +2288,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("searchresultselection: " + payload);
         break;
     case LOK_CALLBACK_DOCUMENT_SIZE_CHANGED:
-        {
-            //TODO: clenaup and merge.
-
-            const int parts = getLOKitDocument()->getParts();
-            for (int i = 0; i < parts; ++i)
-            {
-                sendTextFrame("invalidatetiles: part=" + std::to_string(i) +
-                              " x=0 y=0 width=1000000000 height=1000000000");
-            }
-
-            getStatus("", 0);
-        }
+        getStatus("", 0);
         break;
     case LOK_CALLBACK_SET_PART:
         sendTextFrame("setpart: " + payload);
