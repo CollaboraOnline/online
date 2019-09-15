@@ -856,7 +856,7 @@ L.Control.LokDialog = L.Control.extend({
 	onCloseCurrentPopUp: function() {
 		// for title-less dialog only (context menu, pop-up)
 		if (this._currentId && this._isOpen(this._currentId) &&
-			this._dialogs[this._currentId].title && !this._isSidebar(this._currentId))
+			!this._dialogs[this._currentId].title && !this._isSidebar(this._currentId))
 			this._onDialogClose(this._currentId, true);
 	},
 
