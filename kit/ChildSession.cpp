@@ -46,7 +46,6 @@
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
 using Poco::StringTokenizer;
-using Poco::Timestamp;
 using Poco::URI;
 
 using namespace LOOLProtocol;
@@ -662,7 +661,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    Timestamp timestamp;
+    const auto start = std::chrono::system_clock::now();
     // renderFont use a default font size (25) when width and height are 0
     int width = 0, height = 0;
     unsigned char* ptrFont = nullptr;
@@ -671,7 +670,9 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
 
     ptrFont = getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height);
 
-    LOG_TRC("renderFont [" << font << "] rendered in " << (timestamp.elapsed()/1000.) << "ms");
+    const auto duration = std::chrono::system_clock::now() - start;
+    const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
+    LOG_TRC("renderFont [" << font << "] rendered in " << elapsed << "ms");
 
     if (!ptrFont)
     {
@@ -1457,14 +1458,18 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
     std::vector<unsigned char> pixmap(pixmapDataSize);
     int width = bufferWidth, height = bufferHeight;
     std::string response;
-    Timestamp timestamp;
+    const auto start = std::chrono::system_clock::now();
     getLOKitDocument()->paintWindow(winId, pixmap.data(), startX, startY, width, height, dpiScale);
     const double area = width * height;
+
+    const auto duration = std::chrono::system_clock::now() - start;
+    const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
+    const double totalTime = elapsed/1000.;
     LOG_TRC("paintWindow for " << winId << " returned " << width << "X" << height
             << "@(" << startX << "," << startY << ")"
             << " with dpi scale: " << dpiScale
-            << " and rendered in " << (timestamp.elapsed()/1000.)
-            << "ms (" << area / (timestamp.elapsed()) << " MP/s).");
+            << " and rendered in " << totalTime
+            << "ms (" << area / elapsed << " MP/s).");
 
     response = "windowpaint: id=" + tokens[1] +
         " width=" + std::to_string(width) + " height=" + std::to_string(height);
