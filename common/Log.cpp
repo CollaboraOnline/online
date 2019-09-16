@@ -225,12 +225,12 @@ namespace Log
         std::flush(std::cerr);
         fflush(stderr);
     }
-#endif
 
     bool isShutdownCalled()
     {
         return IsShutdown;
     }
+#endif
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

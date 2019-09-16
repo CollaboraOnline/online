@@ -61,6 +61,8 @@ namespace Log
     void shutdown();
     /// Was static shutdown() called? If so, producing more logs should be avoided.
     bool isShutdownCalled();
+#else
+    constexpr bool isShutdownCalled() { return false; }
 #endif
 
     char* prefix(char* buffer, std::size_t len, const char* level);
