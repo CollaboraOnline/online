@@ -7,14 +7,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <config.h>
+#include <memory>
+#include <string>
+
+#include <Poco/URI.h>
+#include <cppunit/TestAssert.h>
 
 #include <Unit.hpp>
-#include <UnitHTTP.hpp>
+#include <Util.hpp>
 #include <helpers.hpp>
-#include <wsd/LOOLWSD.hpp>
 
-#include <test.hpp>
+class LOOLWebSocket;
 
 /// TIFF load testcase.
 class UnitTiffLoad : public UnitWSD
@@ -23,8 +26,6 @@ public:
     UnitTiffLoad();
 
     void invokeTest() override;
-
-    void configure(Poco::Util::LayeredConfiguration& config) override;
 };
 
 UnitTiffLoad::UnitTiffLoad() {}
@@ -51,12 +52,6 @@ void UnitTiffLoad::invokeTest()
     CPPUNIT_ASSERT(Util::startsWith(content, "shapeselectioncontent:\n"));
 
     exitTest(TestResult::Ok);
-}
-
-void UnitTiffLoad::configure(Poco::Util::LayeredConfiguration& config)
-{
-    UnitWSD::configure(config);
-    config.setBool("ssl.enable", true);
 }
 
 UnitBase* unit_create_wsd(void) { return new UnitTiffLoad(); }
