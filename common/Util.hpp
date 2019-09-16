@@ -12,6 +12,7 @@
 
 #include <cassert>
 #include <cerrno>
+#include <cinttypes>
 #include <cstddef>
 #include <cstring>
 #include <atomic>
@@ -761,7 +762,7 @@ int main(int argc, char**argv)
     inline void vectorAppendHex(std::vector<char> &vector, uint64_t number)
     {
         char output[32];
-        sprintf(output, "%lx", number);
+        sprintf(output, "%" PRIx64, number);
         vectorAppend(vector, output);
     }
 
