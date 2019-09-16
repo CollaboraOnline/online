@@ -414,44 +414,65 @@ L.AnnotationManager = L.Class.extend({
 				this._items[selectIndexFirst]._data.anchorPix = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.min);
 			}
 
+			var anchorPx = this._items[selectIndexFirst]._data.anchorPix;
 			var posX = docRight.x;
-			var posY = this._items[selectIndexFirst]._data.anchorPix.y;
+			var posY = anchorPx.y;
 			point = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.min);
 
-			if (L.Browser.mobile) {
-				var mapBoundsPx = this._map.getPixelBounds();
-				var annotationBoundsPx = this._items[selectIndexFirst].getBounds();
-				var annotationSize = annotationBoundsPx.getSize();
-				var topLeftPoint = L.point(posX, posY);
-				annotationBoundsPx = L.bounds(topLeftPoint, topLeftPoint.add(annotationSize));
+			var mapBoundsPx = this._map.getPixelBounds();
+			var annotationBoundsPx = this._items[selectIndexFirst].getBounds();
+			var annotationSize = annotationBoundsPx.getSize();
+			var topLeftPoint = L.point(posX, posY);
+			var bottomRightPoint = topLeftPoint.add(annotationSize);
+			var scrollX = 0, scrollY = 0, spacing = 16;
+			// there is an odd gap between map top and anchor point y coordinate; is this due to the top ruler bar ?
+			// anyway without taking it into account the y-scroll offset is wrong
+			var gapY = 22;
 
-				if (!mapBoundsPx.contains(annotationBoundsPx)) {
-					var scrollX = 0, scrollY = 0, spacing = 16;
+			if (this._selected !== this._lastSelected) {
+				this._lastSelected = this._selected;
+				if (anchorPx.x < mapBoundsPx.min.x) {
+					// a lot of spacing; we would need to know where is the left start of the annotated element;
+					// the anchor point is on the bottom right
+					scrollX = anchorPx.x - mapBoundsPx.min.x - 3 * spacing;
+				}
+				if (anchorPx.y < mapBoundsPx.min.y + gapY) {
+					scrollY = anchorPx.y - mapBoundsPx.min.y - gapY - spacing;
+				}
+				scrollX = Math.round(scrollX);
+				scrollY = Math.round(scrollY);
+				if (scrollX !== 0 || scrollY !== 0) {
+					this._map.fire('scrollby', {x: scrollX, y: scrollY});
+					return;
+				}
+			}
 
-					if (annotationBoundsPx.min.x < mapBoundsPx.min.x) {
-						scrollX = annotationBoundsPx.min.x - mapBoundsPx.min.x - spacing;
-					} else if (annotationBoundsPx.max.x > mapBoundsPx.max.x) {
-						scrollX = annotationBoundsPx.max.x - mapBoundsPx.max.x + spacing;
-					}
-					if (annotationBoundsPx.min.y < mapBoundsPx.min.y) {
-						scrollY = annotationBoundsPx.min.y - mapBoundsPx.min.y + spacing;
-					} else if (annotationBoundsPx.max.y > mapBoundsPx.max.y) {
-						scrollY = annotationBoundsPx.max.y - mapBoundsPx.max.y - spacing;
-					}
-					scrollX = Math.round(scrollX);
-					scrollY = Math.round(scrollY);
-					posX -= scrollX;
-					if (posX < mapBoundsPx.min.x)
-						posX = Math.round(mapBoundsPx.min.x + spacing);
-					posY -= scrollY;
-					if (posY < mapBoundsPx.min.y)
-						posY = Math.round(mapBoundsPx.min.y + spacing);
-					if (posX < this._items[selectIndexFirst]._data.anchorPix.x + spacing) {
-						var anchorPosMax = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.max);
-						var lineHeight = Math.round(anchorPosMax.y - this._items[selectIndexFirst]._data.anchorPix.y);
-						posY += 2 * lineHeight;
-						point.y += lineHeight;
-					}
+			// move the annotation box in order to make it visible but only if the annotated element is already visible
+			if (anchorPx.x >= mapBoundsPx.min.x &&  anchorPx.x <= mapBoundsPx.max.x
+				&& anchorPx.y >= mapBoundsPx.min.y + gapY && anchorPx.y <= mapBoundsPx.max.y + gapY) {
+				scrollX = 0; scrollY = 0;
+
+				if (bottomRightPoint.x > mapBoundsPx.max.x) {
+					scrollX = bottomRightPoint.x - mapBoundsPx.max.x + spacing;
+				}
+				if (bottomRightPoint.y > mapBoundsPx.max.y) {
+					scrollY = bottomRightPoint.y - mapBoundsPx.max.y - spacing;
+				}
+				scrollX = Math.round(scrollX);
+				scrollY = Math.round(scrollY);
+				console.log('doLayout: scrollY 2: ' + scrollY);
+				posX -= scrollX;
+				if (posX < mapBoundsPx.min.x)
+					posX = Math.round(mapBoundsPx.min.x + spacing);
+				posY -= scrollY;
+				if (posY < mapBoundsPx.min.y)
+					posY = Math.round(mapBoundsPx.min.y + spacing);
+				// avoid the annotation box to cover the annotated element
+				if (posX < anchorPx.x + spacing) {
+					var anchorPosMax = this._map._docLayer._twipsToPixels(this._items[selectIndexFirst]._data.anchorPos.max);
+					var lineHeight = Math.round(anchorPosMax.y - anchorPx.y);
+					posY += 2 * lineHeight;
+					point.y += lineHeight;
 				}
 			}
 
@@ -461,15 +482,6 @@ L.AnnotationManager = L.Class.extend({
 
 			latlng = this._map.unproject(L.point(posX, posY));
 			var annotationCoords = this._map.latLngToLayerPoint(latlng);
-			if (this._selected != this._lastSelected) {
-				this._lastSelected = this._selected;
-				var offsetX = this.options.marginX;
-				var offsetY = this.options.marginY + 16;
-				// Scroll to bring the comments in view, which will trigger layouting again.
-				this._map.fire('scrollto', {x: posX-offsetX, y: posY-offsetY, calledFromInvalidateCursorMsg: false});
-				return;
-			}
-
 			(new L.PosAnimation()).run(this._items[selectIndexFirst]._container, annotationCoords);
 			this._items[selectIndexFirst].setLatLng(latlng, /*skip check bounds*/ true);
 			layoutBounds = this._items[selectIndexFirst].getBounds();
@@ -544,6 +556,7 @@ L.AnnotationManager = L.Class.extend({
 				this._selected.show();
 			}
 		} else if (this._items.length > 0) { // If nothing is selected, but there are comments:
+			this._lastSelected = null;
 			point = this._map.latLngToLayerPoint(this._map.unproject(L.point(topRight.x, this._items[0]._data.anchorPix.y)));
 			layoutBounds = L.bounds(point, point);
 			// Pass over all comments present
