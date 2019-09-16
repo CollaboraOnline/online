@@ -227,7 +227,7 @@ namespace Log
     }
 #endif
 
-    bool isShutdown()
+    bool isShutdownCalled()
     {
         return IsShutdown;
     }
