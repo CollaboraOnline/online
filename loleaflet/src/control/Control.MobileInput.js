@@ -330,7 +330,7 @@ L.Control.MobileInput = L.Control.extend({
 	warnCopyPaste: function() {
 		var self = this;
 		vex.dialog.alert({
-			message: _('<p>Your browser has very limited access to the clipboard</p>'),
+			unsafeMessage: _('<p>Your browser has very limited access to the clipboard</p>'),
 			callback: function () {
 				self._map.focus();
 			}

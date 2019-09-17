@@ -762,7 +762,7 @@ L.Clipboard = L.Class.extend({
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>');
 		}
 		vex.dialog.alert({
-			message: msg,
+			unsafeMessage: msg,
 			callback: function () {
 				self._map.focus();
 			}
@@ -785,7 +785,7 @@ L.Clipboard = L.Class.extend({
 			    '<p>If you are copy and pasting between documents inside %productName, ' +
 			    'there is no need to download.</p>');
 		vex.dialog.alert({
-			message: this._substProductName(msg),
+			unsafeMessage: this._substProductName(msg),
 			callback: function () {
 				self._map.focus();
 			}
@@ -795,7 +795,7 @@ L.Clipboard = L.Class.extend({
 	_warnLargeCopyPasteAlreadyStarted: function () {
 		var self = this;
 		vex.dialog.alert({
-			message: _('<p>A download due to a large copy/paste operation has already started. ' +
+			unsafeMessage: _('<p>A download due to a large copy/paste operation has already started. ' +
 				   'Please, wait for the current download or cancel it before starting a new one</p>'),
 			callback: function () {
 				self._map.focus();
