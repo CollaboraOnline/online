@@ -331,19 +331,23 @@ pot:
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.DownloadProgress.js \
 		src/control/Control.Menubar.js \
+		src/control/Control.MobileInput.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
-		src/control/Signing.js \
 		src/control/Ruler.js \
+		src/control/Signing.js \
 		src/control/Toolbar.js \
 		src/core/Socket.js \
 		src/errormessages.js \
 		src/layer/marker/Annotation.js \
+		src/layer/marker/ClipboardContainer.js \
+		src/layer/tile/CalcTileLayer.js \
+		src/layer/tile/ImpressTileLayer.js \
 		src/layer/tile/TileLayer.js \
-		src/layer/tile/TileLayer.TableOverlay.js \
-		src/map/Map.js \
+		src/layer/tile/WriterTileLayer.js \
 		src/map/Clipboard.js \
+		src/map/Map.js \
 		src/map/handler/Map.FileInserter.js \
 		src/map/handler/Map.WOPI.js
 
