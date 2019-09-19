@@ -507,6 +507,13 @@ L.Map.TouchGesture = L.Handler.extend({
 				L.Util.cancelAnimFrame(this._animRequest);
 				this._map._animateZoom(this._center, finalZoom, true, true);
 			}
+
+			if (this._map._docLayer && this._map._docLayer._annotations) {
+				var annotations = this._map._docLayer._annotations;
+				setTimeout(function() {
+					annotations.update();
+				}, 250 /* ms */);
+			}
 		}
 	},
 
