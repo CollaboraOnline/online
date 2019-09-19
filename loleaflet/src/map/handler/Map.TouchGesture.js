@@ -301,6 +301,13 @@ L.Map.TouchGesture = L.Handler.extend({
 		// unselect if anything is selected already
 		if (this._map._docLayer && this._map._docLayer._annotations && this._map._docLayer._annotations.unselect) {
 			this._map._docLayer._annotations.unselect();
+			var pointPx = this._map._docLayer._twipsToPixels(mousePos);
+			var bounds = this._map._docLayer._annotations.getBounds();
+			if (bounds && bounds.contains(pointPx)) {
+				// not forward mouse events to core if the user tap on a comment box
+				// for instance on Writer that causes the text cursor to be moved
+				return;
+			}
 		}
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
