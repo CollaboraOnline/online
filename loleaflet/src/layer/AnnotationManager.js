@@ -335,7 +335,7 @@ L.AnnotationManager = L.Class.extend({
 		var posX = docRight.x + this.options.marginX;
 		posX = this._map.latLngToLayerPoint(this._map.unproject(L.point(posX, 0))).x;
 		var posY;
-		if (layoutBounds.intersects(bounds)) {
+		if (layoutBounds.min.y <= bounds.max.y) {
 			layoutBounds.extend(layoutBounds.min.subtract([0, bounds.getSize().y]));
 			posY = layoutBounds.min.y;
 		}
@@ -377,7 +377,7 @@ L.AnnotationManager = L.Class.extend({
 		var posX = docRight.x + this.options.marginX;
 		posX = this._map.latLngToLayerPoint(this._map.unproject(L.point(posX, 0))).x;
 		var posY;
-		if (layoutBounds.intersects(bounds)) {
+		if (layoutBounds.max.y >= bounds.min.y) {
 			posY = layoutBounds.getBottomLeft().y;
 			layoutBounds.extend(layoutBounds.max.add([0, bounds.getSize().y]));
 		}
