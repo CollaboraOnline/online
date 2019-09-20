@@ -267,8 +267,8 @@ void DocumentBroker::pollThread()
     uint64_t adminRecv = 0;
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
 
-    int limit_load_secs = LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
-    auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
+    const int limit_load_secs = LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
+    const auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
     auto last30SecCheckTime = std::chrono::steady_clock::now();
 
@@ -284,7 +284,14 @@ void DocumentBroker::pollThread()
         {
             // Brutal but effective.
             if (_childProcess)
+            {
+                LOG_WRN("Doc [" << _docKey << "] is taking too long to load. Will kill process ["
+                                << _childProcess->getPid()
+                                << "]. per_document.limit_load_secs set to " << limit_load_secs
+                                << " secs.");
                 _childProcess->terminate();
+            }
+
             stop("Load timed out");
             continue;
         }
