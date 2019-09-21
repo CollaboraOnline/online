@@ -89,7 +89,8 @@ bool runClientTests(bool standalone, bool verbose)
     controller.addListener(&result);
     CPPUNIT_NS::BriefTestProgressListener progress;
     controller.addListener(&progress);
-    controller.addListener(new CPPUNIT_NS::TextTestProgressListener());
+    std::unique_ptr<CPPUNIT_NS::TextTestProgressListener> pListener(new CPPUNIT_NS::TextTestProgressListener());
+    controller.addListener(pListener.get());
 
     CPPUNIT_NS::Test* testRegistry = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
 
