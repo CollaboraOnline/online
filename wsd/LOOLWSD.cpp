@@ -517,7 +517,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
 
                     // Ugly to have that static global, otoh we know there is just one LOOLWSD
                     // object. (Even in real Online.)
-                    lokit_main(uri, LOOLWSD::prisonerServerSocketFD);
+                    lokit_main(uri, LOOLWSD::prisonerServerSocketFD, 1);
                 }).detach();
 #endif
 

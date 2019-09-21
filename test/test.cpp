@@ -181,7 +181,7 @@ std::vector<int> getProcPids(const char* exec_filename)
     std::vector<int> pids;
 
     // Ensure we're in the same group.
-    int grp = getpgrp();
+    const int grp = getpgrp();
 
     // Get all lokit processes.
     for (auto it = Poco::DirectoryIterator(std::string("/proc")); it != Poco::DirectoryIterator(); ++it)
@@ -207,7 +207,7 @@ std::vector<int> getProcPids(const char* exec_filename)
                 std::string statString;
                 Poco::StreamCopier::copyToString(stat, statString);
                 Poco::StringTokenizer tokens(statString, " ");
-                if (tokens.count() > 6 && tokens[1] == exec_filename)
+                if (tokens.count() > 6 && tokens[1].find(exec_filename) == 0)
                 {
                     // We could have several make checks running at once.
                     int kidGrp = std::atoi(tokens[4].c_str());
@@ -236,18 +236,28 @@ std::vector<int> getProcPids(const char* exec_filename)
     return pids;
 }
 
+std::vector<int> getSpareKitPids()
+{
+    return getProcPids("(kit_spare_");
+}
+
+std::vector<int> getDocKitPids()
+{
+    return getProcPids("(kitbroker_");
+}
+
 std::vector<int> getKitPids()
 {
-    std::vector<int> pids;
-
-    pids = getProcPids("(loolkit)");
+    std::vector<int> pids = getSpareKitPids();
+    for (int pid : getDocKitPids())
+        pids.push_back(pid);
 
     return pids;
 }
 
 int getLoolKitProcessCount()
 {
-    return getProcPids("(loolkit)").size();
+    return getKitPids().size();
 }
 
 std::vector<int> getForKitPids()

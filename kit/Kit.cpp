@@ -490,7 +490,6 @@ public:
                     // Shrink cache when we exceed the size to maximize
                     // the chance of hitting these entries in the future.
                     _cacheSize -= it->second.getData()->size();
-
                     it = _cache.erase(it);
                 }
                 else
@@ -2262,6 +2261,7 @@ protected:
             std::string url;
             URI::decode(docKey, url);
             LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
+            Util::setThreadName("kitbroker_" + docId);
 
             if (!document)
                 document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, shared_from_this());
@@ -2428,11 +2428,12 @@ void lokit_main(
                 bool noCapabilities,
                 bool noSeccomp,
                 bool queryVersion,
-                bool displayVersion
+                bool displayVersion,
 #else
                 const std::string& documentUri,
-                int docBrokerSocket
+                int docBrokerSocket,
 #endif
+                size_t spareKitId
                 )
 {
 #if !MOBILEAPP
@@ -2442,7 +2443,7 @@ void lokit_main(
     SigUtil::setTerminationSignals();
 #endif
 
-    Util::setThreadName("loolkit");
+    Util::setThreadName("kit_spare_" + Util::encodeId(spareKitId, 3));
 
     // Reinitialize logging when forked.
     const bool logToFile = std::getenv("LOOL_LOGFILE");
