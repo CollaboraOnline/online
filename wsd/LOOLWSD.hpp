@@ -46,7 +46,7 @@ public:
 
     // An Application is a singleton anyway,
     // so just keep these as statics.
-    static std::atomic<uint64_t> NextSessionId;
+    static std::atomic<uint64_t> NextConnectionId;
     static unsigned int NumPreSpawnedChildren;
     static bool NoCapsForKit;
     static bool NoSeccomp;
@@ -85,9 +85,9 @@ public:
     /// For testing only [!] DocumentBrokers are mostly single-threaded with their own thread
     static std::vector<std::shared_ptr<DocumentBroker>> getBrokersTestOnly();
 
-    static std::string GenSessionId()
+    static std::string GetConnectionId()
     {
-        return Util::encodeId(++NextSessionId, 4);
+        return Util::encodeId(NextConnectionId++, 3);
     }
 
     static bool isSSLEnabled()

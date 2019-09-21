@@ -274,7 +274,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
       _isAuthenticated(false)
 {
     // Different session id pool for admin sessions (?)
-    _sessionId = Util::decodeId(LOOLWSD::GenSessionId());
+    _sessionId = Util::decodeId(LOOLWSD::GetConnectionId());
 }
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
@@ -282,7 +282,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
       _admin(adminManager),
       _isAuthenticated(true)
 {
-    _sessionId = Util::decodeId(LOOLWSD::GenSessionId());
+    _sessionId = Util::decodeId(LOOLWSD::GetConnectionId());
 }
 
 void AdminSocketHandler::sendTextFrame(const std::string& message)
