@@ -498,19 +498,30 @@ namespace Util
         return replace(r, "\n", " / ");
     }
 
-    static __thread char ThreadName[32] = {0};
+    // prctl(2) supports names of up to 16 characters, including null-termination.
+    // Although in practice on linux more than 16 chars is supported.
+    static thread_local char ThreadName[32] = {0};
+    static_assert(sizeof(ThreadName) >= 16, "ThreadName should have a statically known size, and not be a pointer.");
 
     void setThreadName(const std::string& s)
     {
-        strncpy(ThreadName, s.c_str(), 31);
-        ThreadName[31] = '\0';
+        // Copy the current name.
+        const std::string knownAs
+            = ThreadName[0] ? "known as [" + std::string(ThreadName) + "]" : "unnamed";
+
+        // Set the new name.
+        strncpy(ThreadName, s.c_str(), sizeof(ThreadName) - 1);
+        ThreadName[sizeof(ThreadName) - 1] = '\0';
 #ifdef __linux
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
-            LOG_SYS("Cannot set thread name of " << getThreadId() << " (" << std::hex <<
-                    std::this_thread::get_id() << std::dec << ") to [" << s << "].");
+            LOG_SYS("Cannot set thread name of "
+                    << getThreadId() << " (" << std::hex << std::this_thread::get_id() << std::dec
+                    << ") of process " << getpid() << " currently " << knownAs << " to [" << s
+                    << "].");
         else
-            LOG_INF("Thread " << getThreadId() << " (" << std::hex <<
-                    std::this_thread::get_id() << std::dec << ") is now called [" << s << "].");
+            LOG_INF("Thread " << getThreadId() << " (" << std::hex << std::this_thread::get_id()
+                              << std::dec << ") of process " << getpid() << " formerly " << knownAs
+                              << " is now called [" << s << "].");
 #elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
         LOG_INF("Thread " << getThreadId() <<
@@ -524,13 +535,14 @@ namespace Util
         if (ThreadName[0] == '\0')
         {
 #ifdef __linux
+            // prctl(2): The buffer should allow space for up to 16 bytes; the returned string will be null-terminated.
             if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(ThreadName), 0, 0, 0) != 0)
                 strncpy(ThreadName, "<noid>", sizeof(ThreadName) - 1);
 #elif defined IOS
             const char *const name = [[[NSThread currentThread] name] UTF8String];
-            strncpy(ThreadName, name, 31);
-            ThreadName[31] = '\0';
+            strncpy(ThreadName, name, sizeof(ThreadName) - 1);
 #endif
+            ThreadName[sizeof(ThreadName) - 1] = '\0';
         }
 
         // Avoid so many redundant system calls
