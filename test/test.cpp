@@ -174,7 +174,7 @@ std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = fal
                 std::string statString;
                 Poco::StreamCopier::copyToString(stat, statString);
                 Poco::StringTokenizer tokens(statString, " ");
-                if (tokens.count() > 3 && tokens[1] == exec_filename)
+                if (tokens.count() > 3 && Util::startsWith(tokens[1], exec_filename))
                 {
                     if (ignoreZombies)
                     {
@@ -202,18 +202,28 @@ std::vector<int> getProcPids(const char* exec_filename, bool ignoreZombies = fal
     return pids;
 }
 
+std::vector<int> getSpareKitPids()
+{
+    return getProcPids("(kit_spare_");
+}
+
+std::vector<int> getDocKitPids()
+{
+    return getProcPids("(kitbroker_");
+}
+
 std::vector<int> getKitPids()
 {
-    std::vector<int> pids;
-
-    pids = getProcPids("(loolkit)");
+    std::vector<int> pids = getSpareKitPids();
+    for (int pid : getDocKitPids())
+        pids.push_back(pid);
 
     return pids;
 }
 
 int getLoolKitProcessCount()
 {
-    return getProcPids("(loolkit)", true).size();
+    return getKitPids().size();
 }
 
 std::vector<int> getForKitPids()

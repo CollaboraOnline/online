@@ -20,8 +20,13 @@ bool runClientTests(bool standalone, bool verbose);
 
 // ---- Abstraction for standalone vs. WSD ----
 
-/// Get the list of kit PIDs
+/// Get the list of all kit PIDs
 std::vector<int> getKitPids();
+
+/// Get the list of spare (unused) kit PIDs
+std::vector<int> getSpareKitPids();
+/// Get the list of doc (loaded) kit PIDs
+std::vector<int> getDocKitPids();
 
 /// Get the PID of the forkit
 std::vector<int> getForKitPids();

@@ -32,11 +32,12 @@ void lokit_main(
                 bool noCapabilities,
                 bool noSeccomp,
                 bool queryVersionInfo,
-                bool displayVersion
+                bool displayVersion,
 #else
                 const std::string& documentUri,
-                int docBrokerSocket
+                int docBrokerSocket,
 #endif
+                size_t spareKitId
                 );
 
 bool globalPreinit(const std::string& loTemplate);

@@ -250,7 +250,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
     // Generate a jail ID to be used for in the jail path.
     const std::string jailId = Util::rng::getFilename(16);
 
-    LOG_DBG("Forking a loolkit process with jailId: " << jailId << ".");
+    // Used to label the spare kit instances
+    static size_t spareKitId = 0;
+    ++spareKitId;
+    LOG_DBG("Forking a loolkit process with jailId: " << jailId << " as spare loolkit #" << spareKitId << ".");
 
     const Process::PID pid = fork();
     if (!pid)
@@ -277,9 +280,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
         }
 
 #ifndef KIT_IN_PROCESS
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, NoSeccomp, queryVersion, DisplayVersion);
+        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, NoSeccomp, queryVersion, DisplayVersion, spareKitId);
 #else
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, true, true, queryVersion, DisplayVersion);
+        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, true, true, queryVersion, DisplayVersion, spareKitId);
 #endif
     }
     else
