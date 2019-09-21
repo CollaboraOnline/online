@@ -676,7 +676,7 @@ inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
 
 #endif // MOBILEAPP
 
-std::atomic<unsigned> LOOLWSD::NextSessionId;
+std::atomic<unsigned> LOOLWSD::NextConnectionId(1);
 #ifndef KIT_IN_PROCESS
 std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
@@ -2029,7 +2029,7 @@ private:
     /// Set the socket associated with this ResponseClient.
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
-        _id = LOOLWSD::GenSessionId();
+        _id = LOOLWSD::GetConnectionId();
         _socket = socket;
         LOG_TRC("#" << socket->getFD() << " Connected to ClientRequestDispatcher.");
     }

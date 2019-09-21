@@ -45,7 +45,7 @@ public:
 
     // An Application is a singleton anyway,
     // so just keep these as statics.
-    static std::atomic<unsigned> NextSessionId;
+    static std::atomic<unsigned> NextConnectionId;
     static unsigned int NumPreSpawnedChildren;
     static bool NoCapsForKit;
     static bool NoSeccomp;
@@ -79,9 +79,9 @@ public:
 
     static std::vector<int> getKitPids();
 
-    static std::string GenSessionId()
+    static std::string GetConnectionId()
     {
-        return Util::encodeId(++NextSessionId, 4);
+        return Util::encodeId(NextConnectionId++, 3);
     }
 
     static bool isSSLEnabled()
