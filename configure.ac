@@ -153,6 +153,10 @@ AC_ARG_WITH([max-documents],
              AS_HELP_STRING([--with-max-documents],
                            [Set the limit on the total number of documents. Def: 10, Min: 2.]))
 
+AC_ARG_WITH([sanitizer],
+             AS_HELP_STRING([--with-sanitizer],
+                           [Enable one or more compatible sanitizers. E.g. --with-sanitizer=address,leak]))
+
 AC_ARG_WITH([compiler-plugins],
             AS_HELP_STRING([--with-compiler-plugins=<path>],
                 [Experimental! Unlikely to work for anyone except Noel! Enable compiler plugins that will perform additional checks during
@@ -337,6 +341,17 @@ if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
     AC_MSG_RESULT([yes])
     CXXFLAGS="$CXXFLAGS -Werror"
     CFLAGS="$CFLAGS -Werror"
+else
+    AC_MSG_RESULT([no])
+fi
+
+AC_MSG_CHECKING([whether to turn sanitizers on])
+if test "x$with_sanitizer" != "x"; then
+    AC_MSG_RESULT([yes ($with_sanitizer)])
+	SANITIZER_FLAGS="-O1 -fno-omit-frame-pointer -fsanitize=$with_sanitizer -frtti" # -fno-sanitize=vptr
+    CXXFLAGS="$CXXFLAGS $SANITIZER_FLAGS"
+    CFLAGS="$CFLAGS $SANITIZER_FLAGS"
+    LIBS="$LIBS -ldl"
 else
     AC_MSG_RESULT([no])
 fi
