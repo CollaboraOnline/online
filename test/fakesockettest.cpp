@@ -287,7 +287,8 @@ int main(int, char**)
     controller.addListener(&result);
     CPPUNIT_NS::BriefTestProgressListener progress;
     controller.addListener(&progress);
-    controller.addListener(new CPPUNIT_NS::TextTestProgressListener());
+    CPPUNIT_NS::TextTestProgressListener listener;
+    controller.addListener(&listener);
 
     CPPUNIT_NS::Test* testRegistry = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
 
