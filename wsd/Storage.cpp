@@ -733,9 +733,10 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         {
             // the suggested target has to be in UTF-7; default to extension
             // only when the conversion fails
-            std::string suggestedTarget = "." + Poco::Path(saveAsFilename).getExtension();
+            std::string suggestedTarget = '.' + Poco::Path(saveAsFilename).getExtension();
 
-            iconv_t cd = iconv_open("UTF-7", "UTF-8");
+            //TODO: Perhaps we should cache this descriptor and reuse, as iconv_open might be expensive.
+            const iconv_t cd = iconv_open("UTF-7", "UTF-8");
             if (cd == (iconv_t) -1)
                 LOG_ERR("Failed to initialize iconv for UTF-7 conversion, using '" << suggestedTarget << "'.");
             else
@@ -756,6 +757,8 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
                     suggestedTarget = std::string(&buffer[0], buffer.size() - out_left);
                     LOG_TRC("Converted '" << saveAsFilename << "' to UTF-7 as '" << suggestedTarget << "'.");
                 }
+
+                iconv_close(cd);
             }
 
             if (isRename)
