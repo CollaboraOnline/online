@@ -69,10 +69,21 @@ static bool IsDebugrun = false;
 
 int main(int argc, char** argv)
 {
-    const bool verbose = (argc > 1 && std::string("--verbose") == argv[1]);
-    IsDebugrun = (argc > 2 && std::string("--debugrun") == argv[2]);
-    const char* loglevel = verbose ? "trace" : "error";
+    bool verbose = false;
+    for (int i = 1; i < argc; ++i)
+    {
+        const std::string arg(argv[i]);
+        if (arg == "--verbose")
+        {
+            verbose = true;
+        }
+        else if (arg == "--debugrun")
+        {
+            IsDebugrun = true;
+        }
+    }
 
+    const char* loglevel = verbose ? "trace" : "warning";
     Log::initialize("tst", loglevel, true, false, {});
 
     return runClientTests(true, verbose)? 0: 1;
