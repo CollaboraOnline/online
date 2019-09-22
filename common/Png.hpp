@@ -111,13 +111,17 @@ unpremultiply_data (png_structp /*png*/, png_row_infop row_info, png_bytep data)
     }
 }
 
-// Sadly, older libpng headers don't use const for the pixmap pointer parameter to
-// png_write_row(), so can't use const here for pixmap.
-inline
-bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
-                          int width, int height,
-                          int bufferWidth, int bufferHeight,
-                          std::vector<char>& output, LibreOfficeKitTileMode mode)
+/// This function uses setjmp which may clobbers non-trivial objects.
+/// So we can't use logging or create complex C++ objects in this frame.
+/// Specifically, logging uses std::string objects, and GCC gives the following:
+/// error: variable ‘__capacity’ might be clobbered by ‘longjmp’ or ‘vfork’ [-Werror=clobbered]
+/// In practice, this is bogus, since __capacity is has a trivial type, but this error
+/// shows up with the sanitizers. But technically we shouldn't mix C++ objects with setjmp.
+/// Sadly, older libpng headers don't use const for the pixmap pointer parameter to
+/// png_write_row(), so can't use const here for pixmap.
+inline bool impl_encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
+                                      int width, int height, int bufferWidth, int bufferHeight,
+                                      std::vector<char>& output, LibreOfficeKitTileMode mode)
 {
     if (bufferWidth < width || bufferHeight < height)
     {
@@ -154,8 +158,6 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
         png_set_write_user_transform_fn (png_ptr, unpremultiply_data);
     }
 
-    auto a = std::chrono::steady_clock::now();
-
     for (int y = 0; y < height; ++y)
     {
         size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
@@ -163,17 +165,6 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
     }
 
     png_write_end(png_ptr, info_ptr);
-
-    auto b = std::chrono::steady_clock::now();
-
-    std::chrono::milliseconds::rep duration = std::chrono::duration_cast<std::chrono::milliseconds>(b-a).count();
-
-    static std::chrono::milliseconds::rep totalDuration = 0;
-    static int nCalls = 0;
-
-    totalDuration += duration;
-    nCalls += 1;
-    LOG_TRC("Average PNG compression time after " << std::to_string(nCalls) << " calls: " << (totalDuration / static_cast<double>(nCalls)));
 
     png_destroy_write_struct(&png_ptr, &info_ptr);
 
@@ -188,6 +179,36 @@ bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY,
 #endif
 
     return true;
+}
+
+/// Sadly, older libpng headers don't use const for the pixmap pointer parameter to
+/// png_write_row(), so can't use const here for pixmap.
+inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t startY, int width,
+                                 int height, int bufferWidth, int bufferHeight,
+                                 std::vector<char>& output, LibreOfficeKitTileMode mode)
+{
+    const auto start = std::chrono::steady_clock::now();
+
+    const bool res = impl_encodeSubBufferToPNG(pixmap, startX, startY, width, height, bufferWidth,
+                                               bufferHeight, output, mode);
+    if (Log::traceEnabled())
+    {
+        const auto end = std::chrono::steady_clock::now();
+
+        std::chrono::milliseconds::rep duration
+            = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+        static std::chrono::milliseconds::rep totalDuration = 0;
+        static int nCalls = 0;
+
+        totalDuration += duration;
+        ++nCalls;
+        LOG_TRC("PNG compression took "
+                << duration << " ms (" << output.size() << " bytes). Average after " << nCalls
+                << " calls: " << (totalDuration / static_cast<double>(nCalls)));
+    }
+
+    return res;
 }
 
 inline
