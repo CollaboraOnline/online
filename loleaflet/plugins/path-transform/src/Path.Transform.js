@@ -51,6 +51,7 @@ L.Handler.PathTransform = L.Handler.extend({
 	options: {
 		rotation: true,
 		scaling:  true,
+		scaleSouthAndEastOnly:  false,
 		uniformScaling: true,
 		maxZoom:  22,
 
@@ -838,13 +839,19 @@ L.Handler.PathTransform = L.Handler.extend({
 	*/
 	_createHandler: function(latlng, type, index) {
 		var HandleClass = this.options.handleClass;
+		var options = {
+			className: 'leaflet-drag-transform-marker drag-marker--' +
+			index + ' drag-marker--' + type,
+			index:     index,
+			type:      type,
+		};
+		if (this.options.scaleSouthAndEastOnly && index < 5) {
+			options.opacity = 0;
+			options.fill = false;
+			options.interactive = false;
+		}
 		var marker = new HandleClass(latlng,
-			L.Util.extend({}, this.options.handlerOptions, {
-				className: 'leaflet-drag-transform-marker drag-marker--' +
-				index + ' drag-marker--' + type,
-				index:     index,
-				type:      type
-			})
+			L.Util.extend({}, this.options.handlerOptions, options)
 		);
 
 		marker.on('mousedown', this._onScaleStart, this);
