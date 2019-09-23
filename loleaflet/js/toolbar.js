@@ -2073,7 +2073,7 @@ function updateCommandValues(targetName) {
 			data: []
 		});
 
-		$('.fontsizes-select').on('select2:select', onFontSizeSelect);
+		$('.fontsizes-select').off('select2:select', onFontSizeSelect).on('select2:select', onFontSizeSelect);
 		if (fontsSelectValue) {
 			updateFontSizeList(fontsSelectValue);
 		}
