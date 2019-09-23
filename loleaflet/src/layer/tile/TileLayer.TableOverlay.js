@@ -175,6 +175,7 @@ L.TileLayer.include({
 		textMsg = textMsg.substring('tableselected:'.length + 1);
 		var message = JSON.parse(textMsg);
 		this._currentTableData = message;
+		this._hasTableSelection = this._currentTableData.rows != null || this._currentTableData.columns != null;
 		this._updateTableMarkers();
 		this._map.on('zoomend', L.bind(this._onZoom, this));
 	},

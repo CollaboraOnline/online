@@ -2392,8 +2392,9 @@ L.TileLayer = L.GridLayer.extend({
 				this._graphicMarker.dragging.enable();
 			this._graphicMarker.transform.enable({
 				scaling: extraInfo.isResizable,
-				rotation: extraInfo.isRotatable,
-				uniformScaling: !this._isGraphicAngleDivisibleBy90()});
+				rotation: extraInfo.isRotatable && !this._hasTableSelection,
+				uniformScaling: !this._isGraphicAngleDivisibleBy90(),
+				scaleSouthAndEastOnly: this._hasTableSelection});
 			if (extraInfo.dragInfo && extraInfo.dragInfo.svg) {
 				this._graphicMarker.removeEmbeddedSVG();
 				this._graphicMarker.addEmbeddedSVG(extraInfo.dragInfo.svg);
