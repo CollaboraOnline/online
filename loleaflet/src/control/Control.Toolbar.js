@@ -1546,7 +1546,7 @@ function onDocLayerInit() {
 			return parseFloat(a.text) - parseFloat(b.text);
 		})}
 	});
-	$('.fontsizes-select').on('select2:select', onFontSizeSelect);
+	$('.fontsizes-select').off('select2:select', onFontSizeSelect).on('select2:select', onFontSizeSelect);
 }
 
 function onCommandStateChanged(e) {
