@@ -39,6 +39,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		radiobutton.type = 'radiobutton';
 		radiobutton.value = data.text;
 
+		if (data.enabled == 'false')
+			$(radiobutton).attr('disabled', 'disabled');
+
 		return false;
 	},
 
@@ -49,6 +52,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkboxLabel.innerHTML = data.text;
 		checkboxLabel.for = data.id;
 
+		if (data.enabled == 'false')
+			$(checkbox).attr('disabled', 'disabled');
+
 		return false;
 	},
 
@@ -57,12 +63,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		spinfield.type = 'number';
 		spinfield.value = data.text;
 
+		if (data.enabled == 'false')
+			$(spinfield).attr('disabled', 'disabled');
+
 		return false;
 	},
 
 	_editControl: function(parentContainer, data) {
 		var edit = L.DomUtil.create('input', '', parentContainer);
 		edit.value = data.text;
+
+		if (data.enabled == 'false')
+			$(edit).attr('disabled', 'disabled');
 
 		return false;
 	},
@@ -71,12 +83,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var pushbutton = L.DomUtil.create('button', '', parentContainer);
 		pushbutton.innerHTML = data.text;
 
+		if (data.enabled == 'false')
+			$(pushbutton).attr('disabled', 'disabled');
+
 		return false;
 	},
 
 	_comboboxControl: function(parentContainer, data) {
 		var listbox = L.DomUtil.create('select', '', parentContainer);
 		listbox.value = data.text;
+
+		if (data.enabled == 'false')
+			$(listbox).attr('disabled', 'disabled');
 
 		return false;
 	},
@@ -98,11 +116,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		for (var childIndex in data) {
 			var childData = data[childIndex];
 			var childType = childData.type;
-			var childIsEnabled = childData.enabled;
 			var processChildren = true;
-
-			if (childIsEnabled === false)
-				continue;
 
 			if (currentIsContainer) {
 				var horizontalOverflow = (childIndex > 0 && columns && (childIndex % columns == 0));
