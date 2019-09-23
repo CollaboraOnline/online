@@ -60,7 +60,7 @@ L.Control.MobileWizard = L.Control.extend({
 			var content = $('#mobile-wizard-content');
 			content.empty();
 
-			L.control.jsDialogBuilder().build(content.get(0), [data]);
+			L.control.jsDialogBuilder({'mobileWizard': this}).build(content.get(0), [data]);
 		}
 	}
 });

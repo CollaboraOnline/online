@@ -7,6 +7,12 @@
 /* global $ */
 L.Control.JSDialogBuilder = L.Control.extend({
 
+	/* Handler is a function which takes two parameters:
+	 * parentContainer - place where insert the content
+	 * data - data of a control under process
+	 * returns boolean: true if children should be processed
+	 * and false otherwise
+	 */
 	_controlHandlers: {},
 
 	_setup: function() {
@@ -18,6 +24,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['listbox'] = this._comboboxControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
+		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['container'] = this._containerHandler;
 		this._controlHandlers['window'] = this._containerHandler;
 		this._controlHandlers['borderwindow'] = this._containerHandler;
@@ -31,6 +38,28 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_ignoreHandler: function() {
+		return false;
+	},
+
+	_frameHandler: function(parentContainer, data, builder) {
+		var titleNode = data.children[0];
+		var sectionTitle = L.DomUtil.create('div', 'ui-header mobile-wizard ui-widget', parentContainer);
+		sectionTitle.innerHTML = titleNode.text;
+
+		var contentNode = data.children[1];
+		var contentDiv = L.DomUtil.create('div', 'ui-content mobile-wizard', parentContainer);
+		builder.build(contentDiv, [contentNode]);
+
+		$(contentDiv).hide();
+		$(sectionTitle).click(function() {
+			$('.ui-header.mobile-wizard').hide('slide', { direction: 'left' }, 'fast', function() {
+				$(contentDiv).show('slide', { direction: 'right' }, 'fast');
+			});
+			builder.wizard._setTitle(titleNode.text);
+			builder.wizard._inMainMenu = false;
+		});
+
+
 		return false;
 	},
 
@@ -128,8 +157,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					currentInsertPlace = L.DomUtil.create('td', '', currentHorizontalRow);
 			}
 
-			var childIsContainer = (childType == 'container' || childType == 'borderwindow');
-			var childIsVertical = childData.vertical === true;
+			var childIsContainer = (childType == 'container' || childType == 'borderwindow') && childData.children.length > 1;
+			var childIsVertical = childData.vertical == 'true';
 			var childColumns = childData.cols;
 
 			var childObject = null;
@@ -145,7 +174,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var handler = this._controlHandlers[childType];
 
 			if (handler)
-				processChildren = handler(childObject, childData);
+				processChildren = handler(childObject, childData, this);
 			else
 				console.warn('Unsupported control type: \"' + childType + '\"');
 
@@ -158,5 +187,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 L.control.jsDialogBuilder = function (options) {
 	var builder = new L.Control.JSDialogBuilder(options);
 	builder._setup();
+	builder.wizard = options.mobileWizard;
 	return builder;
 };

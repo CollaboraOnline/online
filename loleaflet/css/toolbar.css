@@ -766,3 +766,17 @@ tr.useritem > td > img {
     background-color: #F6F6F6;
     height: 30px;
 }
+
+.ui-content.mobile-wizard {
+	background-color: white !important;
+	border: none !important;
+	padding: 10px;
+}
+
+.ui-header.mobile-wizard {
+	height: 20px !important;
+	font-size: 11pt !important;
+	margin: 5px;
+	padding: 5px;
+	border: solid 1px lightgrey;
+}
