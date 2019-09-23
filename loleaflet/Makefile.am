@@ -330,6 +330,7 @@ pot:
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.DownloadProgress.js \
+		src/control/Control.JSDialogBuilder.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.MobileInput.js \
 		src/control/Control.MobileWizard.js \

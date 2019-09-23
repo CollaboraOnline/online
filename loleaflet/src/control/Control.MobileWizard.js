@@ -51,14 +51,16 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_onMobileWizard: function(data) {
-		if (!this._isActive) {
+		if (data) {
 			this._isActive = true;
 
 			this._showWizard();
-
 			this._hideKeyboard();
 
-			console.log(data);
+			var content = $('#mobile-wizard-content');
+			content.empty();
+
+			L.control.jsDialogBuilder().build(content.get(0), [data]);
 		}
 	}
 });

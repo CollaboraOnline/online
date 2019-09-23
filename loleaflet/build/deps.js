@@ -400,6 +400,7 @@ var deps = {
 			'control/Control.LokDialog.js',
 			'control/Control.AlertDialog.js',
 			'control/Control.Infobar.js',
+			'control/Control.JSDialogBuilder.js',
 			'control/Control.MobileWizard.js'],
 		heading: 'Controls',
 		desc: 'Handles vex dialogs for displaying alerts'
