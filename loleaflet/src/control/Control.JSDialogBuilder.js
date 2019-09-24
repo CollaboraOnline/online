@@ -190,10 +190,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			else
 				childObject = currentInsertPlace;
 
-			$(childObject).css('border-style', 'solid');
-			$(childObject).css('border-width', '1px');
-			$(childObject).css('border-color', 'black');
-
 			var handler = this._controlHandlers[childType];
 
 			if (handler)
