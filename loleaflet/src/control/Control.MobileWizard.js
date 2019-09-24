@@ -8,6 +8,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_inMainMenu: true,
 	_isActive: false,
+	_currentDepth: 0,
 
 	onAdd: function (map) {
 		map.on('mobilewizard', this._onMobileWizard, this);
@@ -22,11 +23,13 @@ L.Control.MobileWizard = L.Control.extend({
 		backButton.click(function() {
 			if (that._inMainMenu) {
 				that._hideWizard();
+				that._currentDepth = 0;
 			} else {
-				$('.ui-content.mobile-wizard').hide('slide', { direction: 'right' }, 'fast', function() {
-					$('.ui-header.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
-				});
-				that._inMainMenu = true;
+				that._currentDepth--;
+				$('.ui-content.level-' + that._currentDepth + '.mobile-wizard').hide('slide', { direction: 'right' }, 'fast', function() {});
+				$('.ui-header.level-' + that._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
+				if (that._currentDepth == 0)
+					that._inMainMenu = true;
 			}
 		});
 	},

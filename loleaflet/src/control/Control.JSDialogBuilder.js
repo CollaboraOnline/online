@@ -15,6 +15,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	 */
 	_controlHandlers: {},
 
+	_currentDepth: 0,
+
 	_setup: function() {
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
@@ -25,12 +27,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['listbox'] = this._comboboxControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
 		this._controlHandlers['frame'] = this._frameHandler;
+		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['container'] = this._containerHandler;
 		this._controlHandlers['window'] = this._containerHandler;
 		this._controlHandlers['borderwindow'] = this._containerHandler;
 		this._controlHandlers['control'] = this._containerHandler;
 		this._controlHandlers['scrollbar'] = this._ignoreHandler;
 		this._controlHandlers['toolbox'] = this._ignoreHandler;
+		this._currentDepth = 0;
 	},
 
 	_containerHandler: function() {
@@ -41,24 +45,43 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_frameHandler: function(parentContainer, data, builder) {
-		var titleNode = data.children[0];
-		var sectionTitle = L.DomUtil.create('div', 'ui-header mobile-wizard ui-widget', parentContainer);
-		sectionTitle.innerHTML = titleNode.text;
+	_explorableEntry: function(parentContainer, title, contentNode, builder) {
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		sectionTitle.innerHTML = title;
 
-		var contentNode = data.children[1];
-		var contentDiv = L.DomUtil.create('div', 'ui-content mobile-wizard', parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+
+		builder._currentDepth++;
 		builder.build(contentDiv, [contentNode]);
+		builder._currentDepth--;
 
 		$(contentDiv).hide();
 		$(sectionTitle).click(function() {
-			$('.ui-header.mobile-wizard').hide('slide', { direction: 'left' }, 'fast', function() {
-				$(contentDiv).show('slide', { direction: 'right' }, 'fast');
-			});
-			builder.wizard._setTitle(titleNode.text);
+			var titles = '.ui-header.level-' + builder.wizard._currentDepth + '.mobile-wizard';
+
+			$(titles).hide('slide', { direction: 'left' }, 'fast', function() {});
+			$(contentDiv).show('slide', { direction: 'right' }, 'fast');
+
+			builder.wizard._currentDepth++;
+			builder.wizard._setTitle(title);
 			builder.wizard._inMainMenu = false;
 		});
+	},
 
+	_frameHandler: function(parentContainer, data, builder) {
+		var title = data.children[0].text;
+		var contentNode = data.children[1];
+
+		builder._explorableEntry(parentContainer, title, contentNode, builder);
+
+		return false;
+	},
+
+	_panelHandler: function(parentContainer, data, builder) {
+		var title = data.children[0].id;
+		var contentNode = data.children[0];
+
+		builder._explorableEntry(parentContainer, title, contentNode, builder);
 
 		return false;
 	},
