@@ -39,6 +39,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._currentDepth = 0;
 	},
 
+	_cleanText: function(text) {
+		return text.replace('~', '');
+	},
+
 	_containerHandler: function() {
 		return true;
 	},
@@ -71,7 +75,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_frameHandler: function(parentContainer, data, builder) {
-		var title = data.children[0].text;
+		var title = builder._cleanText(data.children[0].text);
 		var contentNode = data.children[1];
 
 		builder._explorableEntry(parentContainer, title, contentNode, builder);
@@ -88,10 +92,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_radiobuttonControl: function(parentContainer, data) {
+	_radiobuttonControl: function(parentContainer, data, builder) {
 		var radiobutton = L.DomUtil.create('input', '', parentContainer);
 		radiobutton.type = 'radiobutton';
-		radiobutton.value = data.text;
+		radiobutton.value = builder._cleanText(data.text);
 
 		if (data.enabled == 'false')
 			$(radiobutton).attr('disabled', 'disabled');
@@ -99,11 +103,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_checkboxControl: function(parentContainer, data) {
+	_checkboxControl: function(parentContainer, data, builder) {
 		var checkbox = L.DomUtil.createWithId('input', data.id, parentContainer);
 		checkbox.type = 'checkbox';
 		var checkboxLabel = L.DomUtil.create('label', '', parentContainer);
-		checkboxLabel.innerHTML = data.text;
+		checkboxLabel.innerHTML = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
 
 		if (data.enabled == 'false')
@@ -112,10 +116,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_spinfieldControl: function(parentContainer, data) {
+	_spinfieldControl: function(parentContainer, data, builder) {
 		var spinfield = L.DomUtil.create('input', '', parentContainer);
 		spinfield.type = 'number';
-		spinfield.value = data.text;
+		spinfield.value = builder._cleanText(data.text);
 
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
@@ -123,9 +127,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_editControl: function(parentContainer, data) {
+	_editControl: function(parentContainer, data, builder) {
 		var edit = L.DomUtil.create('input', '', parentContainer);
-		edit.value = data.text;
+		edit.value = builder._cleanText(data.text);
 
 		if (data.enabled == 'false')
 			$(edit).attr('disabled', 'disabled');
@@ -133,9 +137,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_pushbuttonControl: function(parentContainer, data) {
+	_pushbuttonControl: function(parentContainer, data, builder) {
 		var pushbutton = L.DomUtil.create('button', '', parentContainer);
-		pushbutton.innerHTML = data.text;
+		pushbutton.innerHTML = builder._cleanText(data.text);
 
 		if (data.enabled == 'false')
 			$(pushbutton).attr('disabled', 'disabled');
@@ -143,9 +147,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_comboboxControl: function(parentContainer, data) {
+	_comboboxControl: function(parentContainer, data, builder) {
 		var listbox = L.DomUtil.create('select', '', parentContainer);
-		listbox.value = data.text;
+		listbox.value = builder._cleanText(data.text);
 
 		if (data.enabled == 'false')
 			$(listbox).attr('disabled', 'disabled');
@@ -153,9 +157,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_fixedtextControl: function(parentContainer, data) {
+	_fixedtextControl: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('p', '', parentContainer);
-		fixedtext.innerHTML = data.text;
+		fixedtext.innerHTML = builder._cleanText(data.text);
 
 		return false;
 	},
