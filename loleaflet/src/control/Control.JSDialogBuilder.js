@@ -7,9 +7,11 @@
 /* global $ */
 L.Control.JSDialogBuilder = L.Control.extend({
 
-	/* Handler is a function which takes two parameters:
+	/* Handler is a function which takes three parameters:
 	 * parentContainer - place where insert the content
 	 * data - data of a control under process
+	 * builder - current builder reference
+	 *
 	 * returns boolean: true if children should be processed
 	 * and false otherwise
 	 */
