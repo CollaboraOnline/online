@@ -56,6 +56,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_onMobileWizard: function(data) {
 		if (data) {
 			this._isActive = true;
+			this._currentDepth = 0;
 
 			this._showWizard();
 			this._hideKeyboard();
