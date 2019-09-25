@@ -116,13 +116,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_spinfieldControl: function(parentContainer, data, builder) {
+	_spinfieldControl: function(parentContainer, data) {
 		var spinfield = L.DomUtil.create('input', '', parentContainer);
 		spinfield.type = 'number';
-		spinfield.value = builder._cleanText(data.text);
 
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
+
+		if (data.children && data.children.length) {
+			// TODO: units
+			$(spinfield).attr('value', data.children[0].text.replace('%', ''));
+		}
 
 		return false;
 	},
