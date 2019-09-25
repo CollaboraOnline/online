@@ -1976,7 +1976,7 @@ function onUpdatePermission(e) {
 	}
 
 	var spreadsheetButtons = ['insertsheet'];
-	var formulaBarButtons = ['sum', 'function'];
+	var formulaBarButtons = ['functiondialog', 'sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
 	var toolbarDownButtons = ['next', 'prev'];
 	if (e.perm === 'edit') {
