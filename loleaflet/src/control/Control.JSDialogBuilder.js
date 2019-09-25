@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ */
+/* global $ w2ui */
 L.Control.JSDialogBuilder = L.Control.extend({
 
 	/* Handler is a function which takes three parameters:
@@ -16,6 +16,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	 * and false otherwise
 	 */
 	_controlHandlers: {},
+	_toolitemHandlers: {},
 
 	_currentDepth: 0,
 
@@ -35,8 +36,26 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['borderwindow'] = this._containerHandler;
 		this._controlHandlers['control'] = this._containerHandler;
 		this._controlHandlers['scrollbar'] = this._ignoreHandler;
-		this._controlHandlers['toolbox'] = this._ignoreHandler;
+		this._controlHandlers['toolbox'] = this._containerHandler;
+		this._controlHandlers['toolitem'] = this._toolitemHandler;
+
+		this._toolitemHandlers['.uno:SelectWidth'] = this._ignoreHandler;
+		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
+
 		this._currentDepth = 0;
+	},
+
+	_toolitemHandler: function(parentContainer, data, builder) {
+		if (data.command) {
+			var handler = builder._toolitemHandlers[data.command];
+
+			if (handler)
+				handler(parentContainer, data, this);
+			else
+				console.warn('Unsupported toolitem type: \"' + data.command + '\"');
+		}
+
+		return false;
 	},
 
 	_cleanText: function(text) {
@@ -178,6 +197,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_fixedtextControl: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('p', '', parentContainer);
 		fixedtext.innerHTML = builder._cleanText(data.text);
+
+		return false;
+	},
+
+	_colorControl: function(parentContainer, data) {
+		var colorContainer = L.DomUtil.create('div', '', parentContainer);
+
+		if (data.enabled == 'false')
+			$(colorContainer).attr('disabled', 'disabled');
+
+		var toolbar = $(colorContainer);
+		var items = [{type: 'color',  id: 'color'}];
+		toolbar.w2toolbar({
+			name: 'colorselector',
+			tooltip: 'bottom',
+			items: items
+		});
+		w2ui['colorselector'].set('color', {color: '#ff0033'});
 
 		return false;
 	},
