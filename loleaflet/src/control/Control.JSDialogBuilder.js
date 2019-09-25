@@ -154,6 +154,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled == 'false')
 			$(listbox).attr('disabled', 'disabled');
 
+		for (var index in data.entries) {
+			var option = L.DomUtil.create('option', '', listbox);
+			option.innerHTML = data.entries[index];
+		}
+
 		return false;
 	},
 
