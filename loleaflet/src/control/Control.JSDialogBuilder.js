@@ -29,6 +29,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['listbox'] = this._comboboxControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
+		this._controlHandlers['grid'] = this._gridHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['container'] = this._containerHandler;
@@ -67,6 +68,66 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_ignoreHandler: function() {
+		return false;
+	},
+
+	_getGridColumns: function(children) {
+		var columns = 0;
+		for (var index in children) {
+			if (parseInt(children[index].left) > columns)
+				columns = parseInt(children[index].left);
+		}
+		return columns + 1;
+	},
+
+	_getGridRows: function(children) {
+		var rows = 0;
+		for (var index in children) {
+			if (parseInt(children[index].top) > rows)
+				rows = parseInt(children[index].top);
+		}
+		return rows + 1;
+	},
+
+	_getGridChild: function(children, row, col) {
+		for (var index in children) {
+			if (parseInt(children[index].top) == row
+				&& parseInt(children[index].left) == col)
+				return children[index];
+		}
+		return null;
+	},
+
+	_gridHandler: function(parentContainer, data, builder) {
+		var columns = builder._getGridColumns(data.children);
+		var rows = builder._getGridRows(data.children);
+		var index = 0;
+
+		var table = L.DomUtil.create('table', '', parentContainer);
+		for (var row = 0; row < rows; row++) {
+			var tr = L.DomUtil.create('tr', '', table);
+			for (var col = 0; col < columns; col++) {
+				var td = L.DomUtil.create('td', '', tr);
+				var child = builder._getGridChild(data.children, row, col);
+
+				if (child) {
+					var childObject = null;
+					if (child.type == 'container')
+						childObject = L.DomUtil.create('table', '', td);
+					else
+						childObject = td;
+
+					builder.build(childObject, [child], data.type);
+					index++;
+				}
+
+				if (index > data.children.length) {
+					console.warn('index > data.children.length');
+					return false;
+				}
+			}
+		}
+
 		return false;
 	},
 
@@ -171,6 +232,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_comboboxControl: function(parentContainer, data, builder) {
+		if (!data.entries || data.entries.length == 0)
+			return false;
+
 		var listbox = L.DomUtil.create('select', '', parentContainer);
 		listbox.value = builder._cleanText(data.text);
 
@@ -219,9 +283,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	build: function(parent, data, currentIsContainer, currentIsVertival, columns) {
+	build: function(parent, data, currentType, currentIsVertival) {
 		var currentInsertPlace = parent;
 		var currentHorizontalRow = parent;
+		var currentIsContainer = currentType == 'container';
 
 		if (currentIsContainer && !currentIsVertival)
 			currentHorizontalRow = L.DomUtil.create('tr', '', parent);
@@ -232,18 +297,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var processChildren = true;
 
 			if (currentIsContainer) {
-				var horizontalOverflow = (childIndex > 0 && columns && (childIndex % columns == 0));
-				var newRow = currentIsVertival || horizontalOverflow;
-				if (newRow) {
+				if (currentIsVertival) {
 					currentHorizontalRow = L.DomUtil.create('tr', '', parent);
 					currentInsertPlace = L.DomUtil.create('td', '', currentHorizontalRow);
 				} else
 					currentInsertPlace = L.DomUtil.create('td', '', currentHorizontalRow);
 			}
 
-			var childIsContainer = (childType == 'container' || childType == 'borderwindow') && childData.children.length > 1;
+			var childIsContainer = (childType == 'container' || childType == 'borderwindow')
+				&& childData.children.length > 1;
 			var childIsVertical = childData.vertical == 'true';
-			var childColumns = childData.cols;
 
 			var childObject = null;
 			if (childIsContainer && childType != 'borderwindow')
@@ -259,7 +322,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				console.warn('Unsupported control type: \"' + childType + '\"');
 
 			if (processChildren && childData.children != undefined)
-				this.build(childObject, childData.children, childIsContainer, childIsVertical, childColumns);
+				this.build(childObject, childData.children, childType, childIsVertical);
 		}
 	}
 });
