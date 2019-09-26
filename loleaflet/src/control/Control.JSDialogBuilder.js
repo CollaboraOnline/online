@@ -180,6 +180,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled == 'false')
 			$(radiobutton).attr('disabled', 'disabled');
 
+		if (data.checked == 'true')
+			$(radiobutton).attr('checked', 'checked');
+
 		return false;
 	},
 
@@ -192,6 +195,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.enabled == 'false')
 			$(checkbox).attr('disabled', 'disabled');
+
+		if (data.checked == 'true')
+			$(checkbox).attr('checked', 'checked');
 
 		return false;
 	},
@@ -284,8 +290,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_lineWidthControl: function(parentContainer, data, builder) {
-		// TODO: send from the core
-		data.children = [ { text: '0.5' } ];
+		data.children = [ { text: '0.5' },
+							{ text: '0.8' },
+							{ text: '1.0' },
+							{ text: '1.5' },
+							{ text: '2.3' },
+							{ text: '3.0' },
+							{ text: '4.5' },
+							{ text: '6.0' } ];
 		builder._spinfieldControl(parentContainer, data, builder);
 	},
 
