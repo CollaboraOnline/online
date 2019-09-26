@@ -703,7 +703,7 @@ function createToolbar() {
 						e.item.html = undefined;
 					}});
 				}
-			}, hidden: true, desktop: true, mobile: false, tablet: false},
+			}, hidden: true, desktop: true, mobile: false, tablet: true},
 		{type: 'html', id: 'fonts',
 			html: '<select class="fonts-select"><option>Liberation Sans</option></select>',
 			onRefresh: function (edata) {
