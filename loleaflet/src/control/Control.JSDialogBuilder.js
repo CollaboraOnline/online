@@ -40,8 +40,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['toolbox'] = this._containerHandler;
 		this._controlHandlers['toolitem'] = this._toolitemHandler;
 
-		this._toolitemHandlers['.uno:SelectWidth'] = this._ignoreHandler;
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
 
 		this._currentDepth = 0;
 	},
@@ -51,7 +51,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var handler = builder._toolitemHandlers[data.command];
 
 			if (handler)
-				handler(parentContainer, data, this);
+				handler(parentContainer, data, builder);
 			else
 				console.warn('Unsupported toolitem type: \"' + data.command + '\"');
 		}
@@ -281,6 +281,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		w2ui['colorselector'].set('color', {color: '#ff0033'});
 
 		return false;
+	},
+
+	_lineWidthControl: function(parentContainer, data, builder) {
+		// TODO: send from the core
+		data.children = [ { text: '0.5' } ];
+		builder._spinfieldControl(parentContainer, data, builder);
 	},
 
 	build: function(parent, data, currentType, currentIsVertival) {
