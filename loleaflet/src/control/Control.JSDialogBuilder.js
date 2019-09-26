@@ -138,22 +138,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		sectionTitle.innerHTML = title;
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+		contentDiv.title = title;
 
 		builder._currentDepth++;
 		builder.build(contentDiv, [contentNode]);
 		builder._currentDepth--;
 
 		$(contentDiv).hide();
-		$(sectionTitle).click(function() {
-			var titles = '.ui-header.level-' + builder.wizard._currentDepth + '.mobile-wizard';
-
-			$(titles).hide('slide', { direction: 'left' }, 'fast', function() {});
-			$(contentDiv).show('slide', { direction: 'right' }, 'fast');
-
-			builder.wizard._currentDepth++;
-			builder.wizard._setTitle(title);
-			builder.wizard._inMainMenu = false;
-		});
+		$(sectionTitle).click(function() { builder.wizard.goLevelDown(contentDiv); });
 	},
 
 	_frameHandler: function(parentContainer, data, builder) {

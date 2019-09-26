@@ -21,18 +21,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_setupBackButton: function() {
 		var that = this;
 		var backButton = $('#mobile-wizard-back');
-		backButton.click(function() {
-			if (that._inMainMenu) {
-				that._hideWizard();
-				that._currentDepth = 0;
-			} else {
-				that._currentDepth--;
-				$('.ui-content.level-' + that._currentDepth + '.mobile-wizard').hide('slide', { direction: 'right' }, 'fast', function() {});
-				$('.ui-header.level-' + that._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
-				if (that._currentDepth == 0)
-					that._inMainMenu = true;
-			}
-		});
+		backButton.click(function() { that.goLevelUp(); });
 	},
 
 	_showWizard: function() {
@@ -47,6 +36,42 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_hideKeyboard: function() {
 		document.activeElement.blur();
+	},
+
+	getCurrentLevel: function() {
+		return this._currentDepth;
+	},
+
+	goLevelDown: function(contentToShow) {
+		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
+
+		$(titles).hide('slide', { direction: 'left' }, 'fast');
+		$(contentToShow).show('slide', { direction: 'right' }, 'fast');
+
+		this._currentDepth++;
+		this._setTitle(contentToShow.title);
+		this._inMainMenu = false;
+	},
+
+	goLevelUp: function() {
+		if (this._inMainMenu) {
+			this._hideWizard();
+			this._currentDepth = 0;
+		} else {
+			this._currentDepth--;
+
+			var parent = $('.ui-content.mobile-wizard:visible');
+			if (this._currentDepth > 0 && parent)
+				this._setTitle(parent.get(0).title);
+			else
+				this._setTitle('');
+
+			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide('slide', { direction: 'right' }, 'fast');
+			$('.ui-header.level-' + this._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
+
+			if (this._currentDepth == 0)
+				this._inMainMenu = true;
+		}
 	},
 
 	_setTitle: function(title) {
