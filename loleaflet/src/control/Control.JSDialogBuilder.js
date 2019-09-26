@@ -52,7 +52,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (handler)
 				handler(parentContainer, data, builder);
-			else
+			else if (data.text) {
+				builder._unoToolButton(parentContainer, data, builder);
+			} else
 				console.warn('Unsupported toolitem type: \"' + data.command + '\"');
 		}
 
@@ -271,6 +273,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_unoToolButton: function(parentContainer, data, builder) {
+		var button = L.DomUtil.create('button', '', parentContainer);
+		button.innerHTML = builder._cleanText(data.text);
+		$(button).click(function () {
+			builder.map.sendUnoCommand(data.command);
+		});
+
+		if (data.enabled == 'false')
+			$(button).attr('disabled', 'disabled');
+
+		return false;
+	},
+
 	_colorControl: function(parentContainer, data) {
 		var colorContainer = L.DomUtil.create('div', '', parentContainer);
 
@@ -349,5 +364,6 @@ L.control.jsDialogBuilder = function (options) {
 	var builder = new L.Control.JSDialogBuilder(options);
 	builder._setup();
 	builder.wizard = options.mobileWizard;
+	builder.map = options.map;
 	return builder;
 };

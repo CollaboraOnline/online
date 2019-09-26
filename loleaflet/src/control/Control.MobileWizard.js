@@ -11,6 +11,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_currentDepth: 0,
 
 	onAdd: function (map) {
+		this.map = map;
 		map.on('mobilewizard', this._onMobileWizard, this);
 		map.on('closemobilewizard', this._hideWizard, this);
 
@@ -64,7 +65,7 @@ L.Control.MobileWizard = L.Control.extend({
 			var content = $('#mobile-wizard-content');
 			content.empty();
 
-			L.control.jsDialogBuilder({'mobileWizard': this}).build(content.get(0), [data]);
+			L.control.jsDialogBuilder({mobileWizard: this, map: this.map}).build(content.get(0), [data]);
 		}
 	}
 });
