@@ -274,8 +274,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_unoToolButton: function(parentContainer, data, builder) {
-		var button = L.DomUtil.create('button', '', parentContainer);
-		button.innerHTML = builder._cleanText(data.text);
+		var button = null;
+
+		if (data.image) {
+			button = L.DomUtil.create('img', 'ui-content unobutton', parentContainer);
+			button.src = data.image;
+		} else {
+			button = L.DomUtil.create('button', '', parentContainer);
+			button.innerHTML = builder._cleanText(data.text);
+		}
 		$(button).click(function () {
 			builder.map.sendUnoCommand(data.command);
 		});
