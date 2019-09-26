@@ -40,10 +40,12 @@
 #endif
 
 // Logging in unit-tests go to cerr, for now at least.
-#define TST_LOG_NAME_BEGIN(NAME, X) do { std::cerr << NAME << "(@" << helpers::timeSinceTestStartMs() << "ms) " << X; } while (false)
+static std::mutex MutexLog;
+#define TST_LOG_MUTEX std::unique_lock<std::mutex> lock(MutexLog)
+#define TST_LOG_NAME_BEGIN(NAME, X) do { TST_LOG_MUTEX; std::cerr << NAME << "(@" << helpers::timeSinceTestStartMs() << "ms) " << X; } while (false)
 #define TST_LOG_BEGIN(X) TST_LOG_NAME_BEGIN(testname, X)
-#define TST_LOG_APPEND(X) do { std::cerr << X; } while (false)
-#define TST_LOG_END do { std::cerr << "| " << __FILE__ << ':' << __LINE__ << std::endl; } while (false)
+#define TST_LOG_APPEND(X) do { TST_LOG_MUTEX; std::cerr << X; } while (false)
+#define TST_LOG_END do { TST_LOG_MUTEX; std::cerr << "| " << __FILE__ << ':' << __LINE__ << std::endl; } while (false)
 #define TST_LOG_NAME(NAME, X) TST_LOG_NAME_BEGIN(NAME, X); TST_LOG_END
 #define TST_LOG(X) TST_LOG_NAME(testname, X)
 
