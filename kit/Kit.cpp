@@ -1530,6 +1530,7 @@ private:
 
         _loKitDocument->setView(viewId);
         _loKitDocument->registerCallback(nullptr, nullptr);
+        _loKit->registerCallback(nullptr, nullptr);
 
         int viewCount = _loKitDocument->getViewsCount();
         if (viewCount == 1)
