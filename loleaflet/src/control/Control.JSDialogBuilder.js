@@ -175,9 +175,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_radiobuttonControl: function(parentContainer, data, builder) {
-		var radiobutton = L.DomUtil.create('input', '', parentContainer);
-		radiobutton.type = 'radiobutton';
-		radiobutton.value = builder._cleanText(data.text);
+		var radiobutton = L.DomUtil.createWithId('input', data.id, parentContainer);
+		radiobutton.type = 'radio';
+
+		var radiobuttonLabel = L.DomUtil.create('label', '', parentContainer);
+		radiobuttonLabel.innerHTML = builder._cleanText(data.text);
+		radiobuttonLabel.for = data.id;
 
 		if (data.enabled == 'false')
 			$(radiobutton).attr('disabled', 'disabled');
