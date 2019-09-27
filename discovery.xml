@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <wopi-discovery>
     <net-zone name="external-http">
-        <app name="application/vnd.lotus-wordpro">
-            <action name="view" ext="lwp"/>
-        </app>
         <app name="image/svg+xml">
             <action name="view" ext="svg"/>
         </app>
