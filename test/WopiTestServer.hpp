@@ -41,7 +41,7 @@ private:
     std::string _fileContent;
 
     /// Last modified time of the file
-    Poco::Timestamp _fileLastModifiedTime;
+    std::chrono::system_clock::time_point _fileLastModifiedTime;
 
 protected:
     const std::string& getWopiSrc() const { return _wopiSrc; }
@@ -54,10 +54,10 @@ protected:
     void setFileContent(const std::string& fileContent)
     {
         _fileContent = fileContent;
-        _fileLastModifiedTime = Poco::Timestamp();
+        _fileLastModifiedTime = std::chrono::system_clock::now();
     }
 
-    const Poco::Timestamp& getFileLastModifiedTime() const { return _fileLastModifiedTime; }
+    const std::chrono::system_clock::time_point& getFileLastModifiedTime() const { return _fileLastModifiedTime; }
 
 public:
     WopiTestServer(std::string fileContent = "Hello, world")
@@ -126,7 +126,7 @@ protected:
             fileInfo->set("UserFriendlyName", "test");
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", Poco::DateTimeFormatter::format(Poco::DateTime(_fileLastModifiedTime), Poco::DateTimeFormat::ISO8601_FRAC_FORMAT));
+            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(_fileLastModifiedTime));
             fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
@@ -137,7 +137,7 @@ protected:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                "Last-Modified: " << Util::getHttpTime(_fileLastModifiedTime) << "\r\n"
                 "User-Agent: " WOPI_AGENT_STRING "\r\n"
                 "Content-Length: " << responseString.size() << "\r\n"
                 "Content-Type: " << mimeType << "\r\n"
@@ -160,7 +160,7 @@ protected:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                "Last-Modified: " << Util::getHttpTime(_fileLastModifiedTime) << "\r\n"
                 "User-Agent: " WOPI_AGENT_STRING "\r\n"
                 "Content-Length: " << _fileContent.size() << "\r\n"
                 "Content-Type: " << mimeType << "\r\n"
@@ -194,7 +194,7 @@ protected:
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                "Last-Modified: " << Util::getHttpTime(_fileLastModifiedTime) << "\r\n"
                 "User-Agent: " WOPI_AGENT_STRING "\r\n"
                 "Content-Length: " << content.size() << "\r\n"
                 "Content-Type: application/json\r\n"
@@ -214,9 +214,7 @@ protected:
             if (!wopiTimestamp.empty())
             {
 
-                const std::string fileModifiedTime =
-                    Poco::DateTimeFormatter::format(Poco::DateTime(_fileLastModifiedTime),
-                                                    Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
+                const std::string fileModifiedTime = Util::getIso8601FracformatTime(_fileLastModifiedTime);
                 if (wopiTimestamp != fileModifiedTime)
                 {
                     std::ostringstream oss;
@@ -242,7 +240,7 @@ protected:
             oss << "HTTP/1.1 200 OK\r\n"
                 "User-Agent: " WOPI_AGENT_STRING "\r\n"
                 "\r\n"
-                "{\"LastModifiedTime\": \"" << Poco::DateTimeFormatter::format(_fileLastModifiedTime, Poco::DateTimeFormat::ISO8601_FRAC_FORMAT) << "\" }";
+                "{\"LastModifiedTime\": \"" << Util::getIso8601FracformatTime(_fileLastModifiedTime) << "\" }";
 
             socket->send(oss.str());
             socket->shutdown();

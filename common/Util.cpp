@@ -784,6 +784,16 @@ namespace Util
         return time_now;
     }
 
+    std::string getHttpTime(std::chrono::system_clock::time_point time)
+    {
+        char http_time[64];
+        std::time_t time_c = std::chrono::system_clock::to_time_t(time);
+        std::tm time_tm = *std::gmtime(&time_c);
+        strftime(http_time, sizeof(http_time), "%a, %d %b %Y %T", &time_tm);
+
+        return http_time;
+    }
+
     size_t findInVector(const std::vector<char>& tokens, const char *cstring)
     {
         assert(cstring);

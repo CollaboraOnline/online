@@ -762,6 +762,12 @@ void WhiteBoxTests::testTime()
     oss.str(std::string());
     oss << t.time_since_epoch().count();
     CPPUNIT_ASSERT_EQUAL(first, oss.str());
+
+    t = std::chrono::system_clock::time_point();
+    CPPUNIT_ASSERT_EQUAL(std::string("Thu, 01 Jan 1970 00:00:00"), Util::getHttpTime(t));
+
+    t = std::chrono::system_clock::time_point(std::chrono::nanoseconds(1569592993495336798));
+    CPPUNIT_ASSERT_EQUAL(std::string("Fri, 27 Sep 2019 14:03:13"), Util::getHttpTime(t));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
