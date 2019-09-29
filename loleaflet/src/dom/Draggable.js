@@ -137,7 +137,7 @@ L.Draggable = L.Evented.extend({
 		L.DomEvent.preventDefault(e);
 
 		if (!this._moved) {
-			this.fire('dragstart');
+			this.fire('dragstart', {originalEvent: e});
 
 			this._moved = true;
 			this._startPos = L.DomUtil.getPosition(this._element).subtract(offset);
@@ -192,6 +192,7 @@ L.Draggable = L.Evented.extend({
 			L.Util.cancelAnimFrame(this._animRequest);
 
 			this.fire('dragend', {
+				originalEvent: e,
 				distance: this._newPos.distanceTo(this._startPos)
 			});
 		} else {
