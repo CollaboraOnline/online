@@ -89,6 +89,17 @@
 	cursor: row-resize;
 }
 
+.table-move-marker {
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 24px;
+	height: 24px;
+	background-image: url('images/table-move-marker.svg');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	cursor: col-resize;
+}
+
 body {
 	margin: 0;
 	overflow: hidden;

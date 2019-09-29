@@ -58,11 +58,11 @@ L.Handler.MarkerDrag = L.Handler.extend({
 		this._marker.fire('down', e);
 	},
 
-	_onDragStart: function () {
+	_onDragStart: function (e) {
 		this._marker
 		    .closePopup()
-		    .fire('movestart')
-		    .fire('dragstart');
+		    .fire('movestart', e)
+		    .fire('dragstart', e);
 	},
 
 	_onDrag: function (e) {
@@ -86,7 +86,7 @@ L.Handler.MarkerDrag = L.Handler.extend({
 
 	_onDragEnd: function (e) {
 		this._marker
-		    .fire('moveend')
+		    .fire('moveend', e)
 		    .fire('dragend', e);
 	},
 

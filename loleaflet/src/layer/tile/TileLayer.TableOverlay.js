@@ -8,6 +8,7 @@ L.TileLayer.include({
 		this._tableColumnMarkers = [];
 		this._tableRowMarkers = [];
 		this._tableMarkersDragged = false;
+		this._initMoveMarkers();
 		this._tableSelectionColumnMarkers = [];
 		this._tableSelectionRowMarkers = [];
 		this._selectionHeaderDistanceFromTable = 6;
@@ -16,6 +17,17 @@ L.TileLayer.include({
 	_convertPixelToTwips: function(pixel) {
 		var point = this._latLngToTwips(this._map.unproject(new L.Point(pixel, 0)));
 		return point.x;
+	},
+	_initMoveMarkers: function () {
+		this._tableMoveMarker = L.marker(new L.LatLng(0, 0), {
+			icon: L.divIcon({
+				className: 'table-move-marker',
+				iconSize: null
+			}),
+			draggable: true
+		});
+
+		this._tableMoveMarker.on('dragstart drag dragend', this._onTableMoveMarkerDrag, this);
 	},
 	_setMarkerPosition: function(marker) {
 		var point = this._twipsToLatLng(marker._positionTwips, this._map.getZoom());
@@ -108,6 +120,8 @@ L.TileLayer.include({
 		}
 		this._tableSelectionRowMarkers = [];
 
+		this._map.removeLayer(this._tableMoveMarker);
+
 		// Create markers
 		if (this._currentTableData.rows && this._currentTableData.rows.entries.length > 0 && this._currentTableData.columns && this._currentTableData.columns.entries.length > 0) {
 			this._tablePositionColumnOffset = parseInt(this._currentTableData.columns.tableOffset);
@@ -146,7 +160,6 @@ L.TileLayer.include({
 			this._addSelectionMarkers('column', columnPositions, firstRowPosition, lastRowPosition);
 
 			rowPositions.push(parseInt(this._currentTableData.rows.left));
-
 			for (i = 0; i < this._currentTableData.rows.entries.length; i++) {
 				entry = this._currentTableData.rows.entries[i];
 				rowPositions.push(parseInt(entry.position));
@@ -162,9 +175,28 @@ L.TileLayer.include({
 			this._tableRowMarkers.push(markerX);
 
 			this._addSelectionMarkers('row', rowPositions, firstColumnPosition, lastColumnPosition);
+
+			if (this._map.getDocType() === 'presentation' && this._currentTableData.rectangle) {
+				var topLeftTwips = new L.Point(parseInt(this._currentTableData.rectangle.x), parseInt(this._currentTableData.rectangle.y));
+				var offset = new L.Point(parseInt(this._currentTableData.rectangle.width), parseInt(this._currentTableData.rectangle.height));
+				var bottomRightTwips = topLeftTwips.add(offset);
+
+				var tableRectangle = new L.LatLngBounds(
+						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+				this._map.addLayer(this._tableMoveMarker);
+
+				var markerRect;
+				var movePosition = new L.LatLng(tableRectangle.getNorth(), tableRectangle.getWest());
+				movePosition = this._map.project(movePosition);
+				markerRect = this._tableMoveMarker._icon.getBoundingClientRect();
+				movePosition = movePosition.subtract(new L.Point(markerRect.width + 4, markerRect.height + 4));
+				movePosition = this._map.unproject(movePosition);
+				this._tableMoveMarker.setLatLng(movePosition);
+			}
 		}
 	},
-	_onZoom: function () {
+	_onZoomForTableMarkers: function () {
 		this._updateTableMarkers();
 	},
 	_onTableSelectedMsg: function (textMsg) {
@@ -177,7 +209,7 @@ L.TileLayer.include({
 		this._currentTableData = message;
 		this._hasTableSelection = this._currentTableData.rows != null || this._currentTableData.columns != null;
 		this._updateTableMarkers();
-		this._map.on('zoomend', L.bind(this._onZoom, this));
+		this._map.on('zoomend', L.bind(this._onZoomForTableMarkers, this));
 	},
 	_addSelectionMarkers: function (type, positions, start, end) {
 		if (positions.length < 2)
@@ -300,6 +332,39 @@ L.TileLayer.include({
 
 		if (e.originalEvent)
 			e.originalEvent.preventDefault();
+	},
+	_createMouseEvent: function (type, inputEvent) {
+		var event = inputEvent;
+		if (inputEvent.type == 'touchstart' || inputEvent.type == 'touchmove') {
+			event = inputEvent.touches[0];
+		}
+		else if (inputEvent.type == 'touchend') {
+			event = inputEvent.changedTouches[0];
+		}
+		
+		var newEvent = document.createEvent('MouseEvents');
+		newEvent.initMouseEvent(
+			type, true, true, window, 1,
+			event.screenX, event.screenY,
+			event.clientX, event.clientY,
+			false, false, false, false, 0, null
+		);
+		return newEvent;
+	},
+	_onTableMoveMarkerDrag: function (event) {
+		var mouseEvent; 
+		if (event.type == 'dragstart') {
+			mouseEvent = this._createMouseEvent('mousedown', event.originalEvent);
+			this._graphicMarker._onDragStart(mouseEvent);
+		}
+		else if (event.type == 'drag') {
+			mouseEvent = this._createMouseEvent('mousemove', event.originalEvent);
+			this._graphicMarker._onDrag(mouseEvent);
+		}
+		else if (event.type == 'dragend') {
+			mouseEvent = this._createMouseEvent('mouseup', event.originalEvent);
+			this._graphicMarker._onDragEnd(mouseEvent);
+		}
 	}
 });
 
