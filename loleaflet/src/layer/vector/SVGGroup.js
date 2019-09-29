@@ -57,9 +57,6 @@ L.SVGGroup = L.Layer.extend({
 		if (!this._map || !this._dragShape || !this.dragging)
 			return;
 
-		if (!this._map)
-			return;
-
 		this._moved = false;
 
 		if (!this.options.manualDrag) {
@@ -81,9 +78,6 @@ L.SVGGroup = L.Layer.extend({
 
 	_onDrag: function(evt) {
 		if (!this._map || !this._dragShape || !this.dragging)
-			return;
-
-		if (!this._map)
 			return;
 
 		if (!this._moved) {
