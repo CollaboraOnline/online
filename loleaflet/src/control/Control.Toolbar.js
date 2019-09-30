@@ -1432,7 +1432,8 @@ function onDocLayerInit() {
 
 		break;
 	case 'text':
-		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+		if (toolbarUp)
+			toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 			'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
 
@@ -1469,7 +1470,7 @@ function onDocLayerInit() {
 		break;
 	case 'presentation':
 		var presentationToolbar = w2ui['presentation-toolbar'];
-		if (!map['wopi'].HideExportOption) {
+		if (!map['wopi'].HideExportOption && presentationToolbar) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
 		if (!_inMobileMode()) {
@@ -1489,9 +1490,11 @@ function onDocLayerInit() {
 
 		// FALLTHROUGH intended
 	case 'drawing':
-		toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+		if (toolbarUp)
+			toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor');
-		statusbar.show('prev', 'next');
+		if (statusbar)
+			statusbar.show('prev', 'next');
 
 		$('#presentation-toolbar').show();
 		break;
@@ -2109,7 +2112,7 @@ function onUpdatePermission(e) {
 			$('#toolbar-down').hide();
 			switch (map._docLayer._docType) {
 			case 'text':
-				$('#document-container').css('bottom', '35px');
+				$('#document-container').css('bottom', '0px');
 				break;
 			case 'spreadsheet':
 				$('#document-container').css('bottom', '35px');
@@ -2117,7 +2120,7 @@ function onUpdatePermission(e) {
 				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
-				$('#document-container').css('bottom', '35px');
+				$('#document-container').css('bottom', '0px');
 				break;
 			}
 		}
