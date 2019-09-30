@@ -2141,7 +2141,7 @@ protected:
         }
         else if (tokens[0] == "exit")
         {
-            LOG_TRC("Setting TerminationFlag due to 'exit' command from parent.");
+            LOG_INF("Setting TerminationFlag due to 'exit' command from parent.");
             SigUtil::getTerminationFlag() = true;
             document.reset();
         }

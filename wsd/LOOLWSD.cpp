@@ -1574,6 +1574,7 @@ void PrisonerPoll::wakeupHook()
                 // block until the replay finishes
                 replayThread->join();
 
+                LOG_INF("Setting TerminationFlag");
                 SigUtil::getTerminationFlag() = true;
             }
 #endif
