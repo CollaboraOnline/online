@@ -206,7 +206,7 @@ namespace Log
         if (id != std::thread::id())
         {
             std::ostringstream os;
-            os << std::hex << "0x" << id << std::dec;
+            os << std::hex << "0x" << id;
             return os.str();
         }
 

@@ -1540,6 +1540,7 @@ void PrisonerPoll::wakeupHook()
                 // block until the replay finishes
                 replayThread->join();
 
+                LOG_WRN("Setting TerminationFlag");
                 TerminationFlag = true;
             }
 #endif

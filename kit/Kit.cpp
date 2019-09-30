@@ -2069,7 +2069,7 @@ protected:
         }
         else if (tokens[0] == "exit")
         {
-            LOG_TRC("Setting TerminationFlag due to 'exit' command from parent.");
+            LOG_WRN("Setting TerminationFlag due to 'exit' command from parent.");
             TerminationFlag = true;
             document.reset();
         }
@@ -2438,7 +2438,7 @@ void lokit_main(
 #ifndef MOBILEAPP
             if (document && document->purgeSessions() == 0)
             {
-                LOG_INF("Last session discarded. Setting TerminationFlag");
+                LOG_WRN("Last session discarded. Setting TerminationFlag");
                 TerminationFlag = true;
             }
 #endif
