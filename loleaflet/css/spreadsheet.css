@@ -74,7 +74,8 @@
 }
 
 #spreadsheet-row-column-frame.readonly {
-        top: 36px;
+		top: 36px;
+		bottom: 0px;
 }
 
 #spreadsheet-row-column-frame.tablet {

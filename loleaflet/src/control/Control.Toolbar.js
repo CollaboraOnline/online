@@ -2010,23 +2010,25 @@ function onUpdatePermission(e) {
 			});
 		}
 
-		presentationButtons.forEach(function(id) {
-			if (id === 'deletepage') {
-				var itemState = map['stateChangeHandler'].getItemValue('.uno:DeletePage');
-			} else if (id === 'insertpage') {
-				itemState = map['stateChangeHandler'].getItemValue('.uno:InsertPage');
-			} else if (id === 'duplicatepage') {
-				itemState = map['stateChangeHandler'].getItemValue('.uno:DuplicatePage');
-			} else {
-				itemState = 'enabled';
-			}
+		if (toolbar) {
+			presentationButtons.forEach(function(id) {
+				if (id === 'deletepage') {
+					var itemState = map['stateChangeHandler'].getItemValue('.uno:DeletePage');
+				} else if (id === 'insertpage') {
+					itemState = map['stateChangeHandler'].getItemValue('.uno:InsertPage');
+				} else if (id === 'duplicatepage') {
+					itemState = map['stateChangeHandler'].getItemValue('.uno:DuplicatePage');
+				} else {
+					itemState = 'enabled';
+				}
 
-			if (itemState === 'enabled') {
-				toolbar.enable(id);
-			} else {
-				toolbar.disable(id);
-			}
-		});
+				if (itemState === 'enabled') {
+					toolbar.enable(id);
+				} else {
+					toolbar.disable(id);
+				}
+			});
+		}
 
 		toolbar = w2ui['actionbar'];
 		if (toolbar) {
@@ -2041,15 +2043,15 @@ function onUpdatePermission(e) {
 			$('#toolbar-down').show();
 			switch (map._docLayer._docType) {
 			case 'text':
-				$('#document-container').css('bottom', '33px');
+				$('#document-container').css('bottom', '35px');
 				break;
 			case 'spreadsheet':
-				$('#document-container').css('bottom', '68px'); // FIXME this and spreadsheet-row-column-frame are supposed to be the same, but are not
-				$('#spreadsheet-row-column-frame').css('bottom', '65px');
+				$('#document-container').css('bottom', '68px');
+				$('#spreadsheet-row-column-frame').css('bottom', '68px');
 				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
-				$('#document-container').css('bottom', '33px');
+				$('#document-container').css('bottom', '35px');
 				break;
 			}
 		}
@@ -2098,15 +2100,15 @@ function onUpdatePermission(e) {
 			$('#toolbar-down').hide();
 			switch (map._docLayer._docType) {
 			case 'text':
-				$('#document-container').css('bottom', '0');
+				$('#document-container').css('bottom', '35px');
 				break;
 			case 'spreadsheet':
 				$('#document-container').css('bottom', '35px');
-				$('#spreadsheet-row-column-frame').css('bottom', '0');
+				$('#spreadsheet-row-column-frame').css('bottom', '68px');
 				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
-				$('#document-container').css('bottom', '0');
+				$('#document-container').css('bottom', '35px');
 				break;
 			}
 		}

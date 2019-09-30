@@ -165,6 +165,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 			}
 		});
 
+		map.on('updatepermission', window.onUpdatePermission);
 	},
 
 	onAnnotationModify: function (annotation) {
