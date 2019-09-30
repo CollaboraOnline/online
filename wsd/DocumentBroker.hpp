@@ -240,9 +240,6 @@ public:
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
 
-    /// Loads a document from the public URI into the jail.
-    bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
-    bool isLoaded() const { return _isLoaded; }
     void setLoaded();
 
     bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
@@ -317,8 +314,6 @@ public:
                                    const std::shared_ptr<ClientSession>& session);
     void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
     void cancelTileRequests(const std::shared_ptr<ClientSession>& session);
-    void handleTileResponse(const std::vector<char>& payload);
-    void handleTileCombinedResponse(const std::vector<char>& payload);
 
     enum ClipboardRequest {
         CLIP_REQUEST_SET,
@@ -343,25 +338,12 @@ public:
     /// Ask the document broker to close. Makes sure that the document is saved.
     void closeDocument(const std::string& reason);
 
-    /// Called by the ChildProcess object to notify
-    /// that it has terminated on its own.
-    /// This happens either when the child exists
-    /// or upon failing to process an incoming message.
-    void childSocketTerminated();
-
     /// Get the PID of the associated child process
     Poco::Process::PID getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
 
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
-    std::unique_lock<std::mutex> getDeferredLock() { return std::unique_lock<std::mutex>(_mutex, std::defer_lock); }
 
     void updateLastActivityTime();
-
-    std::size_t getIdleTimeSecs() const
-    {
-        const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
-        return std::chrono::duration_cast<std::chrono::seconds>(duration).count();
-    }
 
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const std::string& sessionId, bool dontTerminateEdit = true,
@@ -381,6 +363,28 @@ public:
     std::vector<std::shared_ptr<ClientSession>> getSessionsTestOnlyUnsafe();
 
 private:
+
+    /// Loads a document from the public URI into the jail.
+    bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
+    bool isLoaded() const { return _isLoaded; }
+
+    std::size_t getIdleTimeSecs() const
+    {
+        const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
+        return std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+    }
+
+    std::unique_lock<std::mutex> getDeferredLock() { return std::unique_lock<std::mutex>(_mutex, std::defer_lock); }
+
+    /// Called by the ChildProcess object to notify
+    /// that it has terminated on its own.
+    /// This happens either when the child exists
+    /// or upon failing to process an incoming message.
+    void childSocketTerminated();
+    void handleTileResponse(const std::vector<char>& payload);
+    void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
+    void handleTileCombinedResponse(const std::vector<char>& payload);
+    void handleDialogRequest(const std::string& dialogCmd);
 
     /// Shutdown all client connections with the given reason.
     void shutdownClients(const std::string& closeReason);
