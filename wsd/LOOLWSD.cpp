@@ -1567,10 +1567,10 @@ void PrisonerPoll::wakeupHook()
 #endif
         }
     }
-#endif
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
     if (docBrokersLock.try_lock())
         cleanupDocBrokers();
+#endif
 }
 
 #if !MOBILEAPP

@@ -340,11 +340,9 @@ void DocumentBroker::pollThread()
             last30SecCheckTime = std::chrono::steady_clock::now();
         }
 
-        if (false)
-            ;
 #if !MOBILEAPP
         // Remove idle documents after 1 hour.
-        else if ((isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs))
+        if ((isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs))
         {
             // Stop if there is nothing to save.
             LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey() << "] to kill.");
@@ -354,13 +352,13 @@ void DocumentBroker::pollThread()
                 stop("idle");
             }
         }
-#endif
         else if (_sessions.empty() && (isLoaded() || _markToDestroy))
         {
             // If all sessions have been removed, no reason to linger.
             LOG_INF("Terminating dead DocumentBroker for docKey [" << getDocKey() << "].");
             stop("dead");
         }
+#endif
     }
 
     LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
