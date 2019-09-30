@@ -39,6 +39,9 @@ global.mode = {
 var nUsers, oneUser, noUser;
 
 function _updateVisibilityForToolbar(toolbar) {
+	if (!toolbar)
+		return;
+
 	var isDesktop = _inDesktopMode();
 	var isMobile = _inMobileMode();
 	var isTablet = _inTabletMode();
@@ -1358,20 +1361,24 @@ function onDocLayerInit() {
 
 	switch (docType) {
 	case 'spreadsheet':
-		toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
+		if (toolbarUp) {
+			toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
 			'numberformatcurrency', 'numberformatpercent',
 			'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
 			'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
-		toolbarUp.remove('styles');
+			toolbarUp.remove('styles');
+		}
 
-		statusbar.remove('prev', 'next', 'prevnextbreak');
+		if (statusbar) {
+			statusbar.remove('prev', 'next', 'prevnextbreak');
 
-		statusbar.set('zoom', {
-			items: [
-				{ id: 'zoom100', text: '100%', scale: 10},
-				{ id: 'zoom200', text: '200%', scale: 14}
-			]
-		});
+			statusbar.set('zoom', {
+				items: [
+					{ id: 'zoom100', text: '100%', scale: 10},
+					{ id: 'zoom200', text: '200%', scale: 14}
+				]
+			});
+		}
 
 		if (!_inMobileMode()) {
 			statusbar.insert('left', [
@@ -1509,8 +1516,10 @@ function onDocLayerInit() {
 	}
 
 	updateUserListCount();
-	toolbarUp.refresh();
-	statusbar.refresh();
+	if (toolbarUp)
+		toolbarUp.refresh();
+	if (statusbar)
+		statusbar.refresh();
 
 	if (!window.ThisIsTheiOSApp && window.mode.isTablet()) {
 		map.hideMenubar();
@@ -2203,8 +2212,8 @@ function getUserItem(viewId, userName, extraInfo, color) {
 }
 
 function updateUserListCount() {
-	var userlistItem = w2ui['actionbar'].get('userlist');
-	if (userlistItem === null) {
+	var userlistItem = w2ui.actionbar && w2ui['actionbar'].get('userlist');
+	if (userlistItem == null) {
 		return;
 	}
 
@@ -2407,10 +2416,10 @@ function setupToolbar(e) {
 				w2utils.unlock(w2ui['actionbar'].box);
 			}
 		});
-
-		map.on('doclayerinit', onDocLayerInit);
-		map.on('updatepermission', onUpdatePermission);
 	}
+
+	map.on('doclayerinit', onDocLayerInit);
+	map.on('updatepermission', onUpdatePermission);
 	map.on('wopiprops', onWopiProps);
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
