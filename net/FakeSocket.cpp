@@ -102,7 +102,7 @@ void fakeSocketSetLoggingCallback(void (*callback)(const std::string&))
     loggingCallback = callback;
 }
 
-int fakeSocketSocket()
+static int fakeSocketAllocate()
 {
     std::vector<FakeSocketPair>& fds = getFds();
 
@@ -119,14 +119,21 @@ int fakeSocketSocket()
 
     result.fd[0] = i*2;
 
-    FAKESOCKET_LOG("FakeSocket Create #" << i*2 << flush());
-
     return i*2;
+}
+
+int fakeSocketSocket()
+{
+    const int result = fakeSocketAllocate();
+
+    FAKESOCKET_LOG("FakeSocket Create #" << result << flush());
+
+    return result;
 }
 
 int fakeSocketPipe2(int pipefd[2])
 {
-    pipefd[0] = fakeSocketSocket();
+    pipefd[0] = fakeSocketAllocate();
     assert(pipefd[0] >= 0);
 
     std::vector<FakeSocketPair>& fds = getFds();
