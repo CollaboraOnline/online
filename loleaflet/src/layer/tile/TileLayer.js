@@ -322,6 +322,24 @@ L.TileLayer = L.GridLayer.extend({
 		map.fire('statusindicator', {statusType: 'loleafletloaded'});
 	},
 
+	_createNewMouseEvent: function (type, inputEvent) {
+		var event = inputEvent;
+		if (inputEvent.type == 'touchstart' || inputEvent.type == 'touchmove') {
+			event = inputEvent.touches[0];
+		}
+		else if (inputEvent.type == 'touchend') {
+			event = inputEvent.changedTouches[0];
+		}
+		var newEvent = document.createEvent('MouseEvents');
+		newEvent.initMouseEvent(
+			type, true, true, window, 1,
+			event.screenX, event.screenY,
+			event.clientX, event.clientY,
+			false, false, false, false, 0, null
+		);
+		return newEvent;
+	},
+
 	clearAnnotations: function() {
 		console.debug('Implemented in child  classes');
 	},

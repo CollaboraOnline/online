@@ -333,36 +333,18 @@ L.TileLayer.include({
 		if (e.originalEvent)
 			e.originalEvent.preventDefault();
 	},
-	_createMouseEvent: function (type, inputEvent) {
-		var event = inputEvent;
-		if (inputEvent.type == 'touchstart' || inputEvent.type == 'touchmove') {
-			event = inputEvent.touches[0];
-		}
-		else if (inputEvent.type == 'touchend') {
-			event = inputEvent.changedTouches[0];
-		}
-		
-		var newEvent = document.createEvent('MouseEvents');
-		newEvent.initMouseEvent(
-			type, true, true, window, 1,
-			event.screenX, event.screenY,
-			event.clientX, event.clientY,
-			false, false, false, false, 0, null
-		);
-		return newEvent;
-	},
 	_onTableMoveMarkerDrag: function (event) {
 		var mouseEvent; 
 		if (event.type == 'dragstart') {
-			mouseEvent = this._createMouseEvent('mousedown', event.originalEvent);
+			mouseEvent = this._createNewMouseEvent('mousedown', event.originalEvent);
 			this._graphicMarker._onDragStart(mouseEvent);
 		}
 		else if (event.type == 'drag') {
-			mouseEvent = this._createMouseEvent('mousemove', event.originalEvent);
+			mouseEvent = this._createNewMouseEvent('mousemove', event.originalEvent);
 			this._graphicMarker._onDrag(mouseEvent);
 		}
 		else if (event.type == 'dragend') {
-			mouseEvent = this._createMouseEvent('mouseup', event.originalEvent);
+			mouseEvent = this._createNewMouseEvent('mouseup', event.originalEvent);
 			this._graphicMarker._onDragEnd(mouseEvent);
 		}
 	}
