@@ -2113,7 +2113,7 @@ function onUpdatePermission(e) {
 				break;
 			case 'spreadsheet':
 				$('#document-container').css('bottom', '35px');
-				$('#spreadsheet-row-column-frame').css('bottom', '68px');
+				$('#spreadsheet-row-column-frame').css('bottom', '35px');
 				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
