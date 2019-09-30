@@ -815,7 +815,7 @@ void TileCacheTests::testTileInvalidateWriterPage()
     int part = -1;
     CPPUNIT_ASSERT_MESSAGE("No part# in invalidatetiles message.",
                            LOOLProtocol::getTokenIntegerFromMessage(res, "part", part));
-    CPPUNIT_ASSERT_EQUAL(1, part);
+    CPPUNIT_ASSERT_EQUAL(0, part);
 }
 
 // This isn't yet used
