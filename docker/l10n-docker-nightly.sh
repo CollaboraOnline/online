@@ -81,7 +81,7 @@ cp -a libreoffice/instdir "$INSTDIR"/opt/libreoffice
 
 # build
 ( cd online && ./autogen.sh ) || exit 1
-( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/libreoffice/include --with-lo-path="$INSTDIR"/opt/libreoffice $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
+( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/libreoffice/include --with-lo-path=/opt/libreoffice $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
 ( cd online/loleaflet/po && ../../scripts/downloadpootle.sh )
 ( cd online/loleaflet && make l10n) || exit 1
 ( cd online && scripts/locorestrings.py "$BUILDDIR"/online "$BUILDDIR"/libreoffice/translations )

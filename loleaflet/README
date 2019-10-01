@@ -71,7 +71,7 @@ To see an example:
 
 * run loolwsd, like:
 
-    ./loolwsd --o:sys_template_path=${SYSTEMPLATE} --o:lo_template_path=${MASTER}/instdir --o:child_root_path=${ROOTFORJAILS}
+    ./loolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS}
 
 Note that this will, by default, set the loolwsd's file server's root to the parent directory of loolwsd,
 which means you can access all the files in loleaflet using /loleaflet/ path. It is advised to set

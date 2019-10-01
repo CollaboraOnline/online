@@ -506,29 +506,32 @@ AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
 lokit_msg="$LOKIT_PATH"
 
-LO_PATH="/usr/lib64/libreoffice"
+AC_MSG_CHECKING([for LibreOffice path])
+if test -n "$with_lo_path"; then
+    # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
+    LO_PATH="${with_lo_path%/}"
+    AC_MSG_RESULT([found])
+else
+    AC_MSG_RESULT([not found])
+    AC_MSG_ERROR([LibreOffice path must be configured: --with-lo-path])
+fi
+
 JAIL_PATH=not-set
 SYSTEMPLATE_PATH=not-set
 have_lo_path=false
 AC_MSG_CHECKING([whether to run tests against a LibreOffice])
-if test -n "$with_lo_path"; then
-   # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
-   LO_PATH="${with_lo_path%/}"
-   version_file="$with_lo_path/program/versionrc"
-   if test -f $version_file; then
-     JAILS_PATH="\${abs_top_builddir}/jails"
-     SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
-     have_lo_path=true
-     lo_msg="test against $LO_PATH"
-     AC_MSG_RESULT([yes])
-   else
-     lo_msg="no integration tests"
-     AC_MSG_RESULT([no])
-   fi
+version_file="$with_lo_path/program/versionrc"
+if test -f $version_file; then
+    JAILS_PATH="\${abs_top_builddir}/jails"
+    SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
+    have_lo_path=true
+    lo_msg="test against $LO_PATH"
+    AC_MSG_RESULT([yes])
 else
-   lo_msg="no integration tests"
-   AC_MSG_RESULT([no])
+    lo_msg="no integration tests"
+    AC_MSG_RESULT([no])
 fi
+
 AC_SUBST(LO_PATH)
 AC_DEFINE_UNQUOTED([LO_PATH],["$LO_PATH"],[Path to LibreOffice installation])
 AC_SUBST(JAILS_PATH)

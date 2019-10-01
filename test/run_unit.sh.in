@@ -88,7 +88,6 @@ if test "z$tst" == "z"; then
      echo "Executing external tests"
      ${trace} \
      ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
-                                 --o:lo_template_path="$lo_path" \
                                  --o:child_root_path="$jails_path" \
                                  --o:storage.filesystem[@allow]=true \
                                  --o:logging.level=trace \
@@ -128,7 +127,6 @@ else # newer unit tests.
     echo "Running $tst | $tst_log ...";
     if ${trace} \
        ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
-                                   --o:lo_template_path="$lo_path" \
                                    --o:child_root_path="$jails_path" \
                                    --o:storage.filesystem[@allow]=true \
                                    --o:logging.level=trace \
@@ -144,7 +142,6 @@ else # newer unit tests.
         echo "============================================================="
         echo "Test failed on unit: $tst re-run with:"
         echo "   $ gdb --args ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
-        echo "         --o:lo_template_path=\"$lo_path\" \\"
         echo "         --o:child_root_path=\"$jails_path\" \\"
         echo "         --o:storage.filesystem[@allow]=true \\"
         echo "         --o:logging.level=trace \\"

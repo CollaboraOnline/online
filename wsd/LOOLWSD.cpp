@@ -796,7 +796,6 @@ void LOOLWSD::initialize(Application& self)
             { "child_root_path", "jails" },
             { "file_server_root_path", "loleaflet/.." },
             { "lo_jail_subpath", "lo" },
-            { "lo_template_path", LO_PATH },
             { "logging.anonymize.filenames", "false" }, // Deprecated.
             { "logging.anonymize.usernames", "false" }, // Deprecated.
             // { "logging.anonymize.anonymize_user_data", "false" }, // Do not set to fallback on filename/username.
@@ -1056,7 +1055,7 @@ void LOOLWSD::initialize(Application& self)
 #endif
 
     SysTemplate = getPathFromConfig("sys_template_path");
-    LoTemplate = getPathFromConfig("lo_template_path");
+    LoTemplate = LO_PATH;
     ChildRoot = getPathFromConfig("child_root_path");
     ServerName = config().getString("server_name");
 
