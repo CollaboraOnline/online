@@ -577,7 +577,9 @@ L.Control.Menubar = L.Control.extend({
 		});
 		$('#main-menu').attr('tabindex', 0);
 
-		if (this._map._permission !== 'readonly') {
+		// The _createFileIcon function shows the Collabora logo in the iOS app case, no
+		// need to delay that until the document has been made editable.
+		if (window.ThisIsTheiOSApp || this._map._permission !== 'readonly') {
 			this._createFileIcon();
 		}
 	},
