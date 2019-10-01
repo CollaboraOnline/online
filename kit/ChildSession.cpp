@@ -885,8 +885,11 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
     NSArray<NSString *> *pathComponents = [[NSURL URLWithString:[NSString stringWithUTF8String:getDocURL().c_str()]] pathComponents];
     NSString *baseName = [[pathComponents lastObject] stringByDeletingPathExtension];
     NSURL *documentDirectory = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
-    NSURL *pdfURL = [documentDirectory URLByAppendingPathComponent:[baseName stringByAppendingString:@".pdf"]];
-    getLOKitDocument()->saveAs([[pdfURL absoluteString] UTF8String],
+    NSString *dotFormat = [@"." stringByAppendingString:[NSString stringWithUTF8String:format.c_str()]];
+    NSURL *exportedURL = [documentDirectory URLByAppendingPathComponent:[baseName stringByAppendingString:dotFormat]];
+    LOG_TRC("Exporting as " << [[exportedURL absoluteString] UTF8String]);
+
+    getLOKitDocument()->saveAs([[exportedURL absoluteString] UTF8String],
                                format.empty() ? nullptr : format.c_str(),
                                filterOptions.empty() ? nullptr : filterOptions.c_str());
 #else
