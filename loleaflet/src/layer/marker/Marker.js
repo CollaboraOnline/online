@@ -113,6 +113,14 @@ L.Marker = L.Layer.extend({
 		return this;
 	},
 
+	getBounds: function () {
+		if (!this._map)
+			return null;
+		var topLeftPx = this._map.project(this._latlng);
+		var bottomRightPx = L.point(topLeftPx.x + this._icon.clientWidth, topLeftPx.y + this._icon.clientHeight);
+		return new L.LatLngBounds(this._latlng, this._map.unproject(bottomRightPx));
+	},
+
 	_initIcon: function () {
 		var options = this.options,
 		    classToAdd = 'leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide');

@@ -19,6 +19,9 @@ L.Control.MobileInput = L.Control.extend({
 			draggable: true
 		});
 
+		if (window.ThisIsTheiOSApp) {
+			this._cursorHandler.on('dragstart', this.onDragStart, this);
+		}
 		this._cursorHandler.on('dragend', this.onDragEnd, this);
 		this._currentKeysDown = {};
 		this._ignoreKeypress = false;
@@ -40,10 +43,17 @@ L.Control.MobileInput = L.Control.extend({
 		this._map.fire('input.press', this._cursorHandler.getLatLng());
 	},
 
+	onDragStart: function () {
+		this._map.fire('input.dragstart', this._cursorHandler.getLatLng());
+	},
+
 	onDragEnd: function () {
 		var mousePos = this._map._docLayer._latLngToTwips(this._cursorHandler.getLatLng());
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+		if (window.ThisIsTheiOSApp) {
+			this._map.fire('input.dragend', this._cursorHandler.getLatLng());
+		}
 	},
 
 	onGotFocus: function () {
@@ -73,6 +83,10 @@ L.Control.MobileInput = L.Control.extend({
 				this._hammer = undefined;
 			}
 			this._map.removeLayer(this._cursorHandler);
+		}
+		if (window.ThisIsTheiOSApp) {
+			// when the focus is lost remove the context toolbar
+			this._map.fire('input.blur');
 		}
 	},
 
@@ -184,6 +198,13 @@ L.Control.MobileInput = L.Control.extend({
 			if (handler.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 				docLayer._postKeyboardEvent('input', charCode, unoKeyCode);
 				this._lastInput = unoKeyCode;
+			}
+			if (window.ThisIsTheiOSApp) {
+				// when the user start typing remove the context toolbar
+				if (this._map.touchGesture._toolbar && this._map.touchGesture._toolbarAdded) {
+					this._map.touchGesture._toolbar.remove();
+					this._map.touchGesture._toolbarAdded = null;
+				}
 			}
 		}
 		else if (this._isMobileSafariOriOSApp &&

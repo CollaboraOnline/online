@@ -14,7 +14,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		CURSOR: 2,
 		GRAPHIC: 4,
 		MARKER: 8,
-		TABLE: 16
+		TABLE: 16,
+		TEXT_CURSOR_HANDLE: 32,
+		TEXT_SELECTION_HANDLE: 64
 	},
 
 	initialize: function (map) {
@@ -89,8 +91,14 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('pinchmove', L.bind(this._onPinch, this));
 		this._hammer.on('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.on('tripletap', L.bind(this._onTripleTap, this));
-		if (window.ThisIsTheiOSApp)
+		if (window.ThisIsTheiOSApp) {
 			this._map.on('input.press', this._onInputPressiOSOnly, this);
+			this._map.on('input.dragstart', this._onInputDragStartiOSOnly, this);
+			this._map.on('input.dragend', this._onInputDragEndiOSOnly, this);
+			this._map.on('input.blur', this._onInputLostFocusiOSOnly, this);
+			this._map.on('textselected', this._onTextSelectediOSOnly, this);
+			this._map.on('textselection.dragend', this._onTextSelectionHandleDragEndiOSOnly, this);
+		}
 		this._map.on('updatepermission', this._onPermission, this);
 		this._onPermission({perm: this._map._permission});
 	},
@@ -131,6 +139,16 @@ L.Map.TouchGesture = L.Handler.extend({
 				this._marker = this._map._docLayer._graphicMarker.transform.getMarker(layerPoint);
 			}
 
+			var cursorHandleBounds;
+			if (this._map._clipboardContainer._cursorHandler)
+				cursorHandleBounds = this._map._clipboardContainer._cursorHandler.getBounds();
+			var startTextSelectionHandleBounds;
+			if (this._map._docLayer._selectionHandles['start'])
+				startTextSelectionHandleBounds = this._map._docLayer._selectionHandles['start'].getBounds();
+			var endTextSelectionHandleBounds;
+			if (this._map._docLayer._selectionHandles['end'])
+				endTextSelectionHandleBounds = this._map._docLayer._selectionHandles['end'].getBounds();
+
 			if (this._marker) {
 				this._state = L.Map.TouchGesture.MARKER;
 			} else if (this._map._docLayer._graphicMarker && this._map._docLayer._graphicMarker.getBounds().contains(latlng)) {
@@ -140,9 +158,15 @@ L.Map.TouchGesture = L.Handler.extend({
 					this._state = L.Map.TouchGesture.GRAPHIC;
 			} else if (this._map._docLayer._cellCursor && this._map._docLayer._cellCursor.contains(latlng)) {
 				this._state = L.Map.TouchGesture.CURSOR;
+			} else if (cursorHandleBounds && cursorHandleBounds.padHorizontally(0.2).contains(latlng)) {
+				this._state = L.Map.TouchGesture.TEXT_CURSOR_HANDLE;
+			} else if ((startTextSelectionHandleBounds && startTextSelectionHandleBounds.padHorizontally(0.2).contains(latlng))
+				|| (endTextSelectionHandleBounds && endTextSelectionHandleBounds.padHorizontally(0.2).contains(latlng))) {
+				this._state = L.Map.TouchGesture.TEXT_SELECTION_HANDLE;
 			} else {
 				this._state = L.Map.TouchGesture.MAP;
 			}
+			// console.log('==> _onHammer: _state: ' + this._state);
 		}
 
 		if (e.isLast && this._state !== L.Map.TouchGesture.MAP) {
@@ -162,6 +186,30 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 	},
 
+	_addContextToolbar: function (commands, latlng, timeStamp) {
+		this._toolbar.remove();
+		this._toolbar.addTo(this._map);
+		this._toolbar.setEntries(commands);
+		this._toolbar.setPosition(latlng);
+		this._toolbarAdded = timeStamp;
+	},
+
+	_getTextSelectionNorthCenter: function () {
+		var result;
+		var selections = this._map._docLayer._selections;
+		if (selections) {
+			var layers = selections.getLayers();
+			if (layers && layers.length === 1) {
+				var mapBounds = this._map.getBounds();
+				var bounds = layers[0].getBounds();
+				bounds = mapBounds.intersection(bounds);
+				result = bounds.getCenter();
+				result.lat = bounds.getNorth();
+			}
+		}
+		return result;
+	},
+
 	_onPress: function (e) {
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
@@ -169,28 +217,81 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
+		var docLayer = this._map._docLayer;
+
 		if (window.ThisIsTheiOSApp) {
-			// console.log('==> ' + e.timeStamp);
-			if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
-				this._toolbar._pos = containerPoint;
-				// console.log('==> Adding context toolbar ' + e.timeStamp);
-				this._toolbar.addTo(this._map);
-				this._toolbarAdded = e.timeStamp;
-			} else if (this._toolbarAdded && e.timeStamp - this._toolbarAdded >= 1000) {
-				// console.log('==> Removing context toolbar ' + e.timeStamp);
-				this._toolbar.remove();
-				this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
-				// send right click to trigger context menus
-				this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
-				this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
+			// if user has pressed on cursor or text selection handles don't perform any action
+			// so far we skip also press actions on graphics and cell cursor
+			// we check focus in order to not get unexpected behavior with open dialogs
+			var hasPressedOnCellCursor = this._state === L.Map.TouchGesture.CURSOR;
+			if ((this._state === L.Map.TouchGesture.MAP && this._map.hasFocus()) || hasPressedOnCellCursor) {
+				// console.log('==> onPress: ' + e.timeStamp);
+				// no text selected
+				if (!docLayer.containsSelection(latlng) && !hasPressedOnCellCursor) {
+					// I see several press events generated for the same press action, try to skip the redundant ones.
+					if (!this._prevPressContainerPoint || !(this._contextToolbarTimeout && containerPoint.equals(this._prevPressContainerPoint))) {
+						// we can skip when the toolbar is already active and user has pressed at the text cursor position
+						if (this._toolbar.isVisible() && docLayer._visibleCursor.padHorizontally(0.2).contains(latlng))
+							return;
+						// place the text cursor where user pressed
+						docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
+						docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+
+						var that = this;
+						var timeout = 300;
+						var prevCursorPos = this._map.latLngToContainerPoint(docLayer._visibleCursor.getNorthEast());
+
+						var setContextToolbar = function (n) {
+							var toolbarUpdated = false;
+							// is the text cursor visible ?
+							if (docLayer._isCursorVisible && !docLayer._isEmptyRectangle(docLayer._visibleCursor) && docLayer._cursorMarker) {
+								var posLatLng = docLayer._visibleCursor.getNorthEast();
+								var pos = that._map.latLngToContainerPoint(posLatLng);
+								// do the client get the new cursor position ? if client doesn't, let's try to re-schedule this routine
+								if (!pos.equals(prevCursorPos) || !that._toolbar.isVisible()) {
+									var commands = 'TEXT_CURSOR_TOOLBAR';
+									// console.log('==> onPress: Adding context toolbar ' + Date.now() + ', call: ' + n);
+									that._addContextToolbar(commands, posLatLng, Date.now());
+									toolbarUpdated = true;
+								}
+							}
+							// if the toolbar has not been update re-schedule this routine
+							if (!toolbarUpdated && n < 5) {
+								n += 1;
+								that._contextToolbarTimeout = setTimeout(setContextToolbar, n * timeout, n);
+							} else {
+								that._contextToolbarTimeout = null;
+							}
+						};
+
+						if (this._contextToolbarTimeout)
+							clearTimeout(this._contextToolbarTimeout);
+						this._contextToolbarTimeout = setTimeout(setContextToolbar, timeout, 1);
+					}
+				// if some text is selected and the toolbar is active, the user wants to trigger the context menu
+				} else if (hasPressedOnCellCursor && !this._toolbar.isVisible()) {
+					if (!this._prevPressContainerPoint || !(this._toolbar.isVisible() && containerPoint.equals(this._prevPressContainerPoint))) {
+						var commands = 'TEXT_CURSOR_TOOLBAR';
+						// console.log('==> onPress: Adding context toolbar ' + e.timeStamp);
+						this._addContextToolbar(commands, latlng, e.timeStamp);
+					}
+				} else if (this._toolbar.isVisible() && e.timeStamp - this._toolbarAdded >= 1000) {
+					// console.log('==> onPress: Removing context toolbar ' + e.timeStamp);
+					this._toolbar.remove();
+					this._toolbarAdded = null;
+					this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
+					// send right click to trigger context menus
+					docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
+					docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
+				}
 			}
+			this._prevPressContainerPoint = containerPoint;
 		} else {
 			this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 			// send right click to trigger context menus
-			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
-			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
+			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
+			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
 		}
-
 		e.preventDefault();
 	},
 
@@ -201,8 +302,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		if (window.ThisIsTheiOSApp)
+		if (window.ThisIsTheiOSApp) {
 			this._toolbar.remove();
+			this._toolbarAdded = null;
+		}
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
@@ -217,8 +320,50 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
-		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+		var docLayer = this._map._docLayer;
+
+		if (window.ThisIsTheiOSApp) {
+			this._newTextSelection = false;
+		}
+		docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
+		docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+
+		if (window.ThisIsTheiOSApp) {
+			var that = this;
+			var timeout = 300;
+			var prevCursorPos = this._map.latLngToContainerPoint(docLayer._visibleCursor.getSouthWest());
+
+			var setContextToolbar = function (n) {
+				var canBeUpdated = false;
+				var commands, pos, posLatLng;
+				if (that._newTextSelection) {
+					commands = 'TEXT_SELECTION_TOOLBAR';
+					posLatLng = that._getTextSelectionNorthCenter() || latlng;
+					canBeUpdated = true;
+				} else if (docLayer._isCursorVisible && !docLayer._isEmptyRectangle(docLayer._visibleCursor) && docLayer._cursorMarker) {
+					posLatLng = docLayer._visibleCursor.getNorthEast();
+					pos = that._map.latLngToContainerPoint(posLatLng);
+					if (!pos.equals(prevCursorPos) || !that._toolbar.isVisible()) {
+						commands = 'TEXT_CURSOR_TOOLBAR';
+						canBeUpdated = true;
+					}
+				}
+				if (!canBeUpdated && n < 5) {
+					n += 1;
+					that._contextToolbarTimeout = setTimeout(setContextToolbar, n * timeout, n);
+				} else {
+					if (canBeUpdated) {
+						// console.log('==> onDoubleTap: Adding context toolbar ' + Date.now() + ', call: ' + n);
+						that._addContextToolbar(commands, posLatLng, Date.now());
+					}
+					that._contextToolbarTimeout = null;
+				}
+			};
+
+			if (this._contextToolbarTimeout)
+				clearTimeout(this._contextToolbarTimeout);
+			this._contextToolbarTimeout = setTimeout(setContextToolbar, timeout, 1);
+		}
 	},
 
 	_onTripleTap: function (e) {
@@ -238,6 +383,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
+
+		if (window.ThisIsTheiOSApp) {
+			this._toolbar.hide();
+		}
 
 		var originalCellCursor = this._map._docLayer._cellCursor;
 		var increaseRatio = 0.40;
@@ -310,6 +459,15 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
+		if (window.ThisIsTheiOSApp) {
+			if (this._toolbarAdded) {
+				// set to the previous position
+				this._toolbar.setPosition(this._toolbar._latlng);
+				this._toolbar.show();
+				this._toolbarAdded = Date.now();
+			}
+		}
+
 		if (this._state === L.Map.TouchGesture.MARKER) {
 			this._map._fireDOMEvent(this._map, e.srcEvent, 'mouseup');
 		} else if (this._state === L.Map.TouchGesture.GRAPHIC) {
@@ -327,6 +485,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	_onPinchStart: function (e) {
 		if (this._map.getDocType() !== 'spreadsheet') {
 			this._pinchStartCenter = {x: e.center.x, y: e.center.y};
+		}
+		if (window.ThisIsTheiOSApp) {
+			this._toolbar.hide();
 		}
 	},
 
@@ -349,16 +510,69 @@ L.Map.TouchGesture = L.Handler.extend({
 			var oldZoom = this._map.getZoom(),
 			    zoomDelta = this._zoom - oldZoom,
 			    finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
+			if (this._center) {
+				this._map._animateZoom(this._center, finalZoom, true, true);
+			}
+		}
 
-			this._map._animateZoom(this._center, finalZoom, true, true);
+		if (window.ThisIsTheiOSApp) {
+			if (this._toolbarAdded) {
+				this._toolbar.setPosition(this._toolbar._latlng);
+				this._toolbar.show();
+				this._toolbarAdded = Date.now();
+			}
 		}
 	},
 
 	_onInputPressiOSOnly: function (e) {
-		var pos = this._map.latLngToContainerPoint(e);
+		if (this._toolbar.isVisible())
+			return;
+		var posLatLng = this._map._docLayer._visibleCursor.getNorthEast() || L.latLng(e);
+		this._addContextToolbar('TEXT_CURSOR_TOOLBAR', posLatLng, Date.now());
+	},
+
+	_onInputDragStartiOSOnly: function () {
+		this._toolbar.hide();
+		// not set this._toolbarAdded to null it's checked on drag end
+	},
+
+	_onInputDragEndiOSOnly: function (e) {
+		if (!this._toolbarAdded)
+			return; // show the toolbar only if it was already active before starting dragging
+		var posLatLng = L.latLng(e);
+		this._toolbar.setPosition(posLatLng);
+		this._toolbar.show();
+		this._toolbarAdded = Date.now();
+	},
+
+	_onInputLostFocusiOSOnly: function () {
+		// remove the toolbar when a dialog pops up
+		if (!this._toolbar.isVisible())
+			return;
 		this._toolbar.remove();
-		this._toolbar._pos = pos;
-		this._toolbar.addTo(this._map);
+		this._toolbarAdded = null;
+	},
+
+	_onTextSelectionHandleDragEndiOSOnly: function (e) {
+		var posLatLng = L.latLng(e);
+		var that = this;
+		var timeout = 300;
+
+		var setContextToolbar = function (n) {
+			if (that._newTextSelection) {
+				posLatLng = that._getTextSelectionNorthCenter() || posLatLng;
+				that._addContextToolbar('TEXT_SELECTION_TOOLBAR', posLatLng, Date.now());
+			} else if (n < 5) {
+				n += 1;
+				setTimeout(setContextToolbar, n * timeout, n);
+			}
+		};
+
+		setTimeout(setContextToolbar, timeout, 1);
+	},
+
+	_onTextSelectediOSOnly: function () {
+		this._newTextSelection = true;
 	},
 
 	_constructFakeEvent: function (evt, type) {

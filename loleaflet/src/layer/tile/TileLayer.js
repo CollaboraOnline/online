@@ -211,6 +211,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._levels = {};
 		this._tiles = {};
 		this._tileCache = {};
+		this._internalCacheEmpty = true;
 		this._map._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		var that = this;
@@ -311,6 +312,9 @@ L.TileLayer = L.GridLayer.extend({
 
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
+			if (window.ThisIsTheiOSApp) {
+				this._selectionHandles[key].on('dragstart', this._onSelectionHandleDrag, this);
+			}
 		}
 
 		this._cellResizeMarkerStart.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
@@ -1287,6 +1291,9 @@ L.TileLayer = L.GridLayer.extend({
 				weight: 2,
 				opacity: 0.25});
 			this._selections.addLayer(selection);
+			if (window.ThisIsTheiOSApp) {
+				this._map.fire('textselected', null);
+			}
 			if (this._selectionContentRequest) {
 				clearTimeout(this._selectionContentRequest);
 			}
@@ -2198,6 +2205,19 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update dragged text selection.
 	_onSelectionHandleDrag: function (e) {
+		if (window.ThisIsTheiOSApp) {
+			if (e.type === 'dragstart') {
+				if (this._map.touchGesture._toolbar && this._map.touchGesture._toolbar.isVisible()) {
+					this._map.touchGesture._toolbar.remove();
+					this._map.touchGesture._toolbarAdded = null;
+				}
+				if (this._map.touchGesture._toolbar) {
+					this._map.touchGesture._newTextSelection = false;
+				}
+				return;
+			}
+		}
+
 		if (e.type === 'drag') {
 			e.target.isDragged = true;
 
@@ -2250,6 +2270,12 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (this._selectionHandles.end === e.target) {
 			this._postSelectTextEvent('end', aPos.x, aPos.y);
+		}
+
+		if (window.ThisIsTheiOSApp) {
+			if (e.type === 'dragend') {
+				this._map.fire('textselection.dragend', e.target.getLatLng());
+			}
 		}
 	},
 

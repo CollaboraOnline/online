@@ -448,15 +448,15 @@ body {
 		background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
 }
 
-.loleaflet-context-copy {
+.loleaflet-context-copy-button {
 		background: url('images/lc_copy.svg') no-repeat center !important;
 }
 
-.loleaflet-context-cut {
+.loleaflet-context-cut-button {
 		background: url('images/lc_cut.svg') no-repeat center !important;
 }
 
-.loleaflet-context-paste {
+.loleaflet-context-paste-button {
 		background: url('images/lc_paste.svg') no-repeat center !important;
 }
 
@@ -473,7 +473,7 @@ body {
 
 .loleaflet-ios-context-button {
 	background-color: black;
-	height: 40px;
+	height: 36px;
 }
 
 .loleaflet-ios-context-left {
@@ -482,15 +482,15 @@ body {
     border-bottom-left-radius: 10px;
 }
 
-.loleaflet-ios-context-first-and-middle-entry {
-    padding-left: 8px;
-    padding-right: 8px;
+.loleaflet-ios-context-first-entry, .loleaflet-ios-context-middle-entry {
+    padding-left: 10px;
+    padding-right: 10px;
     border-right: 1px solid white;
 }
 
 .loleaflet-ios-context-last-entry {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .loleaflet-ios-context-right {

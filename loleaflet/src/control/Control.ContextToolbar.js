@@ -7,100 +7,192 @@
 L.Control.ContextToolbar = L.Control.extend({
 	options: {
 		position: 'topleft',
-		item: ''
+	},
+
+	statics: {
+		TOOLBARS: {
+			'TEXT_CURSOR_TOOLBAR': ['Paste'],
+			'TEXT_SELECTION_TOOLBAR': ['Cut', 'Copy', 'Paste']
+		}
 	},
 
 	initialize: function (options) {
 		L.setOptions(this, options);
+
 	},
 
 	onAdd: function () {
+		// console.log('==> ContextToolbar.onAdd');
 		if (!this._container) {
 			this._initLayout();
 		}
-		if (this.options.item === 'paste') {
-			this._paste.style.display = '';
-			this._cut.style.display = 'none';
-			this._copy.style.display = 'none';
-		}
-
-		this._container.style.visibility = 'hidden';
+		this.hide();
 		return this._container;
 	},
 
 	onRemove: function () {
-		this._paste.style.display = '';
-		this._cut.style.display = '';
-		this._copy.style.display = '';
-		this.options.item = '';
+		if (this._bar)
+			// remove all previous entries
+			L.DomUtil.empty(this._bar);
+		this.hide();
+		this._latlng = null;
+		// console.log('==> ContextToolbar.onRemove');
+	},
+
+	isInitialized: function () {
+		return 	!!this._bar.firstChild;
+	},
+
+	isVisible: function () {
+		return 	this._container && this._container.style.visibility === '';
+	},
+
+	hide: function () {
+		this._container.style.visibility = 'hidden';
+	},
+
+	show: function () {
+		this._container.style.visibility = '';
+	},
+
+	_createEntry: function (platform, command, noText, pos) {
+		if (!command || command.length === 0)
+			return;
+
+		var tagTd = 'td';
+		var entryTag = command.toLowerCase();
+		var platformFragment = (platform && platform.length) ? '-' + platform + '-' : '';
+		pos = (pos && pos.length) ? pos : 'middle';
+		var flagEntryClass = 'loleaflet-context-' + entryTag; // this class is used only for retrieving the command type
+		var genericButtonClass = 'loleaflet' + platformFragment + 'context-button';
+		var specificButtonClass = 'loleaflet' + platformFragment + 'context-' + entryTag + '-button';
+		var posEntryClass = 'loleaflet' + platformFragment + 'context-' + pos + '-entry';
+		var classList = flagEntryClass + ' ' + genericButtonClass + ' ' + specificButtonClass + ' ' + posEntryClass;
+		var entry = L.DomUtil.create(tagTd, classList, this._bar);
+		if (!noText) {
+			// get locale name for the command
+			entry.innerHTML = _UNO('.uno:' + command);
+		}
+		var stopEvents = 'touchstart touchmove touchend mousedown mousemove mouseout mouseover mouseup mousewheel click scroll';
+
+		L.DomEvent.on(entry, stopEvents,  L.DomEvent.stopPropagation)
+			.on(entry, 'mousedown', this.onMouseDown, this)
+			.on(entry, 'mouseup', this.onMouseUp, this);
+
+		return entry;
+	},
+
+	_entryIs: function(name, entry) {
+		var flagEntryClass = 'loleaflet-context-' + name;
+		return L.DomUtil.hasClass(entry, flagEntryClass);
 	},
 
 	_initLayout: function () {
+		// create an empty toolbar, it will be populated with command entries later
 		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp)
 			this._container = L.DomUtil.create('div', 'loleaflet-ios-context-toolbar');
 		else
 			this._container = L.DomUtil.create('div', 'loleaflet-context-toolbar');
 
-		var tagTd = 'td',
-		    onUp = 'mouseup',
-		    onDown = 'mousedown',
-		    stopEvents = 'touchstart touchmove touchend mousedown mousemove mouseout mouseover mouseup mousewheel click scroll',
-		    container;
-
+		var container;
 		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp)
 			container = L.DomUtil.create('table', 'loleaflet-ios-context-table', this._container);
 		else
 			container = L.DomUtil.create('table', 'loleaflet-context-table', this._container);
 
-		var tbody = L.DomUtil.create('tbody', '', container),
-		    tr = L.DomUtil.create('tr', '', tbody);
-
-		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
-			this._leftroundedend = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-left', tr);
-			this._cut = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-first-and-middle-entry loleaflet-ios-context-cut', tr);
-			this._cut.innerHTML = _UNO('.uno:Cut');
-			this._copy = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-first-and-middle-entry loleaflet-ios-context-copy', tr);
-			this._copy.innerHTML = _UNO('.uno:Copy');
-			this._paste = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-last-entry loleaflet-ios-context-paste', tr);
-			this._paste.innerHTML = _UNO('.uno:Paste');
-			this._rightroundedend = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-right', tr);
-		}
-		else {
-			this._cut = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-cut', tr);
-			this._copy = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-copy', tr);
-			this._paste = L.DomUtil.create(tagTd, 'loleaflet-context-button loleaflet-context-paste', tr);
-		}
-		L.DomEvent.on(this._cut, stopEvents,  L.DomEvent.stopPropagation)
-			.on(this._cut, onDown, this.onMouseDown, this)
-			.on(this._cut, onUp, this.onMouseUp, this);
-		L.DomEvent.on(this._copy, stopEvents,  L.DomEvent.stopPropagation)
-			.on(this._copy, onDown, this.onMouseDown, this)
-			.on(this._copy, onUp, this.onMouseUp, this);
-		L.DomEvent.on(this._paste, stopEvents,  L.DomEvent.stopPropagation)
-			.on(this._paste, onDown, this.onMouseDown, this)
-			.on(this._paste, onUp, this.onMouseUp, this);
+		var tbody = L.DomUtil.create('tbody', '', container);
+		this._bar = L.DomUtil.create('tr', '', tbody);
 	},
 
 	onAdded: function () {
-		if (this._pos) {
+		this.show();
+	},
+
+	setEntries: function(commands) {
+		if (!this._bar)
+			return;
+
+		// commands is the name of a predefined toolbar ?
+		if (typeof commands === 'string') {
+			commands = L.Control.ContextToolbar.TOOLBARS[commands];
+			if (!commands)
+				return;
+		}
+
+		// remove all previous entries
+		L.DomUtil.empty(this._bar);
+
+		// check commands validity
+		var validCommands = [];
+		if (this._map && this._map._docLayer._internalCacheEmpty) {
+			for (var k = 0; k < commands.length; ++k) {
+				var cmd = commands[k];
+				if (cmd === 'Paste')
+					continue;
+				validCommands.push(cmd);
+			}
+		} else {
+			validCommands = commands;
+		}
+		if (!validCommands.length)
+			return;
+
+		var tagTd = 'td';
+		var platform = '';
+		var noText = true;
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
+			platform = 'ios';
+			noText = false;
+			this._leftroundedend = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-left', this._bar);
+		}
+
+		for (var i = 0; i < validCommands.length; ++i) {
+			var command = validCommands[i];
+			var pos;
+			if (i === validCommands.length - 1)
+				pos = 'last';
+			else if (i === 0)
+				pos = 'first';
+			else
+				pos = 'middle';
+			this._createEntry(platform, command, noText, pos);
+		}
+
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
+			this._rightroundedend = L.DomUtil.create(tagTd, 'loleaflet-ios-context-button loleaflet-ios-context-right', this._bar);
+		}
+	},
+
+	setPosition: function (latlng) {
+		// hint: the toolbar should be populated earlier than set up the position
+		if (this._map && this._bar && this.isInitialized() && latlng) {
+			this._latlng = latlng;
+			var pos = this._map.project(latlng);
 			var maxBounds = this._map.getPixelBounds();
 			var size = L.point(this._container.clientWidth,this._container.clientHeight);
-			this._pos._add(L.point(-size.x / 2, -size.y));
-			var bounds = new L.Bounds(this._pos, this._pos.add(size));
+			pos._add(L.point(-size.x / 2, -5 * size.y / 4));
+			var bounds = new L.Bounds(pos, pos.add(size));
 			if (!maxBounds.contains(bounds)) {
 				var offset = L.point(0, 0);
 				if (bounds.max.x > maxBounds.max.x) {
-					offset.x = size.x;
+					offset.x = bounds.max.x - maxBounds.max.x;
 				}
-
 				if (bounds.max.y > maxBounds.max.y) {
-					offset.y = size.y;
+					offset.y = bounds.max.y - maxBounds.max.y;
 				}
-				this._pos._subtract(offset);
+				pos._subtract(offset);
+				if (bounds.min.x < maxBounds.min.x) {
+					offset.x = maxBounds.min.x - bounds.min.x;
+				}
+				if (bounds.min.y < maxBounds.min.y) {
+					offset.y = maxBounds.min.y - bounds.min.y;
+				}
+				pos._add(offset);
 			}
-			L.DomUtil.setPosition(this._container, this._pos);
+			var containerPoint = this._map.latLngToContainerPoint(this._map.unproject(pos));
+			L.DomUtil.setPosition(this._container, containerPoint);
+			this.show();
 		}
-		this._container.style.visibility = '';
 	},
 
 	onMouseDown: function (e) {
@@ -111,17 +203,15 @@ L.Control.ContextToolbar = L.Control.extend({
 
 	onMouseUp: function (e) {
 		var target = e.target || e.srcElement;
-
-		if (L.DomUtil.hasClass(target, 'loleaflet-context-cut') ||
-		   L.DomUtil.hasClass(target, 'loleaflet-ios-context-cut')) {
+		if (this._entryIs('cut', target)) {
 			this._map._socket.sendMessage('uno .uno:Cut');
+			this._map._docLayer._internalCacheEmpty = false;
 		}
-		else if (L.DomUtil.hasClass(target, 'loleaflet-context-copy') ||
-			L.DomUtil.hasClass(target, 'loleaflet-ios-context-copy')) {
+		else if (this._entryIs('copy', target)) {
 			this._map._socket.sendMessage('uno .uno:Copy');
+			this._map._docLayer._internalCacheEmpty = false;
 		}
-		else if (L.DomUtil.hasClass(target, 'loleaflet-context-paste') ||
-			L.DomUtil.hasClass(target, 'loleaflet-ios-context-paste')) {
+		else if (this._entryIs('paste', target)) {
 			this._map._socket.sendMessage('uno .uno:Paste');
 		}
 

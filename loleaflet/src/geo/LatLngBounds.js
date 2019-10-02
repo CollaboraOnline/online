@@ -60,7 +60,7 @@ L.LatLngBounds.prototype = {
 		        new L.LatLng(ne.lat + heightBuffer, ne.lng + widthBuffer));
 	},
 
-	// extend the bounds by a percentage
+	// extend the bounds vertically by a percentage
 	padVertically: function (bufferRatio) { // (Number) -> LatLngBounds
 		var sw = this._southWest,
 		ne = this._northEast,
@@ -69,6 +69,17 @@ L.LatLngBounds.prototype = {
 		return new L.LatLngBounds(
 		        new L.LatLng(sw.lat - heightBuffer, sw.lng),
 		        new L.LatLng(ne.lat + heightBuffer, ne.lng));
+	},
+
+	// extend the bounds horizontally by a percentage
+	padHorizontally: function (bufferRatio) { // (Number) -> LatLngBounds
+		var sw = this._southWest,
+		ne = this._northEast,
+		widthBuffer = Math.abs(sw.lng - ne.lng) * bufferRatio;
+
+		return new L.LatLngBounds(
+		        new L.LatLng(sw.lat, sw.lng - widthBuffer),
+		        new L.LatLng(ne.lat, ne.lng + widthBuffer));
 	},
 
 	getCenter: function () { // -> LatLng
@@ -143,6 +154,21 @@ L.LatLngBounds.prototype = {
 		    lngIntersects = (ne2.lng >= sw.lng) && (sw2.lng <= ne.lng);
 
 		return latIntersects && lngIntersects;
+	},
+
+	intersection: function (bounds) { // (LatLngBounds)
+		bounds = L.latLngBounds(bounds);
+
+		var sw = this._southWest,
+		ne = this._northEast,
+		sw2 = bounds.getSouthWest(),
+		ne2 = bounds.getNorthEast(),
+		nelat = Math.min(ne.lat, ne2.lat),
+		nelng = Math.min(ne.lng, ne2.lng),
+		swlat = Math.max(sw.lat, sw2.lat),
+		swlng = Math.max(sw.lng, sw2.lng);
+
+		return L.latLngBounds(L.latLng(swlat, swlng), L.latLng(nelat, nelng));
 	},
 
 	toBBoxString: function () {
