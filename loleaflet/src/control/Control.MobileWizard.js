@@ -22,6 +22,7 @@ L.Control.MobileWizard = L.Control.extend({
 		var that = this;
 		var backButton = $('#mobile-wizard-back');
 		backButton.click(function() { that.goLevelUp(); });
+		$(backButton).addClass('close-button');
 	},
 
 	_showWizard: function() {
@@ -43,6 +44,8 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	goLevelDown: function(contentToShow) {
+		$('#mobile-wizard-back').removeClass('close-button');
+
 		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
 
 		$(titles).hide('slide', { direction: 'left' }, 'fast');
@@ -69,8 +72,10 @@ L.Control.MobileWizard = L.Control.extend({
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide('slide', { direction: 'right' }, 'fast');
 			$('.ui-header.level-' + this._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
 
-			if (this._currentDepth == 0)
+			if (this._currentDepth == 0) {
 				this._inMainMenu = true;
+				$('#mobile-wizard-back').addClass('close-button');
+			}
 		}
 	},
 
