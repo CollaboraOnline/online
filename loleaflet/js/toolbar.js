@@ -1685,6 +1685,7 @@ function onDocLayerInit() {
 
 		break;
 	case 'presentation':
+		toolbarUp.show('breaksidebar', 'sidebar');
 		var presentationToolbar = w2ui['presentation-toolbar'];
 		if (!map['wopi'].HideExportOption) {
 			presentationToolbar.show('presentation', 'presentationbreak');
