@@ -198,6 +198,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.checked == 'true')
 			$(radiobutton).attr('checked', 'checked');
 
+		radiobutton.addEventListener('change', function() {
+			builder.callback('radiobutton', 'change', radiobutton, this.checked, builder);
+		});
+
 		return false;
 	},
 
@@ -221,7 +225,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_spinfieldControl: function(parentContainer, data) {
+	_spinfieldControl: function(parentContainer, data, builder) {
 		var spinfield = L.DomUtil.create('input', '', parentContainer);
 		spinfield.type = 'number';
 
@@ -233,6 +237,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(spinfield).attr('value', data.children[0].text.replace('%', ''));
 		}
 
+		spinfield.addEventListener('change', function() {
+			builder.callback('spinfield', 'change', spinfield, this.value, builder);
+		});
+
 		return false;
 	},
 
@@ -243,6 +251,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled == 'false')
 			$(edit).attr('disabled', 'disabled');
 
+		edit.addEventListener('change', function() {
+			builder.callback('edit', 'change', edit, this.value, builder);
+		});
+
 		return false;
 	},
 
@@ -252,6 +264,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.enabled == 'false')
 			$(pushbutton).attr('disabled', 'disabled');
+
+		$(pushbutton).click(function () {
+			builder.callback('pushbutton', 'click', pushbutton, data.command, builder);
+		});
 
 		return false;
 	},
@@ -279,6 +295,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (selected == index)
 				$(option).attr('selected', 'selected');
 		}
+
+		listbox.addEventListener('change', function() {
+			builder.callback('combobox', 'change', listbox, this.value, builder);
+		});
 
 		return false;
 	},
