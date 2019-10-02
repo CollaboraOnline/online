@@ -20,7 +20,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_currentDepth: 0,
 
-	_setup: function() {
+	_setup: function(options) {
+		this.wizard = options.mobileWizard;
+		this.map = options.map;
+		this.callback = options.callback ? options.callback : this._defaultCallbackHandler;
+
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['spinfield'] = this._spinfieldControl;
@@ -59,6 +63,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		return false;
+	},
+
+	// by default send new state to the core
+	_defaultCallbackHandler: function(objectType, eventType, object, data, builder) {
+		console.debug('control: \'' + objectType + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+
+		if (objectType == 'toolbutton' && eventType == 'click') {
+			console.log(builder);
+			builder.map.sendUnoCommand(data);
+		}
 	},
 
 	_cleanText: function(text) {
@@ -200,6 +214,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.checked == 'true')
 			$(checkbox).attr('checked', 'checked');
 
+		checkbox.addEventListener('change', function() {
+			builder.callback('checkbox', 'change', checkbox, this.checked, builder);
+		});
+
 		return false;
 	},
 
@@ -282,8 +300,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button = L.DomUtil.create('button', '', parentContainer);
 			button.innerHTML = builder._cleanText(data.text);
 		}
+
 		$(button).click(function () {
-			builder.map.sendUnoCommand(data.command);
+			builder.callback('toolbutton', 'click', button, data.command, builder);
 		});
 
 		if (data.enabled == 'false')
@@ -368,8 +387,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 L.control.jsDialogBuilder = function (options) {
 	var builder = new L.Control.JSDialogBuilder(options);
-	builder._setup();
-	builder.wizard = options.mobileWizard;
-	builder.map = options.map;
+	builder._setup(options);
 	return builder;
 };
