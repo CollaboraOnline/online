@@ -13,7 +13,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		MAP: 1,
 		CURSOR: 2,
 		GRAPHIC: 4,
-		MARKER: 8
+		MARKER: 8,
+		TABLE: 16
 	},
 
 	initialize: function (map) {
@@ -133,7 +134,10 @@ L.Map.TouchGesture = L.Handler.extend({
 			if (this._marker) {
 				this._state = L.Map.TouchGesture.MARKER;
 			} else if (this._map._docLayer._graphicMarker && this._map._docLayer._graphicMarker.getBounds().contains(latlng)) {
-				this._state = L.Map.TouchGesture.GRAPHIC;
+				if (this._map._docLayer.hasTableSelection())
+					this._state = L.Map.TouchGesture.TABLE;
+				else
+					this._state = L.Map.TouchGesture.GRAPHIC;
 			} else if (this._map._docLayer._cellCursor && this._map._docLayer._cellCursor.contains(latlng)) {
 				this._state = L.Map.TouchGesture.CURSOR;
 			} else {
@@ -269,6 +273,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		} else if (this._state === L.Map.TouchGesture.GRAPHIC) {
 			var mouseEvent = this._map._docLayer._createNewMouseEvent('mousedown', e.srcEvent);
 			this._map._docLayer._graphicMarker._onDragStart(mouseEvent);
+		} else if (this._state === L.Map.TouchGesture.TABLE) {
+			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
@@ -288,6 +294,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		} else if (this._state === L.Map.TouchGesture.GRAPHIC) {
 			var mouseEvent = this._map._docLayer._createNewMouseEvent('mousemove', e.srcEvent);
 			this._map._docLayer._graphicMarker._onDrag(mouseEvent);
+		} else if (this._state === L.Map.TouchGesture.TABLE) {
+			this._map._docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 1, 0);
 		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {
@@ -307,6 +315,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		} else if (this._state === L.Map.TouchGesture.GRAPHIC) {
 			var mouseEvent = this._map._docLayer._createNewMouseEvent('mouseup', e.srcEvent);
 			this._map._docLayer._graphicMarker._onDragEnd(mouseEvent);
+		} else if (this._state === L.Map.TouchGesture.TABLE) {
+			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 		} else {

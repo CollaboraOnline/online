@@ -18,6 +18,9 @@ L.TileLayer.include({
 		var point = this._latLngToTwips(this._map.unproject(new L.Point(pixel, 0)));
 		return point.x;
 	},
+	hasTableSelection: function () {
+		return this._currentTableData.rows != null || this._currentTableData.columns != null;
+	},
 	_initMoveMarkers: function () {
 		this._tableMoveMarker = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
@@ -207,7 +210,6 @@ L.TileLayer.include({
 		textMsg = textMsg.substring('tableselected:'.length + 1);
 		var message = JSON.parse(textMsg);
 		this._currentTableData = message;
-		this._hasTableSelection = this._currentTableData.rows != null || this._currentTableData.columns != null;
 		this._updateTableMarkers();
 		this._map.on('zoomend', L.bind(this._onZoomForTableMarkers, this));
 	},
@@ -335,6 +337,8 @@ L.TileLayer.include({
 	},
 	_onTableMoveMarkerDrag: function (event) {
 		var mouseEvent; 
+		if (this._graphicMarker == null)
+			return;
 		if (event.type == 'dragstart') {
 			mouseEvent = this._createNewMouseEvent('mousedown', event.originalEvent);
 			this._graphicMarker._onDragStart(mouseEvent);
