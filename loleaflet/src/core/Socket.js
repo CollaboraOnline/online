@@ -609,6 +609,9 @@ L.Socket = L.Class.extend({
 			} else if (errorKind.startsWith('faileddocloading')) {
 				this._map._fatal = true;
 				this._map.fire('error', {msg: errorMessages.faileddocloading});
+			} else if (errorKind.startsWith('docloadtimeout')) {
+				this._map._fatal = true;
+				this._map.fire('error', {msg: errorMessages.docloadtimeout});
 			} else if (errorKind.startsWith('docunloading')) {
 				// The document is unloading. Have to wait a bit.
 				this._map._active = false;

@@ -283,21 +283,20 @@ void DocumentBroker::pollThread()
         if (!_isLoaded && (limit_load_secs > 0) && (now > loadDeadline))
         {
             // Brutal but effective.
+            LOG_WRN("Doc [" << _docKey << "] is taking too long to load. Will kill process ["
+                            << _childProcess->getPid() << "]. per_document.limit_load_secs set to "
+                            << limit_load_secs << " secs.");
+            broadcastMessage("error: cmd=load kind=docloadtimeout");
+
             if (_childProcess)
-            {
-                LOG_WRN("Doc [" << _docKey << "] is taking too long to load. Will kill process ["
-                                << _childProcess->getPid()
-                                << "]. per_document.limit_load_secs set to " << limit_load_secs
-                                << " secs.");
                 _childProcess->terminate();
-            }
 
             stop("Load timed out");
             continue;
         }
 
         if (std::chrono::duration_cast<std::chrono::milliseconds>
-                    (now - lastBWUpdateTime).count() >= 5 * 1000)
+                    (now - lastBWUpdateTime).count() >= COMMAND_TIMEOUT_MS)
         {
             lastBWUpdateTime = now;
             uint64_t sent, recv;
@@ -307,9 +306,9 @@ void DocumentBroker::pollThread()
                                        // connection drop transiently reduces this.
                                        (sent > adminSent ? (sent - adminSent): uint64_t(0)),
                                        (recv > adminRecv ? (recv - adminRecv): uint64_t(0)));
-            LOG_DBG("Doc [" << _docKey << "] added sent: " << sent << " recv: " << recv << " bytes to totals");
             adminSent = sent;
             adminRecv = recv;
+            LOG_TRC("Doc [" << _docKey << "] added stats sent: " << sent << ", recv: " << recv << " bytes to totals.");
         }
 #endif
 
