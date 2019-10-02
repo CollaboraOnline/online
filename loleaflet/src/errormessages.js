@@ -23,6 +23,7 @@ errorMessages.sessionexpired = _('Your session has been expired. Further changes
 errorMessages.faileddocloading = _('Failed to load the document. Please ensure the file type is supported and not corrupted, and try again.');
 errorMessages.invalidLink = _('Invalid link: \'%url\'');
 errorMessages.leaving = _('You are leaving the editor, are you sure you want to visit %url?');
+errorMessages.docloadtimeout = _('Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator.');
 
 if (window.ThisIsAMobileApp) {
 	errorMessages.storage = {
