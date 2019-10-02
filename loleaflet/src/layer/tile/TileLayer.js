@@ -2058,12 +2058,14 @@ L.TileLayer = L.GridLayer.extend({
 		var aPos = this._latLngToTwips(e.pos);
 		if (e.type === 'graphicmovestart') {
 			this._graphicMarker.isDragged = true;
+			this._graphicMarker.setVisible(true);
 			this._graphicMarker._startPos = aPos;
 		}
 		else if (e.type === 'graphicmoveend' && this._graphicMarker._startPos) {
 			var deltaPos = aPos.subtract(this._graphicMarker._startPos);
 			if (deltaPos.x === 0 && deltaPos.y === 0) {
 				this._graphicMarker.isDragged = false;
+				this._graphicMarker.setVisible(false);
 				return;
 			}
 
@@ -2129,6 +2131,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			this._map.sendUnoCommand('.uno:TransformDialog ', param);
 			this._graphicMarker.isDragged = false;
+			this._graphicMarker.setVisible(false);
 		}
 	},
 
@@ -2142,6 +2145,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (e.type === 'scalestart') {
 			this._graphicMarker.isDragged = true;
+			this._graphicMarker.setVisible(true);
 			if (selMax.x - selMin.x < 2)
 				this._graphicMarker.dragHorizDir = 0; // overlapping handles
 			else if (Math.abs(selMin.x - aPos.x) < 2)
@@ -2283,6 +2287,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			this._graphicMarker.isDragged = false;
+			this._graphicMarker.setVisible(false);
 			this._graphicMarker.dragHorizDir = undefined;
 			this._graphicMarker.dragVertDir = undefined;
 		}
@@ -2291,6 +2296,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onGraphicRotate: function (e) {
 		if (e.type === 'rotatestart') {
 			this._graphicMarker.isDragged = true;
+			this._graphicMarker.setVisible(true);
 		}
 		else if (e.type === 'rotateend') {
 			var center = this._graphicSelectionTwips.getCenter();
@@ -2310,6 +2316,7 @@ L.TileLayer = L.GridLayer.extend({
 			};
 			this._map.sendUnoCommand('.uno:TransformDialog ', param);
 			this._graphicMarker.isDragged = false;
+			this._graphicMarker.setVisible(false);
 		}
 	},
 
@@ -2515,9 +2522,9 @@ L.TileLayer = L.GridLayer.extend({
 				this._graphicMarker.dragging.enable();
 			this._graphicMarker.transform.enable({
 				scaling: extraInfo.isResizable,
-				rotation: extraInfo.isRotatable && !this._hasTableSelection,
+				rotation: extraInfo.isRotatable && !this.hasTableSelection(),
 				uniformScaling: !this._isGraphicAngleDivisibleBy90(),
-				scaleSouthAndEastOnly: this._hasTableSelection});
+				scaleSouthAndEastOnly: this.hasTableSelection()});
 			if (extraInfo.dragInfo && extraInfo.dragInfo.svg) {
 				this._graphicMarker.removeEmbeddedSVG();
 				this._graphicMarker.addEmbeddedSVG(extraInfo.dragInfo.svg);
@@ -2532,6 +2539,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.transform.disable();
 			this._map.removeLayer(this._graphicMarker);
 			this._graphicMarker.isDragged = false;
+			this._graphicMarker.setVisible(false);
 		}
 		this._updateCursorAndOverlay();
 	},

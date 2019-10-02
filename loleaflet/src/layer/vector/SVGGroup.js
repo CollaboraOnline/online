@@ -22,7 +22,14 @@ L.SVGGroup = L.Layer.extend({
 		this.on('dragstart scalestart rotatestart', this._showEmbeddedSVG, this);
 		this.on('dragend scaleend rotateend', this._hideEmbeddedSVG, this);
 	},
-
+	setVisible: function (visible) {
+		if (this._svg != null) {
+			if (visible)
+				this._svg.setAttribute('visibility', 'visible');
+			else
+				this._svg.setAttribute('visibility', 'hidden');
+		}
+	},
 	addEmbeddedSVG: function (svgString) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(svgString, 'image/svg+xml');
