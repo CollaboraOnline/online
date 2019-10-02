@@ -145,7 +145,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder._currentDepth--;
 
 		$(contentDiv).hide();
-		$(sectionTitle).click(function() { builder.wizard.goLevelDown(contentDiv); });
+		if (builder.wizard) {
+			$(sectionTitle).click(function() { builder.wizard.goLevelDown(contentDiv); });
+		} else {
+			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+		}
 	},
 
 	_frameHandler: function(parentContainer, data, builder) {
