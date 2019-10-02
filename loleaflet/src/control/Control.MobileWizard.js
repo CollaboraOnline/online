@@ -18,11 +18,19 @@ L.Control.MobileWizard = L.Control.extend({
 		this._setupBackButton();
 	},
 
+	_reset: function() {
+		this._currentDepth = 0;
+		this._inMainMenu = true;
+		this.content.empty();
+		this.backButton.addClass('close-button');
+	},
+
 	_setupBackButton: function() {
 		var that = this;
-		var backButton = $('#mobile-wizard-back');
-		backButton.click(function() { that.goLevelUp(); });
-		$(backButton).addClass('close-button');
+		this.content = $('#mobile-wizard-content');
+		this.backButton = $('#mobile-wizard-back');
+		this.backButton.click(function() { that.goLevelUp(); });
+		$(this.backButton).addClass('close-button');
 	},
 
 	_showWizard: function() {
@@ -44,7 +52,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	goLevelDown: function(contentToShow) {
-		$('#mobile-wizard-back').removeClass('close-button');
+		this.backButton.removeClass('close-button');
 
 		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
 
@@ -74,7 +82,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 			if (this._currentDepth == 0) {
 				this._inMainMenu = true;
-				$('#mobile-wizard-back').addClass('close-button');
+				this.backButton.addClass('close-button');
 			}
 		}
 	},
@@ -87,15 +95,12 @@ L.Control.MobileWizard = L.Control.extend({
 	_onMobileWizard: function(data) {
 		if (data) {
 			this._isActive = true;
-			this._currentDepth = 0;
+			this._reset();
 
 			this._showWizard();
 			this._hideKeyboard();
 
-			var content = $('#mobile-wizard-content');
-			content.empty();
-
-			L.control.jsDialogBuilder({mobileWizard: this, map: this.map}).build(content.get(0), [data]);
+			L.control.jsDialogBuilder({mobileWizard: this, map: this.map}).build(this.content.get(0), [data]);
 		}
 	}
 });
