@@ -345,11 +345,16 @@
         overflow: scroll;
         z-index: 1010;
         bottom: 34px !important;
+        background-color: #00000050;
     }
 
     #main-menu {
        position: relative;
-	top: 0;
+       top: 0;
+       width: 70%;
+       float: right;
+       background-color: white;
+       height: 100%;
     }
 
     .writer-icon-img {
