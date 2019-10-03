@@ -122,7 +122,7 @@ function onClick(e, id, item, subItem) {
 	}
 	var docLayer = map._docLayer;
 	// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
-	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout') {
+	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard') {
 		map.focus();
 	}
 	if (item.disabled) {
