@@ -1,4 +1,9 @@
-#toolbar-up.w2ui-toolbar {
+@media (max-width: 767px), (max-device-height: 767px) {
+  #formulabar {
+    border-top: none !important;
+  }
+}
+  #toolbar-up.w2ui-toolbar {
     left: 0;
     right: 0;
     padding-left: 9px;
@@ -742,8 +747,9 @@ tr.useritem > td > img {
 #mobile-wizard-back {
     background-image: url('images/lc_closedocmobile.svg');
     background-repeat: no-repeat;
-    background-position: center;
-    width: 20px;
+    width: 68px;
+    background-position-x: 16px;
+    background-position-y: center;
     height: 20px;
 }
 
@@ -754,19 +760,21 @@ tr.useritem > td > img {
     bottom: 37px;
     z-index: 1000;
     background-color: white;
+    box-shadow: 0px -2px 6px #acacac;
 }
 
 #mobile-wizard-content {
     overflow: scroll;
     position: absolute;
-    top: 30px;
+    top: 56px;
     bottom: 0px;
     width: 100%;
 }
 
 #mobile-wizard-titlebar {
-    background-color: #F6F6F6;
-    height: 30px;
+  background-color: #3768A6;
+  height: 56px;
+  color: white;
 }
 
 .ui-content.mobile-wizard {
@@ -776,9 +784,17 @@ tr.useritem > td > img {
 }
 
 .ui-header.mobile-wizard {
-	height: 20px !important;
+	height: 56px !important;
 	font-size: 11pt !important;
-	margin: 5px;
+	margin: 0px;
 	padding: 5px;
-	border: solid 1px lightgrey;
+	border: solid 1px #fff;
+  padding-left: 74px !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ui-header.mobile-wizard:active {
+    background-color: #eee;
 }
