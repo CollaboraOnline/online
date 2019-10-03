@@ -48,7 +48,9 @@
     font-weight: bold;
     color: #404040;
   }
-
+#document-header{
+  display: none !important;
+}
 
 }
 
@@ -342,6 +344,7 @@
         -webkit-overflow-scrolling: touch;
         overflow: scroll;
         z-index: 1010;
+        bottom: 34px !important;
     }
 
     #main-menu {
