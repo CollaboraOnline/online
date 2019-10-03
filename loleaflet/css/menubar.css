@@ -1,10 +1,4 @@
 @media (max-width: 767px), (max-device-height: 767px) {
-    .w2ui-icon.closemobile {
-    width: 59px !important;
-        /*68px - 9px from parent*/
-    background-position-x: 16px !important;
-    background-position-y: center;
-    }
     .logo {
 	background-size: 100px;
 	max-width: 24px;
