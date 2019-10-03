@@ -1394,6 +1394,10 @@ L.TileLayer = L.GridLayer.extend({
 
 	_updateReferenceMarks: function() {
 		this._clearReferences();
+
+		if (!this._referencesAll)
+			return;
+
 		for (var i = 0; i < this._referencesAll.length; i++) {
 			// Avoid doubed marks, add only marks for current sheet
 			if ((this._references == null || !hasMark(this._references.getLayers(), this._referencesAll[i].mark))
