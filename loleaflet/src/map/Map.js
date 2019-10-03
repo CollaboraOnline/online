@@ -1201,7 +1201,6 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		var message = '';
 		var map = this;
 		var inactiveMs = Date.now() - this.lastActiveTime;
 		var multiplier = 1;
