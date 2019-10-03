@@ -36,7 +36,7 @@ L.SVGGroup = L.Layer.extend({
 		var size = L.bounds(this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
 			this._map.latLngToLayerPoint(this._bounds.getSouthEast())).getSize();
 
-		if (doc.lastChild.localName !== 'svg')
+		if (doc.lastChild.localName !== 'svg' || this._dragStarted)
 			return;
 
 		if (svgString.indexOf('XTEXT_PAINTSHAPE_BEGIN') !== -1) {
@@ -63,7 +63,7 @@ L.SVGGroup = L.Layer.extend({
 	_onDragStart: function(evt) {
 		if (!this._map || !this._dragShape || !this.dragging)
 			return;
-
+		this._dragStarted = true;
 		this._moved = false;
 
 		if (!this.options.manualDrag) {
@@ -116,6 +116,7 @@ L.SVGGroup = L.Layer.extend({
 
 		if (this.options.manualDrag || evt.type === 'mouseup')
 			this.dragging._onDragEnd(evt);
+		this._dragStarted = false;
 	},
 
 	bringToFront: function () {
@@ -141,6 +142,7 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	onAdd: function () {
+		this._dragStarted = false;
 		this._renderer = this._map.getRenderer(this);
 		this._renderer._initGroup(this);
 		this._renderer._initPath(this._rect);
