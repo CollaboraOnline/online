@@ -303,8 +303,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
 		if (window.ThisIsTheiOSApp) {
-			this._toolbar.remove();
-			this._toolbarAdded = null;
+			if (this._toolbarAdded) {
+				this._toolbar.remove();
+				this._toolbarAdded = null;
+			}
 		}
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
@@ -385,7 +387,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
 		if (window.ThisIsTheiOSApp) {
-			this._toolbar.hide();
+			if (this._toolbar.isVisible())
+				this._toolbar.hide();
 		}
 
 		var originalCellCursor = this._map._docLayer._cellCursor;
@@ -487,7 +490,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._pinchStartCenter = {x: e.center.x, y: e.center.y};
 		}
 		if (window.ThisIsTheiOSApp) {
-			this._toolbar.hide();
+			if (this._toolbar.isVisible())
+				this._toolbar.hide();
 		}
 	},
 
@@ -532,7 +536,8 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onInputDragStartiOSOnly: function () {
-		this._toolbar.hide();
+		if (this._toolbar.isVisible())
+			this._toolbar.hide();
 		// not set this._toolbarAdded to null it's checked on drag end
 	},
 
