@@ -84,7 +84,7 @@
 
 #spreadsheet-header-corner-container {
 	border: 1px solid darkgrey;
-	background-color: lightgrey;
+	background-color: #f1f4f7;
 	cursor: pointer;
 
 	position: absolute;
@@ -111,7 +111,7 @@
 	border: 1px solid darkgray;
 	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
 	color: black;
-	background-color: lightgray;
+	background-color: #f1f4f7;
 	cursor: pointer;
 	}
 
@@ -144,7 +144,7 @@
 	border: 1px solid darkgray;
 	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
 	color: black;
-	background-color: lightgray;
+	background-color: #f1f4f7;
 	cursor: pointer;
 }
 
@@ -154,7 +154,7 @@
 
 .spreadsheet-header-column-selected {
 	color: white;
-	background: linear-gradient(#3465A4, #729FCF, #004586);
+  background: linear-gradient(#0b87e7, #0b87e7, #0b87e7);
 }
 
 .spreadsheet-header-column-resize {
@@ -186,7 +186,7 @@
 	border: 1px solid darkgray;
 	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
 	color: black;
-	background-color: lightgray;
+	background-color: #f1f4f7;
 	cursor: pointer;
 	}
 
@@ -196,7 +196,7 @@
 
 .spreadsheet-header-row-selected {
 	color: white;
-	background: linear-gradient(#3465A4, #729FCF, #004586);
+	background: linear-gradient(#0b87e7, #0b87e7, #0b87e7);
 	}
 
 .spreadsheet-header-row-resize {
