@@ -2,6 +2,7 @@
   #formulabar {
     border-top: none !important;
   }
+  #tb_actionbar_item_fullscreen{display: none;}
 }
   #toolbar-up.w2ui-toolbar {
     left: 0;
