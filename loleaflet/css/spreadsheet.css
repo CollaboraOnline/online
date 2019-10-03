@@ -1,8 +1,8 @@
 #document-container.spreadsheet-document {
-        border-top: 1px solid #B6B6B6;
-        top: 137px;
-        left: 50px;
-        bottom: 68px;
+				border-top: 1px solid #B6B6B6;
+				top: 137px;
+				left: 50px;
+				bottom: 68px;
 }
 
 #document-container.spreadsheet-document.readonly {
@@ -249,5 +249,41 @@
 
 	#spreadsheet-row-column-frame.readonly {
 		top: 30px;
+	}
+
+	.spreadsheet-tab{
+		background-color: #eaf5ff;
+		color: #4c4c4c;
+		border-radius: 3px;
+		border-color: #fbfbfb;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		margin-top: 4px;
+	}
+
+	.spreadsheet-tab-selected{
+		color: #0b87e7 !important;
+		border-color: #0b87e7;
+		border-top-left-radius: 0px;
+		border-top-right-radius: 0px;
+		margin-top: 2px;
+		padding-top: 5px;
+		padding-bottom: 3px;
+	}
+
+	.spreadsheet-tabs-container, #spreadsheet-toolbar{
+		background-color: #fff;
+		border-top: 1px solid #eceff4;
+	}
+	#spreadsheet-toolbar{
+		background-color: #fbfbfb;
+		border-top: 1px solid #eceff4;
+		height: 33px;
+	}
+	#spreadsheet-toolbar .w2ui-tb-image{
+		padding-top: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 0px !important;
+		height: 32px !important;
 	}
 }

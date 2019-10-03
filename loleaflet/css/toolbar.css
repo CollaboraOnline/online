@@ -3,6 +3,9 @@
     border-top: none !important;
   }
   #tb_actionbar_item_fullscreen{display: none;}
+  #toolbar-down {
+    height: 34px !important;
+  }
 }
   #toolbar-up.w2ui-toolbar {
     left: 0;
