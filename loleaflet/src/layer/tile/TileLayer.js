@@ -655,10 +655,6 @@ L.TileLayer = L.GridLayer.extend({
 		// messages during text composition, and resetting the contents
 		// of the clipboard container mid-composition will easily break it.
 		var formula = textMsg.substring(13);
-		if (!this._map['wopi'].DisableCopy) {
-			this._map._clipboardContainer.setValue(formula);
-			this._map._clipboardContainer.select();
-		}
 		this._lastFormula = formula;
 		this._map.fire('cellformula', {formula: formula});
 	},

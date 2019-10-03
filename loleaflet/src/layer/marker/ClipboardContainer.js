@@ -157,17 +157,6 @@ L.ClipboardContainer = L.Layer.extend({
 		return arr;
 	},
 
-	setValue: function(val) {
-		// console.log('clipboard setValue: ', val);
-		if (this._legacyArea) {
-			var tmp = document.createElement('div');
-			tmp.innerHTML = val;
-			this._textArea.value = tmp.innerText || tmp.textContent || '';
-		} else {
-			this._textArea.innerHTML = val;
-		}
-	},
-
 	update: function() {
 		if (this._container && this._map && this._latlng) {
 			var position = this._map.latLngToLayerPoint(this._latlng).round();
