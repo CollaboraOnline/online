@@ -131,16 +131,6 @@ L.ClipboardContainer = L.Layer.extend({
 		this._textArea.select();
 	},
 
-	warnCopyPaste: function() {
-		var self = this;
-		vex.dialog.alert({
-			unsafeMessage: _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>'),
-			callback: function () {
-				self._map.focus();
-			}
-		});
-	},
-
 	getValue: function() {
 		var value = this._textArea.value;
 		return value;
