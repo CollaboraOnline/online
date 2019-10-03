@@ -747,12 +747,6 @@ L.Control.LokDialog = L.Control.extend({
 		$('#sidebar-dock-wrapper').css({display: ''});
 	},
 
-	_postWindowGestureEvent: function(winid, type, x, y, offset) {
-		console.log('x ' + x + ' y ' + y + ' o ' + offset);
-		this._map._socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
-		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
-	},
-
 	_onDialogClose: function(dialogId, notifyBackend) {
 		if (window.ThisIsTheiOSApp)
 			w2ui['editbar'].enable('closemobile');
