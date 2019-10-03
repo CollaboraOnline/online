@@ -86,18 +86,6 @@ L.ClipboardContainer = L.Layer.extend({
 	_onFocusBlur: function(ev) {
 		this._fancyLog(ev.type, '');
 
-		if (this.dontBlur && ev.type == 'blur') {
-			this._map.focus();
-			this.dontBlur = false;
-			return;
-		}
-
-		if (this.dontBlur && ev.type == 'blur') {
-			this._map.focus();
-			this.dontBlur = false;
-			return;
-		}
-
 		var onoff = (ev.type == 'focus' ? L.DomEvent.on : L.DomEvent.off).bind(L.DomEvent);
 
 		// Debug - connect first for saner logging.
