@@ -280,7 +280,7 @@ L.Control.LokDialog = L.Control.extend({
 				// When left/top are invalid, the dialog shows in the center.
 				this._launchDialog(e.id, left, top, width, height, e.title);
 			} else if (e.winType === 'deck') {
-				if (!window.mode.isMobile()) {
+				if (window.mobileWizard !== true) {
 					this._launchSidebar(e.id, width, height);
 				}
 			} else if (e.winType === 'child') {

@@ -757,7 +757,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onJSDialogMsg: function (textMsg) {
-		if (window.mode.isMobile()) {
+		if (window.mode.isMobile() && window.mobileWizard === true) {
 			var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
 			this._openMobileWizard(msgData);
 		}
