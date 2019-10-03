@@ -21,8 +21,8 @@
     border: none;
   }
   .lo-menu ul{
-    border: none;
-    background-color: #f7f7f7;
+    border: none !important;
+    background-color: #f7f7f7 !important;
   }
   .lo-menu ul > li{
     height: auto;
