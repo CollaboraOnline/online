@@ -316,6 +316,17 @@ function onClick(e, id, item, subItem) {
 			map.remove();
 		}
 	}
+	else if (id === 'mobile_wizard') {
+		if (window.mobileWizard === true) {
+			window.mobileWizard = false
+			map.sendUnoCommand('.uno:Sidebar');
+			map.fire('closemobilewizard');
+		}
+		else {
+			window.mobileWizard = true
+			map.sendUnoCommand('.uno:Sidebar');
+		}
+	}
 	else {
 		map.handleSigningClickEvent(id, item); // this handles a bunch of signing bar click events
 	}
@@ -1991,7 +2002,7 @@ function onUpdatePermission(e) {
 	var spreadsheetButtons = ['insertsheet'];
 	var formulaBarButtons = ['functiondialog', 'sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
-	var toolbarDownButtons = ['next', 'prev'];
+	var toolbarDownButtons = ['next', 'prev', 'mobile_wizard'];
 	if (e.perm === 'edit') {
 		// Enable list boxes
 		$('.styles-select').prop('disabled', false);

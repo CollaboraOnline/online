@@ -101,6 +101,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 				{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text')},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
+				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', name: _('Mobile Wizard'), disabled: true},
 				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
 				{type: 'drop', id: 'userlist', img: 'users', html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 					'<hr><table class="loleaflet-font" id="editor-btn">' +
@@ -129,6 +130,11 @@ L.WriterTileLayer = L.TileLayer.extend({
 					map.on('deselectuser', window.deselectUser);
 					map.on('addview', window.onAddView);
 					map.on('removeview', window.onRemoveView);
+				}
+				if (window.mobileWizard === true) {
+					this.check('mobile_wizard');
+				} else {
+					this.uncheck('mobile_wizard');
 				}
 			}
 		});
