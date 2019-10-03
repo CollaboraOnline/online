@@ -242,8 +242,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._state === L.Map.TouchGesture.MARKER || this._state === L.Map.TouchGesture.GRAPHIC) {
 			this._map._clipboardContainer.blur();
 		} else {
-			if (!this._map.hasFocus())
-				this._map.focus();
+			this._map.focus();
 		}
 	},
 
