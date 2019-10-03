@@ -2113,7 +2113,7 @@ bool ChildSession::removeTextContext(const char* /*buffer*/, int /*length*/,
         return false;
     }
 
-    std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
+    std::unique_lock<std::mutex> lock(getLock());
     getLOKitDocument()->setView(_viewId);
     getLOKitDocument()->removeTextContext(id, before, after);
 
