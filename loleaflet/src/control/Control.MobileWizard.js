@@ -68,6 +68,8 @@ L.Control.MobileWizard = L.Control.extend({
 		if (this._inMainMenu) {
 			this._hideWizard();
 			this._currentDepth = 0;
+			window.mobileWizard = false
+			this.map.sendUnoCommand('.uno:Sidebar');
 		} else {
 			this._currentDepth--;
 
