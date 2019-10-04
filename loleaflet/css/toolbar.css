@@ -755,7 +755,11 @@ tr.useritem > td > img {
 		text-decoration: none;
 		color: black;
 }
-
+#mobile-wizard-back.close-button {
+	transform: rotate(-90deg);
+	background-position-x: center;
+	background-position-y: 16px;
+}
 #mobile-wizard-back {
 		background-image: url('images/lc_closedocmobile.svg');
 		background-repeat: no-repeat;
@@ -778,14 +782,14 @@ tr.useritem > td > img {
 #mobile-wizard-content {
 		overflow: scroll;
 		position: absolute;
-		top: 56px;
+		top: 48px;
 		bottom: 0px;
 		width: 100%;
 }
 
 #mobile-wizard-titlebar {
 	background-color: white;
-	height: 56px;
+	height: 48px;
 	color: #636363;
 }
 
@@ -799,7 +803,7 @@ tr.useritem > td > img {
 	height: 56px !important;
 	font-size: 11pt !important;
 	margin: 0px;
-	padding: 5px;
+	padding: 0px;
 	border: solid 1px #fff;
 	padding-left: 74px !important;
 	display: flex;
