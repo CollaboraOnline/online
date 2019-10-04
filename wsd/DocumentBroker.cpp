@@ -1938,10 +1938,19 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
     NumConverters++;
 }
 
+void ConvertToBroker::dispose()
+{
+    if (!_uriOrig.empty())
+    {
+        NumConverters--;
+        removeFile(_uriOrig);
+        _uriOrig.clear();
+    }
+}
+
 ConvertToBroker::~ConvertToBroker()
 {
-    NumConverters--;
-    removeFile(_uriOrig);
+    dispose();
 }
 
 void ConvertToBroker::removeFile(const std::string &uriOrig)

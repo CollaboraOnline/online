@@ -225,6 +225,9 @@ public:
 
     virtual ~DocumentBroker();
 
+    /// Called when removed from the DocBrokers list
+    virtual void dispose() {}
+
     /// Start processing events
     void startThread();
 
@@ -403,7 +406,7 @@ private:
     void getIOStats(uint64_t &sent, uint64_t &recv);
 
 protected:
-    const std::string _uriOrig;
+    std::string _uriOrig;
 private:
     const Poco::URI _uriPublic;
     /// URL-based key. May be repeated during the lifetime of WSD.
@@ -481,6 +484,9 @@ public:
                     const Poco::URI& uriPublic,
                     const std::string& docKey);
     virtual ~ConvertToBroker();
+
+    /// Called when removed from the DocBrokers list
+    void dispose() override;
 
     /// How many live conversions are running.
     static size_t getInstanceCount();
