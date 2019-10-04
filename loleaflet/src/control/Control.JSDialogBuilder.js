@@ -115,39 +115,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return null;
 	},
 
-	_gridHandler: function(parentContainer, data, builder) {
-		var columns = builder._getGridColumns(data.children);
-		var rows = builder._getGridRows(data.children);
-		var index = 0;
-
-		var table = L.DomUtil.create('table', '', parentContainer);
-		for (var row = 0; row < rows; row++) {
-			var tr = L.DomUtil.create('tr', '', table);
-			for (var col = 0; col < columns; col++) {
-				var td = L.DomUtil.create('td', '', tr);
-				var child = builder._getGridChild(data.children, row, col);
-
-				if (child) {
-					var childObject = null;
-					if (child.type == 'container')
-						childObject = L.DomUtil.create('table', '', td);
-					else
-						childObject = td;
-
-					builder.build(childObject, [child], data.type);
-					index++;
-				}
-
-				if (index > data.children.length) {
-					console.warn('index > data.children.length');
-					return false;
-				}
-			}
-		}
-
-		return false;
-	},
-
 	_explorableEntry: function(parentContainer, title, contentNode, builder) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		sectionTitle.innerHTML = title;
