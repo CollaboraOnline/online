@@ -256,35 +256,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_comboboxControl: function(parentContainer, data, builder) {
+		// TODO: event listener in the next level...
+
 		if (!data.entries || data.entries.length == 0)
 			return false;
 
-		var listbox = L.DomUtil.create('select', '', parentContainer);
-		listbox.value = builder._cleanText(data.text);
+		var title = data.text;
+		if (data.selectedEntries)
+			title = data.entries[data.selectedEntries[0]];
+		title = builder._cleanText(title);
 
-		if (data.enabled == 'false')
-			$(listbox).attr('disabled', 'disabled');
-
-		var selected = null;
-		if (parseInt(data.selectedCount) > 0) {
-			// TODO: multiselection listbox
-			selected = data.selectedEntries[0];
-		}
-
+		var entries = [];
 		for (var index in data.entries) {
-			var option = L.DomUtil.create('option', '', listbox);
-			option.innerHTML = data.entries[index];
-
-			if (selected == index)
-				$(option).attr('selected', 'selected');
+			var entry = { type: 'fixedtext', text: data.entries[index] };
+			entries.push(entry);
 		}
 
-		if (data.hidden)
-			$(listbox).hide();
+		var contentNode = {type: 'container', children: entries};
 
-		listbox.addEventListener('change', function() {
-			builder.callback('combobox', 'change', listbox, this.value, builder);
-		});
+		builder._explorableEntry(parentContainer, title, contentNode, builder);
 
 		return false;
 	},
