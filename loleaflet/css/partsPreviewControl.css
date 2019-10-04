@@ -47,3 +47,10 @@
 .preview-img-dropsite {
     border-bottom: 3px solid #b6b6b6;
 }
+
+/* Make it larger on larger displays */
+@media (min-width: 768px),(min-device-height: 768px) {
+    .preview-img-dropsite {
+	border-bottom: 20px solid #b6b6b6;
+    }
+}
