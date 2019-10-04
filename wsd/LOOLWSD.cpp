@@ -258,8 +258,9 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
 inline void checkSessionLimitsAndWarnClients()
 {
 #if !MOBILEAPP
-    size_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
-    if (docBrokerCount > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections)
+    ssize_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
+    if (LOOLWSD::MaxDocuments < 10000 &&
+        (docBrokerCount > LOOLWSD::MaxDocuments || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections))
     {
         const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
         LOG_INF("Sending client 'limitreached' message: " << info);
@@ -333,6 +334,7 @@ void cleanupDocBrokers()
         if (!docBroker->isAlive())
         {
             LOG_INF("Removing DocumentBroker for docKey [" << it->first << "].");
+            docBroker->dispose();
             it = DocBrokers.erase(it);
             continue;
         } else {
