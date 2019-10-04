@@ -72,7 +72,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		console.debug('control: \'' + objectType + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
 		if (objectType == 'toolbutton' && eventType == 'click') {
-			console.log(builder);
 			builder.map.sendUnoCommand(data);
 		}
 	},
