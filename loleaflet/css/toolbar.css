@@ -20,7 +20,7 @@
 		overflow: visible !important;
 		background-color: white;
 }
-#tb_actionbar_item_undo .w2ui-tb-image, #tb_actionbar_item_redo .w2ui-tb-image, #tb_actionbar_item_userlist{
+#tb_actionbar_item_undo .w2ui-tb-image, #tb_actionbar_item_redo .w2ui-tb-image, #tb_actionbar_item_userlist, #tb_actionbar_item_mobile_wizard .w2ui-tb-image{
   min-width: 48px;
 }
 #toolbar-down {
