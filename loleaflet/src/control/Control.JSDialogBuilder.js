@@ -321,6 +321,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button.innerHTML = builder._cleanText(data.text);
 		}
 
+		if (data.command)
+			button.id = data.command.substr('.uno:'.length);
+
 		$(button).click(function () {
 			builder.callback('toolbutton', 'click', button, data.command, builder);
 		});
