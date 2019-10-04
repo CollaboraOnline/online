@@ -1449,12 +1449,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._updateReferenceMarks();
 	},
 
-	_onTextSelectionContentMsg: function (textMsg) {
-		this._selectionTextContent = textMsg.substr(22);
-		this._map._clipboardContainer.setValue(this._selectionTextContent);
-		this._map._clipboardContainer.select();
-	},
-
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
 		if (this._map._docLayer._docType === 'spreadsheet' && oldSelection) {
 			var mapBounds = this._map.getBounds();
