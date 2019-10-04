@@ -784,9 +784,9 @@ tr.useritem > td > img {
 }
 
 #mobile-wizard-titlebar {
-	background-color: #3768A6;
+	background-color: white;
 	height: 56px;
-	color: white;
+	color: #636363;
 }
 
 .ui-content.mobile-wizard {
