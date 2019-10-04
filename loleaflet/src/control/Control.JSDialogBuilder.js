@@ -341,17 +341,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_unoToolButton: function(parentContainer, data, builder) {
 		var button = null;
 
+		var span = L.DomUtil.create('span', 'ui-content unospan', parentContainer);
+
 		if (data.command) {
+			var id = data.command.substr('.uno:'.length);
 			var icon = builder._createIconPathFronUnoCommand(data.command);
-			button = L.DomUtil.create('img', 'ui-content unobutton', parentContainer);
+
+			button = L.DomUtil.create('img', 'ui-content unobutton', span);
 			$(button).css('background', 'url(' + icon + ')');
+			button.id = id;
+
+			var label = L.DomUtil.create('label', 'ui-content unolabel', span);
+			label.for = id;
+			label.innerHTML = data.text;
 		} else {
-			button = L.DomUtil.create('button', '', parentContainer);
+			button = L.DomUtil.create('label', 'ui-content unolabel', span);
 			button.innerHTML = builder._cleanText(data.text);
 		}
-
-		if (data.command)
-			button.id = data.command.substr('.uno:'.length);
 
 		$(button).click(function () {
 			builder.callback('toolbutton', 'click', button, data.command, builder);

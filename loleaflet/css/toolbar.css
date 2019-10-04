@@ -820,3 +820,12 @@ tr.useritem > td > img {
 #mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
 	margin-top: 0px !important;
 }
+
+.ui-content.unospan {
+	line-height: 32px;
+}
+
+.ui-content.unolabel {
+	display: table-cell;
+	vertical-align: middle;
+}
