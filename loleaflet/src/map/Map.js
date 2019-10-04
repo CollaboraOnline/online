@@ -347,22 +347,12 @@ L.Map = L.Evented.extend({
 			this.fire('showbusy', {label: label});
 			return;
 		}
-
-		this._progressBar.setLabel(label);
-		this._progressBar.setBar(bar);
-		this._progressBar.setValue(0);
-
-		if (!this.hasLayer(this._progressBar)) {
-			this.addLayer(this._progressBar);
-		}
+		this._progressBar.delayedStart(this, label, bar);
 	},
 
 	hideBusy: function () {
 		this.fire('hidebusy');
-
-		if (this.hasLayer(this._progressBar)) {
-			this.removeLayer(this._progressBar);
-		}
+		this._progressBar.end(this);
 	},
 
 	setZoom: function (zoom, options) {
