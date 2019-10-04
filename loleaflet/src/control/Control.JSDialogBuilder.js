@@ -33,7 +33,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['listbox'] = this._comboboxControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
-		this._controlHandlers['grid'] = this._gridHandler;
+		this._controlHandlers['grid'] = this._containerHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['container'] = this._containerHandler;
@@ -403,36 +403,27 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder._comboboxControl(parentContainer, data, builder);
 	},
 
-	build: function(parent, data, currentType, currentIsVertival) {
+	build: function(parent, data) {
 		var currentInsertPlace = parent;
 		var currentHorizontalRow = parent;
-		var currentIsContainer = currentType == 'container';
-
-		if (currentIsContainer && !currentIsVertival)
-			currentHorizontalRow = L.DomUtil.create('tr', '', parent);
 
 		for (var childIndex in data) {
 			var childData = data[childIndex];
 			var childType = childData.type;
 			var processChildren = true;
 
-			if (currentIsContainer) {
-				if (currentIsVertival) {
-					currentHorizontalRow = L.DomUtil.create('tr', '', parent);
-					currentInsertPlace = L.DomUtil.create('td', '', currentHorizontalRow);
-				} else
-					currentInsertPlace = L.DomUtil.create('td', '', currentHorizontalRow);
-			}
+			currentHorizontalRow = L.DomUtil.create('tr', '', parent);
+			currentInsertPlace = L.DomUtil.create('td', '', currentHorizontalRow);
 
-			var childIsContainer = (childType == 'container' || childType == 'borderwindow')
-				&& childData.children.length > 1;
-			var childIsVertical = childData.vertical == 'true';
+			var childIsContainer = (childType == 'container' || childType == 'borderwindow'
+				|| childType == 'grid' || childType == 'toolbox') && childData.children.length > 1;
 
 			var childObject = null;
-			if (childIsContainer && childType != 'borderwindow')
+			if (childType != 'borderwindow' && childIsContainer)
 				childObject = L.DomUtil.create('table', '', currentInsertPlace);
-			else
+			else {
 				childObject = currentInsertPlace;
+			}
 
 			var handler = this._controlHandlers[childType];
 
@@ -442,7 +433,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				console.warn('Unsupported control type: \"' + childType + '\"');
 
 			if (processChildren && childData.children != undefined)
-				this.build(childObject, childData.children, childType, childIsVertical);
+				this.build(childObject, childData.children);
 		}
 	}
 });
