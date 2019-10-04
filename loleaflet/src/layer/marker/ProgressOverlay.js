@@ -6,13 +6,15 @@
 L.ProgressOverlay = L.Layer.extend({
 
 	options: {
-		spinnerSpeed: 15
+		spinnerSpeed: 30
 	},
 
 	initialize: function (latlng, size) {
 		this._latlng = L.latLng(latlng);
 		this._size = size;
+		this._percent = 0;
 		this._initLayout();
+		this.intervalTimer = undefined;
 	},
 
 	onAdd: function () {
@@ -67,6 +69,55 @@ L.ProgressOverlay = L.Layer.extend({
 		L.DomUtil.setPosition(this._container, pos);
 	},
 
+	shutdownTimer: function() {
+		if (this.intervalTimer)
+			clearInterval(this.intervalTimer);
+		this.intervalTimer = undefined;
+	},
+
+	// Show the progress bar, but only if things seem slow
+	delayedStart: function(map, label, bar) {
+		this.setLabel(label);
+		this.setBar(false);
+		this.setValue(0);
+
+		this.shutdownTimer();
+
+		var self = this;
+		self.state = 0;
+		this.intervalTimer = setInterval(
+			function() {
+				self.state = self.state + 1;
+				switch (self.state) {
+				// 0.5s -> start the spinner
+				case 1:
+					if (!map.hasLayer(self))
+						map.addLayer(self);
+					break;
+				// 2s -> enable the progress bar if we have one & it's low
+				case 4:
+					if (self._percent < 80)
+						self.setBar(bar);
+					break;
+				// 3s -> show the bar if it's not up.
+				case 6:
+					self.setBar(bar);
+					break;
+				}
+				if (!map.hasLayer(self)) {
+					map.addLayer(self);
+				}
+			}, 500 /* ms */);
+	},
+
+	// Hide ourselves if there is anything to hide
+	end: function(map) {
+		this.shutdownTimer();
+		if (map.hasLayer(this)) {
+			map.removeLayer(this);
+		}
+	},
+
 	setLabel: function (label) {
 		if (this._label.innerHTML !== label) {
 			this._label.innerHTML = label;
@@ -83,6 +134,7 @@ L.ProgressOverlay = L.Layer.extend({
 	},
 
 	setValue: function (value) {
+		this._percent = value;
 		this._bar.style.width = value + '%';
 		this._value.innerHTML = value + '%';
 	}
