@@ -46,6 +46,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
+		this._toolitemHandlers['.uno:CharFontName'] = this._fontNameControl;
+		this._toolitemHandlers['.uno:FontHeight'] = this._fontHeightControl;
 
 		this._currentDepth = 0;
 	},
@@ -362,6 +364,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							{ text: '4.5' },
 							{ text: '6.0' } ];
 		builder._spinfieldControl(parentContainer, data, builder);
+	},
+
+	_fontNameControl: function(parentContainer, data, builder) {
+		data.entries = [ 'Liberation Sans' ];
+		builder._comboboxControl(parentContainer, data, builder);
+	},
+
+	_fontHeightControl: function(parentContainer, data, builder) {
+		data.entries = [ '8', '10', '11', '12', '14', '16', '24', '32', '48' ];
+		builder._comboboxControl(parentContainer, data, builder);
 	},
 
 	build: function(parent, data, currentType, currentIsVertival) {
