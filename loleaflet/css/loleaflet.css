@@ -222,7 +222,7 @@ body {
 	left: 0px !important;
 	}
 	#document-container.spreadsheet-document {
-	top: 103px !important;
+	top: 97px !important;
 	}
 	#document-container.spreadsheet-document.readonly {
 	top: 61px !important;
@@ -232,7 +232,7 @@ body {
 	right: 0px !important;
 	}
 	#spreadsheet-row-column-frame {
-	top: 83px !important;
+	top: 77px !important;
 	}
 	#spreadsheet-row-column-frame.readonly {
 	top: 41px !important;

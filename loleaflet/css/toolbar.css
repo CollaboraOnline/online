@@ -1,6 +1,7 @@
 @media (max-width: 767px), (max-device-height: 767px) {
 	#formulabar {
-		border-top: none !important;
+		padding: 0px !important;
+		border-top: 1px solid #bbbbbb !important;
 	}
 	#tb_actionbar_item_fullscreen{display: none;}
 	#toolbar-down {
@@ -9,6 +10,22 @@
 
 	#toolbar-down{
 		border-top: 1px solid #f1f1f1 !important;
+	}
+	#addressInput{
+		width: 60px !important;
+		border: 1px solid #bbbbbb;
+		border-bottom: none;
+		border-top: none;
+		border-left: none;
+		height: 35px !important;
+	}
+	.w2ui-icon.equal, .w2ui-icon.autosum{width: 38px !important;}
+	#formulaInput{
+		border: 1px solid #bbbbbb;
+		border-bottom: none;
+		border-top: none;
+		border-right: none;
+		height: 35px !important;
 	}
 }
 	#toolbar-up.w2ui-toolbar {
