@@ -312,12 +312,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_createIconPathFronUnoCommand: function(command) {
+		var commandName = command.substring('.uno:'.length);
+		return 'images/lc_' + commandName.toLowerCase() + '.svg';
+	},
+
 	_unoToolButton: function(parentContainer, data, builder) {
 		var button = null;
 
-		if (data.image) {
+		if (data.command) {
+			var icon = builder._createIconPathFronUnoCommand(data.command);
 			button = L.DomUtil.create('img', 'ui-content unobutton', parentContainer);
-			button.src = data.image;
+			$(button).css('background', 'url(' + icon + ')');
 		} else {
 			button = L.DomUtil.create('button', '', parentContainer);
 			button.innerHTML = builder._cleanText(data.text);

@@ -805,5 +805,11 @@ tr.useritem > td > img {
 }
 
 .ui-header.mobile-wizard:active {
-		background-color: #eee;
+	background-color: #eee;
+}
+
+.ui-content .unobutton {
+	min-width: 32px;
+	min-height: 32px;
+	margin-right: 5px;
 }
