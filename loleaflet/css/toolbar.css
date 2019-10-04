@@ -813,9 +813,6 @@ tr.useritem > td > img {
 	min-height: 32px;
 	margin-right: 5px;
 }
-.mobile-wizard img{
-	margin-top: 32px !important;
-}
 
 #mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
 	margin-top: 0px !important;
