@@ -77,7 +77,7 @@ L.Control.Menubar = L.Control.extend({
 				{id: 'mobile-wizard',  type: 'action', name: _('Mobile Wizard'), mobile: true, desktop: false}
 			]
 			},
-			{name: _UNO('.uno:InsertMenu', 'text'), type: 'menu', menu: [
+			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
@@ -382,7 +382,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Sidebar'},
 				{id: 'mobile-wizard',  type: 'action', name: _('Mobile Wizard'), mobile: true, desktop: false}
 			]},
-			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
@@ -1183,6 +1183,50 @@ L.Control.Menubar = L.Control.extend({
 		for (var i in menuHtml) {
 			this._menubarCont.appendChild(menuHtml[i]);
 		}
+	},
+
+	generateMenuStructureFor: function(targetId) {
+		var item = this._getItem(targetId);
+		if (item === null) {
+			return '';
+		}
+
+		var menuStructure = this._generateMenuStructure(item, true)
+		return menuStructure
+	},
+
+	_generateMenuStructure: function(item, mainMenu) {
+		var itemText = $($(item).children()[0]).text();
+		var children = $(item).children('ul').children('li');
+		var itemEnabled = true;
+		if ($($(item).children()[0]).hasClass('disabled')) {
+			itemEnabled = false;
+		}
+		var itemType = 'submenu';
+		if (mainMenu) {
+			itemType = 'mainmenu';
+		} else if (!children.length) {
+			itemType = 'menuitem';
+		}
+		var itemID = $(item).attr('id');
+		if (itemID && itemID.length > 5) {
+			itemID = itemID.substring(5);
+		}
+
+		var menuStructure = {
+			id : itemID,
+			type : itemType,
+			enabled : itemEnabled,
+			text : itemText,
+			command : $($(item).children()[0]).data('uno'),
+			executionType : $($(item).children()[0]).data('type'),
+			children : []
+		};
+
+		for (var i = 0; i < children.length; i++) {
+			menuStructure['children'].push(this._generateMenuStructure(children[i], false));
+		}
+		return menuStructure;
 	}
 });
 

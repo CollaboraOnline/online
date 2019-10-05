@@ -44,6 +44,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['toolbox'] = this._containerHandler;
 		this._controlHandlers['toolitem'] = this._toolitemHandler;
 
+		this._controlHandlers['mainmenu'] = this._containerHandler;
+		this._controlHandlers['submenu'] = this._subMenuHandler;
+		this._controlHandlers['menuitem'] = this._menuItemHandler;
+
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
 		this._toolitemHandlers['.uno:CharFontName'] = this._fontNameControl;
@@ -124,6 +128,27 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		builder._currentDepth++;
 		builder.build(contentDiv, [contentNode]);
+		builder._currentDepth--;
+
+		$(contentDiv).hide();
+		if (builder.wizard) {
+			$(sectionTitle).click(function() { builder.wizard.goLevelDown(contentDiv); });
+		} else {
+			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+		}
+	},
+
+	_explorableMenu: function(parentContainer, title, children, builder) {
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		sectionTitle.innerHTML = title;
+
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+		contentDiv.title = title;
+
+		builder._currentDepth++;
+		for (var i = 0; i < children.length; i++) {
+			builder.build(contentDiv, [children[i]]);
+		}
 		builder._currentDepth--;
 
 		$(contentDiv).hide();
@@ -353,6 +378,38 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							{ text: '4.5' },
 							{ text: '6.0' } ];
 		builder._spinfieldControl(parentContainer, data, builder);
+	},
+
+	_subMenuHandler: function(parentContainer, data, builder) {
+		var title = data.text;
+		builder._explorableMenu(parentContainer, title, data.children, builder);
+
+		return false;
+	},
+
+	_menuItemHandler: function(parentContainer, data, builder) {
+		var title = data.text;
+		// separator
+		if (title === '') {
+			return false;
+		}
+
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		sectionTitle.innerHTML = title;
+
+		if (builder.wizard) {
+			$(sectionTitle).click(function() {
+				if (data.executionType === 'action') {
+					builder.map.menubar._executeAction($(builder.map.menubar._getItem(data.id).children()[0]))
+				} else {
+					builder.map.sendUnoCommand(data.command)
+				}
+			});
+		} else {
+			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+		}
+
+		return false;
 	},
 
 	_fontNameControl: function(parentContainer, data, builder) {

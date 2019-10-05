@@ -122,7 +122,7 @@ function onClick(e, id, item, subItem) {
 	}
 	var docLayer = map._docLayer;
 	// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
-	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard') {
+	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
 		map.focus();
 	}
 	if (item.disabled) {
@@ -321,10 +321,25 @@ function onClick(e, id, item, subItem) {
 			window.mobileWizard = false
 			map.sendUnoCommand('.uno:Sidebar');
 			map.fire('closemobilewizard');
+			toolbar.uncheck(id);
 		}
 		else {
 			window.mobileWizard = true
 			map.sendUnoCommand('.uno:Sidebar');
+			toolbar.check(id);
+		}
+	}
+	else if (id === 'insertion_mobile_wizard') {
+		if (window.insertionMobileWizard === true) {
+			window.insertionMobileWizard = false
+			map.fire('closemobilewizard');
+			toolbar.uncheck(id);
+		}
+		else {
+			window.insertionMobileWizard = true
+			var menuData = map.menubar.generateMenuStructureFor('insert');
+			map.fire('mobilewizard', menuData);
+			toolbar.check(id);
 		}
 	}
 	else {
@@ -2018,7 +2033,7 @@ function onUpdatePermission(e) {
 	var spreadsheetButtons = ['insertsheet'];
 	var formulaBarButtons = ['functiondialog', 'sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
-	var toolbarDownButtons = ['next', 'prev', 'mobile_wizard'];
+	var toolbarDownButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard'];
 	if (e.perm === 'edit') {
 		// Enable list boxes
 		$('.styles-select').prop('disabled', false);
