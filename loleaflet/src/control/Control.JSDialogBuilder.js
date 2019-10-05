@@ -140,7 +140,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_explorableMenu: function(parentContainer, title, children, builder) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
-		sectionTitle.innerHTML = title;
+		if (builder._currentDepth === 0) {
+			$(sectionTitle).css('justify-content', 'space-between');
+
+			var titleSpan = L.DomUtil.create('span', 'sub-menu-title', sectionTitle);
+			titleSpan.innerHTML = title;
+			var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', sectionTitle);
+			arrowSpan.innerHTML = '>';
+		} else {
+			sectionTitle.innerHTML = title;
+		}
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
 		contentDiv.title = title;

@@ -1197,6 +1197,9 @@ L.Control.Menubar = L.Control.extend({
 
 	_generateMenuStructure: function(item, mainMenu) {
 		var itemText = $($(item).children()[0]).text();
+		if (itemText.endsWith('›'))
+			itemText = itemText.substring(0, itemText.length - 1);
+
 		var children = $(item).children('ul').children('li');
 		var itemEnabled = true;
 		if ($($(item).children()[0]).hasClass('disabled')) {

@@ -827,3 +827,8 @@ tr.useritem > td > img {
 	display: table-cell;
 	vertical-align: middle;
 }
+
+.sub-menu-arrow {
+	margin-right: 40px;
+	background: transparent;
+}
