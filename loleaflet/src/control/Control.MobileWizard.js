@@ -9,6 +9,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_inMainMenu: true,
 	_isActive: false,
 	_currentDepth: 0,
+	_mainTitle: '',
 
 	onAdd: function (map) {
 		this.map = map;
@@ -80,7 +81,7 @@ L.Control.MobileWizard = L.Control.extend({
 			if (this._currentDepth > 0 && parent)
 				this._setTitle(parent.get(0).title);
 			else
-				this._setTitle('');
+				this._setTitle(this._mainTitle);
 
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide('slide', { direction: 'right' }, 'fast');
 			$('.ui-header.level-' + this._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
@@ -106,6 +107,9 @@ L.Control.MobileWizard = L.Control.extend({
 			this._hideKeyboard();
 
 			L.control.jsDialogBuilder({mobileWizard: this, map: this.map}).build(this.content.get(0), [data]);
+
+			this._mainTitle = data.text ? data.text : '';
+			this._setTitle(this._mainTitle);
 		}
 	}
 });
