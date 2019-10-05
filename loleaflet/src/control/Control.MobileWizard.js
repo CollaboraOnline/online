@@ -3,7 +3,7 @@
  * L.Control.MobileWizard
  */
 
-/* global $ */
+/* global $ w2ui*/
 L.Control.MobileWizard = L.Control.extend({
 
 	_inMainMenu: true,
@@ -70,10 +70,10 @@ L.Control.MobileWizard = L.Control.extend({
 			this._hideWizard();
 			this._currentDepth = 0;
 			if (window.mobileWizard === true) {
-				this.map.sendUnoCommand('.uno:Sidebar');
-				window.mobileWizard = false
+				w2ui['actionbar'].click('mobile_wizard')
+			} else if (window.insertionMobileWizard === true) {
+				w2ui['actionbar'].click('insertion_mobile_wizard')
 			}
-			window.insertionMobileWizard = false
 		} else {
 			this._currentDepth--;
 
