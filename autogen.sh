@@ -18,6 +18,8 @@ EOF
 
 if test `uname -s` = Linux; then
     libtoolize || failed "libtool"
+elif test `uname -s` = Darwin; then
+    glibtoolize || failed "Can't find glibtoolize. For instance use the one from https://brew.sh, 'brew install libtool', or build GNU libtool yourself."
 fi
 
 aclocal || failed "aclocal"
