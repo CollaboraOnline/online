@@ -29,6 +29,10 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		var index = e.state.indexOf('{');
 		var state = index !== -1 ? JSON.parse(e.state.substring(index)) : e.state;
 		this._items[e.commandName] = state;
+		if (e.commandName === '.uno:CurrentTrackedChangeId') {
+			var redlineId = 'change-' + state;
+			this._map._docLayer._annotations.selectById(redlineId);
+		}
 	},
 
 	getItems: function() {
