@@ -338,7 +338,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var icon = builder._createIconPathFronUnoCommand(data.command);
 
 			button = L.DomUtil.create('img', 'ui-content unobutton', span);
-			$(button).css('background', 'url(' + icon + ')');
+			button.src = icon;
 			button.id = id;
 
 			var label = L.DomUtil.create('label', 'ui-content unolabel', span);
