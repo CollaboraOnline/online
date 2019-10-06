@@ -9,8 +9,6 @@
 
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-extern const char *lo_ios_app_getCacheDir();
-
 extern int loolwsd_server_socket_fd;
 
 extern lok::Document *lok_document;
