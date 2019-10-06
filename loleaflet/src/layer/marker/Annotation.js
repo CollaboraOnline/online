@@ -210,9 +210,9 @@ L.Annotation = L.Layer.extend({
 
 		if (this._data.trackchange && this._map._permission !== 'readonly') {
 			var tdAccept = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
-			var acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
+			var acceptButton = this._acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
 			var tdReject = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
-			var rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
+			var rejectButton = this._rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
 
 			acceptButton.title = _('Accept change');
 			L.DomEvent.on(acceptButton, click, function() {
@@ -416,6 +416,15 @@ L.Annotation = L.Layer.extend({
 			this._menu.style.width = menuWidth + 'px';
 			var menuHeight = Math.round(initialLayoutData.menuHeight * scaleFactor);
 			this._menu.style.height = menuHeight + 'px';
+
+			if (this._acceptButton) {
+				this._acceptButton.style.width = menuWidth + 'px';
+				this._acceptButton.style.height = menuHeight + 'px';
+			}
+			if (this._rejectButton) {
+				this._rejectButton.style.width = menuWidth + 'px';
+				this._rejectButton.style.height = menuHeight + 'px';
+			}
 		}
 
 		var authorImageWidth = Math.round(this.options.imgSize.x * scaleFactor);

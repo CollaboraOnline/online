@@ -904,9 +904,17 @@ L.AnnotationManager = L.Class.extend({
 	_updateScaling: function () {
 		if (!L.Browser.mobile || this._items.length === 0)
 			return;
+		var contentWrapperClassName, menuClassName;
+		if (this._items[0]._data.trackchange) {
+			contentWrapperClassName = '.loleaflet-annotation-redline-content-wrapper';
+			menuClassName = '.loleaflet-annotation-menu-redline';
+		} else {
+			contentWrapperClassName = '.loleaflet-annotation-content-wrapper';
+			menuClassName = '.loleaflet-annotation-menu';
+		}
 
 		var initNeeded = (this._initialLayoutData === undefined);
-		var contentWrapperClass = $('.loleaflet-annotation-content-wrapper');
+		var contentWrapperClass = $(contentWrapperClassName);
 		if (initNeeded && contentWrapperClass.length > 0) {
 			var contentAuthor = $('.loleaflet-annotation-content-author');
 			var dateClass = $('.loleaflet-annotation-date');
@@ -927,7 +935,7 @@ L.AnnotationManager = L.Class.extend({
 		if (this._initialLayoutData === undefined)
 			return;
 
-		var menuClass = $('.loleaflet-annotation-menu');
+		var menuClass = $(menuClassName);
 		if ((this._initialLayoutData.menuWidth === undefined) && menuClass.length > 0) {
 			this._initialLayoutData.menuWidth = parseInt(menuClass.css('width'));
 			this._initialLayoutData.menuHeight = parseInt(menuClass.css('height'));
