@@ -805,6 +805,7 @@ tr.useritem > td > img {
 }
 
 .ui-header.mobile-wizard {
+	width: 100%;
 	height: 56px !important;
 	font-size: 11pt !important;
 	margin: 0px;
