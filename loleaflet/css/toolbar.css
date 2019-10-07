@@ -815,6 +815,7 @@ tr.useritem > td > img {
 	width: 32px;
 	height: 32px;
 	margin-right: 5px;
+	vertical-align: middle;
 }
 
 #mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
@@ -823,6 +824,7 @@ tr.useritem > td > img {
 
 .ui-content.unospan {
 	line-height: 32px;
+	display: table;
 }
 
 .ui-content.unolabel {

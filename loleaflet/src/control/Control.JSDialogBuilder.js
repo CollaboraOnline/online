@@ -211,9 +211,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_checkboxControl: function(parentContainer, data, builder) {
-		var checkbox = L.DomUtil.createWithId('input', data.id, parentContainer);
+		var div = L.DomUtil.createWithId('div', data.id, parentContainer);
+
+		var checkbox = L.DomUtil.createWithId('input', data.id, div);
 		checkbox.type = 'checkbox';
-		var checkboxLabel = L.DomUtil.create('label', '', parentContainer);
+		var checkboxLabel = L.DomUtil.create('label', '', div);
 		checkboxLabel.innerHTML = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
 
@@ -331,21 +333,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_unoToolButton: function(parentContainer, data, builder) {
 		var button = null;
 
-		var span = L.DomUtil.create('span', 'ui-content unospan', parentContainer);
+		var div = L.DomUtil.create('div', 'ui-content unospan', parentContainer);
 
 		if (data.command) {
 			var id = data.command.substr('.uno:'.length);
 			var icon = builder._createIconPathFronUnoCommand(data.command);
 
-			button = L.DomUtil.create('img', 'ui-content unobutton', span);
+			button = L.DomUtil.create('img', 'ui-content unobutton', div);
 			button.src = icon;
 			button.id = id;
 
-			var label = L.DomUtil.create('label', 'ui-content unolabel', span);
+			var label = L.DomUtil.create('span', 'ui-content unolabel', div);
 			label.for = id;
 			label.innerHTML = data.text;
 		} else {
-			button = L.DomUtil.create('label', 'ui-content unolabel', span);
+			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.innerHTML = builder._cleanText(data.text);
 		}
 
@@ -432,26 +434,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	build: function(parent, data) {
-		var currentInsertPlace = parent;
-		var currentHorizontalRow = parent;
-
 		for (var childIndex in data) {
 			var childData = data[childIndex];
 			var childType = childData.type;
 			var processChildren = true;
+			var isPanelOrFrame = childType == 'panel' || childType == 'frame';
 
-			currentHorizontalRow = L.DomUtil.create('tr', '', parent);
-			currentInsertPlace = L.DomUtil.create('td', '', currentHorizontalRow);
-
-			var childIsContainer = (childType == 'container' || childType == 'borderwindow'
-				|| childType == 'grid' || childType == 'toolbox') && childData.children.length > 1;
-
-			var childObject = null;
-			if (childType != 'borderwindow' && childIsContainer)
-				childObject = L.DomUtil.create('table', '', currentInsertPlace);
-			else {
-				childObject = currentInsertPlace;
-			}
+			var childObject = isPanelOrFrame ? L.DomUtil.create('div', '', parent) : parent;
 
 			var handler = this._controlHandlers[childType];
 
