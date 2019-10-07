@@ -269,7 +269,7 @@ L.Map = L.Evented.extend({
 
 			// Show sidebar.
 			if (this._docLayer && !this._docLoadedOnce &&
-				(this._docLayer._docType === 'spreadsheet' || this._docLayer._docType === 'text')) {
+				(this._docLayer._docType === 'spreadsheet' || this._docLayer._docType === 'text' || this._docLayer._docType === 'presentation')) {
 				// Let the first page finish loading then load the sidebar.
 				var map = this;
 				setTimeout(function () {

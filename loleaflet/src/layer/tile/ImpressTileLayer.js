@@ -134,6 +134,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
+				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
+				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
+				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
 					'<hr><table class="loleaflet-font" id="editor-btn">' +
 					'<tr>' +
