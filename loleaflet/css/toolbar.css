@@ -801,7 +801,7 @@ tr.useritem > td > img {
 .ui-content.mobile-wizard {
 	background-color: white !important;
 	border: none !important;
-	padding: 10px;
+	padding: 0px 12px 16px 12px;
 }
 
 .ui-header.mobile-wizard {
