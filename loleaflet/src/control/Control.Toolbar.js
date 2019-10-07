@@ -200,6 +200,9 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'insertannotation') {
 		map.insertComment();
 	}
+	else if (id === 'insertcomment') {
+		map.insertComment();
+	}
 	else if (id === 'insertpage') {
 		map.insertPage();
 	}
@@ -2036,7 +2039,7 @@ function onUpdatePermission(e) {
 	var spreadsheetButtons = ['insertsheet'];
 	var formulaBarButtons = ['functiondialog', 'sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
-	var toolbarDownButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard'];
+	var toolbarDownButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard', 'insertcomment'];
 	if (e.perm === 'edit') {
 		// Enable list boxes
 		$('.styles-select').prop('disabled', false);

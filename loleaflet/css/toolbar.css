@@ -661,6 +661,7 @@ button.leaflet-control-search-next
 .w2ui-icon.sidebar_modify_page{ background: url('images/lc_formproperties.svg') no-repeat center !important; }
 .w2ui-icon.mobile_wizard{ background: url('images/lc_mobile_wizard.svg') no-repeat center !important; }
 .w2ui-icon.insertion_mobile_wizard{ background: url('images/lc_insertion_mobile_wizard.svg') no-repeat center !important; }
+.w2ui-icon.insertcomment{ background: url('images/lc_insertcomment.svg') no-repeat center !important; }
 
 .w2ui-icon.vereign{ background: url('images/vereign.png') no-repeat center !important; }
 
