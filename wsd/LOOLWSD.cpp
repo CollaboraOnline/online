@@ -2501,6 +2501,18 @@ private:
         return "application/octet-stream";
     }
 
+    static bool isSpreadsheet(const std::string& fileName)
+    {
+        std::string sContentType = getContentType(fileName);
+
+        if (sContentType == "application/vnd.oasis.opendocument.spreadsheet"
+            || sContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            || sContentType == "application/vnd.ms-excel")
+            return true;
+        else
+            return false;
+    }
+
     void handlePostRequest(const Poco::Net::HTTPRequest& request,
                            Poco::MemoryInputStream& message,
                            SocketDisposition &disposition)
@@ -2531,7 +2543,10 @@ private:
             ConvertToPartHandler handler(/*convertTo =*/ true);
             HTMLForm form(request, message, handler);
 
+            std::string sOptions("");
             std::string format = (form.has("format") ? form.get("format") : "");
+            std::string sFullSheetPreview = (form.has("FullSheetPreview") ? form.get("FullSheetPreview") : "");
+            bool bFullSheetPreview = sFullSheetPreview == "true" ? true : false;
 
             // prefer what is in the URI
             if (tokens.count() > 3)
@@ -2544,6 +2559,15 @@ private:
             {
                 Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
                 const std::string docKey = DocumentBroker::getDocKey(uriPublic);
+
+                if (bFullSheetPreview && format == "pdf" && isSpreadsheet(fromPath))
+                {
+                    sOptions += std::string(",FullSheetPreview=") + sFullSheetPreview + std::string("FULLSHEETPREVEND");
+                }
+                else
+                {
+                    bFullSheetPreview = false;
+                }
 
                     // This lock could become a bottleneck.
                     // In that case, we can use a pool and index by publicPath.
@@ -2566,7 +2590,7 @@ private:
                     nullptr, _id, uriPublic, docBroker, isReadOnly, "nocliphost");
                 if (clientSession)
                 {
-                    disposition.setMove([docBroker, clientSession, format]
+                    disposition.setMove([docBroker, clientSession, format, sOptions]
                                         (const std::shared_ptr<Socket> &moveSocket)
                     {
                         // Perform all of this after removing the socket
@@ -2577,7 +2601,7 @@ private:
                         // We no longer own this socket.
                         moveSocket->setThreadOwner(std::thread::id(0));
 
-                        docBroker->addCallback([docBroker, moveSocket, clientSession, format]()
+                        docBroker->addCallback([docBroker, moveSocket, clientSession, format, sOptions]()
                         {
                             auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
                             clientSession->setSaveAsSocket(streamSocket);
@@ -2603,7 +2627,7 @@ private:
                             URI::encode(toJailURL, "", encodedTo);
 
                             // Convert it to the requested format.
-                            const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=";
+                            const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=" + sOptions;
                             std::vector<char> saveasRequest(saveas.begin(), saveas.end());
                             clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
                         });
