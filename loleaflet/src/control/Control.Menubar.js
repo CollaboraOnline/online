@@ -73,17 +73,17 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Sidebar'},
+				{uno: '.uno:Sidebar', mobile: false},
 				{id: 'mobile-wizard',  type: 'action', name: _('Mobile Wizard'), mobile: true, desktop: false}
 			]
 			},
-			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
+			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', mobile: false, type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
-				{uno: '.uno:InsertSection', id: 'insertsection'},
+				{uno: '.uno:InsertSection', id: 'insertsection', mobile: false },
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertPageNumberField'},
 					{uno: '.uno:InsertPageCountField'},
@@ -106,7 +106,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'hyperlink', type: 'action'},
-				{uno: '.uno:InsertSymbol'},
+				{uno: '.uno:InsertSymbol', mobile: false},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
 					{uno: '.uno:InsertHardHyphen'},
@@ -115,12 +115,12 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertZWNBSP'},
 					{uno: '.uno:InsertLRM'},
 					{uno: '.uno:InsertRLM'}]},
-                                {name: _UNO('.uno:IndexesMenu', 'text'), type: 'menu', menu: [
+                                {name: _UNO('.uno:IndexesMenu', 'text'), type: 'menu', mobile: false, menu: [
 					{uno: '.uno:InsertIndexesEntry'},
 					{uno: '.uno:InsertAuthoritiesEntry'},
 					{uno: '.uno:InsertMultiIndex'}]},
 			]},
-			{name: _UNO('.uno:FormatMenu', 'text'), id: 'format', type: 'menu', menu: [
+			{name: _UNO('.uno:FormatMenu', 'text'), id: 'format', mobile: false, type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:Bold'},
 					{uno: '.uno:Italic'},
@@ -205,7 +205,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:ResetAttributes'}
 			]},
-			{name: _UNO('.uno:TableMenu', 'text'), type: 'menu', menu: [
+			{name: _UNO('.uno:TableMenu', 'text'), mobile: false, type: 'menu', menu: [
 				{name: _UNO('.uno:TableInsertMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
 					{uno: '.uno:InsertRowsAfter'},
@@ -225,7 +225,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:TableDialog'}
 			]},
-			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
+			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', mobile: false, type: 'menu', menu: [
 				{uno: '.uno:SpellingAndGrammarDialog'},
 				{uno: '.uno:SpellOnline'},
 				{uno: '.uno:ThesaurusDialog'},
@@ -243,7 +243,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:OnlineAutoFormat'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobileapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobile: false, mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
@@ -290,7 +290,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Sidebar'},
 				{id: 'mobile-wizard',  type: 'action', name: _('Mobile Wizard'), mobile: true, desktop: false}]
 			},
-			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
+			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', mobile: false, type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
@@ -381,20 +381,20 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
 				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{type: 'separator', mobileapp: false},
-				{uno: '.uno:Sidebar'},
+				{uno: '.uno:Sidebar', mobile: false},
 				{id: 'mobile-wizard',  type: 'action', name: _('Mobile Wizard'), mobile: true, desktop: false}
 			]},
-			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
+			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', mobile: false, type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'hyperlink', type: 'action'},
-				{uno: '.uno:InsertSymbol'},
-				{uno: '.uno:EditHeaderAndFooter'}
+				{uno: '.uno:InsertSymbol', mobile: false},
+				{uno: '.uno:EditHeaderAndFooter', mobile: false}
 			]},
-			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), id: 'format', type: 'menu', menu: [
+			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), id: 'format', mobile: false, type: 'menu', menu: [
 				{uno: '.uno:ResetAttributes'},
 				{uno: '.uno:FormatCellDialog'},
 				{uno: '.uno:PageFormatDialog'},
@@ -1107,6 +1107,9 @@ L.Control.Menubar = L.Control.extend({
 				if (menu[i].mobileapp == true && !window.ThisIsAMobileApp) {
 					continue;
 				}
+				if (menu[i].mobile === false && window.mode.isMobile())
+					continue;
+
 				var ulItem = L.DomUtil.create('ul', '', liItem);
 				var subitemList = this._createMenu(menu[i].menu);
 				if (!subitemList.length) {
