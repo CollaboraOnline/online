@@ -56,8 +56,8 @@ L.Control.MobileWizard = L.Control.extend({
 		this.backButton.removeClass('close-button');
 
 		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
-
 		$(titles).hide('slide', { direction: 'left' }, 'fast');
+		$(contentToShow).siblings().hide();
 		$(contentToShow).show('slide', { direction: 'right' }, 'fast');
 
 		this._currentDepth++;
@@ -83,7 +83,8 @@ L.Control.MobileWizard = L.Control.extend({
 			else
 				this._setTitle(this._mainTitle);
 
-			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide('slide', { direction: 'right' }, 'fast');
+			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').siblings().show('slide', { direction: 'left' }, 'fast');
+			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide();
 			$('.ui-header.level-' + this._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
 
 			if (this._currentDepth == 0) {
