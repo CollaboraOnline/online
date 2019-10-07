@@ -105,7 +105,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertPagebreak'},
 				{uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
-				{uno: '.uno:HyperlinkDialog'},
+				{name: _UNO('.uno:HyperlinkDialog'), id: 'hyperlink', type: 'action'},
 				{uno: '.uno:InsertSymbol'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
@@ -294,7 +294,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
-				{uno: '.uno:HyperlinkDialog'},
+				{name: _UNO('.uno:HyperlinkDialog'), id: 'hyperlink', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
                                {type: 'separator'},
@@ -388,7 +388,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:HyperlinkDialog'},
+				{name: _UNO('.uno:HyperlinkDialog'), id: 'hyperlink', type: 'action'},
 				{uno: '.uno:InsertSymbol'},
 				{uno: '.uno:EditHeaderAndFooter'}
 			]},
@@ -890,6 +890,8 @@ L.Control.Menubar = L.Control.extend({
 			});
 		} else if (id === 'about') {
 			this._map.showLOAboutDialog();
+		} else if (id === 'hyperlink') {
+			this._map.showHyperlinkDialog();
 		} else if (id === 'keyboard-shortcuts') {
 			this._map.showLOKeyboardHelp();
 		} else if (revHistoryEnabled && (id === 'rev-history' || id === 'last-mod')) {
