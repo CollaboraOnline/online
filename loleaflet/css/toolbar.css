@@ -1,4 +1,76 @@
 @media (max-width: 767px), (max-device-height: 767px) {
+	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough{
+		margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+		padding: 24px 32px 24px 32px;
+		background-size: 24px !important;
+	}
+	#buttonbefore:focus, #buttonafter:focus, #buttonoptimal:focus, #buttonparallel:focus, #buttonnone:focus, #buttonthrough:focus{
+		border-radius: 4px;
+    outline: none;
+    background-color: #e5f1ff;
+	}
+	#buttonbefore{background: url(images/sc_wrapleft.svg) no-repeat center;}
+	#buttonafter{background: url(images/sc_wrapright.svg) no-repeat center;}
+	#buttonoptimal{background: url(images/sc_wrapleft.svg) no-repeat center;}
+	#buttonparallel{background: url(images/sc_wrapmenu.svg) no-repeat center;}
+	#buttonnone{background: url(images/sc_wrapoff.svg) no-repeat center;}
+	#buttonthrough{background: url(images/sc_wrapthrough.svg) no-repeat center;}
+
+	#enablecontour{
+		float: left;
+		margin: 16px 0px;
+	}
+	input[type=checkbox]#enablecontour{
+		appearance: none;
+		width: 24px;
+		height: 24px;
+		margin: 10px 0px;
+		-webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border-radius: 2px;
+    border: 2px solid #aaa;
+    outline: none;
+    box-shadow: #00000015 0px 0px 2px 1px;
+	}
+	input[type=checkbox]#enablecontour:checked{
+		background: url(images/lc_ok_white.svg) no-repeat center;
+		background-color: #0b87e7;
+		border-radius: 2px;
+    border: 2px solid #0b87e7;
+    outline: none;
+    box-shadow: none;
+	}
+	input[type=checkbox]#enablecontour:before{
+		width: 20px;
+		height: 20px;
+	}
+	input[type=checkbox]#enablecontour:after{
+		top: -20px;
+		width: 16px;
+	}
+	#enablecontour + label{
+		line-height: 44px;
+		vertical-align: baseline;
+		padding-left: 24px;
+	}
+	#enablecontour + button {
+		float: right;
+		margin: 24px 0px;
+    height: 38px;
+    border-radius: 4px;
+    color: #0b87e7;
+    font-weight: bold;
+    background-color: #fff;
+    text-transform: uppercase;
+    border: 1px solid #0b87e7;
+	}
+	#enablecontour + button + p {clear: both;}
 	#formulabar {
 		padding: 0px !important;
 		border-top: 1px solid #bbbbbb !important;
