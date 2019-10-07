@@ -844,4 +844,7 @@ tr.useritem > td > img {
 .sub-menu-arrow {
 	margin-right: 40px;
 	background: transparent;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #aaa !important;
 }
