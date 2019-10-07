@@ -832,8 +832,10 @@ L.Control.Menubar = L.Control.extend({
 		});
 	},
 
-	_executeAction: function(item) {
-		var id = $(item).data('id');
+	_executeAction: function(item, id) {
+		if (!id)
+			id = $(item).data('id');
+
 		if (id === 'save') {
 			// Save only when not read-only.
 			if (map._permission !== 'readonly') {
@@ -1190,48 +1192,58 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	generateMenuStructureFor: function(targetId) {
-		var item = this._getItem(targetId);
-		if (item === null) {
+		var docType = this._map.getDocType();
+		var items = this.options[docType];
+		var target = items.find(function(item) { return item.id === targetId; });
+
+		if (!target) {
+			console.log('Cannot find item ' + targetId);
 			return '';
 		}
 
-		var menuStructure = this._generateMenuStructure(item, true)
+		var menuStructure = this._generateMenuStructure(target, docType, true)
 		return menuStructure
 	},
 
-	_generateMenuStructure: function(item, mainMenu) {
-		var itemText = $($(item).children()[0]).text();
-		if (itemText.endsWith('›'))
-			itemText = itemText.substring(0, itemText.length - 1);
-
-		var children = $(item).children('ul').children('li');
-		var itemEnabled = true;
-		if ($($(item).children()[0]).hasClass('disabled')) {
-			itemEnabled = false;
-		}
-		var itemType = 'submenu';
+	_generateMenuStructure: function(item, docType, mainMenu) {
+		var itemType;
 		if (mainMenu) {
 			itemType = 'mainmenu';
-		} else if (!children.length) {
-			itemType = 'menuitem';
-		}
-		var itemID = $(item).attr('id');
-		if (itemID && itemID.length > 5) {
-			itemID = itemID.substring(5);
+		} else {
+			if (item.mobile === false)
+				return undefined;
+			if (!item.menu) {
+				itemType = 'menuitem';
+			} else {
+				itemType = 'submenu';
+			}
 		}
 
+		var itemName;
+		if (item.name)
+			itemName = item.name;
+		else if (item.uno)
+			itemName = _UNO(item.uno, docType);
+		else
+			return undefined; // separator
+
 		var menuStructure = {
-			id : itemID,
+			id : item.id,
 			type : itemType,
-			enabled : itemEnabled,
-			text : itemText,
-			command : $($(item).children()[0]).data('uno'),
-			executionType : $($(item).children()[0]).data('type'),
+			enabled : !item.disabled,
+			text : itemName,
+			command : item.uno,
+			executionType : item.type,
 			children : []
 		};
 
-		for (var i = 0; i < children.length; i++) {
-			menuStructure['children'].push(this._generateMenuStructure(children[i], false));
+		if (item.menu)
+		{
+			for (var i = 0; i < item.menu.length; i++) {
+				var element = this._generateMenuStructure(item.menu[i], docType, false);
+				if (element)
+					menuStructure['children'].push(element);
+			}
 		}
 		return menuStructure;
 	}

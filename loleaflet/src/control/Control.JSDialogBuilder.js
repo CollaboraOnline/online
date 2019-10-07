@@ -411,7 +411,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (builder.wizard) {
 			$(sectionTitle).click(function() {
 				if (data.executionType === 'action') {
-					builder.map.menubar._executeAction($(builder.map.menubar._getItem(data.id).children()[0]))
+					builder.map.menubar._executeAction(undefined, data.id);
 				} else {
 					builder.map.sendUnoCommand(data.command)
 				}
