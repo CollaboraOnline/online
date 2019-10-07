@@ -787,6 +787,11 @@ tr.useritem > td > img {
 		width: 100%;
 }
 
+#mobile-wizard-content *{
+	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+	color: #212121;
+}
+
 #mobile-wizard-titlebar {
 	background-color: white;
 	height: 48px;
