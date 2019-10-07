@@ -125,6 +125,13 @@
         <webdav desc="Allow/deny webdav storage. Mutually exclusive with wopi." allow="false">
             <host desc="Hostname to allow" allow="false">localhost</host>
         </webdav>
+        <ssl desc="SSL settings">
+            <enable type="bool" default="false"></enable>
+            <cert_file_path desc="Path to the cert file" relative="false"></cert_file_path>
+            <key_file_path desc="Path to the key file" relative="false"></key_file_path>
+            <ca_file_path desc="Path to the ca file" relative="false"></ca_file_path>
+            <cipher_list desc="List of OpenSSL ciphers to accept. If empty the defaults are used. These can be overriden only if absolutely needed."></cipher_list>
+        </ssl>
     </storage>
 
     <tile_cache_persistent desc="Should the tiles persist between two editing sessions of the given document?" type="bool" default="true">true</tile_cache_persistent>

@@ -16,6 +16,7 @@
 
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
+#include <Poco/Net/HTTPClientSession.h>
 
 #include "Auth.hpp"
 #include "LOOLWSD.hpp"
@@ -208,6 +209,8 @@ public:
                                                const std::string& jailPath);
 
     static bool allowedWopiHost(const std::string& host);
+    static Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri);
+
 protected:
 
     /// Returns the root path of the jail directory of docs.
@@ -238,6 +241,7 @@ private:
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;
+    static bool SSLEnabled;
     /// Allowed/denied WOPI hosts, if any and if WOPI is enabled.
     static Util::RegexListMatcher WopiHosts;
 };

@@ -130,6 +130,27 @@ public:
         return getConfigValue(Application::instance().config(), name, def);
     }
 
+    /// Reads and processes path entries with the given property
+    /// from the configuration.
+    /// Converts relative paths to absolute.
+    static
+    std::string getPathFromConfig(const std::string& name)
+    {
+        return getPathFromConfig(Application::instance().config(), name);
+    }
+
+    /// Reads and processes path entries with the given property
+    /// from the configuration. If value is empty then it reads from fallback
+    /// Converts relative paths to absolute.
+    static
+    std::string getPathFromConfigWithFallback(const std::string& name, const std::string& fallbackName)
+    {
+        std::string value = LOOLWSD::getPathFromConfig(name);
+        if (value.empty())
+            return LOOLWSD::getPathFromConfig(fallbackName);
+        return value;
+    }
+
     /// Trace a new session and take a snapshot of the file.
     static void dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path);
 
@@ -253,19 +274,20 @@ private:
     /// Reads and processes path entries with the given property
     /// from the configuration.
     /// Converts relative paths to absolute.
-    std::string getPathFromConfig(const std::string& property) const
+    static
+    std::string getPathFromConfig(Poco::Util::LayeredConfiguration& config, const std::string& property)
     {
-        std::string path = config().getString(property);
-        if (path.empty() && config().hasProperty(property + "[@default]"))
+        std::string path = config.getString(property);
+        if (path.empty() && config.hasProperty(property + "[@default]"))
         {
             // Use the default value if empty and a default provided.
-            path = config().getString(property + "[@default]");
+            path = config.getString(property + "[@default]");
         }
 
         // Reconstruct absolute path if relative.
         if (!Poco::Path(path).isAbsolute() &&
-            config().hasProperty(property + "[@relative]") &&
-            config().getBool(property + "[@relative]"))
+            config.hasProperty(property + "[@relative]") &&
+            config.getBool(property + "[@relative]"))
         {
             path = Poco::Path(Application::instance().commandPath()).parent().append(path).toString();
         }
