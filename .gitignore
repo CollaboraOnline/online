@@ -43,6 +43,7 @@ cache
 test/data/hello-world.odt
 test/data/hello-world.ods
 test/data/hello-world.odp
+test/fakesockettest
 
 *.o
 *.exe
@@ -51,8 +52,10 @@ cscope*
 loolwsd.log
 *.log.*.gz
 *.lo
+*.mo
 
 # loleaflet
+loleaflet/build/dist
 loleaflet/dist
 loleaflet/npm-shrinkwrap.json
 
