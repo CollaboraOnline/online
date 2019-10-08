@@ -36,6 +36,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['grid'] = this._containerHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
+		this._controlHandlers['paneltabs'] = this._panelTabsHandler;
 		this._controlHandlers['container'] = this._containerHandler;
 		this._controlHandlers['window'] = this._containerHandler;
 		this._controlHandlers['borderwindow'] = this._containerHandler;
@@ -186,6 +187,74 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_panelTabsHandler: function(parentContainer, data, builder) {
+		var tabsContainer = L.DomUtil.create('div', 'ui-tabs mobile-wizard ui-widget', parentContainer);
+		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content mobile-wizard ui-widget', parentContainer);
+
+		var title1 = builder._cleanText(data.children[1].children[0].id);
+		var icon1 = builder._createIconPath(title1);
+
+		var tab1 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
+
+		var button = L.DomUtil.create('img', 'ui-tab-content mobile-wizard unobutton', tab1);
+		button.src = icon1;
+
+		var label = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab1);
+		label.innerHTML = title1;
+
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', contentsContainer);
+		contentDiv.title = title1;
+
+		builder._currentDepth++;
+		for (var i = 0; i < data.children[1].children[0].children.length; i++) {
+			builder.build(contentDiv, [data.children[1].children[0].children[i]]);
+		}
+		builder._currentDepth--;
+
+		$(contentDiv).hide();
+
+
+		var tab2 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
+
+		var title2 = builder._cleanText(data.children[3].children[0].id);
+		var icon2 = builder._createIconPath(title2);
+
+		var button2 = L.DomUtil.create('img', 'ui-tab-content mobile-wizard unobutton', tab2);
+		button2.src = icon2;
+
+		var label2 = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab2);
+		label2.innerHTML = title2;
+
+		var contentDiv2 = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', contentsContainer);
+		contentDiv2.title = title2;
+
+		builder._currentDepth++;
+		for (i = 0; i < data.children[3].children[0].children.length; i++) {
+			builder.build(contentDiv2, [data.children[3].children[0].children[i]]);
+		}
+		builder._currentDepth--;
+
+		$(contentDiv2).hide();
+		if (builder.wizard) {
+			$(tab1).click(function() {
+				$(tab1).addClass('selected');
+				$(tab2).removeClass('selected');
+				$(contentDiv).show();
+				$(contentDiv2).hide();
+			});
+			$(tab2).click(function() {
+				$(tab2).addClass('selected');
+				$(tab1).removeClass('selected');
+				$(contentDiv).hide();
+				$(contentDiv2).show();
+			});
+		} else {
+			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+		}
+
+		return false;
+	},
+
 	_radiobuttonControl: function(parentContainer, data, builder) {
 		var radiobutton = L.DomUtil.createWithId('input', data.id, parentContainer);
 		radiobutton.type = 'radio';
@@ -325,9 +394,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_createIconPathFronUnoCommand: function(command) {
-		var commandName = command.substring('.uno:'.length);
-		return 'images/lc_' + commandName.toLowerCase() + '.svg';
+	_createIconPath: function(name) {
+		var cleanName = name;
+		var prefixLength = '.uno:'.length;
+		if (name.substr(0, prefixLength) == '.uno:')
+			cleanName = name.substr(prefixLength);
+		return 'images/lc_' + cleanName.toLowerCase() + '.svg';
 	},
 
 	_unoToolButton: function(parentContainer, data, builder) {
@@ -339,7 +411,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var id = data.command.substr('.uno:'.length);
 			div.id = id;
 
-			var icon = builder._createIconPathFronUnoCommand(data.command);
+			var icon = builder._createIconPath(data.command);
 			var buttonId = id + 'img';
 
 			button = L.DomUtil.create('img', 'ui-content unobutton', div);
@@ -459,13 +531,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var handler = this._controlHandlers[childType];
 
-			if (handler)
-				processChildren = handler(childObject, childData, this);
-			else
-				console.warn('Unsupported control type: \"' + childType + '\"');
+			var twoPanelsAsChildren = childData.children && childData.children.length == 5
+				&& childData.children[1] && childData.children[1].type == 'panel'
+				&& childData.children[3] && childData.children[3].type == 'panel';
 
-			if (processChildren && childData.children != undefined)
-				this.build(childObject, childData.children);
+			if (twoPanelsAsChildren) {
+				handler = this._controlHandlers['paneltabs'];
+				processChildren = handler(childObject, childData, this);
+			} else {
+				if (handler)
+					processChildren = handler(childObject, childData, this);
+				else
+					console.warn('Unsupported control type: \"' + childType + '\"');
+
+				if (processChildren && childData.children != undefined)
+					this.build(childObject, childData.children);
+			}
 		}
 	}
 });

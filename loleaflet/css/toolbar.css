@@ -1008,3 +1008,24 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 .menu-entry-no-icon {
 	padding-left: 42px;
 }
+
+.ui-tabs.mobile-wizard {
+	text-align: center;
+}
+
+.ui-tab.mobile-wizard {
+	display: inline-table;
+	height: 36px;
+	line-height: 36px;
+    vertical-align: middle;
+	margin: 5px;
+	padding: 5px;
+	border-radius: 10px;
+	border: solid 1px #0b87e7;
+}
+
+.ui-tab.selected.mobile-wizard {
+	color: white;
+	background-color: #eaf5ff;
+	border: none;
+}
