@@ -756,14 +756,22 @@ L.TileLayer = L.GridLayer.extend({
 	_onJSDialogMsg: function (textMsg) {
 		if (window.mode.isMobile() && window.mobileWizard === true) {
 			var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
-			this._mergeStylesAndTextPropertyPanels(msgData);
+			// by now jsdialog is used only for sidebar
+			this._modifySidebarLayout(msgData);
 			this._openMobileWizard(msgData);
 		}
 	},
 
+	_modifySidebarLayout: function (data) {
+		this._mergeStylesAndTextPropertyPanels(data);
+		this._removeItems(data, ['editcontour']);
+	},
+
 	_mergeStylesAndTextPropertyPanels: function (data) {
 		var stylesChildren = this._removeStylesPanelAndGetContent(data);
-		this._addChildrenToTextPanel(data, stylesChildren);
+		if (stylesChildren !== null) {
+			this._addChildrenToTextPanel(data, stylesChildren);
+		}
 	},
 
 	_removeStylesPanelAndGetContent: function (data) {
@@ -800,6 +808,26 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		return null;
+	},
+
+	_removeItems: function (data, items) {
+		if (data.children) {
+			var childRemoved = false;
+			for (var i = 0; i < data.children.length; i++) {
+				for (var j = 0; j < items.length; j++) {
+					if (data.children[i].id === items[j]) {
+						data.children.splice(i, 1);
+						childRemoved = true;
+						continue;
+					}
+				}
+				if (childRemoved === true) {
+					i = i - 1;
+				} else {
+					this._removeItems(data.children[i], items);
+				}
+			}
+		}
 	},
 
 	_onGraphicSelectionMsg: function (textMsg) {
