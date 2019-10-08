@@ -1956,15 +1956,17 @@ function onUpdateParts(e) {
 		return;
 	}
 
-	if (e.docType === 'presentation') {
-		toolbar.set('prev', {hint: _('Previous slide')});
-		toolbar.set('next', {hint: _('Next slide')});
-	}
-	else {
-		toolbar.hide('presentation');
-		toolbar.hide('insertpage');
-		toolbar.hide('duplicatepage');
-		toolbar.hide('deletepage');
+	if (!window.mode.isMobile()) {
+		if (e.docType === 'presentation') {
+			toolbar.set('prev', {hint: _('Previous slide')});
+			toolbar.set('next', {hint: _('Next slide')});
+		}
+		else {
+			toolbar.hide('presentation');
+			toolbar.hide('insertpage');
+			toolbar.hide('duplicatepage');
+			toolbar.hide('deletepage');
+		}
 	}
 
 	if (e.docType !== 'spreadsheet') {
