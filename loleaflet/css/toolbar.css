@@ -18,7 +18,20 @@
 	#buttonnone + label, #buttonbefore + label, #buttonafter + label, #buttonoptimal + label, #buttonparallel + label, #buttonnone + label, #buttonthrough + label{
 		padding-left: 0;
 	}
-	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard{
+	#Color > img{
+		border-radius:100px;
+		background-color: #696969;
+	}
+	#Bold > span, #Italic > span, #Underline > span, #Strikeout > span, #StyleApply > span, #StyleUpdateByExample > span, #StyleNewByExample > span, #Shadowed > span, #Grow > span, #Shrink > span, #Color > span, #Spacing > span, #SuperScript > span, #SubScript > span{
+		display: none !important;
+	}
+	#Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript{
+		padding: 24px 28px 24px 28px !important;
+		margin: 0px !important;
+		float:left;
+	}
+	#Shadowed, #StyleNewByExample + div{clear:both;}
+	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
 		margin: 0;
     padding: 0;
     -webkit-appearance: none;
@@ -27,10 +40,10 @@
 		padding: 24px 32px 24px 32px;
 		background-size: 24px !important;
 	}
-	#buttonbefore:focus, #buttonafter:focus, #buttonoptimal:focus, #buttonparallel:focus, #buttonnone:focus, #buttonthrough:focus,  #bottom:focus, #top:focus, #standard:focus{
+	#buttonbefore:focus, #buttonafter:focus, #buttonoptimal:focus, #buttonparallel:focus, #buttonnone:focus, #buttonthrough:focus, #bottom:focus, #top:focus, #standard:focus, #Bold:focus, #Bold:active, #Italic:focus, #Italic:active, #Underline:focus, #Underline:active, #Strikeout:focus, #Strikeout:active, #StyleApply:focus, #StyleApply:active, #StyleUpdateByExample:focus, #StyleUpdateByExample:active, #StyleNewByExample:focus, #StyleNewByExample:active, #Spacing:active, #SuperScript:active, #SubScript:active, #Shadowed:active, #Spacing:active, #SuperScript:active, #SubScript:active, #Grow:active, #Shrink:active, #Color:active {
 		border-radius: 4px;
     outline: none;
-    background-color: #e5f1ff;
+    background-color: #e5f1ff !important;
 	}
 	#buttonbefore{background: url(images/sc_wrapleft.svg) no-repeat center;}
 	#buttonafter{background: url(images/sc_wrapright.svg) no-repeat center;}
