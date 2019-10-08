@@ -116,7 +116,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
             if ((flags & WebSocket::FrameFlags::FRAME_FLAG_FIN) != WebSocket::FrameFlags::FRAME_FLAG_FIN)
             {
                 // One WS message split into multiple frames.
-                // TODO: Is this even possible with Poco if we never construct such messages outselves?
+                // TODO: Is this even possible with Poco if we never construct such messages ourselves?
                 LOG_WRN("SocketProcessor [" << name << "]: Receiving multi-part frame.");
                 while (true)
                 {

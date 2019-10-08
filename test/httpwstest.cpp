@@ -1592,7 +1592,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
     auto res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: xxx yyy zzzz"), res);
-    // Can we edit the coment?
+    // Can we edit the comment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
     sendTextFrame(socket, "uno .uno:SelectAll", testname);
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
@@ -1617,7 +1617,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
     res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
 
-    // Can we still edit the coment?
+    // Can we still edit the comment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nand now for something completely different", testname);
     sendTextFrame(socket, "uno .uno:SelectAll", testname);
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
@@ -1651,7 +1651,7 @@ void HTTPWSTest::testInsertAnnotationWriter()
     res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
-    // Can we still edit the coment?
+    // Can we still edit the comment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nblah blah xyz", testname);
     sendTextFrame(socket, "uno .uno:SelectAll", testname);
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
@@ -1685,7 +1685,7 @@ void HTTPWSTest::testEditAnnotationWriter()
     res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: blah blah xyz"), res);
 
-    // Can we still edit the coment?
+    // Can we still edit the comment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nand now for something completely different", testname);
     sendTextFrame(socket, "uno .uno:SelectAll", testname);
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
@@ -1722,7 +1722,7 @@ void HTTPWSTest::testEditAnnotationWriter()
     res = getResponseString(socket, "textselectioncontent:", testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
-    // Can we still edit the coment?
+    // Can we still edit the comment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nnew text different", testname);
     sendTextFrame(socket, "uno .uno:SelectAll", testname);
     sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);

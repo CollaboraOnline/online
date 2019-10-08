@@ -411,7 +411,7 @@ static bool cleanupChildren()
     return static_cast<int>(NewChildren.size()) != count;
 }
 
-/// Decides how many children need spawning and spanws.
+/// Decides how many children need spawning and spawns.
 /// Returns the number of children requested to spawn,
 /// -1 for error.
 static int rebalanceChildren(int balance)
@@ -747,7 +747,7 @@ public:
 };
 
 /// This thread listens for and accepts prisoner kit processes.
-/// And also cleans up and balances the correct number of childen.
+/// And also cleans up and balances the correct number of children.
 PrisonerPoll PrisonerPoll;
 
 /// Helper class to hold default configuration entries.

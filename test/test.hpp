@@ -31,7 +31,7 @@ std::vector<int> getDocKitPids();
 /// Get the PID of the forkit
 std::vector<int> getForKitPids();
 
-/// How many live lookit processes do we have ?
+/// How many live loolkit processes do we have ?
 int getLoolKitProcessCount();
 
 #endif

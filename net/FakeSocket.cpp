@@ -27,8 +27,8 @@
 // A "fake socket" is represented by a number, a smallish integer, just like a real socket.
 //
 // There is one FakeSocketPair for each two sequential fake socket numbers. When you create one, you
-// will always get the lower (even) number in a pair. The higher number wil be returned if you
-// sucessfully call fakeSocketConnect() from the lower number to some other fake socket.
+// will always get the lower (even) number in a pair. The higher number will be returned if you
+// successfully call fakeSocketConnect() from the lower number to some other fake socket.
 //
 // After you create a fake socket, there is basically just two things you can do with it:
 //
@@ -312,7 +312,7 @@ int fakeSocketListen(int fd)
         errno = EBADF;
         return -1;
     }
-    
+
     FakeSocketPair& pair = fds[fd/2];
 
     if (fd&1 || pair.fd[1] != -1)
@@ -321,7 +321,7 @@ int fakeSocketListen(int fd)
         errno = EISCONN;
         return -1;
     }
-    
+
     if (pair.listening)
     {
         FAKESOCKET_LOG("FakeSocket EIO: Listening on #" << fd << flush());
@@ -413,13 +413,13 @@ int fakeSocketAccept4(int fd)
 
     while (pair.connectingFd == -1)
         theCV.wait(lock);
-    
+
     assert(pair.connectingFd >= 0);
     assert(static_cast<unsigned>(pair.connectingFd/2) < fds.size());
     assert((pair.connectingFd&1) == 0);
 
     FakeSocketPair& pair2 = fds[pair.connectingFd/2];
-    
+
     assert(pair2.fd[1] == -1);
     assert(pair2.fd[0] == pair.connectingFd);
 

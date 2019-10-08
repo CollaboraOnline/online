@@ -146,7 +146,7 @@ public:
             "\n"
             END_CHUNK
 
-            "  4 room:for expansion!! cf. leading spaces and nasies <>!\"\'?=)\r\n"
+            "  4 room:for expansion!! cf. leading spaces and nasties <>!\"\'?=)\r\n"
             "And "
             END_CHUNK
 

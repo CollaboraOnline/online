@@ -661,13 +661,13 @@ namespace Util
         return true;
     }
 
-    /// Split a string in two at the delimeter and give the delimiter to the first.
+    /// Split a string in two at the delimiter and give the delimiter to the first.
     static
-    std::pair<std::string, std::string> splitLast2(const char* s, const int length, const char delimeter = ' ')
+    std::pair<std::string, std::string> splitLast2(const char* s, const int length, const char delimiter = ' ')
     {
         if (s != nullptr && length > 0)
         {
-            const int pos = getLastDelimiterPosition(s, length, delimeter);
+            const int pos = getLastDelimiterPosition(s, length, delimiter);
             if (pos < length)
                 return std::make_pair(std::string(s, pos + 1), std::string(s + pos + 1));
         }

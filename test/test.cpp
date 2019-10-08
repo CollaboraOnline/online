@@ -301,7 +301,7 @@ std::vector<int> getForKitPids()
     return pids;
 }
 
-/// How many live lookit processes do we have ?
+/// How many live loolkit processes do we have ?
 int getLoolKitProcessCount()
 {
     return getKitPids().size();

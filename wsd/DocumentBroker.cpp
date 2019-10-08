@@ -856,7 +856,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 {
     assertCorrectThread();
 
-    // Record that we got a response to avoid timeing out on saving.
+    // Record that we got a response to avoid timing out on saving.
     _lastSaveResponseTime = std::chrono::steady_clock::now();
 
     const bool isSaveAs = !saveAsPath.empty();
@@ -1660,14 +1660,14 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     }
     else
     {
-        tilesOnFlyUpperLimit = 200; // Have a big number here to get all tiles requested by file openning
+        tilesOnFlyUpperLimit = 200; // Have a big number here to get all tiles requested by file opening
     }
 
     // Drop tiles which we are waiting for too long
     session->removeOutdatedTilesOnFly();
 
     // All tiles were processed on client side that we sent last time, so we can send
-    // a new banch of tiles which was invalidated / requested in the meantime
+    // a new batch of tiles which was invalidated / requested in the meantime
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
     if (!requestedTiles.empty())
     {

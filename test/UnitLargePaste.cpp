@@ -56,7 +56,7 @@ void UnitLargePaste::invokeTest()
     helpers::sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents, testname);
 
     // Check if the server is still alive.
-    // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
+    // This resulted first in a hang, as response for the message never arrived, then a bit later in a Poco::TimeoutException.
     helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
     helpers::sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
     const auto selection = helpers::assertResponseString(socket, "textselectioncontent:", testname);

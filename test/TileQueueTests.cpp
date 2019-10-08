@@ -432,7 +432,7 @@ void TileQueueTests::testCallbackInvalidation()
 
     CPPUNIT_ASSERT_EQUAL(std::string("callback all 0 284, 1418, 11105, 275, 0"), payloadAsString(queue.get()));
 
-    // invalidate everywhing with EMPTY, but keep the different part intact
+    // invalidate everything with EMPTY, but keep the different part intact
     queue.put("callback all 0 284, 1418, 11105, 275, 0");
     queue.put("callback all 0 4299, 1418, 7090, 275, 1");
     queue.put("callback all 0 4299, 10418, 7090, 275, 0");

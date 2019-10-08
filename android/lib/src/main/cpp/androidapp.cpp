@@ -146,7 +146,7 @@ static void send2JS(jclass loActivityClz, jobject loActivityObj, const std::vect
 /// Close the document.
 void closeDocument()
 {
-    // Close one end of the socket pair, that will wake up the forwarding thread that was contstructed in HULLO
+    // Close one end of the socket pair, that will wake up the forwarding thread that was constructed in HULLO
     if (fakeSocketClose(closeNotificationPipeForForwardingThread[0]) == 0)
     {
         LOG_DBG("Waiting for LOOLWSD to finish...");

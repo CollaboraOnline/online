@@ -102,7 +102,7 @@ bool lockdown(Type type)
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, AUDIT_ARCH_NR, 1, 0),
         BPF_STMT(BPF_RET+BPF_K,         SECCOMP_RET_KILL),
 
-        // Load sycall number
+        // Load syscall number
         BPF_STMT(BPF_LD+BPF_W+BPF_ABS,  offsetof(struct seccomp_data, nr)),
 
         // First white-list the syscalls we frequently use.

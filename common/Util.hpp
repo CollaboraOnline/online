@@ -698,11 +698,11 @@ int main(int argc, char**argv)
         return std::string(message, size);
     }
 
-    /// Split a string in two at the delimeter, removing it.
+    /// Split a string in two at the delimiter, removing it.
     inline
-    std::pair<std::string, std::string> split(const char* s, const int length, const char delimeter = ' ', bool removeDelim = true)
+    std::pair<std::string, std::string> split(const char* s, const int length, const char delimiter = ' ', bool removeDelim = true)
     {
-        const size_t size = getDelimiterPosition(s, length, delimeter);
+        const size_t size = getDelimiterPosition(s, length, delimiter);
 
         std::string after;
         int after_pos = size + (removeDelim? 1: 0);
@@ -712,18 +712,18 @@ int main(int argc, char**argv)
         return std::make_pair(std::string(s, size), after);
     }
 
-    /// Split a string in two at the delimeter, removing it.
+    /// Split a string in two at the delimiter, removing it.
     inline
-    std::pair<std::string, std::string> split(const std::string& s, const char delimeter = ' ', bool removeDelim = true)
+    std::pair<std::string, std::string> split(const std::string& s, const char delimiter = ' ', bool removeDelim = true)
     {
-        return split(s.c_str(), s.size(), delimeter, removeDelim);
+        return split(s.c_str(), s.size(), delimiter, removeDelim);
     }
 
-    /// Split a string in two at the delimeter.
+    /// Split a string in two at the delimiter.
     inline
-    std::pair<std::string, std::string> splitLast(const char* s, const int length, const char delimeter = ' ', bool removeDelim = true)
+    std::pair<std::string, std::string> splitLast(const char* s, const int length, const char delimiter = ' ', bool removeDelim = true)
     {
-        const size_t size = getLastDelimiterPosition(s, length, delimeter);
+        const size_t size = getLastDelimiterPosition(s, length, delimiter);
 
         std::string after;
         int after_pos = size + (removeDelim? 1: 0);
@@ -733,11 +733,11 @@ int main(int argc, char**argv)
         return std::make_pair(std::string(s, size), after);
     }
 
-    /// Split a string in two at the delimeter, removing it.
+    /// Split a string in two at the delimiter, removing it.
     inline
-    std::pair<std::string, std::string> splitLast(const std::string& s, const char delimeter = ' ', bool removeDelim = true)
+    std::pair<std::string, std::string> splitLast(const std::string& s, const char delimiter = ' ', bool removeDelim = true)
     {
-        return splitLast(s.c_str(), s.size(), delimeter, removeDelim);
+        return splitLast(s.c_str(), s.size(), delimiter, removeDelim);
     }
 
     /// Append a length bytes to a vector, or strlen of data as a C string if not provided

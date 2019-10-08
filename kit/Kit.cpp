@@ -1550,7 +1550,7 @@ private:
         }
 
         // Since callback messages are processed on idle-timer,
-        // we could recieve callbacks after destroying a view.
+        // we could receive callbacks after destroying a view.
         // Retain the CallbackDescriptor object, which is shared with Core.
         // _viewIdToCallbackDescr.erase(viewId);
 
@@ -1674,7 +1674,7 @@ private:
             }
         }
         // 0 for preventing selection of the first always
-        // 1 for preventing the new users from directly beoming the editors
+        // 1 for preventing new users from directly becoming editors
         if (_editorId != fastestUser && (maxSpeed != 0 && maxSpeed != 1)) {
             if (!_editorChangeWarning && _editorId != -1)
             {
@@ -2305,7 +2305,7 @@ protected:
         else if (tokens.size() == 3 && tokens[0] == "setconfig")
         {
 #if !MOBILEAPP
-            // Currently onlly rlimit entries are supported.
+            // Currently only rlimit entries are supported.
             if (!Rlimit::handleSetrlimitCommand(tokens))
             {
                 LOG_ERR("Unknown setconfig command: " << message);
@@ -2404,7 +2404,7 @@ public:
             return -1;
         }
 #endif
-        // Report the number of events we processsed.
+        // Report the number of events we processed.
         return eventsSignalled;
     }
 };

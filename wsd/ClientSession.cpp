@@ -157,7 +157,7 @@ bool ClientSession::disconnectFromKit()
     return true; // just get on with it
 }
 
-// Allow 20secs for the clipboard and disconection to come.
+// Allow 20secs for the clipboard and disconnection to come.
 bool ClientSession::staleWaitDisconnect(const std::chrono::steady_clock::time_point &now)
 {
     if (_state != SessionState::WAIT_DISCONNECT)
@@ -1693,7 +1693,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         return;
     }
 
-    // Visible area can have negativ value as position, but we have tiles only in the positive range
+    // Visible area can have negative value as position, but we have tiles only in the positive range
     Util::Rectangle normalizedVisArea = getNormalizedVisibleArea();
 
     std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
@@ -1704,7 +1704,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if(!normalizedVisArea.intersects(invalidateRect))
         return;
 
-    if( part == -1 ) // If no part is specifed we use the part used by the client
+    if( part == -1 ) // If no part is specified we use the part used by the client
         part = _clientSelectedPart;
 
     std::vector<TileDesc> invalidTiles;

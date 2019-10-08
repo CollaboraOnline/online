@@ -1253,7 +1253,7 @@ void TileCacheTests::testTileWireIDHandling()
     sendChar(socket, 'x', skNone, testname);
     assertResponseString(socket, "invalidatetiles:", testname);
 
-    // For the second input wsd will send one tile, since some of them are indentical
+    // For the second input wsd will send one tile, since some of them are identical
     arrivedTiles = 0;
     do
     {
@@ -1398,7 +1398,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
 
     CPPUNIT_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTiles > 1);
 
-    // For the later inputs wsd will send one tile, since other ones are indentical
+    // For the later inputs wsd will send one tile, since other ones are identical
     for(int i = 0; i < 5; ++i)
     {
         // Type an other character
@@ -1461,7 +1461,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     sendChar(socket1, 'x', skNone, testname);
     assertResponseString(socket1, "invalidatetiles:", testname);
 
-    // For the second input wsd will send one tile, since other tiles are indentical
+    // For the second input wsd will send one tile, since other tiles are identical
     arrivedTiles = 0;
     do
     {

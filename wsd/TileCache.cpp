@@ -129,7 +129,7 @@ double TileCache::getTileBeingRenderedElapsedTimeMs(const TileDesc &tileDesc) co
 {
     auto it = _tilesBeingRendered.find(tileDesc);
     if (it == _tilesBeingRendered.end())
-        return -1.0; // Negativ value means that we did not find tileBeingRendered object
+        return -1.0; // Negative value means that we did not find tileBeingRendered object
 
     return it->second->getElapsedTimeMs();
 }
