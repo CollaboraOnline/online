@@ -62,19 +62,18 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:EditStyle'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false},
+				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false, mobile: false},
 				{type: 'separator', mobileapp: false},
-				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
-				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action'},
-				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action', mobile: false},
+				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action', mobile: false},
+				{name: _('Reset zoom'), id: 'zoomreset', type: 'action', mobile:false },
 				{name: _('Show Ruler'), id: 'showruler', type: 'action'},
-				{type: 'separator'},
+				{type: 'separator', mobile: false},
 				{uno: '.uno:ControlCodes'},
-				{type: 'separator'},
+				{type: 'separator', mobile: false},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:Sidebar', mobile: false},
-				{id: 'mobile-wizard',  type: 'action', name: _('Mobile Wizard'), mobile: true, desktop: false}
 			]
 			},
 			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', mobile: false, type: 'menu', menu: [
@@ -284,13 +283,12 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu', menu: [
 				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
-				{type: 'separator', mobileapp: false},
-				{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
-				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
-				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
-				{uno: '.uno:Sidebar'},
-				{id: 'mobile-wizard',  type: 'action', name: _('Mobile Wizard'), mobile: true, desktop: false}]
-			},
+				{type: 'separator', mobileapp: false, mobile: false},
+				{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action', mobile: false },
+				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action', mobile: false},
+				{name: _('Reset zoom'), id: 'zoomreset', type: 'action', mobile: false},
+				{uno: '.uno:Sidebar', mobile: false}
+			]},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', mobile: false, type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
@@ -303,7 +301,7 @@ L.Control.Menubar = L.Control.extend({
                                {type: 'separator'},
                                {uno: '.uno:HeaderAndFooter'}]
 			},
-			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
+			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', mobile: false, type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
 				{uno: '.uno:PageSetup'},
@@ -335,13 +333,13 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
-				{uno: '.uno:SpellDialog'},
+				{uno: '.uno:SpellDialog', mobile: false},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobileapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobileapp: false, mobile: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
@@ -383,7 +381,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{type: 'separator', mobileapp: false},
 				{uno: '.uno:Sidebar', mobile: false},
-				{id: 'mobile-wizard',  type: 'action', name: _('Mobile Wizard'), mobile: true, desktop: false}
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', mobile: false, type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -434,10 +431,10 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:DataSort'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
-				{uno: '.uno:Validation'},
+				{uno: '.uno:Validation', mobile: false },
 				{type: 'separator'},
 				{uno: '.uno:DataFilterAutoFilter'},
-				{name: _UNO('.uno:FilterMenu', 'spreadsheet'), type: 'menu', menu: [
+				{name: _UNO('.uno:FilterMenu', 'spreadsheet'), mobile: false, type: 'menu', menu: [
 					{uno: '.uno:DataFilterStandardFilter'},
 					{uno: '.uno:DataFilterSpecialFilter'},
 					{type: 'separator'},
@@ -454,14 +451,14 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:ShowDetail'}]}
 			]},
 			{name: _UNO('.uno:ToolsMenu', 'spreadsheet'), id: 'tools', type: 'menu', menu: [
-				{uno: '.uno:SpellDialog'},
+				{uno: '.uno:SpellDialog', mobile: false},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-				{uno: '.uno:GoalSeekDialog'}
+				{uno: '.uno:GoalSeekDialog', mobile: false}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobileapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', mobileapp: false, mobile: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', mobile: false, tablet: false}
