@@ -935,6 +935,7 @@ tr.useritem > td > img {
 	background-color: white;
 	height: 48px;
 	color: #636363;
+	border-bottom: 1px solid #dddddd !important;
 }
 
 .ui-content.mobile-wizard {
