@@ -179,7 +179,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_panelHandler: function(parentContainer, data, builder) {
-		var title = data.children[0].id;
+		var title = data.text;
 		var contentNode = data.children[0];
 
 		builder._explorableEntry(parentContainer, title, contentNode, builder);
