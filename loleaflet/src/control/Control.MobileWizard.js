@@ -3,13 +3,14 @@
  * L.Control.MobileWizard
  */
 
-/* global $ w2ui*/
+/* global $ w2ui */
 L.Control.MobileWizard = L.Control.extend({
 
 	_inMainMenu: true,
 	_isActive: false,
 	_currentDepth: 0,
 	_mainTitle: '',
+	_isTabMode: false,
 
 	onAdd: function (map) {
 		this.map = map;
@@ -24,6 +25,9 @@ L.Control.MobileWizard = L.Control.extend({
 		this._inMainMenu = true;
 		this.content.empty();
 		this.backButton.addClass('close-button');
+		$('#mobile-wizard-tabs').empty();
+		$('#mobile-wizard-content').css('top', '48px');
+		this._isTabMode = false;
 	},
 
 	_setupBackButton: function() {
@@ -52,8 +56,16 @@ L.Control.MobileWizard = L.Control.extend({
 		return this._currentDepth;
 	},
 
+	setTabs: function(tabs) {
+		$('#mobile-wizard-tabs').empty();
+		$('#mobile-wizard-tabs').append(tabs);
+		$('#mobile-wizard-content').css('top', '110px');
+		this._isTabMode = true;
+	},
+
 	goLevelDown: function(contentToShow) {
-		this.backButton.removeClass('close-button');
+		if (!this._isTabMode || this._currentDepth > 0)
+			this.backButton.removeClass('close-button');
 
 		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
 		$(titles).hide('slide', { direction: 'left' }, 'fast');
@@ -66,7 +78,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	goLevelUp: function() {
-		if (this._inMainMenu) {
+		if (this._inMainMenu || (this._isTabMode && this._currentDepth == 1)) {
 			this._hideWizard();
 			this._currentDepth = 0;
 			if (window.mobileWizard === true) {
@@ -87,7 +99,7 @@ L.Control.MobileWizard = L.Control.extend({
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide();
 			$('.ui-header.level-' + this._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
 
-			if (this._currentDepth == 0) {
+			if (this._currentDepth == 0 || (this._isTabMode && this._currentDepth == 1)) {
 				this._inMainMenu = true;
 				this.backButton.addClass('close-button');
 			}

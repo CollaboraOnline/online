@@ -192,7 +192,8 @@ ifelse(MOBILEAPP,[true],
           <td id="mobile-wizard-title" class="ui-widget"></td>
         </tr>
       </table>
-      <div id="mobile-wizard-content">
+      <div id="mobile-wizard-tabs"></div>
+      <div id="mobile-wizard-content"></div>
     </div>
 
     <!-- Remove if you don't want the About dialog -->
