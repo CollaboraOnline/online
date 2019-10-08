@@ -100,7 +100,7 @@ public:
             messages[i].push_back("useractive");
         }
 
-        // randonly queue 'a', 'b' etc. key-press / space to each socket.
+        // randomly queue 'a', 'b' etc. key-press / space to each socket.
         std::mt19937 randMt(0);
         for (int i = 0; i < count; ++i)
         {
