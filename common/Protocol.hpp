@@ -109,6 +109,7 @@ namespace LOOLProtocol
         {
             return tokens;
         }
+        tokens.reserve(8);
 
         const char* start = data;
         const char* end = data;
