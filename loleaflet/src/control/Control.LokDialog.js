@@ -127,25 +127,6 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('closesidebar', this._closeSidebar, this);
 		map.on('editorgotfocus', this._onEditorGotFocus, this);
 		L.DomEvent.on(document, 'mouseup', this.onCloseCurrentPopUp, this);
-
-		this.slideAnimationDuration = 250;//sidebar open animation duration
-
-		//open sidebar on left swipe on document view
-		var documentContainerHammer = new Hammer(document.getElementById('document-container'));
-		documentContainerHammer.on('swipeleft', function (e) {
-			var startX = e.changedPointers[0].clientX - e.deltaX;
-			if (startX < window.screen.width * 0.7)//detect open swipes only near screen edge
-				return;
-			map._socket.sendMessage('uno .uno:Sidebar');
-		})
-
-		//close sidebar on right swipe on sidebar panel, also on document view(for tablets)
-		var sidebarPanelHammer = new Hammer(document.getElementById('sidebar-panel'));
-		[sidebarPanelHammer, documentContainerHammer].forEach(function (hammerElement) {
-			hammerElement.on('swiperight', function () {
-				map._socket.sendMessage('uno .uno:Sidebar');
-			})
-		})
 	},
 
 	_dialogs: {},
@@ -608,19 +589,6 @@ L.Control.LokDialog = L.Control.extend({
 
 		// Render window.
 		this._sendPaintWindowRect(id);
-
-		//play slide from right animation on mobile and tablets
-		if (L.Browser.mobile) {
-			var sidebar = $('#sidebar-dock-wrapper');
-			var bottomBar = $('#toolbar-down');
-			sidebar.css('bottom', '0px');//to take the space occupied by the bottom menu
-			sidebar.css('position', 'fixed');//fixed position in order to prevent scrollbars to appear while opening/closing
-			bottomBar.animate({ 'opacity': 0 }, this.slideAnimationDuration);
-			sidebar.css('margin-right', -width * ratio + 'px').animate({ 'margin-right': '0px' }, this.slideAnimationDuration, function () {
-				$('#toolbar-down').hide();
-				sidebar.css('position', '');
-			});
-		}
 	},
 
 	_setupWindowEvents: function(id, canvas/*, dlgInput*/) {
@@ -739,22 +707,6 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onSidebarClose: function(dialogId) {
-		//play slide animation to right if this is a mobile or tablet
-		if (L.Browser.mobile) {
-			var sidebar = $('#sidebar-dock-wrapper');
-			var bottomBar = $('#toolbar-down');
-			var sidebarWidth = $('#sidebar-dock-wrapper').width();
-			bottomBar.animate({ 'opacity': 1 }, this.slideAnimationDuration);
-			sidebar.css('position', 'fixed');//fixed position in order to prevent scrollbars to appear while opening/closing
-			sidebar.animate({ 'margin-right': -sidebarWidth + 'px' }, this.slideAnimationDuration, function () {
-				//remove artifacts from the animation
-				sidebar.css('margin-right', '');
-				sidebar.css('display', '');
-				sidebar.css('position', '');
-				$('#toolbar-down').show();
-			});
-		}
-
 		this._resizeSidebar(dialogId, 0);
 		$('#' + this._currentDeck.strId).remove();
 		this._map.focus();
