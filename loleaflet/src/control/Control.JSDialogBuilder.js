@@ -56,6 +56,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:CharFontName'] = this._fontNameControl;
 		this._toolitemHandlers['.uno:FontHeight'] = this._fontHeightControl;
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
 
 		this._currentDepth = 0;
 	},
@@ -454,12 +455,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
-		var colorContainer = L.DomUtil.create('div', '', parentContainer);
+		var colorContainer = L.DomUtil.create('div', 'colorspan', parentContainer);
 
 		if (data.enabled == 'false')
 			$(colorContainer).attr('disabled', 'disabled');
 
-		var toolbar = $(colorContainer);
+		var imageContainer = L.DomUtil.create('div', 'colorimagecontainer', colorContainer);
+		var image = L.DomUtil.create('img', 'colorimage', imageContainer);
+		var icon = builder._createIconPath(data.command);
+		image.src = icon;
+
+		var toolbarContainer = L.DomUtil.create('div', 'colorspan', colorContainer);
+		var toolbar = $(toolbarContainer);
 		var id = 'colorselector-' + builder._colorPickers.length;
 		var items = [{type: 'color',  id: 'color'}];
 		toolbar.w2toolbar({

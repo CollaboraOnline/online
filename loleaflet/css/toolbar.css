@@ -41,10 +41,10 @@
 		margin: 0px !important;
 		float:left;
 	}
-	[name='colorselector-0'] {
-		padding: 24px 0px 24px 20px !important;
-		margin: 0px !important;
-		float:left;
+	.colorspan {
+		width: 120px;
+		float: left;
+		padding: 0px 10px 0px 10px !important;
 	}
 	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells{clear:both;}
 	#DecrementIndent + input:disabled{display: none;}
@@ -1067,11 +1067,16 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	color: #0b87e7;
 }
 
-#tb_colorselector-0_item_color .w2ui-tb-caption > div {
+[id|=tb_colorselector] .w2ui-tb-caption > div {
 	height: 32px !important;
 	width: 32px !important;
 }
 
-[name='colorselector-0'] {
+[name|=colorselector] {
 	width: 80px;
+}
+
+.colorimage {
+	float: left;
+	height: 32px;
 }
