@@ -337,14 +337,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.command) {
 			var id = data.command.substr('.uno:'.length);
+			div.id = id;
+
 			var icon = builder._createIconPathFronUnoCommand(data.command);
+			var buttonId = id + 'img';
 
 			button = L.DomUtil.create('img', 'ui-content unobutton', div);
 			button.src = icon;
-			button.id = id;
+			button.id = buttonId;
 
 			var label = L.DomUtil.create('span', 'ui-content unolabel', div);
-			label.for = id;
+			label.for = buttonId;
 			label.innerHTML = data.text;
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
