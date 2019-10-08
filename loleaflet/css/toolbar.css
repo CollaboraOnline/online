@@ -7,6 +7,17 @@
 	.w2ui-icon.users{
 		background-size: 20px !important;
 	}
+	.ui-content > div{
+		margin:16px 0px;
+	}
+	.ui-content label{
+		line-height: 44px;
+		vertical-align: top;
+		padding-left: 24px;
+	}
+	#buttonnone + label, #buttonbefore + label, #buttonafter + label, #buttonoptimal + label, #buttonparallel + label, #buttonnone + label, #buttonthrough + label{
+		padding-left: 0;
+	}
 	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough{
 		margin: 0;
     padding: 0;
