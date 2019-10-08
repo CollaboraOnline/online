@@ -59,6 +59,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 
 		this._currentDepth = 0;
 	},
@@ -458,6 +459,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_colorControl: function(parentContainer, data, builder) {
 		var colorContainer = L.DomUtil.create('div', 'colorcontainer', parentContainer);
+		colorContainer.id = data.command.substr('.uno:'.length);
 
 		if (data.enabled == 'false')
 			$(colorContainer).attr('disabled', 'disabled');

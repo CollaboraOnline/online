@@ -49,6 +49,9 @@
 	#ParaspaceIncrease, #ParaspaceDecrease {
 		padding-left: 28px !important;
 	}
+	#Color {
+		padding: 20px 20px 0px 20px !important;
+	}
 	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells{clear:both;}
 	#DecrementIndent + input:disabled{display: none;}
 	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
