@@ -2,21 +2,22 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 09:05+0200\n"
-"PO-Revision-Date: 2019-10-08 09:27+0200\n"
-"Language: es\n"
+"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
-"X-Pootle-Revision: 3858248\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"X-Pootle-Revision: 3939976\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -172,7 +173,7 @@ msgstr "Apagar servidor"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Tiempo de actividad del servidor"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -242,7 +243,7 @@ msgstr ""
 
 #: src/control/Control.ContextMenu.js:156
 msgid "Paste Special"
-msgstr "Copiado Especial"
+msgstr "Pegado especial"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -282,15 +283,15 @@ msgstr "Iniciar descarga"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr "Confirmar copia al portapapeles"
+msgstr "Confirmar copia en el portapapeles"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr "Iniciar subida"
+msgstr "Iniciar carga"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr "Iniciar a copiar/pegar"
+msgstr "Iniciar el copiado/pegado cruzado"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:256
 #: src/control/Control.Menubar.js:353
@@ -355,7 +356,7 @@ msgstr "Restablecer escala"
 
 #: src/control/Control.Menubar.js:70
 msgid "Show Ruler"
-msgstr "Reglas visibles"
+msgstr "Mostrar regla"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:291
 #: src/control/Control.Menubar.js:385
@@ -439,8 +440,8 @@ msgid ""
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
 "<p>El navegador tiene acceso limitado al portapapeles. Utilice estos atajos "
-"de teclado:<ul><li><b>Ctrl + C</b>: copiar.</li><li><b>Ctrl + X</b>: cortar."
-"</li><li><b>Ctrl + V</b>: pegar.</li></ul></p>"
+"de teclado:<ul><li><b>Ctrl + C</b>: copiar.</li><li><b>Ctrl + X</b>: "
+"cortar.</li><li><b>Ctrl + V</b>: pegar.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -832,8 +833,8 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "IE11 ha alcanzado su número máximo de conexiones. Consulte ese documento si "
-"necesita aumentar este límite: https://docs.microsoft.com/en-us/previous-"
-"versions/windows/internet-explorer/ie-developer/general-info/"
+"necesita aumentar este límite: https://docs.microsoft.com/en-us/"
+"previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:59
@@ -1003,8 +1004,8 @@ msgid ""
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
 "La sesión ha finalizado. Es posible que no se guarden las modificaciones que "
-"realice en el documento a partir de ahora. Actualice la sesión (o página "
-"web) para continuar."
+"realice en el documento a partir de ahora. Actualice la sesión (o página web)"
+" para continuar."
 
 #: src/errormessages.js:23
 msgid ""
@@ -1024,13 +1025,13 @@ msgstr "Está por abandonar el editor. ¿Confirma que quiere visitar «%url»?"
 
 #: src/errormessages.js:29
 msgid "Failed to load document."
-msgstr "Falló la lectura del documento."
+msgstr "Falló al cargar el documento."
 
 #: src/errormessages.js:30
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
-"Falta espacio para guardar el documento. Se ha activado el modo de solo "
-"lectura."
+"Falló el guardado debido a que no queda espacio en disco. El documento será "
+"ahora de solo lectura."
 
 #: src/errormessages.js:31 src/errormessages.js:39
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1040,11 +1041,11 @@ msgstr ""
 
 #: src/errormessages.js:32
 msgid "Document cannot be saved."
-msgstr "No se ha podido guardar el documento."
+msgstr "No se puede guardar el documento."
 
 #: src/errormessages.js:33
 msgid "Document cannot be renamed."
-msgstr "Document cannot be renamed."
+msgstr "No se puede cambiar el nombre del documento."
 
 #: src/errormessages.js:37
 #, javascript-format

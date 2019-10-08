@@ -1,0 +1,33 @@
+#. /* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
+#. extracted from /home/timar/online/ios/Mobile/Resources/Settings.bundle/en.lproj/Root.strings
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.4.0\n"
+"X-Pootle-Path: /id/libo_online/ios-id.po\n"
+"X-Pootle-Revision: 3937877\n"
+
+#: App+info
+msgid "App info"
+msgstr "Info aplikasi"
+
+#: Version
+msgid "Version"
+msgstr "Versi"
+
+#: Settings
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: Template+list+URL
+msgid "Template list URL"
+msgstr "URL daftar templat"

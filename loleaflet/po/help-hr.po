@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-02 20:32+0200\n"
+"POT-Creation-Date: 2019-10-08 11:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.3.0\n"
+"X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-help-hr.po\n"
-"X-Pootle-Revision: 3816911\n"
+"X-Pootle-Revision: 3899436\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:25-5
 msgid "Keyboard Shortcuts"
@@ -918,9 +918,8 @@ msgid "Tab"
 msgstr "Kartica"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-18
-#, fuzzy
 msgid "Promote list item (list item has to be selected)"
-msgstr "Uklonite stavku popisa (potrebno je odabrati stavku)"
+msgstr "Digni razinu stavke popisa (potrebno je odabrati stavku popisa)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:211-107
@@ -938,18 +937,20 @@ msgstr "Povratak i označavanje do početka dokumenta "
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 msgid "Go and select text to end of textbox"
 msgstr ""
-"Postavljanje kursora na kraj teksta u tekstnom okviru i označavanje do kraja "
-"teksta u tekstnom okviru"
+"Postavljanje kursora na kraj teksta u tekstualnom okviru i označavanje do "
+"kraja teksta u tekstualnom okviru"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:207-9
 msgid "Slide / draw page keyboard shortcuts"
-msgstr ""
+msgstr "Tipkovni prečac za slajd/stranicu crteža"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
+"Napusti trenutačni način rada, npr. prebaci s uređivanja na odabiranje "
+"objekta, s odabiranja objekta prebaci na prikaz."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-166
 msgid "Esc"
@@ -960,14 +961,13 @@ msgid "Select objects in the order in which they were created"
 msgstr "Označiti objekte po redu kako su kreirani"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:211-18
-#, fuzzy
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Označiti objekte po redu kako su kreirani"
+msgstr "Odaberite objekte redoslijedom njihovih stvaranja"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:212-18
 msgid "Move to next text object on slide / drawing page"
-msgstr ""
+msgstr "Prijeđi na sljedeći objekt na slajdu/stranici crteža"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:213-18
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "Odaberi sve na slajdu/stranici crteža"

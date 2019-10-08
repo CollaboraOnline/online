@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-02 20:32+0200\n"
+"POT-Creation-Date: 2019-10-08 11:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
-"X-Pootle-Revision: 3847691\n"
+"X-Pootle-Revision: 3938227\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -119,7 +119,7 @@ msgstr "Графік процесора"
 msgid "Network Graph"
 msgstr "Графік мережі"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:241
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:248
 msgid "Save"
 msgstr "Зберегти"
 
@@ -167,6 +167,10 @@ msgstr "Оновити"
 
 #: admin/admin.strings.js:42
 msgid "Shutdown Server"
+msgstr "Вимкнути сервер"
+
+#: admin/admin.strings.js:43
+msgid "Server uptime"
 msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:219
@@ -181,11 +185,11 @@ msgstr "Відіслано"
 msgid "Connection error"
 msgstr "Помилка з'єднання"
 
-#: admin/src/AdminSocketOverview.js:101
+#: admin/src/AdminSocketOverview.js:102
 msgid "Are you sure you want to terminate this session?"
 msgstr "Ви справді бажаєте закінчити цей сеанс?"
 
-#: admin/src/AdminSocketOverview.js:182 admin/src/AdminSocketOverview.js:284
+#: admin/src/AdminSocketOverview.js:183 admin/src/AdminSocketOverview.js:285
 msgid "Documents"
 msgstr "Документи"
 
@@ -223,15 +227,19 @@ msgstr " с"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "Open link"
-msgstr ""
+msgstr "Відкрити посилання"
 
 #: src/control/Control.AlertDialog.js:53
 msgid "Edit"
 msgstr "Зміни"
 
-#: src/control/Control.AlertDialog.js:73
+#: src/control/Control.AlertDialog.js:74
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Сервер зіткнувся з %0 помилок під час опрацювання %1 команд."
+
+#: src/control/Control.ContextMenu.js:156
+msgid "Paste Special"
+msgstr "Вставити як"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -245,7 +253,7 @@ msgstr "Тип"
 msgid "Index"
 msgstr "Індекс"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:230
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:271
 msgid "Comment"
 msgstr "Коментар"
 
@@ -261,141 +269,177 @@ msgstr "Позначка часу"
 msgid "Jump to state"
 msgstr "Перейти до стану"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2241
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2333
 msgid "You"
 msgstr "Ви"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:238
-#: src/control/Control.Menubar.js:326
+#: src/control/Control.DownloadProgress.js:36
+msgid "Start download"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:51
+msgid "Confirm copy to clipboard"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:209
+msgid "Start upload"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:314
+msgid "Start cross copy/paste"
+msgstr ""
+
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:256
+#: src/control/Control.Menubar.js:353
 msgid "Share..."
 msgstr "Поширити..."
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:240
-#: src/control/Control.Menubar.js:328
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:258
+#: src/control/Control.Menubar.js:355
 msgid "See revision history"
 msgstr "Див. історію змін"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:241
-#: src/control/Control.Menubar.js:329
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:356
 msgid "Download as"
 msgstr "Звантажити як"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:242
-#: src/control/Control.Menubar.js:330
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:31
+#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:265
+#: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:362
 msgid "PDF Document (.pdf)"
 msgstr "Документ PDF (.pdf)"
 
-#: src/control/Control.Menubar.js:26
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:32
 msgid "ODF text document (.odt)"
 msgstr "ODF текстовий документ (.odt)"
 
-#: src/control/Control.Menubar.js:27
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:33
 msgid "Word 2003 Document (.doc)"
 msgstr "Документ Word 2003 (.doc)"
 
-#: src/control/Control.Menubar.js:28
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:34
 msgid "Word Document (.docx)"
 msgstr "Документ Word (.docx)"
 
-#: src/control/Control.Menubar.js:29
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:35
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
-#: src/control/Control.Menubar.js:30 src/control/Signing.js:601
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:361
+msgid "Export as"
+msgstr ""
+
+#: src/control/Control.Menubar.js:36 src/control/Signing.js:601
 msgid "Sign document"
 msgstr "Підписати документ"
 
-#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:247
-#: src/control/Control.Menubar.js:335
+#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:270
+#: src/control/Control.Menubar.js:367
 msgid "Close document"
 msgstr "Закрити документ"
 
-#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:252
-#: src/control/Control.Menubar.js:340
+#: src/control/Control.Menubar.js:43 src/control/Control.Menubar.js:275
+#: src/control/Control.Menubar.js:372
 msgid "Repair"
 msgstr "Відновити"
 
-#: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:266
-#: src/control/Control.Toolbar.js:1010
+#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:289
+#: src/control/Control.Toolbar.js:1071
 msgid "Reset zoom"
 msgstr "Відновити масштаб"
 
-#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:269
-#: src/control/Control.Menubar.js:353
+#: src/control/Control.Menubar.js:70
+msgid "Show Ruler"
+msgstr ""
+
+#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:291
+#: src/control/Control.Menubar.js:385
+msgid "Mobile Wizard"
+msgstr ""
+
+#: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:294
+#: src/control/Control.Menubar.js:388
 msgid "Local Image..."
 msgstr "Локальне зображення..."
 
-#: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:88
+#: src/control/Control.Menubar.js:98 src/control/Control.Menubar.js:100
 msgid "All"
 msgstr "Все"
 
-#: src/control/Control.Menubar.js:136
+#: src/control/Control.Menubar.js:149
 msgid "Text orientation"
 msgstr "Напрямок тексту"
 
-#: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:218
-#: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:313
-#: src/control/Control.Menubar.js:418
+#: src/control/Control.Menubar.js:234 src/control/Control.Menubar.js:236
+#: src/control/Control.Menubar.js:238 src/control/Control.Menubar.js:340
+#: src/control/Control.Menubar.js:459 src/control/Control.Toolbar.js:1830
 msgid "None (Do not check spelling)"
 msgstr "Немає (не перевіряти правопису)"
 
-#: src/control/Control.Menubar.js:228 src/control/Control.Menubar.js:316
-#: src/control/Control.Menubar.js:422
+#: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:343
+#: src/control/Control.Menubar.js:463
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:317
-#: src/control/Control.Menubar.js:423
+#: src/control/Control.Menubar.js:247 src/control/Control.Menubar.js:344
+#: src/control/Control.Menubar.js:464
 msgid "About"
 msgstr "Про програму"
 
-#: src/control/Control.Menubar.js:231 src/control/Control.Menubar.js:319
-#: src/control/Control.Menubar.js:425 src/map/Map.js:312
+#: src/control/Control.Menubar.js:249 src/control/Control.Menubar.js:346
+#: src/control/Control.Menubar.js:466 src/map/Map.js:371
 msgid "Last modification"
-msgstr ""
+msgstr "Остання зміна"
 
-#: src/control/Control.Menubar.js:243
+#: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:266
 msgid "ODF presentation (.odp)"
 msgstr "ODF презентація (.odp)"
 
-#: src/control/Control.Menubar.js:244
+#: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:267
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Презентація PowerPoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:245
+#: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:268
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Презентація PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.js:308 src/control/Control.Toolbar.js:963
+#: src/control/Control.Menubar.js:334 src/control/Control.Toolbar.js:1024
 msgid "Fullscreen presentation"
 msgstr "Повноекранна презентація"
 
-#: src/control/Control.Menubar.js:331
+#: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:363
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF ел.таблиця (.ods)"
 
-#: src/control/Control.Menubar.js:332
+#: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:364
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Електронна таблиця Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:333
+#: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:365
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Електронна таблиця Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:492
+#: src/control/Control.Menubar.js:533 src/control/Control.Toolbar.js:1829
 msgid "Reset to Default Language"
 msgstr "Відновити типову мову"
 
-#: src/control/Control.Menubar.js:763
+#: src/control/Control.Menubar.js:888
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ви дійсно бажаєте видалити цей слайд?"
 
-#: src/control/Control.Menubar.js:790
+#: src/control/Control.Menubar.js:926 src/map/Clipboard.js:751
+#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
+"<p>Ваш оглядач має дуже обмежений доступ до буфера обміну, тому "
+"використовуйте спосучення клавіш:<ul><li><b>Ctrl+C</b>: для "
+"копіювання.</li><li><b>Ctrl+X</b>: для вирізання.</li><li><b>Ctrl+P</b>: для "
+"вставляння.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -421,349 +465,365 @@ msgstr "Ви дійсно бажаєте видалити аркуш %sheet%?"
 msgid "Enter new sheet name"
 msgstr "Введіть нову назву аркуша"
 
-#: src/control/Control.Toolbar.js:199
+#: src/control/Control.Toolbar.js:214
 msgid "Are you sure you want to delete this page?"
 msgstr "Ви дійсно бажаєте видалити цю сторінку?"
 
-#: src/control/Control.Toolbar.js:753
+#: src/control/Control.Toolbar.js:810
 msgid "Borders"
 msgstr "Обрамлення"
 
-#: src/control/Control.Toolbar.js:761
+#: src/control/Control.Toolbar.js:818
 msgid "More..."
 msgstr "Більше..."
 
-#: src/control/Control.Toolbar.js:809
+#: src/control/Control.Toolbar.js:866 src/layer/tile/ImpressTileLayer.js:117
+#: src/layer/tile/WriterTileLayer.js:80
 msgid "Insert table"
 msgstr "Вставити таблицю"
 
-#: src/control/Control.Toolbar.js:814
+#: src/control/Control.Toolbar.js:871
 msgid "Insert Local Image"
 msgstr "Вставити локальне зображення"
 
-#: src/control/Control.Toolbar.js:818
+#: src/control/Control.Toolbar.js:875 src/control/Control.Toolbar.js:877
+#: src/layer/tile/CalcTileLayer.js:94 src/layer/tile/ImpressTileLayer.js:119
+#: src/layer/tile/WriterTileLayer.js:82
 msgid "Insert shapes"
 msgstr "Вставити фігури"
 
-#: src/control/Control.Toolbar.js:891 src/control/Control.Toolbar.js:1461
+#: src/control/Control.Toolbar.js:952 src/control/Control.Toolbar.js:1476
+#: src/layer/tile/CalcTileLayer.js:92 src/layer/tile/CalcTileLayer.js:157
 msgid "Sum"
 msgstr "Сума"
 
-#: src/control/Control.Toolbar.js:892
+#: src/control/Control.Toolbar.js:953 src/layer/tile/CalcTileLayer.js:158
 msgid "Function"
 msgstr "Функція"
 
-#: src/control/Control.Toolbar.js:893 src/layer/marker/Annotation.js:181
+#: src/control/Control.Toolbar.js:954 src/control/Toolbar.js:361
+#: src/layer/marker/Annotation.js:181 src/layer/tile/CalcTileLayer.js:159
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: src/control/Control.Toolbar.js:894
+#: src/control/Control.Toolbar.js:955 src/layer/tile/CalcTileLayer.js:160
 msgid "Accept"
 msgstr "Прийняти"
 
-#: src/control/Control.Toolbar.js:941
+#: src/control/Control.Toolbar.js:1002 src/layer/tile/CalcTileLayer.js:193
 msgid "First sheet"
 msgstr "Перший аркуш"
 
-#: src/control/Control.Toolbar.js:942
+#: src/control/Control.Toolbar.js:1003 src/layer/tile/CalcTileLayer.js:194
 msgid "Previous sheet"
 msgstr "Попередній аркуш"
 
-#: src/control/Control.Toolbar.js:943
+#: src/control/Control.Toolbar.js:1004 src/layer/tile/CalcTileLayer.js:195
 msgid "Next sheet"
 msgstr "Наступний аркуш"
 
-#: src/control/Control.Toolbar.js:944
+#: src/control/Control.Toolbar.js:1005 src/layer/tile/CalcTileLayer.js:196
 msgid "Last sheet"
 msgstr "Останній аркуш"
 
-#: src/control/Control.Toolbar.js:945
+#: src/control/Control.Toolbar.js:1006 src/layer/tile/CalcTileLayer.js:197
 msgid "Insert sheet"
 msgstr "Вставити аркуш"
 
-#: src/control/Control.Toolbar.js:987
-#, fuzzy
+#: src/control/Control.Toolbar.js:1048
 msgid "Search"
-msgstr "Пошук:"
+msgstr "Пошук"
 
-#: src/control/Control.Toolbar.js:993
+#: src/control/Control.Toolbar.js:1054
 msgid "Cancel the search"
 msgstr "Скасувати пошук"
 
-#: src/control/Control.Toolbar.js:1000
+#: src/control/Control.Toolbar.js:1061 src/layer/tile/CalcTileLayer.js:115
+#: src/layer/tile/ImpressTileLayer.js:144 src/layer/tile/WriterTileLayer.js:105
 msgid "Always follow the editor"
 msgstr "Завжди стежити за редактором"
 
-#: src/control/Control.Toolbar.js:1003
+#: src/control/Control.Toolbar.js:1064 src/layer/tile/CalcTileLayer.js:118
+#: src/layer/tile/ImpressTileLayer.js:147 src/layer/tile/WriterTileLayer.js:108
 msgid "Current"
 msgstr "Поточний"
 
-#: src/control/Control.Toolbar.js:1080
+#: src/control/Control.Toolbar.js:1141
 msgid "%user has joined"
 msgstr "%user приєднався"
 
-#: src/control/Control.Toolbar.js:1081
+#: src/control/Control.Toolbar.js:1142
 msgid "%user has left"
 msgstr "%user вийшов"
 
-#: src/control/Control.Toolbar.js:1427
+#: src/control/Control.Toolbar.js:1443
 msgid "Number of Sheets"
 msgstr "Число аркушів"
 
-#: src/control/Control.Toolbar.js:1432
+#: src/control/Control.Toolbar.js:1448
 msgid "Selected range of cells"
 msgstr "Обраний діапазон комірок"
 
-#: src/control/Control.Toolbar.js:1437 src/control/Control.Toolbar.js:1494
+#: src/control/Control.Toolbar.js:1453 src/control/Control.Toolbar.js:1510
 msgid "Entering text mode"
 msgstr "Режим введення тексту"
 
-#: src/control/Control.Toolbar.js:1442 src/control/Control.Toolbar.js:1504
-#: src/control/Control.Toolbar.js:1526
-msgid "Text Language"
-msgstr "Мова тексту"
-
-#: src/control/Control.Toolbar.js:1447 src/control/Control.Toolbar.js:1499
+#: src/control/Control.Toolbar.js:1462 src/control/Control.Toolbar.js:1515
 msgid "Selection Mode"
 msgstr "Режим вибору"
 
-#: src/control/Control.Toolbar.js:1452
+#: src/control/Control.Toolbar.js:1467
 msgid "Choice of functions"
 msgstr "Вибір функцій"
 
-#: src/control/Control.Toolbar.js:1456
+#: src/control/Control.Toolbar.js:1471
 msgid "Average"
 msgstr "Середнє"
 
-#: src/control/Control.Toolbar.js:1457
+#: src/control/Control.Toolbar.js:1472
 msgid "CountA"
 msgstr "CountA"
 
-#: src/control/Control.Toolbar.js:1458
+#: src/control/Control.Toolbar.js:1473
 msgid "Count"
 msgstr "Кількість"
 
-#: src/control/Control.Toolbar.js:1459
+#: src/control/Control.Toolbar.js:1474
 msgid "Maximum"
 msgstr "Максимум"
 
-#: src/control/Control.Toolbar.js:1460
+#: src/control/Control.Toolbar.js:1475
 msgid "Minimum"
 msgstr "Мінімум"
 
-#: src/control/Control.Toolbar.js:1462
+#: src/control/Control.Toolbar.js:1477
 msgid "Selection count"
 msgstr "Кількість виділень"
 
-#: src/control/Control.Toolbar.js:1463
+#: src/control/Control.Toolbar.js:1478
 msgid "None"
 msgstr "Нічого"
 
-#: src/control/Control.Toolbar.js:1484
+#: src/control/Control.Toolbar.js:1500
 msgid "Number of Pages"
 msgstr "Число сторінок"
 
-#: src/control/Control.Toolbar.js:1489
+#: src/control/Control.Toolbar.js:1505
 msgid "Word Counter"
 msgstr "Лічильник слів"
 
-#: src/control/Control.Toolbar.js:1521
+#: src/control/Control.Toolbar.js:1536
 msgid "Number of Slides"
 msgstr "Число слайдів"
 
-#: src/control/Control.Toolbar.js:1554
+#: src/control/Control.Toolbar.js:1570
 msgid "%n users"
 msgstr "%n користувачів"
 
-#: src/control/Control.Toolbar.js:1555
+#: src/control/Control.Toolbar.js:1571
 msgid "1 user"
 msgstr "1 користувач"
 
-#: src/control/Control.Toolbar.js:1556
+#: src/control/Control.Toolbar.js:1572
 msgid "0 users"
 msgstr "0 користувачів"
 
-#: src/control/Control.Toolbar.js:1851
+#: src/control/Control.Toolbar.js:1923
 msgid "Style"
 msgstr "Стиль"
 
-#: src/control/Control.Toolbar.js:1874
+#: src/control/Control.Toolbar.js:1946
 msgid "Font"
 msgstr "Шрифт"
 
-#: src/control/Control.Toolbar.js:1913
+#: src/control/Control.Toolbar.js:1971
 msgid "Previous slide"
 msgstr "Попередній слайд"
 
-#: src/control/Control.Toolbar.js:1914
+#: src/control/Control.Toolbar.js:1972
 msgid "Next slide"
 msgstr "Наступний слайд"
 
-#: src/control/Control.Toolbar.js:1960
+#: src/control/Control.Toolbar.js:2024
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Конфлікт Повернути/Повторити для декількох користувачів. Будь ласка, "
 "використовуйте команду виправити документ для його вирішення"
 
-#: src/control/Control.Toolbar.js:2247
+#: src/control/Control.Toolbar.js:2339
 msgid "Readonly"
 msgstr "Лише читання"
 
-#: src/control/Signing.js:195
-msgid "Please enter the PIN Code"
-msgstr ""
-
-#: src/control/Signing.js:214
-msgid "Error at login."
-msgstr ""
-
-#: src/control/Signing.js:227
-msgid "Please scan the code"
-msgstr ""
-
-#: src/control/Signing.js:242
-msgid "Couldn't get the QR code image."
-msgstr ""
-
-#: src/control/Signing.js:269
-msgid "Error when trying to restore access to identity."
-msgstr ""
-
-#: src/control/Signing.js:275
-msgid "PIN Code"
-msgstr ""
-
-#: src/control/Signing.js:276
-msgid "Please enter the PIN code from the EMail or SMS"
-msgstr ""
-
-#: src/control/Signing.js:296
-msgid "Login from email or mobile number"
-msgstr ""
-
-#: src/control/Signing.js:329
-msgid "Select document type to upload"
-msgstr ""
-
-#: src/control/Signing.js:330
-#, fuzzy
-msgid "Type:"
-msgstr "Тип"
-
-#: src/control/Signing.js:361 src/control/Signing.js:660
-msgid "Document uploaded."
-msgstr ""
-
-#: src/control/Signing.js:488
-msgid "Select identity:"
-msgstr ""
-
-#: src/control/Signing.js:489
-msgid "Login from mobile"
-msgstr ""
-
-#: src/control/Signing.js:490
-msgid "Recover from email"
-msgstr ""
-
-#: src/control/Signing.js:598
-msgid "Select passport"
-msgstr ""
-
-#: src/control/Signing.js:599
-msgid "Passport: N/A"
-msgstr ""
-
-#: src/control/Signing.js:601
-msgid "Sign"
-msgstr ""
-
-#: src/control/Signing.js:603
-msgid "Status:"
-msgstr ""
-
-#: src/control/Signing.js:604
-msgid "N/A"
-msgstr ""
-
-#: src/control/Signing.js:607
-msgid "Login"
-msgstr ""
-
-#: src/control/Signing.js:608
-msgid "Close"
-msgstr ""
-
-#: src/control/Signing.js:616
-msgid "Not Signed"
-msgstr ""
-
-#: src/control/Signing.js:619
-msgid "This document is digitally signed and the signature is valid."
-msgstr ""
-
-#: src/control/Signing.js:620
-msgid "Signed and validated"
-msgstr ""
-
-#: src/control/Signing.js:623
-msgid "This document has an invalid signature."
-msgstr ""
-
-#: src/control/Signing.js:624
-msgid "Signature broken"
-msgstr ""
-
-#: src/control/Signing.js:627
-msgid "The signature was valid, but the document has been modified"
-msgstr ""
-
-#: src/control/Signing.js:628
-msgid "Signed but document modified"
-msgstr ""
-
-#: src/control/Signing.js:631
-msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
-
-#: src/control/Signing.js:632
-msgid "Signed but not validated"
-msgstr ""
-
-#: src/control/Signing.js:635
-msgid "The signature is OK, but the document is only partially signed"
-msgstr ""
-
-#: src/control/Signing.js:636
-msgid "Signed but not all files are signed"
-msgstr ""
-
-#: src/control/Ruler.js:97
+#: src/control/Ruler.js:101
 msgid "Left Margin"
 msgstr "Ліве поле"
 
-#: src/control/Ruler.js:98
+#: src/control/Ruler.js:102
 msgid "Right Margin"
 msgstr "Праве поле"
 
-#: src/control/Toolbar.js:75 src/control/Toolbar.js:87
+#: src/control/Signing.js:195
+msgid "Please enter the PIN Code"
+msgstr "Будь ласка, введіть PIN-код"
+
+#: src/control/Signing.js:214
+msgid "Error at login."
+msgstr "Помилка авторизації."
+
+#: src/control/Signing.js:227
+msgid "Please scan the code"
+msgstr "Відскануйте код"
+
+#: src/control/Signing.js:242
+msgid "Couldn't get the QR code image."
+msgstr "Не вдалось отримати зображення QR-коду."
+
+#: src/control/Signing.js:269
+msgid "Error when trying to restore access to identity."
+msgstr "Помилка під час спроби відновити доступ."
+
+#: src/control/Signing.js:275
+msgid "PIN Code"
+msgstr "PIN-код"
+
+#: src/control/Signing.js:276
+msgid "Please enter the PIN code from the EMail or SMS"
+msgstr "Будь ласка, введіть PIN-код з електронної пошти або SMS"
+
+#: src/control/Signing.js:296
+msgid "Login from email or mobile number"
+msgstr "Увійти за адресою електронної пошти або номером мобільного телефону"
+
+#: src/control/Signing.js:329
+msgid "Select document type to upload"
+msgstr "Виберіть тип документа для завантаження"
+
+#: src/control/Signing.js:330
+msgid "Type:"
+msgstr "Тип:"
+
+#: src/control/Signing.js:361 src/control/Signing.js:660
+msgid "Document uploaded."
+msgstr "Документ завантажено."
+
+#: src/control/Signing.js:488
+msgid "Select identity:"
+msgstr "Виберіть особу:"
+
+#: src/control/Signing.js:489
+msgid "Login from mobile"
+msgstr "Зайти з телефона"
+
+#: src/control/Signing.js:490
+msgid "Recover from email"
+msgstr "Відновити з електронної пошти"
+
+#: src/control/Signing.js:598
+msgid "Select passport"
+msgstr "Виберіть паспорт"
+
+#: src/control/Signing.js:599
+msgid "Passport: N/A"
+msgstr "Паспорт: недоступний"
+
+#: src/control/Signing.js:601
+msgid "Sign"
+msgstr "Підписати"
+
+#: src/control/Signing.js:603
+msgid "Status:"
+msgstr "Стан:"
+
+#: src/control/Signing.js:604
+msgid "N/A"
+msgstr "Н/Д"
+
+#: src/control/Signing.js:607
+msgid "Login"
+msgstr "Увійти"
+
+#: src/control/Signing.js:608
+msgid "Close"
+msgstr "Закрити"
+
+#: src/control/Signing.js:616
+msgid "Not Signed"
+msgstr "Не підписано"
+
+#: src/control/Signing.js:619
+msgid "This document is digitally signed and the signature is valid."
+msgstr "Цей документ має цифровий підпис, який досі чинний."
+
+#: src/control/Signing.js:620
+msgid "Signed and validated"
+msgstr "Підписано і підтверджено"
+
+#: src/control/Signing.js:623
+msgid "This document has an invalid signature."
+msgstr "Цей документ має нечинний підпис."
+
+#: src/control/Signing.js:624
+msgid "Signature broken"
+msgstr "Підпис зламано"
+
+#: src/control/Signing.js:627
+msgid "The signature was valid, but the document has been modified"
+msgstr "Підпис був чинним, але документ було змінено"
+
+#: src/control/Signing.js:628
+msgid "Signed but document modified"
+msgstr "Підписано, але документ змінено"
+
+#: src/control/Signing.js:631
+msgid "The signature is OK, but the certificate could not be validated."
+msgstr "Підпис коректний, але неможливо підтвердити сертифікат."
+
+#: src/control/Signing.js:632
+msgid "Signed but not validated"
+msgstr "Підписано, але не підтверджено"
+
+#: src/control/Signing.js:635
+msgid "The signature is OK, but the document is only partially signed"
+msgstr "Із підписом усе гаразд, але документ підписаний лише частково."
+
+#: src/control/Signing.js:636
+msgid "Signed but not all files are signed"
+msgstr "Підписано, але не всі файли підписані"
+
+#: src/control/Toolbar.js:76 src/control/Toolbar.js:88
 msgid "Downloading..."
 msgstr "Звантажується..."
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1171
+#: src/control/Toolbar.js:104 src/map/Map.js:1353
 msgid "Saving..."
 msgstr "Збереження..."
 
-#: src/control/Toolbar.js:114
+#: src/control/Toolbar.js:115
 msgid "Renaming..."
-msgstr ""
+msgstr "Перейменування..."
 
-#: src/control/Toolbar.js:278
+#: src/control/Toolbar.js:285
 msgid "This version of %productName is powered by"
 msgstr "Ця версія %productName працює на"
 
-#: src/core/Socket.js:56
+#: src/control/Toolbar.js:354
+msgid "Insert hyperlink"
+msgstr ""
+
+#: src/control/Toolbar.js:356
+msgid "Text"
+msgstr ""
+
+#: src/control/Toolbar.js:357
+msgid "Link"
+msgstr ""
+
+#: src/control/Toolbar.js:360
+msgid "OK"
+msgstr ""
+
+#: src/core/Socket.js:57
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
@@ -775,36 +835,36 @@ msgstr ""
 "com/en-us/previous-versions/windows/internet-explorer/ie-developer/"
 "general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
-#: src/core/Socket.js:58
+#: src/core/Socket.js:59
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Халепа при під'єднання до LibreOffice Online : "
 
-#: src/core/Socket.js:260
+#: src/core/Socket.js:283
 msgid "Unsupported server version."
 msgstr "Непідтримувана версія сервера."
 
-#: src/core/Socket.js:323
+#: src/core/Socket.js:350
 msgid "Session terminated by document owner"
 msgstr "Сесія припинена власником документу"
 
-#: src/core/Socket.js:327
+#: src/core/Socket.js:354
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Неактивний документ - клацніть для перезавантаження і відновлення редагування"
 
-#: src/core/Socket.js:334
+#: src/core/Socket.js:361
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Сервер вимикається на технічне обслуговування (автозбереження)"
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:365
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ой, виникла проблема під час з’єднання з документом"
 
-#: src/core/Socket.js:342
+#: src/core/Socket.js:369
 msgid "Server is recycling and will be available shortly"
 msgstr "Сервер перезапускається і буде доступним найближчим часом"
 
-#: src/core/Socket.js:369
+#: src/core/Socket.js:397
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -812,7 +872,7 @@ msgstr ""
 "Документ змінено у сховищі. Завантажую новий документ. Ваш варіант буде "
 "доступний як версія."
 
-#: src/core/Socket.js:375
+#: src/core/Socket.js:403
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -820,46 +880,46 @@ msgstr ""
 "Відновлення старішої версії. Незбережені зміни будуть доступн в історії "
 "версій"
 
-#: src/core/Socket.js:464
+#: src/core/Socket.js:493
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 "Документ було змінено у сховищі. Що зробити зі своїми незбереженими змінами?"
 
-#: src/core/Socket.js:468
+#: src/core/Socket.js:497
 msgid "Discard"
 msgstr "Відхилити"
 
-#: src/core/Socket.js:473
+#: src/core/Socket.js:502
 msgid "Overwrite"
 msgstr "Перезаписати"
 
-#: src/core/Socket.js:478
+#: src/core/Socket.js:507
 msgid "Save to new file"
 msgstr "Зберегти в новий файл"
 
-#: src/core/Socket.js:548
+#: src/core/Socket.js:580
 msgid "Document requires password to view."
 msgstr "Документ вимагає пароль для перегляду."
 
-#: src/core/Socket.js:551
+#: src/core/Socket.js:583
 msgid "Document requires password to modify."
 msgstr "Документ вимагає пароль для редагування."
 
-#: src/core/Socket.js:553
+#: src/core/Socket.js:585
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Натисніть Скасувати для відкриття у режимі перегляду."
 
-#: src/core/Socket.js:557
+#: src/core/Socket.js:589
 msgid "Wrong password provided. Please try again."
 msgstr "Надано неправильний пароль. Спробуйте знову."
 
-#: src/core/Socket.js:680
+#: src/core/Socket.js:717
 msgid "Connecting..."
 msgstr "З'єднання..."
 
-#: src/core/Socket.js:846
+#: src/core/Socket.js:924
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -955,13 +1015,35 @@ msgstr ""
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
-msgstr ""
+msgstr "Неправильне посилання: '%url'"
 
 #: src/errormessages.js:25
 msgid "You are leaving the editor, are you sure you want to visit %url?"
+msgstr "Ви виходите з редактора, ви впевнені, що бажаєте відвідати %url?"
+
+#: src/errormessages.js:29
+msgid "Failed to load document."
 msgstr ""
 
-#: src/errormessages.js:28
+#: src/errormessages.js:30
+msgid "Save failed due to no disk space left. Document will now be read-only."
+msgstr ""
+
+#: src/errormessages.js:31 src/errormessages.js:39
+msgid "Document cannot be saved due to expired or invalid access token."
+msgstr ""
+"Документ не може бути збережений через маркер доступу, що застарів або "
+"недійсний."
+
+#: src/errormessages.js:32
+msgid "Document cannot be saved."
+msgstr ""
+
+#: src/errormessages.js:33
+msgid "Document cannot be renamed."
+msgstr ""
+
+#: src/errormessages.js:37
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -970,7 +1052,7 @@ msgstr ""
 "Не вдалося зчитати документ зі сховища. Будь ласка, зв'яжіться з "
 "адміністратором сервера (%storageserver)."
 
-#: src/errormessages.js:29
+#: src/errormessages.js:38
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -981,13 +1063,7 @@ msgstr ""
 "стає доступним лише для читання. Зв'яжіться з адміністратором сервера "
 "(%storageserver), щоб продовжити редагування."
 
-#: src/errormessages.js:30
-msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
-"Документ не може бути збережений через маркер доступу, що застарів або "
-"недійсний."
-
-#: src/errormessages.js:31
+#: src/errormessages.js:40
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -995,58 +1071,89 @@ msgstr ""
 "Документ не можна зберегти на носії. Перевірте ваші права або зв'яжіться з "
 "адміністратором сервера."
 
-#: src/errormessages.js:32
-#, fuzzy
+#: src/errormessages.js:41
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Документ не можна зберегти на носії. Перевірте ваші права або зв'яжіться з "
-"адміністратором сервера."
+"Документ неможливо перейменувати. Перевірте ваші права або зверніться до "
+"адміністратора сервера."
 
-#: src/layer/marker/Annotation.js:210
+#: src/layer/marker/Annotation.js:217
 msgid "Accept change"
 msgstr "Прийняти зміну"
 
-#: src/layer/marker/Annotation.js:215
+#: src/layer/marker/Annotation.js:222
 msgid "Reject change"
 msgstr "Відкинути зміну"
 
-#: src/layer/marker/Annotation.js:224
+#: src/layer/marker/Annotation.js:231
 msgid "Open menu"
 msgstr "Відкрити меню"
 
-#: src/layer/marker/Annotation.js:244 src/layer/tile/TileLayer.js:203
+#: src/layer/marker/Annotation.js:251 src/layer/tile/TileLayer.js:238
 msgid "Reply"
 msgstr "Відповідь"
 
-#: src/layer/tile/TileLayer.js:197
+#: src/layer/tile/TileLayer.js:232
 msgid "Modify"
 msgstr "Змінити"
 
-#: src/layer/tile/TileLayer.js:209
+#: src/layer/tile/TileLayer.js:244
 msgid "Remove"
 msgstr "Видалити"
 
-#: src/map/Map.js:198
+#: src/layer/tile/TileLayer.js:250
+msgid "Resolve"
+msgstr ""
+
+#: src/map/Clipboard.js:123
+msgid "To paste outside %productName, please first click the 'download' button"
+msgstr ""
+
+#: src/map/Clipboard.js:269
+msgid "Failed to download clipboard, please re-copy"
+msgstr ""
+
+#: src/map/Clipboard.js:749
+msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
+msgstr ""
+
+#: src/map/Clipboard.js:771
+msgid ""
+"<p>If you would like to share larger elements of your document with other "
+"applications it is necessary to first download them onto your device. To do "
+"that press the \"Start download\" button below, and when complete click "
+"\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
+"documents inside %productName, there is no need to download.</p>"
+msgstr ""
+
+#: src/map/Clipboard.js:787
+msgid ""
+"<p>A download due to a large copy/paste operation has already started. "
+"Please, wait for the current download or cancel it before starting a new "
+"one</p>"
+msgstr ""
+
+#: src/map/Map.js:219
 msgid "Initializing..."
 msgstr "Започаткування…"
 
-#: src/map/Map.js:347
+#: src/map/Map.js:406
 #, javascript-format
 msgid "%d seconds ago"
-msgstr ""
+msgstr "%d секунд тому"
 
-#: src/map/Map.js:350
+#: src/map/Map.js:409
 #, javascript-format
 msgid "%d minutes ago"
-msgstr ""
+msgstr "%d хвилин тому"
 
-#: src/map/Map.js:1052
+#: src/map/Map.js:1220
 msgid "Inactive document - please click to resume editing"
 msgstr "Неактивний документ - клацніть для відновлення редагування"
 
-#: src/map/Map.js:1174
+#: src/map/Map.js:1356
 msgid "Loading..."
 msgstr "Завантаження…"
 
@@ -1054,10 +1161,10 @@ msgstr "Завантаження…"
 msgid "Uploading..."
 msgstr "Вивантаження…"
 
-#: src/map/handler/Map.WOPI.js:105
+#: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "Створити новий файл із шаблона..."
 
-#: src/map/handler/Map.WOPI.js:304
+#: src/map/handler/Map.WOPI.js:371
 msgid "Creating copy..."
 msgstr "Створення копії..."
