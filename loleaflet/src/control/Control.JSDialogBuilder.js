@@ -17,10 +17,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	 */
 	_controlHandlers: {},
 	_toolitemHandlers: {},
+	_colorPickers: [],
 
 	_currentDepth: 0,
 
 	_setup: function(options) {
+		this._clearColorPickers();
 		this.wizard = options.mobileWizard;
 		this.map = options.map;
 		this.callback = options.callback ? options.callback : this._defaultCallbackHandler;
@@ -53,8 +55,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
 		this._toolitemHandlers['.uno:CharFontName'] = this._fontNameControl;
 		this._toolitemHandlers['.uno:FontHeight'] = this._fontHeightControl;
+		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
 
 		this._currentDepth = 0;
+	},
+
+	_clearColorPickers: function() {
+		while (this._colorPickers.length) {
+			var id = this._colorPickers.pop();
+			w2ui[id].remove();
+			delete w2ui[id];
+		}
 	},
 
 	_toolitemHandler: function(parentContainer, data, builder) {
@@ -442,20 +453,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_colorControl: function(parentContainer, data) {
+	_colorControl: function(parentContainer, data, builder) {
 		var colorContainer = L.DomUtil.create('div', '', parentContainer);
 
 		if (data.enabled == 'false')
 			$(colorContainer).attr('disabled', 'disabled');
 
 		var toolbar = $(colorContainer);
+		var id = 'colorselector-' + builder._colorPickers.length;
 		var items = [{type: 'color',  id: 'color'}];
 		toolbar.w2toolbar({
-			name: 'colorselector',
+			name: id,
 			tooltip: 'bottom',
 			items: items
 		});
-		w2ui['colorselector'].set('color', {color: '#ff0033'});
+		w2ui[id].set('color', {color: '#ff0033'});
+		builder._colorPickers.push(id);
 
 		return false;
 	},
