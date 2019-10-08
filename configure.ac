@@ -506,15 +506,17 @@ AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
 lokit_msg="$LOKIT_PATH"
 
-AC_MSG_CHECKING([for LibreOffice path])
-if test -n "$with_lo_path"; then
-    # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
-    LO_PATH="${with_lo_path%/}"
-    AC_MSG_RESULT([found])
-else
-    AC_MSG_RESULT([not found])
-    AC_MSG_ERROR([LibreOffice path must be configured: --with-lo-path])
-fi
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
+      [AC_MSG_CHECKING([for LibreOffice path])
+      if test -n "$with_lo_path"; then
+          # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
+          LO_PATH="${with_lo_path%/}"
+          AC_MSG_RESULT([found])
+      else
+          AC_MSG_RESULT([not found])
+          AC_MSG_ERROR([LibreOffice path must be configured: --with-lo-path])
+      fi
+      ])
 
 JAIL_PATH=not-set
 SYSTEMPLATE_PATH=not-set
