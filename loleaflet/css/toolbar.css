@@ -32,11 +32,15 @@
 		float: left;
 		margin: 16px 0px;
 	}
-	input[type=checkbox]#enablecontour{
+	input[type=checkbox]:disabled{
+		border: 2px solid #ddd;
+		box-shadow: none;
+	}
+	input[type=checkbox]{
 		appearance: none;
 		width: 24px;
 		height: 24px;
-		margin: 10px 0px;
+		margin: 10px 0px !important;
 		-webkit-appearance: none;
     -moz-appearance: none;
     -o-appearance: none;
@@ -46,7 +50,7 @@
     outline: none;
     box-shadow: #00000015 0px 0px 2px 1px;
 	}
-	input[type=checkbox]#enablecontour:checked{
+	input[type=checkbox]:checked{
 		background: url(images/lc_ok_white.svg) no-repeat center;
 		background-color: #0b87e7;
 		border-radius: 2px;
@@ -54,11 +58,11 @@
     outline: none;
     box-shadow: none;
 	}
-	input[type=checkbox]#enablecontour:before{
+	input[type=checkbox]:before{
 		width: 20px;
 		height: 20px;
 	}
-	input[type=checkbox]#enablecontour:after{
+	input[type=checkbox]:after{
 		top: -20px;
 		width: 16px;
 	}
@@ -67,16 +71,26 @@
 		vertical-align: baseline;
 		padding-left: 24px;
 	}
-	#enablecontour + button {
-		float: right;
-		margin: 24px 0px;
-    height: 38px;
+	button{
+		height: 38px;
     border-radius: 4px;
-    color: #0b87e7;
+    color: #0b87e7 !important;
     font-weight: bold;
     background-color: #fff;
     text-transform: uppercase;
     border: 1px solid #0b87e7;
+	}
+	button:focus{
+		outline: none;
+	}
+	button:active{
+		outline: none;
+		border: none;
+		background-color: #ebf2fb;
+	}
+	#enablecontour + button {
+		float: right;
+		margin: 24px 0px;
 	}
 	#enablecontour + button + p {clear: both;}
 	#formulabar {
