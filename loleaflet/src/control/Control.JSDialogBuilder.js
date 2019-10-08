@@ -508,6 +508,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				} else {
 					builder.map.sendUnoCommand(data.command)
 				}
+				window.onClick(null, 'insertion_mobile_wizard');
 			});
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
