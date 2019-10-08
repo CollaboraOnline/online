@@ -18,7 +18,7 @@
 	#buttonnone + label, #buttonbefore + label, #buttonafter + label, #buttonoptimal + label, #buttonparallel + label, #buttonnone + label, #buttonthrough + label{
 		padding-left: 0;
 	}
-	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough{
+	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard{
 		margin: 0;
     padding: 0;
     -webkit-appearance: none;
@@ -27,7 +27,7 @@
 		padding: 24px 32px 24px 32px;
 		background-size: 24px !important;
 	}
-	#buttonbefore:focus, #buttonafter:focus, #buttonoptimal:focus, #buttonparallel:focus, #buttonnone:focus, #buttonthrough:focus{
+	#buttonbefore:focus, #buttonafter:focus, #buttonoptimal:focus, #buttonparallel:focus, #buttonnone:focus, #buttonthrough:focus,  #bottom:focus, #top:focus, #standard:focus{
 		border-radius: 4px;
     outline: none;
     background-color: #e5f1ff;
@@ -38,6 +38,9 @@
 	#buttonparallel{background: url(images/sc_wrapmenu.svg) no-repeat center;}
 	#buttonnone{background: url(images/sc_wrapoff.svg) no-repeat center;}
 	#buttonthrough{background: url(images/sc_wrapthrough.svg) no-repeat center;}
+	#top{background: url(images/sc_aligntop.svg) no-repeat center;}
+	#bottom{background: url(images/sc_alignbottom.svg) no-repeat center;}
+	#standard{background: url(images/sc_alignverticalcenter.svg) no-repeat center;}
 
 	#enablecontour{
 		float: left;
