@@ -935,7 +935,7 @@ tr.useritem > td > img {
 	margin: 0px;
 	padding: 0px;
 	border: solid 1px #fff;
-	padding-left: 74px !important;
+	padding-left: 32px !important;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -966,10 +966,30 @@ tr.useritem > td > img {
 	vertical-align: middle;
 }
 
+.sub-menu-title {
+	padding-left: 42px;
+}
+
 .sub-menu-arrow {
 	margin-right: 40px;
 	background: transparent;
 	font-size: 1.5em;
 	font-weight: bold;
 	color: #aaa !important;
+}
+
+.menu-entry-icon {
+	width: 32px;
+	height: 32px;
+	background: transparent;
+}
+
+.menu-entry-with-icon {
+	padding-left: 10px;
+}
+
+/* Don't forget to update it when you change one of the two above!
+menu-entry-with-icon.padding-left + menu-entry-icon.width */
+.menu-entry-no-icon {
+	padding-left: 42px;
 }

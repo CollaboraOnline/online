@@ -405,11 +405,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return false;
 		}
 
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
-		sectionTitle.innerHTML = title;
+		var menuEntry = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+
+		var icon = null;
+		var commandName = data.command ? data.command.substring('.uno:'.length) : data.id;
+		if (commandName && commandName.length) {
+			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon', menuEntry);
+			var iconPath = 'images/lc_' + commandName.toLowerCase() + '.svg';
+			icon = L.DomUtil.create('img', '', iconSpan);
+			icon.src = iconPath;
+		}
+		var titleSpan = L.DomUtil.create('span', '', menuEntry);
+		titleSpan.innerHTML = title;
+		var paddingClass = icon ? 'menu-entry-with-icon' : 'menu-entry-no-icon';
+		L.DomUtil.addClass(titleSpan, paddingClass);
 
 		if (builder.wizard) {
-			$(sectionTitle).click(function() {
+			$(menuEntry).click(function() {
 				if (data.executionType === 'action') {
 					builder.map.menubar._executeAction(undefined, data.id);
 				} else {
