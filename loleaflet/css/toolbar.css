@@ -1041,6 +1041,9 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 .ui-tabs.mobile-wizard {
 	text-align: center;
 	height: 42px;
+	display: table;
+	width: 100%;
+	border-spacing: 10px;
 }
 
 .ui-tab.mobile-wizard {
@@ -1049,7 +1052,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	line-height: 36px;
     vertical-align: middle;
 	margin: 5px;
-	padding: 5px;
 	border-radius: 10px;
 	border: solid 1px #0b87e7;
 }
@@ -1057,4 +1059,5 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 .ui-tab.selected.mobile-wizard {
 	background-color: #eaf5ff;
 	border: none;
+	color: #0b87e7;
 }
