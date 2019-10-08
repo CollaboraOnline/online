@@ -54,7 +54,7 @@ echo "Running ${tst}"
 echo "	$cmd_line"
 
 # drop .la suffix
-tst=`echo $tst | sed s/\.la//`;
+tst=`echo $tst | sed "s/\.la//"`;
 
 if test "z$tst" != "z" && test "z$CPPUNIT_TEST_NAME" != "z"; then
     # $tst is not empty, but $CPPUNIT_TEST_NAME is set, exit early if they

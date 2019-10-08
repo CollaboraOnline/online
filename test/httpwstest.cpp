@@ -103,7 +103,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPaste);
     CPPUNIT_TEST(testPasteBlank);
-    CPPUNIT_TEST(testLargePaste);
     CPPUNIT_TEST(testRenderingOptions);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithoutPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithWrongPassword);
@@ -163,7 +162,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testExcelLoad();
     void testPaste();
     void testPasteBlank();
-    void testLargePaste();
     void testRenderingOptions();
     void testPasswordProtectedDocumentWithoutPassword();
     void testPasswordProtectedDocumentWithWrongPassword();
@@ -941,42 +939,6 @@ void HTTPWSTest::testPasteBlank()
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
         const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testLargePaste()
-{
-    const char* testname = "LargePaste ";
-    try
-    {
-        // Load a document and make it empty, then paste some text into it.
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
-
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "uno .uno:Delete", testname);
-
-        // Paste some text into it.
-        std::ostringstream oss;
-        for (int i = 0; i < 1000; ++i)
-        {
-            oss << Util::encodeId(Util::rng::getNext(), 6);
-        }
-
-        const std::string documentContents = oss.str();
-        TST_LOG("Pasting " << documentContents.size() << " characters into document.");
-        sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents, testname);
-
-        // Check if the server is still alive.
-        // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
-        CPPUNIT_ASSERT_MESSAGE("Pasted text was either corrupted or couldn't be read back",
-                               "textselectioncontent: " + documentContents == selection);
     }
     catch (const Poco::Exception& exc)
     {
