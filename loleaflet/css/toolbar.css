@@ -41,10 +41,13 @@
 		margin: 0px !important;
 		float:left;
 	}
-	.colorspan {
+	.colorcontainer {
 		width: 120px;
 		float: left;
-		padding: 0px 10px 0px 10px !important;
+		padding: 20px 20px 20px 20px !important;
+	}
+	#ParaspaceIncrease, #ParaspaceDecrease {
+		padding-left: 28px !important;
 	}
 	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells{clear:both;}
 	#DecrementIndent + input:disabled{display: none;}
