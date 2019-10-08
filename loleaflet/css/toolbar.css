@@ -1,3 +1,8 @@
+@media (max-width: 407px), (max-device-height: 407px) {
+	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough{
+		padding: 18px 28px 18px 28px !important;
+	}
+}
 @media (max-width: 767px), (max-device-height: 767px) {
 	.w2ui-icon.users{
 		background-size: 20px !important;
