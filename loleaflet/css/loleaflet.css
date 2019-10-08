@@ -197,7 +197,12 @@ body {
 @media (max-width: 767px),(max-device-height: 767px) {
 	/* Show slidesorter beyond 768px only */
 	#presentation-controls-wrapper {
-	display: none;
+		top: initial;
+		left: initial;
+		bottom: 33px;
+		height: 60px;
+		width: 100%;
+		max-width: initial;
 	}
 
 	/* Show sidebar beyond 768px only */
@@ -219,33 +224,34 @@ body {
 	}
 
 	#document-container.parts-preview-document {
-	left: 0px !important;
+		left: 0px !important;
+		bottom: 95px;
 	}
 	#document-container.spreadsheet-document {
-	top: 97px !important;
+		top: 97px !important;
 	}
 	#document-container.spreadsheet-document.readonly {
-	top: 61px !important;
+		top: 61px !important;
 	}
 	#document-container {
-	top: 41px;
-	right: 0px !important;
+		top: 41px;
+		right: 0px !important;
 	}
 	#spreadsheet-row-column-frame {
-	top: 77px !important;
+		top: 77px !important;
 	}
 	#spreadsheet-row-column-frame.readonly {
-	top: 41px !important;
+		top: 41px !important;
 	}
 	#toolbar-hamburger {
 	width: 36px;
 	}
 	#closebuttonwrapper {
-	display: none;
+		display: none;
 	}
 	/* Show menubar even if folded */
 	.main-nav {
-	display: block !important;
+		display: block !important;
 	}
 }
 

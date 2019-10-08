@@ -1544,7 +1544,9 @@ function onDocLayerInit() {
 		if (statusbar)
 			statusbar.show('prev', 'next');
 
-		$('#presentation-toolbar').show();
+		if (!_inMobileMode()) {
+			$('#presentation-toolbar').show();
+		}
 		break;
 	}
 
@@ -2119,7 +2121,7 @@ function onUpdatePermission(e) {
 				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
-				$('#document-container').css('bottom', '35px');
+				$('#document-container').css('bottom', '95px');
 				break;
 			}
 		}

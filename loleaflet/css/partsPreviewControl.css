@@ -13,7 +13,8 @@
 .preview-frame {
 	max-width: 190px;
 	white-space: nowrap;
-	text-align: center; margin: 1em 0;
+	text-align: center;
+	margin: 1em 0;
 	}
 
 .preview-helper {
@@ -30,6 +31,20 @@
 	cursor: pointer;
 	border: 2px solid #dfdfdf;
 	}
+
+@media (max-width: 767px),(max-device-height: 767px) {
+	.preview-img {
+		min-width: 60px;
+		max-width: 60px;
+	}
+
+	.preview-frame {
+		max-height: 60px;
+		max-width: initial;
+		display: table-cell;
+		padding-right: 1em;
+	}
+}
 
 /* The current part the user is on. */
 .preview-img-currentpart {
