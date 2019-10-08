@@ -105,7 +105,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertPagebreak'},
 				{uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
-				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _UNO('.uno:HyperlinkDialog'), id: 'hyperlink', type: 'action'},
+				{name: _('Insert Shape'), id: 'insertshape', desktop: false, mobile: true, type: 'action' },
 				{uno: '.uno:InsertSymbol', mobile: false},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
@@ -832,6 +833,15 @@ L.Control.Menubar = L.Control.extend({
 		});
 	},
 
+	_openInsertShapesDialog: function() {
+		vex.open({
+			unsafeContent: '<div id="insertshape-wrapper"><div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all"><div class="insertshape-grid"></div></div></div>',
+			afterOpen: function() {
+				window.insertShapes(true);
+			}
+		});
+	},
+
 	_executeAction: function(item, id) {
 		if (!id)
 			id = $(item).data('id');
@@ -880,6 +890,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('fullscreen');
 		} else if (id === 'insertpage') {
 			this._map.insertPage();
+		} else if (id === 'insertshape') {
+			this._openInsertShapesDialog();
 		} else if (id === 'duplicatepage') {
 			this._map.duplicatePage();
 		} else if (id === 'deletepage') {
