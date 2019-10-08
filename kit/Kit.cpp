@@ -2115,14 +2115,18 @@ public:
         catch (const std::exception& exc)
         {
             LOG_FTL("QueueHandler::run: Exception: " << exc.what());
+#if !MOBILEAPP
             Log::shutdown();
             std::_Exit(Application::EXIT_SOFTWARE);
+#endif
         }
         catch (...)
         {
             LOG_FTL("QueueHandler::run: Unknown exception");
+#if !MOBILEAPP
             Log::shutdown();
             std::_Exit(Application::EXIT_SOFTWARE);
+#endif
         }
     }
 
