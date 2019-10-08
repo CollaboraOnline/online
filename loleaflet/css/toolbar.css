@@ -41,6 +41,11 @@
 		margin: 0px !important;
 		float:left;
 	}
+	[name='colorselector-0'] {
+		padding: 24px 0px 24px 20px !important;
+		margin: 0px !important;
+		float:left;
+	}
 	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells{clear:both;}
 	#DecrementIndent + input:disabled{display: none;}
 	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
@@ -1060,4 +1065,13 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	background-color: #eaf5ff;
 	border: none;
 	color: #0b87e7;
+}
+
+#tb_colorselector-0_item_color .w2ui-tb-caption > div {
+	height: 32px !important;
+	width: 32px !important;
+}
+
+[name='colorselector-0'] {
+	width: 80px;
 }
