@@ -1039,10 +1039,11 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 .ui-tabs.mobile-wizard {
 	text-align: center;
+	height: 42px;
 }
 
 .ui-tab.mobile-wizard {
-	display: inline-table;
+	display: table-cell;
 	height: 36px;
 	line-height: 36px;
     vertical-align: middle;
