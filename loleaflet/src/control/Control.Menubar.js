@@ -104,7 +104,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertPagebreak'},
 				{uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
-				{name: _UNO('.uno:HyperlinkDialog'), id: 'hyperlink', type: 'action'},
+				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{name: _('Insert Shape'), id: 'insertshape', desktop: false, mobile: true, type: 'action' },
 				{uno: '.uno:InsertSymbol', mobile: false},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
