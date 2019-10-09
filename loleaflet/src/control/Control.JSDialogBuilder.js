@@ -403,7 +403,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
-		var fixedtext = L.DomUtil.create('p', '', parentContainer);
+		var fixedtext = L.DomUtil.create('p', 'mobile-wizard ui-text', parentContainer);
 		fixedtext.innerHTML = builder._cleanText(data.text);
 		fixedtext.id = data.id;
 
