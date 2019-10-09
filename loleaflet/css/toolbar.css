@@ -66,7 +66,6 @@
 		height: 32px;
     margin: 24px 28px 24px 28px !important;
     width: 70%;
-    background: url(images/lc_linespacing.svg) no-repeat 1px center;
     border: 1px solid #ccc;
     border-radius: 2px;
     background-size: 28px;
@@ -1106,4 +1105,8 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 .colorimage {
 	float: left;
 	height: 32px;
+}
+
+.spinfieldcontainer {
+	display: inline-block;
 }

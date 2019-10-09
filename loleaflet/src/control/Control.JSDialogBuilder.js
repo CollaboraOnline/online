@@ -320,9 +320,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_spinfieldControl: function(parentContainer, data, builder) {
-		var spinfield = L.DomUtil.create('input', '', parentContainer);
+		var div = L.DomUtil.createWithId('div', data.id, parentContainer);
+		$(div).addClass('spinfieldcontainer');
+
+		var image = L.DomUtil.create('img', 'spinfieldimage', div);
+		var icon = builder._createIconPath(data.id);
+		image.src = icon;
+
+		var spinfield = L.DomUtil.create('input', 'spinfield', div);
 		spinfield.type = 'number';
-		spinfield.id = data.id;
 
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
