@@ -199,6 +199,25 @@ L.Map = L.Evented.extend({
 				var interactiveRuler = this._permission === 'edit' ? true : false;
 				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
 			}
+			var elem;
+			if (this._docLayer._docType === 'text') {
+				elem = L.DomUtil.get('spreadsheet-row-column-frame');
+				elem.parentNode.removeChild(elem);
+				elem = L.DomUtil.get('spreadsheet-toolbar');
+				elem.parentNode.removeChild(elem);
+				elem = L.DomUtil.get('presentation-controls-wrapper');
+				elem.parentNode.removeChild(elem);
+			}
+			else if (this._docLayer._docType === 'presentation') {
+				elem = L.DomUtil.get('spreadsheet-row-column-frame');
+				elem.parentNode.removeChild(elem);
+				elem = L.DomUtil.get('spreadsheet-toolbar');
+				elem.parentNode.removeChild(elem);
+			} else if (this._docLayer._docType === 'spreadsheet') {
+				elem = L.DomUtil.get('presentation-controls-wrapper');
+				elem.parentNode.removeChild(elem);
+			}
+
 			if (L.Browser.mobile)
 			{
 				this._socket.sendMessage('uno .uno:LOKSetMobile');

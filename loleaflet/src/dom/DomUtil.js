@@ -79,6 +79,10 @@ L.DomUtil = {
 	},
 
 	addClass: function (el, name) {
+		if (!el) {
+			return;
+		}
+
 		if (el.classList !== undefined) {
 			var classes = L.Util.splitWords(name);
 			for (var i = 0, len = classes.length; i < len; i++) {
@@ -91,6 +95,10 @@ L.DomUtil = {
 	},
 
 	removeClass: function (el, name) {
+		if (!el) {
+			return;
+		}
+
 		if (el.classList !== undefined) {
 			el.classList.remove(name);
 		} else {
