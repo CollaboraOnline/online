@@ -57,9 +57,9 @@
 		padding: 20px 20px 0px 20px !important;
 	}
 	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel{clear:both;}
-	#BackgroundColor + p, #LineSpacing + p{
+	#BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel{
 		border-bottom: 1px solid #eeeeee;
-    color: #dddddd;
+    color: #dddddd !important;
 	}
 	#DecrementIndent + input:disabled{display: none;}
 	div#mobile-wizard-content input[type=number]{
