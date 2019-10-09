@@ -53,6 +53,8 @@ L.Control.PartsPreview = L.Control.extend({
 				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
 				var bottomBound;
 				if (this._direction === 'x') {
+					$('#presentation-controls-wrapper').css({ width: '100%'});
+					$('#slide-sorter').css({ height: this.options.maxHeight + 'px' });
 					this._previewContTop = previewContBB.left;
 					bottomBound = previewContBB.right + previewContBB.width / 2;
 				} else {
