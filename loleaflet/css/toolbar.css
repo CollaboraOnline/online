@@ -63,12 +63,18 @@
 	}
 	#DecrementIndent + input:disabled{display: none;}
 	div#mobile-wizard-content input[type=number]{
-		height: 32px;
-    margin: 24px 28px 24px 28px !important;
-    width: 70%;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    background-size: 28px;
+		height: 46px;
+		width: 70%;
+		margin-left: 10px;
+		border: none;
+	}
+	div#mobile-wizard-content .spinfieldcontainer{
+		height: 48px;
+		margin: 24px 28px 24px 28px !important;
+		width: 70%;
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		background-size: 28px;
 	}
 	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
 		margin: 0;
@@ -1109,4 +1115,23 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 .spinfieldcontainer {
 	display: inline-block;
+}
+
+.sinfieldcontrols {
+	background-color: #eee;
+	text-align: center;
+	width: 25px;
+	height: 48px;
+	float: right;
+}
+
+.plus {
+	border-bottom: 1px solid #ccc;
+	height: 24px;
+	color: #777 !important;
+}
+
+.minus {
+	height: 24px;
+	color: #777 !important;
 }

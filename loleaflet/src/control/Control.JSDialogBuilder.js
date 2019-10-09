@@ -330,6 +330,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var spinfield = L.DomUtil.create('input', 'spinfield', div);
 		spinfield.type = 'number';
 
+		var controlsContainer = L.DomUtil.create('div', 'sinfieldcontrols', div);
+		var plus = L.DomUtil.create('div', 'plus', controlsContainer);
+		plus.innerHTML = '+';
+		var minus = L.DomUtil.create('div', 'minus', controlsContainer);
+		minus.innerHTML = '-';
+
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
 
