@@ -975,13 +975,13 @@ tr.useritem > td > img {
 #mobile-wizard-content {
 		overflow: scroll;
 		position: absolute;
-		top: 48px;
+		top: 111px;
 		bottom: 0px;
 		width: 100%;
 }
 
 #mobile-wizard-tabs {
-	height: 42px;
+	height: 63px;
 }
 
 #mobile-wizard-content *{
@@ -991,6 +991,7 @@ tr.useritem > td > img {
 
 #mobile-wizard-titlebar {
 	background-color: white;
+	top: 63px;
 	height: 48px;
 	color: #636363;
 	border-bottom: 1px solid #dddddd !important;

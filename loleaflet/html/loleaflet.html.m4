@@ -186,13 +186,13 @@ ifelse(MOBILEAPP,[true],
 
     <div id="toolbar-down" style="display: none"></div>
     <div id="mobile-wizard" style="display: none">
+      <div id="mobile-wizard-tabs"></div>
       <table id="mobile-wizard-titlebar" width="100%">
         <tr>
           <td id="mobile-wizard-back"></td>
           <td id="mobile-wizard-title" class="ui-widget"></td>
         </tr>
       </table>
-      <div id="mobile-wizard-tabs"></div>
       <div id="mobile-wizard-content"></div>
     </div>
 
