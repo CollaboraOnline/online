@@ -284,7 +284,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Sidebar'}]
+				{uno: '.uno:Sidebar', mobile: false}]
 			},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
