@@ -4,6 +4,19 @@
 	}
 }
 @media (max-width: 767px), (max-device-height: 767px) {
+	#slide-sorter .preview-img{
+		    border-radius: 3px;
+				border-color: #eee;
+	}
+	#slide-sorter .preview-img-currentpart {
+    border-color: #0b87e780;
+    border-style: solid;
+    border-radius: 3px;
+	}
+	#presentation-controls-wrapper {
+    background-color: #f9f9f9;
+		border: none;
+	}
 	.spinfieldcontainer .plus:active, .spinfieldcontainer .minus:active{
     border-color: #0b87e7;
     -webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
