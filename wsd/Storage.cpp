@@ -392,12 +392,12 @@ Poco::Net::HTTPClientSession* StorageBase::getHTTPClientSession(const Poco::URI&
     // We decoupled the Wopi communication from client communcation because
     // the Wopi communication must have an independent policy.
     // So, we will use here only Storage settings.
-    return (SSLEnabled)
+    return (SSLEnabled || LOOLWSD::isSSLTermination())
          ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(),
                                              Poco::Net::SSLManager::instance().defaultClientContext())
          : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
  }
- 
+
 namespace
 {
 
