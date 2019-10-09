@@ -145,6 +145,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		sectionTitle.innerHTML = title;
 
+		$(sectionTitle).css('justify-content', 'space-between');
+
+		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', sectionTitle);
+		arrowSpan.innerHTML = '>';
+
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
 		contentDiv.title = title;
 
