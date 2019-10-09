@@ -1071,13 +1071,15 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
     vertical-align: middle;
 	margin: 5px;
 	border-radius: 10px;
-	border: solid 1px #0b87e7;
+	border: none;
+	color: #777;
 }
 
 .ui-tab.selected.mobile-wizard {
-	background-color: #eaf5ff;
 	border: none;
 	color: #0b87e7;
+	border-radius: 0px;
+	border-bottom: solid 1px #0b87e7;
 }
 
 [id|=tb_colorselector] .w2ui-tb-caption > div {
