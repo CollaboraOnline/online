@@ -206,7 +206,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var tabsContainer = L.DomUtil.create('div', 'ui-tabs mobile-wizard ui-widget');
 		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content mobile-wizard ui-widget', parentContainer);
 
-		var title1 = builder._cleanText(data.children[1].text);
+		var title1 = builder._cleanText(data[0].text);
 		var icon1 = builder._createIconPath(title1);
 
 		var tab1 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
@@ -221,8 +221,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		contentDiv.title = title1;
 
 		builder._currentDepth++;
-		for (var i = 0; i < data.children[1].children[0].children.length; i++) {
-			builder.build(contentDiv, [data.children[1].children[0].children[i]]);
+		for (var i = 0; i < data[0].children.length; i++) {
+			builder.build(contentDiv, [data[0].children[i]]);
 		}
 		builder._currentDepth--;
 
@@ -231,7 +231,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var tab2 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
 
-		var title2 = builder._cleanText(data.children[3].text);
+		var title2 = builder._cleanText(data[1].text);
 		var icon2 = builder._createIconPath(title2);
 
 		var button2 = L.DomUtil.create('img', 'ui-tab-content mobile-wizard unobutton', tab2);
@@ -244,8 +244,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		contentDiv2.title = title2;
 
 		builder._currentDepth++;
-		for (i = 0; i < data.children[3].children[0].children.length; i++) {
-			builder.build(contentDiv2, [data.children[3].children[0].children[i]]);
+		for (i = 0; i < data[1].children.length; i++) {
+			builder.build(contentDiv2, [data[1].children[i]]);
 		}
 		builder._currentDepth--;
 
@@ -566,13 +566,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var handler = this._controlHandlers[childType];
 
-			var twoPanelsAsChildren = childData.children && childData.children.length == 5
-				&& childData.children[1] && childData.children[1].type == 'panel'
-				&& childData.children[3] && childData.children[3].type == 'panel';
+			var twoPanelsAsChildren = childData.children
+				&& (childData.children.length == 4 || childData.children.length == 5)
+				&& childData.children[0] && childData.children[0].type == 'panel'
+				&& childData.children[2] && childData.children[2].type == 'panel';
 
 			if (twoPanelsAsChildren) {
+				var tabsData = [childData.children[0], childData.children[2]];
+
 				handler = this._controlHandlers['paneltabs'];
-				processChildren = handler(childObject, childData, this);
+				processChildren = handler(childObject, tabsData, this);
 			} else {
 				if (handler)
 					processChildren = handler(childObject, childData, this);
