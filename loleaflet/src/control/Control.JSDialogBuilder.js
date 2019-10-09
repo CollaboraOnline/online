@@ -328,6 +328,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_spinfieldControl: function(parentContainer, data, builder) {
 		var spinfield = L.DomUtil.create('input', '', parentContainer);
 		spinfield.type = 'number';
+		spinfield.id = data.id;
 
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
@@ -350,6 +351,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_editControl: function(parentContainer, data, builder) {
 		var edit = L.DomUtil.create('input', '', parentContainer);
 		edit.value = builder._cleanText(data.text);
+		edit.id = data.id;
 
 		if (data.enabled == 'false')
 			$(edit).attr('disabled', 'disabled');
@@ -367,6 +369,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_pushbuttonControl: function(parentContainer, data, builder) {
 		var pushbutton = L.DomUtil.create('button', '', parentContainer);
 		pushbutton.innerHTML = builder._cleanText(data.text);
+		pushbutton.id = data.id;
 
 		if (data.enabled == 'false')
 			$(pushbutton).attr('disabled', 'disabled');
@@ -408,6 +411,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_fixedtextControl: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('p', '', parentContainer);
 		fixedtext.innerHTML = builder._cleanText(data.text);
+		fixedtext.id = data.id;
 
 		if (data.hidden)
 			$(fixedtext).hide();
