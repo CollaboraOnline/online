@@ -27,6 +27,7 @@ L.Control.MobileWizard = L.Control.extend({
 		this.backButton.addClass('close-button');
 		$('#mobile-wizard-tabs').empty();
 		$('#mobile-wizard-tabs').hide();
+		$('#mobile-wizard-titlebar').show();
 		$('#mobile-wizard-titlebar').css('top', '0px');
 		$('#mobile-wizard-content').css('top', '48px');
 		this._isTabMode = false;
