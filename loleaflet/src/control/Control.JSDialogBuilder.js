@@ -100,7 +100,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return text.replace('~', '');
 	},
 
-	_containerHandler: function() {
+	_containerHandler: function(parentContainer, data) {
+		if (data.enabled == 'false')
+			return false;
 		return true;
 	},
 
