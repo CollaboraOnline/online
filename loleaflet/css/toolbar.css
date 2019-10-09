@@ -4,6 +4,14 @@
 	}
 }
 @media (max-width: 767px), (max-device-height: 767px) {
+	.spinfieldcontainer .plus:active, .spinfieldcontainer .minus:active{
+    border-color: #0b87e7;
+    -webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+    filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+	}
+	.spinfieldcontainer .minus:active{
+		border-top: 1px solid #0b87e7;
+	}
 	.mobile-wizard.ui-combobox-text.checked {
     color: #0b87e7 !important;
 	}
