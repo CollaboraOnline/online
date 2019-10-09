@@ -320,32 +320,36 @@ function onClick(e, id, item, subItem) {
 		}
 	}
 	else if (id === 'mobile_wizard') {
-		if (window.mobileWizard === true) {
-			window.mobileWizard = false
+		if (window.mobileWizard) {
+			window.mobileWizard = false;
 			map.sendUnoCommand('.uno:Sidebar');
 			map.fire('closemobilewizard');
 			toolbar.uncheck(id);
 		}
 		else {
-			window.mobileWizard = true
+			if (window.insertionMobileWizard)
+				this.onClick(null, 'insertion_mobile_wizard');
+			window.mobileWizard = true;
 			map.sendUnoCommand('.uno:Sidebar');
 			toolbar.check(id);
 		}
 	}
 	else if (id === 'insertion_mobile_wizard') {
-		if (window.insertionMobileWizard === true) {
-			window.insertionMobileWizard = false
+		if (window.insertionMobileWizard) {
+			window.insertionMobileWizard = false;
 			map.fire('closemobilewizard');
 			toolbar.uncheck(id);
 		}
 		else {
-			window.insertionMobileWizard = true
+			if (window.mobileWizard)
+				this.onClick(null, 'mobile_wizard');
+			window.insertionMobileWizard = true;
 			var menuData = map.menubar.generateMenuStructureFor('insert');
 			map.fire('mobilewizard', menuData);
 			toolbar.check(id);
 		}
 	}
-	else if (id == 'link') {
+	else if (id === 'link') {
 		map.showHyperlinkDialog();
 	}
 	else {
