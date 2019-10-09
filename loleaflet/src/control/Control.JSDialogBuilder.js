@@ -407,7 +407,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var entries = [];
 		for (var index in data.entries) {
-			var entry = { type: 'fixedtext', text: data.entries[index] };
+			var entry = { type: 'fixedtext', text: data.entries[index], isComboboxItem: true };
 			entries.push(entry);
 		}
 
@@ -422,6 +422,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var fixedtext = L.DomUtil.create('p', 'mobile-wizard ui-text', parentContainer);
 		fixedtext.innerHTML = builder._cleanText(data.text);
 		fixedtext.id = data.id;
+
+		if (data.isComboboxItem) {
+			$(fixedtext).removeClass('ui-text');
+			$(fixedtext).addClass('ui-combobox-text');
+		}
 
 		if (data.hidden)
 			$(fixedtext).hide();
