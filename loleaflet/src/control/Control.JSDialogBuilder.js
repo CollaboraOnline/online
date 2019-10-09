@@ -209,12 +209,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content mobile-wizard ui-widget', parentContainer);
 
 		var title1 = builder._cleanText(data[0].text);
-		var icon1 = builder._createIconPath(title1);
 
 		var tab1 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
-
-		var button = L.DomUtil.create('img', 'ui-tab-content mobile-wizard unobutton', tab1);
-		button.src = icon1;
 
 		var label = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab1);
 		label.innerHTML = title1;
@@ -234,10 +230,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var tab2 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
 
 		var title2 = builder._cleanText(data[1].text);
-		var icon2 = builder._createIconPath(title2);
-
-		var button2 = L.DomUtil.create('img', 'ui-tab-content mobile-wizard unobutton', tab2);
-		button2.src = icon2;
 
 		var label2 = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab2);
 		label2.innerHTML = title2;
