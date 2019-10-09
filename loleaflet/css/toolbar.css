@@ -1135,3 +1135,8 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	height: 24px;
 	color: #777 !important;
 }
+
+.spinfieldimage {
+	height: 24px;
+	vertical-align: middle;
+}
