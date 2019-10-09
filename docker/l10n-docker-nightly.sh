@@ -65,7 +65,7 @@ if test ! -d online ; then
     git clone https://git.libreoffice.org/online online || exit 1
 fi
 
-( cd online && git fetch --all && git checkout -f $LIBREOFFICE_BRANCH && git clean -f -f -d && git pull -r ) || exit 1
+( cd online && git fetch --all && git checkout -f $LIBREOFFICE_BRANCH && git clean -f -d && git pull -r ) || exit 1
 
 ##### LibreOffice #####
 
