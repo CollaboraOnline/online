@@ -90,18 +90,18 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		var map = this._map;
 		var toolItems = [
 			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
-			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
+//			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
-			{type: 'break'},
 			{type: 'text-color',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
 			{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
-			{type: 'break' , mobile:false},
-			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara', unosheet: 'AlignLeft', disabled: true},
-			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true), uno: 'CenterPara', unosheet: 'AlignHorizontalCenter', disabled: true},
-			{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _UNO('.uno:RightPara', '', true), uno: 'RightPara', unosheet: 'AlignRight', disabled: true},
-			{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: 'JustifyPara', unosheet: '', disabled: true},
-			{type: 'break', id: 'breakpara'},
+			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'),
+				items: [
+					{id: 'leftpara',    text: _UNO('.uno:LeftPara', '', true),    icon: 'alignleft', uno: 'LeftPara'},
+					{id: 'centerpara',  text: _UNO('.uno:CenterPara', '', true),  icon: 'alignhorizontal', uno: 'CenterPara'},
+					{id: 'rightpara',   text: _UNO('.uno:RigthPara', '', true),   icon: 'alignright', uno: 'RightPara'},
+					{id: 'justifypara', text: _UNO('.uno:JustifyPara', '', true), icon: 'alignblock', uno: 'JustifyPara'},
+				]},
 			{type: 'menu',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'),
 				items: [
 					{id: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1'},
@@ -111,11 +111,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 					{id: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: 'ParaspaceIncrease'},
 					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
 				]},
-			{type: 'break', id: 'breakspacing'},
 			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), uno: 'DefaultBullet', disabled: true},
-			{type: 'break', id: 'breakbullet'},
-			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: window.insertTable},
-			 html: '<div id="inserttable-wrapper"><div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all"><div class="inserttable-grid"></div><div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div></div></div>'},
 		];
 
 		var toolbar = $('#toolbar-up');
