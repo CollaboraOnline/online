@@ -53,13 +53,13 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:TrackChanges'},
 					{uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
-					{uno: '.uno:AcceptTrackedChanges'},
+					{uno: '.uno:AcceptTrackedChanges', mobile: false},
 					{uno: '.uno:AcceptAllTrackedChanges'},
 					{uno: '.uno:RejectAllTrackedChanges'},
 					{uno: '.uno:PreviousTrackedChange'},
 					{uno: '.uno:NextTrackedChange'}
 				]},
-				{uno: '.uno:EditStyle'}
+				{uno: '.uno:EditStyle', mobile: false}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false, mobile: false},
@@ -297,9 +297,10 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:InsertSymbol'},
-                               {type: 'separator'},
-                               {uno: '.uno:HeaderAndFooter'}]
+				{uno: '.uno:InsertSymbol', mobile: false},
+				{type: 'separator'},
+				{name: _('Insert Shape'), id: 'insertshape', desktop: false, mobile: true, type: 'action' },
+				{uno: '.uno:HeaderAndFooter', mobile: false}]
 			},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', mobile: false, type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
