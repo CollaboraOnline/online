@@ -741,6 +741,17 @@
 		BE7E683D229DAAB400DE73C8 /* dialogcontrolling.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dialogcontrolling.cxx; path = "../../ios-device/svtools/source/misc/dialogcontrolling.cxx"; sourceTree = "<group>"; };
 		BE7E683E229DAAB400DE73C8 /* imap3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imap3.cxx; path = "../../ios-device/svtools/source/misc/imap3.cxx"; sourceTree = "<group>"; };
 		BE7E683F229DAAB400DE73C8 /* ehdl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ehdl.cxx; path = "../../ios-device/svtools/source/misc/ehdl.cxx"; sourceTree = "<group>"; };
+		BE7EC148234CC9AB000D1DB6 /* breakiteratorImpl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = breakiteratorImpl.cxx; path = "../../ios-device/i18npool/source/breakiterator/breakiteratorImpl.cxx"; sourceTree = "<group>"; };
+		BE7EC149234CC9AB000D1DB6 /* breakiterator_ctl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = breakiterator_ctl.cxx; path = "../../ios-device/i18npool/source/breakiterator/breakiterator_ctl.cxx"; sourceTree = "<group>"; };
+		BE7EC14A234CC9AB000D1DB6 /* breakiterator_unicode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = breakiterator_unicode.cxx; path = "../../ios-device/i18npool/source/breakiterator/breakiterator_unicode.cxx"; sourceTree = "<group>"; };
+		BE7EC14B234CC9AB000D1DB6 /* gendict.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gendict.cxx; path = "../../ios-device/i18npool/source/breakiterator/gendict.cxx"; sourceTree = "<group>"; };
+		BE7EC14C234CC9AB000D1DB6 /* breakiterator_th.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = breakiterator_th.cxx; path = "../../ios-device/i18npool/source/breakiterator/breakiterator_th.cxx"; sourceTree = "<group>"; };
+		BE7EC14D234CC9AB000D1DB6 /* breakiterator_cjk.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = breakiterator_cjk.cxx; path = "../../ios-device/i18npool/source/breakiterator/breakiterator_cjk.cxx"; sourceTree = "<group>"; };
+		BE7EC14E234CC9AC000D1DB6 /* xdictionary.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = xdictionary.cxx; path = "../../ios-device/i18npool/source/breakiterator/xdictionary.cxx"; sourceTree = "<group>"; };
+		BE7EC150234CCB18000D1DB6 /* cclass_unicode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cclass_unicode.cxx; path = "../../ios-device/i18npool/source/characterclassification/cclass_unicode.cxx"; sourceTree = "<group>"; };
+		BE7EC151234CCB18000D1DB6 /* characterclassificationImpl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = characterclassificationImpl.cxx; path = "../../ios-device/i18npool/source/characterclassification/characterclassificationImpl.cxx"; sourceTree = "<group>"; };
+		BE7EC152234CCB18000D1DB6 /* unoscripttypedetector.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unoscripttypedetector.cxx; path = "../../ios-device/i18npool/source/characterclassification/unoscripttypedetector.cxx"; sourceTree = "<group>"; };
+		BE7EC153234CCB18000D1DB6 /* cclass_unicode_parser.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cclass_unicode_parser.cxx; path = "../../ios-device/i18npool/source/characterclassification/cclass_unicode_parser.cxx"; sourceTree = "<group>"; };
 		BE80E43121AD92F600859C97 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Mobile/Fonts; sourceTree = SOURCE_ROOT; };
 		BE80E43421B562F500859C97 /* servicemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servicemanager.cxx; path = "../../ios-device/cppuhelper/source/servicemanager.cxx"; sourceTree = "<group>"; };
 		BE80E43521B562F500859C97 /* component_context.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = component_context.cxx; path = "../../ios-device/cppuhelper/source/component_context.cxx"; sourceTree = "<group>"; };
@@ -1850,6 +1861,7 @@
 				BE34D182218CFC6C00815297 /* desktop */,
 				BE51F4A62248F370005129DC /* framework */,
 				BEA8CDC42199E5ED009FE17E /* i18nlangtag */,
+				BE7EC146234CC96C000D1DB6 /* i18npool */,
 				BE51F4D52248FC0B005129DC /* lingucomponent */,
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
@@ -2090,6 +2102,40 @@
 				BE7E6839229DAAB300DE73C8 /* unitconv.cxx */,
 			);
 			name = misc;
+			sourceTree = "<group>";
+		};
+		BE7EC146234CC96C000D1DB6 /* i18npool */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EC147234CC981000D1DB6 /* breakiterator */,
+				BE7EC14F234CCAF5000D1DB6 /* characterclassification */,
+			);
+			name = i18npool;
+			sourceTree = "<group>";
+		};
+		BE7EC147234CC981000D1DB6 /* breakiterator */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EC14D234CC9AB000D1DB6 /* breakiterator_cjk.cxx */,
+				BE7EC149234CC9AB000D1DB6 /* breakiterator_ctl.cxx */,
+				BE7EC14C234CC9AB000D1DB6 /* breakiterator_th.cxx */,
+				BE7EC14A234CC9AB000D1DB6 /* breakiterator_unicode.cxx */,
+				BE7EC148234CC9AB000D1DB6 /* breakiteratorImpl.cxx */,
+				BE7EC14B234CC9AB000D1DB6 /* gendict.cxx */,
+				BE7EC14E234CC9AC000D1DB6 /* xdictionary.cxx */,
+			);
+			name = breakiterator;
+			sourceTree = "<group>";
+		};
+		BE7EC14F234CCAF5000D1DB6 /* characterclassification */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EC153234CCB18000D1DB6 /* cclass_unicode_parser.cxx */,
+				BE7EC150234CCB18000D1DB6 /* cclass_unicode.cxx */,
+				BE7EC151234CCB18000D1DB6 /* characterclassificationImpl.cxx */,
+				BE7EC152234CCB18000D1DB6 /* unoscripttypedetector.cxx */,
+			);
+			name = characterclassification;
 			sourceTree = "<group>";
 		};
 		BE80E43321B5629300859C97 /* cppuhelper */ = {
@@ -2821,7 +2867,6 @@
 				BE8D85D6214055F3009F1860 /* rc in Resources */,
 				BE8D85D0214055F3009F1860 /* services in Resources */,
 				BE8D85D4214055F3009F1860 /* fundamentalrc in Resources */,
-				BE8D85C9214055F3009F1860 /* filter in Resources */,
 				BE8D85CD214055F3009F1860 /* registry in Resources */,
 				BE80E43221AD92F700859C97 /* Fonts in Resources */,
 				BE00F8A821396585001CE2D4 /* images in Resources */,
