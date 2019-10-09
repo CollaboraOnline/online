@@ -271,6 +271,9 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    // tdf#126974 We don't want any global object destructors to be called, the code
+    // is not prepared for that.
+    std::_Exit(1);
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)inputURL options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
