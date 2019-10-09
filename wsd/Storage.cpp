@@ -389,7 +389,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
 
 Poco::Net::HTTPClientSession* StorageBase::getHTTPClientSession(const Poco::URI& uri)
  {
-    // We decoupled the Wopi communication from client communcation because
+    // We decoupled the Wopi communication from client communication because
     // the Wopi communication must have an independent policy.
     // So, we will use here only Storage settings.
     return (SSLEnabled || LOOLWSD::isSSLTermination())
