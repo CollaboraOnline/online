@@ -1106,7 +1106,12 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
     {
         getLOKitDocument()->setView(_viewId);
 
-        LOG_TRC("Paste data of size " << size << " bytes and hash " << SpookyHash::Hash64(data, size, 0));
+        if (Log::logger().trace())
+        {
+            // Ensure 8 byte alignment for the start of the data, SpookyHash needs it.
+            std::vector<char> toHash(data, data + size);
+            LOG_TRC("Paste data of size " << size << " bytes and hash " << SpookyHash::Hash64(toHash.data(), toHash.size(), 0));
+        }
         success = getLOKitDocument()->paste(mimeType.c_str(), data, size);
         if (!success)
             LOG_WRN("Paste failed " << getLOKitLastError());
