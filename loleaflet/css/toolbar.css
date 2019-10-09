@@ -1065,6 +1065,7 @@ tr.useritem > td > img {
 .menu-entry-icon {
 	width: 32px;
 	height: 32px;
+	vertical-align: middle;
 	background: transparent;
 }
 

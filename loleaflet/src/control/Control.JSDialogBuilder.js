@@ -141,9 +141,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return null;
 	},
 
-	_explorableEntry: function(parentContainer, title, contentNode, builder) {
+	_explorableEntry: function(parentContainer, title, contentNode, builder, iconPath) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
-		sectionTitle.innerHTML = title;
+		if (iconPath) {
+			var div = L.DomUtil.create('div', '', sectionTitle);
+			var icon = L.DomUtil.create('img', 'menu-entry-icon', div);
+			icon.src = iconPath;
+			var titleSpan = L.DomUtil.create('span', 'menu-entry-with-icon', div);
+			titleSpan.innerHTML = title;
+		} else {
+			sectionTitle.innerHTML = title;
+		}
 
 		$(sectionTitle).css('justify-content', 'space-between');
 
@@ -399,7 +407,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_comboboxControl: function(parentContainer, data, builder) {
+	_comboboxControl: function(parentContainer, data, builder, iconPath) {
 		// TODO: event listener in the next level...
 
 		if (!data.entries || data.entries.length == 0)
@@ -418,7 +426,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var contentNode = {type: 'container', children: entries};
 
-		builder._explorableEntry(parentContainer, title, contentNode, builder);
+		builder._explorableEntry(parentContainer, title, contentNode, builder, iconPath);
 
 		return false;
 	},
@@ -575,13 +583,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_fontNameControl: function(parentContainer, data, builder) {
+		var iconPath = 'images/lc_charfontname.svg';
 		data.entries = [ 'Liberation Sans' ];
-		builder._comboboxControl(parentContainer, data, builder);
+		builder._comboboxControl(parentContainer, data, builder, iconPath);
 	},
 
 	_fontHeightControl: function(parentContainer, data, builder) {
+		var iconPath = 'images/lc_fontheight.svg';
 		data.entries = [ '8', '10', '11', '12', '14', '16', '24', '32', '48' ];
-		builder._comboboxControl(parentContainer, data, builder);
+		builder._comboboxControl(parentContainer, data, builder, iconPath);
 	},
 
 	build: function(parent, data) {
