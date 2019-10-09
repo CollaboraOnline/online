@@ -426,6 +426,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_createIconPath: function(name) {
+		if (!name)
+			return '';
+
 		var cleanName = name;
 		var prefixLength = '.uno:'.length;
 		if (name.substr(0, prefixLength) == '.uno:')
