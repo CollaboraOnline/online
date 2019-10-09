@@ -108,6 +108,7 @@
 		width: 24px;
 		height: 24px;
 		margin: 10px 0px !important;
+		float: right;
 		-webkit-appearance: none;
     -moz-appearance: none;
     -o-appearance: none;

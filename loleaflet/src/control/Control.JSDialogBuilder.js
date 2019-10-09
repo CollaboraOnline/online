@@ -303,11 +303,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_checkboxControl: function(parentContainer, data, builder) {
 		var div = L.DomUtil.createWithId('div', data.id, parentContainer);
 
-		var checkbox = L.DomUtil.createWithId('input', data.id, div);
-		checkbox.type = 'checkbox';
 		var checkboxLabel = L.DomUtil.create('label', '', div);
 		checkboxLabel.innerHTML = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
+		var checkbox = L.DomUtil.createWithId('input', data.id, div);
+		checkbox.type = 'checkbox';
 
 		if (data.enabled == 'false')
 			$(checkbox).attr('disabled', 'disabled');
