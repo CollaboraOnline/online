@@ -390,6 +390,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _('Insert Shape'), id: 'insertshape', desktop: false, mobile: true, type: 'action' },
 				{uno: '.uno:InsertSymbol', mobile: false},
 				{uno: '.uno:EditHeaderAndFooter', mobile: false}
 			]},

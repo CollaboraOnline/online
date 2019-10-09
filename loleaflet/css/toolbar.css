@@ -796,6 +796,8 @@ button.leaflet-control-search-next
 .w2ui-icon.numberformatincdecimals{ background: url('images/lc_numberformatincdecimals.svg') no-repeat center !important; }
 .w2ui-icon.numberformatdecdecimals{ background: url('images/lc_numberformatdecdecimals.svg') no-repeat center !important; }
 .w2ui-icon.insertobjectchart{ background: url('images/lc_drawchart.svg') no-repeat center !important; }
+.w2ui-icon.insertrowsafter{ background: url('images/lc_insertrowsafter.svg') no-repeat center !important; }
+.w2ui-icon.insertcolumnsafter{ background: url('images/lc_insertcolumnsafter.svg') no-repeat center !important; }
 .w2ui-icon.autosum{ background: url('images/lc_autosum.svg') no-repeat center !important; }
 
 .w2ui-icon.functiondialog{ background: url('images/lc_functiondialog.svg') no-repeat center !important; }
