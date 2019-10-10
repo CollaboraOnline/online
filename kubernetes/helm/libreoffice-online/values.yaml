@@ -1,0 +1,77 @@
+# Default values for libreoffice-online.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  app:
+    name: libreoffice-online
+    urlScheme: HTTP # either HTTP or HTTPS
+    scaling:
+      enabled: true
+      min: 1
+      max: 10
+      target:
+        cpu: 70
+        memory: 70        
+    monitoring:
+      activate: false
+      port: 9980
+      path: "/lool/adminMonitorInfo"
+    service:
+      name: libreoffice-online
+      type: NodePort
+      externalPort: 9980
+      internalPort: 9980
+  ingress: {}
+
+replicaCount: 3
+image:
+  pullPolicy: Always
+  repository: libreoffice/online
+  tag: master
+
+probes:
+  urlScheme: HTTP # either HTTP or HTTPS
+  port: 9980
+  readiness:
+    activate: true
+    path: /
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 30
+    successThreshold: 1
+    failureThreshold: 3
+  liveness:
+    activate: true
+    path: /
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 30
+    successThreshold: 1
+    failureThreshold: 3
+
+deployment:
+  name: libreoffice-online
+  type: RollingUpdate
+  minReadySeconds: 0
+  maxUnavailable: 1
+  maxSurge: 1
+
+environmentVariablesLool: {}
+
+service:
+  name: libreoffice-online
+
+hpa:
+ name: libreoffice-online
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 2000m
+  #  memory: 256Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi

@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ default .Values.global.app.name .Values.deployment.name }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ template "chartname" . }}
+    release: {{ .Release.Name }}    
+    version: "{{ .Values.global.app.version }}"
+spec:
+  minReadySeconds: {{ .Values.deployment.minReadySeconds }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "name" . }}
+      release: {{ .Release.Name }}
+  strategy:
+    type: {{ .Values.deployment.type }}
+    {{- if eq .Values.deployment.type "RollingUpdate"}}
+    rollingUpdate:
+      maxSurge: {{ .Values.deployment.maxSurge }}
+      maxUnavailable: {{ .Values.deployment.maxUnavailable }}
+    {{- end}}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+        version: "{{ .Values.global.app.version }}"
+        exposed: "true"
+      annotations:
+      {{- if .Values.global.app.monitoring.activate }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ .Values.global.app.monitoring.port }}"
+        prometheus.io/path: "{{ .Values.global.app.monitoring.path }}"
+      {{- end }}
+    spec:      
+      containers:
+        - name: {{ .Values.global.app.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}          
+          ports:
+            - containerPort: {{ .Values.global.app.service.internalPort }}
+          securityContext:
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            #Lool user id
+            runAsUser: 101
+        {{- if .Values.probes.liveness.activate }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.probes.liveness.path }}
+              port: {{ .Values.probes.port }}
+              scheme: {{ .Values.probes.urlScheme }}
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+            successThreshold: {{ .Values.probes.liveness.successThreshold }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+          {{- end }}
+          {{- if .Values.probes.readiness.activate }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.probes.readiness.path }}
+              port: {{ .Values.probes.port }}
+              scheme: {{ .Values.probes.urlScheme }}
+            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
+            successThreshold: {{ .Values.probes.readiness.successThreshold }}
+            failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
+          {{- end }}
+          {{- if .Values.environmentVariablesLool }}
+          env:
+{{ toYaml .Values.environmentVariablesLool | indent 12 }}          
+          {{- end }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir:
+            medium: "Memory"
