@@ -43,11 +43,13 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_showWizard: function() {
 		$('#mobile-wizard').show();
+		$('#toolbar-down').hide();
 	},
 
 	_hideWizard: function() {
 		$('#mobile-wizard').hide();
 		$('#mobile-wizard-content').empty();
+		$('#toolbar-down').show();
 		this._isActive = false;
 	},
 

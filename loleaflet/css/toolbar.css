@@ -1000,7 +1000,7 @@ tr.useritem > td > img {
 		height: 45%;
 		width: 100%;
 		position: fixed;
-		bottom: 34px;
+		bottom: 0px;
 		z-index: 1000;
 		background-color: white;
 		box-shadow: 0px -2px 4px 1px #00000030
