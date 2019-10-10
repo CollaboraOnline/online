@@ -163,7 +163,7 @@ L.Control.MobileWizard = L.Control.extend({
 			for (var i = 0; i < data.children.length; i++) {
 				if (data.children[i].type === 'panel' && data.children[i].children &&
 					data.children[i].children.length > 0 && data.children[i].children[0].id === 'SidebarStylesPanel') {
-					var ret = [data.children[i].children[0].children, data.children[i+1].children[0].children];
+					var ret = data.children[i].children[0].children;
 					data.children.splice(i, 2);
 					return ret;
 				}
@@ -180,7 +180,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_addChildrenToTextPanel: function (data, children) {
 		if (data.id === 'SidebarTextPanel' && data.children && data.children.length > 0 &&
 			data.children[0].children && data.children[0].children.length > 0) {
-			data.children[0].children = children[0].concat(data.children[0].children);
+			data.children[0].children = children.concat(data.children[0].children);
 			data.children[0].children[0].id = 'box42';
 			return 'success';
 		}
