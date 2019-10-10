@@ -446,6 +446,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('cellcursor:')) {
 			this._onCellCursorMsg(textMsg);
+			this._closeMobileWizard();
 		}
 		else if (textMsg.startsWith('celladdress:')) {
 			this._onCellAddressMsg(textMsg);
@@ -464,6 +465,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('invalidatecursor:')) {
 			this._onInvalidateCursorMsg(textMsg);
+			this._closeMobileWizard();
 		}
 		else if (textMsg.startsWith('invalidatetiles:')) {
 			var payload = textMsg.substring('invalidatetiles:'.length + 1);

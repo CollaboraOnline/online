@@ -51,6 +51,13 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-content').empty();
 		$('#toolbar-down').show();
 		this._isActive = false;
+		if (window.mobileWizard === true) {
+			var toolbar = w2ui['actionbar'];
+			if (toolbar && toolbar.get('mobile_wizard').checked)
+				toolbar.uncheck('mobile_wizard');
+			this.map.sendUnoCommand('.uno:Sidebar');
+			window.mobileWizard = false;
+		}
 	},
 
 	_hideKeyboard: function() {
