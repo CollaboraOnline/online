@@ -80,7 +80,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
-				{uno: '.uno:InsertObjectChart'},
+				{uno: '.uno:InsertObjectChart', mobile: false},
 				{type: 'separator'},
 				{uno: '.uno:InsertSection', id: 'insertsection', mobile: false },
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
