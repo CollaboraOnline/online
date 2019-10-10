@@ -1043,7 +1043,7 @@ tr.useritem > td > img {
 	margin: 0px;
 	padding: 0px;
 	border: solid 1px #fff;
-	padding-left: 32px !important;
+	padding-left: 4% !important;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -1079,11 +1079,23 @@ tr.useritem > td > img {
 }
 
 .sub-menu-arrow {
-	margin-right: 40px;
+	display: table-cell;
+	padding-left: 10px;
+	padding-right: 20px;
 	background: transparent;
 	font-size: 1.5em;
 	font-weight: bold;
 	color: #aaa !important;
+	vertical-align: middle;
+}
+
+.entry-value {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.ui-header-right {
+	display: table;
 }
 
 .menu-entry-icon {

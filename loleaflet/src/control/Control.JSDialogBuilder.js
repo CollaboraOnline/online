@@ -141,21 +141,27 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return null;
 	},
 
-	_explorableEntry: function(parentContainer, title, contentNode, builder, iconPath) {
+	_explorableEntry: function(parentContainer, title, contentNode, builder, valueNode, iconPath) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
-		if (iconPath) {
-			var div = L.DomUtil.create('div', '', sectionTitle);
-			var icon = L.DomUtil.create('img', 'menu-entry-icon', div);
-			icon.src = iconPath;
-			var titleSpan = L.DomUtil.create('span', 'menu-entry-with-icon', div);
-			titleSpan.innerHTML = title;
-		} else {
-			sectionTitle.innerHTML = title;
-		}
-
 		$(sectionTitle).css('justify-content', 'space-between');
 
-		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', sectionTitle);
+		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
+		var titleClass = '';
+		if (iconPath) {
+			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
+			icon.src = iconPath;
+			titleClass = 'menu-entry-with-icon'
+		}
+		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
+		titleSpan.innerHTML = title;
+
+		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
+		if (valueNode) {
+			var valueDiv = L.DomUtil.create('div', 'entry-value', rightDiv);
+			valueDiv.appendChild(valueNode);
+		}
+
+		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
 		arrowSpan.innerHTML = '>';
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
@@ -410,12 +416,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_comboboxControl: function(parentContainer, data, builder, iconPath) {
 		// TODO: event listener in the next level...
 
-		if (!data.entries || data.entries.length == 0)
+		if (!data.entries || data.entries.length === 0)
 			return false;
 
 		var title = data.text;
-		if (data.selectedEntries)
-			title = data.entries[data.selectedEntries[0]];
+		var valueNode = null;
+		if (data.selectedEntries) {
+			if (title && title.length) {
+				var value = data.entries[data.selectedEntries[0]];
+				valueNode = L.DomUtil.create('div', '', null);
+				valueNode.innerHTML = value;
+			} else {
+				title = data.entries[data.selectedEntries[0]];
+			}
+		}
 		title = builder._cleanText(title);
 
 		var entries = [];
@@ -426,7 +440,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var contentNode = {type: 'container', children: entries};
 
-		builder._explorableEntry(parentContainer, title, contentNode, builder, iconPath);
+		builder._explorableEntry(parentContainer, title, contentNode, builder, valueNode, iconPath);
 
 		return false;
 	},
@@ -585,12 +599,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_fontNameControl: function(parentContainer, data, builder) {
 		var iconPath = 'images/lc_charfontname.svg';
 		data.entries = [ 'Liberation Sans' ];
+		if (!(data.selectedEntries && data.selectedEntries.length))
+			data.selectedEntries = [0];
 		builder._comboboxControl(parentContainer, data, builder, iconPath);
 	},
 
 	_fontHeightControl: function(parentContainer, data, builder) {
 		var iconPath = 'images/lc_fontheight.svg';
 		data.entries = [ '8', '10', '11', '12', '14', '16', '24', '32', '48' ];
+		if (!(data.selectedEntries && data.selectedEntries.length))
+			data.selectedEntries = [1];
 		builder._comboboxControl(parentContainer, data, builder, iconPath);
 	},
 
