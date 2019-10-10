@@ -635,7 +635,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			return;
 
 		var columnHeader = L.DomUtil.get('spreadsheet-header-columns-container');
-		var document = L.DomUtil.get('document-container');
+		var document = this.options.documentContainer;
 
 		this._setCornerCanvasWidth(width);
 

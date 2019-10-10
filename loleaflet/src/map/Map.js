@@ -148,7 +148,7 @@ L.Map = L.Evented.extend({
 
 		// Avoid white bar on the bottom - force resize-detector to get full size
 		if (window.mode.isMobile()) {
-			$('#document-container').css('bottom', '0px');
+			$(this.options.documentContainer).css('bottom', '0px');
 			$(this._resizeDetector).css('bottom', '0px');
 		}
 
@@ -1678,7 +1678,7 @@ L.Map = L.Evented.extend({
 		obj.addClass('fold');
 
 		moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
-		moveObjectVertically($('#document-container'), 36);
+		moveObjectVertically($(this.options.documentContainer), 36);
 		moveObjectVertically($('#presentation-controls-wrapper'), 36);
 		moveObjectVertically($('#sidebar-dock-wrapper'), 36);
 	},
@@ -1696,7 +1696,7 @@ L.Map = L.Evented.extend({
 		obj.addClass('unfold');
 
 		moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
-		moveObjectVertically($('#document-container'), -36);
+		moveObjectVertically($(this.options.documentContainer), -36);
 		moveObjectVertically($('#presentation-controls-wrapper'), -36);
 		moveObjectVertically($('#sidebar-dock-wrapper'), -36);
 	},

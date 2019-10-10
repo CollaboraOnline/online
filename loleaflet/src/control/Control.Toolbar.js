@@ -1577,7 +1577,7 @@ function onDocLayerInit() {
 	if (!window.ThisIsTheiOSApp && window.mode.isTablet()) {
 		map.hideMenubar();
 
-		$('#document-container').addClass('tablet');
+		$(map.options.documentContainer).addClass('tablet');
 		$('#spreadsheet-row-column-frame').addClass('tablet');
 
 		$('#tb_editbar_item_fonts').css({'display': 'none'});
@@ -2113,15 +2113,15 @@ function onUpdatePermission(e) {
 			$('#toolbar-down').show();
 			switch (map._docLayer._docType) {
 			case 'text':
-				$('#document-container').css('bottom', '35px');
+				$(map.options.documentContainer).css('bottom', '35px');
 				break;
 			case 'spreadsheet':
-				$('#document-container').css('bottom', '68px');
+				$(map.options.documentContainer).css('bottom', '68px');
 				$('#spreadsheet-row-column-frame').css('bottom', '68px');
 				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
-				$('#document-container').css('bottom', '95px');
+				$(map.options.documentContainer).css('bottom', '95px');
 				break;
 			}
 		}
@@ -2170,15 +2170,15 @@ function onUpdatePermission(e) {
 			$('#toolbar-down').hide();
 			switch (map._docLayer._docType) {
 			case 'text':
-				$('#document-container').css('bottom', '0px');
+				$(map.options.documentContainer).css('bottom', '0px');
 				break;
 			case 'spreadsheet':
-				$('#document-container').css('bottom', '35px');
+				$(map.options.documentContainer).css('bottom', '35px');
 				$('#spreadsheet-row-column-frame').css('bottom', '35px');
 				$('#spreadsheet-toolbar').show();
 				break;
 			case 'presentation':
-				$('#document-container').css('bottom', '0px');
+				$(map.options.documentContainer).css('bottom', '0px');
 				break;
 			}
 		}

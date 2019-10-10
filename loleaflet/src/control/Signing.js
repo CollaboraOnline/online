@@ -437,9 +437,9 @@ L.Map.include({
 	showSignDocument: function() {
 		$('#document-signing-bar').show();
 		this.initializeLibrary();
-		oldtoolbarSize = $('#document-container').css('top');
+		oldtoolbarSize = $(this.options.documentContainer).css('top');
 
-		$('#document-container').css('top', '116px');
+		$(this.options.documentContainer).css('top', '116px');
 
 		// Avoid scroll button ">>"
 		var el = w2ui['document-signing-bar'];
@@ -451,7 +451,7 @@ L.Map.include({
 		library = null;
 		identity = null;
 		currentPassport = null;
-		$('#document-container').css('top', oldtoolbarSize);
+		$(this.options.documentContainer).css('top', oldtoolbarSize);
 	},
 	signingInitializeBar: function() {
 		$('#document-signing-bar').hide();
