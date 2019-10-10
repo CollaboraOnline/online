@@ -178,8 +178,10 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_addChildrenToTextPanel: function (data, children) {
-		if (data.id === 'SidebarTextPanel') {
-			data.children = children[0].concat(data.children);
+		if (data.id === 'SidebarTextPanel' && data.children && data.children.length > 0 &&
+			data.children[0].children && data.children[0].children.length > 0) {
+			data.children[0].children = children[0].concat(data.children[0].children);
+			data.children[0].children[0].id = 'box42';
 			return 'success';
 		}
 
