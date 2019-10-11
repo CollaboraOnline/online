@@ -104,6 +104,8 @@ L.Control.MobileWizard = L.Control.extend({
 				w2ui['actionbar'].click('mobile_wizard')
 			} else if (window.insertionMobileWizard === true) {
 				w2ui['actionbar'].click('insertion_mobile_wizard')
+			} else if (window.mobileMenuWizard === true) {
+				$('#main-menu-state').click()
 			}
 		} else {
 			this._currentDepth--;

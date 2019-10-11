@@ -640,6 +640,7 @@ L.Control.Menubar = L.Control.extend({
 		// SmartMenus mobile menu toggle button
 		$(function() {
 			var $mainMenuState = $('#main-menu-state');
+			$('#main-menu-state').checked = false;
 			if ($mainMenuState.length) {
 				// animate mobile menu
 				$mainMenuState.change(function() {
@@ -647,11 +648,20 @@ L.Control.Menubar = L.Control.extend({
 					var $nav = $menu.parent();
 					if (this.checked) {
 						self._map.fire('closesidebar');
-						$nav.css({height: 'initial', bottom: '38px'});
-						$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
-					} else {
+						if (!L.Browser.mobile) {
+							$nav.css({height: 'initial', bottom: '38px'});
+							$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
+						} else {
+							window.mobileMenuWizard = true;
+							var menuData = self._map.menubar.generateFullMenuStructure();
+							self._map.fire('mobilewizard', menuData);
+						}
+					} else if (!L.Browser.mobile) {
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
 						$nav.css({height:'', bottom: ''});
+					} else {
+						window.mobileMenuWizard = false;
+						self._map.fire('closemobilewizard');
 					}
 				});
 				// hide mobile menu beforeunload
