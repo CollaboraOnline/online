@@ -690,22 +690,6 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_beforeShow: function(e, menu) {
-		var findUnoItemInMenu = function(items, unocommand) {
-			var returnItem = null;
-			$(items).each(function() {
-				var aItem = this;
-				var type = $(aItem).data('type');
-				if (type === 'unocommand') {
-					var unoCommand = $(aItem).data('uno');
-					if (unoCommand.startsWith(unocommand)) {
-						returnItem = aItem;
-					}
-				}
-			});
-
-			return returnItem;
-		};
-
 		var self = e.data.self;
 		var items = $(menu).children().children('a').not('.has-submenu');
 		$(items).each(function() {
@@ -795,18 +779,6 @@ L.Control.Menubar = L.Control.extend({
 							$(aItem).removeClass('disabled');
 							$(aItem).removeClass(constChecked);
 						}
-					} else if (id === 'mobile-wizard') {
-						if (window.mobileWizard === true)
-							$(aItem).addClass(constChecked);
-						else
-							$(aItem).removeClass(constChecked);
-
-						var sidebarItem = findUnoItemInMenu(items, '.uno:Sidebar');
-
-						if (window.mobileWizard === true)
-							$(sidebarItem).addClass('disabled');
-						else
-							$(sidebarItem).removeClass('disabled');
 					} else {
 						$(aItem).removeClass('disabled');
 					}
@@ -926,11 +898,6 @@ L.Control.Menubar = L.Control.extend({
 			}
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
-		} else if (id === 'mobile-wizard') {
-			window.mobileWizard = window.mobileWizard ? false : true;
-			this._map.sendUnoCommand('.uno:Sidebar');
-			if (!window.mobileWizard)
-				this._map.fire('closemobilewizard');
 		} else if (!window.ThisIsAMobileApp && id === 'warn-copy-paste') {
 			var self = this;
 			vex.dialog.alert({
