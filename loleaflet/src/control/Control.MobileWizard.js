@@ -143,14 +143,23 @@ L.Control.MobileWizard = L.Control.extend({
 			this._hideKeyboard();
 
 			// We can change the sidebar as we want here
-			if (!data.type || data.type !== 'mainmenu') { // sidebar indicator
+			if (data.id === '') { // sidebar indicator
 				this._modifySidebarLayout(data);
 			}
 
 			L.control.jsDialogBuilder({mobileWizard: this, map: this.map}).build(this.content.get(0), [data]);
 
-			this._mainTitle = data.text ? data.text : '';
-			this._setTitle(this._mainTitle);
+			if (data.id === 'insert') {
+				this._mainTitle = data.text ? data.text : '';
+				this._setTitle(this._mainTitle);
+			}
+
+			if (data.id === 'menubar') {
+				var newHeight = $(window).height() - $('#toolbar-wrapper').height() - 2;
+				$('#mobile-wizard').height(newHeight);
+			} else {
+				$('#mobile-wizard').height('45%');
+			}
 		}
 	},
 

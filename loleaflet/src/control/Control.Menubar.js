@@ -1178,9 +1178,9 @@ L.Control.Menubar = L.Control.extend({
 
 	generateFullMenuStructure: function() {
 		var topMenu = {
-			type : 'mainmenu',
+			type : 'menubar',
 			enabled : true,
-			text : '',
+			id : 'menubar',
 			children : []
 		};
 		var docType = this._map.getDocType();
