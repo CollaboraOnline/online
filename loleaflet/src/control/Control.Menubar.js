@@ -1172,6 +1172,24 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
+	generateFullMenuStructure: function() {
+		var topMenu = {
+			type : 'mainmenu',
+			enabled : true,
+			text : '',
+			children : []
+		};
+		var docType = this._map.getDocType();
+		var items = this.options[docType];
+
+		for (var i = 0; i < items.length; i++) {
+			if (items[i].mobile !== false) {
+				topMenu.children.push(this._generateMenuStructure(items[i], docType, false));
+			}
+		}
+		return topMenu;
+	},
+
 	generateMenuStructureFor: function(targetId) {
 		var docType = this._map.getDocType();
 		var items = this.options[docType];

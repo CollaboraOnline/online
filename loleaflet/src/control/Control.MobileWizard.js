@@ -143,7 +143,7 @@ L.Control.MobileWizard = L.Control.extend({
 			this._hideKeyboard();
 
 			// We can change the sidebar as we want here
-			if (!data.text) { // sidebar indicator
+			if (!data.type || data.type !== 'mainmenu') { // sidebar indicator
 				this._modifySidebarLayout(data);
 			}
 
