@@ -124,6 +124,7 @@ L.Map.include({
 		}
 
 		this._socket.sendMessage('tile ' +
+							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
 							'width=' + maxWidth * dpiscale + ' ' +
 							'height=' + maxHeight * dpiscale + ' ' +
@@ -148,6 +149,7 @@ L.Map.include({
 		var dpiscale = L.getDpiScaleFactor();
 
 		this._socket.sendMessage('tile ' +
+							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
 							'width=' + width * dpiscale + ' ' +
 							'height=' + height * dpiscale + ' ' +
