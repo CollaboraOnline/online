@@ -91,14 +91,13 @@
 	#DecrementIndent + input:disabled{display: none;}
 	div#mobile-wizard-content input[type=number]{
 		height: 46px;
-		width: 70%;
+		width: 110px;
 		margin-left: 10px;
 		border: none;
 	}
 	div#mobile-wizard-content .spinfieldcontainer{
 		height: 48px;
-		margin: 24px 28px 24px 28px !important;
-		width: 70%;
+		margin: 24px 0px 24px 28px !important;
 		border: 1px solid #ccc;
 		border-radius: 2px;
 		background-size: 28px;
@@ -1157,28 +1156,42 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 .spinfieldcontainer {
 	display: inline-block;
+	overflow: hidden;
 }
 
 .sinfieldcontrols {
 	background-color: #eee;
 	text-align: center;
-	width: 25px;
-	height: 48px;
-	float: right;
+	display: inline-block;
+	vertical-align: middle;
+	border-left: 1px solid #ccc;
+}
+
+.spinfieldunit {
+	color: #777;
+	width: 30px;
+	margin: 0px 10px 0px 10px;
 }
 
 .plus {
-	border-bottom: 1px solid #ccc;
-	height: 24px;
+	border-right: 1px solid #ccc;
+	width: 48px;
+	height: 48px;
 	color: #777 !important;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .minus {
-	height: 24px;
+	width: 48px;
+	height: 48px;
 	color: #777 !important;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .spinfieldimage {
+	width: 24px;
 	height: 24px;
 	vertical-align: middle;
 }

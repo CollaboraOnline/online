@@ -343,8 +343,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_spinfieldControl: function(parentContainer, data, builder) {
-		var div = L.DomUtil.createWithId('div', data.id, parentContainer);
-		$(div).addClass('spinfieldcontainer');
+		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
 
 		var image = L.DomUtil.create('img', 'spinfieldimage', div);
 		var icon = builder._createIconPath(data.id);
@@ -352,6 +351,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var spinfield = L.DomUtil.create('input', 'spinfield', div);
 		spinfield.type = 'number';
+
+		if (data.unit) {
+			var unit = L.DomUtil.create('span', 'spinfieldunit', div);
+			unit.innerHTML = data.unit;
+		}
 
 		var controlsContainer = L.DomUtil.create('div', 'sinfieldcontrols', div);
 		var plus = L.DomUtil.create('div', 'plus', controlsContainer);
