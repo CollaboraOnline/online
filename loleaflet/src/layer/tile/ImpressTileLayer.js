@@ -7,6 +7,14 @@
 L.ImpressTileLayer = L.TileLayer.extend({
 	extraSize: L.point(290, 0),
 
+	initialize: function (url, options) {
+		L.TileLayer.prototype.initialize.call(this, url, options);
+
+		if (window.mode.isMobile()) {
+			this._addButton = L.control.mobileSlide();
+		}
+	},
+
 	newAnnotation: function (comment) {
 		if (this._draft) {
 			return;
@@ -25,13 +33,14 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	beforeAdd: function (map) {
 		map.on('zoomend', this._onAnnotationZoom, this);
 		map.on('updateparts', this.onUpdateParts, this);
+		map.on('updatepermission', this.onUpdatePermission, this);
 		map.on('AnnotationCancel', this.onAnnotationCancel, this);
 		map.on('AnnotationReply', this.onReplyClick, this);
 		map.on('AnnotationSave', this.onAnnotationSave, this);
 		map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
 		map.on('resize', this.onResize, this);
-		if (L.Browser.mobile) {
+		if (window.mode.isMobile()) {
 			map.on('doclayerinit', this.onMobileInit, this);
 		}
 	},
@@ -337,6 +346,16 @@ L.ImpressTileLayer = L.TileLayer.extend({
 					this._topAnnotation[this._selectedPart] = 0;
 				}
 				this.onAnnotationCancel();
+			}
+		}
+	},
+
+	onUpdatePermission: function (e) {
+		if (window.mode.isMobile()) {
+			if (e.perm === 'edit') {
+				this._addButton.addTo(this._map);
+			} else {
+				this._addButton.remove();
 			}
 		}
 	},

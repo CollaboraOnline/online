@@ -405,6 +405,12 @@ var deps = {
 		desc: 'Attribution control.'
 	},
 
+	ControlMobileSlide: {
+		src: ['control/Control.js',
+		      'control/Control.MobileSlide.js'],
+		desc: 'Mobile control to add new slide.'
+	},
+
 	ControlScale: {
 		src: ['control/Control.js',
 		      'control/Control.Scale.js'],
