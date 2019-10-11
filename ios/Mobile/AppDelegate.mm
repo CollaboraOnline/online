@@ -12,8 +12,13 @@
 #import <cstdlib>
 #import <cstring>
 
-#import <LibreOfficeKit/LibreOfficeKitInit.h>
+#import <LibreOfficeKit/LibreOfficeKit.hxx>
 
+#define LIBO_INTERNAL_ONLY
+#include <comphelper/lok.hxx>
+#include <i18nlangtag/languagetag.hxx>
+
+#import "ios.h"
 #import "AppDelegate.h"
 #import "DocumentBrowserViewController.h"
 #import "DocumentViewController.h"
@@ -196,6 +201,10 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         app_locale = [NSString stringWithUTF8String:lang];
     else
         app_locale = [[NSLocale preferredLanguages] firstObject];
+
+    lo_kit = lok_init_2(nullptr, nullptr);
+
+    comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([app_locale UTF8String])), true));
 
     // Look for the setting indicating the URL for a file containing a list of URLs for template
     // documents to download. If set, start a task to download it, and then to download the listed

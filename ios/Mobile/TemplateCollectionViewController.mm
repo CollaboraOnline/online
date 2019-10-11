@@ -6,14 +6,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#define LIBO_INTERNAL_ONLY
-#include <comphelper/lok.hxx>
-#include <i18nlangtag/languagetag.hxx>
-
 #import "svtools/strings.hrc"
 
 #import <LibreOfficeKit/LibreOfficeKitInit.h>
 
+#import "ios.h"
 #import "AppDelegate.h"
 #import "L10n.h"
 #import "TemplateCollectionViewController.h"
@@ -141,10 +138,6 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
     NSURL *cacheDirectory = [NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask][0];
     NSURL *newURL = [cacheDirectory URLByAppendingPathComponent:mapTemplateExtensionToActual(selectedTemplate.lastPathComponent)
                                                     isDirectory:NO];
-    LibreOfficeKit *lo_kit = lok_init_2(nullptr, nullptr);
-
-    comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([app_locale UTF8String])), true));
-
     // Load the template into LibreOffice core, save as the corresponding document type (with the
     // same basename), and then proceed to edit that.
 

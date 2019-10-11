@@ -2565,7 +2565,13 @@ void lokit_main(
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #else
+
+#ifdef IOS // In the iOS app we call lok_init_2() just once, when the app starts
+        static LibreOfficeKit *kit = lo_kit;
+#else
         static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
+#endif
+
 #endif
 
         assert(kit);

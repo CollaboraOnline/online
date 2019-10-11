@@ -57,8 +57,6 @@
     fakeClientFd = fakeSocketSocket();
     NSString *uri = [[self fileURL] absoluteString];
 
-    comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([app_locale UTF8String])), true));
-
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:uri],
