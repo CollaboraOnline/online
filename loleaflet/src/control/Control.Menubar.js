@@ -994,72 +994,76 @@ L.Control.Menubar = L.Control.extend({
 
 	},
 
+	_checkItemVisibility: function(menuItem) {
+		if (menuItem.id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
+			return false;
+		}
+		if (menuItem.id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
+			return false;
+		}
+		if (this._map._permission === 'readonly' && menuItem.type === 'menu') {
+			var found = false;
+			for (var j in this.options.allowedReadonlyMenus) {
+				if (this.options.allowedReadonlyMenus[j] === menuItem.id) {
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+				return false;
+		}
+		if (this._map._permission === 'readonly' && menuItem.id === 'last-mod') {
+			return false;
+		}
+
+		if (menuItem.type === 'action') {
+			if ((menuItem.id === 'rev-history' && !revHistoryEnabled) ||
+				(menuItem.id === 'closedocument' && !closebutton)) {
+				return false;
+			}
+		}
+
+		if (menuItem.id === 'print' && this._map['wopi'].HidePrintOption)
+			return false;
+
+		if (menuItem.id === 'save' && this._map['wopi'].HideSaveOption)
+			return false;
+
+		if (menuItem.id === 'saveas' && this._map['wopi'].UserCanNotWriteRelative)
+			return false;
+
+		if (menuItem.id === 'shareas' && !this._map['wopi'].EnableShare)
+			return false;
+
+		if (menuItem.id === 'insertgraphicremote' && !this._map['wopi'].EnableInsertRemoteImage)
+			return false;
+
+		if (menuItem.id && menuItem.id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)
+			return false;
+
+		if (menuItem.id === 'changesmenu' && this._map['wopi'].HideChangeTrackingControls)
+			return false;
+
+		// Keep track of all 'downloadas-' options and register them as
+		// export formats with docLayer which can then be publicly accessed unlike
+		// this Menubar control for which there doesn't seem to be any easy way
+		// to get access to.
+		if (menuItem.id && menuItem.id.startsWith('downloadas-')) {
+			var format = menuItem.id.substring('downloadas-'.length);
+			this._map._docLayer.registerExportFormat(menuItem.name, format);
+
+			if (this._map['wopi'].HideExportOption)
+				return false;
+		}
+		return true
+	},
+
 	_createMenu: function(menu) {
 		var itemList = [];
 		var docType = this._map.getDocType();
 		for (var i in menu) {
-			if (menu[i].id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
+			if (this._checkItemVisibility(menu[i]) === false)
 				continue;
-			}
-			if (menu[i].id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
-				continue;
-			}
-
-			if (this._map._permission === 'readonly' && menu[i].type === 'menu') {
-				var found = false;
-				for (var j in this.options.allowedReadonlyMenus) {
-					if (this.options.allowedReadonlyMenus[j] === menu[i].id) {
-						found = true;
-						break;
-					}
-				}
-				if (!found)
-					continue;
-			}
-
-			if (this._map._permission === 'readonly' && menu[i].id === 'last-mod') {
-				continue;
-			}
-
-			if (menu[i].type === 'action') {
-				if ((menu[i].id === 'rev-history' && !revHistoryEnabled) ||
-					(menu[i].id === 'closedocument' && !closebutton)) {
-					continue;
-				}
-			}
-
-			if (menu[i].id === 'print' && this._map['wopi'].HidePrintOption)
-				continue;
-
-			if (menu[i].id === 'save' && this._map['wopi'].HideSaveOption)
-				continue;
-
-			if (menu[i].id === 'saveas' && this._map['wopi'].UserCanNotWriteRelative)
-				continue;
-
-			if (menu[i].id === 'shareas' && !this._map['wopi'].EnableShare)
-				continue;
-
-			if (menu[i].id === 'insertgraphicremote' && !this._map['wopi'].EnableInsertRemoteImage)
-				continue;
-
-			if (menu[i].id && menu[i].id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)
-				continue;
-
-			if (menu[i].id === 'changesmenu' && this._map['wopi'].HideChangeTrackingControls)
-				continue;
-
-			// Keep track of all 'downloadas-' options and register them as
-			// export formats with docLayer which can then be publicly accessed unlike
-			// this Menubar control for which there doesn't seem to be any easy way
-			// to get access to.
-			if (menu[i].id && menu[i].id.startsWith('downloadas-')) {
-				var format = menu[i].id.substring('downloadas-'.length);
-				this._map._docLayer.registerExportFormat(menu[i].name, format);
-
-				if (this._map['wopi'].HideExportOption)
-					continue;
-			}
 
 			var liItem = L.DomUtil.create('li', '');
 			if (menu[i].id) {
@@ -1211,6 +1215,8 @@ L.Control.Menubar = L.Control.extend({
 		} else {
 			if (item.mobile === false)
 				return undefined;
+			if (item.mobileapp == true && !window.ThisIsAMobileApp)
+				return undefined;
 			if (!item.menu) {
 				itemType = 'menuitem';
 			} else {
@@ -1239,9 +1245,11 @@ L.Control.Menubar = L.Control.extend({
 		if (item.menu)
 		{
 			for (var i = 0; i < item.menu.length; i++) {
-				var element = this._generateMenuStructure(item.menu[i], docType, false);
-				if (element)
-					menuStructure['children'].push(element);
+				if (this._checkItemVisibility(item.menu[i]) === true) {
+					var element = this._generateMenuStructure(item.menu[i], docType, false);
+					if (element)
+						menuStructure['children'].push(element);
+				}
 			}
 		}
 		return menuStructure;
