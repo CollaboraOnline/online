@@ -42,7 +42,10 @@
 // Logging in unit-tests go to cerr, for now at least.
 static std::mutex MutexLog;
 #define TST_LOG_MUTEX std::unique_lock<std::mutex> lock(MutexLog)
-#define TST_LOG_NAME_BEGIN(NAME, X) do { TST_LOG_MUTEX; std::cerr << NAME << "(@" << helpers::timeSinceTestStartMs() << "ms) " << X; } while (false)
+#define TST_LOG_NAME_BEGIN(NAME, X) do { TST_LOG_MUTEX; \
+                        char t[64]; Poco::DateTime time; snprintf(t, sizeof(t), "%.2u:%.2u:%.2u.%.6u (@%lums) ", \
+                        time.hour(), time.minute(), time.second(), time.millisecond() * 1000 + time.microsecond(), helpers::timeSinceTestStartMs()); \
+                        std::cerr << NAME << t << X; } while (false)
 #define TST_LOG_BEGIN(X) TST_LOG_NAME_BEGIN(testname, X)
 #define TST_LOG_APPEND(X) do { TST_LOG_MUTEX; std::cerr << X; } while (false)
 #define TST_LOG_END do { TST_LOG_MUTEX; std::cerr << "| " << __FILE__ << ':' << __LINE__ << std::endl; } while (false)
