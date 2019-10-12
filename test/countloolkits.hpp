@@ -59,7 +59,14 @@ static int countLoolKitProcesses(const int expected)
     TST_LOG_END;
     if (expected != count)
     {
-        TST_LOG("Found " << count << " LoKit processes but was expecting " << expected << ".");
+        TST_LOG_BEGIN("Found " << count << " LoKit processes but was expecting " << expected << ": [");
+        for (int i : getKitPids())
+        {
+            TST_LOG_APPEND(i << ' ');
+        }
+        TST_LOG_APPEND(']');
+        TST_LOG_END;
+
     }
 
     std::vector<int> pids = getKitPids();

@@ -49,7 +49,10 @@
       fprintf(stderr, "%s", stream.str().c_str());
   }
 #endif
-#define TST_LOG_NAME_BEGIN(NAME, X) do { std::ostringstream str; str << NAME << "(@" << helpers::timeSinceTestStartMs() << "ms) " << X; tstLog(str); } while (false)
+#define TST_LOG_NAME_BEGIN(NAME, X) do { \
+                        char t[64]; Poco::DateTime time; snprintf(t, sizeof(t), "%.2u:%.2u:%.2u.%.6u (@%lums) ", \
+                        time.hour(), time.minute(), time.second(), time.millisecond() * 1000 + time.microsecond(), helpers::timeSinceTestStartMs()); \
+                        std::ostringstream str; str << NAME << t << X; tstLog(str); } while (false)
 #define TST_LOG_BEGIN(X) TST_LOG_NAME_BEGIN(testname, X)
 #define TST_LOG_APPEND(X) do { std::ostringstream str; str << X; tstLog(str); } while (false)
 #define TST_LOG_END do { std::ostringstream str; str << "| " << __FILE__ << ':' << __LINE__ << std::endl; tstLog(str); } while (false)
