@@ -59,6 +59,9 @@
 #define TST_LOG_NAME(NAME, X) TST_LOG_NAME_BEGIN(NAME, X); TST_LOG_END
 #define TST_LOG(X) TST_LOG_NAME(testname, X)
 
+// Sometimes we need to retry some commands as they can (due to timing or load) soft-fail.
+constexpr int COMMAND_RETRY_COUNT = 5;
+
 /// Common helper testing functions.
 /// Avoid the temptation to reuse from LOOL code!
 /// These are supposed to be testing the latter.
@@ -675,8 +678,6 @@ inline void getServerVersion(std::shared_ptr<LOOLWebSocket>& socket,
     getServerVersion(*socket, major, minor, testname);
 }
 
-}
-
 inline bool svgMatch(const char *testname, const std::vector<char> &response, const char *templateFile)
 {
     const std::vector<char> expectedSVG = helpers::readDataFromFile(templateFile);
@@ -702,6 +703,49 @@ inline bool svgMatch(const char *testname, const std::vector<char> &response, co
     return true;
 }
 
+/// Select all and wait for the text selection update.
+inline void selectAll(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
+{
+    for (int i = 0; i < repeat; ++i)
+    {
+        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        if (!getResponseString(socket, "textselection:", testname).empty())
+            break;
+    }
+}
+
+
+/// Delete all and wait for the text selection update.
+inline void deleteAll(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
+{
+    selectAll(socket, testname);
+
+    for (int i = 0; i < repeat; ++i)
+    {
+        sendTextFrame(socket, "uno .uno:Delete", testname);
+        if (!getResponseString(socket, "textselection:", testname).empty())
+            break;
+    }
+}
+
+inline std::string getAllText(const std::shared_ptr<LOOLWebSocket>& socket,
+                              const std::string& testname, int retry = COMMAND_RETRY_COUNT)
+{
+    std::string text;
+    for (int i = 0; i < retry; ++i)
+    {
+        selectAll(socket, testname);
+
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        text = assertResponseString(socket, "textselectioncontent:", testname);
+        if (!text.empty())
+            break;
+    }
+
+    return text;
+}
+
+}
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
