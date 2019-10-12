@@ -680,9 +680,7 @@ void HTTPWSTest::testGetTextSelection()
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
         std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
 
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -709,16 +707,13 @@ void HTTPWSTest::testSaveOnDisconnect()
         std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
         sendTextFrame(socket2, "userinactive");
 
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "uno .uno:Delete", testname);
+        deleteAll(socket, testname);
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
 
         TST_LOG("Validating what we sent before disconnecting.");
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
 
         // Closing connection too fast might not flush buffers.
@@ -750,9 +745,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
     }
     catch (const Poco::Exception& exc)
@@ -775,18 +768,18 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
     try
     {
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+        getResponseMessage(socket, "textselection", testname);
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         std::shared_ptr<LOOLWebSocket> socket2 = connectLOKit(_uri, request, _response, testname);
 
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "uno .uno:Delete", testname);
+        deleteAll(socket, testname);
+
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
+        getResponseMessage(socket, "textselection:", testname);
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
 
         // Closing connection too fast might not flush buffers.
@@ -813,14 +806,13 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
     {
         // Load the same document and check that the last changes (pasted text) is saved.
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+        getResponseMessage(socket, "textselection", testname);
 
         // Should have no new instances.
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
     }
     catch (const Poco::Exception& exc)
@@ -839,8 +831,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
 
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "uno .uno:Delete", testname);
+        deleteAll(socket, testname);
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
 
         // Closing connection too fast might not flush buffers.
@@ -862,9 +853,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
     }
     catch (const Poco::Exception& exc)
@@ -907,17 +896,14 @@ void HTTPWSTest::testPaste()
         TST_LOG("Pasting text #" << i + 1 << ": " << text);
 
         // Always delete everything to have an empty doc.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "uno .uno:Delete", testname);
+        deleteAll(socket, testname);
 
         // Paste some text into it.
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
         const std::string expected = "textselectioncontent: " + text;
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_EQUAL(expected, selection);
     }
 }
@@ -930,16 +916,13 @@ void HTTPWSTest::testPasteBlank()
         // Load a document and make it empty, then paste nothing into it.
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "uno .uno:Delete", testname);
+        deleteAll(socket, testname);
 
         // Paste nothing into it.
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8", testname);
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n", testname);
 
         // Check if the document contains the pasted text.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
     }
     catch (const Poco::Exception& exc)
@@ -956,8 +939,7 @@ void HTTPWSTest::testLargePaste()
         // Load a document and make it empty, then paste some text into it.
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
 
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "uno .uno:Delete", testname);
+        deleteAll(socket, testname);
 
         // Paste some text into it.
         std::ostringstream oss;
@@ -972,9 +954,7 @@ void HTTPWSTest::testLargePaste()
 
         // Check if the server is still alive.
         // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string selection = getAllText(socket, testname);
         CPPUNIT_ASSERT_MESSAGE("Pasted text was either corrupted or couldn't be read back",
                                "textselectioncontent: " + documentContents == selection);
     }
@@ -1362,8 +1342,7 @@ void HTTPWSTest::testInactiveClient()
         sendTextFrame(socket2, "userinactive", "inactiveClient-2 ");
 
         // While second is inactive, make some changes.
-        sendTextFrame(socket1, "uno .uno:SelectAll", "inactiveClient-1 ");
-        sendTextFrame(socket1, "uno .uno:Delete", "inactiveClient-1 ");
+        deleteAll(socket1, "inactiveClient-1 ");
 
         // Activate second.
         sendTextFrame(socket2, "useractive", "inactiveClient-2 ");
@@ -1619,15 +1598,11 @@ void HTTPWSTest::testInsertAnnotationWriter()
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nxxx yyy zzzz", testname);
 
     // Read it back.
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    auto res = getResponseString(socket, "textselectioncontent:", testname);
+    std::string res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: xxx yyy zzzz"), res);
     // Can we edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
 
     // Confirm that the text is in the comment and not doc body.
@@ -1635,24 +1610,18 @@ void HTTPWSTest::testInsertAnnotationWriter()
     sendTextFrame(socket, "mouse type=buttondown x=1600 y=1600 count=1 buttons=1 modifier=0", testname);
     sendTextFrame(socket, "mouse type=buttonup x=1600 y=1600 count=1 buttons=1 modifier=0", testname);
     // Read body text.
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
 
     // Confirm that the comment is still intact.
     sendTextFrame(socket, "mouse type=buttondown x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
     sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
 
     // Can we still edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nand now for something completely different", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
     // Close and reopen the same document and test again.
@@ -1669,24 +1638,18 @@ void HTTPWSTest::testInsertAnnotationWriter()
     sendTextFrame(socket, "mouse type=buttondown x=1600 y=1600 count=1 buttons=1 modifier=0", testname);
     sendTextFrame(socket, "mouse type=buttonup x=1600 y=1600 count=1 buttons=1 modifier=0", testname);
     // Read body text.
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
 
     // Confirm that the comment is still intact.
     sendTextFrame(socket, "mouse type=buttondown x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
     sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
     // Can we still edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nblah blah xyz", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: blah blah xyz"), res);
 }
 
@@ -1703,24 +1666,18 @@ void HTTPWSTest::testEditAnnotationWriter()
     sendTextFrame(socket, "mouse type=buttondown x=1600 y=1600 count=1 buttons=1 modifier=0", testname);
     sendTextFrame(socket, "mouse type=buttonup x=1600 y=1600 count=1 buttons=1 modifier=0", testname);
     // Read body text.
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    auto res = getResponseString(socket, "textselectioncontent:", testname);
+    std::string res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
 
     // Confirm that the comment is intact.
     sendTextFrame(socket, "mouse type=buttondown x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
     sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: blah blah xyz"), res);
 
     // Can we still edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nand now for something completely different", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
     const int kitcount = getLoolKitProcessCount();
@@ -1740,24 +1697,18 @@ void HTTPWSTest::testEditAnnotationWriter()
     sendTextFrame(socket, "mouse type=buttondown x=1600 y=1600 count=1 buttons=1 modifier=0", testname);
     sendTextFrame(socket, "mouse type=buttonup x=1600 y=1600 count=1 buttons=1 modifier=0", testname);
     // Read body text.
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), res);
 
     // Confirm that the comment is still intact.
     sendTextFrame(socket, "mouse type=buttondown x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
     sendTextFrame(socket, "mouse type=buttonup x=13855 y=1893 count=1 buttons=1 modifier=0", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: and now for something completely different"), res);
 
     // Can we still edit the coment?
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\nnew text different", testname);
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    res = getResponseString(socket, "textselectioncontent:", testname);
+    res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: new text different"), res);
 }
 
@@ -1773,9 +1724,7 @@ void HTTPWSTest::testInsertAnnotationCalc()
     sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
 
     // Read it back.
-    sendTextFrame(socket, "uno .uno:SelectAll", testname);
-    sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-    auto res = getResponseString(socket, "textselectioncontent:", testname);
+    std::string res = getAllText(socket, testname);
     CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), res);
 }
 
@@ -2753,7 +2702,7 @@ void HTTPWSTest::testRenderShapeSelectionImpress()
 
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
 
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
+        selectAll(socket, testname);
         std::this_thread::sleep_for(std::chrono::milliseconds(250));
         sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
