@@ -80,7 +80,7 @@ public:
     Tile lookupCachedTile(const std::string& name, const std::string& dir);
 
     // The tiles parameter is an invalidatetiles: message as sent by the child process
-    void invalidateTiles(const std::string& tiles);
+    void invalidateTiles(const std::string& tiles, int normalizedViewId);
 
     /// Parse invalidateTiles message to a part number and a rectangle of the invalidated area
     static std::pair<int, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
@@ -97,7 +97,7 @@ public:
     void assertCorrectThread();
 
 private:
-    void invalidateTiles(int part, int x, int y, int width, int height);
+    void invalidateTiles(int part, int x, int y, int width, int height, int normalizedViewId);
 
     /// Lookup tile in our cache.
     TileCache::Tile loadTile(const std::string &fileName);
@@ -106,10 +106,10 @@ private:
     void removeFile(const std::string& fileName);
 
     static std::string cacheFileName(const TileDesc& tile);
-    static bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight);
+    static bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight, int& normalizedViewId);
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
-    static bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height);
+    static bool intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height, int normalizedViewId);
 
     void saveDataToCache(const std::string &fileName, const char *data, const size_t size);
 

@@ -545,6 +545,7 @@ public:
         _height = desc.getHeight();
         _tileWidth = desc.getTileWidth();
         _tileHeight = desc.getTileHeight();
+        _normalizedViewId = desc.getNormalizedViewId();
         _tiles.push_back(desc);
     }
 

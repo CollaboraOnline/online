@@ -1157,6 +1157,7 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     // Track sent tile
     if (tile)
     {
+        tile->setNormalizedViewId(getHash());
         traceTileBySend(*tile, sizeBefore == newSize);
     }
 }
@@ -1321,7 +1322,7 @@ void ClientSession::dumpState(std::ostream& os)
 void ClientSession::handleTileInvalidation(const std::string& message,
     const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    docBroker->invalidateTiles(message);
+    docBroker->invalidateTiles(message, getHash());
 
     // Skip requesting new tiles if we don't have client visible area data yet.
     if(!_clientVisibleArea.hasSurface() ||
@@ -1454,7 +1455,7 @@ std::string ClientSession::generateTileID(const TileDesc& tile) const
 {
     std::ostringstream tileID;
     tileID << tile.getPart() << ":" << tile.getTilePosX() << ":" << tile.getTilePosY() << ":"
-           << tile.getTileWidth() << ":" << tile.getTileHeight();
+           << tile.getTileWidth() << ":" << tile.getTileHeight() << ":" << tile.getNormalizedViewId();
     return tileID.str();
 }
 

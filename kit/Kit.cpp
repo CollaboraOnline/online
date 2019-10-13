@@ -980,7 +980,7 @@ public:
 
         if (it == _sessions.end())
         {
-            LOG_ERR("Session is not found. Maybe exited after rendering request.");
+            LOG_ERR("Session is not found. Maybe exited after tile rendering request. " << nViewId);
             return;
         }
 
