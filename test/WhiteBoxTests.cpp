@@ -353,17 +353,18 @@ void WhiteBoxTests::testTokenizer()
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
     CPPUNIT_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
-    tokens = LOOLProtocol::tokenize("tile part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1");
-    CPPUNIT_ASSERT_EQUAL(9UL, tokens.size());
+    tokens = LOOLProtocol::tokenize("tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1");
+    CPPUNIT_ASSERT_EQUAL(10UL, tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("tile"), tokens[0]);
-    CPPUNIT_ASSERT_EQUAL(std::string("part=0"), tokens[1]);
-    CPPUNIT_ASSERT_EQUAL(std::string("width=256"), tokens[2]);
-    CPPUNIT_ASSERT_EQUAL(std::string("height=256"), tokens[3]);
-    CPPUNIT_ASSERT_EQUAL(std::string("tileposx=0"), tokens[4]);
-    CPPUNIT_ASSERT_EQUAL(std::string("tileposy=0"), tokens[5]);
-    CPPUNIT_ASSERT_EQUAL(std::string("tilewidth=3840"), tokens[6]);
-    CPPUNIT_ASSERT_EQUAL(std::string("tileheight=3840"), tokens[7]);
-    CPPUNIT_ASSERT_EQUAL(std::string("ver=-1"), tokens[8]);
+    CPPUNIT_ASSERT_EQUAL(std::string("nviewid=0"), tokens[1]);
+    CPPUNIT_ASSERT_EQUAL(std::string("part=0"), tokens[2]);
+    CPPUNIT_ASSERT_EQUAL(std::string("width=256"), tokens[3]);
+    CPPUNIT_ASSERT_EQUAL(std::string("height=256"), tokens[4]);
+    CPPUNIT_ASSERT_EQUAL(std::string("tileposx=0"), tokens[5]);
+    CPPUNIT_ASSERT_EQUAL(std::string("tileposy=0"), tokens[6]);
+    CPPUNIT_ASSERT_EQUAL(std::string("tilewidth=3840"), tokens[7]);
+    CPPUNIT_ASSERT_EQUAL(std::string("tileheight=3840"), tokens[8]);
+    CPPUNIT_ASSERT_EQUAL(std::string("ver=-1"), tokens[9]);
 
     // With custom delimeters
     tokens = LOOLProtocol::tokenize(std::string("ABC:DEF"), ':');

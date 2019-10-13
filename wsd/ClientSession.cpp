@@ -1322,6 +1322,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if( part == -1 ) // If no part is specifed we use the part used by the client
         part = _clientSelectedPart;
 
+    int normalizedViewId=0;
 
     std::vector<TileDesc> invalidTiles;
     if(part == _clientSelectedPart || _isTextDocument)
@@ -1337,7 +1338,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                 Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
                 if(invalidateRect.intersects(tileRect))
                 {
-                    invalidTiles.emplace_back(part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
+                    invalidTiles.emplace_back(normalizedViewId, part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
 
                     TileWireId oldWireId = 0;
                     auto iter = _oldWireIds.find(generateTileID(invalidTiles.back()));

@@ -1791,7 +1791,7 @@ void HTTPWSTest::testCalcEditRendering()
 
     assertResponseString(socket, "cellformula: abc", testname);
 
-    const char* req = "tilecombine part=0 width=512 height=512 tileposx=3840 tileposy=0 tilewidth=7680 tileheight=7680";
+    const char* req = "tilecombine nviewid=0 part=0 width=512 height=512 tileposx=3840 tileposy=0 tilewidth=7680 tileheight=7680";
     sendTextFrame(socket, req, testname);
 
     const std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
@@ -1875,7 +1875,7 @@ void HTTPWSTest::testCalcRenderAfterNewView51()
     // Wait for status due to doc resize.
     assertResponseString(socket, "status:", testname);
 
-    const char* req = "tilecombine part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
+    const char* req = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
 
     // Get tile.
     const std::vector<char> tile1 = getTileAndSave(socket, req, "/tmp/calc_render_51_orig.png", testname);
@@ -1921,7 +1921,7 @@ void HTTPWSTest::testCalcRenderAfterNewView53()
     sendTextFrame(socket, "key type=input char=0 key=1031", testname);
 
     // Get tile.
-    const char* req = "tilecombine part=0 width=256 height=256 tileposx=0 tileposy=291840 tilewidth=3840 tileheight=3840 oldwid=0";
+    const char* req = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=291840 tilewidth=3840 tileheight=3840 oldwid=0";
     const std::vector<char> tile1 = getTileAndSave(socket, req, "/tmp/calc_render_53_orig.png", testname);
 
 
