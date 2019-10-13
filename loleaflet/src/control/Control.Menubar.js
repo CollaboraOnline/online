@@ -640,7 +640,6 @@ L.Control.Menubar = L.Control.extend({
 		// SmartMenus mobile menu toggle button
 		$(function() {
 			var $mainMenuState = $('#main-menu-state');
-			$('#main-menu-state').checked = false;
 			if ($mainMenuState.length) {
 				// animate mobile menu
 				$mainMenuState.change(function() {
