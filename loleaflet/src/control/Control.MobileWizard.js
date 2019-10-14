@@ -151,10 +151,8 @@ L.Control.MobileWizard = L.Control.extend({
 
 			L.control.jsDialogBuilder({mobileWizard: this, map: this.map}).build(this.content.get(0), [data]);
 
-			if (data.id === 'insert') {
-				this._mainTitle = data.text ? data.text : '';
-				this._setTitle(this._mainTitle);
-			}
+			this._mainTitle = data.text ? data.text : '';
+			this._setTitle(this._mainTitle);
 
 			if (data.id === 'menubar') {
 				var newHeight = $(window).height() - $('#toolbar-wrapper').height() - 2;
