@@ -4,6 +4,14 @@
 	}
 }
 @media (max-width: 767px), (max-device-height: 767px) {
+	.mCSB_draggerRail {
+    background-color: #f9f9f9 !important;
+	}
+	.mCSB_dragger_bar {
+    margin-top: 8px !important;
+    height: 2px !important;
+    background-color: #69b1e0 !important;
+	}
 	#slide-sorter .preview-img{
 		    border-radius: 3px;
 				border-color: #eee;
