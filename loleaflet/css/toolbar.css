@@ -4,6 +4,17 @@
 	}
 }
 @media (max-width: 767px), (max-device-height: 767px) {
+	.leaflet-control-zoom.leaflet-bar{
+		border: none !important;
+	}
+	a.leaflet-control-zoom-in {
+    border-radius: 100px !important;
+		padding: 8px !important;
+		background-color: #0b87e7 !important;
+		color: white !important;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 6px 0 rgba(0, 0, 0, 0.19) !important;
+		border: none !important;
+	}
 	.mCSB_draggerRail {
     background-color: #f9f9f9 !important;
 	}
