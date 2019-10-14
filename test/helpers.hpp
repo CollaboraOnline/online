@@ -673,9 +673,9 @@ inline bool svgMatch(const char *testname, const std::vector<char> &response, co
         newName += ".new";
         TST_LOG_APPEND("Updated template writing to: " << newName << "\n");
         TST_LOG_END;
+
         FILE *of = fopen(Poco::Path(TDOC, newName).toString().c_str(), "w");
-        size_t unused = fwrite(response.data(), response.size(), 1, of);
-        (void)unused;
+        CPPUNIT_ASSERT(fwrite(response.data(), response.size(), 1, of) == response.size());
         fclose(of);
         return false;
     }

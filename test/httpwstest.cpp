@@ -60,19 +60,40 @@ namespace
  */
 void stripDescriptions(std::vector<char>& svg)
 {
+    static const std::string startDesc("<desc>");
+    static const std::string endDesc("</desc>");
+    static const std::string selfClose("/>");
+
     while (true)
     {
-        std::string startDesc("<desc>");
-        auto itStart = std::search(svg.begin(), svg.end(), startDesc.begin(), startDesc.end());
+        const auto itStart = std::search(svg.begin(), svg.end(), startDesc.begin(), startDesc.end());
         if (itStart == svg.end())
             return;
 
-        std::string endDesc("</desc>");
-        auto itEnd = std::search(svg.begin(), svg.end(), endDesc.begin(), endDesc.end());
-        if (itEnd == svg.end())
-            return;
+        const auto itClose = std::search(itStart + 1, svg.end(), selfClose.begin(), selfClose.end());
 
-        svg.erase(itStart, itEnd + endDesc.size());
+        const auto itEnd = std::search(itStart + 1, svg.end(), endDesc.begin(), endDesc.end());
+
+        if (itEnd != svg.end() && itClose != svg.end())
+        {
+            if (itEnd < itClose)
+                svg.erase(itStart, itEnd + endDesc.size());
+            else
+                svg.erase(itStart, itClose + selfClose.size());
+        }
+        else if (itEnd != svg.end())
+        {
+            svg.erase(itStart, itEnd + endDesc.size());
+        }
+        else if (itClose != svg.end())
+        {
+            svg.erase(itStart, itClose + selfClose.size());
+        }
+        else
+        {
+            // No more closing tags; possibly broken, as we found an opening tag.
+            return;
+        }
     }
 }
 }
@@ -2707,7 +2728,7 @@ void HTTPWSTest::testRenderShapeSelectionImpress()
         sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG = getResponseMessage(socket, "shapeselectioncontent:", testname);
         CPPUNIT_ASSERT(!responseSVG.empty());
-        auto it = std::find(responseSVG.begin(), responseSVG.end(),'\n');
+        auto it = std::find(responseSVG.begin(), responseSVG.end(), '\n');
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
