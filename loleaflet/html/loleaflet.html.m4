@@ -143,7 +143,7 @@ ifelse(MOBILEAPP,[true],
        <td id="toolbar-up"></td>
        <td id="toolbar-hamburger">
          <label class="main-menu-btn" for="main-menu-state">
-           <span class="main-menu-btn-icon"></span>
+           <span class="main-menu-btn-icon" id="main-menu-btn-icon"></span>
          </label>
        </td>
      </tr>
