@@ -104,6 +104,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return text.replace('~', '');
 	},
 
+	_cleanValueFromUnits: function(text) {
+		if (!text)
+			return '';
+		return text.replace('″', '')
+			.replace('%', '');
+	},
+
 	_containerHandler: function(parentContainer, data) {
 		if (data.enabled == 'false')
 			return false;
@@ -367,12 +374,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var minus = L.DomUtil.create('div', 'minus', controlsContainer);
 		minus.innerHTML = '-';
 
+		if (data.min)
+			$(spinfield).attr('min', data.min);
+
+		if (data.max)
+			$(spinfield).attr('max', data.max);
+
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
 
-		if (data.children && data.children.length) {
-			$(spinfield).attr('value', data.children[0].text.replace('%', ''));
-		}
+		if (data.text)
+			$(spinfield).attr('value', builder._cleanValueFromUnits(data.text));
+		else if (data.children && data.children.length)
+			$(spinfield).attr('value', builder._cleanValueFromUnits(data.children[0].text));
 
 		spinfield.addEventListener('change', function() {
 			builder.callback('spinfield', 'change', spinfield, this.value, builder);
