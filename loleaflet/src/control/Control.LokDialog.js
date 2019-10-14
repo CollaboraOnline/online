@@ -263,6 +263,8 @@ L.Control.LokDialog = L.Control.extend({
 			} else if (e.winType === 'deck') {
 				if (!window.mode.isMobile()) {
 					this._launchSidebar(e.id, width, height);
+				} else {
+					window.sidebarId = e.id;
 				}
 			} else if (e.winType === 'child') {
 				var parentId = parseInt(e.parentId);

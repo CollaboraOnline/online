@@ -91,10 +91,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	// by default send new state to the core
 	_defaultCallbackHandler: function(objectType, eventType, object, data, builder) {
-		console.debug('control: \'' + objectType + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+		console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			builder.map.sendUnoCommand(data);
+		} else {
+			builder.map._socket.sendMessage('dialogevent ' + window.sidebarId + ' ' + object.id);
 		}
 	},
 

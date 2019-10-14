@@ -42,6 +42,7 @@
 #include <Util.hpp>
 #include <Unit.hpp>
 #include <Clipboard.hpp>
+#include <string>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -295,7 +296,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "uploadsigneddocument" ||
                tokens[0] == "exportsignanduploaddocument" ||
                tokens[0] == "rendershapeselection" ||
-               tokens[0] == "removetextcontext");
+               tokens[0] == "removetextcontext" ||
+               tokens[0] == "dialogevent");
 
         if (tokens[0] == "clientzoom")
         {
@@ -418,6 +420,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "removetextcontext")
         {
             return removeTextContext(buffer, length, tokens);
+        }
+        else if (tokens[0] == "dialogevent")
+        {
+            return dialogEvent(buffer, length, tokens);
         }
         else
         {
@@ -1371,6 +1377,23 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
     default:
         assert(false && "Unsupported mouse target type");
     }
+
+    return true;
+}
+
+bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    if (tokens.size() <= 2)
+    {
+        sendTextFrame("error: cmd=dialogevent kind=syntax");
+        return false;
+    }
+
+    getLOKitDocument()->setView(_viewId);
+
+    unsigned nLOKWindowId = std::stoi(tokens[1].c_str());
+    getLOKitDocument()->sendDialogEvent(nLOKWindowId,
+        Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str());
 
     return true;
 }
