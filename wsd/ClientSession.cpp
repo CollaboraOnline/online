@@ -427,7 +427,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "removesession" &&
              tokens[0] != "renamefile" &&
              tokens[0] != "resizewindow" &&
-             tokens[0] != "removetextcontext")
+             tokens[0] != "removetextcontext" &&
+             tokens[0] != "dialogevent")
     {
         LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
@@ -695,6 +696,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         Poco::URI::decode(encodedWopiFilename, wopiFilename);
         docBroker->saveAsToStorage(getId(), "", wopiFilename, true);
         return true;
+    }
+    else if (tokens[0] == "dialogevent")
+    {
+        return forwardToChild(firstLine, docBroker);
     }
     else
     {
