@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ w2ui */
+/* global $ w2ui _ */
 L.Control.JSDialogBuilder = L.Control.extend({
 
 	/* Handler is a function which takes three parameters:
@@ -338,6 +338,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_unitToVisibleString: function(unit) {
+		if (unit == 'inch') {
+			return _('\"');
+		}
+
+		return unit;
+	},
+
 	_spinfieldControl: function(parentContainer, data, builder) {
 		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
 
@@ -350,7 +358,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.unit) {
 			var unit = L.DomUtil.create('span', 'spinfieldunit', div);
-			unit.innerHTML = data.unit;
+			unit.innerHTML = builder._unitToVisibleString(data.unit);
 		}
 
 		var controlsContainer = L.DomUtil.create('div', 'sinfieldcontrols', div);
@@ -363,7 +371,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(spinfield).attr('disabled', 'disabled');
 
 		if (data.children && data.children.length) {
-			// TODO: units
 			$(spinfield).attr('value', data.children[0].text.replace('%', ''));
 		}
 
