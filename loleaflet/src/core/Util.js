@@ -191,6 +191,10 @@ L.Util = {
 		} else if (document.webkitExitFullscreen) {
 			document.webkitExitFullscreen();
 		}
+	},
+
+	isEmpty: function(o) {
+		return !(o && o.length);
 	}
 };
 
@@ -240,3 +244,4 @@ L.setOptions = L.Util.setOptions;
 L.round = L.Util.round;
 L.getDpiScaleFactor = L.Util.getDpiScaleFactor;
 L.toggleFullScreen = L.Util.toggleFullScreen;
+L.isEmpty = L.Util.isEmpty;

@@ -4,7 +4,8 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ w2ui _ */
+/* global $ _ */
+
 L.Control.JSDialogBuilder = L.Control.extend({
 
 	/* Handler is a function which takes three parameters:
@@ -46,6 +47,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['scrollbar'] = this._ignoreHandler;
 		this._controlHandlers['toolbox'] = this._containerHandler;
 		this._controlHandlers['toolitem'] = this._toolitemHandler;
+		this._controlHandlers['colorsample'] = this._colorSampleControl;
+		this._controlHandlers['divcontainer'] = this._divContainerHandler;
 
 		this._controlHandlers['chartTypeSelector'] = this._chartTypeControl;
 
@@ -67,11 +70,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_clearColorPickers: function() {
-		while (this._colorPickers.length) {
-			var id = this._colorPickers.pop();
-			w2ui[id].remove();
-			delete w2ui[id];
-		}
+		this._colorPickers = [];
+		L.ColorPicker.ID = 0;
 	},
 
 	_toolitemHandler: function(parentContainer, data, builder) {
@@ -97,6 +97,28 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.sendUnoCommand(data);
 		} else {
 			builder.map._socket.sendMessage('dialogevent ' + window.sidebarId + ' ' + object.id);
+		}
+	},
+
+	_setupHandlers: function (controlElement, handlers) {
+		if (handlers) {
+			for (var i = 0; i < handlers.length; ++i) {
+				var event = handlers[i].event;
+				var handler = handlers[i].handler;
+				if (!L.isEmpty(event) && handler) {
+					if (event === 'click') {
+						var eventData = {
+							id: controlElement.id
+						};
+						$(controlElement).click(
+							// avoid to access mutable variable (that is `i` dependent) in closure
+							(function (lhandler, leventData) {
+								return function() { lhandler(leventData) };
+							})(handler, eventData)
+						);
+					}
+				}
+			}
 		}
 	},
 
@@ -458,7 +480,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var entries = [];
 		for (var index in data.entries) {
-			var entry = { type: 'fixedtext', text: data.entries[index], isComboboxItem: true };
+			var entry = { type: 'fixedtext', text: data.entries[index], style: 'ui-combobox-text' };
 			entries.push(entry);
 		}
 
@@ -470,13 +492,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
-		var fixedtext = L.DomUtil.create('p', 'mobile-wizard ui-text', parentContainer);
+		var fixedtext = L.DomUtil.create('p', 'mobile-wizard', parentContainer);
 		fixedtext.innerHTML = builder._cleanText(data.text);
 		fixedtext.id = data.id;
-
-		if (data.isComboboxItem) {
-			$(fixedtext).removeClass('ui-text');
-			$(fixedtext).addClass('ui-combobox-text');
+		if (data.style && data.style.length) {
+			L.DomUtil.addClass(fixedtext, data.style);
+		} else {
+			L.DomUtil.addClass(fixedtext, 'ui-text');
 		}
 
 		if (data.hidden)
@@ -530,30 +552,67 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_divContainerHandler: function (parentContainer, data, builder) {
+		if (!(data.children && data.children.length))
+			return false;
+
+		var divElem = L.DomUtil.create('div', 'mobile-wizard', parentContainer);
+		if (data.style && data.style.length)
+			L.DomUtil.addClass(divElem, data.style);
+		for (var i = 0; i < data.children.length; ++i) {
+			var entry = data.children[i];
+			var handle = builder._controlHandlers[entry.type];
+			if (handle) {
+				handle(divElem, entry, builder);
+			}
+		}
+		builder._setupHandlers(divElem, data.handlers);
+		return false;
+	},
+
+	_colorSampleControl: function (parentContainer, data, builder) {
+		var sampleSizeClass = 'color-sample-small';
+		if (data.size === 'big')
+			sampleSizeClass = 'color-sample-big';
+		var colorSample = L.DomUtil.create('div', 'mobile-wizard ' + sampleSizeClass, parentContainer);
+		colorSample.id = data.id;
+		colorSample.style.backgroundColor = data.color;
+		colorSample.name = data.color.substring(1);
+
+		if (data.selected && data.mark) {
+			colorSample.appendChild(data.mark);
+		}
+
+		 builder._setupHandlers(colorSample, data.handlers);
+
+		 return false;
+	},
+
 	_colorControl: function(parentContainer, data, builder) {
-		var colorContainer = L.DomUtil.create('div', 'colorcontainer', parentContainer);
-		colorContainer.id = data.command.substr('.uno:'.length);
+		var title = data.text;
+		title = builder._cleanText(title);
 
-		if (data.enabled == 'false')
-			$(colorContainer).attr('disabled', 'disabled');
+		var selectedColor = L.ColorPicker.BASIC_COLORS[1];
+		var valueNode =  L.DomUtil.create('div', 'color-sample-selected', null);
+		valueNode.style.backgroundColor = selectedColor;
 
-		var imageContainer = L.DomUtil.create('div', 'colorimagecontainer', colorContainer);
-		var image = L.DomUtil.create('img', 'colorimage', imageContainer);
-		var icon = builder._createIconPath(data.command);
-		image.src = icon;
+		var iconPath = builder._createIconPath(data.command);
+		var noColorControl = data.command !== '.uno:FontColor';
 
-		var toolbarContainer = L.DomUtil.create('div', 'colorspan', colorContainer);
-		var toolbar = $(toolbarContainer);
-		var id = 'colorselector-' + builder._colorPickers.length;
-		var items = [{type: 'color',  id: 'color'}];
-		toolbar.w2toolbar({
-			name: id,
-			tooltip: 'bottom',
-			items: items
-		});
-		w2ui[id].set('color', {color: '#ff0033'});
-		builder._colorPickers.push(id);
+		var colorPickerControl = new L.ColorPicker(
+			valueNode,
+			{
+				selectedColor: selectedColor,
+				noColorControl: noColorControl
+			});
+		builder._colorPickers.push(colorPickerControl);
 
+		// color control panel
+		var colorsContainer = colorPickerControl.getContainer();
+
+		var contentNode = {type: 'container', children: [colorsContainer]};
+
+		builder._explorableEntry(parentContainer, title, contentNode, builder, valueNode, iconPath);
 		return false;
 	},
 
