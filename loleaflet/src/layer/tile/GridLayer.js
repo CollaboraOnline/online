@@ -688,6 +688,7 @@ L.GridLayer = L.Layer.extend({
 
 			if (tilePositionsX !== '' && tilePositionsY !== '') {
 				var message = 'tilecombine ' +
+					'nviewid=0 ' +
 					'part=' + this._selectedPart + ' ' +
 					'width=' + this._tileWidthPx + ' ' +
 					'height=' + this._tileHeightPx + ' ' +
@@ -1024,6 +1025,7 @@ L.GridLayer = L.Layer.extend({
 
 			twips = this._coordsToTwips(coords);
 			msg = 'tilecombine ' +
+				'nviewid=0 ' +
 				'part=' + coords.part + ' ' +
 				'width=' + this._tileWidthPx + ' ' +
 				'height=' + this._tileHeightPx + ' ' +
