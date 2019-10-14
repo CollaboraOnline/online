@@ -155,8 +155,11 @@ L.Control.MobileWizard = L.Control.extend({
 			this._setTitle(this._mainTitle);
 
 			if (data.id === 'menubar') {
-				var newHeight = $(window).height() - $('#toolbar-wrapper').height() - 2;
-				$('#mobile-wizard').height(newHeight);
+				$('#mobile-wizard').height('100%');
+				if (this.map .getDocType() === 'spreadsheet')
+					$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
+				else
+					$('#mobile-wizard').css('top', $('#document-container').css('top'));
 			} else {
 				$('#mobile-wizard').height('45%');
 			}
