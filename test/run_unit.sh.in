@@ -96,6 +96,7 @@ if test "z$tst" == "z"; then
                                  --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
                                  --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
                                  --o:admin_console.username=admin --o:admin_console.password=admin \
+                                 --o:storage.ssl.enable=false \
                                  > "$tst_log" 2>&1 &
      if test "z${SLEEPFORDEBUGGER}${SLEEPKITFORDEBUGGER}" != "z"; then
 	  echo "sleeping for debugger"
@@ -134,6 +135,7 @@ else # newer unit tests.
                                    --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
                                    --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
                                    --o:admin_console.username=admin --o:admin_console.password=admin \
+                                   --o:storage.ssl.enable=false \
                                    --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log"; then
         echo "Test $tst passed."
         echo ":test-result: PASS $tst" >> $test_output
@@ -144,6 +146,7 @@ else # newer unit tests.
         echo "   $ gdb --args ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
         echo "         --o:child_root_path=\"$jails_path\" \\"
         echo "         --o:storage.filesystem[@allow]=true \\"
+        echo "         --o:storage.ssl.enable=false \\"
         echo "         --o:logging.level=trace \\"
         echo "         --o:ssl.key_file_path=\"${abs_top_builddir}/etc/key.pem\" \\"
         echo "         --o:ssl.cert_file_path=\"${abs_top_builddir}/etc/cert.pem\" \\"
