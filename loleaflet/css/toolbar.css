@@ -1005,12 +1005,11 @@ tr.useritem > td > img {
 #mobile-wizard-back.close-button {
 	transform: rotate(-90deg);
 	background-position-x: center;
-	background-position-y: 16px;
 }
 #mobile-wizard-back {
 		background-image: url('images/lc_closedocmobile.svg');
 		background-repeat: no-repeat;
-		width: 68px;
+		width: 48px;
 		background-position-x: 16px;
 		background-position-y: center;
 		height: 20px;
