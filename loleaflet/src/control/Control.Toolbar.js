@@ -2120,9 +2120,6 @@ function onUpdatePermission(e) {
 				$('#spreadsheet-row-column-frame').css('bottom', '68px');
 				$('#spreadsheet-toolbar').show();
 				break;
-			case 'presentation':
-				$(map.options.documentContainer).css('bottom', '95px');
-				break;
 			}
 		}
 	}
@@ -2176,9 +2173,6 @@ function onUpdatePermission(e) {
 				$(map.options.documentContainer).css('bottom', '35px');
 				$('#spreadsheet-row-column-frame').css('bottom', '35px');
 				$('#spreadsheet-toolbar').show();
-				break;
-			case 'presentation':
-				$(map.options.documentContainer).css('bottom', '0px');
 				break;
 			}
 		}
