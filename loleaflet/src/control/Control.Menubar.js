@@ -503,9 +503,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 			]
 			},
-			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
-				{name: _('About'), id: 'about', type: 'action'}]
-			},
+			{name: _('About'), id: 'about', type: 'action'},
 		],
 
 		mobilepresentation: [
@@ -563,9 +561,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:SlideShowMenu', 'presentation'), type: 'menu', menu: [
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
 			},
-			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
-				{name: _('About'), id: 'about', type: 'action'}]
-			},
+			{name: _('About'), id: 'about', type: 'action'},
 		],
 
 		mobilespreadsheet: [
@@ -637,9 +633,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:HideDetail'},
 					{uno: '.uno:ShowDetail'}]}
 			]},
-			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
-				{name: _('About'), id: 'about', type: 'action'}]
-			},
+			{name: _('About'), id: 'about', type: 'action'},
 		],
 
 		commandStates: {},
