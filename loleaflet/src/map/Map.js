@@ -24,7 +24,7 @@ function isAnyVexDialogActive() {
 	return res;
 }
 
-/* global closebutton vex revHistoryEnabled $ _ */
+/* global vex revHistoryEnabled $ _ */
 L.Map = L.Evented.extend({
 
 	options: {
@@ -1669,7 +1669,7 @@ L.Map = L.Evented.extend({
 		if (!this.isMenubarHidden())
 			return;
 		$('.main-nav').show();
-		if (closebutton && !window.mode.isTablet()) {
+		if (window.closeButtonEnabled && !window.mode.isTablet()) {
 			$('#closebuttonwrapper').show();
 		}
 
@@ -1687,7 +1687,7 @@ L.Map = L.Evented.extend({
 		if (this.isMenubarHidden())
 			return;
 		$('.main-nav').hide();
-		if (closebutton) {
+		if (window.closeButtonEnabled) {
 			$('#closebuttonwrapper').hide();
 		}
 

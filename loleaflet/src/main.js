@@ -18,7 +18,7 @@ var filePath = getParameterByName('file_path');
 var permission = getParameterByName('permission') || 'edit';
 var timestamp = getParameterByName('timestamp');
 // Shows close button if non-zero value provided
-var closebutton = getParameterByName('closebutton');
+window.closeButtonEnabled = getParameterByName('closebutton');
 // Shows revision history file menu option
 var revHistoryEnabled = getParameterByName('revisionhistory');
 // Should the document go inactive or not
@@ -38,7 +38,6 @@ global.isInternetExplorer = isInternetExplorer;
 
 // loleaflet.js accesses these globals
 // TODO: Get rid of these globals
-global.closebutton = closebutton;
 global.revHistoryEnabled = revHistoryEnabled;
 var docURL, docParams;
 var isWopi = false;

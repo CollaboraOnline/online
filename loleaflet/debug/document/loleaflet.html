@@ -106,7 +106,7 @@
     var filePath = getParameterByName('file_path');
     var permission = getParameterByName('permission') || 'edit';
     var timestamp = getParameterByName('timestamp');
-    var closebutton = getParameterByName('closebutton');
+    window.closeButtonEnabled = getParameterByName('closebutton');
     if (wopiSrc === '' && filePath === '') {
         vex.dialog.alert(wrongwopisrc);
     }

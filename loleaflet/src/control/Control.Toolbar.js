@@ -3,7 +3,7 @@
  * LibreOffice Online toolbar
  */
 
-/* global $ closebutton w2ui w2utils vex _ _UNO */
+/* global $ w2ui w2utils vex _ _UNO */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function(global) {
 
@@ -2374,20 +2374,6 @@ $(window).resize(function() {
 });
 
 $(document).ready(function() {
-	if (!closebutton) {
-		$('#closebuttonwrapper').hide();
-	} else if (closebutton && !L.Browser.mobile) {
-		$('.closebuttonimage').show();
-	}
-
-	$('#closebutton').click(function() {
-		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-		if (!map._disableDefaultAction['UI_Close']) {
-			map.remove();
-		}
-	});
-
 	// Attach insert file action
 	$('#insertgraphic').on('change', onInsertFile);
 });
@@ -2493,6 +2479,21 @@ function setupToolbar(e) {
 	map.on('updateparts pagenumberchanged', onUpdateParts);
 	map.on('commandstatechanged', onCommandStateChanged);
 	map.on('commandvalues', onCommandValues, this);
+
+	if (!window.closeButtonEnabled) {
+		$('#closebuttonwrapper').hide();
+	} else if (window.closeButtonEnabled && !L.Browser.mobile) {
+		$('#closebuttonwrapper').show();
+		$('.closebuttonimage').show();
+	}
+
+	$('#closebutton').click(function() {
+		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
+		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+		if (!map._disableDefaultAction['UI_Close']) {
+			map.remove();
+		}
+	});
 }
 
 global.setupToolbar = setupToolbar;

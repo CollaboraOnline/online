@@ -3,7 +3,7 @@
 * Control.Menubar
 */
 
-/* global $ _ _UNO vex revHistoryEnabled closebutton L */
+/* global $ _ _UNO vex revHistoryEnabled L */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
@@ -1029,7 +1029,7 @@ L.Control.Menubar = L.Control.extend({
 
 		if (menuItem.type === 'action') {
 			if ((menuItem.id === 'rev-history' && !revHistoryEnabled) ||
-				(menuItem.id === 'closedocument' && !closebutton)) {
+				(menuItem.id === 'closedocument' && !window.closebutton)) {
 				return false;
 			}
 		}
