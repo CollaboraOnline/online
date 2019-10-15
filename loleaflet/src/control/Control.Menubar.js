@@ -457,13 +457,14 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
-				{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
-					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
-					{name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
-					{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
-					{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
-					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}]},
 				{name: _('Sign document'), id: 'signdocument', type: 'action'}
+			]},
+			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
+				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+				{name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
+				{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
+				{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
+				{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), type: 'menu', menu: [
 				{uno: '.uno:Undo'},
