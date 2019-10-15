@@ -481,17 +481,16 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'},
+				{uno: '.uno:SearchDialog'}
+			]},
+			{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
+				{uno: '.uno:TrackChanges'},
+				{uno: '.uno:ShowTrackedChanges'},
 				{type: 'separator'},
-				{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
-					{uno: '.uno:TrackChanges'},
-					{uno: '.uno:ShowTrackedChanges'},
-					{type: 'separator'},
-					{uno: '.uno:AcceptAllTrackedChanges'},
-					{uno: '.uno:RejectAllTrackedChanges'},
-					{uno: '.uno:PreviousTrackedChange'},
-					{uno: '.uno:NextTrackedChange'}
-				]},
+				{uno: '.uno:AcceptAllTrackedChanges'},
+				{uno: '.uno:RejectAllTrackedChanges'},
+				{uno: '.uno:PreviousTrackedChange'},
+				{uno: '.uno:NextTrackedChange'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{name: _('Show Ruler'), id: 'showruler', type: 'action'},
