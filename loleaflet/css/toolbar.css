@@ -123,6 +123,15 @@
 		border-radius: 2px;
 		background-size: 28px;
 	}
+	div#mobile-wizard-content .spinfieldcontainer .spinfieldimage {
+		opacity: 0.5;
+	}
+	div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:focus .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:hover .spinfieldimage {
+    opacity: 1 !important;
+	}
+	div#mobile-wizard-content .spinfield:active .spinfieldimage, div#mobile-wizard-content .spinfield:focus .spinfieldimage, div#mobile-wizard-content .spinfield:hover .spinfieldimage {
+    opacity: 1 !important;
+	}
 	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
 		margin: 0;
     padding: 0;
