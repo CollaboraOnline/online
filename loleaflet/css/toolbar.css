@@ -42,14 +42,7 @@
     background-color: #f9f9f9;
 		border: none;
 	}
-	.spinfieldcontainer .plus:active, .spinfieldcontainer .minus:active{
-    border-color: #0b87e7;
-    -webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
-    filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
-	}
-	.spinfieldcontainer .minus:active{
-		border-top: 1px solid #0b87e7;
-	}
+
 	.mobile-wizard.ui-combobox-text.checked {
     color: #0b87e7 !important;
 	}
@@ -1205,15 +1198,19 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	display: table-cell;
 	vertical-align: middle;
 }
-
 .minus {
+	border-left: 1px solid #ccc;
 	width: 48px;
 	height: 48px;
 	color: #777 !important;
 	display: table-cell;
 	vertical-align: middle;
 }
-
+.spinfieldcontainer .plus:active, .spinfieldcontainer .minus:active{
+	border-color: #0b87e7;
+	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+}
 .spinfieldimage {
 	width: 24px;
 	height: 24px;
