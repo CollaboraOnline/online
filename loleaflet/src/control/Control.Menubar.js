@@ -1198,7 +1198,7 @@ L.Control.Menubar = L.Control.extend({
 		var items = this.options[docType];
 
 		for (var i = 0; i < items.length; i++) {
-			if (items[i].mobile !== false) {
+			if (items[i].mobile !== false && this._checkItemVisibility(items[i]) === true) {
 				topMenu.children.push(this._generateMenuStructure(items[i], docType, false));
 			}
 		}
