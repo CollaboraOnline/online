@@ -4,6 +4,12 @@
 	}
 }
 @media (max-width: 767px), (max-device-height: 767px) {
+	.spinfieldcontainer .sinfieldcontrols {
+    height: 49px;
+	}
+	.spinfieldcontainer input.spinfield {
+    padding-top: 0px;
+	}
 	.leaflet-control-zoom.leaflet-bar{
 		border: none !important;
 	}
