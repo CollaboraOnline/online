@@ -42,12 +42,6 @@ var deps = {
 		deps: ['GridLayer']
 	},
 
-	TileLayerWMS: {
-		src: ['layer/tile/TileLayer.WMS.js'],
-		desc: 'WMS tile layer.',
-		deps: ['TileLayer']
-	},
-
 	WriterTileLayer: {
 		src: ['layer/tile/WriterTileLayer.js'],
 		desc: 'Writer tile layer.',
