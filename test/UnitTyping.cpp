@@ -135,7 +135,7 @@ public:
                     {
                         std::ostringstream oss;
                         std::uniform_int_distribution<int> distribution(0,32);
-                        oss << "tilecombine part=0 width=512 height=512"
+                        oss << "tilecombine nviewid=0 part=0 width=512 height=512"
                             << " tileposx=" << 3840*distribution(randDev)
                             << " tileposy=" << 3840*distribution(randDev)
                             << " tilewidth=7680 tileheight=7680";
@@ -167,7 +167,7 @@ public:
                         std::vector<char> tile = getResponseMessage(sock, "tile:", testname, waitMS /* ms */);
                         if (tile.size())
                         {
-// 1544818858022 INCOMING: tile: part=0 width=256 height=256 tileposx=15360 tileposy=38400 tilewidth=3840 tileheight=3840 oldwid=0 wid=232 ver=913 imgsize=1002
+// 1544818858022 INCOMING: tile: nviewid=0 part=0 width=256 height=256 tileposx=15360 tileposy=38400 tilewidth=3840 tileheight=3840 oldwid=0 wid=232 ver=913 imgsize=1002
 // Socket.js:123 1544818858027 OUTGOING: tileprocessed tile=0:15360:38400:3840:3840
                             TileDesc desc = TileDesc::parse(LOOLProtocol::tokenize(tile.data(), tile.size()));
                             sendTextFrame(sock, "tileprocessed tile=" + desc.generateID(), testname);
