@@ -286,7 +286,7 @@
 		margin-bottom: 0px !important;
 		height: 32px !important;
 	}
-	.w2ui-toolbar table.w2ui-button.over {
+	#toolbar-down table.w2ui-button.over {
 	    border: 1px solid #eee;
 	    background-color: #eeeeee;
 	    border-radius: 0px;
