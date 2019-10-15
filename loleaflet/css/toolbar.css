@@ -1144,10 +1144,11 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 .ui-tab.mobile-wizard {
 	display: table-cell;
+	width: 49%;
 	height: 36px;
 	line-height: 36px;
     vertical-align: middle;
-	margin: 5px;
+	margin: 0px 1%;
 	border-radius: 10px;
 	border: none;
 	color: #777;
