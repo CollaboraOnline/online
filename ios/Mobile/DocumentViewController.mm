@@ -265,6 +265,10 @@
                       LOG_TRC("save completion handler gets " << (success?"YES":"NO"));
                    }];
 
+            // Wait for lokit_main thread to exit
+            std::lock_guard<std::mutex> lock(lokit_main_mutex);
+
+            // And only then let the document browsing view show up again
             [self dismissDocumentViewController];
             return;
         } else if ([message.body isEqualToString:@"SLIDESHOW"]) {

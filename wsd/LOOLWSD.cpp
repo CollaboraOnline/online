@@ -515,6 +515,9 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
 
     std::thread([&]
                 {
+#ifdef IOS
+                    std::lock_guard<std::mutex> lokit_main_lock(lokit_main_mutex);
+#endif
                     Util::setThreadName("lokit_main");
 
                     // Ugly to have that static global, otoh we know there is just one LOOLWSD

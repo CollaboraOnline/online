@@ -7,11 +7,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <mutex>
+
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 extern int loolwsd_server_socket_fd;
 extern lok::Document *lok_document;
 
 extern LibreOfficeKit *lo_kit;
+
+extern std::mutex lokit_main_mutex;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
