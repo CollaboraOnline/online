@@ -1212,4 +1212,5 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	width: 24px;
 	height: 24px;
 	vertical-align: middle;
+	padding-left: 8px;
 }
