@@ -162,6 +162,7 @@ L.Control.MobileWizard = L.Control.extend({
 					$('#mobile-wizard').css('top', $('#document-container').css('top'));
 			} else {
 				$('#mobile-wizard').height('45%');
+				$('#mobile-wizard').css('top', '');
 			}
 		}
 	},
