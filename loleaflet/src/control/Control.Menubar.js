@@ -800,6 +800,7 @@ L.Control.Menubar = L.Control.extend({
 							var menuData = self._map.menubar.generateFullMenuStructure();
 							self._map.fire('mobilewizard', menuData);
 							$('#main-menu-btn-icon').css('filter', 'drop-shadow(0px 0px 4px #0b87e7)')
+							$nav.css({height:'', bottom: ''});
 						}
 					} else if (!L.Browser.mobile) {
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
@@ -808,6 +809,7 @@ L.Control.Menubar = L.Control.extend({
 						window.mobileMenuWizard = false;
 						self._map.fire('closemobilewizard');
 						$('#main-menu-btn-icon').css('filter', '')
+						$nav.css({height:'', bottom: ''});
 					}
 				});
 				// hide mobile menu beforeunload
