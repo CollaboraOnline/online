@@ -1189,7 +1189,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 }
 
 .spinfieldunit {
-	color: #777;
+	color: #777 !important;
 	width: 30px;
 	margin: 0px 10px 0px 10px;
 }
