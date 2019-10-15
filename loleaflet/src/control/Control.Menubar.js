@@ -496,11 +496,9 @@ L.Control.Menubar = L.Control.extend({
 				]},
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
-				{type: 'separator', mobileapp: false},
 				{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				{uno: '.uno:ControlCodes'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
-				{type: 'separator'},
 			]
 			},
 			{name: _('About'), id: 'about', type: 'action'},
@@ -598,7 +596,6 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
 				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
-				{type: 'separator', mobileapp: false},
 			]},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
