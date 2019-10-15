@@ -858,6 +858,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std:
     try
     {
         TileDesc tileDesc = TileDesc::parse(tokens);
+        tileDesc.setNormalizedViewId(getHash());
         docBroker->handleTileRequest(tileDesc, shared_from_this());
     }
     catch (const std::exception& exc)
@@ -875,6 +876,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
     try
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
+        tileCombined.setNormalizedViewId(getHash());
         docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
     }
     catch (const std::exception& exc)
@@ -1687,7 +1689,7 @@ void ClientSession::dumpState(std::ostream& os)
 void ClientSession::handleTileInvalidation(const std::string& message,
     const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    docBroker->invalidateTiles(message);
+    docBroker->invalidateTiles(message, getHash());
 
     // Skip requesting new tiles if we don't have client visible area data yet.
     if(!_clientVisibleArea.hasSurface() ||
@@ -1712,7 +1714,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if( part == -1 ) // If no part is specified we use the part used by the client
         part = _clientSelectedPart;
 
-    int normalizedViewId = 0;
+    int normalizedViewId = getHash();
 
     std::vector<TileDesc> invalidTiles;
     if(part == _clientSelectedPart || _isTextDocument)
@@ -1745,6 +1747,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if(!invalidTiles.empty())
     {
         TileCombined tileCombined = TileCombined::create(invalidTiles);
+        tileCombined.setNormalizedViewId(normalizedViewId);
         docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
     }
 }

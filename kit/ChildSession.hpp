@@ -24,6 +24,7 @@
 #include "Kit.hpp"
 #include "Session.hpp"
 
+class Watermark;
 class ChildSession;
 
 enum class LokEventTargetEnum
@@ -214,6 +215,8 @@ public:
     int getSpeed();
 
     void loKitCallback(const int type, const std::string& payload);
+
+    std::shared_ptr<Watermark> _docWatermark;
 
     bool sendTextFrame(const char* buffer, int length) override
     {

@@ -310,7 +310,7 @@ public:
         _cursorHeight = h;
     }
 
-    void invalidateTiles(const std::string& tiles);
+    void invalidateTiles(const std::string& tiles, int normalizedViewId);
     void handleTileRequest(TileDesc& tile,
                            const std::shared_ptr<ClientSession>& session);
     void handleTileCombinedRequest(TileCombined& tileCombined,

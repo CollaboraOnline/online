@@ -89,7 +89,8 @@ public:
                _tileWidth == other._tileWidth &&
                _tileHeight == other._tileHeight &&
                _id == other._id &&
-               _broadcast == other._broadcast;
+               _broadcast == other._broadcast &&
+               _normalizedViewId == other._normalizedViewId;
     }
 
     static bool rectanglesIntersect(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)

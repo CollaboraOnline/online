@@ -669,6 +669,11 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     session->setUserExtraInfo(userExtraInfo);
     session->setWatermarkText(watermarkText);
 
+    if(!watermarkText.empty())
+        session->setHash(watermarkText);
+    else
+        session->setHash(0);
+
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
     const StorageBase::FileInfo fileInfo = _storage->getFileInfo();
     if (!fileInfo.isValid())
@@ -1454,10 +1459,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     return true;
 }
 
-void DocumentBroker::invalidateTiles(const std::string& tiles)
+void DocumentBroker::invalidateTiles(const std::string& tiles, int normalizedViewId)
 {
     // Remove from cache.
-    _tileCache->invalidateTiles(tiles);
+    _tileCache->invalidateTiles(tiles, normalizedViewId);
 }
 
 void DocumentBroker::handleTileRequest(TileDesc& tile,
@@ -1558,7 +1563,8 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             for (auto& oldTile : requestedTiles)
             {
                 if(oldTile.getTilePosX() == newTile.getTilePosX() &&
-                   oldTile.getTilePosY() == newTile.getTilePosY() )
+                   oldTile.getTilePosY() == newTile.getTilePosY() &&
+                   oldTile.getNormalizedViewId() == newTile.getNormalizedViewId())
                 {
                     oldTile.setVersion(newTile.getVersion());
                     oldTile.setOldWireId(newTile.getOldWireId());
