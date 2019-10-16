@@ -1210,7 +1210,11 @@ L.Control.Menubar = L.Control.extend({
 			if (this._map['wopi'].HideExportOption)
 				return false;
 		}
-		return true
+
+		if (this._hiddenItems && this._hiddenItems.includes(menuItem.id))
+			return false;
+
+		return true;
 	},
 
 	_createMenu: function(menu) {
