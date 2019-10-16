@@ -1,0 +1,64 @@
+@media (max-width: 767px), (max-device-height: 767px) {
+	.vex-dialog-message {
+		text-align: center;
+		font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif !important;
+		font-size: 1em !important;
+		font-weight: 600 !important;
+	}
+	.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"] {
+		border-radius: 4px !important;
+		background-color: #fff !important;
+		border: 1px solid #999999 !important;
+		width: 100%;
+		width: -moz-available;
+		width: -webkit-fill-available;
+		width: fill-available;
+	}
+	.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"]:focus {
+		box-shadow: none !important;
+		border: 2px solid #0b87e7 !important;
+	}
+	.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"]:focus{
+		color: #0b87e7 !important;
+	}
+	.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"]:focus input{
+		color: #000 !important;
+	}
+	.vex-dialog-input {
+		font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif !important;
+		font-size: 0.8em;
+	}
+	.vex.vex-theme-plain .vex-content {
+		height: 100% !important;
+		max-width: 100% !important;
+		width: auto !important;
+	}
+	.vex.vex-theme-plain {
+		padding: 0px !important;
+		position: relative !important;
+		z-index: 1001 !important;
+		top: -42px !important;
+	}
+	.vex-open .vex-overlay {
+		z-index: 1000;
+		min-height: 100%;
+		position: absolute;
+		width: -webkit-fill-available;
+		top: 0;
+		background-color: white;
+	}
+	.vex.vex-theme-plain input {
+		font-size: 1.1em !important;
+	}
+	button.vex-dialog-button-primary.vex-dialog-button.vex-first {
+		border: 1px solid #0b87e7 !important;
+		border-radius: 4px !important;
+		background-color: #fff !important;
+		color: #0b87e7 !important;
+	}
+	button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
+		border-radius: 4px;
+		background-color: #fff !important;
+		border: 1px solid #aaa !important;
+	}
+}
