@@ -1145,7 +1145,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket, const 
 
             sendTextFrame(socket, text, name);
             tile = assertResponseString(socket, "tile:", name);
-            // expected tile: nviewid=  part= width= height= tileposx= tileposy= tilewidth= tileheight=
+            // expected tile: nviewid= part= width= height= tileposx= tileposy= tilewidth= tileheight=
             Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
             CPPUNIT_ASSERT_EQUAL(0, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
@@ -1243,7 +1243,8 @@ void TileCacheTests::testTileWireIDHandling()
     bool gotTile = false;
     do
     {
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        // If we wait for too long, the cached tiles will get evicted.
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
         gotTile = !tile.empty();
         if(gotTile)
             ++arrivedTiles;
@@ -1393,7 +1394,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
     bool gotTile = false;
     do
     {
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
         gotTile = !tile.empty();
         if(gotTile)
             ++arrivedTiles;
