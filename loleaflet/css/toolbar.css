@@ -202,6 +202,7 @@
 	}
 	#mobile-wizard button{
 		height: 38px;
+		width: 100%;
     border-radius: 4px;
     color: #0b87e7 !important;
     font-weight: bold;
