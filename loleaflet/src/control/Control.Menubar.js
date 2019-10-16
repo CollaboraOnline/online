@@ -569,9 +569,6 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
-			]},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
@@ -605,6 +602,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:HideDetail'},
 					{uno: '.uno:ShowDetail'}]}
 			]},
+			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
