@@ -357,6 +357,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_spinfieldControl: function(parentContainer, data, builder) {
 		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
+		div.id = data.id;
 
 		var image = L.DomUtil.create('img', 'spinfieldimage', div);
 		var icon = builder._createIconPath(data.id);
