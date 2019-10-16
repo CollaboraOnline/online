@@ -30,6 +30,7 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-titlebar').show();
 		$('#mobile-wizard-titlebar').css('top', '0px');
 		$('#mobile-wizard-content').css('top', '48px');
+		$('#mobile-wizard').removeClass('menuwizard');
 		this._isTabMode = false;
 	},
 
@@ -156,6 +157,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 			if (data.id === 'menubar') {
 				$('#mobile-wizard').height('100%');
+				$('#mobile-wizard').addClass('menuwizard');
 				if (this.map .getDocType() === 'spreadsheet')
 					$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
 				else
