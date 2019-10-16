@@ -1054,8 +1054,9 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     for (auto& sessionIt : _sessions)
     {
         // Save the document using an editable session, or first ...
-        if (savingSessionId.empty() ||
-            (!sessionIt.second->isReadOnly() && !sessionIt.second->inWaitDisconnected()))
+        if (savingSessionId.empty()
+            || (!sessionIt.second->isReadOnly() && sessionIt.second->isViewLoaded()
+                && !sessionIt.second->inWaitDisconnected()))
         {
             savingSessionId = sessionIt.second->getId();
         }
@@ -1271,9 +1272,12 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
         const bool lastEditableSession = !it->second->isReadOnly() && !haveAnotherEditableSession(id);
 
-        LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
-                "]. Have " << _sessions.size() << " sessions. markToDestroy: " << _markToDestroy <<
-                ", LastEditableSession: " << lastEditableSession);
+        LOG_INF("Removing session ["
+                << id << "] on docKey [" << _docKey << "]. Have " << _sessions.size()
+                << " sessions. IsReadOnly: " << it->second->isReadOnly()
+                << ", IsViewLoaded: " << it->second->isViewLoaded() << ", IsWaitDisconnected: "
+                << it->second->inWaitDisconnected() << ", MarkToDestroy: " << _markToDestroy
+                << ", LastEditableSession: " << lastEditableSession);
 
         const auto dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
 
