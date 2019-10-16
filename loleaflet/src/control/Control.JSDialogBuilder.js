@@ -18,6 +18,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	 */
 	_controlHandlers: {},
 	_toolitemHandlers: {},
+	_menuItemHandlers: {},
 	_colorPickers: [],
 
 	_currentDepth: 0,
@@ -55,6 +56,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
 		this._controlHandlers['menuitem'] = this._menuItemHandler;
+
+		this._menuItemHandlers['inserttable'] = this._insertTableMenuItem;
 
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
@@ -648,6 +651,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return false;
 		}
 
+		var id = data.id;
+		if (id) {
+			var handler = builder._menuItemHandlers[id];
+			if (handler) {
+				handler(parentContainer, data, builder);
+				return;
+			}
+		}
+
 		var menuEntry = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 
 		var icon = null;
@@ -678,6 +690,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		return false;
+	},
+
+	_insertTableMenuItem: function(parentContainer, data, builder) {
+		var title = data.text;
+		builder._explorableMenu(parentContainer, title, data.children, builder);
 	},
 
 	_fontNameControl: function(parentContainer, data, builder) {
