@@ -993,18 +993,19 @@ bool DocumentBroker::autoSave(const bool force)
 
     // Which session to use when auto saving ?
     std::string savingSessionId;
-    for (auto& sessionIt : _sessions)
+    for (auto& session : _sessions)
     {
-        // Save the document using an editable session, or first ...
-        if (savingSessionId.empty() || !sessionIt.second->isReadOnly())
+        // Save the document using an editable and loaded session, or first ...
+        if (savingSessionId.empty()
+            || (!session.second->isReadOnly() && session.second->isViewLoaded()))
         {
-            savingSessionId = sessionIt.second->getId();
+            savingSessionId = session.second->getId();
         }
 
         // or if any of the sessions is document owner, use that.
-        if (sessionIt.second->isDocumentOwner())
+        if (session.second->isDocumentOwner())
         {
-            savingSessionId = sessionIt.second->getId();
+            savingSessionId = session.second->getId();
             break;
         }
     }
@@ -1210,9 +1211,11 @@ size_t DocumentBroker::removeSession(const std::string& id)
 
         const bool lastEditableSession = !it->second->isReadOnly() && !haveAnotherEditableSession(id);
 
-        LOG_INF("Removing session [" << id << "] on docKey [" << _docKey <<
-                "]. Have " << _sessions.size() << " sessions. markToDestroy: " << _markToDestroy <<
-                ", LastEditableSession: " << lastEditableSession);
+        LOG_INF("Removing session ["
+                << id << "] on docKey [" << _docKey << "]. Have " << _sessions.size()
+                << " sessions. IsReadOnly: " << it->second->isReadOnly() << ", IsViewLoaded: "
+                << it->second->isViewLoaded() << ". markToDestroy: " << _markToDestroy
+                << ", LastEditableSession: " << lastEditableSession);
 
         // If last editable, save and don't remove until after uploading to storage.
         if (!lastEditableSession || !autoSave(isPossiblyModified()))
