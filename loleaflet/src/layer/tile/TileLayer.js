@@ -1476,7 +1476,7 @@ L.TileLayer = L.GridLayer.extend({
 		L.Log.log(textMsg, L.INCOMING, key);
 
 		// Send acknowledgment, that the tile message arrived
-		var tileID = command.part + ':' + command.x + ':' + command.y + ':' + command.tileWidth + ':' + command.tileHeight;
+		var tileID = command.part + ':' + command.x + ':' + command.y + ':' + command.tileWidth + ':' + command.tileHeight + ':' + command.nviewid;
 		this._map._socket.sendMessage('tileprocessed tile=' + tileID);
 	},
 

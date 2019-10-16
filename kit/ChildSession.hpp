@@ -24,6 +24,7 @@
 #include "Kit.hpp"
 #include "Session.hpp"
 
+class Watermark;
 class ChildSession;
 
 enum class LokEventTargetEnum
@@ -238,6 +239,7 @@ public:
     }
 
     using Session::sendTextFrame;
+    std::shared_ptr<Watermark> _docWatermark;
 
 private:
     bool loadDocument(const char* buffer, int length, const std::vector<std::string>& tokens);

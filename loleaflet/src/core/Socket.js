@@ -969,6 +969,9 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 7) === 'viewid=') {
 				command.viewid = tokens[i].substring(7);
 			}
+			else if (tokens[i].substring(0, 8) === 'nviewid=') {
+				command.nviewid = tokens[i].substring(8);
+			}
 			else if (tokens[i].substring(0, 7) === 'params=') {
 				command.params = tokens[i].substring(7).split(',');
 			}
