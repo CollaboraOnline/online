@@ -591,7 +591,7 @@ void HTTPWSTest::testSaveOnDisconnect()
 
 void HTTPWSTest::testSavePassiveOnDisconnect()
 {
-    const char* testname = "saveOnPassiveDisconnect ";
+    const char* testname = "savePassiveOnDisconnect ";
 
     const std::string text = helpers::genRandomString(40);
     TST_LOG("Test string: [" << text << "].");
@@ -785,7 +785,8 @@ void HTTPWSTest::testLargePaste()
 
         const std::string documentContents = oss.str();
         TST_LOG("Pasting " << documentContents.size() << " characters into document.");
-        sendTextFrame(socket, "paste mimetype=text/html\n" + documentContents, testname);
+        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + documentContents, testname);
+        getResponseString(socket, "textselection:", testname, 1000);
 
         // Check if the server is still alive.
         // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.

@@ -452,7 +452,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         // If this session is the owner of the file & 'EnableOwnerTermination' feature
         // is turned on by WOPI, let it close all sessions
-        if (_isDocumentOwner && _wopiFileInfo && _wopiFileInfo->getEnableOwnerTermination())
+        if (isDocumentOwner() && _wopiFileInfo && _wopiFileInfo->getEnableOwnerTermination())
         {
             LOG_DBG("Session [" << getId() << "] requested owner termination");
             docBroker->closeDocument("ownertermination");
@@ -1567,7 +1567,9 @@ void ClientSession::removeOutdatedTilesOnFly()
         double elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - tileIter->second).count();
         if(elapsedTimeMs > TILE_ROUNDTRIP_TIMEOUT_MS)
         {
-            LOG_WRN("Tracker tileID was dropped because of time out. Tileprocessed message did not arrive");
+            LOG_WRN("Tracker tileID " << tileIter->first << " was dropped because of time out ("
+                                      << elapsedTimeMs
+                                      << " ms). Tileprocessed message did not arrive in time.");
             _tilesOnFly.erase(tileIter);
         }
         else
@@ -1659,7 +1661,7 @@ void ClientSession::dumpState(std::ostream& os)
     Session::dumpState(os);
 
     os << "\t\tisReadOnly: " << isReadOnly()
-       << "\n\t\tisDocumentOwner: " << _isDocumentOwner
+       << "\n\t\tisDocumentOwner: " << isDocumentOwner()
        << "\n\t\tstate: " << stateToString(_state)
        << "\n\t\tkeyEvents: " << _keyEvents
 //       << "\n\t\tvisibleArea: " << _clientVisibleArea

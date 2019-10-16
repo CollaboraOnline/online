@@ -213,6 +213,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             sendTextFrame("error: cmd=load kind=faileddocloading");
         }
 
+        LOG_TRC("isDocLoaded state after loadDocument: " << _isDocLoaded << '.');
         return _isDocLoaded;
     }
     else if (!_isDocLoaded)
