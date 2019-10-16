@@ -1,6 +1,6 @@
 span.menu-entry-icon img {
-    width: 24px;
-    margin: 4px;
+    width: 24px !important;
+    margin: 4px !important;
 }
 
 #mobile-wizard.menuwizard #mobile-wizard-content{
