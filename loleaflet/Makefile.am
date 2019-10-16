@@ -69,11 +69,17 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/selectionMarkers.css \
 	$(srcdir)/css/loleaflet.css \
 	$(srcdir)/css/toolbar.css \
+	$(srcdir)/css/toolbar-mobile.css \
 	$(srcdir)/css/partsPreviewControl.css \
 	$(srcdir)/css/sidebar.css \
 	$(srcdir)/css/scrollBar.css \
 	$(srcdir)/css/searchControl.css \
+	$(srcdir)/css/impress.css \
+	$(srcdir)/css/impress-mobile.css \
 	$(srcdir)/css/spreadsheet.css \
+	$(srcdir)/css/spreadsheet-mobile.css \
+	$(srcdir)/css/writer.css \
+	$(srcdir)/css/writer-mobile.css \
 	$(srcdir)/css/editor.css \
 	$(srcdir)/css/jquery.mCustomScrollbar.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
@@ -83,6 +89,8 @@ LOLEAFLET_CSS =\
 	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
 	$(srcdir)/css/menubar.css \
+	$(srcdir)/css/menubar-mobile.css \
+	$(srcdir)/css/vex.css \
 	$(builddir)/node_modules/jquery-ui/themes/ui-lightness/jquery-ui.css
 
 LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(builddir)/dist/$(notdir $(file)))
