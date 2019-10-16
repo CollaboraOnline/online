@@ -74,10 +74,10 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
-				{uno: '.uno:InsertObjectChart'},
+				{uno: '.uno:InsertObjectChart', mobile: false},
 				{id: 'inserttable', type: 'action', name: _('Insert table'), desktop: false, tablet: false},
 				{type: 'separator'},
-				{uno: '.uno:InsertSection', id: 'insertsection'},
+				{uno: '.uno:InsertSection', id: 'insertsection', mobile: false},
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertPageNumberField'},
 					{uno: '.uno:InsertPageCountField'},
@@ -101,7 +101,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{name: _('Insert Shape'), id: 'insertshape', desktop: false, type: 'action' },
-				{uno: '.uno:InsertSymbol'},
+				{uno: '.uno:InsertSymbol', mobile: false},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
 					{uno: '.uno:InsertHardHyphen'},
@@ -283,14 +283,14 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
-				{uno: '.uno:InsertObjectChart'},
+				{uno: '.uno:InsertObjectChart', mobile: false},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:InsertSymbol'},
+				{uno: '.uno:InsertSymbol', mobile: false},
 				{type: 'separator'},
 				{name: _('Insert Shape'), id: 'insertshape', desktop: false, type: 'action' },
-				{uno: '.uno:HeaderAndFooter'}]
+				{uno: '.uno:HeaderAndFooter', mobile: false}]
 			},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
@@ -376,8 +376,8 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{name: _('Insert Shape'), id: 'insertshape', desktop: false, type: 'action' },
-				{uno: '.uno:InsertSymbol'},
-				{uno: '.uno:EditHeaderAndFooter'}
+				{uno: '.uno:InsertSymbol', mobile: false},
+				{uno: '.uno:EditHeaderAndFooter', mobile: false}
 			]},
 			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:ResetAttributes'},
