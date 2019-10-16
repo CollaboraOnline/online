@@ -522,9 +522,6 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false}
-			]},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 				{uno: '.uno:InsertRowsBefore'},
 				{uno: '.uno:InsertRowsAfter'},
@@ -538,11 +535,10 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:SlideMenu', 'presentation'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'} ]
+				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
-			{name: _UNO('.uno:SlideShowMenu', 'presentation'), type: 'menu', menu: [
-				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
-			},
+			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
+			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
