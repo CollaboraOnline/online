@@ -213,7 +213,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_explorableMenu: function(parentContainer, title, children, builder) {
+	_explorableMenu: function(parentContainer, title, children, builder, customContent) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 
@@ -225,11 +225,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
 		contentDiv.title = title;
 
-		builder._currentDepth++;
-		for (var i = 0; i < children.length; i++) {
-			builder.build(contentDiv, [children[i]]);
+		if (customContent) {
+			contentDiv.appendChild(customContent);
+		} else {
+			builder._currentDepth++;
+			for (var i = 0; i < children.length; i++) {
+				builder.build(contentDiv, [children[i]]);
+			}
+			builder._currentDepth--;
 		}
-		builder._currentDepth--;
 
 		$(contentDiv).hide();
 		if (builder.wizard) {
@@ -380,7 +384,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return unit;
 	},
 
-	_spinfieldControl: function(parentContainer, data, builder) {
+	_spinfieldControl: function(parentContainer, data, builder, customCallback) {
+		if (data.label) {
+			var fixedTextData = { text: data.label };
+			builder._fixedtextControl(parentContainer, fixedTextData, builder);
+		}
+
 		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
 		div.id = data.id;
 
@@ -417,7 +426,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(spinfield).attr('value', builder._cleanValueFromUnits(data.children[0].text));
 
 		spinfield.addEventListener('change', function() {
-			builder.callback('spinfield', 'change', spinfield, this.value, builder);
+			if (customCallback)
+				customCallback();
+			else
+				builder.callback('spinfield', 'change', spinfield, this.value, builder);
 		});
 
 		if (data.hidden)
@@ -444,7 +456,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_pushbuttonControl: function(parentContainer, data, builder) {
+	_pushbuttonControl: function(parentContainer, data, builder, customCallback) {
 		var pushbutton = L.DomUtil.create('button', '', parentContainer);
 		pushbutton.innerHTML = builder._cleanText(data.text);
 		pushbutton.id = data.id;
@@ -453,7 +465,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(pushbutton).attr('disabled', 'disabled');
 
 		$(pushbutton).click(function () {
-			builder.callback('pushbutton', 'click', pushbutton, data.command, builder);
+			if (customCallback)
+				customCallback();
+			else
+				builder.callback('pushbutton', 'click', pushbutton, data.command, builder);
 		});
 
 		if (data.hidden)
@@ -694,7 +709,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_insertTableMenuItem: function(parentContainer, data, builder) {
 		var title = data.text;
-		builder._explorableMenu(parentContainer, title, data.children, builder);
+
+		var content = L.DomUtil.create('div', 'inserttablecontrols');
+
+		var rowsData = { min: 0, id: 'rows', label: _('Rows') };
+		var colsData = { min: 0, id: 'cols', label: _('Columns') };
+		builder._spinfieldControl(content, rowsData, builder, function() { });
+		builder._spinfieldControl(content, colsData, builder, function() { });
+
+		var buttonData = { text: _('Insert table') };
+		builder._pushbuttonControl(content, buttonData, builder, function() { });
+
+		builder._explorableMenu(parentContainer, title, data.children, builder, content);
 	},
 
 	_fontNameControl: function(parentContainer, data, builder) {
