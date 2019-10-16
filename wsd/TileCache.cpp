@@ -353,7 +353,7 @@ std::unique_ptr<std::fstream> TileCache::lookupCachedFile(const std::string& nam
     return nullptr;
 }
 
-void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
+void TileCache::invalidateTiles(int part, int x, int y, int width, int height, int nViewId)
 {
     LOG_TRC("Removing invalidated tiles: part: " << part <<
             ", x: " << x << ", y: " << y <<
@@ -369,7 +369,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
         for (auto tileIterator = DirectoryIterator(dir); tileIterator != DirectoryIterator(); ++tileIterator)
         {
             const std::string fileName = tileIterator.path().getFileName();
-            if (intersectsTile(fileName, part, x, y, width, height))
+            if (intersectsTile(fileName, part, x, y, width, height, nViewId))
             {
                 LOG_DBG("Removing tile: " << tileIterator.path().toString());
                 FileUtil::removeFile(tileIterator.path());
@@ -378,11 +378,11 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height)
     }
 }
 
-void TileCache::invalidateTiles(const std::string& tiles)
+void TileCache::invalidateTiles(const std::string& tiles, int normalizedViewId)
 {
     std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(tiles);
     Util::Rectangle& invalidateRect = result.second;
-    invalidateTiles(result.first, invalidateRect.getLeft(), invalidateRect.getTop(), invalidateRect.getWidth(), invalidateRect.getHeight());
+    invalidateTiles(result.first, invalidateRect.getLeft(), invalidateRect.getTop(), invalidateRect.getWidth(), invalidateRect.getHeight(), normalizedViewId);
 }
 
 std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string& tiles)
@@ -433,23 +433,26 @@ void TileCache::removeFile(const std::string& fileName)
 std::string TileCache::cacheFileName(const TileDesc& tile)
 {
     std::ostringstream oss;
-    oss << tile.getPart() << '_' << tile.getWidth() << 'x' << tile.getHeight() << '.'
+    oss << tile.getNormalizedViewId() << '_' << tile.getPart() << '_' << tile.getWidth() << 'x' << tile.getHeight() << '.'
         << tile.getTilePosX() << ',' << tile.getTilePosY() << '.'
         << tile.getTileWidth() << 'x' << tile.getTileHeight() << ".png";
     return oss.str();
 }
 
-bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight)
+bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight, int& nViewId)
 {
-    return std::sscanf(fileName.c_str(), "%d_%dx%d.%d,%d.%dx%d.png", &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 7;
+    return std::sscanf(fileName.c_str(), "%d_%d_%dx%d.%d,%d.%dx%d.png", &nViewId, &part, &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight) == 8;
 }
 
-bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height)
+bool TileCache::intersectsTile(const std::string& fileName, int part, int x, int y, int width, int height, int normalizedViewId)
 {
-    int tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight;
-    if (parseCacheFileName(fileName, tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight))
+    int tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight, nViewId;
+    if (parseCacheFileName(fileName, tilePart, tilePixelWidth, tilePixelHeight, tilePosX, tilePosY, tileWidth, tileHeight, nViewId))
     {
         if (part != -1 && tilePart != part)
+            return false;
+
+        if (nViewId != normalizedViewId)
             return false;
 
         const int left = std::max(x, tilePosX);

@@ -1363,10 +1363,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     return true;
 }
 
-void DocumentBroker::invalidateTiles(const std::string& tiles)
+void DocumentBroker::invalidateTiles(const std::string& tiles, int normalizedViewId)
 {
     // Remove from cache.
-    _tileCache->invalidateTiles(tiles);
+    _tileCache->invalidateTiles(tiles, normalizedViewId);
 }
 
 void DocumentBroker::handleTileRequest(TileDesc& tile,

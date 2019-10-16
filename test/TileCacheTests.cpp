@@ -211,7 +211,7 @@ void TileCacheTests::testSimple()
     CPPUNIT_ASSERT_MESSAGE("cached tile corrupted", data == tileData);
 
     // Invalidate Tiles
-    tc.invalidateTiles("invalidatetiles: EMPTY");
+    tc.invalidateTiles("invalidatetiles: EMPTY", nviewid);
 
     // No Cache
     file = tc.lookupTile(tile);

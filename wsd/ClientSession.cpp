@@ -1299,7 +1299,7 @@ void ClientSession::dumpState(std::ostream& os)
 void ClientSession::handleTileInvalidation(const std::string& message,
     const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    docBroker->invalidateTiles(message);
+    docBroker->invalidateTiles(message, getHash());
 
     // Skip requesting new tiles if we don't have client visible area data yet.
     if(!_clientVisibleArea.hasSurface() ||
