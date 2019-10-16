@@ -1226,7 +1226,8 @@ void TileCacheTests::testTileWireIDHandling()
     bool gotTile = false;
     do
     {
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        // If we wait for too long, the cached tiles will get evicted.
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
         gotTile = !tile.empty();
         if(gotTile)
             ++arrivedTiles;
@@ -1238,7 +1239,7 @@ void TileCacheTests::testTileWireIDHandling()
     sendChar(socket, 'x', skNone, testname);
     assertResponseString(socket, "invalidatetiles:", testname);
 
-    // For the second input wsd will send one tile, since some of them are indentical
+    // For the second input wsd will send one tile, since some of them are identical.
     arrivedTiles = 0;
     do
     {
@@ -1376,7 +1377,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
     bool gotTile = false;
     do
     {
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+        std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
         gotTile = !tile.empty();
         if(gotTile)
             ++arrivedTiles;
