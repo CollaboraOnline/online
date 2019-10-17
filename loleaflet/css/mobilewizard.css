@@ -31,3 +31,7 @@ span.menu-entry-icon img {
 span#main-menu-btn-icon {
     filter: none !important;
 }
+
+	#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage{
+		display: none;
+	}
