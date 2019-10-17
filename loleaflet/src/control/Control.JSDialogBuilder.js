@@ -35,6 +35,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['edit'] = this._editControl;
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
 		this._controlHandlers['combobox'] = this._comboboxControl;
+		this._controlHandlers['comboboxentry'] = this._comboboxEntry;
 		this._controlHandlers['listbox'] = this._comboboxControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
 		this._controlHandlers['grid'] = this._containerHandler;
@@ -98,7 +99,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			builder.map.sendUnoCommand(data);
-		} else {
+		} else if (object) {
+			console.log('dialogevent ' + window.sidebarId + ' ' + object.id);
 			builder.map._socket.sendMessage('dialogevent ' + window.sidebarId + ' ' + object.id);
 		}
 	},
@@ -503,7 +505,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var entries = [];
 		for (var index in data.entries) {
-			var entry = { type: 'fixedtext', text: data.entries[index], style: 'ui-combobox-text' };
+			var entry = { type: 'comboboxentry', text: data.entries[index], parent: data, style: 'ui-combobox-text' };
 			entries.push(entry);
 		}
 
@@ -512,6 +514,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder._explorableEntry(parentContainer, title, contentNode, builder, valueNode, iconPath);
 
 		return false;
+	},
+
+	_comboboxEntry: function(parentContainer, data, builder) {
+		var fixedtext = L.DomUtil.create('p', 'mobile-wizard', parentContainer);
+		fixedtext.innerHTML = builder._cleanText(data.text);
+		fixedtext.parent = data.parent;
+
+		if (data.style && data.style.length)
+			L.DomUtil.addClass(fixedtext, data.style);
+
+		$(fixedtext).click(function () {
+			builder.callback('combobox', 'selected', fixedtext.parent, fixedtext.innerHTML, builder);
+		});
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
