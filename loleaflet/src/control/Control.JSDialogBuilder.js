@@ -100,8 +100,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			builder.map.sendUnoCommand(data);
 		} else if (object) {
-			console.log('dialogevent ' + window.sidebarId + ' ' + object.id);
-			builder.map._socket.sendMessage('dialogevent ' + window.sidebarId + ' ' + object.id);
+			builder.map._socket.sendMessage('dialogevent ' + window.sidebarId + ' ' + object.id + ' ' + eventType + ' ' + data);
 		}
 	},
 
@@ -505,7 +504,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var entries = [];
 		for (var index in data.entries) {
-			var entry = { type: 'comboboxentry', text: data.entries[index], parent: data, style: 'ui-combobox-text' };
+			var entry = { type: 'comboboxentry', text: data.entries[index], pos: index, parent: data, style: 'ui-combobox-text' };
 			entries.push(entry);
 		}
 
@@ -525,7 +524,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			L.DomUtil.addClass(fixedtext, data.style);
 
 		$(fixedtext).click(function () {
-			builder.callback('combobox', 'selected', fixedtext.parent, fixedtext.innerHTML, builder);
+			builder.callback('combobox', 'selected', fixedtext.parent, data.pos + ';' + fixedtext.innerHTML, builder);
 		});
 	},
 
