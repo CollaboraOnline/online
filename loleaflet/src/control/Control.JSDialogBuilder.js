@@ -717,8 +717,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var content = L.DomUtil.create('div', 'inserttablecontrols');
 
-		var rowsData = { min: 0, id: 'rows', label: _('Rows') };
-		var colsData = { min: 0, id: 'cols', label: _('Columns') };
+		var rowsData = { min: 0, id: 'rows', text: '2', label: _('Rows') };
+		var colsData = { min: 0, id: 'cols', text: '2', label: _('Columns') };
 		builder._spinfieldControl(content, rowsData, builder, function() { });
 		builder._spinfieldControl(content, colsData, builder, function() { });
 
@@ -727,6 +727,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var rowsCount = parseInt($('#rows > input.spinfield').get(0).value);
 			var colsCount = parseInt($('#cols > input.spinfield').get(0).value);
 			builder.map.sendUnoCommand('.uno:InsertTable?Columns=' + colsCount + '&Rows=' + rowsCount);
+			builder.map.fire('closemobilewizard');
 		});
 
 		builder._explorableMenu(parentContainer, title, data.children, builder, content);
