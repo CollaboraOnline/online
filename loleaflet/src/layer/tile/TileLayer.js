@@ -2597,8 +2597,7 @@ L.TileLayer = L.GridLayer.extend({
 				transform: true,
 				stroke: false,
 				fillOpacity: 0,
-				fill: true,
-				ignoreMouseOut: true
+				fill: true
 			});
 
 			if (!this._graphicMarker) {
