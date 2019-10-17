@@ -1,37 +1,37 @@
 span.menu-entry-icon img {
-    width: 24px !important;
-    margin: 4px !important;
+	width: 24px !important;
+	margin: 4px !important;
 }
 
 #mobile-wizard.menuwizard #mobile-wizard-content{
-  overflow: hidden !important;
+	overflow: hidden !important;
 }
 
 #mobile-wizard.menuwizard{
-  top: 0px !important;
-  height: 100% !important;
-  z-index: 999 !important;
+	top: 0px !important;
+	height: 100% !important;
+	z-index: 999 !important;
 }
 
 #mobile-wizard.menuwizard #mobile-wizard-back.close-button{
-  visibility: hidden !important;
+	visibility: hidden !important;
 }
 
 #toolbar-hamburger.menuwizard-opened{
-  z-index: 1000 !important;
-  position: relative !important;
-  background-color: #dae6f3 !important;
-  padding-left: 8px !important;
-  border-radius: 0 0 0 100px !important;
+	z-index: 1000 !important;
+	position: relative !important;
+	background-color: #dae6f3 !important;
+	padding-left: 8px !important;
+	border-radius: 0 0 0 100px !important;
 }
 
 #mobile-wizard.menuwizard #mobile-wizard-titlebar{
-  border: none !important;
+	border: none !important;
 }
 span#main-menu-btn-icon {
-    filter: none !important;
+	filter: none !important;
 }
 
-	#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage{
-		display: none;
-	}
+#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage{
+	display: none;
+}
