@@ -798,7 +798,7 @@ L.Control.Menubar = L.Control.extend({
 							window.mobileMenuWizard = true;
 							var menuData = self._map.menubar.generateFullMenuStructure();
 							self._map.fire('mobilewizard', menuData);
-							$('#main-menu-btn-icon').css('filter', 'drop-shadow(0px 0px 4px #0b87e7)')
+							$('#toolbar-hamburger').addClass('menuwizard-opened');
 						}
 					} else if (!L.Browser.mobile) {
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
@@ -806,7 +806,7 @@ L.Control.Menubar = L.Control.extend({
 					} else {
 						window.mobileMenuWizard = false;
 						self._map.fire('closemobilewizard');
-						$('#main-menu-btn-icon').css('filter', '')
+						$('#toolbar-hamburger').removeClass('menuwizard-opened').addClass('menuwizard-closed');
 					}
 				});
 				// hide mobile menu beforeunload
