@@ -611,19 +611,19 @@ L.Control.Menubar = L.Control.extend({
 					{id: 'inserttable', type: 'action', name: _('Insert table')},
 					{type: 'separator'},
 					{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
-                        {uno: '.uno:InsertPageNumberField'},
-                        {uno: '.uno:InsertPageCountField'},
-                        {uno: '.uno:InsertDateField'},
-                        {uno: '.uno:InsertTimeField'},
-                        {uno: '.uno:InsertTitleField'},
-                        {uno: '.uno:InsertAuthorField'},
-                        {uno: '.uno:InsertTopicField'}
+						{uno: '.uno:InsertPageNumberField'},
+						{uno: '.uno:InsertPageCountField'},
+						{uno: '.uno:InsertDateField'},
+						{uno: '.uno:InsertTimeField'},
+						{uno: '.uno:InsertTitleField'},
+						{uno: '.uno:InsertAuthorField'},
+						{uno: '.uno:InsertTopicField'}
 					]},
 					{name: _UNO('.uno:InsertHeaderFooterMenu', 'text'), type: 'menu', menu: [
-                        {name: _UNO('.uno:InsertPageHeader', 'text'), type: 'menu', menu: [
-                            {name: _('All'), disabled: true, id: 'insertheader', tag: '_ALL_', uno: '.uno:InsertPageHeader?'}]},
-                        {name: _UNO('.uno:InsertPageFooter', 'text'), type: 'menu', menu: [
-                            {name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?'}]}
+						{name: _UNO('.uno:InsertPageHeader', 'text'), type: 'menu', menu: [
+							{name: _('All'), disabled: true, id: 'insertheader', tag: '_ALL_', uno: '.uno:InsertPageHeader?'}]},
+						{name: _UNO('.uno:InsertPageFooter', 'text'), type: 'menu', menu: [
+							{name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?'}]}
 					]},
 					{uno: '.uno:InsertFootnote'},
 					{uno: '.uno:InsertEndnote'},
@@ -634,13 +634,13 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _('Insert Shape'), id: 'insertshape', type: 'action' },
 					{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
-                        {uno: '.uno:InsertNonBreakingSpace'},
-                        {uno: '.uno:InsertHardHyphen'},
-                        {uno: '.uno:InsertSoftHyphen'},
-                        {uno: '.uno:InsertZWSP'},
-                        {uno: '.uno:InsertZWNBSP'},
-                        {uno: '.uno:InsertLRM'},
-                        {uno: '.uno:InsertRLM'}]},
+						{uno: '.uno:InsertNonBreakingSpace'},
+						{uno: '.uno:InsertHardHyphen'},
+						{uno: '.uno:InsertSoftHyphen'},
+						{uno: '.uno:InsertZWSP'},
+						{uno: '.uno:InsertZWNBSP'},
+						{uno: '.uno:InsertLRM'},
+						{uno: '.uno:InsertRLM'}]},
 				]
 			},
 			spreadsheet : {
