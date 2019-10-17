@@ -99,8 +99,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-				{name: _('Insert Shape'), id: 'insertshape', desktop: false, type: 'action' },
-				{uno: '.uno:InsertSymbol', mobile: false},
+				{uno: '.uno:InsertSymbol'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
 					{uno: '.uno:InsertHardHyphen'},
@@ -109,9 +108,9 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertZWNBSP'},
 					{uno: '.uno:InsertLRM'},
 					{uno: '.uno:InsertRLM'}]},
-                                {name: _UNO('.uno:IndexesMenu', 'text'), type: 'menu', menu: [
+				{name: _UNO('.uno:IndexesMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertIndexesEntry'},
-					{uno: '.uno:InsertAuthoritiesEntry', mobileapp: false},
+					{uno: '.uno:InsertAuthoritiesEntry'},
 					{uno: '.uno:InsertMultiIndex'}]},
 			]},
 			{name: _UNO('.uno:FormatMenu', 'text'), id: 'format', type: 'menu', menu: [
@@ -1322,10 +1321,6 @@ L.Control.Menubar = L.Control.extend({
 				$(aItem).data('id', menu[i].id);
 			}
 
-			if (menu[i].desktop == false && window.mode.isDesktop()) {
-				$(aItem).css('display', 'none');
-			}
-
 			if (menu[i].tablet == false && window.mode.isTablet()) {
 				$(aItem).css('display', 'none');
 			}
@@ -1397,7 +1392,7 @@ L.Control.Menubar = L.Control.extend({
 		var items = this.options['mobile' + docType];
 
 		for (var i = 0; i < items.length; i++) {
-			if (items[i].mobile !== false && this._checkItemVisibility(items[i]) === true) {
+			if (this._checkItemVisibility(items[i]) === true) {
 				topMenu.children.push(this._generateMenuStructure(items[i], docType, false));
 			}
 		}
@@ -1417,8 +1412,6 @@ L.Control.Menubar = L.Control.extend({
 		if (mainMenu) {
 			itemType = 'mainmenu';
 		} else {
-			if (item.mobile === false)
-				return undefined;
 			if (item.mobileapp == true && !window.ThisIsAMobileApp)
 				return undefined;
 			if (!item.menu) {
