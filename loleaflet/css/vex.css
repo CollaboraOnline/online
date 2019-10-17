@@ -1,3 +1,45 @@
+/* Infobar */
+.vex-theme-bottom-right-corner .vex-dialog-message {
+	font-size: 1em;
+}
+/* Place above statusbar */
+.vex.vex-theme-bottom-right-corner .vex-content {
+	bottom: 40px !important;
+	right: 10px !important;
+}
+
+/* Vex dialogs */
+.vex-open .vex-overlay {
+	/* TODO: remove specific z-index from our codebase
+	so that the following line can also be removed */
+	position: relative;
+	z-index: 2000;
+}
+/* dialog shown when user is idle */
+.vex-open .loleaflet-user-idle {
+	background: rgba(0, 0, 0, 0)!important;
+	font-size: xx-large!important;
+	color: #fff!important;
+	text-align: center!important;
+}
+.vex-open .loleaflet-user-idle .vex-dialog-buttons {
+	display: none!important;
+}
+.vex.vex-theme-plain{
+	position: relative;
+	z-index: 2001 !important;
+}
+
+.vex.vex-theme-plain .vex-content{
+	border: 1px solid #a4a4a4;
+	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+}
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="date"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime-local"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="email"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="month"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="number"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="password"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="search"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="tel"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="time"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="url"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="week"]{
+	padding: 0 !important
+}
+
+/*mobile*/
 @media (max-width: 767px), (max-device-height: 767px) {
 	.vex-dialog-message {
 		text-align: center;
@@ -32,12 +74,15 @@
 		height: 100% !important;
 		max-width: 100% !important;
 		width: auto !important;
+		border: none;
+		box-shadow: none;
+		border-radius: none;
 	}
 	.vex.vex-theme-plain {
 		padding: 0px !important;
-		position: absolute !important;
+		position: relative !important;
 		z-index: 2001 !important;
-		top: 0px !important;
+		top: -42px !important;
 	}
 	.vex-open .vex-overlay {
 		z-index: 2000;
