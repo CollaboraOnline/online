@@ -74,10 +74,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
-				{uno: '.uno:InsertObjectChart', mobile: false},
-				{id: 'inserttable', type: 'action', name: _('Insert table'), desktop: false, tablet: false},
+				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
-				{uno: '.uno:InsertSection', id: 'insertsection', mobile: false},
+				{uno: '.uno:InsertSection', id: 'insertsection'},
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertPageNumberField'},
 					{uno: '.uno:InsertPageCountField'},
@@ -283,15 +282,13 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
-				{uno: '.uno:InsertObjectChart', mobile: false},
-				{id: 'inserttable', type: 'action', name: _('Insert table'), desktop: false, tablet: false},
+				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:InsertSymbol', mobile: false},
+				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
-				{name: _('Insert Shape'), id: 'insertshape', desktop: false, type: 'action' },
-				{uno: '.uno:HeaderAndFooter', mobile: false}]
+				{uno: '.uno:HeaderAndFooter'}]
 			},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
@@ -376,9 +373,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-				{name: _('Insert Shape'), id: 'insertshape', desktop: false, type: 'action' },
-				{uno: '.uno:InsertSymbol', mobile: false},
-				{uno: '.uno:EditHeaderAndFooter', mobile: false}
+				{uno: '.uno:InsertSymbol'},
+				{uno: '.uno:EditHeaderAndFooter'}
 			]},
 			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:ResetAttributes'},
@@ -606,6 +602,70 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
+
+		mobileInsertMenu : {
+			text : {
+				name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
+					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
+					{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
+					{id: 'inserttable', type: 'action', name: _('Insert table')},
+					{type: 'separator'},
+					{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
+                        {uno: '.uno:InsertPageNumberField'},
+                        {uno: '.uno:InsertPageCountField'},
+                        {uno: '.uno:InsertDateField'},
+                        {uno: '.uno:InsertTimeField'},
+                        {uno: '.uno:InsertTitleField'},
+                        {uno: '.uno:InsertAuthorField'},
+                        {uno: '.uno:InsertTopicField'}
+					]},
+					{name: _UNO('.uno:InsertHeaderFooterMenu', 'text'), type: 'menu', menu: [
+                        {name: _UNO('.uno:InsertPageHeader', 'text'), type: 'menu', menu: [
+                            {name: _('All'), disabled: true, id: 'insertheader', tag: '_ALL_', uno: '.uno:InsertPageHeader?'}]},
+                        {name: _UNO('.uno:InsertPageFooter', 'text'), type: 'menu', menu: [
+                            {name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?'}]}
+					]},
+					{uno: '.uno:InsertFootnote'},
+					{uno: '.uno:InsertEndnote'},
+					{type: 'separator'},
+					{uno: '.uno:InsertPagebreak'},
+					{uno: '.uno:InsertColumnBreak'},
+					{type: 'separator'},
+					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+					{name: _('Insert Shape'), id: 'insertshape', type: 'action' },
+					{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
+                        {uno: '.uno:InsertNonBreakingSpace'},
+                        {uno: '.uno:InsertHardHyphen'},
+                        {uno: '.uno:InsertSoftHyphen'},
+                        {uno: '.uno:InsertZWSP'},
+                        {uno: '.uno:InsertZWNBSP'},
+                        {uno: '.uno:InsertLRM'},
+                        {uno: '.uno:InsertRLM'}]},
+				]
+			},
+			spreadsheet : {
+				name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
+					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
+					{uno: '.uno:InsertObjectChart'},
+					{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
+					{type: 'separator'},
+					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+					{name: _('Insert Shape'), id: 'insertshape', type: 'action' },
+				]
+			},
+			presentation : {
+				name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
+					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
+					{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
+					{id: 'inserttable', type: 'action', name: _('Insert table')},
+					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+					{name: _('Insert Shape'), id: 'insertshape', type: 'action' },
+				]
+			}
+		},
 
 		commandStates: {},
 
@@ -1344,15 +1404,9 @@ L.Control.Menubar = L.Control.extend({
 		return topMenu;
 	},
 
-	generateMenuStructureFor: function(targetId) {
+	generateInsertMenuStructure: function() {
 		var docType = this._map.getDocType();
-		var items = this.options[docType];
-		var target = items.find(function(item) { return item.id === targetId; });
-
-		if (!target) {
-			console.log('Cannot find item ' + targetId);
-			return '';
-		}
+		var target = this.options['mobileInsertMenu'][docType];
 
 		var menuStructure = this._generateMenuStructure(target, docType, true)
 		return menuStructure

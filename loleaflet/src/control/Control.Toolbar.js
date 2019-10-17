@@ -344,7 +344,7 @@ function onClick(e, id, item, subItem) {
 			if (window.mobileWizard)
 				this.onClick(null, 'mobile_wizard');
 			window.insertionMobileWizard = true;
-			var menuData = map.menubar.generateMenuStructureFor('insert');
+			var menuData = map.menubar.generateInsertMenuStructure();
 			map.fire('mobilewizard', menuData);
 			toolbar.check(id);
 		}
