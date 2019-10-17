@@ -36,11 +36,11 @@
 	.vex.vex-theme-plain {
 		padding: 0px !important;
 		position: relative !important;
-		z-index: 1001 !important;
+		z-index: 2001 !important;
 		top: -42px !important;
 	}
 	.vex-open .vex-overlay {
-		z-index: 1000;
+		z-index: 2000;
 		min-height: 100%;
 		position: absolute;
 		width: -webkit-fill-available;

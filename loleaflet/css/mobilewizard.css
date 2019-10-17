@@ -10,7 +10,7 @@ span.menu-entry-icon img {
 #mobile-wizard.menuwizard{
 	top: 0px !important;
 	height: 100% !important;
-	z-index: 999 !important;
+	z-index: 1500 !important;
 }
 
 #mobile-wizard.menuwizard #mobile-wizard-back.close-button{
@@ -18,7 +18,7 @@ span.menu-entry-icon img {
 }
 
 #toolbar-hamburger.menuwizard-opened{
-	z-index: 1000 !important;
+	z-index: 1501 !important;
 	position: relative !important;
 	background-color: #dae6f3 !important;
 	padding-left: 8px !important;
