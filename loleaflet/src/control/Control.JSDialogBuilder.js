@@ -395,9 +395,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
 		div.id = data.id;
 
-		var image = L.DomUtil.create('img', 'spinfieldimage', div);
-		var icon = builder._createIconPath(data.id);
-		image.src = icon;
+		var commandName = data.id ? data.id.substring('.uno:'.length) : data.id;
+		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName)) {
+			var image = L.DomUtil.create('img', 'spinfieldimage', div);
+			var icon = builder._createIconPath(data.id);
+			image.src = icon;
+		}
 
 		var spinfield = L.DomUtil.create('input', 'spinfield', div);
 		spinfield.type = 'number';
