@@ -549,9 +549,9 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
 				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
-				{name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
-				{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action'},
-				{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}
+				{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
+				{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
+				{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'},
 			]},
 			{name: _UNO('.uno:EditMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:Undo'},
