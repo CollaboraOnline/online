@@ -413,16 +413,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var minus = L.DomUtil.create('div', 'minus', controlsContainer);
 		minus.innerHTML = '-';
 
-		if (data.min)
+		if (data.min != undefined)
 			$(spinfield).attr('min', data.min);
 
-		if (data.max)
+		if (data.max != undefined)
 			$(spinfield).attr('max', data.max);
 
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
 
-		if (data.text)
+		if (data.text != undefined)
 			$(spinfield).attr('value', builder._cleanValueFromUnits(data.text));
 		else if (data.children && data.children.length)
 			$(spinfield).attr('value', builder._cleanValueFromUnits(data.children[0].text));
@@ -720,7 +720,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder._spinfieldControl(content, colsData, builder, function() { });
 
 		var buttonData = { text: _('Insert table') };
-		builder._pushbuttonControl(content, buttonData, builder, function() { });
+		builder._pushbuttonControl(content, buttonData, builder, function() {
+			var rowsCount = parseInt($('#rows > input.spinfield').get(0).value);
+			var colsCount = parseInt($('#cols > input.spinfield').get(0).value);
+			builder.map.sendUnoCommand('.uno:InsertTable?Columns=' + colsCount + '&Rows=' + rowsCount);
+		});
 
 		builder._explorableMenu(parentContainer, title, data.children, builder, content);
 	},
