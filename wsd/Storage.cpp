@@ -148,6 +148,7 @@ void StorageBase::initialize()
         sslClientParams.cipherList = LOOLWSD::getPathFromConfigWithFallback("storage.ssl.cipher_list", "ssl.cipher_list");
 
         sslClientParams.verificationMode = (sslClientParams.caLocation.empty() ? Poco::Net::Context::VERIFY_NONE : Poco::Net::Context::VERIFY_STRICT);
+        sslClientParams.loadDefaultCAs = true;
     }
     else
         sslClientParams.verificationMode = Poco::Net::Context::VERIFY_NONE;
@@ -156,6 +157,9 @@ void StorageBase::initialize()
     Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler = new Poco::Net::AcceptCertificateHandler(false);
 
     Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
+    sslClientContext->disableProtocols(Poco::Net::Context::Protocols::PROTO_SSLV2 |
+                                       Poco::Net::Context::Protocols::PROTO_SSLV3 |
+                                       Poco::Net::Context::Protocols::PROTO_TLSV1);
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 #endif
 #else
