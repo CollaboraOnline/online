@@ -68,7 +68,8 @@ L.SVGGroup = L.Layer.extend({
 		if (!this.options.manualDrag) {
 			L.DomEvent.on(this._dragShape, 'mousemove', this._onDrag, this);
 			L.DomEvent.on(this._dragShape, 'mouseup', this._onDragEnd, this);
-			L.DomEvent.on(this._dragShape, 'mouseout', this._onDragEnd, this);
+			if (this.dragging.constraint)
+				L.DomEvent.on(this._dragShape, 'mouseout', this._onDragEnd, this);
 		}
 
 		var data = {
@@ -100,7 +101,8 @@ L.SVGGroup = L.Layer.extend({
 		if (!this.options.manualDrag) {
 			L.DomEvent.off(this._dragShape, 'mousemove', this._onDrag, this);
 			L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
-			L.DomEvent.off(this._dragShape, 'mouseout', this._onDragEnd, this);
+			if (this.dragging.constraint)
+				L.DomEvent.off(this._dragShape, 'mouseout', this._onDragEnd, this);
 		}
 
 		this._moved = false;
