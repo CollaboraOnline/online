@@ -373,7 +373,12 @@ void DocumentBroker::pollThread()
     }
 
     // Flush socket data first.
-    const int flushTimeoutMs = POLL_TIMEOUT_MS * 2; // ~1000ms
+    constexpr int flushTimeoutMs = POLL_TIMEOUT_MS * 2; // ~1000ms
+    LOG_INF("Flushing socket for doc ["
+            << _docKey << "] for " << flushTimeoutMs << " ms. stop: " << _stop
+            << ", continuePolling: " << _poll->continuePolling() << ", ShutdownRequestFlag: "
+            << ShutdownRequestFlag << ", TerminationFlag: " << TerminationFlag
+            << ". Terminating child with reason: [" << _closeReason << "].");
     const auto flushStartTime = std::chrono::steady_clock::now();
     while (_poll->getSocketCount())
     {
