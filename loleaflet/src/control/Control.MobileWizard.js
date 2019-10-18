@@ -11,6 +11,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_currentDepth: 0,
 	_mainTitle: '',
 	_isTabMode: false,
+	_currentPath: [],
 
 	onAdd: function (map) {
 		this.map = map;
@@ -32,6 +33,7 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-content').css('top', '48px');
 		$('#mobile-wizard').removeClass('menuwizard');
 		this._isTabMode = false;
+		this._currentPath = [];
 	},
 
 	_setupBackButton: function() {
@@ -52,6 +54,7 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-content').empty();
 		$('#toolbar-down').show();
 		this._isActive = false;
+		this._currentPath = [];
 		if (window.mobileWizard === true) {
 			var toolbar = w2ui['actionbar'];
 			if (toolbar && toolbar.get('mobile_wizard').checked)
@@ -95,9 +98,12 @@ L.Control.MobileWizard = L.Control.extend({
 		this._currentDepth++;
 		this._setTitle(contentToShow.title);
 		this._inMainMenu = false;
+
+		this._currentPath.push(contentToShow.title);
 	},
 
 	goLevelUp: function() {
+		this._currentPath.pop();
 		if (this._inMainMenu || (this._isTabMode && this._currentDepth == 1)) {
 			this._hideWizard();
 			this._currentDepth = 0;
@@ -137,9 +143,20 @@ L.Control.MobileWizard = L.Control.extend({
 		right.text(title);
 	},
 
+	_goToPath: function(path) {
+		for (var index in path) {
+			$('[title=\'' + path[index] + '\'').prev().click();
+		}
+		this._currentPath = path;
+	},
+
 	_onMobileWizard: function(data) {
 		if (data) {
 			this._isActive = true;
+			var currentPath = null;
+			if (this._currentPath)
+				currentPath = this._currentPath;
+
 			this._reset();
 
 			this._showWizard();
@@ -166,6 +183,9 @@ L.Control.MobileWizard = L.Control.extend({
 				$('#mobile-wizard').height('45%');
 				$('#mobile-wizard').css('top', '');
 			}
+
+			if (this._isActive && currentPath.length)
+				this._goToPath(currentPath);
 		}
 	},
 
