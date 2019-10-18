@@ -37,6 +37,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['comboboxentry'] = this._comboboxEntry;
 		this._controlHandlers['listbox'] = this._comboboxControl;
+		this._controlHandlers['valueset'] = this._valuesetControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
 		this._controlHandlers['grid'] = this._containerHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
@@ -511,6 +512,27 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var contentNode = {type: 'container', children: entries};
 
 		builder._explorableEntry(parentContainer, title, contentNode, builder, valueNode, iconPath);
+
+		return false;
+	},
+
+	_valuesetControl: function (parentContainer, data, builder) {
+		var elem;
+		var image;
+
+		if (!data.entries || data.entries.length === 0) {
+			return false;
+		}
+
+		for (var index in data.entries) {
+			image = data.entries[index].image;
+			image = image.substr(0, image.lastIndexOf('.'));
+			image = image.substr(image.lastIndexOf('/') + 1);
+			elem = L.DomUtil.create('div', 'layout ' + image, parentContainer);
+			$(elem).click(function () {
+				builder.callback('valueset', 'selected', data.pos);
+			});
+		}
 
 		return false;
 	},
