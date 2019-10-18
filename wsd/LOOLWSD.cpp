@@ -211,6 +211,8 @@ extern "C" { void dump_state(void); /* easy for gdb */ }
 static int careerSpanMs = 0;
 #endif
 
+/// The timeout for a child to spawn, initially high, then reset to the default.
+int ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS * 4;
 bool LOOLWSD::NoCapsForKit = false;
 std::atomic<unsigned> LOOLWSD::NumConnections;
 std::set<std::string> LOOLWSD::EditFileExtensions;
@@ -425,7 +427,7 @@ static int rebalanceChildren(int balance)
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
     const std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-    if (OutstandingForks != 0 && durationMs >= CHILD_TIMEOUT_MS)
+    if (OutstandingForks != 0 && durationMs >= ChildSpawnTimeoutMs)
     {
         // Children taking too long to spawn.
         // Forget we had requested any, and request anew.
@@ -507,7 +509,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
     }
 
     // With valgrind we need extended time to spawn kits.
-    const size_t timeoutMs = CHILD_TIMEOUT_MS / 2;
+    const size_t timeoutMs = ChildSpawnTimeoutMs / 2;
     LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
     const auto timeout = std::chrono::milliseconds(timeoutMs);
 #else
@@ -1676,7 +1678,10 @@ bool LOOLWSD::createForKit()
     Admin::instance().setForKitPid(ForKitProcId);
     Admin::instance().setForKitWritePipe(ForKitWritePipe);
 
-    rebalanceChildren(LOOLWSD::NumPreSpawnedChildren - 1);
+    const int balance = LOOLWSD::NumPreSpawnedChildren - OutstandingForks;
+    if (balance > 0)
+        rebalanceChildren(balance);
+
     return ForKitProcId != -1;
 #endif
 }
@@ -3415,7 +3420,7 @@ int LOOLWSD::innerMain()
         }
         else
         {
-            const int timeoutMs = CHILD_TIMEOUT_MS * (LOOLWSD::NoCapsForKit ? 150 : 50);
+            const int timeoutMs = ChildSpawnTimeoutMs * (LOOLWSD::NoCapsForKit ? 150 : 50);
             const auto timeout = std::chrono::milliseconds(timeoutMs);
             LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
             if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
@@ -3452,6 +3457,9 @@ int LOOLWSD::innerMain()
 #if ENABLE_DEBUG
     std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
 #endif
+
+    // Reset the child-spawn timeout to the default, now that we're set.
+    ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
 
     const auto startStamp = std::chrono::steady_clock::now();
 
