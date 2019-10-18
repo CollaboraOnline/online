@@ -392,11 +392,15 @@ Z-index values:
 -------------------------------------------
 		menu items
 -------------------------------------------
-1000			menu, toolbar-down
-1050			closebuttonwrapper
+1000			main-menu(desktop-only), toolbar-down
+1050			closebuttonwrapper (not being used currently)
 -------------------------------------------
 		on the top
 -------------------------------------------
 1105			dialogs
-2000			mobile-edit-button
+1001			mobile-edit-button
+1500			mobile-wizard (with class=menuwizard)
+1501			toolbar-hamburger (with class=menuwizard-opened)
+2000			vex-overlay
+2001			vex dialog (vex-content)
 -------------------------------------------
