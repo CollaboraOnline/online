@@ -351,6 +351,7 @@ L.Map.include({
 	showHyperlinkDialog: function() {
 		var map = this;
 		vex.dialog.open({
+			contentClassName: 'hyperlink-dialog',
 			message: _('Insert hyperlink'),
 			input: [
 				_('Text') + '<input name="text" type="text"/>',
