@@ -35,15 +35,18 @@
 	}
 	.vex.vex-theme-plain {
 		padding: 0px !important;
-		position: relative !important;
+		position: absolute !important;
 		z-index: 2001 !important;
-		top: -42px !important;
+		top: 0px !important;
 	}
 	.vex-open .vex-overlay {
 		z-index: 2000;
 		min-height: 100%;
 		position: absolute;
+		width: 100%;
+		width: -moz-available;
 		width: -webkit-fill-available;
+		width: fill-available;
 		top: 0;
 		background-color: white;
 	}
