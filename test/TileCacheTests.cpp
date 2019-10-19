@@ -1128,7 +1128,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket, const 
 
             sendTextFrame(socket, text, name);
             tile = assertResponseString(socket, "tile:", name);
-            // expected tile: nviewid= part= width= height= tileposx= tileposy= tilewidth= tileheight=
+            // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
             CPPUNIT_ASSERT_EQUAL(part, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
@@ -1222,34 +1222,31 @@ void TileCacheTests::testTileWireIDHandling()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // For the first input wsd will send all invalidated tiles
-    int arrivedTiles = 0;
-    bool gotTile = false;
-    do
-    {
-        // If we wait for too long, the cached tiles will get evicted.
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
-        gotTile = !tile.empty();
-        if(gotTile)
-            ++arrivedTiles;
-    } while(gotTile);
+    CPPUNIT_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket, "tile:", testname, 500) > 1);
 
-    CPPUNIT_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTiles > 1);
+    // Let WSD know we got these so it wouldn't stop sending us modified tiles automatically.
+    sendTextFrame(socket, "tileprocessed tile=0:0:0:3840:3840:0");
+    sendTextFrame(socket, "tileprocessed tile=0:3840:0:3840:3840:0");
+    sendTextFrame(socket, "tileprocessed tile=0:7680:0:3840:3840:0");
 
     // Type an other character
-    sendChar(socket, 'x', skNone, testname);
+    sendChar(socket, 'y', skNone, testname);
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // For the second input wsd will send one tile, since some of them are identical.
-    arrivedTiles = 0;
-    do
-    {
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
-        gotTile = !tile.empty();
-        if(gotTile)
-            ++arrivedTiles;
-    } while(gotTile);
+    const int arrivedTiles = countMessages(socket, "tile:", testname, 500);
+    if (arrivedTiles == 1)
+        return;
 
-    CPPUNIT_ASSERT_EQUAL(1, arrivedTiles);
+    // Or, at most 2. The reason is that sometimes we get line antialiasing differences that
+    // are sub-pixel different, and that results in a different hash.
+    CPPUNIT_ASSERT_EQUAL(2, arrivedTiles);
+
+    // The third time, however, we shouldn't see anything but the tile we change.
+    sendChar(socket, 'z', skNone, testname);
+    assertResponseString(socket, "invalidatetiles:", testname);
+
+    CPPUNIT_ASSERT_MESSAGE("Expected exactly one tile.", countMessages(socket, "tile:", testname, 500) == 1);
 }
 
 void TileCacheTests::testTileProcessed()
@@ -1373,37 +1370,32 @@ void TileCacheTests::testTileBeingRenderedHandling()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // For the first input wsd will send all invalidated tiles
-    int arrivedTiles = 0;
-    bool gotTile = false;
-    do
-    {
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
-        gotTile = !tile.empty();
-        if(gotTile)
-            ++arrivedTiles;
-    } while(gotTile);
-
-    CPPUNIT_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTiles > 1);
+    CPPUNIT_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket, "tile:", testname, 500) > 1);
 
     // For the later inputs wsd will send one tile, since other ones are indentical
     for(int i = 0; i < 5; ++i)
     {
+        sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0");
+
         // Type an other character
-        sendChar(socket, 'x', skNone, testname);
+        sendChar(socket, 'y', skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
 
-        arrivedTiles = 0;
-        do
+        const int arrivedTiles = countMessages(socket, "tile:", testname, 500);
+        if (arrivedTiles != 1)
         {
-            std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 500);
-            gotTile = !tile.empty();
-            if(gotTile)
-                ++arrivedTiles;
-        } while(gotTile);
+            // Or, at most 2. The reason is that sometimes we get line antialiasing differences that
+            // are sub-pixel different, and that results in a different hash.
+            CPPUNIT_ASSERT_EQUAL(2, arrivedTiles);
 
-        CPPUNIT_ASSERT_EQUAL(1, arrivedTiles);
+            sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0");
 
-        sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0");
+            // The third time, however, we shouldn't see anything but the tile we change.
+            sendChar(socket, 'z', skNone, testname);
+            assertResponseString(socket, "invalidatetiles:", testname);
+
+            CPPUNIT_ASSERT_MESSAGE("Expected exactly one tile.", countMessages(socket, "tile:", testname, 500) == 1);
+        }
     }
 }
 
@@ -1432,49 +1424,38 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     assertResponseString(socket1, "invalidatetiles:", testname);
 
     // For the first input wsd will send all invalidated tiles
-    int arrivedTiles = 0;
-    bool gotTile = false;
-    do
-    {
-        std::vector<char> tile = getResponseMessage(socket1, "tile:", testname, 5000);
-        gotTile = !tile.empty();
-        if(gotTile)
-            ++arrivedTiles;
-    } while(gotTile);
+    CPPUNIT_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket1, "tile:", testname, 500) > 1);
 
-    CPPUNIT_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTiles > 1);
+    // Let WSD know we got these so it wouldn't stop sending us modified tiles automatically.
+    sendTextFrame(socket1, "tileprocessed tile=0:0:0:3840:3840:0");
+    sendTextFrame(socket1, "tileprocessed tile=0:3840:0:3840:3840:0");
+    sendTextFrame(socket1, "tileprocessed tile=0:7680:0:3840:3840:0");
 
     // Type an other character
-    sendChar(socket1, 'x', skNone, testname);
+    sendChar(socket1, 'y', skNone, testname);
     assertResponseString(socket1, "invalidatetiles:", testname);
 
-    // For the second input wsd will send one tile, since other tiles are indentical
-    arrivedTiles = 0;
-    do
-    {
-        std::vector<char> tile = getResponseMessage(socket1, "tile:", testname, 1000);
-        gotTile = !tile.empty();
-        if(gotTile)
-            ++arrivedTiles;
-    } while(gotTile);
+    // For the second input wsd will send one tile, since some of them are identical.
+    const int arrivedTiles = countMessages(socket1, "tile:", testname, 500);
+    if (arrivedTiles == 1)
+        return;
 
-    CPPUNIT_ASSERT_EQUAL(1, arrivedTiles);
+    // Or, at most 2. The reason is that sometimes we get line antialiasing differences that
+    // are sub-pixel different, and that results in a different hash.
+    CPPUNIT_ASSERT_EQUAL(2, arrivedTiles);
+
+    // The third time, however, we shouldn't see anything but the tile we change.
+    sendChar(socket1, 'z', skNone, testname);
+    assertResponseString(socket1, "invalidatetiles:", testname);
+
+    CPPUNIT_ASSERT_MESSAGE("Expected exactly one tile.", countMessages(socket1, "tile:", testname, 500) == 1);
 
     //2. Now request the same tiles by the other client (e.g. scroll to the same view)
 
     sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
 
     // We expect three tiles sent to the second client
-    arrivedTiles = 0;
-    do
-    {
-        std::vector<char> tile = getResponseMessage(socket2, "tile:", testname, 1000);
-        gotTile = !tile.empty();
-        if(gotTile)
-            ++arrivedTiles;
-    } while(gotTile);
-
-    CPPUNIT_ASSERT_EQUAL(3, arrivedTiles);
+    CPPUNIT_ASSERT_EQUAL(3, countMessages(socket2, "tile:", testname, 500));
 
     // wsd should not send tiles messages for the first client
     std::vector<char> tile = getResponseMessage(socket1, "tile:", testname, 1000);

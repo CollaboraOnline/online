@@ -264,7 +264,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                 }
 
                 response.resize(READ_BUFFER_SIZE * 8);
-                int bytes = ws.receiveFrame(response.data(), response.size(), flags);
+                const int bytes = ws.receiveFrame(response.data(), response.size(), flags);
                 response.resize(std::max(bytes, 0));
                 const auto message = LOOLProtocol::getFirstLine(response);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
@@ -360,6 +360,22 @@ std::string assertNotInResponse(T& ws, const std::string& prefix, const std::str
 }
 
 inline
+int countMessages(LOOLWebSocket& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
+{
+    int count = 0;
+    while (!getResponseMessage(ws, prefix, testname, timeoutMs).empty())
+        ++count;
+
+    return count;
+}
+
+inline
+int countMessages(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
+{
+    return countMessages(*ws, prefix, testname, timeoutMs);
+}
+
+inline
 bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& testname, bool isView = true)
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
@@ -393,11 +409,13 @@ connectLOKit(const Poco::URI& uri,
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
             auto ws = std::make_shared<LOOLWebSocket>(*session, request, response);
             const char* expected_response = "statusindicator: ready";
+            TST_LOG_END;
             if (getResponseString(ws, expected_response, testname) == expected_response)
             {
                 return ws;
             }
 
+            TST_LOG_BEGIN("Connecting... ");
             TST_LOG_APPEND(11 - retries);
         }
         catch (const std::exception& ex)

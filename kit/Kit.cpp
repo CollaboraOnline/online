@@ -477,9 +477,9 @@ class PngCache
             for (auto it = _cache.begin(); it != _cache.end(); ++it)
                 avgHits += it->second.getHitCount();
 
-            LOG_DBG("cache " << _cache.size() << " items total size " <<
+            LOG_DBG("Cache " << _cache.size() << " items total size " <<
                     _cacheSize << " current hits " << avgHits << ", total hit rate " <<
-                    (_cacheHits * 100. / _cacheTests) << "% at balance start");
+                    (_cacheHits * 100. / _cacheTests) << "% at balance start.");
             avgHits /= _cache.size();
 
             for (auto it = _cache.begin(); it != _cache.end();)
@@ -500,8 +500,8 @@ class PngCache
                 }
             }
 
-            LOG_DBG("cache " << _cache.size() << " items total size " <<
-                    _cacheSize << " after balance");
+            LOG_DBG("Cache " << _cache.size() << " items with total size of " <<
+                    _cacheSize << " bytes after balance.");
         }
 
         if (_hashToWireId.size() > CacheWidHardLimit)
@@ -539,6 +539,7 @@ class PngCache
             }
         }
 
+        LOG_DBG("PNG cache with hash " << hash << " missed.");
         return false;
     }
 
@@ -548,7 +549,6 @@ class PngCache
                                    std::vector<char>& output, LibreOfficeKitTileMode mode,
                                    TileBinaryHash hash, TileWireId wid, TileWireId /*oldWid*/)
     {
-        LOG_DBG("PNG cache with hash " << hash << " missed.");
 /*
  *Disable for now - pushed in error.
  *
@@ -558,7 +558,7 @@ class PngCache
             return true;
 */
 
-        LOG_DBG("Encode a new png for this tile.");
+        LOG_DBG("Encode a new png for this tile (" << startX << ',' << startY << ").");
         CacheEntry newEntry(bufferWidth * bufferHeight * 1, wid);
         if (Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
                                       bufferWidth, bufferHeight,
@@ -569,6 +569,8 @@ class PngCache
                 newEntry.getData()->shrink_to_fit();
                 _cache.emplace(hash, newEntry);
                 _cacheSize += newEntry.getData()->size();
+                LOG_TRC("Cached new tile (" << startX << ',' << startY << ") with hash " << hash
+                                            << ". New size: " << _cacheSize);
             }
 
             output.insert(output.end(),
