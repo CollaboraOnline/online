@@ -416,8 +416,6 @@ L.Map.TouchGesture = L.Handler.extend({
 			    zoomDelta = this._zoom - oldZoom,
 			    finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
 
-			L.Util.cancelAnimFrame(this._animRequest);
-			this._map._animateZoom(this._center, finalZoom, true, true);
 			if (this._map._docLayer.isCursorVisible()) {
 				this._map._docLayer._cursorMarker.setOpacity(1);
 			}
@@ -429,6 +427,11 @@ L.Map.TouchGesture = L.Handler.extend({
 			}
 			if (this._map._docLayer._selectionHandles['end']) {
 				this._map._docLayer._selectionHandles['end'].setOpacity(1);
+			}
+
+			if (this._center) {
+				L.Util.cancelAnimFrame(this._animRequest);
+				this._map._animateZoom(this._center, finalZoom, true, true);
 			}
 		}
 	},
