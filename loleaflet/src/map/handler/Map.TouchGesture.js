@@ -105,6 +105,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.off('pinchmove', L.bind(this._onPinch, this));
 		this._hammer.off('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
+		this._hammer.off('press', L.bind(this._onPress, this));
 		this._hammer.off('tripletap', L.bind(this._onTripleTap, this));
 		this._map.off('updatepermission', this._onPermission, this);
 	},
