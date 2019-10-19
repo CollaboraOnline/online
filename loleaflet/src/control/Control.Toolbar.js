@@ -83,13 +83,20 @@ function resizeToolbar() {
 }
 
 function _cancelSearch() {
-	var toolbar = w2ui['actionbar'];
+	var toolbar = _inMobileMode() ? w2ui['searchbar'] : w2ui['actionbar'];
+	var searchInput = L.DomUtil.get('search-input');
 	map.resetSelection();
 	toolbar.hide('cancelsearch');
 	toolbar.disable('searchprev');
 	toolbar.disable('searchnext');
-	L.DomUtil.get('search-input').value = '';
-	map.focus();
+	searchInput.value = '';
+	if (_inMobileMode()) {
+		searchInput.focus();
+		// odd, but on mobile we need to invoke it twice
+		toolbar.hide('cancelsearch');
+	}
+	else
+		map.focus();
 }
 
 function onClick(e, id, item, subItem) {
@@ -192,6 +199,7 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'showsearchbar') {
 		$('#toolbar-down').hide();
 		$('#toolbar-search').show();
+		L.DomUtil.get('search-input').focus();
 	}
 	else if (id === 'hidesearchbar') {
 		$('#toolbar-search').hide();

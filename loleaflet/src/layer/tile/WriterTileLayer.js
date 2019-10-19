@@ -178,7 +178,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 				},
 				{type: 'button', id: 'searchprev', img: 'prev', hint: _UNO('.uno:UpSearch'), disabled: true},
 				{type: 'button', id: 'searchnext', img: 'next', hint: _UNO('.uno:DownSearch'), disabled: true},
-				{type: 'button', id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
+				{type: 'button', id: 'cancelsearch', img: 'cancel', hint: _('Clear the search field'), hidden: true},
 				{type: 'html', id: 'left'},
 				{type: 'button', id: 'hidesearchbar', img: 'unfold', hint: _('Hide the search bar')}
 			],
@@ -186,7 +186,6 @@ L.WriterTileLayer = L.TileLayer.extend({
 				window.onClick(e, e.target, e.item, e.subItem);
 			},
 			onRefresh: function () {
-				console.log('searchwidget.onRefresh');
 				$('#search-input').off('input', window.onSearch).on('input', window.onSearch);
 				$('#search-input').off('keydown', window.onSearchKeyDown).on('keydown', window.onSearchKeyDown);
 			}
