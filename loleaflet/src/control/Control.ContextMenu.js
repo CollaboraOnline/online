@@ -60,6 +60,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 	_onClosePopup: function () {
 		$.contextMenu('destroy', '.leaflet-layer');
+		this.hasContextMenu = false;
 	},
 
 	_onMouseDown: function(e) {
@@ -80,6 +81,9 @@ L.Control.ContextMenu = L.Control.extend({
 			return;
 		}
 
+		if (this.hasContextMenu) {
+			this._onClosePopup();
+		}
 		var contextMenu = this._createContextMenuStructure(obj);
 		L.installContextMenu({
 			selector: '.leaflet-layer',
@@ -99,6 +103,7 @@ L.Control.ContextMenu = L.Control.extend({
 		});
 
 		$('.leaflet-layer').contextMenu(this._prevMousePos);
+		this.hasContextMenu = true;
 	},
 
 	_createContextMenuStructure: function(obj) {
@@ -202,7 +207,7 @@ L.installContextMenu = function(options) {
 			}
 			rewrite(items[key].items);
 		}
-	}
+	};
 	rewrite(options.items);
 	$.contextMenu(options);
 };
