@@ -369,6 +369,25 @@ L.Map.TouchGesture = L.Handler.extend({
 	_onPinchStart: function (e) {
 		if (this._map.getDocType() !== 'spreadsheet') {
 			this._pinchStartCenter = {x: e.center.x, y: e.center.y};
+			if (this._map._docLayer.isCursorVisible()) {
+				this._map._docLayer._cursorMarker.setOpacity(0);
+			}
+			if (this._map._clipboardContainer._cursorHandler) {
+				this._map._clipboardContainer._cursorHandler.setOpacity(0);
+			}
+			if (this._map._docLayer._selectionHandles['start']) {
+				this._map._docLayer._selectionHandles['start'].setOpacity(0);
+			}
+			if (this._map._docLayer._selectionHandles['end']) {
+				this._map._docLayer._selectionHandles['end'].setOpacity(0);
+			}
+
+			this._map._docLayer.eachView(this._map._docLayer._viewCursors, function (item) {
+				var viewCursorMarker = item.marker;
+				if (viewCursorMarker) {
+					viewCursorMarker.setOpacity(0);
+				}
+			}, this._map._docLayer, true);
 		}
 	},
 
@@ -399,6 +418,18 @@ L.Map.TouchGesture = L.Handler.extend({
 
 			L.Util.cancelAnimFrame(this._animRequest);
 			this._map._animateZoom(this._center, finalZoom, true, true);
+			if (this._map._docLayer.isCursorVisible()) {
+				this._map._docLayer._cursorMarker.setOpacity(1);
+			}
+			if (this._map._clipboardContainer._cursorHandler) {
+				this._map._clipboardContainer._cursorHandler.setOpacity(1);
+			}
+			if (this._map._docLayer._selectionHandles['start']) {
+				this._map._docLayer._selectionHandles['start'].setOpacity(1);
+			}
+			if (this._map._docLayer._selectionHandles['end']) {
+				this._map._docLayer._selectionHandles['end'].setOpacity(1);
+			}
 		}
 	},
 
