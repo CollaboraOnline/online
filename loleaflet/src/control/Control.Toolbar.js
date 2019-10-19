@@ -117,6 +117,10 @@ function onClick(e, id, item, subItem) {
 		toolbar = w2ui['presentation-toolbar'];
 		item = toolbar.get(id);
 	}
+	else if (w2ui['searchbar'].get(id) !== null) {
+		toolbar = w2ui['searchbar'];
+		item = toolbar.get(id);
+	}
 	else {
 		throw new Error('unknown id: ' + id);
 	}
@@ -184,6 +188,14 @@ function onClick(e, id, item, subItem) {
 		else {
 			map.setPart(id);
 		}
+	}
+	else if (id === 'showsearchbar') {
+		$('#toolbar-down').hide();
+		$('#toolbar-search').show();
+	}
+	else if (id === 'hidesearchbar') {
+		$('#toolbar-search').hide();
+		$('#toolbar-down').show();
 	}
 	else if (id === 'searchprev') {
 		map.search(L.DomUtil.get('search-input').value, true);
@@ -733,6 +745,7 @@ var fontsSelectValue;
 function createToolbar() {
 
 	if (_inMobileMode()) {
+		$('#toolbar-search').hide();
 		$('#mobile-edit-button').show();
 	} else {
 		$('#toolbar-down').show();
@@ -1184,7 +1197,7 @@ function unoCmdToToolbarId(commandname)
 }
 
 function onSearch() {
-	var toolbar = w2ui['actionbar'];
+	var toolbar = _inMobileMode() ? w2ui['searchbar'] : w2ui['actionbar'];
 	// conditionally disabling until, we find a solution for tdf#108577
 	if (L.DomUtil.get('search-input').value === '') {
 		toolbar.disable('searchprev');
@@ -2505,5 +2518,7 @@ global.onStyleSelect = onStyleSelect;
 global.insertTable = insertTable;
 global.insertShapes = insertShapes;
 global.onUpdatePermission = onUpdatePermission;
+global.onSearch = onSearch;
+global.onSearchKeyDown = onSearchKeyDown;
 
 }(window));

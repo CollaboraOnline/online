@@ -185,6 +185,7 @@ ifelse(MOBILEAPP,[true],
     </div>
 
     <div id="toolbar-down" style="display: none"></div>
+    <div id="toolbar-search" style="display: none"></div>
     <div id="mobile-wizard" style="display: none">
       <div id="mobile-wizard-tabs"></div>
       <table id="mobile-wizard-titlebar" width="100%">
