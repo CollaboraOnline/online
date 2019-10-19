@@ -31,7 +31,7 @@ L.Map = L.Evented.extend({
 		crs: L.CRS.Simple,
 		center: [0, 0],
 		zoom: 10,
-		minZoom: 6,
+		minZoom: 4,
 		maxZoom: 14,
 		maxBounds: L.latLngBounds([0, 0], [-100, 100]),
 		fadeAnimation: false, // Not useful for typing.
