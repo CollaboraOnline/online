@@ -3,7 +3,7 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global $ L Hammer w2ui */
+/* global $ L Hammer w2ui brandProductName */
 L.WinUtil = {
 
 };
@@ -254,6 +254,10 @@ L.Control.LokDialog = L.Control.extend({
 		if (e.position) {
 			left = parseInt(e.position.split(',')[0]);
 			top = parseInt(e.position.split(',')[1]);
+		}
+
+		if (e.title && typeof brandProductName !== 'undefined') {
+			e.title = e.title.replace('Collabora Office', brandProductName);
 		}
 
 		if (e.action === 'created') {
