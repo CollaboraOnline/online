@@ -198,6 +198,9 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		this._map.fire('closepopups');
 
+		var that = this;
+		var docLayer = this._map._docLayer;
+
 		if (window.ThisIsTheiOSApp) {
 			// console.log('==> ' + e.timeStamp);
 			if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
@@ -214,10 +217,64 @@ L.Map.TouchGesture = L.Handler.extend({
 				this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
 			}
 		} else {
-			this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
-			// send right click to trigger context menus
-			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
-			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
+			var singleClick = function () {
+				docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
+				docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+			};
+
+			var doubleClick = function () {
+				docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
+				docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+			};
+
+			var rightClick = function () {
+				docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 4, 0);
+				docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 4, 0);
+			};
+
+			var waitForSelectionMsg = function () {
+				// check new selection if any
+				var graphicSelection = docLayer._graphicSelection;
+				var cellCursor = docLayer._cellCursor;
+				if ((!graphicSelection || !graphicSelection.contains(latlng))
+					&& (!cellCursor || !cellCursor.contains(latlng))) {
+					// try to select text
+					doubleClick();
+				}
+				// send right click to trigger context menus
+				that._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
+				rightClick();
+			};
+
+			// we want to select the long touched object before triggering the context menu;
+			// for selecting text we need to simulate a double click, anyway for a graphic object
+			// a single click is enough, while a double click can lead to switch to edit mode
+			// (not only for an embedded ole object, even for entering text inside a shape);
+			// a similar problem regards spreadsheet cell: a single click moves the cell cursor,
+			// while a double click enables text input;
+			// in order to avoid these cases, we send a single click and wait for a few milliseconds
+			// before checking if we received a possible selection message; if no such message is received
+			// we simulate a double click for trying to select text and finally, in any case,
+			// we trigger the context menu by sending a right click
+			var graphicSelection = docLayer._graphicSelection;
+			var cellCursor = docLayer._cellCursor;
+			var textSelection;
+			if (docLayer._textSelectionStart && docLayer._textSelectionEnd)
+				textSelection = new L.LatLngBounds(docLayer._textSelectionStart.getSouthWest(), docLayer._textSelectionEnd.getNorthEast());
+
+			if ((textSelection && textSelection.contains(latlng))
+				|| (graphicSelection && graphicSelection.contains(latlng))
+				|| (cellCursor && cellCursor.contains(latlng))) {
+				// long touched an already selected object
+				// send right click to trigger context menus
+				this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
+				rightClick();
+			}
+			else {
+				// try to select a graphic object or move the cell cursor
+				singleClick();
+				setTimeout(waitForSelectionMsg, 300);
+			}
 		}
 
 		this._map.notifyActive();
