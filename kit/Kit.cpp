@@ -500,8 +500,8 @@ public:
                 }
             }
 
-            LOG_DBG("PNG cache has " << _cache.size() << " items, total size " <<
-                    _cacheSize << " after balance.");
+            LOG_DBG("PNG cache has " << _cache.size() << " items with total size of " <<
+                    _cacheSize << " bytes after balance.");
         }
 
         if (_hashToWireId.size() > CacheWidHardLimit)
@@ -541,6 +541,7 @@ public:
             }
         }
 
+        LOG_DBG("PNG cache with hash " << hash << " missed.");
         return false;
     }
 

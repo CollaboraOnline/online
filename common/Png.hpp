@@ -212,7 +212,7 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
         ++nCalls;
         LOG_TRC("PNG compression took "
                 << duration << " ms (" << output.size() << " bytes). Average after " << nCalls
-                << " calls: " << (totalDuration / static_cast<double>(nCalls)));
+                << " calls: " << (totalDuration / static_cast<double>(nCalls)) << " ms.");
     }
 
     return res;
