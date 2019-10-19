@@ -701,8 +701,9 @@ void HTTPWSTest::testGetTextSelection()
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
         std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
 
-        const std::string selection = getAllText(socket, testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: Hello world"), selection);
+        static const std::string expected = "Hello world";
+        const std::string selection = getAllText(socket, testname, expected);
+        CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + expected, selection);
     }
     catch (const Poco::Exception& exc)
     {
@@ -766,7 +767,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket, testname);
+        const std::string selection = getAllText(socket, testname, text);
         CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + text, selection);
     }
     catch (const Poco::Exception& exc)

@@ -708,20 +708,26 @@ inline void deleteAll(const std::shared_ptr<LOOLWebSocket>& socket, const std::s
 }
 
 inline std::string getAllText(const std::shared_ptr<LOOLWebSocket>& socket,
-                              const std::string& testname, int retry = COMMAND_RETRY_COUNT)
+                              const std::string& testname,
+                              const std::string expected = std::string(),
+                              int retry = COMMAND_RETRY_COUNT)
 {
-    std::string text;
+    static const std::string prefix = "textselectioncontent: ";
+
     for (int i = 0; i < retry; ++i)
     {
         selectAll(socket, testname);
 
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        text = assertResponseString(socket, "textselectioncontent:", testname);
+        const std::string text = getResponseString(socket, prefix, testname);
         if (!text.empty())
-            break;
+        {
+            if (expected.empty() || (prefix + expected) == text)
+                return text;
+        }
     }
 
-    return text;
+    return std::string();
 }
 
 }
