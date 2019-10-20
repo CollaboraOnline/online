@@ -239,7 +239,7 @@ L.Control.Scroll = L.Control.extend({
 
 	_onUpdateScrollOffset: function (e) {
 		// used on window resize
-		if (this._map._docLayer._docType === 'spreadsheet') {
+		if (e.updateHeaders && this._map._docLayer._docType === 'spreadsheet') {
 			var offset = new L.Point(e.x - this._prevScrollX, e.y - this._prevScrollY);
 			if (offset.x === 0) {
 				offset.x = 1;

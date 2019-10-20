@@ -443,7 +443,7 @@ L.GridLayer = L.Layer.extend({
 		var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));
 		var x = Math.round(newScrollPos.x < 0 ? 0 : newScrollPos.x);
 		var y = Math.round(newScrollPos.y < 0 ? 0 : newScrollPos.y);
-		this._map.fire('updatescrolloffset', {x: x, y: y});
+		this._map.fire('updatescrolloffset', {x: x, y: y, updateHeaders: true});
 	},
 
 	_setZoomTransforms: function (center, zoom) {
@@ -701,6 +701,18 @@ L.GridLayer = L.Layer.extend({
 			}
 
 			this._level.el.appendChild(fragment);
+		}
+
+		if (typeof (this._prevSelectedPart) === 'number' &&
+			this._prevSelectedPart !== this._selectedPart
+			&& this._docType === 'spreadsheet') {
+			this._map.fire('updatescrolloffset', {x: 0, y: 0, updateHeaders: false});
+			this._map.scrollTop(0);
+			this._map.scrollLeft(0);
+			this._cellCursor = L.LatLngBounds.createDefault();
+			this._prevCellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1));
+			this._cellCursorXY = new L.Point(-1, -1);
+			this._prevCellCursorXY = new L.Point(0, 0);
 		}
 	},
 
