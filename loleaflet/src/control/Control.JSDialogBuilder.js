@@ -548,8 +548,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			image = image.substr(0, image.lastIndexOf('.'));
 			image = image.substr(image.lastIndexOf('/') + 1);
 			elem = L.DomUtil.create('div', 'layout ' + image, parentContainer);
+			$(elem).data('id', data.entries[index].id);
 			$(elem).click(function () {
-				builder.callback('valueset', 'selected', data.pos);
+				builder.callback('valueset', 'selected', { id: data.id }, $(this).data('id'), builder);
 			});
 		}
 
