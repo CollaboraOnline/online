@@ -384,7 +384,7 @@ L.Annotation = L.Layer.extend({
 
 		var d = new Date(this._data.dateTime.replace(/,.*/, 'Z'));
 		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-		$(this._contentDate).text((isNaN(d.getTime()) || this._map.getDocType() === 'spreadsheet')? this._data.dateTime: d.toLocaleDateString(String.locale, dateOptions));
+		$(this._contentDate).text(isNaN(d.getTime()) ? this._data.dateTime: d.toLocaleDateString(String.locale, dateOptions));
 
 		if (this._data.trackchange) {
 			$(this._captionText).text(this._data.description);

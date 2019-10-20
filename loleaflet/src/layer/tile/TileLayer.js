@@ -402,7 +402,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		var d = new Date(comment.dateTime.replace(/,.*/, 'Z'));
 		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-		$(this._contentDate).text((isNaN(d.getTime()) || this._map.getDocType() === 'spreadsheet')? comment.dateTime: d.toLocaleDateString(String.locale, dateOptions));
+		$(this._contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString(String.locale, dateOptions));
 
 		dialog.get(0).insertBefore(this._author, dialog.get(0).childNodes[0]);
 	},
