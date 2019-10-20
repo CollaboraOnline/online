@@ -37,6 +37,10 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._hammer.get('pinch').set({
 				enable: true
 			});
+			// avoid to trigger the context menu too early so the user can start panning in a relaxed way
+			this._hammer.get('press').set({
+				time: 500
+			});
 
 			var singleTap = this._hammer.get('tap');
 			var doubleTap = this._hammer.get('doubletap');
