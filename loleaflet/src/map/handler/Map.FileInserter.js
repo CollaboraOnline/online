@@ -47,7 +47,7 @@ L.Map.FileInserter = L.Handler.extend({
 			this._toInsert[Date.now()] = e.file;
 		}
 		else {
-			this._sendFile(Date.now(), e.file);
+			this._sendFile(Date.now(), e.file, 'graphic');
 		}
 	},
 
@@ -64,7 +64,7 @@ L.Map.FileInserter = L.Handler.extend({
 	_onChildIdMsg: function (e) {
 		this._childId = e.id;
 		for (var name in this._toInsert) {
-			this._sendFile(name, this._toInsert[name]);
+			this._sendFile(name, this._toInsert[name], 'graphic');
 		}
 		this._toInsert = {};
 
@@ -74,7 +74,7 @@ L.Map.FileInserter = L.Handler.extend({
 		this._toInsertURL = {};
 	},
 
-	_sendFile: function (name, file) {
+	_sendFile: function (name, file, type) {
 		var socket = this._map._socket;
 		var map = this._map;
 		var url = this.getWopiUrl(map);
@@ -89,7 +89,7 @@ L.Map.FileInserter = L.Handler.extend({
 					for (var i = 0; i < byteBuffer.length; i++) {
 						strBytes += String.fromCharCode(byteBuffer[i]);
 					}
-					window.postMobileMessage('insertfile name=' + aFile.name + ' type=graphic' +
+					window.postMobileMessage('insertfile name=' + aFile.name + ' type=' + type +
 										       ' data=' + window.btoa(strBytes));
 				};
 			})(file);
@@ -104,9 +104,21 @@ L.Map.FileInserter = L.Handler.extend({
 			var xmlHttp = new XMLHttpRequest();
 			this._map.showBusy(_('Uploading...'), false);
 			xmlHttp.onreadystatechange = function () {
-				if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+				if (xmlHttp.readyState === 4) {
 					map.hideBusy();
-					socket.sendMessage('insertfile name=' + name + ' type=graphic');
+					socket.sendMessage('insertfile name=' + name + ' type=' + type);
+					if (xmlHttp.status === 200) {
+						socket.sendMessage('insertfile name=' + name + ' type=' + type);
+					}
+					else if (xmlHttp.status === 404) {
+						console.error(_('Uploading file to server failed, file not found.'));
+					}
+					else if (xmlHttp.status === 413) {
+						console.error(_('Uploading file to server failed, file is too large.'));
+					}
+					else {
+						console.error('Uploading file to server failed with status: ' + xmlHttp.status + ': ' + xmlHttp.statusText);
+					}
 				}
 			};
 			xmlHttp.open('POST', url, true);
