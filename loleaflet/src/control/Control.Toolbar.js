@@ -237,7 +237,7 @@ function onClick(e, id, item, subItem) {
 	}
 	else if (id === 'insertsheet') {
 		var nPos = $('#spreadsheet-tab-scroll')[0].childElementCount;
-		map.insertPage(nPos + 1);
+		map.insertPage(nPos);
 		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').prop('scrollWidth'));
 	}
 	else if (id === 'firstrecord') {
