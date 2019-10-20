@@ -237,7 +237,8 @@ L.Map.TouchGesture = L.Handler.extend({
 				// check new selection if any
 				var graphicSelection = docLayer._graphicSelection;
 				var cellCursor = docLayer._cellCursor;
-				if ((!graphicSelection || !graphicSelection.contains(latlng))
+				if (!docLayer._cursorAtMispelledWord
+					&& (!graphicSelection || !graphicSelection.contains(latlng))
 					&& (!cellCursor || !cellCursor.contains(latlng))) {
 					// try to select text
 					doubleClick();

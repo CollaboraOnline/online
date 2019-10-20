@@ -1010,6 +1010,7 @@ L.TileLayer = L.GridLayer.extend({
 		textMsg = textMsg.substring('invalidatecursor:'.length + 1);
 		var obj = JSON.parse(textMsg);
 		var modifierViewId = parseInt(obj.viewId);
+		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 		var strTwips = obj.rectangle.match(/\d+/g);
 		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
