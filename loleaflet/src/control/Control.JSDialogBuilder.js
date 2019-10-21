@@ -101,7 +101,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			builder.map.sendUnoCommand(data);
 		} else if (object) {
-			builder.map._socket.sendMessage('dialogevent ' + window.sidebarId + ' ' + object.id + ' ' + eventType + ' ' + data);
+			var message = 'dialogevent ' + window.sidebarId + ' ' + object.id + ' ' + eventType + ' ' + data;
+			builder.map._socket.sendMessage(message);
 		}
 	},
 
@@ -436,7 +437,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (customCallback)
 				customCallback();
 			else
-				builder.callback('spinfield', 'change', spinfield, this.value, builder);
+				builder.callback('spinfield', 'change', div, this.value, builder);
+		});
+
+		plus.addEventListener('click', function() {
+			if (customCallback)
+				customCallback();
+			else
+				builder.callback('spinfield', 'plus', div, this.value, builder);
+		});
+
+		minus.addEventListener('click', function() {
+			if (customCallback)
+				customCallback();
+			else
+				builder.callback('spinfield', 'minus', div, this.value, builder);
 		});
 
 		if (data.hidden)
