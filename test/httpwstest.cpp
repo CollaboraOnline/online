@@ -875,8 +875,9 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket, testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: aaa bbb ccc"), selection);
+        const std::string expected = "aaa bbb ccc";
+        const std::string selection = getAllText(socket, testname, expected);
+        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: ") + expected, selection);
     }
     catch (const Poco::Exception& exc)
     {
@@ -1494,7 +1495,7 @@ void HTTPWSTest::getPartHashCodes(const std::string& testname,
 
     // Expected format is something like 'type= parts= current= width= height= viewid='.
     Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.count());
 
     const std::string type = tokens[0].substr(std::string("type=").size());
     CPPUNIT_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
@@ -2682,21 +2683,26 @@ void HTTPWSTest::testUndoConflict()
     try
     {
         // Load first view
-        sendTextFrame(socket0, "load url=" + docURL);
+        sendTextFrame(socket0, "load url=" + docURL, testname + "0 ");
         response = getResponseString(socket0, "invalidatecursor:", testname + "0 ");
 
         // Load second view
-        sendTextFrame(socket1, "load url=" + docURL);
+        sendTextFrame(socket1, "load url=" + docURL, testname + "1 ");
         response = getResponseString(socket1, "invalidatecursor:", testname + "1 ");
 
         // edit first view
         sendChar(socket0, 'A', skNone, testname + "0 ");
         response = getResponseString(socket0, "invalidateviewcursor: ", testname + "0 ");
+        response = getResponseString(socket0, "invalidateviewcursor: ", testname + "0 ");
+
         // edit second view
         sendChar(socket1, 'B', skNone, testname + "1 ");
         response = getResponseString(socket1, "invalidateviewcursor: ", testname + "1 ");
+        response = getResponseString(socket1, "invalidateviewcursor: ", testname + "1 ");
+
         // try to undo first view
-        sendTextFrame(socket0, "uno .uno:Undo", testname);
+        sendTextFrame(socket0, "uno .uno:Undo", testname + "0 ");
+
         // undo conflict
         response = getResponseString(socket0, "unocommandresult:", testname + "0 ");
         Poco::JSON::Object::Ptr objJSON = parser.parse(response.substr(17)).extract<Poco::JSON::Object::Ptr>();
