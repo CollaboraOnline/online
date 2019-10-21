@@ -354,8 +354,8 @@ L.Map.include({
 			contentClassName: 'hyperlink-dialog',
 			message: _('Insert hyperlink'),
 			input: [
-				_('Text') + '<input name="text" type="text"/>',
-				_('Link') + '<input name="link" type="text"/>'
+				_('Text') + '<input name="text" type="text" value="' + (map.hyperlinkUnderCursor.text || '') + '"/>',
+				_('Link') + '<input name="link" type="text" value="' + (map.hyperlinkUnderCursor.link || '') + '"/>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),

@@ -1048,6 +1048,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._setFollowing(false, null);
 		}
 		this._map.lastActionByUser = false;
+		this._map.hyperlinkUnderCursor = obj.hyperlink;
 
 		if (!this._map._isFocused && (modifierViewId === this._viewId) && (this._map.getWinId === 0) && (this._map._permission === 'edit')) {
 			// Regain cursor if we had been out of focus and now have input.
