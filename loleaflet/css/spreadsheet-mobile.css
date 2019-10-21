@@ -1,0 +1,17 @@
+@media (max-width: 767px), (max-device-height: 767px) {
+
+	@-moz-document url-prefix() {
+		#spreadsheet-row-column-frame.readonly {
+			top: 39px !important;
+		}
+		#document-container.spreadsheet-document.readonly {
+			top: 59px !important;
+		}
+		#spreadsheet-row-column-frame {
+			top: 75px !important
+		}
+		#document-container.spreadsheet-document {
+			top: 95px !important;
+		}
+	}
+}
