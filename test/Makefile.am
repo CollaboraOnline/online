@@ -24,6 +24,7 @@ noinst_LTLIBRARIES = \
 	unit-tiff-load.la \
 	unit-large-paste.la \
 	unit-paste.la \
+	unit-load-torture.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
@@ -128,6 +129,8 @@ unit_large_paste_la_SOURCES = UnitLargePaste.cpp
 unit_large_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_paste_la_SOURCES = UnitPaste.cpp
 unit_paste_la_LIBADD = $(CPPUNIT_LIBS)
+unit_load_torture_la_SOURCES = UnitLoadTorture.cpp
+unit_load_torture_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -150,6 +153,7 @@ TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-t
 	unit-tiff-load.la \
 	unit-large-paste.la \
 	unit-paste.la \
+	unit-load-torture.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
