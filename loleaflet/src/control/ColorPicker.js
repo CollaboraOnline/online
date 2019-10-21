@@ -170,14 +170,12 @@ L.ColorPicker = L.Class.extend({
 
 	_createBasicColorSelectionMark: function () {
 		this._basicColorSelectionMark = L.DomUtil.create('div', 'colors-container-basic-color-mark', null);
-		this._basicColorSelectionMark.innerHTML = '&#9679;';
 	},
 
 	_createTintSelectionMark: function () {
 		this._tintSelectionMark = L.DomUtil.create('div', 'colors-container-tint-mark', null);
 		this._tintSelectionMark.innerHTML = '&#10004;';
 	},
-
 
 	_getSelectionMark: function (colorType) {
 		if (colorType === L.ColorPicker.BASIC_COLOR)
