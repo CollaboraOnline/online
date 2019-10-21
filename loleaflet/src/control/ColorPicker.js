@@ -44,7 +44,6 @@ L.ColorPicker = L.Class.extend({
 		this._tintSampleIdTag = L.ColorPicker.ID_TAG + this._id + '-tint-';
 		this._noColorControlId = L.ColorPicker.ID_TAG + this._id + '-no-color';
 		this._createBasicColorSelectionMark();
-		this._createTintSelectionMark();
 		this._selectedColorElement = selectedColorSample;
 		this._selectedColor = this.options.selectedColor;
 		this._initIndexes();
@@ -140,9 +139,6 @@ L.ColorPicker = L.Class.extend({
 				size: 'big',
 				handlers: [{event: 'click', handler: L.bind(this.onClickTintSample, this)}]
 			};
-			if (selected) {
-				entry.mark = this._tintSelectionMark;
-			}
 			tintsEntries1.push(entry);
 		}
 		var tintsRow1 = {type: 'divcontainer', style: 'colors-container-tints', children: tintsEntries1};
@@ -158,9 +154,6 @@ L.ColorPicker = L.Class.extend({
 				size: 'big',
 				handlers: [{event: 'click', handler: L.bind(this.onClickTintSample, this)}]
 			};
-			if (selected) {
-				entry.mark = this._tintSelectionMark
-			}
 			tintsEntries2.push(entry);
 		}
 		var tintsRow2 = {type: 'divcontainer', style: 'colors-container-tints', children: tintsEntries2};
@@ -170,20 +163,6 @@ L.ColorPicker = L.Class.extend({
 
 	_createBasicColorSelectionMark: function () {
 		this._basicColorSelectionMark = L.DomUtil.create('div', 'colors-container-basic-color-mark', null);
-	},
-
-	_createTintSelectionMark: function () {
-		this._tintSelectionMark = L.DomUtil.create('div', 'colors-container-tint-mark', null);
-		this._tintSelectionMark.innerHTML = '&#10004;';
-	},
-
-	_getSelectionMark: function (colorType) {
-		if (colorType === L.ColorPicker.BASIC_COLOR)
-			return this._basicColorSelectionMark;
-		else if (colorType === L.ColorPicker.TINT)
-			return this._tintSelectionMark;
-		else
-			return null;
 	},
 
 	_getBasicColorCount: function () {
@@ -257,14 +236,22 @@ L.ColorPicker = L.Class.extend({
 	_unselectSample: function (colorIndex, colorType) {
 		var sampleElem = this._getSampleElement(colorIndex, colorType);
 		if (sampleElem && sampleElem.firstChild) {
-			sampleElem.removeChild(sampleElem.firstChild);
+			if (colorType === L.ColorPicker.BASIC_COLOR) {
+				sampleElem.removeChild(sampleElem.firstChild);
+			} else if (colorType === L.ColorPicker.TINT) {
+				sampleElem.firstChild.style.visibility = 'hidden';
+			}
 		}
 	},
 
 	_selectSample: function (colorIndex, colorType) {
 		var sampleElem = this._getSampleElement(colorIndex, colorType);
 		if (sampleElem) {
-			sampleElem.appendChild(this._getSelectionMark(colorType));
+			if (colorType === L.ColorPicker.BASIC_COLOR) {
+				sampleElem.appendChild(this._basicColorSelectionMark);
+			} else if (colorType === L.ColorPicker.TINT && sampleElem.firstChild) {
+				sampleElem.firstChild.style.visibility = 'visible';
+			}
 		}
 	},
 
@@ -278,10 +265,13 @@ L.ColorPicker = L.Class.extend({
 			if (sampleElem) {
 				sampleElem.style.backgroundColor = tint;
 				sampleElem.name = tint.substring(1);
-				if (tint === this._selectedColor) {
-					sampleElem.appendChild(this._getSelectionMark(L.ColorPicker.TINT));
-				} else if (sampleElem.firstChild) {
-					sampleElem.removeChild(sampleElem.firstChild);
+				if (sampleElem.firstChild) {
+					if (tint === this._selectedColor) {
+						sampleElem.firstChild.style.visibility = 'visible';
+					}
+					else {
+						sampleElem.firstChild.style.visibility = 'hidden';
+					}
 				}
 			}
 		}

@@ -653,7 +653,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		colorSample.style.backgroundColor = data.color;
 		colorSample.name = data.color.substring(1);
 
-		if (data.selected && data.mark) {
+		if (data.size === 'big') {
+			var selectionMarker = L.DomUtil.create('div', 'colors-container-tint-mark', colorSample);
+			if (data.selected) {
+				selectionMarker.style.visibility = 'visible';
+			} else {
+				selectionMarker.style.visibility = 'hidden';
+			}
+		} else if (data.selected && data.mark) {
 			colorSample.appendChild(data.mark);
 		}
 

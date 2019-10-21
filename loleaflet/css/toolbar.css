@@ -1353,11 +1353,8 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 .colors-container-tint-mark {
 	width: 20px;
 	height: 20px;
-	font-size: medium;
-	color: #000 !important;
-	background-color: whitesmoke !important;
-	text-align: center;
-	line-height: 21px;
+	background-image: url('images/icon-set-symbols1-check.svg');
 	margin-left: auto;
-	border-radius: 100px;
+	background-repeat: no-repeat;
+	background-size: auto;
 }
