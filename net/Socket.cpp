@@ -785,7 +785,7 @@ bool StreamSocket::parseHeader(const char *clientName,
     }
     catch (const std::exception& exc)
     {
-        LOG_DBG("parseHeader exception caught.");
+        LOG_DBG("parseHeader exception caught: " << exc.what());
         // Probably don't have enough data just yet.
         // TODO: timeout if we never get enough.
         return false;

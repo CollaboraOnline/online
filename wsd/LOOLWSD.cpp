@@ -2037,6 +2037,8 @@ public:
                     break;
                 }
             }
+
+            init = true;
         }
         return hosts.match(address);
     }
@@ -2056,7 +2058,7 @@ public:
         // Handle forwarded header and make sure all participating IPs are allowed
         if(request.has("X-Forwarded-For"))
         {
-            std::string fowardedData = request.get("X-Forwarded-For");
+            const std::string fowardedData = request.get("X-Forwarded-For");
             std::vector<std::string> tokens = LOOLProtocol::tokenize(fowardedData, ',');
             for(std::string& token : tokens)
             {
@@ -2538,7 +2540,7 @@ private:
             // Validate sender - FIXME: should do this even earlier.
             if (!allowConvertTo(socket->clientAddress(), request, true))
             {
-                LOG_TRC("Conversion not allowed from this address");
+                LOG_WRN("Conversion requests not allowed from this address: " << socket->clientAddress());
                 std::ostringstream oss;
                 oss << "HTTP/1.1 403\r\n"
                     "Date: " << Util::getHttpTimeNow() << "\r\n"
@@ -2579,19 +2581,19 @@ private:
                     bFullSheetPreview = false;
                 }
 
-                    // This lock could become a bottleneck.
-                    // In that case, we can use a pool and index by publicPath.
-                    std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+                // This lock could become a bottleneck.
+                // In that case, we can use a pool and index by publicPath.
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey);
-                    handler.takeFile();
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey);
+                handler.takeFile();
 
-                    cleanupDocBrokers();
+                cleanupDocBrokers();
 
-                    LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                    DocBrokers.emplace(docKey, docBroker);
-                    LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                DocBrokers.emplace(docKey, docBroker);
+                LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
                 // Load the document.
                 // TODO: Move to DocumentBroker.
