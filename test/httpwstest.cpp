@@ -2343,22 +2343,22 @@ void HTTPWSTest::testUndoConflict()
         response = getResponseString(socket1, "invalidatecursor:", testname + "1 ");
 
         // edit first view
-        sendTextFrame(socket0, "key type=input char=97 key=0", testname);
-        response = getResponseString(socket0, "invalidatecursor:", testname + "0 ");
+        sendChar(socket0, 'A', skNone, testname + "0 ");
+        response = getResponseString(socket0, "invalidateviewcursor: ", testname + "0 ");
         // edit second view
-        sendTextFrame(socket1, "key type=input char=98 key=0", testname);
-        response = getResponseString(socket1, "invalidatecursor:", testname + "1 ");
+        sendChar(socket1, 'B', skNone, testname + "1 ");
+        response = getResponseString(socket1, "invalidateviewcursor: ", testname + "1 ");
         // try to undo first view
         sendTextFrame(socket0, "uno .uno:Undo", testname);
         // undo conflict
         response = getResponseString(socket0, "unocommandresult:", testname + "0 ");
         Poco::JSON::Object::Ptr objJSON = parser.parse(response.substr(17)).extract<Poco::JSON::Object::Ptr>();
-        CPPUNIT_ASSERT_EQUAL(objJSON->get("commandName").toString(), std::string(".uno:Undo"));
-        CPPUNIT_ASSERT_EQUAL(objJSON->get("success").toString(), std::string("true"));
+        CPPUNIT_ASSERT_EQUAL(std::string(".uno:Undo"), objJSON->get("commandName").toString());
+        CPPUNIT_ASSERT_EQUAL(std::string("true"), objJSON->get("success").toString());
         CPPUNIT_ASSERT(objJSON->has("result"));
         const Poco::Dynamic::Var parsedResultJSON = objJSON->get("result");
         const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
-        CPPUNIT_ASSERT_EQUAL(resultObj->get("type").toString(), std::string("long"));
+        CPPUNIT_ASSERT_EQUAL(std::string("long"), resultObj->get("type").toString());
         CPPUNIT_ASSERT(Poco::strToInt(resultObj->get("value").toString(), conflict, 10));
         CPPUNIT_ASSERT(conflict > 0); /*UNDO_CONFLICT*/
     }
