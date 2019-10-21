@@ -128,6 +128,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
                     const std::string& name = "checkTiles ");
 
     void requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
+                      const std::string& docType,
                       const int part,
                       const int docWidth,
                       const int docHeight,
@@ -1079,10 +1080,18 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
 
         Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
-        CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(6), tokens.count());
+        if (docType == "presentation")
+            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.count()); // We have an extra field.
+        else
+            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(6), tokens.count());
+#else
+        if (docType == "presentation")
+            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.count()); // We have an extra field.
+        else
+            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
 #endif
 
-        // Expected format is something like 'type= parts= current= width= height= [hiddenparts=]'.
+        // Expected format is something like 'type= parts= current= width= height='.
         const std::string text = tokens[0].substr(type.size());
         totalParts = std::stoi(tokens[1].substr(parts.size()));
         currentPart = std::stoi(tokens[2].substr(current.size()));
@@ -1099,7 +1108,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
     {
         // request tiles
         TST_LOG("Requesting Impress tiles.");
-        requestTiles(socket, currentPart, docWidth, docHeight, name);
+        requestTiles(socket, docType, currentPart, docWidth, docHeight, name);
     }
 
     // random setclientpart
@@ -1119,7 +1128,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
             // issue a new tile request as a response, which a real client would do).
             assertResponseString(socket, "setpart:", name);
 
-            requestTiles(socket, it, docWidth, docHeight, name);
+            requestTiles(socket, docType, it, docWidth, docHeight, name);
 
             if (++requests >= 3)
             {
@@ -1132,7 +1141,9 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
     }
 }
 
-void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket, const int part, const int docWidth, const int docHeight, const std::string& name)
+void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
+                                  const std::string& , const int part, const int docWidth,
+                                  const int docHeight, const std::string& name)
 {
     // twips
     const int tileSize = 3840;
@@ -1176,7 +1187,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket, const 
 
             sendTextFrame(socket, text, name);
             tile = assertResponseString(socket, "tile:", name);
-            // expected tile: nviewid= part= width= height= tileposx= tileposy= tilewidth= tileheight=
+            // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
             CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
             CPPUNIT_ASSERT_EQUAL(0, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
@@ -1273,9 +1284,9 @@ void TileCacheTests::testTileWireIDHandling()
     CPPUNIT_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket, "tile:", testname, 500) > 1);
 
     // Let WSD know we got these so it wouldn't stop sending us modified tiles automatically.
-    sendTextFrame(socket, "tileprocessed tile=0:0:0:3840:3840:0");
-    sendTextFrame(socket, "tileprocessed tile=0:3840:0:3840:3840:0");
-    sendTextFrame(socket, "tileprocessed tile=0:7680:0:3840:3840:0");
+    sendTextFrame(socket, "tileprocessed tile=0:0:0:3840:3840:0", testname);
+    sendTextFrame(socket, "tileprocessed tile=0:3840:0:3840:3840:0", testname);
+    sendTextFrame(socket, "tileprocessed tile=0:7680:0:3840:3840:0", testname);
 
     // Type an other character
     sendChar(socket, 'y', skNone, testname);
@@ -1342,7 +1353,7 @@ void TileCacheTests::testTileProcessed()
 
     for(std::string& tileID : tileIDs)
     {
-        sendTextFrame(socket, "tileprocessed tile=" + tileID);
+        sendTextFrame(socket, "tileprocessed tile=" + tileID, testname);
     }
 
     // Now we can get the remaining tiles
@@ -1420,10 +1431,10 @@ void TileCacheTests::testTileBeingRenderedHandling()
     // For the first input wsd will send all invalidated tiles
     CPPUNIT_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket, "tile:", testname, 500) > 1);
 
-    // For the later inputs wsd will send one tile, since other ones are identical
+    // For the later inputs wsd will send one tile, since other ones are indentical
     for(int i = 0; i < 5; ++i)
     {
-        sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0");
+        sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0", testname);
 
         // Type an other character
         sendChar(socket, 'y', skNone, testname);
@@ -1436,7 +1447,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
             // are sub-pixel different, and that results in a different hash.
             CPPUNIT_ASSERT_EQUAL(2, arrivedTiles);
 
-            sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0");
+            sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0", testname);
 
             // The third time, however, we shouldn't see anything but the tile we change.
             sendChar(socket, 'z', skNone, testname);
@@ -1475,9 +1486,9 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     CPPUNIT_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket1, "tile:", testname, 500) > 1);
 
     // Let WSD know we got these so it wouldn't stop sending us modified tiles automatically.
-    sendTextFrame(socket1, "tileprocessed tile=0:0:0:3840:3840:0");
-    sendTextFrame(socket1, "tileprocessed tile=0:3840:0:3840:3840:0");
-    sendTextFrame(socket1, "tileprocessed tile=0:7680:0:3840:3840:0");
+    sendTextFrame(socket1, "tileprocessed tile=0:0:0:3840:3840:0", testname);
+    sendTextFrame(socket1, "tileprocessed tile=0:3840:0:3840:3840:0", testname);
+    sendTextFrame(socket1, "tileprocessed tile=0:7680:0:3840:3840:0", testname);
 
     // Type an other character
     sendChar(socket1, 'y', skNone, testname);
@@ -1490,7 +1501,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
 
     // Or, at most 2. The reason is that sometimes we get line antialiasing differences that
     // are sub-pixel different, and that results in a different hash.
-    CPPUNIT_ASSERT_EQUAL(2, arrivedTiles);
+    CPPUNIT_ASSERT_MESSAGE("Expected at most 3 tiles.", arrivedTiles <= 3);
 
     // The third time, however, we shouldn't see anything but the tile we change.
     sendChar(socket1, 'z', skNone, testname);
@@ -1554,7 +1565,7 @@ void TileCacheTests::testLimitTileVersionsOnFly()
 
     // When the next tileprocessed message arrive with correct tileID
     // wsd sends the delayed tile
-    sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0");
+    sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0", testname);
 
     int arrivedTiles = 0;
     bool gotTile = false;
