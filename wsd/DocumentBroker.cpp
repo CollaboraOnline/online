@@ -774,13 +774,20 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
 {
     assertCorrectThread();
 
-    if (force)
+    // Force saving on exit, if enabled.
+    if (!force && isMarkedToDestroy())
     {
-        LOG_TRC("Document will be saved forcefully to storage.");
-        _storage->forceSave();
+        static const bool always_save = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
+        if (always_save)
+        {
+            LOG_TRC("Enabling forced saving to storage per always_save_on_exit config.");
+            force = true;
+        }
     }
 
-    const bool res = saveToStorageInternal(sessionId, success, result);
+    constexpr bool isRename = false;
+    const bool res = saveToStorageInternal(sessionId, success, result, /*saveAsPath*/ std::string(),
+                                           /*saveAsFilename*/ std::string(), isRename, force);
 
     // If marked to destroy, or session is disconnected, remove.
     const auto it = _sessions.find(sessionId);
@@ -804,22 +811,21 @@ bool DocumentBroker::saveAsToStorage(const std::string& sessionId, const std::st
     return saveToStorageInternal(sessionId, true, "", saveAsPath, saveAsFilename, isRename);
 }
 
-bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
-                                           bool success, const std::string& result,
-                                           const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename)
+bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool success,
+                                           const std::string& result, const std::string& saveAsPath,
+                                           const std::string& saveAsFilename, const bool isRename,
+                                           const bool force)
 {
     assertCorrectThread();
 
     // Record that we got a response to avoid timeing out on saving.
     _lastSaveResponseTime = std::chrono::steady_clock::now();
 
-    const bool isSaveAs = !saveAsPath.empty();
-
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
-    LOG_TRC("Saving to storage docKey [" << _docKey << "] for session [" << sessionId <<
-            "]. Success: " << success << ", result: " << result);
-    if (!success && result == "unmodified" && !isRename)
+    LOG_TRC("Uploading to storage docKey [" << _docKey << "] for session [" << sessionId <<
+            "]. Success: " << success << ", result: " << result << ", force: " << force);
+    if (!success && result == "unmodified" && !isRename && !force)
     {
         LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
@@ -830,18 +836,24 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
-        LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving docKey [" << _docKey << "].");
+        LOG_ERR("Session with sessionId [" << sessionId << "] not found while storing document docKey [" << _docKey << "]. The document ");
         return false;
     }
 
     // Check that we are actually about to upload a successfully saved document.
-    if (!success)
+    if (!success && !force)
     {
-        LOG_ERR("Cannot save docKey [" << _docKey << "], the .uno:Save has failed in LOK.");
+        LOG_ERR("Cannot store docKey [" << _docKey << "] as .uno:Save has failed in LOK.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
         return false;
     }
 
+    if (force)
+    {
+        LOG_DBG("Document docKey [" << _docKey << "] will be saved forcefully to storage.");
+    }
+
+    const bool isSaveAs = !saveAsPath.empty();
     const Authorization auth = it->second->getAuthorization();
     const std::string uri = isSaveAs ? saveAsPath : it->second->getPublicUri().toString();
 
@@ -1215,14 +1227,14 @@ size_t DocumentBroker::removeSession(const std::string& id)
         _markToDestroy = (_sessions.size() <= 1);
 
         const bool lastEditableSession = !it->second->isReadOnly() && !haveAnotherEditableSession(id);
+        static const bool dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
 
         LOG_INF("Removing session ["
                 << id << "] on docKey [" << _docKey << "]. Have " << _sessions.size()
                 << " sessions. IsReadOnly: " << it->second->isReadOnly() << ", IsViewLoaded: "
                 << it->second->isViewLoaded() << ". markToDestroy: " << _markToDestroy
-                << ", LastEditableSession: " << lastEditableSession);
-
-        const auto dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
+                << ", LastEditableSession: " << lastEditableSession
+                << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
 
         // If last editable, save and don't remove until after uploading to storage.
         if (!lastEditableSession || !autoSave(isPossiblyModified(), dontSaveIfUnmodified))
