@@ -829,6 +829,7 @@ void LOOLWSD::initialize(Application& self)
             { "net.proto", "all" },
             { "net.service_root", "" },
             { "num_prespawn_children", "1" },
+            { "per_document.always_save_on_exit", "false" },
             { "per_document.autosave_duration_secs", "300" },
             { "per_document.document_signing_url", VEREIGN_URL },
             { "per_document.idle_timeout_secs", "3600" },
