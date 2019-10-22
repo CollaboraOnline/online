@@ -666,6 +666,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		} else if (data.selected && data.mark) {
 			colorSample.appendChild(data.mark);
+			L.DomUtil.addClass(colorSample, 'colors-container-selected-basic-color');
 		}
 
 		 builder._setupHandlers(colorSample, data.handlers);

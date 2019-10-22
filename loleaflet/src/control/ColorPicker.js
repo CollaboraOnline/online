@@ -246,6 +246,7 @@ L.ColorPicker = L.Class.extend({
 		if (sampleElem && sampleElem.firstChild) {
 			if (colorType === L.ColorPicker.BASIC_COLOR) {
 				sampleElem.removeChild(sampleElem.firstChild);
+				L.DomUtil.removeClass(sampleElem, 'colors-container-selected-basic-color');
 			} else if (colorType === L.ColorPicker.TINT) {
 				sampleElem.firstChild.style.visibility = 'hidden';
 			}
@@ -257,6 +258,7 @@ L.ColorPicker = L.Class.extend({
 		if (sampleElem) {
 			if (colorType === L.ColorPicker.BASIC_COLOR) {
 				sampleElem.appendChild(this._basicColorSelectionMark);
+				L.DomUtil.addClass(sampleElem, 'colors-container-selected-basic-color');
 			} else if (colorType === L.ColorPicker.TINT && sampleElem.firstChild) {
 				sampleElem.firstChild.style.visibility = 'visible';
 			}
