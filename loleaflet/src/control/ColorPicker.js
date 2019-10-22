@@ -96,7 +96,7 @@ L.ColorPicker = L.Class.extend({
 	_createNoColorControl: function () {
 		var icon = {
 			type: 'fixedtext',
-			text: '\\',
+			text: '',
 			style: 'no-color-control-icon'
 		};
 		var label = {type: 'fixedtext', style: 'no-color-control-label', text: _('No color')};

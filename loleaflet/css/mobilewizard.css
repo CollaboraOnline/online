@@ -113,3 +113,104 @@ span#main-menu-btn-icon {
 .layout.layout_head02a {
 	background: url('images/layout_head02a.svg') no-repeat center !important;
 }
+
+/*Color-picker*/
+.color-sample-selected {
+	height: 32px !important;
+	width: 32px !important;
+	border: 1px solid #8A8A8A;
+	border-radius: 100px;
+}
+
+.no-color-selected {
+	text-align: center;
+	font-size: 30pt;
+	line-height: 32px;
+	font-weight: 300;
+	color: #ff0000 !important;
+	background-color: #fff !important;
+}
+
+.colors-container-selected-basic-color{
+	box-shadow: 0 2px 3px -2px #0b87e7;
+	border-radius: 4px;
+}
+.color-sample-small {
+	border: 2px solid #fff;
+	width: 28px;
+	height: 28px;
+	color: #f0f8ff;
+	text-align: center;
+	vertical-align: bottom;
+	display: table-cell;
+}
+
+.color-sample-big {
+	padding: 5px;
+	width: 118px;
+	height: 42px;
+	color: #f0f8ff;
+	text-align: right;
+	vertical-align: bottom;
+	display: table-cell;
+	box-shadow: 0px 0px 0px 1px #dddddd, 1px 1px 0 3px #ffffff;
+}
+
+.colors-container {
+	display: table;
+}
+
+.colors-container-no-color-row {
+	display: flex;
+	justify-content: space-between;
+	height: 50px;
+}
+
+.colors-container-basic-colors-row {
+	padding-bottom: 20px;
+}
+
+.colors-container-tints {
+	padding-bottom: 0px;
+}
+
+.no-color-control-label {
+	display:table-cell;
+	padding-left: 4px;
+	vertical-align: middle;
+}
+
+.no-color-control-mark {
+	color: #0b87e7 !important;
+	font-size: larger;
+	line-height: 0;
+}
+
+.no-color-control-icon {
+	display: table-cell;
+	height: 32px !important;
+	width: 32px !important;
+	text-align: center;
+	font-size: 26pt;
+	line-height: 28px;
+	font-weight: 300;
+	color: #ff0000 !important;
+	background: url(images/lc_square_rounded_unfilled.svg) no-repeat center;
+}
+
+.colors-container-basic-color-mark {
+	border: 4px solid transparent;
+	border-top: 5px solid #0b87e7;
+	margin-top: 2px;
+	position: absolute;
+	margin-left: 10px
+}
+
+.colors-container-tint-mark {
+	width: 20px;
+	height: 20px;
+	background-image: url('images/lc_color-picker-selected.svg');
+	margin-left: auto;
+	background-repeat: no-repeat;
+	background-size: auto;
+}
