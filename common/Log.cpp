@@ -163,6 +163,7 @@ namespace Log
         {
             channel = static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel());
             channel->setProperty("traceColor", "green");
+            channel->setProperty("warningColor", "magenta");
         }
         else
             channel = static_cast<Poco::Channel*>(new Poco::ConsoleChannel());
