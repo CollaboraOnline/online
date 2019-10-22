@@ -48,6 +48,7 @@ L.ColorPicker = L.Class.extend({
 		this._selectedColor = this.options.selectedColor;
 		this._initIndexes();
 		this._container = this._createControl();
+		this._initialized = true;
 	},
 
 	getId: function () {
@@ -60,6 +61,13 @@ L.ColorPicker = L.Class.extend({
 
 	getContainer: function () {
 		return this._container;
+	},
+
+	onShow: function () {
+		if (!this._initialized || this._selectedColor === '#')
+			return;
+		this._initIndexes();
+		this._updateTintsView();
 	},
 
 	_initIndexes: function () {

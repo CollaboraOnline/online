@@ -210,7 +210,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		$(contentDiv).hide();
 		if (builder.wizard) {
-			$(sectionTitle).click(function() { builder.wizard.goLevelDown(contentDiv); });
+			$(sectionTitle).click(function() {
+				builder.wizard.goLevelDown(contentDiv);
+				if (contentNode.onshow)
+					contentNode.onshow();
+			});
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
@@ -691,7 +695,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		// color control panel
 		var colorsContainer = colorPickerControl.getContainer();
 
-		var contentNode = {type: 'container', children: [colorsContainer]};
+		var contentNode = {type: 'container', children: [colorsContainer], onshow: L.bind(colorPickerControl.onShow, colorPickerControl)};
 
 		builder._explorableEntry(parentContainer, title, contentNode, builder, valueNode, iconPath);
 		return false;
