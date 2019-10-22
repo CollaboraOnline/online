@@ -101,7 +101,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			builder.map.sendUnoCommand(data);
 		} else if (object) {
-			var message = 'dialogevent ' + window.sidebarId + ' ' + object.id + ' ' + eventType + ' ' + data;
+			var message = 'dialogevent ' + window.sidebarId + ' {\"id\":\"' + object.id + '\", \"cmd\": \"' + eventType + '\", \"data\":\"' + data + '\"}';
 			builder.map._socket.sendMessage(message);
 		}
 	},
@@ -441,7 +441,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (customCallback)
 				customCallback();
 			else
-				builder.callback('spinfield', 'change', div, this.value, builder);
+				builder.callback('spinfield', 'set', div, this.value, builder);
 		});
 
 		plus.addEventListener('click', function() {
