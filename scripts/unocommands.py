@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- tab-width: 4; indent-tabs-mode: nil; py-indent-offset: 4 -*-
 #
 # This file is part of the LibreOffice project.
@@ -201,20 +201,19 @@ def writeUnocommandsJS(onlineDir, lofficeDir, menuCommands, contextCommands, too
             descriptions = collectCommandsFromXCU(os.path.join(dir, file), descriptions, toolbarCommands, 'Label', type)
 
     # output the unocommands.js
-    f = open(onlineDir + '/loleaflet/src/unocommands.js', 'w')
+    f = open(onlineDir + '/loleaflet/src/unocommands.js', 'w', encoding='utf-8')
     f.write('''// Don't modify, generated using unocommands.py
 
 var unoCommandsArray = {\n''')
 
     for key in sorted(descriptions.keys()):
-        #f.write(('    ' + key + ": _('" + descriptions[key] + "'),\n").encode('utf-8'))
-        f.write(('\t' + key + ':{').encode('utf-8'))
+        f.write('\t' + key + ':{')
         for type in sorted(descriptions[key].keys()):
-            f.write((type + ':{').encode('utf-8'))
+            f.write(type + ':{')
             for menuType in sorted(descriptions[key][type].keys()):
-                f.write((menuType + ":_('" + descriptions[key][type][menuType] + "'),").encode('utf-8'))
-            f.write(('},').encode('utf-8'))
-        f.write(('},\n').encode('utf-8'))
+                f.write(menuType + ":_('" + descriptions[key][type][menuType] + "'),")
+            f.write('},')
+        f.write('},\n')
 
     f.write('''};
 
@@ -258,10 +257,9 @@ window._UNO = function(string, component, isContext) {
 def parseUnocommandsJS(onlineDir):
     strings = {}
 
-    f = open(onlineDir + '/loleaflet/src/unocommands.js', 'r')
+    f = open(onlineDir + '/loleaflet/src/unocommands.js', 'r', encoding='utf-8')
     readingCommands = False
     for line in f:
-        line = line.decode('utf-8')
         m = re.match(r"\t([^:]*):.*", line)
         if m:
             command = m.group(1)
@@ -296,7 +294,7 @@ def writeTranslations(onlineDir, translationsDir, strings):
                         if text == entry.msgid:
                             translations[entry.msgid] = entry.msgstr
 
-        f = open(onlineDir + '/loleaflet/l10n/uno/' + lang + '.json', 'w')
+        f = open(onlineDir + '/loleaflet/l10n/uno/' + lang + '.json', 'w', encoding='utf-8')
         f.write('{\n')
 
         writeComma = False
@@ -305,7 +303,7 @@ def writeTranslations(onlineDir, translationsDir, strings):
                 f.write(',\n')
             else:
                 writeComma = True
-            f.write(('"' + key.replace('"','\\\"') + '":"' + translations[key].replace('"','\\\"') + '"').encode('utf-8'))
+            f.write('"' + key.replace('"','\\\"') + '":"' + translations[key].replace('"','\\\"') + '"')
 
         f.write('\n}\n')
 
