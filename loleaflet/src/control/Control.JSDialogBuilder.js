@@ -528,7 +528,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_setIconAndNameFrofCombobox: function(data) {
+	_setIconAndNameForCombobox: function(data) {
 		if (data.command == '.uno:CharFontName') {
 			data.text = _('Font Name');
 		} else if (data.command == '.uno:FontHeight') {
@@ -542,7 +542,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!data.entries || data.entries.length === 0)
 			return false;
 
-		builder._setIconAndNameFrofCombobox(data);
+		builder._setIconAndNameForCombobox(data);
 
 		var title = data.text;
 		var valueNode = null;
