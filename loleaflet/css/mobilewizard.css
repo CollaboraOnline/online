@@ -214,3 +214,10 @@ span#main-menu-btn-icon {
 	background-repeat: no-repeat;
 	background-size: auto;
 }
+p.mobile-wizard.ui-combobox-text:not(.selected) {
+	color: #00000095 !important;
+}
+p.mobile-wizard.ui-combobox-text.selected {
+	background: url(images/lc_color-picker-selected.svg) no-repeat right;
+	color: #000000 !important;
+}
