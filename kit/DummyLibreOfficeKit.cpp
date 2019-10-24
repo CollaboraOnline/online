@@ -122,6 +122,12 @@ static unsigned char* doc_renderFont(LibreOfficeKitDocument* pThis,
                           const char *pChar,
                           int* pFontWidth,
                           int* pFontHeight);
+static unsigned char* doc_renderFontOrientation(LibreOfficeKitDocument* pThis,
+                          const char *pFontName,
+                          const char *pChar,
+                          int* pFontWidth,
+                          int* pFontHeight,
+                          int pOrientation);
 static char* doc_getPartHash(LibreOfficeKitDocument* pThis, int nPart);
 
 static size_t doc_renderShapeSelection(LibreOfficeKitDocument* pThis, char** pOutput);
@@ -170,6 +176,7 @@ LibLODocument_Impl::LibLODocument_Impl()
         m_pDocumentClass->getViewIds = doc_getViewIds;
 
         m_pDocumentClass->renderFont = doc_renderFont;
+        m_pDocumentClass->renderFontOrientation = doc_renderFontOrientation;
         m_pDocumentClass->getPartHash = doc_getPartHash;
 
         m_pDocumentClass->renderShapeSelection = doc_renderShapeSelection;
@@ -523,6 +530,22 @@ unsigned char* doc_renderFont(LibreOfficeKitDocument* /*pThis*/,
     (void) pChar;
     (void) pFontWidth;
     (void) pFontHeight;
+
+    return nullptr;
+}
+
+unsigned char* doc_renderFontOrientation(LibreOfficeKitDocument* /*pThis*/,
+                    const char* pFontName,
+                    const char* pChar,
+                    int* pFontWidth,
+                    int* pFontHeight,
+                    int pOrientation)
+{
+    (void) pFontName;
+    (void) pChar;
+    (void) pFontWidth;
+    (void) pFontHeight;
+    (void) pOrientation;
 
     return nullptr;
 }
