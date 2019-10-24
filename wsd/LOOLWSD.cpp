@@ -853,7 +853,7 @@ void LOOLWSD::initialize(Application& self)
             { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
             { "ssl.termination", "true" },
             { "storage.filesystem[@allow]", "false" },
-            { "storage.ssl.enable", "false" },
+//            "storage.ssl.enable" - deliberately not set; for back-compat
             { "storage.webdav[@allow]", "false" },
             { "storage.wopi.host[0]", "localhost" },
             { "storage.wopi.host[0][@allow]", "true" },

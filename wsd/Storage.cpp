@@ -125,7 +125,10 @@ void StorageBase::initialize()
     // Init client
     Poco::Net::Context::Params sslClientParams;
 
-    SSLEnabled = LOOLWSD::getConfigValue<bool>("storage.ssl.enable", false);
+    // Fallback to ssl.enable if not set - for back compatibility & simplicity.
+    SSLEnabled = LOOLWSD::getConfigValue<bool>(
+        "storage.ssl.enable", LOOLWSD::getConfigValue<bool>("ssl.enable", true));
+
 #if ENABLE_DEBUG
     char *StorageSSLEnabled = getenv("STORAGE_SSL_ENABLE");
     if (StorageSSLEnabled != NULL)
