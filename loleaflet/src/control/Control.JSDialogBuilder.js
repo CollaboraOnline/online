@@ -63,8 +63,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
-		this._toolitemHandlers['.uno:CharFontName'] = this._fontNameControl;
-		this._toolitemHandlers['.uno:FontHeight'] = this._fontHeightControl;
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
@@ -141,9 +139,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			.replace('%', '');
 	},
 
-	_containerHandler: function(parentContainer, data) {
+	_containerHandler: function(parentContainer, data, builder) {
 		if (data.enabled == 'false')
 			return false;
+
+		if (data.cols && data.rows) {
+			return builder._gridHandler(parentContainer, data, builder);
+		}
+
 		return true;
 	},
 
@@ -176,6 +179,28 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				return children[index];
 		}
 		return null;
+	},
+
+	_swapControls: function(controls, indexA, indexB) {
+		var tmp = controls[indexA];
+		controls[indexA] = controls[indexB];
+		controls[indexB] = tmp;
+	},
+
+	/// reorder widgets in case of vertical placement of labels and corresponding controls
+	/// current implementation fits for 2 column views
+	_gridHandler: function(parentContainer, data, builder) {
+		var children = data.children;
+		if (children) {
+			var count = children.length;
+			for (var i = 0; i < count - 2; i++) {
+				if (children[i].type == 'fixedtext' && children[i+1].type == 'fixedtext') {
+					builder._swapControls(children, i+1, i+2);
+				}
+			}
+		}
+
+		return true;
 	},
 
 	_explorableEntry: function(parentContainer, title, contentNode, builder, valueNode, iconPath) {
@@ -503,11 +528,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_comboboxControl: function(parentContainer, data, builder, iconPath) {
+	_setIconAndNameFrofCombobox: function(data) {
+		if (data.command == '.uno:CharFontName') {
+			data.text = _('Font Name');
+		} else if (data.command == '.uno:FontHeight') {
+			data.text = _('Font Size');
+		}
+	},
+
+	_comboboxControl: function(parentContainer, data, builder) {
 		// TODO: event listener in the next level...
 
 		if (!data.entries || data.entries.length === 0)
 			return false;
+
+		builder._setIconAndNameFrofCombobox(data);
 
 		var title = data.text;
 		var valueNode = null;
@@ -529,6 +564,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var contentNode = {type: 'container', children: entries};
+
+		var iconPath = null;
+		if (data.command)
+			iconPath = builder._createIconPath(data.command);
 
 		builder._explorableEntry(parentContainer, title, contentNode, builder, valueNode, iconPath);
 
@@ -798,22 +837,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 
 		builder._explorableMenu(parentContainer, title, data.children, builder, content);
-	},
-
-	_fontNameControl: function(parentContainer, data, builder) {
-		var iconPath = 'images/lc_charfontname.svg';
-		data.entries = [ 'Liberation Sans' ];
-		if (!(data.selectedEntries && data.selectedEntries.length))
-			data.selectedEntries = [0];
-		builder._comboboxControl(parentContainer, data, builder, iconPath);
-	},
-
-	_fontHeightControl: function(parentContainer, data, builder) {
-		var iconPath = 'images/lc_fontheight.svg';
-		data.entries = [ '8', '10', '11', '12', '14', '16', '24', '32', '48' ];
-		if (!(data.selectedEntries && data.selectedEntries.length))
-			data.selectedEntries = [1];
-		builder._comboboxControl(parentContainer, data, builder, iconPath);
 	},
 
 	build: function(parent, data) {
