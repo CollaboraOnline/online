@@ -9,7 +9,8 @@
 L.ColorPicker = L.Class.extend({
 	options: {
 		selectedColor: '#CC0814',
-		noColorControl: true
+		noColorControl: true,
+		selectionCallback: function () {}
 	},
 
 	statics: {
@@ -46,6 +47,7 @@ L.ColorPicker = L.Class.extend({
 		this._createBasicColorSelectionMark();
 		this._selectedColorElement = selectedColorSample;
 		this._selectedColor = this.options.selectedColor;
+		this._selectionCallback = this.options.selectionCallback;
 		this._initIndexes();
 		this._container = this._createControl();
 		this._initialized = true;
@@ -233,6 +235,7 @@ L.ColorPicker = L.Class.extend({
 		this._selectedColor = '#' + this._getColorCode(this._selectedTintIndex, L.ColorPicker.TINT);
 		this._updateNoColorControl(false);
 		this._updateSelectedColorElement();
+		this._selectionCallback(this._getColorCode(this._selectedTintIndex, L.ColorPicker.TINT));
 	},
 
 	_updateSelectedSample: function (colorIndex, selectedColorIndex, colorType) {

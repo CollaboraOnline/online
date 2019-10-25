@@ -732,11 +732,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var iconPath = builder._createIconPath(data.command);
 		var noColorControl = data.command !== '.uno:FontColor';
 
+		var callback = function(color) {
+			var command = data.command + '?Color:string=' + color;
+			builder.map.sendUnoCommand(command);
+		};
+
 		var colorPickerControl = new L.ColorPicker(
 			valueNode,
 			{
 				selectedColor: selectedColor,
-				noColorControl: noColorControl
+				noColorControl: noColorControl,
+				selectionCallback: callback
 			});
 		builder._colorPickers.push(colorPickerControl);
 
