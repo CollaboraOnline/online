@@ -260,7 +260,7 @@
 		border-right: none;
 		height: 35px !important;
 	}
-	#tb_actionbar_item_undo .w2ui-tb-image, #tb_actionbar_item_redo .w2ui-tb-image, #tb_actionbar_item_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_prev  .w2ui-tb-image, #tb_actionbar_item_next  .w2ui-tb-image, #tb_actionbar_item_insertion_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_insertcomment .w2ui-tb-image{
+	#tb_actionbar_item_undo .w2ui-tb-image, #tb_actionbar_item_redo .w2ui-tb-image, #tb_actionbar_item_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_prev  .w2ui-tb-image, #tb_actionbar_item_next  .w2ui-tb-image, #tb_actionbar_item_insertion_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_insertcomment .w2ui-tb-image, #tb_actionbar_item_fullscreen-presentation .w2ui-tb-image{
 	  min-width: 38px;
 	}
 
@@ -931,6 +931,7 @@ button.leaflet-control-search-next
 .w2ui-icon.closetoolbar{ background: url('images/close_toolbar.svg') no-repeat center !important; }
 .w2ui-icon.sidebar_modify_page{ background: url('images/lc_formproperties.svg') no-repeat center !important; }
 .w2ui-icon.mobile_wizard{ background: url('images/lc_mobile_wizard.svg') no-repeat center !important; }
+.w2ui-icon.fullscreen-presentation{ background: url('images/lc_fullscreen-presentation-toolbar-mobile.svg') no-repeat center !important;}
 .w2ui-icon.insertion_mobile_wizard{ background: url('images/lc_insertion_mobile_wizard.svg') no-repeat center !important; }
 .w2ui-icon.insertcomment{ background: url('images/lc_insertcomment.svg') no-repeat center !important; }
 
