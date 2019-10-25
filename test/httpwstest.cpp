@@ -98,7 +98,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPasteBlank);
-    CPPUNIT_TEST(testRenderingOptions);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithoutPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithWrongPassword);
     CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
@@ -152,7 +151,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testReloadWhileDisconnecting();
     void testExcelLoad();
     void testPasteBlank();
-    void testRenderingOptions();
     void testPasswordProtectedDocumentWithoutPassword();
     void testPasswordProtectedDocumentWithWrongPassword();
     void testPasswordProtectedDocumentWithCorrectPassword();
@@ -739,41 +737,6 @@ void HTTPWSTest::testPasteBlank()
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
         const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testRenderingOptions()
-{
-    const char* testname = "renderingOptions ";
-    try
-    {
-        // Load a document and get its size.
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("hide-whitespace.odt", documentPath, documentURL, testname);
-
-        const std::string options = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
-        sendTextFrame(socket, "status");
-        const auto status = assertResponseString(socket, "status:", testname);
-
-        // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
-        Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.count());
-
-        const std::string token = tokens[5];
-        const std::string prefix = "height=";
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
-        const int height = std::stoi(token.substr(prefix.size()));
-        // HideWhitespace was ignored, this was 32532, should be around 16706.
-        CPPUNIT_ASSERT(height < 20000);
     }
     catch (const Poco::Exception& exc)
     {
