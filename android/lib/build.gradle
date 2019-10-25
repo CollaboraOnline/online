@@ -11,6 +11,11 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_STL=c++_shared"
+            }
+        }
     }
 
     buildTypes {
