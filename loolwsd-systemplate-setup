@@ -28,6 +28,7 @@ find etc/hosts etc/nsswitch.conf etc/resolv.conf \
      lib/libresolv* lib64/libresolv* lib/*/libresolv* \
      var/cache/fontconfig \
      etc/fonts \
+     etc/timezone \
      etc/localtime \
      usr/lib/locale/en_US.utf8 \
      usr/lib/locale/C.UTF-8 \
@@ -40,6 +41,8 @@ find etc/hosts etc/nsswitch.conf etc/resolv.conf \
 	 -type f 2>/dev/null
 
 find etc/fonts \
+     etc/timezone \
+     etc/localtime \
      etc/resolv.conf \
      lib/ld-* lib64/ld-* \
      lib/libnss_* lib64/libnss_* lib/*/libnss_* \
