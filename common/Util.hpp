@@ -935,6 +935,9 @@ int main(int argc, char**argv)
     //// Return time in ISO8061 fraction format
     std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time);
 
+    /// Convert a time_point to iso8601 formatted string.
+    std::string time_point_to_iso8601(std::chrono::system_clock::time_point tp);
+
     //// Convert time from ISO8061 fraction format
     std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName);
 

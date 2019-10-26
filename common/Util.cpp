@@ -25,7 +25,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
-#include <time.h>
 
 #include <atomic>
 #include <cassert>
@@ -33,6 +32,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -836,31 +836,55 @@ namespace Util
         return oss.str();
     }
 
-    std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName)
+    std::string time_point_to_iso8601(std::chrono::system_clock::time_point tp)
+    {
+        const std::time_t tt = std::chrono::system_clock::to_time_t(tp);
+        std::tm tm;
+        gmtime_r(&tt, &tm);
+
+        std::ostringstream oss;
+        oss << tm.tm_year + 1900 << '-' << std::setfill('0') << std::setw(2) << tm.tm_mon + 1 << '-'
+            << std::setfill('0') << std::setw(2) << tm.tm_mday << 'T';
+        oss << std::setfill('0') << std::setw(2) << tm.tm_hour << ':';
+        oss << std::setfill('0') << std::setw(2) << tm.tm_min << ':';
+        const std::chrono::duration<double> sec
+            = tp - std::chrono::system_clock::from_time_t(tt) + std::chrono::seconds(tm.tm_sec);
+        if (sec.count() < 10)
+            oss << '0';
+        oss << std::fixed << sec.count() << 'Z';
+
+        return oss.str();
+    }
+
+    std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time,
+                                                             const std::string& logName)
     {
         std::chrono::system_clock::time_point timestamp;
         std::tm tm;
-        const char *cstr = iso8601Time.c_str();
-        const char *trailing;
+        const char* cstr = iso8601Time.c_str();
+        const char* trailing;
         if (!(trailing = strptime(cstr, "%Y-%m-%dT%H:%M:%S", &tm)))
         {
             LOG_WRN(logName << " [" << iso8601Time << "] is in invalid format."
-                << "Returning " << timestamp.time_since_epoch().count());
+                            << "Returning " << timestamp.time_since_epoch().count());
             return timestamp;
         }
+
         timestamp += std::chrono::seconds(timegm(&tm));
         if (trailing[0] == '\0')
             return timestamp;
-        double us;
+
         if (trailing[0] != '.')
         {
             LOG_WRN(logName << " [" << iso8601Time << "] is in invalid format."
-                    << ". Returning " << timestamp.time_since_epoch().count());
+                            << ". Returning " << timestamp.time_since_epoch().count());
             return timestamp;
         }
-        char *end = nullptr;
-        us = strtod(trailing, &end);
-        std::size_t seconds_us = us * std::chrono::system_clock::period::den / std::chrono::system_clock::period::num;
+
+        char* end = nullptr;
+        const size_t us = strtoul(trailing + 1, &end, 10); // Skip the '.' and read as integer.
+        const std::size_t seconds_us = us * std::chrono::system_clock::period::den
+                                       / std::chrono::system_clock::period::num / 1000000;
 
         timestamp += std::chrono::system_clock::duration(seconds_us);
 

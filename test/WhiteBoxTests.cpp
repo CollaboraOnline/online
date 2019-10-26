@@ -738,37 +738,57 @@ void WhiteBoxTests::testTime()
 {
     std::ostringstream oss;
 
-	std::chrono::system_clock::time_point t(std::chrono::nanoseconds(1567444337874777375));
-    CPPUNIT_ASSERT_EQUAL(std::string("2019-09-02T17:12:17.874777Z"), Util::getIso8601FracformatTime(t));
+    std::chrono::system_clock::time_point t(std::chrono::nanoseconds(1567444337874777375));
+    CPPUNIT_ASSERT_EQUAL(std::string("2019-09-02T17:12:17.874777Z"),
+                         Util::getIso8601FracformatTime(t));
 
     t = std::chrono::system_clock::time_point(std::chrono::nanoseconds(0));
-    CPPUNIT_ASSERT_EQUAL(std::string("1970-01-01T00:00:00.000000Z"), Util::getIso8601FracformatTime(t));
+    CPPUNIT_ASSERT_EQUAL(std::string("1970-01-01T00:00:00.000000Z"),
+                         Util::getIso8601FracformatTime(t));
 
-    t = Util::iso8601ToTimestamp("2019-09-02T17:12:17.874777Z", "LastModifiedTime");
-    oss << t.time_since_epoch().count();
-    CPPUNIT_ASSERT_EQUAL(std::string("1567444337874777000"), oss.str());
-
-    oss.str(std::string());
     t = Util::iso8601ToTimestamp("1970-01-01T00:00:00.000000Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
     CPPUNIT_ASSERT_EQUAL(std::string("0"), oss.str());
+    CPPUNIT_ASSERT_EQUAL(std::string("1970-01-01T00:00:00.000000Z"),
+                         Util::time_point_to_iso8601(t));
 
     oss.str(std::string());
-    t = std::chrono::system_clock::now();
-    uint64_t t_in_micros = (t.time_since_epoch().count() / 1000) * 1000;
-    oss << t_in_micros;
-    std::string first = oss.str();
-    std::string s = Util::getIso8601FracformatTime(t);
-    t = Util::iso8601ToTimestamp(s, "LastModifiedTime");
-    oss.str(std::string());
+    t = Util::iso8601ToTimestamp("2019-09-02T17:12:17.874777Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
-    CPPUNIT_ASSERT_EQUAL(first, oss.str());
+    CPPUNIT_ASSERT_EQUAL(std::string("1567444337874777000"), oss.str());
+    CPPUNIT_ASSERT_EQUAL(std::string("2019-09-02T17:12:17.874777Z"),
+                         Util::time_point_to_iso8601(t));
+
+    oss.str(std::string());
+    t = Util::iso8601ToTimestamp("2019-10-24T14:31:28.063730Z", "LastModifiedTime");
+    oss << t.time_since_epoch().count();
+    CPPUNIT_ASSERT_EQUAL(std::string("1571927488063730000"), oss.str());
+    CPPUNIT_ASSERT_EQUAL(std::string("2019-10-24T14:31:28.063730Z"),
+                         Util::time_point_to_iso8601(t));
+
+    t = Util::iso8601ToTimestamp("2020-02-20T20:02:20.100000Z", "LastModifiedTime");
+    CPPUNIT_ASSERT_EQUAL(std::string("2020-02-20T20:02:20.100000Z"),
+                         Util::time_point_to_iso8601(t));
 
     t = std::chrono::system_clock::time_point();
     CPPUNIT_ASSERT_EQUAL(std::string("Thu, 01 Jan 1970 00:00:00"), Util::getHttpTime(t));
 
     t = std::chrono::system_clock::time_point(std::chrono::nanoseconds(1569592993495336798));
     CPPUNIT_ASSERT_EQUAL(std::string("Fri, 27 Sep 2019 14:03:13"), Util::getHttpTime(t));
+
+    for (int i = 0; i < 100; ++i)
+    {
+        t = std::chrono::system_clock::now();
+        const uint64_t t_in_micros = (t.time_since_epoch().count() / 1000) * 1000;
+
+        const std::string s = Util::getIso8601FracformatTime(t);
+        t = Util::iso8601ToTimestamp(s, "LastModifiedTime");
+        CPPUNIT_ASSERT_EQUAL(std::to_string(t_in_micros),
+                             std::to_string(t.time_since_epoch().count()));
+
+        // Allow a small delay to get a different timestamp on next iteration.
+        sleep(0);
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
