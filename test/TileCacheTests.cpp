@@ -430,20 +430,22 @@ void TileCacheTests::testDisconnectMultiView()
 
 void TileCacheTests::testUnresponsiveClient()
 {
-    const char* testname = "testUnresponsiveClient";
+    const std::string testname = "unresponsiveClient-";
+
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL, "unresponsiveClient ");
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     TST_LOG("Connecting first client.");
-    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-1 ");
+    std::shared_ptr<LOOLWebSocket> socket1
+        = loadDocAndGetSocket(_uri, documentURL, testname + "1 ");
 
     TST_LOG("Connecting second client.");
-    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "unresponsiveClient-2 ");
+    std::shared_ptr<LOOLWebSocket> socket2
+        = loadDocAndGetSocket(_uri, documentURL, testname + "2 ");
 
     // Pathologically request tiles and fail to read (say slow connection).
     // Meanwhile, verify that others can get all tiles fine.
     // TODO: Track memory consumption to verify we don't buffer too much.
-
     std::ostringstream oss;
     for (int i = 0; i < 1000; ++i)
     {
@@ -454,24 +456,31 @@ void TileCacheTests::testUnresponsiveClient()
     for (int x = 0; x < 8; ++x)
     {
         // Invalidate to force re-rendering.
-        sendTextFrame(socket2, "uno .uno:SelectAll");
-        sendTextFrame(socket2, "uno .uno:Delete");
-        assertResponseString(socket2, "invalidatetiles:", "client2 ");
-        sendTextFrame(socket2, "paste mimetype=text/html\n" + documentContents);
-        assertResponseString(socket2, "invalidatetiles:", "client2 ");
+        deleteAll(socket2, testname);
+        assertResponseString(socket2, "invalidatetiles:", testname + "2 ");
+        sendTextFrame(socket2, "paste mimetype=text/html\n" + documentContents, testname + "2 ");
+        assertResponseString(socket2, "invalidatetiles:", testname + "2 ");
 
         // Ask for tiles and don't read!
-        sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
+        sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 "
+                               "tileposx=0,3840,7680,11520,0,3840,7680,11520 "
+                               "tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 "
+                               "tileheight=3840",
+                      testname + "1 ");
 
         // Verify that we get all 8 tiles.
-        sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840");
+        sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 "
+                               "tileposx=0,3840,7680,11520,0,3840,7680,11520 "
+                               "tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 "
+                               "tileheight=3840",
+                      testname + "2 ");
         for (int i = 0; i < 8; ++i)
         {
-            std::vector<char> tile = getResponseMessage(socket2, "tile:", "client2 ");
+            std::vector<char> tile = getResponseMessage(socket2, "tile:", testname + "2 ");
             CPPUNIT_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
         }
         /// Send canceltiles message to clear tiles-on-fly list, otherwise wsd waits for tileprocessed messages
-        sendTextFrame(socket2, "canceltiles");
+        sendTextFrame(socket2, "canceltiles", testname + "2 ");
     }
 }
 
