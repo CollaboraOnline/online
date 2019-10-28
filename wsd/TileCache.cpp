@@ -595,7 +595,9 @@ void TileCache::ensureCacheSize()
     std::sort(wids.begin(), wids.end(),
               [](const WidSize &a, const WidSize &b) { return a._wid < b._wid; });
 
-    TileWireId maxToRemove;
+    // FIXME: should we just take a wid 25% into the list ?
+    TileWireId maxToRemove = wids.front()._wid;
+
     // do we have (the very rare) WID wrap-around
     if (wids.back()._wid - wids.front()._wid > 256*256*256)
         maxToRemove = wids.back()._wid;
