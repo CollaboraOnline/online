@@ -98,12 +98,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPasteBlank);
-    CPPUNIT_TEST(testPasswordProtectedDocumentWithoutPassword);
-    CPPUNIT_TEST(testPasswordProtectedDocumentWithWrongPassword);
-    CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPassword);
-    CPPUNIT_TEST(testPasswordProtectedDocumentWithCorrectPasswordAgain);
-    CPPUNIT_TEST(testPasswordProtectedOOXMLDocument);
-    CPPUNIT_TEST(testPasswordProtectedBinaryMSOfficeDocument);
     CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testSlideShow);
     CPPUNIT_TEST(testInactiveClient);
@@ -151,12 +145,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testReloadWhileDisconnecting();
     void testExcelLoad();
     void testPasteBlank();
-    void testPasswordProtectedDocumentWithoutPassword();
-    void testPasswordProtectedDocumentWithWrongPassword();
-    void testPasswordProtectedDocumentWithCorrectPassword();
-    void testPasswordProtectedDocumentWithCorrectPasswordAgain();
-    void testPasswordProtectedOOXMLDocument();
-    void testPasswordProtectedBinaryMSOfficeDocument();
     void testInsertDelete();
     void testSlideShow();
     void testInactiveClient();
@@ -737,139 +725,6 @@ void HTTPWSTest::testPasteBlank()
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
         const auto selection = assertResponseString(socket, "textselectioncontent:", testname);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testPasswordProtectedDocumentWithoutPassword()
-{
-    const char* testname = "passwordProtectedDocumentWithoutPassword ";
-    try
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        // Send a load request without password first
-        sendTextFrame(socket, "load url=" + documentURL);
-
-        const auto response = getResponseString(socket, "error:", testname);
-        Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.count());
-
-        std::string errorCommand;
-        std::string errorKind;
-        LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
-        LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
-        CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-        CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testPasswordProtectedDocumentWithWrongPassword()
-{
-    const char* testname = "passwordProtectedDocumentWithWrongPassword ";
-    try
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        // Send a load request with incorrect password
-        sendTextFrame(socket, "load url=" + documentURL + " password=2");
-
-        const auto response = getResponseString(socket, "error:", testname);
-        Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.count());
-
-        std::string errorCommand;
-        std::string errorKind;
-        LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
-        LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
-        CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-        CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPassword()
-{
-    const char* testname = "passwordProtectedDocumentWithCorrectPassword ";
-    try
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.ods", documentPath, documentURL, testname);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        // Send a load request with correct password
-        sendTextFrame(socket, "load url=" + documentURL + " password=1");
-
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket, testname));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testPasswordProtectedDocumentWithCorrectPasswordAgain()
-{
-    testPasswordProtectedDocumentWithCorrectPassword();
-}
-
-void HTTPWSTest::testPasswordProtectedOOXMLDocument()
-{
-    const char* testname = "passwordProtectedOOXMLDocument ";
-    try
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.docx", documentPath, documentURL, testname);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        // Send a load request with correct password
-        sendTextFrame(socket, "load url=" + documentURL + " password=abc");
-
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket, testname));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testPasswordProtectedBinaryMSOfficeDocument()
-{
-    const char* testname = "passwordProtectedBinaryMSOfficeDocument ";
-    try
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("password-protected.doc", documentPath, documentURL, testname);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        // Send a load request with correct password
-        sendTextFrame(socket, "load url=" + documentURL + " password=abc");
-
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL, isDocumentLoaded(socket, testname));
     }
     catch (const Poco::Exception& exc)
     {
