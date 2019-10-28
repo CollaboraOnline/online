@@ -60,6 +60,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testDesc);
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
+    CPPUNIT_TEST(testSize);
     CPPUNIT_TEST(testCancelTiles);
     // unstable
     // CPPUNIT_TEST(testCancelTilesMultiView);
@@ -95,6 +96,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testDesc();
     void testSimple();
     void testSimpleCombine();
+    void testSize();
     void testCancelTiles();
     void testCancelTilesMultiView();
     void testDisconnectMultiView();
@@ -260,6 +262,35 @@ void TileCacheTests::testSimpleCombine()
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
     std::vector<char> tile2b = getResponseMessage(socket2, "tile:", testname);
     CPPUNIT_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
+}
+
+void TileCacheTests::testSize()
+{
+    // Create TileCache and pretend the file was modified as recently as
+    // now, so it discards the cached data.
+    TileCache tc("doc.ods", std::chrono::system_clock::time_point());
+
+    int nviewid = 0;
+    int part = 0;
+    int width = 256;
+    int height = 256;
+    int tilePosX = 0;
+    int tileWidth = 3840;
+    int tileHeight = 3840;
+    TileWireId id = 0;
+    const std::vector<char> data = genRandomData(4096);
+
+    // Churn the cache somewhat
+    size_t maxSize = (data.size() + sizeof (TileDesc)) * 10;
+    tc.setMaxCacheSize(maxSize);
+    for (int tilePosY = 0; tilePosY < 20; tilePosY++)
+    {
+        TileDesc tile(nviewid, part, width, height, tilePosX, tilePosY * tileHeight,
+                      tileWidth, tileHeight, -1, 0, -1, false);
+        tile.setWireId(id++);
+        tc.saveTileAndNotify(tile, data.data(), data.size());
+    }
+    CPPUNIT_ASSERT_MESSAGE("tile cache too big", tc.getMemorySize() < maxSize);
 }
 
 void TileCacheTests::testCancelTiles()

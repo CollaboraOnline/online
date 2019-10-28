@@ -362,6 +362,9 @@ public:
     /// For testing only [!]
     std::vector<std::shared_ptr<ClientSession>> getSessionsTestOnlyUnsafe();
 
+    /// Estimate memory usage / bytes
+    size_t getMemorySize() const;
+
 private:
 
     /// Loads a document from the public URI into the jail.

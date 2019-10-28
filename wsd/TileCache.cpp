@@ -35,7 +35,9 @@ TileCache::TileCache(const std::string& docURL,
                      const std::chrono::system_clock::time_point& modifiedTime,
                      bool dontCache) :
     _docURL(docURL),
-    _dontCache(dontCache)
+    _dontCache(dontCache),
+    _cacheSize(0),
+    _maxCacheSize(512*1024)
 {
 #ifndef BUILDING_TESTS
     LOG_INF("TileCache ctor for uri [" << LOOLWSD::anonymizeUrl(_docURL) <<
@@ -56,6 +58,7 @@ TileCache::~TileCache()
 void TileCache::clear()
 {
     _cache.clear();
+    _cacheSize = 0;
     for (auto i : _streamCache)
         i.clear();
     LOG_INF("Completely cleared tile cache for: " << _docURL);
@@ -301,6 +304,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height, i
         if (intersectsTile(it->first, part, x, y, width, height, normalizedViewId))
         {
             LOG_TRC("Removing tile: " << it->first.serialize());
+            _cacheSize -= itemCacheSize(it->second);
             it = _cache.erase(it);
         }
         else
@@ -538,9 +542,100 @@ void TileCache::saveDataToCache(const TileDesc &desc, const char *data, const si
     if (_dontCache)
         return;
 
+    ensureCacheSize();
+
     TileCache::Tile tile = std::make_shared<std::vector<char>>(size);
     std::memcpy(tile->data(), data, size);
-    _cache[desc] = tile;
+    auto res = _cache.insert(std::make_pair(desc, tile));
+    if (!res.second)
+    {
+        _cacheSize -= itemCacheSize(res.first->second);
+        _cache[desc] = tile;
+    }
+    _cacheSize += itemCacheSize(tile);
+}
+
+size_t TileCache::itemCacheSize(const Tile &tile)
+{
+    return tile->size() + sizeof(TileDesc);
+}
+
+void TileCache::assertCacheSize()
+{
+#ifdef ENABLE_DEBUG
+    {
+        size_t recalcSize = 0;
+        for (auto &it : _cache) {
+            recalcSize += itemCacheSize(it.second);
+        }
+        assert(recalcSize == _cacheSize);
+    }
+#endif
+}
+
+void TileCache::ensureCacheSize()
+{
+    assertCacheSize();
+
+    if (_cacheSize < _maxCacheSize || _cache.size() < 2)
+        return;
+
+    LOG_TRC("Cleaning tile cache of size " << _cacheSize << " vs. " << _maxCacheSize <<
+            " with " << _cache.size() << " entries");
+
+    struct WidSize {
+        TileWireId _wid;
+        size_t     _size;
+        WidSize(TileWireId w, size_t s) : _wid(w), _size(s) {}
+    };
+    std::vector<WidSize> wids;
+    for (auto &it : _cache)
+        wids.push_back(WidSize(it.first.getWireId(),
+                               itemCacheSize(it.second)));
+    std::sort(wids.begin(), wids.end(),
+              [](const WidSize &a, const WidSize &b) { return a._wid < b._wid; });
+
+    TileWireId maxToRemove;
+    // do we have (the very rare) WID wrap-around
+    if (wids.back()._wid - wids.front()._wid > 256*256*256)
+        maxToRemove = wids.back()._wid;
+    // calculate which wid to start at.
+    else
+    {
+        size_t total = 0;
+        for (auto &it : wids)
+        {
+            total += it._size;
+            maxToRemove = it._wid;
+            if (total > _maxCacheSize/4)
+                break;
+        }
+    }
+    LOG_TRC("cleaning up to wid " << maxToRemove << " between " <<
+            wids.front()._wid << " and " << wids.back()._wid);
+
+    for (auto it = _cache.begin(); it != _cache.end();)
+    {
+        if (it->first.getWireId() <= maxToRemove)
+        {
+            LOG_TRC("cleaned out tile: " << it->first.serialize());
+            _cacheSize -= itemCacheSize(it->second);
+            it = _cache.erase(it);
+        }
+        else
+            ++it;
+    }
+
+    LOG_TRC("Cache is now of size " << _cacheSize << " and " <<
+            _cache.size() << " entries after cleaning");
+
+    assertCacheSize();
+}
+
+void TileCache::setMaxCacheSize(size_t cacheSize)
+{
+    _maxCacheSize = cacheSize;
+    ensureCacheSize();
 }
 
 void TileCache::saveDataToStreamCache(StreamType type, const std::string &fileName, const char *data, const size_t size)
@@ -565,19 +660,12 @@ void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 
 void TileCache::dumpState(std::ostream& os)
 {
+    os << "  tile cache: num: " << _cache.size() << " size: " << _cacheSize << " bytes\n";
+    for (const auto& it : _cache)
     {
-        size_t num = 0, size = 0;
-        for (const auto& it : _cache)
-        {
-            num++; size += it.second->size();
-        }
-        os << "  tile cache: num: " << num << " size: " << size << " bytes\n";
-        for (const auto& it : _cache)
-        {
-            os << "    " << std::setw(4) << it.first.getWireId()
-               << "\t" << std::setw(6) << it.second->size() << " bytes"
-               << "\t'" << it.first.serialize() << "'\n" ;
-        }
+        os << "    " << std::setw(4) << it.first.getWireId()
+           << "\t" << std::setw(6) << it.second->size() << " bytes"
+           << "\t'" << it.first.serialize() << "'\n" ;
     }
 
     int type = 0;

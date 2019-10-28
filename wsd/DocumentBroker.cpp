@@ -290,6 +290,9 @@ void DocumentBroker::pollThread()
         const auto now = std::chrono::steady_clock::now();
 
 #if !MOBILEAPP
+        // a tile's data is ~8k, a 4k screen is ~128 256x256 tiles
+        _tileCache->setMaxCacheSize(8 * 1024 * 128 * _sessions.size());
+
         if (!_isLoaded && (limit_load_secs > 0) && (now > loadDeadline))
         {
             LOG_WRN("Doc [" << _docKey << "] is taking too long to load. Will kill process ["
@@ -1444,7 +1447,8 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             int dirty;
             if (message->getTokenInteger("dirty", dirty))
             {
-                Admin::instance().updateMemoryDirty(_docKey, dirty);
+                Admin::instance().updateMemoryDirty(
+                    _docKey, dirty + getMemorySize()/1024);
             }
         }
 #endif
@@ -1456,6 +1460,12 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     }
 
     return true;
+}
+
+size_t DocumentBroker::getMemorySize() const
+{
+    return sizeof(DocumentBroker) + _tileCache->getMemorySize() +
+        _sessions.size() * sizeof(ClientSession);
 }
 
 void DocumentBroker::invalidateTiles(const std::string& tiles, int normalizedViewId)

@@ -89,6 +89,7 @@ public:
     void clear();
 
     TileCache(const TileCache&) = delete;
+    TileCache& operator=(const TileCache&) = delete;
 
     /// Subscribes if no subscription exists and returns the version number.
     /// Otherwise returns 0 to signify a subscription exists.
@@ -141,12 +142,22 @@ public:
     bool hasTileBeingRendered(const TileDesc& tileDesc);
     int  getTileBeingRenderedVersion(const TileDesc& tileDesc);
 
+    /// Set the high watermark for tilecache size
+    void setMaxCacheSize(size_t cacheSize);
+
+    /// Get the current memory use.
+    size_t getMemorySize() const { return _cacheSize; }
+
     // Debugging bits ...
     void dumpState(std::ostream& os);
     void setThreadOwner(const std::thread::id &id) { _owner = id; }
     void assertCorrectThread();
+    void assertCacheSize();
 
 private:
+    void ensureCacheSize();
+    static size_t itemCacheSize(const Tile &tile);
+
     void invalidateTiles(int part, int x, int y, int width, int height, int normalizedViewId);
 
     /// Lookup tile in our cache.
@@ -172,6 +183,13 @@ private:
     std::thread::id _owner;
 
     bool _dontCache;
+
+    /// Approximate size of tilecache in bytes
+    size_t _cacheSize;
+
+    /// Maximum (high watermark) size of the tilecache in bytes
+    size_t _maxCacheSize;
+
     // FIXME: should we have a tile-desc to WID map instead and a simpler lookup ?
     std::unordered_map<TileCacheDesc, Tile,
                        TileCacheDescHasher,
