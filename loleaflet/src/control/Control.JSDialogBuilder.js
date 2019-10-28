@@ -734,6 +734,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var callback = function(color) {
 			var command = data.command + '?Color:string=' + color;
+			console.log(command);
 			builder.map.sendUnoCommand(command);
 		};
 

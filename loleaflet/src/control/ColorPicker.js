@@ -217,6 +217,7 @@ L.ColorPicker = L.Class.extend({
 		this._selectedColor = '#';
 		this._unselectSample(this._selectedTintIndex, L.ColorPicker.TINT);
 		this._updateNoColorControl(true);
+		this._selectionCallback('transparent');
 	},
 
 	onClickBasicColorSample: function (e) {
