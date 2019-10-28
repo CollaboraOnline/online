@@ -471,14 +471,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		plus.addEventListener('click', function() {
 			if (customCallback)
-				customCallback();
+				customCallback('spinfield', 'plus', div, this.value, builder);
 			else
 				builder.callback('spinfield', 'plus', div, this.value, builder);
 		});
 
 		minus.addEventListener('click', function() {
 			if (customCallback)
-				customCallback();
+				customCallback('spinfield', 'minus', div, this.value, builder);
 			else
 				builder.callback('spinfield', 'minus', div, this.value, builder);
 		});
@@ -838,8 +838,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var rowsData = { min: 0, id: 'rows', text: '2', label: _('Rows') };
 		var colsData = { min: 0, id: 'cols', text: '2', label: _('Columns') };
-		builder._spinfieldControl(content, rowsData, builder, function() { });
-		builder._spinfieldControl(content, colsData, builder, function() { });
+
+		var callbackFunction = function(objectType, eventType, object) {
+			if (eventType == 'plus') {
+				$(object).find('input').val(function(i, oldval) {
+					return parseInt(oldval, 10) + 1;
+				});
+			} else if (eventType == 'minus') {
+				$(object).find('input').val(function(i, oldval) {
+					if (oldval > 0)
+						return parseInt(oldval, 10) - 1;
+					else
+						return 0;
+				});
+			}
+		};
+
+		builder._spinfieldControl(content, rowsData, builder, callbackFunction);
+		builder._spinfieldControl(content, colsData, builder, callbackFunction);
 
 		var buttonData = { text: _('Insert table') };
 		builder._pushbuttonControl(content, buttonData, builder, function() {
