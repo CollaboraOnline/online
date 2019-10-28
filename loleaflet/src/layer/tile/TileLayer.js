@@ -1048,7 +1048,16 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._setFollowing(false, null);
 		}
 		this._map.lastActionByUser = false;
+
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
+		this._map.closePopup(this._map.hyperlinkPopup);
+		this._map.hyperlinkPopup = null;
+		if (obj.hyperlink.link) {
+			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
+				.setContent('<a href="' + obj.hyperlink.link + '" target="_blank">' + obj.hyperlink.link + '</a>')
+				.setLatLng(cursorPos)
+				.openOn(this._map);
+		}
 
 		if (!this._map._isFocused && (modifierViewId === this._viewId) && (this._map.getWinId === 0) && (this._map._permission === 'edit')) {
 			// Regain cursor if we had been out of focus and now have input.
