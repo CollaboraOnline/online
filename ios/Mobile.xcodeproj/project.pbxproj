@@ -1059,6 +1059,31 @@
 		BEB6524E216FD0CA00B8C09A /* stream.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stream.cxx; path = "../../ios-device/tools/source/stream/stream.cxx"; sourceTree = "<group>"; };
 		BEB6524F216FD0CA00B8C09A /* strmwnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmwnt.cxx; path = "../../ios-device/tools/source/stream/strmwnt.cxx"; sourceTree = "<group>"; };
 		BEB65250216FD0CA00B8C09A /* strmunx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmunx.cxx; path = "../../ios-device/tools/source/stream/strmunx.cxx"; sourceTree = "<group>"; };
+		BEBFC5602361D83400BECBD6 /* TransitionPreset.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransitionPreset.cxx; path = "../../ios-device/sd/source/core/TransitionPreset.cxx"; sourceTree = "<group>"; };
+		BEBFC5612361D83400BECBD6 /* drawdoc2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc2.cxx; path = "../../ios-device/sd/source/core/drawdoc2.cxx"; sourceTree = "<group>"; };
+		BEBFC5622361D83400BECBD6 /* sdpage_animations.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdpage_animations.cxx; path = "../../ios-device/sd/source/core/sdpage_animations.cxx"; sourceTree = "<group>"; };
+		BEBFC5632361D83400BECBD6 /* typemap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = typemap.cxx; path = "../../ios-device/sd/source/core/typemap.cxx"; sourceTree = "<group>"; };
+		BEBFC5642361D83400BECBD6 /* stlsheet.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stlsheet.cxx; path = "../../ios-device/sd/source/core/stlsheet.cxx"; sourceTree = "<group>"; };
+		BEBFC5652361D83400BECBD6 /* pglink.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pglink.cxx; path = "../../ios-device/sd/source/core/pglink.cxx"; sourceTree = "<group>"; };
+		BEBFC5662361D83400BECBD6 /* stlfamily.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stlfamily.cxx; path = "../../ios-device/sd/source/core/stlfamily.cxx"; sourceTree = "<group>"; };
+		BEBFC5672361D83400BECBD6 /* shapelist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = shapelist.cxx; path = "../../ios-device/sd/source/core/shapelist.cxx"; sourceTree = "<group>"; };
+		BEBFC5682361D83400BECBD6 /* drawdoc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc3.cxx; path = "../../ios-device/sd/source/core/drawdoc3.cxx"; sourceTree = "<group>"; };
+		BEBFC5692361D83400BECBD6 /* cusshow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cusshow.cxx; path = "../../ios-device/sd/source/core/cusshow.cxx"; sourceTree = "<group>"; };
+		BEBFC56A2361D83400BECBD6 /* CustomAnimationEffect.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomAnimationEffect.cxx; path = "../../ios-device/sd/source/core/CustomAnimationEffect.cxx"; sourceTree = "<group>"; };
+		BEBFC56B2361D83400BECBD6 /* PageListWatcher.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PageListWatcher.hxx; path = "../../ios-device/sd/source/core/PageListWatcher.hxx"; sourceTree = "<group>"; };
+		BEBFC56C2361D83400BECBD6 /* sdpage.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdpage.cxx; path = "../../ios-device/sd/source/core/sdpage.cxx"; sourceTree = "<group>"; };
+		BEBFC56D2361D83400BECBD6 /* drawdoc4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc4.cxx; path = "../../ios-device/sd/source/core/drawdoc4.cxx"; sourceTree = "<group>"; };
+		BEBFC56E2361D83400BECBD6 /* sdpage2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdpage2.cxx; path = "../../ios-device/sd/source/core/sdpage2.cxx"; sourceTree = "<group>"; };
+		BEBFC56F2361D83400BECBD6 /* CustomAnimationPreset.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomAnimationPreset.cxx; path = "../../ios-device/sd/source/core/CustomAnimationPreset.cxx"; sourceTree = "<group>"; };
+		BEBFC5702361D83500BECBD6 /* undoanim.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = undoanim.cxx; path = "../../ios-device/sd/source/core/undoanim.cxx"; sourceTree = "<group>"; };
+		BEBFC5712361D83500BECBD6 /* stlpool.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stlpool.cxx; path = "../../ios-device/sd/source/core/stlpool.cxx"; sourceTree = "<group>"; };
+		BEBFC5722361D83500BECBD6 /* drawdoc_animations.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc_animations.cxx; path = "../../ios-device/sd/source/core/drawdoc_animations.cxx"; sourceTree = "<group>"; };
+		BEBFC5732361D83500BECBD6 /* EffectMigration.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EffectMigration.cxx; path = "../../ios-device/sd/source/core/EffectMigration.cxx"; sourceTree = "<group>"; };
+		BEBFC5742361D83500BECBD6 /* PageListWatcher.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PageListWatcher.cxx; path = "../../ios-device/sd/source/core/PageListWatcher.cxx"; sourceTree = "<group>"; };
+		BEBFC5752361D83500BECBD6 /* drawdoc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc.cxx; path = "../../ios-device/sd/source/core/drawdoc.cxx"; sourceTree = "<group>"; };
+		BEBFC5762361D83500BECBD6 /* CustomAnimationCloner.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomAnimationCloner.cxx; path = "../../ios-device/sd/source/core/CustomAnimationCloner.cxx"; sourceTree = "<group>"; };
+		BEBFC5772361D83500BECBD6 /* sdiocmpt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdiocmpt.cxx; path = "../../ios-device/sd/source/core/sdiocmpt.cxx"; sourceTree = "<group>"; };
+		BEBFC5782361D83500BECBD6 /* anminfo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = anminfo.cxx; path = "../../ios-device/sd/source/core/anminfo.cxx"; sourceTree = "<group>"; };
 		BEEC453022A68111008E9F6C /* graphic.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphic.cxx; path = "../../ios-device/svtools/source/graphic/graphic.cxx"; sourceTree = "<group>"; };
 		BEEC453122A68112008E9F6C /* grfattr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grfattr.cxx; path = "../../ios-device/svtools/source/graphic/grfattr.cxx"; sourceTree = "<group>"; };
 		BEEC453222A68112008E9F6C /* descriptor.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = descriptor.hxx; path = "../../ios-device/svtools/source/graphic/descriptor.hxx"; sourceTree = "<group>"; };
@@ -1866,6 +1891,7 @@
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
 				BE34D1892190712C00815297 /* sc */,
+				BEBFC55E2361D7FC00BECBD6 /* sd */,
 				BE8C0370223FC4AC0048B7EA /* svl */,
 				BE7E6825229DAA8C00DE73C8 /* svtools */,
 				BEB0E5DC21CA93950085A0CF /* svx */,
@@ -2705,6 +2731,46 @@
 				BEB6524D216FD0CA00B8C09A /* vcompat.cxx */,
 			);
 			name = stream;
+			sourceTree = "<group>";
+		};
+		BEBFC55E2361D7FC00BECBD6 /* sd */ = {
+			isa = PBXGroup;
+			children = (
+				BEBFC55F2361D80D00BECBD6 /* core */,
+			);
+			name = sd;
+			sourceTree = "<group>";
+		};
+		BEBFC55F2361D80D00BECBD6 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				BEBFC5782361D83500BECBD6 /* anminfo.cxx */,
+				BEBFC5692361D83400BECBD6 /* cusshow.cxx */,
+				BEBFC5762361D83500BECBD6 /* CustomAnimationCloner.cxx */,
+				BEBFC56A2361D83400BECBD6 /* CustomAnimationEffect.cxx */,
+				BEBFC56F2361D83400BECBD6 /* CustomAnimationPreset.cxx */,
+				BEBFC5722361D83500BECBD6 /* drawdoc_animations.cxx */,
+				BEBFC5752361D83500BECBD6 /* drawdoc.cxx */,
+				BEBFC5612361D83400BECBD6 /* drawdoc2.cxx */,
+				BEBFC5682361D83400BECBD6 /* drawdoc3.cxx */,
+				BEBFC56D2361D83400BECBD6 /* drawdoc4.cxx */,
+				BEBFC5732361D83500BECBD6 /* EffectMigration.cxx */,
+				BEBFC5742361D83500BECBD6 /* PageListWatcher.cxx */,
+				BEBFC56B2361D83400BECBD6 /* PageListWatcher.hxx */,
+				BEBFC5652361D83400BECBD6 /* pglink.cxx */,
+				BEBFC5772361D83500BECBD6 /* sdiocmpt.cxx */,
+				BEBFC5622361D83400BECBD6 /* sdpage_animations.cxx */,
+				BEBFC56C2361D83400BECBD6 /* sdpage.cxx */,
+				BEBFC56E2361D83400BECBD6 /* sdpage2.cxx */,
+				BEBFC5672361D83400BECBD6 /* shapelist.cxx */,
+				BEBFC5662361D83400BECBD6 /* stlfamily.cxx */,
+				BEBFC5712361D83500BECBD6 /* stlpool.cxx */,
+				BEBFC5642361D83400BECBD6 /* stlsheet.cxx */,
+				BEBFC5602361D83400BECBD6 /* TransitionPreset.cxx */,
+				BEBFC5632361D83400BECBD6 /* typemap.cxx */,
+				BEBFC5702361D83500BECBD6 /* undoanim.cxx */,
+			);
+			name = core;
 			sourceTree = "<group>";
 		};
 		BEEC452F22A680F6008E9F6C /* graphic */ = {
