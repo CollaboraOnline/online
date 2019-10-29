@@ -12,10 +12,24 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 	partsFocused: false,
 
+	initialize: function (container, preview, options) {
+		L.setOptions(this, options);
+
+		if (!container) {
+			container = L.DomUtil.get('presentation-controls-wrapper');
+		}
+
+		if (!preview) {
+			preview = L.DomUtil.get('slide-sorter');
+		}
+
+		this._container = container;
+		this._partsPreviewCont = preview;
+	},
+
 	onAdd: function (map) {
 		this._previewInitialized = false;
 		this._previewTiles = [];
-		this._partsPreviewCont = L.DomUtil.get('slide-sorter');
 		this._direction = window.mode.isMobile() ? 'x' : 'y';
 		this._scrollY = 0;
 
@@ -36,7 +50,7 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 
 		if (docType === 'presentation' || docType === 'drawing') {
-			var presentationControlWrapperElem = L.DomUtil.get('presentation-controls-wrapper');
+			var presentationControlWrapperElem = this._container;
 			var visible = L.DomUtil.getStyle(presentationControlWrapperElem, 'display');
 			if (visible === 'none')
 				return;
@@ -45,16 +59,18 @@ L.Control.PartsPreview = L.Control.extend({
 				// make room for the preview
 				var control = this;
 				var docContainer = this._map.options.documentContainer;
-				L.DomUtil.addClass(docContainer, 'parts-preview-document');
-				setTimeout(L.bind(function () {
-					this._map.invalidateSize();
-					$('.scroll-container').mCustomScrollbar('update');
-				}, this), 500);
+				if (!L.DomUtil.hasClass(docContainer, 'parts-preview-document')) {
+					L.DomUtil.addClass(docContainer, 'parts-preview-document');
+					setTimeout(L.bind(function () {
+						this._map.invalidateSize();
+						$('.scroll-container').mCustomScrollbar('update');
+					}, this), 500);
+				}
 				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
 				var bottomBound;
 				if (this._direction === 'x') {
-					$('#presentation-controls-wrapper').css({ width: '100%'});
-					$('#slide-sorter').css({ height: this.options.maxHeight + 'px' });
+					$(this._container).css({ width: '100%'});
+					$(this._partsPreviewCont).css({ height: this.options.maxHeight + 'px' });
 					this._previewContTop = previewContBB.left;
 					bottomBound = previewContBB.right + previewContBB.width / 2;
 				} else {
@@ -62,7 +78,7 @@ L.Control.PartsPreview = L.Control.extend({
 					bottomBound = previewContBB.bottom + previewContBB.height / 2;
 				}
 
-				$('#slide-sorter').mCustomScrollbar({
+				$(this._partsPreviewCont).mCustomScrollbar({
 					axis: this._direction,
 					theme: 'dark-thick',
 					scrollInertia: 0,
@@ -91,7 +107,7 @@ L.Control.PartsPreview = L.Control.extend({
 					}
 				}, this);
 
-				this._scrollContainer = $('#slide-sorter .mCSB_container').get(0);
+				this._scrollContainer = $(this._partsPreviewCont).find('.mCSB_container').get(0);
 
 				// Add a special frame just as a drop-site for reordering.
 				var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
@@ -222,31 +238,31 @@ L.Control.PartsPreview = L.Control.extend({
 		if (e === 'prev' || e === 'next') {
 			this._map.setPart(e);
 			var nodePos;
-			var node = $('#slide-sorter .mCSB_container .preview-frame')[this._map.getCurrentPartNumber()];
+			var node = $(this._partsPreviewCont).find('.mCSB_container .preview-frame')[this._map.getCurrentPartNumber()];
 			if (!isVisible(node)) {
 				if (e === 'prev') {
 					setTimeout(function () {
-						$('#slide-sorter').mCustomScrollbar('scrollTo', node);
+						$(this._partsPreviewCont).mCustomScrollbar('scrollTo', node);
 					}, 50);
 				} else if (this._direction === 'x') {
 					var nodeWidth = $(node).width();
-					var sliderWidth = $('#slide-sorter').width();
+					var sliderWidth = $(this._partsPreviewCont).width();
 					nodePos = $(node).position().left;
 					setTimeout(function () {
-						$('#slide-sorter').mCustomScrollbar('scrollTo', nodePos-(sliderWidth-nodeWidth-nodeWidth/2));
+						$(this._partsPreviewCont).mCustomScrollbar('scrollTo', nodePos-(sliderWidth-nodeWidth-nodeWidth/2));
 					}, 50);
 				} else {
 					var nodeHeight = $(node).height();
-					var sliderHeight= $('#slide-sorter').height();
+					var sliderHeight= $(this._partsPreviewCont).height();
 					nodePos = $(node).position().top;
 					setTimeout(function () {
-						$('#slide-sorter').mCustomScrollbar('scrollTo', nodePos-(sliderHeight-nodeHeight-nodeHeight/2));
+						$(this._partsPreviewCont).mCustomScrollbar('scrollTo', nodePos-(sliderHeight-nodeHeight-nodeHeight/2));
 					}, 50);
 				}
 			}
 			return;
 		}
-		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 
@@ -335,7 +351,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_updatePreviewIds: function () {
-		$('#slide-sorter').mCustomScrollbar('update');
+		$(this._partsPreviewCont).mCustomScrollbar('update');
 	},
 
 	_insertPreview: function (e) {
@@ -412,7 +428,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_handleDragStart: function (e) {
 		// To avoid having to add a new message to move an arbitrary part, let's select the
 		// slide that is being dragged.
-		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 			this.partsPreview._map.setPart(partId);
@@ -448,7 +464,7 @@ L.Control.PartsPreview = L.Control.extend({
 			e.stopPropagation();
 		}
 
-		var part = $('#slide-sorter .mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
 			if (partId < 0)
@@ -473,6 +489,6 @@ L.Control.PartsPreview = L.Control.extend({
 
 });
 
-L.control.partsPreview = function (options) {
-	return new L.Control.PartsPreview(options);
+L.control.partsPreview = function (container, preview, options) {
+	return new L.Control.PartsPreview(container, preview, options);
 };
