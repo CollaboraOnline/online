@@ -91,7 +91,7 @@
 		display: none !important;
 	}
 	#Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript,#AlignLeft, #AlignRight, #AlignHorizontalCenter, #AlignBlock, #ParaRightToLeft, #ParaLeftToRight, #AlignTop, #AlignVCenter, #AlignBottom, #IncrementIndent, #DecrementIndent, #LeftPara, #RightPara, #CenterPara, #JustifyPara, #DefaultBullet, #DefaultNumbering, #ParaspaceIncrease, #ParaspaceDecrease, #LineSpacing, #HangingIndent, #CellVertTop, #CellVertCenter, #CellVertBottom, #ParaspaceIncrease, #ParaspaceDecrease{
-		padding: 24px 28px 24px 4% !important;
+		padding: 16px 28px 16px 4% !important;
 		margin: 0px !important;
 		float:left;
 	}
@@ -106,10 +106,12 @@
 	}
 	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel{clear:both;}
 	#BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel, .mobile-wizard.ui-text {
-		border-bottom: 1px solid #eeeeee;
-		color: #dddddd !important;
+		border-bottom: 1px solid #c2d5ed;
+		color: #b3c5dc !important;
 		margin-left: 4%;
 		width: 98%;
+		font-size: 12px;
+		font-weight: bold;
 	}
 	[title=Line] > #XLineColor {
 		width: 100%;
@@ -123,7 +125,7 @@
 	}
 	div#mobile-wizard-content .spinfieldcontainer{
 		height: 48px;
-		margin: 24px 0px 24px 4% !important;
+		margin: 0px 0px 8px 4% !important;
 		border: 1px solid #ccc;
 		border-radius: 2px;
 		background-size: 28px;
