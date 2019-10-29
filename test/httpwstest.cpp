@@ -768,40 +768,6 @@ void HTTPWSTest::testPasteBlank()
     }
 }
 
-void HTTPWSTest::testLargePaste()
-{
-    const char* testname = "LargePaste ";
-    try
-    {
-        // Load a document and make it empty, then paste some text into it.
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
-
-        deleteAll(socket, testname);
-
-        // Paste some text into it.
-        std::ostringstream oss;
-        for (int i = 0; i < 1000; ++i)
-        {
-            oss << Util::encodeId(Util::rng::getNext(), 6);
-        }
-
-        const std::string documentContents = oss.str();
-        TST_LOG("Pasting " << documentContents.size() << " characters into document.");
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + documentContents, testname);
-        getResponseString(socket, "textselection:", testname, 1000);
-
-        // Check if the server is still alive.
-        // This resulted first in a hang, as respose for the message never arrived, then a bit later in a Poco::TimeoutException.
-        const std::string selection = getAllText(socket, testname);
-        CPPUNIT_ASSERT_MESSAGE("Pasted text was either corrupted or couldn't be read back",
-                               "textselectioncontent: " + documentContents == selection);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
 void HTTPWSTest::testInsertDelete()
 {
     const char* testname = "insertDelete ";
