@@ -20,7 +20,7 @@ noinst_LTLIBRARIES = \
 	unit-fuzz.la unit-oob.la unit-http.la unit-oauth.la \
 	unit-wopi.la unit-wopi-saveas.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-	unit-wopi-documentconflict.la unit_wopi_renamefile.la \
+	unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-tiff-load.la \
 	unit-large-paste.la \
 	unit-paste.la \
@@ -122,6 +122,8 @@ unit_wopi_documentconflict_la_SOURCES = UnitWOPIDocumentConflict.cpp
 unit_wopi_documentconflict_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
 unit_wopi_renamefile_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_watermark_la_SOURCES = UnitWOPIWatermark.cpp
+unit_wopi_watermark_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
 unit_wopi_loadencoded_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
@@ -157,7 +159,7 @@ check-local:
 TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
         unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-        unit-wopi-documentconflict.la unit_wopi_renamefile.la \
+        unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-http.la \
 	unit-tiff-load.la \
 	unit-large-paste.la \
