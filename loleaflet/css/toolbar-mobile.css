@@ -10,3 +10,10 @@
 		top:-1px;
 	}
 }
+#toolbar-down table.w2ui-button .w2ui-tb-image {
+	margin: 5px 9px 3px 9px!important;
+}
+.w2ui-toolbar .w2ui-break{
+	background-image: none;
+	background-color: #dae6f3;
+}
