@@ -90,8 +90,8 @@
 	#Bold > span, #Italic > span, #Underline > span, #Strikeout > span, #StyleApply > span, #StyleUpdateByExample > span, #StyleNewByExample > span, #Shadowed > span, #Grow > span, #Shrink > span, #Color > span, #Spacing > span, #SuperScript > span, #SubScript > span, #AlignLeft > span, #AlignRight > span, #AlignHorizontalCenter > span, #AlignBlock > span, #ParaLeftToRight > span, #ParaRightToLeft > span, #AlignTop > span, #AlignVCenter > span, #AlignBottom > span, #IncrementIndent > span, #DecrementIndent > span, #LeftPara > span, #RightPara > span, #CenterPara > span, #JustifyPara > span, #DefaultBullet > span, #DefaultNumbering > span, #ParaspaceIncrease > span, #ParaspaceDecrease > span, #LineSpacing > span, #HangingIndent > span, #CellVertTop > span, #CellVertCenter > span, #CellVertBottom > span{
 		display: none !important;
 	}
-	#Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript,#AlignLeft, #AlignRight, #AlignHorizontalCenter, #AlignBlock, #ParaRightToLeft, #ParaLeftToRight, #AlignTop, #AlignVCenter, #AlignBottom, #IncrementIndent, #DecrementIndent, #LeftPara, #RightPara, #CenterPara, #JustifyPara, #DefaultBullet, #DefaultNumbering, #ParaspaceIncrease, #ParaspaceDecrease, #LineSpacing, #HangingIndent, #CellVertTop, #CellVertCenter, #CellVertBottom{
-		padding: 24px 28px 24px 28px !important;
+	#Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript,#AlignLeft, #AlignRight, #AlignHorizontalCenter, #AlignBlock, #ParaRightToLeft, #ParaLeftToRight, #AlignTop, #AlignVCenter, #AlignBottom, #IncrementIndent, #DecrementIndent, #LeftPara, #RightPara, #CenterPara, #JustifyPara, #DefaultBullet, #DefaultNumbering, #ParaspaceIncrease, #ParaspaceDecrease, #LineSpacing, #HangingIndent, #CellVertTop, #CellVertCenter, #CellVertBottom, #ParaspaceIncrease, #ParaspaceDecrease{
+		padding: 24px 28px 24px 4% !important;
 		margin: 0px !important;
 		float:left;
 	}
@@ -101,16 +101,15 @@
 		padding: 20px 20px 20px 20px !important;
 	}
 	#belowparaspacing{float: left;}
-	#ParaspaceIncrease, #ParaspaceDecrease {
-		padding-left: 28px !important;
-	}
 	#Color {
 		padding: 20px 20px 0px 20px !important;
 	}
 	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel{clear:both;}
 	#BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel, .mobile-wizard.ui-text {
 		border-bottom: 1px solid #eeeeee;
-    color: #dddddd !important;
+		color: #dddddd !important;
+		margin-left: 4%;
+		width: 98%;
 	}
 	[title=Line] > #XLineColor {
 		width: 100%;
@@ -124,7 +123,7 @@
 	}
 	div#mobile-wizard-content .spinfieldcontainer{
 		height: 48px;
-		margin: 24px 0px 24px 28px !important;
+		margin: 24px 0px 24px 4% !important;
 		border: 1px solid #ccc;
 		border-radius: 2px;
 		background-size: 28px;
