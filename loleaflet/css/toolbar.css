@@ -81,7 +81,7 @@
 	.ui-content label{
 		line-height: 44px;
 		vertical-align: top;
-		padding-left: 24px;
+		padding-left: 4%;
 	}
 	#buttonnone + label, #buttonbefore + label, #buttonafter + label, #buttonoptimal + label, #buttonparallel + label, #buttonnone + label, #buttonthrough + label{
 		padding-left: 0;
@@ -165,10 +165,6 @@
 	#bottom{background: url(images/sc_alignbottom.svg) no-repeat center;}
 	#standard{background: url(images/sc_alignverticalcenter.svg) no-repeat center;}
 
-	#enablecontour{
-		float: left;
-		margin: 16px 0px;
-	}
 	#mobile-wizard input[type=checkbox]:disabled{
 		border: 2px solid #ddd;
 		box-shadow: none;
@@ -231,7 +227,7 @@
 		float: right;
 		margin: 24px 0px;
 	}
-	#enablecontour + button + p {clear: both;}
+	div#enablecontour + p {clear: both;}
 	#formulabar {
 		padding: 0px !important;
 		border-top: 1px solid #bbbbbb !important;
