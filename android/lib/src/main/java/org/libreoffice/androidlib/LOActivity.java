@@ -64,7 +64,7 @@ import androidx.core.content.ContextCompat;
 public class LOActivity extends AppCompatActivity {
     final static String TAG = "LOActivity";
 
-    private static final String ASSETS_EXTRACTED_PREFS_KEY = "ASSETS_EXTRACTED";
+    private static final String ASSETS_EXTRACTED_GIT_COMMIT = "ASSETS_EXTRACTED_GIT_COMMIT";
     private static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 777;
     private static final String KEY_ENABLE_SHOW_DEBUG_INFO = "ENABLE_SHOW_DEBUG_INFO";
 
@@ -204,10 +204,10 @@ public class LOActivity extends AppCompatActivity {
     }
 
     private void updatePreferences() {
-        if (sPrefs.getInt(ASSETS_EXTRACTED_PREFS_KEY, 0) != BuildConfig.VERSION_CODE) {
+        if (!sPrefs.getString(ASSETS_EXTRACTED_GIT_COMMIT, "").equals(BuildConfig.GIT_COMMIT)) {
             if (copyFromAssets(getAssets(), "unpack", getApplicationInfo().dataDir) &&
                     copyFonts("/system/fonts", getApplicationInfo().dataDir + "/user/fonts")) {
-                sPrefs.edit().putInt(ASSETS_EXTRACTED_PREFS_KEY, BuildConfig.VERSION_CODE).apply();
+                sPrefs.edit().putString(ASSETS_EXTRACTED_GIT_COMMIT, BuildConfig.GIT_COMMIT).apply();
             }
         }
     }
