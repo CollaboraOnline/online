@@ -206,6 +206,11 @@ body {
 		max-width: initial;
 	}
 
+	#presentation-controls-wrapper.readonly {
+		top: initial;
+		bottom: 0px;
+	}
+
 	/* Show sidebar beyond 768px only */
 	#sidebar-dock-wrapper {
 		display: none;

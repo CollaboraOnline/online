@@ -47,9 +47,6 @@
     border-style: solid;
     border-radius: 3px;
 	}
-	#presentation-controls-wrapper.readonly .preview-frame {
-    visibility: hidden;
-	}
 	#presentation-controls-wrapper {
     background-color: #f9f9f9;
 		border: none;
