@@ -55,15 +55,6 @@ build the native parts on Windows.
 To debug the native code in Android Studio, you need the debugging symbols and
 to setup lldb to actually read & use them.
 
-* [Temporary] Cherry pick the following patches in your core.git (if they are
-  not in master yet):
-
-  https://gerrit.libreoffice.org/70366
-  https://gerrit.libreoffice.org/70367
-  https://gerrit.libreoffice.org/70369
-  https://gerrit.libreoffice.org/70370
-  https://gerrit.libreoffice.org/70389
-
 * Add debugging symbols for the modules you are interested in
 
   To autogen.input, add something like:
@@ -98,7 +89,12 @@ to setup lldb to actually read & use them.
     settings append target.exec-search-paths /local/libreoffice/master-android/android/source/obj/local/armeabi-v7a
   ]
 
-From now on, you will be able to debug directly in the Android Stuido
+* To use pretty printers for types like OUString, add the following to your
+  ~/.lldbinit:
+
+  command script import '/local/libreoffice/master-android/solenv/lldb/libreoffice/LO.py'
+
+From now on, you will be able to debug directly in the Android Studio
 debugger.  Happy debugging!
 
 == Tip: How to speed up your core.git build ==
