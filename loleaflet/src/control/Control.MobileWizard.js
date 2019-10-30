@@ -5,6 +5,9 @@
 
 /* global $ w2ui _ */
 L.Control.MobileWizard = L.Control.extend({
+	options: {
+		maxHeight: '45%'
+	},
 
 	_inMainMenu: true,
 	_isActive: false,
@@ -12,6 +15,10 @@ L.Control.MobileWizard = L.Control.extend({
 	_mainTitle: '',
 	_isTabMode: false,
 	_currentPath: [],
+
+	initialize: function (options) {
+		L.setOptions(this, options);
+	},
 
 	onAdd: function (map) {
 		this.map = map;
@@ -178,7 +185,7 @@ L.Control.MobileWizard = L.Control.extend({
 				else
 					$('#mobile-wizard').css('top', $('#document-container').css('top'));
 			} else {
-				$('#mobile-wizard').height('45%');
+				$('#mobile-wizard').height(this.options.maxHeight);
 				$('#mobile-wizard').css('top', '');
 			}
 
