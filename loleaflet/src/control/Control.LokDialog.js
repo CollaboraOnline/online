@@ -232,6 +232,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		e.id = parseInt(e.id);
+		window.sidebarId = e.id;
 		var strId = this._toStrId(e.id);
 
 		var width = 0;
