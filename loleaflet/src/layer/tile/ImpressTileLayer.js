@@ -37,6 +37,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
+		map.addControl(L.control.partsPreview());
 		map.on('zoomend', this._onAnnotationZoom, this);
 		map.on('updateparts', this.onUpdateParts, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
@@ -48,6 +49,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		map.on('resize', this.onResize, this);
 		if (window.mode.isMobile()) {
 			map.on('doclayerinit', this.onMobileInit, this);
+			L.Control.MobileWizard.mergeOptions({maxHeight: '55%'});
+			var mobileWizard = L.DomUtil.get('mobile-wizard');
+			var container = L.DomUtil.createWithId('div', 'mobile-wizard-header', mobileWizard);
+			var preview = L.DomUtil.createWithId('div', 'mobile-slide-sorter', container);
+			L.DomUtil.toBack(container);
+			map.addControl(L.control.partsPreview(container, preview, {fetchThumbnail: false}));
 		}
 	},
 
@@ -275,7 +282,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	onAdd: function (map) {
-		map.addControl(L.control.partsPreview());
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
 		this._topAnnotation = [];
@@ -357,6 +363,11 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	_onAnnotationZoom: function () {
 		this.onAnnotationCancel();
+	},
+
+	_openMobileWizard: function(data) {
+		L.TileLayer.prototype._openMobileWizard.call(this, data);
+		$('mobile-slide-sorter').mCustomScrollbar('update');
 	},
 
 	onReplyClick: function (e) {
