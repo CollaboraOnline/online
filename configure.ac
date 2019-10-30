@@ -561,6 +561,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true"],
        #include <Poco/RegularExpression.h>
        int main(int argc, char **argv)
        {
+           (void)argc;
            Poco::RegularExpression e("abc.[def]");
            Poco::RegularExpression::Match m;
            return e.match(argv[[1]], m);
