@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 #
 # convert .po to .json
 #
@@ -58,4 +58,3 @@ for srcfile in args:
 	dest.write(json.dumps(xlate_map, sort_keys = True));
 
 	dest.close()
-
