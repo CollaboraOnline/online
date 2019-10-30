@@ -30,7 +30,6 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-tabs').hide();
 		$('#mobile-wizard-titlebar').show();
 		$('#mobile-wizard-titlebar').css('top', '0px');
-		$('#mobile-wizard-content').css('top', '48px');
 		$('#mobile-wizard').removeClass('menuwizard');
 		this._isTabMode = false;
 		this._currentPath = [];
@@ -77,7 +76,6 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-tabs').empty();
 		$('#mobile-wizard-tabs').append(tabs);
 		$('#mobile-wizard-titlebar').hide();
-		$('#mobile-wizard-content').css('top', '63px');
 		this._isTabMode = true;
 	},
 
