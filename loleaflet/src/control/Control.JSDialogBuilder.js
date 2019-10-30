@@ -444,10 +444,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var controlsContainer = L.DomUtil.create('div', 'sinfieldcontrols', div);
-		var plus = L.DomUtil.create('div', 'plus', controlsContainer);
-		plus.innerHTML = '+';
 		var minus = L.DomUtil.create('div', 'minus', controlsContainer);
 		minus.innerHTML = '-';
+		var plus = L.DomUtil.create('div', 'plus', controlsContainer);
+		plus.innerHTML = '+';
 
 		if (data.min != undefined)
 			$(spinfield).attr('min', data.min);

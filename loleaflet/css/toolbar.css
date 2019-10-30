@@ -1241,7 +1241,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 }
 
 .plus {
-	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
 	width: 48px;
 	height: 48px;
 	color: #777 !important;
@@ -1249,7 +1249,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	vertical-align: middle;
 }
 .minus {
-	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
 	width: 48px;
 	height: 48px;
 	color: #777 !important;
