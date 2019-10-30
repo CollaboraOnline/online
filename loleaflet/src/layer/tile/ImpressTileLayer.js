@@ -297,7 +297,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	onAnnotationModify: function (annotation) {
 		this.onAnnotationCancel();
 		this._selectedAnnotation = annotation._data.id;
-		if (window.mode.isMobile() || window.mode.isTablet) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this.newAnnotationVex(annotation, this.onAnnotationSave, /* isMod */ true);
 		} else {
 			annotation.edit();

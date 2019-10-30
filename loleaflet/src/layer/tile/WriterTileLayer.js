@@ -21,7 +21,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 		if (comment.anchorPos) {
 			this._annotations.modify(this._annotations.add(comment));
 		}
-		if (window.mode.isMobile() || window.mode.isTablet) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			var that = this;
 			this.newAnnotationVex(comment, function(annotation) { that._annotations._onAnnotationSave(annotation); });
 		}
@@ -208,7 +208,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 	},
 
 	onAnnotationModify: function (annotation) {
-		if (window.mode.isMobile() || window.mode.isTablet) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			var that = this;
 			this.newAnnotationVex(annotation, function(annotation) { that._annotations._onAnnotationSave(annotation); }, /* isMod */ true);
 		} else {

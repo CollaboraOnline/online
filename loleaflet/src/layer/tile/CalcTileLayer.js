@@ -14,7 +14,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	newAnnotation: function (comment) {
-		if (window.mode.isMobile() || window.mode.isTablet) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			var that = this;
 			this.newAnnotationVex(comment, function(annotation) { that._onAnnotationSave(annotation); });
 		} else {
