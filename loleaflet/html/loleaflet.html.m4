@@ -222,6 +222,7 @@ ifelse(MOBILEAPP,[true],
       window.loleafletLogging = 'true';
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;
+      window.reuseCookies = '';
       window.tileSize = 256;],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
