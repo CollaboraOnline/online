@@ -17,3 +17,6 @@
 	background-image: none;
 	background-color: #dae6f3;
 }
+#setgamma input.spinfield {
+	width: 140px !important;
+}

@@ -87,10 +87,10 @@
 		border-radius:100px;
 		background-color: #696969;
 	}
-	#Bold > span, #Italic > span, #Underline > span, #Strikeout > span, #StyleApply > span, #StyleUpdateByExample > span, #StyleNewByExample > span, #Shadowed > span, #Grow > span, #Shrink > span, #Color > span, #Spacing > span, #SuperScript > span, #SubScript > span, #AlignLeft > span, #AlignRight > span, #AlignHorizontalCenter > span, #AlignBlock > span, #ParaLeftToRight > span, #ParaRightToLeft > span, #AlignTop > span, #AlignVCenter > span, #AlignBottom > span, #IncrementIndent > span, #DecrementIndent > span, #LeftPara > span, #RightPara > span, #CenterPara > span, #JustifyPara > span, #DefaultBullet > span, #DefaultNumbering > span, #ParaspaceIncrease > span, #ParaspaceDecrease > span, #LineSpacing > span, #HangingIndent > span, #CellVertTop > span, #CellVertCenter > span, #CellVertBottom > span{
+	#selectheight > img, #selectwidth > img, #selectheight > img, #SendToBack > span, #ObjectBackOne > span, #ObjectForwardOne > span, #BringToFront > span, #FlipVertical > span, #FlipHorizontal > span, #Bold > span, #Italic > span, #Underline > span, #Strikeout > span, #StyleApply > span, #StyleUpdateByExample > span, #StyleNewByExample > span, #Shadowed > span, #Grow > span, #Shrink > span, #Color > span, #Spacing > span, #SuperScript > span, #SubScript > span, #AlignLeft > span, #AlignRight > span, #AlignHorizontalCenter > span, #AlignBlock > span, #ParaLeftToRight > span, #ParaRightToLeft > span, #AlignTop > span, #AlignVCenter > span, #AlignBottom > span, #IncrementIndent > span, #DecrementIndent > span, #LeftPara > span, #RightPara > span, #CenterPara > span, #JustifyPara > span, #DefaultBullet > span, #DefaultNumbering > span, #ParaspaceIncrease > span, #ParaspaceDecrease > span, #LineSpacing > span, #HangingIndent > span, #CellVertTop > span, #CellVertCenter > span, #CellVertBottom > span{
 		display: none !important;
 	}
-	#Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript,#AlignLeft, #AlignRight, #AlignHorizontalCenter, #AlignBlock, #ParaRightToLeft, #ParaLeftToRight, #AlignTop, #AlignVCenter, #AlignBottom, #IncrementIndent, #DecrementIndent, #LeftPara, #RightPara, #CenterPara, #JustifyPara, #DefaultBullet, #DefaultNumbering, #ParaspaceIncrease, #ParaspaceDecrease, #LineSpacing, #HangingIndent, #CellVertTop, #CellVertCenter, #CellVertBottom, #ParaspaceIncrease, #ParaspaceDecrease{
+		#SendToBack, #ObjectBackOne, #ObjectForwardOne, #BringToFront, #FlipVertical, #FlipHorizontal, #Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript,#AlignLeft, #AlignRight, #AlignHorizontalCenter, #AlignBlock, #ParaRightToLeft, #ParaLeftToRight, #AlignTop, #AlignVCenter, #AlignBottom, #IncrementIndent, #DecrementIndent, #LeftPara, #RightPara, #CenterPara, #JustifyPara, #DefaultBullet, #DefaultNumbering, #ParaspaceIncrease, #ParaspaceDecrease, #LineSpacing, #HangingIndent, #CellVertTop, #CellVertCenter, #CellVertBottom, #ParaspaceIncrease, #ParaspaceDecrease{
 		padding: 16px 28px 16px 4% !important;
 		margin: 0px !important;
 		float:left;
@@ -225,7 +225,7 @@
 		float: right;
 		margin: 24px 0px;
 	}
-	div#enablecontour + p {clear: both;}
+	div#enablecontour + p, #arrangelabel {clear: both;}
 	#formulabar {
 		padding: 0px !important;
 		border-top: 1px solid #bbbbbb !important;
