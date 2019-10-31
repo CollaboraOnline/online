@@ -456,7 +456,8 @@ void TileCacheTests::testUnresponsiveClient()
     for (int x = 0; x < 8; ++x)
     {
         // Invalidate to force re-rendering.
-        deleteAll(socket2, testname);
+        sendTextFrame(socket2, "uno .uno:SelectAll", testname);
+        sendTextFrame(socket2, "uno .uno:Delete", testname);
         assertResponseString(socket2, "invalidatetiles:", testname + "2 ");
         sendTextFrame(socket2, "paste mimetype=text/html\n" + documentContents, testname + "2 ");
         assertResponseString(socket2, "invalidatetiles:", testname + "2 ");
