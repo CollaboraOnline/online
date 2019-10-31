@@ -122,6 +122,7 @@
 		width: 110px;
 		margin-left: 10px;
 		border: none;
+		-moz-appearance: textfield;
 	}
 	div#mobile-wizard-content .spinfieldcontainer{
 		height: 48px;
