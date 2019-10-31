@@ -6,6 +6,7 @@
 /* global $ */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
+		fetchThumbnail: true,
 		autoUpdate: true,
 		maxWidth: window.mode.isMobile() ? 60 : 180,
 		maxHeight: window.mode.isMobile() ? 60 : 180
@@ -190,7 +191,9 @@ L.Control.PartsPreview = L.Control.extend({
 		var imgSize;
 		if (i === 0 || (previewFrameTop >= topBound && previewFrameTop <= bottomBound)
 			|| (previewFrameBottom >= topBound && previewFrameBottom <= bottomBound)) {
-			imgSize = this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
+			imgSize = this.options.fetchThumbnail ?
+				this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate}) :
+				{ width: this.options.maxWidth, height: this.options.maxHeight };
 			img.fetched = true;
 
 			if (this._direction === 'x') {
