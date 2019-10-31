@@ -47,7 +47,9 @@
 				column: col
 			}, desc = err.message || {}, stack = err.stack || {};
 			var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
-			if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
+			if (window.ThisIsAMobileApp) {
+				window.postMobileError(log);
+			} else if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
 				global.socket.send(log);
 			} else if (global.socket && (global.socket instanceof global.L.Socket) && global.socket.connected()) {
 				global.socket.sendMessage(log);
