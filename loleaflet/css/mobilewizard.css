@@ -48,8 +48,8 @@ span#main-menu-btn-icon {
 }
 
 .layout {
-	height: 60px;
-	width: 60px;
+	height: 58px;
+	width: 72px;
 	overflow: hidden;
 	margin: 2px 2px !important;
 	display: inline-block;
@@ -88,7 +88,7 @@ span#main-menu-btn-icon {
 }
 
 .layout.layout_head03a {
-	background: url('images/layout_head0a.svg') no-repeat center !important;
+	background: url('images/layout_head03a.svg') no-repeat center !important;
 }
 
 .layout.layout_head02b {
@@ -117,6 +117,15 @@ span#main-menu-btn-icon {
 
 .layout.layout_head02a {
 	background: url('images/layout_head02a.svg') no-repeat center !important;
+}
+.layout{
+	border: 1px solid #fff;
+}
+.layout.loleaflet-context-down {
+	background-color: #dddddd;
+	box-shadow: inset 0px -1px 2px 5px #eee;
+	border-color: #dddddd;
+	border-radius: 2px
 }
 
 /*Color-picker*/
