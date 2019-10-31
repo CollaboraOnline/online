@@ -65,6 +65,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
