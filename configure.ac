@@ -658,6 +658,9 @@ AC_SUBST(ENABLE_SUPPORT_KEY)
 
 LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 
+AS_IF([test "$ENABLE_SSL" = "true"],
+      [LIBS="$LIBS -lssl -lcrypto"])
+
 AS_IF([test "$ENABLE_IOSAPP" != "true"],
       [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
                         [],
