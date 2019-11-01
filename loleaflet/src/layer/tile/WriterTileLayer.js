@@ -40,18 +40,18 @@ L.WriterTileLayer = L.TileLayer.extend({
 
 	beforeAdd: function (map) {
 		if (L.Browser.mobile) {
-			map.on('doclayerinit', this.onMobileInit, this);
+			this.onMobileInit(map);
 		}
 	},
 
 	onAdd: function (map) {
+
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = L.annotationManager(map);
 		map.on('updatemaxbounds', this._onUpdateMaxBounds, this);
 	},
 
-	onMobileInit: function () {
-		var map = this._map;
+	onMobileInit: function (map) {
 		var toolItems = [
 			{type: 'button',  id: 'showsearchbar',  img: 'search', hint: _('Show the search bar')},
 			{type: 'break'},

@@ -51,7 +51,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.on('AnnotationReply', this._onAnnotationReply, this);
 		map.on('AnnotationSave', this._onAnnotationSave, this);
 		if (L.Browser.mobile) {
-			map.on('doclayerinit', this.onMobileInit, this);
+			this.onMobileInit(map);
 		}
 	},
 
@@ -70,8 +70,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._annotations = {};
 	},
 
-	onMobileInit: function () {
-		var map = this._map;
+	onMobileInit: function (map) {
 		var toolItems = [
 			{type: 'button',  id: 'showsearchbar',  img: 'search', hint: _('Show the search bar')},
 			{type: 'break'},
