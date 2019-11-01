@@ -214,6 +214,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 				L.DomEvent.preventDefault(e);
 			}
 		});
+		toolbar.show();
 
 		toolbar = $('#toolbar-down');
 		toolbar.w2toolbar({

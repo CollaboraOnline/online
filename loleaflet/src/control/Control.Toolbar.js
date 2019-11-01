@@ -2138,19 +2138,8 @@ function onUpdatePermission(e) {
 		}
 		$('#search-input').prop('disabled', false);
 
-		// FIXME avoid hardcoding this stuff if possible
 		if (_inMobileMode()) {
 			$('#toolbar-down').show();
-			switch (map._docLayer._docType) {
-			case 'text':
-				$(map.options.documentContainer).css('bottom', '35px');
-				break;
-			case 'spreadsheet':
-				$(map.options.documentContainer).css('bottom', '68px');
-				$('#spreadsheet-row-column-frame').css('bottom', '68px');
-				$('#spreadsheet-toolbar').show();
-				break;
-			}
 		}
 	}
 	else {
@@ -2192,19 +2181,8 @@ function onUpdatePermission(e) {
 		}
 		$('#search-input').prop('disabled', true);
 
-		// FIXME avoid hardcoding this stuff if possible
 		if (_inMobileMode()) {
 			$('#toolbar-down').hide();
-			switch (map._docLayer._docType) {
-			case 'text':
-				$(map.options.documentContainer).css('bottom', '0px');
-				break;
-			case 'spreadsheet':
-				$(map.options.documentContainer).css('bottom', '35px');
-				$('#spreadsheet-row-column-frame').css('bottom', '35px');
-				$('#spreadsheet-toolbar').show();
-				break;
-			}
 		}
 	}
 }

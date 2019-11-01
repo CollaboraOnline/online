@@ -147,10 +147,7 @@ L.Map = L.Evented.extend({
 		this._clipboardContainer = L.clipboardContainer();
 		this.addLayer(this._clipboardContainer);
 
-		// Avoid white bar on the bottom - force resize-detector to get full size
 		if (window.mode.isMobile()) {
-			$(this.options.documentContainer).css('bottom', '0px');
-			$(this._resizeDetector).css('bottom', '0px');
 			L.DomEvent.on(window, 'resize', function(e) {
 				this.fire('orientationchange', e);
 			}, this);

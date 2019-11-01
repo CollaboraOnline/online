@@ -221,34 +221,46 @@ body {
 		left: 0px !important;
 	}
 
-	#document-container.tablet {
-		top: 41px;
-	}
-
 	#document-container.readonly {
 		top: 41px;
+		bottom: 0px;
+	}
+
+	#document-container.readonly.parts-preview-document {
+		bottom: 65px;
+	}
+
+	#document-container.readonly.spreadsheet-document {
+		top: 61px !important;
+		bottom: 35px;
 	}
 
 	#document-container.parts-preview-document {
 		left: 0px !important;
 		bottom: 95px;
 	}
+
 	#document-container.spreadsheet-document {
 		top: 97px !important;
+		bottom: 68px;
 	}
-	#document-container.spreadsheet-document.readonly {
-		top: 61px !important;
-	}
+
 	#document-container {
 		top: 41px;
 		right: 0px !important;
+		bottom: 35px;
 	}
+
 	#spreadsheet-row-column-frame {
 		top: 77px !important;
+		bottom: 68px;
 	}
+
 	#spreadsheet-row-column-frame.readonly {
 		top: 41px !important;
+		bottom: 35px !important;
 	}
+
 	#toolbar-hamburger {
 	width: 36px;
 	}
