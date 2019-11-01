@@ -191,11 +191,6 @@ L.Map = L.Evented.extend({
 			}
 		}, this);
 		this.on('doclayerinit', function() {
-			if (window._invalidateSize) {
-				this._size = new L.Point(0,0);
-				this._onResize();
-				delete window._invalidateSize;
-			}
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');
 			}
@@ -211,8 +206,7 @@ L.Map = L.Evented.extend({
 				elem.parentNode.removeChild(elem);
 				elem = L.DomUtil.get('presentation-controls-wrapper');
 				elem.parentNode.removeChild(elem);
-			}
-			else if (this._docLayer._docType === 'presentation') {
+			} else if (this._docLayer._docType === 'presentation') {
 				elem = L.DomUtil.get('spreadsheet-row-column-frame');
 				elem.parentNode.removeChild(elem);
 				elem = L.DomUtil.get('spreadsheet-toolbar');
@@ -224,6 +218,8 @@ L.Map = L.Evented.extend({
 
 			if (L.Browser.mobile)
 			{
+				this._size = new L.Point(0,0);
+				this._onResize();
 				this._socket.sendMessage('uno .uno:LOKSetMobile');
 			}
 		});
@@ -1100,10 +1096,6 @@ L.Map = L.Evented.extend({
 	},
 
 	_onResize: function () {
-		if (!this || !this._docLayer) {
-			window._invalidateSize = true;
-			return;
-		}
 		L.Util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = L.Util.requestAnimFrame(
 			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
