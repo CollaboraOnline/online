@@ -151,6 +151,9 @@ L.Map = L.Evented.extend({
 		if (window.mode.isMobile()) {
 			$(this.options.documentContainer).css('bottom', '0px');
 			$(this._resizeDetector).css('bottom', '0px');
+			L.DomEvent.on(window, 'resize', function(e) {
+				this.fire('orientationchange', e);
+			}, this);
 		}
 
 		// When all these conditions are met, fire statusindicator:initializationcomplete
