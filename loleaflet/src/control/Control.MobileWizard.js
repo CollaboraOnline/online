@@ -58,7 +58,9 @@ L.Control.MobileWizard = L.Control.extend({
 	_hideWizard: function() {
 		$('#mobile-wizard').hide();
 		$('#mobile-wizard-content').empty();
-		$('#toolbar-down').show();
+		if (this.map._permission === 'edit') {
+			$('#toolbar-down').show();
+		}
 		this._isActive = false;
 		this._currentPath = [];
 		if (window.mobileWizard === true) {
