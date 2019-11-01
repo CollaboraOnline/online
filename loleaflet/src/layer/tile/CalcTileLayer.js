@@ -245,8 +245,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 			items: [
 				{
 					type: 'html', id: 'search',
-					html: '<div style="padding: 3px 10px;" class="loleaflet-font">' +
-						' ' + _('Search:') +
+					html: '<div id="search-input-group" style="padding: 3px 10px;" class="loleaflet-font">' +
+						'    <label for="search-input">Search:</label>' +
 						'    <input size="10" id="search-input"' +
 						'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
 						'</div>'
