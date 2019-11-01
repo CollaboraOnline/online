@@ -51,10 +51,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			map.on('doclayerinit', this.onMobileInit, this);
 			L.Control.MobileWizard.mergeOptions({maxHeight: '55%'});
 			var mobileWizard = L.DomUtil.get('mobile-wizard');
+			var mobileWizardContent = L.DomUtil.get('mobile-wizard-content');
 			var container = L.DomUtil.createWithId('div', 'mobile-wizard-header', mobileWizard);
 			var preview = L.DomUtil.createWithId('div', 'mobile-slide-sorter', container);
 			L.DomUtil.toBack(container);
 			map.addControl(L.control.partsPreview(container, preview, {fetchThumbnail: false}));
+			L.DomUtil.addClass(mobileWizardContent, 'with-slide-sorter-above');
 		}
 	},
 
