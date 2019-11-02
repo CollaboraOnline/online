@@ -1,3 +1,9 @@
+@keyframes vex-fadeout {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
 /* Infobar */
 .vex-theme-bottom-right-corner .vex-dialog-message {
 	font-size: 1em;
@@ -25,6 +31,7 @@
 .vex-open .loleaflet-user-idle .vex-dialog-buttons {
 	display: none!important;
 }
+
 .vex.vex-theme-plain{
 	position: relative;
 	z-index: 2001 !important;
@@ -37,6 +44,11 @@
 }
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="date"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime-local"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="email"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="month"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="number"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="password"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="search"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="tel"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="time"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="url"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="week"]{
 	padding: 0 !important
+}
+
+.vex-closing {
+    -webkit-animation: vex-fadeout .25s forwards;
+    animation: vex-fadeout .25s forwards;
 }
 
 /*mobile*/
