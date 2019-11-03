@@ -485,7 +485,7 @@ void DocumentBroker::joinThread()
 
 void DocumentBroker::stop(const std::string& reason)
 {
-    LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
+    LOG_DBG("Stopping DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
     _closeReason = reason; // used later in the polling loop
     _stop = true;
     _poll->wakeup();
