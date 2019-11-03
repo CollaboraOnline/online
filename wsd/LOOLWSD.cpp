@@ -3265,8 +3265,8 @@ int LOOLWSD::innerMain()
 #if ENABLE_DEBUG
         if (careerSpanMs > 0 && timeSinceStartMs > careerSpanMs)
         {
-            LOG_INF(timeSinceStartMs << " milliseconds gone, finishing as requested.");
-            break;
+            LOG_INF(timeSinceStartMs << " milliseconds gone, finishing as requested. Setting ShutdownRequestFlag.");
+            ShutdownRequestFlag = true;
         }
 #endif
     }
@@ -3279,36 +3279,53 @@ int LOOLWSD::innerMain()
     srv.stop();
 
     // atexit handlers tend to free Admin before Documents
-    LOG_INF("Cleaning up lingering documents.");
-    if (ShutdownRequestFlag || TerminationFlag)
+    LOG_INF("Exiting. Cleaning up lingering documents.");
+    if (!ShutdownRequestFlag)
     {
-        // Don't stop the DocBroker, they will exit.
-        const size_t sleepMs = 300;
-        const size_t count = std::max<size_t>(COMMAND_TIMEOUT_MS, 2000) / sleepMs;
-        for (size_t i = 0; i < count; ++i)
-        {
-            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-            cleanupDocBrokers();
-            if (DocBrokers.empty())
-                break;
-            docBrokersLock.unlock();
-
-            // Give them time to save and cleanup.
-            std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
-        }
+        // This shouldn't happen, but it's fail safe to always cleanup properly.
+        LOG_WRN("Exiting WSD without ShutdownRequestFlag. Setting it now.");
+        ShutdownRequestFlag = true;
     }
-    else
+
+    // Don't stop the DocBroker, they will exit.
+    constexpr size_t sleepMs = 500;
+    constexpr size_t count = (COMMAND_TIMEOUT_MS * 4) / sleepMs;
+    for (size_t i = 0; i < count; ++i)
     {
-        // Stop and join.
-        for (auto& docBrokerIt : DocBrokers)
-            docBrokerIt.second->joinThread();
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+        LOG_DBG("Waiting for " << DocBrokers.size() << " documents to stop.");
+        cleanupDocBrokers();
+        if (DocBrokers.empty())
+            break;
+        docBrokersLock.unlock();
+
+        // Give them time to save and cleanup.
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
     }
 
     // Disable thread checking - we'll now cleanup lots of things if we can
     Socket::InhibitThreadChecks = true;
     SocketPoll::InhibitThreadChecks = true;
 
-    DocBrokers.clear();
+    // Wait for the DocumentBrokers. They must be saving/uploading now.
+    // Do not stop them! Otherwise they might not save/upload the document.
+    // We block until they finish, or the service stopping times out.
+    {
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+        for (auto& docBrokerIt : DocBrokers)
+        {
+            std::shared_ptr<DocumentBroker> docBroker = docBrokerIt.second;
+            if (docBroker && docBroker->isAlive())
+            {
+                LOG_DBG("Joining docBroker [" << docBrokerIt.first << "].");
+                docBroker->joinThread();
+            }
+        }
+
+        // Now should be safe to destroy what's left.
+        cleanupDocBrokers();
+        DocBrokers.clear();
+    }
 
 #if !defined(KIT_IN_PROCESS) && !defined(MOBILEAPP)
     // Terminate child processes
