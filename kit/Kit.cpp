@@ -1392,6 +1392,9 @@ private:
 #endif
             LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
                     _sessions.size() << " sessions still. Destroying the document.");
+#ifdef IOS
+            lok_document = nullptr;
+#endif
             _loKitDocument.reset();
             LOG_INF("Document [" << anonymizeUrl(_url) << "] session [" << sessionId << "] unloaded Document.");
             return;

@@ -19,6 +19,9 @@
 @property std::string slideshowFile;
 @property (strong) NSURL *slideshowURL;
 
+- (void)bye;
++ (DocumentViewController*)singleton;
+
 @end
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:

@@ -22,6 +22,8 @@
 
 #import "DocumentViewController.h"
 
+static DocumentViewController* theSingleton = nil;
+
 @interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate> {
     int closeNotificationPipeForForwardingThread[2];
 }
@@ -32,6 +34,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    theSingleton = self;
 
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
@@ -256,20 +260,7 @@
         } else if ([message.body isEqualToString:@"BYE"]) {
             LOG_TRC("Document window terminating on JavaScript side. Closing our end of the socket.");
 
-            // Close one end of the socket pair, that will wake up the forwarding thread above
-            fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
-
-            [self.document saveToURL:[self.document fileURL]
-                    forSaveOperation:UIDocumentSaveForOverwriting
-                   completionHandler:^(BOOL success) {
-                      LOG_TRC("save completion handler gets " << (success?"YES":"NO"));
-                   }];
-
-            // Wait for lokit_main thread to exit
-            std::lock_guard<std::mutex> lock(lokit_main_mutex);
-
-            // And only then let the document browsing view show up again
-            [self dismissDocumentViewController];
+            [self bye];
             return;
         } else if ([message.body isEqualToString:@"SLIDESHOW"]) {
 
@@ -366,6 +357,29 @@
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     scrollView.pinchGestureRecognizer.enabled = NO;
+}
+
+- (void)bye {
+    // Close one end of the socket pair, that will wake up the forwarding thread above
+    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+
+    [self.document saveToURL:[self.document fileURL]
+            forSaveOperation:UIDocumentSaveForOverwriting
+           completionHandler:^(BOOL success) {
+              LOG_TRC("save completion handler gets " << (success?"YES":"NO"));
+           }];
+
+    // Wait for lokit_main thread to exit
+    std::lock_guard<std::mutex> lock(lokit_main_mutex);
+
+    theSingleton = nil;
+
+    // And only then let the document browsing view show up again
+    [self dismissDocumentViewController];
+}
+
++ (DocumentViewController*)singleton {
+    return theSingleton;
 }
 
 @end
