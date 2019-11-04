@@ -562,7 +562,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var entries = [];
 		for (var index in data.entries) {
 			var style = 'ui-combobox-text';
-			if (index == data.selectedEntries[0]
+			if ((data.selectedEntries && index == data.selectedEntries[0])
 				|| data.entries[index] == title) {
 				style += ' selected';
 			}
