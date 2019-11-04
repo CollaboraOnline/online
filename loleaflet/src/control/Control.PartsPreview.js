@@ -31,7 +31,7 @@ L.Control.PartsPreview = L.Control.extend({
 	onAdd: function (map) {
 		this._previewInitialized = false;
 		this._previewTiles = [];
-		this._direction = window.mode.isMobile() ? 'x' : 'y';
+		this._direction = window.mode.isMobile() && L.DomUtil.isPortrait() ? 'x' : 'y';
 		this._scrollY = 0;
 
 		map.on('updateparts', this._updateDisabled, this);
@@ -39,6 +39,26 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('tilepreview', this._updatePreview, this);
 		map.on('insertpage', this._insertPreview, this);
 		map.on('deletepage', this._deletePreview, this);
+	},
+
+	createScrollbar: function (axis) {
+		var control = this;
+		if (axis) {
+			this._direction = axis;
+		}
+
+		$(this._partsPreviewCont).mCustomScrollbar({
+			axis: this._direction,
+			theme: 'dark-thick',
+			scrollInertia: 0,
+			alwaysShowScrollbar: 1,
+			callbacks:{
+				whileScrolling: function() {
+					control._onScroll(this);
+				}
+			}
+		});
+		$(this._partsPreviewCont).data('preview', this);
 	},
 
 	_updateDisabled: function (e) {
@@ -58,7 +78,6 @@ L.Control.PartsPreview = L.Control.extend({
 			if (!this._previewInitialized)
 			{
 				// make room for the preview
-				var control = this;
 				var docContainer = this._map.options.documentContainer;
 				if (!L.DomUtil.hasClass(docContainer, 'parts-preview-document')) {
 					L.DomUtil.addClass(docContainer, 'parts-preview-document');
@@ -69,27 +88,16 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
 				var bottomBound;
+
+				this.createScrollbar();
+
 				if (this._direction === 'x') {
-					$(this._container).css({ width: '100%'});
-					$(this._partsPreviewCont).css({ height: this.options.maxHeight + 'px' });
 					this._previewContTop = previewContBB.left;
 					bottomBound = previewContBB.right + previewContBB.width / 2;
 				} else {
 					this._previewContTop = previewContBB.top;
 					bottomBound = previewContBB.bottom + previewContBB.height / 2;
 				}
-
-				$(this._partsPreviewCont).mCustomScrollbar({
-					axis: this._direction,
-					theme: 'dark-thick',
-					scrollInertia: 0,
-					alwaysShowScrollbar: 1,
-					callbacks:{
-						whileScrolling: function() {
-							control._onScroll(this);
-						}
-					}
-				});
 
 				this._map.on('click', function() {
 					this.partsFocused = false;
