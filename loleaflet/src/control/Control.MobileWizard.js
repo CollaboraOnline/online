@@ -3,7 +3,7 @@
  * L.Control.MobileWizard
  */
 
-/* global $ w2ui _ */
+/* global $ w2ui */
 L.Control.MobileWizard = L.Control.extend({
 	options: {
 		maxHeight: '45%'
@@ -197,7 +197,6 @@ L.Control.MobileWizard = L.Control.extend({
 	_modifySidebarLayout: function (data) {
 		this._mergeStylesAndTextPropertyPanels(data);
 		this._removeItems(data, ['editcontour']);
-		this._injectChartTypePanel(data);
 	},
 
 	_mergeStylesAndTextPropertyPanels: function (data) {
@@ -243,32 +242,6 @@ L.Control.MobileWizard = L.Control.extend({
 			}
 		}
 		return null;
-	},
-
-	_findChartElementsPanelAndGetContent: function (data) {
-		if (data.children) {
-			for (var i = 0; i < data.children.length; i++) {
-				if (data.children[i].type === 'panel' && data.children[i].children &&
-					data.children[i].children.length > 0 && data.children[i].children[0].id === 'ChartElementsPanel') {
-					var ret = data.children[i];
-					return ret;
-				}
-
-				var childReturn = this._findChartElementsPanelAndGetContent(data.children[i]);
-				if (childReturn !== null) {
-					return childReturn;
-				}
-			}
-		}
-		return null;
-	},
-
-	_injectChartTypePanel: function(data) {
-		var chartPanels = this._findChartElementsPanelAndGetContent(data);
-		if (chartPanels) {
-			var chartTypePanel = [{type: 'chartTypeSelector', text: _('Chart type')}];
-			data.children = chartTypePanel.concat(data.children);
-		}
 	},
 
 	_removeItems: function (data, items) {
