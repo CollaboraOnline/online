@@ -77,7 +77,7 @@ public:
     bool pollAndDispatch()
     {
         std::string message;
-        const int ready = readLine(message, [](){ return SigUtil::getTerminationFlag().load(); });
+        const int ready = readLine(message, [](){ return SigUtil::getTerminationFlag(); });
         if (ready <= 0)
         {
             // Termination is done via SIGTERM, which breaks the wait.

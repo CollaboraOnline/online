@@ -1578,7 +1578,7 @@ void PrisonerPoll::wakeupHook()
                 replayThread->join();
 
                 LOG_INF("Setting TerminationFlag");
-                SigUtil::getTerminationFlag() = true;
+                SigUtil::setTerminationFlag();
             }
 #endif
         }
@@ -3208,7 +3208,7 @@ private:
             if (SigUtil::getDumpGlobalState())
             {
                 dump_state();
-                SigUtil::getDumpGlobalState() = false;
+                SigUtil::resetDumpGlobalState();
             }
         }
     };
@@ -3617,7 +3617,7 @@ void LOOLWSD::cleanup()
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
 #if MOBILEAPP
-    SigUtil::getTerminationFlag() = false;
+    SigUtil::resetTerminationFlag();
 #endif
 
     int returnValue;

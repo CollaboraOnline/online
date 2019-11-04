@@ -40,39 +40,49 @@
 
 static std::atomic<bool> TerminationFlag(false);
 static std::atomic<bool> DumpGlobalState(false);
-namespace SigUtil
-{
-    std::atomic<bool>& getTerminationFlag()
-    {
-        return TerminationFlag;
-    }
-    std::atomic<bool>& getDumpGlobalState()
-    {
-        return DumpGlobalState;
-    }
-}
-
 #if MOBILEAPP
 std::atomic<bool> MobileTerminationFlag(false);
+#else
+// Mobile defines its own, which is constexpr.
+static std::atomic<bool> ShutdownRequestFlag(false);
+#endif
+
 namespace SigUtil
 {
     bool getShutdownRequestFlag()
     {
         return ShutdownRequestFlag;
     }
-}
+
+    bool getTerminationFlag()
+    {
+        return TerminationFlag;
+    }
+
+    void setTerminationFlag()
+    {
+        TerminationFlag = true;
+    }
+
+#if MOBILEAPP
+    void resetTerminationFlag()
+    {
+        TerminationFlag = false;
+    }
 #endif
 
-#if !MOBILEAPP
-static std::atomic<bool> ShutdownRequestFlag(false);
-namespace SigUtil
-{
-    std::atomic<bool>& getShutdownRequestFlag()
+    bool getDumpGlobalState()
     {
-        return ShutdownRequestFlag;
+        return DumpGlobalState;
+    }
+
+    void resetDumpGlobalState()
+    {
+        DumpGlobalState = false;
     }
 }
 
+#if !MOBILEAPP
 std::mutex SigHandlerTrap;
 
 namespace SigUtil

@@ -13,36 +13,34 @@
 #include <atomic>
 #include <mutex>
 
-#if !MOBILEAPP
-namespace SigUtil
-{
-    /// Flag to commence clean shutdown
-    std::atomic<bool>& getShutdownRequestFlag();
-}
-#else
-static constexpr bool ShutdownRequestFlag(false);
-namespace SigUtil
-{
-    /// Flag to commence clean shutdown
-    bool getShutdownRequestFlag();
-}
-#endif
-
-namespace SigUtil
-{
-    /// Flag to stop pump loops.
-    std::atomic<bool>& getTerminationFlag();
-
-    /// Flag to dump internal state
-    std::atomic<bool>& getDumpGlobalState();
-}
-
 #if MOBILEAPP
+static constexpr bool ShutdownRequestFlag(false);
 extern std::atomic<bool> MobileTerminationFlag;
 #endif
 
-#if !MOBILEAPP
+namespace SigUtil
+{
+    /// Get the flag used to commence clean shutdown.
+    /// requestShutdown() is used to set the flag.
+    bool getShutdownRequestFlag();
 
+    /// Get the flag to stop pump loops forcefully.
+    bool getTerminationFlag();
+    /// Set the flag to stop pump loops forcefully.
+    void setTerminationFlag();
+#if MOBILEAPP
+    /// Reset the flag to stop pump loops forcefully.
+    /// Only necessary in Mobile.
+    void resetTerminationFlag();
+#endif
+
+    /// Get the flag to dump internal state.
+    bool getDumpGlobalState();
+    /// Reset the flag to dump internal state.
+    void resetDumpGlobalState();
+}
+
+#if !MOBILEAPP
 namespace SigUtil
 {
     /// Mutex to trap signal handler, if any,

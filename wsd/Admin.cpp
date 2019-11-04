@@ -191,8 +191,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     else if (tokens[0] == "shutdown")
     {
         LOG_INF("Shutdown requested by admin.");
-        SigUtil::getShutdownRequestFlag() = true;
-        SocketPoll::wakeupWorld();
+        SigUtil::requestShutdown();
         return;
     }
     else if (tokens[0] == "set" && tokens.count() > 1)

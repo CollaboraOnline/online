@@ -2146,7 +2146,7 @@ protected:
         else if (tokens[0] == "exit")
         {
             LOG_INF("Setting TerminationFlag due to 'exit' command from parent.");
-            SigUtil::getTerminationFlag() = true;
+            SigUtil::setTerminationFlag();
             document.reset();
         }
         else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
@@ -2182,7 +2182,7 @@ protected:
     {
 #if !MOBILEAPP
         LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
-        SigUtil::getTerminationFlag() = true;
+        SigUtil::setTerminationFlag();
 #endif
     }
 };
@@ -2260,7 +2260,7 @@ public:
         if (document && document->purgeSessions() == 0)
         {
             LOG_INF("Last session discarded. Setting TerminationFlag");
-            SigUtil::getTerminationFlag() = true;
+            SigUtil::setTerminationFlag();
             return -1;
         }
 #endif
