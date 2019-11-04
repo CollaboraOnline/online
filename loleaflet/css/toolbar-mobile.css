@@ -47,6 +47,20 @@
 		border-right: none;
 		height: 35px !important;
 	}
+
+	#calc-inputbar-wrapper {
+		display: block;
+		border: none;
+	}
+
+	#calc-inputbar {
+		display: block;
+		width: 100%;
+		position: relative;
+		padding:0px;
+		margin: 0px;
+	}
+
 	#tb_actionbar_item_undo .w2ui-tb-image, #tb_actionbar_item_redo .w2ui-tb-image, #tb_actionbar_item_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_prev  .w2ui-tb-image, #tb_actionbar_item_next  .w2ui-tb-image, #tb_actionbar_item_insertion_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_insertcomment .w2ui-tb-image, #tb_actionbar_item_fullscreen-presentation .w2ui-tb-image{
 		min-width: 38px;
 	}

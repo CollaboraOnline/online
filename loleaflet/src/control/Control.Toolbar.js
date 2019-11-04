@@ -964,11 +964,7 @@ function initNormalToolbar() {
 			{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
 			{type: 'break'},
 			{type: 'button',  id: 'functiondialog', img: 'functiondialog', hint: _UNO('.uno:FunctionDialog', '', true), uno: '.uno:FunctionDialog'},
-			{type: 'button',  id: 'sum',  img: 'autosum', hint: _('Sum')},
-			{type: 'button',  id: 'function',  img: 'equal', hint: _('Function')},
-			{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
-			{type: 'button', hidden: true, id: 'acceptformula',  img: 'accepttrackedchanges', hint: _('Accept')},
-			{type: 'html', id: 'formula', html: '<input id="formulaInput" type="text">'}
+			{type: 'html', id: 'formula', html: '<div id="calc-inputbar-wrapper"><div id="calc-inputbar"></div></div>'}
 		],
 		onClick: function (e) {
 			onClick(e, e.target);
@@ -976,9 +972,6 @@ function initNormalToolbar() {
 		},
 		onRefresh: function() {
 			$('#addressInput').off('keyup', onAddressInput).on('keyup', onAddressInput);
-			$('#formulaInput').off('keyup', onFormulaInput).on('keyup', onFormulaInput);
-			$('#formulaInput').off('blur', onFormulaBarBlur).on('blur', onFormulaBarBlur);
-			$('#formulaInput').off('focus', onFormulaBarFocus).on('focus', onFormulaBarFocus);
 		}
 	});
 	toolbar.bind('touchstart', function() {

@@ -153,6 +153,10 @@ L.Control.LokDialog = L.Control.extend({
 		return (id in this._dialogs) && this._dialogs[id].isSidebar;
 	},
 
+	_isCalcInputBar: function(id) {
+		return (id in this._dialogs) && this._dialogs[id].isCalcInputBar;
+	},
+
 	// Given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323.
 	_toIntId: function(id) {
 		if (typeof(id) === 'string')
@@ -231,7 +235,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogMsg: function(e) {
 		console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
-		if (e.winType != undefined && e.winType !== 'dialog' && e.winType !== 'child' && e.winType !== 'deck') {
+		if (e.winType != undefined && e.winType !== 'dialog' && e.winType !== 'calc-input-win' && e.winType !== 'child' && e.winType !== 'deck') {
 			return;
 		}
 
@@ -261,6 +265,8 @@ L.Control.LokDialog = L.Control.extend({
 			if (e.winType === 'dialog') {
 				// When left/top are invalid, the dialog shows in the center.
 				this._launchDialog(e.id, left, top, width, height, e.title);
+			} else if (e.winType === 'calc-input-win') {
+				this._launchCalcInputBar(e.id, width, height);
 			} else if (e.winType === 'deck') {
 				if (!window.mode.isMobile()) {
 					this._launchSidebar(e.id, width, height);
@@ -319,6 +325,8 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + strId).remove();
 			if (e.winType  === 'deck' || this._isSidebar(e.id))
 				this._launchSidebar(e.id, width, height);
+			else if (e.winType  === 'calc-input-win' || this._isCalcInputBar(e.id))
+				this._launchCalcInputBar(e.id, width, height);
 			else
 				this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
 		} else if (e.action === 'cursor_invalidate') {
@@ -350,6 +358,8 @@ L.Control.LokDialog = L.Control.extend({
 				this._onDialogChildClose(parent);
 			else if (this._isSidebar(e.id))
 				this._onSidebarClose(e.id);
+			else if (this._isCalcInputBar(e.id))
+				this._onCalcInputBarClose(e.id);
 			else
 				this._onDialogClose(e.id, false);
 		} else if (e.action === 'hide') {
@@ -394,6 +404,9 @@ L.Control.LokDialog = L.Control.extend({
 			} else if (!this._isOpen(dlgId) || !this._dialogs[dlgId].cursorVisible) {
 				return;
 			}
+		}
+		else if (this._isCalcInputBar(dlgId) && (!this._isOpen(dlgId) || !this._dialogs[dlgId].cursorVisible)) {
+			return;
 		}
 
 		this._map.setWinId(dlgId);
@@ -483,6 +496,7 @@ L.Control.LokDialog = L.Control.extend({
 			id: id,
 			strId: strId,
 			isSidebar: false,
+			isCalcInputBar: false,
 			width: width,
 			height: height,
 			cursor: null,
@@ -498,6 +512,110 @@ L.Control.LokDialog = L.Control.extend({
 
 		this._currentId = id;
 		this._sendPaintWindow(id, this._createRectStr(id));
+	},
+
+	_launchCalcInputBar: function(id, width, height) {
+
+		if (false && this._map._permission !== 'edit')
+			return;
+
+		console.log('_launchCalcInputBar: start: id: ' + id + ', width: ' + width);
+		if (this._calcInputBar) {
+			var oldHeight = this._calcInputBar.height;
+			var delta = height - oldHeight;
+			this._onCalcInputBarClose(this._calcInputBar.id);
+			if (delta !== 0) {
+				var documentContainer = L.DomUtil.get('document-container');
+				if (documentContainer) {
+					var top = documentContainer.offsetTop;
+					var noTopProp = true;
+					var props = documentContainer.style.cssText.split(';');
+					for (var i = 0; i < props.length; ++i) {
+						if (props[i].startsWith('top')) {
+							props[i] = 'top: ' + (top + delta).toString() + 'px !important';
+							documentContainer.setAttribute('style', props.join(';'));
+							noTopProp = false;
+							break;
+						}
+					}
+					if (noTopProp) {
+						var styleAttr = documentContainer.style.cssText;
+						styleAttr += '; top: ' + (top + delta).toString() + 'px !important';
+						documentContainer.setAttribute('style', styleAttr);
+					}
+				}
+
+				var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
+				if (spreadsheetRowColumnFrame) {
+					top = spreadsheetRowColumnFrame.offsetTop;
+					noTopProp = true;
+					props = spreadsheetRowColumnFrame.style.cssText.split(';');
+					for (i = 0; i < props.length; ++i) {
+						if (props[i].startsWith('top')) {
+							props[i] = 'top: ' + (top + delta).toString() + 'px !important';
+							spreadsheetRowColumnFrame.setAttribute('style', props.join(';'));
+							noTopProp = false;
+							break;
+						}
+					}
+					if (noTopProp) {
+						styleAttr = spreadsheetRowColumnFrame.style.cssText;
+						styleAttr += '; top: ' + (top + delta).toString() + 'px !important';
+						spreadsheetRowColumnFrame.setAttribute('style', styleAttr);
+					}
+				}
+			}
+		}
+
+		var strId = this._toStrId(id);
+
+		$('#calc-inputbar-wrapper').css({display: 'block'});
+
+		var container = L.DomUtil.create('div', 'inputbar_container', L.DomUtil.get('calc-inputbar'));
+		container.id = strId;
+		L.DomUtil.setStyle(container, 'width', '100%');
+		L.DomUtil.setStyle(container, 'height', height + 'px');
+
+		// Create the canvas.
+		var canvas = L.DomUtil.create('canvas', 'inputbar_canvas', container);
+		L.DomUtil.setStyle(canvas, 'position', 'absolute');
+		this._setCanvasWidthHeight(canvas, width, height);
+		canvas.id = strId + '-canvas';
+
+		// Don't show the inputbar until we get the contents.
+		$(container).parent().hide();
+
+		this._dialogs[id] = {
+			open: true,
+			id: id,
+			strId: strId,
+			isSidebar: false,
+			isCalcInputBar: true,
+			left: 0,
+			top: 0,
+			width: width,
+			height: height,
+			cursor: null,
+			child: null, // never used for inputbar
+			title: null  // never used for inputbar
+		};
+
+		this._createDialogCursor(strId);
+		this._setupWindowEvents(id, canvas/*, dlgInput*/);
+
+		L.DomEvent.on(container, 'mouseleave', function() {
+			// Move the mouse off-screen when we leave the inputbar
+			// so we don't leave edge-elements highlighted as if
+			// the mouse is still over them.
+			this._map.lastActiveTime = Date.now();
+			this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
+		}, this);
+
+		// Render window.
+		this._sendPaintWindowRect(id);
+
+		this._calcInputBar = this._dialogs[id];
+		console.log('_launchCalcInputBar: end');
 	},
 
 	_launchSidebar: function(id, width, height) {
@@ -617,6 +735,7 @@ L.Control.LokDialog = L.Control.extend({
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
+			this._map.setWinId(id);
 			//dlgInput.focus();
 		}, this);
 
@@ -753,6 +872,17 @@ L.Control.LokDialog = L.Control.extend({
 		$('#sidebar-dock-wrapper').css({display: ''});
 	},
 
+	_onCalcInputBarClose: function(dialogId) {
+		console.log('_onCalcInputBarClose: start: id: ' + dialogId);
+		$('#' + this._calcInputBar.strId).remove();
+		this._map.focus();
+		delete this._dialogs[dialogId];
+		this._calcInputBar = null;
+
+		$('#calc-inputbar-wrapper').css({display: ''});
+		console.log('_onCalcInputBarClose: end');
+	},
+
 	_onDialogClose: function(dialogId, notifyBackend) {
 		if (window.ThisIsTheiOSApp)
 			w2ui['editbar'].enable('closemobile');
@@ -773,7 +903,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onClosePopups: function() {
 		for (var dialogId in this._dialogs) {
-			if (!this._isSidebar(dialogId)) {
+			if (!this._isSidebar(dialogId) && !this._isCalcInputBar(dialogId)) {
 				this._onDialogClose(dialogId, true);
 			}
 		}
@@ -782,7 +912,7 @@ L.Control.LokDialog = L.Control.extend({
 	onCloseCurrentPopUp: function() {
 		// for title-less dialog only (context menu, pop-up)
 		if (this._currentId && this._isOpen(this._currentId) &&
-			!this._dialogs[this._currentId].title && !this._isSidebar(this._currentId))
+			!this._dialogs[this._currentId].title && !this._isSidebar(this._currentId) && !this._isCalcInputBar(this._currentId))
 			this._onDialogClose(this._currentId, true);
 	},
 
@@ -809,6 +939,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (!canvas)
 			return; // no window to paint to
 
+		this._dialogs[parentId].isPainting = true;
 		var ctx = canvas.getContext('2d');
 
 		var that = this;
@@ -832,6 +963,12 @@ L.Control.LokDialog = L.Control.extend({
 				that._setCanvasWidthHeight(panelCanvas, that._currentDeck.width, that._currentDeck.height);
 			}
 
+			var isCalcInputBar = that._isCalcInputBar(parentId);
+			if (isCalcInputBar) {
+				var canvas = L.DomUtil.get(that._calcInputBar.strId + '-canvas');
+				that._setCanvasWidthHeight(canvas, that._calcInputBar.width, that._calcInputBar.height);
+			}
+
 			ctx.drawImage(img, x, y);
 
 			// if dialog is hidden, show it
@@ -839,6 +976,12 @@ L.Control.LokDialog = L.Control.extend({
 			if (container)
 				$(container).parent().show();
 			that.focus(parentId);
+			that._dialogs[parentId].isPainting = false;
+
+			if (isCalcInputBar && container && that._calcInputBar.width !== container.clientWidth) {
+				console.log('_paintDialog: container width: ' + container.clientWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
+				that._map._socket.sendMessage('resizewindow ' + parentId + ' size=' + container.clientWidth + ',' + that._calcInputBar.height);
+			}
 		};
 		img.src = imgData;
 	},
@@ -904,7 +1047,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogChildClose: function(dialogId) {
 		$('#' + this._toStrId(dialogId) + '-floating').remove();
-		if (!this._isSidebar(dialogId)) {
+		if (!this._isSidebar(dialogId) && !this._isCalcInputBar(dialogId)) {
 			// Remove any extra height allocated for the parent container (only for floating dialogs).
 			var canvas = document.getElementById(dialogId + '-canvas');
 			if (!canvas) {

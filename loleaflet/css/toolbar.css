@@ -119,6 +119,19 @@ w2ui-toolbar {
 		width: 100%;
 }
 
+#calc-inputbar-wrapper {
+	display: block;
+	border: none;
+}
+
+#calc-inputbar {
+	display: block;
+	width: 100%;
+	position: relative;
+	padding:0px;
+	margin: 0px;
+}
+
 #tb_formulabar_item_formula {
 		width: 100%;
 }

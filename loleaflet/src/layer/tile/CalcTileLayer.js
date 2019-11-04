@@ -160,11 +160,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			items: [
 				{type: 'html',  id: 'left'},
 				{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
-				{type: 'button',  id: 'sum',  img: 'autosum', hint: _('Sum')},
-				{type: 'button',  id: 'function',  img: 'equal', hint: _('Function')},
-				{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
-				{type: 'button', hidden: true, id: 'acceptformula',  img: 'accepttrackedchanges', hint: _('Accept')},
-				{type: 'html', id: 'formula', html: '<input id="formulaInput" type="text">'}
+				{type: 'html', id: 'formula', html: '<div id="calc-inputbar-wrapper"><div id="calc-inputbar"></div></div>'}
 			],
 			onClick: function (e) {
 				window.onClick(e, e.target);
@@ -172,9 +168,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 			},
 			onRefresh: function() {
 				$('#addressInput').off('keyup', window.onAddressInput).on('keyup', window.onAddressInput);
-				$('#formulaInput').off('keyup', window.onFormulaInput).on('keyup', window.onFormulaInput);
-				$('#formulaInput').off('blur', window.onFormulaBarBlur).on('blur', window.onFormulaBarBlur);
-				$('#formulaInput').off('focus', window.onFormulaBarFocus).on('focus', window.onFormulaBarFocus);
 			}
 		});
 		toolbar.bind('touchstart', function(e) {
