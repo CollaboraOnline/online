@@ -857,11 +857,13 @@ L.Control.Menubar = L.Control.extend({
 						if (!L.Browser.mobile) {
 							$nav.css({height: 'initial', bottom: '38px'});
 							$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
+							$('#mobile-wizard-header').show();
 						} else {
 							window.mobileMenuWizard = true;
 							var menuData = self._map.menubar.generateFullMenuStructure();
 							self._map.fire('mobilewizard', menuData);
 							$('#toolbar-hamburger').addClass('menuwizard-opened');
+							$('#mobile-wizard-header').hide();
 						}
 					} else if (!L.Browser.mobile) {
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
