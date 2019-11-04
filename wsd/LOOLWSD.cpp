@@ -3503,13 +3503,14 @@ int LOOLWSD::innerMain()
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Exiting. Cleaning up lingering documents.");
+#ifndef MOBILEAPP
     if (!SigUtil::getShutdownRequestFlag())
     {
         // This shouldn't happen, but it's fail safe to always cleanup properly.
         LOG_WRN("Exiting WSD without ShutdownRequestFlag. Setting it now.");
         SigUtil::requestShutdown();
     }
-
+#endif
     // Don't stop the DocBroker, they will exit.
     constexpr size_t sleepMs = 500;
     constexpr size_t count = (COMMAND_TIMEOUT_MS * 4) / sleepMs;
