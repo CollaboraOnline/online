@@ -255,3 +255,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	-webkit-flex-wrap: wrap  !important;
 	flex-wrap: wrap  !important;
 }
+#rotationlabel{
+	display: none;
+}
