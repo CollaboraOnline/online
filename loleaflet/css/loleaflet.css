@@ -273,6 +273,58 @@ body {
 	}
 }
 
+@media (max-width: 767px) and (orientation: portrait),(max-device-height: 767px) and (orientation: portrait) {
+	#presentation-controls-wrapper {
+		top: initial;
+		left: initial;
+		bottom: 33px;
+		position: fixed;
+		width: 100%;
+		max-width: initial;
+	}
+
+	#presentation-controls-wrapper.readonly {
+		top: initial;
+		bottom: 0px;
+		width: 100%;
+		position: fixed;
+	}
+
+	#document-container.readonly.parts-preview-document {
+		bottom: 65px;
+	}
+
+	#document-container.parts-preview-document {
+		left: 0px !important;
+		bottom: 95px;
+		width: 100%;
+	}
+}
+
+@media (max-width: 767px) and (orientation: landscape),(max-device-height: 767px) and (orientation: landscape)  {
+	#document-container.parts-preview-document {
+		left: 66px !important;
+		bottom: 33px;
+	}
+
+	#document-container.readonly.parts-preview-document {
+		top: 41px;
+		bottom: 0px;
+		width: initial;
+	}
+
+	#presentation-controls-wrapper {
+		top: 41px;
+		bottom: 33px;
+	}
+
+	#presentation-controls-wrapper.readonly {
+		top: 41px;
+		bottom: 0px;
+		max-width: 120px;
+	}
+}
+
 .loleaflet-font {
 	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
 	font-size: 12px !important;
