@@ -685,7 +685,10 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._map.fire('updatepart', {part: command.part, docType: this._docType});
 		}
 
-		this._map._docPreviews[command.part].invalid = true;
+		var preview = this._map._docPreviews[command.part];
+		if (preview) {
+			preview.invalid = true;
+		}
 		this._previewInvalidations.push(invalidBounds);
 		// 1s after the last invalidation, update the preview
 		clearTimeout(this._previewInvalidator);
