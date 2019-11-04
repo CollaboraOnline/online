@@ -57,7 +57,10 @@ for MODULE in lxml polib; do
         AC_MSG_RESULT([yes])
     else
         AC_MSG_RESULT([no])
-        AC_MSG_ERROR([${MODULE} for python3 is needed. It might be in a package called python3-${MODULE}.])
+        AS_IF([test `uname -s` = Linux],
+              [AC_MSG_ERROR([${MODULE} for python3 is needed. It might be in a package called python3-${MODULE}.])],
+              [AC_MSG_WARN([${MODULE} for python3 is needed. It might be in a package called python3-${MODULE}. But
+               if you are building the JS bits on another (Linux) machine, that doesn't matter])])
     fi
 done
 
