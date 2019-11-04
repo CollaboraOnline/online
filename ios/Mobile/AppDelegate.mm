@@ -291,6 +291,11 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         return NO;
     }
 
+    // If we already have a document open, close it
+    if (lok_document != nullptr && [DocumentViewController singleton] != nil) {
+        [[DocumentViewController singleton] bye];
+    }
+
     // Reveal / import the document at the URL
     DocumentBrowserViewController *documentBrowserViewController = (DocumentBrowserViewController *)self.window.rootViewController;
     [documentBrowserViewController revealDocumentAtURL:inputURL importIfNeeded:YES completion:^(NSURL * _Nullable revealedDocumentURL, NSError * _Nullable error) {
