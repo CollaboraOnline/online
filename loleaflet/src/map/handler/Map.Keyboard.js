@@ -414,7 +414,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (e.ctrlKey && e.shiftKey && e.key === '?') {
-			this._map.showHelp('online-help');
+			this._map.showHelp('keyboard-shortcuts');
 			e.preventDefault();
 			return true;
 		}
