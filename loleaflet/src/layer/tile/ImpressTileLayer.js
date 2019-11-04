@@ -46,6 +46,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		map.on('AnnotationSave', this.onAnnotationSave, this);
 		map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
+		map.on('orientationchange', this.onOrientationChange, this);
 		map.on('resize', this.onResize, this);
 		if (window.mode.isMobile()) {
 			this.onMobileInit(map);
@@ -413,6 +414,25 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				this.onAnnotationCancel();
 			}
 		}
+	},
+
+	onOrientationChange: function () {
+		var container = L.DomUtil.get('presentation-controls-wrapper');
+		var preview = L.DomUtil.get('slide-sorter');
+		var control = $(preview).data('preview');
+
+		if (!container || !preview || !control) {
+			return;
+		}
+
+		if (L.DomUtil.isPortrait() && $(preview).data('mCS').opt.axis !== 'x') {
+			$(preview).mCustomScrollbar('destroy');
+			control.createScrollbar('x');
+		} else if (L.DomUtil.isLandscape() && $(preview).data('mCS').opt.axis !== 'y') {
+			$(preview).mCustomScrollbar('destroy');
+			control.createScrollbar('y');
+		}
+
 	},
 
 	onUpdatePermission: function (e) {
