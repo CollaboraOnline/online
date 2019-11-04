@@ -240,3 +240,18 @@ p.mobile-wizard.ui-combobox-text.selected {
 #mobile-wizard-content:not(.with-slide-sorter-above){
 	top: 63px !important;
 }
+
+.with-slide-sorter-above > .ui-tabs-content > div[title=Layouts]{
+	justify-content: center;
+	-ms-box-orient: horizontal  !important;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: flex;
+	align-self: center !important;
+	align-items: center !important;
+	-webkit-flex-wrap: wrap  !important;
+	flex-wrap: wrap  !important;
+}
