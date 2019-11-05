@@ -75,6 +75,8 @@ L.ColorPicker = L.Class.extend({
 	_initIndexes: function () {
 		for (var i = 0; i < this._getBasicColorCount(); ++i) {
 			var tintSet = this._getTintSet(i);
+			if (!tintSet)
+				return;
 			for (var j = 0; j < tintSet.length; ++j) {
 				var tint = tintSet[j];
 				if (tint === this._selectedColor) {

@@ -723,11 +723,40 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		 return false;
 	},
 
+	_getDefaultColorForCommand: function(command) {
+		if (command == '.uno:BackColor')
+			return '#';
+		else if (command == '.uno:CharBackColor')
+			return '#';
+		else if (command == '.uno:BackgroundColor')
+			return '#';
+		return 0;
+	},
+
+	_getCurrentColor: function(data, builder) {
+		var selectedColor = parseInt(builder.map['stateChangeHandler'].getItemValue(data.command));
+
+		if (!selectedColor || selectedColor < 0)
+			selectedColor = builder._getDefaultColorForCommand(data.command);
+
+		selectedColor = selectedColor.toString(16);
+
+		while (selectedColor != '#' && selectedColor.length < 6) {
+			selectedColor = '0' + selectedColor;
+		}
+
+		if (selectedColor[0] != '#')
+			selectedColor = '#' + selectedColor;
+
+		return selectedColor;
+	},
+
 	_colorControl: function(parentContainer, data, builder) {
 		var title = data.text;
 		title = builder._cleanText(title);
 
-		var selectedColor = L.ColorPicker.BASIC_COLORS[1];
+		var selectedColor = builder._getCurrentColor(data, builder);
+
 		var valueNode =  L.DomUtil.create('div', 'color-sample-selected', null);
 		valueNode.style.backgroundColor = selectedColor;
 
@@ -736,7 +765,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var callback = function(color) {
 			var command = data.command + '?Color:string=' + color;
-			console.log(command);
 			builder.map.sendUnoCommand(command);
 		};
 
