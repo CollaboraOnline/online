@@ -758,7 +758,13 @@ L.Control.Header.colHeaderHeight = undefined;
  * - When a new tick position is defined, it resets the size of the last known gap
  *
  * All the outputs are mapped through a scale function. Inputs are meant
- * to be given in twips, outputs are meant to be returned in CSS pixels.
+ * to be given in twips, outputs are meant to be returned in CSS pixels,
+ * which is also the internal storage format.
+ *
+ * **NB.** to ensure that all row heights are the same size even though
+ * their twip height doesn't map to an integer number of pixels we need to
+ * convert to pixels early - and work in pixels internally, as the calc
+ * core does.
  */
 L.Control.Header.GapTickMap = L.Class.extend({
 
@@ -774,7 +780,8 @@ L.Control.Header.GapTickMap = L.Class.extend({
 			// The field in the input data struct is called "text" but it's the
 			// column/row index, as a string.
 			// Idem for "size": it's the tick position in twips, as a string
-			knownTicks[ parseInt(ticks[i].text) ] = parseInt(ticks[i].size);
+			knownTicks[ parseInt(ticks[i].text) ] =
+				this.scaleCallback(parseInt(ticks[i].size));
 		}
 
 		// This *assumes* the input is ordered - i.e. tick indexes only grow
@@ -800,7 +807,7 @@ L.Control.Header.GapTickMap = L.Class.extend({
 
 	// Gets the position of the i-th tick (or `undefined` if the index falls outside).
 	getTick: function getTick(i) {
-		return this.scaleCallback(this._ticks[i]);
+		return this._ticks[i];
 	},
 
 	getMinTickIdx: function() {
