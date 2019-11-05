@@ -33,47 +33,47 @@
 		-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 		filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 	}
-}
-#toolbar-down table.w2ui-button:not(.checked) td.w2ui-tb-down > div {
-	border-top: none !important;
-	margin-top: 0 !important;
-	border-bottom: 5px solid #8D99A7 !important;
-}
-#toolbar-down table.w2ui-button.checked td.w2ui-tb-down > div {
-	border-bottom: none;
-	border-top: 5px solid #8D99A7;
-	margin-bottom: 5px !important;
-}
-#w2ui-overlay-editbar .menu{
-	border-radius: 3px;
-}
-#w2ui-overlay-editbar:before{
-	border: none !important;
-}
-#w2ui-overlay-editbar:after{
-	border: none;
-	border-top: 8px solid #000000;
-	border-top-color: inherit;
-	border-right: 8px solid transparent;
-	border-left: 8px solid transparent;
-	top: 100%;
-	margin-top: -3px;
-}
-#toolbar-search #tb_searchbar_item_search *{
-	width: 100% !important;
-}
-#toolbar-search input#search-input{
-	font-size: 16px;
-}
-#toolbar-search #tb_searchbar_item_left, #tb_searchbar_right {
-	display: none;
-}
-#toolbar-search #tb_searchbar_item_hidesearchbar{
-	padding: 1px 8px !important;
-}
-#toolbar-search #tb_searchbar_item_search{
-	width: 80%;
-}
-#toolbar-search #search-input-group > label{
-	display: none;
+	#toolbar-down table.w2ui-button:not(.checked) td.w2ui-tb-down > div {
+		border-top: none !important;
+		margin-top: 0 !important;
+		border-bottom: 5px solid #8D99A7 !important;
+	}
+	#toolbar-down table.w2ui-button.checked td.w2ui-tb-down > div {
+		border-bottom: none;
+		border-top: 5px solid #8D99A7;
+		margin-bottom: 5px !important;
+	}
+	#w2ui-overlay-editbar .menu{
+		border-radius: 3px;
+	}
+	#w2ui-overlay-editbar:before{
+		border: none !important;
+	}
+	#w2ui-overlay-editbar:after{
+		border: none;
+		border-top: 8px solid #000000;
+		border-top-color: inherit;
+		border-right: 8px solid transparent;
+		border-left: 8px solid transparent;
+		top: 100%;
+		margin-top: -3px;
+	}
+	#toolbar-search #tb_searchbar_item_search *{
+		width: 100% !important;
+	}
+	#toolbar-search input#search-input{
+		font-size: 16px;
+	}
+	#toolbar-search #tb_searchbar_item_left, #tb_searchbar_right {
+		display: none;
+	}
+	#toolbar-search #tb_searchbar_item_hidesearchbar{
+		padding: 1px 8px !important;
+	}
+	#toolbar-search #tb_searchbar_item_search{
+		width: 80%;
+	}
+	#toolbar-search #search-input-group > label{
+		display: none;
+	}
 }
