@@ -647,7 +647,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		var rowHeader = L.DomUtil.get('spreadsheet-header-rows-container');
-		var document = this.options.documentContainer;
+		var document = this._map.options.documentContainer;
 
 		this._setCornerCanvasHeight(height);
 		var deltaTop = height - this._canvasHeight;
