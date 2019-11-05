@@ -1052,7 +1052,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
 		this._map.closePopup(this._map.hyperlinkPopup);
 		this._map.hyperlinkPopup = null;
-		if (obj.hyperlink.link) {
+		if (obj.hyperlink && obj.hyperlink.link) {
 			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
 				.setContent('<a href="' + obj.hyperlink.link + '" target="_blank">' + obj.hyperlink.link + '</a>')
 				.setLatLng(cursorPos)
