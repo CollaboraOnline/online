@@ -118,6 +118,18 @@ span#main-menu-btn-icon {
 .layout.layout_head02a {
 	background: url('images/layout_head02a.svg') no-repeat center !important;
 }
+
+.layout.columns_52x60 {
+	background: url('images/columns_52x60.svg') no-repeat center !important;
+}
+
+.layout.columnstack_52x60 {
+	background: url('images/columnstack_52x60.svg') no-repeat center !important;
+}
+
+.layout.columnpercent_52x60 {
+	background: url('images/columnpercent_52x60.svg') no-repeat center !important;
+}
 .layout{
 	border: 1px solid #fff;
 }
