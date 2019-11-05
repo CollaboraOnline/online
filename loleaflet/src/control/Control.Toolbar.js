@@ -204,7 +204,7 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'cancelsearch') {
 		_cancelSearch();
 	}
-	else if (id === 'presentation' && map.getDocType() === 'presentation') {
+	else if ((id === 'presentation' || id === 'fullscreen-presentation') && map.getDocType() === 'presentation') {
 		map.fire('fullscreen');
 	}
 	else if (id === 'insertannotation') {
