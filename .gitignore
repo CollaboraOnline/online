@@ -122,6 +122,7 @@ eclipsesettingfile.xml
 .yavide_session
 .vscode
 *.code-workspace
+Makecache
 
 # autoconf stuff
 autogen.input
