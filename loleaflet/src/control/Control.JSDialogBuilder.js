@@ -53,8 +53,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['colorsample'] = this._colorSampleControl;
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
 
-		this._controlHandlers['chartTypeSelector'] = this._chartTypeControl;
-
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
 		this._controlHandlers['menuitem'] = this._menuItemHandler;
@@ -796,12 +794,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							{ text: '4.5' },
 							{ text: '6.0' } ];
 		builder._spinfieldControl(parentContainer, data, builder);
-	},
-
-	_chartTypeControl: function(parentContainer, data, builder) {
-		data.entries = [ 'Bar', 'Column', 'Pie', 'Area', 'Line' ];
-		data.title = 'ChartType';
-		builder._comboboxControl(parentContainer, data, builder);
 	},
 
 	_subMenuHandler: function(parentContainer, data, builder) {
