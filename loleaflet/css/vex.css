@@ -131,4 +131,11 @@
 		background-color: #fff !important;
 		border: 1px solid #aaa !important;
 	}
+	.vex-overlay.loleaflet-user-idle-overlay {
+		background-color: #05396180;
+	}
+	.vex-content.loleaflet-user-idle{
+		padding-top: 160px !important;
+		padding-bottom: 160px !important;
+	}
 }

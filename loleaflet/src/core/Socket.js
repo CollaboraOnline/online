@@ -448,6 +448,7 @@ L.Socket = L.Class.extend({
 					map._documentIdle = false;
 					return map._activate();
 				};
+				$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
 			}
 
 			if (postMsgData['Reason']) {
