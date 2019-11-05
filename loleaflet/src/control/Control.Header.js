@@ -353,7 +353,6 @@ L.Control.Header = L.Control.extend({
 		if (this._mouseOverEntry) {
 			var mouseOverIsCurrent = (this._mouseOverEntry.index == this._current);
 			this.drawHeaderEntry(this._mouseOverEntry, /*isOver: */ false, null, mouseOverIsCurrent);
-			this._lastMouseOverIndex = this._mouseOverEntry.index + this._startHeaderIndex; // used by context menu
 			this._mouseOverEntry = null;
 		}
 		this._hitResizeArea = false;
@@ -390,6 +389,7 @@ L.Control.Header = L.Control.extend({
 			this.drawHeaderEntry(this._mouseOverEntry, false, null, mouseOverIsCurrent);
 			this.drawHeaderEntry(entry, true, null, entry.index == this._current);
 			this._mouseOverEntry = entry;
+			this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
 		}
 
 		if (isMouseOverResizeArea !== this._hitResizeArea) {
