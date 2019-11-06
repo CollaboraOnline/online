@@ -270,3 +270,9 @@ p.mobile-wizard.ui-combobox-text.selected {
 #rotationlabel{
 	display: none;
 }
+@media (orientation: landscape) {
+	#mobile-wizard-header{display: none;}
+}
+@media (orientation: portrait) {
+	#mobile-wizard-header{display: block;}
+}
