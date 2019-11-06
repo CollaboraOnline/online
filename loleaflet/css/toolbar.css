@@ -98,7 +98,7 @@
 	#selectheight > img, #selectwidth > img, #selectheight > img, #SendToBack > span, #ObjectBackOne > span, #ObjectForwardOne > span, #BringToFront > span, #FlipVertical > span, #FlipHorizontal > span, #Bold > span, #Italic > span, #Underline > span, #Strikeout > span, #StyleApply > span, #StyleUpdateByExample > span, #StyleNewByExample > span, #Shadowed > span, #Grow > span, #Shrink > span, #Color > span, #Spacing > span, #SuperScript > span, #SubScript > span, #AlignLeft > span, #AlignRight > span, #AlignHorizontalCenter > span, #AlignBlock > span, #ParaLeftToRight > span, #ParaRightToLeft > span, #AlignTop > span, #AlignVCenter > span, #AlignBottom > span, #IncrementIndent > span, #DecrementIndent > span, #LeftPara > span, #RightPara > span, #CenterPara > span, #JustifyPara > span, #DefaultBullet > span, #DefaultNumbering > span, #ParaspaceIncrease > span, #ParaspaceDecrease > span, #LineSpacing > span, #HangingIndent > span, #CellVertTop > span, #CellVertCenter > span, #CellVertBottom > span, div[id*='Row'] > span,  div[id*='Column'] > span, div[id^=Outline] > span{
 		display: none !important;
 	}
-	#SendToBack, #ObjectBackOne, #ObjectForwardOne, #BringToFront, #FlipVertical, #FlipHorizontal, #Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript,#AlignLeft, #AlignRight, #AlignHorizontalCenter, #AlignBlock, #ParaRightToLeft, #ParaLeftToRight, #AlignTop, #AlignVCenter, #AlignBottom, #IncrementIndent, #DecrementIndent, #LeftPara, #RightPara, #CenterPara, #JustifyPara, #DefaultBullet, #DefaultNumbering, #ParaspaceIncrease, #ParaspaceDecrease, #LineSpacing, #HangingIndent, #CellVertTop, #CellVertCenter, #CellVertBottom, #ParaspaceIncrease, #ParaspaceDecrease, div[id*='Row'], div[id*='Column'], #DeleteTable, #MergeCells, div[id^=Outline] > span{
+	#SendToBack, #ObjectBackOne, #ObjectForwardOne, #BringToFront, #FlipVertical, #FlipHorizontal, #Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript,#AlignLeft, #AlignRight, #AlignHorizontalCenter, #AlignBlock, #ParaRightToLeft, #ParaLeftToRight, #AlignTop, #AlignVCenter, #AlignBottom, #IncrementIndent, #DecrementIndent, #LeftPara, #RightPara, #CenterPara, #JustifyPara, #DefaultBullet, #DefaultNumbering, #ParaspaceIncrease, #ParaspaceDecrease, #LineSpacing, #HangingIndent, #CellVertTop, #CellVertCenter, #CellVertBottom, #ParaspaceIncrease, #ParaspaceDecrease, div[id*='Row'], div[id*='Column'], #DeleteTable, #MergeCells, div[id^=Outline]{
 		padding: 16px 28px 16px 4% !important;
 		margin: 0px !important;
 		float:left;
@@ -128,7 +128,7 @@
 	#Color {
 		padding: 20px 20px 0px 20px !important;
 	}
-	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel, #sizelabel{clear:both;}
+	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel, #spacinglabel, #sizelabel{clear:both;}
 	#BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel, .mobile-wizard.ui-text {
 		border-bottom: 1px solid #c2d5ed;
 		color: #b3c5dc !important;
@@ -227,6 +227,13 @@
 		line-height: 44px;
 		vertical-align: baseline;
 		padding-left: 24px;
+	}
+	div[title='Table Design'] div[id^=Use]{
+		width: 92%;
+		padding-right: 4% !important;
+	}
+	input[type=checkbox]#UseBandingColumnStyle, input[type=checkbox]#UseLastColumnStyle, input[type=checkbox]#UseFirstColumnStyle, input[type=checkbox]#UseBandingRowStyle, input[type=checkbox]#UseLastRowStyle, input[type=checkbox]#UseFirstRowStyle{
+		margin-right: 0px !important;
 	}
 	#mobile-wizard button{
 		height: 38px;

@@ -252,6 +252,9 @@ p.mobile-wizard.ui-combobox-text.selected {
 #mobile-wizard-content:not(.with-slide-sorter-above){
 	top: 63px !important;
 }
+#mobile-wizard-content.with-slide-sorter-above {
+	top: 128px !important;
+}
 
 .with-slide-sorter-above > .ui-tabs-content > div[title=Layouts]{
 	justify-content: center;
