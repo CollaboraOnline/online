@@ -213,7 +213,11 @@ L.Map = L.Evented.extend({
 				elem.parentNode.removeChild(elem);
 			}
 
-			if (L.Browser.mobile)
+			// We need core's knowledge of whether it is a mobile phone or not (which is
+			// what .uno:LOKSetMobile does) to be in sync with the test in
+			// _onJSDialogMsg in TileLayer.js but we don't have the clout to do so
+			// except for the iOS app out of fear of breaking something.
+			if (L.Browser.mobile && (!window.ThisIsTheiOSApp || screen.width < 768))
 			{
 				this._size = new L.Point(0,0);
 				this._onResize();
