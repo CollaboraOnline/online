@@ -441,79 +441,73 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinchStart: function (e) {
-		if (this._map.getDocType() !== 'spreadsheet') {
-			this._pinchStartCenter = {x: e.center.x, y: e.center.y};
-			if (this._map._docLayer.isCursorVisible()) {
-				this._map._docLayer._cursorMarker.setOpacity(0);
-			}
-			if (this._map._clipboardContainer._cursorHandler) {
-				this._map._clipboardContainer._cursorHandler.setOpacity(0);
-			}
-			if (this._map._docLayer._selectionHandles['start']) {
-				this._map._docLayer._selectionHandles['start'].setOpacity(0);
-			}
-			if (this._map._docLayer._selectionHandles['end']) {
-				this._map._docLayer._selectionHandles['end'].setOpacity(0);
-			}
-
-			this._map._docLayer.eachView(this._map._docLayer._viewCursors, function (item) {
-				var viewCursorMarker = item.marker;
-				if (viewCursorMarker) {
-					viewCursorMarker.setOpacity(0);
-				}
-			}, this._map._docLayer, true);
+		this._pinchStartCenter = {x: e.center.x, y: e.center.y};
+		if (this._map._docLayer.isCursorVisible()) {
+			this._map._docLayer._cursorMarker.setOpacity(0);
 		}
+		if (this._map._clipboardContainer._cursorHandler) {
+			this._map._clipboardContainer._cursorHandler.setOpacity(0);
+		}
+		if (this._map._docLayer._selectionHandles['start']) {
+			this._map._docLayer._selectionHandles['start'].setOpacity(0);
+		}
+		if (this._map._docLayer._selectionHandles['end']) {
+			this._map._docLayer._selectionHandles['end'].setOpacity(0);
+		}
+		this._map._docLayer.eachView(this._map._docLayer._viewCursors, function (item) {
+			var viewCursorMarker = item.marker;
+			if (viewCursorMarker) {
+				viewCursorMarker.setOpacity(0);
+			}
+		}, this._map._docLayer, true);
 	},
 
 	_onPinch: function (e) {
 		if (!this._pinchStartCenter)
 			return;
 
-		if (this._map.getDocType() !== 'spreadsheet') {
-			// we need to invert the offset or the map is moved in the opposite direction
-			var offset = {x: e.center.x - this._pinchStartCenter.x, y: e.center.y - this._pinchStartCenter.y};
-			var center = {x: this._pinchStartCenter.x - offset.x, y: this._pinchStartCenter.y - offset.y};
-			this._zoom = this._map.getScaleZoom(e.scale);
-			this._center = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
-				this._zoom, this._map.options.maxBounds);
+		// we need to invert the offset or the map is moved in the opposite direction
+		var offset = {x: e.center.x - this._pinchStartCenter.x, y: e.center.y - this._pinchStartCenter.y};
+		var center = {x: this._pinchStartCenter.x - offset.x, y: this._pinchStartCenter.y - offset.y};
+		this._zoom = this._map.getScaleZoom(e.scale);
+		this._center = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
+						      this._zoom, this._map.options.maxBounds);
 
-			L.Util.cancelAnimFrame(this._animRequest);
-			this._animRequest = L.Util.requestAnimFrame(function () {
-				this._map._animateZoom(this._center, this._zoom, false, true);
-			}, this, true, this._map._container);
-		}
+		L.Util.cancelAnimFrame(this._animRequest);
+		this._animRequest = L.Util.requestAnimFrame(function () {
+			this._map._animateZoom(this._center, this._zoom, false, true);
+		}, this, true, this._map._container);
 	},
 
 	_onPinchEnd: function () {
-		if (this._map.getDocType() !== 'spreadsheet') {
-			var oldZoom = this._map.getZoom(),
-			    zoomDelta = this._zoom - oldZoom,
-			    finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
+		var oldZoom = this._map.getZoom(),
+		    zoomDelta = this._zoom - oldZoom,
+		    finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
 
-			if (this._map._docLayer.isCursorVisible()) {
-				this._map._docLayer._cursorMarker.setOpacity(1);
-			}
-			if (this._map._clipboardContainer._cursorHandler) {
-				this._map._clipboardContainer._cursorHandler.setOpacity(1);
-			}
-			if (this._map._docLayer._selectionHandles['start']) {
-				this._map._docLayer._selectionHandles['start'].setOpacity(1);
-			}
-			if (this._map._docLayer._selectionHandles['end']) {
-				this._map._docLayer._selectionHandles['end'].setOpacity(1);
-			}
+		if (this._map._docLayer.isCursorVisible()) {
+			this._map._docLayer._cursorMarker.setOpacity(1);
+		}
+		if (this._map._clipboardContainer._cursorHandler) {
+			this._map._clipboardContainer._cursorHandler.setOpacity(1);
+		}
+		if (this._map._docLayer._selectionHandles['start']) {
+			this._map._docLayer._selectionHandles['start'].setOpacity(1);
+		}
+		if (this._map._docLayer._selectionHandles['end']) {
+			this._map._docLayer._selectionHandles['end'].setOpacity(1);
+		}
 
-			if (this._center) {
-				L.Util.cancelAnimFrame(this._animRequest);
-				this._map._animateZoom(this._center, finalZoom, true, true);
-			}
+		if (this._center) {
+			L.Util.cancelAnimFrame(this._animRequest);
+			this._map._animateZoom(this._center, finalZoom, true, true);
+		}
 
-			if (this._map._docLayer && this._map._docLayer._annotations) {
-				var annotations = this._map._docLayer._annotations;
+		if (this._map._docLayer && this._map._docLayer._annotations) {
+			var annotations = this._map._docLayer._annotations;
+			if (annotations.update)
 				setTimeout(function() {
 					annotations.update();
 				}, 250 /* ms */);
-			}
 		}
 	},
 
