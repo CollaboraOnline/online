@@ -15,6 +15,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <sysexits.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -54,7 +55,7 @@ protected:
         if (args.size() != 2)
         {
             logger().fatal("Usage: lokitclient /path/to/lo/installation/program /path/to/document");
-            return Application::EXIT_USAGE;
+            return EX_USAGE;
         }
 
         LibreOfficeKit *loKit;
@@ -64,7 +65,7 @@ protected:
         if (!loKit)
         {
             logger().fatal("LibreOfficeKit initialisation failed");
-            return Application::EXIT_UNAVAILABLE;
+            return EX_UNAVAILABLE;
         }
 
 
@@ -72,7 +73,7 @@ protected:
         if (!loKitDocument)
         {
             logger().fatal("Document loading failed: " + std::string(loKit->pClass->getError(loKit)));
-            return Application::EXIT_UNAVAILABLE;
+            return EX_UNAVAILABLE;
         }
 
         loKitDocument->pClass->registerCallback(loKitDocument, myCallback, nullptr);
@@ -162,7 +163,7 @@ protected:
         }
 
         // Safest to just bluntly exit
-        std::_Exit(Application::EXIT_OK);
+        std::_Exit(EX_OK);
     }
 };
 

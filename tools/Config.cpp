@@ -12,6 +12,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <sysexits.h>
 #include <termios.h>
 
 #include <openssl/rand.h>
@@ -164,7 +165,7 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
     if (optionName == "help")
     {
         displayHelp();
-        std::exit(Application::EXIT_OK);
+        std::exit(EX_OK);
     }
     else if (optionName == "config-file")
     {
@@ -219,10 +220,10 @@ int Config::main(const std::vector<std::string>& args)
     {
         std::cerr << "Nothing to do." << std::endl;
         displayHelp();
-        return Application::EXIT_NOINPUT;
+        return EX_NOINPUT;
     }
 
-    int retval = Application::EXIT_OK;
+    int retval = EX_OK;
     bool changed = false;
     _loolConfig.load(ConfigFile);
 
@@ -262,7 +263,7 @@ int Config::main(const std::vector<std::string>& args)
         if (adminPwd != reAdminPwd)
         {
             std::cout << "Password mismatch." << std::endl;
-            return Application::EXIT_DATAERR;
+            return EX_DATAERR;
         }
 
         // Do the magic !
@@ -297,7 +298,7 @@ int Config::main(const std::vector<std::string>& args)
         changed = true;
 #else
         std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/loolwsd/loolwsd.xml." << std::endl;
-        return Application::EXIT_UNAVAILABLE;
+        return EX_UNAVAILABLE;
 #endif
     }
 #if ENABLE_SUPPORT_KEY

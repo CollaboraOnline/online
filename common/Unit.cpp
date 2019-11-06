@@ -15,9 +15,10 @@
 #include <cassert>
 #include <dlfcn.h>
 #include <fstream>
+#include <sysexits.h>
 
 #include <Poco/Thread.h>
-#include <Poco/Util/Application.h>
+#include <Poco/Util/LayeredConfiguration.h>
 
 #include "Log.hpp"
 #include "Util.hpp"
@@ -186,9 +187,7 @@ void UnitBase::exitTest(TestResult result)
 {
     LOG_INF("exitTest: " << (int)result << ". Flagging for termination.");
     _setRetValue = true;
-    _retValue = result == TestResult::Ok ?
-        Poco::Util::Application::EXIT_OK :
-        Poco::Util::Application::EXIT_SOFTWARE;
+    _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;
     SigUtil::setTerminationFlag();
     SocketPoll::wakeupWorld();
 }

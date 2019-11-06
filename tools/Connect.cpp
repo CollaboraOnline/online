@@ -14,6 +14,7 @@
 #include <fstream>
 #include <iostream>
 #include <mutex>
+#include <sysexits.h>
 #include <thread>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
@@ -114,7 +115,7 @@ public:
                 std::cout << "CLOSE frame received" << std::endl;
             }
             if (!closeExpected)
-                std::_Exit(Application::EXIT_SOFTWARE);
+                std::_Exit(EX_SOFTWARE);
         }
         catch (WebSocketException& exc)
         {
@@ -146,7 +147,7 @@ protected:
         if (args.size() < 1)
         {
             LOG_ERR("Usage: connect documentURI [serverURI]");
-            return Application::EXIT_USAGE;
+            return EX_USAGE;
         }
 
         if (args.size() > 1)
@@ -228,7 +229,7 @@ protected:
         ws.shutdown();
         thread.join();
 
-        return Application::EXIT_OK;
+        return EX_OK;
     }
 
 private:

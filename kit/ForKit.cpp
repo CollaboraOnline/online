@@ -17,6 +17,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sysexits.h>
 
 #include <atomic>
 #include <cstdlib>
@@ -27,7 +28,6 @@
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/Thread.h>
-#include <Poco/Util/Application.h>
 
 #include <Common.hpp>
 #include <IoUtil.hpp>
@@ -43,9 +43,6 @@
 
 using Poco::Process;
 using Poco::Thread;
-#ifndef KIT_IN_PROCESS
-using Poco::Util::Application;
-#endif
 
 #ifndef KIT_IN_PROCESS
 static bool NoCapsForKit = false;
@@ -353,7 +350,7 @@ int main(int argc, char** argv)
 {
     if (!hasCorrectUID("loolforkit"))
     {
-        return Application::EXIT_SOFTWARE;
+        return EX_SOFTWARE;
     }
 
     if (std::getenv("SLEEPFORDEBUGGER"))
@@ -490,14 +487,14 @@ int main(int argc, char** argv)
         loTemplate.empty() || childRoot.empty())
     {
         printArgumentHelp();
-        return Application::EXIT_USAGE;
+        return EX_USAGE;
     }
 
     if (!UnitBase::init(UnitBase::UnitType::Kit,
                         UnitTestLibrary))
     {
         LOG_ERR("Failed to load kit unit test library");
-        return Application::EXIT_USAGE;
+        return EX_USAGE;
     }
 
     // Setup & check environment
@@ -528,7 +525,7 @@ int main(int argc, char** argv)
         std::cerr << "FATAL: Capabilities are not set for the loolforkit program." << std::endl;
         std::cerr << "Please make sure that the current partition was *not* mounted with the 'nosuid' option." << std::endl;
         std::cerr << "If you are on SLES11, please set 'file_caps=1' as kernel boot option." << std::endl << std::endl;
-        return Application::EXIT_SOFTWARE;
+        return EX_SOFTWARE;
     }
 
     // Set various options we need.
@@ -542,7 +539,7 @@ int main(int argc, char** argv)
     {
         LOG_FTL("Failed to preinit lokit.");
         Log::shutdown();
-        std::_Exit(Application::EXIT_SOFTWARE);
+        std::_Exit(EX_SOFTWARE);
     }
 
     if (Util::getProcessThreadCount() != 1)
@@ -558,7 +555,7 @@ int main(int argc, char** argv)
     {
         LOG_FTL("Failed to create a kit process.");
         Log::shutdown();
-        std::_Exit(Application::EXIT_SOFTWARE);
+        std::_Exit(EX_SOFTWARE);
     }
 
     // No need to trace subsequent children.
@@ -585,7 +582,7 @@ int main(int argc, char** argv)
         forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath);
     }
 
-    int returnValue = Application::EXIT_OK;
+    int returnValue = EX_OK;
     UnitKit::get().returnValue(returnValue);
 
 #if 0

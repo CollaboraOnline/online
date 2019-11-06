@@ -33,6 +33,7 @@
 // number of child processes, each which handles a viewing (editing) session for one document.
 
 #include <unistd.h>
+#include <sysexits.h>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -999,7 +1000,7 @@ void LOOLWSD::initialize(Application& self)
                          "'--o:logging.level=trace' from the command line in Makefile.am.\n" << std::endl;
 #endif
             Log::shutdown();
-            _exit(Application::EXIT_SOFTWARE);
+            _exit(EX_SOFTWARE);
         }
     }
 
@@ -1373,7 +1374,7 @@ void LOOLWSD::handleOption(const std::string& optionName,
     if (optionName == "help")
     {
         displayHelp();
-        std::exit(Application::EXIT_OK);
+        std::exit(EX_OK);
     }
     else if (optionName == "version")
         DisplayVersion = true;
@@ -3246,7 +3247,7 @@ private:
         {
             LOG_FTL("Failed to create local unix domain socket. Exiting.");
             Log::shutdown();
-            _exit(Application::EXIT_SOFTWARE);
+            _exit(EX_SOFTWARE);
             return nullptr;
         }
 
@@ -3254,7 +3255,7 @@ private:
         {
             LOG_FTL("Failed to listen on local unix domain socket at " << location << ". Exiting.");
             Log::shutdown();
-            _exit(Application::EXIT_SOFTWARE);
+            _exit(EX_SOFTWARE);
         }
 
         LOG_INF("Listening to prisoner connections on " << location);
@@ -3298,7 +3299,7 @@ private:
         {
             LOG_FTL("Failed to listen on Server port(s) (" <<
                     ClientPortNumber << '-' << port << "). Exiting.");
-            _exit(Application::EXIT_SOFTWARE);
+            _exit(EX_SOFTWARE);
         }
 
         ClientPortNumber = port;
@@ -3592,7 +3593,7 @@ int LOOLWSD::innerMain()
     }
 #endif // !MOBILEAPP
 
-    return Application::EXIT_OK;
+    return EX_OK;
 }
 
 void LOOLWSD::cleanup()

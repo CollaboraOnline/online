@@ -16,6 +16,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <sysexits.h>
 
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPClientSession.h>
@@ -179,7 +180,7 @@ void Tool::handleOption(const std::string& optionName,
     if (optionName == "help")
     {
         displayHelp();
-        std::exit(Application::EXIT_OK);
+        std::exit(EX_OK);
     }
     else if (optionName == "extension"
              || optionName == "convert-to")
@@ -246,7 +247,7 @@ int Tool::main(const std::vector<std::string>& origArgs)
     {
         std::cerr << "Nothing to do." << std::endl;
         displayHelp();
-        return Application::EXIT_NOINPUT;
+        return EX_NOINPUT;
     }
 
     std::vector<std::unique_ptr<Thread>> clients(_numWorkers);
@@ -271,7 +272,7 @@ int Tool::main(const std::vector<std::string>& origArgs)
         clients[i]->join();
     }
 
-    return Application::EXIT_OK;
+    return EX_OK;
 }
 
 POCO_APP_MAIN(Tool)

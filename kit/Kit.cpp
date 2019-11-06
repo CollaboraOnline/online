@@ -23,6 +23,7 @@
 #include <utime.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <sysexits.h>
 
 #include <atomic>
 #include <cassert>
@@ -52,7 +53,6 @@
 #include <Poco/StringTokenizer.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
-#include <Poco/Util/Application.h>
 
 #include "ChildSession.hpp"
 #include <Common.hpp>
@@ -99,7 +99,6 @@ using Poco::JSON::Parser;
 using Poco::StringTokenizer;
 using Poco::Thread;
 using Poco::URI;
-using Poco::Util::Application;
 
 #ifndef BUILDING_TESTS
 using Poco::Path;
@@ -224,7 +223,7 @@ namespace
                 LOG_FTL("Copying of '" << fpath << "' to " << newPath.toString() <<
                         " failed: " << exc.what() << ". Exiting.");
                 Log::shutdown();
-                std::_Exit(Application::EXIT_SOFTWARE);
+                std::_Exit(EX_SOFTWARE);
             }
         }
     }
@@ -841,7 +840,7 @@ public:
             {
                 LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
                 Log::shutdown();
-                std::_Exit(Application::EXIT_OK);
+                std::_Exit(EX_OK);
             }
 #endif
         }
@@ -1386,7 +1385,7 @@ private:
             {
                 LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
                 Log::shutdown();
-                std::_Exit(Application::EXIT_OK);
+                std::_Exit(EX_OK);
             }
 #endif
             LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
@@ -1976,7 +1975,7 @@ public:
             LOG_FTL("QueueHandler::run: Exception: " << exc.what());
 #if !MOBILEAPP
             Log::shutdown();
-            std::_Exit(Application::EXIT_SOFTWARE);
+            std::_Exit(EX_SOFTWARE);
 #endif
         }
         catch (...)
@@ -1984,7 +1983,7 @@ public:
             LOG_FTL("QueueHandler::run: Unknown exception");
 #if !MOBILEAPP
             Log::shutdown();
-            std::_Exit(Application::EXIT_SOFTWARE);
+            std::_Exit(EX_SOFTWARE);
 #endif
         }
     }
@@ -2456,14 +2455,14 @@ void lokit_main(
             {
                 LOG_SFL("chroot(\"" << jailPath.toString() << "\") failed.");
                 Log::shutdown();
-                std::_Exit(Application::EXIT_SOFTWARE);
+                std::_Exit(EX_SOFTWARE);
             }
 
             if (chdir("/") == -1)
             {
                 LOG_SFL("chdir(\"/\") in jail failed.");
                 Log::shutdown();
-                std::_Exit(Application::EXIT_SOFTWARE);
+                std::_Exit(EX_SOFTWARE);
             }
 
             dropCapability(CAP_SYS_CHROOT);
@@ -2506,7 +2505,7 @@ void lokit_main(
             {
                 LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
                 Log::shutdown();
-                std::_Exit(Application::EXIT_SOFTWARE);
+                std::_Exit(EX_SOFTWARE);
             }
         }
 
@@ -2517,7 +2516,7 @@ void lokit_main(
             {
                 LOG_FTL("LibreOfficeKit seccomp security lockdown failed. Exiting.");
                 Log::shutdown();
-                std::_Exit(Application::EXIT_SOFTWARE);
+                std::_Exit(EX_SOFTWARE);
             }
 
             LOG_ERR("LibreOfficeKit seccomp security lockdown failed, but configured to continue. "
@@ -2615,7 +2614,7 @@ void lokit_main(
         {
             LOG_ERR("Kit is missing Unipoll API");
             std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
-            std::_Exit(Application::EXIT_SOFTWARE);
+            std::_Exit(EX_SOFTWARE);
         }
 
         LOG_INF("Kit unipoll loop run");
@@ -2652,7 +2651,7 @@ void lokit_main(
     LOG_INF("Process finished.");
     Log::shutdown();
     std::unique_lock<std::mutex> lock(SigUtil::getSigHandlerTrap());
-    std::_Exit(Application::EXIT_OK);
+    std::_Exit(EX_OK);
 
 #endif
 }

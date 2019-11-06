@@ -18,6 +18,7 @@
 #include <fstream>
 #include <iostream>
 #include <numeric>
+#include <sysexits.h>
 #include <thread>
 
 #include <Poco/Net/HTTPRequest.h>
@@ -258,7 +259,7 @@ void Stress::handleOption(const std::string& optionName,
         helpFormatter.setUsage("OPTIONS");
         helpFormatter.setHeader("LibreOffice Online tool.");
         helpFormatter.format(std::cerr);
-        std::exit(Application::EXIT_OK);
+        std::exit(EX_OK);
     }
     else if (optionName == "bench")
         Stress::Benchmark = true;
@@ -286,7 +287,7 @@ int Stress::main(const std::vector<std::string>& args)
         std::cerr << "Usage: loolstress [--bench] <tracefile | url> " << std::endl;
         std::cerr << "       Trace files may be plain text or gzipped (with .gz extension)." << std::endl;
         std::cerr << "       --help for full arguments list." << std::endl;
-        return Application::EXIT_NOINPUT;
+        return EX_NOINPUT;
     }
 
     std::vector<std::shared_ptr<Worker>> workers;
@@ -347,7 +348,7 @@ int Stress::main(const std::vector<std::string>& args)
         }
     }
 
-    return Application::EXIT_OK;
+    return EX_OK;
 }
 
 POCO_APP_MAIN(Stress)
