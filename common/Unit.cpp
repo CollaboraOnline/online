@@ -16,8 +16,8 @@
 #include <dlfcn.h>
 #include <fstream>
 #include <sysexits.h>
+#include <thread>
 
-#include <Poco/Thread.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
 #include "Log.hpp"
@@ -27,7 +27,9 @@
 
 UnitBase *UnitBase::Global = nullptr;
 
-static Poco::Thread TimeoutThread("unit timeout");
+static std::thread TimeoutThread;
+static std::atomic<bool> TimeoutThreadRunning(false);
+std::timed_mutex TimeoutThreadMutex;
 
 UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibPath)
 {
@@ -82,13 +84,22 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         Global = linkAndCreateUnit(type, unitLibPath);
         if (Global && type == UnitType::Kit)
         {
-            TimeoutThread.startFunc([](){
-                    Poco::Thread::trySleep(Global->_timeoutMilliSeconds);
-                    if (!Global->_timeoutShutdown)
+            TimeoutThreadMutex.lock();
+            TimeoutThread = std::thread([]{
+                    TimeoutThreadRunning = true;
+                    Util::setThreadName("unit timeout");
+
+                    if (TimeoutThreadMutex.try_lock_for(std::chrono::milliseconds(Global->_timeoutMilliSeconds)))
+                    {
+                        LOG_DBG("Unit test finished in time");
+                        TimeoutThreadMutex.unlock();
+                    }
+                    else
                     {
                         LOG_ERR("Unit test timeout");
                         Global->timeout();
                     }
+                    TimeoutThreadRunning = false;
                 });
         }
     }
@@ -121,7 +132,7 @@ bool UnitBase::isUnitTesting()
 
 void UnitBase::setTimeout(int timeoutMilliSeconds)
 {
-    assert(!TimeoutThread.isRunning());
+    assert(!TimeoutThreadRunning);
     _timeoutMilliSeconds = timeoutMilliSeconds;
 }
 
@@ -130,7 +141,6 @@ UnitBase::UnitBase()
       _setRetValue(false),
       _retValue(0),
       _timeoutMilliSeconds(30 * 1000),
-      _timeoutShutdown(false),
       _type(UnitType::Wsd)
 {
 }
@@ -206,9 +216,10 @@ void UnitBase::returnValue(int &retValue)
     if (_setRetValue)
         retValue = _retValue;
 
-    _timeoutShutdown = true;
-    TimeoutThread.wakeUp();
-    TimeoutThread.join();
+    // tell the timeout thread that the work has finished
+    TimeoutThreadMutex.unlock();
+    if (TimeoutThread.joinable())
+        TimeoutThread.join();
 
     delete Global;
     Global = nullptr;

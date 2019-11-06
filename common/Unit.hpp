@@ -146,7 +146,6 @@ private:
     bool _setRetValue;
     int _retValue;
     int _timeoutMilliSeconds;
-    std::atomic<bool> _timeoutShutdown;
     static UnitBase *Global;
     UnitType _type;
 };
