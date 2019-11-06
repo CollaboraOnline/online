@@ -291,7 +291,8 @@ void DocumentBroker::pollThread()
 
 #if !MOBILEAPP
         // a tile's data is ~8k, a 4k screen is ~128 256x256 tiles
-        _tileCache->setMaxCacheSize(8 * 1024 * 128 * _sessions.size());
+        if (_tileCache)
+            _tileCache->setMaxCacheSize(8 * 1024 * 128 * _sessions.size());
 
         if (!_isLoaded && (limit_load_secs > 0) && (now > loadDeadline))
         {
@@ -1474,7 +1475,8 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
 
 size_t DocumentBroker::getMemorySize() const
 {
-    return sizeof(DocumentBroker) + _tileCache->getMemorySize() +
+    return sizeof(DocumentBroker) +
+        (!!_tileCache ? _tileCache->getMemorySize() : 0) +
         _sessions.size() * sizeof(ClientSession);
 }
 
@@ -2171,7 +2173,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  last saved: " << std::ctime(&t);
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
-    _tileCache->dumpState(os);
+    if (_tileCache)
+        _tileCache->dumpState(os);
 
     _poll->dumpState(os);
 }
