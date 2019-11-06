@@ -346,9 +346,9 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 	getHeaderEntryBoundingClientRect: function (index) {
 		var entry = this._mouseOverEntry;
-		if (index) {
-			entry = this._tickMap.get(index);
-		}
+
+		if (index)
+			entry = this._tickMap.getGap(index);
 
 		if (!entry)
 			return;
