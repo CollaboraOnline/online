@@ -8,7 +8,7 @@
 
 L.ColorPicker = L.Class.extend({
 	options: {
-		selectedColor: '#CC0814',
+		selectedColor: '#ff0000',
 		noColorControl: true,
 		selectionCallback: function () {}
 	},
@@ -20,18 +20,33 @@ L.ColorPicker = L.Class.extend({
 		// color types
 		BASIC_COLOR: 0,
 		TINT: 1,
-
-		BASIC_COLORS: ['#000000', '#FF011B', '#FF9838', '#FFFD59', '#01FD55',
-			'#00FFFE', '#006CE7', '#9B24F4', '#FF21F5'],
+		// we need a tight layout in order to be able to show 11 colors as in gdoc
+		BASIC_COLORS: ['#000000', '#980000', '#ff0000', '#ff9900',
+			'#ffff00','#00ff00','#00ffff', /*'#4a86e8',*/
+			'#0000ff','#9900ff', '#ff00ff'],
 		TINTS: {
 			'#000000': ['#000000', '#434343', '#666666', '#888888',
-				'#BBBBBB', '#DDDDDD', '#EEEEEE', '#FFFFFF'],
-			'#FF011B': ['#99050C', '#CC0814', '#E06666', '#FF011B',
-				'#EA9899', '#F4CCCC', '#FFEAEA', '#FFFFFF'],
-			'#FF9838': ['#783f04', '#b45f06', '#e69138', '#ff9900',
-				'#f6b26b', '#f9cb9c', '#fce5cd', '#FFFFFF'],
-			'#FFFD59': ['#7f6000', '#bf9000', '#f1c232', '#ffff00',
-				'#ffd966', '#ffe599', '#fff2cc', '#FFFFFF']
+				'#bbbbbb', '#dddddd', '#eeeeee', '#ffffff'],
+			'#980000': ['#5b0f00', '#85200c', '#a61c00', '#980000',
+				'#cc4125', '#dd7e6b', '#e6b8af', '#ffffff'],
+			'#ff0000': ['#660000', '#990000', '#cc0000', '#ff0000',
+				'#e06666', '#ea9999', '#f4cccc', '#ffffff'],
+			'#ff9900': ['#783f04', '#b45f06', '#e69138', '#ff9900',
+				'#f6b26b', '#f9cb9c', '#fce5cd', '#ffffff'],
+			'#ffff00': ['#7f6000', '#bf9000', '#f1c232', '#ffff00',
+				'#ffd966', '#ffe599', '#fff2cc', '#ffffff'],
+			'#00ff00': ['#274e13', '#38761d', '#6aa84f', '#00ff00',
+				'#93c47d', '#b6d7a8', '#d9ead3', '#ffffff'],
+			'#00ffff': ['#0c343d', '#134f5c', '#45818e', '#00ffff',
+				'#76a5af', '#a2c4c9', '#d0e0e3', '#ffffff'],
+			// '#4a86e8': ['#1c4587', '#1155cc', '#3c78d8', '#4a86e8',
+			// 	'#6d9eeb', '#a4c2f4', '#c9daf8', '#ffffff'],
+			'#0000ff': ['#073763', '#0b5394', '#3d85c6', '#0000ff',
+				'#6fa8dc', '#9fc5e8', '#cfe2f3', '#ffffff'],
+			'#9900ff': ['#20124d', '#351c75', '#674ea7', '#9900ff',
+				'#8e7cc3', '#b4a7d6', '#d9d2e9', '#ffffff'],
+			'#ff00ff': ['#4c1130', '#741b47', '#a64d79', '#ff00ff',
+				'#c27ba0', '#d5a6bd', '#ead1dc', '#ffffff']
 		}
 	},
 
