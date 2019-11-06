@@ -111,8 +111,13 @@ AC_ARG_ENABLE([androidapp],
                               message plumbing point of view.]))
 
 AC_ARG_WITH(android-package-name,
-    AS_HELP_STRING([--with-android-package-name="org.libreoffice.androidapp"],
-        [Set Android package name of the build.]),
+            AS_HELP_STRING([--with-android-package-name="org.libreoffice.androidapp"],
+                           [Set Android package name of the build.]),
+,)
+
+AC_ARG_WITH(android-package-versioncode,
+            AS_HELP_STRING([--with-android-package-versioncode=20],
+                           [Set the versionCode for the Android package.]),
 ,)
 
 AC_ARG_WITH([app-name],
@@ -352,6 +357,7 @@ AC_SUBST(LOKIT_PATH)
 
 ENABLE_ANDROIDAPP=
 ANDROID_PACKAGE_NAME=
+ANDROID_PACKAGE_VERSIONCODE=
 if test "$enable_androidapp" = "yes"; then
     ENABLE_ANDROIDAPP=true
 
@@ -363,10 +369,20 @@ if test "$enable_androidapp" = "yes"; then
         ANDROID_PACKAGE_NAME="$with_android_package_name"
         AC_MSG_RESULT([$ANDROID_PACKAGE_NAME])
     fi
+
+    AC_MSG_CHECKING([for Android package versionCode])
+    if test -z "$with_android_package_versioncode" -o "$with_android_package_versioncode" = "no"; then
+        ANDROID_PACKAGE_VERSIONCODE="1"
+        AC_MSG_RESULT([not set, using $ANDROID_PACKAGE_VERSIONCODE])
+    else
+        ANDROID_PACKAGE_VERSIONCODE="$with_android_package_versioncode"
+        AC_MSG_RESULT([$ANDROID_PACKAGE_VERSIONCODE])
+    fi
 fi
 AC_SUBST(ENABLE_ANDROIDAPP)
 AM_CONDITIONAL([ENABLE_ANDROIDAPP], [test "$ENABLE_ANDROIDAPP" = "true"])
 AC_SUBST(ANDROID_PACKAGE_NAME)
+AC_SUBST(ANDROID_PACKAGE_VERSIONCODE)
 
 APP_NAME="LOOL"
 if test -n "$with_app_name"; then
