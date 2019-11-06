@@ -23,13 +23,13 @@
 }
 /* dialog shown when user is idle */
 .vex-open .loleaflet-user-idle {
-	background: rgba(0, 0, 0, 0)!important;
-	font-size: xx-large!important;
-	color: #fff!important;
-	text-align: center!important;
+	background: #ffffffe0 !important;
+	font-size: xx-large !important;
+	color: #7a8592 !important;
+	text-align: center !important;
 }
 .vex-open .loleaflet-user-idle .vex-dialog-buttons {
-	display: none!important;
+	display: none !important;
 }
 
 .vex.vex-theme-plain{
@@ -53,6 +53,12 @@
 
 /*mobile*/
 @media (max-width: 767px), (max-device-height: 767px) {
+	.vex-open .loleaflet-user-idle {
+		background: rgba(0, 0, 0, 0)!important;
+		font-size: xx-large!important;
+		color: #fff!important;
+		text-align: center!important;
+	}
 	.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="date"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime-local"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="email"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="month"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="number"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="password"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="search"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="tel"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="time"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="url"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="week"]{
 		padding: 0 !important
 	}
