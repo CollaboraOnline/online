@@ -53,86 +53,9 @@ span#main-menu-btn-icon {
 	overflow: hidden;
 	margin: 2px 2px !important;
 	display: inline-block;
-}
-
-.layout.layout_empty {
-	background: url('images/layout_empty.svg') no-repeat center !important;
-}
-
-.layout.layout_head03 {
-	background: url('images/layout_head03.svg') no-repeat center !important;
-}
-
-.layout.layout_head02 {
-	background: url('images/layout_head02.svg') no-repeat center !important;
-}
-
-.layout.layout_head02a {
-	background: url('images/layout_head02a.svg') no-repeat center !important;
-}
-
-.layout.layout_head01 {
-	background: url('images/layout_head01.svg') no-repeat center !important;
-}
-
-.layout.layout_textonly {
-	background: url('images/layout_textonly.svg') no-repeat center !important;
-}
-
-.layout.layout_head03b {
-	background: url('images/layout_head03b.svg') no-repeat center !important;
-}
-
-.layout.layout_head03c {
-	background: url('images/layout_head03c.svg') no-repeat center !important;
-}
-
-.layout.layout_head03a {
-	background: url('images/layout_head03a.svg') no-repeat center !important;
-}
-
-.layout.layout_head02b {
-	background: url('images/layout_head02b.svg') no-repeat center !important;
-}
-
-.layout.layout_head04 {
-	background: url('images/layout_head04.svg') no-repeat center !important;
-}
-
-.layout.layout_head06 {
-	background: url('images/layout_head06.svg') no-repeat center !important;
-}
-
-.layout.layout_vertical02 {
-	background: url('images/layout_vertical02.svg') no-repeat center !important;
-}
-
-.layout.layout_vertical01 {
-	background: url('images/layout_vertical01.svg') no-repeat center !important;
-}
-
-.layout.layout_head02 {
-	background: url('images/layout_head02.svg') no-repeat center !important;
-}
-
-.layout.layout_head02a {
-	background: url('images/layout_head02a.svg') no-repeat center !important;
-}
-
-.layout.columns_52x60 {
-	background: url('images/columns_52x60.svg') no-repeat center !important;
-}
-
-.layout.columnstack_52x60 {
-	background: url('images/columnstack_52x60.svg') no-repeat center !important;
-}
-
-.layout.columnpercent_52x60 {
-	background: url('images/columnpercent_52x60.svg') no-repeat center !important;
-}
-.layout{
 	border: 1px solid #fff;
 }
+
 .layout.loleaflet-context-down {
 	background-color: #dddddd;
 	box-shadow: inset 0px -1px 2px 5px #eee;

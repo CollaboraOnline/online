@@ -592,12 +592,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			image = data.entries[index].image;
 			image = image.substr(0, image.lastIndexOf('.'));
 			image = image.substr(image.lastIndexOf('/') + 1);
-			elem = L.DomUtil.create('div', 'layout ' + image +
+			elem = L.DomUtil.create('div', 'layout ' +
 				(data.entries[index].selected ? ' loleaflet-context-down' : ''), parentContainer);
 			$(elem).data('id', data.entries[index].id);
 			$(elem).click(function () {
 				builder.callback('valueset', 'selected', { id: data.id }, $(this).data('id'), builder);
 			});
+			elem.style.setProperty('background', 'url("images/' + image +
+				'.svg") no-repeat center', 'important');
 		}
 
 		return false;
