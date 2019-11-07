@@ -164,9 +164,6 @@ using Poco::Path;
 using Poco::StreamCopier;
 using Poco::StringTokenizer;
 using Poco::TemporaryFile;
-#if FUZZER
-using Poco::Thread;
-#endif
 using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
@@ -1572,11 +1569,10 @@ void PrisonerPoll::wakeupHook()
 #endif
                         LOOLWSD::FuzzFileName));
 
-                std::unique_ptr<Thread> replayThread(new Thread());
-                replayThread->start(*replay);
+                std::thread replayThread([&replay]{ replay->run(); });
 
                 // block until the replay finishes
-                replayThread->join();
+                replayThread.join();
 
                 LOG_INF("Setting TerminationFlag");
                 SigUtil::setTerminationFlag();

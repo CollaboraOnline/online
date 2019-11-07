@@ -55,7 +55,6 @@
 #include <Poco/Process.h>
 #include <Poco/RandomStream.h>
 #include <Poco/TemporaryFile.h>
-#include <Poco/Thread.h>
 #include <Poco/Timestamp.h>
 #include <Poco/Util/Application.h>
 

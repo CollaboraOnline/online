@@ -51,7 +51,6 @@
 #include <Poco/Process.h>
 #include <Poco/Runnable.h>
 #include <Poco/StringTokenizer.h>
-#include <Poco/Thread.h>
 #include <Poco/URI.h>
 
 #include "ChildSession.hpp"
@@ -97,7 +96,6 @@ using Poco::JSON::Array;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
 using Poco::StringTokenizer;
-using Poco::Thread;
 using Poco::URI;
 
 #ifndef BUILDING_TESTS
@@ -2057,7 +2055,6 @@ private:
     /// For showing disconnected user info in the doc repair dialog.
     std::map<int, UserInfo> _sessionUserInfo;
     std::chrono::steady_clock::time_point _lastMemStatsTime;
-    Poco::Thread _callbackThread;
 
     friend std::shared_ptr<lok::Document> getLOKDocument();
 };

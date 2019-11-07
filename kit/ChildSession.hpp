@@ -18,7 +18,6 @@
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #include <Poco/Net/WebSocket.h>
-#include <Poco/Thread.h>
 
 #include "Common.hpp"
 #include "Kit.hpp"
