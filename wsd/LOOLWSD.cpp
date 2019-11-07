@@ -10,6 +10,7 @@
 #include <config.h>
 
 #include "LOOLWSD.hpp"
+#include "ProofKey.hpp"
 
 /* Default host used in the start test URI */
 #define LOOLWSD_TEST_HOST "localhost"
@@ -3000,6 +3001,16 @@ private:
             // Set the View extensions cache as well.
             if (elem->getAttribute("name") == "edit")
                 LOOLWSD::EditFileExtensions.insert(elem->getAttribute("ext"));
+        }
+
+        const auto& proofAttribs = GetProofKeyAttributes();
+        if (!proofAttribs.empty())
+        {
+            // Add proof-key element to wopi-discovery root
+            AutoPtr<Element> keyElem = docXML->createElement("proof-key");
+            for (const auto& attrib : proofAttribs)
+                keyElem->setAttribute(attrib.first, attrib.second);
+            docXML->documentElement()->appendChild(keyElem);
         }
 
         std::ostringstream ostrXML;

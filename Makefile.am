@@ -109,7 +109,8 @@ loolwsd_sources = common/Crypto.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
                   wsd/Storage.cpp \
-                  wsd/TileCache.cpp
+                  wsd/TileCache.cpp \
+                  wsd/ProofKey.cpp
 
 loolwsd_SOURCES = $(loolwsd_sources) \
                   $(shared_sources)
