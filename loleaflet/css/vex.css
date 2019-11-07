@@ -82,9 +82,9 @@
 		border-radius: 4px !important;
 		background-color: #fff !important;
 		width: 100%;
-		width: -moz-available;
-		width: -webkit-fill-available;
-		width: fill-available;
+		width: -moz-available !important;
+		width: -webkit-fill-available !important;
+		width: fill-available !important;
 		border: 4px solid #fff !important;
 		box-shadow: 0 0 1px 1px #dfdfdf;
 	}
@@ -119,14 +119,19 @@
 		min-height: 100%;
 		position: absolute;
 		width: 100%;
-		width: -moz-available;
-		width: -webkit-fill-available;
-		width: fill-available;
+		width: -moz-available !important;
+		width: -webkit-fill-available !important;
+		width: fill-available !important;
 		top: 0;
 		background-color: white;
 	}
 	.vex.vex-theme-plain input {
 		font-size: 1.1em !important;
+	}
+	textarea.loleaflet-annotation-textarea {
+		min-width: -moz-available !important;
+		min-width: -webkit-fill-available !important;
+		min-width: fill-available !important;
 	}
 	button.vex-dialog-button-primary.vex-dialog-button.vex-first {
 		border: 1px solid #0b87e7 !important;
@@ -138,6 +143,10 @@
 		border-radius: 4px;
 		background-color: #fff !important;
 		border: 1px solid #aaa !important;
+	}
+	.vex.vex-theme-plain .vex-dialog-button{
+		line-height: 1em !important;
+		height: auto !important;
 	}
 	.vex-overlay.loleaflet-user-idle-overlay {
 		background-color: #05396180;
