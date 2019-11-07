@@ -124,7 +124,7 @@
 		float: left;
 		padding: 20px 20px 20px 20px !important;
 	}
-	#belowparaspacing, #spacinglabel, #OutlineRight, #DefaultBullet, #CellVertTop{float: left;}
+	#belowparaspacing, #spacinglabel, #OutlineRight, #DefaultBullet, #CellVertTop, #rowheight, #columnwidth{float: left;}
 	#Color {
 		padding: 20px 20px 0px 20px !important;
 	}
@@ -257,7 +257,7 @@
 		float: right;
 		margin: 24px 0px;
 	}
-	div#enablecontour + p, #arrangelabel {clear: both;}
+	div#enablecontour + p, #arrangelabel, #SetMinimalRowHeight {clear: both;}
 	#formulabar {
 		padding: 0px !important;
 		border-top: 1px solid #bbbbbb !important;
