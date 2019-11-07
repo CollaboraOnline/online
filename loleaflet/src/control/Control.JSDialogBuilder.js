@@ -135,8 +135,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_cleanValueFromUnits: function(text) {
 		if (!text)
 			return '';
-		return text.replace('″', '')
-			.replace('%', '');
+
+		return text.replace(/[^\d.-]/g, '').trim();
 	},
 
 	_containerHandler: function(parentContainer, data, builder) {
