@@ -787,15 +787,47 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_lineWidthControl: function(parentContainer, data, builder) {
-		data.children = [ { text: '0.5' },
-							{ text: '0.8' },
-							{ text: '1.0' },
-							{ text: '1.5' },
-							{ text: '2.3' },
-							{ text: '3.0' },
-							{ text: '4.5' },
-							{ text: '6.0' } ];
-		builder._spinfieldControl(parentContainer, data, builder);
+		var values = [ 0.0,
+			0.5,
+			0.8,
+			1.0,
+			1.5,
+			2.3,
+			3.0,
+			4.5,
+			6.0 ];
+
+		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: '0.5' };
+
+		var callbackFunction = function(objectType, eventType, object) {
+			var newValue = 0;
+			if (eventType == 'plus') {
+				$(object).find('input').val(function(i, oldVal) {
+					var index = 1;
+					newValue = values[0];
+					while (newValue <= oldVal && index < values.length)
+						newValue = values[index++];
+					return newValue;
+				});
+			} else if (eventType == 'minus') {
+				$(object).find('input').val(function(i, oldVal) {
+					if (oldVal > 0.0)
+					{
+						var index = values.length - 1;
+						newValue = values[index];
+						while (newValue >= oldVal && index > 0)
+							newValue = values[index--];
+					}
+					else
+						newValue = 0.0;
+					return newValue;
+				});
+			}
+			var command = '.uno:LineWidth?Width:double=' + newValue.toFixed(1);
+			builder.map.sendUnoCommand(command);
+		};
+
+		builder._spinfieldControl(parentContainer, lineData, builder, callbackFunction);
 	},
 
 	_subMenuHandler: function(parentContainer, data, builder) {
