@@ -577,6 +577,104 @@
 		BE8D85C6214055F3009F1860 /* fundamentalrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fundamentalrc; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/fundamentalrc"; sourceTree = "<group>"; };
 		BE8D85C7214055F3009F1860 /* unorc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unorc; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/unorc"; sourceTree = "<group>"; };
 		BE8D85C8214055F3009F1860 /* rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rc; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/rc"; sourceTree = "<group>"; };
+		BE9273AE2372DC9600ADB598 /* EmptyPanel.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = EmptyPanel.hxx; path = "../../ios-device/svx/source/sidebar/EmptyPanel.hxx"; sourceTree = "<group>"; };
+		BE9273AF2372DC9600ADB598 /* ContextChangeEventMultiplexer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ContextChangeEventMultiplexer.cxx; path = "../../ios-device/svx/source/sidebar/ContextChangeEventMultiplexer.cxx"; sourceTree = "<group>"; };
+		BE9273B02372DC9600ADB598 /* PanelFactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PanelFactory.cxx; path = "../../ios-device/svx/source/sidebar/PanelFactory.cxx"; sourceTree = "<group>"; };
+		BE9273B12372DC9600ADB598 /* nbdtmg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = nbdtmg.cxx; path = "../../ios-device/svx/source/sidebar/nbdtmg.cxx"; sourceTree = "<group>"; };
+		BE9273B22372DC9600ADB598 /* SelectionAnalyzer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SelectionAnalyzer.cxx; path = "../../ios-device/svx/source/sidebar/SelectionAnalyzer.cxx"; sourceTree = "<group>"; };
+		BE9273B32372DC9600ADB598 /* nbdtmgfact.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = nbdtmgfact.cxx; path = "../../ios-device/svx/source/sidebar/nbdtmgfact.cxx"; sourceTree = "<group>"; };
+		BE9273B42372DC9600ADB598 /* SelectionChangeHandler.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SelectionChangeHandler.cxx; path = "../../ios-device/svx/source/sidebar/SelectionChangeHandler.cxx"; sourceTree = "<group>"; };
+		BE9273B52372DC9600ADB598 /* PanelLayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PanelLayout.cxx; path = "../../ios-device/svx/source/sidebar/PanelLayout.cxx"; sourceTree = "<group>"; };
+		BE9273B62372DC9600ADB598 /* EmptyPanel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EmptyPanel.cxx; path = "../../ios-device/svx/source/sidebar/EmptyPanel.cxx"; sourceTree = "<group>"; };
+		BE9273B82372E06000ADB598 /* fmtools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmtools.cxx; path = "../../ios-device/svx/source/form/fmtools.cxx"; sourceTree = "<group>"; };
+		BE9273B92372E06000ADB598 /* fmpage.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmpage.cxx; path = "../../ios-device/svx/source/form/fmpage.cxx"; sourceTree = "<group>"; };
+		BE9273BA2372E06000ADB598 /* fmdmod.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmdmod.cxx; path = "../../ios-device/svx/source/form/fmdmod.cxx"; sourceTree = "<group>"; };
+		BE9273BB2372E06000ADB598 /* formcontrolfactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formcontrolfactory.cxx; path = "../../ios-device/svx/source/form/formcontrolfactory.cxx"; sourceTree = "<group>"; };
+		BE9273BC2372E06000ADB598 /* datanavi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = datanavi.cxx; path = "../../ios-device/svx/source/form/datanavi.cxx"; sourceTree = "<group>"; };
+		BE9273BD2372E06000ADB598 /* tabwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabwin.cxx; path = "../../ios-device/svx/source/form/tabwin.cxx"; sourceTree = "<group>"; };
+		BE9273BE2372E06000ADB598 /* formfeaturedispatcher.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formfeaturedispatcher.cxx; path = "../../ios-device/svx/source/form/formfeaturedispatcher.cxx"; sourceTree = "<group>"; };
+		BE9273BF2372E06000ADB598 /* fmsrccfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmsrccfg.cxx; path = "../../ios-device/svx/source/form/fmsrccfg.cxx"; sourceTree = "<group>"; };
+		BE9273C02372E06000ADB598 /* fmcontrollayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmcontrollayout.cxx; path = "../../ios-device/svx/source/form/fmcontrollayout.cxx"; sourceTree = "<group>"; };
+		BE9273C12372E06000ADB598 /* fmcontrolbordermanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmcontrolbordermanager.cxx; path = "../../ios-device/svx/source/form/fmcontrolbordermanager.cxx"; sourceTree = "<group>"; };
+		BE9273C22372E06000ADB598 /* fmservs.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmservs.cxx; path = "../../ios-device/svx/source/form/fmservs.cxx"; sourceTree = "<group>"; };
+		BE9273C32372E06000ADB598 /* fmobjfac.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmobjfac.cxx; path = "../../ios-device/svx/source/form/fmobjfac.cxx"; sourceTree = "<group>"; };
+		BE9273C42372E06000ADB598 /* fmscriptingenv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmscriptingenv.cxx; path = "../../ios-device/svx/source/form/fmscriptingenv.cxx"; sourceTree = "<group>"; };
+		BE9273C52372E06000ADB598 /* fmtextcontroldialogs.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmtextcontroldialogs.cxx; path = "../../ios-device/svx/source/form/fmtextcontroldialogs.cxx"; sourceTree = "<group>"; };
+		BE9273C62372E06000ADB598 /* ParseContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParseContext.cxx; path = "../../ios-device/svx/source/form/ParseContext.cxx"; sourceTree = "<group>"; };
+		BE9273C72372E06000ADB598 /* legacyformcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = legacyformcontroller.cxx; path = "../../ios-device/svx/source/form/legacyformcontroller.cxx"; sourceTree = "<group>"; };
+		BE9273C82372E06000ADB598 /* datalistener.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = datalistener.cxx; path = "../../ios-device/svx/source/form/datalistener.cxx"; sourceTree = "<group>"; };
+		BE9273C92372E06000ADB598 /* typemap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = typemap.cxx; path = "../../ios-device/svx/source/form/typemap.cxx"; sourceTree = "<group>"; };
+		BE9273CA2372E06000ADB598 /* fmview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmview.cxx; path = "../../ios-device/svx/source/form/fmview.cxx"; sourceTree = "<group>"; };
+		BE9273CB2372E06000ADB598 /* fmpgeimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmpgeimp.cxx; path = "../../ios-device/svx/source/form/fmpgeimp.cxx"; sourceTree = "<group>"; };
+		BE9273CC2372E06000ADB598 /* filtnav.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = filtnav.cxx; path = "../../ios-device/svx/source/form/filtnav.cxx"; sourceTree = "<group>"; };
+		BE9273CD2372E06000ADB598 /* formcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formcontroller.cxx; path = "../../ios-device/svx/source/form/formcontroller.cxx"; sourceTree = "<group>"; };
+		BE9273CE2372E06000ADB598 /* databaselocationinput.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = databaselocationinput.cxx; path = "../../ios-device/svx/source/form/databaselocationinput.cxx"; sourceTree = "<group>"; };
+		BE9273CF2372E06000ADB598 /* dataaccessdescriptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dataaccessdescriptor.cxx; path = "../../ios-device/svx/source/form/dataaccessdescriptor.cxx"; sourceTree = "<group>"; };
+		BE9273D02372E06100ADB598 /* sdbdatacolumn.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdbdatacolumn.cxx; path = "../../ios-device/svx/source/form/sdbdatacolumn.cxx"; sourceTree = "<group>"; };
+		BE9273D12372E06100ADB598 /* fmdpage.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmdpage.cxx; path = "../../ios-device/svx/source/form/fmdpage.cxx"; sourceTree = "<group>"; };
+		BE9273D22372E06100ADB598 /* fmdocumentclassification.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmdocumentclassification.cxx; path = "../../ios-device/svx/source/form/fmdocumentclassification.cxx"; sourceTree = "<group>"; };
+		BE9273D32372E06100ADB598 /* fmshell.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmshell.cxx; path = "../../ios-device/svx/source/form/fmshell.cxx"; sourceTree = "<group>"; };
+		BE9273D42372E06100ADB598 /* fmexch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmexch.cxx; path = "../../ios-device/svx/source/form/fmexch.cxx"; sourceTree = "<group>"; };
+		BE9273D52372E06100ADB598 /* fmsrcimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmsrcimp.cxx; path = "../../ios-device/svx/source/form/fmsrcimp.cxx"; sourceTree = "<group>"; };
+		BE9273D62372E06100ADB598 /* xfm_addcondition.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = xfm_addcondition.cxx; path = "../../ios-device/svx/source/form/xfm_addcondition.cxx"; sourceTree = "<group>"; };
+		BE9273D72372E06100ADB598 /* formdispatchinterceptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formdispatchinterceptor.cxx; path = "../../ios-device/svx/source/form/formdispatchinterceptor.cxx"; sourceTree = "<group>"; };
+		BE9273D82372E06100ADB598 /* fmPropBrw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmPropBrw.cxx; path = "../../ios-device/svx/source/form/fmPropBrw.cxx"; sourceTree = "<group>"; };
+		BE9273D92372E06100ADB598 /* fmshimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmshimp.cxx; path = "../../ios-device/svx/source/form/fmshimp.cxx"; sourceTree = "<group>"; };
+		BE9273DA2372E06100ADB598 /* dbcharsethelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbcharsethelper.cxx; path = "../../ios-device/svx/source/form/dbcharsethelper.cxx"; sourceTree = "<group>"; };
+		BE9273DB2372E06100ADB598 /* fmundo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmundo.cxx; path = "../../ios-device/svx/source/form/fmundo.cxx"; sourceTree = "<group>"; };
+		BE9273DC2372E06100ADB598 /* fmexpl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmexpl.cxx; path = "../../ios-device/svx/source/form/fmexpl.cxx"; sourceTree = "<group>"; };
+		BE9273DD2372E06100ADB598 /* fmobj.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmobj.cxx; path = "../../ios-device/svx/source/form/fmobj.cxx"; sourceTree = "<group>"; };
+		BE9273DE2372E06100ADB598 /* formtoolbars.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formtoolbars.cxx; path = "../../ios-device/svx/source/form/formtoolbars.cxx"; sourceTree = "<group>"; };
+		BE9273DF2372E06100ADB598 /* fmvwimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmvwimp.cxx; path = "../../ios-device/svx/source/form/fmvwimp.cxx"; sourceTree = "<group>"; };
+		BE9273E02372E06100ADB598 /* delayedevent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = delayedevent.cxx; path = "../../ios-device/svx/source/form/delayedevent.cxx"; sourceTree = "<group>"; };
+		BE9273E12372E06200ADB598 /* navigatortreemodel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = navigatortreemodel.cxx; path = "../../ios-device/svx/source/form/navigatortreemodel.cxx"; sourceTree = "<group>"; };
+		BE9273E22372E06200ADB598 /* fmtextcontrolfeature.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmtextcontrolfeature.cxx; path = "../../ios-device/svx/source/form/fmtextcontrolfeature.cxx"; sourceTree = "<group>"; };
+		BE9273E32372E06200ADB598 /* navigatortree.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = navigatortree.cxx; path = "../../ios-device/svx/source/form/navigatortree.cxx"; sourceTree = "<group>"; };
+		BE9273E42372E06200ADB598 /* tbxform.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxform.cxx; path = "../../ios-device/svx/source/form/tbxform.cxx"; sourceTree = "<group>"; };
+		BE9273E52372E06200ADB598 /* formcontrolling.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formcontrolling.cxx; path = "../../ios-device/svx/source/form/formcontrolling.cxx"; sourceTree = "<group>"; };
+		BE9273E62372E06200ADB598 /* fmmodel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmmodel.cxx; path = "../../ios-device/svx/source/form/fmmodel.cxx"; sourceTree = "<group>"; };
+		BE9273E72372E06200ADB598 /* fmtextcontrolshell.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fmtextcontrolshell.cxx; path = "../../ios-device/svx/source/form/fmtextcontrolshell.cxx"; sourceTree = "<group>"; };
+		BE9273E82372E06200ADB598 /* sqlparserclient.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sqlparserclient.cxx; path = "../../ios-device/svx/source/form/sqlparserclient.cxx"; sourceTree = "<group>"; };
+		BE9273EA2372EE7900ADB598 /* SidebarModelUpdate.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SidebarModelUpdate.cxx; path = "../../ios-device/sfx2/source/sidebar/SidebarModelUpdate.cxx"; sourceTree = "<group>"; };
+		BE9273EB2372EE7900ADB598 /* Deck.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Deck.cxx; path = "../../ios-device/sfx2/source/sidebar/Deck.cxx"; sourceTree = "<group>"; };
+		BE9273EC2372EE7900ADB598 /* Panel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Panel.cxx; path = "../../ios-device/sfx2/source/sidebar/Panel.cxx"; sourceTree = "<group>"; };
+		BE9273ED2372EE7900ADB598 /* ResourceManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ResourceManager.cxx; path = "../../ios-device/sfx2/source/sidebar/ResourceManager.cxx"; sourceTree = "<group>"; };
+		BE9273EE2372EE7900ADB598 /* TitleBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TitleBar.cxx; path = "../../ios-device/sfx2/source/sidebar/TitleBar.cxx"; sourceTree = "<group>"; };
+		BE9273EF2372EE7900ADB598 /* Paint.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Paint.cxx; path = "../../ios-device/sfx2/source/sidebar/Paint.cxx"; sourceTree = "<group>"; };
+		BE9273F02372EE7900ADB598 /* ControllerFactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ControllerFactory.cxx; path = "../../ios-device/sfx2/source/sidebar/ControllerFactory.cxx"; sourceTree = "<group>"; };
+		BE9273F12372EE7900ADB598 /* FocusManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FocusManager.cxx; path = "../../ios-device/sfx2/source/sidebar/FocusManager.cxx"; sourceTree = "<group>"; };
+		BE9273F22372EE7900ADB598 /* UnoDecks.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoDecks.cxx; path = "../../ios-device/sfx2/source/sidebar/UnoDecks.cxx"; sourceTree = "<group>"; };
+		BE9273F32372EE7A00ADB598 /* UnoPanels.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoPanels.cxx; path = "../../ios-device/sfx2/source/sidebar/UnoPanels.cxx"; sourceTree = "<group>"; };
+		BE9273F42372EE7A00ADB598 /* PanelTitleBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PanelTitleBar.cxx; path = "../../ios-device/sfx2/source/sidebar/PanelTitleBar.cxx"; sourceTree = "<group>"; };
+		BE9273F52372EE7A00ADB598 /* SidebarController.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SidebarController.cxx; path = "../../ios-device/sfx2/source/sidebar/SidebarController.cxx"; sourceTree = "<group>"; };
+		BE9273F62372EE7A00ADB598 /* ILayoutableWindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ILayoutableWindow.cxx; path = "../../ios-device/sfx2/source/sidebar/ILayoutableWindow.cxx"; sourceTree = "<group>"; };
+		BE9273F72372EE7A00ADB598 /* DeckDescriptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DeckDescriptor.cxx; path = "../../ios-device/sfx2/source/sidebar/DeckDescriptor.cxx"; sourceTree = "<group>"; };
+		BE9273F82372EE7A00ADB598 /* DrawHelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DrawHelper.cxx; path = "../../ios-device/sfx2/source/sidebar/DrawHelper.cxx"; sourceTree = "<group>"; };
+		BE9273F92372EE7A00ADB598 /* ContextList.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ContextList.cxx; path = "../../ios-device/sfx2/source/sidebar/ContextList.cxx"; sourceTree = "<group>"; };
+		BE9273FA2372EE7A00ADB598 /* Accessible.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Accessible.cxx; path = "../../ios-device/sfx2/source/sidebar/Accessible.cxx"; sourceTree = "<group>"; };
+		BE9273FB2372EE7A00ADB598 /* SidebarPanelBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SidebarPanelBase.cxx; path = "../../ios-device/sfx2/source/sidebar/SidebarPanelBase.cxx"; sourceTree = "<group>"; };
+		BE9273FC2372EE7A00ADB598 /* Sidebar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Sidebar.cxx; path = "../../ios-device/sfx2/source/sidebar/Sidebar.cxx"; sourceTree = "<group>"; };
+		BE9273FD2372EE7A00ADB598 /* MenuButton.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MenuButton.cxx; path = "../../ios-device/sfx2/source/sidebar/MenuButton.cxx"; sourceTree = "<group>"; };
+		BE9273FE2372EE7A00ADB598 /* Context.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Context.cxx; path = "../../ios-device/sfx2/source/sidebar/Context.cxx"; sourceTree = "<group>"; };
+		BE9273FF2372EE7A00ADB598 /* Tools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Tools.cxx; path = "../../ios-device/sfx2/source/sidebar/Tools.cxx"; sourceTree = "<group>"; };
+		BE9274002372EE7A00ADB598 /* DeckTitleBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DeckTitleBar.cxx; path = "../../ios-device/sfx2/source/sidebar/DeckTitleBar.cxx"; sourceTree = "<group>"; };
+		BE9274012372EE7A00ADB598 /* TabItem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TabItem.cxx; path = "../../ios-device/sfx2/source/sidebar/TabItem.cxx"; sourceTree = "<group>"; };
+		BE9274022372EE7A00ADB598 /* SidebarDockingWindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SidebarDockingWindow.cxx; path = "../../ios-device/sfx2/source/sidebar/SidebarDockingWindow.cxx"; sourceTree = "<group>"; };
+		BE9274032372EE7A00ADB598 /* ContextChangeBroadcaster.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ContextChangeBroadcaster.cxx; path = "../../ios-device/sfx2/source/sidebar/ContextChangeBroadcaster.cxx"; sourceTree = "<group>"; };
+		BE9274042372EE7A00ADB598 /* TabBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TabBar.cxx; path = "../../ios-device/sfx2/source/sidebar/TabBar.cxx"; sourceTree = "<group>"; };
+		BE9274052372EE7B00ADB598 /* DeckLayouter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DeckLayouter.cxx; path = "../../ios-device/sfx2/source/sidebar/DeckLayouter.cxx"; sourceTree = "<group>"; };
+		BE9274062372EE7B00ADB598 /* AsynchronousCall.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AsynchronousCall.cxx; path = "../../ios-device/sfx2/source/sidebar/AsynchronousCall.cxx"; sourceTree = "<group>"; };
+		BE9274072372EE7B00ADB598 /* AccessibleTitleBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AccessibleTitleBar.cxx; path = "../../ios-device/sfx2/source/sidebar/AccessibleTitleBar.cxx"; sourceTree = "<group>"; };
+		BE9274082372EE7B00ADB598 /* SidebarToolBox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SidebarToolBox.cxx; path = "../../ios-device/sfx2/source/sidebar/SidebarToolBox.cxx"; sourceTree = "<group>"; };
+		BE9274092372EE7B00ADB598 /* Theme.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Theme.cxx; path = "../../ios-device/sfx2/source/sidebar/Theme.cxx"; sourceTree = "<group>"; };
+		BE92740A2372EE7B00ADB598 /* IContextChangeReceiver.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IContextChangeReceiver.cxx; path = "../../ios-device/sfx2/source/sidebar/IContextChangeReceiver.cxx"; sourceTree = "<group>"; };
+		BE92740B2372EE7B00ADB598 /* PanelDescriptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PanelDescriptor.cxx; path = "../../ios-device/sfx2/source/sidebar/PanelDescriptor.cxx"; sourceTree = "<group>"; };
+		BE92740C2372EE7B00ADB598 /* SidebarChildWindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SidebarChildWindow.cxx; path = "../../ios-device/sfx2/source/sidebar/SidebarChildWindow.cxx"; sourceTree = "<group>"; };
+		BE92740D2372EE7B00ADB598 /* ControlFactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ControlFactory.cxx; path = "../../ios-device/sfx2/source/sidebar/ControlFactory.cxx"; sourceTree = "<group>"; };
+		BE92740E2372EE7B00ADB598 /* UnoDeck.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoDeck.cxx; path = "../../ios-device/sfx2/source/sidebar/UnoDeck.cxx"; sourceTree = "<group>"; };
+		BE92740F2372EE7B00ADB598 /* UnoPanel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoPanel.cxx; path = "../../ios-device/sfx2/source/sidebar/UnoPanel.cxx"; sourceTree = "<group>"; };
+		BE9274102372EE7B00ADB598 /* ControllerItem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ControllerItem.cxx; path = "../../ios-device/sfx2/source/sidebar/ControllerItem.cxx"; sourceTree = "<group>"; };
+		BE9274112372EE7B00ADB598 /* UnoSidebar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoSidebar.cxx; path = "../../ios-device/sfx2/source/sidebar/UnoSidebar.cxx"; sourceTree = "<group>"; };
 		BE93D422216CAA7A007A39F4 /* unohelp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unohelp.cxx; path = "../../ios-device/vcl/source/app/unohelp.cxx"; sourceTree = "<group>"; };
 		BE93D423216CAA7A007A39F4 /* stdtext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stdtext.cxx; path = "../../ios-device/vcl/source/app/stdtext.cxx"; sourceTree = "<group>"; };
 		BE93D424216CAA7A007A39F4 /* session.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = session.cxx; path = "../../ios-device/vcl/source/app/session.cxx"; sourceTree = "<group>"; };
@@ -1519,6 +1617,125 @@
 			path = Mobile;
 			sourceTree = "<group>";
 		};
+		BE9273AD2372DC6B00ADB598 /* sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				BE9273AF2372DC9600ADB598 /* ContextChangeEventMultiplexer.cxx */,
+				BE9273B62372DC9600ADB598 /* EmptyPanel.cxx */,
+				BE9273AE2372DC9600ADB598 /* EmptyPanel.hxx */,
+				BE9273B12372DC9600ADB598 /* nbdtmg.cxx */,
+				BE9273B32372DC9600ADB598 /* nbdtmgfact.cxx */,
+				BE9273B02372DC9600ADB598 /* PanelFactory.cxx */,
+				BE9273B52372DC9600ADB598 /* PanelLayout.cxx */,
+				BE9273B22372DC9600ADB598 /* SelectionAnalyzer.cxx */,
+				BE9273B42372DC9600ADB598 /* SelectionChangeHandler.cxx */,
+			);
+			name = sidebar;
+			sourceTree = "<group>";
+		};
+		BE9273B72372E04500ADB598 /* form */ = {
+			isa = PBXGroup;
+			children = (
+				BE9273CF2372E06000ADB598 /* dataaccessdescriptor.cxx */,
+				BE9273CE2372E06000ADB598 /* databaselocationinput.cxx */,
+				BE9273C82372E06000ADB598 /* datalistener.cxx */,
+				BE9273BC2372E06000ADB598 /* datanavi.cxx */,
+				BE9273DA2372E06100ADB598 /* dbcharsethelper.cxx */,
+				BE9273E02372E06100ADB598 /* delayedevent.cxx */,
+				BE9273CC2372E06000ADB598 /* filtnav.cxx */,
+				BE9273C12372E06000ADB598 /* fmcontrolbordermanager.cxx */,
+				BE9273C02372E06000ADB598 /* fmcontrollayout.cxx */,
+				BE9273BA2372E06000ADB598 /* fmdmod.cxx */,
+				BE9273D22372E06100ADB598 /* fmdocumentclassification.cxx */,
+				BE9273D12372E06100ADB598 /* fmdpage.cxx */,
+				BE9273D42372E06100ADB598 /* fmexch.cxx */,
+				BE9273DC2372E06100ADB598 /* fmexpl.cxx */,
+				BE9273E62372E06200ADB598 /* fmmodel.cxx */,
+				BE9273DD2372E06100ADB598 /* fmobj.cxx */,
+				BE9273C32372E06000ADB598 /* fmobjfac.cxx */,
+				BE9273B92372E06000ADB598 /* fmpage.cxx */,
+				BE9273CB2372E06000ADB598 /* fmpgeimp.cxx */,
+				BE9273D82372E06100ADB598 /* fmPropBrw.cxx */,
+				BE9273C42372E06000ADB598 /* fmscriptingenv.cxx */,
+				BE9273C22372E06000ADB598 /* fmservs.cxx */,
+				BE9273D32372E06100ADB598 /* fmshell.cxx */,
+				BE9273D92372E06100ADB598 /* fmshimp.cxx */,
+				BE9273BF2372E06000ADB598 /* fmsrccfg.cxx */,
+				BE9273D52372E06100ADB598 /* fmsrcimp.cxx */,
+				BE9273C52372E06000ADB598 /* fmtextcontroldialogs.cxx */,
+				BE9273E22372E06200ADB598 /* fmtextcontrolfeature.cxx */,
+				BE9273E72372E06200ADB598 /* fmtextcontrolshell.cxx */,
+				BE9273B82372E06000ADB598 /* fmtools.cxx */,
+				BE9273DB2372E06100ADB598 /* fmundo.cxx */,
+				BE9273CA2372E06000ADB598 /* fmview.cxx */,
+				BE9273DF2372E06100ADB598 /* fmvwimp.cxx */,
+				BE9273BB2372E06000ADB598 /* formcontrolfactory.cxx */,
+				BE9273CD2372E06000ADB598 /* formcontroller.cxx */,
+				BE9273E52372E06200ADB598 /* formcontrolling.cxx */,
+				BE9273D72372E06100ADB598 /* formdispatchinterceptor.cxx */,
+				BE9273BE2372E06000ADB598 /* formfeaturedispatcher.cxx */,
+				BE9273DE2372E06100ADB598 /* formtoolbars.cxx */,
+				BE9273C72372E06000ADB598 /* legacyformcontroller.cxx */,
+				BE9273E32372E06200ADB598 /* navigatortree.cxx */,
+				BE9273E12372E06200ADB598 /* navigatortreemodel.cxx */,
+				BE9273C62372E06000ADB598 /* ParseContext.cxx */,
+				BE9273D02372E06100ADB598 /* sdbdatacolumn.cxx */,
+				BE9273E82372E06200ADB598 /* sqlparserclient.cxx */,
+				BE9273BD2372E06000ADB598 /* tabwin.cxx */,
+				BE9273E42372E06200ADB598 /* tbxform.cxx */,
+				BE9273C92372E06000ADB598 /* typemap.cxx */,
+				BE9273D62372E06100ADB598 /* xfm_addcondition.cxx */,
+			);
+			name = form;
+			sourceTree = "<group>";
+		};
+		BE9273E92372EE5C00ADB598 /* sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				BE9273FA2372EE7A00ADB598 /* Accessible.cxx */,
+				BE9274072372EE7B00ADB598 /* AccessibleTitleBar.cxx */,
+				BE9274062372EE7B00ADB598 /* AsynchronousCall.cxx */,
+				BE9273FE2372EE7A00ADB598 /* Context.cxx */,
+				BE9274032372EE7A00ADB598 /* ContextChangeBroadcaster.cxx */,
+				BE9273F92372EE7A00ADB598 /* ContextList.cxx */,
+				BE92740D2372EE7B00ADB598 /* ControlFactory.cxx */,
+				BE9273F02372EE7900ADB598 /* ControllerFactory.cxx */,
+				BE9274102372EE7B00ADB598 /* ControllerItem.cxx */,
+				BE9273EB2372EE7900ADB598 /* Deck.cxx */,
+				BE9273F72372EE7A00ADB598 /* DeckDescriptor.cxx */,
+				BE9274052372EE7B00ADB598 /* DeckLayouter.cxx */,
+				BE9274002372EE7A00ADB598 /* DeckTitleBar.cxx */,
+				BE9273F82372EE7A00ADB598 /* DrawHelper.cxx */,
+				BE9273F12372EE7900ADB598 /* FocusManager.cxx */,
+				BE92740A2372EE7B00ADB598 /* IContextChangeReceiver.cxx */,
+				BE9273F62372EE7A00ADB598 /* ILayoutableWindow.cxx */,
+				BE9273FD2372EE7A00ADB598 /* MenuButton.cxx */,
+				BE9273EF2372EE7900ADB598 /* Paint.cxx */,
+				BE9273EC2372EE7900ADB598 /* Panel.cxx */,
+				BE92740B2372EE7B00ADB598 /* PanelDescriptor.cxx */,
+				BE9273F42372EE7A00ADB598 /* PanelTitleBar.cxx */,
+				BE9273ED2372EE7900ADB598 /* ResourceManager.cxx */,
+				BE9273FC2372EE7A00ADB598 /* Sidebar.cxx */,
+				BE92740C2372EE7B00ADB598 /* SidebarChildWindow.cxx */,
+				BE9273F52372EE7A00ADB598 /* SidebarController.cxx */,
+				BE9274022372EE7A00ADB598 /* SidebarDockingWindow.cxx */,
+				BE9273EA2372EE7900ADB598 /* SidebarModelUpdate.cxx */,
+				BE9273FB2372EE7A00ADB598 /* SidebarPanelBase.cxx */,
+				BE9274082372EE7B00ADB598 /* SidebarToolBox.cxx */,
+				BE9274042372EE7A00ADB598 /* TabBar.cxx */,
+				BE9274012372EE7A00ADB598 /* TabItem.cxx */,
+				BE9274092372EE7B00ADB598 /* Theme.cxx */,
+				BE9273EE2372EE7900ADB598 /* TitleBar.cxx */,
+				BE9273FF2372EE7A00ADB598 /* Tools.cxx */,
+				BE92740E2372EE7B00ADB598 /* UnoDeck.cxx */,
+				BE9273F22372EE7900ADB598 /* UnoDecks.cxx */,
+				BE92740F2372EE7B00ADB598 /* UnoPanel.cxx */,
+				BE9273F32372EE7A00ADB598 /* UnoPanels.cxx */,
+				BE9274112372EE7B00ADB598 /* UnoSidebar.cxx */,
+			);
+			name = sidebar;
+			sourceTree = "<group>";
+		};
 		BE93D420216CAA52007A39F4 /* vcl */ = {
 			isa = PBXGroup;
 			children = (
@@ -1571,6 +1788,7 @@
 			children = (
 				BE8C03932242BA480048B7EA /* appl */,
 				BE93D43D216D5568007A39F4 /* doc */,
+				BE9273E92372EE5C00ADB598 /* sidebar */,
 				BE484B722292AF73001EE76C /* view */,
 			);
 			name = sfx2;
@@ -1715,6 +1933,8 @@
 		BEB0E5DC21CA93950085A0CF /* svx */ = {
 			isa = PBXGroup;
 			children = (
+				BE9273B72372E04500ADB598 /* form */,
+				BE9273AD2372DC6B00ADB598 /* sidebar */,
 				BEB0E5DD21CA93A50085A0CF /* svdraw */,
 			);
 			name = svx;
@@ -1899,7 +2119,6 @@
 				BE8D85D6214055F3009F1860 /* rc in Resources */,
 				BE8D85D0214055F3009F1860 /* services in Resources */,
 				BE8D85D4214055F3009F1860 /* fundamentalrc in Resources */,
-				BE8D85C9214055F3009F1860 /* filter in Resources */,
 				BE8D85CD214055F3009F1860 /* registry in Resources */,
 				BE80E43221AD92F700859C97 /* Fonts in Resources */,
 				BE00F8A821396585001CE2D4 /* images in Resources */,
