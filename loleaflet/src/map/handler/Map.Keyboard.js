@@ -419,6 +419,12 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
+		if (e.ctrlKey && (e.key === 'k' || e.key === 'K')) {
+			this._map.showHyperlinkDialog();
+			e.preventDefault();
+			return true;
+		}
+
 		if (e.ctrlKey && (e.key === 'z' || e.key === 'Z')) {
 			this._map._socket.sendMessage('uno .uno:Undo');
 			e.preventDefault();
