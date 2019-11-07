@@ -1287,7 +1287,8 @@ L.Control.Menubar = L.Control.extend({
 				return false;
 		}
 
-		if (this._hiddenItems && this._hiddenItems.includes(menuItem.id))
+		if (this._hiddenItems &&
+		    $.inArray(menuItem.id, this._hiddenItems) !== -1)
 			return false;
 
 		return true;
