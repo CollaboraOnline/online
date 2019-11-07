@@ -236,7 +236,7 @@ namespace SigUtil
         dumpBacktrace();
 
         // let default handler process the signal
-        kill(Poco::Process::id(), signal);
+        kill(getpid(), signal);
     }
 
     void dumpBacktrace()
@@ -298,9 +298,9 @@ namespace SigUtil
         // prepare this in advance just in case.
         std::ostringstream stream;
         stream << "\nFatal signal! Attach debugger with:\n"
-               << "sudo gdb --pid=" << Poco::Process::id() << "\n or \n"
+               << "sudo gdb --pid=" << getpid() << "\n or \n"
                << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
-               << Poco::Process::id() << "\n";
+               << getpid() << "\n";
         std::string streamStr = stream.str();
         assert (sizeof (FatalGdbString) > strlen(streamStr.c_str()) + 1);
         strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString)-1);

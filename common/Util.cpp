@@ -608,7 +608,7 @@ namespace Util
     std::string UniqueId()
     {
         static std::atomic_int counter(0);
-        return std::to_string(Poco::Process::id()) + '/' + std::to_string(counter++);
+        return std::to_string(getpid()) + '/' + std::to_string(counter++);
     }
 
     std::map<std::string, std::string> JsonToMap(const std::string& jsonString)

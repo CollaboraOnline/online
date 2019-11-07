@@ -158,7 +158,7 @@ namespace Log
         oss << Source.getName();
 #if !MOBILEAPP // Just one process in a mobile app, the pid is uninteresting.
         oss << '-'
-            << std::setw(5) << std::setfill('0') << Poco::Process::id();
+            << std::setw(5) << std::setfill('0') << getpid();
 #endif
         Source.setId(oss.str());
 
