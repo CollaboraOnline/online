@@ -17,9 +17,7 @@
 #include <map>
 #include <sstream>
 #include <string>
-
-#include <Poco/Format.h>
-#include <Poco/StringTokenizer.h>
+#include <vector>
 
 #include <Poco/Net/WebSocket.h>
 
@@ -76,9 +74,7 @@ namespace LOOLProtocol
     bool getTokenString(const std::string& token, const std::string& name, std::string& value);
     bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value);
 
-    bool getTokenInteger(const Poco::StringTokenizer& tokens, const std::string& name, int& value);
-    bool getTokenString(const Poco::StringTokenizer& tokens, const std::string& name, std::string& value);
-    bool getTokenKeyword(const Poco::StringTokenizer& tokens, const std::string& name, const std::map<std::string, int>& map, int& value);
+    bool getTokenKeyword(const std::vector<std::string>& tokens, const std::string& name, const std::map<std::string, int>& map, int& value);
 
     bool getTokenInteger(const std::vector<std::string>& tokens, const std::string& name, int& value);
 

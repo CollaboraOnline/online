@@ -79,7 +79,7 @@ void WhiteBoxTests::testLOOLProtocolFunctions()
     CPPUNIT_ASSERT_EQUAL(2, mumble);
 
     std::string message("hello x=1 y=2 foo=42 bar=hello-sailor mumble='goodbye' zip zap");
-    Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    std::vector<std::string> tokens(LOOLProtocol::tokenize(message));
 
     CPPUNIT_ASSERT(LOOLProtocol::getTokenInteger(tokens, "foo", foo));
     CPPUNIT_ASSERT_EQUAL(42, foo);

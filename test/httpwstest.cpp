@@ -29,7 +29,6 @@
 #include <Poco/Path.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 #include <Poco/DOM/Node.h>
 #include <Poco/DOM/Document.h>
@@ -659,8 +658,8 @@ void HTTPWSTest::testExcelLoad()
         const auto status = assertResponseString(socket, "status:", testname);
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
-        Poco::StringTokenizer tokens(status, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(8), tokens.count());
+        std::vector<std::string> tokens(LOOLProtocol::tokenize(status, ' '));
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(8), tokens.size());
     }
     catch (const Poco::Exception& exc)
     {
@@ -857,7 +856,7 @@ void HTTPWSTest::testSlideShow()
         response = getResponseString(socket, "downloadas:", testname);
         CPPUNIT_ASSERT_MESSAGE("did not receive a downloadas: message as expected", !response.empty());
 
-        Poco::StringTokenizer tokens(response.substr(11), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        std::vector<std::string> tokens(LOOLProtocol::tokenize(response.substr(11), ' '));
         // "downloadas: jail= dir= name=slideshow.svg port= id=slideshow"
         const std::string jail = tokens[0].substr(std::string("jail=").size());
         const std::string dir = tokens[1].substr(std::string("dir=").size());
@@ -1059,11 +1058,11 @@ void HTTPWSTest::getPartHashCodes(const std::string& testname,
     TST_LOG("Reading parts from [" << response << "].");
 
     // Expected format is something like 'type= parts= current= width= height= viewid= [hiddenparts=]'.
-    Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    std::vector<std::string> tokens(LOOLProtocol::tokenize(line, ' '));
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
-    CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.count());
+    CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size());
 #else
-    CPPUNIT_ASSERT_MESSAGE("Expected at least 7 tokens.", static_cast<size_t>(7) <= tokens.count());
+    CPPUNIT_ASSERT_MESSAGE("Expected at least 7 tokens.", static_cast<size_t>(7) <= tokens.size());
 #endif
 
     const std::string type = tokens[0].substr(std::string("type=").size());
@@ -1107,7 +1106,7 @@ void HTTPWSTest::getCursor(const std::string& message,
     CPPUNIT_ASSERT_EQUAL(std::string(".uno:CellCursor"), text);
     text = command->get("commandValues").toString();
     CPPUNIT_ASSERT(!text.empty());
-    Poco::StringTokenizer position(text, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    std::vector<std::string> position(LOOLProtocol::tokenize(text, ','));
     cursorX = std::stoi(position[0]);
     cursorY = std::stoi(position[1]);
     cursorWidth = std::stoi(position[2]);
@@ -2101,8 +2100,8 @@ void HTTPWSTest::testCursorPosition()
         const auto& command0 = result0.extract<Poco::JSON::Object::Ptr>();
         CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command0->has("rectangle"));
 
-        Poco::StringTokenizer cursorTokens(command0->get("rectangle").toString(), ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.count());
+        std::vector<std::string> cursorTokens(LOOLProtocol::tokenize(command0->get("rectangle").toString(), ','));
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.size());
 
         // Create second view
         std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, docURL, testname);
@@ -2115,8 +2114,8 @@ void HTTPWSTest::testCursorPosition()
         const auto& command = result.extract<Poco::JSON::Object::Ptr>();
         CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command->has("rectangle"));
 
-        Poco::StringTokenizer viewTokens(command->get("rectangle").toString(), ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.count());
+        std::vector<std::string> viewTokens(LOOLProtocol::tokenize(command->get("rectangle").toString(), ','));
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.size());
 
         // check both cursor should be equal
         CPPUNIT_ASSERT_EQUAL(cursorTokens[0], viewTokens[0]);
@@ -2150,7 +2149,7 @@ void HTTPWSTest::testAlertAllUsers()
         for (int i = 0; i < 2; i++)
         {
             const std::string response = assertResponseString(socket[i], "error:", testname);
-            Poco::StringTokenizer tokens(response.substr(6), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(response.substr(6), ' '));
             std::string cmd;
             LOOLProtocol::getTokenString(tokens, "cmd", cmd);
             CPPUNIT_ASSERT_EQUAL(std::string("internal"), cmd);
