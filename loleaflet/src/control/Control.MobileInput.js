@@ -268,6 +268,10 @@ L.Control.MobileInput = L.Control.extend({
 			this._keyHandled = true;
 			// console.log('    _keyHandled := true');
 		}
+		if (window.ThisIsTheiOSApp && e.key === 'Tab') {
+			// We don't want Tab to move focus
+			L.DomEvent.preventDefault(e);
+		}
 		L.DomEvent.stopPropagation(e);
 	},
 
