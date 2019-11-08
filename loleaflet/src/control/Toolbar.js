@@ -404,14 +404,28 @@ L.Map.include({
 		});
 	},
 
+	extractContent: function(html) {
+		var parser = new DOMParser;
+		return parser.parseFromString(html, 'text/html').documentElement.getElementsByTagName('body')[0].textContent;
+	},
+
 	showHyperlinkDialog: function() {
 		var map = this;
+		var text = '';
+		var link = '';
+		if (this.hyperlinkUnderCursor && this.hyperlinkUnderCursor.text && this.hyperlinkUnderCursor.link) {
+			text = this.hyperlinkUnderCursor.text;
+			link = this.hyperlinkUnderCursor.link;
+		} else if (this._clip._selectionType == 'text') {
+			text = this.extractContent(this._clip._selectionContent);
+		}
+
 		vex.dialog.open({
 			contentClassName: 'hyperlink-dialog',
 			message: _('Insert hyperlink'),
 			input: [
-				_('Text') + '<input name="text" type="text" value="' + (map.hyperlinkUnderCursor.text || '') + '"/>',
-				_('Link') + '<input name="link" type="text" value="' + (map.hyperlinkUnderCursor.link || '') + '"/>'
+				_('Text') + '<input name="text" type="text" value="' + text + '"/>',
+				_('Link') + '<input name="link" type="text" value="' + link + '"/>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
