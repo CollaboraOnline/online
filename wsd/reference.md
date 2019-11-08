@@ -59,10 +59,12 @@ A string for the domain the host page sends/receives PostMessages from, we only 
 ### Size
 Size of the file in bytes (64bit)
 
-### TemplateSaveAs
-In case this file should be treated as a template, the file name (potentially including a suitable path - that the WOPI host has to interpret) will be used as the real name under which the resulting file will be stored.
+### TemplateSource
+The ID of file (like the wopi/files/ID) can be a non-existing file.  In that case, the file will be created from a template when the template (eg. an OTT file) is specifiend as "TemplateSource" in the CheckFileInfo response.
 
-Storing the file resulting from a template uses the normal PutRelativeFile workflow, which means a new CheckFileInfo will have to be sent upon load of the resulting file.
+The TemplateSource is supposed to be an URL like https://somewhere/accessible/file.ott that is accessible by the Online.
+
+For the actual saving of the content, normal PutFile mechanism will be used.
 
 ### UserCanWrite
 A boolean flag, indicating whether the user has permission to edit and/or over-write the file. If not set PutFile will fail.
