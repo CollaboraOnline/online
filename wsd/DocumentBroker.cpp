@@ -24,7 +24,6 @@
 #include <Poco/Path.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/StringTokenizer.h>
 
 #include "Admin.hpp"
 #include "ClientSession.hpp"
@@ -743,19 +742,31 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
                     const std::string newRootPath = _storage->getRootFilePath() + "." + newExtension;
 
+                    std::vector<std::string> args(LOOLProtocol::tokenize(commandLine, ' '));
+                    std::string command(args[0]);
+                    args.erase(args.begin()); // strip the commmand
+
                     // The commandline must contain the space-separated substring @INPUT@ that is
                     // replaced with the input file name, and @OUTPUT@ for the output file name.
-                    Poco::StringTokenizer tokenizer(commandLine, " ");
-                    if (tokenizer.replace("@INPUT@", _storage->getRootFilePath()) != 1 ||
-                        tokenizer.replace("@OUTPUT@", newRootPath) != 1)
-                        throw Poco::NotFoundException();
+                    int inputs(0), outputs(0);
+                    for (auto it = args.begin(); it != args.end(); ++it)
+                    {
+                        if (*it == "@INPUT@")
+                        {
+                            *it = _storage->getRootFilePath();
+                            ++inputs;
+                        }
+                        else if (*it == "@OUTPUT@")
+                        {
+                            *it = newRootPath;
+                            ++outputs;
+                        }
+                    }
 
+                    if (inputs != 1 || outputs != 1)
+                        throw std::exception();
 
-                    std::vector<std::string> args;
-                    for (std::size_t i = 1; i < tokenizer.count(); ++i)
-                        args.emplace_back(tokenizer[i]);
-
-                    int process = Util::spawnProcess(tokenizer[0], args);
+                    int process = Util::spawnProcess(command, args);
                     int status = -1;
                     const int rc = ::waitpid(process, &status, 0);
                     if (rc != 0)
@@ -772,7 +783,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                 // loop.
                 break;
             }
-            catch (const Poco::NotFoundException&)
+            catch (const std::exception&)
             {
                 // This plugin is not a proper prefilter one
             }
