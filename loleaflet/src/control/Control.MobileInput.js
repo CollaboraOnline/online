@@ -166,6 +166,15 @@ L.Control.MobileInput = L.Control.extend({
 		    docLayer = this._map._docLayer,
 		    unoKeyCode = handler._toUNOKeyCode(keyCode);
 
+		if (e.shiftKey)
+			unoKeyCode |= handler.keyModifier.shift;
+		if (e.ctrlKey)
+			unoKeyCode |= handler.keyModifier.ctrl;
+		if (e.altKey)
+			unoKeyCode |= handler.keyModifier.alt;
+		if (e.metaKey)
+			unoKeyCode |= handler.keyModifier.ctrl;
+
 		this._keyHandled = this._keyHandled || false;
 		// console.log('==> onKeyEvents: ' + e.type + ':' + e.key + ' keyCode=' + keyCode + ' charCode=' + charCode + ' unoKeyCode=' + unoKeyCode + ' _keyHandled=' + this._keyHandled + ' _isComposing=' + this._isComposing)
 		if (this._isComposing) {
