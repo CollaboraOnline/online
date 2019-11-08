@@ -15,6 +15,7 @@
 #include <cstring>
 #include <iomanip>
 #include <map>
+#include <regex>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -138,6 +139,18 @@ namespace LOOLProtocol
     std::vector<std::string> tokenize(const std::string& s, const char delimiter = ' ')
     {
         return tokenize(s.data(), s.size(), delimiter);
+    }
+
+    /// Tokenize according to the regex, potentially skip empty tokens.
+    inline
+    std::vector<std::string> tokenize(const std::string& s, const std::regex& pattern, bool skipEmpty = false)
+    {
+        std::vector<std::string> tokens;
+        if (skipEmpty)
+            std::copy_if(std::sregex_token_iterator(s.begin(), s.end(), pattern, -1), std::sregex_token_iterator(), std::back_inserter(tokens), [](std::string in) { return !in.empty(); });
+        else
+            std::copy(std::sregex_token_iterator(s.begin(), s.end(), pattern, -1), std::sregex_token_iterator(), std::back_inserter(tokens));
+        return tokens;
     }
 
     inline
