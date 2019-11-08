@@ -202,3 +202,436 @@ p.mobile-wizard.ui-combobox-text.selected {
 @media (orientation: portrait) {
 	#mobile-wizard-header{display: block;}
 }
+
+#mobile-wizard-back.close-button {
+	transform: rotate(-90deg);
+	background-position-x: center;
+}
+#mobile-wizard-back {
+		background-image: url('images/lc_closedocmobile.svg');
+		background-repeat: no-repeat;
+		width: 48px;
+		background-position-x: 16px;
+		background-position-y: center;
+		height: 20px;
+}
+
+#mobile-wizard {
+		width: 100%;
+		position: fixed;
+		bottom: 0px;
+		z-index: 1000;
+		background-color: white;
+		box-shadow: 0px -2px 4px 1px #00000030
+}
+
+#mobile-wizard-content {
+		overflow: scroll;
+		position: absolute;
+		top: 111px;
+		bottom: 0px;
+		width: 100%;
+}
+
+#mobile-wizard-tabs {
+	height: 63px;
+}
+
+#mobile-wizard-content *{
+	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+	color: #212121;
+}
+
+#mobile-wizard-titlebar {
+	background-color: white;
+	top: 63px;
+	height: 48px;
+	color: #636363;
+	border-bottom: 1px solid #dddddd !important;
+}
+
+.ui-content.mobile-wizard {
+	background-color: white !important;
+	border: none !important;
+	padding: 0px 12px 16px 12px;
+}
+
+.ui-header.mobile-wizard {
+	width: 96%;
+	height: 56px !important;
+	font-size: 11pt !important;
+	margin: 0px;
+	padding: 0px;
+	border: solid 1px #fff;
+	padding-left: 4% !important;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.ui-header.mobile-wizard:active {
+	background-color: #eee;
+}
+
+.ui-content .unobutton {
+	width: 32px;
+	height: 32px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+#mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
+	margin-top: 0px !important;
+}
+
+.ui-content.unospan {
+	line-height: 32px;
+	display: table;
+}
+#SetBorderStyle, div[id^=NumberFormat]{padding-left: 4%;}
+.ui-content.unolabel {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.sub-menu-title {
+	padding-left: 42px;
+}
+
+.sub-menu-arrow {
+	display: table-cell;
+	padding-left: 10px;
+	padding-right: 20px;
+	background: transparent;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #aaa !important;
+	vertical-align: middle;
+}
+
+.entry-value {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.ui-header-right {
+	display: table;
+}
+
+.ui-tabs.mobile-wizard {
+	text-align: center;
+	height: 42px;
+	display: table;
+	width: 100%;
+	border-spacing: 10px;
+}
+
+.ui-tab.mobile-wizard {
+	display: table-cell;
+	width: 49%;
+	height: 36px;
+	line-height: 36px;
+    vertical-align: middle;
+	margin: 0px 1%;
+	border-radius: 10px;
+	border: none;
+	color: #777;
+}
+
+.ui-tab.selected.mobile-wizard {
+	border: none;
+	color: #0b87e7;
+	border-radius: 0px;
+	border-bottom: solid 1px #0b87e7;
+}
+
+[id|=tb_colorselector] .w2ui-tb-caption > div {
+	height: 32px !important;
+	width: 32px !important;
+}
+
+[name|=colorselector] {
+	width: 80px;
+}
+
+.colorimage {
+	float: left;
+	height: 32px;
+}
+
+.spinfieldcontainer {
+	display: inline-block;
+	overflow: hidden;
+}
+
+.sinfieldcontrols {
+	background-color: #eee;
+	text-align: center;
+	display: inline-block;
+	vertical-align: middle;
+	border-left: 1px solid #ccc;
+}
+
+.spinfieldunit {
+	color: #777 !important;
+	width: 30px;
+	margin: 0px 10px 0px 10px;
+}
+
+.plus {
+	border-left: 1px solid #ccc;
+	width: 48px;
+	height: 48px;
+	color: #777 !important;
+	display: table-cell;
+	vertical-align: middle;
+}
+.minus {
+	border-right: 1px solid #ccc;
+	width: 48px;
+	height: 48px;
+	color: #777 !important;
+	display: table-cell;
+	vertical-align: middle;
+}
+.spinfieldcontainer .plus:active, .spinfieldcontainer .minus:active{
+	border-color: #0b87e7;
+	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+}
+.spinfieldimage {
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	padding-left: 8px;
+}
+
+.spinfieldcontainer .sinfieldcontrols {
+	height: 49px;
+}
+.spinfieldcontainer input.spinfield {
+	padding-top: 0px;
+}
+.leaflet-control-zoom.leaflet-bar{
+	border: none !important;
+}
+a.leaflet-control-zoom-in {
+	border-radius: 100px !important;
+	padding: 8px !important;
+	background-color: #0b87e7 !important;
+	color: white !important;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 6px 0 rgba(0, 0, 0, 0.19) !important;
+	border: none !important;
+}
+#slide-sorter .preview-img{
+	border-radius: 3px;
+	border-color: #eee;
+}
+#slide-sorter .preview-img-currentpart, #mobile-wizard-header .preview-img-currentpart{
+	border-color: #0b87e780;
+	border-style: solid;
+	border-radius: 3px;
+}
+#presentation-controls-wrapper {
+	background-color: #f9f9f9;
+	border: none;
+}
+
+.mobile-wizard.ui-combobox-text.checked {
+	color: #0b87e7 !important;
+}
+#BackColor .w2ui-tb-caption > div, #FontColor .w2ui-tb-caption > div, #BackgroundColor .w2ui-tb-caption > div, #FrameLineColor div, #Color div{
+	border-radius:100px !important;
+}
+#toolbar-down table.w2ui-button.checked .w2ui-tb-image{
+	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+	background-size: 18px !important;
+}
+
+#toolbar-down table.w2ui-button.checked {
+	border: 1px solid #e5f1ff;
+	background-color: #e5f1ff;
+	border-radius: 0px;
+}
+.w2ui-icon.users{
+	background-size: 20px !important;
+}
+.ui-content > div{
+	margin:16px 0px;
+}
+.ui-content label{
+	line-height: 44px;
+	vertical-align: top;
+	padding-left: 4%;
+}
+#buttonnone + label, #buttonbefore + label, #buttonafter + label, #buttonoptimal + label, #buttonparallel + label, #buttonnone + label, #buttonthrough + label{
+	padding-left: 0;
+}
+#Color > img{
+	border-radius:100px;
+	background-color: #696969;
+}
+#selectheight > img, #selectwidth > img, #selectheight > img, #SendToBack > span, #ObjectBackOne > span, #ObjectForwardOne > span, #BringToFront > span, #FlipVertical > span, #FlipHorizontal > span, #Bold > span, #Italic > span, #Underline > span, #Strikeout > span, #StyleApply > span, #StyleUpdateByExample > span, #StyleNewByExample > span, #Shadowed > span, #Grow > span, #Shrink > span, #Color > span, #Spacing > span, #SuperScript > span, #SubScript > span, #AlignLeft > span, #AlignRight > span, #AlignHorizontalCenter > span, #AlignBlock > span, #ParaLeftToRight > span, #ParaRightToLeft > span, #AlignTop > span, #AlignVCenter > span, #AlignBottom > span, #IncrementIndent > span, #DecrementIndent > span, #LeftPara > span, #RightPara > span, #CenterPara > span, #JustifyPara > span, #DefaultBullet > span, #DefaultNumbering > span, #ParaspaceIncrease > span, #ParaspaceDecrease > span, #LineSpacing > span, #HangingIndent > span, #CellVertTop > span, #CellVertCenter > span, #CellVertBottom > span, div[id*='Row'] > span,  div[id*='Column'] > span, div[id^=Outline] > span, #horizontalpos > img, #verticalpos > img, #nolines > img{
+	display: none !important;
+}
+#SendToBack, #ObjectBackOne, #ObjectForwardOne, #BringToFront, #FlipVertical, #FlipHorizontal, #Bold, #Italic, #Underline, #Strikeout, #StyleApply, #StyleUpdateByExample, #StyleNewByExample, #Shadowed, #Grow, #Shrink, #Color, #Spacing, #SuperScript, #SubScript,#AlignLeft, #AlignRight, #AlignHorizontalCenter, #AlignBlock, #ParaRightToLeft, #ParaLeftToRight, #AlignTop, #AlignVCenter, #AlignBottom, #IncrementIndent, #DecrementIndent, #LeftPara, #RightPara, #CenterPara, #JustifyPara, #DefaultBullet, #DefaultNumbering, #ParaspaceIncrease, #ParaspaceDecrease, #LineSpacing, #HangingIndent, #CellVertTop, #CellVertCenter, #CellVertBottom, #ParaspaceIncrease, #ParaspaceDecrease, div[id*='Row'], div[id*='Column'], #DeleteTable, #MergeCells, div[id^=Outline]{
+	padding: 16px 28px 16px 4% !important;
+	margin: 0px !important;
+	float:left;
+}
+#MergeCells > span{
+	color: #4d82b8;
+	text-align: end;
+	vertical-align: bottom;
+}
+#DeleteTable{
+	background-color: #fbf4f5;
+	border-radius: 6px;
+	padding-right: 4% !important;
+}
+#DeleteTable > span{
+	font-weight: bold;
+	color: #e68497;
+	text-align: end;
+	vertical-align: bottom;
+}
+.colorcontainer {
+	width: 120px;
+	float: left;
+	padding: 20px 20px 20px 20px !important;
+}
+#belowparaspacing, #spacinglabel, #OutlineRight, #DefaultBullet, #CellVertTop, #rowheight, #columnwidth{float: left;}
+#Color {
+	padding: 20px 20px 0px 20px !important;
+}
+#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel, #spacinglabel, #sizelabel{clear:both;}
+#BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel, .mobile-wizard.ui-text {
+	border-bottom: 1px solid #c2d5ed;
+	color: #b3c5dc !important;
+	margin-left: 4%;
+	width: 98%;
+	font-size: 12px;
+	font-weight: bold;
+}
+[title=Line] > #XLineColor {
+	width: 100%;
+}
+#DecrementIndent + input:disabled{display: none;}
+div#mobile-wizard-content input[type=number]{
+	height: 46px;
+	width: 110px;
+	margin-left: 10px;
+	border: none;
+	-moz-appearance: textfield;
+}
+div#mobile-wizard-content .spinfieldcontainer{
+	height: 48px;
+	margin: 0px 0px 8px 4% !important;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	background-size: 28px;
+}
+div#mobile-wizard-content .spinfieldcontainer .spinfieldimage {
+	opacity: 0.5;
+}
+div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:focus .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:hover .spinfieldimage {
+	opacity: 1 !important;
+}
+div#mobile-wizard-content .spinfield:active .spinfieldimage, div#mobile-wizard-content .spinfield:focus .spinfieldimage, div#mobile-wizard-content .spinfield:hover .spinfieldimage {
+	opacity: 1 !important;
+}
+#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
+	margin: 0;
+	padding: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	padding: 24px 32px 24px 32px;
+	background-size: 24px !important;
+}
+#buttonbefore:focus, #buttonafter:focus, #buttonoptimal:focus, #buttonparallel:focus, #buttonnone:focus, #buttonthrough:focus, #bottom:focus, #top:focus, #standard:focus, #Bold:focus, #Bold:active, #Italic:focus, #Italic:active, #Underline:focus, #Underline:active, #Strikeout:focus, #Strikeout:active, #StyleApply:focus, #StyleApply:active, #StyleUpdateByExample:focus, #StyleUpdateByExample:active, #StyleNewByExample:focus, #StyleNewByExample:active, #Spacing:active, #SuperScript:active, #SubScript:active, #Shadowed:active, #Spacing:active, #SuperScript:active, #SubScript:active, #Grow:active, #Shrink:active, #Color:active, #AlignLeft:active, #AlignRight:active, #AlignHorizontalCenter:active, #AlignBlock:active, #AlignTop:active, #AlignVCenter:active, #AlignBottom:active, #IncrementIndent:active, #DecrementIndent:active, #LeftPara:active, #RightPara:active, #CenterPara:active, #JustifyPara:active, #DefaultBullet:active, #DefaultNumbering:active, #ParaspaceIncrease:active, #ParaspaceDecrease:active, #HangingIndent:active{
+	border-radius: 4px;
+	outline: none;
+	background-color: #e5f1ff !important;
+}
+#buttonbefore{background: url(images/sc_wrapleft.svg) no-repeat center;}
+#buttonafter{background: url(images/sc_wrapright.svg) no-repeat center;}
+#buttonoptimal{background: url(images/sc_wrapleft.svg) no-repeat center;}
+#buttonparallel{background: url(images/sc_wrapmenu.svg) no-repeat center;}
+#buttonnone{background: url(images/sc_wrapoff.svg) no-repeat center;}
+#buttonthrough{background: url(images/sc_wrapthrough.svg) no-repeat center;}
+#top{background: url(images/sc_aligntop.svg) no-repeat center;}
+#bottom{background: url(images/sc_alignbottom.svg) no-repeat center;}
+#standard{background: url(images/sc_alignverticalcenter.svg) no-repeat center;}
+
+#mobile-wizard input[type=checkbox]:disabled{
+	border: 2px solid #ddd;
+	box-shadow: none;
+}
+#mobile-wizard input[type=checkbox]{
+	appearance: none;
+	width: 24px;
+	height: 24px;
+	margin: 10px 20px 10px 0px !important;
+	float: right;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+	border-radius: 2px;
+	border: 2px solid #aaa;
+	outline: none;
+	box-shadow: #00000015 0px 0px 2px 1px;
+}
+#mobile-wizard input[type=checkbox]:checked{
+	background: url(images/lc_ok_white.svg) no-repeat center;
+	background-color: #0b87e7;
+	border-radius: 2px;
+	border: 2px solid #0b87e7;
+	outline: none;
+	box-shadow: none;
+}
+#mobile-wizard input[type=checkbox]:before{
+	width: 20px;
+	height: 20px;
+}
+#mobile-wizard input[type=checkbox]:after{
+	top: -20px;
+	width: 16px;
+}
+#enablecontour + label{
+	line-height: 44px;
+	vertical-align: baseline;
+	padding-left: 24px;
+}
+div[title='Table Design'] div[id^=Use]{
+	width: 92%;
+	padding-right: 4% !important;
+}
+input[type=checkbox]#UseBandingColumnStyle, input[type=checkbox]#UseLastColumnStyle, input[type=checkbox]#UseFirstColumnStyle, input[type=checkbox]#UseBandingRowStyle, input[type=checkbox]#UseLastRowStyle, input[type=checkbox]#UseFirstRowStyle{
+	margin-right: 0px !important;
+}
+#mobile-wizard button{
+	height: 38px;
+	width: 100%;
+	border-radius: 4px;
+	color: #0b87e7 !important;
+	font-weight: bold;
+	background-color: #fff;
+	text-transform: uppercase;
+	border: 1px solid #0b87e7;
+}
+#mobile-wizard button:focus{
+	outline: none;
+}
+#mobile-wizard button:active{
+	outline: none;
+	border: none;
+	background-color: #ebf2fb;
+}
+#enablecontour + button {
+	float: right;
+	margin: 24px 0px;
+}
+div#enablecontour + p, #arrangelabel, #SetMinimalRowHeight {clear: both;}

@@ -11,6 +11,47 @@
 	}
 }
 @media (max-width: 767px), (max-device-height: 767px) {
+	#formulabar {
+		padding: 0px !important;
+		border-top: 1px solid #bbbbbb !important;
+	}
+	#tb_actionbar_item_fullscreen{display: none;}
+	#toolbar-down {
+		height: 34px !important;
+	}
+
+	#toolbar-down{
+		border-top: 1px solid #f1f1f1 !important;
+	}
+	#addressInput{
+		width: 60px !important;
+		border: 1px solid #bbbbbb;
+		border-bottom: none;
+		border-top: none;
+		border-left: none;
+		height: 35px !important;
+	}
+	.w2ui-icon.equal, .w2ui-icon.autosum{width: 38px !important;}
+	#formulaInput{
+		border: 1px solid #bbbbbb;
+		border-bottom: none;
+		border-top: none;
+		border-right: none;
+		height: 35px !important;
+	}
+	#tb_actionbar_item_undo .w2ui-tb-image, #tb_actionbar_item_redo .w2ui-tb-image, #tb_actionbar_item_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_prev  .w2ui-tb-image, #tb_actionbar_item_next  .w2ui-tb-image, #tb_actionbar_item_insertion_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_insertcomment .w2ui-tb-image, #tb_actionbar_item_fullscreen-presentation .w2ui-tb-image{
+		min-width: 38px;
+	}
+
+	#tb_actionbar_item_userlist table{
+		margin: -1px 0px auto 3px !important;
+	}
+	#toolbar-up .checked{
+		border-color: #fff;
+	}
+	#toolbar-up .checked .w2ui-tb-image{
+		filter: drop-shadow(0px 0px 4px #0b87e7);
+	}
 	#toolbar-down table.w2ui-button .w2ui-tb-image {
 		margin: 5px 9px 3px 9px!important;
 	}
