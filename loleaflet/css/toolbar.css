@@ -147,7 +147,19 @@ w2ui-toolbar {
 		padding-right: 20px;
 		width: 181px;
 }
-
+#tb_editbar_item_fold table.w2ui-button {
+	border-radius: 20px;
+	background-color: #f4f4f4 !important;
+	padding: 0px 4px;
+	box-shadow: inset 0px 0px 1px 2px #00000020;
+}
+#tb_editbar_item_fold table.w2ui-button.over {
+	background-color: #fff !important;
+	box-shadow: inset 0px 0px 1px 2px #0000;
+}
+td[id^=tb_editbar_item_sidebar]{
+	padding: 0px 8px;
+}
 #tb_editbar_item_edit {
 		display: none;
 }
@@ -608,8 +620,8 @@ button.leaflet-control-search-next
 .w2ui-icon.link{ background: url('images/lc_inserthyperlink.svg') no-repeat center !important; }
 .w2ui-icon.insertsymbol{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
 .w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; }
-.w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center !important; }
-.w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center !important; }
+.w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center 1px / 19px !important; }
+.w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center/ 19px !important; }
 .w2ui-icon.hamburger{ background: url('images/hamburger.svg') no-repeat center !important; }
 .w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
 .w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
@@ -658,10 +670,10 @@ button.leaflet-control-search-next
 .w2ui-icon.fullscreen{ background: url('images/lc_fullscreen.svg') no-repeat center !important; }
 .w2ui-icon.closemobile{ background: url('images/lc_closedocmobile.svg') no-repeat center !important; }
 .w2ui-icon.closetoolbar{ background: url('images/close_toolbar.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_modify_page{ background: url('images/sidebar-property-large.png') no-repeat center !important; }
+.w2ui-icon.sidebar_modify_page{ background: url('images/lc_formproperties.svg') no-repeat center !important; }
 .w2ui-icon.sidebar_slide_change{ background: url('images/sidebar-transition-large.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_custom_animation{ background: url('images/sidebar-animation-large.png') no-repeat center !important; }
-.w2ui-icon.sidebar_master_slides{ background: url('images/sidebar-template-large.png') no-repeat center !important; }
+.w2ui-icon.sidebar_custom_animation{ background: url('images/lc_animationobjects.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_master_slides{ background: url('images/lc_slidemasterpage.svg') no-repeat center !important; }
 .w2ui-icon.mobile_wizard{ background: url('images/lc_mobile_wizard.svg') no-repeat center !important; }
 .w2ui-icon.fullscreen-presentation{ background: url('images/lc_fullscreen-presentation-toolbar-mobile.svg') no-repeat center !important;}
 .w2ui-icon.insertion_mobile_wizard{ background: url('images/lc_insertion_mobile_wizard.svg') no-repeat center !important; }
