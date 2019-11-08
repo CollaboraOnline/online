@@ -18,7 +18,7 @@
 		background-image: none;
 		background-color: #dae6f3;
 	}
-	#setgamma input.spinfield {
+	#setgamma input.spinfield, #linewidth input.spinfield, #nolines input.spinfield{
 		width: 140px !important;
 	}
 	td[id^=tb_spreadsheet-toolbar_item] table.w2ui-button.over {
