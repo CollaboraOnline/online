@@ -533,7 +533,7 @@ else
 fi
 
 STD_FILESYSTEM=
-if test "$CXXFLAGS_CXX11" = "-std=c++17" ; then
+if test "$CXXFLAGS_CXX11" = "-std=c++17" -a "$ENABLE_ANDROIDAPP" != "true" ; then
     save_CXXFLAGS=$CXXFLAGS
     CXXFLAGS="$CXXFLAGS -Werror"
     save_LIBS=$LIBS
