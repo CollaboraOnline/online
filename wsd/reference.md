@@ -196,9 +196,9 @@ Currently the following are present:
 
   The property *available* is *true* when the convert-to functionality is present and correctly accessible from the WOPI host.
 
-* hasTemplateSaveAs: true/false
+* hasTemplateSource: true/false
 
-  is *true* when the Online supports the TemplateSaveAs CheckFileInfo property.
+  is *true* when the Online supports the TemplateSource CheckFileInfo property.
 
 * hasMobileSupport: true/false
 
