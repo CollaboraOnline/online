@@ -29,7 +29,6 @@
 #include <Poco/Exception.h>
 #include <Poco/Path.h>
 #include <Poco/String.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
 #include "Common.hpp"

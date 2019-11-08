@@ -50,7 +50,6 @@
 #include <Poco/Net/Socket.h>
 #include <Poco/Process.h>
 #include <Poco/Runnable.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
 #include "ChildSession.hpp"
@@ -95,7 +94,6 @@ using Poco::File;
 using Poco::JSON::Array;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
-using Poco::StringTokenizer;
 using Poco::URI;
 
 #ifndef BUILDING_TESTS
@@ -1225,9 +1223,9 @@ public:
 
         if (type == LOK_CALLBACK_CELL_CURSOR)
         {
-            Poco::StringTokenizer tokens(payload, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(payload, ','));
             // Payload may be 'EMPTY'.
-            if (tokens.count() == 4)
+            if (tokens.size() == 4)
             {
                 int cursorX = std::stoi(tokens[0]);
                 int cursorY = std::stoi(tokens[1]);
@@ -1243,9 +1241,9 @@ public:
             const Poco::Dynamic::Var result = parser.parse(payload);
             const auto& command = result.extract<Poco::JSON::Object::Ptr>();
             std::string rectangle = command->get("rectangle").toString();
-            Poco::StringTokenizer tokens(rectangle, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(rectangle, ','));
             // Payload may be 'EMPTY'.
-            if (tokens.count() == 4)
+            if (tokens.size() == 4)
             {
                 int cursorX = std::stoi(tokens[0]);
                 int cursorY = std::stoi(tokens[1]);
@@ -1264,9 +1262,9 @@ public:
             targetViewId = command->get("viewId").toString();
             std::string part = command->get("part").toString();
             std::string text = command->get("rectangle").toString();
-            Poco::StringTokenizer tokens(text, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(text, ','));
             // Payload may be 'EMPTY'.
-            if (tokens.count() == 4)
+            if (tokens.size() == 4)
             {
                 int cursorX = std::stoi(tokens[0]);
                 int cursorY = std::stoi(tokens[1]);

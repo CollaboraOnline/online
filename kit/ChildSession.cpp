@@ -20,7 +20,6 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/WebSocket.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/BinaryReader.h>
@@ -46,7 +45,6 @@
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
-using Poco::StringTokenizer;
 using Poco::URI;
 
 using namespace LOOLProtocol;
@@ -2270,8 +2268,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     {
     case LOK_CALLBACK_INVALIDATE_TILES:
         {
-            StringTokenizer tokens(payload, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            if (tokens.count() == 5)
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(payload, ','));
+            if (tokens.size() == 5)
             {
                 int part, x, y, width, height;
                 try
@@ -2300,7 +2298,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                               " width=" + std::to_string(width) +
                               " height=" + std::to_string(height));
             }
-            else if (tokens.count() == 2 && tokens[0] == "EMPTY")
+            else if (tokens.size() == 2 && tokens[0] == "EMPTY")
             {
                 const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
                 sendTextFrame("invalidatetiles: EMPTY, " + part);

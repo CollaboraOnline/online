@@ -16,13 +16,10 @@
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/StringTokenizer.h>
 
 #include "Protocol.hpp"
 #include "Log.hpp"
 #include <TileDesc.hpp>
-
-using Poco::StringTokenizer;
 
 void TileQueue::put_impl(const Payload& value)
 {
@@ -33,7 +30,7 @@ void TileQueue::put_impl(const Payload& value)
     {
         LOG_TRC("Processing [" << LOOLProtocol::getAbbreviatedMessage(msg) << "]. Before canceltiles have " << getQueue().size() << " in queue.");
         const std::string seqs = msg.substr(12);
-        StringTokenizer tokens(seqs, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+        std::vector<std::string> tokens(LOOLProtocol::tokenize(seqs, ','));
         getQueue().erase(std::remove_if(getQueue().begin(), getQueue().end(),
                 [&tokens](const Payload& v)
                 {
@@ -41,7 +38,7 @@ void TileQueue::put_impl(const Payload& value)
                     // Tile is for a thumbnail, don't cancel it
                     if (s.find("id=") != std::string::npos)
                         return false;
-                    for (size_t i = 0; i < tokens.count(); ++i)
+                    for (size_t i = 0; i < tokens.size(); ++i)
                     {
                         if (s.find("ver=" + tokens[i]) != std::string::npos)
                         {

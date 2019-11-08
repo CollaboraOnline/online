@@ -18,7 +18,6 @@
 
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
 #include "DocumentBroker.hpp"
@@ -35,7 +34,6 @@
 using namespace LOOLProtocol;
 
 using Poco::Path;
-using Poco::StringTokenizer;
 
 static std::mutex SessionMapMutex;
 static std::unordered_map<std::string, std::weak_ptr<ClientSession>> SessionMap;
@@ -898,7 +896,7 @@ bool ClientSession::forwardToChild(const std::string& message,
 bool ClientSession::filterMessage(const std::string& message) const
 {
     bool allowed = true;
-    StringTokenizer tokens(message, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    std::vector<std::string> tokens(LOOLProtocol::tokenize(message, ' '));
 
     // Set allowed flag to false depending on if particular WOPI properties are set
     if (tokens[0] == "downloadas")
@@ -1246,8 +1244,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 #endif
     else if (tokens.size() == 2 && tokens[0] == "statechanged:")
     {
-        StringTokenizer stateTokens(tokens[1], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-        if (stateTokens.count() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
+        std::vector<std::string> stateTokens(LOOLProtocol::tokenize(tokens[1], '='));
+        if (stateTokens.size() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
         {
             docBroker->setModified(stateTokens[1] == "true");
         }
@@ -1430,13 +1428,13 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             const Poco::Dynamic::Var result = parser.parse(stringJSON);
             const auto& object = result.extract<Poco::JSON::Object::Ptr>();
             const std::string rectangle = object->get("rectangle").toString();
-            StringTokenizer rectangleTokens(rectangle, ",", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            std::vector<std::string> rectangleTokens(LOOLProtocol::tokenize(rectangle, ','));
             int x = 0, y = 0, w = 0, h = 0;
-            if (rectangleTokens.count() > 2 &&
+            if (rectangleTokens.size() > 2 &&
                 stringToInteger(rectangleTokens[0], x) &&
                 stringToInteger(rectangleTokens[1], y))
             {
-                if (rectangleTokens.count() > 3)
+                if (rectangleTokens.size() > 3)
                 {
                     stringToInteger(rectangleTokens[2], w);
                     stringToInteger(rectangleTokens[3], h);
