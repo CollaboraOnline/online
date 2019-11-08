@@ -506,8 +506,8 @@ fi
 
 # check for C++11 support
 HAVE_CXX11=
-AC_MSG_CHECKING([whether $CXX supports C++14 or C++11])
-for flag in -std=gnu++14 -std=gnu++1y -std=c++14 -std=c++1y -std=gnu++11 -std=gnu++0x -std=c++11 -std=c++0x ; do
+AC_MSG_CHECKING([whether $CXX supports C++17, C++14 or C++11])
+for flag in -std=c++17 -std=gnu++14 -std=gnu++1y -std=c++14 -std=c++1y -std=gnu++11 -std=gnu++0x -std=c++11 -std=c++0x ; do
     save_CXXFLAGS=$CXXFLAGS
     CXXFLAGS="$CXXFLAGS $flag -Werror"
     AC_LANG_PUSH([C++])
@@ -530,6 +530,49 @@ if test "$HAVE_CXX11" = TRUE; then
     AC_MSG_RESULT([yes ($CXXFLAGS_CXX11)])
 else
     AC_MSG_ERROR(no)
+fi
+
+STD_FILESYSTEM=
+if test "$CXXFLAGS_CXX11" = "-std=c++17" ; then
+    save_CXXFLAGS=$CXXFLAGS
+    CXXFLAGS="$CXXFLAGS -Werror"
+    save_LIBS=$LIBS
+    LIBS="$save_LIBS -lstdc++fs"
+    AC_LANG_PUSH([C++])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([[
+        #include <experimental/filesystem>
+        int main()
+        {
+            if (!std::experimental::filesystem::temp_directory_path().empty())
+                return 0;
+            return 1;
+        }
+        ]])],[STD_FILESYSTEM=experimental])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([[
+        #include <filesystem>
+        int main()
+        {
+            if (!std::filesystem::temp_directory_path().empty())
+                return 0;
+            return 1;
+        }
+        ]])],[STD_FILESYSTEM=TRUE])
+    AC_LANG_POP([C++])
+    CXXFLAGS=$save_CXXFLAGS
+    LIBS=$save_LIBS
+fi
+
+if test -n "$STD_FILESYSTEM" ; then
+    LIBS="$LIBS -lstdc++fs"
+    AC_DEFINE([HAVE_STD_FILESYSTEM],1,[Whether the used C++ has support for std::filesystem.])
+    if test "$STD_FILESYSTEM" = "experimental" ; then
+        AC_DEFINE([HAVE_STD_FILESYSTEM_EXPERIMENTAL],1,[Whether the std::filesystem is in the experimental header.])
+    else
+        AC_DEFINE([HAVE_STD_FILESYSTEM_EXPERIMENTAL],0,[Whether the std::filesystem is in the experimental header.])
+    fi
+else
+    AC_DEFINE([HAVE_STD_FILESYSTEM],0,[Whether the used C++ has support for std::filesystem.])
+    AC_DEFINE([HAVE_STD_FILESYSTEM_EXPERIMENTAL],0,[Whether the std::filesystem is in the experimental header.])
 fi
 
 AS_IF([test -n "$LOKIT_PATH"],

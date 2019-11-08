@@ -27,7 +27,17 @@
 #include <mutex>
 #include <string>
 
-#include <Poco/TemporaryFile.h>
+#if HAVE_STD_FILESYSTEM
+# if HAVE_STD_FILESYSTEM_EXPERIMENTAL
+#  include <experimental/filesystem>
+namespace filesystem = ::std::experimental::filesystem;
+# else
+#  include <filesystem>
+namespace filesystem = ::std::filesystem;
+# endif
+#else
+# include <Poco/TemporaryFile.h>
+#endif
 
 #include "Log.hpp"
 #include "Util.hpp"
@@ -40,6 +50,26 @@ namespace
         LOG_ERR(message);
         Util::alertAllUsers(cmd, kind);
     }
+
+#if HAVE_STD_FILESYSTEM
+/// Class to delete files when the process ends.
+class FileDeleter
+{
+    std::vector<std::string> _filesToDelete;
+public:
+    FileDeleter() {}
+    ~FileDeleter()
+    {
+        for (auto& file: _filesToDelete)
+            filesystem::remove(file);
+    }
+
+    void registerForDeletion(const std::string& file)
+    {
+        _filesToDelete.push_back(file);
+    }
+};
+#endif
 }
 
 namespace FileUtil
@@ -47,7 +77,11 @@ namespace FileUtil
     std::string createRandomDir(const std::string& path)
     {
         const std::string name = Util::rng::getFilename(64);
+#if HAVE_STD_FILESYSTEM
+        filesystem::create_directory(path + '/' + name);
+#else
         Poco::File(Poco::Path(path, name)).createDirectories();
+#endif
         return name;
     }
 
@@ -55,9 +89,18 @@ namespace FileUtil
     {
         const std::string srcPath = srcDir + '/' + srcFilename;
         const std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
+#if HAVE_STD_FILESYSTEM
+        const std::string dstPath = filesystem::temp_directory_path() / dstFilename;
+        filesystem::copy(srcPath, dstPath);
+
+        static FileDeleter fileDeleter;
+        fileDeleter.registerForDeletion(dstPath);
+#else
         const std::string dstPath = Poco::Path(Poco::Path::temp(), dstFilename).toString();
         Poco::File(srcPath).copyTo(dstPath);
         Poco::TemporaryFile::registerForDeletion(dstPath);
+#endif
+
         return dstPath;
     }
 
@@ -121,6 +164,7 @@ namespace FileUtil
         }
     }
 
+#if !HAVE_STD_FILESYSTEM
     static int nftw_cb(const char *fpath, const struct stat*, int type, struct FTW*)
     {
         if (type == FTW_DP)
@@ -135,9 +179,20 @@ namespace FileUtil
         // Always continue even when things go wrong.
         return 0;
     }
+#endif
 
     void removeFile(const std::string& path, const bool recursive)
     {
+#if HAVE_STD_FILESYSTEM
+        std::error_code ec;
+        if (recursive)
+            filesystem::remove_all(path, ec);
+        else
+            filesystem::remove(path, ec);
+
+        // Already removed or we don't care about failures.
+        (void) ec;
+#else
         try
         {
             struct stat sb;
@@ -156,6 +211,7 @@ namespace FileUtil
         {
             // Already removed or we don't care about failures.
         }
+#endif
     }
 
 
