@@ -761,7 +761,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		valueNode.style.backgroundColor = selectedColor;
 
 		var iconPath = builder._createIconPath(data.command);
-		var noColorControl = data.command !== '.uno:FontColor';
+		var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
 
 		var callback = function(color) {
 			var command = data.command + '?Color:string=' + color;
