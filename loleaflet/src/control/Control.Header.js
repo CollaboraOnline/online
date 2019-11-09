@@ -631,8 +631,8 @@ L.Control.Header = L.Control.extend({
 			if (!this._groups[level]) {
 				this._groups[level] = {};
 			}
-			var startPos = this._twipsToPixels(parseInt(groupData.startPos));
-			var endPos = this._twipsToPixels(parseInt(groupData.endPos));
+			var startPos = parseInt(groupData.startPos);
+			var endPos = parseInt(groupData.endPos);
 			var isHidden = !!parseInt(groupData.hidden);
 			if (isHidden || startPos === endPos) {
 				startPos -= this._groupHeadSize / 2;
@@ -757,31 +757,27 @@ L.Control.Header.colHeaderHeight = undefined;
  *   the size of the last known gap.
  * - When a new tick position is defined, it resets the size of the last known gap
  *
- * All the outputs are mapped through a scale function. Inputs are meant
- * to be given in twips, outputs are meant to be returned in CSS pixels,
- * which is also the internal storage format.
+ * All inputs received are given in pixels, outputs are meant to be returned
+ * in CSS pixels, which is also the internal storage format.
  *
- * **NB.** to ensure that all row heights are the same size even though
- * their twip height doesn't map to an integer number of pixels we need to
- * convert to pixels early - and work in pixels internally, as the calc
- * core does.
+ * **NB.** twip to pixel mapping is made non-obvious by the need to ensure that
+ * there are no cumulative rounding errors from TWIP heights to pixels. We have to
+ * match the core here, so we just use pixels.
  */
 L.Control.Header.GapTickMap = L.Class.extend({
 
-	initialize: function (ticks, scaleCallback) {
+	initialize: function (ticks) {
 
 		var gapSize;
 		this._ticks = [];
-		this.scaleCallback = scaleCallback || function() {return 0;}
 
 		// Sanitize input
 		var knownTicks = [];
 		for (var i in ticks) {
 			// The field in the input data struct is called "text" but it's the
 			// column/row index, as a string.
-			// Idem for "size": it's the tick position in twips, as a string
-			knownTicks[ parseInt(ticks[i].text) ] =
-				this.scaleCallback(parseInt(ticks[i].size));
+			// Idem for "size": it's the tick position in pixels, as a string
+			knownTicks[ parseInt(ticks[i].text) ] = parseInt(ticks[i].size);
 		}
 
 		// This *assumes* the input is ordered - i.e. tick indexes only grow

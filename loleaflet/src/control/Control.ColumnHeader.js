@@ -410,8 +410,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._groupLevels = parseInt(columns[0].groupLevels);
 		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
 
-		var startOffsetTw = parseInt(columns[0].size);
-		this._startOffset = this._twipsToPixels(startOffsetTw);
+		var startOffsetPx = parseInt(columns[0].size);
+		this._startOffset = startOffsetPx;
 
 		// collect group controls data
 		if (colGroups !== undefined && this._groups) {

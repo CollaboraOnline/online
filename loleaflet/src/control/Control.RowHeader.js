@@ -399,8 +399,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._groupLevels = parseInt(rows[0].groupLevels);
 		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
 
-		var startOffsetTw = parseInt(rows[0].size);
-		this._startOffset = this._twipsToPixels(startOffsetTw);
+		var startOffsetPx = parseInt(rows[0].size);
+		this._startOffset = startOffsetPx;
 
 		// collect group controls data
 		if (rowGroups !== undefined && this._groups) {
