@@ -39,7 +39,8 @@ public:
                _tilePosX == other._tilePosX &&
                _tilePosY == other._tilePosY &&
                _tileWidth == other._tileWidth &&
-               _tileHeight == other._tileHeight;
+               _tileHeight == other._tileHeight &&
+               _normalizedViewId == other._normalizedViewId;
     }
 };
 
@@ -63,6 +64,7 @@ struct TileCacheDescHasher
         hash = (hash << 5) + hash + t.getTilePosY();
         hash = (hash << 5) + hash + t.getTileWidth();
         hash = (hash << 5) + hash + t.getTileHeight();
+        hash = (hash << 5) + hash + t.getNormalizedViewId();
 
         return hash;
     }
