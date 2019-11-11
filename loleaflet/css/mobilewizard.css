@@ -318,6 +318,10 @@ p.mobile-wizard.ui-combobox-text.selected {
 	display: table;
 }
 
+.ui-header.level-1.mobile-wizard.ui-widget .ui-header-left span.menu-entry-with-icon {
+	vertical-align: middle;
+}
+
 .ui-tabs.mobile-wizard {
 	text-align: center;
 	height: 42px;
