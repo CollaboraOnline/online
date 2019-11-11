@@ -657,9 +657,9 @@ void HTTPWSTest::testExcelLoad()
         sendTextFrame(socket, "status", testname);
         const auto status = assertResponseString(socket, "status:", testname);
 
-        // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
+        // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142 viewid=0\n...'.
         std::vector<std::string> tokens(LOOLProtocol::tokenize(status, ' '));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(8), tokens.size());
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size());
     }
     catch (const Poco::Exception& exc)
     {
