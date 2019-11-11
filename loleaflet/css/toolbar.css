@@ -24,7 +24,9 @@
 		z-index: 1000;
 		border-top: 1px solid #bbbbbb;
 }
-
+#toolbar-down *{
+	max-height: 35px !important;
+}
 #document-signing-bar {
 		background-color: #ef324e;;
 }
