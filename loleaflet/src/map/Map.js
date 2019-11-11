@@ -1246,7 +1246,7 @@ L.Map = L.Evented.extend({
 			},
 			showCloseButton: false
 		});
-
+		$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
 		console.debug('_dim: sending userinactive');
 		map.fire('postMessage', {msgId: 'User_Idle'});
