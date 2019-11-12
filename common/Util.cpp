@@ -195,7 +195,7 @@ namespace Util
     }
 
     // close what we have - far faster than going up to a 1m open_max eg.
-    static bool closeFdsFromProc()
+    static bool closeFdsFromProc(std::map<int, int> *mapFdsToKeep = nullptr)
     {
           DIR *fdDir = opendir("/proc/self/fd");
           if (!fdDir)
@@ -219,6 +219,9 @@ namespace Util
               if (fd < 3)
                   continue;
 
+              if (mapFdsToKeep && mapFdsToKeep->find(fd) != mapFdsToKeep->end())
+                  continue;
+
               if (close(fd) < 0)
                   std::cerr << "Unexpected failure to close fd " << fd << std::endl;
           }
@@ -227,22 +230,23 @@ namespace Util
           return true;
     }
 
-    static void closeFds()
+    static void closeFds(std::map<int, int> *mapFdsToKeep = nullptr)
     {
-        if (!closeFdsFromProc())
+        if (!closeFdsFromProc(mapFdsToKeep))
         {
             std::cerr << "Couldn't close fds efficiently from /proc" << std::endl;
             for (int fd = 3; fd < sysconf(_SC_OPEN_MAX); ++fd)
-                close(fd);
+                if (mapFdsToKeep->find(fd) != mapFdsToKeep->end())
+                    close(fd);
         }
     }
 
-    int spawnProcess(const std::string &cmd, const std::vector<std::string> &args, int *stdInput)
+    int spawnProcess(const std::string &cmd, const std::vector<std::string> &args, const std::vector<int>* fdsToKeep, int *stdInput)
     {
         int pipeFds[2] = { -1, -1 };
         if (stdInput)
         {
-            if (pipe(pipeFds) < 0)
+            if (pipe2(pipeFds, O_NONBLOCK) < 0)
             {
                 LOG_ERR("Out of file descriptors spawning " << cmd);
                 throw Poco::SystemException("Out of file descriptors");
@@ -255,6 +259,12 @@ namespace Util
             params.push_back(const_cast<char *>(i.c_str()));
         params.push_back(nullptr);
 
+        std::map<int, int> mapFdsToKeep;
+
+        if (fdsToKeep)
+            for (const auto& i : *fdsToKeep)
+                mapFdsToKeep[i] = i;
+
         int pid = fork();
         if (pid < 0)
         {
@@ -266,7 +276,7 @@ namespace Util
             if (stdInput)
                 dup2(pipeFds[0], STDIN_FILENO);
 
-            closeFds();
+            closeFds(&mapFdsToKeep);
 
             int ret = execvp(params[0], &params[0]);
             if (ret < 0)
@@ -282,6 +292,7 @@ namespace Util
         }
         return pid;
     }
+
 #endif
 
     bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data)

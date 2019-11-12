@@ -1,0 +1,155 @@
+Below is the description of the metrics returned by 'getMetrics' REST endpoint.
+The general format of the output is complient with Prometheus text-based format
+which can be found here: https://prometheus.io/docs/instrumenting/exposition_formats/#text-based-format
+
+GLOBAL
+
+    global_host_system_memory_bytes - Total host system memory in bytes.
+    global_memory_available_bytes – Memory available to our application in bytes. This is equal to global_host_system_memory_bytes * memproportion where memproportion represents the maximum percentage of system memory consumed by all of the LibreOffice Online, after which we start cleaning up idle documents. This parameter can be setup in loolwsd.xml.
+    global_memory_used_bytes – Total memory usage: PSS(loolwsd) + RSS(forkit) + Private_Dirty(all assigned loolkits).
+    global_memory_free_bytes - global_memory_available_bytes - global_memory_used_bytes
+
+LOOLWSD
+
+    loolwsd_count – number of running loolwsd processes.
+    loolwsd_thread_count – number of threads in the current loolwsd process.
+    loolwsd_cpu_time_seconds – the CPU usage by current loolwsd process.
+    loolwsd_memory_used_bytes – the memory used by current loolwsd process: PSS(loolwsd).
+
+FORKIT
+
+    forkit_process_count – number of running forkit processes.
+    forkit_thread_count – number of threads in the current forkit process.
+    forkit_cpu_time_seconds – the CPU usage by the current forkit process.
+    forkit_memory_used_bytes - the memory used by the current forkit process: RSS(forkit).
+
+KITS
+
+    kit_count – total number of running kit processes.
+    kit_unassigned_count – number of running kit processes that are not assigned to documents.
+    kit_assigned_count – number of running kit processes that are assigned to documents.
+    kit_thread_count_total - total number of threads in all running kit processes.
+    kit_thread_count_average – average number of threads per running kit process.
+    kit_thread_count_min - minimum from the number of threads in each running kit process.
+    kit_thread_count_max – maximum from the number of threads in each running kit process.
+    kit_memory_used_total_bytes – total Private_Dirty memory used by all running kit processes.
+    kit_memory_used_average_bytes – average between the Private_Dirty memory used by each active kit process.
+    kit_memory_used_min_bytes – minimum from the Private_Dirty memory used by each running kit process.
+    kit_memory_used_max_bytes - maximum from the Private_Dirty memory used by each running kit process.
+    kit_cpu_time_total_seconds – total CPU time for all running kit processes.
+    kit_cpu_time_average_seconds – average between the CPU time each running kit process used.
+    kit_cpu_time_min_seconds – minimum from the CPU time each running kit process used.
+    kit_cpu_time_max_seconds - maximum from the CPU time each running kit process used.
+
+DOCUMENT VIEWS
+
+    document_all_views_all_count_total - total number of views (active or expired) of all documents (active and expired).
+    document_all_views_all_count_average – average between the number of all views (active or expired) per document (active or expired).
+    document_all_views_all_count_min – minimum from the number of all views (active or expired) of each document (active or expired).
+    document_all_views_all_count_max – maximum from the number of all views (active or expired) of each document (active or expired).
+    document_active_views_all_count_total - total number of all views (active or expired) of active documents.
+    document_active_views_all_count_average – average between the number of all views (active or expired) of each active document.
+    document_active_views_all_count_min – minimum from the number of all views (active or expired) of each active document.
+    document_active_views_all_count_max – maximum from the number of all views (active or expired) of each active document.
+    document_expired_views_all_count_total - total number of all views (active or expired) of expired documents.
+    document_expired_views_all_count_average – average between the number of all views (active or expired) of each expired document.
+    document_expired_views_all_count_min – minimum from the number of all views (active or expired) of each expired document.
+    document_expired_views_all_count_max – maximum from the number of all views (active or expired) of each expired document.
+    document_active_views_active_count_total – total number of active views of all active documents.
+    document_active_views_active_count_average – average between the number of active views of each active document.
+    document_active_views_active_count_min – minimum from the number of active views of each active document.
+    document_active_views_active_count_max – maximum from the number of active views of each active document.
+    document_active_views_expired_count_total – total number of expired views of all active documents.
+    document_active_views_expired_count_average – average between the number of expired views of each active document.
+    document_active_views_expired_count_min – minimum from the number of expired views of each active document.
+    document_active_views_expired_count_max – maximum from the number of expired views of each active document.
+
+DOCUMENT OPENED TIME
+
+    document_all_opened_time_total_seconds - sum of time each document (active or expired) was kept opened.
+    document_all_opened_time_average_seconds – average between the time intervals each document (active or expired) was kept opened.
+    document_all_opened_time_min_seconds – minimum from the time intervals each document (active or expired) was kept opened.
+    document_all_opened_time_max_seconds - maximum from the time intervals each document (active or expired) was kept opened.
+    document_active_opened_time_total_seconds - sum of time each active document was kept opened.
+    document_active_opened_time_average_seconds – average between the time intervals each active document was kept opened.
+    document_active_opened_time_min_seconds - minimum from the time intervals each active document was kept opened.
+    document_active_opened_time_max_seconds - maximum from the time intervals each active document was kept opened.
+    document_expired_opened_time_total_seconds - sum of time each expired document was kept opened.
+    document_expired_opened_time_average_seconds – average between the time intervals each expired document was kept opened.
+    document_expired_opened_time_min_seconds - minimum from the time intervals each expired document was kept opened.
+    document_expired_opened_time_max_seconds – maximum from the time intervals each expired document was kept opened.
+
+DOCUMENT BYTES SENT TO CLIENTS
+
+    document_all_sent_to_clients_total_bytes - total number of bytes sent to clients by all documents (active or expired).
+    document_all_sent_to_clients_average_bytes – average between the number of bytes sent to clients by each document (active or expired).
+    document_all_sent_to_clients_min_bytes - minimum from the number of bytes sent to clients by each document (active or expired).
+    document_all_sent_to_clients_max_bytes - maximum from the number of bytes sent to clients by each document (active or expired).
+    document_active_sent_to_clients_total_bytes - total number of bytes sent to clients by active documents.
+    document_active_sent_to_clients_average_bytes - average between the number of bytes sent to clients by each active document.
+    document_active_sent_to_clients_min_bytes - minimum from the number of bytes sent to clients by each active document.
+    document_active_sent_to_clients_max_bytes - maximum from the number of bytes sent to clients by each active document.
+    document_expired_sent_to_clients_total_bytes - total number of bytes sent to clients by expired documents.
+    document_expired_sent_to_clients_average_bytes – average between the number of bytes sent to clients by each expired document.
+    document_expired_sent_to_clients_min_bytes - minimum from the number of bytes sent to clients by each expired document.
+    document_expired_sent_to_clients_max_bytes - maximum from the number of bytes sent to clients by each expired document.
+
+DOCUMENT BYTES RECEIVED FROM CLIENTS
+
+    document_all_received_from_clients_total_bytes - total number of bytes received from clients by all documents (active or expired).
+    document_all_received_from_clients_average_bytes – average between the number of bytes received from clients by each document (active or expired).
+    document_all_received_from_clients_min_bytes - minimum from the number of bytes received from clients by each document (active or expired).
+    document_all_received_from_clients_max_bytes - maximum from the number of bytes received from clients by each document (active or expired).
+    document_active_received_from_clients_total_bytes - total number of bytes received from clients by active documents.
+    document_active_received_from_clients_average_bytes - average between the number of bytes received from clients by each active document.
+    document_active_received_from_clients_min_bytes - minimum from the number of bytes received from clients by each active document.
+    document_active_received_from_clients_max_bytes - maximum from the number of bytes received from clients by each active document.
+    document_expired_received_from_clients_total_bytes - total number of bytes received from clients by expired documents.
+    document_expired_received_from_clients_average_bytes - average between the number of bytes received from clients by each expired document.
+    document_expired_received_from_clients_min_bytes - minimum from the number of bytes received from clients by each expired document.
+    document_expired_received_from_clients_max_bytes - maximum from the number of bytes received from clients by each expired document.
+
+DOCUMENT DOWNLOAD DURATION
+
+    document_all_wopi_download_duration_total_seconds - sum of download duration of each document (active or expired). 
+    document_all_wopi_download_duration_average_seconds – average between the download duration of each document (active or expired).
+    document_all_wopi_download_duration_min_seconds – minimum from the download duration of each document (active or expired).
+    document_all_wopi_download_duration_max_seconds - maximum from the download duration of each document (active or expired).
+    document_active_wopi_download_duration_total_seconds - sum of download duration of each active document.
+    document_active_wopi_download_duration_average_seconds - average between the download duration of each active document.
+    document_active_wopi_download_duration_min_seconds - minimum from the download duration of each active document.
+    document_active_wopi_download_duration_max_seconds - maximum from the download duration of each active document.
+    document_expired_wopi_download_duration_total_seconds - sum of download duration of each expired document.
+    document_expired_wopi_download_duration_average_seconds - average between the download duration of each expired document.
+    document_expired_wopi_download_duration_min_seconds - minimum from the download duration of each expired document.
+    document_expired_wopi_download_duration_max_seconds - maximum from the download duration of each expired document.
+
+DOCUMENT UPLOAD DURATION
+
+    document_all_wopi_upload_duration_total_seconds - sum of upload duration of each document (active or expired).
+    document_all_wopi_upload_duration_average_seconds – average between the upload duration of each document (active or expired).
+    document_all_wopi_upload_duration_min_seconds – minimum from the upload duration of each document (active or expired).
+    document_all_wopi_upload_duration_max_seconds - maximum from the upload duration of each document (active or expired).
+    document_active_wopi_upload_duration_total_seconds - sum of upload duration of each active document.
+    document_active_wopi_upload_duration_average_seconds - average between the upload duration of each active document.
+    document_active_wopi_upload_duration_min_seconds - minimum from the upload duration of each active document.
+    document_active_wopi_upload_duration_max_seconds - maximum from the upload duration of each active document.
+    document_expired_wopi_upload_duration_total_seconds - sum of upload duration of each expired document.
+    document_expired_wopi_upload_duration_average_seconds - average between the upload duration of each expired document.
+    document_expired_wopi_upload_duration_min_seconds - minimum from the upload duration of each expired document.
+    document_expired_wopi_upload_duration_max_seconds - maximum from the upload duration of each expired document.
+
+DOCUMENT VIEW LOAD DURATION
+
+    document_all_view_load_duration_total_seconds - sum of load duration of each view (active or expired) of each document (active or expired).
+    document_all_view_load_duration_average_seconds – average between the load duration of all views (active or expired) of each document (active or expired).
+    document_all_view_load_duration_min_seconds – minimum from the load duration of all views (active or expired) of each document (active or expired).
+    document_all_view_load_duration_max_seconds - maximum from the load duration of all views (active or expired) of each document (active or expired).
+    document_active_view_load_duration_total_seconds - sum of load duration of all views (active or expired) of each active document.
+    document_active_view_load_duration_average_seconds - average between the load duration of all views (active or expired) of each active document.
+    document_active_view_load_duration_min_seconds - minimum from the load duration of all views (active or expired) of each active document.
+    document_active_view_load_duration_max_seconds - maximum from the load duration of all views (active or expired) of each active document.
+    document_expired_view_load_duration_total_seconds - sum of load duration of all views (active or expired) of each expired document.
+    document_expired_view_load_duration_average_seconds - average between the load duration of all views (active or expired) of each expired document.
+    document_expired_view_load_duration_min_seconds - minimum from the load duration of all views (active or expired) of each expired document.
+    document_expired_view_load_duration_max_seconds - maximum from the load duration of all views (active or expired) of each expired document.

@@ -191,7 +191,8 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _closeReason("stopped"),
     _lockCtx(new LockContext()),
     _tileVersion(0),
-    _debugRenderedTileCount(0)
+    _debugRenderedTileCount(0),
+    _wopiLoadDuration(0)
 {
     assert(!_docKey.empty());
     assert(!LOOLWSD::ChildRoot.empty());
@@ -837,6 +838,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         auto callDuration = wopiStorage->getWopiLoadDuration();
         // Add the time taken to check file info
         callDuration += getInfoCallDuration;
+        _wopiLoadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(callDuration);
         const std::string msg = "stats: wopiloadduration " + std::to_string(callDuration.count());
         LOG_TRC("Sending to Client [" << msg << "].");
         session->sendTextFrame(msg);
@@ -965,6 +967,12 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         auth, *_lockCtx, saveAsPath, saveAsFilename, isRename);
     if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
+#if !MOBILEAPP
+        WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
+        if (wopiStorage != nullptr)
+            Admin::instance().setDocWopiUploadDuration(_docKey, std::chrono::duration_cast<std::chrono::milliseconds>(wopiStorage->getWopiSaveDuration()));
+#endif
+
         if (!isSaveAs && !isRename)
         {
             // Saved and stored; update flags.
@@ -1280,6 +1288,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
 #if !MOBILEAPP
     // Tell the admin console about this new doc
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(), session->getUserId());
+    Admin::instance().setDocWopiDownloadDuration(_docKey, _wopiLoadDuration);
 #endif
 
     // Add and attach the session.

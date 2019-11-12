@@ -325,6 +325,7 @@ public:
                 const std::string& jailPath) :
         StorageBase(uri, localStorePath, jailPath),
         _wopiLoadDuration(0),
+        _wopiSaveDuration(0),
         _reuseCookies(false)
     {
         const auto& app = Poco::Util::Application::instance();
@@ -548,10 +549,12 @@ public:
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
+    std::chrono::duration<double> getWopiSaveDuration() const { return _wopiSaveDuration; }
 
 private:
     // Time spend in loading the file from storage
     std::chrono::duration<double> _wopiLoadDuration;
+    std::chrono::duration<double> _wopiSaveDuration;
     /// Whether or not to re-use cookies from the browser for the WOPI requests.
     bool _reuseCookies;
 };

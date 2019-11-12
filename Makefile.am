@@ -33,7 +33,8 @@ man_MANS = man/loolwsd.1 \
 dist_doc_DATA = wsd/README \
                 wsd/README.vars \
                 wsd/protocol.txt \
-                wsd/reference.md
+                wsd/reference.md \
+                wsd/metrics.txt
 
 loolwsddatadir = @LOOLWSD_DATADIR@
 

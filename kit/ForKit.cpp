@@ -209,6 +209,7 @@ static void cleanupChildren()
     std::vector<std::string> jails;
     Process::PID exitedChildPid;
     int status;
+
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
     while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
     {

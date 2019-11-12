@@ -275,6 +275,9 @@ private:
 
     /// Sockets to send binary selection content to
     std::vector<std::weak_ptr<StreamSocket>> _clipSockets;
+
+    ///Time when loading of view started
+    std::chrono::steady_clock::time_point _viewLoadStart;
 };
 
 

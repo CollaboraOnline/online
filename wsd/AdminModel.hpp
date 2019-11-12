@@ -13,12 +13,15 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <cmath>
 
 #include <Poco/Process.h>
 
 #include "Log.hpp"
 #include "net/WebSocketHandler.hpp"
 #include "Util.hpp"
+
+class DocumentAggregateStats;
 
 /// A client view in Admin controller.
 class View
@@ -28,7 +31,8 @@ public:
         _sessionId(sessionId),
         _userName(userName),
         _userId(userId),
-        _start(std::time(nullptr))
+        _start(std::time(nullptr)),
+        _loadDuration(0)
     {
     }
 
@@ -37,6 +41,8 @@ public:
     std::string getUserId() const { return _userId; }
     std::string getSessionId() const { return _sessionId; }
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
+    std::chrono::milliseconds getLoadDuration() const { return _loadDuration; }
+    void setLoadDuration(std::chrono::milliseconds loadDuration) { _loadDuration = loadDuration; }
 
 private:
     const std::string _sessionId;
@@ -44,6 +50,7 @@ private:
     const std::string _userId;
     const std::time_t _start;
     std::time_t _end = 0;
+    std::chrono::milliseconds _loadDuration;
 };
 
 struct DocProcSettings
@@ -108,6 +115,8 @@ public:
           _end(0),
           _sentBytes(0),
           _recvBytes(0),
+          _wopiDownloadDuration(0),
+          _wopiUploadDuration(0),
           _isModified(false)
     {
     }
@@ -155,6 +164,15 @@ public:
     const DocProcSettings& getDocProcSettings() const { return _docProcSettings; }
     void setDocProcSettings(const DocProcSettings& docProcSettings) { _docProcSettings = docProcSettings; }
 
+    std::time_t getOpenTime() const { return isExpired() ? _end - _start : getElapsedTime(); }
+    uint64_t getSentBytes() const { return _sentBytes; }
+    uint64_t getRecvBytes() const { return _recvBytes; }
+    void setViewLoadDuration(const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
+    void setWopiDownloadDuration(std::chrono::milliseconds wopiDownloadDuration) { _wopiDownloadDuration = wopiDownloadDuration; }
+    std::chrono::milliseconds getWopiDownloadDuration() const { return _wopiDownloadDuration; }
+    void setWopiUploadDuration(const std::chrono::milliseconds wopiUploadDuration) { _wopiUploadDuration = wopiUploadDuration; }
+    std::chrono::milliseconds getWopiUploadDuration() const { return _wopiUploadDuration; }
+
     std::string to_string() const;
 
 private:
@@ -178,6 +196,10 @@ private:
 
     /// Total bytes sent and recv'd by this document.
     uint64_t _sentBytes, _recvBytes;
+
+    //Download/upload duration from/to storage for this document
+    std::chrono::milliseconds _wopiDownloadDuration;
+    std::chrono::milliseconds _wopiUploadDuration;
 
     /// Per-doc kit process settings.
     DocProcSettings _docProcSettings;
@@ -224,6 +246,7 @@ private:
 class AdminModel
 {
 public:
+
     AdminModel() :
         _owner(std::this_thread::get_id())
     {
@@ -289,6 +312,15 @@ public:
     /// Document basic info list sorted by most idle time
     std::vector<DocBasicInfo> getDocumentsSortedByIdle() const;
 
+    void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
+    void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
+    void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration);
+    void setForKitPid(pid_t pid) { _forKitPid = pid; }
+
+    void getMetrics(std::ostringstream &oss);
+
+    static int getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids);
+
 private:
     std::string getMemStats();
 
@@ -301,6 +333,8 @@ private:
     unsigned getTotalActiveViews();
 
     std::string getDocuments() const;
+
+    void CalcDocAggregateStats(DocumentAggregateStats& stats);
 
 private:
     std::map<int, Subscriber> _subscribers;
@@ -322,6 +356,8 @@ private:
 
     uint64_t _sentBytesTotal;
     uint64_t _recvBytesTotal;
+
+    pid_t _forKitPid;
 
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;

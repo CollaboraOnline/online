@@ -90,7 +90,7 @@ public:
     /// Remove the document with all views. Used on termination or catastrophic failure.
     void rmDoc(const std::string& docKey);
 
-    void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; }
+    void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; _model.setForKitPid(forKitPid);}
     void setForKitWritePipe(const int forKitWritePipe) { _forKitWritePipe = forKitWritePipe; }
 
     /// Callers must ensure that modelMutex is acquired
@@ -122,6 +122,15 @@ public:
 
     /// Attempt a synchronous connection to a monitor with @uri @when that future comes
     void scheduleMonitorConnect(const std::string &uri, std::chrono::steady_clock::time_point when);
+
+    void sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::shared_ptr<Poco::Net::HTTPResponse>& response);
+    void sendMetricsAsync(const std::shared_ptr<StreamSocket>& socket, const std::shared_ptr<Poco::Net::HTTPResponse>& response);
+
+    void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
+    void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
+    void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration);
+
+    void getMetrics(std::ostringstream &metrics);
 
 private:
     /// Notify Forkit of changed settings.

@@ -33,6 +33,8 @@
 
 #include "common/SigUtil.hpp"
 
+#include "Admin.hpp"
+
 // Forwards.
 class PrisonerRequestDispatcher;
 class DocumentBroker;
@@ -500,6 +502,7 @@ private:
     std::chrono::steady_clock::time_point _lastActivityTime;
     std::chrono::steady_clock::time_point _threadStart;
     std::chrono::milliseconds _loadDuration;
+    std::chrono::milliseconds _wopiLoadDuration;
 
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
