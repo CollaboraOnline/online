@@ -486,7 +486,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(spinfield).attr('disabled', 'disabled');
 
 		var value = builder._getUnoStateForItemId(data.id, builder);
-		console.log(data.id + ': ' + value);
+
 		if (!value && data.text != undefined)
 			value = data.text;
 		else if (!value && data.children && data.children.length)
