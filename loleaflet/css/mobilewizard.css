@@ -172,11 +172,20 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background: url(images/lc_listitem-selected.svg) no-repeat right;
 	color: #0867af !important;
 }
+#mobile-wizard-content {
+	overflow: scroll;
+	position: absolute;
+	top: 111px;
+	bottom: 0px;
+	width: 100%;
+}
+
 #mobile-wizard-content:not(.with-slide-sorter-above){
 	top: 63px !important;
 }
 #mobile-wizard-content.with-slide-sorter-above {
 	top: 128px !important;
+	overflow-x: auto;
 }
 
 .with-slide-sorter-above > .ui-tabs-content > div[title=Layouts]{
@@ -198,6 +207,9 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 @media (orientation: landscape) {
 	#mobile-wizard-header{display: none;}
+	#mobile-wizard-content.with-slide-sorter-above {
+		top: 48px !important;
+	}
 }
 @media (orientation: portrait) {
 	#mobile-wizard-header{display: block;}
@@ -223,14 +235,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 		z-index: 1000;
 		background-color: white;
 		box-shadow: 0px -2px 4px 1px #00000030
-}
-
-#mobile-wizard-content {
-		overflow: scroll;
-		position: absolute;
-		top: 111px;
-		bottom: 0px;
-		width: 100%;
 }
 
 #mobile-wizard-tabs {
@@ -437,7 +441,7 @@ a.leaflet-control-zoom-in {
 	border-radius: 3px;
 }
 #presentation-controls-wrapper {
-	background-color: #f9f9f9;
+	background: none;
 	border: none;
 }
 
