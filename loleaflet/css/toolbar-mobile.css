@@ -20,6 +20,17 @@
 		height: 34px !important;
 		border-top: 1px solid #f1f1f1 !important;
 	}
+	#toolbar-down > .w2ui-scroll-wrapper {
+		overflow-x: scroll !important;
+		scrollbar-width: none; /*css draft (firefox only)*/
+		-ms-scrollbar: none; /*ie*/
+	}
+	#toolbar-down > .w2ui-scroll-wrapper::-webkit-scrollbar { /*webkit only*/
+		display: none;
+}
+	.w2ui-scroll-right,.w2ui-scroll-left{
+		display: none !important;
+	}
 	#addressInput{
 		width: 60px !important;
 		border: 1px solid #bbbbbb;
