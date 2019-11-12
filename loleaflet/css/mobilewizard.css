@@ -185,7 +185,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 #mobile-wizard-content.with-slide-sorter-above {
 	top: 128px !important;
-	overflow-x: auto;
+	overflow-x: hidden;
 }
 
 .with-slide-sorter-above > .ui-tabs-content > div[title=Layouts]{

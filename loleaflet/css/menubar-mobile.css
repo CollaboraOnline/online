@@ -51,5 +51,9 @@
 	#document-header{
 		display: none !important;
 	}
-
+	@media (orientation: landscape) {
+		#mobile-wizard.menuwizard #mobile-wizard-content.with-slide-sorter-above {
+			overflow-y: auto !important;
+		}
+	}
 }
