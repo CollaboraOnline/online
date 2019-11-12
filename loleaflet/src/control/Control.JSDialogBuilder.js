@@ -797,7 +797,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			4.5,
 			6.0 ];
 
-		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: '0.5' };
+		var currentWidth = parseInt(builder.map['stateChangeHandler'].getItemValue('.uno:LineWidth'));
+		var currentWidthText = currentWidth ? String(parseFloat(currentWidth)/100.0) : '0.5';
+
+		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: currentWidthText };
 
 		var callbackFunction = function(objectType, eventType, object) {
 			var newValue = 0;
