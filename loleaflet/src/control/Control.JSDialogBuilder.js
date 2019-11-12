@@ -441,6 +441,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (state)
 				return state.firstline.replace(',', '.');
 			break;
+
+		case 'aboveparaspacing':
+			state = items.getItemValue('.uno:ULSpacing');
+			if (state)
+				return state.upper.replace(',', '.');
+			break;
+
+		case 'belowparaspacing':
+			state = items.getItemValue('.uno:ULSpacing');
+			if (state)
+				return state.lower.replace(',', '.');
+			break;
 		}
 
 		return null;
