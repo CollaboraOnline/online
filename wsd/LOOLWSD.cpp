@@ -374,7 +374,7 @@ static int forkChildren(const int number)
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
-        if (IoUtil::writeToPipe(LOOLWSD::ForKitWritePipe, aMessage) > 0)
+        if (write(LOOLWSD::ForKitWritePipe, aMessage.c_str(), aMessage.length()) > 0)
 #endif
         {
             OutstandingForks += number;
@@ -1635,7 +1635,7 @@ bool LOOLWSD::createForKit()
 
     LastForkRequestTime = std::chrono::steady_clock::now();
     int childStdin = -1;
-    int child = Util::spawnProcess(forKitPath, args, &childStdin);
+    int child = Util::spawnProcess(forKitPath, args, nullptr, &childStdin);
 
     ForKitWritePipe = childStdin;
     ForKitProcId = child;
@@ -2103,6 +2103,47 @@ private:
                         });
                 }
 
+            }
+            else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "getMetrics")
+            {
+                //See metrics.txt
+                std::shared_ptr<Poco::Net::HTTPResponse> response(new Poco::Net::HTTPResponse());
+
+                if (!LOOLWSD::AdminEnabled)
+                    throw Poco::FileAccessDeniedException("Admin console disabled");
+
+                try{
+                    if (!FileServerRequestHandler::isAdminLoggedIn(request, *response.get()))
+                        throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+                }
+                catch (const Poco::Net::NotAuthenticatedException& exc)
+                {
+                    //LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
+                    std::ostringstream oss;
+                    oss << "HTTP/1.1 401 \r\n"
+                        << "Content-Type: text/html charset=UTF-8\r\n"
+                        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                        << "WWW-authenticate: Basic realm=\"online\"\r\n"
+                        << "\r\n";
+                    socket->send(oss.str());
+                    socket->shutdown();
+                    return;
+                }
+
+                response->add("Last-Modified", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+                // Ask UAs to block if they detect any XSS attempt
+                response->add("X-XSS-Protection", "1; mode=block");
+                // No referrer-policy
+                response->add("Referrer-Policy", "no-referrer");
+                response->add("User-Agent", HTTP_AGENT_STRING);
+                response->add("Content-Type", "text/plain");
+                response->add("X-Content-Type-Options", "nosniff");
+
+                disposition.setMove([response](const std::shared_ptr<Socket> &moveSocket){
+                            const std::shared_ptr<StreamSocket> streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            Admin::instance().sendMetricsAsync(streamSocket, response);
+                        });
             }
             // Client post and websocket connections
             else if ((request.getMethod() == HTTPRequest::HTTP_GET ||

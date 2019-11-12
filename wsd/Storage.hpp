@@ -296,7 +296,8 @@ public:
                 const std::string& localStorePath,
                 const std::string& jailPath) :
         StorageBase(uri, localStorePath, jailPath),
-        _wopiLoadDuration(0)
+        _wopiLoadDuration(0),
+        _wopiSaveDuration(0)
     {
         LOG_INF("WopiStorage ctor with localStorePath: [" << localStorePath <<
                 "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
@@ -492,10 +493,12 @@ public:
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
+    std::chrono::duration<double> getWopiSaveDuration() const { return _wopiSaveDuration; }
 
 private:
     // Time spend in loading the file from storage
     std::chrono::duration<double> _wopiLoadDuration;
+    std::chrono::duration<double> _wopiSaveDuration;
 };
 
 /// WebDAV protocol backed storage.

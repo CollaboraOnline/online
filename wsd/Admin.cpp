@@ -507,7 +507,7 @@ size_t Admin::getTotalMemoryUsage()
     // memory to the forkit; and then count only dirty pages in the clients
     // since we know that they share everything else with the forkit.
     const size_t forkitRssKb = Util::getMemoryUsageRSS(_forKitPid);
-    const size_t wsdPssKb = Util::getMemoryUsagePSS(Poco::Process::id());
+    const size_t wsdPssKb = Util::getMemoryUsagePSS(getpid());
     const size_t kitsDirtyKb = _model.getKitsMemoryUsage();
     const size_t totalMem = wsdPssKb + forkitRssKb + kitsDirtyKb;
 
@@ -517,7 +517,7 @@ size_t Admin::getTotalMemoryUsage()
 size_t Admin::getTotalCpuUsage()
 {
     const size_t forkitJ = Util::getCpuUsage(_forKitPid);
-    const size_t wsdJ = Util::getCpuUsage(Poco::Process::id());
+    const size_t wsdJ = Util::getCpuUsage(getpid());
     const size_t kitsJ = _model.getKitsJiffies();
 
     if (_lastJiffies == 0)
@@ -565,6 +565,21 @@ void Admin::updateMemoryDirty(const std::string& docKey, int dirty)
 void Admin::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
 {
     addCallback([=] { _model.addBytes(docKey, sent, recv); });
+}
+
+void Admin::setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
+{
+    addCallback([=]{ _model.setViewLoadDuration(docKey, sessionId, viewLoadDuration); });
+}
+
+void Admin::setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration)
+{
+    addCallback([=]{ _model.setDocWopiDownloadDuration(docKey, wopiDownloadDuration); });
+}
+
+void Admin::setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration)
+{
+    addCallback([=]{ _model.setDocWopiUploadDuration(docKey, uploadDuration); });
 }
 
 void Admin::notifyForkit()
@@ -689,6 +704,34 @@ void Admin::scheduleMonitorConnect(const std::string &uri, std::chrono::steady_c
     todo.setWhen(when);
     todo.setUri(uri);
     _pendingConnects.push_back(todo);
+}
+
+void Admin::getMetrics(std::ostringstream &metrics)
+{
+    size_t memAvail =  getTotalAvailableMemory();
+    size_t memUsed = getTotalMemoryUsage();
+
+    metrics << "global_host_system_memory_bytes " << _totalSysMemKb * 1024 << std::endl;
+    metrics << "global_memory_available_bytes " << memAvail * 1024 << std::endl;
+    metrics << "global_memory_used_bytes " << memUsed * 1024 << std::endl;
+    metrics << "global_memory_free_bytes " << (memAvail - memUsed) * 1024 << std::endl;
+    metrics << std::endl;
+
+    _model.getMetrics(metrics);
+}
+
+void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::shared_ptr<Poco::Net::HTTPResponse>& response)
+{
+    std::ostringstream oss;
+    response->write(oss);
+    getMetrics(oss);
+    socket->send(oss.str());
+    socket->shutdown();
+}
+
+void Admin::sendMetricsAsync(const std::shared_ptr<StreamSocket>& socket, const std::shared_ptr<Poco::Net::HTTPResponse>& response)
+{
+    addCallback([this, socket, response]{ sendMetrics(socket, response); });
 }
 
 void Admin::start()

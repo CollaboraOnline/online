@@ -714,6 +714,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     LOG_INF("Uploading URI via WOPI [" << uriAnonym << "] from [" << filePathAnonym + "].");
 
     StorageBase::SaveResult saveResult(StorageBase::SaveResult::FAILED);
+    const auto startTime = std::chrono::steady_clock::now();
     try
     {
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
@@ -794,6 +795,8 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
+
+        _wopiSaveDuration = std::chrono::steady_clock::now() - startTime;
 
         std::ostringstream oss;
         Poco::StreamCopier::copyStream(rs, oss);

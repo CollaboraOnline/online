@@ -440,6 +440,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         return false;
     }
 
+    _viewLoadStart = std::chrono::steady_clock::now();
     LOG_INF("Requesting document load from child.");
     try
     {
@@ -970,6 +971,10 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             setViewLoaded();
             docBroker->setLoaded();
+            
+#if !MOBILEAPP
+            Admin::instance().setViewLoadDuration(docBroker->getDocKey(), getId(), std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - _viewLoadStart));
+#endif
 
             for(auto &token : tokens)
             {
