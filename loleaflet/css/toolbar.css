@@ -623,7 +623,7 @@ button.leaflet-control-search-next
 .w2ui-icon.insertsymbol{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
 .w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; }
 .w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center 1px / 19px !important; }
-.w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center/ 19px !important; }
+.w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center 2px/ 19px !important;}
 .w2ui-icon.hamburger{ background: url('images/hamburger.svg') no-repeat center !important; }
 .w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
 .w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
