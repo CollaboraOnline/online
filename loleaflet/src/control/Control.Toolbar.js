@@ -889,6 +889,7 @@ function initNormalToolbar() {
 		{type: 'spacer'},
 		{type: 'button',  id: 'edit',  img: 'edit'},
 		{type: 'break', id: 'breaksidebar', hidden: true},
+		{type: 'button',  id: 'sidebar', img: 'sidebar_modify_page', hint: _UNO('.uno:Sidebar', '', true), uno: '.uno:Sidebar', hidden: true},
 		{type: 'button',  id: 'sidebar-modify-page', img: 'sidebar_modify_page', hint: _UNO('.uno:ModifyPage', 'presentation', true), uno: 'ModifyPage', hidden: true},
 		{type: 'button',  id: 'sidebar-slide-change', img: 'sidebar_slide_change', hint: _UNO('.uno:SlideChangeWindow', 'presentation', true), uno: 'SlideChangeWindow', hidden: true},
 		{type: 'button',  id: 'sidebar-custom-animation', img: 'sidebar_custom_animation', hint: _UNO('.uno:CustomAnimation', 'presentation', true), uno: 'CustomAnimation', hidden: true},
@@ -1448,7 +1449,7 @@ function onDocLayerInit() {
 			toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
 			'numberformatcurrency', 'numberformatpercent',
 			'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
-			'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar-modify-page');
+			'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
 			toolbarUp.remove('styles');
 		}
 
@@ -1518,7 +1519,7 @@ function onDocLayerInit() {
 		if (toolbarUp)
 			toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
-			'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar-modify-page');
+			'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
 
 		if (!_inMobileMode()) {
 			statusbar.insert('left', [
