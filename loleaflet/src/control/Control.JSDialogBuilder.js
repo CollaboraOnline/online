@@ -418,6 +418,34 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return unit;
 	},
 
+	_getUnoStateForItemId: function(id, builder) {
+		var items = builder.map['stateChangeHandler'];
+		var state = null;
+
+		switch (id) {
+		case 'beforetextindent':
+			state = items.getItemValue('.uno:LeftRightParaMargin');
+			if (state)
+				return state.left.replace(',', '.');
+			break;
+
+		case 'aftertextindent':
+			state = items.getItemValue('.uno:LeftRightParaMargin');
+			if (state) {
+				return state.right.replace(',', '.');
+			}
+			break;
+
+		case 'firstlineindent':
+			state = items.getItemValue('.uno:LeftRightParaMargin');
+			if (state)
+				return state.firstline.replace(',', '.');
+			break;
+		}
+
+		return null;
+	},
+
 	_spinfieldControl: function(parentContainer, data, builder, customCallback) {
 		if (data.label) {
 			var fixedTextData = { text: data.label };
@@ -457,10 +485,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
 
-		if (data.text != undefined)
-			$(spinfield).attr('value', builder._cleanValueFromUnits(data.text));
-		else if (data.children && data.children.length)
-			$(spinfield).attr('value', builder._cleanValueFromUnits(data.children[0].text));
+		var value = builder._getUnoStateForItemId(data.id, builder);
+		console.log(data.id + ': ' + value);
+		if (!value && data.text != undefined)
+			value = data.text;
+		else if (!value && data.children && data.children.length)
+			value = data.children[0].text;
+
+		$(spinfield).attr('value', builder._cleanValueFromUnits(value));
 
 		spinfield.addEventListener('change', function() {
 			if (customCallback)
