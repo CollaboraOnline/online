@@ -135,18 +135,32 @@
 		}
 	}
 
+	var lang = global.getParameterByName('lang');
 	global.queueMsg = [];
 	if (window.ThisIsTheiOSApp)
-		window.LANG = window.getParameterByName('lang');
+		window.LANG = lang;
 	if (global.socket && global.socket.readyState !== 3) {
 		global.socket.onopen = function () {
 			if (global.socket.readyState === 1) {
 				var ProtocolVersionNumber = '0.1';
+				var timestamp = global.getParameterByName('timestamp');
+				var msg = 'load url=' + encodeURIComponent(global.docURL);
+
 				global.socket.send('loolclient ' + ProtocolVersionNumber);
-				if (window.ThisIsTheiOSApp)
-					global.socket.send('load url=' + encodeURIComponent(global.docURL) + ' lang=' + window.LANG);
-				else
-					global.socket.send('load url=' + encodeURIComponent(global.docURL));
+
+				if (window.ThisIsTheiOSApp) {
+					msg += ' lang=' + window.LANG;
+				} else {
+
+					if (timestamp) {
+						msg += ' timestamp=' + timestamp;
+					}
+					if (lang) {
+						msg += ' lang=' + lang;
+					}
+					// renderingOptions?
+				}
+				global.socket.send(msg);
 			}
 		}
 
