@@ -1088,12 +1088,12 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
         std::istringstream istr(response.substr(8));
         std::getline(istr, line);
 
-        Poco::StringTokenizer tokens(line, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        std::vector<std::string> tokens(LOOLProtocol::tokenize(line, ' '));
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
         if (docType == "presentation")
-            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.count()); // We have an extra field.
+            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size()); // We have an extra field.
         else
-            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(6), tokens.count());
+            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(6), tokens.size());
 #else
         if (docType == "presentation")
             CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.count()); // We have an extra field.
@@ -1198,7 +1198,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
             sendTextFrame(socket, text, name);
             tile = assertResponseString(socket, "tile:", name);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
-            Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(tile, ' '));
             CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
             CPPUNIT_ASSERT_EQUAL(0, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
             CPPUNIT_ASSERT_EQUAL(part, std::stoi(tokens[2].substr(std::string("part=").size())));
@@ -1346,7 +1346,7 @@ void TileCacheTests::testTileProcessed()
             ++arrivedTile;
 
             // Store tileID, so we can send it back
-            Poco::StringTokenizer tokens(tile, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(tile, ' '));
             std::string tileID = tokens[2].substr(std::string("part=").size()) + ":" +
                                  tokens[5].substr(std::string("tileposx=").size()) + ":" +
                                  tokens[6].substr(std::string("tileposy=").size()) + ":" +
@@ -1394,7 +1394,7 @@ void TileCacheTests::testTileInvalidatedOutside()
 
     // First wsd forwards the invalidation
     std::string sInvalidate = assertResponseString(socket, "invalidatetiles:", testname);
-    Poco::StringTokenizer tokens(sInvalidate, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    std::vector<std::string> tokens(LOOLProtocol::tokenize(sInvalidate, ' '));
     int y = std::stoi(tokens[3].substr(std::string("y=").size()));
     int height = std::stoi(tokens[5].substr(std::string("height=").size()));
 
