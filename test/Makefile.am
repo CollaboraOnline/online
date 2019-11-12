@@ -28,6 +28,7 @@ noinst_LTLIBRARIES = \
 	unit-rendering-options.la \
 	unit-password-protected.la \
 	unit-render-shape.la \
+	unit-each-view.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
@@ -142,6 +143,8 @@ unit_password_protected_la_SOURCES = UnitPasswordProtected.cpp
 unit_password_protected_la_LIBADD = $(CPPUNIT_LIBS)
 unit_render_shape_la_SOURCES = UnitRenderShape.cpp
 unit_render_shape_la_LIBADD = $(CPPUNIT_LIBS)
+unit_each_view_la_SOURCES = UnitEachView.cpp
+unit_each_view_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -168,6 +171,7 @@ TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-t
 	unit-rendering-options.la \
 	unit-password-protected.la \
 	unit-render-shape.la \
+	unit-each-view.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la

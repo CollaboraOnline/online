@@ -90,12 +90,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStateUnoCommandImpress);
     // FIXME CPPUNIT_TEST(testColumnRowResize);
     // FIXME CPPUNIT_TEST(testOptimalResize);
-    CPPUNIT_TEST(testInvalidateViewCursor);
-    CPPUNIT_TEST(testViewCursorVisible);
-    CPPUNIT_TEST(testCellViewCursor);
-    CPPUNIT_TEST(testGraphicViewSelectionWriter);
-    CPPUNIT_TEST(testGraphicViewSelectionCalc);
-    CPPUNIT_TEST(testGraphicViewSelectionImpress);
     CPPUNIT_TEST(testGraphicInvalidate);
     CPPUNIT_TEST(testCursorPosition);
     CPPUNIT_TEST(testAlertAllUsers);
@@ -135,12 +129,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testStateUnoCommandImpress();
     void testColumnRowResize();
     void testOptimalResize();
-    void testInvalidateViewCursor();
-    void testViewCursorVisible();
-    void testCellViewCursor();
-    void testGraphicViewSelectionWriter();
-    void testGraphicViewSelectionCalc();
-    void testGraphicViewSelectionImpress();
     void testGraphicInvalidate();
     void testCursorPosition();
     void testAlertAllUsers();
@@ -171,7 +159,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testStateChanged(const std::string& filename, std::set<std::string>& vecComands);
     double getColRowSize(const std::string& property, const std::string& message, int index);
     double getColRowSize(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& item, int index, const std::string& testname);
-    void testEachView(const std::string& doc, const std::string& type, const std::string& protocol, const std::string& view, const std::string& testname);
 
 public:
     HTTPWSTest()
@@ -1954,101 +1941,6 @@ void HTTPWSTest::testOptimalResize()
     {
         CPPUNIT_FAIL(exc.displayText());
     }
-}
-
-void HTTPWSTest::testEachView(const std::string& doc, const std::string& type,
-                              const std::string& protocol, const std::string& protocolView,
-                              const std::string& testname)
-{
-    const std::string view = testname + "view %d -> ";
-    const std::string error = testname + "view %d, did not receive a %s message as expected";
-
-    try
-    {
-        // Load a document
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL(doc, documentPath, documentURL, testname);
-
-        int itView = 0;
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView));
-
-        // Check document size
-        sendTextFrame(socket, "status", Poco::format(view, itView));
-        auto response = assertResponseString(socket, "status:", Poco::format(view, itView));
-        int docPart = -1;
-        int docParts = 0;
-        int docHeight = 0;
-        int docWidth = 0;
-        int docViewId = -1;
-        parseDocSize(response.substr(7), type, docPart, docParts, docWidth, docHeight, docViewId);
-
-        // Send click message
-        std::string text;
-        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttondown"), docWidth/2, docHeight/6);
-        sendTextFrame(socket, text, Poco::format(view, itView));
-        text.clear();
-
-        Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0", std::string("buttonup"), docWidth/2, docHeight/6);
-        sendTextFrame(socket, text, Poco::format(view, itView));
-        response = getResponseString(socket, protocol, Poco::format(view, itView));
-        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
-
-        // Connect and load 0..N Views, where N<=limit
-        std::vector<std::shared_ptr<LOOLWebSocket>> views;
-        static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
-        const int limit = std::min(4, MAX_DOCUMENTS - 1); // +1 connection above
-        for (itView = 0; itView < limit; ++itView)
-        {
-            views.emplace_back(loadDocAndGetSocket(_uri, documentURL, Poco::format(view, itView)));
-        }
-
-        // main view should receive response each view
-        itView = 0;
-        for (const auto& socketView : views)
-        {
-            getResponseString(socket, protocolView, Poco::format(view, itView));
-            CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
-            ++itView; (void)socketView;
-        }
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-    catch (const std::exception& exc)
-    {
-        CPPUNIT_FAIL(exc.what());
-    }
-}
-
-void HTTPWSTest::testInvalidateViewCursor()
-{
-    testEachView("viewcursor.odp", "presentation", "invalidatecursor:", "invalidateviewcursor:", "invalidateViewCursor ");
-}
-
-void HTTPWSTest::testViewCursorVisible()
-{
-    testEachView("viewcursor.odp", "presentation", "cursorvisible:", "viewcursorvisible:", "viewCursorVisible ");
-}
-
-void HTTPWSTest::testCellViewCursor()
-{
-    testEachView("empty.ods", "spreadsheet", "cellcursor:", "cellviewcursor:", "cellViewCursor");
-}
-
-void HTTPWSTest::testGraphicViewSelectionWriter()
-{
-    testEachView("graphicviewselection.odt", "text", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odt ");
-}
-
-void HTTPWSTest::testGraphicViewSelectionCalc()
-{
-    testEachView("graphicviewselection.ods", "spreadsheet", "graphicselection:", "graphicviewselection:", "graphicViewSelection-ods ");
-}
-
-void HTTPWSTest::testGraphicViewSelectionImpress()
-{
-    testEachView("graphicviewselection.odp", "presentation", "graphicselection:", "graphicviewselection:", "graphicViewSelection-odp ");
 }
 
 void HTTPWSTest::testGraphicInvalidate()
