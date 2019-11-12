@@ -3568,6 +3568,8 @@ int LOOLWSD::innerMain()
         child->terminate();
     }
 
+    NewChildren.clear();
+
 #if !MOBILEAPP
 #ifndef KIT_IN_PROCESS
     // Wait for forkit process finish.
