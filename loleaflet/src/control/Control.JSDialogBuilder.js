@@ -453,6 +453,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (state)
 				return state.lower.replace(',', '.');
 			break;
+
+		case 'rowheight':
+			state = items.getItemValue('.uno:TableRowHeight');
+			if (state)
+				return state.replace(',', '.');
+			break;
+
+		case 'columnwidth':
+			state = items.getItemValue('.uno:TableColumWidth');
+			if (state)
+				return state.replace(',', '.');
+			break;
 		}
 
 		return null;
