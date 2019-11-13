@@ -1096,9 +1096,9 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
             CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(6), tokens.size());
 #else
         if (docType == "presentation")
-            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.count()); // We have an extra field.
+            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size()); // We have an extra field.
         else
-            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.count());
+            CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), tokens.size());
 #endif
 
         // Expected format is something like 'type= parts= current= width= height='.
