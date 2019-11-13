@@ -497,6 +497,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				return state.replace(',', '.');
 			}
 			break;
+
+		case 'FIELD_TRANSPARENCY':
+			state = items.getItemValue('.uno:FillShadowTransparency');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
 		}
 
 		return null;
