@@ -23,7 +23,6 @@
 #include <helpers.hpp>
 
 #include <Poco/Timestamp.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/StringPartSource.h>

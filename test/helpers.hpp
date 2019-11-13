@@ -25,7 +25,6 @@
 #include <Poco/Net/SecureStreamSocket.h>
 #include <Poco/Net/Socket.h>
 #include <Poco/Path.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
 #include <cppunit/extensions/HelperMacros.h>
@@ -524,7 +523,7 @@ inline
 void parseDocSize(const std::string& message, const std::string& type,
                   int& part, int& parts, int& width, int& height, int& viewid)
 {
-    Poco::StringTokenizer tokens(message, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    std::vector<std::string> tokens(LOOLProtocol::tokenize(message, ' '));
 
     // Expected format is something like 'type= parts= current= width= height='.
     const std::string text = tokens[0].substr(std::string("type=").size());
@@ -553,7 +552,7 @@ std::vector<char> assertTileMessage(LOOLWebSocket& ws, const std::string& testna
     const std::vector<char> response = getTileMessage(ws, testname);
 
     const std::string firstLine = LOOLProtocol::getFirstLine(response);
-    Poco::StringTokenizer tileTokens(firstLine, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+    std::vector<std::string> tileTokens(LOOLProtocol::tokenize(firstLine, ' '));
     CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tileTokens[0]);
     CPPUNIT_ASSERT_EQUAL(std::string("part="), tileTokens[1].substr(0, std::string("part=").size()));
     CPPUNIT_ASSERT_EQUAL(std::string("width="), tileTokens[2].substr(0, std::string("width=").size()));

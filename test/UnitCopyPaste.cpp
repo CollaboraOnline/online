@@ -18,7 +18,6 @@
 #include <common/Clipboard.hpp>
 #include <wsd/ClientSession.hpp>
 #include <Poco/Timestamp.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTMLForm.h>

@@ -29,9 +29,10 @@
 #include <Poco/DirectoryIterator.h>
 #include <Poco/FileStream.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/StringTokenizer.h>
 
 #include <Log.hpp>
+
+#include "common/Protocol.hpp"
 
 class HTTPGetTest;
 
@@ -217,8 +218,8 @@ std::vector<int> getProcPids(const char* exec_filename)
                 Poco::FileInputStream stat(procEntry.toString() + "/stat");
                 std::string statString;
                 Poco::StreamCopier::copyToString(stat, statString);
-                Poco::StringTokenizer tokens(statString, " ");
-                if (tokens.count() > 6 && tokens[1].find(exec_filename) == 0)
+                std::vector<std::string> tokens(LOOLProtocol::tokenize(statString, ' '));
+                if (tokens.size() > 6 && tokens[1].find(exec_filename) == 0)
                 {
                     // We could have several make checks running at once.
                     int kidGrp = std::atoi(tokens[4].c_str());

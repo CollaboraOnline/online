@@ -107,8 +107,8 @@ void HTTPWSError::testBadDocLoadFail()
         sendTextFrame(socket, "load url=" + documentURL, testname);
 
         const auto response = getResponseString(socket, "error:", testname);
-        Poco::StringTokenizer tokens(response, " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.count());
+        std::vector<std::string> tokens(LOOLProtocol::tokenize(response, ' '));
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
         std::string errorCommand;
         std::string errorKind;

@@ -18,7 +18,6 @@
 #include <Poco/DirectoryIterator.h>
 #include <Poco/FileStream.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/StringTokenizer.h>
 
 #include <Common.hpp>
 #include "test.hpp"
