@@ -262,6 +262,9 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_entryAtPoint: function(point) {
+		if (!this._tickMap)
+			return false;
+
 		var position = this._getParallelPos(point);
 		position = position - this._position;
 
