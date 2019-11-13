@@ -465,6 +465,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (state)
 				return state.replace(',', '.');
 			break;
+
+		case 'decimalplaces':
+			state = items.getItemValue('.uno:NumberFormat');
+			if (state) {
+				state = state.split(',');
+				if (state.length > 2)
+					return state[2];
+			}
+			break;
+
+		case 'leadingzeros':
+			state = items.getItemValue('.uno:NumberFormat');
+			if (state) {
+				state = state.split(',');
+				if (state.length > 3)
+					return state[3];
+			}
+			break;
 		}
 
 		return null;
