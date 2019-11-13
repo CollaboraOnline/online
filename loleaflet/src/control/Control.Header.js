@@ -562,12 +562,13 @@ L.Control.Header = L.Control.extend({
 			canvas.width = value * scale;
 			if (!isCorner)
 				this._canvasWidth = value;
-// 			console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
+//			console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
 			canvas.height = value * scale;
 			if (!isCorner)
 				this._canvasHeight = value;
+//			console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
 		}
 	},
 
@@ -631,8 +632,8 @@ L.Control.Header = L.Control.extend({
 			if (!this._groups[level]) {
 				this._groups[level] = {};
 			}
-			var startPos = parseInt(groupData.startPos);
-			var endPos = parseInt(groupData.endPos);
+			var startPos = parseInt(groupData.startPos) / this._map._docLayer._tilePixelScale;
+			var endPos = parseInt(groupData.endPos) / this._map._docLayer._tilePixelScale;
 			var isHidden = !!parseInt(groupData.hidden);
 			if (isHidden || startPos === endPos) {
 				startPos -= this._groupHeadSize / 2;
@@ -735,7 +736,6 @@ L.Control.Header = L.Control.extend({
 L.Control.Header.rowHeaderWidth = undefined;
 L.Control.Header.colHeaderHeight = undefined;
 
-
 /*
  * GapTickMap is a data structure for handling the dimensions of each
  * column/row in the column/row header.
@@ -757,8 +757,11 @@ L.Control.Header.colHeaderHeight = undefined;
  *   the size of the last known gap.
  * - When a new tick position is defined, it resets the size of the last known gap
  *
- * All inputs received are given in pixels, outputs are meant to be returned
- * in CSS pixels, which is also the internal storage format.
+ * All inputs received are given in tile pixels, and stored as such.
+ * outputs are returned in CSS pixels.
+ *
+ * **NB.** CSS pixels are scaled (down) from the tile pixels by the a factor
+ * from TileLayer - 2x for retina, 1x for non-retina.
  *
  * **NB.** twip to pixel mapping is made non-obvious by the need to ensure that
  * there are no cumulative rounding errors from TWIP heights to pixels. We have to
@@ -766,7 +769,7 @@ L.Control.Header.colHeaderHeight = undefined;
  */
 L.Control.Header.GapTickMap = L.Class.extend({
 
-	initialize: function (ticks) {
+	initialize: function (map, ticks) {
 
 		var gapSize;
 		this._ticks = [];
@@ -783,6 +786,8 @@ L.Control.Header.GapTickMap = L.Class.extend({
 		// This *assumes* the input is ordered - i.e. tick indexes only grow
 		this._minTickIdx = parseInt(ticks[0].text);
 		this._maxTickIdx = knownTicks.length - 1;
+		this._startOffset = parseInt(ticks[0].size);
+		this._tilePixelScale = map._docLayer._tilePixelScale;
 
 		for (var idx=this._minTickIdx; idx <= this._maxTickIdx; idx++) {
 
@@ -803,7 +808,14 @@ L.Control.Header.GapTickMap = L.Class.extend({
 
 	// Gets the position of the i-th tick (or `undefined` if the index falls outside).
 	getTick: function getTick(i) {
-		return this._ticks[i];
+		// to get CSS pixels we need to adjust for DPI scale
+		// since we render at full native pixel resolution &
+		// account in those units.
+		return this._ticks[i] / this._tilePixelScale;
+	},
+
+	getStartOffset: function() {
+		return this._startOffset / this._tilePixelScale;
 	},
 
 	getMinTickIdx: function() {
@@ -859,4 +871,3 @@ L.Control.Header.GapTickMap = L.Class.extend({
 	},
 
 });
-

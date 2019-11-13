@@ -76,21 +76,14 @@ L.CalcGridLines = L.LayerGroup.extend({
 
 		// Aux stuff to scale twips from the websocket message
 		// into map coordinate units
-		var pixelToMapUnitRatio = this._map.options.crs.scale(this._map.getZoom()) * L.Util.getDpiScaleFactor();
-		var twipToMapUnitRatio = ev.context._tileWidthPx / ev.context._tileWidthTwips / pixelToMapUnitRatio;
-
-		function twipToLatLng(twip) {
-			return twip * twipToMapUnitRatio;
-		}
+		var pixelToMapUnitRatio = this._map.options.crs.scale(this._map.getZoom());
 
 		if (ev.data.columns && ev.data.columns.length) {
-			ticks = new L.Control.Header.GapTickMap(
-				ev.data.columns,
-				twipToLatLng
-			);
+			ticks = new L.Control.Header.GapTickMap(this._map, ev.data.columns);
 			this._colLines.clearLayers();
 
 			ticks.forEachTick(function(idx, pos) {
+				pos /= pixelToMapUnitRatio;
 				this._colLines.addLayer(
 					L.polyline([[[ Number.MIN_SAFE_INTEGER, pos ],[ Number.MAX_SAFE_INTEGER, pos ]]],
 						this.options
@@ -100,13 +93,11 @@ L.CalcGridLines = L.LayerGroup.extend({
 		}
 
 		if (ev.data.rows && ev.data.rows.length) {
-			ticks = new L.Control.Header.GapTickMap(
-				ev.data.rows,
-				twipToLatLng
-			);
+			ticks = new L.Control.Header.GapTickMap(this._map, ev.data.rows);
 			this._rowLines.clearLayers();
 
 			ticks.forEachTick(function(idx, pos) {
+				pos /= pixelToMapUnitRatio;
 				this._rowLines.addLayer(
 					// Note that y-coordinates are inverted: Leaflet's CRS.Simple assumes
 					// down = negative latlngs, whereas loolkit assumes down = positive twips

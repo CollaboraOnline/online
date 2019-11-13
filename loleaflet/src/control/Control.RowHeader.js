@@ -387,10 +387,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._lastMouseOverIndex = undefined;
 
 		// create data structure for row heights
-		this._tickMap = new L.Control.Header.GapTickMap(
-			rows,
-			L.Util.bind(this._twipsToPixels, this)
-		);
+		this._tickMap = new L.Control.Header.GapTickMap(this._map, rows);
+		this._startOffset = this._tickMap.getStartOffset();
 
 		// setup conversion routine
 		this.converter = L.Util.bind(converter, context);
@@ -398,9 +396,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		// create group array
 		this._groupLevels = parseInt(rows[0].groupLevels);
 		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
-
-		var startOffsetPx = parseInt(rows[0].size);
-		this._startOffset = startOffsetPx;
 
 		// collect group controls data
 		if (rowGroups !== undefined && this._groups) {

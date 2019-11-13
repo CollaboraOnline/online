@@ -684,6 +684,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 		var comment;
 		if (values.commandName === '.uno:ViewRowColumnHeaders') {
+//			console.log('view row column headers: ' + JSON.stringify(values));
 			this._map.fire('viewrowcolumnheaders', {
 				data: values,
 				converter: this._twipsToPixels,

@@ -398,10 +398,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._lastMouseOverIndex = undefined;
 
 		// create data structure for column widths
-		this._tickMap = new L.Control.Header.GapTickMap(
-			columns,
-			L.Util.bind(this._twipsToPixels, this)
-		);
+		this._tickMap = new L.Control.Header.GapTickMap(this._map, columns);
+		this._startOffset = this._tickMap.getStartOffset();
 
 		// setup conversion routine
 		this.converter = L.Util.bind(converter, context);
@@ -409,9 +407,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// create group array
 		this._groupLevels = parseInt(columns[0].groupLevels);
 		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
-
-		var startOffsetPx = parseInt(columns[0].size);
-		this._startOffset = startOffsetPx;
 
 		// collect group controls data
 		if (colGroups !== undefined && this._groups) {
