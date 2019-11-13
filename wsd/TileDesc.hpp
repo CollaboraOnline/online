@@ -15,10 +15,9 @@
 #include <sstream>
 #include <string>
 
-#include <Poco/StringTokenizer.h>
 
 #include "Exceptions.hpp"
-#include "Protocol.hpp"
+#include <Protocol.hpp>
 
 #define TILE_WIRE_ID
 typedef uint32_t TileWireId;
@@ -301,21 +300,21 @@ private:
             throw BadArgumentException("Invalid tilecombine descriptor.");
         }
 
-        Poco::StringTokenizer positionXtokens(tilePositionsX, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        Poco::StringTokenizer positionYtokens(tilePositionsY, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        Poco::StringTokenizer imgSizeTokens(imgSizes, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        Poco::StringTokenizer verTokens(vers, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        Poco::StringTokenizer oldWireIdTokens(oldWireIds, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        Poco::StringTokenizer wireIdTokens(wireIds, ",", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+        std::vector<std::string> positionXtokens(LOOLProtocol::tokenize(tilePositionsX, ','));
+        std::vector<std::string> positionYtokens(LOOLProtocol::tokenize(tilePositionsY, ','));
+        std::vector<std::string> imgSizeTokens(LOOLProtocol::tokenize(imgSizes, ','));
+        std::vector<std::string> verTokens(LOOLProtocol::tokenize(vers, ','));
+        std::vector<std::string> oldWireIdTokens(LOOLProtocol::tokenize(oldWireIds, ','));
+        std::vector<std::string> wireIdTokens(LOOLProtocol::tokenize(wireIds, ','));
 
-        const size_t numberOfPositions = positionXtokens.count();
+        const size_t numberOfPositions = positionXtokens.size();
 
         // check that the comma-separated strings have the same number of elements
-        if (numberOfPositions != positionYtokens.count() ||
-            (!imgSizes.empty() && numberOfPositions != imgSizeTokens.count()) ||
-            (!vers.empty() && numberOfPositions != verTokens.count()) ||
-            (!oldWireIds.empty() && numberOfPositions != oldWireIdTokens.count()) ||
-            (!wireIds.empty() && numberOfPositions != wireIdTokens.count()))
+        if (numberOfPositions != positionYtokens.size() ||
+            (!imgSizes.empty() && numberOfPositions != imgSizeTokens.size()) ||
+            (!vers.empty() && numberOfPositions != verTokens.size()) ||
+            (!oldWireIds.empty() && numberOfPositions != oldWireIdTokens.size()) ||
+            (!wireIds.empty() && numberOfPositions != wireIdTokens.size()))
         {
             throw BadArgumentException("Invalid tilecombine descriptor. Unequal number of tiles in parameters.");
         }
@@ -335,25 +334,25 @@ private:
             }
 
             int imgSize = 0;
-            if (imgSizeTokens.count() && !LOOLProtocol::stringToInteger(imgSizeTokens[i], imgSize))
+            if (!imgSizeTokens.empty() && !LOOLProtocol::stringToInteger(imgSizeTokens[i], imgSize))
             {
                 throw BadArgumentException("Invalid 'imgsize' in tilecombine descriptor.");
             }
 
             int ver = -1;
-            if (verTokens.count() && !verTokens[i].empty() && !LOOLProtocol::stringToInteger(verTokens[i], ver))
+            if (!verTokens.empty() && !verTokens[i].empty() && !LOOLProtocol::stringToInteger(verTokens[i], ver))
             {
                 throw BadArgumentException("Invalid 'ver' in tilecombine descriptor.");
             }
 
             TileWireId oldWireId = 0;
-            if (oldWireIdTokens.count() && !LOOLProtocol::stringToUInt32(oldWireIdTokens[i], oldWireId))
+            if (!oldWireIdTokens.empty() && !LOOLProtocol::stringToUInt32(oldWireIdTokens[i], oldWireId))
             {
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
 
             TileWireId wireId = 0;
-            if (wireIdTokens.count() && !LOOLProtocol::stringToUInt32(wireIdTokens[i], wireId))
+            if (!wireIdTokens.empty() && !LOOLProtocol::stringToUInt32(wireIdTokens[i], wireId))
             {
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }

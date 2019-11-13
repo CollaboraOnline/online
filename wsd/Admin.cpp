@@ -17,7 +17,6 @@
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/StringTokenizer.h>
 
 #include "Admin.hpp"
 #include "AdminModel.hpp"
@@ -43,7 +42,6 @@
 using namespace LOOLProtocol;
 
 using Poco::Net::HTTPResponse;
-using Poco::StringTokenizer;
 using Poco::Util::Application;
 
 const int Admin::MinStatsIntervalMs = 50;
@@ -55,10 +53,10 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
 {
     // FIXME: check fin, code etc.
     const std::string firstLine = getFirstLine(payload.data(), payload.size());
-    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-    LOG_TRC("Recv: " << firstLine << " tokens " << tokens.count());
+    std::vector<std::string> tokens(LOOLProtocol::tokenize(firstLine, ' '));
+    LOG_TRC("Recv: " << firstLine << " tokens " << tokens.size());
 
-    if (tokens.count() < 1)
+    if (tokens.empty())
     {
         LOG_TRC("too few tokens");
         return;
@@ -68,7 +66,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
 
     if (tokens[0] == "auth")
     {
-        if (tokens.count() < 2)
+        if (tokens.size() < 2)
         {
             LOG_DBG("Auth command without any token");
             sendMessage("InvalidAuthToken");
@@ -98,7 +96,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     if (!_isAuthenticated)
     {
         LOG_DBG("Not authenticated - message is '" << firstLine << "' " <<
-                tokens.count() << " first: '" << tokens[0] << "'");
+                tokens.size() << " first: '" << tokens[0] << "'");
         sendMessage("NotAuthenticated");
         shutdown();
         return;
@@ -126,16 +124,16 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
     }
-    else if (tokens[0] == "subscribe" && tokens.count() > 1)
+    else if (tokens[0] == "subscribe" && tokens.size() > 1)
     {
-        for (std::size_t i = 0; i < tokens.count() - 1; i++)
+        for (std::size_t i = 0; i < tokens.size() - 1; i++)
         {
             model.subscribe(_sessionId, tokens[i + 1]);
         }
     }
-    else if (tokens[0] == "unsubscribe" && tokens.count() > 1)
+    else if (tokens[0] == "unsubscribe" && tokens.size() > 1)
     {
-        for (std::size_t i = 0; i < tokens.count() - 1; i++)
+        for (std::size_t i = 0; i < tokens.size() - 1; i++)
         {
             model.unsubscribe(_sessionId, tokens[i + 1]);
         }
@@ -155,7 +153,7 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
     else if (tokens[0] == "uptime")
         sendTextFrame("uptime " + std::to_string(model.getServerUptime()));
 
-    else if (tokens[0] == "kill" && tokens.count() == 2)
+    else if (tokens[0] == "kill" && tokens.size() == 2)
     {
         try
         {
@@ -194,11 +192,11 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         SigUtil::requestShutdown();
         return;
     }
-    else if (tokens[0] == "set" && tokens.count() > 1)
+    else if (tokens[0] == "set" && tokens.size() > 1)
     {
-        for (size_t i = 1; i < tokens.count(); i++)
+        for (size_t i = 1; i < tokens.size(); i++)
         {
-            StringTokenizer setting(tokens[i], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            std::vector<std::string> setting(LOOLProtocol::tokenize(tokens[i], '='));
             int settingVal = 0;
             try
             {
@@ -320,7 +318,7 @@ bool AdminSocketHandler::handleInitialRequest(
     std::shared_ptr<StreamSocket> socket = socketWeak.lock();
 
     const std::string& requestURI = request.getURI();
-    StringTokenizer pathTokens(requestURI, "/", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+    std::vector<std::string> pathTokens(LOOLProtocol::tokenize(requestURI, '/'));
 
     if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
     {

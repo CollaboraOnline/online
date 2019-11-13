@@ -18,7 +18,6 @@
 #include <string>
 
 #include <Poco/Process.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
 #include <Protocol.hpp>

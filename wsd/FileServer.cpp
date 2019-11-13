@@ -36,7 +36,6 @@
 #include <Poco/RegularExpression.h>
 #include <Poco/Runnable.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/URI.h>
 
 #include "Auth.hpp"
