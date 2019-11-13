@@ -85,7 +85,7 @@ L.CalcGridLines = L.LayerGroup.extend({
 			ticks.forEachTick(function(idx, pos) {
 				pos /= pixelToMapUnitRatio;
 				this._colLines.addLayer(
-					L.polyline([[[ Number.MIN_SAFE_INTEGER, pos ],[ Number.MAX_SAFE_INTEGER, pos ]]],
+					L.polyline([[[ L.Util.MIN_SAFE_INTEGER, pos ],[ L.Util.MAX_SAFE_INTEGER, pos ]]],
 						this.options
 					)
 				);
@@ -101,7 +101,7 @@ L.CalcGridLines = L.LayerGroup.extend({
 				this._rowLines.addLayer(
 					// Note that y-coordinates are inverted: Leaflet's CRS.Simple assumes
 					// down = negative latlngs, whereas loolkit assumes down = positive twips
-					L.polyline([[[ -pos, Number.MIN_SAFE_INTEGER ],[ -pos, Number.MAX_SAFE_INTEGER ]]],
+					L.polyline([[[ -pos, L.Util.MIN_SAFE_INTEGER ],[ -pos, L.Util.MAX_SAFE_INTEGER ]]],
 						this.options
 					)
 				);
