@@ -10,11 +10,11 @@
 #include <config.h>
 
 #include "Authorization.hpp"
+#include "Protocol.hpp"
 
 #include <cstdlib>
 #include <cassert>
-
-#include <Poco/StringTokenizer.h>
+#include <regex>
 
 void Authorization::authorizeURI(Poco::URI& uri) const
 {
@@ -50,19 +50,28 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
             // there might be more headers in here; like
             //   Authorization: Basic ....
             //   X-Something-Custom: Huh
-            Poco::StringTokenizer tokens(_data, "\n\r", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
+            // Regular expression evaluates and finds "\n\r" and tokenizes accordingly
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(_data, std::regex(R"(\n\r)"), /*skipEmpty =*/ true));
             for (const auto& token : tokens)
             {
-                size_t i = token.find_first_of(':');
-                if (i != std::string::npos)
+                size_t separator = token.find_first_of(':');
+                if (separator != std::string::npos)
                 {
-                    size_t separator = i;
-                    for (++i; i < token.length() && token[i] == ' ';)
-                        ++i;
+                    size_t headerStart = token.find_first_not_of(' ', 0);
+                    size_t headerEnd = token.find_last_not_of(' ', separator - 1);
+
+                    size_t valueStart = token.find_first_not_of(' ', separator + 1);
+                    size_t valueEnd = token.find_last_not_of(' ');
 
                     // set the header
-                    if (i < token.length())
-                        request.set(token.substr(0, separator), token.substr(i));
+                    if (headerStart != std::string::npos && headerEnd != std::string::npos &&
+                            valueStart != std::string::npos && valueEnd != std::string::npos)
+                    {
+                        size_t headerLength = headerEnd - headerStart + 1;
+                        size_t valueLength = valueEnd - valueStart + 1;
+
+                        request.set(token.substr(headerStart, headerLength), token.substr(valueStart, valueLength));
+                    }
                 }
             }
             break;
