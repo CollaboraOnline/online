@@ -441,6 +441,7 @@
             <key>UTTypeConformsTo</key>
             <array>
                 <string>public.data</string>
+                <string>public.content</string>
             </array>
             <key>UTTypeDescription</key>
             <string>OpenDocument Text</string>
@@ -458,6 +459,7 @@
             <key>UTTypeConformsTo</key>
             <array>
                 <string>public.data</string>
+                <string>public.content</string>
             </array>
             <key>UTTypeDescription</key>
             <string>OpenDocument Flat Text</string>
@@ -473,6 +475,7 @@
             <key>UTTypeConformsTo</key>
             <array>
                 <string>public.data</string>
+                <string>public.content</string>
             </array>
             <key>UTTypeDescription</key>
             <string>OpenDocument Spreadsheet</string>
@@ -490,6 +493,7 @@
             <key>UTTypeConformsTo</key>
             <array>
                 <string>public.data</string>
+                <string>public.content</string>
             </array>
             <key>UTTypeDescription</key>
             <string>OpenDocument Presentation</string>
@@ -507,6 +511,7 @@
             <key>UTTypeConformsTo</key>
             <array>
                 <string>public.data</string>
+                <string>public.content</string>
             </array>
             <key>UTTypeDescription</key>
             <string>Visio Document</string>
