@@ -76,6 +76,80 @@
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BE02642223795424008D3E52 /* drviews1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews1.cxx; path = "../../ios-device/sd/source/ui/view/drviews1.cxx"; sourceTree = "<group>"; };
+		BE02642323795424008D3E52 /* drawview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawview.cxx; path = "../../ios-device/sd/source/ui/view/drawview.cxx"; sourceTree = "<group>"; };
+		BE02642423795425008D3E52 /* ImpressViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ImpressViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/ImpressViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE02642523795425008D3E52 /* drviewsd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsd.cxx; path = "../../ios-device/sd/source/ui/view/drviewsd.cxx"; sourceTree = "<group>"; };
+		BE02642623795425008D3E52 /* drbezob.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drbezob.cxx; path = "../../ios-device/sd/source/ui/view/drbezob.cxx"; sourceTree = "<group>"; };
+		BE02642723795425008D3E52 /* drviewsf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsf.cxx; path = "../../ios-device/sd/source/ui/view/drviewsf.cxx"; sourceTree = "<group>"; };
+		BE02642823795425008D3E52 /* drviews7.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews7.cxx; path = "../../ios-device/sd/source/ui/view/drviews7.cxx"; sourceTree = "<group>"; };
+		BE02642923795425008D3E52 /* drviewsa.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsa.cxx; path = "../../ios-device/sd/source/ui/view/drviewsa.cxx"; sourceTree = "<group>"; };
+		BE02642A23795425008D3E52 /* tabcontr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabcontr.cxx; path = "../../ios-device/sd/source/ui/view/tabcontr.cxx"; sourceTree = "<group>"; };
+		BE02642B23795425008D3E52 /* viewoverlaymanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewoverlaymanager.cxx; path = "../../ios-device/sd/source/ui/view/viewoverlaymanager.cxx"; sourceTree = "<group>"; };
+		BE02642C23795425008D3E52 /* ViewTabBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewTabBar.cxx; path = "../../ios-device/sd/source/ui/view/ViewTabBar.cxx"; sourceTree = "<group>"; };
+		BE02642D23795425008D3E52 /* GraphicObjectBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicObjectBar.cxx; path = "../../ios-device/sd/source/ui/view/GraphicObjectBar.cxx"; sourceTree = "<group>"; };
+		BE02642E23795425008D3E52 /* outlview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = outlview.cxx; path = "../../ios-device/sd/source/ui/view/outlview.cxx"; sourceTree = "<group>"; };
+		BE02642F23795425008D3E52 /* drtxtob1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drtxtob1.cxx; path = "../../ios-device/sd/source/ui/view/drtxtob1.cxx"; sourceTree = "<group>"; };
+		BE02643023795425008D3E52 /* drviews2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews2.cxx; path = "../../ios-device/sd/source/ui/view/drviews2.cxx"; sourceTree = "<group>"; };
+		BE02643123795425008D3E52 /* drviewsk.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsk.cxx; path = "../../ios-device/sd/source/ui/view/drviewsk.cxx"; sourceTree = "<group>"; };
+		BE02643223795425008D3E52 /* frmview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frmview.cxx; path = "../../ios-device/sd/source/ui/view/frmview.cxx"; sourceTree = "<group>"; };
+		BE02643323795425008D3E52 /* OutlinerIterator.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OutlinerIterator.cxx; path = "../../ios-device/sd/source/ui/view/OutlinerIterator.cxx"; sourceTree = "<group>"; };
+		BE02643423795425008D3E52 /* drviews6.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews6.cxx; path = "../../ios-device/sd/source/ui/view/drviews6.cxx"; sourceTree = "<group>"; };
+		BE02643523795425008D3E52 /* ViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/ViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE02643623795425008D3E52 /* drviewse.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewse.cxx; path = "../../ios-device/sd/source/ui/view/drviewse.cxx"; sourceTree = "<group>"; };
+		BE02643723795425008D3E52 /* ViewShellImplementation.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewShellImplementation.cxx; path = "../../ios-device/sd/source/ui/view/ViewShellImplementation.cxx"; sourceTree = "<group>"; };
+		BE02643823795425008D3E52 /* drtxtob.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drtxtob.cxx; path = "../../ios-device/sd/source/ui/view/drtxtob.cxx"; sourceTree = "<group>"; };
+		BE02643923795426008D3E52 /* sdview3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview3.cxx; path = "../../ios-device/sd/source/ui/view/sdview3.cxx"; sourceTree = "<group>"; };
+		BE02643A23795426008D3E52 /* drviewsj.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsj.cxx; path = "../../ios-device/sd/source/ui/view/drviewsj.cxx"; sourceTree = "<group>"; };
+		BE02643B23795426008D3E52 /* viewshel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewshel.cxx; path = "../../ios-device/sd/source/ui/view/viewshel.cxx"; sourceTree = "<group>"; };
+		BE02643C23795426008D3E52 /* presvish.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = presvish.cxx; path = "../../ios-device/sd/source/ui/view/presvish.cxx"; sourceTree = "<group>"; };
+		BE02643D23795426008D3E52 /* PresentationViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PresentationViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/PresentationViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE02643E23795426008D3E52 /* MediaObjectBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MediaObjectBar.cxx; path = "../../ios-device/sd/source/ui/view/MediaObjectBar.cxx"; sourceTree = "<group>"; };
+		BE02643F23795426008D3E52 /* drviews3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews3.cxx; path = "../../ios-device/sd/source/ui/view/drviews3.cxx"; sourceTree = "<group>"; };
+		BE02644023795426008D3E52 /* clview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clview.cxx; path = "../../ios-device/sd/source/ui/view/clview.cxx"; sourceTree = "<group>"; };
+		BE02644123795426008D3E52 /* ViewShellManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewShellManager.cxx; path = "../../ios-device/sd/source/ui/view/ViewShellManager.cxx"; sourceTree = "<group>"; };
+		BE02644223795426008D3E52 /* SlideSorterViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideSorterViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/SlideSorterViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE02644323795426008D3E52 /* sdview2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview2.cxx; path = "../../ios-device/sd/source/ui/view/sdview2.cxx"; sourceTree = "<group>"; };
+		BE02644423795426008D3E52 /* sdview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview.cxx; path = "../../ios-device/sd/source/ui/view/sdview.cxx"; sourceTree = "<group>"; };
+		BE02644523795426008D3E52 /* drviews5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews5.cxx; path = "../../ios-device/sd/source/ui/view/drviews5.cxx"; sourceTree = "<group>"; };
+		BE02644623795426008D3E52 /* grviewsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grviewsh.cxx; path = "../../ios-device/sd/source/ui/view/grviewsh.cxx"; sourceTree = "<group>"; };
+		BE02644723795426008D3E52 /* ToolBarManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ToolBarManager.cxx; path = "../../ios-device/sd/source/ui/view/ToolBarManager.cxx"; sourceTree = "<group>"; };
+		BE02644823795426008D3E52 /* drviewsb.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsb.cxx; path = "../../ios-device/sd/source/ui/view/drviewsb.cxx"; sourceTree = "<group>"; };
+		BE02644923795426008D3E52 /* sdwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdwindow.cxx; path = "../../ios-device/sd/source/ui/view/sdwindow.cxx"; sourceTree = "<group>"; };
+		BE02644A23795426008D3E52 /* drviews8.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews8.cxx; path = "../../ios-device/sd/source/ui/view/drviews8.cxx"; sourceTree = "<group>"; };
+		BE02644B23795427008D3E52 /* outlnvsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = outlnvsh.cxx; path = "../../ios-device/sd/source/ui/view/outlnvsh.cxx"; sourceTree = "<group>"; };
+		BE02644C23795427008D3E52 /* drviewsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsh.cxx; path = "../../ios-device/sd/source/ui/view/drviewsh.cxx"; sourceTree = "<group>"; };
+		BE02644D23795427008D3E52 /* WindowUpdater.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowUpdater.cxx; path = "../../ios-device/sd/source/ui/view/WindowUpdater.cxx"; sourceTree = "<group>"; };
+		BE02644E23795427008D3E52 /* outlnvs2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = outlnvs2.cxx; path = "../../ios-device/sd/source/ui/view/outlnvs2.cxx"; sourceTree = "<group>"; };
+		BE02644F23795427008D3E52 /* GraphicViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/GraphicViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE02645023795427008D3E52 /* drviewsi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsi.cxx; path = "../../ios-device/sd/source/ui/view/drviewsi.cxx"; sourceTree = "<group>"; };
+		BE02645123795427008D3E52 /* viewshe2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewshe2.cxx; path = "../../ios-device/sd/source/ui/view/viewshe2.cxx"; sourceTree = "<group>"; };
+		BE02645223795427008D3E52 /* DocumentRenderer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentRenderer.cxx; path = "../../ios-device/sd/source/ui/view/DocumentRenderer.cxx"; sourceTree = "<group>"; };
+		BE02645323795427008D3E52 /* sdview4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview4.cxx; path = "../../ios-device/sd/source/ui/view/sdview4.cxx"; sourceTree = "<group>"; };
+		BE02645423795427008D3E52 /* sdruler.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdruler.cxx; path = "../../ios-device/sd/source/ui/view/sdruler.cxx"; sourceTree = "<group>"; };
+		BE02645523795427008D3E52 /* sdview5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview5.cxx; path = "../../ios-device/sd/source/ui/view/sdview5.cxx"; sourceTree = "<group>"; };
+		BE02645623795427008D3E52 /* drviews9.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews9.cxx; path = "../../ios-device/sd/source/ui/view/drviews9.cxx"; sourceTree = "<group>"; };
+		BE02645723795427008D3E52 /* unmodpg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unmodpg.cxx; path = "../../ios-device/sd/source/ui/view/unmodpg.cxx"; sourceTree = "<group>"; };
+		BE02645823795427008D3E52 /* viewshe3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewshe3.cxx; path = "../../ios-device/sd/source/ui/view/viewshe3.cxx"; sourceTree = "<group>"; };
+		BE02645923795427008D3E52 /* drvwshrg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drvwshrg.cxx; path = "../../ios-device/sd/source/ui/view/drvwshrg.cxx"; sourceTree = "<group>"; };
+		BE02645A23795427008D3E52 /* FormShellManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FormShellManager.cxx; path = "../../ios-device/sd/source/ui/view/FormShellManager.cxx"; sourceTree = "<group>"; };
+		BE02645B23795427008D3E52 /* OutlineViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OutlineViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/OutlineViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE02645C23795427008D3E52 /* ViewClipboard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewClipboard.cxx; path = "../../ios-device/sd/source/ui/view/ViewClipboard.cxx"; sourceTree = "<group>"; };
+		BE02645D23795427008D3E52 /* ViewShellHint.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewShellHint.cxx; path = "../../ios-device/sd/source/ui/view/ViewShellHint.cxx"; sourceTree = "<group>"; };
+		BE02645E23795427008D3E52 /* drviewsg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsg.cxx; path = "../../ios-device/sd/source/ui/view/drviewsg.cxx"; sourceTree = "<group>"; };
+		BE02645F23795428008D3E52 /* drviewsc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsc.cxx; path = "../../ios-device/sd/source/ui/view/drviewsc.cxx"; sourceTree = "<group>"; };
+		BE02646023795428008D3E52 /* Outliner.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Outliner.cxx; path = "../../ios-device/sd/source/ui/view/Outliner.cxx"; sourceTree = "<group>"; };
+		BE02646123795428008D3E52 /* drviews4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews4.cxx; path = "../../ios-device/sd/source/ui/view/drviews4.cxx"; sourceTree = "<group>"; };
+		BE02646223795428008D3E52 /* zoomlist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = zoomlist.cxx; path = "../../ios-device/sd/source/ui/view/zoomlist.cxx"; sourceTree = "<group>"; };
+		BE0264BD23797958008D3E52 /* svimpbox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svimpbox.cxx; path = "../../ios-device/vcl/source/treelist/svimpbox.cxx"; sourceTree = "<group>"; };
+		BE0264BF2379975C008D3E52 /* sdmod.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdmod.cxx; path = "../../ios-device/sd/source/ui/app/sdmod.cxx"; sourceTree = "<group>"; };
+		BE0264C02379975C008D3E52 /* sddll.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sddll.cxx; path = "../../ios-device/sd/source/ui/app/sddll.cxx"; sourceTree = "<group>"; };
+		BE0264C12379975C008D3E52 /* sdmod2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdmod2.cxx; path = "../../ios-device/sd/source/ui/app/sdmod2.cxx"; sourceTree = "<group>"; };
+		BE0264C22379975C008D3E52 /* sdmod1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdmod1.cxx; path = "../../ios-device/sd/source/ui/app/sdmod1.cxx"; sourceTree = "<group>"; };
+		BE0264C32379975C008D3E52 /* optsitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = optsitem.cxx; path = "../../ios-device/sd/source/ui/app/optsitem.cxx"; sourceTree = "<group>"; };
+		BE0264C42379975C008D3E52 /* tmplctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tmplctrl.cxx; path = "../../ios-device/sd/source/ui/app/tmplctrl.cxx"; sourceTree = "<group>"; };
+		BE0264C52379975C008D3E52 /* sdxfer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdxfer.cxx; path = "../../ios-device/sd/source/ui/app/sdxfer.cxx"; sourceTree = "<group>"; };
+		BE0264C62379975C008D3E52 /* sdpopup.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdpopup.cxx; path = "../../ios-device/sd/source/ui/app/sdpopup.cxx"; sourceTree = "<group>"; };
 		BE18C7DD226DE09A001AD27E /* Branding */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Branding; path = Mobile/Branding; sourceTree = SOURCE_ROOT; };
 		BE34D10F218B66B600815297 /* docsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh.cxx; path = "../../ios-device/sw/source/uibase/app/docsh.cxx"; sourceTree = "<group>"; };
 		BE34D110218B66B600815297 /* docstyle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docstyle.cxx; path = "../../ios-device/sw/source/uibase/app/docstyle.cxx"; sourceTree = "<group>"; };
@@ -1225,6 +1299,110 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE026420237953E6008D3E52 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				BE0264BE2379973F008D3E52 /* app */,
+				BE02642123795403008D3E52 /* view */,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		BE02642123795403008D3E52 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				BE02644023795426008D3E52 /* clview.cxx */,
+				BE02645223795427008D3E52 /* DocumentRenderer.cxx */,
+				BE02642323795424008D3E52 /* drawview.cxx */,
+				BE02642623795425008D3E52 /* drbezob.cxx */,
+				BE02643823795425008D3E52 /* drtxtob.cxx */,
+				BE02642F23795425008D3E52 /* drtxtob1.cxx */,
+				BE02642223795424008D3E52 /* drviews1.cxx */,
+				BE02643023795425008D3E52 /* drviews2.cxx */,
+				BE02643F23795426008D3E52 /* drviews3.cxx */,
+				BE02646123795428008D3E52 /* drviews4.cxx */,
+				BE02644523795426008D3E52 /* drviews5.cxx */,
+				BE02643423795425008D3E52 /* drviews6.cxx */,
+				BE02642823795425008D3E52 /* drviews7.cxx */,
+				BE02644A23795426008D3E52 /* drviews8.cxx */,
+				BE02645623795427008D3E52 /* drviews9.cxx */,
+				BE02642923795425008D3E52 /* drviewsa.cxx */,
+				BE02644823795426008D3E52 /* drviewsb.cxx */,
+				BE02645F23795428008D3E52 /* drviewsc.cxx */,
+				BE02642523795425008D3E52 /* drviewsd.cxx */,
+				BE02643623795425008D3E52 /* drviewse.cxx */,
+				BE02642723795425008D3E52 /* drviewsf.cxx */,
+				BE02645E23795427008D3E52 /* drviewsg.cxx */,
+				BE02644C23795427008D3E52 /* drviewsh.cxx */,
+				BE02645023795427008D3E52 /* drviewsi.cxx */,
+				BE02643A23795426008D3E52 /* drviewsj.cxx */,
+				BE02643123795425008D3E52 /* drviewsk.cxx */,
+				BE02645923795427008D3E52 /* drvwshrg.cxx */,
+				BE02645A23795427008D3E52 /* FormShellManager.cxx */,
+				BE02643223795425008D3E52 /* frmview.cxx */,
+				BE02642D23795425008D3E52 /* GraphicObjectBar.cxx */,
+				BE02644F23795427008D3E52 /* GraphicViewShellBase.cxx */,
+				BE02644623795426008D3E52 /* grviewsh.cxx */,
+				BE02642423795425008D3E52 /* ImpressViewShellBase.cxx */,
+				BE02643E23795426008D3E52 /* MediaObjectBar.cxx */,
+				BE02646023795428008D3E52 /* Outliner.cxx */,
+				BE02643323795425008D3E52 /* OutlinerIterator.cxx */,
+				BE02645B23795427008D3E52 /* OutlineViewShellBase.cxx */,
+				BE02644E23795427008D3E52 /* outlnvs2.cxx */,
+				BE02644B23795427008D3E52 /* outlnvsh.cxx */,
+				BE02642E23795425008D3E52 /* outlview.cxx */,
+				BE02643D23795426008D3E52 /* PresentationViewShellBase.cxx */,
+				BE02643C23795426008D3E52 /* presvish.cxx */,
+				BE02645423795427008D3E52 /* sdruler.cxx */,
+				BE02644423795426008D3E52 /* sdview.cxx */,
+				BE02644323795426008D3E52 /* sdview2.cxx */,
+				BE02643923795426008D3E52 /* sdview3.cxx */,
+				BE02645323795427008D3E52 /* sdview4.cxx */,
+				BE02645523795427008D3E52 /* sdview5.cxx */,
+				BE02644923795426008D3E52 /* sdwindow.cxx */,
+				BE02644223795426008D3E52 /* SlideSorterViewShellBase.cxx */,
+				BE02642A23795425008D3E52 /* tabcontr.cxx */,
+				BE02644723795426008D3E52 /* ToolBarManager.cxx */,
+				BE02645723795427008D3E52 /* unmodpg.cxx */,
+				BE02645C23795427008D3E52 /* ViewClipboard.cxx */,
+				BE02642B23795425008D3E52 /* viewoverlaymanager.cxx */,
+				BE02645123795427008D3E52 /* viewshe2.cxx */,
+				BE02645823795427008D3E52 /* viewshe3.cxx */,
+				BE02643B23795426008D3E52 /* viewshel.cxx */,
+				BE02643523795425008D3E52 /* ViewShellBase.cxx */,
+				BE02645D23795427008D3E52 /* ViewShellHint.cxx */,
+				BE02643723795425008D3E52 /* ViewShellImplementation.cxx */,
+				BE02644123795426008D3E52 /* ViewShellManager.cxx */,
+				BE02642C23795425008D3E52 /* ViewTabBar.cxx */,
+				BE02644D23795427008D3E52 /* WindowUpdater.cxx */,
+				BE02646223795428008D3E52 /* zoomlist.cxx */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		BE0264BC23797905008D3E52 /* treelist */ = {
+			isa = PBXGroup;
+			children = (
+				BE0264BD23797958008D3E52 /* svimpbox.cxx */,
+			);
+			name = treelist;
+			sourceTree = "<group>";
+		};
+		BE0264BE2379973F008D3E52 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				BE0264C32379975C008D3E52 /* optsitem.cxx */,
+				BE0264C02379975C008D3E52 /* sddll.cxx */,
+				BE0264BF2379975C008D3E52 /* sdmod.cxx */,
+				BE0264C22379975C008D3E52 /* sdmod1.cxx */,
+				BE0264C12379975C008D3E52 /* sdmod2.cxx */,
+				BE0264C62379975C008D3E52 /* sdpopup.cxx */,
+				BE0264C52379975C008D3E52 /* sdxfer.cxx */,
+				BE0264C42379975C008D3E52 /* tmplctrl.cxx */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
 		BE34D10C218B667400815297 /* sw */ = {
 			isa = PBXGroup;
 			children = (
@@ -2367,6 +2545,7 @@
 				BE7AECFE2239B76F00B117D2 /* ios */,
 				BEB0E5E721D642420085A0CF /* outdev */,
 				BEB0E5DF21CA9DA20085A0CF /* quartz */,
+				BE0264BC23797905008D3E52 /* treelist */,
 				BE34D140218CF87D00815297 /* window */,
 				BE7E67AC229D0F5300DE73C8 /* xmloff */,
 			);
@@ -2737,6 +2916,7 @@
 			isa = PBXGroup;
 			children = (
 				BEBFC55F2361D80D00BECBD6 /* core */,
+				BE026420237953E6008D3E52 /* ui */,
 			);
 			name = sd;
 			sourceTree = "<group>";
