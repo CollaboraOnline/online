@@ -490,6 +490,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				return state.replace(',', '.');
 			}
 			break;
+
+		case 'settransparency':
+			state = items.getItemValue('.uno:FillTransparence');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
 		}
 
 		return null;
