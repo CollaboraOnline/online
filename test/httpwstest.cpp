@@ -71,7 +71,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSavePassiveOnDisconnect);
     CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testExcelLoad);
-    CPPUNIT_TEST(testPaste);
     CPPUNIT_TEST(testPasteBlank);
     CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testSlideShow);
@@ -110,7 +109,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testSavePassiveOnDisconnect();
     void testReloadWhileDisconnecting();
     void testExcelLoad();
-    void testPaste();
     void testPasteBlank();
     void testInsertDelete();
     void testSlideShow();
@@ -651,31 +649,6 @@ void HTTPWSTest::testExcelLoad()
     catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testPaste()
-{
-    const char* testname = "paste ";
-
-    // Load a document and make it empty, then paste some text into it.
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
-
-    for (int i = 0; i < 5; ++i)
-    {
-        const std::string text = std::to_string(i + 1) + "_sh9le[;\"CFD7U[#B+_nW=$kXgx{sv9QE#\"l1y\"hr_" + Util::encodeId(Util::rng::getNext());
-        TST_LOG("Pasting text #" << i + 1 << ": " << text);
-
-        // Always delete everything to have an empty doc.
-        deleteAll(socket, testname);
-
-        // Paste some text into it.
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
-        const std::string expected = "textselectioncontent: " + text;
-
-        // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket, testname);
-        CPPUNIT_ASSERT_EQUAL(expected, selection);
     }
 }
 
