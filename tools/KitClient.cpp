@@ -23,7 +23,6 @@
 #include <Poco/Buffer.h>
 #include <Poco/Process.h>
 #include <Poco/String.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
@@ -31,8 +30,8 @@
 #include <KitHelper.hpp>
 #include <Png.hpp>
 #include <Util.hpp>
+#include <Protocol.hpp>
 
-using Poco::StringTokenizer;
 using Poco::TemporaryFile;
 using Poco::Util::Application;
 
@@ -90,9 +89,9 @@ protected:
             std::string line;
             std::getline(std::cin, line);
 
-            StringTokenizer tokens(line, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+            std::vector<std::string> tokens(LOOLProtocol::tokenize(line, ' '));
 
-            if (tokens.count() == 0)
+            if (tokens.size() == 0)
                 continue;
 
             if (tokens[0] == "?" || tokens[0] == "help")
@@ -106,7 +105,7 @@ protected:
             }
             else if (tokens[0] == "status")
             {
-                if (tokens.count() != 1)
+                if (tokens.size() != 1)
                 {
                     std::cout << "? syntax" << std::endl;
                     continue;
@@ -119,7 +118,7 @@ protected:
             }
             else if (tokens[0] == "tile")
             {
-                if (tokens.count() != 8)
+                if (tokens.size() != 8)
                 {
                     std::cout << "? syntax" << std::endl;
                     continue;

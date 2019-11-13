@@ -27,7 +27,6 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/SharedPtr.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/Thread.h>
 #include <Poco/URI.h>
@@ -56,7 +55,6 @@ using Poco::Net::WebSocket;
 using Poco::Net::WebSocketException;
 using Poco::Runnable;
 using Poco::SharedPtr;
-using Poco::StringTokenizer;
 using Poco::TemporaryFile;
 using Poco::Thread;
 using Poco::URI;
@@ -92,7 +90,7 @@ public:
                     }
 
                     std::string firstLine = getFirstLine(buffer, n);
-                    StringTokenizer tokens(firstLine, " ", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                    std::vector<std::string> tokens(LOOLProtocol::tokenize(firstLine, ' '));
 
                     if (std::getenv("DISPLAY") != nullptr && tokens[0] == "tile:")
                     {

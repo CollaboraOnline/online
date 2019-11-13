@@ -17,7 +17,6 @@
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/Util/XMLConfiguration.h>
 
 #include <Log.hpp>
@@ -136,9 +135,7 @@ private:
             LOG_INF("Incoming websocket request: " << request.getURI());
 
             const std::string& requestURI = request.getURI();
-            Poco::StringTokenizer pathTokens(requestURI, "/", Poco::StringTokenizer::TOK_IGNORE_EMPTY |
-                                                              Poco::StringTokenizer::TOK_TRIM);
-
+            std::vector<std::string> pathTokens(LOOLProtocol::tokenize(requestURI, '/'));
             if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
             {
                 auto dumpHandler = std::make_shared<DumpSocketHandler>(_socket, request);
