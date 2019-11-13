@@ -483,6 +483,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					return state[3];
 			}
 			break;
+
+		case 'linetransparency':
+			state = items.getItemValue('.uno:LineTransparence');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
 		}
 
 		return null;
