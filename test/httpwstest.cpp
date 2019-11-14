@@ -10,32 +10,15 @@
 #include <config.h>
 
 #include <algorithm>
-#include <condition_variable>
-#include <mutex>
-#include <thread>
-#include <regex>
 #include <vector>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Net/PrivateKeyPassphraseHandler.h>
 #include <Poco/Net/SSLManager.h>
-#include <Poco/Net/Socket.h>
-#include <Poco/Path.h>
 #include <Poco/RegularExpression.h>
-#include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
-#include <Poco/DOM/Node.h>
-#include <Poco/DOM/Document.h>
-#include <Poco/DOM/NodeFilter.h>
-#include <Poco/DOM/NodeIterator.h>
-#include <Poco/DOM/DOMParser.h>
-#include <Poco/SAX/InputSource.h>
 
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -43,8 +26,6 @@
 #include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
 #include <Png.hpp>
-#include <UserMessages.hpp>
-#include <Util.hpp>
 
 #include <countloolkits.hpp>
 #include <helpers.hpp>
@@ -59,8 +40,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
-    CPPUNIT_TEST(testBadRequest);
-    CPPUNIT_TEST(testHandshake);
     CPPUNIT_TEST(testCloseAfterClose);
     CPPUNIT_TEST(testConnectNoLoad);
     CPPUNIT_TEST(testLoadSimple);
@@ -73,7 +52,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPasteBlank);
     CPPUNIT_TEST(testInsertDelete);
-    CPPUNIT_TEST(testSlideShow);
     CPPUNIT_TEST(testInactiveClient);
     CPPUNIT_TEST(testMaxColumn);
     CPPUNIT_TEST(testMaxRow);
@@ -97,8 +75,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testBadRequest();
-    void testHandshake();
     void testCloseAfterClose();
     void testConnectNoLoad();
     void testLoadSimple();
@@ -111,7 +87,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testExcelLoad();
     void testPasteBlank();
     void testInsertDelete();
-    void testSlideShow();
     void testInactiveClient();
     void testMaxColumn();
     void testMaxRow();
@@ -193,94 +168,6 @@ public:
         resetTestStartTime();
     }
 };
-
-void HTTPWSTest::testBadRequest()
-{
-    try
-    {
-        // Try to load a bogus url.
-        const std::string documentURL = "/lol/file%3A%2F%2F%2Ffake.doc";
-
-        Poco::Net::HTTPResponse response;
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-
-        request.set("Connection", "Upgrade");
-        request.set("Upgrade", "websocket");
-        request.set("Sec-WebSocket-Version", "13");
-        request.set("Sec-WebSocket-Key", "");
-        request.setChunkedTransferEncoding(false);
-        session->setKeepAlive(true);
-        session->sendRequest(request);
-        session->receiveResponse(response);
-        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTPResponse::HTTP_BAD_REQUEST, response.getStatus());
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testHandshake()
-{
-    const char* testname = "handshake ";
-    try
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-
-        // NOTE: Do not replace with wrappers. This has to be explicit.
-        Poco::Net::HTTPResponse response;
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        LOOLWebSocket socket(*session, request, response);
-        socket.setReceiveTimeout(0);
-
-        int flags = 0;
-        char buffer[1024] = {0};
-        int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
-        CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
-
-        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
-        if (bytes > 0 && !std::strstr(buffer, "error:"))
-        {
-            CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: connect"), std::string(buffer, bytes));
-
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
-            if (!std::strstr(buffer, "error:"))
-            {
-                CPPUNIT_ASSERT_EQUAL(std::string("statusindicator: ready"), std::string(buffer, bytes));
-            }
-            else
-            {
-                // check error message
-                CPPUNIT_ASSERT(std::strstr(SERVICE_UNAVAILABLE_INTERNAL_ERROR, buffer) != nullptr);
-
-                // close frame message
-                bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-                TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
-                CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
-            }
-        }
-        else
-        {
-            // check error message
-            CPPUNIT_ASSERT(std::strstr(SERVICE_UNAVAILABLE_INTERNAL_ERROR, buffer) != nullptr);
-
-            // close frame message
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
-            CPPUNIT_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        }
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
 
 void HTTPWSTest::testCloseAfterClose()
 {
@@ -767,101 +654,6 @@ void HTTPWSTest::testInsertDelete()
         CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
         CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-static int findInDOM(Poco::XML::Document *doc, const char *string, bool checkName,
-                     unsigned long nodeFilter = Poco::XML::NodeFilter::SHOW_ALL)
-{
-    int count = 0;
-    Poco::XML::NodeIterator itCode(doc, nodeFilter);
-    while (Poco::XML::Node* pNode = itCode.nextNode())
-    {
-        if (checkName)
-        {
-            if (pNode->nodeName() == string)
-                count++;
-        }
-        else
-        {
-            if (pNode->getNodeValue().find(string) != std::string::npos)
-                count++;
-        }
-    }
-    return count;
-}
-
-void HTTPWSTest::testSlideShow()
-{
-    const char* testname = "slideshow ";
-    try
-    {
-        // Load a document
-        std::string documentPath, documentURL;
-        std::string response;
-        getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL, testname);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        sendTextFrame(socket, "load url=" + documentURL, testname);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket, testname));
-
-        // request slide show
-        sendTextFrame(socket, "downloadas name=slideshow.svg id=slideshow format=svg options=", testname);
-        response = getResponseString(socket, "downloadas:", testname);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a downloadas: message as expected", !response.empty());
-
-        std::vector<std::string> tokens(LOOLProtocol::tokenize(response.substr(11), ' '));
-        // "downloadas: jail= dir= name=slideshow.svg port= id=slideshow"
-        const std::string jail = tokens[0].substr(std::string("jail=").size());
-        const std::string dir = tokens[1].substr(std::string("dir=").size());
-        const std::string name = tokens[2].substr(std::string("name=").size());
-        const int port = std::stoi(tokens[3].substr(std::string("port=").size()));
-        const std::string id = tokens[4].substr(std::string("id=").size());
-        CPPUNIT_ASSERT(!jail.empty());
-        CPPUNIT_ASSERT(!dir.empty());
-        CPPUNIT_ASSERT_EQUAL(std::string("slideshow.svg"), name);
-        CPPUNIT_ASSERT_EQUAL(static_cast<int>(_uri.getPort()), port);
-        CPPUNIT_ASSERT_EQUAL(std::string("slideshow"), id);
-
-        std::string encodedDoc;
-        Poco::URI::encode(documentPath, ":/?", encodedDoc);
-        const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name;
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
-        TST_LOG("Requesting SVG from " << path);
-        session->sendRequest(requestSVG);
-
-        Poco::Net::HTTPResponse responseSVG;
-        std::istream& rs = session->receiveResponse(responseSVG);
-        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK /* 200 */, responseSVG.getStatus());
-        CPPUNIT_ASSERT_EQUAL(std::string("image/svg+xml"), responseSVG.getContentType());
-        TST_LOG("SVG file size: " << responseSVG.getContentLength());
-
-//        std::ofstream ofs("/tmp/slide.svg");
-//        Poco::StreamCopier::copyStream(rs, ofs);
-//        ofs.close();
-
-        // Asserting on the size of the stream is really unhelpful;
-        // lets checkout the contents instead ...
-        Poco::XML::DOMParser parser;
-        Poco::XML::InputSource svgSrc(rs);
-        Poco::AutoPtr<Poco::XML::Document> doc = parser.parse(&svgSrc);
-
-        // Do we have our automation / scripting
-        CPPUNIT_ASSERT(findInDOM(doc, "jessyinkstart",    false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
-        CPPUNIT_ASSERT(findInDOM(doc, "jessyinkend",      false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
-        CPPUNIT_ASSERT(findInDOM(doc, "libreofficestart", false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
-        CPPUNIT_ASSERT(findInDOM(doc, "libreofficeend",   false, Poco::XML::NodeFilter::SHOW_CDATA_SECTION));
-
-        // Do we have plausible content ?
-        int countText = findInDOM(doc, "text", true, Poco::XML::NodeFilter::SHOW_ELEMENT);
-        CPPUNIT_ASSERT_EQUAL(countText, 93);
     }
     catch (const Poco::Exception& exc)
     {
