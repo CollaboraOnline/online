@@ -188,6 +188,7 @@ function onClick(e, id, item, subItem) {
 	}
 	else if (id === 'showsearchbar') {
 		$('#toolbar-down').hide();
+		$('#tb_editbar_item_showsearchbar .w2ui-button').removeClass('over');
 		$('#toolbar-search').show();
 		L.DomUtil.get('search-input').focus();
 	}
