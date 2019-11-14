@@ -284,6 +284,11 @@ p.mobile-wizard.ui-combobox-text.selected {
 	vertical-align: middle;
 }
 
+.ui-content.unobutton.selected {
+	border: 1px solid #4d82b8;
+	border-radius: 10px;
+}
+
 #mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
 	margin-top: 0px !important;
 }

@@ -811,6 +811,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var label = L.DomUtil.create('span', 'ui-content unolabel', div);
 			label.for = buttonId;
 			label.innerHTML = data.text;
+
+			var updateFunction = function() {
+				var items = builder.map['stateChangeHandler'];
+				var state = items.getItemValue(data.command);
+				console.warn('state: ' + state);
+				if (state && state === 'true')
+					$(button).addClass('selected');
+				else
+					$(button).removeClass('selected');
+			}
+
+			updateFunction();
+
+			builder.map.on('commandstatechanged', function(e) {
+				if (e.commandName === data.command)
+					updateFunction();
+			}, this);
+
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.innerHTML = builder._cleanText(data.text);
