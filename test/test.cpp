@@ -176,7 +176,12 @@ bool runClientTests(bool standalone, bool verbose)
         const char *cmd = "./run_unit.sh --verbose";
         if (getenv("UNITTEST"))
             cmd = "./unittest";
-        std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" " << cmd << ")\n\n";
+        std::cerr << "  (cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" " << cmd << ")\n\n";
+        if (getenv("UNITTEST"))
+        {
+            std::cerr << "To debug:\n\n";
+            std::cerr << "  (cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" gdb --args " << cmd << ")\n\n";
+        }
 #else
         std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" make check)\n\n";
 #endif
