@@ -419,6 +419,48 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return unit;
 	},
 
+	_mapWindowIdToUnoCommand: function(id) {
+		switch (id) {
+		case 'beforetextindent':
+			return '.uno:LeftRightParaMargin';
+
+		case 'aftertextindent':
+			return '.uno:LeftRightParaMargin';
+
+		case 'firstlineindent':
+			return '.uno:LeftRightParaMargin';
+
+		case 'aboveparaspacing':
+			return '.uno:ULSpacing';
+
+		case 'belowparaspacing':
+			return '.uno:ULSpacing';
+
+		case 'rowheight':
+			return '.uno:TableRowHeight';
+
+		case 'columnwidth':
+			return '.uno:TableColumWidth';
+
+		case 'decimalplaces':
+			return '.uno:NumberFormat';
+
+		case 'leadingzeros':
+			return '.uno:NumberFormat';
+
+		case 'linetransparency':
+			return '.uno:LineTransparence';
+
+		case 'settransparency':
+			return '.uno:FillTransparence';
+
+		case 'FIELD_TRANSPARENCY':
+			return '.uno:FillShadowTransparency';
+		}
+
+		return null;
+	},
+
 	_getUnoStateForItemId: function(id, builder) {
 		var items = builder.map['stateChangeHandler'];
 		var state = null;
@@ -549,14 +591,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
 
-		var value = builder._getUnoStateForItemId(data.id, builder);
+		var updateFunction = function() {
+			var value = builder._getUnoStateForItemId(data.id, builder);
 
-		if (!value && data.text != undefined)
-			value = data.text;
-		else if (!value && data.children && data.children.length)
-			value = data.children[0].text;
+			if (!value && data.text != undefined)
+				value = data.text;
+			else if (!value && data.children && data.children.length)
+				value = data.children[0].text;
 
-		$(spinfield).attr('value', builder._cleanValueFromUnits(value));
+			$(spinfield).attr('value', builder._cleanValueFromUnits(value));
+		}
+
+		updateFunction();
+
+		builder.map.on('commandstatechanged', function(e) {
+			if (e.commandName === builder._mapWindowIdToUnoCommand(data.id))
+				updateFunction();
+		}, this);
 
 		spinfield.addEventListener('change', function() {
 			if (customCallback)
