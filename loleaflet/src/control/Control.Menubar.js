@@ -282,7 +282,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:ModifyPage'},
 				{uno: '.uno:SlideChangeWindow'},
 				{uno: '.uno:CustomAnimation'},
-				{uno: '.uno:MasterSlidesPanel', name: _('Master Slides'), id: 'masterslidespanel', type: 'action'}]
+				{uno: '.uno:MasterSlidesPanel'}]
 			},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -1137,8 +1137,6 @@ L.Control.Menubar = L.Control.extend({
 			});
 		} else if (window.ThisIsAMobileApp && $(item).data('mobileappuno')) {
 			this._map.sendUnoCommand($(item).data('mobileappuno'));
-		} else if (id == 'masterslidespanel') {
-			this._map.sendUnoCommand('.uno:MasterSlidesPanel');
 		}
 		// Inform the host if asked
 		if ($(item).data('postmessage') === 'true') {
