@@ -413,8 +413,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return _('\"');
 		} else if (unit == 'percent') {
 			return _('%');
+		} else if (unit == 'degree') {
+			return _('°');
 		}
-
 		return unit;
 	},
 
