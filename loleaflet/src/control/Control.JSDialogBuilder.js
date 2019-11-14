@@ -395,12 +395,34 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled == 'false')
 			$(checkbox).attr('disabled', 'disabled');
 
-		if (data.checked == 'true')
-			$(checkbox).attr('checked', 'checked');
-
 		checkbox.addEventListener('change', function() {
 			builder.callback('checkbox', 'change', checkbox, this.checked, builder);
 		});
+
+		var customCommand = builder._mapWindowIdToUnoCommand(data.id);
+
+		var updateFunction = function() {
+			var state = builder._getUnoStateForItemId(data.id, builder);
+
+			if (!state) {
+				var items = builder.map['stateChangeHandler'];
+				state = items.getItemValue(data.command);
+			}
+			if (!state)
+				state = data.checked;
+
+			if (state && state === 'true' || state === 1 || state === '1')
+				$(checkbox).attr('checked', 'checked');
+			else if (state)
+				$(checkbox).removeAttr('checked', 'checked');
+		}
+
+		updateFunction();
+
+		builder.map.on('commandstatechanged', function(e) {
+			if (e.commandName === customCommand ? customCommand : data.command)
+				updateFunction();
+		}, this);
 
 		if (data.hidden)
 			$(checkbox).hide();
@@ -446,6 +468,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '.uno:NumberFormat';
 
 		case 'leadingzeros':
+			return '.uno:NumberFormat';
+
+		case 'negativenumbersred':
+			return '.uno:NumberFormat';
+
+		case 'thousandseparator':
 			return '.uno:NumberFormat';
 
 		case 'linetransparency':
@@ -526,6 +554,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					return state[3];
 			}
 			break;
+
+		case 'negativenumbersred':
+			state = items.getItemValue('.uno:NumberFormat');
+			if (state) {
+				state = state.split(',');
+				if (state.length > 1)
+					return state[1];
+			}
+			return;
+
+		case 'thousandseparator':
+			state = items.getItemValue('.uno:NumberFormat');
+			if (state) {
+				state = state.split(',');
+				if (state.length > 0)
+					return state[0];
+			}
+			return;
 
 		case 'linetransparency':
 			state = items.getItemValue('.uno:LineTransparence');
