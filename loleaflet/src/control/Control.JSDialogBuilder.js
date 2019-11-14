@@ -815,7 +815,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var updateFunction = function() {
 				var items = builder.map['stateChangeHandler'];
 				var state = items.getItemValue(data.command);
-				console.warn('state: ' + state);
+
 				if (state && state === 'true')
 					$(button).addClass('selected');
 				else
