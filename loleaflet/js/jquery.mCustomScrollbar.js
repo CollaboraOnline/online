@@ -1218,7 +1218,8 @@ and dependencies (minified).
 				_iframe(false); /* enable scrollbar dragging over iframes by disabling their events */
 				_stop($this);
 				draggable=$(this);
-				var offset=draggable.offset(),y=_coordinates(e)[0]-offset.top,x=_coordinates(e)[1]-offset.left,
+				var coordinates = _coordinates(e);
+				var offset=draggable.offset(),y=coordinates[0]-offset.top,x=coordinates[1]-offset.left,
 					h=draggable.height()+offset.top,w=draggable.width()+offset.left;
 				if(y<h && y>0 && x<w && x>0){
 					dragY=y; 
@@ -1228,12 +1229,14 @@ and dependencies (minified).
 			}).bind("touchmove."+namespace,function(e){
 				e.stopImmediatePropagation();
 				e.preventDefault();
-				var offset=draggable.offset(),y=_coordinates(e)[0]-offset.top,x=_coordinates(e)[1]-offset.left;
+				var coordinates = _coordinates(e);
+				var offset=draggable.offset(),y=coordinates[0]-offset.top,x=coordinates[1]-offset.left;
 				_drag(dragY,dragX,y,x);
 			});
 			$(document).add(eds).bind("mousemove."+namespace+" pointermove."+namespace+" MSPointerMove."+namespace,function(e){
 				if(draggable){
-					var offset=draggable.offset(),y=_coordinates(e)[0]-offset.top,x=_coordinates(e)[1]-offset.left;
+					var coordinates = _coordinates(e);
+					var offset=draggable.offset(),y=coordinates[0]-offset.top,x=coordinates[1]-offset.left;
 					if(dragY===y && dragX===x){return;} /* has it really moved? */
 					_drag(dragY,dragX,y,x);
 				}
@@ -1313,26 +1316,28 @@ and dependencies (minified).
 				});
 			}
 			function _onTouchstart(e){
-				if(!_pointerTouch(e) || touchActive || _coordinates(e)[2]){touchable=0; return;}
+				var coordinates = _coordinates(e);
+				if(!_pointerTouch(e) || touchActive || coordinates[2]){touchable=0; return;}
 				touchable=1; touchDrag=0; docDrag=0; draggable=1;
 				$this.removeClass("mCS_touch_action");
 				var offset=mCSB_container.offset();
-				dragY=_coordinates(e)[0]-offset.top;
-				dragX=_coordinates(e)[1]-offset.left;
-				touchIntent=[_coordinates(e)[0],_coordinates(e)[1]];
+				dragY=coordinates[0]-offset.top;
+				dragX=coordinates[1]-offset.left;
+				touchIntent=[coordinates[0],coordinates[1]];
 			}
 			function _onTouchmove(e){
-				if(!_pointerTouch(e) || touchActive || _coordinates(e)[2]){return;}
+				var coordinates = _coordinates(e);
+				if(!_pointerTouch(e) || touchActive || coordinates[2]){return;}
 				if(!o.documentTouchScroll){e.preventDefault();} 
 				e.stopImmediatePropagation();
 				if(docDrag && !touchDrag){return;}
 				if(draggable){
 					runningTime=_getTime();
-					var offset=mCustomScrollBox.offset(),y=_coordinates(e)[0]-offset.top,x=_coordinates(e)[1]-offset.left,
+					var offset=mCustomScrollBox.offset(),y=coordinates[0]-offset.top,x=coordinates[1]-offset.left,
 						easing="mcsLinearOut";
 					touchMoveY.push(y);
 					touchMoveX.push(x);
-					touchIntent[2]=Math.abs(_coordinates(e)[0]-touchIntent[0]); touchIntent[3]=Math.abs(_coordinates(e)[1]-touchIntent[1]);
+					touchIntent[2]=Math.abs(coordinates[0]-touchIntent[0]); touchIntent[3]=Math.abs(coordinates[1]-touchIntent[1]);
 					if(d.overflowed[0]){
 						var limit=mCSB_dragger[0].parent().height()-mCSB_dragger[0].height(),
 							prevent=((dragY-y)>0 && (y-dragY)>-(limit*d.scrollRatio.y) && (touchIntent[3]*2<touchIntent[2] || o.axis==="yx"));
@@ -1356,23 +1361,25 @@ and dependencies (minified).
 				}
 			}
 			function _onTouchstart2(e){
-				if(!_pointerTouch(e) || touchActive || _coordinates(e)[2]){touchable=0; return;}
+				var coordinates = _coordinates(e);
+				if(!_pointerTouch(e) || touchActive || coordinates[2]){touchable=0; return;}
 				touchable=1;
 				e.stopImmediatePropagation();
 				_stop($this);
 				startTime=_getTime();
 				var offset=mCustomScrollBox.offset();
-				touchStartY=_coordinates(e)[0]-offset.top;
-				touchStartX=_coordinates(e)[1]-offset.left;
+				touchStartY=coordinates[0]-offset.top;
+				touchStartX=coordinates[1]-offset.left;
 				touchMoveY=[]; touchMoveX=[];
 			}
 			function _onTouchend(e){
-				if(!_pointerTouch(e) || touchActive || _coordinates(e)[2]){return;}
+				var coordinates = _coordinates(e);
+				if(!_pointerTouch(e) || touchActive || coordinates[2]){return;}
 				draggable=0;
 				e.stopImmediatePropagation();
 				touchDrag=0; docDrag=0;
 				endTime=_getTime();
-				var offset=mCustomScrollBox.offset(),y=_coordinates(e)[0]-offset.top,x=_coordinates(e)[1]-offset.left;
+				var offset=mCustomScrollBox.offset(),y=coordinates[0]-offset.top,x=coordinates[1]-offset.left;
 				if((endTime-runningTime)>30){return;}
 				speed=1000/(endTime-startTime);
 				var easing="mcsEaseOut",slow=speed<2.5,
@@ -1427,8 +1434,9 @@ and dependencies (minified).
 				if(!action){action=1; touchActive=true;}
 			}).add(document).bind("mousemove."+namespace,function(e){
 				if(!touchable && action && _sel()){
+					var coordinates = _coordinates(e);
 					var offset=mCSB_container.offset(),
-						y=_coordinates(e)[0]-offset.top+mCSB_container[0].offsetTop,x=_coordinates(e)[1]-offset.left+mCSB_container[0].offsetLeft;
+						y=coordinates[0]-offset.top+mCSB_container[0].offsetTop,x=coordinates[1]-offset.left+mCSB_container[0].offsetLeft;
 					if(y>0 && y<wrapper.height() && x>0 && x<wrapper.width()){
 						if(seq.step){_seq("off",null,"stepped");}
 					}else{
