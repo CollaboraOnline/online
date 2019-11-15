@@ -633,6 +633,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         }
     }
 
+    const auto& config = Application::instance().config();
+
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
@@ -640,13 +642,17 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), LOOLWSD::ServiceRoot);
 
+    std::string protocolDebug = "false";
+    if (config.getBool("logging.protocol"))
+        protocolDebug = "true";
+    Poco::replaceInPlace(preprocess, std::string("%PROTOCOL_DEBUG%"), protocolDebug);
+
     static const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
     static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
 
     std::string brandCSS(Poco::format(linkCSS, LOOLWSD::ServiceRoot, std::string(BRANDING)));
     std::string brandJS(Poco::format(scriptJS, LOOLWSD::ServiceRoot, std::string(BRANDING)));
 
-    const auto& config = Application::instance().config();
 #if ENABLE_SUPPORT_KEY
     const std::string keyString = config.getString("support_key", "");
     SupportKey key(keyString);

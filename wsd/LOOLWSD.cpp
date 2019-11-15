@@ -797,6 +797,7 @@ void LOOLWSD::initialize(Application& self)
             { "child_root_path", "jails" },
             { "file_server_root_path", "loleaflet/.." },
             { "lo_jail_subpath", "lo" },
+            { "logging.protocol", "false" },
             { "logging.anonymize.filenames", "false" }, // Deprecated.
             { "logging.anonymize.usernames", "false" }, // Deprecated.
             // { "logging.anonymize.anonymize_user_data", "false" }, // Do not set to fallback on filename/username.

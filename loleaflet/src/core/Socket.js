@@ -140,9 +140,7 @@ L.Socket = L.Class.extend({
 			// Only attempt to log text frames, not binary ones.
 			if (typeof msg === 'string') {
 				L.Log.log(msg, L.OUTGOING, coords);
-				if (this._map._docLayer && this._map._docLayer._debug) {
-					console.log2(+new Date() + ' %cOUTGOING%c: ' + msg.concat(' ').replace(' ', '%c '), 'background:#fbb;color:black', 'color:red', 'color:black');
-				}
+				this._logSocket('OUTGOING', msg);
 			}
 		}
 		else {
@@ -155,9 +153,7 @@ L.Socket = L.Class.extend({
 		// Only attempt to log text frames, not binary ones.
 		if (typeof msg === 'string') {
 			L.Log.log(msg, L.OUTGOING, coords);
-			if (this._map._docLayer && this._map._docLayer._debug) {
-				console.log2(+new Date() + ' %cOUTGOING%c: ' + msg.concat(' ').replace(' ', '%c '), 'background:#fbb;color:black', 'color:red', 'color:black');
-			}
+			this._logSocket('OUTGOING', msg);
 		}
 
 		this.socket.send(msg);
@@ -237,6 +233,20 @@ L.Socket = L.Class.extend({
 		return true;
 	},
 
+	_logSocket: function(type, msg) {
+
+		var fullDebug = this._map._docLayer && this._map._docLayer._debug;
+		if (!window.protocolDebug && !fullDebug)
+			return;
+
+		if (!fullDebug && msg.length > 256) // for reasonable performance.
+			msg = msg.substring(0,256) + '<truncated ' + (msg.length - 256) + 'chars>';
+
+		var color = type === 'OUTGOING' ? 'color:red' : 'color:blue';
+		console.log2(+new Date() + ' %c' + type + '%c: ' + msg.concat(' ').replace(' ', '%c '),
+			     'background:#ddf;color:black', color, 'color:black');
+	},
+
 	_onMessage: function (e) {
 		var imgBytes, index, textMsg, img;
 
@@ -254,9 +264,7 @@ L.Socket = L.Class.extend({
 			textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
 		}
 
-		if (this._map._docLayer && this._map._docLayer._debug) {
-			console.log2(+new Date() + ' %cINCOMING%c: ' + textMsg.concat(' ').replace(' ', '%c '), 'background:#ddf;color:black', 'color:blue', 'color:black');
-		}
+		this._logSocket('INCOMING', textMsg);
 
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('loolserver ')) {
