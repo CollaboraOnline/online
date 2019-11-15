@@ -1544,10 +1544,6 @@ and dependencies (minified).
 		_canAccessIFrame=function(iframe){
 			var html=null;
 			if(!iframe){
-				try{
-					var doc=top.document;
-					html=doc.body.innerHTML;
-				}catch(err){/* do nothing */}
 				return(html!==null);
 			}else{
 				try{
