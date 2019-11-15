@@ -64,7 +64,7 @@ var deps = {
 		desc: 'Calc tile layer.',
 		deps: ['TileLayer', 'CalcGridLines']
 	},
-	
+
 	ImageOverlay: {
 		src: ['layer/ImageOverlay.js'],
 		desc: 'Used to display an image over a particular rectangular area of the map.'
@@ -75,9 +75,9 @@ var deps = {
 		desc: 'Used to display a progress image over rectangular are of the map.'
 	},
 
-	ClipboardContainer: {
-		src: ['layer/marker/ClipboardContainer.js'],
-		desc: 'Container for hidden input field.'
+	TextInput: {
+		src: ['layer/marker/TextInput.js'],
+		desc: 'Hidden input field.'
 	},
 
 	Marker: {

@@ -314,7 +314,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 
 		if (this._state === L.Map.TouchGesture.MARKER || this._state === L.Map.TouchGesture.GRAPHIC) {
-			this._map._clipboardContainer.blur();
+			this._map._textInput.blur();
 		} else {
 			this._map.focus();
 		}
@@ -445,8 +445,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map._docLayer.isCursorVisible()) {
 			this._map._docLayer._cursorMarker.setOpacity(0);
 		}
-		if (this._map._clipboardContainer._cursorHandler) {
-			this._map._clipboardContainer._cursorHandler.setOpacity(0);
+		if (this._map._textInput._cursorHandler) {
+			this._map._textInput._cursorHandler.setOpacity(0);
 		}
 		if (this._map._docLayer._selectionHandles['start']) {
 			this._map._docLayer._selectionHandles['start'].setOpacity(0);
@@ -487,8 +487,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map._docLayer.isCursorVisible()) {
 			this._map._docLayer._cursorMarker.setOpacity(1);
 		}
-		if (this._map._clipboardContainer._cursorHandler) {
-			this._map._clipboardContainer._cursorHandler.setOpacity(1);
+		if (this._map._textInput._cursorHandler) {
+			this._map._textInput._cursorHandler.setOpacity(1);
 		}
 		if (this._map._docLayer._selectionHandles['start']) {
 			this._map._docLayer._selectionHandles['start'].setOpacity(1);

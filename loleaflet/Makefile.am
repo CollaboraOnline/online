@@ -354,7 +354,7 @@ pot:
 		src/core/Socket.js \
 		src/errormessages.js \
 		src/layer/marker/Annotation.js \
-		src/layer/marker/ClipboardContainer.js \
+		src/layer/marker/TextInput.js \
 		src/layer/tile/CalcTileLayer.js \
 		src/layer/tile/ImpressTileLayer.js \
 		src/layer/tile/TileLayer.js \

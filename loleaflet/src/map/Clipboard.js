@@ -395,7 +395,7 @@ L.Clipboard = L.Class.extend({
 								if (usePasteKeyEvent) {
 									// paste into dialog
 									var KEY_PASTE = 1299;
-									that._map._clipboardContainer._sendKeyEvent(0, KEY_PASTE);
+									that._map._textInput._sendKeyEvent(0, KEY_PASTE);
 								} else {
 									// paste into document
 									that._map._socket.sendMessage('uno .uno:Paste');
@@ -652,7 +652,7 @@ L.Clipboard = L.Class.extend({
 					that._map.focus();
 				else
 					active.focus();
-				that._map._clipboardContainer._abortComposition(ev);
+				that._map._textInput._abortComposition(ev);
 				that._clipboardSerial++;
 			}, 0 /* ASAP */);
 			return false;
@@ -666,7 +666,7 @@ L.Clipboard = L.Class.extend({
 			// pass the clipboard data to a different context (async calls, f.e.).
 			var htmlText = ev.clipboardData.getData('text/html');
 			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, htmlText, usePasteKeyEvent);
-			this._map._clipboardContainer._abortComposition(ev);
+			this._map._textInput._abortComposition(ev);
 			this._clipboardSerial++;
 			this._stopHideDownload();
 		}

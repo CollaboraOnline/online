@@ -4,7 +4,7 @@
  *
  * It handles keyboard interactions which are NOT text input, including those which
  * don't require edit permissions (e.g. page scroll). Text input is handled
- * at ClipboardContainer.
+ * at TextInput.
  */
 
 L.Map.mergeOptions({
@@ -127,7 +127,7 @@ L.Map.Keyboard = L.Handler.extend({
 	handleOnKeyDownKeys: {
 		// these keys need to be handled on keydown in order for them
 		// to work on chrome
-		// Backspace and Delete are handled at ClipboardContainer's 'beforeinput' handler.
+		// Backspace and Delete are handled at TextInput's 'beforeinput' handler.
 		9   : true, // tab
 		19  : true, // pause/break
 		20  : true, // caps lock
@@ -232,7 +232,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// Calls the public onKeyDown(), but only if the event doesn't have
 	// a charCode property (set to something different than 0) - that ignores
 	// any 'beforeinput', 'keypress' and 'input' events that would add
-	// printable characters. Those are handled by ClipboardContainer.js.
+	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
 		console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
 
@@ -340,7 +340,7 @@ L.Map.Keyboard = L.Handler.extend({
 			else if ((ev.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
 				if (keyCode === 8 || keyCode === 46 || keyCode === 13)
 				{
-					// handled generically in ClipboardContainer.js
+					// handled generically in TextInput.js
 					console.log('Ignore backspace/delete/enter keypress');
 					return;
 				}
@@ -500,7 +500,7 @@ L.Map.Keyboard = L.Handler.extend({
 		case 93: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
 			this._map.focus();
-			this._map._clipboardContainer.select();
+			this._map._textInput.select();
 			return true;
 		case 80: // p
 			this._map.print();

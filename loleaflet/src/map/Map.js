@@ -144,8 +144,8 @@ L.Map = L.Evented.extend({
 		}
 		this._progressBar = L.progressOverlay(center, new L.point(150, 25));
 
-		this._clipboardContainer = L.clipboardContainer();
-		this.addLayer(this._clipboardContainer);
+		this._textInput = L.textInput();
+		this.addLayer(this._textInput);
 
 		if (window.mode.isMobile()) {
 			L.DomEvent.on(window, 'resize', function(e) {
@@ -811,9 +811,9 @@ L.Map = L.Evented.extend({
 		return this._container;
 	},
 
-	// Returns the instance of layer/marker/ClipboardContainer in this map.
-	getClipboardContainer: function getClipboardContainer() {
-		return this._clipboardContainer;
+	// Returns the instance of layer/marker/TextInput in this map.
+	getTextInput: function getTextInput() {
+		return this._textInput;
 	},
 
 	// We have one global winId that controls what window (dialog, sidebar, or
@@ -907,12 +907,12 @@ L.Map = L.Evented.extend({
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
 		if (this._permission === 'edit') {
-			this._clipboardContainer.focus();
+			this._textInput.focus();
 		}
 	},
 
 	hasFocus: function () {
-		return this._clipboardContainer.hasFocus();
+		return this._textInput.hasFocus();
 	},
 
 	setHelpTarget: function(page) {

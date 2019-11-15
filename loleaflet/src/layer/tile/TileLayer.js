@@ -2000,7 +2000,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 		}
 
-		this._map._clipboardContainer.showCursor();
+		this._map._textInput.showCursor();
 		if (this._map._isFocused && !L.Browser.mobile) {
 			// On mobile, this is causing some key input to get lost.
 			this._map.focus();
@@ -2046,7 +2046,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._updateCursorPos();
 		}
 		else {
-			this._map._clipboardContainer.hideCursor();
+			this._map._textInput.hideCursor();
 		}
 	},
 
@@ -3126,7 +3126,7 @@ L.TileLayer = L.GridLayer.extend({
 				if (e.layer === this._debugAlwaysActive) {
 					this._map._debugAlwaysActive = true;
 				} else if (e.layer === this._debugShowClipboard) {
-					this._map._clipboardContainer.debug(true);
+					this._map._textInput.debug(true);
 				} else if (e.layer === this._debugTyper) {
 					this._debugTypeTimeout();
 				} else if (e.layer === this._debugInfo2) {
@@ -3139,7 +3139,7 @@ L.TileLayer = L.GridLayer.extend({
 				if (e.layer === this._debugAlwaysActive) {
 					this._map._debugAlwaysActive = false;
 				} else if (e.layer === this._debugShowClipboard) {
-					this._map._clipboardContainer.debug(false);
+					this._map._textInput.debug(false);
 				} else if (e.layer === this._debugTyper) {
 					clearTimeout(this._debugTypeTimeoutId);
 				} else if (e.layer === this._debugInfo2) {

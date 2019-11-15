@@ -371,7 +371,7 @@ L.Control.LokDialog = L.Control.extend({
 		// set the position of the cursor container element
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
-		this._map.getClipboardContainer().focus();
+		this._map.getTextInput().focus();
 	},
 
 	_createDialogCursor: function(dialogId) {
@@ -397,11 +397,11 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		this._map.setWinId(dlgId);
+		var inputContainer = this._map.getTextInput();
 		if (this._dialogs[dlgId].cursorVisible) {
-			this._map.getClipboardContainer().focus();
-		}
-		else {
-			this._map.getClipboardContainer().blur();
+			inputContainer.focus();
+		} else {
+			inputContainer.blur();
 		}
 	},
 

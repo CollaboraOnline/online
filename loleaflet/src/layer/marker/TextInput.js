@@ -1,13 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.ClipboardContainer is the hidden textarea, which handles text
+ * L.TextInput is the hidden textarea, which handles text
  * input events and clipboard selection.
  *
  */
 
 /* global */
 
-L.ClipboardContainer = L.Layer.extend({
+L.TextInput = L.Layer.extend({
 	initialize: function() {
 		// Flag to denote the composing state, derived from
 		// compositionstart/compositionend events; unused
@@ -656,6 +656,6 @@ L.ClipboardContainer = L.Layer.extend({
 	}
 });
 
-L.clipboardContainer = function() {
-	return new L.ClipboardContainer();
+L.textInput = function() {
+	return new L.TextInput();
 };
