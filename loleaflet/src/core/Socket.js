@@ -234,7 +234,6 @@ L.Socket = L.Class.extend({
 	},
 
 	_logSocket: function(type, msg) {
-
 		var fullDebug = this._map._docLayer && this._map._docLayer._debug;
 		if (!window.protocolDebug && !fullDebug)
 			return;
@@ -242,15 +241,20 @@ L.Socket = L.Class.extend({
 		if (!fullDebug && msg.length > 256) // for reasonable performance.
 			msg = msg.substring(0,256) + '<truncated ' + (msg.length - 256) + 'chars>';
 
+		var status = '';
+		if (!window.fullyLoadedAndReady)
+			status += '[!fullyLoadedAndReady]';
+		if (!window.bundlejsLoaded)
+			status += '[!bundlejsLoaded]';
+
 		var color = type === 'OUTGOING' ? 'color:red' : 'color:blue';
-		console.log2(+new Date() + ' %c' + type + '%c: ' + msg.concat(' ').replace(' ', '%c '),
+		console.log2(+new Date() + ' %c' + type + status + '%c: ' + msg.concat(' ').replace(' ', '%c '),
 			     'background:#ddf;color:black', color, 'color:black');
 	},
 
 	_onMessage: function (e) {
 		var imgBytes, index, textMsg, img;
 
-		console.info('onMessage: window.fullyLoadedAndReady: ' + window.fullyLoadedAndReady + ', bundlejsLoaded: ' + window.bundlejsLoaded);
 		if (typeof (e.data) === 'string') {
 			textMsg = e.data;
 		}
