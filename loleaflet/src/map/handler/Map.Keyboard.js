@@ -262,7 +262,6 @@ L.Map.Keyboard = L.Handler.extend({
 		var alt = ev.altKey ? this.keyModifier.alt : 0;
 		var cmd = ev.metaKey ? this.keyModifier.ctrl : 0;
 		var location = ev.location;
-		this._keyHandled = this._keyHandled || false;
 		this.modifier = shift | ctrl | alt | cmd;
 
 		// On Windows, pressing AltGr = Alt + Ctrl
@@ -331,7 +330,6 @@ L.Map.Keyboard = L.Handler.extend({
 				// key ignored
 			}
 			else if (ev.type === 'keydown') {
-				this._keyHandled = false;
 				// console.log(e);
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					keyEventFn('input', charCode, unoKeyCode);
@@ -356,11 +354,9 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 
 				keyEventFn('input', charCode, unoKeyCode);
-				this._keyHandled = true;
 			}
 			else if (ev.type === 'keyup') {
 				keyEventFn('up', charCode, unoKeyCode);
-				this._keyHandled = true;
 			}
 			if (keyCode === 9) {
 				// tab would change focus to other DOM elements
