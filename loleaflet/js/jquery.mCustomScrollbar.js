@@ -1267,7 +1267,24 @@ and dependencies (minified).
 		},
 		/* -------------------- */
 		
-		
+		_getTouchEvents=function(namespace){
+			var eventStart, eventMove, eventEnd;
+			if ('ontouchstart' in window){
+				eventStart = "touchstart."+namespace;
+				eventMove = "touchmove."+namespace;
+				eventEnd = "touchend."+namespace;
+			} else if (window.MSPointerEvent){
+				eventStart = "MSPointerDown."+namespace;
+				eventMove = "MSPointerMove."+namespace;
+				eventEnd = "MSPointerUp."+namespace;
+			} else if (window.PointerEvent){
+				eventStart = "pointerdown."+namespace;
+				eventMove = "pointermove."+namespace;
+				eventEnd = "pointerup."+namespace;
+			}
+			return [eventStart, eventMove, eventEnd];
+		},
+
 		/* 
 		TOUCH SWIPE EVENTS
 		scrolls content via touch swipe 
@@ -1282,11 +1299,7 @@ and dependencies (minified).
 				draggable,dragY,dragX,touchStartY,touchStartX,touchMoveY=[],touchMoveX=[],startTime,runningTime,endTime,distance,speed,amount,
 				durA=0,durB,overwrite=o.axis==="yx" ? "none" : "all",touchIntent=[],touchDrag,docDrag,
 				iframe=mCSB_container.find("iframe"),
-				events=[
-					"touchstart."+namespace+" pointerdown."+namespace+" MSPointerDown."+namespace, //start
-					"touchmove."+namespace+" pointermove."+namespace+" MSPointerMove."+namespace, //move
-					"touchend."+namespace+" pointerup."+namespace+" MSPointerUp."+namespace //end
-				],
+				events=_getTouchEvents(namespace),
 				touchAction=document.body.style.touchAction!==undefined;
 			mCSB_container.bind(events[0],function(e){
 				_onTouchstart(e);
