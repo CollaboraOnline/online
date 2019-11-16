@@ -10,6 +10,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	initialize: function (url, options) {
 		L.TileLayer.prototype.initialize.call(this, url, options);
+		this._preview = L.control.partsPreview();
 
 		if (window.mode.isMobile()) {
 			this._addButton = L.control.mobileSlide();
@@ -37,7 +38,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
-		map.addControl(L.control.partsPreview());
+		map.addControl(this._preview);
 		map.on('zoomend', this._onAnnotationZoom, this);
 		map.on('updateparts', this.onUpdateParts, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
@@ -425,18 +426,17 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	onOrientationChange: function () {
 		var container = L.DomUtil.get('presentation-controls-wrapper');
 		var preview = L.DomUtil.get('slide-sorter');
-		var control = $(preview).data('preview');
 
-		if (!container || !preview || !control) {
+		if (!container || !preview) {
 			return;
 		}
 
 		if (L.DomUtil.isPortrait() && $(preview).data('mCS').opt.axis !== 'x') {
 			$(preview).mCustomScrollbar('destroy');
-			control.createScrollbar('x');
+			this._preview.createScrollbar('x');
 		} else if (L.DomUtil.isLandscape() && $(preview).data('mCS').opt.axis !== 'y') {
 			$(preview).mCustomScrollbar('destroy');
-			control.createScrollbar('y');
+			this._preview.createScrollbar('y');
 		}
 
 	},

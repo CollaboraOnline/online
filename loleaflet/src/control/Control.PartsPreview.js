@@ -58,7 +58,6 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 			}
 		});
-		$(this._partsPreviewCont).data('preview', this);
 	},
 
 	_updateDisabled: function (e) {
