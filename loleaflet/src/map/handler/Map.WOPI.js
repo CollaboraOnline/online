@@ -269,6 +269,7 @@ L.Map.WOPI = L.Handler.extend({
 			var dontTerminateEdit = msg.Values && msg.Values['DontTerminateEdit'];
 			var dontSaveIfUnmodified = msg.Values && msg.Values['DontSaveIfUnmodified'];
 			var extendedData = msg.Values && msg.Values['ExtendedData'];
+			extendedData = encodeURIComponent(extendedData);
 			this._notifySave = msg.Values && msg.Values['Notify'];
 
 			this._map.save(dontTerminateEdit, dontSaveIfUnmodified, extendedData);

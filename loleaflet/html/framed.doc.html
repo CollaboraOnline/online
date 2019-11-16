@@ -48,7 +48,7 @@
 
       function save() {
         post({'MessageId': 'Action_Save',
-              'Values': { 'Notify': true, 'ExtendedData': 'CustomFlag=CustomValue;AnotherFlag=AnotherValue' }
+              'Values': { 'Notify': true, 'ExtendedData': 'CustomFlag=Custom Value;AnotherFlag=AnotherValue' }
             });
       }
 
@@ -90,9 +90,10 @@
 
   <body style="user-select: none;">
 
+    <p>Note: Set net/frame_ancestors in loolwsd.xml to contain 'file:' (without the quotes, but with the colon), otherwise you will get CSP violation. And force reload, or clear caches, otherwise you might get served from the browser cache..</p>
     <form id="insert-text-form">
       Click <button onclick="insertText(document.forms['insert-text-form'].elements['source'].value); return false;">here</button> to insert the following text into the document:
-      <textarea name="source" value="" rows="10" cols="80"></textarea>
+      <textarea name="source" value="" rows="5" cols="50"></textarea>
     </form>
 
     <form id="insert-text-form">
