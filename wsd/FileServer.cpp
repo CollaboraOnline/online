@@ -276,7 +276,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         std::string path(requestUri.getPath());
         if (path.find("loleaflet/" LOOLWSD_VERSION_HASH "/") == std::string::npos)
         {
-            LOG_WRN("client - server version mismatch, disabling browser cache.");
+            LOG_WRN("client - server version mismatch, disabling browser cache. Expected: " LOOLWSD_VERSION_HASH);
             noCache = true;
         }
 
@@ -845,7 +845,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         oss.str(preprocess);
     }
 
-    socket->send(oss.str());
+    preprocess = oss.str();
+    socket->send(preprocess);
     LOG_DBG("Sent file: " << relPath << ": " << preprocess);
 }
 

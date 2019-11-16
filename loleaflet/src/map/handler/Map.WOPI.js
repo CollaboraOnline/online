@@ -142,7 +142,9 @@ L.Map.WOPI = L.Handler.extend({
 	},
 
 	_postMessageListener: function(e) {
-		if (e.origin !== window.parent.origin) {
+
+		// e.origin === 'null' when sandboxed (i.e. when the parent is a file on local filesystem).
+		if (e.origin !== 'null' && e.origin !== window.parent.origin) {
 			return;
 		}
 
@@ -321,6 +323,7 @@ L.Map.WOPI = L.Handler.extend({
 			var dontTerminateEdit = msg.Values && msg.Values['DontTerminateEdit'];
 			var dontSaveIfUnmodified = msg.Values && msg.Values['DontSaveIfUnmodified'];
 			var extendedData = msg.Values && msg.Values['ExtendedData'];
+			extendedData = encodeURIComponent(extendedData);
 			this._notifySave = msg.Values && msg.Values['Notify'];
 
 			this._map.save(dontTerminateEdit, dontSaveIfUnmodified, extendedData);

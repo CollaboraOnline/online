@@ -524,7 +524,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
             std::string extendedData;
             if (tokens.size() > 3)
+            {
                 getTokenString(tokens[3], "extendedData", extendedData);
+                std::string decoded;
+                Poco::URI::decode(extendedData, decoded);
+                extendedData = decoded;
+            }
 
             constexpr bool isAutosave = false;
             constexpr bool isExitSave = false;
