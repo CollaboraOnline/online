@@ -393,34 +393,36 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_onScroll: function (e) {
-		var scrollOffset = 0;
-		if (e) {
-			var prevScrollY = this._scrollY;
-			this._scrollY = this._direction === 'x' ? -e.mcs.left : -e.mcs.top;
-			scrollOffset = this._scrollY - prevScrollY;
-		}
+		setTimeout(L.bind(function (e) {
+			var scrollOffset = 0;
+			if (e) {
+				var prevScrollY = this._scrollY;
+				this._scrollY = this._direction === 'x' ? -e.mcs.left : -e.mcs.top;
+				scrollOffset = this._scrollY - prevScrollY;
+			}
 
-		var previewContBB = this._partsPreviewCont.getBoundingClientRect();
-		var extra =  this._direction === 'x' ? previewContBB.width : previewContBB.height;
-		var topBound = this._previewContTop - (scrollOffset < 0 ? extra : extra / 2);
-		var bottomBound = this._previewContTop + extra + (scrollOffset > 0 ? extra : extra / 2);
-		for (var i = 0; i < this._previewTiles.length; ++i) {
-			var img = this._previewTiles[i];
-			if (img && img.parentNode && !img.fetched) {
-				var previewFrameBB = img.parentNode.getBoundingClientRect();
-				if (this._direction === 'x') {
-					if ((previewFrameBB.left >= topBound && previewFrameBB.left <= bottomBound)
-					|| (previewFrameBB.right >= topBound && previewFrameBB.right <= bottomBound)) {
+			var previewContBB = this._partsPreviewCont.getBoundingClientRect();
+			var extra =  this._direction === 'x' ? previewContBB.width : previewContBB.height;
+			var topBound = this._previewContTop - (scrollOffset < 0 ? extra : extra / 2);
+			var bottomBound = this._previewContTop + extra + (scrollOffset > 0 ? extra : extra / 2);
+			for (var i = 0; i < this._previewTiles.length; ++i) {
+				var img = this._previewTiles[i];
+				if (img && img.parentNode && !img.fetched) {
+					var previewFrameBB = img.parentNode.getBoundingClientRect();
+					if (this._direction === 'x') {
+						if ((previewFrameBB.left >= topBound && previewFrameBB.left <= bottomBound)
+						|| (previewFrameBB.right >= topBound && previewFrameBB.right <= bottomBound)) {
+							this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
+							img.fetched = true;
+						}
+					} else if ((previewFrameBB.top >= topBound && previewFrameBB.top <= bottomBound)
+						|| (previewFrameBB.bottom >= topBound && previewFrameBB.bottom <= bottomBound)) {
 						this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 						img.fetched = true;
 					}
-				} else if ((previewFrameBB.top >= topBound && previewFrameBB.top <= bottomBound)
-					|| (previewFrameBB.bottom >= topBound && previewFrameBB.bottom <= bottomBound)) {
-					this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
-					img.fetched = true;
 				}
 			}
-		}
+		}, this, e), 0);
 	},
 
 	_addDnDHandlers: function (elem) {
