@@ -98,6 +98,7 @@ fakesockettest_LDADD = $(CPPUNIT_LIBS)
 # unit test modules:
 unit_oob_la_SOURCES = UnitOOB.cpp
 unit_http_la_SOURCES = UnitHTTP.cpp
+unit_http_la_LIBADD = $(CPPUNIT_LIBS)
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
