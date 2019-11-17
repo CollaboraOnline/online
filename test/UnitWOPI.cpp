@@ -70,6 +70,10 @@ public:
             // and this test fakes that it's an autosave
             CPPUNIT_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsAutosave"));
 
+            // Check that we get the extended data.
+            CPPUNIT_ASSERT_EQUAL(std::string("CustomFlag=Custom Value;AnotherFlag=AnotherValue"),
+                                 request.get("X-LOOL-WOPI-ExtendedData"));
+
             _finishedSaveModified = true;
         }
 
@@ -105,7 +109,11 @@ public:
             }
             case Phase::SaveModified:
             {
-                helpers::sendTextFrame(*_ws->getLOOLWebSocket(), "save dontTerminateEdit=0 dontSaveIfUnmodified=0", testName);
+                helpers::sendTextFrame(*_ws->getLOOLWebSocket(),
+                                       "save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
+                                       "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%"
+                                       "3DAnotherValue",
+                                       testName);
 
                 _phase = Phase::Polling;
                 _savingPhase = SavingPhase::Modified;
