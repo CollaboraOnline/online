@@ -86,6 +86,7 @@ def extractMenuCommands(path):
 
 # Extract all the uno commands we are using in the Online context menu
 def extractContextCommands(path):
+    commandsToIgnore = ["FontDialogForParagraph"]
     commands = []
 
     # extract from the comments whitelist
@@ -114,6 +115,7 @@ def extractContextCommands(path):
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
+    commands = [command for command in commands if command not in commandsToIgnore]
     # may the list unique
     return set(commands)
 
@@ -242,6 +244,10 @@ window._UNO = function(string, component, isContext) {
 \t\t}
 \t}
 
+\treturn this.removeAccessKey(text);
+}
+
+window.removeAccessKey = function(text) {
 \t// Remove access key markers from translated strings
 \t// 1. access key in parenthesis in case of non-latin scripts
 \ttext = text.replace(/\(~[A-Za-z]\)/, '');

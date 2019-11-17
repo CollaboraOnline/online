@@ -154,6 +154,7 @@ var unoCommandsArray = {
 	JumpUpThisLevel:{text:{menu:_('To Previous Paragraph in Level'),},},
 	JustifyPara:{global:{menu:_('Justified'),},},
 	LanguageMenu:{global:{menu:_('Language'),},},
+	LanguageStatus:{global:{menu:_('Language Status'),},},
 	LayoutStatus:{presentation:{menu:_('Layout'),},},
 	LeftPara:{global:{context:_('Align Left'),menu:_('Left'),},},
 	MergeCells:{presentation:{menu:_('Merge Cells'),},spreadsheet:{menu:_('Merge Cells'),},text:{menu:_('Merge Cells'),},},
@@ -241,6 +242,9 @@ var unoCommandsArray = {
 	SpacePara1:{global:{menu:_('Line Spacing: 1'),},},
 	SpacePara15:{global:{menu:_('Line Spacing: 1.5'),},},
 	SpacePara2:{global:{menu:_('Line Spacing: 2'),},},
+	SpellCheckApplySuggestion:{global:{menu:_('Apply Suggestion'),},},
+	SpellCheckIgnore:{global:{menu:_('Ignore'),},},
+	SpellCheckIgnoreAll:{global:{menu:_('IgnoreAll'),},},
 	SpellDialog:{global:{menu:_('~Spelling...'),},},
 	SpellOnline:{global:{menu:_('~Automatic Spell Checking'),},},
 	SpellingAndGrammarDialog:{global:{menu:_('~Spelling...'),},},
@@ -311,6 +315,10 @@ window._UNO = function(string, component, isContext) {
 		}
 	}
 
+	return this.removeAccessKey(text);
+}
+
+window.removeAccessKey = function(text) {
 	// Remove access key markers from translated strings
 	// 1. access key in parenthesis in case of non-latin scripts
 	text = text.replace(/\(~[A-Za-z]\)/, '');

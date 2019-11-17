@@ -36,7 +36,9 @@ L.Control.ContextMenu = L.Control.extend({
 				   'DeleteRows', 'DeleteColumns', 'DeleteTable',
 				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
 				   'UpdateCurIndex','RemoveTableOf',
-				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes'],
+				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
+				   'SpellingAndGrammarDialog', 'LanguageStatus', 'FontDialog', 'FontDialogForParagraph',
+				   'SpellCheckIgnore', 'SpellCheckIgnoreAll', 'SpellCheckApplySuggestion'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog',
 						  'ShowNote', 'DeleteNote'],
@@ -116,6 +118,7 @@ L.Control.ContextMenu = L.Control.extend({
 		var docType = this._map.getDocType();
 		var contextMenu = {};
 		var sepIdx = 1, itemName;
+		var subMenuIdx = 1;
 		var isLastItemText = false;
 		for (var idx in obj.menu) {
 			var item = obj.menu[idx];
@@ -133,7 +136,20 @@ L.Control.ContextMenu = L.Control.extend({
 				// Only show whitelisted items
 				// Command name (excluding '.uno:') starts from index = 5
 				var commandName = item.command.substring(5);
-				if (this.options.whitelist.general.indexOf(commandName) === -1 &&
+
+				// Command might have paramateres (e.g. .uno:SpellCheckIgnore?Type:string=Grammar)
+				var hasParam = false;
+				if (commandName.indexOf('?')!== -1) {
+					commandName = commandName.substring(0, commandName.indexOf('?'));
+					hasParam = true;
+				}
+
+				// We use a special character dialog in spelling context menu with a parameter
+				if (commandName === 'FontDialog' && !hasParam)
+					continue;
+
+				if (commandName !== 'None' &&
+					this.options.whitelist.general.indexOf(commandName) === -1 &&
 					!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
 					!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
 					!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
@@ -146,8 +162,12 @@ L.Control.ContextMenu = L.Control.extend({
 						item.command = '.uno:HideNote';
 				}
 
-				// Get the translated text associated with the command
-				itemName = _UNO(item.command, docType, true);
+				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph') {
+					itemName = window.removeAccessKey(item.text);
+				} else {
+					// Get the translated text associated with the command
+					itemName = _UNO(item.command, docType, true);
+				}
 
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
@@ -178,7 +198,7 @@ L.Control.ContextMenu = L.Control.extend({
 					continue;
 				}
 
-				contextMenu[item.command] = {
+				contextMenu['submenu' + subMenuIdx++] = {
 					name: _(itemName).replace(/\(~[A-Za-z]\)/, '').replace('~', ''),
 					items: submenu
 				};
