@@ -203,9 +203,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return true;
 	},
 
-	_explorableEntry: function(parentContainer, title, contentNode, builder, valueNode, iconPath) {
+	_explorableEntry: function(parentContainer, data, contentNode, builder, valueNode, iconPath) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
+		if (data && data.id)
+			sectionTitle.id = data.id;
 
 		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
 		var titleClass = '';
@@ -215,7 +217,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			titleClass = 'menu-entry-with-icon'
 		}
 		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
-		titleSpan.innerHTML = title;
+		titleSpan.innerHTML = data.text;
 
 		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
 		if (valueNode) {
@@ -227,7 +229,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		arrowSpan.innerHTML = '>';
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
-		contentDiv.title = title;
+		contentDiv.title = data.text;
 
 		builder._currentDepth++;
 		builder.build(contentDiv, [contentNode]);
@@ -276,19 +278,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_frameHandler: function(parentContainer, data, builder) {
-		var title = builder._cleanText(data.children[0].text);
+		data.text = builder._cleanText(data.children[0].text);
 		var contentNode = data.children[1];
 
-		builder._explorableEntry(parentContainer, title, contentNode, builder);
+		builder._explorableEntry(parentContainer, data, contentNode, builder);
 
 		return false;
 	},
 
 	_panelHandler: function(parentContainer, data, builder) {
-		var title = data.text;
 		var contentNode = data.children[0];
 
-		builder._explorableEntry(parentContainer, title, contentNode, builder);
+		builder._explorableEntry(parentContainer, data, contentNode, builder);
 
 		return false;
 	},
@@ -749,6 +750,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 		title = builder._cleanText(title);
+		data.text = title;
 
 		var entries = [];
 		for (var index in data.entries) {
@@ -768,7 +770,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.command)
 			iconPath = builder._createIconPath(data.command);
 
-		builder._explorableEntry(parentContainer, title, contentNode, builder, valueNode, iconPath);
+		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath);
 
 		return false;
 	},
@@ -963,8 +965,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
-		var title = data.text;
-		title = builder._cleanText(title);
+		data.text = builder._cleanText(data.text);
 
 		var selectedColor = builder._getCurrentColor(data, builder);
 
@@ -993,7 +994,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var contentNode = {type: 'container', children: [colorsContainer], onshow: L.bind(colorPickerControl.onShow, colorPickerControl)};
 
-		builder._explorableEntry(parentContainer, title, contentNode, builder, valueNode, iconPath);
+		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath);
 		return false;
 	},
 
