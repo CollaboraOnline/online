@@ -70,14 +70,18 @@ namespace FileUtil
         removeFile(path.toString(), recursive);
     }
 
+    /// Make a temp copy of a file, and prepend it with a prefix.
+    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename,
+                                const std::string& dstFilenamePrefix);
+
     /// Make a temp copy of a file.
     /// Primarily used by tests to avoid tainting the originals.
     /// srcDir shouldn't end with '/' and srcFilename shouldn't contain '/'.
     /// Returns the created file path.
-    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename);
-
-    /// Make a temp copy of a file, and prepend it with a prefix.
-    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix);
+    inline std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename)
+    {
+        return getTempFilePath(srcDir, srcFilename, std::string());
+    }
 
 } // end namespace FileUtil
 
