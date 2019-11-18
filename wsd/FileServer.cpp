@@ -461,6 +461,8 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
     LOG_TRC("Pre-reading directory: " << basePath << path);
     workingdir = opendir((basePath + path).c_str());
+    if (workingdir == nullptr)
+        return;
 
     while ((currentFile = readdir(workingdir)) != nullptr)
     {
