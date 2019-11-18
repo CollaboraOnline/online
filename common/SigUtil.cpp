@@ -83,13 +83,38 @@ namespace SigUtil
 }
 
 #if !MOBILEAPP
-std::mutex SigHandlerTrap;
-
 namespace SigUtil
 {
-    std::mutex& getSigHandlerTrap()
+    /// This traps the signal-handler so we don't _Exit
+    /// while dumping stack trace. It's re-entrant.
+    /// Used to safely increment and decrement the signal-handler trap.
+    class SigHandlerTrap
     {
-        return SigHandlerTrap;
+        static std::atomic<int> SigHandling;
+    public:
+        SigHandlerTrap() { ++SigHandlerTrap::SigHandling; }
+        ~SigHandlerTrap() { --SigHandlerTrap::SigHandling; }
+
+        /// Check that we have exclusive access to the trap.
+        /// Otherwise, there is another signal in progress.
+        bool isExclusive() const
+        {
+            // Return true if we are alone.
+            return SigHandlerTrap::SigHandling == 1;
+        }
+
+        /// Wait for the trap to clear.
+        static void wait()
+        {
+            while (SigHandlerTrap::SigHandling)
+                sleep(1);
+        }
+    };
+    std::atomic<int> SigHandlerTrap::SigHandling;
+
+    void waitSigHandlerTrap()
+    {
+        SigHandlerTrap::wait();
     }
 
     const char *signalName(const int signo)
@@ -211,7 +236,15 @@ namespace SigUtil
     static
     void handleFatalSignal(const int signal)
     {
-        std::unique_lock<std::mutex> lock(SigHandlerTrap);
+        SigHandlerTrap guard;
+        if (!guard.isExclusive())
+        {
+            Log::signalLogPrefix();
+            Log::signalLog(" Fatal double signal received: ");
+            Log::signalLog(signalName(signal));
+            Log::signalLog("\n Already handling a signal; will ignore this.");
+            return;
+        }
 
         Log::signalLogPrefix();
         Log::signalLog(" Fatal signal received: ");
