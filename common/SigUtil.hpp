@@ -38,14 +38,12 @@ namespace SigUtil
     bool getDumpGlobalState();
     /// Reset the flag to dump internal state.
     void resetDumpGlobalState();
-}
 
 #if !MOBILEAPP
-namespace SigUtil
-{
-    /// Mutex to trap signal handler, if any,
+
+    /// Wait for the signal handler, if any,
     /// and prevent _Exit while collecting backtrace.
-    std::mutex& getSigHandlerTrap();
+    void waitSigHandlerTrap();
 
     /// Returns the name of the signal.
     const char* signalName(int signo);
@@ -78,9 +76,9 @@ namespace SigUtil
     /// Dump a signal-safe back-trace
     void dumpBacktrace();
 
-} // end namespace SigUtil
-
 #endif // !MOBILEAPP
+
+} // end namespace SigUtil
 
 #endif
 
