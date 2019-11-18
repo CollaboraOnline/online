@@ -30,6 +30,7 @@ noinst_LTLIBRARIES = \
 	unit-render-shape.la \
 	unit-each-view.la \
 	unit-session.la \
+	unit-uno-command.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
@@ -148,6 +149,8 @@ unit_each_view_la_SOURCES = UnitEachView.cpp
 unit_each_view_la_LIBADD = $(CPPUNIT_LIBS)
 unit_session_la_SOURCES = UnitSession.cpp
 unit_session_la_LIBADD = $(CPPUNIT_LIBS)
+unit_uno_command_la_SOURCES = UnitUNOCommand.cpp
+unit_uno_command_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -176,6 +179,7 @@ TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-t
 	unit-render-shape.la \
 	unit-each-view.la \
 	unit-session.la \
+	unit-uno-command.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
