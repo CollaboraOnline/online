@@ -61,17 +61,21 @@ private:
         for (int to_y = from_offset_y, from_y = 0; (to_y < to_height) && (from_y < from_height) ; ++to_y, ++from_y)
             for (int to_x = from_offset_x, from_x = 0; (to_x < to_width) && (from_x < from_width); ++to_x, ++from_x)
             {
+                unsigned char* t = to + 4 * (to_y * to_width + to_x);
+
+                if (t[3] != 255.0)
+                    continue;
+
+                double dst_r = t[0];
+                double dst_g = t[1];
+                double dst_b = t[2];
+                double dst_a = t[3] / 255.0;
+
                 const unsigned char* f = from.data() + 4 * (from_y * from_width + from_x);
                 double src_r = f[0];
                 double src_g = f[1];
                 double src_b = f[2];
                 double src_a = f[3] / 255.0;
-
-                unsigned char* t = to + 4 * (to_y * to_width + to_x);
-                double dst_r = t[0];
-                double dst_g = t[1];
-                double dst_b = t[2];
-                double dst_a = t[3] / 255.0;
 
                 double out_a = src_a + dst_a * (1.0 - src_a);
                 unsigned char out_r = src_r + dst_r * (1.0 - src_a);
