@@ -56,16 +56,19 @@ namespace
 class FileDeleter
 {
     std::vector<std::string> _filesToDelete;
+    std::mutex _lock;
 public:
     FileDeleter() {}
     ~FileDeleter()
     {
-        for (auto& file: _filesToDelete)
+        std::unique_lock<std::mutex> guard(_lock);
+        for (const std::string& file: _filesToDelete)
             filesystem::remove(file);
     }
 
     void registerForDeletion(const std::string& file)
     {
+        std::unique_lock<std::mutex> guard(_lock);
         _filesToDelete.push_back(file);
     }
 };
@@ -102,11 +105,6 @@ namespace FileUtil
 #endif
 
         return dstPath;
-    }
-
-    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename)
-    {
-        return getTempFilePath(srcDir, srcFilename, "");
     }
 
     bool saveDataToFileSafely(const std::string& fileName, const char *data, size_t size)

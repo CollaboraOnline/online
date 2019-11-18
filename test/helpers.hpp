@@ -143,14 +143,19 @@ std::vector<char> readDataFromFile(std::unique_ptr<std::fstream>& file)
     return v;
 }
 
-inline
-void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath, std::string& documentURL, std::string prefix)
+inline void getDocumentPathAndURL(const std::string& docFilename, std::string& documentPath,
+                                  std::string& documentURL, std::string prefix)
 {
-    const auto testname = prefix;
+    const std::string testname = prefix;
+
+    static std::mutex lock;
+    std::unique_lock<std::mutex> guard(lock);
+
     std::replace(prefix.begin(), prefix.end(), ' ', '_');
     documentPath = FileUtil::getTempFilePath(TDOC, docFilename, prefix);
     std::string encodedUri;
-    Poco::URI::encode("file://" + Poco::Path(documentPath).makeAbsolute().toString(), ":/?", encodedUri);
+    Poco::URI::encode("file://" + Poco::Path(documentPath).makeAbsolute().toString(), ":/?",
+                      encodedUri);
     documentURL = "lool/" + encodedUri + "/ws";
     TST_LOG("Test file: " << documentPath);
 }
