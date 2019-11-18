@@ -111,7 +111,7 @@ namespace SigUtil
     {
         bool hardExit = false;
         const char *domain;
-        if (!ShutdownRequestFlag && signal == SIGINT)
+        if (!ShutdownRequestFlag && (signal == SIGINT || signal == SIGTERM))
         {
             domain = " Shutdown signal received: ";
             ShutdownRequestFlag = true;
