@@ -251,13 +251,6 @@ namespace SigUtil
         Log::signalLog(signalName(signal));
         Log::signalLog("\n");
 
-        if (std::getenv("LOOL_DEBUG"))
-        {
-            Log::signalLog(FatalGdbString);
-            LOG_ERR("Sleeping 30s to allow debugging.");
-            sleep(30);
-        }
-
         struct sigaction action;
 
         sigemptyset(&action.sa_mask);
@@ -274,34 +267,17 @@ namespace SigUtil
 
     void dumpBacktrace()
     {
-        char header[32];
-        sprintf(header, "Backtrace %d:\n", getpid());
-
 #if !defined(__ANDROID__)
+        Log::signalLog("\nBacktrace ");
+        Log::signalLogNumber(getpid());
+        Log::signalLog(":\n");
+
         const int maxSlots = 50;
         void *backtraceBuffer[maxSlots];
-        int numSlots = backtrace(backtraceBuffer, maxSlots);
+        const int numSlots = backtrace(backtraceBuffer, maxSlots);
         if (numSlots > 0)
         {
-            char **symbols = backtrace_symbols(backtraceBuffer, numSlots);
-            if (symbols != nullptr)
-            {
-                struct iovec ioVector[maxSlots*2+1];
-                ioVector[0].iov_base = static_cast<void*>(header);
-                ioVector[0].iov_len = std::strlen(static_cast<const char*>(ioVector[0].iov_base));
-                for (int i = 0; i < numSlots; i++)
-                {
-                    ioVector[1+i*2+0].iov_base = symbols[i];
-                    ioVector[1+i*2+0].iov_len = std::strlen(static_cast<const char *>(ioVector[1+i*2+0].iov_base));
-                    ioVector[1+i*2+1].iov_base = const_cast<void*>(static_cast<const void*>("\n"));
-                    ioVector[1+i*2+1].iov_len = 1;
-                }
-
-                if (writev(STDERR_FILENO, ioVector, numSlots*2+1) == -1)
-                {
-                    LOG_SYS("Failed to dump backtrace to stderr.");
-                }
-            }
+            backtrace_symbols_fd(backtraceBuffer, numSlots, STDERR_FILENO);
         }
 #else
         LOG_SYS("Backtrace not available on Android.");
@@ -309,6 +285,7 @@ namespace SigUtil
 
         if (std::getenv("LOOL_DEBUG"))
         {
+            Log::signalLog(FatalGdbString);
             LOG_ERR("Sleeping 30s to allow debugging.");
             sleep(30);
         }
@@ -328,9 +305,9 @@ namespace SigUtil
         sigaction(SIGILL, &action, nullptr);
         sigaction(SIGFPE, &action, nullptr);
 
-        // prepare this in advance just in case.
+        // Prepare this in advance just in case.
         std::ostringstream stream;
-        stream << "\nFatal signal! Attach debugger with:\n"
+        stream << "\nERROR: Fatal signal! Attach debugger with:\n"
                << "sudo gdb --pid=" << getpid() << "\n or \n"
                << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
                << getpid() << "\n";
