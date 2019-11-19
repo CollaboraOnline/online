@@ -164,6 +164,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph') {
 					itemName = window.removeAccessKey(item.text);
+					itemName = itemName.replace(' ', '\u00a0');
 				} else {
 					// Get the translated text associated with the command
 					itemName = _UNO(item.command, docType, true);

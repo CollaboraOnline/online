@@ -364,6 +364,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens[0] == "uno")
         {
+            // SpellCheckApplySuggestion might contain non separator spaces
+            if (tokens[1].find(".uno:SpellCheckApplySuggestion") != std::string::npos)
+            {
+                std::vector<std::string> newTokens;
+                newTokens.push_back(tokens[0]);
+                newTokens.push_back(firstLine.substr(4)); // Copy the remaining part.
+                return unoCommand(buffer, length, newTokens);
+            }
             return unoCommand(buffer, length, tokens);
         }
         else if (tokens[0] == "selecttext")
