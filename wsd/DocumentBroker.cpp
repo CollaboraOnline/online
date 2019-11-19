@@ -189,6 +189,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _poll(new DocumentBrokerPoll("docbroker_" + _docId, *this)),
     _stop(false),
     _closeReason("stopped"),
+    _lockCtx(new LockContext()),
     _tileVersion(0),
     _debugRenderedTileCount(0)
 {
@@ -563,7 +564,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAuthorization());
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo =
+            wopiStorage->getWOPIFileInfo(session->getAuthorization(), *_lockCtx);
         userId = wopifileinfo->getUserId();
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
@@ -722,7 +724,11 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
-        std::string localPath = _storage->loadStorageFileToLocal(session->getAuthorization(), templateSource);
+        std::string localPath = _storage->loadStorageFileToLocal(
+            session->getAuthorization(), *_lockCtx, templateSource);
+
+        if (!_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
+            LOG_ERR("Failed to lock!");
 
 #if !MOBILEAPP
         // Check if we have a prefilter "plugin" for this document format
@@ -955,7 +961,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
     assert(_storage && _tileCache);
-    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename, isRename);
+    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(
+        auth, *_lockCtx, saveAsPath, saveAsFilename, isRename);
     if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
         if (!isSaveAs && !isRename)
@@ -1299,18 +1306,19 @@ size_t DocumentBroker::removeSession(const std::string& id)
             LOG_ERR("Invalid or unknown session [" << id << "] to remove.");
             return _sessions.size();
         }
+        std::shared_ptr<ClientSession> session = it->second;
 
         // Last view going away, can destroy.
         _markToDestroy = (_sessions.size() <= 1);
 
-        const bool lastEditableSession = !it->second->isReadOnly() && !haveAnotherEditableSession(id);
+        const bool lastEditableSession = !session->isReadOnly() && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
 
         LOG_INF("Removing session ["
                 << id << "] on docKey [" << _docKey << "]. Have " << _sessions.size()
-                << " sessions. IsReadOnly: " << it->second->isReadOnly()
-                << ", IsViewLoaded: " << it->second->isViewLoaded() << ", IsWaitDisconnected: "
-                << it->second->inWaitDisconnected() << ", MarkToDestroy: " << _markToDestroy
+                << " sessions. IsReadOnly: " << session->isReadOnly()
+                << ", IsViewLoaded: " << session->isViewLoaded() << ", IsWaitDisconnected: "
+                << session->inWaitDisconnected() << ", MarkToDestroy: " << _markToDestroy
                 << ", LastEditableSession: " << lastEditableSession
                 << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
 
@@ -1341,7 +1349,16 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
             LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
 
-            LOG_TRC("Disconnect session internal " << id);
+            LOG_TRC("Disconnect session internal " << id <<
+                    " destroy? " << _markToDestroy <<
+                    " locked? " << _lockCtx->_isLocked);
+
+            if (_markToDestroy && // last session to remove; FIXME: Editable?
+                _lockCtx->_isLocked && _storage)
+            {
+                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false))
+                    LOG_ERR("Failed to unlock!");
+            }
 
             bool hardDisconnect;
             if (it->second->inWaitDisconnected())
