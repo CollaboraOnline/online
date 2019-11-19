@@ -24,10 +24,28 @@
 #include "Util.hpp"
 #include <common/Authorization.hpp>
 
+/// Represents whether the underlying file is locked
+/// and with what token.
+struct LockContext
+{
+    /// Do we have support for locking for a storage.
+    bool        _supportsLocks;
+    /// Do we own the (leased) lock currently
+    bool        _isLocked;
+    /// Name if we need it to use consistently for locking
+    std::string _lockToken;
+
+    LockContext() : _supportsLocks(false), _isLocked(false) { }
+
+    /// one-time setup for supporting locks & create token
+    void initSupportsLocks();
+};
+
 /// Base class of all Storage abstractions.
 class StorageBase
 {
 public:
+
     /// Represents basic file's attributes.
     /// Used for local and network files.
     class FileInfo
@@ -190,13 +208,16 @@ public:
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
+    /// Update the locking state (check-in/out) of the associated file
+    virtual bool updateLockState(const Authorization &auth, LockContext &lockCtx, bool lock) = 0;
+
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
-    virtual std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) = 0;
+    virtual std::string loadStorageFileToLocal(const Authorization& auth, LockContext &lockCtx, const std::string& templateUri) = 0;
 
     /// Writes the contents of the file back to the source.
     /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
-    virtual SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) = 0;
+    virtual SaveResult saveLocalFileToStorage(const Authorization& auth, LockContext &lockCtx, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) = 0;
 
     static size_t getFileSize(const std::string& filename);
 
@@ -283,9 +304,11 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
+    bool updateLockState(const Authorization &, LockContext &, bool) override { return true; }
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, LockContext &lockCtx, const std::string& templateUri) override;
+
+    SaveResult saveLocalFileToStorage(const Authorization& auth, LockContext &lockCtx, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 
 private:
     /// True if the jailed file is not linked but copied.
@@ -511,12 +534,17 @@ public:
     /// provided during the initial creation of the WOPI storage.
     /// Also extracts the basic file information from the response
     /// which can then be obtained using getFileInfo()
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth);
+    /// Also sets up the locking context for future operations.
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth,
+                                                  LockContext &lockCtx);
+
+    /// Update the locking state (check-in/out) of the associated file
+    bool updateLockState(const Authorization &auth, LockContext &lockCtx, bool lock) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, LockContext &lockCtx, const std::string& templateUri) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, LockContext &lockCtx, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
@@ -546,9 +574,11 @@ public:
     // Implement me
     // WebDAVFileInfo getWebDAVFileInfo(const Poco::URI& uriPublic);
 
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
+    bool updateLockState(const Authorization &, LockContext &, bool) override { return true; }
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, LockContext &lockCtx, const std::string& templateUri) override;
+
+    SaveResult saveLocalFileToStorage(const Authorization& auth, LockContext &lockCtx, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
 
 private:
     std::unique_ptr<AuthBase> _authAgent;

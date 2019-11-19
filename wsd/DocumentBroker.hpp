@@ -36,6 +36,7 @@
 // Forwards.
 class PrisonerRequestDispatcher;
 class DocumentBroker;
+class LockContext;
 class StorageBase;
 class TileCache;
 class Message;
@@ -488,6 +489,7 @@ private:
     std::unique_ptr<DocumentBrokerPoll> _poll;
     std::atomic<bool> _stop;
     std::string _closeReason;
+    std::unique_ptr<LockContext> _lockCtx;
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.

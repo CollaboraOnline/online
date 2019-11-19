@@ -299,7 +299,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), "LocalHost#" + std::to_string(LastLocalStorageId++)}));
 }
 
-std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/, const std::string& /*templateUri*/)
+std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/, LockContext & /*lockCtx*/, const std::string& /*templateUri*/)
 {
 #if !MOBILEAPP
     // /chroot/jailId/user/doc/childId/file.ext
@@ -363,7 +363,7 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/, 
 
 }
 
-StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/, bool /*isRename*/)
+StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization& /*auth*/, LockContext &/*lockCtx*/, const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/, bool /*isRename*/)
 {
     try
     {
@@ -461,7 +461,17 @@ std::string getReuseCookies(const Poco::URI &uriObject)
 
 } // anonymous namespace
 
-std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
+void LockContext::initSupportsLocks()
+{
+    if (_supportsLocks)
+        return;
+
+    // first time token setup
+    _supportsLocks = true;
+    _lockToken = "lool-lock" + Util::rng::getHexString(8);
+}
+
+std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth, LockContext &lockCtx)
 {
     // update the access_token to the one matching to the session
     Poco::URI uriObject(getUri());
@@ -657,6 +667,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     const std::chrono::system_clock::time_point modifiedTime = Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
     setFileInfo(FileInfo({filename, ownerId, modifiedTime, size}));
 
+    if (supportsLocks)
+        lockCtx.initSupportsLocks();
+
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
         {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, templateSource,
          canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
@@ -667,8 +680,71 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
          userCanRename, callDuration}));
 }
 
+bool WopiStorage::updateLockState(const Authorization &auth, LockContext &lockCtx, bool lock)
+{
+    if (!lockCtx._supportsLocks)
+        return true;
+
+    Poco::URI uriObject(getUri());
+    auth.authorizeURI(uriObject);
+
+    std::string reuseStorageCookies = getReuseCookies(uriObject);
+
+    Poco::URI uriObjectAnonym(getUri());
+    uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()));
+    const std::string uriAnonym = uriObjectAnonym.toString();
+
+    const std::string wopiLog(lock ? "WOPI::Lock" : "WOPI::Unlock");
+    LOG_DBG(wopiLog << " requesting: " << uriAnonym);
+
+    try
+    {
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        auth.authorizeRequest(request);
+
+        request.set("X-WOPI-Override", lock ? "LOCK" : "UNLOCK");
+        request.set("X-WOPI-Lock", lockCtx._lockToken);
+        if (!getExtendedData().empty())
+            request.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
+        addStorageDebugCookie(request);
+        if (_reuseCookies)
+            addStorageReuseCookie(request, reuseStorageCookies);
+
+        psession->sendRequest(request);
+        Poco::Net::HTTPResponse response;
+        std::istream& rs = psession->receiveResponse(response);
+
+        std::ostringstream oss;
+        Poco::StreamCopier::copyStream(rs, oss);
+        std::string responseString = oss.str();
+
+        LOG_INF(wopiLog << " response: " << responseString <<
+                " status " << response.getStatus());
+
+        if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+        {
+            lockCtx._isLocked = lock;
+            return true;
+        }
+        else
+        {
+            LOG_WRN("Un-successfull " << wopiLog << " with status " << response.getStatus() <<
+                    " and response: " << responseString);
+        }
+    }
+    catch (const Poco::Exception& pexc)
+    {
+        LOG_ERR("Cannot " << wopiLog << " uri [" << uriAnonym << "]. Error: " <<
+                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
+    }
+    return false;
+}
+
 /// uri format: http://server/<...>/wopi*/files/<id>/content
-std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri)
+std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, LockContext &/* lockCtx */, const std::string& templateUri)
 {
     // WOPI URI to download files ends in '/contents'.
     // Add it here to get the payload instead of file info.
@@ -741,7 +817,6 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, const
             ofs.close();
             LOG_INF("WOPI::GetFile downloaded " << getFileSize(getRootFilePath()) << " bytes from [" <<
                     uriAnonym << "] -> " << getRootFilePathAnonym() << " in " << diff.count() << "s");
-
             setLoaded(true);
 
             // Now return the jailed path.
@@ -758,7 +833,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, const
     return "";
 }
 
-StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename)
+StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization& auth, LockContext &lockCtx, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename)
 {
     // TODO: Check if this URI has write permission (canWrite = true)
 
@@ -791,6 +866,8 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         {
             // normal save
             request.set("X-WOPI-Override", "PUT");
+            if (lockCtx._supportsLocks)
+                request.set("X-WOPI-Lock", lockCtx._lockToken);
             request.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified()? "true": "false");
             request.set("X-LOOL-WOPI-IsAutosave", getIsAutosave()? "true": "false");
             request.set("X-LOOL-WOPI-IsExitSave", isExitSave()? "true": "false");
@@ -970,14 +1047,17 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     return saveResult;
 }
 
-std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/, const std::string& /*templateUri*/)
+std::string WebDAVStorage::loadStorageFileToLocal(
+    const Authorization& /*auth*/, LockContext &/*lockCtx*/, const std::string& /*templateUri*/)
 {
     // TODO: implement webdav GET.
     setLoaded(true);
     return getUri().toString();
 }
 
-StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/, bool /*isRename*/)
+StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(
+    const Authorization& /*auth*/, LockContext &/*lockCtx*/, const std::string& /*saveAsPath*/,
+    const std::string& /*saveAsFilename*/, bool /*isRename*/)
 {
     // TODO: implement webdav PUT.
     return StorageBase::SaveResult(StorageBase::SaveResult::OK);
