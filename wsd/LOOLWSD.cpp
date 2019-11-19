@@ -2175,7 +2175,7 @@ private:
             {
                 handleFaviconRequest(request);
             }
-            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/hosting/discovery")
+            else if (request.getMethod() == HTTPRequest::HTTP_GET && (request.getURI() == "/hosting/discovery" || request.getURI() == "/hosting/discovery/"))
             {
                 handleWopiDiscoveryRequest(request);
             }

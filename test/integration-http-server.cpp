@@ -128,6 +128,14 @@ void HTTPServerTest::testDiscovery()
     session->receiveResponse(response);
     CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
     CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
+
+    Poco::Net::HTTPRequest request2(Poco::Net::HTTPRequest::HTTP_GET, "/hosting/discovery/");
+    session->sendRequest(request2);
+
+    Poco::Net::HTTPResponse response2;
+    session->receiveResponse(response2);
+    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response2.getStatus());
+    CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response2.getContentType());
 }
 
 
