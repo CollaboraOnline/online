@@ -538,6 +538,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     bool userCanNotWriteRelative = true;
     bool enableInsertRemoteImage = false;
     bool enableShare = false;
+    bool supportsLocks = false;
     bool supportsRename = false;
     bool userCanRename = false;
     std::string hideUserList("false");
@@ -625,6 +626,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "EnableInsertRemoteImage", enableInsertRemoteImage);
         JsonUtil::findJSONValue(object, "EnableShare", enableShare);
         JsonUtil::findJSONValue(object, "HideUserList", hideUserList);
+        JsonUtil::findJSONValue(object, "SupportsLocks", supportsLocks);
         JsonUtil::findJSONValue(object, "SupportsRename", supportsRename);
         JsonUtil::findJSONValue(object, "UserCanRename", userCanRename);
         bool booleanFlag = false;
@@ -656,7 +658,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
          enableOwnerTermination, disablePrint, disableExport, disableCopy,
          disableInactiveMessages, downloadAsPostMessage, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,
          hideUserList, disableChangeTrackingShow, disableChangeTrackingRecord,
-         hideChangeTrackingControls, supportsRename, userCanRename, callDuration}));
+         hideChangeTrackingControls, supportsLocks, supportsRename,
+         userCanRename, callDuration}));
 }
 
 /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -743,6 +746,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, const
                     uriAnonym << "] -> " << getRootFilePathAnonym() << " in " << diff.count() << "s");
 
             setLoaded(true);
+
             // Now return the jailed path.
             return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
         }

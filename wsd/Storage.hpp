@@ -347,6 +347,7 @@ public:
                      const TriState disableChangeTrackingShow,
                      const TriState disableChangeTrackingRecord,
                      const TriState hideChangeTrackingControls,
+                     const bool supportsLocks,
                      const bool supportsRename,
                      const bool userCanRename,
                      const std::chrono::duration<double> callDuration)
@@ -374,6 +375,7 @@ public:
               _disableChangeTrackingShow(disableChangeTrackingShow),
               _disableChangeTrackingRecord(disableChangeTrackingRecord),
               _hideChangeTrackingControls(hideChangeTrackingControls),
+              _supportsLocks(supportsLocks),
               _supportsRename(supportsRename),
               _userCanRename(userCanRename),
               _callDuration(callDuration)
@@ -426,6 +428,8 @@ public:
         bool getEnableShare() const { return _enableShare; }
 
         bool getSupportsRename() const { return _supportsRename; }
+
+        bool getSupportsLocks() const { return _supportsLocks; }
 
         bool getUserCanRename() const { return _userCanRename; }
 
@@ -492,6 +496,8 @@ public:
         TriState _disableChangeTrackingRecord;
         /// If we should hide change-tracking commands for this user.
         TriState _hideChangeTrackingControls;
+        /// If WOPI host supports locking
+        bool _supportsLocks;
         /// If WOPI host supports rename
         bool _supportsRename;
         /// If user is allowed to rename the document
