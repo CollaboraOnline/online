@@ -1040,7 +1040,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         oss << "error: cmd=storage kind=" << (isRename ? "renamefailed" : "savefailed");
         it->second->sendTextFrame(oss.str());
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED
+             || storageSaveResult.getResult() == StorageBase::SaveResult::CONFLICT)
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;
