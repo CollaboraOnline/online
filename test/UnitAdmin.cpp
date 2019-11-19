@@ -11,6 +11,8 @@
 
 #include <condition_variable>
 #include <mutex>
+#include <thread>
+#include <chrono>
 
 #include <Poco/Net/HTTPBasicCredentials.h>
 #include <Poco/Net/HTTPCookie.h>
@@ -200,7 +202,7 @@ private:
 
         // FIXME: we really should wait for the subscription to be
         // registered and have a reply to avoid a race here.
-        Poco::Thread::sleep(250);
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
 
         std::string documentPath1, documentURL1;
         helpers::getDocumentPathAndURL("hello.odt", documentPath1, documentURL1, "unitAdmin-hello.odt ");

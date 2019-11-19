@@ -24,10 +24,11 @@
 #include <cstring>
 #include <iostream>
 #include <map>
+#include <thread>
+#include <chrono>
 
 #include <Poco/Path.h>
 #include <Poco/Process.h>
-#include <Poco/Thread.h>
 
 #include <Common.hpp>
 #include "Kit.hpp"
@@ -45,7 +46,6 @@
 #include <security.h>
 
 using Poco::Process;
-using Poco::Thread;
 
 #ifndef KIT_IN_PROCESS
 static bool NoCapsForKit = false;
@@ -322,7 +322,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
                 std::cerr << "Kit: Sleeping " << delaySecs
                           << " seconds to give you time to attach debugger to process "
                           << Process::id() << std::endl;
-                Thread::sleep(delaySecs * 1000);
+                std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
             }
         }
 
@@ -424,7 +424,7 @@ int main(int argc, char** argv)
             std::cerr << "Forkit: Sleeping " << delaySecs
                       << " seconds to give you time to attach debugger to process "
                       << Process::id() << std::endl;
-            Thread::sleep(delaySecs * 1000);
+            std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
         }
     }
 
