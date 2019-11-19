@@ -83,7 +83,7 @@ namespace Log
         while (true)
         {
             const int length = std::strlen(message);
-            const int written = write (STDERR_FILENO, message, length);
+            const int written = write(STDERR_FILENO, message, length);
             if (written < 0)
             {
                 if (errno == EINTR)
@@ -119,6 +119,7 @@ namespace Log
         Poco::DateTime time;
 #ifdef __linux
         const long osTid = Util::getThreadId();
+        // Note that snprintf is deemed signal-safe in most common implementations.
         snprintf(buffer, len, "%s-%.05lu %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
                     (Source.getInited() ? Source.getId().c_str() : "<shutdown>"),
                     osTid,
