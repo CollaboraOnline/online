@@ -28,7 +28,6 @@
 #include <Poco/Net/SSLManager.h>
 #include <Poco/SharedPtr.h>
 #include <Poco/TemporaryFile.h>
-#include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
@@ -56,7 +55,6 @@ using Poco::Net::WebSocketException;
 using Poco::Runnable;
 using Poco::SharedPtr;
 using Poco::TemporaryFile;
-using Poco::Thread;
 using Poco::URI;
 using Poco::Util::Application;
 
@@ -171,9 +169,7 @@ protected:
 
         ws.setReceiveTimeout(0);
 
-        Thread thread;
-        Output output(ws);
-        thread.start(output);
+        std::thread thread([&ws]{Output(ws).run();});
 
         while (true)
         {

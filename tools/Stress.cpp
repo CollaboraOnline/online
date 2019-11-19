@@ -23,7 +23,6 @@
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Util/HelpFormatter.h>
@@ -55,7 +54,6 @@ protected:
     int  main(const std::vector<std::string>& args) override;
 };
 
-using Poco::Thread;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
 using Poco::Util::Option;
@@ -282,7 +280,8 @@ void Stress::handleOption(const std::string& optionName,
 
 int Stress::main(const std::vector<std::string>& args)
 {
-    std::vector<std::unique_ptr<Thread>> clients(_numClients * args.size());
+    std::vector<std::thread> clients;
+    clients.reserve(_numClients * args.size());
 
     if (args.size() == 0)
     {
@@ -294,21 +293,19 @@ int Stress::main(const std::vector<std::string>& args)
 
     std::vector<std::shared_ptr<Worker>> workers;
 
-    unsigned index = 0;
     for (size_t i = 0; i < args.size(); ++i)
     {
         std::cout << "Arg: " << args[i] << std::endl;
-        for (unsigned j = 0; j < _numClients; ++j, ++index)
+        for (unsigned j = 0; j < _numClients; ++j)
         {
             workers.emplace_back(new Worker(_serverURI, args[i]));
-            clients[index].reset(new Thread());
-            clients[index]->start(*workers[workers.size() - 1]);
+            clients.emplace_back([&workers]{workers.back()->run();});
         }
     }
 
-    for (const auto& client : clients)
+    for (auto& client : clients)
     {
-        client->join();
+        client.join();
     }
 
     if (Stress::Benchmark)
