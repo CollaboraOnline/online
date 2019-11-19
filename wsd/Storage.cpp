@@ -445,15 +445,8 @@ static void addStorageReuseCookie(Poco::Net::HTTPRequest& request, const std::st
     }
 }
 
-} // anonymous namespace
-
-std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
+std::string getReuseCookies(const Poco::URI &uriObject)
 {
-    // update the access_token to the one matching to the session
-    Poco::URI uriObject(getUri());
-    auth.authorizeURI(uriObject);
-    const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
-
     std::string reuseStorageCookies;
     for (const auto& param : uriObject.getQueryParameters())
     {
@@ -463,6 +456,18 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             break;
         }
     }
+    return reuseStorageCookies;
+}
+
+} // anonymous namespace
+
+std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth)
+{
+    // update the access_token to the one matching to the session
+    Poco::URI uriObject(getUri());
+    auth.authorizeURI(uriObject);
+    const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
+    std::string reuseStorageCookies = getReuseCookies(uriObject);
 
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << "].");
 
@@ -671,15 +676,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth, const
     uriObject.setPath(uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
-    std::string reuseStorageCookies;
-    for (const auto& param : uriObject.getQueryParameters())
-    {
-        if (param.first == "reuse_cookies")
-        {
-            reuseStorageCookies = param.second;
-            break;
-        }
-    }
+    std::string reuseStorageCookies = getReuseCookies(uriObject);
 
     Poco::URI uriObjectAnonym(getUri());
     uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
@@ -775,15 +772,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
     uriObject.setPath(isSaveAs || isRename? uriObject.getPath(): uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
-    std::string reuseStorageCookies;
-    for (const auto& param : uriObject.getQueryParameters())
-    {
-        if (param.first == "reuse_cookies")
-        {
-            reuseStorageCookies = param.second;
-            break;
-        }
-    }
+    std::string reuseStorageCookies = getReuseCookies(uriObject);
 
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
 
