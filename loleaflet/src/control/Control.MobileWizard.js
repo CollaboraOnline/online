@@ -61,6 +61,7 @@ L.Control.MobileWizard = L.Control.extend({
 		if (this.map._permission === 'edit') {
 			$('#toolbar-down').show();
 		}
+
 		this._isActive = false;
 		this._currentPath = [];
 		if (window.mobileWizard === true) {
@@ -69,6 +70,10 @@ L.Control.MobileWizard = L.Control.extend({
 				toolbar.uncheck('mobile_wizard');
 			this.map.sendUnoCommand('.uno:Sidebar');
 			window.mobileWizard = false;
+		}
+
+		if (!this.map.hasFocus()) {
+			this.map.focus();
 		}
 	},
 
