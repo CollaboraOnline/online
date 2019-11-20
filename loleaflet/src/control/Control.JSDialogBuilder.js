@@ -49,7 +49,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['borderwindow'] = this._containerHandler;
 		this._controlHandlers['control'] = this._containerHandler;
 		this._controlHandlers['scrollbar'] = this._ignoreHandler;
-		this._controlHandlers['toolbox'] = this._containerHandler;
+		this._controlHandlers['toolbox'] = this._toolboxHandler;
 		this._controlHandlers['toolitem'] = this._toolitemHandler;
 		this._controlHandlers['colorsample'] = this._colorSampleControl;
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
@@ -143,9 +143,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_containerHandler: function(parentContainer, data, builder) {
-		if (data.enabled == 'false')
-			return false;
-
 		if (data.cols && data.rows) {
 			return builder._gridHandler(parentContainer, data, builder);
 		}
@@ -1223,6 +1220,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (titleOverride)
 			data.text = titleOverride;
 
+		data.id = data.id ? data.id : (data.command ? data.command.replace('.uno:', '') : undefined);
+
 		data.text = builder._cleanText(data.text);
 
 		var valueNode =  L.DomUtil.create('div', 'color-sample-selected', null);
@@ -1409,9 +1408,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var childData = data[childIndex];
 			var childType = childData.type;
 			var processChildren = true;
-			var isPanelOrFrame = childType == 'panel' || childType == 'frame';
+			var needsToCreateContainer =
+				childType == 'panel' || childType == 'frame' || childType == 'toolbox';
 
-			var childObject = isPanelOrFrame ? L.DomUtil.create('div', '', parent) : parent;
+			var childObject = needsToCreateContainer ? L.DomUtil.createWithId('div', childData.id, parent) : parent;
 
 			var handler = this._controlHandlers[childType];
 
@@ -1433,6 +1433,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				if (processChildren && childData.children != undefined)
 					this.build(childObject, childData.children);
+				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
+					$('#' + childData.id).addClass('hidden-from-event');
+				}
 			}
 		}
 	}
