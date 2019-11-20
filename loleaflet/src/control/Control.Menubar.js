@@ -36,9 +36,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'},
@@ -263,9 +263,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
@@ -362,9 +362,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action'},
-				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action'},
+				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
+				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
+				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
@@ -1334,6 +1334,9 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'action') {
 				$(aItem).data('type', 'action');
 				$(aItem).data('id', menu[i].id);
+				if (window.ThisIsAMobileApp && menu[i].mobileappuno) {
+					$(aItem).data('mobileappuno', menu[i].mobileappuno);
+				}
 			}
 
 			if (menu[i].tablet == false && window.mode.isTablet()) {
