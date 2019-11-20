@@ -30,7 +30,6 @@
 #include <Poco/Net/Socket.h>
 #include <Poco/Path.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/Thread.h>
 #include <Poco/URI.h>
 #include <cppunit/extensions/HelperMacros.h>
 

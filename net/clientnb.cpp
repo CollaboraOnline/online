@@ -35,7 +35,6 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Runnable.h>
-#include <Poco/Thread.h>
 
 #include <Util.hpp>
 
@@ -44,7 +43,6 @@ using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
 using Poco::Net::WebSocket;
 using Poco::Runnable;
-using Poco::Thread;
 using Poco::Util::Application;
 
 const char *HostName = "127.0.0.1";
@@ -178,8 +176,7 @@ struct Client : public Poco::Util::Application
     {
         std::cerr << "testLadder\n";
         ThreadWorker ladder;
-        Thread thread;
-        thread.start(ladder);
+        std::thread thread([&ladder]{ladder.run();});
         thread.join();
     }
 
@@ -187,11 +184,11 @@ struct Client : public Poco::Util::Application
     {
         std::cerr << "testParallel\n";
         const int num = 10;
-        Thread snakes[num];
+        std::thread snakes[num];
         ThreadWorker ladders[num];
 
         for (size_t i = 0; i < num; i++)
-            snakes[i].start(ladders[i]);
+            snakes[i] = std::thread([&ladders, i]{ladders[i].run();});
 
         for (int i = 0; i < num; i++)
             snakes[i].join();
