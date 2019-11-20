@@ -49,6 +49,10 @@ L.DomUtil = {
 	},
 
 	remove: function (el) {
+		if (!el) {
+			return;
+		}
+
 		var parent = el.parentNode;
 		if (parent) {
 			parent.removeChild(el);
