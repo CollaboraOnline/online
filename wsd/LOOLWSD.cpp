@@ -92,6 +92,7 @@ using Poco::Net::PartHandler;
 #include <Poco/Process.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
+#include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/AbstractConfiguration.h>
@@ -161,6 +162,7 @@ using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Path;
 using Poco::StreamCopier;
+using Poco::StringTokenizer;
 using Poco::TemporaryFile;
 using Poco::URI;
 using Poco::Util::Application;
@@ -2189,21 +2191,19 @@ private:
             }
             else
             {
-                // split by /'s and ?'s
-                std::vector<std::string> reqPathTokens(LOOLProtocol::tokenize(request.getURI(), std::regex(R"(\s*[\/\?]\s*)"), /*skipEmpty =*/ true));
-
-                if (reqPathTokens.size() > 1 && reqPathTokens[0] == "lool" && reqPathTokens[1] == "clipboard")
+                StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
+                if (reqPathTokens.count() > 1 && reqPathTokens[0] == "lool" && reqPathTokens[1] == "clipboard")
                 {
 //                    Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
                     handleClipboardRequest(request, message, disposition);
                 }
                 else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
-                    reqPathTokens.size() > 0 && reqPathTokens[0] == "lool")
+                    reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
                     handlePostRequest(request, message, disposition);
                 }
-                else if (reqPathTokens.size() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
+                else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
                          request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
                 {
                     std::string decodedUri; // WOPISrc
@@ -2533,8 +2533,8 @@ private:
         Poco::Net::HTTPResponse response;
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
-        std::vector<std::string> tokens(LOOLProtocol::tokenize(request.getURI(), std::regex(R"(\s*[\/\?]\s*)")));
-        if (tokens.size() > 2 && tokens[2] == "convert-to")
+        StringTokenizer tokens(request.getURI(), "/?");
+        if (tokens.count() > 2 && tokens[2] == "convert-to")
         {
             // Validate sender - FIXME: should do this even earlier.
             if (!allowConvertTo(socket->clientAddress(), request, true))
@@ -2560,7 +2560,7 @@ private:
             bool bFullSheetPreview = sFullSheetPreview == "true" ? true : false;
 
             // prefer what is in the URI
-            if (tokens.size() > 3)
+            if (tokens.count() > 3)
                 format = tokens[3];
 
             bool sent = false;
@@ -2660,7 +2660,7 @@ private:
             }
             return;
         }
-        else if (tokens.size() >= 4 && tokens[3] == "insertfile")
+        else if (tokens.count() >= 4 && tokens[3] == "insertfile")
         {
             LOG_INF("Insert file request.");
 
@@ -2701,7 +2701,7 @@ private:
                 }
             }
         }
-        else if (tokens.size() >= 6)
+        else if (tokens.count() >= 6)
         {
             LOG_INF("File download request.");
             // TODO: Check that the user in question has access to this file!
