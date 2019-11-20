@@ -24,10 +24,10 @@
 	}
 
 .preview-img {
-	/* In draw docs, the width of previews are small, but we want a min of 180px to align it with document's left edge */
-	min-width: 180px;
+	/* In draw docs, the width of previews are small, but we want a min of 160px to align it with document's left edge */
+	min-width: 160px;
 	vertical-align: middle;
-	max-width: 184px;
+	max-width: 164px;
 	cursor: pointer;
 	border: 2px solid #dfdfdf;
 	}
