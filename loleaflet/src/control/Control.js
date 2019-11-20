@@ -95,30 +95,14 @@ L.control = function (options) {
 L.Map.include({
 	addControl: function (control) {
 		control._map = this;
-		var controlDiv = control.onAdd(this);
-		var controlContainer = L.DomUtil.get(this.options.toolbarContainer);
-		if (!this._controls) {
-			this._controls = [];
-		}
+		control.onAdd(this);
 
-		if (controlContainer && controlDiv) {
-			controlContainer.appendChild(controlDiv);
-			this._controls.push({div: controlDiv});
-		}
 		return this;
 	},
 
 	removeControl: function (control) {
 		control.remove();
 		return this;
-	},
-
-	removeControls: function () {
-		if (this._controls) {
-			this._controls.forEach(function (control) {
-				L.DomUtil.remove(control.div);
-			});
-		}
 	},
 
 	_initControlPos: function () {

@@ -671,7 +671,6 @@ L.Map = L.Evented.extend({
 		if (this._docLayer) {
 			this.removeLayer(this._docLayer);
 		}
-		this.removeControls();
 		this._socket.close();
 		return this;
 	},
