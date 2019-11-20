@@ -152,7 +152,7 @@ w2ui-toolbar {
 #tb_editbar_item_fold table.w2ui-button {
 	border-radius: 20px;
 	background-color: #f4f4f4 !important;
-	padding: 0px 4px;
+	margin: 0px 14px 0px 4px !important;
 	box-shadow: inset 0px 0px 1px 2px #00000020;
 }
 #tb_editbar_item_fold table.w2ui-button.over {
