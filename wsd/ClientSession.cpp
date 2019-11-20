@@ -142,10 +142,11 @@ bool ClientSession::disconnectFromKit()
     {
         setState(SessionState::WAIT_DISCONNECT);
 
+#ifndef IOS
         LOG_TRC("request/rescue clipboard on disconnect for " << getId());
         // rescue clipboard before shutdown.
         docBroker->forwardToChild(getId(), "getclipboard");
-
+#endif
         // handshake nicely; so wait for 'disconnected'
         docBroker->forwardToChild(getId(), "disconnect");
 
