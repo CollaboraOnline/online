@@ -30,6 +30,7 @@
 	max-width: 164px;
 	cursor: pointer;
 	border: 2px solid #dfdfdf;
+	margin-left: 20px;
 	}
 
 @media (max-width: 767px) and (orientation: potrait),(max-device-height: 767px) and (orientation: portrait) {
