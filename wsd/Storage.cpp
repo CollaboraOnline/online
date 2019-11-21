@@ -690,7 +690,7 @@ bool WopiStorage::updateLockState(const Authorization &auth, LockContext &lockCt
     Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
 
-    std::string reuseStorageCookies = getReuseCookies(uriObject);
+    std::map<std::string, std::string> params = GetQueryParams(uriObject);
 
     Poco::URI uriObjectAnonym(getUri());
     uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()));
@@ -713,7 +713,8 @@ bool WopiStorage::updateLockState(const Authorization &auth, LockContext &lockCt
             request.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
         addStorageDebugCookie(request);
         if (_reuseCookies)
-            addStorageReuseCookie(request, reuseStorageCookies);
+            addStorageReuseCookie(request, params["reuse_cookies"]);
+        addWopiProof(request, params["access_token"]);
 
         psession->sendRequest(request);
         Poco::Net::HTTPResponse response;
