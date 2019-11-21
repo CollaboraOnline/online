@@ -346,7 +346,7 @@ namespace SigUtil
     bool killChild(const int pid)
     {
         LOG_DBG("Killing PID: " << pid);
-        if (kill(pid, SIGTERM) == 0 || errno == ESRCH)
+        if (kill(pid, SIGABRT) == 0 || errno == ESRCH)
         {
             // Killed or doesn't exist.
             return true;
