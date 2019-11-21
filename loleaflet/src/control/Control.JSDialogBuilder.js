@@ -217,7 +217,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			titleClass = 'menu-entry-with-icon'
 		}
 		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
-		titleSpan.innerHTML = data.text;
 
 		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
 		if (valueNode) {
@@ -227,6 +226,31 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
 		arrowSpan.innerHTML = '>';
+
+		var updateFunction = function() {
+			var items = builder.map['stateChangeHandler'];
+
+			var state = null;
+			if (data.command) {
+				state = items.getItemValue(data.command);
+				state = builder._getTextForUnoState(data.command, state);
+			}
+			if (state) {
+				console.warn('state: ' + state);
+				titleSpan.innerHTML = state;
+			} else {
+				titleSpan.innerHTML = data.text;
+			}
+		}
+
+		updateFunction();
+
+		if (data.command) {
+			builder.map.on('commandstatechanged', function(e) {
+				if (e.commandName === data.command)
+					updateFunction();
+			}, this);
+		}
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
 		contentDiv.title = data.text;
@@ -593,6 +617,34 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (state) {
 				return state.replace(',', '.');
 			}
+			break;
+		}
+
+		return null;
+	},
+
+	_getTextForUnoState: function(command, state) {
+		switch (command) {
+		case '.uno:FillStyle':
+
+			switch (state) {
+			case 'NONE':
+				return _('None');
+
+			case 'SOLID':
+				return _('Color');
+
+			case 'GRADIENT':
+				return _('Gradient');
+
+			case 'HATCH':
+				return _('Hatching');
+
+			case 'BITMAP':
+				// FIXME: can be bitmap or pattern, for now we cant import bitmap
+				return _('Pattern');
+			}
+
 			break;
 		}
 

@@ -653,4 +653,9 @@
 		margin: 24px 0px;
 	}
 	div#enablecontour + p, #arrangelabel, #SetMinimalRowHeight {clear: both;}
+
+	/*TODO: missing icon*/
+	#fillstyle div img {
+		display: none;
+	}
 }
