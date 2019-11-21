@@ -1209,6 +1209,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (docType === 'presentation' || docType === 'drawing') {
 			iconClass += ' impress-icon-img';
 		}
+		$('.main-nav').addClass(docType += '-color-indicator');
 
 		var liItem = L.DomUtil.create('li', '');
 		liItem.id = 'document-header';
