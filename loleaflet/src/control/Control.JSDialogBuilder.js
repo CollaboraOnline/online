@@ -236,7 +236,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				state = builder._getTextForUnoState(data.command, state);
 			}
 			if (state) {
-				console.warn('state: ' + state);
 				titleSpan.innerHTML = state;
 			} else {
 				titleSpan.innerHTML = data.text;
