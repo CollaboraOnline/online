@@ -393,6 +393,9 @@ AC_SUBST(APP_NAME)
 
 VENDOR=
 AC_MSG_CHECKING([for vendor])
+if test "$enable_iosapp" = yes -a -z "$with_vendor"; then
+    AC_MSG_ERROR([You must use --with-vendor when configuring for the iOS app])
+fi
 if test -z "$with_vendor" -o "$with_vendor" = "no"; then
     VENDOR="$USERNAME"
 
