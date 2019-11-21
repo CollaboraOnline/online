@@ -958,6 +958,12 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
                 LOG_WRN("Invalid or missing JSON in " << wopiLog << " HTTP_CONFLICT response.");
             }
         }
+        else
+        {
+            LOG_ERR("Unexpected response to " << wopiLog << " : " << response.getStatus() <<
+                    "Cannot save file to WOPI storage uri [" << uriAnonym << "]. Error: ");
+            saveResult.setResult(StorageBase::SaveResult::FAILED);
+        }
     }
     catch (const Poco::Exception& pexc)
     {
