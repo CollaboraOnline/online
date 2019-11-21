@@ -124,7 +124,7 @@ L.Control.ContextToolbar = L.Control.extend({
 
 		// check commands validity
 		var validCommands = [];
-		if (this._map && this._map._docLayer._internalCacheEmpty) {
+		if (!window.ThisIsTheiOSApp && this._map && this._map._docLayer._internalCacheEmpty) {
 			for (var k = 0; k < commands.length; ++k) {
 				var cmd = commands[k];
 				if (cmd === 'Paste')
