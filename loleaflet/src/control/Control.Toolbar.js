@@ -1659,6 +1659,9 @@ function onCommandStateChanged(e) {
 	var found = false;
 	var value, color, div;
 
+	if (!commandName)
+		return;
+
 	if (commandName === '.uno:AssignLayout') {
 		$('.styles-select').val(state).trigger('change');
 	} else if (commandName === '.uno:StyleApply') {
