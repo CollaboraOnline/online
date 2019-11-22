@@ -155,8 +155,8 @@ std::string Proof::GetProof(const std::string& access_token, const std::string& 
 {
     std::string decoded_access_token;
     Poco::URI::decode(access_token, decoded_access_token);
-    assert(decoded_access_token.size() <= std::numeric_limits<int32_t>::max()
-           && uri.size() <= std::numeric_limits<int32_t>::max());
+    assert(decoded_access_token.size() <= static_cast<size_t>(std::numeric_limits<int32_t>::max()));
+    assert(uri.size() <= static_cast<size_t>(std::numeric_limits<int32_t>::max()));
     const size_t size = 4 + decoded_access_token.size() + 4 + uri.size() + 4 + 8;
     Poco::Buffer<char> buffer(size); // allocate enough size
     buffer.resize(0); // start from empty buffer
