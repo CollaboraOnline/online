@@ -524,7 +524,7 @@ private:
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
     int sendFrame(const std::shared_ptr<StreamSocket>& socket,
-                  const char* data, const size_t len,
+                  const char* data, const uint64_t len,
                   unsigned char flags, const bool flush = true) const
     {
         if (!socket || data == nullptr || len == 0)
