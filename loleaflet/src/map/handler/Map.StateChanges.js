@@ -28,8 +28,15 @@ L.Map.StateChangeHandler = L.Handler.extend({
 
 	_onStateChanged: function(e) {
 		var slideMasterPageItem = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
-		var index = e.state.indexOf('{');
-		var state = index !== -1 ? JSON.parse(e.state.substring(index)) : e.state;
+		var state;
+
+		if (typeof(e.state == 'object')) {
+			state = e.state;
+		} else if (typeof(e.state == 'string')) {
+			var index = e.state.indexOf('{');
+			state = index !== -1 ? JSON.parse(e.state.substring(index)) : e.state;
+		}
+
 		this._items[e.commandName] = state;
 		if (e.commandName === '.uno:CurrentTrackedChangeId') {
 			var redlineId = 'change-' + state;
