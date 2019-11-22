@@ -234,7 +234,7 @@ private:
 
         void operator()(int& value) { value = _config.getInt(_name); }
         void operator()(unsigned int& value) { value = _config.getUInt(_name); }
-        void operator()(unsigned long& value) { value = _config.getUInt64(_name); }
+        void operator()(uint64_t& value) { value = _config.getUInt64(_name); }
         void operator()(bool& value) { value = _config.getBool(_name); }
         void operator()(std::string& value) { value = _config.getString(_name); }
         void operator()(double& value) { value = _config.getDouble(_name); }
