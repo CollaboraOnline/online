@@ -189,6 +189,15 @@ L.Map = L.Evented.extend({
 			if (((window.ThisIsTheiOSApp && window.mode.isTablet()) || !L.Browser.mobile) && this._docLayer._docType == 'text') {
 				var interactiveRuler = this._permission === 'edit' ? true : false;
 				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
+
+				// For some unclear reason there would be a 20px gap between the
+				// toolbar and the ruler in the iOS app on iPad. This is a very ugly
+				// workaround for that. Don't ask me why something called
+				// ".leaflet-top" in practice seems to have impact only on where the
+				// ruler is located.
+				if (window.ThisIsTheiOSApp) {
+					$('.leaflet-top').css('top', '-20px');
+				}
 			}
 		});
 		this.on('updatetoolbarcommandvalues', function(e) {
