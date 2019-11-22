@@ -49,7 +49,7 @@
   }
 #endif
 #define TST_LOG_NAME_BEGIN(NAME, X) do { \
-                        char t[64]; Poco::DateTime time; snprintf(t, sizeof(t), "%.2u:%.2u:%.2u.%.6u (@%lums) ", \
+                        char t[64]; Poco::DateTime time; snprintf(t, sizeof(t), "%.2u:%.2u:%.2u.%.6u (@%zums) ", \
                         time.hour(), time.minute(), time.second(), time.millisecond() * 1000 + time.microsecond(), helpers::timeSinceTestStartMs()); \
                         std::ostringstream str; str << NAME << t << X; tstLog(str); } while (false)
 #define TST_LOG_BEGIN(X) TST_LOG_NAME_BEGIN(testname, X)

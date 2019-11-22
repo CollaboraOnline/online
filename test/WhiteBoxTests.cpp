@@ -99,53 +99,53 @@ void WhiteBoxTests::testLOOLProtocolFunctions()
     CPPUNIT_ASSERT(LOOLProtocol::getTokenKeywordFromMessage(message, "mumble", map, mumble));
     CPPUNIT_ASSERT_EQUAL(2, mumble);
 
-    CPPUNIT_ASSERT_EQUAL(1UL, Util::trimmed("A").size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), Util::trimmed("A").size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), Util::trimmed("A"));
 
-    CPPUNIT_ASSERT_EQUAL(1UL, Util::trimmed(" X").size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), Util::trimmed(" X").size());
     CPPUNIT_ASSERT_EQUAL(std::string("X"), Util::trimmed(" X"));
 
-    CPPUNIT_ASSERT_EQUAL(1UL, Util::trimmed("Y ").size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), Util::trimmed("Y ").size());
     CPPUNIT_ASSERT_EQUAL(std::string("Y"), Util::trimmed("Y "));
 
-    CPPUNIT_ASSERT_EQUAL(1UL, Util::trimmed(" Z ").size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), Util::trimmed(" Z ").size());
     CPPUNIT_ASSERT_EQUAL(std::string("Z"), Util::trimmed(" Z "));
 
-    CPPUNIT_ASSERT_EQUAL(0UL, Util::trimmed(" ").size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), Util::trimmed(" ").size());
     CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trimmed(" "));
 
-    CPPUNIT_ASSERT_EQUAL(0UL, Util::trimmed("   ").size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), Util::trimmed("   ").size());
     CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trimmed("   "));
 
     std::string s;
 
     s = "A";
-    CPPUNIT_ASSERT_EQUAL(1UL, Util::trim(s).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), Util::trim(s).size());
     s = "A";
     CPPUNIT_ASSERT_EQUAL(std::string("A"), Util::trim(s));
 
     s = " X";
-    CPPUNIT_ASSERT_EQUAL(1UL, Util::trim(s).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), Util::trim(s).size());
     s = " X";
     CPPUNIT_ASSERT_EQUAL(std::string("X"), Util::trim(s));
 
     s = "Y ";
-    CPPUNIT_ASSERT_EQUAL(1UL, Util::trim(s).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), Util::trim(s).size());
     s = "Y ";
     CPPUNIT_ASSERT_EQUAL(std::string("Y"), Util::trim(s));
 
     s = " Z ";
-    CPPUNIT_ASSERT_EQUAL(1UL, Util::trim(s).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), Util::trim(s).size());
     s = " Z ";
     CPPUNIT_ASSERT_EQUAL(std::string("Z"), Util::trim(s));
 
     s = " ";
-    CPPUNIT_ASSERT_EQUAL(0UL, Util::trim(s).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), Util::trim(s).size());
     s = " ";
     CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trim(s));
 
     s = "   ";
-    CPPUNIT_ASSERT_EQUAL(0UL, Util::trim(s).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), Util::trim(s).size());
     s = "   ";
     CPPUNIT_ASSERT_EQUAL(std::string(""), Util::trim(s));
 }
@@ -219,7 +219,7 @@ void WhiteBoxTests::testSplitting()
     CPPUNIT_ASSERT_EQUAL(std::string("aa"), first);
     CPPUNIT_ASSERT_EQUAL(std::string(".bb"), second);
 
-    CPPUNIT_ASSERT_EQUAL(5UL, Util::getLastDelimiterPosition("aa.bb.cc", 8, '.'));
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), Util::getLastDelimiterPosition("aa.bb.cc", 8, '.'));
 
     // Split last, remove delim.
     std::tie(first, second) = Util::splitLast(std::string("aa.bb.cc"), '.', true);
@@ -312,51 +312,51 @@ void WhiteBoxTests::testTokenizer()
     std::vector<std::string> tokens;
 
     tokens = LOOLProtocol::tokenize("");
-    CPPUNIT_ASSERT_EQUAL(0UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
 
     tokens = LOOLProtocol::tokenize("  ");
-    CPPUNIT_ASSERT_EQUAL(0UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
 
     tokens = LOOLProtocol::tokenize("A");
-    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = LOOLProtocol::tokenize("  A");
-    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = LOOLProtocol::tokenize("A  ");
-    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = LOOLProtocol::tokenize(" A ");
-    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = LOOLProtocol::tokenize(" A  Z ");
-    CPPUNIT_ASSERT_EQUAL(2UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
     CPPUNIT_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
     tokens = LOOLProtocol::tokenize("\n");
-    CPPUNIT_ASSERT_EQUAL(0UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
 
     tokens = LOOLProtocol::tokenize(" A  \nZ ");
-    CPPUNIT_ASSERT_EQUAL(1UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = LOOLProtocol::tokenize(" A  Z\n ");
-    CPPUNIT_ASSERT_EQUAL(2UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
     CPPUNIT_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
     tokens = LOOLProtocol::tokenize(" A  Z  \n ");
-    CPPUNIT_ASSERT_EQUAL(2UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("A"), tokens[0]);
     CPPUNIT_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
     tokens = LOOLProtocol::tokenize("tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1");
-    CPPUNIT_ASSERT_EQUAL(10UL, tokens.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(10), tokens.size());
     CPPUNIT_ASSERT_EQUAL(std::string("tile"), tokens[0]);
     CPPUNIT_ASSERT_EQUAL(std::string("nviewid=0"), tokens[1]);
     CPPUNIT_ASSERT_EQUAL(std::string("part=0"), tokens[2]);
@@ -382,21 +382,21 @@ void WhiteBoxTests::testTokenizer()
     std::vector<int> ints;
 
     ints = LOOLProtocol::tokenizeInts(std::string("-1"));
-    CPPUNIT_ASSERT_EQUAL(1UL, ints.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), ints.size());
     CPPUNIT_ASSERT_EQUAL(-1, ints[0]);
 
     ints = LOOLProtocol::tokenizeInts(std::string("1,2,3,4"));
-    CPPUNIT_ASSERT_EQUAL(4UL, ints.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), ints.size());
     CPPUNIT_ASSERT_EQUAL(1, ints[0]);
     CPPUNIT_ASSERT_EQUAL(2, ints[1]);
     CPPUNIT_ASSERT_EQUAL(3, ints[2]);
     CPPUNIT_ASSERT_EQUAL(4, ints[3]);
 
     ints = LOOLProtocol::tokenizeInts("");
-    CPPUNIT_ASSERT_EQUAL(0UL, ints.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), ints.size());
 
     ints = LOOLProtocol::tokenizeInts(std::string(",,,"));
-    CPPUNIT_ASSERT_EQUAL(0UL, ints.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), ints.size());
 }
 
 void WhiteBoxTests::testReplace()
