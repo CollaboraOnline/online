@@ -41,15 +41,10 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
     CPPUNIT_TEST(testCloseAfterClose);
-    CPPUNIT_TEST(testConnectNoLoad);
-    CPPUNIT_TEST(testLoadSimple);
-    CPPUNIT_TEST(testBadLoad);
-    CPPUNIT_TEST(testReload);
     CPPUNIT_TEST(testGetTextSelection);
     CPPUNIT_TEST(testSaveOnDisconnect);
     CPPUNIT_TEST(testSavePassiveOnDisconnect);
     CPPUNIT_TEST(testReloadWhileDisconnecting);
-    CPPUNIT_TEST(testExcelLoad);
     CPPUNIT_TEST(testPasteBlank);
     CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testInactiveClient);
@@ -73,15 +68,10 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testCloseAfterClose();
-    void testConnectNoLoad();
-    void testLoadSimple();
-    void testBadLoad();
-    void testReload();
     void testGetTextSelection();
     void testSaveOnDisconnect();
     void testSavePassiveOnDisconnect();
     void testReloadWhileDisconnecting();
-    void testExcelLoad();
     void testPasteBlank();
     void testInsertDelete();
     void testInactiveClient();
@@ -101,8 +91,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     void testAlertAllUsers();
     void testViewInfoMsg();
     void testUndoConflict();
-
-    void loadDoc(const std::string& documentURL, const std::string& testname);
 
     void getPartHashCodes(const std::string& testname,
                           const std::string& response,
@@ -210,109 +198,6 @@ void HTTPWSTest::testCloseAfterClose()
     catch (const Poco::Exception& exc)
     {
         CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::loadDoc(const std::string& documentURL, const std::string& testname)
-{
-    try
-    {
-        // Load a document and wait for the status.
-        // Don't replace with helpers, so we catch status.
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-        sendTextFrame(socket, "load url=" + documentURL, testname);
-
-        assertResponseString(socket, "status:", testname);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testConnectNoLoad()
-{
-    const char* testname1 = "connectNoLoad-1 ";
-    const char* testname2 = "connectNoLoad-2 ";
-    const char* testname3 = "connectNoLoad-3 ";
-
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL, "connectNoLoad ");
-
-    // Connect and disconnect without loading.
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-    TST_LOG_NAME(testname1, "Connecting first to disconnect without loading.");
-    std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname1);
-    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket);
-    TST_LOG_NAME(testname1, "Disconnecting first.");
-    socket.reset();
-
-    // Connect and load first view.
-    TST_LOG_NAME(testname2, "Connecting second to load first view.");
-    std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response, testname2);
-    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket1);
-    sendTextFrame(socket1, "load url=" + documentURL, testname2);
-    CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket1, testname2));
-
-    // Connect but don't load second view.
-    TST_LOG_NAME(testname3, "Connecting third to disconnect without loading.");
-    std::shared_ptr<LOOLWebSocket> socket2 = connectLOKit(_uri, request, _response, testname3);
-    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket2);
-    TST_LOG_NAME(testname3, "Disconnecting third.");
-    socket2.reset();
-
-    TST_LOG_NAME(testname2, "Getting status from first view.");
-    sendTextFrame(socket1, "status", testname2);
-    assertResponseString(socket1, "status:", testname2);
-
-    TST_LOG_NAME(testname2, "Disconnecting second.");
-    socket1.reset();
-}
-
-void HTTPWSTest::testLoadSimple()
-{
-    const char* testname = "loadSimple ";
-
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-    loadDoc(documentURL, "load ");
-}
-
-void HTTPWSTest::testBadLoad()
-{
-    const char* testname = "badLoad ";
-    try
-    {
-        // Load a document and get its status.
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        // Before loading request status.
-        sendTextFrame(socket, "status");
-
-        const auto line = assertResponseString(socket, "error:", testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testReload()
-{
-    const char* testname = "reload ";
-
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-    for (int i = 0; i < 3; ++i)
-    {
-        TST_LOG("loading #" << (i+1));
-        loadDoc(documentURL, testname);
     }
 }
 
@@ -504,27 +389,6 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         const std::string expected = "aaa bbb ccc";
         const std::string selection = getAllText(socket, testname, expected);
         CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: ") + expected, selection);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testExcelLoad()
-{
-    const char* testname = "excelLoad ";
-    try
-    {
-        // Load a document and get status.
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("timeline.xlsx", _uri, testname);
-
-        sendTextFrame(socket, "status", testname);
-        const auto status = assertResponseString(socket, "status:", testname);
-
-        // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142 viewid=0\n...'.
-        std::vector<std::string> tokens(LOOLProtocol::tokenize(status, ' '));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size());
     }
     catch (const Poco::Exception& exc)
     {
