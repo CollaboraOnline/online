@@ -42,7 +42,12 @@
 
 #if defined(__x86_64__)
 #  define AUDIT_ARCH_NR AUDIT_ARCH_X86_64
-#  define REG_SYSCALL   REG_RAX
+#  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.gregs[(_reg)])
+#  define SECCOMP_SYSCALL(_ctx)   SECCOMP_REG(_ctx, REG_RAX)
+#elif defined(__arm__)
+#  define AUDIT_ARCH_NR AUDIT_ARCH_ARM
+#  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.arm_##_reg)
+#  define SECCOMP_SYSCALL(_ctx)   SECCOMP_REG(_ctx, r7)
 #else
 #  error "Platform does not support seccomp filtering yet - unsafe."
 #endif
@@ -65,7 +70,7 @@ static void handleSysSignal(int /* signal */,
 	if (info->si_code != SYS_SECCOMP || !uctx)
 		return;
 
-	unsigned int syscall = uctx->uc_mcontext.gregs[REG_SYSCALL];
+    unsigned int syscall = SECCOMP_SYSCALL (uctx);
 
     Log::signalLogPrefix();
     Log::signalLog(" seccomp trapped signal, un-authorized sys-call: ");
@@ -92,9 +97,12 @@ bool lockdown(Type type)
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
-    #define KILL_SYSCALL(name) \
-        BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
+    #define KILL_SYSCALL_FULL(fullname) \
+        BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, fullname, 0, 1), \
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_TRAP)
+
+    #define KILL_SYSCALL(name) \
+        KILL_SYSCALL_FULL(__NR_##name)
 
     struct sock_filter filterCode[] = {
         // Check our architecture is correct.
@@ -145,7 +153,12 @@ bool lockdown(Type type)
         KILL_SYSCALL(uselib),
         KILL_SYSCALL(personality), // !
         KILL_SYSCALL(vhangup),
+#ifdef __NR_modify_ldt
         KILL_SYSCALL(modify_ldt), // !
+#endif
+#ifdef __PNR_modify_ldt
+        KILL_SYSCALL_FULL(__PNR_modify_ldt), // !
+#endif
         KILL_SYSCALL(pivot_root), // !
         KILL_SYSCALL(chroot),
         KILL_SYSCALL(acct),   // !
