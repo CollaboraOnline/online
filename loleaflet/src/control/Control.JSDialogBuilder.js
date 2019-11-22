@@ -829,6 +829,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_valuesetControl: function (parentContainer, data, builder) {
 		var elem;
 		var image;
+		var image64;
 
 		if (!data.entries || data.entries.length === 0) {
 			return false;
@@ -836,16 +837,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (var index in data.entries) {
 			image = data.entries[index].image;
-			image = image.substr(0, image.lastIndexOf('.'));
-			image = image.substr(image.lastIndexOf('/') + 1);
+			image64 = data.entries[index].image64;
+			if (image) {
+				image = image.substr(0, image.lastIndexOf('.'));
+				image = image.substr(image.lastIndexOf('/') + 1);
+				image = 'url("images/' + image + '.svg")';
+			}
+
+			if (image64) {
+				image = 'url("' + image64 + '")';
+			}
+
 			elem = L.DomUtil.create('div', 'layout ' +
 				(data.entries[index].selected ? ' loleaflet-context-down' : ''), parentContainer);
 			$(elem).data('id', data.entries[index].id);
 			$(elem).click(function () {
 				builder.callback('valueset', 'selected', { id: data.id }, $(this).data('id'), builder);
 			});
-			elem.style.setProperty('background', 'url("images/' + image +
-				'.svg") no-repeat center', 'important');
+
+			elem.style.setProperty('background', image + ' no-repeat center', 'important');
 		}
 
 		return false;
