@@ -257,8 +257,8 @@ void Session::getIOStats(uint64_t &sent, uint64_t &recv)
 
 void Session::setHash(const std::string& text)
  {
-    int hash = 0x811C9DC5;
-    int prime = 0x1000193;
+    unsigned int hash = 0x811C9DC5;
+    unsigned int prime = 0x1000193;
 
     if (!text.empty())
     {
@@ -268,7 +268,7 @@ void Session::setHash(const std::string& text)
            hash *= prime;
        }
     }
-    _hash = abs(hash);
+    _hash = abs(static_cast<int>(hash));
  }
 
 
