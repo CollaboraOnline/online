@@ -229,12 +229,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		arrowSpan.innerHTML = '>';
 
 		var updateFunction = function() {
-			var items = builder.map['stateChangeHandler'];
-
 			var state = null;
 			if (data.command) {
-				state = items.getItemValue(data.command);
-				state = builder._getTextForUnoState(data.command, state);
+				state = builder._getUnoStateForItemId(data.id, builder);
 			}
 			if (state) {
 				titleSpan.innerHTML = state;
@@ -660,33 +657,28 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				return state.replace(',', '.');
 			}
 			break;
-		}
 
-		return null;
-	},
+		case 'fillstyle':
+			state = items.getItemValue('.uno:FillStyle');
+			if (state) {
+				switch (state) {
+				case 'NONE':
+					return _('None');
 
-	_getTextForUnoState: function(command, state) {
-		switch (command) {
-		case '.uno:FillStyle':
+				case 'SOLID':
+					return _('Color');
 
-			switch (state) {
-			case 'NONE':
-				return _('None');
+				case 'GRADIENT':
+					return _('Gradient');
 
-			case 'SOLID':
-				return _('Color');
+				case 'HATCH':
+					return _('Hatching');
 
-			case 'GRADIENT':
-				return _('Gradient');
-
-			case 'HATCH':
-				return _('Hatching');
-
-			case 'BITMAP':
-				// FIXME: can be bitmap or pattern, for now we cant import bitmap
-				return _('Pattern');
+				case 'BITMAP':
+					// FIXME: can be bitmap or pattern, for now we cant import bitmap
+					return _('Pattern');
+				}
 			}
-
 			break;
 		}
 
