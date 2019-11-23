@@ -138,16 +138,29 @@ namespace LOOLProtocol
         return tokenize(s.data(), s.size(), delimiter);
     }
 
-    /// Tokenize according to the regex, potentially skip empty tokens.
     inline
-    std::vector<std::string> tokenize(const std::string& s, const std::regex& pattern, bool skipEmpty = false)
+    StringVector tokenize(const std::string& s, const char* delimiter)
     {
-        std::vector<std::string> tokens;
-        if (skipEmpty)
-            std::copy_if(std::sregex_token_iterator(s.begin(), s.end(), pattern, -1), std::sregex_token_iterator(), std::back_inserter(tokens), [](std::string in) { return !in.empty(); });
-        else
-            std::copy(std::sregex_token_iterator(s.begin(), s.end(), pattern, -1), std::sregex_token_iterator(), std::back_inserter(tokens));
-        return tokens;
+        std::vector<StringToken> tokens;
+        if (s.size() == 0)
+        {
+            return StringVector(std::string(), {});
+        }
+
+        size_t start = 0;
+        size_t end = s.find(delimiter, start);
+
+        tokens.emplace_back(start, end - start);
+        start = end + std::strlen(delimiter);
+
+        while(end != std::string::npos)
+        {
+            end = s.find(delimiter, start);
+            tokens.emplace_back(start, end - start);
+            start = end + std::strlen(delimiter);
+        }
+
+        return StringVector(s, tokens);
     }
 
     inline

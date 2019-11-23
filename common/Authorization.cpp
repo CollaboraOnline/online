@@ -53,9 +53,11 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
             //   Authorization: Basic ....
             //   X-Something-Custom: Huh
             // Regular expression evaluates and finds "\n\r" and tokenizes accordingly
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(_data, std::regex(R"(\n\r)"), /*skipEmpty =*/ true));
-            for (const auto& token : tokens)
+            StringVector tokens(LOOLProtocol::tokenize(_data, "\n\r"));
+            for (auto it = tokens.begin(); it != tokens.end(); ++it)
             {
+                std::string token = tokens.getParam(*it);
+
                 size_t separator = token.find_first_of(':');
                 if (separator != std::string::npos)
                 {
