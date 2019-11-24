@@ -228,7 +228,7 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
       [POCO_DEBUG_SUFFIX=])
 
-ENABLE_DEBUG=
+ENABLE_DEBUG=false
 LOOLWSD_LOGLEVEL="warning"
 LOOLWSD_LOG_TO_FILE="false"
 LOOLWSD_LOGFILE="/var/log/loolwsd.log"
