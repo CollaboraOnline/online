@@ -672,6 +672,10 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     if (supportsLocks)
         lockCtx.initSupportsLocks();
 
+    std::string overrideWatermarks = LOOLWSD::getConfigValue<std::string>("watermark.text", "");
+    if (!overrideWatermarks.empty())
+        watermarkText = overrideWatermarks;
+
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
         {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, templateSource,
          canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
