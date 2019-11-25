@@ -21,7 +21,7 @@
 #include "net/WebSocketHandler.hpp"
 #include "Util.hpp"
 
-class DocumentAggregateStats;
+struct DocumentAggregateStats;
 
 /// A client view in Admin controller.
 class View
