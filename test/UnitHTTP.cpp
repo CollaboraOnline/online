@@ -92,13 +92,12 @@ public:
 
     bool expectString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, const std::string& str)
     {
-        char buffer[str.size() + 64];
-        memset(buffer, 0, sizeof(buffer));
-        int got = socket->receiveBytes(buffer, str.size());
+        std::vector<char> buffer(str.size() + 64);
+        int got = socket->receiveBytes(buffer.data(), str.size());
         if (got != (int)str.size() ||
-            strncmp(buffer, str.c_str(), got))
+            strncmp(buffer.data(), str.c_str(), got))
         {
-            std::cerr << "testChunks got " << got << " mismatching strings '" << buffer << " vs. expected '" << str << "'\n";
+            std::cerr << "testChunks got " << got << " mismatching strings '" << buffer.data() << " vs. expected '" << str << "'\n";
             exitTest(TestResult::Failed);
             return false;
         }
