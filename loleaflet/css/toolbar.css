@@ -62,7 +62,10 @@ w2ui-toolbar {
 		display: none;
 		overflow: visible !important;
 }
-
+#toolbar-down .ToolbarStatusInactive {
+	color: #696969;
+	box-shadow: inset 0px 0px 0px 10px #f2f2f2, 0px 0px 0px 2px #f2f2f2, 4px 0px 0px 1px #fff, -4px 0px 0px 1px #fff, 0px 0px 0px 5px #fff;
+}
 #spreadsheet-toolbar {
 		left: 0;
 		text-align: center;

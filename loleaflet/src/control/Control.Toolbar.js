@@ -1786,14 +1786,14 @@ function onCommandStateChanged(e) {
 	else if (commandName === '.uno:RowColSelCount') {
 		state = toLocalePattern('$1 rows, $2 columns selected', '(\\d+) rows, (\\d+) columns selected', state, '$1', '$2');
 		state = toLocalePattern('$1 of $2 records found', '(\\d+) of (\\d+) records found', state, '$1', '$2');
-		updateToolbarItem(statusbar, 'RowColSelCount', $('#RowColSelCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
+		updateToolbarItem(statusbar, 'RowColSelCount', $('#RowColSelCount').html(state ? state : '<span class="ToolbarStatusInactive">&nbsp;Select multiple cells&nbsp;</span>').parent().html());
 	}
 	else if (commandName === '.uno:InsertMode') {
-		updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
+		updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;Insert mode: inactive&nbsp;</span>').parent().html());
 	}
 	else if (commandName === '.uno:StatusSelectionMode' ||
 		 commandName === '.uno:SelectionMode') {
-		updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
+		updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;Selection mode: inactive&nbsp;</span>').parent().html());
 	}
 	else if (commandName == '.uno:StateTableCell') {
 		updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? localizeStateTableCell(state) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
