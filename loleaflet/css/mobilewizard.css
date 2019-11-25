@@ -314,12 +314,34 @@
 	.sub-menu-arrow {
 		display: table-cell;
 		padding-left: 10px;
-		padding-right: 20px;
+		padding-right: 10px;
 		background: transparent;
 		font-size: 1.5em;
 		font-weight: bold;
 		color: #aaa !important;
 		vertical-align: middle;
+	}
+
+	.func-info-icon {
+		display: table-cell;
+		padding-left: 8px;
+		padding-right: 8px;
+		background: transparent;
+		font-size: 1.2em;
+		font-weight: bold;
+		color: #aaa !important;
+		vertical-align: middle;
+		border-radius: 100px;
+		border: solid 2px #aaa;
+	}
+
+	.func-info-sig {
+		margin-left: 1em;
+		margin-bottom: 2em;
+	}
+
+	.func-info-desc {
+		margin-left: 1em;
 	}
 
 	.entry-value {
@@ -329,6 +351,7 @@
 
 	.ui-header-right {
 		display: table;
+		margin-right: 10px;
 	}
 
 	.ui-header.level-1.mobile-wizard.ui-widget .ui-header-left span.menu-entry-with-icon {

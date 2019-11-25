@@ -42,6 +42,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['grid'] = this._gridHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
+		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
 		this._controlHandlers['paneltabs'] = this._panelTabsHandler;
 		this._controlHandlers['container'] = this._containerHandler;
 		this._controlHandlers['window'] = this._containerHandler;
@@ -270,6 +271,40 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	_calcFunctionEntry: function(parentContainer, data, contentNode, builder) {
+		var sectionTitle = L.DomUtil.create('div', 'func-entry ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		$(sectionTitle).css('justify-content', 'space-between');
+		if (data && data.id)
+			sectionTitle.id = data.id;
+
+		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
+		var titleClass = 'func-name';
+		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
+		titleSpan.innerHTML = data.text;
+
+		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
+		var arrowSpan = L.DomUtil.create('span', 'func-info-icon', rightDiv);
+		arrowSpan.innerHTML = 'i';
+
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+		contentDiv.title = data.text;
+
+		builder._currentDepth++;
+		builder.build(contentDiv, [contentNode]);
+		builder._currentDepth--;
+
+		$(contentDiv).hide();
+		if (builder.wizard) {
+			$(rightDiv).click(function() {
+				builder.wizard.goLevelDown(contentDiv);
+				if (contentNode.onshow)
+					contentNode.onshow();
+			});
+		} else {
+			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+		}
+	},
+
 	_explorableMenu: function(parentContainer, title, children, builder, customContent) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
@@ -313,6 +348,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var contentNode = data.children[0];
 
 		builder._explorableEntry(parentContainer, data, contentNode, builder);
+
+		return false;
+	},
+
+	_calcFuncListPanelHandler: function(parentContainer, data, builder) {
+		var contentNode = data.children[0];
+
+		builder._calcFunctionEntry(parentContainer, data, contentNode, builder);
 
 		return false;
 	},

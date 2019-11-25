@@ -680,6 +680,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('jsdialog:')) {
 			this._onJSDialogMsg(textMsg);
 		}
+		else if (textMsg.startsWith('calcfunctionlist:')) {
+			this._onCalcFunctionListMsg(textMsg.substring('calcfunctionlist:'.length + 1));
+		}
 	},
 
 	toggleTileDebugModeImpl: function() {
@@ -745,6 +748,43 @@ L.TileLayer = L.GridLayer.extend({
 		var formula = textMsg.substring(13);
 		this._lastFormula = formula;
 		this._map.fire('cellformula', {formula: formula});
+	},
+
+	_onCalcFunctionListMsg: function (textMsg) {
+		console.log('_onCalcFunctionList: textMsg: ' + textMsg);
+		var funcList = JSON.parse(textMsg);
+		this._closeMobileWizard();
+
+		var data = {
+			id: 'funclist',
+			type: '',
+			text: 'Functions',
+			enabled: true,
+			children: []
+		};
+
+		var entries = data.children;
+		for (var idx in funcList) {
+			var func =  funcList[idx];
+			var name = func.signature.split('(')[0];
+			var entry = {
+				id: '',
+				type: 'calcfuncpanel',
+				text: name,
+				enabled: true,
+				children: []
+			}
+			entries.push(entry);
+			entries[entries.length-1].children[0] = {
+				id: '',
+				type: 'fixedtext',
+				text: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
+				enabled: true,
+				style: 'func-info'
+			};
+		}
+
+		this._openMobileWizard(data);
 	},
 
 	_onCursorVisibleMsg: function(textMsg) {

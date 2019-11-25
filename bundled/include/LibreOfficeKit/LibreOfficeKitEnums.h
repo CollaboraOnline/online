@@ -710,6 +710,12 @@ typedef enum
      * the description.
      */
     LOK_CALLBACK_JSDIALOG = 46,
+
+    /**
+     * Send the list of functions whose name starts with the characters entered
+     * by the user.
+     */
+    LOK_CALLBACK_CALC_FUNCTION_LIST = 47
 }
 LibreOfficeKitCallbackType;
 
@@ -832,6 +838,8 @@ static inline const char* lokCallbackTypeToString(int nType)
         return "LOK_CALLBACK_REFERENCE_MARKS";
     case LOK_CALLBACK_JSDIALOG:
         return "LOK_CALLBACK_JSDIALOG";
+    case LOK_CALLBACK_CALC_FUNCTION_LIST:
+        return "LOK_CALLBACK_CALC_FUNCTION_LIST";
     }
 
     assert(!"Unknown LibreOfficeKitCallbackType type.");
