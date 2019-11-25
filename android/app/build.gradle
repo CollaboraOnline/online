@@ -20,8 +20,8 @@ android {
             manifestPlaceholders = [ appIcon: "${liboLauncherIcon}" ]
             buildConfigField "boolean", "APP_HAS_BRANDING", "${liboHasBranding}"
             ndk {
-                //abiFilters "x86", "armeabi-v7a", "armeabi"
-                abiFilters "armeabi-v7a"
+                abiFilters = []
+                abiFilters.addAll("${liboAndroidAbi}".split(' ').collect{it as String})
             }
             applicationIdSuffix '.debug'
             versionNameSuffix '-debug'
@@ -34,7 +34,8 @@ android {
             manifestPlaceholders = [ appIcon: "${liboLauncherIcon}" ]
             buildConfigField "boolean", "APP_HAS_BRANDING", "${liboHasBranding}"
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters = []
+                abiFilters.addAll("${liboAndroidAbi}".split(' ').collect{it as String})
             }
             minifyEnabled false // FIXME disabled before we get a good proguardRules for callFakeWebsocketOnMessage calling from C++
             shrinkResources false // FIXME cannot be enabled when minifyEnabled is turned off

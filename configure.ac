@@ -175,7 +175,10 @@ AC_ARG_WITH([lo-builddir],
                             In case of macOS, you MUST manually edit the ios/Mobile.xcodeproj/project.pbxproj
                             file and change the references to "../ios-device" to refer to the corresponding
                             LibreOffice core source directory (which typically would be the same as the build
-                            directory you specify with this option).]))
+                            directory you specify with this option).
+                            In case of Android, you can provide 2 builddirs
+                            separated by a colon ':' - the first is for
+                            armeabi-v7a, the second is for arm64-v8a]))
 
 AC_ARG_WITH([logfile],
             AS_HELP_STRING([--with-logfile=<path>],
@@ -183,19 +186,25 @@ AC_ARG_WITH([logfile],
 
 AC_ARG_WITH([poco-includes],
             AS_HELP_STRING([--with-poco-includes=<path>],
-                           [Path to the "include" directory with the Poco headers]))
+                           [Path to the "include" directory with the Poco
+                            headers.  If you are building for Android 64bit,
+                            you need two, separated by a colon ':'.]))
 
 AC_ARG_WITH([poco-libs],
             AS_HELP_STRING([--with-poco-libs=<path>],
-                           [Path to the "lib" directory with the Poco libraries]))
+                           [Path to the "lib" directory with the Poco
+                            libraries.  If you are building for Android 64bit,
+                            you need two, separated by a colon ':'.]))
 
 AC_ARG_WITH([libpng-includes],
             AS_HELP_STRING([--with-libpng-includes=<path>],
-                           [Path to the "include" directory with the libpng headers]))
+                           [Path to the "include" directory with the libpng
+                            headers.  Not used on Android.]))
 
 AC_ARG_WITH([libpng-libs],
             AS_HELP_STRING([--with-libpng-libs=<path>],
-                           [Path to the "lib" directory with the libpng libraries]))
+                           [Path to the "lib" directory with the libpng
+                            libraries.  Not used on Android.]))
 
 AC_ARG_WITH([cppunit-includes],
             AS_HELP_STRING([--with-cppunit-includes=<path>],
@@ -303,8 +312,12 @@ fi
 # to the Mac.
 # Android: We need these to setup the CMakeLists.txt properly.
 LOBUILDDIR=
+ANDROID_ABI="armeabi-v7a"
+LOBUILDDIR_ARM64_V8A=
 POCOINCLUDE=
+POCOINCLUDE_ARM64_V8A=
 POCOLIB=
+POCOLIB_ARM64_V8A=
 POCODEBUG=
 if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \); then
    AC_MSG_CHECKING([for LibreOffice build tree to build against])
@@ -313,6 +326,23 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    fi
 
    LOBUILDDIR="$with_lo_builddir"
+   if test "$enable_androidapp" = "yes" ; then
+       if echo "$LOBUILDDIR" | grep -qs ':' ; then
+           ANDROID_ABI="armeabi-v7a arm64-v8a"
+           LOBUILDDIR=`echo $with_lo_builddir | sed 's/:.*//'`
+           LOBUILDDIR_ARM64_V8A=`echo $with_lo_builddir | sed 's/^.*://'`
+       fi
+
+       # Sanity check, just a random object file in the LibreOffice build tree - 64bit
+       if test "$ANDROID_ABI" != "armeabi-v7a" ; then
+           if test -f "$LOBUILDDIR_ARM64_V8A/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
+               AC_MSG_RESULT([$LOBUILDDIR_ARM64_V8A])
+           else
+               AC_MSG_ERROR([This is not a LibreOffice 64bit core build directory: $LOBUILDDIR_ARM64_V8A])
+           fi
+       fi
+   fi
+
    # Sanity check, just a random object file in the LibreOffice build tree
    if test \( "$enable_iosapp" = "yes" -a -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o" \) -o \( "$enable_androidapp" = "yes" -a -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" \); then
        AC_MSG_RESULT([$LOBUILDDIR])
@@ -326,6 +356,22 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    fi
 
    POCOINCLUDE="$with_poco_includes"
+   if test "$enable_androidapp" = "yes" ; then
+       if echo "$POCOINCLUDE" | grep -qs ':' ; then
+           POCOINCLUDE=`echo $with_poco_includes | sed 's/:.*//'`
+           POCOINCLUDE_ARM64_V8A=`echo $with_poco_includes | sed 's/^.*://'`
+       fi
+
+       # Sanity check - 64bit
+       if test "$ANDROID_ABI" != "armeabi-v7a" ; then
+           if test -f "$POCOINCLUDE_ARM64_V8A/Poco/Poco.h"; then
+               AC_MSG_RESULT([$POCOINCLUDE_ARM64_V8A])
+           else
+               AC_MSG_ERROR([This is not a Poco 64bit include directory: $POCOINCLUDE_ARM64_V8A])
+           fi
+       fi
+   fi
+
    # Sanity check
    if test -f "$POCOINCLUDE/Poco/Poco.h"; then
        AC_MSG_RESULT([$POCOINCLUDE])
@@ -339,6 +385,22 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    fi
 
    POCOLIB="$with_poco_libs"
+   if test "$enable_androidapp" = "yes" ; then
+       if echo "$POCOLIB" | grep -qs ':' ; then
+           POCOLIB=`echo $with_poco_libs | sed 's/:.*//'`
+           POCOLIB_ARM64_V8A=`echo $with_poco_libs | sed 's/^.*://'`
+       fi
+
+       # Sanity check - 64bit
+       if test "$ANDROID_ABI" != "armeabi-v7a" ; then
+           if test -f "$POCOLIB_ARM64_V8A/libPocoFoundation.a"; then
+               AC_MSG_RESULT([$POCOLIB_ARM64_V8A])
+           else
+               AC_MSG_ERROR([This is not a Poco 64bit lib directory: $POCOLIB_ARM64_V8A])
+           fi
+       fi
+   fi
+
    # Sanity check
    if test -f "$POCOLIB/libPocoFoundation.a"; then
        AC_MSG_RESULT([$POCOLIB])
@@ -351,21 +413,26 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    fi
 fi
 AC_SUBST(LOBUILDDIR)
+AC_SUBST(ANDROID_ABI)
+AC_SUBST(LOBUILDDIR_ARM64_V8A)
 AC_SUBST(POCOINCLUDE)
+AC_SUBST(POCOINCLUDE_ARM64_V8A)
 AC_SUBST(POCOLIB)
+AC_SUBST(POCOLIB_ARM64_V8A)
 AC_SUBST(POCODEBUG)
 
 LIBPNG_INCLUDES="$with_libpng_includes"
 LIBPNG_LIBS="$with_libpng_libs"
 LOKIT_PATH=`readlink -f $with_lokit_path`
 if test "$enable_androidapp" = "yes"; then
-   if test -z "$LIBPNG_INCLUDES" ; then
-      LIBPNG_INCLUDES="$LOBUILDDIR/workdir/UnpackedTarball/libpng"
+   if test -n "$LIBPNG_INCLUDES" ; then
+      AC_MSG_ERROR([--with-libpng-includes is ignored on Android, please remove the parameter.])
    fi
-   if test -z "$LIBPNG_LIBS" ; then
-      LIBPNG_LIBS="$LOBUILDDIR/workdir/LinkTarget/StaticLibrary"
+   if test -n "$LIBPNG_LIBS" ; then
+      AC_MSG_ERROR([--with-libpng-libs is ignored on Android, please remove the parameter.])
    fi
-   if test -z "$LOKIT_PATH" ; then
+   if test -n "$LOKIT_PATH" ; then
+      AC_MSG_ERROR([--with-lokit-path is ignored on Android, please remove the parameter.])
       LOKIT_PATH=`readlink -f $LOBUILDDIR/include`
    fi
 fi
@@ -733,7 +800,7 @@ LIBS="$LIBS -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPoc
 AS_IF([test "$ENABLE_SSL" = "true"],
       [LIBS="$LIBS -lssl -lcrypto"])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
                         [],
                         [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])

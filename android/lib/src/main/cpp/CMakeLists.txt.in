@@ -23,6 +23,19 @@ add_library(androidapp SHARED
 
 target_compile_definitions(androidapp PRIVATE LOOLWSD_CONFIGDIR="/etc/loolwsd") # TODO somewhere in assets maybe?
 
+# According to the ABI, we need to use different source trees
+if(${ANDROID_ABI} STREQUAL "armeabi-v7a")
+    set(LOBUILDDIR_ABI @LOBUILDDIR@)
+    set(POCOINCLUDE_ABI ${POCOINCLUDE_ABI})
+    set(POCOLIB_ABI @POCOLIB@)
+elseif(${ANDROID_ABI} STREQUAL "arm64-v8a")
+    set(LOBUILDDIR_ABI @LOBUILDDIR_ARM64_V8A@)
+    set(POCOINCLUDE_ABI @POCOINCLUDE_ARM64_V8A@)
+    set(POCOLIB_ABI @POCOLIB_ARM64_V8A@)
+else()
+    MESSAGE(FATAL_ERROR "Cannot build for ABI ${ANDROID_ABI}, please add support for that.")
+endif()
+
 target_include_directories(androidapp PRIVATE
                            .                     # path to androidapp.h
                            ../../../../..        # path to config.h
@@ -30,51 +43,51 @@ target_include_directories(androidapp PRIVATE
                            ../../../../../kit
                            ../../../../../net
                            ../../../../../wsd
-                           @POCOINCLUDE@         # POCO
-                           @LIBPNG_INCLUDES@     # libpng
-                           @LOKIT_PATH@          # LibreOfficeKit
+                           ${POCOINCLUDE_ABI}         # POCO
+                           ${LOBUILDDIR_ABI}/workdir/UnpackedTarball/libpng # libpng
+                           ${LOBUILDDIR_ABI}/include                        # LibreOfficeKit
 )
 
 add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/liblo-native-code.so"
                    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libfreebl3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libfreebl3.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libfreebl3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libfreebl3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libnspr4.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libnspr4.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libnspr4.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libnspr4.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libnss3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libnss3.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libnss3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libnss3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libnssckbi.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libnssckbi.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libnssckbi.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libnssckbi.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libnssdbm3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libnssdbm3.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libnssdbm3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libnssdbm3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libnssutil3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libnssutil3.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libnssutil3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libnssutil3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libplc4.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libplc4.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libplc4.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libplc4.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libplds4.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libplds4.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libplds4.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libplds4.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libsmime3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libsmime3.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libsmime3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libsmime3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libsoftokn3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libsoftokn3.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libsoftokn3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libsoftokn3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libsqlite3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libsqlite3.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libsqlite3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libsqlite3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/instdir/program/libssl3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/instdir/program/libssl3.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libssl3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libssl3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy @LOBUILDDIR@/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS @LOBUILDDIR@/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LOBUILDDIR_ABI}/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so
 
                    COMMENT "Copied liblo-native-code.so and its dependencies to the tree."
 )
@@ -85,13 +98,13 @@ add_custom_target(copy_native_code DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/lib/${AN
 target_link_libraries(androidapp
                       android
                       log
-                      @LIBPNG_LIBS@/liblibpng.a
-                      @POCOLIB@/libPocoEncodings@POCODEBUG@.a
-                      @POCOLIB@/libPocoNet@POCODEBUG@.a
-                      @POCOLIB@/libPocoRedis@POCODEBUG@.a
-                      @POCOLIB@/libPocoUtil@POCODEBUG@.a
-                      @POCOLIB@/libPocoXML@POCODEBUG@.a
-                      @POCOLIB@/libPocoJSON@POCODEBUG@.a
-                      @POCOLIB@/libPocoFoundation@POCODEBUG@.a
+                      ${LOBUILDDIR_ABI}/workdir/LinkTarget/StaticLibrary/liblibpng.a
+                      ${POCOLIB_ABI}/libPocoEncodings@POCODEBUG@.a
+                      ${POCOLIB_ABI}/libPocoNet@POCODEBUG@.a
+                      ${POCOLIB_ABI}/libPocoRedis@POCODEBUG@.a
+                      ${POCOLIB_ABI}/libPocoUtil@POCODEBUG@.a
+                      ${POCOLIB_ABI}/libPocoXML@POCODEBUG@.a
+                      ${POCOLIB_ABI}/libPocoJSON@POCODEBUG@.a
+                      ${POCOLIB_ABI}/libPocoFoundation@POCODEBUG@.a
                       "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/liblo-native-code.so"
 )

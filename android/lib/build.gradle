@@ -22,15 +22,16 @@ android {
         debug {
             buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
             ndk {
-                //abiFilters "x86", "armeabi-v7a", "armeabi"
-                abiFilters "armeabi-v7a"
+                abiFilters = []
+                abiFilters.addAll("${liboAndroidAbi}".split(' ').collect{it as String})
             }
             debuggable true
         }
         release {
             buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters = []
+                abiFilters.addAll("${liboAndroidAbi}".split(' ').collect{it as String})
             }
             minifyEnabled false // FIXME disabled before we get a good proguardRules for callFakeWebsocketOnMessage calling from C++
             shrinkResources false // FIXME cannot be enabled when minifyEnabled is turned off

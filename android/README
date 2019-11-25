@@ -82,6 +82,17 @@ build the native parts on Windows.
   + Open this 'android' subdir as a project
   + Build from Android Studio (Build -> Make Project)
 
+== Building 32bit + 64bit combined .apk ==
+
+  + you need to build both a 32bit (armeabi-v7a) and 64bit (arm64-v8a) core
+  + you need to build both a 32bit and 64bit POCO
+  + and then provide paths to both to the ./configure, separated by a colon ':',
+    like:
+
+    --with-lo-builddir=/local/libreoffice/master-android-release:/local/libreoffice/master-android-release-64bit \
+    --with-poco-includes=/opt/poco-android/include:/opt/poco-android-64bit/include \
+    --with-poco-libs=/opt/poco-android/lib:/opt/poco-android-64bit/lib \
+
 == Debugging ==
 
 To debug the native code in Android Studio, you need the debugging symbols and
