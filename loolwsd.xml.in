@@ -108,6 +108,7 @@
 
     <watermark>
       <opacity desc="Opacity of on-screen watermark from 0.0 to 1.0" type="double" default="0.2"></opacity>
+      <text desc="Watermark text to be displayed on the document if entered" type="string"></text>
     </watermark>
 
     <storage desc="Backend storage">
