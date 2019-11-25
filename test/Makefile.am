@@ -152,7 +152,7 @@ unit_session_la_SOURCES = UnitSession.cpp
 unit_session_la_LIBADD = $(CPPUNIT_LIBS)
 unit_uno_command_la_SOURCES = UnitUNOCommand.cpp
 unit_uno_command_la_LIBADD = $(CPPUNIT_LIBS)
-unit_load_la_SOURCES = UnitUNOCommand.cpp
+unit_load_la_SOURCES = UnitLoad.cpp
 unit_load_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
