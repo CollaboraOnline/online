@@ -71,7 +71,7 @@ private:
             {
                 unsigned char* t = to + 4 * (to_y * to_width + to_x);
 
-                if (t[3] != 255.0)
+                if (t[3] != 255)
                     continue;
 
                 double dst_r = t[0];
