@@ -18,6 +18,9 @@
 /* Default loleaflet UI used in the admin console URI */
 #define LOOLWSD_TEST_ADMIN_CONSOLE "/loleaflet/dist/admin/admin.html"
 
+/* Default loleaflet UI used in for monitoring URI */
+#define LOOLWSD_TEST_METRICS "/lool/getMetrics"
+
 /* Default loleaflet UI used in the start test URI */
 #define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/loleaflet.html"
 
@@ -635,12 +638,23 @@ namespace
 {
 
 #if ENABLE_DEBUG
-inline std::string getLaunchBase(const std::string &credentials)
+inline std::string getLaunchBase(bool asAdmin = false)
 {
     std::ostringstream oss;
     oss << "    ";
     oss << ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://");
-    oss << credentials;
+
+    if (asAdmin)
+    {
+        auto user = LOOLWSD::getConfigValue<std::string>("admin_console.username", "");
+        auto passwd = LOOLWSD::getConfigValue<std::string>("admin_console.password", "");
+
+        if (user.empty() || passwd.empty())
+            return "";
+
+        oss << user << ":" << passwd << "@";
+    }
+
     oss << LOOLWSD_TEST_HOST ":";
     oss << ClientPortNumber;
 
@@ -651,7 +665,7 @@ inline std::string getLaunchURI(const std::string &document)
 {
     std::ostringstream oss;
 
-    oss << getLaunchBase("");
+    oss << getLaunchBase();
     oss << LOOLWSD::ServiceRoot;
     oss << LOOLWSD_TEST_LOLEAFLET_UI;
     oss << "?file_path=file://";
@@ -661,33 +675,17 @@ inline std::string getLaunchURI(const std::string &document)
     return oss.str();
 }
 
-inline std::string getServiceURI(const std::string &sub)
+inline std::string getServiceURI(const std::string &sub, bool asAdmin = false)
 {
     std::ostringstream oss;
 
-    oss << getLaunchBase("");
+    oss << getLaunchBase(asAdmin);
     oss << LOOLWSD::ServiceRoot;
     oss << sub;
 
     return oss.str();
 }
 
-inline std::string getAdminURI(const Poco::Util::LayeredConfiguration &config)
-{
-    std::string user = config.getString("admin_console.username", "");
-    std::string passwd = config.getString("admin_console.password", "");
-
-    if (user.empty() || passwd.empty())
-        return "";
-
-    std::ostringstream oss;
-
-    oss << getLaunchBase(user + ":" + passwd + "@");
-    oss << LOOLWSD::ServiceRoot;
-    oss << LOOLWSD_TEST_ADMIN_CONSOLE;
-
-    return oss.str();
-}
 #endif
 
 } // anonymous namespace
@@ -1207,10 +1205,11 @@ void LOOLWSD::initialize(Application& self)
               << "    Calc:    " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
               << "    Impress: " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << std::endl;
 
-    const std::string adminURI = getAdminURI(config());
+    const std::string adminURI = getServiceURI(LOOLWSD_TEST_ADMIN_CONSOLE, true);
     if (!adminURI.empty())
-        std::cerr << "\nOr for the admin, capabilities & discovery:\n\n"
+        std::cerr << "\nOr for the admin, monitoring, capabilities & discovery:\n\n"
                   << adminURI << "\n"
+                  << getServiceURI(LOOLWSD_TEST_METRICS, true) << "\n"
                   << getServiceURI("/hosting/capabilities") << "\n"
                   << getServiceURI("/hosting/discovery") << "\n";
 
@@ -3379,13 +3378,7 @@ static LOOLWSDServer srv;
 #if ENABLE_DEBUG
 std::string LOOLWSD::getServerURL()
 {
-    std::ostringstream oss;
-
-    oss << getLaunchBase("");
-    oss << LOOLWSD::ServiceRoot;
-    oss << LOOLWSD_TEST_LOLEAFLET_UI;
-
-    return oss.str();
+    return getServiceURI(LOOLWSD_TEST_LOLEAFLET_UI);
 }
 #endif
 #endif
