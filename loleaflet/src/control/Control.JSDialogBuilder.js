@@ -283,8 +283,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		titleSpan.innerHTML = data.text;
 
 		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
-		var arrowSpan = L.DomUtil.create('span', 'func-info-icon', rightDiv);
-		arrowSpan.innerHTML = 'i';
+		var arrowSpan = L.DomUtil.create('div', 'func-info-icon', rightDiv);
+		arrowSpan.innerHTML = '';
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
 		contentDiv.title = data.text;

@@ -105,6 +105,8 @@ L.Control.MobileWizard = L.Control.extend({
 		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
 		$(titles).hide('slide', { direction: 'left' }, 'fast');
 		$(contentToShow).siblings().hide();
+		$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('hideHelpBG');
+		$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('showHelpBG');
 		$(contentToShow).show('slide', { direction: 'right' }, 'fast');
 
 		this._currentDepth++;
@@ -137,6 +139,8 @@ L.Control.MobileWizard = L.Control.extend({
 
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').siblings().show('slide', { direction: 'left' }, 'fast');
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide();
+			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');
+			$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('hideHelpBG');
 			$('.ui-header.level-' + this._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
 
 			if (this._currentDepth == 0 || (this._isTabMode && this._currentDepth == 1)) {

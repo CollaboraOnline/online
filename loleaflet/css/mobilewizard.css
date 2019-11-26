@@ -180,7 +180,12 @@
 		bottom: 0px;
 		width: 100%;
 	}
-
+	#mobile-wizard.funcwizard div#mobile-wizard-content.hideHelpBG {
+		background: none !important;
+	}
+	#mobile-wizard.funcwizard div#mobile-wizard-content.showHelpBG {
+		background: url(images/lc_helpindex_secondary.svg) no-repeat right 16px bottom 88px / 124px !important;
+	}
 	#mobile-wizard-content:not(.with-slide-sorter-above){
 		top: 63px !important;
 	}
@@ -272,6 +277,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+		background-color: #fff;
 	}
 
 	.ui-header.mobile-wizard:active {
@@ -323,25 +329,20 @@
 	}
 
 	.func-info-icon {
-		display: table-cell;
-		padding-left: 8px;
-		padding-right: 8px;
-		background: transparent;
-		font-size: 1.2em;
-		font-weight: bold;
-		color: #aaa !important;
-		vertical-align: middle;
-		border-radius: 100px;
-		border: solid 2px #aaa;
+		display: block;
+		background: url(images/lc_helpindex.svg) no-repeat center;
+		min-width: 28px;
+		min-height: 28px;
 	}
 
 	.func-info-sig {
-		margin-left: 1em;
-		margin-bottom: 2em;
+		margin: 1em 0px 1em 4%;
+		font-weight: bold;
+		color: #444444 !important;
 	}
 
 	.func-info-desc {
-		margin-left: 1em;
+		margin-left: 4%;
 	}
 
 	.entry-value {
