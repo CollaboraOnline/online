@@ -100,7 +100,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			builder.map.sendUnoCommand(data);
 		} else if (object) {
-			var message = 'dialogevent ' + window.sidebarId + ' {\"id\":\"' + object.id + '\", \"cmd\": \"' + eventType + '\", \"data\":\"' + data + '\"}';
+			var message = 'dialogevent ' + window.sidebarId + ' {\"id\":\"' + object.id + '\", \"cmd\": \"' + eventType + '\", \"data\":\"' + data.replace('"', '\\"') + '\"}';
 			builder.map._socket.sendMessage(message);
 		}
 	},
