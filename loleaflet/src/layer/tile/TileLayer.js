@@ -1451,8 +1451,8 @@ L.TileLayer = L.GridLayer.extend({
 
 			for (var i = 0; i < json.items.length; i++) {
 				var item = json.items[i];
-				if (item.which && item.data) {
-					this._map.fire('commandstatechanged', {commandName: item.which, state: item.data});
+				if (item.commandName && item.state) {
+					this._map.fire('commandstatechanged', item);
 				}
 			}
 		} else {

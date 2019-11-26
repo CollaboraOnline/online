@@ -101,7 +101,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			builder.map.sendUnoCommand(data);
 		} else if (object) {
-			var message = 'dialogevent ' + window.sidebarId + ' {\"id\":\"' + object.id + '\", \"cmd\": \"' + eventType + '\", \"data\":\"' + data.replace('"', '\\"') + '\"}';
+			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
+			var message = 'dialogevent ' + window.sidebarId + ' {\"id\":\"' + object.id + '\", \"cmd\": \"' + eventType + '\", \"data\":\"' + data + '\"}';
 			builder.map._socket.sendMessage(message);
 		}
 	},
@@ -543,6 +544,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'fillgrad1':
 		case 'fillgrad2':
 			return '.uno:FillGradient';
+
+		case 'setbrightness':
+			return '.uno:GrafLuminance';
+
+		case 'setcontrast':
+			return '.uno:GrafContrast';
+
+		case 'setred':
+			return '.uno:GrafRed';
+
+		case 'setgreen':
+			return '.uno:GrafGreen';
+
+		case 'setblue':
+			return '.uno:GrafBlue';
+
+		case 'setgamma':
+			return '.uno:GrafGamma';
 		}
 
 		return null;
@@ -709,6 +728,48 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			state = items.getItemValue('.uno:FillGradient');
 			if (state) {
 				return state.endcolor;
+			}
+			break;
+
+		case 'setbrightness':
+			state = items.getItemValue('.uno:GrafLuminance');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
+
+		case 'setcontrast':
+			state = items.getItemValue('.uno:GrafContrast');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
+
+		case 'setred':
+			state = items.getItemValue('.uno:GrafRed');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
+
+		case 'setgreen':
+			state = items.getItemValue('.uno:GrafGreen');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
+
+		case 'setblue':
+			state = items.getItemValue('.uno:GrafBlue');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
+
+		case 'setgamma':
+			state = items.getItemValue('.uno:GrafGamma');
+			if (state) {
+				return state.replace(',', '.');
 			}
 			break;
 		}
