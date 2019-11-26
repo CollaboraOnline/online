@@ -44,15 +44,28 @@ L.Control.Ruler = L.Control.extend({
 				this._lMarginDrag.style.cursor = 'e-resize';
 				this._rMarginDrag.style.cursor = 'w-resize';
 
-				L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
-				L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+				if (window.ThisIsTheiOSApp) {
+					this.options.interactive = true;
+					L.DomEvent.on(this._rMarginDrag, 'touchstart', this._initiateDrag, this);
+					L.DomEvent.on(this._lMarginDrag, 'touchstart', this._initiateDrag, this);
+				}
+				else {
+					L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
+					L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+				}
 			}
 			else {
 				this._lMarginDrag.style.cursor = 'default';
 				this._rMarginDrag.style.cursor = 'default';
 
-				L.DomEvent.off(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
-				L.DomEvent.off(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+				if (window.ThisIsTheiOSApp) {
+					L.DomEvent.off(this._rMarginDrag, 'touchstart', this._initiateDrag, this);
+					L.DomEvent.off(this._lMarginDrag, 'touchstart', this._initiateDrag, this);
+				}
+				else {
+					L.DomEvent.off(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
+					L.DomEvent.off(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
+				}
 			}
 		}
 	},
@@ -176,12 +189,25 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_initiateDrag: function(e) {
+		if (e.type === 'touchstart') {
+			if (e.touches.length !== 1)
+				return;
+			e.clientX = e.touches[0].clientX;
+		}
+
 		this._map.rulerActive = true;
 
 		var dragableElem = e.srcElement || e.target;
-		L.DomEvent.on(this._rFace, 'mousemove', this._moveMargin, this);
-		L.DomEvent.on(this._map, 'mouseup', this._endDrag, this);
+		if (window.ThisIsTheiOSApp) {
+			L.DomEvent.on(this._rFace, 'touchmove', this._moveMargin, this);
+			L.DomEvent.on(this._rFace, 'touchend', this._endDrag, this);
+		}
+		else {
+			L.DomEvent.on(this._rFace, 'mousemove', this._moveMargin, this);
+			L.DomEvent.on(this._map, 'mouseup', this._endDrag, this);
+		}
 		this._initialposition = e.clientX;
+		this._lastposition = this._initialposition;
 
 		if (L.DomUtil.hasClass(dragableElem, 'loleaflet-ruler-right')) {
 			L.DomUtil.addClass(this._rMarginDrag, 'leaflet-drag-moving');
@@ -194,6 +220,10 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_moveMargin: function(e) {
+		if (e.type === 'touchmove')
+			e.clientX = e.touches[0].clientX;
+
+		this._lastposition = e.clientX;
 		var posChange = e.clientX - this._initialposition;
 		var unit = this.options.unit ? this.options.unit : ' cm';
 		if (L.DomUtil.hasClass(this._rMarginDrag, 'leaflet-drag-moving')) {
@@ -217,12 +247,21 @@ L.Control.Ruler = L.Control.extend({
 	_endDrag: function(e) {
 		this._map.rulerActive = false;
 
-		var posChange = e.originalEvent.clientX - this._initialposition;
+		var posChange;
+		if (e.type === 'touchend')
+			posChange = this._lastposition - this._initialposition;
+		else
+			posChange = e.originalEvent.clientX - this._initialposition;
 		var unoObj = {}, marginType, fact;
 
-		L.DomEvent.off(this._rFace, 'mousemove', this._moveMargin, this);
-		L.DomEvent.off(this._map, 'mouseup', this._endDrag, this);
-
+		if (window.ThisIsTheiOSApp) {
+			L.DomEvent.off(this._rFace, 'touchmove', this._moveMargin, this);
+			L.DomEvent.off(this._rFace, 'touchend', this._endDrag, this);
+		}
+		else {
+			L.DomEvent.off(this._rFace, 'mousemove', this._moveMargin, this);
+			L.DomEvent.off(this._map, 'mouseup', this._endDrag, this);
+		}
 		if (L.DomUtil.hasClass(this._rMarginDrag, 'leaflet-drag-moving')) {
 			marginType = 'Margin2';
 			fact = -1;
