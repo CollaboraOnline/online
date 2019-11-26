@@ -2421,13 +2421,6 @@ function setupToolbar(e) {
 		map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
 	});
 
-	map.on('cellformula', function (e) {
-		if (document.activeElement !== L.DomUtil.get('formulaInput')) {
-			// if the user is not editing the formula bar
-			L.DomUtil.get('formulaInput').value = e.formula;
-		}
-	});
-
 	map.on('zoomend', function () {
 		var zoomPercent = 100;
 		var zoomSelected = null;
