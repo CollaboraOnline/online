@@ -173,7 +173,7 @@ public:
         static const std::string start =
             "HTTP/1.0 200 OK\r\n"
             "Content-Disposition: attachment; filename=\"test.txt\"\r\n";
-        CPPUNIT_ASSERT_EQUAL(start, std::string(buffer));
+        CPPUNIT_ASSERT(Util::startsWith(std::string(buffer), start));
 
         if (strncmp(buffer, start.c_str(), start.size()))
         {
@@ -185,7 +185,7 @@ public:
         // TODO: check content-length etc.
 
         const char *ptr = strstr(buffer, "\r\n\r\n");
-        CPPUNIT_ASSERT_MESSAGE("Missing separator, got " + std::string(buffer), !ptr);
+        CPPUNIT_ASSERT_MESSAGE("Missing separator, got " + std::string(buffer), ptr);
         if (!ptr)
         {
             std::cerr << "missing separator " << got << " '" << buffer << "\n";
