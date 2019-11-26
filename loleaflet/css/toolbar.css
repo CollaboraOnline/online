@@ -760,9 +760,8 @@ button.leaflet-control-search-next
 		background: rgba(255, 255, 255, 0.5);
 		position: relative;
 		padding: 2px;
-		display: block;
-		overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
-		width: 100%;
+		display: inline-block;
+		width:  350px;
 		height: 100%;
 }
 
