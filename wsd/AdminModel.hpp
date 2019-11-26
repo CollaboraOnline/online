@@ -15,8 +15,6 @@
 #include <cmath>
 #include <list>
 
-#include <Poco/Process.h>
-
 #include "Log.hpp"
 #include "net/WebSocketHandler.hpp"
 #include "Util.hpp"
@@ -106,7 +104,7 @@ class Document
 
 public:
     Document(const std::string& docKey,
-             Poco::Process::PID pid,
+             pid_t pid,
              const std::string& filename)
         : _docKey(docKey),
           _pid(pid),
@@ -135,7 +133,7 @@ public:
 
     const std::string getDocKey() const { return _docKey; }
 
-    Poco::Process::PID getPid() const { return _pid; }
+    pid_t getPid() const { return _pid; }
 
     std::string getFilename() const { return _filename; }
 
@@ -189,7 +187,7 @@ public:
 
 private:
     const std::string _docKey;
-    const Poco::Process::PID _pid;
+    const pid_t _pid;
     /// SessionId mapping to View object
     std::map<std::string, View> _views;
     /// Total number of active views
@@ -291,7 +289,7 @@ public:
 
     void unsubscribe(int sessionId, const std::string& command);
 
-    void modificationAlert(const std::string& docKey, Poco::Process::PID pid, bool value);
+    void modificationAlert(const std::string& docKey, pid_t pid, bool value);
 
     void clearMemStats() { _memStats.clear(); }
 
@@ -311,7 +309,7 @@ public:
 
     void notify(const std::string& message);
 
-    void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename,
+    void addDocument(const std::string& docKey, pid_t pid, const std::string& filename,
                      const std::string& sessionId, const std::string& userName, const std::string& userId,
                      const int smapsFD);
 

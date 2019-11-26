@@ -91,7 +91,6 @@ using Poco::Net::PartHandler;
 #include <Poco/Net/DNS.h>
 #include <Poco/Net/HostEntry.h>
 #include <Poco/Path.h>
-#include <Poco/Process.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/StringTokenizer.h>
@@ -2024,7 +2023,7 @@ private:
 
             UnitWSD::get().newChild(*this);
 #else
-            Poco::Process::PID pid = 100;
+            pid_t pid = 100;
             std::string jailId = "jail";
             socket->getInBuffer().clear();
 #endif

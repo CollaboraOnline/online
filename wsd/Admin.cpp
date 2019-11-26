@@ -478,11 +478,11 @@ void Admin::pollingThread()
     }
 }
 
-void Admin::modificationAlert(const std::string& dockey, Poco::Process::PID pid, bool value){
+void Admin::modificationAlert(const std::string& dockey, pid_t pid, bool value){
     addCallback([=] { _model.modificationAlert(dockey, pid, value); });
 }
 
-void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename,
+void Admin::addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
                    const std::string& sessionId, const std::string& userName, const std::string& userId,
                    const int smapsFD)
 {

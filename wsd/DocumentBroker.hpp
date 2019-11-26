@@ -67,7 +67,7 @@ class ChildProcess : public WSProcess
 public:
     /// @param pid is the process ID of the child.
     /// @param socket is the underlying Sockeet to the child.
-    ChildProcess(const Poco::Process::PID pid,
+    ChildProcess(const pid_t pid,
                  const std::string& jailId,
                  const std::shared_ptr<StreamSocket>& socket,
                  const Poco::Net::HTTPRequest &request) :
@@ -259,7 +259,7 @@ public:
     void closeDocument(const std::string& reason);
 
     /// Get the PID of the associated child process
-    Poco::Process::PID getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
+    pid_t getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
 
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
 

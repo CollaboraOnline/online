@@ -14,6 +14,7 @@
 #include <sstream>
 #include <sysexits.h>
 #include <termios.h>
+#include <unistd.h>
 
 #include <openssl/rand.h>
 #include <openssl/evp.h>

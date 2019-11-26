@@ -24,7 +24,6 @@
 #include <Poco/URI.h>
 #include <Poco/BinaryReader.h>
 #include <Poco/Base64Decoder.h>
-#include <Poco/Process.h>
 #if !MOBILEAPP
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
@@ -616,7 +615,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const S
 #if defined(ENABLE_DEBUG) && !MOBILEAPP
     if (std::getenv("PAUSEFORDEBUGGER"))
     {
-        std::cerr << getDocURL() << " paused waiting for a debugger to attach: " << Poco::Process::id() << std::endl;
+        std::cerr << getDocURL() << " paused waiting for a debugger to attach: " << getpid() << std::endl;
         SigUtil::setDebuggerSignal();
         pause();
     }

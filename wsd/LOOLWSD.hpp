@@ -19,7 +19,6 @@
 #include <signal.h>
 
 #include <Poco/Path.h>
-#include <Poco/Process.h>
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
@@ -48,7 +47,7 @@ public:
     /// @param pid is the process ID.
     /// @param socket is the underlying Sockeet to the process.
     WSProcess(const std::string& name,
-              const Poco::Process::PID pid,
+              const pid_t pid,
               const std::shared_ptr<StreamSocket>& socket,
               std::shared_ptr<WebSocketHandler> handler) :
 
@@ -130,7 +129,7 @@ public:
         _pid = -1;
     }
 
-    Poco::Process::PID getPid() const { return _pid; }
+    pid_t getPid() const { return _pid; }
 
     /// Send a text payload to the child-process WS.
     virtual bool sendTextFrame(const std::string& data)
@@ -176,7 +175,7 @@ public:
     }
 
     std::string _name;
-    Poco::Process::PID _pid;
+    pid_t _pid;
     std::shared_ptr<WebSocketHandler> _ws;
     std::shared_ptr<Socket> _socket;
 };

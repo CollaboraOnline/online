@@ -17,7 +17,6 @@
 #include <sstream>
 #include <string>
 
-#include <Poco/Process.h>
 #include <Poco/URI.h>
 
 #include <Protocol.hpp>
@@ -477,7 +476,7 @@ void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t rec
     _recvBytesTotal += recv;
 }
 
-void AdminModel::modificationAlert(const std::string& docKey, Poco::Process::PID pid, bool value)
+void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool value)
 {
     assertCorrectThread();
 
@@ -493,7 +492,7 @@ void AdminModel::modificationAlert(const std::string& docKey, Poco::Process::PID
     notify(oss.str());
 }
 
-void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
+void AdminModel::addDocument(const std::string& docKey, pid_t pid,
                              const std::string& filename, const std::string& sessionId,
                              const std::string& userName, const std::string& userId,
                              const int smapsFD)

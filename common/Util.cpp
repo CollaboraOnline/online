@@ -52,7 +52,6 @@
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/Process.h>
 #include <Poco/RandomStream.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/Timestamp.h>
@@ -448,7 +447,7 @@ namespace Util
         return oss.str();
     }
 
-    size_t getMemoryUsagePSS(const Poco::Process::PID pid)
+    size_t getMemoryUsagePSS(const pid_t pid)
     {
         if (pid > 0)
         {
@@ -465,7 +464,7 @@ namespace Util
         return 0;
     }
 
-    size_t getMemoryUsageRSS(const Poco::Process::PID pid)
+    size_t getMemoryUsageRSS(const pid_t pid)
     {
         static const int pageSizeBytes = getpagesize();
         size_t rss = 0;
@@ -480,7 +479,7 @@ namespace Util
         return 0;
     }
 
-    size_t getCpuUsage(const Poco::Process::PID pid)
+    size_t getCpuUsage(const pid_t pid)
     {
         if (pid > 0)
         {
@@ -492,7 +491,7 @@ namespace Util
         return 0;
     }
 
-    size_t getStatFromPid(const Poco::Process::PID pid, int ind)
+    size_t getStatFromPid(const pid_t pid, int ind)
     {
         if (pid > 0)
         {

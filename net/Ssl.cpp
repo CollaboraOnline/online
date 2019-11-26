@@ -10,10 +10,10 @@
 #include <config.h>
 
 #include <assert.h>
+#include <unistd.h>
 #include "Ssl.hpp"
 
 #include <sys/syscall.h>
-
 #include <Util.hpp>
 
 extern "C"

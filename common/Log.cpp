@@ -30,7 +30,6 @@
 #include <Poco/FileChannel.h>
 #include <Poco/FormattingChannel.h>
 #include <Poco/PatternFormatter.h>
-#include <Poco/Process.h>
 #include <Poco/SplitterChannel.h>
 #include <Poco/Timestamp.h>
 

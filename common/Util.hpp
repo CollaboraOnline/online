@@ -21,6 +21,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <map>
 #include <inttypes.h>
 
 #include <memory.h>
@@ -31,7 +32,6 @@
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
-#include <Poco/Process.h>
 #include <Poco/RegularExpression.h>
 
 #define LOK_USE_UNSTABLE_API
@@ -135,10 +135,10 @@ namespace Util
     size_t getTotalSystemMemoryKb();
 
     /// Returns the process PSS in KB (works only when we have perms for /proc/pid/smaps).
-    size_t getMemoryUsagePSS(const Poco::Process::PID pid);
+    size_t getMemoryUsagePSS(const pid_t pid);
 
     /// Returns the process RSS in KB.
-    size_t getMemoryUsageRSS(const Poco::Process::PID pid);
+    size_t getMemoryUsageRSS(const pid_t pid);
 
     /// Returns the RSS and PSS of the current process in KB.
     /// Example: "procmemstats: pid=123 rss=12400 pss=566"
@@ -148,9 +148,9 @@ namespace Util
     /// returns them as a pair in the same order
     std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file);
 
-    size_t getCpuUsage(const Poco::Process::PID pid);
+    size_t getCpuUsage(const pid_t pid);
 
-    size_t getStatFromPid(const Poco::Process::PID pid, int ind);
+    size_t getStatFromPid(const pid_t pid, int ind);
 #endif
 
     std::string replace(std::string s, const std::string& a, const std::string& b);

@@ -48,7 +48,6 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/Process.h>
 #include <Poco/Runnable.h>
 #include <Poco/URI.h>
 

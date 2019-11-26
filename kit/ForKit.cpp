@@ -28,7 +28,6 @@
 #include <chrono>
 
 #include <Poco/Path.h>
-#include <Poco/Process.h>
 
 #include <Common.hpp>
 #include "Kit.hpp"
@@ -45,8 +44,6 @@
 #include <common/SigUtil.hpp>
 #include <security.h>
 
-using Poco::Process;
-
 #ifndef KIT_IN_PROCESS
 static bool NoCapsForKit = false;
 static bool NoSeccomp = false;
@@ -60,7 +57,7 @@ static std::string UnitTestLibrary;
 static std::string LogLevel;
 static std::atomic<unsigned> ForkCounter(0);
 
-static std::map<Process::PID, std::string> childJails;
+static std::map<pid_t, std::string> childJails;
 
 #ifndef KIT_IN_PROCESS
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
@@ -227,7 +224,7 @@ static bool haveCorrectCapabilities()
 static void cleanupChildren()
 {
     std::vector<std::string> jails;
-    Process::PID exitedChildPid;
+    pid_t exitedChildPid;
     int status, segFaultCount = 0;
 
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
@@ -302,7 +299,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     ++spareKitId;
     LOG_DBG("Forking a loolkit process with jailId: " << jailId << " as spare loolkit #" << spareKitId << ".");
 
-    const Process::PID pid = fork();
+    const pid_t pid = fork();
     if (!pid)
     {
         // Child
@@ -321,7 +318,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
             {
                 std::cerr << "Kit: Sleeping " << delaySecs
                           << " seconds to give you time to attach debugger to process "
-                          << Process::id() << std::endl;
+                          << getpid() << std::endl;
                 std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
             }
         }
@@ -423,7 +420,7 @@ int main(int argc, char** argv)
         {
             std::cerr << "Forkit: Sleeping " << delaySecs
                       << " seconds to give you time to attach debugger to process "
-                      << Process::id() << std::endl;
+                      << getpid() << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
         }
     }
@@ -587,7 +584,7 @@ int main(int argc, char** argv)
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process and trace startup.
     ::setenv("LOOL_TRACE_STARTUP", "1", 1);
-    Process::PID forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true);
+    pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true);
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");

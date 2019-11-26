@@ -21,7 +21,6 @@
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
 #include <Poco/Buffer.h>
-#include <Poco/Process.h>
 #include <Poco/String.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
