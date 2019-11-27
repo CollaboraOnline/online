@@ -109,21 +109,30 @@ L.Clipboard = L.Class.extend({
 		return text.indexOf(this._getHtmlStubMarker()) > 0;
 	},
 
+	// wrap some content with our stub magic
+	_originWrapBody: function(body, isStub) {
+		var encodedOrigin = encodeURIComponent(this.getMetaPath());
+		var text =  '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
+		            '<html>\n' +
+		            '  <head>\n';
+		if (isStub)
+			text += '    ' + this._getHtmlStubMarker() + '\n';
+		text +=     '    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
+			    '    <meta name="origin" content="' + encodedOrigin + '"/>\n' +
+			    '  </head>\n'
+			    + body +
+			'</html>';
+		return text;
+	},
+
+	// what an empty clipboard has on it
 	_getStubHtml: function() {
 		var lang = 'en_US'; // FIXME: l10n
-		var encodedOrigin = encodeURIComponent(this.getMetaPath());
-		var stub = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
-		    '<html>\n' +
-		    '  <head>\n' +
-		    '    ' + this._getHtmlStubMarker() + '\n' +
-		    '    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
-		    '    <meta name="origin" content="' + encodedOrigin + '"/>\n' +
-		    '  </head>\n' +
+		return this._substProductName(this._originWrapBody(
 		    '  <body lang="' + lang + '" dir="ltr">\n' +
 		    '    <p>' + _('To paste outside %productName, please first click the \'download\' button') + '</p>\n' +
-		    '  </body>\n' +
-		    '</html>';
-		return this._substProductName(stub);
+		    '  </body>\n', true
+		));
 	},
 
 	_getMetaOrigin: function (html) {
@@ -688,9 +697,16 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// textselectioncontent: message
-	setTextSelectionContent: function(text) {
+	setTextSelectionHTML: function(html) {
 		this._selectionType = 'text';
-		this._selectionContent = text;
+		this._selectionContent = html;
+	},
+
+	// sets the selection to some (cell formula) text)
+	setTextSelectionText: function(text) {
+		this._selectionType = 'text';
+		this._selectionContent = this._originWrapBody(
+			'<body>' + text + '</body>');
 	},
 
 	// complexselection: message
