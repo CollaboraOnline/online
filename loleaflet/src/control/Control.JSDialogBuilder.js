@@ -1111,7 +1111,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var titleOverride = builder._getTitleForControlWithId(data.id);
 		if (titleOverride)
 			data.text = titleOverride;
-		console.warn(data.text);
 
 		data.text = builder._cleanText(data.text);
 
