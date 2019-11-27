@@ -296,7 +296,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "exportsignanduploaddocument" ||
                tokens[0] == "rendershapeselection" ||
                tokens[0] == "removetextcontext" ||
-               tokens[0] == "dialogevent");
+               tokens[0] == "dialogevent" ||
+               tokens[0] == "completefunction");
 
         if (tokens[0] == "clientzoom")
         {
@@ -431,6 +432,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens[0] == "dialogevent")
         {
             return dialogEvent(buffer, length, tokens);
+        }
+        else if (tokens[0] == "completefunction")
+        {
+            return completeFunction(buffer, length, tokens);
         }
         else
         {
@@ -1402,6 +1407,23 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const std
     getLOKitDocument()->sendDialogEvent(nLOKWindowId,
         Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str());
 
+    return true;
+}
+
+bool ChildSession::completeFunction(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+{
+    int index;
+
+    if (tokens.size() != 2 ||
+        !getTokenInteger(tokens[1], "index", index))
+    {
+        sendTextFrame("error: cmd=completefunction kind=syntax");
+        return false;
+    }
+
+    getLOKitDocument()->setView(_viewId);
+
+    getLOKitDocument()->completeFunction(index);
     return true;
 }
 

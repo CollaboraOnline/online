@@ -427,7 +427,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "renamefile" &&
              tokens[0] != "resizewindow" &&
              tokens[0] != "removetextcontext" &&
-             tokens[0] != "dialogevent")
+             tokens[0] != "dialogevent" &&
+             tokens[0] != "completefunction")
     {
         LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
         sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
@@ -704,6 +705,20 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens[0] == "dialogevent")
     {
         return forwardToChild(firstLine, docBroker);
+    }
+    else if (tokens[0] == "completefunction")
+    {
+        int temp;
+        if (tokens.size() != 2 ||
+            !getTokenInteger(tokens[1], "index", temp))
+        {
+            LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
+            return true;
+        }
+        else
+        {
+            return forwardToChild(std::string(buffer, length), docBroker);
+        }
     }
     else
     {

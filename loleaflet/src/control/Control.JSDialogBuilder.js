@@ -320,10 +320,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		$(contentDiv).hide();
 		if (builder.wizard) {
+			var that = this;
 			$(rightDiv).click(function() {
 				builder.wizard.goLevelDown(contentDiv);
 				if (contentNode.onshow)
 					contentNode.onshow();
+			});
+			$(leftDiv).click(function() {
+				that.map._socket.sendMessage('completefunction index=' + data.index);
 			});
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');

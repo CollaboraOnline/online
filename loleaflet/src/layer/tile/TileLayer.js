@@ -751,7 +751,6 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCalcFunctionListMsg: function (textMsg) {
-		console.log('_onCalcFunctionList: textMsg: ' + textMsg);
 		var funcList = JSON.parse(textMsg);
 		this._closeMobileWizard();
 
@@ -764,13 +763,14 @@ L.TileLayer = L.GridLayer.extend({
 		};
 
 		var entries = data.children;
-		for (var idx in funcList) {
+		for (var idx = 0; idx < funcList.length; ++idx) {
 			var func =  funcList[idx];
 			var name = func.signature.split('(')[0];
 			var entry = {
 				id: '',
 				type: 'calcfuncpanel',
 				text: name,
+				index: idx,
 				enabled: true,
 				children: []
 			}
