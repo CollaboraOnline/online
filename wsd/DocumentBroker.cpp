@@ -323,6 +323,9 @@ void DocumentBroker::pollThread()
             adminRecv = recv;
             LOG_TRC("Doc [" << _docKey << "] added stats sent: " << sent << ", recv: " << recv << " bytes to totals.");
         }
+
+        if (_storage && _lockCtx->needsRefresh(now))
+            refreshLock();
 #endif
 
         if (isSaving() &&
@@ -1078,23 +1081,10 @@ void DocumentBroker::setLoaded()
     }
 }
 
-bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
+std::string DocumentBroker::getWriteableSessionId() const
 {
     assertCorrectThread();
 
-    LOG_TRC("autoSave(): forceful? " << force);
-    if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
-        !_childProcess->isAlive() || (!_isModified && !force))
-    {
-        // Nothing to do.
-        LOG_TRC("Nothing to autosave [" << _docKey << "].");
-        return false;
-    }
-
-    // Remember the last save time, since this is the predicate.
-    LOG_TRC("Checking to autosave [" << _docKey << "].");
-
-    // Which session to use when auto saving ?
     std::string savingSessionId;
     for (auto& sessionIt : _sessions)
     {
@@ -1113,6 +1103,45 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
             break;
         }
     }
+    return savingSessionId;
+}
+
+void DocumentBroker::refreshLock()
+{
+    assertCorrectThread();
+
+    std::string savingSessionId = getWriteableSessionId();
+    LOG_TRC("Refresh lock " << _lockCtx->_lockToken << " with session " << savingSessionId);
+
+    auto it = _sessions.find(savingSessionId);
+    if (it == _sessions.end())
+        LOG_ERR("No write-able session to refresh lock with");
+    else
+    {
+        std::shared_ptr<ClientSession> session = it->second;
+        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
+            LOG_ERR("Failed to refresh lock");
+    }
+}
+
+bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
+{
+    assertCorrectThread();
+
+    LOG_TRC("autoSave(): forceful? " << force);
+    if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
+        !_childProcess->isAlive() || (!_isModified && !force))
+    {
+        // Nothing to do.
+        LOG_TRC("Nothing to autosave [" << _docKey << "].");
+        return false;
+    }
+
+    // Remember the last save time, since this is the predicate.
+    LOG_TRC("Checking to autosave [" << _docKey << "].");
+
+    // Which session to use when auto saving ?
+    std::string savingSessionId = getWriteableSessionId();
 
     bool sent = false;
     if (force)
@@ -2225,6 +2254,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  idle time: " << getIdleTimeSecs();
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
+    _lockCtx->dumpState(os);
     if (_tileCache)
         _tileCache->dumpState(os);
 

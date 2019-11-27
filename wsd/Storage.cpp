@@ -472,6 +472,24 @@ void LockContext::initSupportsLocks()
     _lockToken = "lool-lock" + Util::rng::getHexString(8);
 }
 
+bool LockContext::needsRefresh(const std::chrono::steady_clock::time_point &now) const
+{
+    static int refreshSeconds = LOOLWSD::getConfigValue<int>("storage.wopi.locking.refresh", 900);
+    return _supportsLocks && _isLocked && refreshSeconds > 0 &&
+        std::chrono::duration_cast<std::chrono::seconds>
+        (now - _lastLockTime).count() >= refreshSeconds;
+}
+
+void LockContext::dumpState(std::ostream& os)
+{
+    if (!_supportsLocks)
+        return;
+    os << "  lock:\n";
+    os << "    locked: " << _isLocked << "\n";
+    os << "    token: '" << _lockToken << "'\n";
+    os << "    last locked: " << Util::getSteadyClockAsString(_lastLockTime) << "\n";
+}
+
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth, LockContext &lockCtx)
 {
     // update the access_token to the one matching to the session
@@ -734,11 +752,12 @@ bool WopiStorage::updateLockState(const Authorization &auth, LockContext &lockCt
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
         {
             lockCtx._isLocked = lock;
+            lockCtx._lastLockTime = std::chrono::steady_clock::now();
             return true;
         }
         else
         {
-            LOG_WRN("Un-successfull " << wopiLog << " with status " << response.getStatus() <<
+            LOG_WRN("Un-successful " << wopiLog << " with status " << response.getStatus() <<
                     " and response: " << responseString);
         }
     }

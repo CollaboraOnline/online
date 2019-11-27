@@ -13,6 +13,7 @@
 
 #include <set>
 #include <string>
+#include <chrono>
 
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
@@ -34,11 +35,18 @@ struct LockContext
     bool        _isLocked;
     /// Name if we need it to use consistently for locking
     std::string _lockToken;
+    /// Time of last successful lock (re-)acquisition
+    std::chrono::steady_clock::time_point _lastLockTime;
 
     LockContext() : _supportsLocks(false), _isLocked(false) { }
 
     /// one-time setup for supporting locks & create token
     void initSupportsLocks();
+
+    /// do we need to refresh our lock ?
+    bool needsRefresh(const std::chrono::steady_clock::time_point &now) const;
+
+    void dumpState(std::ostream& os);
 };
 
 /// Base class of all Storage abstractions.

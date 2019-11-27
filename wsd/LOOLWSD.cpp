@@ -860,6 +860,7 @@ void LOOLWSD::initialize(Application& self)
             { "storage.wopi.host[0][@allow]", "true" },
             { "storage.wopi.max_file_size", "0" },
             { "storage.wopi[@allow]", "true" },
+            { "storage.wopi.locking.refresh", "900" },
             { "sys_template_path", "systemplate" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },

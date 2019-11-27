@@ -369,6 +369,10 @@ public:
     size_t getMemorySize() const;
 
 private:
+    /// get the session id of a session that can write the document for save / locking.
+    std::string getWriteableSessionId() const;
+
+    void refreshLock();
 
     /// Loads a document from the public URI into the jail.
     bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
