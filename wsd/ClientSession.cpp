@@ -1006,7 +1006,10 @@ void ClientSession::postProcessCopyPayload(std::shared_ptr<Message> payload)
 {
     // Insert our meta origin if we can
     payload->rewriteDataBody([=](std::vector<char>& data) {
-            const size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
+            size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
+
+            if (pos == std::string::npos)
+                pos = Util::findInVector(data, "<meta http-equiv=\"content-type\" content=\"text/html;");
 
             // cf. TileLayer.js /_dataTransferToDocument/
             if (pos != std::string::npos) // assume text/html

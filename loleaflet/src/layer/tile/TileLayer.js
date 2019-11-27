@@ -597,7 +597,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._onTextSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
-			this._map._clip.setTextSelectionContent(textMsg.substr(22));
+			this._map._clip.setTextSelectionHTML(textMsg.substr(22));
 		}
 		else if (textMsg.startsWith('textselectionend:')) {
 			this._onTextSelectionEndMsg(textMsg);
@@ -733,7 +733,7 @@ L.TileLayer = L.GridLayer.extend({
 		// message is received from lowsd, *then* a 'celladdress' message.
 		var address = textMsg.substring(13);
 		if (!this._map['wopi'].DisableCopy) {
-			this._map._clip.setTextSelectionContent(this._lastFormula);
+			this._map._clip.setTextSelectionText(this._lastFormula);
 		}
 		this._map.fire('celladdress', {address: address});
 	},

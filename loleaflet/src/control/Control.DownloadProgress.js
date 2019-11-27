@@ -159,7 +159,7 @@ L.Control.DownloadProgress = L.Control.extend({
 					var idx = text.indexOf('<!DOCTYPE HTML');
 					if (idx > 0)
 						text = text.substring(idx, text.length);
-					that._map._clip.setTextSelectionContent(text);
+					that._map._clip.setTextSelectionHTML(text);
 				};
 				// TODO: failure to parse ? ...
 				reader.readAsText(response);
