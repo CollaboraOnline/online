@@ -765,6 +765,9 @@ L.Clipboard = L.Class.extend({
 			msg = _('<p>Please use the copy/paste buttons on your on-screen keyboard.</p>');
 		} else {
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>');
+			if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
+				msg = msg.replace(/Ctrl/g, '⌘');
+			}
 		}
 		vex.dialog.alert({
 			unsafeMessage: msg,
