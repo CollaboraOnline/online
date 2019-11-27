@@ -900,6 +900,15 @@ namespace Util
 
         return timestamp;
     }
+
+    std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point &time)
+    {
+        auto now = std::chrono::steady_clock::now();
+        const std::time_t t = std::chrono::system_clock::to_time_t(
+            std::chrono::time_point_cast<std::chrono::seconds>(
+                std::chrono::system_clock::now() + (time - now)));
+        return std::ctime(&t);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

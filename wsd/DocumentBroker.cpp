@@ -2217,10 +2217,12 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
-    const std::time_t t = std::chrono::system_clock::to_time_t(
-        std::chrono::time_point_cast<std::chrono::seconds>(
-            std::chrono::system_clock::now() + (_lastSaveTime - now)));
-    os << "\n  last saved: " << std::ctime(&t);
+    os << "\n  last saved: " << Util::getSteadyClockAsString(_lastSaveTime);
+    os << "\n  last save request: " << Util::getSteadyClockAsString(_lastSaveRequestTime);
+    os << "\n  last save response: " << Util::getSteadyClockAsString(_lastSaveResponseTime);
+    os << "\n  last modifed: " << Util::getHttpTime(_documentLastModifiedTime);
+    os << "\n  file last modifed: " << Util::getHttpTime(_lastFileModifiedTime);
+    os << "\n  idle time: " << getIdleTimeSecs();
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
     if (_tileCache)

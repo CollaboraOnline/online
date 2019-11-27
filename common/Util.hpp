@@ -939,8 +939,11 @@ int main(int argc, char**argv)
     /// Convert a time_point to iso8601 formatted string.
     std::string time_point_to_iso8601(std::chrono::system_clock::time_point tp);
 
-    //// Convert time from ISO8061 fraction format
+    /// Convert time from ISO8061 fraction format
     std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName);
+
+    /// conversion from steady_clock for debugging / tracing
+    std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point &time);
 
     /// Automatically execute code at end of current scope.
     /// Used for exception-safe code.
