@@ -166,14 +166,10 @@ w2ui-toolbar {
 		width: 181px;
 }
 #tb_editbar_item_fold table.w2ui-button {
-	border-radius: 20px;
-	background-color: #f4f4f4 !important;
 	margin: 0px 14px 0px 4px !important;
-	box-shadow: inset 0px 0px 1px 2px #00000020;
 }
 #tb_editbar_item_fold table.w2ui-button.over {
 	background-color: #fff !important;
-	box-shadow: inset 0px 0px 1px 2px #0000;
 }
 td[id^=tb_editbar_item_sidebar]{
 	padding: 0px 8px;
@@ -638,8 +634,8 @@ button.leaflet-control-search-next
 .w2ui-icon.link{ background: url('images/lc_inserthyperlink.svg') no-repeat center !important; }
 .w2ui-icon.insertsymbol{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
 .w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; }
-.w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center 1px / 19px !important; }
-.w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center 2px/ 19px !important;}
+.w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center center / 19px !important; opacity: 0.8; filter: alpha(opacity=80);}
+.w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center center/ 19px !important; opacity: 0.8; filter: alpha(opacity=80);}
 .w2ui-icon.hamburger{ background: url('images/hamburger.svg') no-repeat center !important; }
 .w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
 .w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
