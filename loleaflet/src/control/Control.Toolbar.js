@@ -767,7 +767,7 @@ function initNormalToolbar() {
 		{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes', mobile: false},
 		{type: 'break', mobile: false, tablet: false,},
 		{type: 'html', id: 'styles',
-			html: '<select class="styles-select"><option>Default Style</option></select>',
+			html: '<select class="styles-select"><option>' + _('Default Style') + '</option></select>',
 			onRefresh: function (edata) {
 				if (!edata.item.html) {
 					edata.isCancelled = true;
