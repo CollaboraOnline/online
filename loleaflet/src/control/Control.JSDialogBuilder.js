@@ -53,6 +53,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['toolitem'] = this._toolitemHandler;
 		this._controlHandlers['colorsample'] = this._colorSampleControl;
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
+		this._controlHandlers['colorlistbox'] = this._colorControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -204,7 +205,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return true;
 	},
 
-	_explorableEntry: function(parentContainer, data, contentNode, builder, valueNode, iconPath) {
+	_explorableEntry: function(parentContainer, data, contentNode, builder, valueNode, iconPath, updateCallback) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 		if (data && data.id)
@@ -228,7 +229,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
 		arrowSpan.innerHTML = '>';
 
-		var updateFunction = function() {
+		var updateFunction = function(titleSpan) {
 			var state = null;
 			if (data.id)
 				state = builder._getUnoStateForItemId(data.id, builder);
@@ -240,11 +241,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		updateFunction();
+		updateCallback ? updateCallback(titleSpan) : updateFunction(titleSpan);
 
 		builder.map.on('commandstatechanged', function(e) {
 			if (e.commandName === data.command || e.commandName === builder._mapWindowIdToUnoCommand(data.id))
-				updateFunction();
+				if (updateCallback)
+					updateCallback(titleSpan);
+				else
+					updateFunction(titleSpan);
 		}, this);
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
@@ -506,17 +510,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_mapWindowIdToUnoCommand: function(id) {
 		switch (id) {
 		case 'beforetextindent':
-			return '.uno:LeftRightParaMargin';
-
 		case 'aftertextindent':
-			return '.uno:LeftRightParaMargin';
-
 		case 'firstlineindent':
 			return '.uno:LeftRightParaMargin';
 
 		case 'aboveparaspacing':
-			return '.uno:ULSpacing';
-
 		case 'belowparaspacing':
 			return '.uno:ULSpacing';
 
@@ -527,14 +525,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '.uno:TableColumWidth';
 
 		case 'decimalplaces':
-			return '.uno:NumberFormat';
-
 		case 'leadingzeros':
-			return '.uno:NumberFormat';
-
 		case 'negativenumbersred':
-			return '.uno:NumberFormat';
-
 		case 'thousandseparator':
 			return '.uno:NumberFormat';
 
@@ -548,6 +540,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '.uno:FillShadowTransparency';
 
 		case 'gradientstyle':
+		case 'fillgrad1':
+		case 'fillgrad2':
 			return '.uno:FillGradient';
 		}
 
@@ -703,6 +697,33 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				return state.angle;
 			}
 			break;
+
+		case 'fillgrad1':
+			state = items.getItemValue('.uno:FillGradient');
+			if (state) {
+				return state.startcolor;
+			}
+			break;
+
+		case 'fillgrad2':
+			state = items.getItemValue('.uno:FillGradient');
+			if (state) {
+				return state.endcolor;
+			}
+			break;
+		}
+
+		return null;
+	},
+
+	_getTitleForControlWithId: function(id) {
+		switch (id) {
+
+		case 'fillgrad1':
+			return _('From');
+
+		case 'fillgrad2':
+			return _('To');
 		}
 
 		return null;
@@ -1069,6 +1090,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var selectedColor = parseInt(builder.map['stateChangeHandler'].getItemValue(data.command));
 
 		if (!selectedColor || selectedColor < 0)
+			selectedColor = builder._getUnoStateForItemId(data.id, builder);
+
+		if (!selectedColor || selectedColor < 0)
 			selectedColor = builder._getDefaultColorForCommand(data.command);
 
 		selectedColor = selectedColor.toString(16);
@@ -1084,12 +1108,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
+		var titleOverride = builder._getTitleForControlWithId(data.id);
+		if (titleOverride)
+			data.text = titleOverride;
+		console.warn(data.text);
+
 		data.text = builder._cleanText(data.text);
 
-		var selectedColor = builder._getCurrentColor(data, builder);
-
 		var valueNode =  L.DomUtil.create('div', 'color-sample-selected', null);
-		valueNode.style.backgroundColor = selectedColor;
+		var selectedColor = null;
+
+		var updateFunction = function (titleSpan) {
+			selectedColor = builder._getCurrentColor(data, builder);
+			valueNode.style.backgroundColor = selectedColor;
+			if (titleSpan)
+				titleSpan.innerHTML = data.text;
+		}.bind(this);
+
+		updateFunction(null);
 
 		var iconPath = builder._createIconPath(data.command);
 		var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
@@ -1113,7 +1149,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var contentNode = {type: 'container', children: [colorsContainer], onshow: L.bind(colorPickerControl.onShow, colorPickerControl)};
 
-		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath);
+		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath, updateFunction);
 		return false;
 	},
 
