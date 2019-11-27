@@ -384,7 +384,7 @@ AM_CONDITIONAL([ENABLE_ANDROIDAPP], [test "$ENABLE_ANDROIDAPP" = "true"])
 AC_SUBST(ANDROID_PACKAGE_NAME)
 AC_SUBST(ANDROID_PACKAGE_VERSIONCODE)
 
-APP_NAME="LOOL"
+APP_NAME="LibreOffice Online"
 if test -n "$with_app_name"; then
    APP_NAME="$with_app_name"
 fi
