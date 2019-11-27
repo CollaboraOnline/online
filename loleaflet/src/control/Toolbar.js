@@ -309,6 +309,16 @@ L.Map.include({
 						}
 					}
 
+					// Special Mac key names
+					if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
+						if (id === 'keyboard-shortcuts') {
+							document.getElementById('keyboard-shortcuts').innerHTML = document.getElementById('keyboard-shortcuts').innerHTML.replace(/Ctrl/g, '⌘').replace(/Alt/g, '⌥');
+						}
+						if (id === 'online-help') {
+							document.getElementById('online-help').innerHTML = document.getElementById('online-help').innerHTML.replace(/Ctrl/g, '⌘').replace(/Alt/g, '⌥');
+						}
+					}
+
 					$vexContent.attr('tabindex', -1);
 					$vexContent.focus();
 					// workaround for https://github.com/HubSpot/vex/issues/43
