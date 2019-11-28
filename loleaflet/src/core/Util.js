@@ -195,6 +195,10 @@ L.Util = {
 
 	isEmpty: function(o) {
 		return !(o && o.length);
+	},
+
+	mm100thToInch: function(mm) {
+		return mm / 2540;
 	}
 };
 
@@ -249,3 +253,4 @@ L.round = L.Util.round;
 L.getDpiScaleFactor = L.Util.getDpiScaleFactor;
 L.toggleFullScreen = L.Util.toggleFullScreen;
 L.isEmpty = L.Util.isEmpty;
+L.mm100thToInch = L.Util.mm100thToInch;

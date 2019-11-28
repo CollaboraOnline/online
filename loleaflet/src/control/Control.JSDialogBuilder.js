@@ -565,6 +565,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'setgamma':
 			return '.uno:GrafGamma';
+
+		case 'selectwidth':
+			return '.uno:Size';
+
+		case 'selectheight':
+			return '.uno:Size';
 		}
 
 		return null;
@@ -780,6 +786,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			state = items.getItemValue('.uno:GrafGamma');
 			if (state) {
 				return String(state.replace(',', '.') / 100.0);
+			}
+			break;
+
+		case 'selectwidth':
+			state = items.getItemValue('.uno:Size');
+			if (state) {
+				return String(L.mm100thToInch(state.split('x')[0]).toFixed(2));
+			}
+			break;
+
+		case 'selectheight':
+			state = items.getItemValue('.uno:Size');
+			if (state) {
+				return String(L.mm100thToInch(state.split('x')[1]).toFixed(2));
 			}
 			break;
 		}
