@@ -571,6 +571,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'selectheight':
 			return '.uno:Size';
+
+		case 'horizontalpos':
+			return '.uno:Position';
+
+		case 'verticalpos':
+			return '.uno:Position';
 		}
 
 		return null;
@@ -800,6 +806,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			state = items.getItemValue('.uno:Size');
 			if (state) {
 				return String(L.mm100thToInch(state.split('x')[1]).toFixed(2));
+			}
+			break;
+
+		case 'horizontalpos':
+			state = items.getItemValue('.uno:Position');
+			if (state) {
+				return String(L.mm100thToInch(state.split('/')[0]).toFixed(2));
+			}
+			break;
+
+		case 'verticalpos':
+			state = items.getItemValue('.uno:Position');
+			if (state) {
+				return String(L.mm100thToInch(state.split('/')[1]).toFixed(2));
 			}
 			break;
 		}
