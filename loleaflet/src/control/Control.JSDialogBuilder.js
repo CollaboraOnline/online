@@ -609,13 +609,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'aboveparaspacing':
 			state = items.getItemValue('.uno:ULSpacing');
 			if (state)
-				return JSON.parse(state).upper.replace(',', '.');
+				return state.upper.replace(',', '.');
 			break;
 
 		case 'belowparaspacing':
 			state = items.getItemValue('.uno:ULSpacing');
 			if (state)
-				return JSON.parse(state).lower.replace(',', '.');
+				return state.lower.replace(',', '.');
 			break;
 
 		case 'rowheight':
