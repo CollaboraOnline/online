@@ -779,7 +779,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'setgamma':
 			state = items.getItemValue('.uno:GrafGamma');
 			if (state) {
-				return state.replace(',', '.');
+				return String(state.replace(',', '.') / 100.0);
 			}
 			break;
 		}
