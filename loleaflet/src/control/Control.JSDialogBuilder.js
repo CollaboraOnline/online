@@ -526,7 +526,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '.uno:TableColumWidth';
 
 		case 'decimalplaces':
-		case 'leadingzeros':
+		case 'leadingzeroes':
 		case 'negativenumbersred':
 		case 'thousandseparator':
 			return '.uno:NumberFormat';
@@ -639,7 +639,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			break;
 
-		case 'leadingzeros':
+		case 'leadingzeroes':
 			state = items.getItemValue('.uno:NumberFormat');
 			if (state) {
 				state = state.split(',');
