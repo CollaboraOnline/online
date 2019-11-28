@@ -239,16 +239,18 @@ L.Control.Scroll = L.Control.extend({
 
 	_onUpdateScrollOffset: function (e) {
 		// used on window resize
+		// also when dragging
+		var offset = new L.Point(e.x - this._prevScrollX, e.y - this._prevScrollY);
+		if (offset.x === 0) {
+			offset.x = 1;
+		}
+		if (offset.y === 0) {
+			offset.y = 1;
+		}
 		if (this._map._docLayer._docType === 'spreadsheet') {
-			var offset = new L.Point(e.x - this._prevScrollX, e.y - this._prevScrollY);
-			if (offset.x === 0) {
-				offset.x = 1;
-			}
-			if (offset.y === 0) {
-				offset.y = 1;
-			}
 			this._onUpdateRowColumnHeaders({x: e.x, y: e.y, offset: offset});
 		}
+		this._map.fire('scrolloffset', offset);
 		this._ignoreScroll = null;
 		$('.scroll-container').mCustomScrollbar('stop');
 		this._prevScrollY = e.y;
