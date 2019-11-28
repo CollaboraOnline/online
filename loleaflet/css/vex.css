@@ -18,8 +18,11 @@
 .vex-open .vex-overlay {
 	/* TODO: remove specific z-index from our codebase
 	so that the following line can also be removed */
-	position: relative;
 	z-index: 2000;
+	background-color:#1c5fa814;
+	min-height: 100%;
+	position: absolute;
+	top: 0px;
 }
 /* dialog shown when user is idle */
 .vex-open .loleaflet-user-idle {
