@@ -590,20 +590,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'beforetextindent':
 			state = items.getItemValue('.uno:LeftRightParaMargin');
 			if (state)
-				return JSON.parse(state).left.replace(',', '.');
+				return state.left.replace(',', '.');
 			break;
 
 		case 'aftertextindent':
 			state = items.getItemValue('.uno:LeftRightParaMargin');
 			if (state) {
-				return JSON.parse(state).right.replace(',', '.');
+				return state.right.replace(',', '.');
 			}
 			break;
 
 		case 'firstlineindent':
 			state = items.getItemValue('.uno:LeftRightParaMargin');
 			if (state)
-				return JSON.parse(state).firstline.replace(',', '.');
+				return state.firstline.replace(',', '.');
 			break;
 
 		case 'aboveparaspacing':
