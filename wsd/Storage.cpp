@@ -462,14 +462,20 @@ std::map<std::string, std::string> GetQueryParams(const Poco::URI& uri)
 
 } // anonymous namespace
 
+#endif // !MOBILEAPP
+
 void LockContext::initSupportsLocks()
 {
+#if MOBILEAPP
+    _supportsLocks = false;
+#else
     if (_supportsLocks)
         return;
 
     // first time token setup
     _supportsLocks = true;
     _lockToken = "lool-lock" + Util::rng::getHexString(8);
+#endif
 }
 
 bool LockContext::needsRefresh(const std::chrono::steady_clock::time_point &now) const
@@ -489,6 +495,8 @@ void LockContext::dumpState(std::ostream& os)
     os << "    token: '" << _lockToken << "'\n";
     os << "    last locked: " << Util::getSteadyClockAsString(_lastLockTime) << "\n";
 }
+
+#if !MOBILEAPP
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth, LockContext &lockCtx)
 {
@@ -1100,6 +1108,6 @@ StorageBase::SaveResult WebDAVStorage::saveLocalFileToStorage(
     return StorageBase::SaveResult(StorageBase::SaveResult::OK);
 }
 
-#endif
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

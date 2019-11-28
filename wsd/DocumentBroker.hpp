@@ -33,7 +33,9 @@
 
 #include "common/SigUtil.hpp"
 
+#if !MOBILEAPP
 #include "Admin.hpp"
+#endif
 
 // Forwards.
 class PrisonerRequestDispatcher;
