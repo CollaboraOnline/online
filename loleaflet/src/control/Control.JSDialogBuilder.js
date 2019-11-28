@@ -551,6 +551,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'setcontrast':
 			return '.uno:GrafContrast';
 
+		case 'setgraphtransparency':
+			return '.uno:GrafTransparence';
+
 		case 'setred':
 			return '.uno:GrafRed';
 
@@ -740,6 +743,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'setcontrast':
 			state = items.getItemValue('.uno:GrafContrast');
+			if (state) {
+				return state.replace(',', '.');
+			}
+			break;
+
+		case 'setgraphtransparency':
+			state = items.getItemValue('.uno:GrafTransparence');
 			if (state) {
 				return state.replace(',', '.');
 			}
