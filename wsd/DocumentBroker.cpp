@@ -86,7 +86,13 @@ void sendLastModificationTime(const std::shared_ptr<Session>& session,
 Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
 {
     // The URI of the document should be url-encoded.
+#if !MOBILEAPP
+    std::string decodedUri;
+    Poco::URI::decode(uri, decodedUri);
+    Poco::URI uriPublic(decodedUri);
+#else
     Poco::URI uriPublic(uri);
+#endif
 
     if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
     {

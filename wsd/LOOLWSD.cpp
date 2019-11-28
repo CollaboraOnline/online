@@ -2430,8 +2430,7 @@ private:
         }
         LOG_TRC("Clipboard request for us: " << serverId << " with tag " << tag);
 
-        const auto uriPublic = DocumentBroker::sanitizeURI(WOPISrc);
-        const auto docKey = DocumentBroker::getDocKey(uriPublic);
+        const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(WOPISrc));
 
         std::shared_ptr<DocumentBroker> docBroker;
         {
