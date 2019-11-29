@@ -21,6 +21,7 @@
 	z-index: 2000;
 	background-color:#1c5fa814;
 	min-height: 100%;
+	min-width: 100%;
 	position: absolute;
 	top: 0px;
 }
