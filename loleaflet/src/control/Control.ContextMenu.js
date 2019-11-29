@@ -102,6 +102,14 @@ L.Control.ContextMenu = L.Control.extend({
 			this._onClosePopup();
 		}
 		var contextMenu = this._createContextMenuStructure(obj);
+		var spellingContextMenu = false;
+		for (var menuItem in contextMenu) {
+			if (menuItem.includes('.uno:SpellCheckIgnore')) {
+				spellingContextMenu = true;
+				break;
+			}
+		}
+
 		L.installContextMenu({
 			selector: '.leaflet-layer',
 			className: 'loleaflet-font',
@@ -115,6 +123,9 @@ L.Control.ContextMenu = L.Control.extend({
 							map._docLayer.hideAnnotationFromCurrentCell();
 						} else if (!map._clip.filterExecCopyPaste(key)) {
 							map.sendUnoCommand(key);
+							// For spelling context menu we need to remove selection
+							if (spellingContextMenu)
+								map._docLayer._clearSelections();
 							// Give the stolen focus back to map
 							map.focus();
 						}
