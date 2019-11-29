@@ -27,6 +27,9 @@
 #toolbar-down *{
 	max-height: 35px !important;
 }
+#tb_actionbar_item_LanguageStatus table table td:first-of-type{
+	min-width: max-content !important;
+}
 #document-signing-bar {
 		background-color: #ef324e;;
 }
