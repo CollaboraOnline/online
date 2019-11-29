@@ -499,10 +499,6 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_launchCalcInputBar: function(id, width, height) {
-
-		if (false && this._map._permission !== 'edit')
-			return;
-
 		console.log('_launchCalcInputBar: start: id: ' + id + ', width: ' + width);
 		if (this._calcInputBar) {
 			var oldHeight = this._calcInputBar.height;
@@ -548,6 +544,7 @@ L.Control.LokDialog = L.Control.extend({
 						spreadsheetRowColumnFrame.setAttribute('style', styleAttr);
 					}
 				}
+				$('.funcwizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
 			}
 		}
 
