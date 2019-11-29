@@ -311,11 +311,23 @@ L.Map.include({
 
 					// Special Mac key names
 					if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
+						var ctrl = /Ctrl/g;
+						var alt = /Alt/g;
+						if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
+							ctrl = /Strg/g;
+						}
+						if (String.locale.startsWith('lt')) {
+							ctrl = /Vald/g;
+						}
+						if (String.locale.startsWith('sl')) {
+							ctrl = /Krmilka/gi;
+							alt = /Izmenjalka/gi;
+						}
 						if (id === 'keyboard-shortcuts') {
-							document.getElementById('keyboard-shortcuts').innerHTML = document.getElementById('keyboard-shortcuts').innerHTML.replace(/Ctrl/g, '⌘').replace(/Alt/g, '⌥');
+							document.getElementById('keyboard-shortcuts').innerHTML = document.getElementById('keyboard-shortcuts').innerHTML.replace(ctrl, '⌘').replace(alt, '⌥');
 						}
 						if (id === 'online-help') {
-							document.getElementById('online-help').innerHTML = document.getElementById('online-help').innerHTML.replace(/Ctrl/g, '⌘').replace(/Alt/g, '⌥');
+							document.getElementById('online-help').innerHTML = document.getElementById('online-help').innerHTML.replace(ctrl, '⌘').replace(alt, '⌥');
 						}
 					}
 
