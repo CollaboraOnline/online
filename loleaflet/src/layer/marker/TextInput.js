@@ -17,6 +17,10 @@ L.TextInput = L.Layer.extend({
 		// pressed sometimes - consider '  foo' -> ' foo'
 		this._deleteHint = ''; // or 'delete' or 'backspace'
 
+		// We need to detect line break in the tunneled formula
+		// input window for the multiline case.
+		this._linebreakHint = false;
+
 		// Clearing the area can generate input events
 		this._ignoreInputCount = 0;
 
@@ -461,8 +465,12 @@ L.TextInput = L.Layer.extend({
 
 		this._lastContent = content;
 
-		if (newText.length > 0)
+		if (this._linebreakHint && this._map.dialog._calcInputBar &&
+			this._map.getWinId() === this._map.dialog._calcInputBar.id) {
+			this._sendKeyEvent(13, 5376);
+		} else if (newText.length > 0) {
 			this._sendText(String.fromCharCode.apply(null, newText));
+		}
 
 		// was a 'delete' and we need to reset world.
 		if (removeAfter > 0)
@@ -570,12 +578,14 @@ L.TextInput = L.Layer.extend({
 	},
 
 	_onKeyDown: function _onKeyDown(ev) {
-		if (ev.keyCode == 8)
+		if (ev.keyCode === 8)
 			this._deleteHint = 'backspace';
-		else if (ev.keyCode == 46)
+		else if (ev.keyCode === 46)
 			this._deleteHint = 'delete';
-		else
+		else {
 			this._deleteHint = '';
+			this._linebreakHint = ev.keyCode === 13 && ev.shiftKey;
+		}
 	},
 
 	// Check arrow keys on 'keyup' event; using 'ArrowLeft' or 'ArrowRight'

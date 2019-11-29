@@ -812,6 +812,8 @@ L.Map = L.Evented.extend({
 	// the main document) has the actual focus.  0 means the document.
 	setWinId: function (id) {
 		console.log('winId set to: ' + id);
+		if (typeof id === 'string')
+			id = parseInt(id);
 		this._winId = id;
 	},
 
