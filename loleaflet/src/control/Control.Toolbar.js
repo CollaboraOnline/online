@@ -1771,7 +1771,7 @@ function onCommandStateChanged(e) {
 		}
 		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(language).parent().html());
 		w2ui['editbar'].set('languagecode', {text: code});
-		$('#tb_actionbar_item_LanguageStatus table table td:first-of-type').append(language+'&nbsp;');
+		$('#tb_actionbar_item_LanguageStatus table table td:first-of-type').html(language+'&nbsp;');
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		if (e.state === 'true') {
