@@ -54,8 +54,13 @@ L.Control.ContextMenu = L.Control.extend({
 
 			presentation: [],
 			drawing: []
-		}
+		},
 		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
+
+		// This black list contains those menu items which should be disabled on mobile even if they
+		// are allowed in general. We need to have only those items here which are also part
+		// of the whitelist, otherwise the menu items are not visible anyway.
+		mobileBlackList: ['SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph']
 	},
 
 
@@ -165,6 +170,9 @@ L.Control.ContextMenu = L.Control.extend({
 					!(docType === 'drawing' && this.options.whitelist.drawing.indexOf(commandName) !== -1)) {
 					continue;
 				}
+
+				if (window.mode.isMobile() && this.options.mobileBlackList.indexOf(commandName) !== -1)
+					continue;
 
 				if (this._map.getDocType() == 'spreadsheet' && commandName == 'ShowNote') {
 					if (this._map._docLayer.isCurrentCellCommentShown())
