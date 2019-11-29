@@ -1449,6 +1449,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var needsToCreateContainer =
 				childType == 'panel' || childType == 'frame' || childType == 'toolbox';
 
+			if ((childData.id === undefined || childData.id === '' || childData.id === null)
+				&& (childType == 'checkbox' || childType == 'radiobutton')) {
+				continue;
+			}
+
 			var childObject = needsToCreateContainer ? L.DomUtil.createWithId('div', childData.id, parent) : parent;
 
 			var handler = this._controlHandlers[childType];
