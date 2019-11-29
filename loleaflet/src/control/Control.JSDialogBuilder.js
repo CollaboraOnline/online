@@ -142,6 +142,34 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return text.replace(/[^\d.-]/g, '').trim();
 	},
 
+	_gradientStyleToLabel: function(state) {
+		switch (state) {
+		case 'LINEAR':
+			return _('Linear');
+
+		case 'AXIAL':
+			return _('Axial');
+
+		case 'RADIAL':
+			return _('Radial');
+
+		case 'ELLIPTICAL':
+			return _('Elipsoid');
+
+		// no, not a typo (square - quadratic, rect - square) - same as in the core
+		case 'SQUARE':
+			return _('Quadratic');
+
+		case 'RECT':
+			return _('Square');
+
+		case 'MAKE_FIXED_SIZE':
+			return _('Fixed size');
+		}
+
+		return '';
+	},
+
 	_containerHandler: function(parentContainer, data, builder) {
 		if (data.cols && data.rows) {
 			return builder._gridHandler(parentContainer, data, builder);
@@ -574,6 +602,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'verticalpos':
 			return '.uno:Position';
+
+		case 'transtype':
+			return '.uno:FillFloatTransparence';
 		}
 
 		return null;
@@ -718,7 +749,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'gradientstyle':
 			state = items.getItemValue('.uno:FillGradient');
 			if (state) {
-				return state.style;
+				return builder._gradientStyleToLabel(state.style);
 			}
 			break;
 
@@ -817,6 +848,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			state = items.getItemValue('.uno:Position');
 			if (state) {
 				return String(L.mm100thToInch(state.split('/')[1]).toFixed(2));
+			}
+			break;
+
+		case 'transtype':
+			state = items.getItemValue('.uno:FillFloatTransparence');
+			if (state) {
+				return builder._gradientStyleToLabel(state.style);
 			}
 			break;
 		}
