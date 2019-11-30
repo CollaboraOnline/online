@@ -1472,8 +1472,6 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
 {
     const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1]) : 0);
 
-    getLOKitDocument()->setView(_viewId);
-
     int startX = 0, startY = 0;
     int bufferWidth = 800, bufferHeight = 600;
     double dpiScale = 1.0;
@@ -1502,7 +1500,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
     int width = bufferWidth, height = bufferHeight;
     std::string response;
     const auto start = std::chrono::system_clock::now();
-    getLOKitDocument()->paintWindow(winId, pixmap.data(), startX, startY, width, height, dpiScale);
+    getLOKitDocument()->paintWindow(winId, pixmap.data(), startX, startY, width, height, dpiScale, _viewId);
     const double area = width * height;
 
     const auto duration = std::chrono::system_clock::now() - start;
