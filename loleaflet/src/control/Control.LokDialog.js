@@ -612,6 +612,39 @@ L.Control.LokDialog = L.Control.extend({
 		var strId = this._toStrId(id);
 
 		if (this._currentDeck) {
+
+			var oldId = this._currentDeck.id;
+			if (oldId != id) {
+				// This is a new deck; update the HTML elements in-place.
+				var strOldId = this._toStrId(oldId);
+
+				var oldPanel = document.getElementById(strOldId);
+				if (oldPanel)
+					oldPanel.id = strOldId + '-offscreen';
+				var oldCanvas = document.getElementById(strOldId + '-canvas');
+				if (oldCanvas)
+					oldCanvas.id = strOldId + '-offscreen';
+
+				$('#' + this._currentDeck.strId).remove();
+				delete this._dialogs[oldId];
+				this._currentDeck = null;
+
+				this._createSidebar(id, strId, width, height);
+
+				var newCanvas = document.getElementById(strId + '-canvas');
+				if (oldCanvas && newCanvas)
+				{
+					this._setCanvasWidthHeight(newCanvas, oldCanvas.width, oldCanvas.height);
+					var ctx = newCanvas.getContext('2d');
+					ctx.drawImage(oldCanvas, 0, 0);
+				}
+
+				oldPanel.remove();
+
+				return;
+			}
+
+			// Update the existing sidebar.
 			this._currentDeck.width = width;
 			this._currentDeck.height = height;
 
