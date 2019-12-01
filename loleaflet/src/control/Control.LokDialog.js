@@ -609,10 +609,14 @@ L.Control.LokDialog = L.Control.extend({
 			return;
 
 		$('#sidebar-dock-wrapper').css('display', 'block');
+		if (window.mode.isTablet())
+			$('#sidebar-dock-wrapper').addClass('tablet');
 
 		var ratio = 1.0;
 		if (width > window.screen.width) {
 			ratio = window.screen.width / width;
+			if (ratio < 1.0)
+				$('#sidebar-dock-wrapper').css('width', String(width * ratio) + 'px');
 		}
 
 		var strId = this._toStrId(id);
@@ -633,13 +637,6 @@ L.Control.LokDialog = L.Control.extend({
 
 			// Render window.
 			this._sendPaintWindowRect(id);
-
-			if (window.mode.isTablet())
-				$('#sidebar-dock-wrapper').addClass('tablet');
-
-			if (ratio < 1.0) {
-				$('#sidebar-dock-wrapper').css('width', String(width * ratio) + 'px');
-			}
 			return;
 		}
 
