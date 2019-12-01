@@ -875,12 +875,16 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onSidebarClose: function(dialogId) {
 		this._resizeSidebar(dialogId, 0);
-		$('#' + this._currentDeck.strId).remove();
-		this._map.focus();
 		delete this._dialogs[dialogId];
-		this._currentDeck = null;
+		if (this._currentDeck) {
+			$('#' + this._currentDeck.strId).remove();
+			this._currentDeck = null;
+		}
 
 		$('#sidebar-dock-wrapper').css({display: ''});
+		this._map.fire('editorgotfocus');
+		this._map.focus();
+
 	},
 
 	_onCalcInputBarClose: function(dialogId) {
