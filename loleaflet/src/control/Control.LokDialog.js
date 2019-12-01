@@ -585,18 +585,8 @@ L.Control.LokDialog = L.Control.extend({
 		};
 
 		this._createDialogCursor(strId);
-		this._setupWindowEvents(id, canvas/*, dlgInput*/);
 
-		L.DomEvent.on(container, 'mouseleave', function() {
-			// Move the mouse off-screen when we leave the inputbar
-			// so we don't leave edge-elements highlighted as if
-			// the mouse is still over them.
-			this._map.lastActiveTime = Date.now();
-			this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
-		}, this);
-
-		// Render window.
-		this._sendPaintWindowRect(id);
+		this._postLaunch(id, container, canvas);
 
 		this._calcInputBar = this._dialogs[id];
 		console.log('_launchCalcInputBar: end');
