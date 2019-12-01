@@ -635,10 +635,16 @@ L.Control.LokDialog = L.Control.extend({
 			else
 				$(panel).parent().hide();
 
-			// Render window.
-			this._sendPaintWindowRect(id);
-			return;
+			var panelContainer = document.getElementById(strId);
+			var panelCanvas = document.getElementById(strId + '-canvas');
+			this._postLaunch(id, panelContainer, panelCanvas);
+		} else {
+			this._createSidebar(id, strId, width, height);
 		}
+	},
+
+	_createSidebar: function(id, strId, width, height) {
+		// Create a new sidebar.
 
 		var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('sidebar-panel'));
 		panelContainer.id = strId;
@@ -676,12 +682,13 @@ L.Control.LokDialog = L.Control.extend({
 		this._currentDeck = this._dialogs[id];
 
 		this._createDialogCursor(strId);
-		this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
 
-		L.DomEvent.on(panelContainer, 'resize', function() {
-			// Don't resize the window as we handle overflowing with scrollbars.
-			// this._map._socket.sendMessage('resizewindow ' + id + ' size=' + panelContainer.width + ',' + panelContainer.height);
-		}, this);
+		this._postLaunch(id, panelContainer, panelCanvas);
+	},
+
+	_postLaunch: function(id, panelContainer, panelCanvas) {
+
+		this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
 
 		L.DomEvent.on(panelContainer, 'mouseleave', function() {
 			// Move the mouse off-screen when we leave the sidebar
