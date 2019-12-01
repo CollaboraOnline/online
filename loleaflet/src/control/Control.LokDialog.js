@@ -191,23 +191,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_sendPaintWindowRect: function(id, x, y, width, height) {
-		if (!width)
-			width = this._dialogs[id].width;
-		if (width <= 0)
-			return;	// Don't request rendering an empty area.
-		if (!height)
-			height = this._dialogs[id].height;
-		if (height <= 0)
-			return;	// Don't request rendering an empty area.
-		if (!x)
-			x = 0;
-		if (!y)
-			y = 0;
-
-		// pre-multiplied by the scale factor
-		var dpiscale = L.getDpiScaleFactor();
-		var rect = [x * dpiscale, y * dpiscale, width * dpiscale, height * dpiscale].join(',');
-		this._sendPaintWindow(id, rect);
+		this._sendPaintWindow(id, this._createRectStr(id, x, y, width, height));
 	},
 
 	_sendPaintWindow: function(id, rectangle) {
@@ -393,9 +377,9 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	focus: function(dlgId) {
-		// In case of the sidebar we should be carefull about
+		// In case of the sidebar we should be careful about
 		// grabbing the focus from the main window.
-		if (this._dialogs[dlgId].isSidebar) {
+		if (this._isSidebar(dlgId)) {
 			// On mobile, grab the focus if the sidebar is visible.
 			if (window.mode.isMobile()) {
 				if (!this.mobileSidebarVisible)
@@ -411,7 +395,7 @@ L.Control.LokDialog = L.Control.extend({
 
 		this._map.setWinId(dlgId);
 		var inputContainer = this._map.getTextInput();
-		if (this._dialogs[dlgId].cursorVisible) {
+		if (dlgId in this._dialogs && this._dialogs[dlgId].cursorVisible) {
 			inputContainer.focus();
 		} else {
 			inputContainer.blur();
@@ -954,8 +938,7 @@ L.Control.LokDialog = L.Control.extend({
 			}
 
 			// Sidebars find out their size and become visible on first paint.
-			var isSidebar = that._isSidebar(parentId);
-			if (isSidebar) {
+			if (that._isSidebar(parentId)) {
 				that._resizeSidebar(strId, that._currentDeck.width);
 
 				// Update the underlying canvas.
@@ -975,8 +958,11 @@ L.Control.LokDialog = L.Control.extend({
 			var container = L.DomUtil.get(strId);
 			if (container)
 				$(container).parent().show();
-			that.focus(parentId);
-			that._dialogs[parentId].isPainting = false;
+			if (parentId in that._dialogs) {
+				// We might have closed the dialog by the time we render.
+				that.focus(parentId);
+				that._dialogs[parentId].isPainting = false;
+			}
 
 			if (isCalcInputBar && container && that._calcInputBar.width !== container.clientWidth) {
 				console.log('_paintDialog: container width: ' + container.clientWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
