@@ -102,41 +102,46 @@ L.Control.ContextMenu = L.Control.extend({
 			this._onClosePopup();
 		}
 		var contextMenu = this._createContextMenuStructure(obj);
-		var spellingContextMenu = false;
-		for (var menuItem in contextMenu) {
-			if (menuItem.includes('.uno:SpellCheckIgnore')) {
-				spellingContextMenu = true;
-				break;
+		if (window.mode.isMobile()) {
+			var menuData = this.getMenuStructureForMobileWizard(contextMenu, true, '');
+			map.fire('mobilewizard', menuData);
+		} else {
+			var spellingContextMenu = false;
+			for (var menuItem in contextMenu) {
+				if (menuItem.includes('.uno:SpellCheckIgnore')) {
+					spellingContextMenu = true;
+					break;
+				}
 			}
+
+			L.installContextMenu({
+				selector: '.leaflet-layer',
+				className: 'loleaflet-font',
+				trigger: 'none',
+				build: function() {
+					return {
+						callback: function(key) {
+							if (map.getDocType() == 'spreadsheet' && key == '.uno:ShowNote') {
+								map._docLayer.showAnnotationFromCurrentCell();
+							} else if (map.getDocType() == 'spreadsheet' && key == '.uno:HideNote') {
+								map._docLayer.hideAnnotationFromCurrentCell();
+							} else if (!map._clip.filterExecCopyPaste(key)) {
+								map.sendUnoCommand(key);
+								// For spelling context menu we need to remove selection
+								if (spellingContextMenu)
+									map._docLayer._clearSelections();
+								// Give the stolen focus back to map
+								map.focus();
+							}
+						},
+						items: contextMenu
+					};
+				}
+			});
+
+			$('.leaflet-layer').contextMenu(this._prevMousePos);
+			this.hasContextMenu = true;
 		}
-
-		L.installContextMenu({
-			selector: '.leaflet-layer',
-			className: 'loleaflet-font',
-			trigger: 'none',
-			build: function() {
-				return {
-					callback: function(key) {
-						if (map.getDocType() == 'spreadsheet' && key == '.uno:ShowNote') {
-							map._docLayer.showAnnotationFromCurrentCell();
-						} else if (map.getDocType() == 'spreadsheet' && key == '.uno:HideNote') {
-							map._docLayer.hideAnnotationFromCurrentCell();
-						} else if (!map._clip.filterExecCopyPaste(key)) {
-							map.sendUnoCommand(key);
-							// For spelling context menu we need to remove selection
-							if (spellingContextMenu)
-								map._docLayer._clearSelections();
-							// Give the stolen focus back to map
-							map.focus();
-						}
-					},
-					items: contextMenu
-				};
-			}
-		});
-
-		$('.leaflet-layer').contextMenu(this._prevMousePos);
-		this.hasContextMenu = true;
 	},
 
 	_createContextMenuStructure: function(obj) {
@@ -242,6 +247,50 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 
 		return contextMenu;
+	},
+
+	getMenuStructureForMobileWizard: function(menu, mainMenu, itemCommand) {
+		if (itemCommand.includes('sep'))
+			return null;
+
+		var itemText = ''
+		if (menu.name)
+			itemText = menu.name;
+
+		var itemType = 'submenu';
+		var executionType = 'menu';
+		if (mainMenu) {
+			itemType = 'mainmenu';
+			executionType = 'menu';
+		} else if (!menu.items) {
+			itemType = 'menuitem';
+			executionType = 'command';
+		}
+
+		var menuStructure = {
+			type : itemType,
+			enabled : true,
+			text : itemText,
+			executionType : executionType,
+			children : []
+		};
+		if (itemCommand)
+			menuStructure['command'] = itemCommand;
+		if (mainMenu) {
+			for (var menuItem in menu) {
+				var element = this.getMenuStructureForMobileWizard(menu[menuItem], false, menuItem);
+				if (element)
+					menuStructure['children'].push(element);
+			}
+		} else if (itemType == 'submenu') {
+			for (menuItem in menu.items) {
+				element = this.getMenuStructureForMobileWizard(menu.items[menuItem], false, menuItem);
+				if (element)
+					menuStructure['children'].push(element);
+			}
+		}
+
+		return menuStructure;
 	}
 });
 
