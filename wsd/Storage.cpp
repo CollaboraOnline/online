@@ -1054,7 +1054,8 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         {
             saveResult.setResult(StorageBase::SaveResult::DISKFULL);
         }
-        else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED)
+        else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED ||
+                 response.getStatus() == Poco::Net::HTTPResponse::HTTP_FORBIDDEN)
         {
             saveResult.setResult(StorageBase::SaveResult::UNAUTHORIZED);
         }
@@ -1077,6 +1078,7 @@ StorageBase::SaveResult WopiStorage::saveLocalFileToStorage(const Authorization&
         }
         else
         {
+            // Internal server error, and other failures.
             LOG_ERR("Unexpected response to " << wopiLog << " : " << response.getStatus() <<
                     "Cannot save file to WOPI storage uri [" << uriAnonym << "]. Error: ");
             saveResult.setResult(StorageBase::SaveResult::FAILED);
