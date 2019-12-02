@@ -45,12 +45,7 @@ L.Control.Ruler = L.Control.extend({
 				this._lMarginDrag.style.cursor = 'e-resize';
 				this._rMarginDrag.style.cursor = 'w-resize';
 
-				if (window.ThisIsTheiOSApp) {
-					this.options.interactive = true;
-					L.DomEvent.on(this._rMarginDrag, 'touchstart', this._initiateDrag, this);
-					L.DomEvent.on(this._lMarginDrag, 'touchstart', this._initiateDrag, this);
-				}
-				else {
+				if (!window.ThisIsTheiOSApp) {
 					L.DomEvent.on(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
 					L.DomEvent.on(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
 				}
@@ -59,11 +54,7 @@ L.Control.Ruler = L.Control.extend({
 				this._lMarginDrag.style.cursor = 'default';
 				this._rMarginDrag.style.cursor = 'default';
 
-				if (window.ThisIsTheiOSApp) {
-					L.DomEvent.off(this._rMarginDrag, 'touchstart', this._initiateDrag, this);
-					L.DomEvent.off(this._lMarginDrag, 'touchstart', this._initiateDrag, this);
-				}
-				else {
+				if (!window.ThisIsTheiOSApp) {
 					L.DomEvent.off(this._rMarginDrag, 'mousedown', this._initiateDrag, this);
 					L.DomEvent.off(this._lMarginDrag, 'mousedown', this._initiateDrag, this);
 				}
@@ -154,6 +145,12 @@ L.Control.Ruler = L.Control.extend({
 			this._rToolTip = L.DomUtil.create('div', rToolTip, this._rMarginDrag);
 			this._lMarginDrag.title = leftMarginStr;
 			this._rMarginDrag.title = rightMarginStr;
+
+			if (window.ThisIsTheiOSApp) {
+				this.options.interactive = true;
+				L.DomEvent.on(this._rMarginDrag, 'touchstart', this._initiateDrag, this);
+				L.DomEvent.on(this._lMarginDrag, 'touchstart', this._initiateDrag, this);
+			}
 		}
 
 		this._lMarginMarker.style.width = (DraggableConvertRatio*lMargin) + 'px';
@@ -198,6 +195,9 @@ L.Control.Ruler = L.Control.extend({
 				return;
 			e.clientX = e.touches[0].clientX;
 		}
+
+		if (window.ThisIsTheiOSApp && this._map._permission !== 'edit')
+			return;
 
 		this._map.rulerActive = true;
 
