@@ -992,9 +992,19 @@ L.Control.LokDialog = L.Control.extend({
 				that._dialogs[parentId].isPainting = false;
 			}
 
-			if (isCalcInputBar && container && that._calcInputBar.width !== container.clientWidth) {
-				console.log('_paintDialog: container width: ' + container.clientWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
-				that._map._socket.sendMessage('resizewindow ' + parentId + ' size=' + container.clientWidth + ',' + that._calcInputBar.height);
+			if (isCalcInputBar && container) {
+				var deckOffset = 0;
+				if (that._currentDeck) {
+					var sidebar = L.DomUtil.get(that._currentDeck.strId);
+					if (sidebar) {
+						deckOffset = sidebar.width;
+					}
+				}
+				var correctWidth = container.clientWidth - deckOffset;
+				if (that._calcInputBar.width !== correctWidth) {
+					console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
+					that._map._socket.sendMessage('resizewindow ' + parentId + ' size=' + correctWidth + ',' + that._calcInputBar.height);
+				}
 			}
 		};
 		img.src = imgData;
@@ -1040,8 +1050,10 @@ L.Control.LokDialog = L.Control.extend({
 			// Add extra space for scrollbar only when visible
 			width = width + 15;
 		}
+		var deckOffset = 0;
 		var sidebar = L.DomUtil.get(strId);
 		if (sidebar) {
+			deckOffset = width === 0 ? sidebar.width : -width;
 			sidebar.width = width;
 			if (sidebar.style)
 				sidebar.style.width = width.toString() + 'px';
@@ -1052,10 +1064,29 @@ L.Control.LokDialog = L.Control.extend({
 		if (spreadsheetRowColumnFrame)
 			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
 
+		this._adjustCalcInputBar(deckOffset);
 		// If we didn't have the focus, don't steal it form the editor.
 		if ($('#' + this._currentDeck.strId + '-cursor').css('display') === 'none') {
 			this._map.fire('editorgotfocus');
 			this._map.focus();
+		}
+	},
+
+	_adjustCalcInputBar: function(offset) {
+		if (this._calcInputBar && !this._calcInputBar.isPainting && offset !== 0) {
+			var id = this._calcInputBar.id;
+			var calcInputbar = L.DomUtil.get('calc-inputbar');
+			if (calcInputbar) {
+				var calcInputbarContainer = calcInputbar.children[0];
+				if (calcInputbarContainer) {
+					var width = calcInputbarContainer.clientWidth + offset;
+					var height = calcInputbarContainer.clientHeight;
+					if (width !== 0 && height !== 0) {
+						console.log('_adjustCalcInputBar: width: ' + width + ', height: ' + height);
+						this._map._socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
+					}
+				}
+			}
 		}
 	},
 

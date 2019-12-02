@@ -1093,13 +1093,14 @@ L.Map = L.Evented.extend({
 		L.Util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = L.Util.requestAnimFrame(
 			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
+		var deckOffset = 0;
 		var sidebarpanel = L.DomUtil.get('sidebar-panel');
 		if (sidebarpanel) {
 			var sidebar = sidebarpanel.children[0];
 			if (sidebar) {
 				sidebar.height = this._container.clientHeight - 10;
 				sidebar.style.height = sidebar.height + 'px';
-
+				deckOffset = sidebar.width;
 				// Fire the resize event to propagate the size change to WSD.
 				// .trigger isn't working, so doing it manually.
 				var event;
@@ -1126,9 +1127,9 @@ L.Map = L.Evented.extend({
 			if (calcInputbar) {
 				var calcInputbarContainer = calcInputbar.children[0];
 				if (calcInputbarContainer) {
-					var width = calcInputbarContainer.clientWidth;
+					var width = calcInputbarContainer.clientWidth - deckOffset;
 					var height = calcInputbarContainer.clientHeight;
-					if (width !== 0 && height !== 0) {
+					if (width > 0 && height > 0) {
 						console.log('_onResize: container width: ' + width + ', container height: ' + height + ', _calcInputBar width: ' + this.dialog._calcInputBar.width);
 						this._socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
 					}
