@@ -1738,6 +1738,8 @@ function onCommandStateChanged(e) {
 	var found = false;
 	var value, color, div;
 
+	// window.postMobileDebug('onCommandStateChanged: ' + commandName + ' ' + state);
+
 	if (commandName === '.uno:AssignLayout') {
 		$('.styles-select').val(state).trigger('change');
 	} else if (commandName === '.uno:StyleApply') {
