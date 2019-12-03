@@ -127,6 +127,9 @@ L.Control.MobileWizard = L.Control.extend({
 				w2ui['actionbar'].click('insertion_mobile_wizard')
 			} else if (window.mobileMenuWizard === true) {
 				$('#main-menu-state').click()
+			} else if (window.contextMenuWizard) {
+				window.contextMenuWizard = false;
+				this.map.fire('closemobilewizard');
 			}
 		} else {
 			this._currentDepth--;

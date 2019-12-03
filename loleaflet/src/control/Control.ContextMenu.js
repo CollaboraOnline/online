@@ -103,6 +103,7 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 		var contextMenu = this._createContextMenuStructure(obj);
 		if (window.mode.isMobile()) {
+			window.contextMenuWizard = true;
 			var menuData = this.getMenuStructureForMobileWizard(contextMenu, true, '');
 			map.fire('mobilewizard', menuData);
 		} else {

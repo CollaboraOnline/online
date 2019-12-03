@@ -1404,6 +1404,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					window.onClick(null, 'insertion_mobile_wizard');
 				else if (window.mobileMenuWizard)
 					$('#main-menu-state').click()
+				else if (window.contextMenuWizard) {
+					window.contextMenuWizard = false;
+					builder.map.fire('closemobilewizard');
+				}
 			});
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
