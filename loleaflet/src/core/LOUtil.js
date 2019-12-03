@@ -105,6 +105,8 @@ L.LOUtil = {
 		var res = !this.commandWithoutIcon.find(function (el) {
 			return el.startsWith(commandName);
 		});
+		if (commandName.indexOf('?')!== -1)
+			return false;
 		return res;
 	}
 };
