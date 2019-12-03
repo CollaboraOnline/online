@@ -102,6 +102,7 @@ public class AboutDialogFragment extends DialogFragment {
                         dialog.dismiss();
                     }
                 })
+                /* FIXME Fix lauching the example document, this currently crashes.
                 .setNeutralButton(R.string.about_moreinfo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -110,7 +111,7 @@ public class AboutDialogFragment extends DialogFragment {
                         startActivity(intent);
                         dialog.dismiss();
                     }
-                });
+                })*/;
 
         return builder.create();
     }
