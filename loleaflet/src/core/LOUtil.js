@@ -97,7 +97,8 @@ L.LOUtil = {
 		'InsertZWSP',
 		'InsertZWNBSP',
 		'InsertLRM',
-		'InsertRLM'
+		'InsertRLM',
+		'None'
 	],
 
 	existsIconForCommand: function(command) {
