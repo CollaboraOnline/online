@@ -1451,16 +1451,8 @@ function onDocLayerInit() {
 			toolbarUp.remove('styles');
 		}
 
-		if (statusbar) {
+		if (statusbar)
 			statusbar.remove('prev', 'next', 'prevnextbreak');
-
-			statusbar.set('zoom', {
-				items: [
-					{ id: 'zoom100', text: '100%', scale: 10},
-					{ id: 'zoom200', text: '200%', scale: 14}
-				]
-			});
-		}
 
 		if (!_inMobileMode()) {
 			statusbar.insert('left', [
