@@ -1356,6 +1356,29 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('updateviewslist');
 	},
 
+	_onUserListRefresh: function(map, toolbar) {
+		var showUserList = map['wopi'].HideUserList !== null &&
+							map['wopi'].HideUserList !== undefined &&
+							$.inArray('true', map['wopi'].HideUserList) < 0 &&
+							!window.ThisIsAMobileApp &&
+							((window.mode.isMobile() && $.inArray('mobile', map['wopi'].HideUserList) < 0) ||
+							(window.mode.isTablet() && $.inArray('tablet', map['wopi'].HideUserList) < 0));
+		map.off('deselectuser', window.deselectUser);
+		map.off('addview', window.onAddView);
+		map.off('removeview', window.onRemoveView);
+		if (showUserList) {
+			toolbar.show('userlist');
+			toolbar.show('userlistbreak');
+			map.on('deselectuser', window.deselectUser);
+			map.on('addview', window.onAddView);
+			map.on('removeview', window.onRemoveView);
+		}
+		else {
+			toolbar.hide('userlist');
+			toolbar.hide('userlistbreak');
+		}
+	},
+
 	_onRenderFontMsg: function (textMsg, img) {
 		var command = this._map._socket.parseServerCmd(textMsg);
 		this._map.fire('renderfont', {

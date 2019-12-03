@@ -170,18 +170,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				window.hideTooltip(this, e.target);
 			},
 			onRefresh: function() {
-				var showUserList = map['wopi'].HideUserList !== null &&
-									map['wopi'].HideUserList !== undefined &&
-									$.inArray('true', map['wopi'].HideUserList) < 0 &&
-									((window.mode.isMobile() && $.inArray('mobile', map['wopi'].HideUserList) < 0) ||
-									(window.mode.isTablet() && $.inArray('tablet', map['wopi'].HideUserList) < 0));
-				if (this.get('userlist').hidden == true && showUserList) {
-					this.show('userlist');
-					this.show('userlistbreak');
-					map.on('deselectuser', window.deselectUser);
-					map.on('addview', window.onAddView);
-					map.on('removeview', window.onRemoveView);
-				}
+				L.TileLayer.prototype._onUserListRefresh(map, this);
 			}
 		});
 		toolbar.bind('touchstart', function(e) {
