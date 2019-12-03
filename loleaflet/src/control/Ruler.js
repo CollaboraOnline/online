@@ -95,16 +95,7 @@ L.Control.Ruler = L.Control.extend({
 		|| !this.options.marginSet)
 			this.options.extraSize = 0;
 
-		var classMajorSep = 'loleaflet-ruler-maj',
-		classMargin = 'loleaflet-ruler-margin',
-		classDraggable = 'loleaflet-ruler-drag',
-		rightComp = 'loleaflet-ruler-right',
-		leftComp = 'loleaflet-ruler-left',
-		lToolTip = 'loleaflet-ruler-ltooltip',
-		rToolTip = 'loleaflet-ruler-rtooltip',
-		leftMarginStr = _('Left Margin'),
-		rightMarginStr = _('Right Margin'),
-		DraggableConvertRatio, lMargin, rMargin, wPixel, scale;
+		var DraggableConvertRatio, lMargin, rMargin, wPixel, scale;
 
 		lMargin = this.options.nullOffset;
 		rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
@@ -119,10 +110,10 @@ L.Control.Ruler = L.Control.extend({
 
 		var numCounter = -1 * parseInt(lMargin / 1000);
 
-		$('.' + classMajorSep).remove();
+		$('.loleaflet-ruler-maj').remove();
 		for (var num = 0; num <= (this.options.pageWidth / 1000) + 1; num++) {
 
-			var marker = L.DomUtil.create('div', classMajorSep, this._rBPContainer);
+			var marker = L.DomUtil.create('div', 'loleaflet-ruler-maj', this._rBPContainer);
 			marker.style.width = DraggableConvertRatio*1000 - 2 + 'px';
 			if (this.options.displayNumber) {
 				if (numCounter !== 0)
@@ -136,15 +127,15 @@ L.Control.Ruler = L.Control.extend({
 
 			this.options.marginSet = true;
 
-			this._lMarginMarker = L.DomUtil.create('div', classMargin + ' ' + leftComp, this._rFace);
-			this._rMarginMarker =  L.DomUtil.create('div', classMargin + ' ' + rightComp, this._rFace);
+			this._lMarginMarker = L.DomUtil.create('div', 'loleaflet-ruler-margin loleaflet-ruler-left', this._rFace);
+			this._rMarginMarker =  L.DomUtil.create('div', 'loleaflet-ruler-margin loleaflet-ruler-right', this._rFace);
 
-			this._lMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + leftComp, this._rMarginWrapper);
-			this._lToolTip = L.DomUtil.create('div', lToolTip, this._lMarginDrag);
-			this._rMarginDrag = L.DomUtil.create('div', classDraggable + ' ' + rightComp, this._rMarginWrapper);
-			this._rToolTip = L.DomUtil.create('div', rToolTip, this._rMarginDrag);
-			this._lMarginDrag.title = leftMarginStr;
-			this._rMarginDrag.title = rightMarginStr;
+			this._lMarginDrag = L.DomUtil.create('div', 'loleaflet-ruler-drag loleaflet-ruler-left', this._rMarginWrapper);
+			this._lToolTip = L.DomUtil.create('div', 'loleaflet-ruler-ltooltip', this._lMarginDrag);
+			this._rMarginDrag = L.DomUtil.create('div', 'loleaflet-ruler-drag loleaflet-ruler-right', this._rMarginWrapper);
+			this._rToolTip = L.DomUtil.create('div', 'loleaflet-ruler-rtooltip', this._rMarginDrag);
+			this._lMarginDrag.title = _('Left Margin');
+			this._rMarginDrag.title = _('Right Margin');
 
 			if (window.ThisIsTheiOSApp) {
 				this.options.interactive = true;
