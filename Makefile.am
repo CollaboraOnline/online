@@ -230,11 +230,6 @@ kit_headers = kit/ChildSession.hpp \
               kit/Watermark.hpp
 
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
-                 bundled/include/LibreOfficeKit/LibreOfficeKit.h \
-                 bundled/include/LibreOfficeKit/LibreOfficeKit.hxx \
-                 bundled/include/LibreOfficeKit/LibreOfficeKitEnums.h \
-                 bundled/include/LibreOfficeKit/LibreOfficeKitInit.h \
-                 bundled/include/LibreOfficeKit/LibreOfficeKitTypes.h \
                  test/WopiTestServer.hpp \
                  test/countloolkits.hpp \
                  test/test.hpp \
@@ -242,6 +237,13 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
 
 dist-hook:
 	git log -1 --format=%h > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
+	mkdir -p $(distdir)/bundled/include/LibreOfficeKit/
+	cp @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.h \
+	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.hxx \
+	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitEnums.h \
+	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitInit.h \
+	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitTypes.h \
+	   $(distdir)/bundled/include/LibreOfficeKit/
 
 EXTRA_DIST = discovery.xml \
              favicon.ico \
