@@ -151,8 +151,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     TextView noRecentItemsTextView;
     TextView noItemsTextView;
 
-    private boolean canQuit = false;
-
     private Animation fabOpenAnimation;
     private Animation fabCloseAnimation;
     private boolean isFabMenuOpen = false;
@@ -398,22 +396,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         } else if (isFabMenuOpen) {
             collapseFabMenu();
         } else {
-            // only exit if warning has been shown
-            if (canQuit) {
-                super.onBackPressed();
-                return;
-            }
-
-            // show warning about leaving the app and set a timer
-            Toast.makeText(this, R.string.back_again_to_quit,
-                    Toast.LENGTH_SHORT).show();
-            canQuit = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    canQuit = false;
-                }
-            }, 3000);
+            // exit the app
+            super.onBackPressed();
         }
     }
 
