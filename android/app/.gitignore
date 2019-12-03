@@ -2,3 +2,10 @@
 /app.iml
 /build
 /appSettings.gradle
+/src/main/res/drawable/ic_launcher_brand.xml
+/src/main/res/mipmap-anydpi-v26/ic_launcher_brand.xml
+/src/main/res/mipmap-hdpi/ic_launcher_brand.png
+/src/main/res/mipmap-mdpi/ic_launcher_brand.png
+/src/main/res/mipmap-xhdpi/ic_launcher_brand.png
+/src/main/res/mipmap-xxhdpi/ic_launcher_brand.png
+/src/main/res/mipmap-xxxhdpi/ic_launcher_brand.png

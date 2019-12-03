@@ -4,6 +4,7 @@ ext {
     liboAppName         = '@APP_NAME@'
     liboVendor          = '@VENDOR@'
     liboInfoURL         = '@INFO_URL@'
+    liboLauncherIcon    = '@mipmap/@APP_IC_LAUNCHER@'
 }
 android.defaultConfig {
     applicationId '@ANDROID_PACKAGE_NAME@'
