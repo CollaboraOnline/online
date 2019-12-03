@@ -16,6 +16,24 @@ m4_if(m4_esyscmd_s([uname -s]),Linux,[],[m4_define([PKG_CHECK_MODULES],[])])
 LOOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
 LOOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
 LOOLWSD_VERSION_MICRO=`echo $VERSION | awk -F. '{print $3}'`
+
+ANDROID_PACKAGE_VERSIONCODE=
+if test "$enable_androidapp" = "yes"; then
+    AC_MSG_CHECKING([for Android package versionCode])
+    if test -z "$with_android_package_versioncode" -o "$with_android_package_versioncode" = "no"; then
+        ANDROID_PACKAGE_VERSIONCODE="1"
+        AC_MSG_RESULT([not set, using $ANDROID_PACKAGE_VERSIONCODE])
+    else
+        LOOLWSD_VERSION_MAJOR=`echo $with_android_package_versioncode | awk -F. '{print $1}'`
+        LOOLWSD_VERSION_MINOR=`echo $with_android_package_versioncode | awk -F. '{print $2}'`
+        LOOLWSD_VERSION_MICRO=`echo $with_android_package_versioncode | awk -F. '{print $3}' | awk -F- '{print $1}'`
+
+        ANDROID_PACKAGE_VERSIONCODE=`echo $with_android_package_versioncode | awk -F- '{print $2}'`
+        AC_MSG_RESULT([$ANDROID_PACKAGE_VERSIONCODE])
+    fi
+fi
+AC_SUBST(ANDROID_PACKAGE_VERSIONCODE)
+
 LOOLWSD_VERSION="$LOOLWSD_VERSION_MAJOR.$LOOLWSD_VERSION_MINOR.$LOOLWSD_VERSION_MICRO"
 
 AC_SUBST([LOOLWSD_VERSION_MAJOR])
@@ -116,7 +134,7 @@ AC_ARG_WITH(android-package-name,
 ,)
 
 AC_ARG_WITH(android-package-versioncode,
-            AS_HELP_STRING([--with-android-package-versioncode=20],
+            AS_HELP_STRING([--with-android-package-versioncode=6.7.8-23],
                            [Set the versionCode for the Android package.]),
 ,)
 
@@ -357,7 +375,6 @@ AC_SUBST(LOKIT_PATH)
 
 ENABLE_ANDROIDAPP=
 ANDROID_PACKAGE_NAME=
-ANDROID_PACKAGE_VERSIONCODE=
 if test "$enable_androidapp" = "yes"; then
     ENABLE_ANDROIDAPP=true
 
@@ -369,20 +386,10 @@ if test "$enable_androidapp" = "yes"; then
         ANDROID_PACKAGE_NAME="$with_android_package_name"
         AC_MSG_RESULT([$ANDROID_PACKAGE_NAME])
     fi
-
-    AC_MSG_CHECKING([for Android package versionCode])
-    if test -z "$with_android_package_versioncode" -o "$with_android_package_versioncode" = "no"; then
-        ANDROID_PACKAGE_VERSIONCODE="1"
-        AC_MSG_RESULT([not set, using $ANDROID_PACKAGE_VERSIONCODE])
-    else
-        ANDROID_PACKAGE_VERSIONCODE="$with_android_package_versioncode"
-        AC_MSG_RESULT([$ANDROID_PACKAGE_VERSIONCODE])
-    fi
 fi
 AC_SUBST(ENABLE_ANDROIDAPP)
 AM_CONDITIONAL([ENABLE_ANDROIDAPP], [test "$ENABLE_ANDROIDAPP" = "true"])
 AC_SUBST(ANDROID_PACKAGE_NAME)
-AC_SUBST(ANDROID_PACKAGE_VERSIONCODE)
 
 APP_NAME="LibreOffice Online"
 if test -n "$with_app_name"; then
