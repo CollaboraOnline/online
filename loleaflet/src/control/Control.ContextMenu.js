@@ -276,6 +276,9 @@ L.Control.ContextMenu = L.Control.extend({
 		};
 		if (itemCommand)
 			menuStructure['command'] = itemCommand;
+		if (menu.icon)
+			menuStructure['checked'] = true;
+
 		if (mainMenu) {
 			for (var menuItem in menu) {
 				var element = this.getMenuStructureForMobileWizard(menu[menuItem], false, menuItem);

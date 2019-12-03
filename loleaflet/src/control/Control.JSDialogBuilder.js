@@ -1384,6 +1384,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconPath;
 		}
+		if (data.checked && data.checked === true) {
+			$(menuEntry).css('background', 'url(images/lc_listitem-selected.svg) no-repeat right');
+		}
+
 		var titleSpan = L.DomUtil.create('span', '', menuEntry);
 		titleSpan.innerHTML = title;
 		var paddingClass = icon ? 'menu-entry-with-icon' : 'menu-entry-no-icon';
