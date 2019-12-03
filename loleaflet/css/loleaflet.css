@@ -391,6 +391,8 @@ body {
  * will try to load its own font file which is not available in dist/ */
 .context-menu-icon::before {
 	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+	content: '\2713';
+	color: #000 !important;
 }
 .context-menu-icon-lo-checkmark:before {
 	content: '\2713';
