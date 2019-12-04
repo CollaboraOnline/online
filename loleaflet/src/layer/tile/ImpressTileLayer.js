@@ -122,22 +122,12 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
 			{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
 			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
-			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'),
-				items: [
-					{id: 'leftpara',    text: _UNO('.uno:LeftPara', '', true),    icon: 'alignleft', uno: 'LeftPara'},
-					{id: 'centerpara',  text: _UNO('.uno:CenterPara', '', true),  icon: 'alignhorizontal', uno: 'CenterPara'},
-					{id: 'rightpara',   text: _UNO('.uno:RigthPara', '', true),   icon: 'alignright', uno: 'RightPara'},
-					{id: 'justifypara', text: _UNO('.uno:JustifyPara', '', true), icon: 'alignblock', uno: 'JustifyPara'},
-				]},
-			{type: 'menu',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'),
-				items: [
-					{id: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1'},
-					{id: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: 'SpacePara15'},
-					{id: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: 'SpacePara2'},
-					{type: 'break'},
-					{id: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: 'ParaspaceIncrease'},
-					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
-				]},
+			{type: 'break'},
+			{type: 'button', id: 'leftpara', img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara'},
+			{type: 'button', id: 'centerpara', img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true), uno: 'CenterPara'},
+			{type: 'button', id: 'rightpara', img: 'alignright', hint: _UNO('.uno:RigthPara', '', true), uno: 'RightPara'},
+			{type: 'button', id: 'justifypara', img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: 'JustifyPara'},
+			{type: 'break'},
 			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), uno: 'DefaultBullet', disabled: true},
 		];
 
