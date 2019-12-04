@@ -1463,7 +1463,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var childType = childData.type;
 			var processChildren = true;
 			var needsToCreateContainer =
-				childType == 'panel' || childType == 'frame' || childType == 'toolbox';
+				childType == 'panel' || childType == 'frame';
 
 			if ((childData.id === undefined || childData.id === '' || childData.id === null)
 				&& (childType == 'checkbox' || childType == 'radiobutton')) {
