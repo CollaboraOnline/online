@@ -13842,16 +13842,18 @@ var w2prompt = function (label, title, callBack) {
                 case 'color':
                 case 'text-color':
                     if (typeof item.color == 'string' && item.color.substr(0,1) == '#') item.color = item.color.substr(1);
+                    /*
                     if (item.type == 'color') {
                         text = '<div style="height: 12px; width: 12px; margin-top: 1px; border: 1px solid #8A8A8A; border-radius: 1px; box-shadow: 0px 0px 1px #fff; '+
                                '        background-color: #'+ (item.color != null ? item.color : 'fff') +'; float: left;"></div>'+
                                (item.text ? '<div style="margin-left: 17px;">' + w2utils.lang(item.text) + '</div>' : '');
                     }
-                    if (item.type == 'text-color') {
+                    */
+                    /*if (item.type == 'text-color') {
                         text = '<div style="color: #'+ (item.color != null ? item.color : '444') +';">'+
                                     (item.text ? w2utils.lang(item.text) : '<b>Aa</b>') +
                                '</div>';
-                    }
+                    }*/
                 case 'menu':
                 case 'menu-check':
                 case 'menu-radio':
@@ -13879,7 +13881,7 @@ var w2prompt = function (label, title, callBack) {
                                         ? '<td class="w2ui-tb-count" nowrap="nowrap"><span>'+ item.count +'</span></td>'
                                         : ''
                                     ) +
-                                    (((['menu', 'menu-radio', 'menu-check', 'drop', 'color', 'text-color'].indexOf(item.type) != -1) && item.arrow !== false) ?
+                                    (((['menu', 'menu-radio', 'menu-check', 'drop'].indexOf(item.type) != -1) && item.arrow !== false) ?
                                         '<td class="w2ui-tb-down" nowrap="nowrap"><div></div></td>' : '') +
                             '  </tr></tbody></table>'+
                             '</td></tr></tbody></table>';

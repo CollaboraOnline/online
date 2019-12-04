@@ -1772,6 +1772,9 @@ function onCommandStateChanged(e) {
 
 			color = color.toString(16);
 			color = '#' + Array(7 - color.length).join('0') + color;
+			$('#tb_editbar_item_fontcolor .w2ui-tb-image').css('box-shadow', 'inset 0 -2px #ffffff, inset 0px -6px ' + color);
+			$('#tb_editbar_item_fontcolor .w2ui-tb-down').css('display', 'none');
+			$('#tb_editbar_item_fontcolor .w2ui-tb-caption').css('display', 'none');
 		}
 		div = L.DomUtil.get('fontcolorindicator');
 		if (div) {
@@ -1787,6 +1790,14 @@ function onCommandStateChanged(e) {
 		else {
 			color = color.toString(16);
 			color = '#' + Array(7 - color.length).join('0') + color;
+			//writer
+			$('#tb_editbar_item_backcolor .w2ui-tb-image').css('box-shadow', 'inset 0 -2px #ffffff, inset 0px -6px ' + color);
+			$('#tb_editbar_item_backcolor .w2ui-tb-down').css('display', 'none');
+			$('#tb_editbar_item_backcolor .w2ui-tb-caption').css('display', 'none');
+			//calc?
+			$('#tb_editbar_item_backgroundcolor .w2ui-tb-image').css('box-shadow', 'inset 0 -2px #ffffff, inset 0px -6px ' + color);
+			$('#tb_editbar_item_backgroundcolor .w2ui-tb-down').css('display', 'none');
+			$('#tb_editbar_item_backgroundcolor .w2ui-tb-caption').css('display', 'none');
 		}
 		div = L.DomUtil.get('backcolorindicator');
 		if (div) {
