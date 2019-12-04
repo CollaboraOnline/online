@@ -250,6 +250,12 @@ function onClick(e, id, item, subItem) {
 	else if (item.id === 'remotegraphic') {
 		map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 	}
+	else if (id === 'fontcolor' && typeof e.color === 'undefined') {
+		map.fire('mobilewizard', getColorPickerData('Font Color'));
+	}
+	else if (id === 'backcolor' && typeof e.color === 'undefined') {
+		map.fire('mobilewizard', getColorPickerData('Highlight Color'));
+	}
 	else if (id === 'fontcolor' && typeof e.color !== 'undefined') {
 		onColorPick(id, e.color);
 	}
@@ -682,6 +688,41 @@ function insertShapes(mobile) {
 				closePopup();
 		}
 	});
+}
+
+function getColorPickerData(type) {
+	var uno;
+	if (type === 'Font Color') {
+		if (map.getDocType() === 'spreadsheet')
+			uno = '.uno:Color';
+		else if (map.getDocType() === 'presentation')
+			uno = '.uno:Color';
+		else
+			uno = '.uno:FontColor';
+	} else if (type === 'Highlight Color') {
+		if (map.getDocType() === 'spreadsheet')
+			uno = '.uno:BacgroundColor';
+		else if (map.getDocType() === 'presentation')
+			uno = '.uno:CharBackColor';
+		else
+			uno = '.uno:BackColor';
+	}
+	var data = {
+		id: 'box',
+		type: 'window',
+		text: type,
+		enabled: 'true',
+		children: [
+			{
+				type: 'toolitem',
+				text: '',
+				command: uno,
+				nosubmenu: true
+			}
+		],
+		vertical: 'true'
+	};
+	return data;
 }
 
 function onColorPick(id, color) {

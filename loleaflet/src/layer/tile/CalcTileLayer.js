@@ -79,7 +79,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
 			{type: 'break'},
-			{type: 'text-color',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
+			{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
 //			{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
 			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), uno: 'ToggleMergeCells', disabled: true},
 //			{type: 'break', id: 'breakmergecells'},

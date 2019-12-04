@@ -82,7 +82,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_toolitemHandler: function(parentContainer, data, builder) {
 		if (data.command) {
 			var handler = builder._toolitemHandlers[data.command];
-
 			if (handler)
 				handler(parentContainer, data, builder);
 			else if (data.text) {
@@ -284,16 +283,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.build(contentDiv, [contentNode]);
 		builder._currentDepth--;
 
-		$(contentDiv).hide();
-		if (builder.wizard) {
-			$(sectionTitle).click(function() {
-				builder.wizard.goLevelDown(contentDiv);
-				if (contentNode.onshow)
-					contentNode.onshow();
-			});
-		} else {
-			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+		if (!data.nosubmenu)
+		{
+			$(contentDiv).hide();
+			if (builder.wizard) {
+				$(sectionTitle).click(function() {
+					builder.wizard.goLevelDown(contentDiv);
+					if (contentNode.onshow)
+						contentNode.onshow();
+				});
+			} else {
+				console.debug('Builder used outside of mobile wizard: please implement the click handler');
+			}
 		}
+		else
+			$(sectionTitle).hide();
 	},
 
 	_calcFunctionEntry: function(parentContainer, data, contentNode, builder) {
@@ -1469,7 +1473,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var childObject = needsToCreateContainer ? L.DomUtil.createWithId('div', childData.id, parent) : parent;
 
 			var handler = this._controlHandlers[childType];
-
 			var twoPanelsAsChildren = childData.children
 				&& (childData.children.length == 4 || childData.children.length == 5)
 				&& childData.children[0] && childData.children[0].type == 'panel'

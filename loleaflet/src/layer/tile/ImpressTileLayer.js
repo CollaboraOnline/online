@@ -120,8 +120,8 @@ L.ImpressTileLayer = L.TileLayer.extend({
 //			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
-			{type: 'text-color',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
-			{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
+			{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
+			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
 			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'),
 				items: [
 					{id: 'leftpara',    text: _UNO('.uno:LeftPara', '', true),    icon: 'alignleft', uno: 'LeftPara'},
