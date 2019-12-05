@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Ruler Handler
  */
@@ -9,13 +9,14 @@ L.Control.Ruler = L.Control.extend({
 		interactive: true,
 		marginSet: false,
 		displayNumber: true,
-		tileMargin: 18,
+		tileMargin: 18, // No idea what this means and where it comes from
 		extraSize: 0,
 		margin1: null,
 		margin2: null,
 		nullOffset: null,
 		pageOffset: null,
 		pageWidth: null,
+		tabs: [],
 		unit: null,
 		DraggableConvertRatio: null,
 		timer: null
@@ -70,14 +71,31 @@ L.Control.Ruler = L.Control.extend({
 		this._rBPWrapper = L.DomUtil.create('div', 'loleaflet-ruler-breakwrapper', this._rFace);
 		this._rBPContainer = L.DomUtil.create('div', 'loleaflet-ruler-breakcontainer', this._rBPWrapper);
 
+		// Tab stops
+		this._rTSWrapper = L.DomUtil.create('div', 'loleaflet-ruler-tabstopwrapper', this._rFace);
+		this._rTSContainer = L.DomUtil.create('div', 'loleaflet-ruler-tabstopcontainer', this._rTSWrapper);
+
 		return this._rWrapper;
 	},
 
 	_updateOptions: function(obj) {
+		// Note that the values for margin1, margin2, and leftOffset are not in any sane
+		// units. See the comment in SwCommentRuler::CreateJsonNotification(). The values
+		// are pixels for some virtual device in core, not related to the actual device this
+		// is running on at all, passed through convertTwipToMm100(), i.e. multiplied by
+		// approximately 1.76. Let's call these units "arbitrary pixelish units" in
+		// comments here.
 		this.options.margin1 = parseInt(obj['margin1']);
 		this.options.margin2 = parseInt(obj['margin2']);
 		this.options.nullOffset = parseInt(obj['leftOffset']);
+
+		// pageWidth on the other hand *is* really in mm100.
 		this.options.pageWidth = parseInt(obj['pageWidth']);
+		this.options.tabs = [];
+		// As are the position values of the elements in the tabs array.
+		for (var i in obj['tabs']) {
+			this.options.tabs[i] = { position: parseInt(obj['tabs'][i].position), style: parseInt(obj['tabs'][i].style) };
+		}
 		// to be enabled only after adding support for other length units as well
 		// this.options.unit = obj['unit'].trim();
 
@@ -98,7 +116,15 @@ L.Control.Ruler = L.Control.extend({
 		var DraggableConvertRatio, lMargin, rMargin, wPixel, scale;
 
 		lMargin = this.options.nullOffset;
+
+		// This is surely bogus. We take pageWidth, which is in mm100, and subtract a value
+		// that is in "arbitrary pixelish units". But the only thing rMargin is used for is
+		// to calculate the width of the part of the ruler that goes out over the right side
+		// of the window anyway (see the assignments to this._rMarginMarker.style.width and
+		// this._rMarginDrag.style.width near the end of this function), so presumably it
+		// doesn't matter that much what rMargin is.
 		rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
+
 		scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		wPixel = this._map._docLayer._docPixelSize.x - (this.options.extraSize + this.options.tileMargin * 2) * scale;
 
@@ -111,6 +137,13 @@ L.Control.Ruler = L.Control.extend({
 		var numCounter = -1 * parseInt(lMargin / 1000);
 
 		$('.loleaflet-ruler-maj').remove();
+
+		// this.options.pageWidth is in mm100, so the code here makes one ruler division per
+		// centimetre.
+		//
+		// FIXME: Surely this should be locale-specific, we would want to use inches at
+		// least in the US. (The ruler unit to use doesn't seem to be stored in the document
+		// at least for .odt?)
 		for (var num = 0; num <= (this.options.pageWidth / 1000) + 1; num++) {
 
 			var marker = L.DomUtil.create('div', 'loleaflet-ruler-maj', this._rBPContainer);
@@ -121,6 +154,34 @@ L.Control.Ruler = L.Control.extend({
 				else
 					numCounter++;
 			}
+		}
+
+		// The tabstops. Only draw user-created ones, with style RULER_TAB_LEFT,
+		// RULER_TAB_RIGHT, RULER_TAB_CENTER, and RULER_TAB_DECIMAL. See <svtools/ruler.hxx>.
+
+		$('.loleaflet-ruler-tabstop').remove();
+
+		// First an empty space
+		marker = L.DomUtil.create('div', 'loleaflet-ruler-tabstop', this._rTSContainer);
+		marker.style.marginLeft = (DraggableConvertRatio * lMargin) + 'px';
+
+		// Make its triangle invisible and truly zero width
+		marker.style.borderLeft = '0px';
+		marker.style.borderRight = '0px';
+		marker.style.borderBottom = '0px';
+
+		// Then the visible tab stops
+		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
+		var tabStopWidthAccum = 0;
+		// Reduce their widths by the border
+		var tabstopBorder = getComputedStyle(marker, null).getPropertyValue('--loleaflet-ruler-tabstop-border');
+		for (num = 0; num < this.options.tabs.length; num++) {
+			if (this.options.tabs[num].style >= 4)
+				break;
+			marker = L.DomUtil.create('div', 'loleaflet-ruler-tabstop', this._rTSContainer);
+			var thisWidth = this.options.tabs[num].position - tabStopWidthAccum;
+			marker.style.marginLeft = (pxPerMm100 * thisWidth - tabstopBorder) + 'px';
+			tabStopWidthAccum += thisWidth;
 		}
 
 		if (!this.options.marginSet) {
