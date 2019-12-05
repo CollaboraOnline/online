@@ -191,9 +191,13 @@ L.Control.MobileWizard = L.Control.extend({
 			this._mainTitle = data.text ? data.text : '';
 			this._setTitle(this._mainTitle);
 
-			if (data.id === 'menubar') {
+			if (data.id === 'menubar' || data.id === 'insertshape') {
 				$('#mobile-wizard').height('100%');
-				$('#mobile-wizard').addClass('menuwizard');
+				if (data.id === 'menubar')
+					$('#mobile-wizard').addClass('menuwizard');
+				else if (data.id === 'insertshape') {
+					$('#mobile-wizard').addClass('shapeswizard');
+				}
 				if (this.map .getDocType() === 'spreadsheet')
 					$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
 				else

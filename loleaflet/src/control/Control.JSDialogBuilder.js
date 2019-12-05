@@ -39,6 +39,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['listbox'] = this._comboboxControl;
 		this._controlHandlers['valueset'] = this._valuesetControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
+		this._controlHandlers['htmlcontrol'] = this._htmlControl;
 		this._controlHandlers['grid'] = this._gridHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
@@ -1123,6 +1124,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_htmlControl: function(parentContainer, data) {
+		var container = L.DomUtil.create('div', 'mobile-wizard', parentContainer);
+		container.appendChild(data.content);
+		container.id = data.id;
+		if (data.style && data.style.length) {
+			L.DomUtil.addClass(container, data.style);
+		}
+
+		if (data.hidden)
+			$(container).hide();
+
+		return false;
+	},
+
 	_createIconPath: function(name) {
 		if (!name)
 			return '';
@@ -1399,11 +1414,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (builder.wizard) {
 			$(menuEntry).click(function() {
-				if (data.executionType === 'action') {
-					builder.map.menubar._executeAction(undefined, data.id);
-				} else {
-					builder.map.sendUnoCommand(data.command)
-				}
 				if (window.insertionMobileWizard)
 					window.onClick(null, 'insertion_mobile_wizard');
 				else if (window.mobileMenuWizard)
@@ -1411,6 +1421,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				else if (window.contextMenuWizard) {
 					window.contextMenuWizard = false;
 					builder.map.fire('closemobilewizard');
+				}
+
+				// before close the wizard then execute the action
+				if (data.executionType === 'action') {
+					builder.map.menubar._executeAction(undefined, data.id);
+				} else {
+					builder.map.sendUnoCommand(data.command)
 				}
 			});
 		} else {

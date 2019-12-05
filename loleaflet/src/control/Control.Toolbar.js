@@ -648,6 +648,32 @@ var shapes = {
 	]
 };
 
+function createShapesPanel() {
+	var $grid = $('<div/>').addClass('insertshape-grid');
+
+	for (var s in shapes) {
+		var $rowHeader = $('<div/>').addClass('row-header loleaflet-font').append(_(s));
+		$grid.append($rowHeader);
+		var $row = $('<div/>').addClass('row');
+		$grid.append($row);
+		for (var idx = 0; idx < shapes[s].length; ++idx) {
+			var shape = shapes[s][idx];
+			var $col = $('<div/>').addClass('col w2ui-icon').addClass(shape.img);
+			$col.data('uno', shape.uno);
+			$row.append($col);
+		}
+	}
+
+	$grid.on({
+		click: function(e) {
+			map.sendUnoCommand('.uno:' + $(e.target).data().uno);
+			map._docLayer._closeMobileWizard();
+		}
+	});
+
+	return $grid.get(0);
+}
+
 function insertShapes(mobile) {
 	var width = 10;
 	var $grid = $('.insertshape-grid');
@@ -2568,6 +2594,7 @@ global.updateCommandValues = updateCommandValues;
 global.onStyleSelect = onStyleSelect;
 global.insertTable = insertTable;
 global.insertShapes = insertShapes;
+global.createShapesPanel = createShapesPanel;
 global.onUpdatePermission = onUpdatePermission;
 global.onSearch = onSearch;
 global.onSearchKeyDown = onSearchKeyDown;

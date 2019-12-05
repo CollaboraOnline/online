@@ -1031,13 +1031,25 @@ L.Control.Menubar = L.Control.extend({
 		});
 	},
 
-	_openInsertShapesDialog: function() {
-		vex.open({
-			unsafeContent: '<div id="insertshape-wrapper"><div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all"><div class="insertshape-grid"></div></div></div>',
-			afterOpen: function() {
-				window.insertShapes(true);
-			}
-		});
+	_openInsertShapesWizard: function() {
+		var content = window.createShapesPanel();
+		var data = {
+			id: 'insertshape',
+			type: '',
+			text: 'Insert Shape',
+			enabled: true,
+			children: []
+		};
+
+		var container = {
+			id: '',
+			type: 'htmlcontrol',
+			content: content,
+			enabled: true
+		};
+
+		data.children.push(container);
+		this._map._docLayer._openMobileWizard(data);
 	},
 
 	_executeAction: function(item, id) {
@@ -1091,7 +1103,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'insertpage') {
 			this._map.insertPage();
 		} else if (id === 'insertshape') {
-			this._openInsertShapesDialog();
+			this._openInsertShapesWizard();
 		} else if (id === 'duplicatepage') {
 			this._map.duplicatePage();
 		} else if (id === 'deletepage') {
