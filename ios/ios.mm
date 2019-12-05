@@ -20,6 +20,5 @@ extern "C" {
 int loolwsd_server_socket_fd = -1;
 lok::Document *lok_document = nullptr;
 LibreOfficeKit *lo_kit;
-std::mutex lokit_main_mutex;
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:

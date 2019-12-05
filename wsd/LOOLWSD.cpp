@@ -486,6 +486,10 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     return count;
 }
 
+#if MOBILEAPP
+std::mutex LOOLWSD::lokit_main_mutex;
+#endif
+
 std::shared_ptr<ChildProcess> getNewChild_Blocks(
 #if MOBILEAPP
                                                  const std::string& uri
@@ -519,9 +523,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
 
     std::thread([&]
                 {
-#ifdef IOS
-                    std::lock_guard<std::mutex> lokit_main_lock(lokit_main_mutex);
-#endif
+                    std::lock_guard<std::mutex> lokit_main_lock(LOOLWSD::lokit_main_mutex);
                     Util::setThreadName("lokit_main");
 
                     // Ugly to have that static global, otoh we know there is just one LOOLWSD

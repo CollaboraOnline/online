@@ -16,6 +16,4 @@ extern lok::Document *lok_document;
 
 extern LibreOfficeKit *lo_kit;
 
-extern std::mutex lokit_main_mutex;
-
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
