@@ -237,6 +237,11 @@ public:
 
     void resetDocManager()
     {
+#if MOBILEAPP
+        // I suspect this might be useful even for the non-mobile case, but
+        // not 100% sure, so rather do it mobile-only for now
+        disconnect();
+#endif
         _docManager = nullptr;
     }
 
