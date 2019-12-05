@@ -135,7 +135,7 @@ w2ui-toolbar {
 	width: 100%;
 	position: relative;
 	padding:0px;
-	margin: 0px;
+	margin: 0px 0px -4px 0px;
 }
 
 #tb_formulabar_item_formula {
