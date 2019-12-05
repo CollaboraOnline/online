@@ -73,6 +73,7 @@ L.Control.Ruler = L.Control.extend({
 		// Tab stops
 		this._rTSWrapper = L.DomUtil.create('div', 'loleaflet-ruler-tabstopwrapper', this._rFace);
 		this._rTSContainer = L.DomUtil.create('div', 'loleaflet-ruler-tabstopcontainer', this._rTSWrapper);
+		L.DomEvent.on(this._rTSContainer, 'touchstart', this._initiateTabstopDrag, this);
 
 		return this._rWrapper;
 	},
@@ -109,7 +110,7 @@ L.Control.Ruler = L.Control.extend({
 		if (this._map._docLayer._annotations._items.length === 0 || !this.options.marginSet)
 			this.options.extraSize = 0;
 
-		var DraggableConvertRatio, lMargin, rMargin, wPixel, scale;
+		var lMargin, rMargin, wPixel, scale;
 
 		lMargin = this.options.nullOffset;
 
@@ -126,9 +127,9 @@ L.Control.Ruler = L.Control.extend({
 
 		this._fixOffset();
 
-		DraggableConvertRatio = this.options.DraggableConvertRatio = wPixel / this.options.pageWidth;
+		this.options.DraggableConvertRatio = wPixel / this.options.pageWidth;
 		this._rFace.style.width = wPixel + 'px';
-		this._rBPContainer.style.marginLeft = (-1 * (DraggableConvertRatio * (500 - (lMargin % 1000))) + 1) + 'px';
+		this._rBPContainer.style.marginLeft = (-1 * (this.options.DraggableConvertRatio * (500 - (lMargin % 1000))) + 1) + 'px';
 
 		var numCounter = -1 * parseInt(lMargin / 1000);
 
@@ -143,7 +144,7 @@ L.Control.Ruler = L.Control.extend({
 		for (var num = 0; num <= (this.options.pageWidth / 1000) + 1; num++) {
 
 			var marker = L.DomUtil.create('div', 'loleaflet-ruler-maj', this._rBPContainer);
-			marker.style.width = DraggableConvertRatio*1000 - 2 + 'px';
+			marker.style.width = this.options.DraggableConvertRatio*1000 - 1 + 'px';
 			if (this.options.displayNumber) {
 				if (numCounter !== 0)
 					marker.innerText = Math.abs(numCounter++);
@@ -157,25 +158,15 @@ L.Control.Ruler = L.Control.extend({
 
 		$('.loleaflet-ruler-tabstop').remove();
 
-		// First an empty space
-		marker = L.DomUtil.create('div', 'loleaflet-ruler-tabstop', this._rTSContainer);
-		marker.style.marginLeft = (DraggableConvertRatio * lMargin) + 'px';
-
-		// Make its triangle invisible and truly zero width
-		marker.style.borderLeft = '0px';
-		marker.style.borderRight = '0px';
-		marker.style.borderBottom = '0px';
-
-		// Then the visible tab stops
 		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
 		var tabStopWidthAccum = 0;
 		// Reduce their widths by the border
-		var tabstopBorder = getComputedStyle(marker, null).getPropertyValue('--loleaflet-ruler-tabstop-border');
 		for (num = 0; num < this.options.tabs.length; num++) {
 			if (this.options.tabs[num].style >= 4)
 				break;
 			marker = L.DomUtil.create('div', 'loleaflet-ruler-tabstop', this._rTSContainer);
 			var thisWidth = this.options.tabs[num].position - tabStopWidthAccum;
+			var tabstopBorder = getComputedStyle(marker, null).getPropertyValue('--loleaflet-ruler-tabstop-border');
 			marker.style.marginLeft = (pxPerMm100 * thisWidth - tabstopBorder) + 'px';
 			tabStopWidthAccum += thisWidth;
 		}
@@ -198,13 +189,18 @@ L.Control.Ruler = L.Control.extend({
 				this.options.interactive = true;
 				L.DomEvent.on(this._rMarginDrag, 'touchstart', this._initiateDrag, this);
 				L.DomEvent.on(this._lMarginDrag, 'touchstart', this._initiateDrag, this);
+
 			}
 		}
 
-		this._lMarginMarker.style.width = (DraggableConvertRatio*lMargin) + 'px';
-		this._rMarginMarker.style.width = (DraggableConvertRatio*rMargin) + 'px';
-		this._lMarginDrag.style.width = (DraggableConvertRatio*lMargin) + 'px';
-		this._rMarginDrag.style.width = (DraggableConvertRatio*rMargin) + 'px';
+		this._lMarginMarker.style.width = (this.options.DraggableConvertRatio*lMargin) + 'px';
+		this._rMarginMarker.style.width = (this.options.DraggableConvertRatio*rMargin) + 'px';
+		this._lMarginDrag.style.width = (this.options.DraggableConvertRatio*lMargin) + 'px';
+		this._rMarginDrag.style.width = (this.options.DraggableConvertRatio*rMargin) + 'px';
+
+		// Put the _rTSContainer in the right place
+		this._rTSContainer.style.marginLeft = (this.options.DraggableConvertRatio * lMargin) + 'px';
+		this._rTSContainer.style.width = 'calc(' + this._rFace.style.width + ' - ' + this._rMarginMarker.style.width + ')';
 
 		if (this.options.interactive) {
 			this._changeInteractions({perm:'edit'});
@@ -268,6 +264,18 @@ L.Control.Ruler = L.Control.extend({
 		else {
 			L.DomUtil.addClass(this._lMarginDrag, 'leaflet-drag-moving');
 			this._rFace.style.cursor = 'e-resize';
+		}
+	},
+
+	_initiateTabstopDrag: function(e) {
+		if (e.type === 'touchstart') {
+			if (e.touches.length !== 1)
+				return;
+		}
+
+		var tabstops = $('.loleaflet-ruler-tabstop');
+		for (var tabstop in tabstops) {
+			console.log('tabstop: ' + tabstop);
 		}
 	},
 
