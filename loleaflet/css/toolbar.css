@@ -820,6 +820,10 @@ tr.useritem > td > img {
 	background: transparent;
 }
 
+.menu-entry-checked {
+	background: url(images/lc_listitem-selected.svg) no-repeat right;
+}
+
 .menu-entry-with-icon {
 	padding-left: 10px;
 }

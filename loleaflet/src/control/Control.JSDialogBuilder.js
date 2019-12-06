@@ -1412,7 +1412,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (data.checked && data.checked === true) {
-			$(menuEntry).css('background', 'url(images/lc_listitem-selected.svg) no-repeat right');
+			L.DomUtil.addClass(menuEntry, 'menu-entry-checked');
 		}
 
 		var titleSpan = L.DomUtil.create('span', '', menuEntry);
