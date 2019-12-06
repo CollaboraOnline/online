@@ -15,7 +15,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_mainTitle: '',
 	_isTabMode: false,
 	_currentPath: [],
-	_currentElementId: null,
+	_currentScrollPosition: 0,
 
 	initialize: function (options) {
 		L.setOptions(this, options);
@@ -94,9 +94,8 @@ L.Control.MobileWizard = L.Control.extend({
 		this._isTabMode = true;
 	},
 
-	setCurrentFocus: function(elementId) {
-		console.warn(elementId);
-		this._currentElementId = elementId;
+	setCurrentScrollPosition: function() {
+		this._currentScrollPosition = $('#mobile-wizard-content').scrollTop();
 	},
 
 	goLevelDown: function(contentToShow, options) {
@@ -179,18 +178,17 @@ L.Control.MobileWizard = L.Control.extend({
 		right.text(title);
 	},
 
+	_scrollToLastPosition: function() {
+		if (this._currentScrollPosition) {
+			$('#mobile-wizard-content').animate({ scrollTop: this._currentScrollPosition }, 0);
+		}
+	},
+
 	_goToPath: function(path) {
 		for (var index in path) {
 			$('[title=\'' + path[index] + '\'').prev().trigger('click', {animate: false});
 		}
 		this._currentPath = path;
-
-		if (this._currentElementId) {
-			console.warn('scroll to ' + this._currentElementId);
-			$('#mobile-wizard-content').animate({
-				scrollTop: ($(('#' + this._currentElementId)).offset().top)
-			},0);
-		}
 	},
 
 	_onMobileWizard: function(data) {
@@ -235,8 +233,10 @@ L.Control.MobileWizard = L.Control.extend({
 				$('#mobile-wizard').css('top', '');
 			}
 
-			if (this._isActive && currentPath.length)
+			if (this._isActive && currentPath.length) {
 				this._goToPath(currentPath);
+				this._scrollToLastPosition();
+			}
 		}
 	},
 
