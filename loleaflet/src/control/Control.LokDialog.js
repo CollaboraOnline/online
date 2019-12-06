@@ -1033,7 +1033,7 @@ L.Control.LokDialog = L.Control.extend({
 		// set the canvas to have the actual size, while
 		// the image is rendred with the HiDPI scale.
 		this._setCanvasWidthHeight(canvas, this._dialogs[parentId].childwidth,
-										   this._dialogs[parentId].childheight);
+						this._dialogs[parentId].childheight);
 
 		var ctx = canvas.getContext('2d');
 		var img = new Image();
@@ -1046,10 +1046,6 @@ L.Control.LokDialog = L.Control.extend({
 
 	_resizeSidebar: function(strId, width) {
 		this._currentDeck.width = width;
-		if (width > 1 && !window.mode.isMobile()) {
-			// Add extra space for scrollbar only when visible
-			width = width + 15;
-		}
 		var deckOffset = 0;
 		var sidebar = L.DomUtil.get(strId);
 		if (sidebar) {
@@ -1059,7 +1055,11 @@ L.Control.LokDialog = L.Control.extend({
 				sidebar.style.width = width.toString() + 'px';
 		}
 
-		this._map.options.documentContainer.style.right = (width + 1).toString() + 'px';
+		var wrapper = L.DomUtil.get('sidebar-dock-wrapper');
+		if (wrapper && wrapper.offsetWidth)
+			this._map.options.documentContainer.style.right = wrapper.offsetWidth + 'px';
+		else
+			this._map.options.documentContainer.style.right = (width - 15).toString() + 'px';
 		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 		if (spreadsheetRowColumnFrame)
 			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
