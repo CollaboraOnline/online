@@ -758,7 +758,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
                     std::vector<std::string> args(LOOLProtocol::tokenize(commandLine, ' '));
                     std::string command(args[0]);
-                    args.erase(args.begin()); // strip the commmand
+                    args.erase(args.begin()); // strip the command
 
                     // The commandline must contain the space-separated substring @INPUT@ that is
                     // replaced with the input file name, and @OUTPUT@ for the output file name.
