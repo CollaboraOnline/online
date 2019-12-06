@@ -191,8 +191,21 @@ L.Control.MobileWizard = L.Control.extend({
 		this._currentPath = path;
 	},
 
+	_refreshSidebar: function() {
+		var map = this.map;
+		setTimeout(function () {
+			var message = 'dialogevent ' + window.sidebarId + ' {\"id\":\"-1\"}';
+			map._socket.sendMessage(message);
+		}, 400);
+	},
+
 	_onMobileWizard: function(data) {
 		if (data) {
+			var isSidebar = data.id !== 'menubar' && data.id !== 'insertshape' && data.id !== 'funclist';
+
+			if (!this._isActive && isSidebar)
+				this._refreshSidebar();
+
 			this._isActive = true;
 			var currentPath = null;
 			if (this._currentPath)
