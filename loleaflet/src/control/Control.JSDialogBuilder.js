@@ -582,6 +582,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'gradientstyle':
 		case 'fillgrad1':
 		case 'fillgrad2':
+		case 'gradangle':
 			return '.uno:FillGradient';
 
 		case 'setbrightness':
@@ -606,14 +607,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '.uno:GrafGamma';
 
 		case 'selectwidth':
-			return '.uno:Size';
-
 		case 'selectheight':
 			return '.uno:Size';
 
 		case 'horizontalpos':
-			return '.uno:Position';
-
 		case 'verticalpos':
 			return '.uno:Position';
 
