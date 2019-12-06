@@ -16,6 +16,7 @@
             android:title="@string/external_sd_file_system"
             android:icon="@drawable/ic_sd_card_black_24dp"/>
 
+        <!-- FIXME these two are totally untested, let's disable for the moment
         <item android:id="@+id/menu_provider_otg"
             android:title="@string/otg_file_system"
             android:icon="@drawable/ic_usb_black_24dp"/>
@@ -23,13 +24,16 @@
         <item android:id="@+id/menu_provider_owncloud"
             android:title="@string/owncloud"
             android:icon="@drawable/ic_cloud_black_24dp"/>
+        -->
 
 
     </group>
 
+    <!-- FIXME enable once the menu_provider_owncloud is enabled again
     <group android:orderInCategory="100">
         <item android:id="@+id/menu_storage_preferences"
             android:title="@string/storage_provider_settings"
             android:icon="@drawable/ic_settings_black_24dp"/>
     </group>
+    -->
 </menu>
