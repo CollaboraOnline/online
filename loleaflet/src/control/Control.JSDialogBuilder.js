@@ -98,6 +98,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_defaultCallbackHandler: function(objectType, eventType, object, data, builder) {
 		console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
+		builder.wizard.setCurrentFocus(object.id);
+
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			builder.map.sendUnoCommand(data);
 		} else if (object) {

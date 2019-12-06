@@ -15,6 +15,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_mainTitle: '',
 	_isTabMode: false,
 	_currentPath: [],
+	_currentElementId: null,
 
 	initialize: function (options) {
 		L.setOptions(this, options);
@@ -93,6 +94,11 @@ L.Control.MobileWizard = L.Control.extend({
 		this._isTabMode = true;
 	},
 
+	setCurrentFocus: function(elementId) {
+		console.warn(elementId);
+		this._currentElementId = elementId;
+	},
+
 	goLevelDown: function(contentToShow) {
 		if (!this._isTabMode || this._currentDepth > 0)
 			this.backButton.removeClass('close-button');
@@ -167,6 +173,13 @@ L.Control.MobileWizard = L.Control.extend({
 			$('[title=\'' + path[index] + '\'').prev().click();
 		}
 		this._currentPath = path;
+
+		if (this._currentElementId) {
+			console.warn('scroll to ' + this._currentElementId);
+			$('#mobile-wizard-content').animate({
+				scrollTop: ($(('#' + this._currentElementId)).offset().top)
+			},0);
+		}
 	},
 
 	_onMobileWizard: function(data) {
