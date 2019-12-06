@@ -17,8 +17,6 @@
 #include <Poco/URI.h>
 #include <cppunit/TestAssert.h>
 
-#include <wsd/DocumentBroker.hpp>
-#include <wsd/LOOLWSD.hpp>
 #include <Unit.hpp>
 #include <helpers.hpp>
 
@@ -81,13 +79,7 @@ UnitBase::TestResult UnitLoad::testConnectNoLoad()
     TST_LOG_NAME(testname1, "Disconnecting first.");
     socket.reset();
 
-    std::vector<std::shared_ptr<DocumentBroker>> brokers = LOOLWSD::getBrokersTestOnly();
-    if (!brokers.empty() && !brokers[0]->isMarkedToDestroy())
-    {
-        // Give the document broker thread time, so it can clean up, so the next load won't fail
-        // (sometimes), because a cleanup is in progress.
-        sleep(1);
-    }
+    sleep(1); // paranoia.
 
     // Connect and load first view.
     TST_LOG_NAME(testname2, "Connecting second to load first view.");
