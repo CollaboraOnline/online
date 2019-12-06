@@ -10,7 +10,7 @@
     </string-array>
     <string-array name="SupportedLanguagesValues">
         <item >en</item>
-        <item >tr</item>
+        <!-- FIXME we need more languages item >tr</item-->
     </string-array>
     <string-array name="SortModeStringValues">
         <item >0</item>
@@ -38,7 +38,7 @@
     </string-array>
     <string-array name="SupportedLanguages">
         <item>English</item>
-        <item>Turkçe</item>
+        <!-- FIXME we need more languages item>Turkçe</item-->
     </string-array>
     <string-array name="SortModeNames">
         <item >@string/sort_az</item>
