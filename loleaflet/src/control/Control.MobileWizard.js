@@ -99,7 +99,9 @@ L.Control.MobileWizard = L.Control.extend({
 		this._currentElementId = elementId;
 	},
 
-	goLevelDown: function(contentToShow) {
+	goLevelDown: function(contentToShow, options) {
+		var animate = (options && options.animate != undefined) ? options.animate : true;
+
 		if (!this._isTabMode || this._currentDepth > 0)
 			this.backButton.removeClass('close-button');
 
@@ -109,11 +111,20 @@ L.Control.MobileWizard = L.Control.extend({
 		}
 
 		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
-		$(titles).hide('slide', { direction: 'left' }, 'fast');
+
+		if (animate)
+			$(titles).hide('slide', { direction: 'left' }, 'fast');
+		else
+			$(titles).hide();
+
 		$(contentToShow).siblings().hide();
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('hideHelpBG');
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('showHelpBG');
-		$(contentToShow).show('slide', { direction: 'right' }, 'fast');
+
+		if (animate)
+			$(contentToShow).show('slide', { direction: 'right' }, 'fast');
+		else
+			$(contentToShow).show();
 
 		this._currentDepth++;
 		this._setTitle(contentToShow.title);
@@ -170,7 +181,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_goToPath: function(path) {
 		for (var index in path) {
-			$('[title=\'' + path[index] + '\'').prev().click();
+			$('[title=\'' + path[index] + '\'').prev().trigger('click', {animate: false});
 		}
 		this._currentPath = path;
 

@@ -290,8 +290,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		{
 			$(contentDiv).hide();
 			if (builder.wizard) {
-				$(sectionTitle).click(function() {
-					builder.wizard.goLevelDown(contentDiv);
+				$(sectionTitle).click(function(event, data) {
+					builder.wizard.goLevelDown(contentDiv, data);
 					if (contentNode.onshow)
 						contentNode.onshow();
 				});
