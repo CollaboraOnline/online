@@ -849,12 +849,15 @@ AC_LINK_FILES([loleaflet/archived-packages], [loleaflet/archived-packages])
 
 APP_BRANDING_DIR=
 APP_IC_LAUNCHER="ic_launcher"
+APP_HAS_BRANDING="false"
 if test "$with_app_branding" != no -a -d "$with_app_branding"; then
     APP_BRANDING_DIR="$with_app_branding"
     APP_IC_LAUNCHER="ic_launcher_brand"
+    APP_HAS_BRANDING="true"
 fi
 AC_SUBST(APP_BRANDING_DIR)
 AC_SUBST(APP_IC_LAUNCHER)
+AC_SUBST(APP_HAS_BRANDING)
 
 AS_IF([test "$ENABLE_IOSAPP" = "true"],
       [

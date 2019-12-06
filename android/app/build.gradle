@@ -16,6 +16,7 @@ android {
             resValue "string", "vendor", "${liboVendor}"
             resValue "string", "info_url", "${liboInfoURL}"
             manifestPlaceholders = [ appIcon: "${liboLauncherIcon}" ]
+            buildConfigField "boolean", "APP_HAS_BRANDING", "${liboHasBranding}"
             ndk {
                 //abiFilters "x86", "armeabi-v7a", "armeabi"
                 abiFilters "armeabi-v7a"
@@ -29,6 +30,7 @@ android {
             resValue "string", "vendor", "${liboVendor}"
             resValue "string", "info_url", "${liboInfoURL}"
             manifestPlaceholders = [ appIcon: "${liboLauncherIcon}" ]
+            buildConfigField "boolean", "APP_HAS_BRANDING", "${liboHasBranding}"
             ndk {
                 abiFilters "armeabi-v7a"
             }

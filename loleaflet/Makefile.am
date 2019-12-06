@@ -168,6 +168,7 @@ if ENABLE_ANDROIDAPP
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/toolbar-bg.svg ; fi
 	@if test -d "$(APP_BRANDING_DIR)/android" ; then for I in `cd "$(APP_BRANDING_DIR)/android" && find . -type f` ; do mkdir -p $(abs_top_srcdir)/android/lib/src/main/res/`dirname $$I` ; cp -a "$(APP_BRANDING_DIR)/android/$$I" "$(abs_top_srcdir)/android/app/src/main/res/$$I" ; done ; fi
+	@touch "$(abs_top_srcdir)/android/app/src/main/res/drawable/ic_launcher_brand.xml" # to avoid problems with a missing resource in the non-branded builds
 	@echo
 	@echo "Copied JS, HTML and CSS to the Android project (android/lib/src/main/assets/dist)."
 	@echo
