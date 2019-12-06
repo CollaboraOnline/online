@@ -361,8 +361,12 @@ L.Map.include({
 		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://libreoffice.org';
 		content.find('#product-name').text(productName);
 		var productString = _('This version of %productName is powered by');
-		var productNameWithURL = '<a href="' + sanitizeUrl.sanitizeUrl(productURL) +
+		var productNameWithURL;
+		if (!window.ThisIsTheiOSApp)
+			productNameWithURL = '<a href="' + sanitizeUrl.sanitizeUrl(productURL) +
 								 '" target="_blank">' + productName + '</a>';
+		else
+			productNameWithURL = productName;
 		content.find('#product-string').html(productString.replace('%productName', productNameWithURL));
 
 		var w;
