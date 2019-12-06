@@ -3,7 +3,7 @@
 * Control.ContextMenu
 */
 
-/* global $ _ _UNO */
+/* global $ _ _UNO vex */
 L.Control.ContextMenu = L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
@@ -101,20 +101,27 @@ L.Control.ContextMenu = L.Control.extend({
 		if (this.hasContextMenu) {
 			this._onClosePopup();
 		}
+
 		var contextMenu = this._createContextMenuStructure(obj);
+		var spellingContextMenu = false;
+		for (var menuItem in contextMenu) {
+			if (menuItem.includes('.uno:SpellCheckIgnore')) {
+				spellingContextMenu = true;
+				break;
+			}
+		}
 		if (window.mode.isMobile()) {
 			window.contextMenuWizard = true;
 			var menuData = this.getMenuStructureForMobileWizard(contextMenu, true, '');
-			map.fire('mobilewizard', menuData);
-		} else {
-			var spellingContextMenu = false;
-			for (var menuItem in contextMenu) {
-				if (menuItem.includes('.uno:SpellCheckIgnore')) {
-					spellingContextMenu = true;
-					break;
-				}
+			if (spellingContextMenu === true) {
+				vex.timer = setInterval(function() {
+					map.fire('mobilewizard', menuData);
+					clearTimeout(vex.timer);
+				}, 200);
+			} else {
+				map.fire('mobilewizard', menuData);
 			}
-
+		} else {
 			L.installContextMenu({
 				selector: '.leaflet-layer',
 				className: 'loleaflet-font',
