@@ -32,7 +32,7 @@
     <item
         android:id="@+id/menu_sort"
         android:title="@string/sort"
-        android:icon="@drawable/ic_sort_black_24dp"
+        android:icon="@drawable/ic_sort_by_alpha_black_24dp"
         app:showAsAction="ifRoom">
         <menu>
             <group android:checkableBehavior="single">
