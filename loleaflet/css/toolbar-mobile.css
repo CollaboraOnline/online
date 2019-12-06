@@ -72,6 +72,7 @@
 		border-color: #fff;
 	}
 	#toolbar-up .checked .w2ui-tb-image{
+		-webkit-filter:  drop-shadow(0px 0px 4px #0b87e7);
 		filter: drop-shadow(0px 0px 4px #0b87e7);
 	}
 	#toolbar-down table.w2ui-button .w2ui-tb-image {
