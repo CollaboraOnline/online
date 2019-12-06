@@ -285,10 +285,12 @@ L.Socket = L.Class.extend({
 				$('#loolwsd-version').text(this.WSDServer.Version);
 			}
 
-			var idUri = this._map.options.server + this._map.options.serviceRoot + '/hosting/discovery';
-			idUri = idUri.replace(/^ws:/, 'http:');
-			idUri = idUri.replace(/^wss:/, 'https:');
-			$('#loolwsd-id').html(_('Served by:') + ' <a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
+			if (!window.ThisIsAMobileApp) {
+				var idUri = this._map.options.server + this._map.options.serviceRoot + '/hosting/discovery';
+				idUri = idUri.replace(/^ws:/, 'http:');
+				idUri = idUri.replace(/^wss:/, 'https:');
+				$('#loolwsd-id').html(_('Served by:') + ' <a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
+			}
 
 			// TODO: For now we expect perfect match in protocol versions
 			if (this.WSDServer.Protocol !== this.ProtocolVersionNumber) {
