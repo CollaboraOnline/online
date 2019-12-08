@@ -655,9 +655,8 @@ L.Control.LokDialog = L.Control.extend({
 			else
 				$(panel).parent().hide();
 
-			var panelContainer = document.getElementById(strId);
-			var panelCanvas = document.getElementById(strId + '-canvas');
-			this._postLaunch(id, panelContainer, panelCanvas);
+			// Render window.
+			this._sendPaintWindowRect(id);
 		} else {
 			this._createSidebar(id, strId, width, height);
 		}
