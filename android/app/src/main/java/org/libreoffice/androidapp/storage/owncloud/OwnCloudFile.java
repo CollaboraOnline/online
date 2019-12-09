@@ -14,11 +14,12 @@ import java.util.List;
 import org.libreoffice.androidapp.storage.IFile;
 
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
-import com.owncloud.android.lib.resources.files.ChunkedUploadRemoteFileOperation;
-import com.owncloud.android.lib.resources.files.DownloadRemoteFileOperation;
-import com.owncloud.android.lib.resources.files.ReadRemoteFolderOperation;
-import com.owncloud.android.lib.resources.files.RemoteFile;
-import com.owncloud.android.lib.resources.files.UploadRemoteFileOperation;
+import com.owncloud.android.lib.resources.files.ChunkedFileUploadRemoteOperation;
+import com.owncloud.android.lib.resources.files.DownloadFileRemoteOperation;
+import com.owncloud.android.lib.resources.files.ReadFolderRemoteOperation;
+import com.owncloud.android.lib.resources.files.model.RemoteFile;
+import com.owncloud.android.lib.resources.files.UploadFileRemoteOperation;
+import com.owncloud.android.lib.resources.files.model.RemoteFile;
 
 /**
  * Implementation of IFile for ownCloud servers.
@@ -77,7 +78,7 @@ public class OwnCloudFile implements IFile {
     public List<IFile> listFiles() {
         List<IFile> children = new ArrayList<IFile>();
         if (isDirectory()) {
-            ReadRemoteFolderOperation refreshOperation = new ReadRemoteFolderOperation(
+            ReadFolderRemoteOperation refreshOperation = new ReadFolderRemoteOperation(
                     file.getRemotePath());
             RemoteOperationResult result = refreshOperation.execute(provider
                     .getClient());
@@ -97,7 +98,7 @@ public class OwnCloudFile implements IFile {
     public List<IFile> listFiles(FileFilter filter) {
         List<IFile> children = new ArrayList<IFile>();
         if (isDirectory()) {
-            ReadRemoteFolderOperation refreshOperation = new ReadRemoteFolderOperation(
+            ReadFolderRemoteOperation refreshOperation = new ReadFolderRemoteOperation(
                     file.getRemotePath());
             RemoteOperationResult result = refreshOperation.execute(provider
                     .getClient());
@@ -139,7 +140,7 @@ public class OwnCloudFile implements IFile {
             return null;
         }
         File downFolder = provider.getCacheDir();
-        DownloadRemoteFileOperation operation = new DownloadRemoteFileOperation(
+        DownloadFileRemoteOperation operation = new DownloadFileRemoteOperation(
                 file.getRemotePath(), downFolder.getAbsolutePath());
         RemoteOperationResult result = operation.execute(provider.getClient());
         if (!result.isSuccess()) {
@@ -160,13 +161,13 @@ public class OwnCloudFile implements IFile {
 
     @Override
     public void saveDocument(File newFile) {
-        UploadRemoteFileOperation uploadOperation;
-        if (newFile.length() > ChunkedUploadRemoteFileOperation.CHUNK_SIZE) {
-            uploadOperation = new ChunkedUploadRemoteFileOperation(
-                    newFile.getPath(), file.getRemotePath(), file.getMimeType());
+        UploadFileRemoteOperation uploadOperation;
+        if (newFile.length() > ChunkedFileUploadRemoteOperation.CHUNK_SIZE_MOBILE) {
+            uploadOperation = new ChunkedFileUploadRemoteOperation(
+                    newFile.getPath(), file.getRemotePath(), file.getMimeType(), file.getEtag(), String.valueOf(file.getModifiedTimestamp()), false /* TODO actually check if on Wifi */);
         } else {
-            uploadOperation = new UploadRemoteFileOperation(newFile.getPath(),
-                    file.getRemotePath(), file.getMimeType());
+            uploadOperation = new UploadFileRemoteOperation(newFile.getPath(),
+                    file.getRemotePath(), file.getMimeType(), String.valueOf(file.getModifiedTimestamp()));
         }
 
         RemoteOperationResult result = uploadOperation.execute(provider
