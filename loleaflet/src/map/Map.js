@@ -1186,7 +1186,7 @@ L.Map = L.Evented.extend({
 		}
 
 		this._startInactiveTimer();
-		if (!L.Browser.mobile) {
+		if (!L.Browser.mobile && !isAnyVexDialogActive()) {
 			this.focus();
 		}
 		return false;
