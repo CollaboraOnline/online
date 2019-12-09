@@ -1247,6 +1247,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		 return false;
 	},
 
+	_getColorCommandToSend: function(builder, data, color) {
+		var gradientItem;
+
+		if (data.id === 'fillgrad1') {
+			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
+			gradientItem.startcolor = color;
+			return '.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem);
+		} else if (data.id === 'fillgrad2') {
+			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
+			gradientItem.endcolor = color;
+			return '.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem);
+		}
+
+		return data.command + '?Color:string=' + color;
+	},
+
 	_getDefaultColorForCommand: function(command) {
 		if (command == '.uno:BackColor')
 			return '#';
@@ -1303,7 +1319,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
 
 		var callback = function(color) {
-			var command = data.command + '?Color:string=' + color;
+			var command = builder._getColorCommandToSend(builder, data, color);
 			builder.map.sendUnoCommand(command);
 		};
 
