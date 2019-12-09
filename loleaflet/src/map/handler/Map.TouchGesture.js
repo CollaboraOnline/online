@@ -298,6 +298,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._toolbar.remove();
 
 		this._map.fire('closepopups');
+		this._map.fire('closemobilewizard');
+
 		// unselect if anything is selected already
 		if (this._map._docLayer && this._map._docLayer._annotations && this._map._docLayer._annotations.unselect) {
 			this._map._docLayer._annotations.unselect();
