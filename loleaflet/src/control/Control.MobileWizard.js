@@ -15,6 +15,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_mainTitle: '',
 	_isTabMode: false,
 	_currentPath: [],
+	_tabs: [],
 	_currentScrollPosition: 0,
 
 	initialize: function (options) {
@@ -41,6 +42,8 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard').removeClass('menuwizard');
 		this._isTabMode = false;
 		this._currentPath = [];
+		this._tabs = [];
+		this._currentScrollPosition = 0;
 	},
 
 	_setupBackButton: function() {
@@ -87,6 +90,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	setTabs: function(tabs) {
+		this._tabs = tabs;
 		$('#mobile-wizard-tabs').show();
 		$('#mobile-wizard-tabs').empty();
 		$('#mobile-wizard-tabs').append(tabs);
@@ -178,16 +182,37 @@ L.Control.MobileWizard = L.Control.extend({
 		right.text(title);
 	},
 
-	_scrollToLastPosition: function() {
+	_scrollToPosition: function(position) {
 		if (this._currentScrollPosition) {
-			$('#mobile-wizard-content').animate({ scrollTop: this._currentScrollPosition }, 0);
+			$('#mobile-wizard-content').animate({ scrollTop: position }, 0);
+		}
+	},
+
+	selectedTab: function(tabText) {
+		if (this._currentPath && this._currentPath.length) {
+			this._currentPath[0] = tabText;
+		}
+	},
+
+	_selectTab: function(tabId) {
+		if (this._tabs && tabId) {
+			for (var index in this._tabs.children) {
+				if (this._tabs.children[index].id === tabId) {
+					$(this._tabs.children[index]).trigger('click', {animate: false});
+					break;
+				}
+			}
 		}
 	},
 
 	_goToPath: function(path) {
+		if (this._tabs && path && path.length)
+			this._selectTab(path[0]);
+
 		for (var index in path) {
 			$('[title=\'' + path[index] + '\'').prev().trigger('click', {animate: false});
 		}
+
 		this._currentPath = path;
 	},
 
@@ -208,8 +233,12 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._isActive = true;
 			var currentPath = null;
+			var lastScrollPosition = null;
+
 			if (this._currentPath)
 				currentPath = this._currentPath;
+			if (this._currentScrollPosition)
+				lastScrollPosition = this._currentScrollPosition;
 
 			this._reset();
 
@@ -248,7 +277,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 			if (this._isActive && currentPath.length) {
 				this._goToPath(currentPath);
-				this._scrollToLastPosition();
+				this._scrollToPosition(lastScrollPosition);
 			}
 		}
 	},

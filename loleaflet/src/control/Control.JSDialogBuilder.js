@@ -403,6 +403,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var title1 = builder._cleanText(data[0].text);
 
 		var tab1 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
+		tab1.id = title1;
 
 		var label = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab1);
 		label.innerHTML = title1;
@@ -418,10 +419,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		$(contentDiv).hide();
 
+		var title2 = builder._cleanText(data[1].text);
 
 		var tab2 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
-
-		var title2 = builder._cleanText(data[1].text);
+		tab2.id = title2;
 
 		var label2 = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab2);
 		label2.innerHTML = title2;
@@ -444,6 +445,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(tab2).removeClass('selected');
 				$(contentDiv).show();
 				$(contentDiv2).hide();
+				builder.wizard.selectedTab(label.innerHTML);
 			});
 
 			$(tab2).click(function() {
@@ -451,6 +453,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(tab1).removeClass('selected');
 				$(contentDiv).hide();
 				$(contentDiv2).show();
+				builder.wizard.selectedTab(label2.innerHTML);
 			});
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
