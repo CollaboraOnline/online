@@ -60,7 +60,7 @@ L.Control.ContextMenu = L.Control.extend({
 		// This black list contains those menu items which should be disabled on mobile even if they
 		// are allowed in general. We need to have only those items here which are also part
 		// of the whitelist, otherwise the menu items are not visible anyway.
-		mobileBlackList: ['SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph']
+		mobileBlackList: ['SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TransformDialog', 'FormatLine', 'FormatArea']
 	},
 
 
