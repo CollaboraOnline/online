@@ -2,13 +2,27 @@ Source: loolwsd
 Section: web
 Priority: optional
 Maintainer: Andras Timar <andras.timar@collabora.com>
-Build-Depends: debhelper (>= 9), dh-systemd (>= 1.3), libcap-dev, libcap2-bin, libpcre3-dev, libpng-dev, libpoco-dev (>= 1.7.5), linux-libc-dev, nodejs, python-polib, python-lxml, python3-polib, python3-lxml, fontconfig, libpam-dev, libcppunit-dev, pkg-config, devscripts, m4
+Build-Depends: debhelper (>= 9), dh-systemd (>= 1.3), libcap-dev, libcap2-bin, libpcre3-dev, libpng-dev, linux-libc-dev, nodejs, python3-polib, python3-lxml, fontconfig, libpam-dev, libcppunit-dev, pkg-config, devscripts, m4
 Standards-Version: 3.9.7
 
 Package: loolwsd
 Section: web
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, fontconfig, libsm6, libssl1.0.0, libodbc1, libxinerama1, libxrender1, libcairo2, libgl1-mesa-glx, libcups2, libdbus-glib-1-2, cpio, libcap2-bin, ${lo:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends},
+ locales-all, adduser, expat, fontconfig, cpio, libcap2-bin,
+ collaboraofficebasis6.2-calc,
+ collaboraofficebasis6.2-core,
+ collaboraofficebasis6.2-graphicfilter,
+ collaboraofficebasis6.2-images,
+ collaboraofficebasis6.2-impress,
+ collaboraofficebasis6.2-ooofonts,
+ collaboraofficebasis6.2-writer,
+ collaboraoffice6.2,
+ collaboraoffice6.2-ure,
+ collaboraofficebasis6.2-en-us,
+ collaboraofficebasis6.2-draw,
+ collaboraofficebasis6.2-extension-pdf-import,
+ collaboraofficebasis6.2-ooolinguistic
 Description: LibreOffice Online WebSocket Daemon
  LOOLWSD is a daemon that talks to web browser clients and provides LibreOffice
  services.
