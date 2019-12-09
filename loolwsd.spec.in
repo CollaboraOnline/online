@@ -17,34 +17,40 @@ Vendor:         %{vendor}
 Summary:        LibreOffice Online WebSocket Daemon
 License:        MPL
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
-BuildRequires:  libcap-devel libpng-devel poco-devel >= 1.7.5 m4
-%if 0%{?fedora} || 0%{?rhel} >= 7
-BuildRequires:  libpcap kernel-headers
-%else
-%if 0%{?suse_version}
-BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros
-%endif
+BuildRequires:  libcap-devel libpng-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
+
+# Red Hat and CentOS
+%if 0%{?rhel} == 7
+BuildRequires:  libpcap kernel-headers python36-polib python36-lxml
 %endif
 
-Requires:       %{lo_rpm_list}
-Requires:       systemd
+%if 0%{?rhel} == 8
+BuildRequires:  libpcap kernel-headers python3-polib python3-lxml
+%endif
+
+# openSUSE Leap 15.x, SLES12, SLES15
+%if 0%{?suse_version}
+BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros python3-polib python3-lxml
+%endif
+
+Requires:       collaboraoffice6.2 collaboraoffice6.2-ure collaboraofficebasis6.2-core collaboraofficebasis6.2-writer collaboraofficebasis6.2-impress collaboraofficebasis6.2-graphicfilter collaboraofficebasis6.2-en-US collaboraofficebasis6.2-calc collaboraofficebasis6.2-ooofonts collaboraofficebasis6.2-images collaboraofficebasis6.2-draw collaboraofficebasis6.2-extension-pdf-import collaboraofficebasis6.2-ooolinguistic
 Requires(post): coreutils grep sed
-%if 0%{?fedora} || 0%{?rhel} >= 7
+%if 0%{?rhel}
 # loolwsd dependencies
-Requires:       expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssl-libs pcre xz-libs zlib
-Requires:       poco-crypto >= 1.7.5 poco-foundation >= 1.7.5 poco-json >= 1.7.5 poco-net >= 1.7.5 poco-netssl >= 1.7.5 poco-util >= 1.7.5 poco-xml >= 1.7.5
-# LibreOffice dependencies (unfortunately upstream LibreOffice RPM packages (from TDF) do not have real dependencies)
-Requires:       atk avahi-glib avahi-libs bzip2-libs cairo cups-libs dbus-glib dbus-libs fontconfig freetype GConf2 gdk-pixbuf2 glib2 gnome-vfs2 graphite2 gstreamer gstreamer-plugins-base gtk2 harfbuzz libdrm libffi libICE libSM libuuid libX11 libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXi libXinerama libXrandr libXrender libxshmfence libXt libXxf86vm mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi pango pixman
-%else
+Requires:       systemd expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssl-libs pcre xz-libs zlib
+# Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
+Requires:       expat fontconfig freetype libuuid bzip2-libs
+%endif
+
 %if 0%{?suse_version}
 # loolwsd dependencies
 Requires(post): libcap-progs
-Requires:       libcap2 libopenssl1_0_0 libpng12-0 libpcre1 libz1 %{?systemd_requires} %{fillup_prereq}
-Requires:       libPocoCrypto48 >= 1.7.8 libPocoFoundation48 >= 1.7.8 libPocoJSON48 >= 1.7.8 libPocoNet48 >= 1.7.8 libPocoNetSSL48 >= 1.7.8 libPocoUtil48 >= 1.7.8 libPocoXML48 >= 1.7.8
-# LibreOffice dependencies (unfortunately upstream LibreOffice RPM packages (from TDF) do not have real dependencies)
-Requires:       Mesa-libEGL1 Mesa-libGL1 Mesa-libglapi0 cups-libs dbus-1-glib fontconfig libatk-1_0-0 libavahi-client3 libavahi-common3 libavahi-glib1 libbz2-1 libcairo2 libcom_err2 libdbus-1-3 libdrm2 libexpat1 libfreetype6 libgbm1 libgio-2_0-0 libglib-2_0-0 libgmodule-2_0-0 libgobject-2_0-0 libgraphite2-3 libgthread-2_0-0 libgtk-2_0-0 libharfbuzz0 libkeyutils1 liblzma5 libpixman-1-0 libpng16-16 libuuid1 libxml2 libffi4 libgbm1 libICE6 libselinux1 libSM6 libwayland-client0 libwayland-server0 libX11-6 libX11-xcb1 libXau6 libxcb1 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-render0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libXdamage1 libXext6 libXfixes3 libXrender1 libxshmfence1 libXxf86vm1
+Requires:       systemd libopenssl1_0_0 libpcre1 libz1 libcap2 libpng12-0 %{fillup_prereq}
+# Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
+# cd /opt/collaboraoffice6.2/program ; for i in soffice.bin *.so ;do ldd $i | grep '=>' | sed -e "s/^.*=> //" -e "s/ [(].*$//"; done | sort | uniq | xargs rpm -qf --qf="%{NAME}\n" | sort | uniq | grep -v collaboraoffice
+Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16 libuuid1
 %endif
-%endif
+
 %if 0%{?name_suffix:1}
 Provides:       loleaflet = 1.5.8, loolwsd
 %else
@@ -64,27 +70,30 @@ Obsoletes:      loleaflet <= 1.5.8
 %configure \
 	--enable-silent-rules \
 	--with-lokit-path=bundled/include \
-	--with-lo-path=%{loroot} \
+	--with-lo-path=/opt/collaboraoffice6.2 \
 	--disable-setcap \
 %if 0%{?config_options:1}
 	%{config_options}
 %endif
 
-make %{?_smp_mflags}
+env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 
 %check
-#make check
+#env BUILDING_FROM_RPMBUILD=yes make check
 
 %install
-make install DESTDIR=%{buildroot}
-%__install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
+env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
-%if 0%{?fedora} || 0%{?rhel} >= 7
+%if 0%{?rhel}
+install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -D -m 644 sysconfig.loolwsd %{buildroot}/etc/sysconfig/loolwsd
-%else
-%if 0%{?suse_version}
-install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
+install -d -m 755 %{buildroot}/etc/httpd/conf
+install -D -m 755 etc/apache2/loolwsd.conf %{buildroot}/etc/httpd/conf
+rm %{buildroot}/etc/apache2/conf-available/loolwsd.conf
 %endif
+%if 0%{?suse_version}
+install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
+install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
 %endif
 mkdir -p %{buildroot}/etc/cron.d
 echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
@@ -94,6 +103,7 @@ echo "auth       required     pam_unix.so" > %{buildroot}/etc/pam.d/loolwsd
 echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 
 %files
+%defattr(-,root,root,-)
 /usr/bin/loolwsd
 /usr/bin/loolwsd-systemplate-setup
 /usr/bin/loolforkit
@@ -104,27 +114,33 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/share/loolwsd/loleaflet
 /usr/share/doc/loolwsd/README
 /usr/share/doc/loolwsd/README.vars
+/usr/share/doc/loolwsd/metrics.txt
 /usr/share/doc/loolwsd/protocol.txt
 /usr/share/doc/loolwsd/reference.md
-/usr/share/doc/loolwsd/metrics.txt
-/usr/share/man/man1/loolwsd.1
-/usr/share/man/man1/loolforkit.1
-/usr/share/man/man1/loolconvert.1
-/usr/share/man/man1/loolconfig.1
-/usr/share/man/man1/loolwsd-systemplate-setup.1
+/usr/share/man/man1/loolwsd.1.gz
+/usr/share/man/man1/loolforkit.1.gz
+/usr/share/man/man1/loolconvert.1.gz
+/usr/share/man/man1/loolconfig.1.gz
+/usr/share/man/man1/loolwsd-systemplate-setup.1.gz
 %{_unitdir}/loolwsd.service
-%if 0%{?fedora} || 0%{?rhel} >= 7
+%if 0%{?rhel}
 %config(noreplace) /etc/sysconfig/loolwsd
-%else
+%endif
 %if 0%{?suse_version}
 /var/adm/fillup-templates/sysconfig.loolwsd
-%endif
 %endif
 
 %config(noreplace) /etc/cron.d/loolwsd.cron
 %config(noreplace) /etc/pam.d/loolwsd
 %config(noreplace) %attr(640, lool, root) /etc/loolwsd/loolwsd.xml
 %config /etc/loolwsd/loolkitconfig.xcu
+%config(noreplace) /etc/nginx/snippets/loolwsd.conf
+%if 0%{?suse_version} > 0
+%config(noreplace) /etc/apache2/conf-available/loolwsd.conf
+%endif
+%if 0%{?rhel} > 0
+%config(noreplace) /etc/httpd/conf/loolwsd.conf
+%endif
 
 %doc README
 
@@ -134,17 +150,21 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 %endif
 
 getent group lool >/dev/null || groupadd -r lool
-getent passwd lool >/dev/null || useradd -g lool -r lool
+getent passwd lool >/dev/null || useradd -g lool -r lool -d /opt/lool -s /bin/bash
 
-%post
-setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
+# for filename in `find /opt/lool/systemplate -type f`;do stripped=$(echo -ne $filename | sed -e "s|/opt/lool/systemplate||");rpm -qf --qf="%{NAME}\n" $stripped;done | grep -v devel | grep -v 32bit | grep -v -- -fonts | sort | uniq
+%triggerin -- expat fontconfig freetype freetype2 glibc glibc-locale kernel keyutils-libs krb5 krb5-libs libbz2-1 libcap libcap-ng libcap2 libexpat1 libfreetype6 libgcc libgcc_s1 libgcrypt libiscsi libpng libpng12 libpng12-0 libpng15-15 libpng16-16 libstdc++ libstdc++6 libuuid libuuid1 libz1 lsb nss-mdns nss-softokn-freebl pcre sssd sssd-client systemd-libs timezone tzdata zlib
 
-mkdir -p /var/cache/loolwsd && chown lool:lool /var/cache/loolwsd
-rm -rf /var/cache/loolwsd/*
+echo -ne "Triggered update of loolwsd systemplate..."
+
+%if 0%{?rhel} >= 7 || 0%{?suse_version} >= 1300
+systemctl is-active -q loolwsd && LOOLWSD_IS_ACTIVE=1 || LOOLWSD_IS_ACTIVE=0
+if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl stop loolwsd; fi
+%endif
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system
-loroot=%{loroot}
+loroot=/opt/collaboraoffice6.2
 loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
 rm -rf ${loolparent}/lool
@@ -155,7 +175,19 @@ chown lool:lool ${loolparent}/lool/child-roots
 fc-cache ${loroot}/share/fonts/truetype
 loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null 2>&1
 
-%if 0%{?fedora} || 0%{?rhel} >= 7
+%if 0%{?rhel} || 0%{?suse_version}
+if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl start loolwsd; fi
+%endif
+
+echo "   Done."
+
+%post
+setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
+
+mkdir -p /var/cache/loolwsd && chown lool:lool /var/cache/loolwsd
+rm -rf /var/cache/loolwsd/*
+
+%if 0%{?rhel} >= 7
 %systemd_post loolwsd.service
 %else
 %if 0%{?suse_version}
@@ -164,9 +196,8 @@ loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null 2>
 %endif
 %endif
 
-
 %preun
-%if 0%{?fedora} || 0%{?rhel} >= 7
+%if 0%{?rhel} >= 7
 %systemd_preun loolwsd.service
 %else
 %if 0%{?suse_version}
@@ -175,7 +206,7 @@ loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null 2>
 %endif
 
 %postun
-%if 0%{?fedora} || 0%{?rhel} >= 7
+%if 0%{?rhel} >= 7
 %systemd_postun loolwsd.service
 %else
 %if 0%{?suse_version}
