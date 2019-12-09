@@ -270,12 +270,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    /* FIXME disabled for the moment, enable when menu_provider_owncloud is enabled
                     case R.id.menu_storage_preferences: {
                         startActivity(new Intent(LibreOfficeUIActivity.this, DocumentProviderSettingsActivity.class));
                         return true;
                     }
-                    */
 
                     case R.id.menu_provider_documents: {
                         switchToDocumentProvider(documentProviderFactory.getProvider(0));
@@ -292,7 +290,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                         return true;
                     }
 
-                    /* FIXME disabled for the moment, it's totally untested
                     case R.id.menu_provider_otg: {
                         switchToDocumentProvider(documentProviderFactory.getProvider(3));
                         return true;
@@ -302,7 +299,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                         switchToDocumentProvider(documentProviderFactory.getProvider(4));
                         return true;
                     }
-                    */
 
                     default:
                         return false;
