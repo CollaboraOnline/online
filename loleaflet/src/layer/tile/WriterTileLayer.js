@@ -135,7 +135,6 @@ L.WriterTileLayer = L.TileLayer.extend({
 				}
 				else {
 					// tile outside of the visible area, just remove it
-					this._preFetchBorder = null;
 					this._removeTile(key);
 				}
 			}

@@ -407,7 +407,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				}
 				else {
 					// tile outside of the visible area, just remove it
-					this._preFetchBorder = null;
 					this._removeTile(key);
 				}
 			}
@@ -479,10 +478,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._selectedParts = command.selectedParts || [command.selectedPart];
 			this._resetPreFetching(true);
 			this._update();
-			if (this._preFetchPart !== this._selectedPart) {
-				this._preFetchPart = this._selectedPart;
-				this._preFetchBorder = null;
-			}
 			var partMatch = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
 			this._partHashes = partMatch.slice(partMatch.length - this._parts);

@@ -1168,6 +1168,7 @@ L.GridLayer = L.Layer.extend({
 		var zoom = this._map.getZoom();
 		var tilesToFetch = 10;
 		var maxBorderWidth = 5;
+		var tileBorderSrc;
 
 		if (this._map._permission === 'edit') {
 			tilesToFetch = 5;
@@ -1175,19 +1176,17 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		if (!this._preFetchBorder) {
-			if (this._selectedPart !== this._preFetchPart) {
-				// all tiles from the new part have to be pre-fetched
-				var tileBorder = this._preFetchBorder = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
-			}
-			else {
-				var pixelBounds = this._map.getPixelBounds(center, zoom);
-				tileBorder = this._pxBoundsToTileRange(pixelBounds);
-				this._preFetchBorder = tileBorder;
-			}
+			var pixelBounds = this._map.getPixelBounds(center, zoom);
+			tileBorderSrc = this._pxBoundsToTileRange(pixelBounds);
+			this._preFetchBorder = tileBorderSrc;
 		}
 		else {
-			tileBorder = this._preFetchBorder;
+			tileBorderSrc = this._preFetchBorder;
 		}
+
+		// We mutate this - so need a temporary copy
+		var tileBorder = new L.Bounds(tileBorderSrc.min, tileBorderSrc.max);
+
 		var queue = [],
 		    finalQueue = [],
 		    visitedTiles = {},
