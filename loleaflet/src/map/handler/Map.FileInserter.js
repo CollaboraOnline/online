@@ -130,7 +130,6 @@ L.Map.FileInserter = L.Handler.extend({
 			xmlHttp.onreadystatechange = function () {
 				if (xmlHttp.readyState === 4) {
 					map.hideBusy();
-					socket.sendMessage('insertfile name=' + name + ' type=' + type);
 					if (xmlHttp.status === 200) {
 						socket.sendMessage('insertfile name=' + name + ' type=' + type);
 					}
