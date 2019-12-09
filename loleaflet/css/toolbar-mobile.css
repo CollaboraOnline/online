@@ -11,6 +11,15 @@
 	}
 }
 @media (max-width: 767px), (max-device-height: 767px) {
+	.insertshape-grid {
+		box-sizing: content-box;
+		position: absolute;
+		padding: 2px 0px 2px 0px;
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		overflow-y: scroll;
+	}
 	#formulabar {
 		padding: 0px !important;
 		border-top: 1px solid #bbbbbb !important;
