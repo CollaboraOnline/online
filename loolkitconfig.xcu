@@ -11,7 +11,7 @@
 <item oor:path="/org.openoffice.Office.Common/AutoCorrect"><prop oor:name="TwoCapitalsAtStart" oor:op="fuse"><value>false</value></prop></item>
 
 <!-- The Help root URL, or empty for no help (hides the help buttons) -->
-<item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpRootURL" oor:op="fuse"><value>https://help.libreoffice.org/help.html?</value></prop></item>
+<item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpRootURL" oor:op="fuse"><value>https://help.collaboraoffice.com/help.html?</value></prop></item>
 
 <!-- Enable spell-checking by default -->
 <item oor:path="/org.openoffice.Office.Linguistic/SpellChecking"><prop oor:name="IsSpellAuto" oor:op="fuse"><value>true</value></prop></item>
