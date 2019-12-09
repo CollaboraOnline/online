@@ -20,8 +20,8 @@ import com.owncloud.android.lib.common.OwnCloudCredentialsFactory;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.resources.files.FileUtils;
-import com.owncloud.android.lib.resources.files.ReadRemoteFileOperation;
-import com.owncloud.android.lib.resources.files.RemoteFile;
+import com.owncloud.android.lib.resources.files.ReadFileRemoteOperation;
+import com.owncloud.android.lib.resources.files.model.RemoteFile;
 
 
 /**
@@ -81,7 +81,7 @@ public class OwnCloudProvider implements IDocumentProvider,
     @Override
     public IFile createFromUri(Context context, URI uri) {
         if(serverUrl != "" || userName != "" || password != ""){
-            ReadRemoteFileOperation refreshOperation = new ReadRemoteFileOperation(
+            ReadFileRemoteOperation refreshOperation = new ReadFileRemoteOperation(
                     uri.getPath());
             this.result = refreshOperation.execute(client);
             if (!result.isSuccess()) {
@@ -99,7 +99,7 @@ public class OwnCloudProvider implements IDocumentProvider,
 
     @Override
     public int getNameResource() {
-        return R.string.owncloud;
+        return R.string.remote_server;
     }
 
     /**
