@@ -829,12 +829,12 @@ L.Map = L.Evented.extend({
 
 	getZoomScale: function (toZoom, fromZoom) {
 		var crs = this.options.crs;
-		fromZoom = fromZoom === undefined ? this._zoom : fromZoom;
+		fromZoom = fromZoom === undefined ? this.getZoom() : fromZoom;
 		return crs.scale(toZoom) / crs.scale(fromZoom);
 	},
 
 	getScaleZoom: function (scale, fromZoom) {
-		fromZoom = fromZoom === undefined ? this._zoom : fromZoom;
+		fromZoom = fromZoom === undefined ? this.getZoom() : fromZoom;
 		return fromZoom + (Math.log(scale) / Math.log(1.2));
 	},
 
@@ -842,13 +842,13 @@ L.Map = L.Evented.extend({
 	// conversion methods
 
 	project: function (latlng, zoom) { // (LatLng[, Number]) -> Point
-		zoom = zoom === undefined ? this._zoom : zoom;
+		zoom = zoom === undefined ? this.getZoom() : zoom;
 		var projectedPoint = this.options.crs.latLngToPoint(L.latLng(latlng), zoom);
 		return new L.Point(L.round(projectedPoint.x, 1e-6), L.round(projectedPoint.y, 1e-6));
 	},
 
 	unproject: function (point, zoom) { // (Point[, Number]) -> LatLng
-		zoom = zoom === undefined ? this._zoom : zoom;
+		zoom = zoom === undefined ? this.getZoom() : zoom;
 		return this.options.crs.pointToLatLng(L.point(point), zoom);
 	},
 

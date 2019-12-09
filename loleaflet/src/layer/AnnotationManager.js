@@ -908,7 +908,7 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	_getScaleFactor: function () {
-		var scaleFactor = 1.0 / this._map.getZoomScale(this._map.options.zoom, this._map._zoom);
+		var scaleFactor = 1.0 / this._map.getZoomScale(this._map.options.zoom, this._map.getZoom());
 		if (scaleFactor < 0.4)
 			scaleFactor = 0.4;
 		else if (scaleFactor < 0.6)
