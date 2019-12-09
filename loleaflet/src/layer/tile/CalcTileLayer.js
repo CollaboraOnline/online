@@ -547,7 +547,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 				}
 				else {
 					// tile outside of the visible area, just remove it
-					this._preFetchBorder = null;
 					this._removeTile(key);
 				}
 			}
@@ -665,10 +664,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 			});
 			this._resetPreFetching(true);
 			this._update();
-			if (this._preFetchPart !== this._selectedPart) {
-				this._preFetchPart = this._selectedPart;
-				this._preFetchBorder = null;
-			}
 		}
 	},
 
