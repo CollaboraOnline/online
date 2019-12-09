@@ -1,25 +1,89 @@
-loolwsd (1.8.2-1) unstable; urgency=medium
+loolwsd (4.2.4-1) unstable; urgency=medium
 
-  * Fix crash in Impress.
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=cp-4.2.4-1
 
- -- Jan Holesovsky <kendy@collabora.com>  Thu, 11 Aug 2016 16:46:00 +0100
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 28 May 2020 15:00:00 +0200
 
-loolwsd (1.8.0-1) unstable; urgency=medium
+loolwsd (4.2.3-3) unstable; urgency=medium
 
-  [ Tor Lillqvist ]
-  * Back to packaging this for Debian.
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=cp-4.2.3-3
 
-  [ Jan Holesovsky ]
-  * Update to match Collabora Office 5.1
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 19 May 2020 09:00:00 +0200
 
- -- Jan Holesovsky <kendy@collabora.com>  Fri, 05 Aug 2016 16:51:54 +0100
+loolwsd (4.2.3-2) unstable; urgency=medium
 
-loolwsd (1.0.0-1) unstable; urgency=low
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.3-2
 
-  * Initial release
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 14 May 2020 09:00:00 +0200
 
-  * Local Variables:
-  * Mode: fundamental
-  * End:
+loolwsd (4.2.3-1) unstable; urgency=medium
 
- -- Tor Lillqvist <tml@collabora.com>  Fri, 15 May 2015 11:10:20 +0300
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.3-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Wed, 06 May 2020 14:00:00 +0200
+
+loolwsd (4.2.2-2) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.2-2
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 16 Apr 2020 14:35:00 +0200
+
+loolwsd (4.2.2-1) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.2-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 07 Apr 2020 18:00:00 +0100
+
+loolwsd (4.2.1-3) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.1-3
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 02 Apr 2020 18:00:00 +0100
+
+loolwsd (4.2.1-2) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.1-2
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 26 Mar 2020 18:00:00 +0100
+
+loolwsd (4.2.1-1) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.1-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 19 Mar 2020 12:53:00 +0100
+
+loolwsd (4.2.0-6) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.0-6
+
+ -- Andras Timar <andras.timar@collabora.com>  Wed, 04 Mar 2020 11:26:00 +0100
+
+loolwsd (4.2.0-5) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.0-5
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 25 Feb 2020 11:58:00 +0100
+
+loolwsd (4.2.0-4) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.0-4
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 28 Jan 2020 18:58:00 +0100
+
+loolwsd (4.2.0-3) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.0-3
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 09 Jan 2020 22:12:00 +0100
+
+loolwsd (4.2.0-2) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.0-2
+
+ -- Andras Timar <andras.timar@collabora.com>  Fri, 20 Dec 2019 13:27:00 +0100
+
+loolwsd (4.2.0-1) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.0-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 10 Dec 2019 20:47:00 +0100
