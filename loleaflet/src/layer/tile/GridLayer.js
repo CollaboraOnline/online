@@ -1278,6 +1278,9 @@ L.GridLayer = L.Layer.extend({
 			var fragment = document.createDocumentFragment();
 			this._addTiles(finalQueue, fragment);
 			this._level.el.appendChild(fragment);
+		} else {
+			clearInterval(this._tilesPreFetcher);
+			this._tilesPreFetcher = undefined;
 		}
 	},
 
@@ -1285,8 +1288,10 @@ L.GridLayer = L.Layer.extend({
 		if (!this._map) {
 			return;
 		}
-		clearInterval(this._tilesPreFetcher);
-		clearTimeout(this._preFetchIdle);
+		if (this._tilesPreFetcher)
+			clearInterval(this._tilesPreFetcher);
+		if (this._preFetchIdle)
+			clearTimeout(this._preFetchIdle);
 		if (resetBorder) {
 			this._preFetchBorder = null;
 		}
@@ -1295,6 +1300,7 @@ L.GridLayer = L.Layer.extend({
 		this._preFetchPart = this._selectedPart;
 		this._preFetchIdle = setTimeout(L.bind(function () {
 			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), interval);
+			this._prefetchIdle = undefined;
 		}, this), idleTime);
 	}
 });
