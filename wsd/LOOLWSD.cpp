@@ -3074,7 +3074,9 @@ private:
         capabilities->set("convert-to", convert_to);
 
         // Supports the TemplateSaveAs in CheckFileInfo?
-        capabilities->set("hasTemplateSaveAs", true);
+        // TemplateSaveAs is broken by design, disable it everywhere (and
+        // remove at some stage too)
+        capabilities->set("hasTemplateSaveAs", false);
 
         // Supports the TemplateSource in CheckFileInfo?
         capabilities->set("hasTemplateSource", true);
