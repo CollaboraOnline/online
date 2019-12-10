@@ -163,7 +163,10 @@ public class ExtsdDocumentsProvider implements IExternalDocumentProvider,
         // getExternalStorageState().equals(Environment.MEDIA_MOUNTED) && isExternalStorageRemovable()
         // but they refer to the primary external storage anyway, so what currently is covered by the
         // "LocalDocumentsProvider"
-        return rootPathURI!=null && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+
+        // FIXME temporarily disabled for good
+        return false;
+        //return rootPathURI!=null && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
