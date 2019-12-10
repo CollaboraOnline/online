@@ -1423,11 +1423,13 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_clearSearchResults: function() {
+		if (this._searchTerm) {
+			this._selections.clearLayers();
+		}
 		this._lastSearchResult = null;
 		this._searchResults = null;
 		this._searchTerm = null;
 		this._searchResultsLayer.clearLayers();
-		this._selections.clearLayers();
 	},
 
 	_drawSearchResults: function() {
