@@ -22,28 +22,30 @@ public:
     SslStreamSocket(const int fd, bool isClient,
                     std::shared_ptr<SocketHandlerInterface> responseClient) :
         StreamSocket(fd, isClient, std::move(responseClient)),
+        _bio(nullptr),
         _ssl(nullptr),
         _sslWantsTo(SslWantsTo::Neither),
         _doHandshake(true)
     {
         LOG_DBG("SslStreamSocket ctor #" << fd);
 
-        BIO* bio = BIO_new(BIO_s_socket());
-        if (bio == nullptr)
+        _bio = BIO_new(BIO_s_socket());
+        if (_bio == nullptr)
         {
             throw std::runtime_error("Failed to create SSL BIO.");
         }
 
-        BIO_set_fd(bio, fd, BIO_NOCLOSE);
+        BIO_set_fd(_bio, fd, BIO_NOCLOSE);
 
         _ssl = SslContext::newSsl();
         if (!_ssl)
         {
-            BIO_free(bio);
+            BIO_free(_bio);
+            _bio = nullptr;
             throw std::runtime_error("Failed to create SSL.");
         }
 
-        SSL_set_bio(_ssl, bio, bio);
+        SSL_set_bio(_ssl, _bio, _bio);
 
         if (isClient)
         {
@@ -240,6 +242,14 @@ private:
             // Fallthrough...
         default:
             {
+                // Effectively an EAGAIN error at the BIO layer
+                if (BIO_should_retry(_bio))
+                {
+                    LOG_TRC("Socket #" << getFD() << " BIO asks for retry - underlying EAGAIN? " <<
+                            SSL_get_error(_ssl, rc));
+                    return -1; // poll is used to detect real errors.
+                }
+
                 if (sslError == SSL_ERROR_SSL)
                     LOG_TRC("Socket #" << getFD() << " SSL error: SSL (" << sslError << ").");
                 else if (sslError == SSL_ERROR_SYSCALL)
@@ -289,6 +299,7 @@ private:
     }
 
 private:
+    BIO* _bio;
     SSL* _ssl;
     /// During handshake SSL might want to read
     /// on write, or write on read.
