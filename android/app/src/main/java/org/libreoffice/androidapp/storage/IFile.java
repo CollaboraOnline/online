@@ -112,5 +112,7 @@ public interface IFile {
      * @param file
      *            A local file pointing to the new version of the document.
      */
-    void saveDocument(File file);
+    void saveDocument();
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
