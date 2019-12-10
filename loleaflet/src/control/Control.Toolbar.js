@@ -1833,15 +1833,13 @@ function onCommandStateChanged(e) {
 	else if (commandName === '.uno:LanguageStatus') {
 		var code = state;
 		var language = _(state);
-
 		var split = code.split(';');
 		if (split.length > 1) {
 			language = _(split[0]);
 			code = split[1];
 		}
-		updateToolbarItem(statusbar, 'LanguageStatus', $('#LanguageStatus').html(language).parent().html());
 		w2ui['editbar'].set('languagecode', {text: code});
-		$('#tb_actionbar_item_LanguageStatus table table td:first-of-type').html(language+'&nbsp;');
+		w2ui['actionbar'].set('LanguageStatus', {text: language, selected: language});
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		if (e.state === 'true') {
@@ -1962,7 +1960,9 @@ function onCommandValues(e) {
 		for (var lang in languages) {
 			translated = languages[lang].translated;
 			neutral = languages[lang].neutral;
-			toolbaritems.push({ id: neutral, text: translated, uno: constLang + encodeURIComponent('Default_' + neutral) });
+			var splitTranslated = translated.split(';');
+			var splitNeutral = neutral.split(';');
+			toolbaritems.push({ id: neutral, text: splitTranslated[0], uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
 		}
 
 		toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
