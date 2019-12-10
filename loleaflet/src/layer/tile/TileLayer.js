@@ -1471,12 +1471,8 @@ L.TileLayer = L.GridLayer.extend({
 		var isPureJSON = textMsg.indexOf('=') === -1 && textMsg.indexOf('{') !== -1;
 		if (isPureJSON) {
 			var json = JSON.parse(textMsg);
-
-			for (var i = 0; i < json.items.length; i++) {
-				var item = json.items[i];
-				if (item.commandName && item.state) {
-					this._map.fire('commandstatechanged', item);
-				}
+			if (json.commandName && json.state) {
+				this._map.fire('commandstatechanged', json);
 			}
 		} else {
 			var index = textMsg.indexOf('=');
