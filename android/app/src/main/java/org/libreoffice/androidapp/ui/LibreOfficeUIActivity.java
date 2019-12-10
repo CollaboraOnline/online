@@ -270,7 +270,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         );
 
         // Loop through the document providers menu items and check if they are available or not
-        for (int index = 0; index < navigationDrawer.getMenu().size(); ++index) {
+        for (int index = 0; index < providerNames.size(); ++index) {
             MenuItem item = navigationDrawer.getMenu().getItem(index);
             item.setVisible(documentProviderFactory.getProvider(index).checkProviderAvailability(this));
         }
