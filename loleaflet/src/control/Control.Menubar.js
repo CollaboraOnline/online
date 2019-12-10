@@ -481,9 +481,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
 				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
 				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
-				{uno: '.uno:SelectAll'},
-				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SelectAll'}
 			]},
 			{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 				{uno: '.uno:TrackChanges'},
@@ -525,9 +523,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
 				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
 				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
-				{uno: '.uno:SelectAll'},
-				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SelectAll'}
 			]},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 				{uno: '.uno:InsertRowsBefore'},
@@ -571,9 +567,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:Cut'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Cut'},
 				{name: _UNO('.uno:Copy'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Copy'},
 				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
-				{uno: '.uno:SelectAll'},
-				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SelectAll'}
 			]},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
