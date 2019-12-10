@@ -24,6 +24,8 @@ ifelse(MOBILEAPP,[],
   // result for future
   window.WOPIpostMessageReady = false;
   var PostMessageReadyListener = function(e) {
+    if (!(e && e.data))
+        return;
     var msg = JSON.parse(e.data);
     if (msg.MessageId === 'Host_PostmessageReady') {
       window.WOPIPostmessageReady = true;

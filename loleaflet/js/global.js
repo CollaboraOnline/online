@@ -45,7 +45,8 @@
 				source: src,
 				line: row,
 				column: col
-			}, desc = err.message || {}, stack = err.stack || {};
+			};
+			var desc = err ? err.message || {}: {}, stack = err ? err.stack || {}: {};
 			var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
 			if (window.ThisIsAMobileApp) {
 				window.postMobileError(log);
