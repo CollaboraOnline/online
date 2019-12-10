@@ -1,6 +1,7 @@
 package org.libreoffice.androidapp.storage.owncloud;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -25,9 +26,13 @@ import com.owncloud.android.lib.resources.files.model.RemoteFile;
  * Implementation of IFile for ownCloud servers.
  */
 public class OwnCloudFile implements IFile {
+    final static String LOGTAG = "OwnCloudFile";
 
     private OwnCloudProvider provider;
     private RemoteFile file;
+
+    /** We create the document just once, cache it for further returning. */
+    private File mCachedFile;
 
     private String name;
     private String parentPath;
@@ -136,9 +141,12 @@ public class OwnCloudFile implements IFile {
 
     @Override
     public File getDocument() {
-        if (isDirectory()) {
+        if (mCachedFile != null)
+            return mCachedFile;
+
+        if (isDirectory())
             return null;
-        }
+
         File downFolder = provider.getCacheDir();
         DownloadFileRemoteOperation operation = new DownloadFileRemoteOperation(
                 file.getRemotePath(), downFolder.getAbsolutePath());
@@ -146,7 +154,9 @@ public class OwnCloudFile implements IFile {
         if (!result.isSuccess()) {
             throw provider.buildRuntimeExceptionForResultCode(result.getCode());
         }
-        return new File(downFolder.getAbsolutePath() + file.getRemotePath());
+
+        mCachedFile = new File(downFolder.getAbsolutePath() + file.getRemotePath());
+        return mCachedFile;
     }
 
     @Override
@@ -160,14 +170,19 @@ public class OwnCloudFile implements IFile {
     }
 
     @Override
-    public void saveDocument(File newFile) {
+    public void saveDocument() {
+        if (mCachedFile == null) {
+            Log.e(LOGTAG, "Trying to save document that was not created via getDocument()(");
+            return;
+        }
+
         UploadFileRemoteOperation uploadOperation;
-        if (newFile.length() > ChunkedFileUploadRemoteOperation.CHUNK_SIZE_MOBILE) {
+        if (mCachedFile.length() > ChunkedFileUploadRemoteOperation.CHUNK_SIZE_MOBILE) {
             uploadOperation = new ChunkedFileUploadRemoteOperation(
-                    newFile.getPath(), file.getRemotePath(), file.getMimeType(), file.getEtag(), String.valueOf(file.getModifiedTimestamp()), false /* TODO actually check if on Wifi */);
+                    mCachedFile.getPath(), file.getRemotePath(), file.getMimeType(), file.getEtag(), String.valueOf(mCachedFile.lastModified()), false /* TODO actually check if on Wifi */);
         } else {
-            uploadOperation = new UploadFileRemoteOperation(newFile.getPath(),
-                    file.getRemotePath(), file.getMimeType(), String.valueOf(file.getModifiedTimestamp()));
+            uploadOperation = new UploadFileRemoteOperation(mCachedFile.getPath(),
+                    file.getRemotePath(), file.getMimeType(), String.valueOf(mCachedFile.lastModified()));
         }
 
         RemoteOperationResult result = uploadOperation.execute(provider
@@ -177,3 +192,5 @@ public class OwnCloudFile implements IFile {
         }
     }
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

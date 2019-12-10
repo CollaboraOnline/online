@@ -34,7 +34,10 @@ public class ExternalFile implements IFile{
 
     private ExtsdDocumentsProvider provider;
     private DocumentFile docFile;
-    private File duplicateFile;
+
+    /** We create the document just once, cache it for further returning. */
+    private File mCachedFile;
+
     private Context context;
 
     public ExternalFile(ExtsdDocumentsProvider provider, DocumentFile docFile, Context context) {
@@ -112,12 +115,14 @@ public class ExternalFile implements IFile{
 
     @Override
     public File getDocument() {
-        if(isDirectory()) {
+        if (mCachedFile != null)
+            return mCachedFile;
+
+        if (isDirectory())
             return null;
-        } else {
-            duplicateFile = duplicateInCache();
-            return duplicateFile;
-        }
+
+        mCachedFile = duplicateInCache();
+        return mCachedFile;
     }
 
     private File duplicateInCache() {
@@ -138,11 +143,16 @@ public class ExternalFile implements IFile{
     }
 
     @Override
-    public void saveDocument(File file) {
+    public void saveDocument() {
+        if (mCachedFile == null) {
+            Log.e(LOGTAG, "Trying to save document that was not created via getDocument()(");
+            return;
+        }
+
         try{
             OutputStream ostream = context.getContentResolver().
                     openOutputStream(docFile.getUri());
-            InputStream istream = new FileInputStream(file);
+            InputStream istream = new FileInputStream(mCachedFile);
 
             IOUtils.copy(istream, ostream);
 
@@ -162,3 +172,5 @@ public class ExternalFile implements IFile{
     }
 
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

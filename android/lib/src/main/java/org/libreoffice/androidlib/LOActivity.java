@@ -60,6 +60,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class LOActivity extends AppCompatActivity {
     final static String TAG = "LOActivity";
@@ -97,6 +98,15 @@ public class LOActivity extends AppCompatActivity {
 
     private ValueCallback<Uri[]> valueCallback;
     public static final int REQUEST_SELECT_FILE = 555;
+
+    /** Broadcasting event for passing info back to the shell. */
+    public static final String LO_ACTIVITY_BROADCAST = "LOActivityBroadcast";
+
+    /** Event description for passing info back to the shell. */
+    public static final String LO_ACTION_EVENT = "LOEvent";
+
+    /** Data description for passing info back to the shell. */
+    public static final String LO_ACTION_DATA = "LOData";
 
     private static boolean copyFromAssets(AssetManager assetManager,
                                           String fromAssetPath, String targetDir) {
@@ -647,8 +657,13 @@ public class LOActivity extends AppCompatActivity {
         });
     }
 
-    /** Could be overridden if it's necessary to forward some callbacks elsewhere. */
-    public void sendBroadcast(String event, String data) {}
+    /** Send message back to the shell (for example for the cloud save). */
+    public void sendBroadcast(String event, String data) {
+        Intent intent = new Intent(LO_ACTIVITY_BROADCAST);
+        intent.putExtra(LO_ACTION_EVENT, event);
+        intent.putExtra(LO_ACTION_DATA, data);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
 
     public native void saveAs(String fileUri, String format);
 

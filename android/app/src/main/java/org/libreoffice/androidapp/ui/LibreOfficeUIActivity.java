@@ -95,6 +95,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -119,6 +120,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private IFile homeDirectory;
     private IFile currentDirectory;
     private int currentlySelectedFile;
+
+    /** The document that is being edited - to know what to save back to cloud. */
+    private IFile mCurrentDocument;
 
     private static final String CURRENT_DIRECTORY_KEY = "CURRENT_DIRECTORY";
     private static final String DOC_PROVIDER_KEY = "CURRENT_DOCUMENT_PROVIDER";
@@ -164,6 +168,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private LinearLayout impressLayout;
     private LinearLayout calcLayout;
 
+    /** Request code to evaluate that we are returning from the LOActivity. */
+    private static final int LO_ACTIVITY_REQUEST_CODE = 42;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,9 +189,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         registerReceiver(mUSBReceiver, filter);
+
+        // Register the LOActivity events broadcast receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLOActivityReceiver,
+              new IntentFilter(LOActivity.LO_ACTIVITY_BROADCAST));
+
         // init UI and populate with contents from the provider
-
-
         createUI();
         fabOpenAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_open);
         fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close);
@@ -540,6 +550,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     public void open(final IFile document) {
         addDocumentToRecents(document);
+        mCurrentDocument = document;
         new AsyncTask<IFile, Void, File>() {
             @Override
             protected File doInBackground(IFile... document) {
@@ -566,8 +577,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 if (file != null) {
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
                     String packageName = getApplicationContext().getPackageName();
-                    ComponentName componentName = new ComponentName(packageName,
-                            LOActivity.class.getName());
+                    ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
                     i.setComponent(componentName);
 
                     // these extras allow to rebuild the IFile object in LOActivity
@@ -576,7 +586,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                     i.putExtra("org.libreoffice.document_uri",
                             document.getUri());
 
-                    startActivity(i);
+                    startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
                 }
             }
         }.execute(document);
@@ -616,7 +626,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                         i.putExtra("org.libreoffice.document_provider_id", documentProvider.getId());
                         i.putExtra("org.libreoffice.document_uri", newDocUri);
 
-                        startActivity(i);
+                        startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
                     } else {
                         Toast.makeText(LibreOfficeUIActivity.this, getString(R.string.file_creation_failed), Toast.LENGTH_SHORT).show();
                     }
@@ -1022,6 +1032,67 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         }
     };
 
+    /** Receiver for receiving messages from LOActivity - like that Save was performed and similar. */
+    private final BroadcastReceiver mLOActivityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String event = intent.getStringExtra(LOActivity.LO_ACTION_EVENT);
+            Log.d(LOGTAG, "Received a message from LOActivity: " + event);
+
+            // Handle various events from LOActivity
+            if (event.equals("SAVE")) {
+                LibreOfficeUIActivity.this.saveFileToCloud();
+            }
+        }
+    };
+
+    /** Uploading back when we return from the LOActivity. */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == LO_ACTIVITY_REQUEST_CODE) {
+            Log.d(LOGTAG, "LOActivity has finished.");
+            saveFileToCloud();
+        }
+    }
+
+    /** Actually copy the file to the remote storage (if applicable). */
+    public void saveFileToCloud() {
+        if (mCurrentDocument == null)
+        {
+            Log.e(LOGTAG, "No idea what should be uploaded.");
+            return;
+        }
+
+        final AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    // call document provider save operation
+                    mCurrentDocument.saveDocument();
+                }
+                catch (final RuntimeException e) {
+                    LibreOfficeUIActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(LibreOfficeUIActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Log.e(LOGTAG, e.getMessage(), e.getCause());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void param) {
+                // FIXME Should we present a toast that the file was saved, or
+                // is it annoying?
+                //Toast.makeText(LibreOfficeUIActivity.this, R.string.message_saved, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        task.execute();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -1061,6 +1132,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mUSBReceiver);
+        unregisterReceiver(mLOActivityReceiver);
         Log.d(LOGTAG, "onDestroy");
     }
 
@@ -1081,7 +1153,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         //put the new value in the first place
         recentsArrayList.add(0, newRecent);
-
 
         /*
          * 4 because the number of recommended items in App Shortcuts is 4, and also

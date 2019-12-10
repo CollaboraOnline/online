@@ -97,7 +97,7 @@ public class LocalFile implements IFile {
     }
 
     @Override
-    public void saveDocument(File file) {
+    public void saveDocument() {
         // do nothing; file is local
     }
 }
