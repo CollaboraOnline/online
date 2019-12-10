@@ -632,15 +632,11 @@ public class LOActivity extends AppCompatActivity {
                 .setView(R.layout.lolib_dialog_loading)
                 .create();
 
+        slideShowProgress.show();
+
         nativeHandler.post(new Runnable() {
             @Override
             public void run() {
-                LOActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        slideShowProgress.show();
-                    }
-                });
                 Log.v(TAG, "saving svg for slideshow by " + Thread.currentThread().getName());
                 final String slideShowFileUri = new File(LOActivity.this.getCacheDir(), "slideShow.svg").toURI().toString();
                 LOActivity.this.saveAs(slideShowFileUri, "svg");
