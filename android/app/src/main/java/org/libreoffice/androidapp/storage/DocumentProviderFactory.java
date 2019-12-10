@@ -62,10 +62,9 @@ public final class DocumentProviderFactory {
             instance.providers = new IDocumentProvider[5];
             instance.providers[0] = new LocalDocumentsDirectoryProvider(0);
             instance.providers[1] = new LocalDocumentsProvider(1);
+            instance.providers[EXTSD_PROVIDER_INDEX] = new ExtsdDocumentsProvider(EXTSD_PROVIDER_INDEX, context);
             instance.providers[OTG_PROVIDER_INDEX] = new OTGDocumentsProvider(OTG_PROVIDER_INDEX, context);
             instance.providers[4] = new OwnCloudProvider(4, context);
-
-            instance.providers[EXTSD_PROVIDER_INDEX] = new ExtsdDocumentsProvider(EXTSD_PROVIDER_INDEX, context);
 
             // initialize document provider names list
             instance.providerNames = new String[instance.providers.length];

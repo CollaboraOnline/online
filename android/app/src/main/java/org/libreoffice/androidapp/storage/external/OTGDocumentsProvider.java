@@ -85,6 +85,9 @@ public class OTGDocumentsProvider implements IExternalDocumentProvider,
     @Override
     public boolean checkProviderAvailability(Context context) {
         // check if system supports USB Host
-        return rootPathURI.length()>0 && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_USB_HOST);
+
+        // FIXME temporarily disabled for good
+        return false;
+        //return rootPathURI.length()>0 && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_USB_HOST);
     }
 }
