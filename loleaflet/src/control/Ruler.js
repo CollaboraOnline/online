@@ -148,6 +148,9 @@ L.Control.Ruler = L.Control.extend({
 		for (var num = 0; num <= (this.options.pageWidth / 1000) + 1; num++) {
 
 			var marker = L.DomUtil.create('div', 'loleaflet-ruler-maj', this._rBPContainer);
+
+			// The - 1 is to compensate for the left and right .5px borders of
+			// loleaflet-ruler-maj in leaflet.css.
 			marker.style.width = this.options.DraggableConvertRatio*1000 - 1 + 'px';
 			if (this.options.displayNumber) {
 				if (numCounter !== 0)
