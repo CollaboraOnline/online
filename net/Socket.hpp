@@ -831,7 +831,8 @@ public:
 
     ~StreamSocket()
     {
-        LOG_DBG("StreamSocket dtor #" << getFD());
+        LOG_DBG("StreamSocket dtor #" << getFD() << " with pending "
+                "write: " << _outBuffer.size() << ", read: " << _inBuffer.size());
 
         if (!_closed)
         {
