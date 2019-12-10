@@ -870,7 +870,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onSidebarClose: function(dialogId) {
-		this._resizeSidebar(dialogId, 0);
+		var strId = this._toStrId(dialogId);
+		this._resizeSidebar(strId, 0);
 		delete this._dialogs[dialogId];
 		if (this._currentDeck) {
 			$('#' + this._currentDeck.strId).remove();
@@ -1059,6 +1060,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._map.options.documentContainer.style.right = wrapper.offsetWidth + 'px';
 		else
 			this._map.options.documentContainer.style.right = (width - 15).toString() + 'px';
+
 		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 		if (spreadsheetRowColumnFrame)
 			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
