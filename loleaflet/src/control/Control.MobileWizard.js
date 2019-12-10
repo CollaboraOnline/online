@@ -190,7 +190,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 	selectedTab: function(tabText) {
 		if (this._currentPath && this._currentPath.length) {
-			this._currentPath[0] = tabText;
+			this._currentPath = [tabText];
 		}
 	},
 
