@@ -172,7 +172,7 @@ public class OwnCloudFile implements IFile {
     @Override
     public void saveDocument() {
         if (mCachedFile == null) {
-            Log.e(LOGTAG, "Trying to save document that was not created via getDocument()(");
+            Log.e(LOGTAG, "Trying to save document that was not created via getDocument()");
             return;
         }
 
