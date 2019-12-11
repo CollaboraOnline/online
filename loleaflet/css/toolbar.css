@@ -88,7 +88,7 @@ w2ui-toolbar {
 		position: absolute;
 		z-index: 500;
 		width: 100%;
-		margin-top: -10px;
+		padding: 0px 0px 10px 0px;
 }
 
 /* For MS Edge 40, the select2 combo boxes need to have higher z-index than #map
