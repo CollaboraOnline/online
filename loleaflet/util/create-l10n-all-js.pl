@@ -42,6 +42,8 @@ if (underscore > 0) {
 
 if (false) {
     ;
+} else if (onlylang == 'cs') {
+    window.LOCALIZATIONS = " . insert('cs') . ";
 } else if (onlylang == 'da') {
     window.LOCALIZATIONS = " . insert('da') . ";
 } else if (onlylang == 'de') {

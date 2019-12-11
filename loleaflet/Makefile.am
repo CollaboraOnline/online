@@ -3,13 +3,11 @@ L10N_PO = $(wildcard $(srcdir)/po/*.po)
 
 if !ENABLE_MOBILEAPP
 L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
-endif
-
-if ENABLE_IOSAPP
+else
 L10N_IOS_ALL_JS = $(builddir)/dist/l10n-all.js
 L10N_JSON = $(L10N_IOS_ALL_JS)
 
-$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10n -name '*.*')
+$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
 	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
 		$(srcdir)/util/po2json.py $$F -o $$F.json; \
 	done
@@ -34,7 +32,7 @@ LOLEAFLET_IMAGES_CUSTOM_SRC = $(shell find $(CUSTOM_ICONS_DIRECTORY) -name '*.*'
 LOLEAFLET_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(builddir)/dist/images/%,$(LOLEAFLET_IMAGES_CUSTOM_SRC))
 
 LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
-if !ENABLE_IOSAPP
+if !ENABLE_MOBILEAPP
 LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(builddir)/dist/l10n/%,$(LOLEAFLET_L10N_SRC))
 endif
 
