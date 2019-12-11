@@ -1,0 +1,10 @@
+<resources>
+    <string name="temp_file_saving_disabled">Este archivo es de solo lectura, el guardado está deshabilitado.</string>
+    <string name="storage_permission_required">Se requiere permiso de almacenamiento</string>
+    <string name="failed_to_load_file">Error al determinar el archivo a cargar</string>
+    <string name="failed_to_insert_image">Error al insertar imagen</string>
+    <string name="cannot_open_file_chooser">No se puede abrir el selector de archivos</string>
+
+    <!-- Loading SlideShow Dialog Strings -->
+    <string name="loading">Cargando...</string>
+</resources>
