@@ -37,7 +37,6 @@
 }
 
 .vex.vex-theme-plain{
-	position: relative;
 	z-index: 2001 !important;
 }
 
@@ -48,11 +47,20 @@
 }
 
 .vex-closing {
-    -webkit-animation: vex-fadeout .25s forwards;
-    animation: vex-fadeout .25s forwards;
+	-webkit-animation: vex-fadeout .25s forwards;
+	animation: vex-fadeout .25s forwards;
 }
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="date"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime-local"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="email"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="month"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="number"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="password"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="search"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="tel"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="time"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="url"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="week"]{
 	width: 95% !important;
+}
+
+.vex {
+	position: fixed;
+	overflow: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
 }
 
 /*mobile*/
