@@ -339,7 +339,6 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'mobile_wizard') {
 		if (window.mobileWizard) {
 			window.mobileWizard = false;
-			map.sendUnoCommand('.uno:Sidebar');
 			map.fire('closemobilewizard');
 			toolbar.uncheck(id);
 		}
@@ -347,7 +346,7 @@ function onClick(e, id, item, subItem) {
 			if (window.insertionMobileWizard)
 				this.onClick(null, 'insertion_mobile_wizard');
 			window.mobileWizard = true;
-			map.sendUnoCommand('.uno:Sidebar');
+			map.fire('showmobilewizard');
 			toolbar.check(id);
 		}
 	}

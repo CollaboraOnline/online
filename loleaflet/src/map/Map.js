@@ -285,19 +285,16 @@ L.Map = L.Evented.extend({
 				// Let the first page finish loading then load the sidebar.
 				var map = this;
 				setTimeout(function () {
-                    // This triggers all sidebar decks, so they would
-                    // be loaded and show rather quickly on first use.
-                    // Also, triggers sidebar window creation in the client.
+					// This triggers all sidebar decks, so they would
+					// be loaded and show rather quickly on first use.
+					// Also, triggers sidebar window creation in the client.
 					map._socket.sendMessage('uno .uno:Sidebar');
 
 					// HACK: The initial state of sidebar is that the core
 					// thinks it is shown, so the command has to be triggered
 					// once again for it to be visible on the desktop
-					// (because the first .uno:Sidebar has actually hidden
-					// that)
-					if (!window.mode.isMobile() && !window.mode.isTablet() && !window.ThisIsAMobileApp) {
-						map._socket.sendMessage('uno .uno:Sidebar');
-					}
+					// (because the first .uno:Sidebar has actually hid it)
+					map._socket.sendMessage('uno .uno:Sidebar');
 				}, 200);
 			}
 

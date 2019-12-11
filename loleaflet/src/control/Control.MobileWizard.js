@@ -26,6 +26,7 @@ L.Control.MobileWizard = L.Control.extend({
 		this.map = map;
 		map.on('mobilewizard', this._onMobileWizard, this);
 		map.on('closemobilewizard', this._hideWizard, this);
+		map.on('showmobilewizard', this._showWizard, this);
 
 		this._setupBackButton();
 	},
@@ -72,7 +73,6 @@ L.Control.MobileWizard = L.Control.extend({
 			var toolbar = w2ui['actionbar'];
 			if (toolbar && toolbar.get('mobile_wizard').checked)
 				toolbar.uncheck('mobile_wizard');
-			this.map.sendUnoCommand('.uno:Sidebar');
 			window.mobileWizard = false;
 		}
 
@@ -242,8 +242,10 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._reset();
 
-			this._showWizard();
-			this._hideKeyboard();
+			if (window.mobileWizard) {
+				this._showWizard();
+				this._hideKeyboard();
+			}
 
 			// We can change the sidebar as we want here
 			if (data.id === '') { // sidebar indicator

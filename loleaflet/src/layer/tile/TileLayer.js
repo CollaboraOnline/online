@@ -875,14 +875,18 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('mobilewizard', data);
 	},
 
-	_closeMobileWizard: function() {
-		this._map.fire('closemobilewizard');
+	_closeMobileWizard: function(data) {
+		this._map.fire('closemobilewizard', data);
 	},
 
 	_onJSDialogMsg: function (textMsg) {
-		if (window.mode.isMobile() && window.mobileWizard === true) {
+		if (window.mode.isMobile()) {
 			var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
-			this._openMobileWizard(msgData);
+			if (msgData.enabled) {
+				this._openMobileWizard(msgData);
+			} else {
+				this._closeMobileWizard(msgData);
+			}
 		}
 	},
 
