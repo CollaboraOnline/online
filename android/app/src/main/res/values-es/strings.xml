@@ -1,0 +1,145 @@
+<resources>
+    <!--string name="app_name" aquí falta la definición deliberadamente, se completa en build.gradle.-->
+
+    <string name="app_name_settings">Ajustes</string>
+    <string name="app_version">Version: %1$s, Build ID: %2$s</string>
+    <string name="app_description">$APP_NAME es un conjunto de productividad de código abierto moderno y fácil de usar, para procesamiento de textos, hojas de cálculo, presentaciones y más.</string>
+    <string name="app_vendor">Esta versión fue suministrada por $VENDOR.</string>
+
+    <string name="no_recent_items">No hay elementos recientes</string>
+    <string name="no_items">No hay elementos</string>
+    <string name="temp_file_saving_disabled">Este archivo es de solo lectura, el guardado está deshabilitado.</string>
+    <string name="file_exists_warning">Ya existe un archivo con este nombre y se sobreescribirá</string>
+    <string name="file_creation_failed">La creación del archivo falló</string>
+    <string name="storage_permission_required">Se require permiso de almacenamiento</string>
+    <string name="failed_to_load_file">Error al determinar el archivo a cargar</string>
+
+    <string name="list_view">Lista</string>
+    <string name="grid_view">Cuadrícula</string>
+    <string name="pref_category_explorer">Configuración del explorador de archivos</string>
+    <string name="pref_show_hidden_files">Archivos/Carpetas Ocultas</string>
+    <string name="pref_show_hidden_files_summary">Habilitar para mostrar archivos/carpetas ocultas</string>
+    <string name="pref_sort_summary">Seleccione cómo ordenar los archivos: A-Z, por tamaño o por fecha.</string>
+    <string name="pref_viewmode_summary">Ver archivos como una cuadrícula o en una lista.</string>
+    <string name="pref_file_explorer_title">Diseño del explorador de archivos</string>
+    <string name="pref_sort_title">Orden de Archivos</string>
+    <string name="pref_filter_title">Filtro de Archivos Predeterminado</string>
+    <string name="pref_filter_summary">Establezca quçe filstro de archivo debe usarse de manera predeterminada.</string>
+    <string name="display_language">Idioma de visualización</string>
+    <string name="display_language_summary">Establecer el idioma de visualización predeterminado</string>
+    <string name="pref_show_debug_info">Mostrar información de depuración</string>
+    <string name="pref_show_debug_info_summary">Habilite para mostrar información de depuración en el visor de documentos</string>
+
+    <string name="about_license">Mostrar Licencia</string>
+    <string name="about_notice">Mostrar Aviso</string>
+    <string name="about_moreinfo">Más Información</string>
+
+    <string name="new_textdocument">Nuevo Documento de Texto</string>
+    <string name="new_presentation">Nueva Presentación</string>
+    <string name="new_spreadsheet">Nueva Hoja de Cálculo</string>
+    <string name="new_drawing">Nuevo Dibujo</string>
+    <string name="default_document_name">sin título</string>
+
+    <string name="filter">Filtrar por</string>
+    <string name="sort">Ordenar por</string>
+    <string name="sort_smallest">Más pequeño primero</string>
+    <string name="sort_largest">Más grande primero</string>
+    <string name="sort_az">A-Z</string>
+    <string name="sort_za">Z-A</string>
+    <string name="sort_oldest">Más antiguo primero</string>
+    <string name="sort_newest">Más reciente primero</string>
+    <string name="file_icon_desc">icono de archivo</string>
+    <string name="title_recents">Archivos recientes</string>
+    <string name="title_browser">Todos los archivos</string>
+    <!-- Pref keys as resources ; Not currently used -->
+
+    <string name="action_about">Acerca de</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="open">Abrir</string>
+    <string name="share">Compartir</string>
+    <string name="share_via">Compartir vía</string>
+
+    <!-- Document browser filters -->
+    <string name="filter_everything">Todo</string>
+    <string name="filter_documents">Documentos</string>
+    <string name="filter_spreadsheets">Hojas de cálculo</string>
+    <string name="filter_presentations">Presentaciones</string>
+    <string name="filter_drawings">Dibujos</string>
+
+    <!-- Document provider names -->
+    <string name="document_locations">Ubicaciones de documentos</string>
+    <string name="close_document_locations">Cerrar ubicaciones de documentos</string>
+    <string name="local_documents">Directorio de documentos</string>
+    <string name="local_file_system">Systema de Arhivo local</string>
+    <string name="external_sd_file_system">SD Externa</string>
+    <string name="otg_file_system">Dispositivo OTB (experimental)</string>
+    <string name="remote_server">Servidor remoto</string>
+    <string name="usb_connected_configure">USB conectado, configure su dispositivo</string>
+
+    <string name="owncloud_wrong_connection">Imposible conectar con el servidor en la nube. Revise su configuración.</string>
+    <string name="owncloud_unauthorized">Imposible iniciar sesión en el servidor en la nube. Revise su configuración.</string>
+    <string name="owncloud_unspecified_error">Error no especificado al conectarse al servidor en la nube. Revise su configuración y/o intente más tarde.</string>
+
+    <string name="ext_document_provider_error">Archivo raíz no válido. Verifique la configuración de su tarjeta sd.</string>
+    <string name="otg_missing_error">Archivo raíz no válido. Verifique su dispositivo OTG y/o la configuración.</string>
+
+    <!-- Edit action names -->
+
+    <!-- Feedback messages -->
+
+    <!-- Document provider settings -->
+    <string name="storage_provider_settings">Configuración del proveedor de almacenamiento</string>
+    <string name="owncloud_settings">Configuración del servidor en la nube</string>
+    <string name="physical_storage_settings">Configuraciones de almacenamiento físico</string>
+    <string name="external_sd_path">Ruta SD externa</string>
+    <string name="otg_device_path">Ruta del dispositivo OTG</string>
+    <string name="otg_warning">Característica experimental: Úselo solo si el dispositivo OTG es grabable</string>
+    <string name="server_url">URL del servidor</string>
+    <string name="server_url_and_port">URL y puerto del servidor en la nube</string>
+    <string name="user_name">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
+
+    <!-- Directory browser strings -->
+    <string name="up_description">Al directorio principal</string>
+    <string name="confirm_label">Confirmar</string>
+    <string name="cancel_label">Cancelar</string>
+    <string name="search_label">Ir</string>
+    <string name="directory_browser_label">Elegir Directorio</string>
+    <string name="bad_directory">Ruta de directorio inválida</string>
+    <string name="current_dir">Directorio Actual: %1$s</string>
+
+    <!-- Permission rationale alert dialog strings -->
+    <string name="title_permission_required">Permiso Requerido</string>
+    <string name="reason_required_to_read_documents">Se requiere permiso de almacenamiento para leer sus documentos.</string>
+    <string name="positive_ok">OK</string>
+    <string name="negative_im_sure">Estoy seguro</string>
+    <string name="negative_cancel">Cancelar</string>
+
+    <!-- Save Alert dialog strings -->
+    <string name="action_cancel">Cancelar</string>
+
+    <!-- Create New Document Dialog Strings -->
+    <string name="create_new_document_title">Crear Nuevo Documento</string>
+    <string name="enter_filename">Por favor ingrese el nombre del archivo:</string>
+    <string name="action_create">Crear</string>
+    <string name="action_overwrite">Sobreescribir</string>
+
+    <!-- Loading SlideShow Dialog Strings -->
+    <string name="loading">Cargando...</string>
+
+    <!-- Presentation Mode Strings -->
+
+    <!-- Calc Header Menu Strings -->
+
+    <!-- Password dialog strings -->
+
+    <!-- Insert Image Strings -->
+
+    <!-- Clipboard Actions -->
+
+    <!-- UNO cmd controller Strings -->
+    <string name="unable_to_go_further">Imposible ir más allá.</string>
+    <string name="bmp_null">Bmp es nulo!</string>
+    <string name="directory_not_saved">Directorio no guardado.</string>
+    <string name="title_activity_show_html">Sobre</string>
+</resources>
