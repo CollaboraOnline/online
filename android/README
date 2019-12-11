@@ -113,7 +113,8 @@ to setup lldb to actually read & use them.
 
   This path contains the non-stripped version of the liblo-native-code.so, and
   the debugger will read the symbols from that one (even if the APK contains
-  the stripped version).
+  the stripped version). *NB* ensure that this is before any internal source
+  directories - since the internal source contains stripped native code.
 
   [Alternatively you can add the following to your ~/.lldbinit instead:
 
@@ -128,6 +129,8 @@ to setup lldb to actually read & use them.
 
 From now on, you will be able to debug directly in the Android Studio
 debugger.  Happy debugging!
+
+Note: to re-buld your app with a newly compiled libnative-lo code - it is 
 
 == Tip: How to speed up your core.git build ==
 
