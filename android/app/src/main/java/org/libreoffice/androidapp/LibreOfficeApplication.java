@@ -26,11 +26,6 @@ public class LibreOfficeApplication extends Application {
 
         return mainHandler;
     }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
-    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -59,7 +59,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.libreoffice.androidapp.AboutDialogFragment;
 import org.libreoffice.androidapp.LibreOfficeApplication;
-import org.libreoffice.androidapp.LocaleHelper;
 import org.libreoffice.androidapp.R;
 import org.libreoffice.androidapp.SettingsActivity;
 import org.libreoffice.androidapp.SettingsListenerModel;
@@ -107,7 +106,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private int viewMode;
     private int sortMode;
     private boolean showHiddenFiles;
-    private String displayLanguage;
 
     // dynamic permissions IDs
     private static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 0;
@@ -132,7 +130,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     public static final String SORT_MODE_KEY = "SORT_MODE";
     private static final String RECENT_DOCUMENTS_KEY = "RECENT_DOCUMENTS";
     private static final String ENABLE_SHOW_HIDDEN_FILES_KEY = "ENABLE_SHOW_HIDDEN_FILES";
-    private static final String DISPLAY_LANGUAGE = "DISPLAY_LANGUAGE";
 
     public static final String NEW_FILE_PATH_KEY = "NEW_FILE_PATH_KEY";
     public static final String NEW_DOC_TYPE_KEY = "NEW_DOC_TYPE_KEY";
@@ -198,11 +195,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         createUI();
         fabOpenAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_open);
         fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleHelper.onAttach(newBase, "en"));
     }
 
     public void createUI() {
@@ -940,7 +932,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         viewMode = Integer.valueOf(defaultPrefs.getString(EXPLORER_VIEW_TYPE_KEY, "" + GRID_VIEW));
         filterMode = Integer.valueOf(defaultPrefs.getString(FILTER_MODE_KEY, "-1"));
         showHiddenFiles = defaultPrefs.getBoolean(ENABLE_SHOW_HIDDEN_FILES_KEY, false);
-        displayLanguage = defaultPrefs.getString(DISPLAY_LANGUAGE, "en");
 
         Intent i = this.getIntent();
         if (i.hasExtra(CURRENT_DIRECTORY_KEY)) {
@@ -962,8 +953,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             viewMode = i.getIntExtra(EXPLORER_VIEW_TYPE_KEY, GRID_VIEW);
             Log.d(LOGTAG, EXPLORER_VIEW_TYPE_KEY);
         }
-
-        LocaleHelper.setLocale(this, displayLanguage);
     }
 
 

@@ -8,10 +8,6 @@
         <item >2</item>
         <item >3</item>
     </string-array>
-    <string-array name="SupportedLanguagesValues">
-        <item >en</item>
-        <!-- FIXME we need more languages item >tr</item-->
-    </string-array>
     <string-array name="SortModeStringValues">
         <item >0</item>
         <item >1</item>
@@ -35,10 +31,6 @@
         <item>@string/filter_spreadsheets</item>
         <item>@string/filter_presentations</item>
         <item>@string/filter_drawings</item>
-    </string-array>
-    <string-array name="SupportedLanguages">
-        <item>English</item>
-        <!-- FIXME we need more languages item>Turkçe</item-->
     </string-array>
     <string-array name="SortModeNames">
         <item >@string/sort_az</item>

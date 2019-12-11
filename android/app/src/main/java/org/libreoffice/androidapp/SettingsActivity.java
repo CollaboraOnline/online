@@ -53,9 +53,6 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             SettingsListenerModel.getInstance().changePreferenceState(sharedPreferences, key);
-            if (key.equals("DISPLAY_LANGUAGE")) {
-                getActivity().recreate();
-            }
         }
     }
 }
