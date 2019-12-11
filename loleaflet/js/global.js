@@ -83,7 +83,7 @@
 
 	global._ = function (string) {
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsAMobileApp) {
 			// We use another approach just for iOS for now.
 			if (window.LOCALIZATIONS.hasOwnProperty(string)) {
 				// window.postMobileDebug('_(' + string + '): YES: ' + window.LOCALIZATIONS[string]);
@@ -96,9 +96,6 @@
 				// window.postMobileDebug('_(' + string + '): NO');
 				return string;
 			}
-		} else if (window.ThisIsAMobileApp) {
-			// And bail out without translations on other mobile platforms.
-			return string;
 		} else {
 			return string.toLocaleString();
 		}
@@ -138,7 +135,7 @@
 
 	var lang = global.getParameterByName('lang');
 	global.queueMsg = [];
-	if (window.ThisIsTheiOSApp)
+	if (window.ThisIsAMobileApp)
 		window.LANG = lang;
 	if (global.socket && global.socket.readyState !== 3) {
 		global.socket.onopen = function () {
@@ -149,7 +146,7 @@
 
 				global.socket.send('loolclient ' + ProtocolVersionNumber);
 
-				if (window.ThisIsTheiOSApp) {
+				if (window.ThisIsAMobileApp) {
 					msg += ' lang=' + window.LANG;
 				} else {
 

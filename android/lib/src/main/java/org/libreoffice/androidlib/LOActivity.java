@@ -460,14 +460,21 @@ public class LOActivity extends AppCompatActivity {
         // trigger the load of the document
         String finalUrlToLoad = "file:///android_asset/dist/loleaflet.html?file_path=" +
                 urlToLoad + "&closebutton=1";
+
+        // set the language
+        finalUrlToLoad += "&lang=" + getResources().getConfiguration().locale.toLanguageTag();
+
         if (isDocEditable) {
             finalUrlToLoad += "&permission=edit";
         } else {
             finalUrlToLoad += "&permission=readonly";
         }
+
         if (isDocDebuggable) {
             finalUrlToLoad += "&debug=true";
         }
+
+        // load the page
         mWebView.loadUrl(finalUrlToLoad);
 
         documentLoaded = true;
