@@ -170,6 +170,7 @@ L.Control.PartsPreview = L.Control.extend({
 			.on(img, 'click', this._map.focus, this._map)
 			.on(img, 'click', function() {
 				this.partsFocused = true;
+				document.activeElement.blur();
 			}, this);
 
 		var topBound = this._previewContTop;
