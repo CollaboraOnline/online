@@ -5,11 +5,13 @@ apply from: 'appSettings.gradle'
 
 android {
     compileSdkVersion 28
+
     defaultConfig {
         // applicationId, versionCode and versionName are defined in appSettings.gradle
         minSdkVersion 21
         targetSdkVersion 28
     }
+
     buildTypes {
         debug {
             resValue "string", "app_name", "${liboAppName} Debug"
@@ -40,6 +42,11 @@ android {
                     'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 repositories {
@@ -54,7 +61,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
+
     implementation 'com.github.nextcloud:android-library:-SNAPSHOT'
+    implementation "commons-httpclient:commons-httpclient:3.1@jar" // remove after entire switch to lib v2
 
     //before changing the version please see https://issuetracker.google.com/issues/111662669
     implementation 'androidx.preference:preference:1.1.0-alpha01'
