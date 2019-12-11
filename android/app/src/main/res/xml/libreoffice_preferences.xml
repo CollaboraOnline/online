@@ -30,15 +30,6 @@
             android:summary="@string/pref_viewmode_summary"
             app:iconSpaceReserved="false" />
 
-        <ListPreference
-            android:title="@string/display_language"
-            android:summary="@string/display_language_summary"
-            android:entries="@array/SupportedLanguages"
-            android:entryValues="@array/SupportedLanguagesValues"
-            android:defaultValue="en"
-            android:key="DISPLAY_LANGUAGE"
-            app:iconSpaceReserved="false" />
-
         <CheckBoxPreference
             android:title="@string/pref_show_hidden_files"
             android:key="ENABLE_SHOW_HIDDEN_FILES"
