@@ -248,7 +248,7 @@ public class LOActivity extends AppCompatActivity {
                 }
             } else if (getIntent().getData().getScheme().equals(ContentResolver.SCHEME_FILE)) {
                 isDocEditable = true;
-                urlToLoad = getIntent().getData().getPath();
+                urlToLoad = getIntent().getData().toString();
                 Log.d(TAG, "SCHEME_FILE: getPath(): " + getIntent().getData().getPath());
                 // Gather data to rebuild IFile object later
                 providerId = getIntent().getIntExtra(
