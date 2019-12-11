@@ -1132,7 +1132,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mUSBReceiver);
-        unregisterReceiver(mLOActivityReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLOActivityReceiver);
         Log.d(LOGTAG, "onDestroy");
     }
 
