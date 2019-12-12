@@ -175,6 +175,7 @@ std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 DocumentBroker::DocumentBroker(const std::string& uri,
                                const Poco::URI& uriPublic,
                                const std::string& docKey) :
+    _limitLifeSeconds(0),
     _uriOrig(uri),
     _uriPublic(uriPublic),
     _docKey(docKey),
@@ -305,6 +306,22 @@ void DocumentBroker::pollThread()
                             << _childProcess->getPid() << "]. per_document.limit_load_secs set to "
                             << limit_load_secs << " secs.");
             broadcastMessage("error: cmd=load kind=docloadtimeout");
+
+            // Brutal but effective.
+            if (_childProcess)
+                _childProcess->terminate();
+
+            stop("Load timed out");
+            continue;
+        }
+
+        if (_limitLifeSeconds > 0 &&
+            std::chrono::duration_cast<std::chrono::seconds>(now - _threadStart).count() > _limitLifeSeconds)
+        {
+            LOG_WRN("Doc [" << _docKey << "] is taking too long to convert. Will kill process ["
+                            << _childProcess->getPid() << "]. per_document.limit_convert_secs set to "
+                            << _limitLifeSeconds << " secs.");
+            broadcastMessage("error: cmd=load kind=docexpired");
 
             // Brutal but effective.
             if (_childProcess)
@@ -2181,7 +2198,9 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
                                  const std::string& docKey)
     : DocumentBroker(uri, uriPublic, docKey)
 {
+    static const int limit_convert_secs = LOOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100);
     NumConverters++;
+    _limitLifeSeconds = limit_convert_secs;
 }
 
 void ConvertToBroker::dispose()
@@ -2252,11 +2271,14 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
+    os << "\n  thread start: " << Util::getSteadyClockAsString(_threadStart);
     os << "\n  last saved: " << Util::getSteadyClockAsString(_lastSaveTime);
     os << "\n  last save request: " << Util::getSteadyClockAsString(_lastSaveRequestTime);
     os << "\n  last save response: " << Util::getSteadyClockAsString(_lastSaveResponseTime);
     os << "\n  last modifed: " << Util::getHttpTime(_documentLastModifiedTime);
     os << "\n  file last modifed: " << Util::getHttpTime(_lastFileModifiedTime);
+    if (_limitLifeSeconds)
+        os << "\n  life limit in seconds: " << _limitLifeSeconds;
     os << "\n  idle time: " << getIdleTimeSecs();
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
