@@ -131,6 +131,35 @@ L.LatLngBounds.prototype = {
 		       (sw2.lng >= sw.lng) && (ne2.lng <= ne.lng);
 	},
 
+	// Similar to contains() but for line selections,
+	// where the whole horizontal area is selected.
+	// This is of course an oversimplification, as
+	// text can be in a column, but at the moment we
+	// don't capture the area of text selections, only
+	// the first and last points.
+	inBand: function (obj) {
+		if (typeof obj[0] === 'number' || obj instanceof L.LatLng) {
+			obj = L.latLng(obj);
+		} else {
+			obj = L.latLngBounds(obj);
+		}
+
+		var sw = this._southWest,
+		    ne = this._northEast,
+		    sw2, ne2;
+
+		if (obj instanceof L.LatLngBounds) {
+			sw2 = obj.getSouthWest();
+			ne2 = obj.getNorthEast();
+		} else {
+			sw2 = ne2 = obj;
+		}
+
+		// Assume the longitudes are 100% the document width,
+		// so always matches.
+		return (sw2.lat >= sw.lat) && (ne2.lat <= ne.lat);
+	},
+
 	intersects: function (bounds) { // (LatLngBounds)
 		bounds = L.latLngBounds(bounds);
 
