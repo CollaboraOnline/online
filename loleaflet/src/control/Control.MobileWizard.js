@@ -58,7 +58,6 @@ L.Control.MobileWizard = L.Control.extend({
 	_showWizard: function() {
 		$('#mobile-wizard').show();
 		$('#toolbar-down').hide();
-		this._refreshSidebar();
 	},
 
 	_showWizardSidebar: function() {
@@ -234,11 +233,14 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_onMobileWizard: function(data) {
 		if (data) {
-			var isSidebar = data.id !== 'menubar' && data.id !== 'insertshape' && data.id !== 'funclist';
+			var isSidebar = data.id !== 'insert' && data.id !== 'menubar'
+				&& data.id !== 'insertshape' && data.id !== 'funclist';
 
 			if (!this._isActive && isSidebar) {
 				if (this.map.showSidebar == false)
 					return;
+				else
+					this._refreshSidebar();
 			}
 
 			this._isActive = true;
