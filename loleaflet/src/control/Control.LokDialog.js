@@ -945,7 +945,6 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_paintDialog: function(parentId, rectangle, imgData) {
-
 		var strId = this._toStrId(parentId);
 		var canvas = document.getElementById(strId + '-canvas');
 		if (!canvas)
@@ -967,6 +966,7 @@ L.Control.LokDialog = L.Control.extend({
 
 			// Sidebars find out their size and become visible on first paint.
 			if (that._isSidebar(parentId)) {
+				//console.log('_paintDialog: side-bar: width: ' + that._currentDeck.width);
 				that._resizeSidebar(strId, that._currentDeck.width);
 
 				// Update the underlying canvas.
@@ -974,37 +974,41 @@ L.Control.LokDialog = L.Control.extend({
 				that._setCanvasWidthHeight(panelCanvas, that._currentDeck.width, that._currentDeck.height);
 			}
 
+			// calc input bar find out their size on first paint call
 			var isCalcInputBar = that._isCalcInputBar(parentId);
-			if (isCalcInputBar) {
+			var container = L.DomUtil.get(strId);
+			if (isCalcInputBar && container) {
+				//console.log('_paintDialog: calc input bar: width: ' + that._calcInputBar.width);
 				var canvas = L.DomUtil.get(that._calcInputBar.strId + '-canvas');
 				that._setCanvasWidthHeight(canvas, that._calcInputBar.width, that._calcInputBar.height);
+				$(container).parent().show(); // show or width is 0
+				var deckOffset = 0;
+				if (that._currentDeck) {
+					var sidebar = L.DomUtil.get(that._currentDeck.strId);
+					if (sidebar) {
+						deckOffset = sidebar.clientWidth;
+					}
+				}
+				var correctWidth = container.clientWidth - deckOffset;
+				// resize the input bar to the correct size
+				// the input bar is rendered only if when the size is the expected one
+				if (that._calcInputBar.width !== correctWidth) {
+					console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
+					that._dialogs[parentId].isPainting = false;
+					that._map._socket.sendMessage('resizewindow ' + parentId + ' size=' + correctWidth + ',' + that._calcInputBar.height);
+					return;
+				}
 			}
 
 			ctx.drawImage(img, x, y);
 
 			// if dialog is hidden, show it
-			var container = L.DomUtil.get(strId);
 			if (container)
-				$(container).parent().show();
+				 $(container).parent().show();
 			if (parentId in that._dialogs) {
 				// We might have closed the dialog by the time we render.
 				that.focus(parentId);
 				that._dialogs[parentId].isPainting = false;
-			}
-
-			if (isCalcInputBar && container) {
-				var deckOffset = 0;
-				if (that._currentDeck) {
-					var sidebar = L.DomUtil.get(that._currentDeck.strId);
-					if (sidebar) {
-						deckOffset = sidebar.width;
-					}
-				}
-				var correctWidth = container.clientWidth - deckOffset;
-				if (that._calcInputBar.width !== correctWidth) {
-					console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
-					that._map._socket.sendMessage('resizewindow ' + parentId + ' size=' + correctWidth + ',' + that._calcInputBar.height);
-				}
 			}
 		};
 		img.src = imgData;
@@ -1049,7 +1053,8 @@ L.Control.LokDialog = L.Control.extend({
 		var deckOffset = 0;
 		var sidebar = L.DomUtil.get(strId);
 		if (sidebar) {
-			deckOffset = width === 0 ? sidebar.width : -width;
+			if (sidebar.width !== width)
+				deckOffset = width === 0 ? sidebar.width : -width;
 			sidebar.width = width;
 			if (sidebar.style)
 				sidebar.style.width = width.toString() + 'px';
