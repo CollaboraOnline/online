@@ -234,7 +234,8 @@ L.Control.MobileWizard = L.Control.extend({
 	_onMobileWizard: function(data) {
 		if (data) {
 			var isSidebar = data.id !== 'insert' && data.id !== 'menubar'
-				&& data.id !== 'insertshape' && data.id !== 'funclist';
+				&& data.id !== 'insertshape' && data.id !== 'funclist'
+				&& data.executionType !== 'menu';
 
 			if (!this._isActive && isSidebar) {
 				if (this.map.showSidebar == false)
