@@ -2195,12 +2195,62 @@ size_t ConvertToBroker::getInstanceCount()
 
 ConvertToBroker::ConvertToBroker(const std::string& uri,
                                  const Poco::URI& uriPublic,
-                                 const std::string& docKey)
-    : DocumentBroker(uri, uriPublic, docKey)
+                                 const std::string& docKey,
+                                 const std::string& format,
+                                 const std::string& sOptions) :
+    DocumentBroker(uri, uriPublic, docKey),
+    _format(format),
+    _sOptions(sOptions)
 {
     static const int limit_convert_secs = LOOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100);
     NumConverters++;
     _limitLifeSeconds = limit_convert_secs;
+}
+
+bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std::string &id)
+{
+    std::shared_ptr<ConvertToBroker> docBroker = std::static_pointer_cast<ConvertToBroker>(shared_from_this());
+
+    // Create a session to load the document.
+    const bool isReadOnly = true;
+    _clientSession = std::make_shared<ClientSession>(id, docBroker, getPublicUri(), isReadOnly, "nocliphost");
+    _clientSession->construct();
+
+    if (!_clientSession)
+        return false;
+
+    disposition.setMove([docBroker] (const std::shared_ptr<Socket> &moveSocket)
+        {
+            // Perform all of this after removing the socket
+
+            // Make sure the thread is running before adding callback.
+            docBroker->startThread();
+
+            // We no longer own this socket.
+            moveSocket->setThreadOwner(std::thread::id(0));
+
+            docBroker->addCallback([docBroker, moveSocket]()
+                 {
+                     auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                     docBroker->_clientSession->setSaveAsSocket(streamSocket);
+
+                     // Move the socket into DocBroker.
+                     docBroker->addSocketToPoll(moveSocket);
+
+                     // First add and load the session.
+                     docBroker->addSession(docBroker->_clientSession);
+
+                     // Load the document manually and request saving in the target format.
+                     std::string encodedFrom;
+                     Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
+                     const std::string load = "load url=" + encodedFrom;
+                     std::vector<char> loadRequest(load.begin(), load.end());
+                     docBroker->_clientSession->handleMessage(true, WSOpCode::Text, loadRequest);
+
+                     // Save is done in the setLoaded
+                 });
+        });
+    return true;
 }
 
 void ConvertToBroker::dispose()
@@ -2231,6 +2281,26 @@ void ConvertToBroker::removeFile(const std::string &uriOrig)
             LOG_ERR("Error while removing conversion temporary: '" << uriOrig << "' - " << ex.what());
         }
     }
+}
+
+void ConvertToBroker::setLoaded()
+{
+    DocumentBroker::setLoaded();
+
+    // FIXME: Check for security violations.
+    Poco::Path toPath(getPublicUri().getPath());
+    toPath.setExtension(_format);
+    const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
+    std::string encodedTo;
+    Poco::URI::encode(toJailURL, "", encodedTo);
+
+    // Convert it to the requested format.
+    const std::string saveAsCmd = "saveas url=" + encodedTo + " format=" + _format + " options=" + _sOptions;
+
+    // Send the save request ...
+    std::vector<char> saveasRequest(saveAsCmd.begin(), saveAsCmd.end());
+
+    _clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
 }
 
 std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()
