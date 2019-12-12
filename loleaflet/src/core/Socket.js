@@ -22,6 +22,8 @@ L.Socket = L.Class.extend({
 		console.debug('socket.initialize:');
 		this._map = map;
 		this._msgQueue = [];
+		this._delayedMessages = [];
+		this._handlingDelayedMessages = false;
 	},
 
 	getWebSocketBaseURI: function(map) {
@@ -817,9 +819,57 @@ L.Socket = L.Class.extend({
 			return;
 		}
 
-		if (this._map._docLayer) {
+		var msgDelayed = false;
+		if (!this._isReady() || this._delayedMessages.length || this._handlingDelayedMessages) {
+			msgDelayed = this._tryToDelayMessage(textMsg);
+		}
+
+		if (this._map._docLayer && !msgDelayed) {
 			this._map._docLayer._onMessage(textMsg, img);
 		}
+	},
+
+	_tryToDelayMessage: function(textMsg) {
+		var delayed = false;
+		if (textMsg.startsWith('window:') ||
+			textMsg.startsWith('celladdress:') ||
+			textMsg.startsWith('statechanged:')) {
+			//console.log('_tryToDelayMessage: textMsg: ' + textMsg);
+			var message = {msg: textMsg};
+			this._delayedMessages.push(message);
+			delayed  = true;
+		}
+
+		if (delayed && !this._delayedMsgHandlerTimeoutId) {
+			this._handleDelayedMessages();
+		}
+		return delayed;
+	},
+
+	_handleDelayedMessages: function() {
+		if (!this._isReady() || this._handlingDelayedMessages) {
+			var that = this;
+			// Retry in a bit.
+			this._delayedMsgHandlerTimeoutId = setTimeout(function() {
+				that._handleDelayedMessages();
+			}, 100);
+			return;
+		}
+		var messages = [];
+		for (var i = 0; i < this._delayedMessages.length; ++i) {
+			var message = this._delayedMessages[i];
+			if (message)
+				messages.push(message.msg);
+		}
+		this._delayedMessages = [];
+		this._delayedMsgHandlerTimeoutId = null;
+		this._handlingDelayedMessages = true;
+		if (this._map._docLayer) {
+			for (var k = 0; k < messages.length; ++k) {
+				this._map._docLayer._onMessage(messages[k]);
+			}
+		}
+		this._handlingDelayedMessages = false;
 	},
 
 	_delayedFitToScreen: function(height) {
