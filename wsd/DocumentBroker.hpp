@@ -443,6 +443,8 @@ private:
     void getIOStats(uint64_t &sent, uint64_t &recv);
 
 protected:
+    /// Seconds to live for, or 0 forever
+    int64_t _limitLifeSeconds;
     std::string _uriOrig;
 private:
     const Poco::URI _uriPublic;
