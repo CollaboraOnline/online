@@ -25,8 +25,11 @@
 <!-- Enable thumbnail generation by default (disabling saves CPU time) -->
 <item oor:path="/org.openoffice.Office.Common/Save/Document"><prop oor:name="GenerateThumbnail" oor:op="fuse"><value>true</value></prop></item>
 
-<!-- Use the colibre_svg theme for the sidebar -->
-<item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="SymbolStyle" oor:op="fuse"><value>colibre_svg</value></prop></item>
+<!-- Use the collabora_svg theme for the sidebar -->
+<item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="SymbolStyle" oor:op="fuse"><value>collabora_svg</value></prop></item>
+
+<!-- Use the large icons in the sidebar -->
+<item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="SidebarIconSize" oor:op="fuse"><value>2</value></prop></item>
 
 <!-- Disable GIO UCP we don't want -->
 <item oor:path="/org.openoffice.ucb.Configuration/ContentProviders/Local/SecondaryKeys/Office/ProviderData/Provider999"><prop oor:name="URLTemplate" oor:op="fuse"><value>NeverMatchAnyUrlSuffix</value></prop></item>
