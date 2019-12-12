@@ -245,7 +245,8 @@ public:
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
 
-    void setLoaded();
+    /// Notify that the load has completed
+    virtual void setLoaded();
 
     bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
 
@@ -518,15 +519,27 @@ private:
 
 class ConvertToBroker : public DocumentBroker
 {
+    const std::string _format;
+    const std::string _sOptions;
+    std::shared_ptr<ClientSession> _clientSession;
+
 public:
     /// Construct DocumentBroker with URI and docKey
     ConvertToBroker(const std::string& uri,
                     const Poco::URI& uriPublic,
-                    const std::string& docKey);
+                    const std::string& docKey,
+                    const std::string& format,
+                    const std::string& sOptions);
     virtual ~ConvertToBroker();
+
+    /// Move socket to this broker for response & do conversion
+    bool startConversion(SocketDisposition &disposition, const std::string &id);
 
     /// Called when removed from the DocBrokers list
     void dispose() override;
+
+    /// When the load completes - lets start saving
+    void setLoaded() override;
 
     /// How many live conversions are running.
     static size_t getInstanceCount();

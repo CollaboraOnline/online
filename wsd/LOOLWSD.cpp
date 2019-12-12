@@ -2605,7 +2605,6 @@ private:
             if (tokens.count() > 3)
                 format = tokens[3];
 
-            bool sent = false;
             std::string fromPath = handler.getFilename();
             LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
             if (!fromPath.empty() && !format.empty())
@@ -2627,7 +2626,7 @@ private:
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                 LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey);
+                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, sOptions);
                 handler.takeFile();
 
                 cleanupDocBrokers();
@@ -2636,69 +2635,11 @@ private:
                 DocBrokers.emplace(docKey, docBroker);
                 LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 
-                // Load the document.
-                // TODO: Move to DocumentBroker.
-                const bool isReadOnly = true;
-                std::shared_ptr<ClientSession> clientSession = createNewClientSession(
-                    nullptr, _id, uriPublic, docBroker, isReadOnly, "nocliphost");
-                if (clientSession)
-                {
-                    disposition.setMove([docBroker, clientSession, format, sOptions]
-                                        (const std::shared_ptr<Socket> &moveSocket)
-                    {
-                        // Perform all of this after removing the socket
-
-                        // Make sure the thread is running before adding callback.
-                        docBroker->startThread();
-
-                        // We no longer own this socket.
-                        moveSocket->setThreadOwner(std::thread::id(0));
-
-                        docBroker->addCallback([docBroker, moveSocket, clientSession, format, sOptions]()
-                        {
-                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-                            clientSession->setSaveAsSocket(streamSocket);
-
-                            // Move the socket into DocBroker.
-                            docBroker->addSocketToPoll(moveSocket);
-
-                            // First add and load the session.
-                            docBroker->addSession(clientSession);
-
-                            // Load the document manually and request saving in the target format.
-                            std::string encodedFrom;
-                            URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
-                            const std::string load = "load url=" + encodedFrom;
-                            std::vector<char> loadRequest(load.begin(), load.end());
-                            clientSession->handleMessage(true, WSOpCode::Text, loadRequest);
-
-                            // FIXME: Check for security violations.
-                            Path toPath(docBroker->getPublicUri().getPath());
-                            toPath.setExtension(format);
-                            const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
-                            std::string encodedTo;
-                            URI::encode(toJailURL, "", encodedTo);
-
-                            // Convert it to the requested format.
-                            const auto saveas = "saveas url=" + encodedTo + " format=" + format + " options=" + sOptions;
-                            std::vector<char> saveasRequest(saveas.begin(), saveas.end());
-                            clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
-                        });
-                    });
-
-                    sent = true;
-                }
-                else
+                if (!docBroker->startConversion(disposition, _id))
                 {
                     LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
                     cleanupDocBrokers();
                 }
-            }
-
-            if (!sent)
-            {
-                // TODO: We should differentiate between bad request and failed conversion.
-                throw BadRequestException("Failed to convert and send file.");
             }
             return;
         }
