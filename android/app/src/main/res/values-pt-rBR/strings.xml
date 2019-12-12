@@ -67,7 +67,7 @@
     <!-- Document provider names -->
     <string name="document_locations">Locais de arquivos</string>
     <string name="close_document_locations">Fechar Locais de arquivos</string>
-    <string name="local_documents">Diretorias de documentos</string>
+    <string name="local_documents">Diretórios de documentos</string>
     <string name="local_file_system">Sistema local de arquivos</string>
     <string name="external_sd_file_system">SD externo</string>
     <string name="otg_file_system">Dispositivo OTG (experimental)</string>
@@ -86,7 +86,7 @@
     <!-- Feedback messages -->
 
     <!-- Document provider settings -->
-    <string name="storage_provider_settings">Configurações do provedor de armazenamento</string>
+    <string name="storage_provider_settings">Configurações de servidor</string>
     <string name="owncloud_settings">Configurações do servidor na nuvem</string>
     <string name="physical_storage_settings">Configurações de armazenamento físico</string>
     <string name="external_sd_path">Caminho SD externo</string>
