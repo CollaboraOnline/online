@@ -875,8 +875,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('mobilewizard', data);
 	},
 
-	_closeMobileWizard: function(data) {
-		this._map.fire('closemobilewizard', data);
+	_closeMobileWizard: function() {
+		this._map.fire('closemobilewizard');
 	},
 
 	_onJSDialogMsg: function (textMsg) {
@@ -885,7 +885,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (msgData.enabled) {
 				this._openMobileWizard(msgData);
 			} else {
-				this._closeMobileWizard(msgData);
+				this._closeMobileWizard();
 			}
 		}
 	},

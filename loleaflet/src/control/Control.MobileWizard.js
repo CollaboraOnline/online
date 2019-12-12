@@ -26,7 +26,7 @@ L.Control.MobileWizard = L.Control.extend({
 		this.map = map;
 		map.on('mobilewizard', this._onMobileWizard, this);
 		map.on('closemobilewizard', this._hideWizard, this);
-		map.on('showmobilewizard', this._showWizard, this);
+		map.on('showwizardsidebar', this._showWizardSidebar, this);
 
 		this._setupBackButton();
 	},
@@ -60,6 +60,12 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#toolbar-down').hide();
 	},
 
+	_showWizardSidebar: function() {
+		this.map.showSidebar = true;
+		this._refreshSidebar();
+		this._showWizard();
+	},
+
 	_hideWizard: function() {
 		$('#mobile-wizard').hide();
 		$('#mobile-wizard-content').empty();
@@ -67,6 +73,7 @@ L.Control.MobileWizard = L.Control.extend({
 			$('#toolbar-down').show();
 		}
 
+		this.map.showSidebar = false;
 		this._isActive = false;
 		this._currentPath = [];
 		if (window.mobileWizard === true) {
@@ -228,8 +235,10 @@ L.Control.MobileWizard = L.Control.extend({
 		if (data) {
 			var isSidebar = data.id !== 'menubar' && data.id !== 'insertshape' && data.id !== 'funclist';
 
-			if (!this._isActive && isSidebar)
-				this._refreshSidebar();
+			if (!this._isActive && isSidebar) {
+				if (this.map.showSidebar == false)
+					return;
+			}
 
 			this._isActive = true;
 			var currentPath = null;
@@ -242,10 +251,8 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._reset();
 
-			if (window.mobileWizard) {
-				this._showWizard();
-				this._hideKeyboard();
-			}
+			this._showWizard();
+			this._hideKeyboard();
 
 			// We can change the sidebar as we want here
 			if (data.id === '') { // sidebar indicator
