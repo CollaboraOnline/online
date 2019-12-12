@@ -349,6 +349,8 @@ function onClick(e, id, item, subItem) {
 			if (!map._sidebarVisible) {
 				map._sidebarVisible = true;
 				map.sendUnoCommand('.uno:Sidebar');
+				if (map.hasObjectFocusDarkOverlay())
+					map.sendUnoCommand('.uno:Sidebar');
 			} else {
 				// As the sidebar LOKWindowId can and does change,
 				// esp. between chart and other elements, we apparently
