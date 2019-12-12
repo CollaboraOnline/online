@@ -605,6 +605,7 @@ public class LOActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                break;
             case "DIM_SCREEN": {
                 mainHandler.post(new Runnable() {
                     @Override
