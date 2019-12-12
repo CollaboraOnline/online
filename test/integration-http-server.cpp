@@ -51,6 +51,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testScriptsAndLinksGet);
     CPPUNIT_TEST(testScriptsAndLinksPost);
     CPPUNIT_TEST(testConvertTo);
+    CPPUNIT_TEST(testConvertTo2);
     CPPUNIT_TEST(testConvertToWithForwardedClientIP);
 
     CPPUNIT_TEST_SUITE_END();
@@ -62,6 +63,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     void testScriptsAndLinksGet();
     void testScriptsAndLinksPost();
     void testConvertTo();
+    void testConvertTo2();
     void testConvertToWithForwardedClientIP();
 
 public:
@@ -375,6 +377,44 @@ void HTTPServerTest::testConvertTo()
     CPPUNIT_ASSERT_EQUAL(expectedStream.str(), actualString);
 }
 
+void HTTPServerTest::testConvertTo2()
+{
+    const std::string srcPath = FileUtil::getTempFilePath(TDOC, "convert-to.xlsx", "convertTo_");
+    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+    session->setTimeout(Poco::Timespan(5, 0)); // 5 seconds.
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+    Poco::Net::HTMLForm form;
+    form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+    form.set("format", "png");
+    form.addPart("data", new Poco::Net::FilePartSource(srcPath));
+    form.prepareSubmit(request);
+    try
+    {
+        form.write(session->sendRequest(request));
+    }
+    catch (const std::exception& ex)
+    {
+        // In case the server is still starting up.
+        sleep(2);
+        form.write(session->sendRequest(request));
+    }
+
+    Poco::Net::HTTPResponse response;
+    std::stringstream actualStream;
+    std::istream& responseStream = session->receiveResponse(response);
+    Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+    // Remove the temp files.
+    FileUtil::removeFile(srcPath);
+
+    std::string actualString = actualStream.str();
+    CPPUNIT_ASSERT(actualString.size() >= 100);
+//  CPPUNIT_ASSERT_EQUAL(actualString[0], 0x89);
+    CPPUNIT_ASSERT_EQUAL(actualString[1], 'P');
+    CPPUNIT_ASSERT_EQUAL(actualString[2], 'N');
+    CPPUNIT_ASSERT_EQUAL(actualString[3], 'G');
+}
 
 void HTTPServerTest::testConvertToWithForwardedClientIP()
 {
