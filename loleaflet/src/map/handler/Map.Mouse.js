@@ -117,7 +117,8 @@ L.Map.Mouse = L.Handler.extend({
 			}
 			clearTimeout(this._holdMouseEvent);
 			this._holdMouseEvent = null;
-			if (this._clickTime && Date.now() - this._clickTime <= 250) {
+			var timeDiff = Date.now() - this._clickTime;
+			if (this._clickTime && timeDiff > 1 && timeDiff <= 250) {
 				// double click, a click was sent already
 				this._mouseEventsQueue = [];
 				this._clickCount++;
