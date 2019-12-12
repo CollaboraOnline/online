@@ -2207,6 +2207,7 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
     _limitLifeSeconds = limit_convert_secs;
 }
 
+#if !MOBILEAPP
 bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std::string &id)
 {
     std::shared_ptr<ConvertToBroker> docBroker = std::static_pointer_cast<ConvertToBroker>(shared_from_this());
@@ -2252,6 +2253,7 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
         });
     return true;
 }
+#endif
 
 void ConvertToBroker::dispose()
 {

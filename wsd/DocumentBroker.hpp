@@ -532,8 +532,10 @@ public:
                     const std::string& sOptions);
     virtual ~ConvertToBroker();
 
+#if !MOBILEAPP
     /// Move socket to this broker for response & do conversion
     bool startConversion(SocketDisposition &disposition, const std::string &id);
+#endif
 
     /// Called when removed from the DocBrokers list
     void dispose() override;
