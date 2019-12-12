@@ -58,6 +58,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_showWizard: function() {
 		$('#mobile-wizard').show();
 		$('#toolbar-down').hide();
+		this._refreshSidebar();
 	},
 
 	_showWizardSidebar: function() {
