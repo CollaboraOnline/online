@@ -1705,6 +1705,9 @@ L.TileLayer = L.GridLayer.extend({
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
 			var oldSelection = this._textSelectionStart;
+			//FIXME: The selection is really not two points, as they can be
+			//FIXME: on top of each other, but on separate lines. We should
+			//FIXME: capture the whole area in _onTextSelectionMsg.
 			this._textSelectionStart = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));

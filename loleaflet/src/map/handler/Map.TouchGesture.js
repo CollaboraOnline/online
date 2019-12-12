@@ -268,7 +268,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			if (docLayer._textSelectionStart && docLayer._textSelectionEnd)
 				textSelection = new L.LatLngBounds(docLayer._textSelectionStart.getSouthWest(), docLayer._textSelectionEnd.getNorthEast());
 
-			if ((textSelection && textSelection.contains(latlng))
+			if ((textSelection && textSelection.inBand(latlng))
 				|| (graphicSelection && graphicSelection.contains(latlng))
 				|| (cellCursor && cellCursor.contains(latlng))) {
 				// long touched an already selected object
