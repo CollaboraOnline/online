@@ -595,7 +595,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._onTextSelectionMsg(textMsg);
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
-			this._map._clip.setTextSelectionHTML(textMsg.substr(22));
+			if (this._map._clip)
+				this._map._clip.setTextSelectionHTML(textMsg.substr(22));
 		}
 		else if (textMsg.startsWith('textselectionend:')) {
 			this._onTextSelectionEndMsg(textMsg);
@@ -610,7 +611,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._onCellAutoFillAreaMsg(textMsg);
 		}
 		else if (textMsg.startsWith('complexselection:')) {
-			this._map._clip.onComplexSelection(textMsg.substr('complexselection:'.length));
+			if (this._map._clip)
+				this._map._clip.onComplexSelection(textMsg.substr('complexselection:'.length));
 		}
 		else if (textMsg.startsWith('tile:')) {
 			this._onTileMsg(textMsg, img);
@@ -730,7 +732,7 @@ L.TileLayer = L.GridLayer.extend({
 		// When the user moves the focus to a different cell, a 'cellformula'
 		// message is received from lowsd, *then* a 'celladdress' message.
 		var address = textMsg.substring(13);
-		if (!this._map['wopi'].DisableCopy) {
+		if (this._map._clip && !this._map['wopi'].DisableCopy) {
 			this._map._clip.setTextSelectionText(this._lastFormula);
 		}
 		this._map.fire('celladdress', {address: address});
@@ -954,7 +956,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		// Graphics are by default complex selections, unless Core tells us otherwise.
-		this._map._clip.onComplexSelection('');
+		if (this._map._clip)
+			this._map._clip.onComplexSelection('');
 		if (this._selectionContentRequest) {
 			clearTimeout(this._selectionContentRequest);
 		}
@@ -1947,7 +1950,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateGraphicSelection();
 		this._cellCursor = null;
 		this._onUpdateCellCursor();
-		this._map._clip.clearSelection();
+		if (this._map._clip)
+			this._map._clip.clearSelection();
 	},
 
 	containsSelection: function (latlng) {
@@ -3023,10 +3027,12 @@ L.TileLayer = L.GridLayer.extend({
 		e = e.originalEvent;
 		e.preventDefault();
 
-		// Always capture the html content separate as we may lose it when we
-		// pass the clipboard data to a different context (async calls, f.e.).
-		var htmlText = e.dataTransfer.getData('text/html');
-		this._map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false, htmlText);
+		if (this._map._clip) {
+			// Always capture the html content separate as we may lose it when we
+			// pass the clipboard data to a different context (async calls, f.e.).
+			var htmlText = e.dataTransfer.getData('text/html');
+			this._map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false, htmlText);
+		}
 	},
 
 	_onDragStart: function () {

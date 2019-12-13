@@ -442,7 +442,7 @@ L.Map.include({
 		if (this.hyperlinkUnderCursor && this.hyperlinkUnderCursor.text && this.hyperlinkUnderCursor.link) {
 			text = this.hyperlinkUnderCursor.text;
 			link = this.hyperlinkUnderCursor.link;
-		} else if (this._clip._selectionType == 'text') {
+		} else if (this._clip && this._clip._selectionType == 'text') {
 			text = this.extractContent(this._clip._selectionContent);
 		}
 

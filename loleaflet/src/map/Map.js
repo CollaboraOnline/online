@@ -58,7 +58,8 @@ L.Map = L.Evented.extend({
 			this.options.documentContainer = L.DomUtil.get(this.options.documentContainer);
 		}
 
-		this._clip = L.clipboard(this);
+		if (!window.ThisIsTheiOSApp)
+			this._clip = L.clipboard(this);
 		this._initContainer(id);
 		this._initLayout();
 
