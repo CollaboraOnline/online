@@ -125,6 +125,8 @@
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Loading...</string>
 
+    <string name="share_document">Share Document</string>
+
     <!-- Presentation Mode Strings -->
 
     <!-- Calc Header Menu Strings -->

@@ -92,6 +92,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -730,7 +731,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     }
 
     private void share(int position) {
-
         new AsyncTask<IFile, Void, File>() {
             @Override
             protected File doInBackground(IFile... document) {
@@ -755,14 +755,14 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             @Override
             protected void onPostExecute(File file) {
                 if (file != null) {
-                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                    Uri uri = Uri.fromFile(file);
-                    sharingIntent.setType(FileUtilities.getMimeType(file.getName()));
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                            file.getName());
-                    startActivity(Intent.createChooser(sharingIntent,
-                            getString(R.string.share_via)));
+                    Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+                    Uri finalDocUri = FileProvider.getUriForFile(LibreOfficeUIActivity.this,
+                            LibreOfficeUIActivity.this.getApplicationContext().getPackageName() + ".fileprovider",
+                            file);
+                    intentShareFile.putExtra(Intent.EXTRA_STREAM, finalDocUri);
+                    intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intentShareFile.setDataAndType(finalDocUri, LibreOfficeUIActivity.this.getContentResolver().getType(finalDocUri));
+                    LibreOfficeUIActivity.this.startActivity(Intent.createChooser(intentShareFile, LibreOfficeUIActivity.this.getString(R.string.share_document)));
                 }
             }
         }.execute(filePaths.get(position));
