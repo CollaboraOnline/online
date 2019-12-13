@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"Last-Translator: Andras Timar <timar74@gmail.com>\n"
+"Language-Team: Hungarian <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-help/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-help-hu.po\n"
 "X-Pootle-Revision: 826976\n"
 
@@ -788,7 +789,7 @@ msgstr "Nem törő szóköz beszúrása"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-70
 msgid "Ctrl + Shift + Space"
-msgstr "Ctrl + Shift + Space"
+msgstr "Ctrl + Shift + szóköz"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-18
 msgid "Insert line break"

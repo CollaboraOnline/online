@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading">Betöltés...</string>
+    <string name="cannot_open_file_chooser">Nem lehet megnyitni a fájlválasztót</string>
+    <string name="failed_to_insert_image">Nem sikerült beilleszteni a képet</string>
+    <string name="failed_to_load_file">Nem sikerült meghatározni a betöltendő fájlt</string>
+    <string name="storage_permission_required">Jogosultság szükséges a tárolóhelyhez való hozzáféréshez</string>
+    <string name="temp_file_saving_disabled">Ez a fájl írásvédett, a mentés le van tiltva.</string>
+</resources>

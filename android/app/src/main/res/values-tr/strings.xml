@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name_settings">Ayarları</string>
-
-    <string name="app_version">Versiyon: %1$s\nBuild ID: %2$s</string>
+    <string name="app_version">Versiyon: %1$s, Build ID: %2$s</string>
     <string name="app_description">$APP_NAME LibreOffice tabanlı bir belge görüntüleyicisidir.</string>
     <string name="app_vendor">Bu sürüm $VENDOR tarafından derlenmiştir.</string>
     <string name="temp_file_saving_disabled">Bu dosya salt okunabilir haldedir. Kaydetme devredışı.</string>
-
     <string name="about_license">Lisansı Görüntüle</string>
     <string name="about_notice">Bildiriyi Görüntüle</string>
     <string name="about_moreinfo">Daha Fazla Bilgi</string>
-
     <string name="new_textdocument">Yeni Kelime İşlemci</string>
     <string name="new_presentation">Yeni Sunum</string>
     <string name="new_spreadsheet">Yeni Hesap Tablosu</string>
     <string name="new_drawing">Yeni Çizim</string>
     <string name="default_document_name">adsız</string>
-
     <string name="list_view">Liste</string>
     <string name="grid_view">Grid</string>
     <string name="filter">Şununla filtrele:</string>
@@ -35,20 +30,17 @@
     <string name="pref_category_explorer">Dosya Gezgini Ayarları</string>
     <string name="pref_show_hidden_files">Gizli Dosyalar ve Dizinler</string>
     <string name="pref_show_hidden_files_summary">Gizli dosyalar ve dizinleri göstermeyi etkinleştir.</string>
-
     <string name="action_about">Hakkında</string>
     <string name="action_settings">Ayarlar</string>
     <string name="open">Aç</string>
     <string name="share">Paylaş</string>
     <string name="share_via">Şununla paylaş</string>
-
     <!-- Document browser filters -->
     <string name="filter_everything">Hepsi</string>
     <string name="filter_documents">Kelime İşlemci</string>
     <string name="filter_spreadsheets">Hesap Tablosu</string>
     <string name="filter_presentations">Sunum</string>
     <string name="filter_drawings">Çizimler</string>
-
     <!-- Document provider names -->
     <string name="document_locations">Belge dizinleri</string>
     <string name="close_document_locations">Belge dizinlerini kapat</string>
@@ -57,18 +49,13 @@
     <string name="external_sd_file_system">Harici SD</string>
     <string name="otg_file_system">OTG cihazı (deneysel)</string>
     <string name="usb_connected_configure">USB bağlantısı yapıldı, cihazınızın ayarlarını yapınız.</string>
-
     <string name="owncloud_wrong_connection">Cloud sunucusuna bağlanılamadı. Ayarlarınızı kontrol ediniz.</string>
     <string name="owncloud_unauthorized">Cloud sunucusuna giriş yapılamadı. Ayarlarınızı kontrol ediniz.</string>
     <string name="owncloud_unspecified_error">Cloud sunucusuna bağlanırken belirtilmemiş bir hata oluştu. Lütfen daha sonra tekrar deneyiniz veya ayarlarınızı kontrol ediniz.</string>
-
     <string name="ext_document_provider_error">Geçersiz dizin. SD kart ayarlarınızı kontrol ediniz.</string>
     <string name="otg_missing_error">Geçersiz dizin. OTG cihazınızı veya OTG cihazı ayarlarınızı kontrol ediniz.</string>
-
     <!-- Edit action names -->
-
     <!-- Feedback messages -->
-
     <!-- Document provider settings -->
     <string name="storage_provider_settings">Depolama sağlayıcısı ayarları</string>
     <string name="owncloud_settings">Cloud ayarları</string>
@@ -80,7 +67,6 @@
     <string name="server_url_and_port">Cloud sunucusu URL ve port</string>
     <string name="user_name">Kullanıcı Adı</string>
     <string name="password">Parola</string>
-
     <!-- Directory browser strings -->
     <string name="up_description">Üst dizin</string>
     <string name="confirm_label">Onayla</string>
@@ -89,24 +75,16 @@
     <string name="directory_browser_label">Dizin Seç</string>
     <string name="bad_directory">Geçersiz dizin</string>
     <string name="current_dir">Şuan ki dizin: %1$s</string>
-
     <!-- Save Alert dialog strings -->
     <string name="action_cancel">İptal</string>
-
     <!-- Create New Document Dialog Strings -->
     <string name="create_new_document_title">Dosya ismi girin</string>
     <string name="action_create">OLUŞTUR</string>
-
     <!-- Presentation Mode Strings -->
-
     <!-- Calc Header Menu Strings -->
-
     <!-- Password dialog strings -->
-
     <!-- Insert Image Strings -->
-
     <!-- Clipboard Actions -->
-
     <!-- UNO cmd controller Strings -->
     <string name="unable_to_go_further">Daha fazla ilerlenemiyor.</string>
     <string name="pref_sort_summary">Dosyaların nasıl sıralanacağını seçiniz. A-Z, Z-A ya da boyuta göre.</string>

@@ -7,16 +7,17 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-04 20:16+0100\n"
-"PO-Revision-Date: 2019-11-04 20:33+0100\n"
+"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"Language-Team: Spanish <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
 "X-Pootle-Revision: 3939976\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -295,7 +296,7 @@ msgstr "Iniciar el copiado/pegado cruzado"
 
 #: src/control/ColorPicker.js:104
 msgid "No color"
-msgstr ""
+msgstr "Sin color"
 
 #: src/control/Control.JSDialogBuilder.js:415
 msgid "\""
@@ -307,19 +308,19 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:535
 msgid "Font Name"
-msgstr "Fuente"
+msgstr "Tipo de letra"
 
 #: src/control/Control.JSDialogBuilder.js:537
 msgid "Font Size"
-msgstr "Tamaño de fuente"
+msgstr "Tamaño de letra"
 
 #: src/control/Control.JSDialogBuilder.js:841
 msgid "Rows"
-msgstr ""
+msgstr "Filas"
 
 #: src/control/Control.JSDialogBuilder.js:842
 msgid "Columns"
-msgstr ""
+msgstr "Columnas"
 
 #: src/control/Control.JSDialogBuilder.js:862
 #: src/control/Control.Menubar.js:614 src/control/Control.Menubar.js:665
@@ -478,7 +479,7 @@ msgstr "Exportar como"
 #: src/control/Control.Menubar.js:638 src/control/Control.Menubar.js:657
 #: src/control/Control.Menubar.js:667
 msgid "Insert Shape"
-msgstr "Insertar formas"
+msgstr "Insertar forma"
 
 #: src/control/Control.Menubar.js:737 src/control/Control.Toolbar.js:1854
 msgid "Reset to Default Language"
@@ -500,7 +501,7 @@ msgstr ""
 
 #: src/control/Control.MobileWizard.js:269
 msgid "Chart type"
-msgstr ""
+msgstr "Tipo de gráfico"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -585,7 +586,7 @@ msgstr "Buscar"
 
 #: src/control/Control.Toolbar.js:1063
 msgid "Cancel the search"
-msgstr "Cancelar la búsqueda"
+msgstr "Cancelar búsqueda"
 
 #: src/control/Control.Toolbar.js:1070 src/layer/tile/CalcTileLayer.js:122
 #: src/layer/tile/ImpressTileLayer.js:160 src/layer/tile/WriterTileLayer.js:107
@@ -607,7 +608,7 @@ msgstr "%user ha salido"
 
 #: src/control/Control.Toolbar.js:1452
 msgid "Number of Sheets"
-msgstr "N.º de hojas"
+msgstr "Número de hojas"
 
 #: src/control/Control.Toolbar.js:1457
 msgid "Selected range of cells"
@@ -663,7 +664,7 @@ msgstr "Contador de palabras"
 
 #: src/control/Control.Toolbar.js:1549
 msgid "Number of Slides"
-msgstr "N.º de diapositivas"
+msgstr "Número de diapositivas"
 
 #: src/control/Control.Toolbar.js:1585
 msgid "%n users"
@@ -858,7 +859,7 @@ msgstr "Esta versión de %productName funciona con"
 
 #: src/control/Toolbar.js:407
 msgid "Insert hyperlink"
-msgstr "Insertar link"
+msgstr "Insertar hiperenlace"
 
 #: src/control/Toolbar.js:409
 msgid "Text"
@@ -866,7 +867,7 @@ msgstr "Texto"
 
 #: src/control/Toolbar.js:410
 msgid "Link"
-msgstr "Link"
+msgstr "Enlace"
 
 #: src/control/Toolbar.js:413
 msgid "OK"
@@ -1064,7 +1065,7 @@ msgstr ""
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
-msgstr "Link inválido: '%url'"
+msgstr "Enlace no válido: «%url»"
 
 #: src/errormessages.js:25
 msgid "You are leaving the editor, are you sure you want to visit %url?"
@@ -1074,11 +1075,11 @@ msgstr "Está por abandonar el editor. ¿Confirma que quiere visitar «%url»?"
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Falló la carga del documento. Es posible que el documento esté dañado o que necesite más recursos de los permitidos. Póngase en contacto con el personal técnico."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr "Falló al cargar el documento."
+msgstr "Falló la carga del documento."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
@@ -1138,12 +1139,11 @@ msgstr ""
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr "Error al cargar el archivo al servidor, no se encontró el archivo."
+msgstr "Falló la carga del archivo al servidor; no se encontró el archivo."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
-"Error al cargar el archivo al servidor, el archivo es demasiado grande."
+msgstr "Falló la carga del archivo al servidor; el archivo es demasiado grande."
 
 #: src/layer/marker/Annotation.js:218
 msgid "Accept change"

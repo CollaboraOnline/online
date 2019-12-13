@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-29 11:18+0100\n"
-"PO-Revision-Date: 2019-12-12 11:26+0000\n"
+"PO-Revision-Date: 2019-12-13 11:40+0000\n"
 "Last-Translator: Christian Lohmaier <cloph@documentfoundation.org>\n"
 "Language-Team: German <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/de/>\n"
 "Language: de\n"
@@ -282,11 +282,11 @@ msgstr "Download starten"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "Kopieren in die Zwischenablage bestätigen"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "Upload starten"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
@@ -298,27 +298,27 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:413
 msgid "\""
-msgstr ""
+msgstr "\""
 
 #: src/control/Control.JSDialogBuilder.js:415
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/control/Control.JSDialogBuilder.js:533
 msgid "Font Name"
-msgstr ""
+msgstr "Schriftart"
 
 #: src/control/Control.JSDialogBuilder.js:535
 msgid "Font Size"
-msgstr ""
+msgstr "Schriftgröße"
 
 #: src/control/Control.JSDialogBuilder.js:839
 msgid "Rows"
-msgstr ""
+msgstr "Zeilen"
 
 #: src/control/Control.JSDialogBuilder.js:840
 msgid "Columns"
-msgstr ""
+msgstr "Spalten"
 
 #: src/control/Control.JSDialogBuilder.js:860
 #: src/control/Control.Menubar.js:611 src/control/Control.Menubar.js:662
@@ -389,7 +389,7 @@ msgstr "Maßstab zurücksetzen"
 
 #: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:488
 msgid "Show Ruler"
-msgstr ""
+msgstr "Lineal anzeigen"
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:281
 #: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:608
@@ -490,7 +490,7 @@ msgstr ""
 
 #: src/control/Control.MobileWizard.js:264
 msgid "Chart type"
-msgstr ""
+msgstr "Diagrammtyp"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -854,19 +854,19 @@ msgstr "Diese Version von %productName wird bereitgestellt von"
 
 #: src/control/Toolbar.js:355
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Hyperlink einfügen"
 
 #: src/control/Toolbar.js:357
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/control/Toolbar.js:358
 msgid "Link"
-msgstr ""
+msgstr "Hyperlink"
 
 #: src/control/Toolbar.js:361
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: src/core/Socket.js:57
 msgid ""
