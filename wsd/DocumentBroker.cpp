@@ -2244,8 +2244,8 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
                      // Load the document manually and request saving in the target format.
                      std::string encodedFrom;
                      Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
-                     const std::string load = "load url=" + encodedFrom;
-                     std::vector<char> loadRequest(load.begin(), load.end());
+                     const std::string _load = "load url=" + encodedFrom;
+                     std::vector<char> loadRequest(_load.begin(), _load.end());
                      docBroker->_clientSession->handleMessage(true, WSOpCode::Text, loadRequest);
 
                      // Save is done in the setLoaded
