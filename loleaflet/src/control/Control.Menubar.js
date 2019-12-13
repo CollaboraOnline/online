@@ -1173,7 +1173,7 @@ L.Control.Menubar = L.Control.extend({
 			// Toggle between showing master page and closing it.
 			unoCommand = ($(item).hasClass('lo-menu-item-checked') ? '.uno:CloseMasterView' : '.uno:SlideMasterPage');
 		}
-		else if (this._map._clip.filterExecCopyPaste(unoCommand)) {
+		else if (this._map._clip && this._map._clip.filterExecCopyPaste(unoCommand)) {
 			return;
 		}
 

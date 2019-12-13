@@ -474,6 +474,21 @@ L.Map.Keyboard = L.Handler.extend({
 			return false;
 		}
 
+		if (window.ThisIsTheiOSApp) {
+			if (e.key === 'c' || e.key === 'C') {
+				this._map._socket.sendMessage('uno .uno:Copy');
+				return true;
+			}
+			else if (e.key === 'v' || e.key === 'V') {
+				this._map._socket.sendMessage('uno .uno:Paste');
+				return true;
+			}
+			else if (e.key === 'x' || e.key === 'X') {
+				this._map._socket.sendMessage('uno .uno:Cut');
+				return true;
+			}
+		}
+
 		switch (e.keyCode) {
 		case 51: // 3
 			if (this._map.getDocType() === 'spreadsheet') {
