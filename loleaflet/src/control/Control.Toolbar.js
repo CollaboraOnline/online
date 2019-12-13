@@ -2149,7 +2149,7 @@ function onCommandResult(e) {
 			postMessageObj['result'] = e.result && e.result.value;
 		}
 
-		if (window.ThisIsAMobileApp) {
+		if (window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('SAVE ' + JSON.stringify(postMessageObj));
 		} else {
 			map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
