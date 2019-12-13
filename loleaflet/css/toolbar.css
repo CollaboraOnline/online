@@ -30,6 +30,9 @@
 #tb_actionbar_item_LanguageStatus table table td:first-of-type{
 	min-width: max-content !important;
 }
+#tb_actionbar_item_LanguageStatus .w2ui-tb-caption{
+	float: none;
+}
 #document-signing-bar {
 		background-color: #ef324e;;
 }
