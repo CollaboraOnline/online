@@ -432,11 +432,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_unitToVisibleString: function(unit) {
 		if (unit == 'inch') {
-			return _('\"');
+			return '\"';
 		} else if (unit == 'percent') {
-			return _('%');
+			return '%';
 		} else if (unit == 'degree') {
-			return _('°');
+			return '°';
 		}
 		return unit;
 	},
