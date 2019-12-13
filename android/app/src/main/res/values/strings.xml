@@ -74,9 +74,9 @@
     <string name="remote_server">Remote server</string>
     <string name="usb_connected_configure">USB connected, configure your device.</string>
 
-    <string name="owncloud_wrong_connection">Cannot connect to the Cloud server. Check your configuration.</string>
-    <string name="owncloud_unauthorized">Cannot log into the Cloud server. Check your configuration.</string>
-    <string name="owncloud_unspecified_error">Unspecified error connecting to the Cloud server. Check your configuration and/or try later.</string>
+    <string name="owncloud_wrong_connection">Cannot connect to the cloud server. Check your configuration.</string>
+    <string name="owncloud_unauthorized">Cannot log in to the cloud server. Check your configuration.</string>
+    <string name="owncloud_unspecified_error">Unspecified error connecting to the cloud server. Check your configuration and/or try later.</string>
 
     <string name="ext_document_provider_error">Invalid root file. Check your sd card configuration.</string>
     <string name="otg_missing_error">Invalid root file. Check your OTG device and/or configuration.</string>
@@ -93,7 +93,7 @@
     <string name="otg_device_path">OTG device path</string>
     <string name="otg_warning">Experimental Feature: Use only if OTG device is writable.</string>
     <string name="server_url">Server URL</string>
-    <string name="server_url_and_port">URL and port of the Cloud server.</string>
+    <string name="server_url_and_port">URL and port of the cloud server.</string>
     <string name="user_name">User name</string>
     <string name="password">Password</string>
 
