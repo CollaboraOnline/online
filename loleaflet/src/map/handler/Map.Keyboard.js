@@ -488,10 +488,10 @@ L.Map.Keyboard = L.Handler.extend({
 				return true;
 			}
 			return false;
-		case 67: // c
-		case 88: // x
-		case 99: // c (Safari)
-		case 120: // x (Safari)
+		case 67: // 'C'
+		case 88: // 'X'
+		case 99: // 'c'
+		case 120: // 'x'
 		case 91: // Left Cmd (Safari)
 		case 93: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
