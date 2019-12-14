@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-07 13:01+0200\n"
-"PO-Revision-Date: 2019-11-04 20:22+0100\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2019-12-14 18:56+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"Language-Team: Spanish <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
 "X-Pootle-Revision: 3713610\n"
 
@@ -217,7 +218,7 @@ msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
 msgid "Apply Default paragraph style"
-msgstr "Aplicar el estilo de párrafo predeterminado"
+msgstr "Aplicar el estilo de párrafo Predeterminado"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-74
 msgid "Ctrl + 0"
@@ -1041,17 +1042,17 @@ msgstr "Editar documento de texto"
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr "Menús de contexto"
+msgstr "Menús contextuales"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr "Recursos avanzados del editor de textos"
+msgstr "Funciones avanzadas del editor de textos"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> presentaciones"
+msgstr "Presentaciones de <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
@@ -1061,7 +1062,7 @@ msgstr "Editar presentaciones"
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr "Presentación a pantalla completa"
+msgstr "Pase de diapositivas"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
@@ -1085,7 +1086,7 @@ msgstr "Documentos de texto"
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr "Hojas de cálculo"
+msgstr "Libros"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
@@ -1118,7 +1119,7 @@ msgstr ""
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
-msgstr ""
+msgstr "Puede saltar al cursor de un usuario si pulsa en su nombre o su avatar. Es posible dar seguimiento al editor."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid ""
@@ -1261,7 +1262,7 @@ msgstr ""
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
-msgstr ""
+msgstr "Sus documentos se almacenan y pueden gestionarse en el almacén en nube que se haya integrado con <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid ""
@@ -1321,7 +1322,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Copiar y pegar"
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid ""

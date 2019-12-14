@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="loading">Laden...</string>
+    <string name="cannot_open_file_chooser">Kan bestandskiezer niet openen</string>
+    <string name="failed_to_insert_image">Kan afbeelding niet invoegen</string>
+    <string name="failed_to_load_file">Kan het te laden bestand niet vinden</string>
+    <string name="storage_permission_required">Opslagrechten zijn vereist</string>
+    <string name="temp_file_saving_disabled">Dit bestand is alleen-lezen, opslaan is uitgeschakeld.</string>
+</resources>

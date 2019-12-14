@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"PO-Revision-Date: 2019-12-14 18:56+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
 "Language: es\n"
@@ -226,7 +226,7 @@ msgstr " s"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "Open link"
-msgstr "Abrir link"
+msgstr "Abrir enlace"
 
 #: src/control/Control.AlertDialog.js:54
 msgid "Edit"
@@ -1100,17 +1100,17 @@ msgstr "Responder"
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56
 msgid "Show the search bar"
-msgstr "Mostrar la barra de búsqueda"
+msgstr "Mostrar barra de búsqueda"
 
 #: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
 #: src/layer/tile/WriterTileLayer.js:157
 msgid "Clear the search field"
-msgstr "Borrar el cámpo de búsqueda"
+msgstr "Vaciar campo de búsqueda"
 
 #: src/layer/tile/CalcTileLayer.js:239 src/layer/tile/ImpressTileLayer.js:224
 #: src/layer/tile/WriterTileLayer.js:159
 msgid "Hide the search bar"
-msgstr "Ocultar la barra de búsqueda"
+msgstr "Ocultar barra de búsqueda"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1126,23 +1126,23 @@ msgstr "Resolver"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "Para pegar fuera de %productName, por favor, primero haga click en 'descargar' botón"
+msgstr "Para pegar fuera de %productName, primero pulse en el botón «Descargar»"
 
 #: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr "No se pudo descargar el portapapeles, por favor vuelva a copiar"
+msgstr "No se pudo descargar el portapapeles; vuelva a copiar"
 
 #: src/map/Clipboard.js:765
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Por favor, use los botones de copiar/pegar en su teclado de pantalla.</p>"
+msgstr "<p>Utilice los botones de copiar/pegar en su teclado en pantalla.</p>"
 
 #: src/map/Clipboard.js:790
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr "<p>Si desea compartir grandes elementos de su documento con otras aplicaciones es necesario que primero las descargue en su dispositivo. Para ello, presione el siguiente botón ”Comenzar descarga“, y una vez completado “Confirmar copia al portapapeles“.</p><p> Si está copiando y pegando entre documentos dentro de %productName, no hay necesidad de descargar.</p>"
+msgstr "<p>Si desea compartir grandes elementos de su documento con otras aplicaciones es necesario que primero las descargue en su dispositivo. Para ello, pulse en el botón «Comenzar descarga» de más abajo y, una vez completado, pulse en «Confirmar copia en portapapeles».</p><p> Si está copiando y pegando entre documentos dentro de %productName, no hay necesidad de descargar.</p>"
 
 #: src/map/Clipboard.js:806
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr "<p>Ya se ha iniciado una descarga debido a una operación grande de copiar/pegar. Por favor, espera a la descarga actual o cancele antes de iniciar una nueva</p>"
+msgstr "<p>Ya se ha iniciado una descarga debido a una operación grande de copiado/pegado. Espere a la descarga actual o cancélela antes de iniciar una nueva</p>"
 
 #: src/map/Map.js:234
 msgid "Initializing..."
@@ -1169,12 +1169,12 @@ msgstr "Cargando…"
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 can not be uploaded to server since the file has no name"
-msgstr "El archivo del tipo: %0 no puede ser cargado al servidor ya que el archivo no tiene nombre."
+msgstr "El archivo del tipo %0 no puede cargarse en el servidor ya que no tiene nombre"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 can not be uploaded to server since the file is empty"
-msgstr "El archivo del tipo: %0 no puede ser cargado al servidor ya que el archivo está vacío."
+msgstr "El archivo del tipo %0 no puede cargarse en el servidor ya que está vacío"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1182,7 +1182,7 @@ msgstr "Cargando…"
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr "Error al cargar el archivo al servidor con el estado: %0"
+msgstr "Falló la carga del archivo en el servidor con el estado: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

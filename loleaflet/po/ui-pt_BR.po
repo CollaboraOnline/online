@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2019-12-14 18:56+0000\n"
+"Last-Translator: Olivier Hallot <olivier.hallot@documentfoundation.org>\n"
+"Language-Team: Portuguese (Brazil) <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/pt_BR/>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /pt_BR/libo_online/loleaflet-ui-pt_BR.po\n"
 "X-Pootle-Revision: 3939508\n"
 
@@ -150,7 +151,7 @@ msgstr "Memória de pilha máxima para processamento de documentos (em MB) - som
 
 #: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Tamanho máximo de arquivo permitido (em MB) - somente redução "
+msgstr "Tamanho máximo de arquivo permitido (em MB) - somente redução"
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
@@ -520,7 +521,7 @@ msgstr "Planilha Excel (.xlsx)"
 #: src/control/Control.Menubar.js:469 src/control/Control.Menubar.js:512
 #: src/control/Control.Menubar.js:556
 msgid "Export as"
-msgstr ""
+msgstr "Exportar como"
 
 #: src/control/Control.Menubar.js:639 src/control/Control.Menubar.js:658
 #: src/control/Control.Menubar.js:668
@@ -885,19 +886,19 @@ msgstr "Esta versão do %productName é operada com"
 
 #: src/control/Toolbar.js:451
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Inserir hiperlink"
 
 #: src/control/Toolbar.js:453
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 #: src/control/Toolbar.js:454
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: src/control/Toolbar.js:457
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -1147,7 +1148,6 @@ msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Utilize os botões de copiar/colar no seu teclado de tela.</p>"
 
 #: src/map/Clipboard.js:790
-#, fuzzy
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr "<p>Se deseja partilhar elementos grandes do seu documento com outras aplicações, é necessário primeiro baixá-las para o seu dispositivo. Para fazê-lo, pressione o botão \"Iniciar download\" abaixo, e quando completo, clique em \"Confirmar cópia para a área de transferência\".</p><p>Se estiver copiando e colando entre documentos dentro do %productName, não há necessidade de baixar.</p>"
 

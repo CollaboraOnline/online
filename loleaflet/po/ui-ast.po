@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"PO-Revision-Date: 2019-12-14 18:56+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -54,7 +54,7 @@ msgstr "Usuarios coneutaos"
 
 #: admin/admin.strings.js:14
 msgid "User Name"
-msgstr ""
+msgstr "Nome d'usuariu"
 
 #: admin/admin.strings.js:15
 msgid "Documents opened"
@@ -70,11 +70,11 @@ msgstr ""
 
 #: admin/admin.strings.js:18
 msgid "Bytes sent"
-msgstr ""
+msgstr "Bytes unviaos"
 
 #: admin/admin.strings.js:19
 msgid "Bytes received"
-msgstr ""
+msgstr "Bytes recibíos"
 
 #: admin/admin.strings.js:20
 msgid "PID"
@@ -82,7 +82,7 @@ msgstr ""
 
 #: admin/admin.strings.js:21
 msgid "Document"
-msgstr ""
+msgstr "Documentu"
 
 #: admin/admin.strings.js:22
 msgid "Number of views"
@@ -155,7 +155,7 @@ msgstr ""
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
-msgstr ""
+msgstr "Documentos:"
 
 #: admin/admin.strings.js:40
 msgid "Expired:"
