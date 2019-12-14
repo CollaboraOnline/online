@@ -87,7 +87,7 @@ Proof::Proof()
         {
             // TODO: This is definitely not correct at the moment. The proof key must be
             // base64-encoded blob in "unmanaged Microsoft Cryptographic API (CAPI)" format
-            // (as .Net's RSACryptoServiceProvider::ExportScpBlob returns).
+            // (as .Net's RSACryptoServiceProvider::ExportCspBlob returns).
             std::ostringstream oss;
             Poco::OutputLineEndingConverter lineEndingConv(oss, "");
             m_pKey->save(&lineEndingConv);
