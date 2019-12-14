@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-13 12:22+0200\n"
+"POT-Creation-Date: 2019-12-13 13:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1226,7 +1226,7 @@ msgid "Select a table in text document, a range in a spreadsheet or a table in a
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
-msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Follow the chart wizard to customize the chart."
+msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
