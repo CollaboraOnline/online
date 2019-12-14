@@ -453,18 +453,30 @@ L.Socket = L.Class.extend({
 				message = msg;
 			}
 
-			var dialogOpened = vex.dialog.open({
+			var dialogOptions = {
 				message: message,
 				contentClassName: 'loleaflet-user-idle'
-			});
+			};
 
+			var restartConnectionFn;
 			if (textMsg === 'idle' || textMsg === 'oom') {
 				var map = this._map;
-				dialogOpened.contentEl.onclick = function() {
-					console.debug('idleness: reactivating');
-					map._documentIdle = false;
-					return map._activate();
+				restartConnectionFn = function() {
+					if (map._documentIdle)
+					{
+						console.debug('idleness: reactivating');
+						map._documentIdle = false;
+						return map._activate();
+					}
+					return false;
 				};
+				dialogOptions.afterClose = restartConnectionFn;
+			}
+
+			var dialogOpened = vex.dialog.open(dialogOptions);
+
+			if (textMsg === 'idle' || textMsg === 'oom') {
+				dialogOpened.contentEl.onclick = restartConnectionFn;
 				$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
 			}
 
