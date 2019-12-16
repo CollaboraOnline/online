@@ -27,7 +27,6 @@ spec:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
         version: "{{ .Values.global.app.version }}"
-        exposed: "true"
       annotations:
       {{- if .Values.global.app.monitoring.activate }}
         prometheus.io/scrape: "true"
@@ -43,9 +42,6 @@ spec:
             - containerPort: {{ .Values.global.app.service.internalPort }}
           securityContext:
             readOnlyRootFilesystem: false
-            runAsNonRoot: true
-            #Lool user id
-            runAsUser: 101
         {{- if .Values.probes.liveness.activate }}
           livenessProbe:
             httpGet:
@@ -85,5 +81,4 @@ spec:
     {{- end }}
       volumes:
         - name: tmp
-          emptyDir:
-            medium: "Memory"
+          emptyDir: {}
