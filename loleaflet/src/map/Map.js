@@ -111,6 +111,7 @@ L.Map = L.Evented.extend({
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
 		this._winId = 0;
 		this._activeDialog = null;
+		this.showSidebar = false;
 
 		vex.dialogID = -1;
 
