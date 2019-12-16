@@ -530,7 +530,7 @@ public:
     {
     }
 
-    int getEditorId() override
+    int getEditorId() const override
     {
         return -1;
     }

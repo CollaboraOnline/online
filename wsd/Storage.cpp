@@ -486,7 +486,7 @@ bool LockContext::needsRefresh(const std::chrono::steady_clock::time_point &now)
         (now - _lastLockTime).count() >= refreshSeconds;
 }
 
-void LockContext::dumpState(std::ostream& os)
+void LockContext::dumpState(std::ostream& os) const
 {
     if (!_supportsLocks)
         return;

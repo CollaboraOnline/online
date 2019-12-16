@@ -1432,7 +1432,7 @@ private:
         return _tileQueue;
     }
 
-    int getEditorId() override
+    int getEditorId() const override
     {
         return _editorId;
     }

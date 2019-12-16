@@ -61,7 +61,7 @@ public:
     virtual void notifyViewInfo() = 0;
     virtual void updateEditorSpeeds(int id, int speed) = 0;
 
-    virtual int getEditorId() = 0;
+    virtual int getEditorId() const = 0;
 
     /// Get a view ID <-> UserInfo map.
     virtual std::map<int, UserInfo> getViewInfo() = 0;
