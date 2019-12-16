@@ -240,8 +240,6 @@ L.Control.MobileWizard = L.Control.extend({
 			if (!this._isActive && isSidebar) {
 				if (this.map.showSidebar == false)
 					return;
-				else
-					this._refreshSidebar();
 			}
 
 			this._isActive = true;

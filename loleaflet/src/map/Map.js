@@ -111,8 +111,6 @@ L.Map = L.Evented.extend({
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
 		this._winId = 0;
 		this._activeDialog = null;
-		this._sidebarVisible = false; // The state of the sidebar in Core.
-		this._showSidebar = false; // Whether we have the sidebar visible in the UI or not (i.e. does the user want to see it or not).
 
 		vex.dialogID = -1;
 
@@ -288,17 +286,9 @@ L.Map = L.Evented.extend({
 				// Let the first page finish loading then load the sidebar.
 				var map = this;
 				setTimeout(function () {
-					// This triggers all sidebar decks, so they would
-					// be loaded and show rather quickly on first use.
-					// Also, triggers sidebar window creation in the client.
-					map._socket.sendMessage('uno .uno:Sidebar');
-
-					// HACK: The initial state of sidebar is that the core
-					// thinks it is shown, so the command has to be triggered
-					// once again for it to be visible on the desktop
-					// (because the first .uno:Sidebar has actually hid it)
+					// Show the sidebar by default, but not on mobile.
 					if (!window.mode.isMobile() && !window.mode.isTablet() && !window.ThisIsAMobileApp) {
-						map._socket.sendMessage('uno .uno:Sidebar');
+						map._socket.sendMessage('uno .uno:SidebarShow');
 					}
 				}, 200);
 			}

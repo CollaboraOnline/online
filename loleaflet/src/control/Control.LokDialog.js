@@ -224,7 +224,6 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		e.id = parseInt(e.id);
-		window.sidebarId = e.id;
 		var strId = this._toStrId(e.id);
 
 		var width = 0;
@@ -255,6 +254,7 @@ L.Control.LokDialog = L.Control.extend({
 				if (!window.mode.isMobile()) {
 					this._launchSidebar(e.id, width, height);
 				} else {
+					// In mobile we get jsdialog messages.
 					window.sidebarId = e.id;
 				}
 			} else if (e.winType === 'child') {

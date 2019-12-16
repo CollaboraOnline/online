@@ -339,6 +339,7 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'mobile_wizard') {
 		if (window.mobileWizard) {
 			window.mobileWizard = false;
+			map.sendUnoCommand('.uno:SidebarHide');
 			map.fire('closemobilewizard');
 			toolbar.uncheck(id);
 		}
@@ -346,20 +347,7 @@ function onClick(e, id, item, subItem) {
 			if (window.insertionMobileWizard)
 				this.onClick(null, 'insertion_mobile_wizard');
 			window.mobileWizard = true;
-			if (!map._sidebarVisible) {
-				map._sidebarVisible = true;
-				map.sendUnoCommand('.uno:Sidebar');
-				if (map.hasObjectFocusDarkOverlay())
-					map.sendUnoCommand('.uno:Sidebar');
-			} else {
-				// As the sidebar LOKWindowId can and does change,
-				// esp. between chart and other elements, we apparently
-				// lose track, and there is currently no reliable way to
-				// recover it (which is needed to request updates).
-				// The following disable and enable the sidebar to get it.
-				map.sendUnoCommand('.uno:Sidebar');
-				map.sendUnoCommand('.uno:Sidebar');
-			}
+			map.sendUnoCommand('.uno:SidebarShow');
 			map.fire('showwizardsidebar');
 			toolbar.check(id);
 		}
