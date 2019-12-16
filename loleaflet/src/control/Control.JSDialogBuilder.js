@@ -1420,20 +1420,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var iconPath = 'images/lc_' + commandName.toLowerCase() + '.svg';
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconPath;
-			icon.onerror = function() {
-				L.DomUtil.removeClass(iconSpan.nextSibling, 'menu-entry-with-icon');
-				L.DomUtil.addClass(iconSpan.nextSibling, 'menu-entry-no-icon');
-				L.DomUtil.remove(iconSpan);
-			}
 		}
-
 		if (data.checked && data.checked === true) {
 			L.DomUtil.addClass(menuEntry, 'menu-entry-checked');
 		}
 
 		var titleSpan = L.DomUtil.create('span', '', menuEntry);
 		titleSpan.innerHTML = title;
-		L.DomUtil.addClass(titleSpan, 'menu-entry-with-icon');
+		var paddingClass = icon ? 'menu-entry-with-icon' : 'menu-entry-no-icon';
+		L.DomUtil.addClass(titleSpan, paddingClass);
 
 		if (builder.wizard) {
 			$(menuEntry).click(function() {
