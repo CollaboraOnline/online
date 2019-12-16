@@ -8,7 +8,6 @@ metadata:
     release: {{ .Release.Name }}
 spec:
   type: {{ .Values.global.app.service.type }}
-  externalTrafficPolicy: Local
   ports:
     - port: {{ .Values.global.app.service.externalPort }}
       targetPort: {{ .Values.global.app.service.internalPort }}

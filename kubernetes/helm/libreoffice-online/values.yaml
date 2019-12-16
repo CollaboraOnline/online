@@ -4,6 +4,7 @@
 global:
   app:
     name: libreoffice-online
+    version: 6.5.0
     urlScheme: HTTP # either HTTP or HTTPS
     scaling:
       enabled: true
@@ -11,14 +12,14 @@ global:
       max: 10
       target:
         cpu: 70
-        memory: 70        
+        memory: 70
     monitoring:
       activate: false
       port: 9980
-      path: "/lool/adminMonitorInfo"
+      path: "/lool/getMetrics"
     service:
       name: libreoffice-online
-      type: NodePort
+      type: ClusterIP
       externalPort: 9980
       internalPort: 9980
   ingress: {}
@@ -35,7 +36,7 @@ probes:
   readiness:
     activate: true
     path: /
-    initialDelaySeconds: 60
+    initialDelaySeconds: 180
     periodSeconds: 10
     timeoutSeconds: 30
     successThreshold: 1
@@ -43,7 +44,7 @@ probes:
   liveness:
     activate: true
     path: /
-    initialDelaySeconds: 60
+    initialDelaySeconds: 180
     periodSeconds: 10
     timeoutSeconds: 30
     successThreshold: 1
@@ -53,10 +54,18 @@ deployment:
   name: libreoffice-online
   type: RollingUpdate
   minReadySeconds: 0
-  maxUnavailable: 1
+  maxUnavailable: 0
   maxSurge: 1
 
-environmentVariablesLool: {}
+environmentVariablesLool: 
+  - name: extra_params
+    value: --o:ssl.enable=false
+  - name: username
+    value: 
+  - name: password
+    value: 
+  - name: domain
+    value: 
 
 service:
   name: libreoffice-online
