@@ -46,7 +46,7 @@ struct LockContext
     /// do we need to refresh our lock ?
     bool needsRefresh(const std::chrono::steady_clock::time_point &now) const;
 
-    void dumpState(std::ostream& os);
+    void dumpState(std::ostream& os) const;
 };
 
 /// Base class of all Storage abstractions.

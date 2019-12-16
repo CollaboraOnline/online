@@ -118,7 +118,7 @@ public:
     void setName(const std::string& name) { _name = name; }
     const std::string& getName() const { return _name; }
 
-    size_t size() { return _end - _start; }
+    size_t size() const { return _end - _start; }
 };
 
 struct StringData {
