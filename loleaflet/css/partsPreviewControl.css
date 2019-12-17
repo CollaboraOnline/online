@@ -57,8 +57,9 @@
 	}
 
 	.preview-img {
-		min-width: 60px;
-		max-width: 60px;
+		min-width: 40px;
+		max-width: 40px;
+		margin-left: 8px;
 	}
 
 	.preview-frame {
