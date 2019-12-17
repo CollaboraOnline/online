@@ -8,7 +8,8 @@
 # -- Available env vars --
 # * DOCKER_HUB_REPO - which Docker Hub repo to use
 # * DOCKER_HUB_TAG  - which Docker Hub tag to create
-# * LIBREOFFICE_BRANCH  - which branch to build (needs to exist in both core and online)
+# * LIBREOFFICE_BRANCH  - which branch to build in core
+# * LIBREOFFICE_ONLINE_BRANCH - which branch to build in online
 # * LIBREOFFICE_BUILD_TARGET - which make target to run (in core repo)
 # * ONLINE_EXTRA_BUILD_OPTIONS - extra build options for online
 # * NO_DOCKER_IMAGE - if set, don't build the docker image itself, just do all the preps
@@ -33,7 +34,12 @@ echo "Using Docker Hub Repository: '$DOCKER_HUB_REPO' with tag '$DOCKER_HUB_TAG'
 if [ -z "$LIBREOFFICE_BRANCH" ]; then
   LIBREOFFICE_BRANCH="master"
 fi;
-echo "Building branch '$LIBREOFFICE_BRANCH'"
+echo "Building core branch '$LIBREOFFICE_BRANCH'"
+
+if [ -z "$LIBREOFFICE_ONLINE_BRANCH" ]; then
+  LIBREOFFICE_ONLINE_BRANCH="master"
+fi;
+echo "Building online branch '$LIBREOFFICE_ONLINE_BRANCH'"
 
 if [ -z "$LIBREOFFICE_BUILD_TARGET" ]; then
   LIBREOFFICE_BUILD_TARGET=""
@@ -65,7 +71,7 @@ if test ! -d online ; then
     git clone https://git.libreoffice.org/online online || exit 1
 fi
 
-( cd online && git fetch --all && git checkout -f $LIBREOFFICE_BRANCH && git clean -f -d && git pull -r ) || exit 1
+( cd online && git fetch --all && git checkout -f $LIBREOFFICE_ONLINE_BRANCH && git clean -f -d && git pull -r ) || exit 1
 
 ##### LibreOffice #####
 
