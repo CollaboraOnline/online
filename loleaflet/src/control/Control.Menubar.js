@@ -493,7 +493,6 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:NextTrackedChange'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
-				{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				{uno: '.uno:ControlCodes'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 			]
