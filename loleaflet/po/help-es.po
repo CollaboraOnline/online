@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-13 13:00+0200\n"
+"POT-Creation-Date: 2019-12-15 17:50+0200\n"
 "PO-Revision-Date: 2019-12-17 10:43+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
@@ -1330,7 +1330,9 @@ msgid "To remove the validity of the cell, open the dialog and set the <span cla
 msgstr "Para quitar la validación en una celda, abra el cuadro de diálogo y establezca \"Todos los valores\" en la lista <span class=\"ui\">Permitir</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
-msgid "i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
+#, fuzzy
+#| msgid "i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
+msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
 msgstr "i<span class=\"def\">Comentarios:</span> Puede insertar comentarios en una hoja de cálculo, un comentario por celda. Al seleccionar <span class=\"ui\">Insertar comentario</span>, aparece una ventana emergente para permitir escribir el contenido del comentario. Un punto rojo encima de la derecha de la celda aparece cuando la celda contiene un comentario. Pasa el ratón por encima de la celda para mostrar el comentario."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:377-5

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-13 13:00+0200\n"
+"POT-Creation-Date: 2019-12-15 17:50+0200\n"
 "PO-Revision-Date: 2019-12-17 11:05+0000\n"
 "Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pt_BR/>\n"
@@ -1331,7 +1331,9 @@ msgid "To remove the validity of the cell, open the dialog and set the <span cla
 msgstr "Para remover a validação numa célula, abra a caixa de diálogo e defina “Todos os valores” na lista <span class=\"ui\">Permitir</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
-msgid "i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
+#, fuzzy
+#| msgid "i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
+msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
 msgstr "<span class=\"def\">Anotações:</span> Você pode inserir anotações numa planilha, uma anotação por célula. Ao selecionar <span class=\"ui\">Inserir anotação</span>, uma janela pop-up aparece para permitir escrever o conteúdo da anotação. Um ponto vermelho em cima à direita da célula aparece quando a célula contém uma anotação. Asse o mouse por cima da célula para exibir a anotação."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:377-5
