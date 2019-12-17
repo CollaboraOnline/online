@@ -301,6 +301,10 @@ body {
 		bottom: 95px;
 		width: 100%;
 	}
+
+	#document-container.parts-preview-document.keyboard {
+		bottom: 33px;
+	}
 }
 
 @media (max-width: 767px) and (orientation: landscape),(max-device-height: 767px) and (orientation: landscape)  {
@@ -324,6 +328,10 @@ body {
 		top: 41px;
 		bottom: 0px;
 		max-width: 120px;
+	}
+
+	#document-container.parts-preview-document.keyboard {
+		left: 0px !important;
 	}
 }
 

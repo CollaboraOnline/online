@@ -409,6 +409,17 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			return;
 		}
 
+		// Android change the orientation if the keyboard is visible
+		if (L.Browser.android) {
+			if (window.innerHeight < 2 * screen.height / 3) {
+				L.DomUtil.addClass(this._map.options.documentContainer, 'keyboard');
+				$(preview).hide();
+			} else {
+				L.DomUtil.removeClass(this._map.options.documentContainer, 'keyboard');
+				$(preview).show();
+			}
+		}
+
 		if (L.DomUtil.isPortrait() && $(preview).data('mCS').opt.axis !== 'x') {
 			$(preview).mCustomScrollbar('destroy');
 			this._preview.createScrollbar('x');
