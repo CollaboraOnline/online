@@ -642,7 +642,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
                 object->remove("BaseFileName");
                 object->remove("TemplateSaveAs");
                 object->remove("TemplateSource");
-                 object->remove("OwnerId");
+                object->remove("OwnerId");
                 object->remove("UserId");
                 object->remove("UserFriendlyName");
             }
