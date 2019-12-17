@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"PO-Revision-Date: 2019-12-17 11:05+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Catalan <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
+"Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -291,19 +291,19 @@ msgstr "Inicia el copiar i enganxar creuat"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Cap color"
 
 #: src/control/Control.JSDialogBuilder.js:150
 msgid "Linear"
-msgstr ""
+msgstr "Lineal"
 
 #: src/control/Control.JSDialogBuilder.js:153
 msgid "Axial"
-msgstr ""
+msgstr "Axial"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Radial"
-msgstr ""
+msgstr "Radial"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Elipsoid"
@@ -311,15 +311,15 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:163
 msgid "Quadratic"
-msgstr ""
+msgstr "Quadràtic"
 
 #: src/control/Control.JSDialogBuilder.js:166
 msgid "Square"
-msgstr ""
+msgstr "Quadrat"
 
 #: src/control/Control.JSDialogBuilder.js:169
 msgid "Fixed size"
-msgstr ""
+msgstr "Mida fixa"
 
 #: src/control/Control.JSDialogBuilder.js:734
 #: src/control/Control.Toolbar.js:1577
@@ -328,11 +328,11 @@ msgstr "Cap"
 
 #: src/control/Control.JSDialogBuilder.js:737
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: src/control/Control.JSDialogBuilder.js:740
 msgid "Gradient"
-msgstr ""
+msgstr "Degradat"
 
 #: src/control/Control.JSDialogBuilder.js:743
 msgid "Hatching"
@@ -351,24 +351,20 @@ msgid "To"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1014
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
 msgstr "Tipus de lletra"
 
 #: src/control/Control.JSDialogBuilder.js:1016
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "Sense signar"
+msgstr "Mida de la lletra"
 
 #: src/control/Control.JSDialogBuilder.js:1468
 msgid "Rows"
-msgstr ""
+msgstr "Files"
 
 #: src/control/Control.JSDialogBuilder.js:1469
 msgid "Columns"
-msgstr ""
+msgstr "Columnes"
 
 #: src/control/Control.JSDialogBuilder.js:1489
 #: src/control/Control.Menubar.js:615 src/control/Control.Menubar.js:666
@@ -471,7 +467,7 @@ msgstr "Orientació del text"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:338
 #: src/control/Control.Menubar.js:453
 msgid "Online Help"
-msgstr ""
+msgstr "Ajuda en línia"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:339
 #: src/control/Control.Menubar.js:454

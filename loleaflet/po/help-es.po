@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 13:00+0200\n"
-"PO-Revision-Date: 2019-12-14 18:56+0000\n"
+"PO-Revision-Date: 2019-12-17 10:43+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Spanish <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
+"Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -930,7 +930,7 @@ msgstr "Abrir, cerrar, guardar, imprimir y descargar documentos"
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr "Editar Documentos"
+msgstr "Editar documentos"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -939,12 +939,12 @@ msgstr "Editar Documentos"
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr "Recursos avanzados"
+msgstr "Prestaciones avanzadas"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> hojas de cálculo"
+msgstr "Libros de <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
@@ -959,17 +959,17 @@ msgstr "Fórmulas"
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr "Formato de hoja de cálculo"
+msgstr "Formatear libros"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> documentos de texto"
+msgstr "Documentos de texto de <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr "Editar documento de texto"
+msgstr "Editar documentos de texto"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
@@ -1143,7 +1143,7 @@ msgstr "Reparación del documento"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr "Cuando varias personas editan el mismo documento concomitantemente, es posible que sus cambios puedan chocar y causar confusión. La función Reparar permite a los usuarios deshacer los cambios de otros editores a un estado anterior."
+msgstr "Cuando varias personas editan un documento simultáneamente, es posible que sus cambios puedan colisionar y causar confusión. La función Reparar permite a los usuarios deshacer los cambios de otros editores y restaurarlo a un estado anterior."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
@@ -1202,10 +1202,8 @@ msgid "Select a table in text document, a range in a spreadsheet or a table in a
 msgstr "Seleccione una tabla en un documento de texto, un rango de celdas de una hoja de cálculo o una tabla en una presentación."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
-#, fuzzy
-#| msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Follow the chart wizard to customize the chart."
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
-msgstr "Seleccione <span class=\"ui\">Insertar</span> → <span class=\"ui\">Diagrama</span>. Siga los pasos del asistente para personalizar su diagrama."
+msgstr "Seleccione <span class=\"ui\">Insertar</span> ▸ <span class=\"ui\">Gráfico</span>. Utilice la barra lateral para personalizar el gráfico:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -1229,7 +1227,7 @@ msgstr "Manipular imágenes"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> puede insertar imágenes a partir de su equipo local o desde el almacén en línea. Las imágenes que inserte en el documento siempre se incrustan."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">Insert image</span> icon allows you to choose an image from the cloud storage's folders and shares."
@@ -1253,7 +1251,7 @@ msgstr "Inserte comentarios en <span class=\"productname\">%productName</span> e
 
 #: html/loleaflet-help.html%2Bdiv.p.img:327-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."
-msgstr "Haga clic en el icono de la hamburguesa (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) para ocultar, mover o borrar el comentario."
+msgstr "Pulse en el icono de menú (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) para responder a, mover o eliminar comentarios."
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Spellchecking"
@@ -1273,7 +1271,7 @@ msgstr "Edite una hoja de cálculo en línea de la misma forma que una hoja de t
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr "Las fórmulas se insertan por la barra de fórmulas. Escriba '=' e introduzca la fórmula."
+msgstr "Las fórmulas se insertan por la barra de fórmulas. Escriba «=» e introduzca la fórmula."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "All spreadsheets functions and mathematical rules applies."
@@ -1581,7 +1579,7 @@ msgstr "Coloque el cursor en la posición de inserción del carácter."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:480-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."
-msgstr "Seleccione <span class=\"ui\">Insertar</span> → <span class=\"ui\">Carácter especial</span> o haga clic en el icono correspondiente de la barra de herramientas. Aparecerá un cuadro de diálogo."
+msgstr "Seleccione <span class=\"ui\">Insertar</span> ▸ <span class=\"ui\">Carácter especial</span> o pulse en el icono correspondiente de la barra de herramientas. Aparecerá un cuadro de diálogo."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-11
 msgid "You can either browse the characters displayed with the drop lists or type a search key in the <span class=\"ui\">Search</span> box. If you know the Unicode numeric code of the special character, enter in the boxes on the right."
@@ -1770,7 +1768,7 @@ msgstr "Seleccione las celdas que desea dar formato. Suelte el botón del ratón
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:555-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr "¿Qué es el botón \"Limpiar formato directo\"?"
+msgstr "¿Para qué sirve el botón «Limpiar formato directo»?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:556-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."

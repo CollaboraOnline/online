@@ -65,9 +65,9 @@
     <string name="otg_file_system">Dispositivo OTG (experimental)</string>
     <string name="remote_server">Servidor remoto</string>
     <string name="usb_connected_configure">USB conetado, configure o seu dispositivo.</string>
-    <string name="owncloud_wrong_connection">Falha na conexão com o seu servidor na nuvem. Verifique as suas configurações.</string>
-    <string name="owncloud_unauthorized">Falha na autenticação com o seu servidor na nuvem. Verifique as suas configurações.</string>
-    <string name="owncloud_unspecified_error">Erro ao conetar com o seu servidor na nuvem. Verifique as suas configurações.</string>
+    <string name="owncloud_wrong_connection">Não foi possível conectar com o servidor na nuvem. Verifique as suas configurações.</string>
+    <string name="owncloud_unauthorized">Não foi possível iniciar a sessão no servidor. Verifique as suas configurações.</string>
+    <string name="owncloud_unspecified_error">Erro não especificado ao conetar com o servidor na nuvem. Verifique as suas configurações ou tente mais tarde.</string>
     <string name="ext_document_provider_error">Arquivo raiz inválido. Verifique a configuração do seu cartão SD.</string>
     <string name="otg_missing_error">Arquivo raiz inválido. Verifique seu dispositivo OTG e/ou configuração.</string>
     <!-- Edit action names -->
@@ -116,4 +116,5 @@
     <string name="bmp_null">Bmp é nulo!</string>
     <string name="directory_not_saved">Diretório não salvo.</string>
     <string name="title_activity_show_html">Sobre</string>
+    <string name="share_document">Compartilhar documento</string>
 </resources>

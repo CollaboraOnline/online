@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-13 11:40+0000\n"
-"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
-"Language-Team: Czech <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
+"PO-Revision-Date: 2019-12-17 11:05+0000\n"
+"Last-Translator: raal <raal@post.cz>\n"
+"Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -291,7 +291,7 @@ msgstr "Zahájit kopírování/vkládání"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Automatická"
 
 #: src/control/Control.JSDialogBuilder.js:150
 msgid "Linear"
