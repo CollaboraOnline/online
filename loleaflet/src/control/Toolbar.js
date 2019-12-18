@@ -435,6 +435,13 @@ L.Map.include({
 		return parser.parseFromString(html, 'text/html').documentElement.getElementsByTagName('body')[0].textContent;
 	},
 
+	makeURLFromStr: function(str) {
+		if (!(str.startsWith('http://') || str.startsWith('https://'))) {
+			str = 'http://' + str;
+		}
+		return str;
+	},
+
 	showHyperlinkDialog: function() {
 		var map = this;
 		var text = '';
@@ -466,7 +473,7 @@ L.Map.include({
 						},
 						'Hyperlink.URL': {
 							type: 'string',
-							value: data.link
+							value: map.makeURLFromStr(data.link)
 						}
 					};
 					map.sendUnoCommand('.uno:SetHyperlink', command);
