@@ -236,8 +236,8 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:OnlineAutoFormat'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
-				{name: _('Online Help'), id: 'online-help', type: 'action'},
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -335,8 +335,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
-				{name: _('Online Help'), id: 'online-help', type: 'action'},
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -450,8 +450,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:GoalSeekDialog'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
-				{name: _('Online Help'), id: 'online-help', type: 'action'},
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
+				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -1244,6 +1244,9 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_checkItemVisibility: function(menuItem) {
+		if (window.ThisIsTheiOSApp && menuItem.iosapp === false) {
+			return false;
+		}
 		if (menuItem.id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
 			return false;
 		}
