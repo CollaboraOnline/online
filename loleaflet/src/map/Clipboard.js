@@ -469,7 +469,8 @@ L.Clipboard = L.Class.extend({
 
 		var plainText = this.stripHTML(text);
 		if (ev.clipboardData) { // Standard
-			ev.clipboardData.setData('text/plain', plainText);
+			// if copied content is graphical then plainText is null and it does not work on mobile.
+			ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
 			ev.clipboardData.setData('text/html', text);
 			console.log('Put "' + text + '" on the clipboard');
 			this._clipboardSerial++;
