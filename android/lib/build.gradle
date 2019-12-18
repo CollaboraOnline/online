@@ -74,6 +74,11 @@ task copyUnpackAssets(type: Copy) {
             includes = ["types.rdb"]
             rename 'types.rdb', 'udkapi.rdb'
         }
+
+        into('resource') {
+            from "${liboInstdir}/${liboSharedResFolder}"
+            includes = ['**']
+        }
     }
     into('user/fonts') {
         from "${liboInstdir}/share/fonts/truetype"
@@ -124,11 +129,6 @@ task copyAssets(type: Copy) {
     into('program') {
         from "${liboInstdir}/program"
         includes = ['services.rdb', 'services/services.rdb']
-
-        into('resource') {
-            from "${liboInstdir}/${liboSharedResFolder}"
-            includes = ['*en-US.res']
-        }
     }
     into('share') {
         from "${liboInstdir}/share"
