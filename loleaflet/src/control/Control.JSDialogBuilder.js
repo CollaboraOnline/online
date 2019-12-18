@@ -1444,7 +1444,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				// before close the wizard then execute the action
 				if (data.executionType === 'action') {
 					builder.map.menubar._executeAction(undefined, data.id);
-				} else {
+				} else if (!builder.map._clip.filterExecCopyPaste(data.command)) {
 					builder.map.sendUnoCommand(data.command)
 				}
 			});
