@@ -78,6 +78,9 @@ public class LOActivity extends AppCompatActivity {
 
     private int providerId;
 
+    /// Unique number identifying this app + document.
+    private long loadDocumentMillis = 0;
+
     @Nullable
     private URI documentUri;
 
@@ -478,6 +481,8 @@ public class LOActivity extends AppCompatActivity {
         mWebView.loadUrl(finalUrlToLoad);
 
         documentLoaded = true;
+
+        loadDocumentMillis = android.os.SystemClock.uptimeMillis();
     }
 
     static {
@@ -564,46 +569,13 @@ public class LOActivity extends AppCompatActivity {
             case "uno":
                 switch (messageAndParam[1]) {
                     case ".uno:Paste":
-                        clipData = clipboardManager.getPrimaryClip();
-                        if (clipData != null) {
-                            if (clipData.getDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                                final ClipData.Item clipItem = clipData.getItemAt(0);
-                                nativeHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        LOActivity.this.paste("text/plain;charset=utf-16", clipItem.getText().toString());
-                                    }
-                                });
-                            }
-                            return false;
-                        }
+                        return performPaste();
+                    case ".uno:Copy":
+                    case ".uno:Cut":
+                        populateClipboard();
                         break;
-                    case ".uno:Copy": {
-                        nativeHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                String tempSelectedText = LOActivity.this.getTextSelection();
-                                if (!tempSelectedText.equals("")) {
-                                    clipData = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, tempSelectedText);
-                                    clipboardManager.setPrimaryClip(clipData);
-                                }
-                            }
-                        });
+                    default:
                         break;
-                    }
-                    case ".uno:Cut": {
-                        nativeHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                String tempSelectedText = LOActivity.this.getTextSelection();
-                                if (!tempSelectedText.equals("")) {
-                                    clipData = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, tempSelectedText);
-                                    clipboardManager.setPrimaryClip(clipData);
-                                }
-                            }
-                        });
-                        break;
-                    }
                 }
                 break;
             case "DIM_SCREEN": {
@@ -671,9 +643,83 @@ public class LOActivity extends AppCompatActivity {
 
     public native void saveAs(String fileUri, String format);
 
-    public native String getTextSelection();
+    public native String[] getClipboardContent();
 
     public native void paste(String mimeType, String data);
+
+    /// Returns a magic that specifies this application - and this document.
+    private final String getClipboardMagic() {
+        return "lool-clip-magic-4a22437e49a8-" + Long.toString(loadDocumentMillis);
+    }
+
+    /// Needs to be executed after the .uno:Copy / Paste has executed
+    public final void populateClipboard()
+    {
+        /// FIXME: in theory we can do better with URIs to temporary files and so on...
+        nativeHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    // text[0], html[1]
+                    String[] clipStrings = LOActivity.this.getClipboardContent();
+                    if (clipStrings.length < 2 ||
+                        (clipStrings[0].length() == 0 && clipStrings[1].length() == 0))
+                        Log.e(TAG, "no clipboard to copy");
+                    else
+                    {
+                        String text = clipStrings[0];
+                        String html = clipStrings[1];
+
+                        int idx = html.indexOf("<meta name=\"generator\" content=\"");
+                        if (idx < 0)
+                            idx = html.indexOf("<meta http-equiv=\"content-type\" content=\"text/html;");
+                        if (idx >= 0) { // inject our magic
+                            StringBuffer newHtml = new StringBuffer(html);
+                            newHtml.insert(idx, "<meta name=\"origin\" content=\"" + getClipboardMagic() + "\"/>\n");
+                            html = newHtml.toString();
+                        }
+
+                        if (text == null || text.length() == 0)
+                            Log.i(TAG, "set text to clipoard with: text '" + text + "' and html '" + html + "'");
+                        clipData = ClipData.newHtmlText(ClipDescription.MIMETYPE_TEXT_HTML, text, html);
+                        clipboardManager.setPrimaryClip(clipData);
+                    }
+                }
+            });
+    }
+
+    /// Do the paste, and return true if we should short-circuit the paste locally
+    private final boolean performPaste()
+    {
+        clipData = clipboardManager.getPrimaryClip();
+        ClipDescription clipDesc = clipData != null ? clipData.getDescription() : null;
+        if (clipDesc != null) {
+            if (clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML)) {
+                final String html = clipData.getItemAt(0).getHtmlText();
+                if (html.contains(getClipboardMagic())) {
+                    Log.i(TAG, "clipboard comes from us: short circuit it " + html);
+                    return true;
+                } else {
+                    Log.i(TAG, "foreign html '" + html + "'");
+                    nativeHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            LOActivity.this.paste("text/html", html);
+                        }
+                    });
+                }
+            }
+            else if (clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+                final ClipData.Item clipItem = clipData.getItemAt(0);
+                nativeHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        LOActivity.this.paste("text/plain;charset=utf-16", clipItem.getText().toString());
+                    }
+                });
+            }
+        }
+        return false;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
