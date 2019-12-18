@@ -2,20 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2019-12-18 12:26+0100\n"
+"PO-Revision-Date: 2019-12-14 18:56+0000\n"
+"Last-Translator: Olivier Hallot <olivier.hallot@documentfoundation.org>\n"
+"Language-Team: Portuguese (Brazil) <https://vm137.documentfoundation.org/"
+"projects/libo_online/loleaflet-ui/pt_BR/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /pt_BR/libo_online/loleaflet-ui-pt_BR.po\n"
 "X-Pootle-Revision: 3939508\n"
 
@@ -119,7 +120,8 @@ msgstr "Gráfico de CPU"
 msgid "Network Graph"
 msgstr "Gráfico de rede"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:248
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:251
+#: src/layer/tile/TileLayer.js:383
 msgid "Save"
 msgstr "Salvar"
 
@@ -141,19 +143,15 @@ msgstr "Intervalo de tempo para estatísticas de CPU (ms)"
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
-"Memória virtual máxima para processamento de documentos (em MB) - somente "
-"redução"
+msgstr "Memória virtual máxima para processamento de documentos (em MB) - somente redução"
 
 #: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
-"Memória de pilha máxima para processamento de documentos (em MB) - somente "
-"redução"
+msgstr "Memória de pilha máxima para processamento de documentos (em KB) - somente redução"
 
 #: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Tamanho máximo de arquivo permitido (em MB) - somente redução "
+msgstr "Tamanho máximo de arquivo permitido (em MB) - somente redução"
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
@@ -183,7 +181,7 @@ msgstr "Recebido"
 msgid "Sent"
 msgstr "Enviado"
 
-#: admin/src/AdminSocketBase.js:46
+#: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
 msgstr "Erro de conexão"
 
@@ -231,15 +229,15 @@ msgstr "s"
 msgid "Open link"
 msgstr "Abrir link"
 
-#: src/control/Control.AlertDialog.js:53
+#: src/control/Control.AlertDialog.js:54
 msgid "Edit"
 msgstr "Editar"
 
-#: src/control/Control.AlertDialog.js:74
+#: src/control/Control.AlertDialog.js:76
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "O servidor encontrou o erro %0 ao analisar o comando %1 ."
 
-#: src/control/Control.ContextMenu.js:156
+#: src/control/Control.ContextMenu.js:234
 msgid "Paste Special"
 msgstr "Colar especial"
 
@@ -255,7 +253,7 @@ msgstr "Tipo"
 msgid "Index"
 msgstr "Índice"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:271
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:279
 msgid "Comment"
 msgstr "Comentário"
 
@@ -271,7 +269,7 @@ msgstr "Carimbo de tempo"
 msgid "Jump to state"
 msgstr "Saltar para o estado"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2333
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2442
 msgid "You"
 msgstr "Você"
 
@@ -291,147 +289,262 @@ msgstr "Iniciar envio"
 msgid "Start cross copy/paste"
 msgstr "Iniciar copiar/colar cruzado"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:256
-#: src/control/Control.Menubar.js:353
-msgid "Share..."
-msgstr "Compartilhar..."
+#: src/control/ColorPicker.js:121
+msgid "No color"
+msgstr "Sem cor"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:258
-#: src/control/Control.Menubar.js:355
-msgid "See revision history"
-msgstr "Histórico de revisões"
+#: src/control/Control.JSDialogBuilder.js:150
+msgid "Linear"
+msgstr "Linear"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:259
-#: src/control/Control.Menubar.js:356
-msgid "Download as"
-msgstr "Baixar como"
+#: src/control/Control.JSDialogBuilder.js:153
+msgid "Axial"
+msgstr "Axial"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:31
-#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:265
-#: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:362
-msgid "PDF Document (.pdf)"
-msgstr "Documento PDF (.pdf)"
+#: src/control/Control.JSDialogBuilder.js:156
+msgid "Radial"
+msgstr "Radial"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:32
-msgid "ODF text document (.odt)"
-msgstr "Documento de texto ODF (.odt)"
-
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:33
-msgid "Word 2003 Document (.doc)"
-msgstr "Documento Word 2003 (.doc)"
-
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:34
-msgid "Word Document (.docx)"
-msgstr "Documento Word (.docx)"
-
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:35
-msgid "Rich Text (.rtf)"
-msgstr "Texto rico (.rtf)"
-
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:264
-#: src/control/Control.Menubar.js:361
-msgid "Export as"
+#: src/control/Control.JSDialogBuilder.js:159
+msgid "Elipsóide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:36 src/control/Signing.js:601
-msgid "Sign document"
-msgstr "Assinar documento"
+#: src/control/Control.JSDialogBuilder.js:163
+msgid "Quadratic"
+msgstr "Quadratica"
 
-#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:367
-msgid "Close document"
-msgstr "Fechar documento"
+#: src/control/Control.JSDialogBuilder.js:166
+msgid "Square"
+msgstr "Quadrado"
 
-#: src/control/Control.Menubar.js:43 src/control/Control.Menubar.js:275
-#: src/control/Control.Menubar.js:372
-msgid "Repair"
-msgstr "Reparar"
+#: src/control/Control.JSDialogBuilder.js:169
+msgid "Fixed size"
+msgstr "Tamanho fixo"
 
-#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:289
-#: src/control/Control.Toolbar.js:1071
-msgid "Reset zoom"
-msgstr "Restaurar zoom"
+#: src/control/Control.JSDialogBuilder.js:541
+msgid "\""
+msgstr "\""
 
-#: src/control/Control.Menubar.js:70
-msgid "Show Ruler"
-msgstr "Mostrar régua"
+#: src/control/Control.JSDialogBuilder.js:543
+msgid "%"
+msgstr "%"
 
-#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:291
-#: src/control/Control.Menubar.js:385
-msgid "Mobile Wizard"
+#: src/control/Control.JSDialogBuilder.js:545
+msgid "°"
+msgstr "°"
+
+#: src/control/Control.JSDialogBuilder.js:734
+#: src/control/Control.Toolbar.js:1577
+msgid "None"
+msgstr "Nenhum"
+
+#: src/control/Control.JSDialogBuilder.js:737
+msgid "Color"
+msgstr "Cor"
+
+#: src/control/Control.JSDialogBuilder.js:740
+msgid "Gradient"
+msgstr "Gradiente"
+
+#: src/control/Control.JSDialogBuilder.js:743
+msgid "Hatching"
 msgstr ""
 
-#: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:294
-#: src/control/Control.Menubar.js:388
-msgid "Local Image..."
-msgstr "Imagem do computador..."
+#: src/control/Control.JSDialogBuilder.js:747
+msgid "Pattern"
+msgstr "Padrão"
 
-#: src/control/Control.Menubar.js:98 src/control/Control.Menubar.js:100
-msgid "All"
-msgstr "Tudo"
+#: src/control/Control.JSDialogBuilder.js:880
+msgid "From"
+msgstr "De"
 
-#: src/control/Control.Menubar.js:149
-msgid "Text orientation"
-msgstr "Orientação do texto"
+#: src/control/Control.JSDialogBuilder.js:883
+msgid "To"
+msgstr "Para"
 
-#: src/control/Control.Menubar.js:234 src/control/Control.Menubar.js:236
-#: src/control/Control.Menubar.js:238 src/control/Control.Menubar.js:340
-#: src/control/Control.Menubar.js:459 src/control/Control.Toolbar.js:1830
+#: src/control/Control.JSDialogBuilder.js:1014
+msgid "Font Name"
+msgstr "Fonte"
+
+#: src/control/Control.JSDialogBuilder.js:1016
+msgid "Font Size"
+msgstr "Tamanho de Fonte"
+
+#: src/control/Control.JSDialogBuilder.js:1479
+msgid "Rows"
+msgstr "Linhas"
+
+#: src/control/Control.JSDialogBuilder.js:1480
+msgid "Columns"
+msgstr "Colunas"
+
+#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.Menubar.js:615 src/control/Control.Menubar.js:666
+#: src/control/Control.Toolbar.js:957
+msgid "Insert table"
+msgstr "Inserir tabela"
+
+#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
+#: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
+#: src/control/Control.Menubar.js:335 src/control/Control.Menubar.js:449
+#: src/control/Control.Toolbar.js:1958
 msgid "None (Do not check spelling)"
 msgstr "Nenhum (Não verificar a ortografia)"
 
-#: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:343
-#: src/control/Control.Menubar.js:463
+#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:458
+#: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:384
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:250
+#: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:464
+#: src/control/Control.Menubar.js:508 src/control/Control.Menubar.js:552
+msgid "Share..."
+msgstr "Compartilhar..."
+
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:252
+#: src/control/Control.Menubar.js:351 src/control/Control.Menubar.js:466
+#: src/control/Control.Menubar.js:510 src/control/Control.Menubar.js:554
+msgid "See revision history"
+msgstr "Histórico de revisões"
+
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:253
+#: src/control/Control.Menubar.js:352 src/control/Control.Menubar.js:469
+#: src/control/Control.Menubar.js:512 src/control/Control.Menubar.js:556
+msgid "Download as"
+msgstr "Baixar como"
+
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:254
+#: src/control/Control.Menubar.js:353 src/control/Control.Menubar.js:470
+#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:557
+msgid "PDF Document (.pdf)"
+msgstr "Documento PDF (.pdf)"
+
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:471
+msgid "ODF text document (.odt)"
+msgstr "Documento de texto ODF (.odt)"
+
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:472
+msgid "Word 2003 Document (.doc)"
+msgstr "Documento Word 2003 (.doc)"
+
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:473
+msgid "Word Document (.docx)"
+msgstr "Documento Word (.docx)"
+
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:474
+msgid "Rich Text (.rtf)"
+msgstr "Texto rico (.rtf)"
+
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:467
+#: src/control/Signing.js:601
+msgid "Sign document"
+msgstr "Assinar documento"
+
+#: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:358
+msgid "Close document"
+msgstr "Fechar documento"
+
+#: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:363 src/control/Control.Menubar.js:479
+#: src/control/Control.Menubar.js:521 src/control/Control.Menubar.js:565
+msgid "Repair"
+msgstr "Reparar"
+
+#: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:278
+#: src/control/Control.Toolbar.js:1158
+msgid "Reset zoom"
+msgstr "Restaurar zoom"
+
+#: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:496
+msgid "Show Ruler"
+msgstr "Mostrar régua"
+
+#: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:288
+#: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:612
+#: src/control/Control.Menubar.js:652 src/control/Control.Menubar.js:663
+msgid "Local Image..."
+msgstr "Imagem do computador..."
+
+#: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:93
+#: src/control/Control.Menubar.js:628 src/control/Control.Menubar.js:630
+msgid "All"
+msgstr "Tudo"
+
+#: src/control/Control.Menubar.js:142
+msgid "Text orientation"
+msgstr "Orientação do texto"
+
+#: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:338
+#: src/control/Control.Menubar.js:453
+msgid "Online Help"
+msgstr "Ajuda Online"
+
+#: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:339
+#: src/control/Control.Menubar.js:454
 msgid "Keyboard shortcuts"
 msgstr "Atalhos do teclado"
 
-#: src/control/Control.Menubar.js:247 src/control/Control.Menubar.js:344
-#: src/control/Control.Menubar.js:464
+#: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:340
+#: src/control/Control.Menubar.js:455 src/control/Control.Menubar.js:501
+#: src/control/Control.Menubar.js:545 src/control/Control.Menubar.js:606
 msgid "About"
 msgstr "Sobre"
 
-#: src/control/Control.Menubar.js:249 src/control/Control.Menubar.js:346
-#: src/control/Control.Menubar.js:466 src/map/Map.js:371
+#: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:342
+#: src/control/Control.Menubar.js:457 src/map/Map.js:385
 msgid "Last modification"
 msgstr "Última modificação"
 
-#: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:266
+#: src/control/Control.Menubar.js:255 src/control/Control.Menubar.js:514
 msgid "ODF presentation (.odp)"
 msgstr "Apresentação ODF (.odp)"
 
-#: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:267
+#: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:515
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Apresentação PorwerPoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:268
+#: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:516
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Apresentação PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.js:334 src/control/Control.Toolbar.js:1024
+#: src/control/Control.Menubar.js:329 src/control/Control.Menubar.js:544
+#: src/control/Control.Toolbar.js:1111
 msgid "Fullscreen presentation"
-msgstr "Apresentação de slide"
+msgstr "Apresentação em tela cheia"
 
-#: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:363
+#: src/control/Control.Menubar.js:354 src/control/Control.Menubar.js:558
 msgid "ODF spreadsheet (.ods)"
 msgstr "Planilha ODF (.ods)"
 
-#: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:364
+#: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:559
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Planilha Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:365
+#: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:560
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Planilha Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:533 src/control/Control.Toolbar.js:1829
+#: src/control/Control.Menubar.js:469 src/control/Control.Menubar.js:512
+#: src/control/Control.Menubar.js:556
+msgid "Export as"
+msgstr "Exportar como"
+
+#: src/control/Control.Menubar.js:639 src/control/Control.Menubar.js:658
+#: src/control/Control.Menubar.js:668
+msgid "Insert Shape"
+msgstr "Inserir formas"
+
+#: src/control/Control.Menubar.js:738 src/control/Control.Toolbar.js:1957
 msgid "Reset to Default Language"
 msgstr "Redefinir para o idioma padrão"
 
-#: src/control/Control.Menubar.js:888
+#: src/control/Control.Menubar.js:1106
 msgid "Are you sure you want to delete this slide?"
-msgstr "Deseja excluir esta página?"
+msgstr "Deseja eliminar este slide?"
 
-#: src/control/Control.Menubar.js:926 src/map/Clipboard.js:751
+#: src/control/Control.Menubar.js:1138 src/map/Clipboard.js:767
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
@@ -466,201 +579,180 @@ msgstr "Deseja excluir a planilha %sheet% ?"
 msgid "Enter new sheet name"
 msgstr "Digite o nome da nova planilha"
 
-#: src/control/Control.Toolbar.js:214
+#: src/control/Control.Toolbar.js:225
 msgid "Are you sure you want to delete this page?"
 msgstr "Deseja excluir esta página?"
 
-#: src/control/Control.Toolbar.js:810
+#: src/control/Control.Toolbar.js:850
+msgid "Default Style"
+msgstr "Estilo Padrão"
+
+#: src/control/Control.Toolbar.js:901
 msgid "Borders"
 msgstr "Bordas"
 
-#: src/control/Control.Toolbar.js:818
+#: src/control/Control.Toolbar.js:909
 msgid "More..."
 msgstr "Mais..."
 
-#: src/control/Control.Toolbar.js:866 src/layer/tile/ImpressTileLayer.js:117
-#: src/layer/tile/WriterTileLayer.js:80
-msgid "Insert table"
-msgstr "Inserir tabela"
-
-#: src/control/Control.Toolbar.js:871
+#: src/control/Control.Toolbar.js:962
 msgid "Insert Local Image"
-msgstr "Inserir imagem local"
+msgstr "Inserir imagem do computador"
 
-#: src/control/Control.Toolbar.js:875 src/control/Control.Toolbar.js:877
-#: src/layer/tile/CalcTileLayer.js:94 src/layer/tile/ImpressTileLayer.js:119
-#: src/layer/tile/WriterTileLayer.js:82
+#: src/control/Control.Toolbar.js:966
 msgid "Insert shapes"
 msgstr "Inserir formas"
 
-#: src/control/Control.Toolbar.js:952 src/control/Control.Toolbar.js:1476
-#: src/layer/tile/CalcTileLayer.js:92 src/layer/tile/CalcTileLayer.js:157
-msgid "Sum"
-msgstr "Soma"
-
-#: src/control/Control.Toolbar.js:953 src/layer/tile/CalcTileLayer.js:158
-msgid "Function"
-msgstr "Função"
-
-#: src/control/Control.Toolbar.js:954 src/control/Toolbar.js:361
-#: src/layer/marker/Annotation.js:181 src/layer/tile/CalcTileLayer.js:159
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: src/control/Control.Toolbar.js:955 src/layer/tile/CalcTileLayer.js:160
-msgid "Accept"
-msgstr "Aceitar"
-
-#: src/control/Control.Toolbar.js:1002 src/layer/tile/CalcTileLayer.js:193
+#: src/control/Control.Toolbar.js:1089 src/layer/tile/CalcTileLayer.js:180
 msgid "First sheet"
 msgstr "Primeira planilha"
 
-#: src/control/Control.Toolbar.js:1003 src/layer/tile/CalcTileLayer.js:194
+#: src/control/Control.Toolbar.js:1090 src/layer/tile/CalcTileLayer.js:181
 msgid "Previous sheet"
 msgstr "Planilha anterior"
 
-#: src/control/Control.Toolbar.js:1004 src/layer/tile/CalcTileLayer.js:195
+#: src/control/Control.Toolbar.js:1091 src/layer/tile/CalcTileLayer.js:182
 msgid "Next sheet"
 msgstr "Próxima planilha"
 
-#: src/control/Control.Toolbar.js:1005 src/layer/tile/CalcTileLayer.js:196
+#: src/control/Control.Toolbar.js:1092 src/layer/tile/CalcTileLayer.js:183
 msgid "Last sheet"
 msgstr "Última planilha"
 
-#: src/control/Control.Toolbar.js:1006 src/layer/tile/CalcTileLayer.js:197
+#: src/control/Control.Toolbar.js:1093 src/layer/tile/CalcTileLayer.js:184
 msgid "Insert sheet"
 msgstr "Inserir planilha"
 
-#: src/control/Control.Toolbar.js:1048
+#: src/control/Control.Toolbar.js:1135
 msgid "Search"
 msgstr "Pesquisar"
 
-#: src/control/Control.Toolbar.js:1054
+#: src/control/Control.Toolbar.js:1141
 msgid "Cancel the search"
 msgstr "Cancelar a pesquisa"
 
-#: src/control/Control.Toolbar.js:1061 src/layer/tile/CalcTileLayer.js:115
-#: src/layer/tile/ImpressTileLayer.js:144 src/layer/tile/WriterTileLayer.js:105
+#: src/control/Control.Toolbar.js:1148 src/layer/tile/CalcTileLayer.js:120
+#: src/layer/tile/ImpressTileLayer.js:151 src/layer/tile/WriterTileLayer.js:94
 msgid "Always follow the editor"
 msgstr "Sempre seguir o editor"
 
-#: src/control/Control.Toolbar.js:1064 src/layer/tile/CalcTileLayer.js:118
-#: src/layer/tile/ImpressTileLayer.js:147 src/layer/tile/WriterTileLayer.js:108
+#: src/control/Control.Toolbar.js:1151 src/layer/tile/CalcTileLayer.js:123
+#: src/layer/tile/ImpressTileLayer.js:154 src/layer/tile/WriterTileLayer.js:97
 msgid "Current"
 msgstr "Atual"
 
-#: src/control/Control.Toolbar.js:1141
+#: src/control/Control.Toolbar.js:1228
 msgid "%user has joined"
 msgstr "%user conectou"
 
-#: src/control/Control.Toolbar.js:1142
+#: src/control/Control.Toolbar.js:1229
 msgid "%user has left"
 msgstr "%user desconectou"
 
-#: src/control/Control.Toolbar.js:1443
+#: src/control/Control.Toolbar.js:1542
 msgid "Number of Sheets"
 msgstr "Nº de planilhas"
 
-#: src/control/Control.Toolbar.js:1448
+#: src/control/Control.Toolbar.js:1547
 msgid "Selected range of cells"
 msgstr "Intervalo de células selecionado"
 
-#: src/control/Control.Toolbar.js:1453 src/control/Control.Toolbar.js:1510
+#: src/control/Control.Toolbar.js:1552 src/control/Control.Toolbar.js:1609
 msgid "Entering text mode"
 msgstr "Entrar no modo de texto"
 
-#: src/control/Control.Toolbar.js:1462 src/control/Control.Toolbar.js:1515
+#: src/control/Control.Toolbar.js:1561 src/control/Control.Toolbar.js:1614
 msgid "Selection Mode"
 msgstr "Modo de seleção"
 
-#: src/control/Control.Toolbar.js:1467
+#: src/control/Control.Toolbar.js:1566
 msgid "Choice of functions"
 msgstr "Seleção de funções"
 
-#: src/control/Control.Toolbar.js:1471
+#: src/control/Control.Toolbar.js:1570
 msgid "Average"
 msgstr "Média"
 
-#: src/control/Control.Toolbar.js:1472
+#: src/control/Control.Toolbar.js:1571
 msgid "CountA"
 msgstr "ContagemA"
 
-#: src/control/Control.Toolbar.js:1473
+#: src/control/Control.Toolbar.js:1572
 msgid "Count"
 msgstr "Contagem"
 
-#: src/control/Control.Toolbar.js:1474
+#: src/control/Control.Toolbar.js:1573
 msgid "Maximum"
 msgstr "Máximo"
 
-#: src/control/Control.Toolbar.js:1475
+#: src/control/Control.Toolbar.js:1574
 msgid "Minimum"
 msgstr "Mínimo"
 
-#: src/control/Control.Toolbar.js:1477
+#: src/control/Control.Toolbar.js:1575
+msgid "Sum"
+msgstr "Soma"
+
+#: src/control/Control.Toolbar.js:1576
 msgid "Selection count"
 msgstr "Contagem da seleção"
 
-#: src/control/Control.Toolbar.js:1478
-msgid "None"
-msgstr "Nenhum"
-
-#: src/control/Control.Toolbar.js:1500
+#: src/control/Control.Toolbar.js:1599
 msgid "Number of Pages"
 msgstr "Nº de páginas"
 
-#: src/control/Control.Toolbar.js:1505
+#: src/control/Control.Toolbar.js:1604
 msgid "Word Counter"
 msgstr "Contagem de palavras"
 
-#: src/control/Control.Toolbar.js:1536
+#: src/control/Control.Toolbar.js:1639
 msgid "Number of Slides"
 msgstr "Nº de slides"
 
-#: src/control/Control.Toolbar.js:1570
+#: src/control/Control.Toolbar.js:1676
 msgid "%n users"
 msgstr "%n usuários"
 
-#: src/control/Control.Toolbar.js:1571
+#: src/control/Control.Toolbar.js:1677
 msgid "1 user"
 msgstr "1 usuário"
 
-#: src/control/Control.Toolbar.js:1572
+#: src/control/Control.Toolbar.js:1678
 msgid "0 users"
 msgstr "Sem usuários"
 
-#: src/control/Control.Toolbar.js:1923
+#: src/control/Control.Toolbar.js:2053
 msgid "Style"
 msgstr "Estilo"
 
-#: src/control/Control.Toolbar.js:1946
+#: src/control/Control.Toolbar.js:2076
 msgid "Font"
 msgstr "Fonte"
 
-#: src/control/Control.Toolbar.js:1971
+#: src/control/Control.Toolbar.js:2102
 msgid "Previous slide"
 msgstr "Slide anterior"
 
-#: src/control/Control.Toolbar.js:1972
+#: src/control/Control.Toolbar.js:2103
 msgid "Next slide"
 msgstr "Próximo slide"
 
-#: src/control/Control.Toolbar.js:2024
+#: src/control/Control.Toolbar.js:2161
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Ocorreu um conflito ao desfazer ou refazer com múltiplos usuários. Utilize a "
 "reparação de documentos para resolver"
 
-#: src/control/Control.Toolbar.js:2339
+#: src/control/Control.Toolbar.js:2448
 msgid "Readonly"
-msgstr "Só leitura"
+msgstr "Somente de leitura"
 
-#: src/control/Ruler.js:101
+#: src/control/Ruler.js:192
 msgid "Left Margin"
 msgstr "Margem esquerda"
 
-#: src/control/Ruler.js:102
+#: src/control/Ruler.js:193
 msgid "Right Margin"
 msgstr "Margem direita"
 
@@ -796,7 +888,7 @@ msgstr "Assinado mas em todos os arquivos estão assinados"
 msgid "Downloading..."
 msgstr "Baixando..."
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1353
+#: src/control/Toolbar.js:104 src/map/Map.js:1387
 msgid "Saving..."
 msgstr "Salvando..."
 
@@ -804,27 +896,27 @@ msgstr "Salvando..."
 msgid "Renaming..."
 msgstr "Renomeando..."
 
-#: src/control/Toolbar.js:285
+#: src/control/Toolbar.js:363
 msgid "This version of %productName is powered by"
 msgstr "Esta versão do %productName é operada com"
 
-#: src/control/Toolbar.js:354
+#: src/control/Toolbar.js:451
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Inserir hiperlink"
 
-#: src/control/Toolbar.js:356
+#: src/control/Toolbar.js:453
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
-#: src/control/Toolbar.js:357
+#: src/control/Toolbar.js:454
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
-#: src/control/Toolbar.js:360
+#: src/control/Toolbar.js:457
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
-#: src/core/Socket.js:57
+#: src/core/Socket.js:59
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
@@ -836,35 +928,39 @@ msgstr ""
 "previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
-#: src/core/Socket.js:59
+#: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Ocorreu um problema ao conectar com o LibreOffice Online: "
 
-#: src/core/Socket.js:283
+#: src/core/Socket.js:294
+msgid "Served by:"
+msgstr "Servido por:"
+
+#: src/core/Socket.js:299
 msgid "Unsupported server version."
 msgstr "A versão do servidor não é homologada."
 
-#: src/core/Socket.js:350
+#: src/core/Socket.js:366
 msgid "Session terminated by document owner"
 msgstr "Sessão encerrada pelo proprietário do documento"
 
-#: src/core/Socket.js:354
+#: src/core/Socket.js:370
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Documento ocioso - clique para recarregar e continuar editando"
 
-#: src/core/Socket.js:361
+#: src/core/Socket.js:377
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "O servidor está se desligando para manutenção (auto-salvamento)"
 
-#: src/core/Socket.js:365
+#: src/core/Socket.js:381
 msgid "Oops, there is a problem connecting the document"
 msgstr "Há um problema ao conectar o documento"
 
-#: src/core/Socket.js:369
+#: src/core/Socket.js:385
 msgid "Server is recycling and will be available shortly"
 msgstr "O servidor está se reciclando e estará disponível em beve"
 
-#: src/core/Socket.js:397
+#: src/core/Socket.js:413
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -872,7 +968,7 @@ msgstr ""
 "O documento foi alterado no armazenamento. Recarregando o documento. Sua "
 "versão está disponível como revisão."
 
-#: src/core/Socket.js:403
+#: src/core/Socket.js:419
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -880,7 +976,7 @@ msgstr ""
 "Restaurando a revisão anterior. Quaisquer alterações não salvas estarão "
 "disponíveis no histórico da versão."
 
-#: src/core/Socket.js:493
+#: src/core/Socket.js:510
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -888,39 +984,39 @@ msgstr ""
 "O documento foi alterado no armazenamento. O que deseja fazer com as "
 "alterações não salvas?"
 
-#: src/core/Socket.js:497
+#: src/core/Socket.js:514
 msgid "Discard"
 msgstr "Descartar"
 
-#: src/core/Socket.js:502
+#: src/core/Socket.js:519
 msgid "Overwrite"
 msgstr "Substituir"
 
-#: src/core/Socket.js:507
+#: src/core/Socket.js:524
 msgid "Save to new file"
 msgstr "Salvar com outro nome"
 
-#: src/core/Socket.js:580
+#: src/core/Socket.js:597
 msgid "Document requires password to view."
 msgstr "O documento exige uma senha de abertura."
 
-#: src/core/Socket.js:583
+#: src/core/Socket.js:600
 msgid "Document requires password to modify."
 msgstr "O documento exige uma senha para modificação."
 
-#: src/core/Socket.js:585
+#: src/core/Socket.js:602
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pressione Cancelar para abrir no modo de só leitura."
 
-#: src/core/Socket.js:589
+#: src/core/Socket.js:606
 msgid "Wrong password provided. Please try again."
 msgstr "Senha inválida. Tente novamente."
 
-#: src/core/Socket.js:717
+#: src/core/Socket.js:737
 msgid "Connecting..."
 msgstr "Conectando..."
 
-#: src/core/Socket.js:924
+#: src/core/Socket.js:1009
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1018,31 +1114,39 @@ msgstr "Link inválido: '%url'"
 msgid "You are leaving the editor, are you sure you want to visit %url?"
 msgstr "Você está deixando o editor, tem certeza que quer visitar %url?"
 
-#: src/errormessages.js:29
+#: src/errormessages.js:26
+msgid ""
+"Failed to load the document. This document is either malformed or is taking "
+"more resources than allowed. Please contact the administrator."
+msgstr ""
+"Falhou ao carregar o documento. O documento possuí problemas ou está a consumir "
+"mais recursos do que é permitido. Por favor contate o administrador."
+
+#: src/errormessages.js:30
 msgid "Failed to load document."
 msgstr "Falha ao carregar o documento."
 
-#: src/errormessages.js:30
+#: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
 "Falhou a gravação devido à falta de espaço em disco. O documento será agora "
 "apenas de leitura."
 
-#: src/errormessages.js:31 src/errormessages.js:39
+#: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "O documento não pode ser salvo por que a ficha de acesso expirou ou é "
 "inválida."
 
-#: src/errormessages.js:32
+#: src/errormessages.js:33
 msgid "Document cannot be saved."
 msgstr "O documento não pode ser salvo."
 
-#: src/errormessages.js:33
+#: src/errormessages.js:34
 msgid "Document cannot be renamed."
 msgstr "Não é possível mudar o nome do documento."
 
-#: src/errormessages.js:37
+#: src/errormessages.js:38
 #, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
@@ -1051,7 +1155,7 @@ msgstr ""
 "Falhou ao ler o documento do armazenamento. Contacte o administrador do "
 "servidor de arquivos (%storageserver)."
 
-#: src/errormessages.js:38
+#: src/errormessages.js:39
 #, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
@@ -1062,7 +1166,7 @@ msgstr ""
 "como só leitura. Contacte o administrador do servidor (%storageserver) para "
 "continuar a editar."
 
-#: src/errormessages.js:40
+#: src/errormessages.js:41
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -1070,7 +1174,7 @@ msgstr ""
 "Não foi possível salvar o documento. Verifique suas permissões ou contacte o "
 "administrador do servidor de armazenamento."
 
-#: src/errormessages.js:41
+#: src/errormessages.js:42
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
@@ -1078,48 +1182,73 @@ msgstr ""
 "Não foi possível renomear o documento. Verifique suas permissões ou contacte "
 "o administrador do servidor de armazenamento."
 
-#: src/layer/marker/Annotation.js:217
+#: src/errormessages.js:47
+msgid "Uploading file to server failed, file not found."
+msgstr "Falhou ao fazer upload do arquivo, arquivo não encontrado."
+
+#: src/errormessages.js:48
+msgid "Uploading file to server failed, the file is too large."
+msgstr "Falhou ao fazer upload do arquivo, arquivo demasiado grande."
+
+#: src/layer/marker/Annotation.js:219
 msgid "Accept change"
 msgstr "Aceitar a alteração"
 
-#: src/layer/marker/Annotation.js:222
+#: src/layer/marker/Annotation.js:224
 msgid "Reject change"
 msgstr "Rejeitar a alteração"
 
-#: src/layer/marker/Annotation.js:231
+#: src/layer/marker/Annotation.js:233
 msgid "Open menu"
 msgstr "Abrir menu"
 
-#: src/layer/marker/Annotation.js:251 src/layer/tile/TileLayer.js:238
+#: src/layer/marker/Annotation.js:254 src/layer/tile/TileLayer.js:246
 msgid "Reply"
 msgstr "Responder"
 
-#: src/layer/tile/TileLayer.js:232
+#: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
+#: src/layer/tile/WriterTileLayer.js:56
+#, fuzzy
+msgid "Show the search bar"
+msgstr "Cancelar a pesquisa"
+
+#: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
+#: src/layer/tile/WriterTileLayer.js:157
+#, fuzzy
+msgid "Clear the search field"
+msgstr "Cancelar a pesquisa"
+
+#: src/layer/tile/CalcTileLayer.js:239 src/layer/tile/ImpressTileLayer.js:224
+#: src/layer/tile/WriterTileLayer.js:159
+#, fuzzy
+msgid "Hide the search bar"
+msgstr "Cancelar a pesquisa"
+
+#: src/layer/tile/TileLayer.js:240
 msgid "Modify"
 msgstr "Modificar"
 
-#: src/layer/tile/TileLayer.js:244
+#: src/layer/tile/TileLayer.js:252
 msgid "Remove"
 msgstr "Remover"
 
-#: src/layer/tile/TileLayer.js:250
+#: src/layer/tile/TileLayer.js:258
 msgid "Resolve"
 msgstr "Resolver"
 
-#: src/map/Clipboard.js:123
+#: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "Para colar fora do %productName, clique primeiro no botão 'Transferir'"
 
-#: src/map/Clipboard.js:269
+#: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Falha ao baixar a área de transferência. Copie novamente"
 
-#: src/map/Clipboard.js:749
+#: src/map/Clipboard.js:765
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Utilize os botões de copiar/colar no seu teclado de tela.</p>"
 
-#: src/map/Clipboard.js:771
-#, fuzzy
+#: src/map/Clipboard.js:790
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1134,7 +1263,7 @@ msgstr ""
 "copiando e colando entre documentos dentro do %productName, não há "
 "necessidade de baixar.</p>"
 
-#: src/map/Clipboard.js:787
+#: src/map/Clipboard.js:806
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -1143,39 +1272,63 @@ msgstr ""
 "<p>Uma transferência grande de copiar e colar está em curso. Aguarde seu "
 "témino, ou cancele-a antes de iniciar uma nova</p>"
 
-#: src/map/Map.js:219
+#: src/map/Map.js:234
 msgid "Initializing..."
 msgstr "Inicializando..."
 
-#: src/map/Map.js:406
+#: src/map/Map.js:420
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "Há %d segundos"
 
-#: src/map/Map.js:409
+#: src/map/Map.js:423
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "Há %d minutos"
 
-#: src/map/Map.js:1220
+#: src/map/Map.js:1249
 msgid "Inactive document - please click to resume editing"
 msgstr "Documento inativo - clique para continuar editando"
 
-#: src/map/Map.js:1356
+#: src/map/Map.js:1390
 msgid "Loading..."
 msgstr "Carregando..."
 
-#: src/map/handler/Map.FileInserter.js:105
+#: src/map/handler/Map.FileInserter.js:96
+#, javascript-format
+msgid ""
+"The file of type: %0 can not be uploaded to server since the file has no name"
+msgstr ""
+"Falha ao fazer upload do documento do tipo %0 para o servidor, o arquivo não possuí nome"
+
+#: src/map/handler/Map.FileInserter.js:98
+#, javascript-format
+msgid ""
+"The file of type: %0 can not be uploaded to server since the file is empty"
+msgstr ""
+"Falha ao fazer upload do documento do tipo %0 para o servidor, o arquivo está vazio"
+
+#: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
 msgstr "Carregando..."
+
+#: src/map/handler/Map.FileInserter.js:143
+msgid "Uploading file to server failed with status: %0"
+msgstr "Falha ao fazer upload do documento para o servidor. Estado: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
 msgstr "Criar arquivo a partir de um modelo..."
 
-#: src/map/handler/Map.WOPI.js:371
+#: src/map/handler/Map.WOPI.js:374
 msgid "Creating copy..."
 msgstr "Criar uma cópia..."
+
+#~ msgid "Function"
+#~ msgstr "Função"
+
+#~ msgid "Accept"
+#~ msgstr "Aceitar"
 
 #~ msgid "Save as PDF"
 #~ msgstr "Salvar como PDF"
