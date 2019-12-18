@@ -203,10 +203,11 @@ L.Annotation = L.Layer.extend({
 		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
 		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
-		imgAuthor.setAttribute('src', L.Icon.Default.imagePath + '/user.png');
+		imgAuthor.setAttribute('src', 'images/user.png');
 		imgAuthor.setAttribute('width', this.options.imgSize.x);
 		imgAuthor.setAttribute('height', this.options.imgSize.y);
 		this._authorAvatarImg = imgAuthor;
+		this._authorAvatartdImg = tdImg;
 		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
 
@@ -381,10 +382,13 @@ L.Annotation = L.Layer.extend({
 
 		this._updateResolvedField(this._data.resolved);
 		$(this._authorAvatarImg).attr('src', this._data.avatar);
+		if (!this._data.avatar) {
+			$(this._authorAvatarImg).css('padding-top', '4px');
+		}
 		var user = this._map.getViewId(this._data.author);
 		if (user >= 0) {
 			var color = L.LOUtil.rgbToHex(this._map.getViewColor(user));
-			$(this._authorAvatarImg).css('border-color', color);
+			$(this._authorAvatartdImg).css('border-color', color);
 		}
 
 		var d = new Date(this._data.dateTime.replace(/,.*/, 'Z'));

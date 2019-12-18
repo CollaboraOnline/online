@@ -487,6 +487,23 @@ body {
 .loleaflet-annotation-img {
 	max-width: 32px;
 	display: inline-block;
+	border: solid 2px;
+	border-radius: 50%;
+	height: 32px;
+	width: 32px;
+}
+.loleaflet-annotation-img .avatar-img{
+	border: none;
+	padding-top: 3px;
+}
+.loleaflet-annotation-img > .avatar-img{
+	display: block;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 32px; /* Width of new image */
+	height: 32px; /* Height of new image */
+	padding-left: 32px; /* Equal to width of new image */
+	background: url(images/user.png) center 3px no-repeat;
 }
 
 .leaflet-container .leaflet-pane.leaflet-calc-background-pane {
