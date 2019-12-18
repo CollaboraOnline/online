@@ -1037,11 +1037,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 		title = builder._cleanText(title);
-
-		// FIXME find out why Android needs this & fix
-		if (window.ThisIsTheAndroidApp)
-			title = _(title);
-
 		data.text = title;
 
 		var entries = [];
@@ -1104,13 +1099,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_comboboxEntry: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('p', 'mobile-wizard', parentContainer);
-
-		// FIXME find out why Android needs this & fix
-		if (window.ThisIsTheAndroidApp)
-			fixedtext.innerHTML = _(builder._cleanText(data.text));
-		else
-			fixedtext.innerHTML = builder._cleanText(data.text);
-
+		fixedtext.innerHTML = builder._cleanText(data.text);
 		fixedtext.parent = data.parent;
 
 		if (data.style && data.style.length)
