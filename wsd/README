@@ -240,6 +240,8 @@ limit the amount of concurrently running processes.
 When the crash happens too early, you also want to
 
     export SLEEPFORDEBUGGER=<number of seconds>
+or
+    export PAUSEFORDEBUGGER=1
 
 so that you have time to attach to the process.
 
@@ -260,6 +262,8 @@ sudo ln -s ~/libreoffice/master/lool-child-roots/1046829984599121011/lo /lo
 Use the ps command to find out exactly the path to use.
 
 Set LOOL_DEBUG=1 to trap SIGSEGV and SEGBUS and prompt for debugger.
+
+if you choose PAUSEFORDEBUGGER send the signal SIGUSR1 to resume the process
 
 In order to run and debug one unit test, set CPPUNIT_TEST_NAME to something
 non-empty:

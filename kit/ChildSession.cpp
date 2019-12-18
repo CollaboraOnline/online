@@ -24,6 +24,7 @@
 #include <Poco/URI.h>
 #include <Poco/BinaryReader.h>
 #include <Poco/Base64Decoder.h>
+#include <Poco/Process.h>
 #if !MOBILEAPP
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
@@ -605,6 +606,15 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
     assert(!getJailedFilePath().empty());
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
+
+#ifdef ENABLE_DEBUG
+    if (std::getenv("PAUSEFORDEBUGGER"))
+    {
+        std::cerr << getDocURL() << " paused waiting for a debugger to attach: " << Poco::Process::id() << std::endl;
+        SigUtil::setDebuggerSignal();
+        pause();
+    }
+#endif
 
     const bool loaded = _docManager->onLoad(getId(), getJailedFilePathAnonym(), renderOpts, doctemplate);
     if (!loaded || _viewId < 0)

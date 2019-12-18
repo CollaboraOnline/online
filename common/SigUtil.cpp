@@ -331,6 +331,10 @@ namespace SigUtil
         }
     }
 
+    static
+    void handleDebuggerSignal(const int /*signal*/)
+    {}
+
     void setUserSignals()
     {
         struct sigaction action;
@@ -338,6 +342,17 @@ namespace SigUtil
         sigemptyset(&action.sa_mask);
         action.sa_flags = 0;
         action.sa_handler = handleUserSignal;
+
+        sigaction(SIGUSR1, &action, nullptr);
+    }
+
+    void setDebuggerSignal()
+    {
+        struct sigaction action;
+
+        sigemptyset(&action.sa_mask);
+        action.sa_flags = 0;
+        action.sa_handler = handleDebuggerSignal;
 
         sigaction(SIGUSR1, &action, nullptr);
     }

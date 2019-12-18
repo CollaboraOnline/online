@@ -283,7 +283,14 @@ void DocumentBroker::pollThread()
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
     auto lastClipboardHashUpdateTime = std::chrono::steady_clock::now();
 
-    const int limit_load_secs = LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
+    const int limit_load_secs =
+#ifdef ENABLE_DEBUG
+        // paused waiting for a debugger to attach
+        // ignore load time out
+        std::getenv("PAUSEFORDEBUGGER") ? -1 :
+#endif
+        LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
+
     const auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
     auto last30SecCheckTime = std::chrono::steady_clock::now();

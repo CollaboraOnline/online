@@ -59,6 +59,9 @@ namespace SigUtil
     /// Trap generally useful signals
     void setUserSignals();
 
+    /// Trap to unpause the process
+    void setDebuggerSignal();
+
     /// Requests the server to initiate graceful shutdown.
     /// Shutting down is a multi-stage process, because
     /// it can be requested via signals.
