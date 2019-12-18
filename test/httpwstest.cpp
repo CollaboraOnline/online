@@ -40,16 +40,12 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
     CPPUNIT_TEST(testCloseAfterClose);
-    CPPUNIT_TEST(testGetTextSelection);
     CPPUNIT_TEST(testSaveOnDisconnect);
     CPPUNIT_TEST(testSavePassiveOnDisconnect);
     CPPUNIT_TEST(testReloadWhileDisconnecting);
-    CPPUNIT_TEST(testPasteBlank);
-    CPPUNIT_TEST(testInsertDelete);
     CPPUNIT_TEST(testInactiveClient);
     CPPUNIT_TEST(testFontList);
     CPPUNIT_TEST(testGraphicInvalidate);
-    CPPUNIT_TEST(testCursorPosition);
     CPPUNIT_TEST(testAlertAllUsers);
     CPPUNIT_TEST(testViewInfoMsg);
     CPPUNIT_TEST(testUndoConflict);
@@ -57,23 +53,15 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testCloseAfterClose();
-    void testGetTextSelection();
     void testSaveOnDisconnect();
     void testSavePassiveOnDisconnect();
     void testReloadWhileDisconnecting();
-    void testPasteBlank();
-    void testInsertDelete();
     void testInactiveClient();
     void testFontList();
     void testGraphicInvalidate();
-    void testCursorPosition();
     void testAlertAllUsers();
     void testViewInfoMsg();
     void testUndoConflict();
-
-    void getPartHashCodes(const std::string& testname,
-                          const std::string& response,
-                          std::vector<std::string>& parts);
 
     std::string getFontList(const std::string& message);
 
@@ -157,27 +145,6 @@ void HTTPWSTest::testCloseAfterClose()
             TST_LOG("Error: " << exc.displayText());
 
         }
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testGetTextSelection()
-{
-    const char* testname = "getTextSelection ";
-    try
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
-        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
-
-        static const std::string expected = "Hello world";
-        const std::string selection = getAllText(socket, testname, expected);
-        CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + expected, selection);
     }
     catch (const Poco::Exception& exc)
     {
@@ -359,128 +326,6 @@ void HTTPWSTest::testReloadWhileDisconnecting()
     }
 }
 
-void HTTPWSTest::testPasteBlank()
-{
-    const char* testname = "pasteBlank ";
-    try
-    {
-        // Load a document and make it empty, then paste nothing into it.
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
-
-        deleteAll(socket, testname);
-
-        // Paste nothing into it.
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n", testname);
-
-        // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket, testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testInsertDelete()
-{
-    const char* testname = "insertDelete ";
-    try
-    {
-        std::vector<std::string> parts;
-        std::string response;
-
-        // Load a document
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("insert-delete.odp", documentPath, documentURL, testname);
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket = connectLOKit(_uri, request, _response, testname);
-
-        sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isDocumentLoaded(socket, testname));
-
-        // check total slides 1
-        TST_LOG("Expecting 1 slide.");
-        sendTextFrame(socket, "status");
-        response = getResponseString(socket, "status:", testname);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getPartHashCodes(testname, response.substr(7), parts);
-        CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
-
-        const std::string slide1Hash = parts[0];
-
-        // insert 10 slides
-        TST_LOG("Inserting 10 slides.");
-        for (size_t it = 1; it <= 10; it++)
-        {
-            sendTextFrame(socket, "uno .uno:InsertPage");
-            response = getResponseString(socket, "status:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(testname, response.substr(7), parts);
-            CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
-        }
-
-        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after inserting extra slides.", parts[0] == slide1Hash);
-        const std::vector<std::string> parts_after_insert(parts.begin(), parts.end());
-
-        // delete 10 slides
-        TST_LOG("Deleting 10 slides.");
-        for (size_t it = 1; it <= 10; it++)
-        {
-            // Explicitly delete the nth slide.
-            sendTextFrame(socket, "setclientpart part=" + std::to_string(it));
-            sendTextFrame(socket, "uno .uno:DeletePage");
-            response = getResponseString(socket, "status:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(testname, response.substr(7), parts);
-            CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
-        }
-
-        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after deleting extra slides.", parts[0] == slide1Hash);
-
-        // undo delete slides
-        TST_LOG("Undoing 10 slide deletes.");
-        for (size_t it = 1; it <= 10; it++)
-        {
-            sendTextFrame(socket, "uno .uno:Undo");
-            response = getResponseString(socket, "status:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(testname, response.substr(7), parts);
-            CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
-        }
-
-        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after undoing slide delete.", parts[0] == slide1Hash);
-        const std::vector<std::string> parts_after_undo(parts.begin(), parts.end());
-        CPPUNIT_ASSERT_MESSAGE("Hash codes changed between deleting and undo.", parts_after_insert == parts_after_undo);
-
-        // redo inserted slides
-        TST_LOG("Redoing 10 slide deletes.");
-        for (size_t it = 1; it <= 10; it++)
-        {
-            sendTextFrame(socket, "uno .uno:Redo");
-            response = getResponseString(socket, "status:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-            getPartHashCodes(testname, response.substr(7), parts);
-            CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
-        }
-
-        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after redoing slide delete.", parts[0] == slide1Hash);
-
-        // check total slides 1
-        TST_LOG("Expecting 1 slide.");
-        sendTextFrame(socket, "status");
-        response = getResponseString(socket, "status:", testname);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getPartHashCodes(testname, response.substr(7), parts);
-        CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
 void HTTPWSTest::testInactiveClient()
 {
     const char* testname = "inactiveClient ";
@@ -541,55 +386,6 @@ void HTTPWSTest::testInactiveClient()
     }
 }
 
-void HTTPWSTest::getPartHashCodes(const std::string& testname,
-                                  const std::string& response,
-                                  std::vector<std::string>& parts)
-{
-    std::string line;
-    std::istringstream istr(response);
-    std::getline(istr, line);
-
-    TST_LOG("Reading parts from [" << response << "].");
-
-    // Expected format is something like 'type= parts= current= width= height= viewid= [hiddenparts=]'.
-    std::vector<std::string> tokens(LOOLProtocol::tokenize(line, ' '));
-#if defined CPPUNIT_ASSERT_GREATEREQUAL
-    CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size());
-#else
-    CPPUNIT_ASSERT_MESSAGE("Expected at least 7 tokens.", static_cast<size_t>(7) <= tokens.size());
-#endif
-
-    const std::string type = tokens[0].substr(std::string("type=").size());
-    CPPUNIT_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
-                           type == "presentation" || type == "spreadsheet");
-
-    const int totalParts = std::stoi(tokens[1].substr(std::string("parts=").size()));
-    TST_LOG("Status reports " << totalParts << " parts.");
-
-    Poco::RegularExpression endLine("[^\n\r]+");
-    Poco::RegularExpression number("^[0-9]+$");
-    Poco::RegularExpression::MatchVec matches;
-    int offset = 0;
-
-    parts.clear();
-    while (endLine.match(response, offset, matches) > 0)
-    {
-        CPPUNIT_ASSERT_EQUAL(1, (int)matches.size());
-        const std::string str = response.substr(matches[0].offset, matches[0].length);
-        if (number.match(str, 0))
-        {
-            parts.push_back(str);
-        }
-
-        offset = static_cast<int>(matches[0].offset + matches[0].length);
-    }
-
-    TST_LOG("Found " << parts.size() << " part names/codes.");
-
-    // Validate that Core is internally consistent when emitting status messages.
-    CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
-}
-
 std::string HTTPWSTest::getFontList(const std::string& message)
 {
     Poco::JSON::Parser parser;
@@ -643,57 +439,6 @@ void HTTPWSTest::testGraphicInvalidate()
 
         const auto message = getResponseString(socket, "invalidatetiles:", testname);
         CPPUNIT_ASSERT_MESSAGE("Drag & Drop graphic invalidate all tiles", message.find("EMPTY") == std::string::npos);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testCursorPosition()
-{
-    try
-    {
-        const char* testname = "cursorPosition ";
-
-         // Load a document.
-        std::string docPath;
-        std::string docURL;
-        std::string response;
-
-        getDocumentPathAndURL("Example.odt", docPath, docURL, testname);
-        std::shared_ptr<LOOLWebSocket> socket0 = loadDocAndGetSocket(_uri, docURL, testname);
-
-        // receive cursor position
-        response = getResponseString(socket0, "invalidatecursor:", testname);
-
-        Poco::JSON::Parser parser0;
-        const Poco::Dynamic::Var result0 = parser0.parse(response.substr(17));
-        const auto& command0 = result0.extract<Poco::JSON::Object::Ptr>();
-        CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command0->has("rectangle"));
-
-        std::vector<std::string> cursorTokens(LOOLProtocol::tokenize(command0->get("rectangle").toString(), ','));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.size());
-
-        // Create second view
-        std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, docURL, testname);
-
-        //receive view cursor position
-        response = getResponseString(socket1, "invalidateviewcursor:", testname);
-
-        Poco::JSON::Parser parser;
-        const Poco::Dynamic::Var result = parser.parse(response.substr(21));
-        const auto& command = result.extract<Poco::JSON::Object::Ptr>();
-        CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command->has("rectangle"));
-
-        std::vector<std::string> viewTokens(LOOLProtocol::tokenize(command->get("rectangle").toString(), ','));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.size());
-
-        // check both cursor should be equal
-        CPPUNIT_ASSERT_EQUAL(cursorTokens[0], viewTokens[0]);
-        CPPUNIT_ASSERT_EQUAL(cursorTokens[1], viewTokens[1]);
-        CPPUNIT_ASSERT_EQUAL(cursorTokens[2], viewTokens[2]);
-        CPPUNIT_ASSERT_EQUAL(cursorTokens[3], viewTokens[3]);
     }
     catch (const Poco::Exception& exc)
     {
