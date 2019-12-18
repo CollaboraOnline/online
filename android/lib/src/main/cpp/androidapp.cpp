@@ -333,11 +333,47 @@ Java_org_libreoffice_androidlib_LOActivity_saveAs(JNIEnv *env, jobject instance,
     env->ReleaseStringUTFChars(format_, format);
 }
 
-extern "C"
-JNIEXPORT jstring JNICALL
-Java_org_libreoffice_androidlib_LOActivity_getTextSelection(JNIEnv *env, jobject instance) {
+static jstring tojstringAndFree(JNIEnv *env, char *str)
+{
+    if (!str)
+        return env->NewStringUTF("");
+    jstring ret = env->NewStringUTF(str);
+    free(str);
+    return ret;
+}
 
-    return env->NewStringUTF(getLOKDocument()->getTextSelection("text/plain;charset=utf-8"));
+extern "C"
+JNIEXPORT jobjectArray JNICALL
+Java_org_libreoffice_androidlib_LOActivity_getClipboardContent(JNIEnv *env, jobject instance)
+{
+    const char *mimeTypes[] = { "text/plain;charset=utf-8", "text/html", nullptr };
+    size_t outCount = 0;
+    char  **outMimeTypes = nullptr;
+    size_t *outSizes = nullptr;
+    char  **outStreams = nullptr;
+
+    jobjectArray values = (jobjectArray)env->NewObjectArray(2,env->FindClass("java/lang/String"),env->NewStringUTF(""));
+
+    if (getLOKDocument()->getClipboard(mimeTypes,
+                                       &outCount, &outMimeTypes,
+                                       &outSizes, &outStreams))
+    {
+        if (outCount != 2)
+            LOG_DBG("clipboard fetch produced wrong results");
+        else
+        {
+            env->SetObjectArrayElement(values,0,tojstringAndFree(env, outStreams[0]));
+            env->SetObjectArrayElement(values,1,tojstringAndFree(env, outStreams[1]));
+            free (outMimeTypes[0]);
+            free (outMimeTypes[1]);
+            free (outMimeTypes);
+            free (outStreams);
+        }
+    }
+    else
+        LOG_DBG("failed to fetch mime-types");
+
+    return values;
 }
 
 extern "C"
