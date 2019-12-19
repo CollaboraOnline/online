@@ -1861,6 +1861,12 @@ function onCommandStateChanged(e) {
 	}
 	else if (commandName === '.uno:InsertMode') {
 		updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;Insert mode: inactive&nbsp;</span>').parent().html());
+
+		if (!state && map.hyperlinkPopup) {
+			map.hyperlinkUnderCursor = null;
+			map.closePopup(map.hyperlinkPopup);
+			map.hyperlinkPopup = null;
+		}
 	}
 	else if (commandName === '.uno:StatusSelectionMode' ||
 		 commandName === '.uno:SelectionMode') {
