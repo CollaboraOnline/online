@@ -436,7 +436,7 @@ L.Map.include({
 	},
 
 	makeURLFromStr: function(str) {
-		if (!(str.startsWith('http://') || str.startsWith('https://'))) {
+		if (!(str.toLowerCase().startsWith('http://') || str.toLowerCase().startsWith('https://'))) {
 			str = 'http://' + str;
 		}
 		return str;
