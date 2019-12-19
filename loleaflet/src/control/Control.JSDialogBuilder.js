@@ -104,7 +104,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.sendUnoCommand(data);
 		} else if (object) {
 			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
-			var message = 'dialogevent ' + window.sidebarId + ' {\"id\":\"' + object.id + '\", \"cmd\": \"' + eventType + '\", \"data\":\"' + data + '\"}';
+			var message = 'dialogevent ' + (window.sidebarId !== undefined ? window.sidebarId : -1) +
+			    ' {\"id\":\"' + object.id + '\", \"cmd\": \"' + eventType + '\", \"data\":\"' + data + '\"}';
 			builder.map._socket.sendMessage(message);
 		}
 	},
