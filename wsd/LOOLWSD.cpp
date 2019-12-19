@@ -3475,7 +3475,7 @@ int LOOLWSD::innerMain()
         if (timeSinceStartMs > UnitWSD::get().getTimeoutMilliSeconds())
             UnitWSD::get().timeout();
 
-#if ENABLE_DEBUG
+#if ENABLE_DEBUG && !MOBILEAPP
         if (careerSpanMs > 0 && timeSinceStartMs > careerSpanMs)
         {
             LOG_INF(timeSinceStartMs << " milliseconds gone, finishing as requested. Setting ShutdownRequestFlag.");
