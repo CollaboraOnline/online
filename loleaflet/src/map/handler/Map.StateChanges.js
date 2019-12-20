@@ -30,9 +30,9 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		var slideMasterPageItem = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
 		var state;
 
-		if (typeof(e.state == 'object')) {
+		if (typeof(e.state) == 'object') {
 			state = e.state;
-		} else if (typeof(e.state == 'string')) {
+		} else if (typeof(e.state) == 'string') {
 			var index = e.state.indexOf('{');
 			state = index !== -1 ? JSON.parse(e.state.substring(index)) : e.state;
 		}
