@@ -35,6 +35,7 @@ noinst_LTLIBRARIES = \
 	unit-cursor.la \
 	unit-calc.la \
 	unit-insert-delete.la \
+	unit-close.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
@@ -164,6 +165,8 @@ unit_calc_la_SOURCES = UnitCalc.cpp
 unit_calc_la_LIBADD = $(CPPUNIT_LIBS)
 unit_insert_delete_la_SOURCES = UnitInsertDelete.cpp
 unit_insert_delete_la_LIBADD = $(CPPUNIT_LIBS)
+unit_close_la_SOURCES = UnitClose.cpp
+unit_close_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -197,6 +200,7 @@ TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-t
 	unit-cursor.la \
 	unit-calc.la \
 	unit-insert-delete.la \
+	unit-close.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
