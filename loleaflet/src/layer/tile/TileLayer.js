@@ -1115,7 +1115,7 @@ L.TileLayer = L.GridLayer.extend({
 				.openOn(this._map);
 		}
 
-		if (!this._map._isFocused && (modifierViewId === this._viewId) && (this._map.getWinId === 0) && (this._map._permission === 'edit')) {
+		if (!this._isFocused && (modifierViewId === this._viewId) && (this._map.getWinId === 0) && (this._map._permission === 'edit')) {
 			// Regain cursor if we had been out of focus and now have input.
 			// (only if it is our own cursor and the input is actually not
 			// going into a dialog)
@@ -2090,7 +2090,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._map._textInput.showCursor();
-		if (this._map._isFocused && !L.Browser.mobile) {
+		if (this._isFocused /* && !L.Browser.mobile */) {
 			// On mobile, this is causing some key input to get lost.
 			this._map.focus();
 		}
