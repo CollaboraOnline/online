@@ -9,9 +9,8 @@ msgstr ""
 "POT-Creation-Date: 2019-12-18 12:26+0100\n"
 "PO-Revision-Date: 2019-12-14 18:56+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Spanish <https://vm137.documentfoundation.org/projects/"
-"libo_online/loleaflet-ui/es/>\n"
-"Language: \n"
+"Language-Team: Spanish <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -227,7 +226,7 @@ msgstr " s"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "Open link"
-msgstr "Abrir link"
+msgstr "Abrir enlace"
 
 #: src/control/Control.AlertDialog.js:54
 msgid "Edit"
@@ -364,11 +363,11 @@ msgstr "A"
 
 #: src/control/Control.JSDialogBuilder.js:1014
 msgid "Font Name"
-msgstr "Fuente"
+msgstr "Tipo de letra"
 
 #: src/control/Control.JSDialogBuilder.js:1016
 msgid "Font Size"
-msgstr "Tamaño de fuente"
+msgstr "Tamaño de letra"
 
 #: src/control/Control.JSDialogBuilder.js:1479
 msgid "Rows"
@@ -545,14 +544,8 @@ msgid "Are you sure you want to delete this slide?"
 msgstr "¿Confirma que quiere eliminar esta diapositiva?"
 
 #: src/control/Control.Menubar.js:1138 src/map/Clipboard.js:767
-msgid ""
-"<p>Your browser has very limited access to the clipboard, so use these "
-"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
-"b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr ""
-"<p>El navegador tiene acceso limitado al portapapeles. Utilice estos atajos "
-"de teclado:<ul><li><b>Ctrl + C</b>: copiar.</li><li><b>Ctrl + X</b>: "
-"cortar.</li><li><b>Ctrl + V</b>: pegar.</li></ul></p>"
+msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
+msgstr "<p>El navegador tiene acceso limitado al portapapeles. Utilice estos atajos de teclado:<ul><li><b>Ctrl + C</b>: copiar.</li><li><b>Ctrl + X</b>: cortar.</li><li><b>Ctrl + V</b>: pegar.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -737,11 +730,8 @@ msgid "Next slide"
 msgstr "Diapositiva siguiente"
 
 #: src/control/Control.Toolbar.js:2161
-msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr ""
-"Hay un conflicto de deshacer y rehacer con varios usuarios. Utilice la "
-"reparación de documento para solucionarlo"
+msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
+msgstr "Hay un conflicto de deshacer y rehacer con varios usuarios. Utilice la reparación de documento para solucionarlo"
 
 #: src/control/Control.Toolbar.js:2448
 msgid "Readonly"
@@ -901,7 +891,7 @@ msgstr "Esta versión de %productName funciona con"
 
 #: src/control/Toolbar.js:451
 msgid "Insert hyperlink"
-msgstr "Insertar link"
+msgstr "Insertar hiperenlace"
 
 #: src/control/Toolbar.js:453
 msgid "Text"
@@ -909,23 +899,15 @@ msgstr "Texto"
 
 #: src/control/Toolbar.js:454
 msgid "Link"
-msgstr "Link"
+msgstr "Enlace"
 
 #: src/control/Toolbar.js:457
 msgid "OK"
 msgstr "Aceptar"
 
 #: src/core/Socket.js:59
-msgid ""
-"IE11 has reached its maximum number of connections. Please see this document "
-"to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-"versions/windows/internet-explorer/ie-developer/general-info/"
-"ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr ""
-"IE11 ha alcanzado su número máximo de conexiones. Consulte ese documento si "
-"necesita aumentar este límite: https://docs.microsoft.com/en-us/"
-"previous-versions/windows/internet-explorer/ie-developer/general-info/"
-"ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr "IE11 ha alcanzado su número máximo de conexiones. Consulte ese documento si necesita aumentar este límite: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -960,28 +942,16 @@ msgid "Server is recycling and will be available shortly"
 msgstr "El servidor se está reciclando y estará disponible pronto"
 
 #: src/core/Socket.js:413
-msgid ""
-"Document has changed in storage. Loading the new document. Your version is "
-"available as revision."
-msgstr ""
-"El documento se modificó en el almacenamiento. Cargando el documento nuevo. "
-"Su versión está disponible como una revisión."
+msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
+msgstr "El documento se modificó en el almacenamiento. Cargando el documento nuevo. Su versión está disponible como una revisión."
 
 #: src/core/Socket.js:419
-msgid ""
-"Restoring older revision. Any unsaved changes will be available in version "
-"history"
-msgstr ""
-"Se está restaurando una revisión anterior. Cualquier cambio no guardado "
-"estará disponible en el historial de versiones"
+msgid "Restoring older revision. Any unsaved changes will be available in version history"
+msgstr "Se está restaurando una revisión anterior. Cualquier cambio no guardado estará disponible en el historial de versiones"
 
 #: src/core/Socket.js:510
-msgid ""
-"Document has been changed in storage. What would you like to do with your "
-"unsaved changes?"
-msgstr ""
-"El documento fue modificado en el almacenamiento. ¿Qué quiere hacer con sus "
-"cambios no guardados?"
+msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
+msgstr "El documento fue modificado en el almacenamiento. ¿Qué quiere hacer con sus cambios no guardados?"
 
 #: src/core/Socket.js:514
 msgid "Discard"
@@ -1016,98 +986,52 @@ msgid "Connecting..."
 msgstr "Conectando…"
 
 #: src/core/Socket.js:1009
-msgid ""
-"Well, this is embarrassing, we cannot connect to your document. Please try "
-"again."
+msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "Se produjo un error de conexión con el documento. Inténtelo de nuevo."
 
 #: src/errormessages.js:13
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr ""
-"No queda espacio en el servidor; para continuar, póngase en contacto con el "
-"personal técnico."
+msgid "No disk space left on server, please contact the server administrator to continue."
+msgstr "No queda espacio en el servidor; para continuar, póngase en contacto con el personal técnico."
 
 #: src/errormessages.js:14
-msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
-"contact the administrator."
-msgstr ""
-"El URL del equipo anfitrión está vacío. Es probable que el servidor loolwsd "
-"esté mal configurado. Póngase en contacto con el personal técnico."
+msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
+msgstr "El URL del equipo anfitrión está vacío. Es probable que el servidor loolwsd esté mal configurado. Póngase en contacto con el personal técnico."
 
 #: src/errormessages.js:15
-msgid ""
-"This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears when "
-"more than {docs} documents or {connections} connections are in use "
-"concurrently"
-msgstr ""
-"Esta versión de {productname} no tiene servicio técnico. Para evitar la "
-"impresión de que es adecuada para despliegues corporativos, este mensaje "
-"aparece cuando hay más de {docs} documentos o {connections} conexiones en "
-"uso simultáneamente"
+msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
+msgstr "Esta versión de {productname} no tiene servicio técnico. Para evitar la impresión de que es adecuada para despliegues corporativos, este mensaje aparece cuando hay más de {docs} documentos o {connections} conexiones en uso simultáneamente"
 
 #: src/errormessages.js:16
 msgid "More information and support"
 msgstr "Más información y asistencia"
 
 #: src/errormessages.js:17
-msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
-"admin. This limit has been reached. Please try again later."
-msgstr ""
-"Los administradores de este servicio lo han limitado a %0 documentos y %1 "
-"conexiones como máximo. Ha alcanzado este límite. Inténtelo de nuevo más "
-"tarde."
+msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
+msgstr "Los administradores de este servicio lo han limitado a %0 documentos y %1 conexiones como máximo. Ha alcanzado este límite. Inténtelo de nuevo más tarde."
 
 #: src/errormessages.js:18
-msgid ""
-"Service is unavailable. Please try again later and report to your "
-"administrator if the issue persists."
-msgstr ""
-"El servicio no está disponible. Inténtelo de nuevo más tarde e informe al "
-"personal técnico en caso de que persista el problema."
+msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
+msgstr "El servicio no está disponible. Inténtelo de nuevo más tarde e informe al personal técnico en caso de que persista el problema."
 
 #: src/errormessages.js:19
-msgid ""
-"Unauthorized WOPI host. Please try again later and report to your "
-"administrator if the issue persists."
-msgstr ""
-"El servidor WOPI no está autorizado. Inténtelo de nuevo más tarde e informe "
-"al personal técnico en caso de que persista el problema."
+msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
+msgstr "El servidor WOPI no está autorizado. Inténtelo de nuevo más tarde e informe al personal técnico en caso de que persista el problema."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
-"El parámetro WOPISrc es incorrecto o no existe; póngase en contacto con el "
-"equipo de asistencia."
+msgstr "El parámetro WOPISrc es incorrecto o no existe; póngase en contacto con el equipo de asistencia."
 
 #: src/errormessages.js:21
-msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
-"session (or webpage) to continue."
-msgstr ""
-"La sesión finalizará en %time. Guarde su trabajo y actualice la sesión (o "
-"página web) para continuar."
+msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
+msgstr "La sesión finalizará en %time. Guarde su trabajo y actualice la sesión (o página web) para continuar."
 
 #: src/errormessages.js:22
-msgid ""
-"Your session has been expired. Further changes to document might not be "
-"saved. Please refresh the session (or webpage) to continue."
-msgstr ""
-"La sesión ha finalizado. Es posible que no se guarden las modificaciones que "
-"realice en el documento a partir de ahora. Actualice la sesión (o página web)"
-" para continuar."
+msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
+msgstr "La sesión ha finalizado. Es posible que no se guarden las modificaciones que realice en el documento a partir de ahora. Actualice la sesión (o página web) para continuar."
 
 #: src/errormessages.js:23
-msgid ""
-"Failed to load the document. Please ensure the file type is supported and "
-"not corrupted, and try again."
-msgstr ""
-"Falló la carga del documento. Asegúrese de que el tipo de archivo sea "
-"compatible y el archivo no esté dañado, e inténtelo de nuevo."
+msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
+msgstr "Falló la carga del documento. Asegúrese de que el tipo de archivo sea compatible y el archivo no esté dañado, e inténtelo de nuevo."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1118,13 +1042,8 @@ msgid "You are leaving the editor, are you sure you want to visit %url?"
 msgstr "Está por abandonar el editor. ¿Confirma que quiere visitar «%url»?"
 
 #: src/errormessages.js:26
-msgid ""
-"Failed to load the document. This document is either malformed or is taking "
-"more resources than allowed. Please contact the administrator."
-msgstr ""
-"Falló la carga del documento. Es posible que el documento esté dañado o que "
-"necesite más recursos de los permitidos. Póngase en contacto con el personal "
-"técnico."
+msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
+msgstr "Falló la carga del documento. Es posible que el documento esté dañado o que necesite más recursos de los permitidos. Póngase en contacto con el personal técnico."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1132,15 +1051,11 @@ msgstr "Falló la carga del documento."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
-"Falló el guardado debido a que no queda espacio en disco. El documento será "
-"ahora de solo lectura."
+msgstr "Falló el guardado debido a que no queda espacio en disco. El documento será ahora de solo lectura."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
-"No se ha podido guardar el documento a causa de una ficha de acceso caducada "
-"o no válida."
+msgstr "No se ha podido guardar el documento a causa de una ficha de acceso caducada o no válida."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
@@ -1152,39 +1067,21 @@ msgstr "No se puede cambiar el nombre del documento."
 
 #: src/errormessages.js:38
 #, javascript-format
-msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
-msgstr ""
-"Falló la lectura del documento desde el almacenamiento. Póngase en contacto "
-"con el personal técnico del servidor de almacenamiento (%storageserver)."
+msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
+msgstr "Falló la lectura del documento desde el almacenamiento. Póngase en contacto con el personal técnico del servidor de almacenamiento (%storageserver)."
 
 #: src/errormessages.js:39
 #, javascript-format
-msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server (%storageserver) administrator to "
-"continue editing."
-msgstr ""
-"Falta espacio en el servidor de almacenamiento para guardar el documento. Se "
-"ha activado el modo de solo lectura. Póngase en contacto con el personal "
-"técnico del servidor (%storageserver) para seguir editando."
+msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
+msgstr "Falta espacio en el servidor de almacenamiento para guardar el documento. Se ha activado el modo de solo lectura. Póngase en contacto con el personal técnico del servidor (%storageserver) para seguir editando."
 
 #: src/errormessages.js:41
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"No se ha podido guardar el documento. Compruebe sus permisos o póngase en "
-"contacto con el personal técnico del servidor de almacenamiento."
+msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
+msgstr "No se ha podido guardar el documento. Compruebe sus permisos o póngase en contacto con el personal técnico del servidor de almacenamiento."
 
 #: src/errormessages.js:42
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"No se ha podido cambiar el nombre del documento. Compruebe sus permisos o "
-"póngase en contacto con el personal técnico del servidor de almacenamiento."
+msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
+msgstr "No se ha podido cambiar el nombre del documento. Compruebe sus permisos o póngase en contacto con el personal técnico del servidor de almacenamiento."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
@@ -1250,29 +1147,12 @@ msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Utilice los botones de copiar/pegar en su teclado en pantalla.</p>"
 
 #: src/map/Clipboard.js:790
-msgid ""
-"<p>If you would like to share larger elements of your document with other "
-"applications it is necessary to first download them onto your device. To do "
-"that press the \"Start download\" button below, and when complete click "
-"\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-"documents inside %productName, there is no need to download.</p>"
-msgstr ""
-"<p>Si desea compartir grandes elementos de su documento con otras "
-"aplicaciones es necesario que primero las descargue en su dispositivo. Para "
-"ello, pulse en el botón «Comenzar descarga» de más abajo y, una vez "
-"completado, pulse en «Confirmar copia en portapapeles».</p><p> Si está "
-"copiando y pegando entre documentos dentro de %productName, no hay necesidad "
-"de descargar.</p>"
+msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
+msgstr "<p>Si desea compartir grandes elementos de su documento con otras aplicaciones es necesario que primero las descargue en su dispositivo. Para ello, pulse en el botón «Comenzar descarga» de más abajo y, una vez completado, pulse en «Confirmar copia en portapapeles».</p><p> Si está copiando y pegando entre documentos dentro de %productName, no hay necesidad de descargar.</p>"
 
 #: src/map/Clipboard.js:806
-msgid ""
-"<p>A download due to a large copy/paste operation has already started. "
-"Please, wait for the current download or cancel it before starting a new "
-"one</p>"
-msgstr ""
-"<p>Ya se ha iniciado una descarga debido a una operación grande de copiado/"
-"pegado. Espere a la descarga actual o cancélela antes de iniciar una "
-"nueva</p>"
+msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
+msgstr "<p>Ya se ha iniciado una descarga debido a una operación grande de copiado/pegado. Espere a la descarga actual o cancélela antes de iniciar una nueva</p>"
 
 #: src/map/Map.js:234
 msgid "Initializing..."
@@ -1298,18 +1178,13 @@ msgstr "Cargando…"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
-msgid ""
-"The file of type: %0 can not be uploaded to server since the file has no name"
-msgstr ""
-"El archivo del tipo %0 no puede cargarse en el servidor ya que no tiene "
-"nombre"
+msgid "The file of type: %0 can not be uploaded to server since the file has no name"
+msgstr "El archivo del tipo %0 no puede cargarse en el servidor ya que no tiene nombre"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
-msgid ""
-"The file of type: %0 can not be uploaded to server since the file is empty"
-msgstr ""
-"El archivo del tipo %0 no puede cargarse en el servidor ya que está vacío"
+msgid "The file of type: %0 can not be uploaded to server since the file is empty"
+msgstr "El archivo del tipo %0 no puede cargarse en el servidor ya que está vacío"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."

@@ -9,9 +9,8 @@ msgstr ""
 "POT-Creation-Date: 2019-12-18 12:26+0100\n"
 "PO-Revision-Date: 2019-12-14 18:56+0000\n"
 "Last-Translator: Olivier Hallot <olivier.hallot@documentfoundation.org>\n"
-"Language-Team: Portuguese (Brazil) <https://vm137.documentfoundation.org/"
-"projects/libo_online/loleaflet-ui/pt_BR/>\n"
-"Language: \n"
+"Language-Team: Portuguese (Brazil) <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/pt_BR/>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1023,88 +1022,48 @@ msgid ""
 msgstr "Ocorreu um erro de conexão com seu documento. Tente novamente."
 
 #: src/errormessages.js:13
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr ""
-"Não há mais espaço no disco do servidor, contacte o administrador do "
-"servidor para continuar."
+msgid "No disk space left on server, please contact the server administrator to continue."
+msgstr "Não há mais espaço no disco do servidor, contacte o administrador do servidor para continuar."
 
 #: src/errormessages.js:14
-msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
-"contact the administrator."
-msgstr ""
-"A URL do servidor está vazia. O servidor loolwsd está provavelmente "
-"desconfigurado, contacte o administrador."
+msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
+msgstr "A URL do servidor está vazia. O servidor loolwsd está provavelmente desconfigurado, contacte o administrador."
 
 #: src/errormessages.js:15
-msgid ""
-"This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears when "
-"more than {docs} documents or {connections} connections are in use "
-"concurrently"
-msgstr ""
-"Esta é uma versão não suportada do {productname}. Para evitar dar a "
-"impressão de que é adequada para utilização empresarial, esta mensagem "
-"aparece sempre que estiverem abertos mais do que {docs} documentos ou mais "
-"do que {connections} conexões em simultâneo."
+msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
+msgstr "Esta é uma versão não suportada do {productname}. Para evitar dar a impressão de que é adequada para utilização empresarial, esta mensagem aparece sempre que estiverem abertos mais do que {docs} documentos ou mais do que {connections} conexões em simultâneo."
 
 #: src/errormessages.js:16
 msgid "More information and support"
 msgstr "Informações adicionais e suporte"
 
 #: src/errormessages.js:17
-msgid ""
-"This service is limited to %0 documents, and %1 connections total by the "
-"admin. This limit has been reached. Please try again later."
-msgstr ""
-"Este serviço é limitado pelo administrador a um total de  %0 documentos e %1 "
-"conexões. Este limite foi alcançado. Tente de novo mais tarde."
+msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
+msgstr "Este serviço é limitado pelo administrador a um total de  %0 documentos e %1 conexões. Este limite foi alcançado. Tente de novo mais tarde."
 
 #: src/errormessages.js:18
-msgid ""
-"Service is unavailable. Please try again later and report to your "
-"administrator if the issue persists."
-msgstr ""
-"Serviço indisponível. Tente mais tarde e relate ao seu administrador do "
-"sistema se o problema persistir."
+msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
+msgstr "Serviço indisponível. Tente mais tarde e relate ao seu administrador do sistema se o problema persistir."
 
 #: src/errormessages.js:19
-msgid ""
-"Unauthorized WOPI host. Please try again later and report to your "
-"administrator if the issue persists."
-msgstr ""
-"Servidor WOPI não autorizado. Tente mais tarde e relate ao seu administrador "
-"do sistema se o problema persistir."
+msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
+msgstr "Servidor WOPI não autorizado. Tente mais tarde e relate ao seu administrador do sistema se o problema persistir."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "Parâmetro WOPISrc inválido ou inexistente. Contacte o suporte técnico."
 
 #: src/errormessages.js:21
-msgid ""
-"Your session will expire in %time. Please save your work and refresh the "
-"session (or webpage) to continue."
-msgstr ""
-"Sua sessão expirará em %time. Salve seu trabalho e atualize a sessão (ou "
-"página web) para continuar"
+msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
+msgstr "Sua sessão expirará em %time. Salve seu trabalho e atualize a sessão (ou página web) para continuar"
 
 #: src/errormessages.js:22
-msgid ""
-"Your session has been expired. Further changes to document might not be "
-"saved. Please refresh the session (or webpage) to continue."
-msgstr ""
-"Sua sessão expirou. Modificações no documento podem não serem salvas. "
-"Atualize a sessão (ou página web) para continuar."
+msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
+msgstr "Sua sessão expirou. Modificações no documento podem não serem salvas. Atualize a sessão (ou página web) para continuar."
 
 #: src/errormessages.js:23
-msgid ""
-"Failed to load the document. Please ensure the file type is supported and "
-"not corrupted, and try again."
-msgstr ""
-"Falhou ao carregar o documento. Tenha certeza que o arquivo não está "
-"corrompido e que é de tipo valido, e tente de novo."
+msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
+msgstr "Falhou ao carregar o documento. Tenha certeza que o arquivo não está corrompido e que é de tipo valido, e tente de novo."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1128,15 +1087,11 @@ msgstr "Falha ao carregar o documento."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
-"Falhou a gravação devido à falta de espaço em disco. O documento será agora "
-"apenas de leitura."
+msgstr "Falhou a gravação devido à falta de espaço em disco. O documento será agora apenas de leitura."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
-"O documento não pode ser salvo por que a ficha de acesso expirou ou é "
-"inválida."
+msgstr "O documento não pode ser salvo por que a ficha de acesso expirou ou é inválida."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
@@ -1148,39 +1103,25 @@ msgstr "Não é possível mudar o nome do documento."
 
 #: src/errormessages.js:38
 #, javascript-format
-msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
-msgstr ""
-"Falhou ao ler o documento do armazenamento. Contacte o administrador do "
-"servidor de arquivos (%storageserver)."
+msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
+msgstr "Falhou ao ler o documento do armazenamento. Contacte o administrador do servidor de arquivos (%storageserver)."
 
 #: src/errormessages.js:39
 #, javascript-format
-msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server (%storageserver) administrator to "
-"continue editing."
-msgstr ""
-"Sem espaço em disco para salvar seu documento. Seu documento foi colocado "
-"como só leitura. Contacte o administrador do servidor (%storageserver) para "
-"continuar a editar."
+msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
+msgstr "Sem espaço em disco para salvar seu documento. Seu documento foi colocado como só leitura. Contacte o administrador do servidor (%storageserver) para continuar a editar."
 
 #: src/errormessages.js:41
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Não foi possível salvar o documento. Verifique suas permissões ou contacte o "
-"administrador do servidor de armazenamento."
 
 #: src/errormessages.js:42
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Não foi possível renomear o documento. Verifique suas permissões ou contacte "
-"o administrador do servidor de armazenamento."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
@@ -1209,18 +1150,21 @@ msgstr "Responder"
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56
 #, fuzzy
+#| msgid "Cancel the search"
 msgid "Show the search bar"
 msgstr "Cancelar a pesquisa"
 
 #: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
 #: src/layer/tile/WriterTileLayer.js:157
 #, fuzzy
+#| msgid "Cancel the search"
 msgid "Clear the search field"
 msgstr "Cancelar a pesquisa"
 
 #: src/layer/tile/CalcTileLayer.js:239 src/layer/tile/ImpressTileLayer.js:224
 #: src/layer/tile/WriterTileLayer.js:159
 #, fuzzy
+#| msgid "Cancel the search"
 msgid "Hide the search bar"
 msgstr "Cancelar a pesquisa"
 
