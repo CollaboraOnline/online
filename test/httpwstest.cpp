@@ -39,31 +39,21 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
-    CPPUNIT_TEST(testCloseAfterClose);
     CPPUNIT_TEST(testSaveOnDisconnect);
     CPPUNIT_TEST(testSavePassiveOnDisconnect);
     CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testInactiveClient);
-    CPPUNIT_TEST(testFontList);
-    CPPUNIT_TEST(testGraphicInvalidate);
-    CPPUNIT_TEST(testAlertAllUsers);
     CPPUNIT_TEST(testViewInfoMsg);
     CPPUNIT_TEST(testUndoConflict);
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testCloseAfterClose();
     void testSaveOnDisconnect();
     void testSavePassiveOnDisconnect();
     void testReloadWhileDisconnecting();
     void testInactiveClient();
-    void testFontList();
-    void testGraphicInvalidate();
-    void testAlertAllUsers();
     void testViewInfoMsg();
     void testUndoConflict();
-
-    std::string getFontList(const std::string& message);
 
 public:
     HTTPWSTest()
@@ -100,57 +90,6 @@ public:
         resetTestStartTime();
     }
 };
-
-void HTTPWSTest::testCloseAfterClose()
-{
-    const char* testname = "closeAfterClose ";
-    try
-    {
-        TST_LOG("Connecting and loading.");
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("hello.odt", _uri, testname);
-
-        // send normal socket shutdown
-        TST_LOG("Disconnecting.");
-        socket->shutdown();
-
-        // 5 seconds timeout
-        socket->setReceiveTimeout(5000000);
-
-        // receive close frame handshake
-        int bytes;
-        int flags;
-        char buffer[READ_BUFFER_SIZE];
-        do
-        {
-            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Received [" << std::string(buffer, bytes) << "], flags: "<< std::hex << flags << std::dec);
-        }
-        while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-
-        TST_LOG("Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec);
-
-        try
-        {
-            // no more messages is received.
-            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Received " << bytes << " bytes, flags: "<< std::hex << flags << std::dec);
-            CPPUNIT_ASSERT_EQUAL(0, bytes);
-            CPPUNIT_ASSERT_EQUAL(0, flags);
-        }
-        catch (const Poco::Exception& exc)
-        {
-            // This is not unexpected, since WSD will close the socket after
-            // echoing back the shutdown status code. However, if it doesn't
-            // we assert above that it doesn't send any more data.
-            TST_LOG("Error: " << exc.displayText());
-
-        }
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
 
 void HTTPWSTest::testSaveOnDisconnect()
 {
@@ -379,101 +318,6 @@ void HTTPWSTest::testInactiveClient()
         TST_LOG("Second client finished.");
         socket1->shutdown();
         socket2->shutdown();
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-std::string HTTPWSTest::getFontList(const std::string& message)
-{
-    Poco::JSON::Parser parser;
-    const Poco::Dynamic::Var result = parser.parse(message);
-    const auto& command = result.extract<Poco::JSON::Object::Ptr>();
-    std::string text = command->get("commandName").toString();
-    CPPUNIT_ASSERT_EQUAL(std::string(".uno:CharFontName"), text);
-    text = command->get("commandValues").toString();
-    return text;
-}
-
-void HTTPWSTest::testFontList()
-{
-    const char* testname = "fontList ";
-    try
-    {
-        // Load a document
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("setclientpart.odp", _uri, testname);
-
-        sendTextFrame(socket, "commandvalues command=.uno:CharFontName", testname);
-        const std::vector<char> response = getResponseMessage(socket, "commandvalues:", testname);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected", !response.empty());
-
-        std::stringstream streamResponse;
-        std::copy(response.begin() + std::string("commandvalues:").length() + 1, response.end(), std::ostream_iterator<char>(streamResponse));
-        CPPUNIT_ASSERT(!getFontList(streamResponse.str()).empty());
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testGraphicInvalidate()
-{
-    const char* testname = "graphicInvalidate ";
-    try
-    {
-        // Load a document.
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("shape.ods", _uri, testname);
-
-        // Send click message
-        sendTextFrame(socket, "mouse type=buttondown x=1035 y=400 count=1 buttons=1 modifier=0", testname);
-        sendTextFrame(socket, "mouse type=buttonup x=1035 y=400 count=1 buttons=1 modifier=0", testname);
-        getResponseString(socket, "graphicselection:", testname);
-
-        // Drag & drop graphic
-        sendTextFrame(socket, "mouse type=buttondown x=1035 y=400 count=1 buttons=1 modifier=0", testname);
-        sendTextFrame(socket, "mouse type=move x=1035 y=450 count=1 buttons=1 modifier=0", testname);
-        sendTextFrame(socket, "mouse type=buttonup x=1035 y=450 count=1 buttons=1 modifier=0", testname);
-
-        const auto message = getResponseString(socket, "invalidatetiles:", testname);
-        CPPUNIT_ASSERT_MESSAGE("Drag & Drop graphic invalidate all tiles", message.find("EMPTY") == std::string::npos);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testAlertAllUsers()
-{
-    // Load two documents, each in two sessions. Tell one session to fake a disk full
-    // situation. Expect to get the corresponding error back in all sessions.
-    static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
-    const char* testname = "alertAllUsers ";
-    try
-    {
-        std::shared_ptr<LOOLWebSocket> socket[4];
-
-        socket[0] = loadDocAndGetSocket("hello.odt", _uri, testname);
-        socket[1] = loadDocAndGetSocket("Example.odt", _uri, testname);
-
-        // Simulate disk full.
-        sendTextFrame(socket[0], "uno .uno:fakeDiskFull", testname);
-
-        // Assert that both clients get the error.
-        for (int i = 0; i < 2; i++)
-        {
-            const std::string response = assertResponseString(socket[i], "error:", testname);
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(response.substr(6), ' '));
-            std::string cmd;
-            LOOLProtocol::getTokenString(tokens, "cmd", cmd);
-            CPPUNIT_ASSERT_EQUAL(std::string("internal"), cmd);
-            std::string kind;
-            LOOLProtocol::getTokenString(tokens, "kind", kind);
-            CPPUNIT_ASSERT_EQUAL(std::string("diskfull"), kind);
-        }
     }
     catch (const Poco::Exception& exc)
     {
