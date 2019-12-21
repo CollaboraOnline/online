@@ -656,6 +656,7 @@ button.leaflet-control-search-next
 .w2ui-icon.insertrowsafter{ background: url('images/lc_insertrowsafter.svg') no-repeat center !important; }
 .w2ui-icon.insertcolumnsafter{ background: url('images/lc_insertcolumnsafter.svg') no-repeat center !important; }
 .w2ui-icon.autosum{ background: url('images/lc_autosum.svg') no-repeat center !important; }
+.w2ui-icon.orientation{ background: url('images/lc_orientation.svg') no-repeat center !important; }
 
 .w2ui-icon.functiondialog{ background: url('images/lc_functiondialog.svg') no-repeat center !important; }
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
