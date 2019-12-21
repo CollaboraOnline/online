@@ -418,6 +418,44 @@
 		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE7E5B7623AD07BE00F9462A /* SvxPresetListBox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SvxPresetListBox.cxx; path = "../../ios-device/svx/source/tbxctrls/SvxPresetListBox.cxx"; sourceTree = "<group>"; };
+		BE7E5B7723AD07BE00F9462A /* tbxcolor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxcolor.cxx; path = "../../ios-device/svx/source/tbxctrls/tbxcolor.cxx"; sourceTree = "<group>"; };
+		BE7E5B7823AD07BE00F9462A /* tbxdrctl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxdrctl.cxx; path = "../../ios-device/svx/source/tbxctrls/tbxdrctl.cxx"; sourceTree = "<group>"; };
+		BE7E5B7923AD07BE00F9462A /* fillctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fillctrl.cxx; path = "../../ios-device/svx/source/tbxctrls/fillctrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B7A23AD07BE00F9462A /* colrctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = colrctrl.cxx; path = "../../ios-device/svx/source/tbxctrls/colrctrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B7B23AD07BE00F9462A /* grafctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grafctrl.cxx; path = "../../ios-device/svx/source/tbxctrls/grafctrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B7C23AD07BE00F9462A /* bulletsnumbering.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bulletsnumbering.cxx; path = "../../ios-device/svx/source/tbxctrls/bulletsnumbering.cxx"; sourceTree = "<group>"; };
+		BE7E5B7D23AD07BE00F9462A /* extrusioncontrols.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = extrusioncontrols.cxx; path = "../../ios-device/svx/source/tbxctrls/extrusioncontrols.cxx"; sourceTree = "<group>"; };
+		BE7E5B7E23AD07BE00F9462A /* formatpaintbrushctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formatpaintbrushctrl.cxx; path = "../../ios-device/svx/source/tbxctrls/formatpaintbrushctrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B7F23AD07BE00F9462A /* lboxctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lboxctrl.cxx; path = "../../ios-device/svx/source/tbxctrls/lboxctrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B8023AD07BE00F9462A /* layctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = layctrl.cxx; path = "../../ios-device/svx/source/tbxctrls/layctrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B8123AD07BE00F9462A /* itemwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = itemwin.cxx; path = "../../ios-device/svx/source/tbxctrls/itemwin.cxx"; sourceTree = "<group>"; };
+		BE7E5B8223AD07BE00F9462A /* SvxColorValueSet.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SvxColorValueSet.cxx; path = "../../ios-device/svx/source/tbxctrls/SvxColorValueSet.cxx"; sourceTree = "<group>"; };
+		BE7E5B8323AD07BE00F9462A /* linectrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = linectrl.cxx; path = "../../ios-device/svx/source/tbxctrls/linectrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B8423AD07BE00F9462A /* extrusioncontrols.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = extrusioncontrols.hxx; path = "../../ios-device/svx/source/tbxctrls/extrusioncontrols.hxx"; sourceTree = "<group>"; };
+		BE7E5B8523AD07BE00F9462A /* tbcontrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbcontrl.cxx; path = "../../ios-device/svx/source/tbxctrls/tbcontrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B8623AD07BE00F9462A /* PaletteManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PaletteManager.cxx; path = "../../ios-device/svx/source/tbxctrls/PaletteManager.cxx"; sourceTree = "<group>"; };
+		BE7E5B8723AD07BE00F9462A /* SvxColorChildWindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SvxColorChildWindow.cxx; path = "../../ios-device/svx/source/tbxctrls/SvxColorChildWindow.cxx"; sourceTree = "<group>"; };
+		BE7E5B8823AD07BF00F9462A /* tbunocontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbunocontroller.cxx; path = "../../ios-device/svx/source/tbxctrls/tbunocontroller.cxx"; sourceTree = "<group>"; };
+		BE7E5B8923AD07BF00F9462A /* Palette.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Palette.cxx; path = "../../ios-device/svx/source/tbxctrls/Palette.cxx"; sourceTree = "<group>"; };
+		BE7E5B8A23AD07BF00F9462A /* tbunosearchcontrollers.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbunosearchcontrollers.cxx; path = "../../ios-device/svx/source/tbxctrls/tbunosearchcontrollers.cxx"; sourceTree = "<group>"; };
+		BE7E5B8B23AD07BF00F9462A /* tbxcolorupdate.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxcolorupdate.cxx; path = "../../ios-device/svx/source/tbxctrls/tbxcolorupdate.cxx"; sourceTree = "<group>"; };
+		BE7E5B8C23AD07BF00F9462A /* verttexttbxctrl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = verttexttbxctrl.cxx; path = "../../ios-device/svx/source/tbxctrls/verttexttbxctrl.cxx"; sourceTree = "<group>"; };
+		BE7E5B8D23AD07BF00F9462A /* fontworkgallery.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fontworkgallery.cxx; path = "../../ios-device/svx/source/tbxctrls/fontworkgallery.cxx"; sourceTree = "<group>"; };
+		BE7E5B9123AD194D00F9462A /* slidesorterbaropt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = slidesorterbaropt.cxx; path = "../../ios-device/svtools/source/config/slidesorterbaropt.cxx"; sourceTree = "<group>"; };
+		BE7E5B9223AD194D00F9462A /* apearcfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = apearcfg.cxx; path = "../../ios-device/svtools/source/config/apearcfg.cxx"; sourceTree = "<group>"; };
+		BE7E5B9323AD194D00F9462A /* accessibilityoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = accessibilityoptions.cxx; path = "../../ios-device/svtools/source/config/accessibilityoptions.cxx"; sourceTree = "<group>"; };
+		BE7E5B9423AD194D00F9462A /* extcolorcfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = extcolorcfg.cxx; path = "../../ios-device/svtools/source/config/extcolorcfg.cxx"; sourceTree = "<group>"; };
+		BE7E5B9523AD194D00F9462A /* htmlcfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = htmlcfg.cxx; path = "../../ios-device/svtools/source/config/htmlcfg.cxx"; sourceTree = "<group>"; };
+		BE7E5B9623AD194D00F9462A /* menuoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menuoptions.cxx; path = "../../ios-device/svtools/source/config/menuoptions.cxx"; sourceTree = "<group>"; };
+		BE7E5B9723AD194D00F9462A /* colorcfg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = colorcfg.cxx; path = "../../ios-device/svtools/source/config/colorcfg.cxx"; sourceTree = "<group>"; };
+		BE7E5B9823AD194D00F9462A /* itemholder2.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = itemholder2.hxx; path = "../../ios-device/svtools/source/config/itemholder2.hxx"; sourceTree = "<group>"; };
+		BE7E5B9923AD194D00F9462A /* printoptions.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = printoptions.cxx; path = "../../ios-device/svtools/source/config/printoptions.cxx"; sourceTree = "<group>"; };
+		BE7E5B9A23AD194D00F9462A /* helpopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = helpopt.cxx; path = "../../ios-device/svtools/source/config/helpopt.cxx"; sourceTree = "<group>"; };
+		BE7E5B9B23AD194D00F9462A /* miscopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = miscopt.cxx; path = "../../ios-device/svtools/source/config/miscopt.cxx"; sourceTree = "<group>"; };
+		BE7E5B9C23AD194D00F9462A /* optionsdrawinglayer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = optionsdrawinglayer.cxx; path = "../../ios-device/svtools/source/config/optionsdrawinglayer.cxx"; sourceTree = "<group>"; };
+		BE7E5B9D23AD194D00F9462A /* fontsubstconfig.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fontsubstconfig.cxx; path = "../../ios-device/svtools/source/config/fontsubstconfig.cxx"; sourceTree = "<group>"; };
+		BE7E5B9E23AD194D00F9462A /* itemholder2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = itemholder2.cxx; path = "../../ios-device/svtools/source/config/itemholder2.cxx"; sourceTree = "<group>"; };
 		BE7E6807229D374500DE73C8 /* clipboard.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = clipboard.hxx; path = "../../ios-device/vcl/ios/clipboard.hxx"; sourceTree = "<group>"; };
 		BE7E6808229D374500DE73C8 /* iosinst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = iosinst.cxx; path = "../../ios-device/vcl/ios/iosinst.cxx"; sourceTree = "<group>"; };
 		BE7E6809229D374500DE73C8 /* dummies.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dummies.cxx; path = "../../ios-device/vcl/ios/dummies.cxx"; sourceTree = "<group>"; };
@@ -1400,6 +1438,7 @@
 				BE93D43C216D555C007A39F4 /* sfx2 */,
 				BE34D1892190712C00815297 /* sc */,
 				BE8C0370223FC4AC0048B7EA /* svl */,
+				BE7E5B8F23AD192500F9462A /* svtools */,
 				BEB0E5DC21CA93950085A0CF /* svx */,
 				BE34D10C218B667400815297 /* sw */,
 				BEB6524B216FD09400B8C09A /* tools */,
@@ -1407,6 +1446,66 @@
 				BE93D420216CAA52007A39F4 /* vcl */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		BE7E5B7523AD079F00F9462A /* tbxctrls */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E5B7C23AD07BE00F9462A /* bulletsnumbering.cxx */,
+				BE7E5B7A23AD07BE00F9462A /* colrctrl.cxx */,
+				BE7E5B7D23AD07BE00F9462A /* extrusioncontrols.cxx */,
+				BE7E5B8423AD07BE00F9462A /* extrusioncontrols.hxx */,
+				BE7E5B7923AD07BE00F9462A /* fillctrl.cxx */,
+				BE7E5B8D23AD07BF00F9462A /* fontworkgallery.cxx */,
+				BE7E5B7E23AD07BE00F9462A /* formatpaintbrushctrl.cxx */,
+				BE7E5B7B23AD07BE00F9462A /* grafctrl.cxx */,
+				BE7E5B8123AD07BE00F9462A /* itemwin.cxx */,
+				BE7E5B8023AD07BE00F9462A /* layctrl.cxx */,
+				BE7E5B7F23AD07BE00F9462A /* lboxctrl.cxx */,
+				BE7E5B8323AD07BE00F9462A /* linectrl.cxx */,
+				BE7E5B8923AD07BF00F9462A /* Palette.cxx */,
+				BE7E5B8623AD07BE00F9462A /* PaletteManager.cxx */,
+				BE7E5B8723AD07BE00F9462A /* SvxColorChildWindow.cxx */,
+				BE7E5B8223AD07BE00F9462A /* SvxColorValueSet.cxx */,
+				BE7E5B7623AD07BE00F9462A /* SvxPresetListBox.cxx */,
+				BE7E5B8523AD07BE00F9462A /* tbcontrl.cxx */,
+				BE7E5B8823AD07BF00F9462A /* tbunocontroller.cxx */,
+				BE7E5B8A23AD07BF00F9462A /* tbunosearchcontrollers.cxx */,
+				BE7E5B7723AD07BE00F9462A /* tbxcolor.cxx */,
+				BE7E5B8B23AD07BF00F9462A /* tbxcolorupdate.cxx */,
+				BE7E5B7823AD07BE00F9462A /* tbxdrctl.cxx */,
+				BE7E5B8C23AD07BF00F9462A /* verttexttbxctrl.cxx */,
+			);
+			name = tbxctrls;
+			sourceTree = "<group>";
+		};
+		BE7E5B8F23AD192500F9462A /* svtools */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E5B9023AD193200F9462A /* config */,
+			);
+			name = svtools;
+			sourceTree = "<group>";
+		};
+		BE7E5B9023AD193200F9462A /* config */ = {
+			isa = PBXGroup;
+			children = (
+				BE7E5B9323AD194D00F9462A /* accessibilityoptions.cxx */,
+				BE7E5B9223AD194D00F9462A /* apearcfg.cxx */,
+				BE7E5B9723AD194D00F9462A /* colorcfg.cxx */,
+				BE7E5B9423AD194D00F9462A /* extcolorcfg.cxx */,
+				BE7E5B9D23AD194D00F9462A /* fontsubstconfig.cxx */,
+				BE7E5B9A23AD194D00F9462A /* helpopt.cxx */,
+				BE7E5B9523AD194D00F9462A /* htmlcfg.cxx */,
+				BE7E5B9E23AD194D00F9462A /* itemholder2.cxx */,
+				BE7E5B9823AD194D00F9462A /* itemholder2.hxx */,
+				BE7E5B9623AD194D00F9462A /* menuoptions.cxx */,
+				BE7E5B9B23AD194D00F9462A /* miscopt.cxx */,
+				BE7E5B9C23AD194D00F9462A /* optionsdrawinglayer.cxx */,
+				BE7E5B9923AD194D00F9462A /* printoptions.cxx */,
+				BE7E5B9123AD194D00F9462A /* slidesorterbaropt.cxx */,
+			);
+			name = config;
 			sourceTree = "<group>";
 		};
 		BE7E6806229D371B00DE73C8 /* ios */ = {
@@ -1936,6 +2035,7 @@
 				BE9273B72372E04500ADB598 /* form */,
 				BE9273AD2372DC6B00ADB598 /* sidebar */,
 				BEB0E5DD21CA93A50085A0CF /* svdraw */,
+				BE7E5B7523AD079F00F9462A /* tbxctrls */,
 			);
 			name = svx;
 			sourceTree = "<group>";
