@@ -816,8 +816,25 @@ L.Control.Menubar = L.Control.extend({
 			var pageStyles = e.commandValues['HeaderFooter'];
 			for (var iterator in pageStyles) {
 				style = pageStyles[iterator];
-				$menuHeader.append(this._createUnoMenuItem(_(style), constHeader + encodeURIComponent(style) + constArg, style));
-				$menuFooter.append(this._createUnoMenuItem(_(style), constFooter + encodeURIComponent(style) + constArg, style));
+				if (!L.Browser.mobile) {
+					$menuHeader.append(this._createUnoMenuItem(_(style), constHeader + encodeURIComponent(style) + constArg, style));
+					$menuFooter.append(this._createUnoMenuItem(_(style), constFooter + encodeURIComponent(style) + constArg, style));
+				} else {
+					var docType = this._map.getDocType();
+					var target = this.options['mobileInsertMenu'][docType];
+
+					var findFunction = function(item) {
+						return item.name === _(style);
+					};
+
+					var foundMenu = this._findSubMenuByName(target, _UNO('.uno:InsertPageHeader', 'text'))
+					if (foundMenu && foundMenu.menu.find(findFunction) === undefined)
+						foundMenu.menu.push({name: _(style), tag: style, uno: constHeader + encodeURIComponent(style) + constArg});
+
+					foundMenu = this._findSubMenuByName(target, _UNO('.uno:InsertPageFooter', 'text'))
+					if (foundMenu && foundMenu.menu.find(findFunction) === undefined)
+						foundMenu.menu.push({name: _(style), tag: style, uno: constFooter + encodeURIComponent(style) + constArg});
+				}
 			}
 		}
 	},
@@ -1492,7 +1509,22 @@ L.Control.Menubar = L.Control.extend({
 			}
 		}
 		return menuStructure;
-	}
+	},
+
+	_findSubMenuByName: function(menuTarget, nameString) {
+		if (menuTarget.name === nameString)
+			return menuTarget;
+
+		if (menuTarget.menu)
+		{
+			for (var i = 0; i < menuTarget.menu.length; i++) {
+				var foundItem = this._findSubMenuByName(menuTarget.menu[i], nameString);
+				if (foundItem)
+					return foundItem;
+			}
+		}
+		return null;
+	},
 });
 
 L.control.menubar = function (options) {
