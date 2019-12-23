@@ -634,6 +634,10 @@ void WhiteBoxTests::testAuthorization()
     auth5.authorizeRequest(req5);
     CPPUNIT_ASSERT_EQUAL(std::string("Basic huh=="), req5.get("Authorization"));
     CPPUNIT_ASSERT_EQUAL(std::string("else"), req5.get("X-Something-More"));
+
+    Authorization auth6(Authorization::Type::None, "Authorization: basic huh==");
+    Poco::Net::HTTPRequest req6;
+    CPPUNIT_ASSERT_THROW(auth6.authorizeRequest(req6), BadRequestException);
 }
 
 void WhiteBoxTests::testJson()

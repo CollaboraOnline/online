@@ -11,6 +11,8 @@
 
 #include "Authorization.hpp"
 #include "Protocol.hpp"
+#include "Log.hpp"
+#include <Exceptions.hpp>
 
 #include <cstdlib>
 #include <cassert>
@@ -77,7 +79,9 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
             break;
         }
         default:
-            assert(false);
+            // assert(false);
+            throw BadRequestException("Invalid HTTP request type");
+            break;
     }
 }
 
