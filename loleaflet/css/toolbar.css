@@ -764,6 +764,7 @@ button.leaflet-control-search-next
 		position: relative;
 		padding: 2px;
 		display: inline-block;
+		min-width: 350px;
 		width:  100%;
 		height: 100%;
 }
