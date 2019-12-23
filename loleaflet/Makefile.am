@@ -1,3 +1,4 @@
+CTAGS = ctags
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 
@@ -404,3 +405,6 @@ load-test: spec/data/load-test
 	do \
 		node_modules/.bin/mocha spec/headlessLoadTest.js > load_test_out/$$i.out 2>&1 & \
 	done;
+
+ctags:
+	@$(CTAGS) --language-force=JavaScript $(LOLEAFLET_JS_SRC) $(srcdir)/js/global.js
