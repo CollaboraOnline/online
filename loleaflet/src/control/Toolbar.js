@@ -227,9 +227,9 @@ L.Map.include({
 				showCloseButton: true,
 				escapeButtonCloses: true,
 				overlayClosesOnClick: true,
+				closeAllOnPopState: false,
 				buttons: {},
 				afterOpen: function() {
-					var that = this;
 					var $vexContent = $(this.contentEl);
 					this.contentEl.style.width = w + 'px'
 					map.enable(false);
@@ -335,10 +335,6 @@ L.Map.include({
 					$vexContent.focus();
 					// workaround for https://github.com/HubSpot/vex/issues/43
 					$('.vex-overlay').css({ 'pointer-events': 'none'});
-					$vexContent.one('click', function(e) {
-						that.close();
-						e.stopPropagation();
-					});
 				},
 				beforeClose: function () {
 					map.focus();
@@ -393,7 +389,6 @@ L.Map.include({
 			overlayClosesOnClick: true,
 			buttons: {},
 			afterOpen: function() {
-				var that = this;
 
 				var touchGesture = map['touchGesture'];
 				if (touchGesture && touchGesture._hammer) {
@@ -413,10 +408,6 @@ L.Map.include({
 				$(window).bind('keyup.vex', handler);
 				// workaround for https://github.com/HubSpot/vex/issues/43
 				$('.vex-overlay').css({ 'pointer-events': 'none'});
-				$vexContent.one('click', function(e) {
-					that.close();
-					e.stopPropagation();
-				});
 			},
 			beforeClose: function () {
 				$(window).unbind('keyup.vex', handler);
