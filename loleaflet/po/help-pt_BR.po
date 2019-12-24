@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-17 11:05+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
+"PO-Revision-Date: 2019-12-23 05:31+0000\n"
+"Last-Translator: Olivier Hallot <olivier.hallot@documentfoundation.org>\n"
 "Language-Team: Portuguese (Brazil) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -1035,7 +1035,7 @@ msgstr "A cada usuário é atribuída uma cor. O cursor de cada usuário é most
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
-msgstr ""
+msgstr "Você pode saltar para o cursor de um usuário se clicar em seu nome ou seu avatar. Pode-se assim seguir o editor."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
@@ -1087,7 +1087,7 @@ msgstr "<span class=\"def\">A barra de zoom:</span> À direita da barra de statu
 
 #: html/loleaflet-help.html%2Bdiv.p:270-5
 msgid "Text, charts, shapes and svg images will stay sharp, when zooming in, you will only see pixels appear at inserted images, such as jpg’s or png’s."
-msgstr "Textos, gráficos, formas d desenho e imagens svg permanecem geometricamente precisos ao serem ampliados. Imagens inseridas em formato png e jpg podem produzir pixels na ampliação."
+msgstr "Textos, gráficos, formas de desenho e imagens svg permanecem geometricamente precisos ao serem ampliados. Imagens inseridas em formato png e jpg podem produzir pixels na ampliação."
 
 #: html/loleaflet-help.html%2Bdiv.p:271-5
 msgid "Using the browser zoom affects the document and user interface areas."
@@ -1202,9 +1202,8 @@ msgid "Select a table in text document, a range in a spreadsheet or a table in a
 msgstr "Selecione uma tabela num documento de texto, um intervalo de células de uma planilha ou uma tabela numa apresentação."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
-#, fuzzy
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
-msgstr "Escolha <span class=\"ui\">Inserir</span> → <span class=\"ui\">Gráfico</span>. Siga os passos do assistente para personalizar seu gráfico"
+msgstr "Escolha <span class=\"ui\">Inserir</span> → <span class=\"ui\">Gráficos</span>. Personalize seu gráfico na barra lateral:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -1228,15 +1227,15 @@ msgstr "Manipular imagens"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
-msgstr ""
+msgstr "O <span class=\"productname\">%productName</span> insere imagens em documentos de texto vindas do seu computador local ou do armazenamento na nuvem. Imagens inseridas sempre são incorporadas no documento."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">Insert image</span> icon allows you to choose an image from the cloud storage's folders and shares."
-msgstr ""
+msgstr "<span class=\"def\">Inserir imagem:</span> Clicar no ícone <span class=\"ui\">Inserir imagem</span> permite escolher uma imagem das pastas e compartilhamentos da nuvem."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid "<span class=\"def\">Insert local image:</span> opens the browser file picker to upload the image from your local computer and insert it into the document."
-msgstr ""
+msgstr "<span class=\"def\">Inserir imagem local:</span> abre o seletor de arquivos do navegador para gravar uma imagem de seu computador local e inseri-la no documento."
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
 msgid "Images can be resized, rotated and anchored. Text can be wrapped around the image. Select the image and open the context menu. Use the images handles to resize the image with the mouse."
@@ -1331,10 +1330,8 @@ msgid "To remove the validity of the cell, open the dialog and set the <span cla
 msgstr "Para remover a validação numa célula, abra a caixa de diálogo e defina “Todos os valores” na lista <span class=\"ui\">Permitir</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
-#, fuzzy
-#| msgid "i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
 msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
-msgstr "<span class=\"def\">Anotações:</span> Você pode inserir anotações numa planilha, uma anotação por célula. Ao selecionar <span class=\"ui\">Inserir anotação</span>, uma janela pop-up aparece para permitir escrever o conteúdo da anotação. Um ponto vermelho em cima à direita da célula aparece quando a célula contém uma anotação. Asse o mouse por cima da célula para exibir a anotação."
+msgstr "<span class=\"def\">Anotações:</span> Você pode inserir anotações numa planilha, uma anotação por célula. Ao selecionar <span class=\"ui\">Inserir anotação</span>, uma janela pop-up aparece para permitir escrever o conteúdo da anotação. Um ponto vermelho em cima à direita da célula aparece quando a célula contém uma anotação. Passe o mouse por cima da célula para exibir a anotação."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:377-5
 msgid "<span class=\"def\">Conditional formatting:</span> <span class=\"productname\">%productName</span> adds symbols to each cell of a range based on cells conditions. Select the cell range and click the <span class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the symbol set to apply on the range."

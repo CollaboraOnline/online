@@ -5,9 +5,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"PO-Revision-Date: 2019-12-23 05:31+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Asturian <https://vm137.documentfoundation.org/projects/libo_online/ios/ast/>\n"
+"Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/ios/ast/>\n"
 "Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +23,7 @@ msgstr "Información de l'aplicación"
 
 #: Version
 msgid "Version"
-msgstr ""
+msgstr "Versión"
 
 #: Settings
 msgid "Settings"
@@ -31,4 +31,4 @@ msgstr "Axustes"
 
 #: Template+list+URL
 msgid "Template list URL"
-msgstr ""
+msgstr "URL de la llista de plantíes"

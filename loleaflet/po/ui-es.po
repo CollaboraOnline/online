@@ -6,10 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 12:26+0100\n"
-"PO-Revision-Date: 2019-12-14 18:56+0000\n"
+"POT-Creation-Date: 2019-12-13 12:22+0100\n"
+"PO-Revision-Date: 2019-12-24 18:45+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Spanish <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
+"Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -142,15 +142,15 @@ msgstr "Intervalo de tiempo de estadísticas de CPU (en ms)"
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "Memoria virtual máxima para procesamiento de documentos (en MB) — solo reducción"
+msgstr "Memoria virtual máxima para procesamiento de documentos (en MB); solo reducción"
 
 #: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Memoria de pila máxima para procesamiento de documentos (en kB) — solo reducción"
+msgstr "Memoria de pila máxima para procesamiento de documentos (en kB); solo reducción"
 
 #: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Tamaño de archivo máximo permitido en disco (en MB) — solo reducción"
+msgstr "Tamaño de archivo máximo permitido en disco (en MB); solo reducción"
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
@@ -320,18 +320,6 @@ msgstr "Cuadrado"
 msgid "Fixed size"
 msgstr "Tamaño fijo"
 
-#: src/control/Control.JSDialogBuilder.js:541
-msgid "\""
-msgstr "\""
-
-#: src/control/Control.JSDialogBuilder.js:543
-msgid "%"
-msgstr "%"
-
-#: src/control/Control.JSDialogBuilder.js:545
-msgid "°"
-msgstr "°"
-
 #: src/control/Control.JSDialogBuilder.js:734
 #: src/control/Control.Toolbar.js:1577
 msgid "None"
@@ -343,11 +331,11 @@ msgstr "Color"
 
 #: src/control/Control.JSDialogBuilder.js:740
 msgid "Gradient"
-msgstr "Gradiente"
+msgstr "Degradado"
 
 #: src/control/Control.JSDialogBuilder.js:743
 msgid "Hatching"
-msgstr "Eclosión"
+msgstr "Tramado"
 
 #: src/control/Control.JSDialogBuilder.js:747
 msgid "Pattern"
@@ -369,15 +357,15 @@ msgstr "Tipo de letra"
 msgid "Font Size"
 msgstr "Tamaño de letra"
 
-#: src/control/Control.JSDialogBuilder.js:1479
+#: src/control/Control.JSDialogBuilder.js:1468
 msgid "Rows"
 msgstr "Filas"
 
-#: src/control/Control.JSDialogBuilder.js:1480
+#: src/control/Control.JSDialogBuilder.js:1469
 msgid "Columns"
 msgstr "Columnas"
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1489
 #: src/control/Control.Menubar.js:615 src/control/Control.Menubar.js:666
 #: src/control/Control.Toolbar.js:957
 msgid "Insert table"
@@ -577,7 +565,7 @@ msgstr "¿Confirma que quiere eliminar esta página?"
 
 #: src/control/Control.Toolbar.js:850
 msgid "Default Style"
-msgstr "Estilo por Defecto"
+msgstr "Estilo predeterminado"
 
 #: src/control/Control.Toolbar.js:901
 msgid "Borders"
@@ -1035,7 +1023,7 @@ msgstr "Falló la carga del documento. Asegúrese de que el tipo de archivo sea 
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
-msgstr "Link no válido: «%url»"
+msgstr "Enlace no válido: «%url»"
 
 #: src/errormessages.js:25
 msgid "You are leaving the editor, are you sure you want to visit %url?"
@@ -1201,6 +1189,15 @@ msgstr "Creando un archivo nuevo desde una plantilla…"
 #: src/map/handler/Map.WOPI.js:374
 msgid "Creating copy..."
 msgstr "Creando una copia…"
+
+#~ msgid "\""
+#~ msgstr "\""
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "°"
+#~ msgstr "°"
 
 #~ msgid "Chart type"
 #~ msgstr "Tipo de gráfico"

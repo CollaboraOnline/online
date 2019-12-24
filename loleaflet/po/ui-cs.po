@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-17 11:05+0000\n"
+"PO-Revision-Date: 2019-12-23 05:31+0000\n"
 "Last-Translator: raal <raal@post.cz>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
@@ -295,31 +295,31 @@ msgstr "Automatická"
 
 #: src/control/Control.JSDialogBuilder.js:150
 msgid "Linear"
-msgstr ""
+msgstr "Lineární"
 
 #: src/control/Control.JSDialogBuilder.js:153
 msgid "Axial"
-msgstr ""
+msgstr "Axiální"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Radial"
-msgstr ""
+msgstr "Radiální"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Elipsoid"
-msgstr ""
+msgstr "Oválný"
 
 #: src/control/Control.JSDialogBuilder.js:163
 msgid "Quadratic"
-msgstr ""
+msgstr "Krychlový"
 
 #: src/control/Control.JSDialogBuilder.js:166
 msgid "Square"
-msgstr ""
+msgstr "Čtvercový"
 
 #: src/control/Control.JSDialogBuilder.js:169
 msgid "Fixed size"
-msgstr ""
+msgstr "Pevná velikost"
 
 #: src/control/Control.JSDialogBuilder.js:734
 #: src/control/Control.Toolbar.js:1577
@@ -328,27 +328,27 @@ msgstr "Žádná"
 
 #: src/control/Control.JSDialogBuilder.js:737
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 #: src/control/Control.JSDialogBuilder.js:740
 msgid "Gradient"
-msgstr ""
+msgstr "Přechod"
 
 #: src/control/Control.JSDialogBuilder.js:743
 msgid "Hatching"
-msgstr ""
+msgstr "Šrafování"
 
 #: src/control/Control.JSDialogBuilder.js:747
 msgid "Pattern"
-msgstr ""
+msgstr "Vzorek"
 
 #: src/control/Control.JSDialogBuilder.js:880
 msgid "From"
-msgstr ""
+msgstr "Od"
 
 #: src/control/Control.JSDialogBuilder.js:883
 msgid "To"
-msgstr ""
+msgstr "Do"
 
 #: src/control/Control.JSDialogBuilder.js:1014
 #, fuzzy
@@ -364,11 +364,11 @@ msgstr "Nepodepsáno"
 
 #: src/control/Control.JSDialogBuilder.js:1468
 msgid "Rows"
-msgstr ""
+msgstr "Řádky"
 
 #: src/control/Control.JSDialogBuilder.js:1469
 msgid "Columns"
-msgstr ""
+msgstr "Sloupce"
 
 #: src/control/Control.JSDialogBuilder.js:1489
 #: src/control/Control.Menubar.js:615 src/control/Control.Menubar.js:666
@@ -471,7 +471,7 @@ msgstr "Orientace textu"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:338
 #: src/control/Control.Menubar.js:453
 msgid "Online Help"
-msgstr ""
+msgstr "Online nápověda"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:339
 #: src/control/Control.Menubar.js:454
@@ -572,7 +572,7 @@ msgstr "Opravdu si přejete smazat tuto stránku?"
 
 #: src/control/Control.Toolbar.js:850
 msgid "Default Style"
-msgstr ""
+msgstr "Výchozí styl"
 
 #: src/control/Control.Toolbar.js:901
 msgid "Borders"
@@ -1038,7 +1038,7 @@ msgstr "Opouštíte editor, opravdu chcete navštívit %url?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Dokument se nepodařilo načíst. Tento dokument je buď nesprávně formátovaný, nebo vyžaduje více zdrojů, než je povoleno. Obraťte se prosím na správce."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1080,11 +1080,11 @@ msgstr "Dokument nelze přejmenovat. Ujistěte se, zda máte dostatečná opráv
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Nahrávání souboru na server selhalo, soubor nebyl nalezen."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Nahrávání souboru na server selhalo, soubor je příliš velký."
 
 #: src/layer/marker/Annotation.js:219
 msgid "Accept change"
@@ -1180,12 +1180,12 @@ msgstr "Načítání..."
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 can not be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Soubor typu: %0 nelze nahrát na server, protože soubor nemá jméno"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 can not be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Soubor typu: %0 nelze nahrát na server, protože je prázdný"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1193,7 +1193,7 @@ msgstr "Nahrávání..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Nahrávání souboru na server selhalo se stavem: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

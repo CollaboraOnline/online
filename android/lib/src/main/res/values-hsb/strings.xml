@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="loading">Čita so...</string>
+    <string name="cannot_open_file_chooser">Datajowy wuběranski dialog njeda so wočinić</string>
+    <string name="failed_to_insert_image">Wobraz njeda so zasadźić</string>
+    <string name="failed_to_load_file">Njeje so poradźiło, dataju zwěsćić, kotraž ma so začitać.</string>
+    <string name="storage_permission_required">Prawo za składowanje je trěbne.</string>
+    <string name="temp_file_saving_disabled">Tuta dataja da so jenož čitać, składowanje je znjemóžnjene.</string>
+</resources>

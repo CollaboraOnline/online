@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-14 18:56+0000\n"
+"PO-Revision-Date: 2019-12-23 05:31+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Asturian <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
+"Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
-msgstr ""
+msgstr "Consola alministrativa"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
@@ -30,7 +30,7 @@ msgstr "Axustes"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "Vista xeneral"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
@@ -58,15 +58,15 @@ msgstr "Nome d'usuariu"
 
 #: admin/admin.strings.js:15
 msgid "Documents opened"
-msgstr ""
+msgstr "Documentos abiertos"
 
 #: admin/admin.strings.js:16
 msgid "Number of Documents"
-msgstr ""
+msgstr "Númberu de documentos"
 
 #: admin/admin.strings.js:17
 msgid "Memory consumed"
-msgstr ""
+msgstr "Memoria consumida"
 
 #: admin/admin.strings.js:18
 msgid "Bytes sent"
@@ -86,15 +86,15 @@ msgstr "Documentu"
 
 #: admin/admin.strings.js:22
 msgid "Number of views"
-msgstr ""
+msgstr "Númberu de vistes"
 
 #: admin/admin.strings.js:23
 msgid "Elapsed time"
-msgstr ""
+msgstr "Tiempu trescurríu"
 
 #: admin/admin.strings.js:24
 msgid "Idle time"
-msgstr ""
+msgstr "Tiempu d'inactividá"
 
 #: admin/admin.strings.js:25
 msgid "Modified"
@@ -123,7 +123,7 @@ msgstr ""
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:251
 #: src/layer/tile/TileLayer.js:383
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"
@@ -175,11 +175,11 @@ msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
-msgstr ""
+msgstr "Recibíos"
 
 #: admin/src/AdminSocketAnalytics.js:223
 msgid "Sent"
-msgstr ""
+msgstr "Unviaos"
 
 #: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
@@ -191,7 +191,7 @@ msgstr ""
 
 #: admin/src/AdminSocketOverview.js:183 admin/src/AdminSocketOverview.js:285
 msgid "Documents"
-msgstr ""
+msgstr "Documentos"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
@@ -199,39 +199,39 @@ msgstr ""
 
 #: admin/src/Util.js:14
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: admin/src/Util.js:14
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: admin/src/Util.js:14
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: admin/src/Util.js:14
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
-msgstr ""
+msgstr " h"
 
 #: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
-msgstr ""
+msgstr " min"
 
 #: admin/src/Util.js:54
 msgid " s"
-msgstr ""
+msgstr " s"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "Open link"
-msgstr ""
+msgstr "Abrir l'enllaz"
 
 #: src/control/Control.AlertDialog.js:54
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: src/control/Control.AlertDialog.js:76
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -247,27 +247,27 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
-msgstr ""
+msgstr "Triba"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "Index"
-msgstr ""
+msgstr "Índiz"
 
 #: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:279
 msgid "Comment"
-msgstr ""
+msgstr "Comentariu"
 
 #: src/control/Control.DocumentRepair.js:50
 msgid "User name"
-msgstr ""
+msgstr "Nome d'usuariu"
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
-msgstr ""
+msgstr "Marca de tiempu"
 
 #: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
-msgstr ""
+msgstr "Dir al estáu"
 
 #: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2442
 msgid "You"
@@ -382,13 +382,13 @@ msgstr ""
 #: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:458
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
-msgstr ""
+msgstr "Encaboxar"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:250
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:464
 #: src/control/Control.Menubar.js:508 src/control/Control.Menubar.js:552
 msgid "Share..."
-msgstr ""
+msgstr "Compartir…"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:252
 #: src/control/Control.Menubar.js:351 src/control/Control.Menubar.js:466
@@ -406,33 +406,33 @@ msgstr ""
 #: src/control/Control.Menubar.js:353 src/control/Control.Menubar.js:470
 #: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:557
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "Documentu PDF (.pdf)"
 
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:471
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "Documentu de testu ODF (.odt)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:472
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Documentu de Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:473
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Documentu de Word (.docx)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:474
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Testu enriquecíu (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:467
 #: src/control/Signing.js:601
 msgid "Sign document"
-msgstr ""
+msgstr "Roblar el documentu"
 
 #: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:259
 #: src/control/Control.Menubar.js:358
 msgid "Close document"
-msgstr ""
+msgstr "Zarrar el documentu"
 
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:363 src/control/Control.Menubar.js:479
@@ -472,13 +472,13 @@ msgstr ""
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:339
 #: src/control/Control.Menubar.js:454
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Atayos de tecláu"
 
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:340
 #: src/control/Control.Menubar.js:455 src/control/Control.Menubar.js:501
 #: src/control/Control.Menubar.js:545 src/control/Control.Menubar.js:606
 msgid "About"
-msgstr ""
+msgstr "Tocante a"
 
 #: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:457 src/map/Map.js:385
@@ -570,7 +570,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:901
 msgid "Borders"
-msgstr ""
+msgstr "Berbesos"
 
 #: src/control/Control.Toolbar.js:909
 msgid "More..."
@@ -680,7 +680,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1599
 msgid "Number of Pages"
-msgstr ""
+msgstr "Númberu de páxines"
 
 #: src/control/Control.Toolbar.js:1604
 msgid "Word Counter"
@@ -688,7 +688,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1639
 msgid "Number of Slides"
-msgstr ""
+msgstr "Númberu de diapositives"
 
 #: src/control/Control.Toolbar.js:1676
 msgid "%n users"
@@ -704,7 +704,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:2053
 msgid "Style"
-msgstr ""
+msgstr "Estilu"
 
 #: src/control/Control.Toolbar.js:2076
 msgid "Font"
@@ -724,7 +724,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:2448
 msgid "Readonly"
-msgstr ""
+msgstr "Namái de llectura"
 
 #: src/control/Ruler.js:192
 msgid "Left Margin"
@@ -772,7 +772,7 @@ msgstr ""
 
 #: src/control/Signing.js:330
 msgid "Type:"
-msgstr ""
+msgstr "Triba:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
@@ -816,11 +816,11 @@ msgstr ""
 
 #: src/control/Signing.js:608
 msgid "Close"
-msgstr ""
+msgstr "Zarrar"
 
 #: src/control/Signing.js:616
 msgid "Not Signed"
-msgstr ""
+msgstr "Non robláu"
 
 #: src/control/Signing.js:619
 msgid "This document is digitally signed and the signature is valid."
@@ -828,7 +828,7 @@ msgstr ""
 
 #: src/control/Signing.js:620
 msgid "Signed and validated"
-msgstr ""
+msgstr "Robláu y validáu"
 
 #: src/control/Signing.js:623
 msgid "This document has an invalid signature."
@@ -884,15 +884,15 @@ msgstr ""
 
 #: src/control/Toolbar.js:453
 msgid "Text"
-msgstr ""
+msgstr "Testu"
 
 #: src/control/Toolbar.js:454
 msgid "Link"
-msgstr ""
+msgstr "Enllaz"
 
 #: src/control/Toolbar.js:457
 msgid "OK"
-msgstr ""
+msgstr "Aceutar"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -908,7 +908,7 @@ msgstr ""
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
-msgstr ""
+msgstr "Nun s'almite la versión del sirvidor."
 
 #: src/core/Socket.js:366
 msgid "Session terminated by document owner"

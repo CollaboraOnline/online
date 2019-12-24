@@ -49,9 +49,9 @@
     <string name="external_sd_file_system">Harici SD</string>
     <string name="otg_file_system">OTG cihazı (deneysel)</string>
     <string name="usb_connected_configure">USB bağlantısı yapıldı, cihazınızın ayarlarını yapınız.</string>
-    <string name="owncloud_wrong_connection">Cloud sunucusuna bağlanılamadı. Ayarlarınızı kontrol ediniz.</string>
-    <string name="owncloud_unauthorized">Cloud sunucusuna giriş yapılamadı. Ayarlarınızı kontrol ediniz.</string>
-    <string name="owncloud_unspecified_error">Cloud sunucusuna bağlanırken belirtilmemiş bir hata oluştu. Lütfen daha sonra tekrar deneyiniz veya ayarlarınızı kontrol ediniz.</string>
+    <string name="owncloud_wrong_connection">Bulut sunucusuna bağlanılamadı. Ayarlarınızı kontrol ediniz.</string>
+    <string name="owncloud_unauthorized">Bulut sunucusuna giriş yapılamadı. Ayarlarınızı kontrol ediniz.</string>
+    <string name="owncloud_unspecified_error">Bulut sunucusuna bağlanırken belirtilmemiş bir hata oluştu. Lütfen daha sonra tekrar deneyiniz veya ayarlarınızı kontrol ediniz.</string>
     <string name="ext_document_provider_error">Geçersiz dizin. SD kart ayarlarınızı kontrol ediniz.</string>
     <string name="otg_missing_error">Geçersiz dizin. OTG cihazınızı veya OTG cihazı ayarlarınızı kontrol ediniz.</string>
     <!-- Edit action names -->
@@ -64,7 +64,7 @@
     <string name="otg_device_path">OTG cihazı yolu</string>
     <string name="otg_warning">Deneysel özellik: OTG cihazı yazılabilir ise kullanın</string>
     <string name="server_url">Sunucu URL</string>
-    <string name="server_url_and_port">Cloud sunucusu URL ve port</string>
+    <string name="server_url_and_port">Bulut sunucusu URL ve port</string>
     <string name="user_name">Kullanıcı Adı</string>
     <string name="password">Parola</string>
     <!-- Directory browser strings -->
@@ -95,4 +95,23 @@
     <string name="pref_filter_summary">Varsayılan dosya filtrelemesini seç</string>
     <string name="bmp_null">Bmp boş!</string>
     <string name="directory_not_saved">Dizin kaydedilmedi.</string>
+    <string name="title_activity_show_html">Hakkında</string>
+    <string name="share_document">Belge Paylaş</string>
+    <string name="loading">Yükleniyor...</string>
+    <string name="action_overwrite">Üzerine Yaz</string>
+    <string name="enter_filename">Lütfen dosya adını giriniz:</string>
+    <string name="negative_cancel">İptal</string>
+    <string name="negative_im_sure">Eminim</string>
+    <string name="positive_ok">Tamam</string>
+    <string name="reason_required_to_read_documents">Belgelerinizi okumak için depolama yetkisi gerekiyor.</string>
+    <string name="title_permission_required">İzin Gerekli</string>
+    <string name="remote_server">Uzak sunucu</string>
+    <string name="pref_show_debug_info_summary">Belge göstericide hata kaydı bilgisi göstermeyi etkinleştir</string>
+    <string name="pref_show_debug_info">Hata Kayıt Bilgisini Göster</string>
+    <string name="failed_to_load_file">Yüklemek için dosya tanımlaması başarısız oldu</string>
+    <string name="storage_permission_required">Depolama izni gerekiyor</string>
+    <string name="file_creation_failed">Dosya oluşturma basarısız oldu</string>
+    <string name="file_exists_warning">Bu isimde bir dosya zaten var ve üzerine yazılacak.</string>
+    <string name="no_items">Öge yok</string>
+    <string name="no_recent_items">Son kullanılan öge yok</string>
 </resources>

@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2019-12-24 18:45+0000\n"
+"Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
+"Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/eu/>\n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
 "X-Pootle-Revision: 3939192\n"
 
@@ -290,35 +291,35 @@ msgstr "Hasi kopiatze/itsaste gurutzatua"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Kolorerik ez"
 
 #: src/control/Control.JSDialogBuilder.js:150
 msgid "Linear"
-msgstr ""
+msgstr "Lineala"
 
 #: src/control/Control.JSDialogBuilder.js:153
 msgid "Axial"
-msgstr ""
+msgstr "Axiala"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Radial"
-msgstr ""
+msgstr "Erradiala"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Elipsoid"
-msgstr ""
+msgstr "Elipsoidea"
 
 #: src/control/Control.JSDialogBuilder.js:163
 msgid "Quadratic"
-msgstr ""
+msgstr "Kuadratikoa"
 
 #: src/control/Control.JSDialogBuilder.js:166
 msgid "Square"
-msgstr ""
+msgstr "Karratua"
 
 #: src/control/Control.JSDialogBuilder.js:169
 msgid "Fixed size"
-msgstr ""
+msgstr "Tamaina finkoa"
 
 #: src/control/Control.JSDialogBuilder.js:734
 #: src/control/Control.Toolbar.js:1577
@@ -327,47 +328,43 @@ msgstr "Bat ere ez"
 
 #: src/control/Control.JSDialogBuilder.js:737
 msgid "Color"
-msgstr ""
+msgstr "Kolorea"
 
 #: src/control/Control.JSDialogBuilder.js:740
 msgid "Gradient"
-msgstr ""
+msgstr "Gradientea"
 
 #: src/control/Control.JSDialogBuilder.js:743
 msgid "Hatching"
-msgstr ""
+msgstr "Itzaleztadura"
 
 #: src/control/Control.JSDialogBuilder.js:747
 msgid "Pattern"
-msgstr ""
+msgstr "Eredua"
 
 #: src/control/Control.JSDialogBuilder.js:880
 msgid "From"
-msgstr ""
+msgstr "Hemendik:"
 
 #: src/control/Control.JSDialogBuilder.js:883
 msgid "To"
-msgstr ""
+msgstr "Hona:"
 
 #: src/control/Control.JSDialogBuilder.js:1014
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
-msgstr "Letra-tipoa"
+msgstr "Letra-izena"
 
 #: src/control/Control.JSDialogBuilder.js:1016
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "Sinatu gabea"
+msgstr "Letra-tamaina"
 
 #: src/control/Control.JSDialogBuilder.js:1468
 msgid "Rows"
-msgstr ""
+msgstr "Errenkadak"
 
 #: src/control/Control.JSDialogBuilder.js:1469
 msgid "Columns"
-msgstr ""
+msgstr "Zutabeak"
 
 #: src/control/Control.JSDialogBuilder.js:1489
 #: src/control/Control.Menubar.js:615 src/control/Control.Menubar.js:666
@@ -470,7 +467,7 @@ msgstr "Testu-orientazioa"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:338
 #: src/control/Control.Menubar.js:453
 msgid "Online Help"
-msgstr ""
+msgstr "Laguntza linean"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:339
 #: src/control/Control.Menubar.js:454
@@ -520,14 +517,12 @@ msgstr "Excel kalkulu-orria (.xlsx)"
 #: src/control/Control.Menubar.js:469 src/control/Control.Menubar.js:512
 #: src/control/Control.Menubar.js:556
 msgid "Export as"
-msgstr ""
+msgstr "Esportatu honela:"
 
 #: src/control/Control.Menubar.js:639 src/control/Control.Menubar.js:658
 #: src/control/Control.Menubar.js:668
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "Txertatu formak"
+msgstr "Txertatu forma"
 
 #: src/control/Control.Menubar.js:738 src/control/Control.Toolbar.js:1957
 msgid "Reset to Default Language"
@@ -571,7 +566,7 @@ msgstr "Ziur orri hau ezabatu nahi duzula?"
 
 #: src/control/Control.Toolbar.js:850
 msgid "Default Style"
-msgstr ""
+msgstr "Estilo lehenetsia"
 
 #: src/control/Control.Toolbar.js:901
 msgid "Borders"
@@ -885,19 +880,19 @@ msgstr "%productName bertsio honen oinarria"
 
 #: src/control/Toolbar.js:451
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Txertatu hiperesteka"
 
 #: src/control/Toolbar.js:453
 msgid "Text"
-msgstr ""
+msgstr "Testua"
 
 #: src/control/Toolbar.js:454
 msgid "Link"
-msgstr ""
+msgstr "Esteka"
 
 #: src/control/Toolbar.js:457
 msgid "OK"
-msgstr ""
+msgstr "Ados"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -905,11 +900,11 @@ msgstr "IE11 nabigatzailea bere konexio kopuru maximora iritsi da. Begiratu hona
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Arazo bat dago LibreOffice Onlinera konektatzean:  "
+msgstr "Arazo bat dago LibreOffice Onlinera konektatzean: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Zerbitzaria:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -1037,7 +1032,7 @@ msgstr "Editorea uzten ari zara, ziur zaude %url bisitatu nahi duzula?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Huts egin du dokumentua kargatzeak. Dokumentuak forma okerra du edo onartzen den baino baliabide gehiago hartzen ari da. Jarri harremanetan administratzailearekin."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1079,11 +1074,11 @@ msgstr "Ezin izan da dokumentuaren izena aldatu. Egiaztatu zure baimenak edo kon
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Huts egin du fitxategia zerbitzarira kargatzeak, ez da fitxategia aurkitu."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Huts egin du fitxategia zerbitzarira kargatzeak, fitxategia handiegia da."
 
 #: src/layer/marker/Annotation.js:219
 msgid "Accept change"
@@ -1103,24 +1098,18 @@ msgstr "Erantzun"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Utzi bilaketa"
+msgstr "Erakutsi bilaketa-barra"
 
 #: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
 #: src/layer/tile/WriterTileLayer.js:157
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Utzi bilaketa"
+msgstr "Garbitu bilaketa-eremua"
 
 #: src/layer/tile/CalcTileLayer.js:239 src/layer/tile/ImpressTileLayer.js:224
 #: src/layer/tile/WriterTileLayer.js:159
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Utzi bilaketa"
+msgstr "Ezkutatu bilaketa-barra"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1147,9 +1136,8 @@ msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Erabili zure pantailako teklatuaren kopiatzeko/itsasteko botoiak.</p>"
 
 #: src/map/Clipboard.js:790
-#, fuzzy
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr "<p>Zure dokumentuaren elementu handiak partekatu nahi badituzu beste aplikazio batzuekin, lehenengo zure gailura deskargatu beharko dituzu. Hori egiteko, sakatu 'Hasi deskarga' botoia, eta osatuta dagoenean, sakatu 'Baieztatu arbelera kopiatzea'.</p><p>%productName barruko dokumentuen artean kopiatzen eta itsasten ari bazara, ez dago deskargatzeko beharrik.</p>"
+msgstr "<p>Zure dokumentuaren elementu handiagok partekatu nahi badituzu beste aplikazio batzuekin, lehenengo zure gailura deskargatu beharko dituzu. Hori egiteko, sakatu beheko 'Hasi deskarga' botoia, eta osatuta dagoenean, sakatu 'Berretsi arbelera kopiatzea'.</p><p>%productName barruko dokumentuen artean kopiatzen eta itsasten ari bazara, ez dago deskargatzeko beharrik.</p>"
 
 #: src/map/Clipboard.js:806
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
@@ -1180,12 +1168,12 @@ msgstr "Kargatzen..."
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 can not be uploaded to server since the file has no name"
-msgstr ""
+msgstr "%0 motako fitxategia ezin izan da zerbitzarira kargatu, ez baitu izenik"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 can not be uploaded to server since the file is empty"
-msgstr ""
+msgstr "%0 motako fitxategia ezin izan da zerbitzarira kargatu, hutsik baitago"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1193,7 +1181,7 @@ msgstr "Kargatzen..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Fitxategia zerbitzarira kargatzeak huts egin du honako egoerarekin: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
