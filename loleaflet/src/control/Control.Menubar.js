@@ -1498,6 +1498,19 @@ L.Control.Menubar = L.Control.extend({
 			children : []
 		};
 
+		// Checked state for insert header / footer
+		var insertHeaderString = '.uno:InsertPageHeader?PageStyle:string=';
+		var insertFooterString = '.uno:InsertPageFooter?PageStyle:string=';
+		if (item.uno && (item.uno.startsWith(insertHeaderString) || item.uno.startsWith(insertFooterString))) {
+			var style = decodeURIComponent(item.uno.slice(item.uno.search('=') + 1));
+			style = style.slice(0, style.length - 1);
+			var shortUno = item.uno.slice(0, item.uno.search('\\?'));
+			var state = this._map['stateChangeHandler'].getItemValue(shortUno);
+			if (state && state[style]) {
+				menuStructure['checked'] = true;
+			}
+		}
+
 		if (item.menu)
 		{
 			for (var i = 0; i < item.menu.length; i++) {
