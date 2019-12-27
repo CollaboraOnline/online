@@ -261,6 +261,7 @@ var unoCommandsArray = {
 	SetOptimalColumnWidth:{presentation:{menu:_('Optimal Column Width'),},spreadsheet:{menu:_('~Optimal Width...'),},text:{menu:_('Optimal Column Width'),},},
 	SetOptimalRowHeight:{presentation:{menu:_('Optimal Row Height'),},spreadsheet:{menu:_('~Optimal Height...'),},text:{menu:_('Optimal Row Height'),},},
 	Shadowed:{global:{menu:_('Shadow'),},},
+	ShapesMenu:{global:{menu:_('~Shape'),},},
 	SheetMenu:{spreadsheet:{menu:_('~Sheet'),},},
 	Show:{spreadsheet:{menu:_('~Show Sheet...'),},},
 	ShowColumn:{spreadsheet:{context:_('S~how Columns'),menu:_('~Show'),},},

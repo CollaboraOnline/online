@@ -96,7 +96,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertEndnote'},
 				{type: 'separator'},
 				{uno: '.uno:InsertPagebreak'},
-				{uno: '.uno:InsertColumnBreak'},
+				{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{uno: '.uno:InsertSymbol'},
@@ -613,7 +613,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 					{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
 					{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
-					{id: 'inserttable', type: 'action', name: _('Insert table')},
+					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
 					{type: 'separator'},
 					{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
 						{uno: '.uno:InsertPageNumberField'},
@@ -634,10 +634,10 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertEndnote'},
 					{type: 'separator'},
 					{uno: '.uno:InsertPagebreak'},
-					{uno: '.uno:InsertColumnBreak'},
+					{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
 					{type: 'separator'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-					{name: _('Insert Shape'), id: 'insertshape', type: 'action' },
+					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
 					{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 						{uno: '.uno:InsertNonBreakingSpace'},
 						{uno: '.uno:InsertHardHyphen'},
@@ -656,7 +656,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 					{type: 'separator'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-					{name: _('Insert Shape'), id: 'insertshape', type: 'action' },
+					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
 				]
 			},
 			presentation : {
@@ -664,9 +664,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 					{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 					{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
-					{id: 'inserttable', type: 'action', name: _('Insert table')},
+					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-					{name: _('Insert Shape'), id: 'insertshape', type: 'action' },
+					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
 				]
 			}
 		},
