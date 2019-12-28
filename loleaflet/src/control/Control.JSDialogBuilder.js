@@ -1446,6 +1446,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (data.executionType === 'action') {
 					builder.map.menubar._executeAction(undefined, data.id);
 				} else if (!builder.map._clip || !builder.map._clip.filterExecCopyPaste(data.command)) {
+					// Header / footer is already inserted.
+					if ((data.command.startsWith('.uno:InsertPageHeader') ||
+					     data.command.startsWith('.uno:InsertPageFooter')) &&
+					    data.checked && data.checked === true) {
+						return;
+					}
 					builder.map.sendUnoCommand(data.command)
 				}
 			});
