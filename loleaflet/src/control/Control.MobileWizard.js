@@ -76,12 +76,13 @@ L.Control.MobileWizard = L.Control.extend({
 		this.map.showSidebar = false;
 		this._isActive = false;
 		this._currentPath = [];
-		if (window.mobileWizard === true) {
-			var toolbar = w2ui['actionbar'];
-			if (toolbar && toolbar.get('mobile_wizard').checked)
-				toolbar.uncheck('mobile_wizard');
+		if (window.mobileWizard === true)
 			window.mobileWizard = false;
-		}
+
+		if (window.insertionMobileWizard === true)
+			window.insertionMobileWizard = false;
+
+		this._updateToolbarItemStateByClose();
 
 		if (!this.map.hasFocus()) {
 			this.map.focus();
@@ -90,6 +91,18 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_hideKeyboard: function() {
 		document.activeElement.blur();
+	},
+
+	_updateToolbarItemStateByClose: function() {
+		var toolbar = w2ui['actionbar'];
+		if (toolbar)
+		{
+			if (window.mobileWizard === false && toolbar.get('mobile_wizard').checked)
+				toolbar.uncheck('mobile_wizard');
+
+			if (window.insertionMobileWizard === false && toolbar.get('insertion_mobile_wizard').checked)
+				toolbar.uncheck('insertion_mobile_wizard');
+		}
 	},
 
 	getCurrentLevel: function() {
