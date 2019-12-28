@@ -306,7 +306,7 @@ msgid "Radial"
 msgstr "Erradiala"
 
 #: src/control/Control.JSDialogBuilder.js:159
-msgid "Elipsoid"
+msgid "Ellipsoid"
 msgstr "Elipsoidea"
 
 #: src/control/Control.JSDialogBuilder.js:163
@@ -1167,12 +1167,12 @@ msgstr "Kargatzen..."
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
-msgid "The file of type: %0 can not be uploaded to server since the file has no name"
+msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr "%0 motako fitxategia ezin izan da zerbitzarira kargatu, ez baitu izenik"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
-msgid "The file of type: %0 can not be uploaded to server since the file is empty"
+msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr "%0 motako fitxategia ezin izan da zerbitzarira kargatu, hutsik baitago"
 
 #: src/map/handler/Map.FileInserter.js:129

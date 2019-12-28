@@ -93,9 +93,9 @@ L.Map.FileInserter = L.Handler.extend({
 		var url = this.getWopiUrl(map);
 
 		if (!(file.filename && file.url) && (file.name === '' || file.size === 0)) {
-			var errMsg =  _('The file of type: %0 can not be uploaded to server since the file has no name');
+			var errMsg =  _('The file of type: %0 cannot be uploaded to server since the file has no name');
 			if (file.size === 0)
-				errMsg = _('The file of type: %0 can not be uploaded to server since the file is empty');
+				errMsg = _('The file of type: %0 cannot be uploaded to server since the file is empty');
 			errMsg.replace('%0', file.type);
 			map.fire('error', {msg: errMsg});
 			return;

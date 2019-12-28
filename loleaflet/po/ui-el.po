@@ -306,7 +306,7 @@ msgid "Radial"
 msgstr "Ακτινικό"
 
 #: src/control/Control.JSDialogBuilder.js:159
-msgid "Elipsoid"
+msgid "Ellipsoid"
 msgstr "Ελλειψοειδές"
 
 #: src/control/Control.JSDialogBuilder.js:163
@@ -1167,12 +1167,12 @@ msgstr "Φόρτωση..."
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
-msgid "The file of type: %0 can not be uploaded to server since the file has no name"
+msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr "Το αρχείο τύπου: %0 δεν μπορεί να αποσταλεί στον διακομιστή επειδή το αρχείο δεν έχει όνομα"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
-msgid "The file of type: %0 can not be uploaded to server since the file is empty"
+msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr "Το αρχείο τύπου: %0 δεν μπορεί να αποσταλεί στον διακομιστή, επειδή το αρχείο είναι κενό"
 
 #: src/map/handler/Map.FileInserter.js:129

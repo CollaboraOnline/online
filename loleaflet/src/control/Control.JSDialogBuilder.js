@@ -157,7 +157,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return _('Radial');
 
 		case 'ELLIPTICAL':
-			return _('Elipsoid');
+			return _('Ellipsoid');
 
 		// no, not a typo (square - quadratic, rect - square) - same as in the core
 		case 'SQUARE':
