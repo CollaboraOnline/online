@@ -607,7 +607,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     std::unique_lock<std::recursive_mutex> lock(Mutex);
 
-#ifdef ENABLE_DEBUG
+#if defined(ENABLE_DEBUG) && !MOBILEAPP
     if (std::getenv("PAUSEFORDEBUGGER"))
     {
         std::cerr << getDocURL() << " paused waiting for a debugger to attach: " << Poco::Process::id() << std::endl;
