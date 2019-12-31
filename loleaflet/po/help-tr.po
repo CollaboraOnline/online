@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-23 05:31+0000\n"
+"PO-Revision-Date: 2019-12-26 22:40+0000\n"
 "Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
 "Language-Team: Turkish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/tr/>\n"
 "Language: tr\n"
@@ -1071,11 +1071,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Geriye doğru arama"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr ""
+msgstr "İleriye doğru arama"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
@@ -1119,7 +1119,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "Belge kapatılırken eğer değişiklik yapılmışsa otomatik olarak kaydedilir."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"

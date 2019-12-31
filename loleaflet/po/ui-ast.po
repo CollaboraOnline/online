@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-23 05:31+0000\n"
+"PO-Revision-Date: 2019-12-31 09:37+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -458,7 +458,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:628 src/control/Control.Menubar.js:630
 msgid "All"
-msgstr ""
+msgstr "Too"
 
 #: src/control/Control.Menubar.js:142
 msgid "Text orientation"
@@ -487,20 +487,20 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:255 src/control/Control.Menubar.js:514
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "Presentación ODF (.odp)"
 
 #: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:515
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "Presentación de PowerPoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:516
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "Presentación de PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.js:329 src/control/Control.Menubar.js:544
 #: src/control/Control.Toolbar.js:1111
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Presentación a pantalla completa"
 
 #: src/control/Control.Menubar.js:354 src/control/Control.Menubar.js:558
 msgid "ODF spreadsheet (.ods)"
@@ -530,7 +530,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:1106
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "¿De xuru que quier desaniciar esta diapositiva?"
 
 #: src/control/Control.Menubar.js:1138 src/map/Clipboard.js:767
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
@@ -554,7 +554,7 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:64
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr ""
+msgstr "¿De xuru que quier desaniciar la fueya «%sheet%»?"
 
 #: src/control/Control.Tabs.js:77
 msgid "Enter new sheet name"
@@ -562,7 +562,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:225
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "¿De xuru que quier desaniciar esta páxina?"
 
 #: src/control/Control.Toolbar.js:850
 msgid "Default Style"
@@ -800,7 +800,7 @@ msgstr ""
 
 #: src/control/Signing.js:601
 msgid "Sign"
-msgstr ""
+msgstr "Roblar"
 
 #: src/control/Signing.js:603
 msgid "Status:"
@@ -1024,7 +1024,7 @@ msgstr ""
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
-msgstr ""
+msgstr "Nun val l'enllaz: «%url»"
 
 #: src/errormessages.js:25
 msgid "You are leaving the editor, are you sure you want to visit %url?"
@@ -1048,11 +1048,11 @@ msgstr ""
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Nun pue guardase'l documentu."
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Nun pue camudase'l nome del documentu."
 
 #: src/errormessages.js:38
 #, javascript-format

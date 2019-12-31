@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="sort_za">Z-A</string>
+    <string name="sort_az">A-Z</string>
+    <string name="sort_largest">Наибольшие первые</string>
+    <string name="sort_smallest">Наименьшие первые</string>
+    <string name="sort">Сортировать по</string>
+    <string name="filter">Фильтровать по</string>
+    <string name="default_document_name">без имени</string>
+    <string name="new_drawing">Новый рисунок</string>
+    <string name="new_spreadsheet">Новая таблица</string>
+    <string name="new_presentation">Новая презентация</string>
+    <string name="new_textdocument">Новый текстовый документ</string>
+    <string name="about_moreinfo">Больше информации</string>
+    <string name="about_notice">Показать уведомление</string>
+    <string name="about_license">Показать лицензию</string>
+    <string name="pref_show_debug_info_summary">Включить отображение отладочной информации в просмотре документа</string>
+    <string name="pref_show_debug_info">Показать отладочную информацию.</string>
+    <string name="pref_filter_summary">Установить, какой фильтр файлов должен быть по умолчанию.</string>
+    <string name="pref_filter_title">Фильтр файлов по умолчанию</string>
+    <string name="pref_viewmode_summary">Показать файлы сеткой или списком.</string>
+    <string name="pref_sort_summary">Выбрать, как сортировать файлы: A-Z, по размеру или по дате.</string>
+    <string name="pref_show_hidden_files_summary">Показать скрытые файлы/каталоги</string>
+    <string name="pref_show_hidden_files">Скрытые Файлы/Каталоги</string>
+    <string name="pref_category_explorer">Настройки управления файлами</string>
+    <string name="grid_view">Сетка</string>
+    <string name="list_view">Список</string>
+    <string name="failed_to_load_file">Не удалось определить файл для загрузки</string>
+    <string name="storage_permission_required">Требуется разрешение на хранение</string>
+    <string name="file_creation_failed">Ошибка создания файла</string>
+    <string name="file_exists_warning">Файл с таким именем уже существует и будет перезаписан.</string>
+    <string name="temp_file_saving_disabled">Этот файл только для чтения, сохранение отключено.</string>
+    <string name="no_items">Нет пунктов</string>
+    <string name="no_recent_items">Нет последних элементов</string>
+    <string name="app_vendor">Этот выпуск представлен $VENDOR.</string>
+    <string name="app_description">$APP_NAME это современный, легкий в использовании, с открытым исходным кодом, офисный продукт для работы с текстом, электронными таблицами, презентациями и иными документами.</string>
+    <string name="app_version">Версия: %1$s, ID сборки: %2$s</string>
+    <string name="app_name_settings">Настройки</string>
+</resources>

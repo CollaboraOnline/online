@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-24 18:45+0000\n"
+"PO-Revision-Date: 2019-12-31 09:37+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
 "Language: es\n"
@@ -343,7 +343,7 @@ msgstr "Patrón"
 
 #: src/control/Control.JSDialogBuilder.js:880
 msgid "From"
-msgstr "Desde"
+msgstr "De"
 
 #: src/control/Control.JSDialogBuilder.js:883
 msgid "To"

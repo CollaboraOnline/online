@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-24 18:45+0000\n"
+"PO-Revision-Date: 2019-12-31 09:37+0000\n"
 "Last-Translator: Dimitris Spingos <dmtrs32@gmail.com>\n"
 "Language-Team: Greek <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/el/>\n"
 "Language: el\n"
@@ -1051,771 +1051,761 @@ msgstr "<span class=\"def\">Περιοχή εγγράφου:</span> Η περι�
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
-msgstr ""
+msgstr "<span class=\"def\">Η γραμμή μενού:</span> Το κύριο μενού είναι τοποθετημένο στην κορυφή και περιλαμβάνει πολλές επιλογές, εντολές εκτύπωσης, επεξεργασίας, προβολής και άλλες προχωρημένες εντολές. Μπορείτε να αποκρύψετε τη γραμμή μενού πατώντας στο εικονίδιο <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> έξω δεξιά. Πατήστε το εικονίδιο <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> για προβολή του μενού."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
-msgstr ""
+msgstr "<span class=\"def\">Μενού περιβάλλοντος:</span> Πατώντας το δεξιό πλήκτρο ποντικιού, εμφανίζεται ένα μενού με εντολές σχετικές με το υποκείμενο αντικείμενο."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
-msgstr ""
+msgstr "<span class=\"def\">Η γραμμή εργαλείων:</span> Η γραμμή εργαλείων περιέχει τις πιο χρησιμοποιούμενες επιλογές για καθημερινή επεξεργασία. Τα πλήκτρα της γραμμής εργασίας είναι δυναμικά, που σημαίνει ότι η κατάστασή τους (ενεργή και ανενεργή) εξαρτάται από διάφορους παράγοντες."
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid "<span class=\"def\">The status bar:</span> The status bar is shown in the bottom, and contains several useful options and features."
-msgstr ""
+msgstr "<span class=\"def\">Η γραμμή κατάστασης:</span> Η γραμμή κατάστασης εμφανίζεται στο τέλος και περιέχει αρκετές χρήσιμες επιλογές και χαρακτηριστικά."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">The search bar:</span> Searching starts automatically when content is inserted in the search box, and the document window automatically moves to the first occurrence found. Searching is not case-sensitive. There are three buttons right next to the search box:"
-msgstr ""
+msgstr "<span class=\"def\">Η γραμμή αναζήτησης:</span> Η αναζήτηση ξεκινά αυτόματα όταν εισάγεται περιεχόμενο στη γραμμή αναζήτησης και το παράθυρο εγγράφου μετακινείται αυτόματα στην πρώτη αναφορά που βρίσκεται. Η αναζήτηση δεν διακρίνει πεζά-κεφαλαία. Υπάρχουν τρία πλήκτρα δεξιά δίπλα στο πλαίσιο αναζήτησης:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Αναζήτηση προς τα πίσω"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr ""
+msgstr "Αναζήτηση προς τα εμπρός"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Ακύρωση αναζήτησης (εμφανίζεται μόνο όταν έχει αναζητηθεί ένα κείμενο)"
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."
-msgstr ""
+msgstr "<span class=\"def\">Η γραμμή εστίασης:</span> Δεξιά της γραμμής κατάστασης, υπάρχει ένα σύνολο πλήκτρων που σας επιτρέπει να εστιάσετε μέχρι 1005, να σμικρύνετε και να μεγεθύνετε. Η εστίαση εφαρμόζεται στην περιοχή του εγγράφου, η διεπαφή χρήστη δεν επηρεάζεται. Το τρέχον επίπεδο εστίασης εμφανίζεται σε αυτήν την περιοχή."
 
 #: html/loleaflet-help.html%2Bdiv.p:270-5
 msgid "Text, charts, shapes and svg images will stay sharp, when zooming in, you will only see pixels appear at inserted images, such as jpg’s or png’s."
-msgstr ""
+msgstr "Κείμενο, διαγράμματα, σχήματα και εικόνες svg θα παραμείνουν ευκρινείς, κατά τη μεγέθυνση, θα δείτε να εμφανίζονται εικονοστοιχεία μόνο σε εισαγόμενες εικόνες, όπως jpg ή png."
 
 #: html/loleaflet-help.html%2Bdiv.p:271-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "Η χρήση της εστίασης του πλοηγητή επηρεάζει το έγγραφο και τις περιοχές διεπαφής χρήστη."
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
-msgstr ""
+msgstr "<span class=\"def\">Η γραμμή πληροφοριών:</span> Δεξιά της γραμμής αναζήτησης, εμφανίζεται ένα σύνολο πληροφοριών στο έγγραφο. Η ενεργή πληροφορία εξαρτάται από τη φύση του εγγράφου."
 
 #: html/loleaflet-help.html%2Bdiv.p:276-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
-msgstr ""
+msgstr "Τα έγγραφά σας αποθηκεύονται και διαχειρίζονται στην αποθήκη του σύννεφου που είναι ενσωματωμένο στο <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
-msgstr ""
+msgstr "Για λήψη εγγράφου μεταφορτώστε το από την εφαρμογή <span class=\"productname\">%productName</span> και το μενού <span class=\"ui\">Αρχείο</span>. Οι διαθέσιμες μορφές μεταφόρτωσης εξαρτώνται από την εφαρμογή. Όλες οι εφαρμογές εξάγουν έγγραφα σε μορφή PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."
-msgstr ""
+msgstr "Για ανοίξετε ένα έγγραφο, πατήστε στο αρχείο για να ανοίξετε το άρθρωμα του <span class=\"productname\">%productName</span> που σχετίζεται με τη μορφή του εγγράφου."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Documents in <span class=\"productname\">%productName</span> save automatically, but if you are concerned that a document is synchronized as quickly as possible you can also force saving using the <span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
-msgstr ""
+msgstr "Έγγραφα στο <span class=\"productname\">%productName</span> αποθηκεύονται αυτόματα, αλλά εάν ανησυχείτε εάν το έγγραφο συγχρονίζεται όσο το δυνατόν πιο γρήγορα, μπορείτε επίσης να εξαναγκάσετε την αποθήκευση χρησιμοποιώντας στο μενού <span class=\"ui\">Αρχείο</span> την καταχώριση <span class=\"ui\">Αποθήκευση</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
-msgstr ""
+msgstr "Ανάλογα με τις δυνατότητες του πλοηγητή σας  μπορεί να εμφανιστεί το παράθυρο εκτύπωσης ή το αναδυόμενο “Λήψη της εξαγωγής PDF;”. Μπορείτε να δείτε αυτό το PDF στον αγαπημένο σας αναγνώστη PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "Κατά το κλείσιμο εγγράφου, αποθηκεύεται αυτόματα εάν έχει αλλαχθεί."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
-msgstr ""
+msgstr "Η επεξεργασία εγγράφου πρέπει να είναι οικεία σε οποιονδήποτε έχει χρησιμοποιήσει προηγουμένως εφαρμογή γραφείου, αλλά εδώ υπάρχουν μερικά ιδιαίτερα χαρακτηριστικά:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Αντιγραφή και επικόλληση"
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
-msgstr ""
+msgstr "Υποστηρίζεται αντιγραφή/αποκοπή και επικόλληση πλούσιου περιεχομένου, όχι μόνο σε δεδομένο έγγραφο, αλλά επίσης μεταξύ εγγράφων στο ίδιο ή διαφορετικό <span class=\"productname\">%productName</span>. Για αυτές τις εσωτερικές χρήσεις, οι χρήστες μπορούν να αντιγράψουν/αποκόψουν περιεχόμενο, συμπεριλαμβανομένων εικόνων και μεικτού περιεχομένου,  σε υπολογιστή χρησιμοποιώντας απευθείας τις συντομεύσεις πληκτρολογίου (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). Για λόγους ασφαλείας είναι απαραίτητη η χρήση του <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> για επικόλληση σε υπολογιστή, αλλά τα μενού περιβάλλοντος μπορούν να χρησιμοποιηθούν για αποκοπή και αντιγραφή. Σε Android ή iOS απαιτείται η επιλογή κειμένου με διπλό πάτημα και η χρήση παρατεταμένου πατήματος για πρόσβαση στο αντιγραφή/αποκοπή/επικόλληση μέσω του μενού περιβάλλοντος."
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
-msgstr ""
+msgstr "Για να αντιγράψετε μεγαλύτερα κομμάτια περιεχομένου σε άλλες εφαρμογές στη συσκευή σας, οι χρήστες χρειάζεται να πατήσουν το πλήκτρο <span class=\"ui\">Έναρξη λήψης</span> και έπειτα να τα ξαναντιγράψουν στο πρόχειρό τους για να το καταστήσουν διαθέσιμο για ανάγνωση στην εφαρμογή προορισμού. Αυτό είναι δυνατό μέσω ενός μικροσκοπικού γραφικού στοιχείου που αναδύεται στην κάτω δεξιά γωνία και είναι απαραίτητο μόνο για την εξαγωγή του περιεχομένου προς επικόλληση σε εξωτερικές εφαρμογές. Αυτό το βήμα μετατρέπει επίσης σύνθετους τύπους αντικειμένων σε στατικές εικόνες."
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
-msgstr ""
+msgstr "Επιδιόρθωση εγγράφου"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Όταν πολλά άτομα επεξεργάζονται ταυτόχρονα το ίδιο έγγραφο, είναι δυνατό οι αλλαγές τους να συγκρούονται και αυτό μπορεί να προκαλέσει σύγχυση. Η λειτουργία επιδιόρθωσης εγγράφου επιτρέπει στους χρήστες να αναιρέσουν τις αλλαγές του επεξεργαστή στο έγγραφο σε προηγούμενη κατάσταση."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
-msgstr ""
+msgstr "Για να μεταβείτε στην επιλεγμένη κατάσταση, επιλέξτε την με το ποντίκι και πατήστε <span class=\"ui\">Μετάβαση στην κατάσταση</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
-msgstr ""
+msgstr "Αυτό είναι ιδιαίτερα χρήσιμο - ας πούμε, όταν ένας συνάδελφος επέλεξε κατά λάθος όλο το κείμενο στο έγγραφο με <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> και συνέχισε να πληκτρολογεί πάνω του καταστρέφοντάς το - ενώ το επεξεργαζόσασταν ταυτόχρονα."
 
 #: html/loleaflet-help.html%2Bdiv.h4:293-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Ανενεργό έγγραφο"
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
-msgstr ""
+msgstr "Όταν το <span class=\"productname\">%productName</span> εντοπίζει ότι δεν υπήρξε δραστηριότητα στον πλοηγητή για κάμποσο, βάζει το έγγραφο σε “ανενεργή” κατάσταση. Το έγγραφο εμφανίζεται με διαφανή γκρίζα επικάλυψη, με το μήνυμα “Ανενεργό έγγραφο - παρακαλούμε, πατήστε για να συνεχιστεί η επεξεργασία”."
 
 #: html/loleaflet-help.html%2Bdiv.p:296-5
 msgid "To continue editing, click on the document and the layover and message disappear. Any changes that may have been made by other users – while collaboratively editing the document – are re-loaded."
-msgstr ""
+msgstr "Για να συνεχίσετε την επεξεργασία, πατήστε στο έγγραφο και η ενδιάμεση στάση και το μήνυμα εξαφανίζονται. Οποιεσδήποτε αλλαγές μπορεί να έχουν γίνει από άλλους χρήστες - κατά τη συνεργατική επεξεργασία του εγγράφου - ξαναφορτώνονται."
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Pasting"
-msgstr ""
+msgstr "Επικόλληση"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
-msgstr ""
+msgstr "Όταν επικολλάτε αντιγραμμένο περιεχόμενο από το ίδιο έγγραφο, η μορφή και τα στοιχεία διατηρούνται. Εάν αντιγράφετε από ένα άλλο έγγραφο, σε μια άλλη καρτέλα ή παράθυρο πλοηγητή, ή έξω από τον πλοηγητή, το επικολλημένο περιεχόμενο θα διατηρήσει το εμπλουτισμένο κείμενο."
 
 #: html/loleaflet-help.html%2Bdiv.p:299-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr ""
+msgstr "Μπορείτε να επικολλήσετε ως αμορφοποίητο κείμενο με τη συντόμευση πληκτρολογίου: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:300-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
-msgstr ""
+msgstr "Όταν επικολλάτε κείμενο μέσα από το έγγραφο, η μορφοποίηση θα διατηρηθεί. Μπορείτε επίσης να επικολλήσετε αντικείμενα, όπως εικόνες, εάν αντιγράφτηκαν από το έγγραφο στο οποίο εργάζεσθε."
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text."
-msgstr ""
+msgstr "Όταν επικολλάτε κείμενο έξω από το έγγραφο (ένα άλλο παράθυρο πλοηγητή ή εφαρμογή επιφάνειας εργασίας), θα επικολληθεί ως εμπλουτισμένο κείμενο."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
-msgstr ""
+msgstr "Όταν έχετε εσωτερική αποκοπή ή αντιγραφή περιεχομένου, μπορείτε να επικολλήσετε αυτό το περιεχόμενο με το μενού του δεξιού πλήκτρου του ποντικιού."
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Προσθήκη διαγραμμάτων"
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> υποστηρίζει την εισαγωγή και οπτικοποίηση διαγραμμάτων σε έγγραφα. Για να προσθέσετε ένα διάγραμμα:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:308-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
-msgstr ""
+msgstr "Επιλέξτε έναν πίνακα σε έγγραφο κειμένου, περιοχή υπολογιστικού φύλλου ή σε πίνακα παρουσίασης."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
-msgstr ""
+msgstr "Επιλέξτε <span class=\"ui\">Εισαγωγή</span> → <span class=\"ui\">Διαγράμματα</span>. Προσαρμόστε το διάγραμμά σας στην πλευρική γραμμή:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
 msgid "If no table or range was selected, a prototype chart is displayed."
-msgstr ""
+msgstr "Εάν δεν επιλεγεί πίνακας ή περιοχή, εμφανίζεται χάρτης πρωτοτύπου."
 
 #: html/loleaflet-help.html%2Bdiv.p:316-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
-msgstr ""
+msgstr "<span class=\"def\">Επεξεργασία διαγράμματος:</span> Διπλοπατήστε το διάγραμμα για επιλογή. Χρησιμοποιήστε τα μενού περιβάλλοντος για να προσθέσετε στοιχεία διαγραμμάτων όπως τίτλο, άξονα και άλλα. Επιλέξτε <span class=\"ui\">Περιοχή δεδομένων</span> και <span class=\"ui\">Τύπος διαγράμματος</span> για να επεξεργαστείτε τα δεδομένα του διαγράμματος και να επιλέξετε τύπο διαγράμματος."
 
 #: html/loleaflet-help.html%2Bdiv.p:317-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
-msgstr ""
+msgstr "<span class=\"def\">Μορφοποίηση διαγράμματος:</span> Το ίδιο μενού περιβάλλοντος σας φέρνει τον πίνακα δεδομένων διαγράμματος και την επιλογή τύπου διαγράμματος."
 
 #: html/loleaflet-help.html%2Bdiv.p:318-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
-msgstr ""
+msgstr "<span class=\"def\">Μορφοποίηση σειράς δεδομένων:</span> Ανοίξτε το μενού περιβάλλοντος και επιλέξτε <span class=\"ui\">Μορφή σειράς δεδομένων</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr ""
+msgstr "Διαχείριση εικόνων"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> εισάγει εικόνες στο έγγραφο κειμένου από τον τοπικό σας υπολογιστή ή από την αποθήκη σύννεφου. Οι εισαγόμενες εικόνες ενσωματώνονται πάντα στο έγγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">Insert image</span> icon allows you to choose an image from the cloud storage's folders and shares."
-msgstr ""
+msgstr "<span class=\"def\">Εισαγωγή εικόνας:</span> Πατώντας το εικονίδιο <span class=\"ui\">Εισαγωγή εικόνας</span> σας επιτρέπει να επιλέξετε μια εικόνα από τους φακέλους αποθήκευσης και κοινοχρήστων του σύννεφου."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid "<span class=\"def\">Insert local image:</span> opens the browser file picker to upload the image from your local computer and insert it into the document."
-msgstr ""
+msgstr "<span class=\"def\">Εισαγωγή τοπικής εικόνας:</span> ανοίγει τον επιλογέα αρχείου πλοηγητή για αποστολή της εικόνας από τον τοπικό σου υπολογιστή και την εισάγει στο έγγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
 msgid "Images can be resized, rotated and anchored. Text can be wrapped around the image. Select the image and open the context menu. Use the images handles to resize the image with the mouse."
-msgstr ""
+msgstr "Οι εικόνες μπορεί να αυξομειωθούν, να περιστραφούν και να αγκιστρωθούν. Το κείμενο μπορεί να αναδιπλωθεί γύρω από την εικόνα. Επιλέξτε την εικόνα και ανοίξτε το μενού περιβάλλοντος. Χρησιμοποιήστε τις λαβές των εικόνων και αυξομειώστε την εικόνα με το ποντίκι."
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
-#, fuzzy
-#| msgid "Go to end of document"
 msgid "Comments in documents"
-msgstr "Μετάβαση στο τέλος του εγγράφου"
+msgstr "Σχόλια στα έγγραφα"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
-msgstr ""
+msgstr "Εισάγετε σχόλια στο <span class=\"productname\">%productName</span> σε θέσεις που χρειάζονται ιδιαίτερη προσοχή του αναγνώστη. Τα σχόλια εμφανίζονται στα δεξιά και φέρουν το όνομα και την ημερομηνία του συντάκτη."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:327-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."
-msgstr ""
+msgstr "Πατήστε στο εικονίδιο υπομενού (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) για να απαντήσετε, να μετακινήσετε και να διαγράψετε σχόλια."
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Ορθογραφικός έλεγχος"
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> μπορεί να ελέγξει ορθογραφικά έγγραφα κειμένου, υπολογιστικά φύλλα και παρουσιάσεις. Οι κόκκινες κυματιστές υπογραμμίσεις δείχνουν ανορθόγραφες λέξεις. Πατήστε το δεξιό πλήκτρο του ποντικιού για να ανοίξετε το μενού περιβάλλοντος με προτεινόμενες διορθώσεις της ανορθογραφίας."
 
 #: html/loleaflet-help.html%2Bdiv.p:331-5
 msgid "To systematically spell-check the whole document use the <span class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
-msgstr ""
+msgstr "Για συστηματικό ορθογραφικό έλεγχο όλου του εγγράφου χρησιμοποιήστε στο μενού <span class=\"ui\">Εργαλεία</span> την επιλογή <span class=\"ui\">Ορθογραφία</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:337-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr ""
+msgstr "Επεξεργαζόσαστε υπολογιστικά φύλλα διαδικτυακά με τον ίδιο τρόπο που επεξεργαζόσαστε υπολογιστικά φύλλα στον υπολογιστή. Οι λειτουργίες όπως εισαγωγή δεδομένων, επιλογή περιοχών, στήλες, γραμμές ή φύλλα είναι οι ίδιες. Χρησιμοποιήστε το πληκτρολόγιο, τα μενού ή τη γραμμή εργαλείων για ενέργειες εντολών στο υπολογιστικό φύλλο. Υποστηρίζεται επίσης η μεταφορά περιεχομένων κελιών για συμπλήρωση κελιών με δεδομένα. Οι εντολές αντιγραφής, αποκοπής και επικόλλησης είναι διαθέσιμες από το μενού περιβάλλοντος. Η παρακολούθηση των εισερχόμενων δεδομένων με τον <span class=\"kbd\">στηλοθέτη (Tab)</span> θα μετακινήσει τον δρομέα στο επόμενο κελί στα δεξιά και με <span class=\"kbd\">Enter</span> στο παρακάτω κελί για εύκολη παραπέρα καταχώριση δεδομένων."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "Οι τύποι εισάγονται στη γραμμή τύπων. Πατήστε '=' και εισάγετε τον τύπο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "Εφαρμόζονται όλες οι συναρτήσεις υπολογιστικών φύλλων και οι μαθηματικοί κανόνες."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
-msgstr ""
+msgstr "Η γλώσσα τύπων πρέπει να είναι πολύ οικεία σε οποιονδήποτε χρήστη υπολογιστικών φύλλων και καθορίζεται με μεγάλη λεπτομέρεια στο <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
-msgstr ""
+msgstr "<span class=\"def\">Άμεση μορφοποίηση:</span> Μπορείτε να μορφοποιήσετε κελιά υπολογιστικών φύλλων, στήλες, γραμμές και φύλλα μορφοποιώντας απευθείας από μενού, γραμμή εργαλείων ή μενού περιβάλλοντος. Η άμεση μορφοποίηση εφαρμόζεται μόνο στο τρέχον επιλεγμένο αντικείμενο. Για να μορφοποιήσετε κελί, είτε χρησιμοποιήστε το μενού, είτε πατήστε <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. Ο διάλογος σας επιτρέπει σύνθετη και προσαρμοσμένη μορφοποίηση αριθμών, καθώς και γραμματοσειράς, σύνθετου περιγράμματος, παρασκηνίου, προστασίας κελιού και άλλες επιλογές."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."
-msgstr ""
+msgstr "<span class=\"def\">Ταξινόμηση δεδομένων:</span> Μπορείτε να ταξινομήσετε κατάλογο αριθμών ή κείμενο σε αύξουσα ή φθίνουσα σειρά. Το <span class=\"productname\">%productName</span> εντοπίζει αυτόματα κελιά που είναι κεφαλίδες και γειτονικές στήλες, για να επεκτείνει την επιλογή."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:351-5
 msgid "<span class=\"def\">Filtering data:</span> Filters and advanced filters allow you to work on certain filtered rows (records) of a data range. In the spreadsheets in <span class=\"productname\">%productName</span> there are various possibilities for applying filters."
-msgstr ""
+msgstr "<span class=\"def\">Φιλτράρισμα δεδομένων:</span> Φίλτρα και προηγμένα φίλτρα σας επιτρέπουν να εργαστείτε σε συγκεκριμένες φιλτραρισμένες γραμμές (καταχωρίσεις) περιοχής δεδομένων. Στα υπολογιστικά φύλλα στο <span class=\"productname\">%productName</span> υπάρχουν ποικίλες δυνατότητες εφαρμογής φίλτρων."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:354-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
-msgstr ""
+msgstr "Μια χρήση της λειτουργίας <span class=\"ui\">Αυτόματο φίλτρο</span> είναι ο γρήγορος περιορισμός της οθόνης σε εγγραφές με ταυτόσημες καταχωρίσεις σε πεδίο δεδομένων."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:357-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
-msgstr ""
+msgstr "Στον διάλογο <span class=\"ui\">Τυπικά φίλτρα</span>, μπορείτε επίσης να ορίσετε περιοχές που περιέχουν τις τιμές σε συγκεκριμένα πεδία δεδομένων. Μπορείτε να χρησιμοποιήσετε το τυπικό φίλτρο για να συνδέσετε τις συνθήκες είτε με λογικό τελεστή AND, είτε με λογικό  OR."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:358-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
-msgstr ""
+msgstr "Το <span class=\"ui\">Προχωρημένο φίλτρο</span> σας επιτρέπει μέχρι συνολικά οκτώ συνθήκες φίλτρων. Με προχωρημένα φίλτρα εισάγετε τις συνθήκες απευθείας στο φύλλο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:360-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
-msgstr ""
+msgstr "<span class=\"def\">Διάρθρωση:</span> Μπορείτε να δημιουργήσετε διάρθρωση των δεδομένων σας και να ομαδοποιήσετε γραμμές και στήλες μαζί, έτσι ώστε να μπορείτε να συμπτύσσετε  και να επεκτείνετε τις ομάδες με ένα μοναδικό πάτημα διευκολύνοντας την αναπαράσταση ιεραρχικών δεδομένων."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:362-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"
-msgstr ""
+msgstr "<span class=\"def\">Επικύρωση δεδομένων:</span> Για κάθε κελί, μπορείτε να ορίσετε καταχωρίσεις που θα είναι έγκυρες. Άκυρες καταχωρίσεις στο κελί θα απορρίπτονται. Για να ενεργοποιήσετε την επικύρωση δεδομένων:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:365-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
-msgstr ""
+msgstr "Επιλέξτε <span class=\"ui\">Εγκυρότητα</span> από το μενού <span class=\"ui\">Δεδομένα</span>. Ο διάλογος <span class=\"ui\">Εγκυρότητα</span> ανοίγει."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."
-msgstr ""
+msgstr "Επιλέξτε το κριτήριο εγκυρότητας στον πτυσσόμενο κατάλογο <span class=\"ui\">Να επιτρέπεται</span>. Ανάλογα με το κριτήριο, εμφανίζονται περισσότερες επιλογές. Συμπληρώστε τα ζητούμενα δεδομένα."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:370-9
 msgid "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\">OK</span> to close the dialog."
-msgstr ""
+msgstr "Χρησιμοποιήστε τις καρτέλες <span class=\"ui\">Βοήθεια εισόδου</span> και <span class=\"ui\">Ειδοποίηση σφάλματος</span> για να βελτιώσετε τις αλληλεπιδράσεις χρήστη. Πατήστε <span class=\"ui\">Εντάξει</span> για να κλείσετε τον διάλογο."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:373-11
 msgid "To remove the validity of the cell, open the dialog and set the <span class=\"ui\">Allow</span> list to “All values”."
-msgstr ""
+msgstr "Για να αφαιρέσετε την εγκυρότητα του κελιού, ανοίξτε τον διάλογο και ορίστε τον κατάλογο <span class=\"ui\">Να επιτρέπεται</span> σε “Όλες οι τιμές”."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
-msgstr ""
+msgstr "<span class=\"def\">Σχόλια:</span> Στα υπολογιστικά φύλλα μπορείτε να εισάγετε ένα σχόλιο ανά κελί. Όταν επιλέγετε <span class=\"ui\">Εισαγωγή σχολίου</span>, εμφανίζεται μια ανάδυση που σας επιτρέπει να γράψετε το περιεχόμενο του σχολίου. Μια κόκκινη κουκκίδα εμφανίζεται στην πάνω δεξιά γωνία του κελιού, όταν υπάρχει σχόλιο. Με υπέρπτηση του ποντικού πάνω από το κελί εμφανίζονται τα σχόλια."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:377-5
 msgid "<span class=\"def\">Conditional formatting:</span> <span class=\"productname\">%productName</span> adds symbols to each cell of a range based on cells conditions. Select the cell range and click the <span class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the symbol set to apply on the range."
-msgstr ""
+msgstr "<span class=\"def\">Μορφοποίηση υπό όρους:</span> Το <span class=\"productname\">%productName</span> προσθέτει σύμβολα σε κάθε κελί περιοχής με βάση τις συνθήκες των κελιών. Επιλέξτε την περιοχή κελιών και πατήστε το εικονίδιο <span class=\"ui\">Μορφοποίηση υπό όρους</span> στη γραμμή εργαλείων. Επιλέξτε το ορισμένο σύμβολο για εφαρμογή στην περιοχή."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:385-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> επεξεργάζεται έγγραφα κειμένου με τον ίδιο τρόπο που επεξεργάζεστε έγγραφο του υπολογιστή. Παρέχει διάταξη αυτό που βλέπετε, αυτό παίρνετε (WYSIWYG) - που συμβατικά παραθέτει το έγγραφο όπως θα τυπωθεί. Λειτουργίες όπως πληκτρολόγηση κειμένου, αποκοπή, αντιγραφή και επικόλληση περιεχομένων, επιλογή κειμένου, εισαγωγή, αυξομείωση, αγκίστρωση εικόνων, προσθήκη και διαχείριση πινάκων και διαγραμμάτων, είναι παρόμοιες με επεξεργαστή κειμένου στον υπολογιστή. Χρησιμοποιήστε το πληκτρολόγιο, μενού και γραμμές εργαλείων για να αλληλεπιδράσετε με το έγγραφό σας."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:388-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
-msgstr ""
+msgstr "Τα μενού περιβάλλοντος είναι διαθέσιμα πατώντας το δεξιό πλήκτρο του ποντικιού. Οι διαθέσιμες εντολές στο μενού περιβάλλοντος σχετίζονται - όχι εκτεταμένα - με το υποκείμενο αντικείμενο στο έγγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
-#, fuzzy
-#| msgid "Text formatting"
 msgid "Formatting text"
 msgstr "Μορφοποίηση κειμένου"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid "<span class=\"productname\">%productName</span> supports modern techniques for paragraph formatting through styles. A style is a set of text properties (font, color, background and many more) labeled with a name, the style name. Use style to apply the same set of properties to many paragraphs in the document and produce a uniform, professional look. Also, if you change one of the style formatting properties, all paragraphs with the same style changes formatting as well, simplifying the effort of formatting many paragraph individually."
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> υποστηρίζει σύγχρονες τεχνικές μορφοποίησης παραγράφου μέσω τεχνοτροπιών. Τεχνοτροπία είναι ένα σύνολο ιδιοτήτων κειμένου (γραμματοσειρά, χρώμα, παρασκήνιο και πολλά άλλα) με ένα όνομα, το όνομα της τεχνοτροπίας. Χρησιμοποιήστε μια τεχνοτροπία για να εφαρμόσετε το ίδιο σύνολο ιδιοτήτων σε πολλές παραγράφους του εγγράφου για να παράξετε ομοιόμορφη, επαγγελματική εμφάνιση. Επίσης, εάν αλλάξετε μια ιδιότητα μορφοποίησης της τεχνοτροπίας, όλες οι παράγραφοι με την ίδια τεχνοτροπία αλλάζουν και αυτές, απλοποιώντας την προσπάθεια μορφοποίησης πολλών παραγράφων μεμονωμένα."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:392-5
 msgid "In contrast, direct formatting applies formatting to selected excerpts of the document contents. On a long document, direct formatting must be applied in every text excerpt, turning text formatting a long task, subject to errors and delays."
-msgstr ""
+msgstr "Αντίθετα, η άμεση μορφοποίηση εφαρμόζει μορφοποίηση σε επιλεγμένα αποσπάσματα των περιεχομένων του εγγράφου. Σε μεγάλα έγγραφα, η άμεση μορφοποίηση πρέπει να εφαρμόζεται σε κάθε απόσπασμα κειμένου, μετατρέποντας τη μορφοποίηση κειμένου σε επίπονη εργασία, υποκείμενη σε σφάλματα και καθυστερήσεις."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:393-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format text document objects by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected."
-msgstr ""
+msgstr "<span class=\"def\">Άμεση μορφοποίηση:</span> Μπορείτε να μορφοποιήσετε αντικείμενα κειμενικού εγγράφου μορφοποιώντας απευθείας από τα μενού, τη γραμμή εργαλείων ή τα μενού περιβάλλοντος. Η άμεση μορφοποίηση εφαρμόζεται μόνο στο τρέχον επιλεγμένο αντικείμενο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:394-5
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
-msgstr ""
+msgstr "<span class=\"def\">Μορφοποίηση τεχνοτροπίας:</span> Το <span class=\"productname\">%productName</span> υποστηρίζει τεχνοτροπίες παραγράφου. Μπορείτε τεχνοτροπία υφιστάμενης παραγράφου σε παράγραφο. Επιλέξτε το μενού <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Επεξεργασία τεχνοτροπιών</span> για να αλλάξετε τεχνοτροπία."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:398-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Διαχείριση πινάκων"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:399-5
 msgid "Insert tables with proper icon in the toolbar. Select the initial number of rows and columns. Add rows and columns with the cell context menu. Merge cells with the <span class=\"ui\">Table</span> menu. The default paragraph style inside cells is “Table contents”."
-msgstr ""
+msgstr "Εισάγετε πίνακες με το κατάλληλο εικονίδιο στη γραμμή εργαλείων. Επιλέξτε τον αρχικό αριθμό γραμμών και στηλών. Προσθέστε γραμμές και στήλες με το μενού περιβάλλοντος κελιού. Συγχωνεύστε κελιά με το μενού <span class=\"ui\">Πίνακας</span>. Η προεπιλεγμένη τεχνοτροπία παραγράφου στα κελιά είναι “Περιεχόμενα πίνακα”."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:401-5
 msgid "<span class=\"def\">Formatting cells:</span> Click in the cell or range of cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\">Properties</span>. Fine tune the table with the properties dialog."
-msgstr ""
+msgstr "<span class=\"def\">Μορφοποίηση κελιών:</span> Πατήστε στο κελί ή περιοχή κελιών και επιλέξτε το μενού <span class=\"ui\">Πίνακας</span> → <span class=\"ui\">Ιδιότητες</span>. Ρυθμίστε με ακρίβεια τον πίνακα με τον διάλογο ιδιοτήτων."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Track changes"
-msgstr ""
+msgstr "Παρακολούθηση αλλαγών"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid "When you turn on Track Changes, <span class=\"productname\">%productName</span> marks up new changes made to the document. Select this option again to turn it off."
-msgstr ""
+msgstr "Όταν ενεργοποιείτε την παρακολούθηση αλλαγών, το <span class=\"productname\">%productName</span> επισημαίνονται οι νέες αλλαγές που γίνονται στο έγγραφο. Ξαναεπιλέξτε αυτήν την επιλογή για να την απενεργοποιήσετε."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:405-5
 msgid "Changes made by different people are shown in different colors and each tracked change can be accepted or rejected, using the box the appears on the right. You can also add a comment there."
-msgstr ""
+msgstr "Οι αλλαγές που γίνονται από διάφορα άτομα εμφανίζονται με διαφορετικά χρώματα και κάθε παρακολουθούμενη αλλαγή μπορεί να γίνει αποδεκτή ή να απορριφθεί, χρησιμοποιώντας το πλαίσιο που εμφανίζεται στα δεξιά. Μπορεί επίσης να προσθέσετε σχόλιο εκεί."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Άλλα προχωρημένα χαρακτηριστικά"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid "<span class=\"def\">Comments:</span> Comments are inserted in the text and displayed on the right side of the screen."
-msgstr ""
+msgstr "<span class=\"def\">Σχόλια:</span> Τα σχόλια εισάγονται στο κείμενο και εμφανίζονται στα δεξιά της οθόνης."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:408-5
 msgid "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable spaces are shown as marks to assisting text alignment, editing and formatting."
-msgstr ""
+msgstr "<span class=\"def\">Σημάδια μορφοποίησης:</span> Η παράγραφος, η σελίδα και αχώριστα διαστήματα εμφανίζονται ως σημάδια για βοήθεια στη στοίχιση κειμένου, την επεξεργασία και τη μορφοποίηση."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:409-5
 msgid "<span class=\"def\">Fields:</span> A basic set of fields is available to insert in the document."
-msgstr ""
+msgstr "<span class=\"def\">Πεδία:</span> Ένα βασικό σύνολο πεδίων είναι διαθέσιμο για εισαγωγή στο έγγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:410-5
 msgid "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index can be updated with new entries."
-msgstr ""
+msgstr "<span class=\"def\">Αλφαβητικό ευρετήριο:</span> Υφιστάμενο αλφαβητικό ευρετήριο μπορεί να ενημερωθεί με νέες καταχωρίσεις."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid "<span class=\"def\">Page header and footer:</span> Headers and footers are available for the existing page style applied in the document at the cursor position."
-msgstr ""
+msgstr "<span class=\"def\">Κεφαλίδα και υποσέλιδο σελίδας:</span> Οι κεφαλίδες και τα υποσέλιδα είναι διαθέσιμα για την υφιστάμενη τεχνοτροπία σελίδας που εφαρμόζεται στο έγγραφο στη θέση του δρομέα."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:412-5
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported, being rendered as they are shown."
-msgstr ""
+msgstr "<span class=\"def\">Υποσημειώσεις και σημειώσεις τέλους:</span> Υποστηρίζονται οι υποσημειώσεις και οι σημειώσεις τέλους που αποδίδονται όπως εμφανίζονται."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:419-5
 msgid "<span class=\"productname\">%productName</span> Impress edits presentations in a way that should be familiar to people. Operations like typing text, cut, copy and pasting contents, selecting text , inserting, resizing, anchoring images, adding and handling tables, are similar to a desktop presentation application. Use the keyboard, menus and toolbars to perform actions in your document."
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> Impress επεξεργάζεται παρουσιάσεις κατά τρόπο που είναι οικείος. Οι λειτουργίες όπως πληκτρολόγηση κειμένου, αποκοπή, αντιγραφή και επικόλληση περιεχομένων, επιλογή κειμένου, εισαγωγή, αυξομείωση, αγκίστρωση εικόνων, προσθήκη και διαχείριση πινάκων, είναι παρόμοιες με μια εφαρμογή παρουσίασης υπολογιστή. Χρησιμοποιήστε το πληκτρολόγιο, τα μενού και τις γραμμές εργαλείων για να επενεργήσετε στο έγγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
 msgid "<span class=\"productname\">%productName</span> displays presentation slide shows, including a subset of slide transitions and object animations. Choose the slide show from the menu or click on icon in the bottom left toolbar in the slide pane."
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> εμφανίζει προβολή παρουσίασης, συμπεριλαμβανομένου υποσυνόλου εναλλαγής διαφανειών και κίνησης αντικειμένων. Επιλέξτε τη προβολή παρουσίασης από το μενού ή πατήστε το εικονίδιο στην κάτω αριστερή γραμμή εργαλείων στο παράθυρο διαφανειών."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:423-5
 msgid "To exit a <span class=\"productname\">%productName</span> slide show, press the <span class=\"kbd\">Esc</span> key to return to the presentation edit mode."
-msgstr ""
+msgstr "Για να βγείτε από προβολή παρουσίασης του <span class=\"productname\">%productName</span>, πατήστε το πλήκτρο <span class=\"kbd\">Esc</span> για να επιστρέψετε στην κατάσταση επεξεργασίας παρουσίασης."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:426-5
 msgid "Click on any slide thumbnail in the pane to switch to this slide to view or edit it."
-msgstr ""
+msgstr "Πατήστε σε οποιαδήποτε μικρογραφία διαφάνειας στο παράθυρο για να μεταβείτε σε αυτήν τη διαφάνεια για προβολή ή επεξεργασία της."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:427-5
 msgid "Use the slide pane toolbar in the bottom to start the slideshow, add slide, duplicate or delete the current slide."
-msgstr ""
+msgstr "Χρησιμοποιήστε τη γραμμή εργαλείων στο παράθυρο διαφανειών στο τέλος για να ξεκινήσετε την προβολή παρουσίασης, προσθέστε διαφάνεια, διπλασιάστε ή διαγράψτε την τρέχουσα διαφάνεια."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:430-5
 msgid "<span class=\"def\">Slide layouts:</span> <span class=\"productname\">%productName</span> Impress let you change the slide layout. Select the desired slide layout in the drop-down layout list."
-msgstr ""
+msgstr "<span class=\"def\">Διατάξεις διαφανειών:</span> Το <span class=\"productname\">%productName</span> Impress σας επιτρέπει να αλλάξετε τη διάταξη διαφανειών. Επιλέξτε την επιθυμητή διάταξη διαφανειών από τον πτυσσόμενο κατάλογο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:432-5
 msgid "<span class=\"def\">Master slide:</span> Select the master slide associated to the current slide. Format and arrange slide elements in the master slide."
-msgstr ""
+msgstr "<span class=\"def\">Κύρια διαφάνεια:</span> Επιλέξτε την κύρια διαφάνεια που σχετίζεται με την τρέχουσα διαφάνεια. Μορφοποιήστε και διατάξτε τα στοιχεία της διαφάνειας στην κύρια διαφάνεια."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:433-5
 msgid "<span class=\"def\">Slide transitions:</span> <span class=\"productname\">%productName</span> Impress provides visual effects when displaying a new slide in the slide show. Slide transitions are property of the slide, use the side bar to set the slide transition when in edit mode."
-msgstr ""
+msgstr "<span class=\"def\">Μεταβάσεις διαφανειών:</span> Το <span class=\"productname\">%productName</span> Impress παρέχει οπτικά εφέ όταν εμφανίζει μια νέα διαφάνεια στη προβολή παρουσιάσεων. Οι μεταβάσεις διαφανειών είναι ιδιότητα της διαφάνειας, χρησιμοποιήστε την πλευρική γραμμή για να ορίσετε τη μετάβαση διαφάνειας όταν είναι στην κατάσταση επεξεργασίας."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:434-5
 msgid "<span class=\"def\">Object animation:</span> Individual object in the slide can have animation. Use the side bar to configure the slide transition for a selected object or set of objects."
-msgstr ""
+msgstr "<span class=\"def\">Κίνηση αντικειμένου:</span> Μεμονωμένο αντικείμενο στη διαφάνεια μπορεί να έχει κίνηση. Χρησιμοποιήστε τη γραμμή διαφανειών για να διαμορφώσετε τη μετάβαση διαφάνειας του επιλεγμένου αντικειμένου ή συνόλου αντικειμένων."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:435-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
-msgstr ""
+msgstr "<span class=\"def\">Πίνακες:</span> Εισάγετε πίνακες στην παρουσίαση. Χρησιμοποιήστε τη πλευρική γραμμή για να επιλέξετε το θέμα του πίνακα."
 
 #: html/loleaflet-help.html%2Bdiv.h4:439-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
-msgstr ""
+msgstr "Ποιες μορφές αρχείων κειμένου υποστηρίζονται από το <span class=\"productname\">%productName</span>;"
 
 #: html/loleaflet-help.html%2Bdiv.p:440-5
 msgid "<span class=\"productname\">%productName</span> supports both reading and writing for the following file formats:"
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> υποστηρίζει και ανάγνωση και εγγραφή για τις παρακάτω μορφές αρχείων:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:442-11
 msgid "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr ""
+msgstr "Έγγραφα κειμένου: Μορφές Microsoft DOC, DOCX, RTF. OpenDocument Format ODT"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:443-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "Υπολογιστικά φύλλα: Μορφές Microsoft XLS, XLSX, OpenDocument Format ODS"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:444-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Παρουσιάσεις: Μορφές Microsoft PPT, PPTX, OpenDocument Format ODP"
 
 #: html/loleaflet-help.html%2Bdiv.p:446-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
-msgstr ""
+msgstr "Επιπλέον μπορεί να παράσχει προβολή για μορφές Visio, Keynote, αριθμούς και σελίδες."
 
 #: html/loleaflet-help.html%2Bdiv.h4:447-5
 msgid "How do I save a document with another name?"
-msgstr ""
+msgstr "Πώς αποθηκεύω έγγραφο με άλλο όνομα;"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:449-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr ""
+msgstr "Υπέρπτηση του ποντικιού στο όνομα του εγγράφου στη γραμμή μενού."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:450-11
 msgid "Type the new file name in the text box and press <span class=\"kbd\">Enter</span>."
-msgstr ""
+msgstr "Πληκτρολογήστε το νέο όνομα του αρχείου στο πλαίσιο κειμένου και πατήστε <span class=\"kbd\">Enter</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:452-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "Ένα αντίγραφο του εγγράφου αποθηκεύεται με το νέο όνομα στον ίδιο φάκελο."
 
 #: html/loleaflet-help.html%2Bdiv.h4:453-5
 msgid "How can I quit <span class=\"productname\">%productName</span> without saving my edits?"
-msgstr ""
+msgstr "Πώς μπορώ να βγω από το <span class=\"productname\">%productName</span> χωρίς να αποθηκεύσω τις επεξεργασίες μου;"
 
 #: html/loleaflet-help.html%2Bdiv.p:454-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."
-msgstr ""
+msgstr "Το <span class=\"productname\">%productName</span> αποθηκεύει το έγγραφο στο παρασκήνιο τακτικά, δεν μπορείτε να το κλείσετε χωρίς να το αποθηκεύσετε. Για να εγκαταλείψετε τις αλλαγές σας, πρέπει είτε να τις αναιρέσετε, είτε να χρησιμοποιήσετε το <span class=\"ui\">Ιστορικό αναθεωρήσεων</span> στο μενού <span class=\"ui\">Αρχείο</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:455-5
 msgid "Can <span class=\"productname\">%productName</span> open a password-protected document?"
-msgstr ""
+msgstr "Μπορεί το <span class=\"productname\">%productName</span> να ανοίξει έγγραφο προστατευόμενο με κωδικό πρόσβασης;"
 
 #: html/loleaflet-help.html%2Bdiv.p:456-5
 msgid "Yes. <span class=\"productname\">%productName</span> opens password-protected documents, but it is necessary to supply the password in the “Enter password” prompt at load time."
-msgstr ""
+msgstr "Ναι. Το <span class=\"productname\">%productName</span> ανοίγει έγγραφα προστατευόμενα με κωδικό πρόσβασης, αλλά είναι απαραίτητος ο κωδικός πρόσβασης στην προτροπή “Εισάγετε κωδικό πρόσβασης” κατά τον χρόνο φόρτωσης."
 
 #: html/loleaflet-help.html%2Bdiv.h4:457-5
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "Πώς μπορώ να ελέγξω την ορθογραφία στη γλώσσα μου;"
 
 #: html/loleaflet-help.html%2Bdiv.p:458-5
 msgid "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</span> and select the language for the whole document. Optionally you can set languages for the selected text and for the current paragraph."
-msgstr ""
+msgstr "Επιλέξτε το μενού <span class=\"ui\">Εργαλεία</span> → <span class=\"ui\">Γλώσσες</span> και επιλέξτε τη γλώσσα για όλο το έγγραφο. Προαιρετικά, μπορείτε να ορίσετε γλώσσες για το επιλεγμένο κείμενο και για την τρέχουσα παράγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.h4:459-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Πώς αφαιρώ τις κόκκινες κυματιστές γραμμές στο έγγραφό μου;"
 
 #: html/loleaflet-help.html%2Bdiv.p:460-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
-msgstr ""
+msgstr "Επιλέξτε το μενού <span class=\"ui\">Εργαλεία</span> και αποεπιλέξτε το <span class=\"ui\">Αυτόματος ορθογραφικός έλεγχος</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:461-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "Τι είναι η γαλάζια κυματιστή υπογράμμιση σε κάποιες λέξεις στο κείμενο;"
 
 #: html/loleaflet-help.html%2Bdiv.p:462-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
-msgstr ""
+msgstr "Τα γραμματικά σφάλματα στο κείμενο σημειώνονται με γαλάζια κυματιστή υπογράμμιση. Πατήστε στο υπογραμμισμένο κείμενο με το δεξιό πλήκτρο του ποντικιού για να ανοίξετε μενού με προτάσεις διόρθωσης του γραμματικού σφάλματος και της παραβίασης γραμματικών κανόνων. Επιλέξτε τη σωστή πρόταση αλλαγής του κειμένου."
 
 #: html/loleaflet-help.html%2Bdiv.h4:463-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Υπάρχει θησαυρός;"
 
 #: html/loleaflet-help.html%2Bdiv.p:464-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
-msgstr ""
+msgstr "Ναι. Πατήστε τη λέξη που θέλετε και επιλέξτε <span class=\"ui\">Εργαλεία</span> → <span class=\"ui\">Θησαυρός</span>. Ανοίγει ένας διάλογος με πολλές προτάσεις αντικαταστάσεων."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"
-msgstr ""
+msgstr "Τι είναι το γαλάζιο σύμβολο <span class=\"blue\">¶</span> και πώς μπορώ να το αφαιρέσω από το έγγραφο κειμένου μου;"
 
 #: html/loleaflet-help.html%2Bdiv.p:467-5
 msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to help text alignment and editing and is not printed. To toggle it in the document display, choose menu <span class=\"ui\">View</span> → <span class=\"ui\">Formatting mark</span>."
-msgstr ""
+msgstr "Το σύμβολο <span class=\"blue\">¶</span> είναι σημάδι μορφοποίησης. Χρησιμοποιείται για να βοηθήσει τη στοίχιση κειμένου και την επεξεργασία και δεν εκτυπώνεται. Για να το εναλλάξετε στην προβολή εγγράφου, επιλέξτε το μενού <span class=\"ui\">Προβολή</span> → <span class=\"ui\">Σημάδι μορφοποίησης</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I get a word count of my document?"
-msgstr "Μετάβαση στην αρχή του εγγράφου"
+msgstr "Πώς παίρνω το πλήθος των λέξεων του εγγράφου μου;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
-msgstr ""
+msgstr "Το πλήθος των λέξεων διατίθεται στο <span class=\"ui\">Εργαλεία</span> → <span class=\"ui\">Πλήθος λέξεων</span>. Ένας διάλογος εμφανίζει το πλήθος λέξεων της επιλογής και όλου του εγγράφου."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:474-5
 msgid "Word count is also displayed in the status bar. If no text is selected the word count is for the whole document. Otherwise the word count is for the selected text."
-msgstr ""
+msgstr "Το πλήθος των λέξεων εμφανίζεται επίσης στη γραμμή κατάστασης. Εάν δεν υπάρχει επιλεγμένο κείμενο, το πλήθος των λέξεων είναι για ολόκληρο το κείμενο. Αλλιώς το πλήθος των λέξεων είναι για το επιλεγμένο κείμενο."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:475-5
 msgid "How can I insert a currency, copyright or trademark symbol in the document?"
-msgstr ""
+msgstr "Πώς μπορώ να εισάγω τα σύμβολα νομίσματος, πνευματικών δικαιωμάτων ή σήματος κατατεθέντος στο έγγραφο;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:476-5
 msgid "You can insert these special characters in the document using the <span class=\"ui\">Special Character</span> dialog."
-msgstr ""
+msgstr "Μπορείτε να εισάγετε αυτούς τους ειδικούς χαρακτήρες στο έγγραφο χρησιμοποιώντας τον διάλογο <span class=\"ui\">Ειδικοί χαρακτήρες</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:478-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Τοποθετήστε τον δρομέα στη θέση για εισαγωγή του χαρακτήρα."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:480-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."
-msgstr ""
+msgstr "Επιλέξτε <span class=\"ui\">Εισαγωγή</span> → <span class=\"ui\">Ειδικοί χαρακτήρες</span> ή πατήστε το αντίστοιχο εικονίδιο στη γραμμή εργαλείων. Εμφανίζεται ένας διάλογος."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-11
 msgid "You can either browse the characters displayed with the drop lists or type a search key in the <span class=\"ui\">Search</span> box. If you know the Unicode numeric code of the special character, enter in the boxes on the right."
-msgstr ""
+msgstr "Μπορείτε είτε να πλοηγηθείτε στους εμφανιζόμενους χαρακτήρες με τους πτυσσόμενους καταλόγους ή να πληκτρολογήσετε κλειδί εύρεσης στο πλαίσιο <span class=\"ui\">Αναζήτηση</span>. Εάν γνωρίζετε τον αριθμητικό κωδικό Unicode του ειδικού χαρακτήρα, εισάγετε τον στα πλαίσια στα δεξιά."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:484-11
 msgid "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <span class=\"ui\">Cancel</span>."
-msgstr ""
+msgstr "Πατήστε το πλήκτρο <span class=\"ui\">Εισαγωγή</span>. Για να κλείσετε τον διάλογο, πατήστε <span class=\"ui\">Ακύρωση</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:486-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "Γιατί δεν μπορώ να διαγράψω κείμενο; Γίνεται απλώς διακριτή γραφή;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:487-5
 msgid "You have the Track Changes feature enabled for the document. Track Changes records all changes in the text and shows the editions for later revision. Useful for marking changes in text and spreadsheets. Track changes are enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Record</span>."
-msgstr ""
+msgstr "Έχετε ενεργό το γνώρισμα παρακολούθησης αλλαγών για το έγγραφο. Η παρακολούθηση αλλαγών καταγράφει όλες τις αλλαγές στο κείμενο και εμφανίζει τις επεξεργασίες για μεταγενέστερη αναθεώρηση. Χρήσιμο για σημείωση αλλαγών στο κείμενο και σε υπολογιστικά φύλλα. Η παρακολούθηση αλλαγών ενεργοποιείται επιλέγοντας <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Παρακολούθηση αλλαγών</span> → <span class=\"ui\">Καταγραφή</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:488-5
 msgid "With track changes enabled your document show the following settings:"
-msgstr ""
+msgstr "Με ενεργοποιημένη την παρακολούθηση αλλαγών το έγγραφό σας εμφανίζει τις παρακάτω ρυθμίσεις:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:490-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "Οι διαγραφές σημειώνονται με χρωματιστούς χαρακτήρες διακριτής γραφής."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:491-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "Οι προσθήκες σημειώνονται με χρωματιστούς υπογραμμισμένους χαρακτήρες."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:492-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "Όλες οι αλλαγές σημειώνονται με κάθετη γραμμή στο δεξιό περιθώριο."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Changes are displayed as comment in the right of the document area."
-msgstr ""
+msgstr "Οι αλλαγές εμφανίζονται ως σχόλια στα δεξιά της περιοχής του εγγράφου."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:496-5
 msgid "The color assigned to the changes depends on the user that changes the document."
-msgstr ""
+msgstr "Το χρώμα που εκχωρείται στις αλλαγές εξαρτάται από τον χρήστη που αλλάζει το έγγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:497-5
 msgid "To display or hide track changes choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. Beware that if track changes are enabled but hidden, you still record changes and may inadvertently leave unwanted text available in the document."
-msgstr ""
+msgstr "Για να εμφανίσετε ή να αποκρύψετε τις αλλαγές επιλέξτε <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Παρακολούθηση αλλαγών</span> → <span class=\"ui\">Εμφάνιση</span>. Προσέξτε ότι εάν η παρακολούθηση αλλαγών είναι ενεργή αλλά κρυφή, εξακολουθείτε να καταγράφετε τις αλλαγές και ίσως αφήσετε αθέλητα ανεπιθύμητο κείμενο διαθέσιμο στο έγγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:498-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
-msgstr ""
+msgstr "Οι αλλαγές μπορεί να γίνουν αποδεκτές ή να απορριφθούν. Για να αποδεχθείτε ή να απορρίψετε τις αλλαγές, πατήστε στα αντίστοιχα εικονίδια στο πλαίσιο σχολίων στα δεξιά του εγγράφου. Εναλλακτικά, επιλέξτε <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Παρακολούθηση αλλαγών</span> → <span class=\"ui\">Αποδοχή</span> ή <span class=\"ui\">Απόρριψη</span>. Επιπλέον, εάν χρειάζεται να φιλτράρετε τις αλλαγές πριν την αποδοχή ή την απόρριψη, επιλέξτε <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Παρακολούθηση αλλαγών</span> → <span class=\"ui\">Διαχείριση</span>. Ένας διάλογος εμφανίζει έναν κατάλογο όλων των παρακολουθούμενων αλλαγών. Χρησιμοποιήστε τα πλήκτρα του διαλόγου ανάλογα."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I set the margins of the document?"
-msgstr "Μετάβαση στην αρχή του εγγράφου"
+msgstr "Πώς ορίζω τα περιθώρια του εγγράφου;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "Using the ruler drag the leftmost edge of the ruler to adjust the left margin, or the rightmost for the right margin."
-msgstr ""
+msgstr "Χρησιμοποιώντας τον χάρακα σύρτε την πιο αριστερή άκρη του χάρακα για να ρυθμίσετε το αριστερό περιθώριο, ή τη πιο δεξιά για το δεξιό περιθώριο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:502-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Χρήση της τεχνοτροπίας σελίδας"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:504-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and select the <span class=\"ui\">Page</span> tab"
-msgstr ""
+msgstr "Επιλέξτε <span class=\"ui\">Μορφή</span> → <span class=\"ui\">Σελίδα</span> και την καρτέλα <span class=\"ui\">Σελίδα</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:505-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Ορίστε τα περιθώρια σελίδας στον διάλογο."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:508-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
+msgstr "Πώς αλλάζω τον προσανατολισμό της σελίδας σε οριζόντιο στο έγγραφό μου;"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:510-11
 msgid "Place the cursor at the place where the page orientation is to change. Add an empty paragraph."
-msgstr ""
+msgstr "Τοποθετήστε τον δρομέα στη θέση όπου πρόκειται να αλλάξει ο προσανατολισμός της σελίδας. Προσθέστε μια κενή παράγραφο."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:511-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>, <span class=\"ui\">Text Flow </span> tab"
-msgstr ""
+msgstr "Επιλέξτε <span class=\"ui\">Μορφή</span> → <span class=\"ui\">Παράγραφος</span>, καρτέλα <span class=\"ui\">Ροή κειμένου</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:512-11
 msgid "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, Position: Before."
-msgstr ""
+msgstr "Στην περιοχή <span class=\"ui\">Αλλαγές</span>, σημειώστε Εισαγωγή, Τύπος: αλλαγή σελίδας, Θέση: πριν."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid "Select Landscape in “With Page Style”"
-msgstr ""
+msgstr "Επιλέξτε οριζόντιος στο “Με τεχνοτροπία σελίδας”"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:514-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "Επιλέξτε εάν θέλετε να αλλάξετε την αρίθμηση σελίδας."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:516-5
 msgid "To return to portrait orientation, repeat the procedure, choosing Portrait in “With page style”."
-msgstr ""
+msgstr "Για να επιστρέψετε στον κάθετο προσανατολισμό, επαναλάβετε τη διαδικασία, επιλέγοντας κάθετος στο “Με τεχνοτροπία σελίδας”."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:517-5
 msgid "How can I make the new text look like other existing text?"
-msgstr ""
+msgstr "Πώς μπορώ να κάνω το νέο κείμενο να μοιάζει με το υπόλοιπο υφιστάμενο κείμενο;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:518-5
 msgid "Directly:"
-msgstr ""
+msgstr "Απευθείας:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:520-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Επιλέξτε το κείμενο με την υφιστάμενη μορφή"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:521-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:552-11
 msgid "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
-msgstr ""
+msgstr "Πατήστε στο εικονίδιο μορφοποίησης κλώνου <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">.  Ο δείκτης του ποντικιού γίνεται κουβάς βαφής."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:522-11
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "Επιλέξτε το κείμενο στο οποίο θέλετε να εφαρμόσετε τη νέα μορφή."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
-#, fuzzy
-#| msgid "Apply Heading 1 paragraph style"
 msgid "Applying a paragraph style:"
-msgstr "Εφαρμογή τεχνοτροπίας παραγράφου επικεφαλίδας 1"
+msgstr "Εφαρμογή τεχνοτροπίας παραγράφου:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr ""
+msgstr "Τοποθετήστε τον δρομέα στην παράγραφο προς μορφοποίηση"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:527-11
 msgid "Select the style to apply in the style dropdown list. The paragraph displays the styles attributes."
-msgstr ""
+msgstr "Επιλέξτε την τεχνοτροπία που θα εφαρμόσετε στον πτυσσόμενο κατάλογο. Η παράγραφος εμφανίζει τα γνωρίσματα των τεχνοτροπιών."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:529-5
 msgid "Why did the text I just typed change automatically? How can I revert it?"
-msgstr ""
+msgstr "Γιατί το κείμενο που μόλις πληκτρολόγησα αλλάζει αυτόματα; Πώς μπορώ να το επαναφέρω;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:530-5
 msgid "You have the AutoCorrection enabled. AutoCorrection changes the text just typed into an internal table of corresponding text. In most cases, AutoCorrection fixes typos while you are typing. If AutoCorrection is not necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
-msgstr ""
+msgstr "Έχετε ενεργοποιήσει την αυτόματη διόρθωση. Η αυτόματη διόρθωση αλλάζει το κείμενο που μόλις πληκτρολογήσατε σε έναν εσωτερικό πίνακα αντίστοιχου κειμένου. Στις περισσότερες περιπτώσεις, η αυτόματη διόρθωση διορθώνει τυπογραφικά λάθη, ενώ πληκτρολογείτε. Εάν η αυτόματη διόρθωση δεν είναι απαραίτητη, απενεργοποιήστε την στο <span class=\"ui\">Εργαλεία</span> → <span class=\"ui\">Αυτόματη διόρθωση</span> → <span class=\"ui\">Κατά την πληκτρολόγηση</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:535-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Πώς μπορώ να επιλέξω τα προς εκτύπωση δεδομένα;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:536-5
 msgid "Insert column and row breaks in the spreadsheet to narrow the print range and print the document to download. On printing the PDF, select the pages of interest."
-msgstr ""
+msgstr "Εισάγετε στήλη και αλλαγές γραμμών στο υπολογιστικό φύλλο για να περιορίσετε την περιοχή εκτύπωσης και εκτυπώστε το έγγραφο προς λήψη. Για εκτύπωση του PDF, επιλέξετε τις σελίδες που σας ενδιαφέρουν."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:537-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "Πώς μπορώ να εισάγω δεδομένα CSV;"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:539-11
 msgid "Load your CSV data in some native tool to your platform, select and copy it to the clipboard"
-msgstr ""
+msgstr "Φορτώστε τα CSV δεδομένα σας με κάποιο εγγενές εργαλείο του λειτουργικού σας, επιλέξτε τα και αντιγράψτε τα στο πρόχειρο."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:540-11
 msgid "Activate the <span class=\"productname\">%productName</span> spreadsheet window."
-msgstr ""
+msgstr "Ενεργοποιήστε το παράθυρο υπολογιστικού φύλλου του <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:542-9
 msgid "Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\">Paste</span> or press <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>. The <span class=\"ui\">Text Import</span> dialog opens to let you describe the precise format of the CSV data."
-msgstr ""
+msgstr "Επικολλήστε από τον πλοηγητή <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Επικόλληση</span> ή πατήστε <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>. Ανοίγει ο διάλογος <span class=\"ui\">Εισαγωγή κειμένου</span> που σας επιτρέπει να περιγράψετε την ακριβή μορφή των δεδομένων CSV."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:545-11
 msgid "Select the character set, language and separator options for the CSV file."
-msgstr ""
+msgstr "Επιλέξτε το σύνολο χαρακτήρων, γλώσσα και επιλογές διαχωριστικού για το αρχείο CSV."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:547-5
 msgid "The CSV data is loaded into the selected cell where you pasted, according to these settings."
-msgstr ""
+msgstr "Τα δεδομένα CSV φορτώνονται στο επιλεγμένο κελί όπου επικολλάτε, σύμφωνα με αυτές τις ρυθμίσεις."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:548-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "Πώς μπορώ να αντιγράψω τη μορφοποίηση υφιστάμενων κελιών σε νέα;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:549-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
-msgstr ""
+msgstr "Αυτό είναι εύκολο να γίνει χρησιμοποιώντας το εργαλείο βαφής στη γραμμή εργαλείων."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:551-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "Μορφοποιήστε το κελί προέλευσης με τη γραμματοσειρά, χρώμα παρασκηνίου και άλλα."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:553-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "Επιλέξτε τα κελιά που θέλετε να μορφοποιηθούν. Απελευθερώστε το πλήκτρο του ποντικιού."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:555-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "Το είναι το εικονίδιο “Καθαρισμός άμεσης μορφοποίησης”;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:556-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
-msgstr ""
+msgstr "Η άμεση μορφοποίηση είναι η μορφοποίηση που εφαρμόζεται απευθείας στα επιλεγμένα περιεχόμενα παραγράφου ή κελιού υπολογιστικού φύλλου και επικαλύπτει την εκχωρημένη μορφοποίηση της τεχνοτροπίας. Για να επαναφέρετε τη μορφοποίηση στις ρυθμίσεις τεχνοτροπίας, επιλέξτε το κείμενο ή το κελί υπολογιστικού φύλλου και επιλέξτε <span class=\"ui\">Μορφή</span> → <span class=\"ui\">Καθαρισμός άμεσης μορφοποίησης</span> ή χρησιμοποιήστε το πλήκτρο στη γραμμή εργαλείων."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:557-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Πώς μπορώ να μετονομάσω ένα φύλλο;"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:558-5
 msgid "Rename a sheet in the spreadsheet document using the context menu (using the right mouse button) over the sheet tab in the bottom. Enter the new sheet name in the dialog that follows."
-msgstr ""
+msgstr "Μετονομάστε φύλλο στο έγγραφο υπολογιστικού φύλλου χρησιμοποιώντας το μενού περιβάλλοντος (χρησιμοποιώντας το δεξιό πλήκτρο του ποντικιού) πάνω από την καρτέλα φύλλου στο τέλος. Εισάγετε το νέο όνομα του φύλλου στον διάλογο που ακολουθεί."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:563-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Πώς μπορώ να τρέξω την παρουσίαση προβολής μου;"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:565-11
 msgid "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "Ανοίξτε την παρουσίαση στο <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:566-11
 msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
-msgstr ""
+msgstr "Είτε επιλέξτε <span class=\"ui\">Παρουσίαση προβολής</span> → <span class=\"ui\">Παρουσίαση πλήρους οθόνης</span>, είτε πατήστε στο πιο αριστερό εικονίδιο στο τέλος του παραθύρου διαφανειών: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:568-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr ""
+msgstr "Πώς μπορώ να αλλάξω τη γραμμή, περιοχή και θέση σχήματος στις διαφάνειες μου;"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:570-11
 msgid "Select the shape in your slide. A set of handles shows."
-msgstr ""
+msgstr "Επιλέξτε το σχήμα στη διαφάνειά σας. Εμφανίζεται ένα σύνολο λαβών."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:572-9
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or <span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</span>). A dialog opens."
-msgstr ""
+msgstr "Επιλέξτε <span class=\"ui\">Μορφή</span> → <span class=\"ui\">Γραμμή</span> (ή <span class=\"ui\">Περιοχή</span>, ή <span class=\"ui\">Θέση και μέγεθος</span>). Ανοίγει ένας διάλογος."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Ορίστε τις ιδιότητες του στοιχείου του αντικειμένου."

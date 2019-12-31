@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-24 18:45+0000\n"
-"Last-Translator: Olivier Hallot <olivier.hallot@documentfoundation.org>\n"
+"PO-Revision-Date: 2019-12-31 09:37+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Portuguese (Brazil) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -1098,7 +1098,7 @@ msgstr "Responder"
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56
 msgid "Show the search bar"
-msgstr "Mostrar barra se pesquisa"
+msgstr "Mostrar barra de pesquisa"
 
 #: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
 #: src/layer/tile/WriterTileLayer.js:157

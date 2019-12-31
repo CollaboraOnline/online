@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-23 05:31+0000\n"
-"Last-Translator: raal <raal@post.cz>\n"
+"PO-Revision-Date: 2019-12-26 22:40+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -351,16 +351,12 @@ msgid "To"
 msgstr "Do"
 
 #: src/control/Control.JSDialogBuilder.js:1014
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
-msgstr "Písmo"
+msgstr "Název písma"
 
 #: src/control/Control.JSDialogBuilder.js:1016
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "Nepodepsáno"
+msgstr "Velikost písma"
 
 #: src/control/Control.JSDialogBuilder.js:1468
 msgid "Rows"
@@ -525,10 +521,8 @@ msgstr "Exportovat jako"
 
 #: src/control/Control.Menubar.js:639 src/control/Control.Menubar.js:658
 #: src/control/Control.Menubar.js:668
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "Vložit tvary"
+msgstr "Vložit tvar"
 
 #: src/control/Control.Menubar.js:738 src/control/Control.Toolbar.js:1957
 msgid "Reset to Default Language"
@@ -910,7 +904,7 @@ msgstr "Jejda, nastal problém s přípojením k LibreOffice Online: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Ze serveru:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -1104,24 +1098,18 @@ msgstr "Odpověď"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Zrušit vyhledávání"
+msgstr "Zobrazit vyhledávací lištu"
 
 #: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
 #: src/layer/tile/WriterTileLayer.js:157
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Zrušit vyhledávání"
+msgstr "Vymazat vyhledávací pole"
 
 #: src/layer/tile/CalcTileLayer.js:239 src/layer/tile/ImpressTileLayer.js:224
 #: src/layer/tile/WriterTileLayer.js:159
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Zrušit vyhledávání"
+msgstr "Skrýt vyhledávací lištu"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: 2019-12-23 05:31+0000\n"
+"PO-Revision-Date: 2019-12-31 09:37+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
 "Language: ca\n"
@@ -143,15 +143,15 @@ msgstr "Interval de temps de les estadístiques de CPU (en ms)"
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "Màxima memòria virtual per a processament de documents (en MB) - només reducció"
+msgstr "Màxima memòria virtual per a processament de documents (en MB); només reducció"
 
 #: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Màxima memòria de pila per a processament de documents (en KB) - només reducció"
+msgstr "Màxima memòria de pila per a processament de documents (en kB); només reducció"
 
 #: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Màxima mida de fitxer per a escriure en disc (en MB) - només reducció"
+msgstr "Màxima mida de fitxer per a escriure en disc (en MB); només reducció"
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
@@ -1098,24 +1098,18 @@ msgstr "Respon"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Cancel·la la cerca"
+msgstr "Mostra la barra de cerca"
 
 #: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
 #: src/layer/tile/WriterTileLayer.js:157
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Cancel·la la cerca"
+msgstr "Buida el camp de cerca"
 
 #: src/layer/tile/CalcTileLayer.js:239 src/layer/tile/ImpressTileLayer.js:224
 #: src/layer/tile/WriterTileLayer.js:159
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Cancel·la la cerca"
+msgstr "Amaga la barra de cerca"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1166,7 +1160,7 @@ msgstr "Fa %d minuts"
 
 #: src/map/Map.js:1249
 msgid "Inactive document - please click to resume editing"
-msgstr "El document no és actiu, feu clic per a continuar editant-lo"
+msgstr "El document no és actiu; feu clic per a continuar editant-lo"
 
 #: src/map/Map.js:1390
 msgid "Loading..."

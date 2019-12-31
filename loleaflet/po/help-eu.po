@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-24 18:45+0000\n"
+"PO-Revision-Date: 2019-12-31 09:37+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/eu/>\n"
 "Language: eu\n"
@@ -1051,7 +1051,7 @@ msgstr "<span class=\"def\">Dokumentu-area:</span> Aplikazioaren areak dokumentu
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
-msgstr ""
+msgstr "<span class=\"def\">Menu-barra:</span> Menu nagusia goiko aldean dago kokatuta eta hainbat aukera eta komando ditu inprimatzeko, editatzeko, bistaratzeko eta eginbide aurreratuetarak. Menu-barra ezkutatu egin daiteke eskuin muturreko <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> ikonoa erabilita. Egin klik <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> ikonoan menua erakusteko."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
@@ -1083,7 +1083,7 @@ msgstr "Utzi bilaketa (testu bat bilatu ondoren soilik agertzen da)"
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."
-msgstr ""
+msgstr "<span class=\"def\">Zoom-barra:</span> Egoera-barraren eskuinean zoomak egitea ahalbidetzen duen botoi multzo bat dago. Zooma dokumentu-areari aplikatzen zaio, erabiltzaile-interfazea ez da aldatzen. Uneko zoom-maila area horretan erakusten da."
 
 #: html/loleaflet-help.html%2Bdiv.p:270-5
 msgid "Text, charts, shapes and svg images will stay sharp, when zooming in, you will only see pixels appear at inserted images, such as jpg’s or png’s."
@@ -1103,7 +1103,7 @@ msgstr "Zure dokumentuak <span class=\"productname\">%productName</span> aplikaz
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
-msgstr ""
+msgstr "Dokumentu bat deskargatzeko, <span class=\"productname\">%productName</span> aplikazioaren <span class=\"ui\">Fitxategi</span> menutik deskargatu daiteke. Deskargaren formatua aplikazioaren araberakoa da. Aplikazio guztiek esportatu dezakete PDF formatura."
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."
@@ -1111,11 +1111,11 @@ msgstr "Dokumentu bat irekitzeko, egin klik fitxategian haren dokumentu-formatua
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Documents in <span class=\"productname\">%productName</span> save automatically, but if you are concerned that a document is synchronized as quickly as possible you can also force saving using the <span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> dokumentuak automatikoki gordetzen dira, baina hala ere, dokumentu bat ahalik eta azkarren sinkronizatua izan dadin nahi baduzu, gordetzea behartu dezakezu <span class=\"ui\">Fitxategia</span> menuko <span class=\"ui\">Gorde</span> aukera erabilita."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
-msgstr ""
+msgstr "Nabigatzailearen ahalmenen arabera, inprimatze-leihoa agertuko da edo \"Deskargatu PDF esportazioa?\" laster-leihoa agertuko da. PDFa zure PDF irakurgailu gogokoenean inprimatu dezakezu."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid "When closing a document, it is automatically saved if it has been changed."
@@ -1131,11 +1131,11 @@ msgstr "Kopiatzea eta itsastea"
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
-msgstr ""
+msgstr "Eduki aberatsak kopiatzea/moztea eta itsastea onartzen da, es soilik dokumentu barruan, baina dokumentu desberdinen artean ere  <span class=\"productname\">%productName</span> barruan edo kanpoan. Barneko erabilera horietarako, erabiltzaileek edukia ordenagailura kopiatu/moztu dezakete, baita irudiak eta eduki mistoak ere, lasterbideak erabilita (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). Segurtasunagatik, derrigorrezkoa da <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> erabiltzea ordenagailura itsasteko, baina laster-menuak erabili daitezke mozteko eta kopiatzeko. Android edo iOS sistemetan, derrigorrezkoa da testua hautatzeko pantaila gainean hatzarekin bi aldiz sakatzea, eta sakatze luzea erabiltzea kopiatu/moztu/itsatsi laster-menua atzitzeko."
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
-msgstr ""
+msgstr "Eduki-zati luzeak gailuko beste aplikazio batzuetarako kopiatzeko, erabiltzaileak <span class=\"ui\">Hasi deskarga</span> botoia sakatu behar du eta, ondoren, hori berriro arbelera kopiatu, horrela helburuko aplikazioak hura irakurtzeko gai izan dadin. Horretarako, erabili beheko eskuineko izkina ageri den trepeta txikia. Kanpoko aplikazioetan itsatsi nahi den edukia esportatzeko soilik da beharrezkoa. Urrats horren beste efektu bat objektu konplexuak irudi estatiko bihurtzea da."
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
@@ -1143,11 +1143,11 @@ msgstr "Dokumentua konpontzea"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Pertsona anitzek dokumentu bera aldi berean editatzen dutenean, posible da aldaketek gatazka eragitea eta nahasteak sortzea. 'Dokumentua konpontzea' funtzioa erabilita, erabiltzaileek beste editoreen aldaketak desegin ditzakete, aurreko egoera batera itzultzeko."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
-msgstr ""
+msgstr "Hautatutako egoerara itzultzeko, hautatu hura saguarekin eta sakatu <span class=\"ui\">Jauzi egoerara</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
@@ -1411,7 +1411,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:410-5
 msgid "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index can be updated with new entries."
-msgstr ""
+msgstr "<span class=\"def\">Indize alfabetikoa:</span> Lehendik dagoen indize alfabetikoa sarrera berriekin eguneratu daiteke."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid "<span class=\"def\">Page header and footer:</span> Headers and footers are available for the existing page style applied in the document at the cursor position."
@@ -1435,11 +1435,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:426-5
 msgid "Click on any slide thumbnail in the pane to switch to this slide to view or edit it."
-msgstr ""
+msgstr "Egin klik paneleko edozein diapositiba-miniaturan diapositiba hori bistaratu edo editatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:427-5
 msgid "Use the slide pane toolbar in the bottom to start the slideshow, add slide, duplicate or delete the current slide."
-msgstr ""
+msgstr "Erabili diapositiba-paneleko behealdean dagoen tresna-barra diapositiba-aurkezpena hasteko, diapositiba bat gehitzeko, bikoizteko edo ezabatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:430-5
 msgid "<span class=\"def\">Slide layouts:</span> <span class=\"productname\">%productName</span> Impress let you change the slide layout. Select the desired slide layout in the drop-down layout list."
@@ -1447,7 +1447,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:432-5
 msgid "<span class=\"def\">Master slide:</span> Select the master slide associated to the current slide. Format and arrange slide elements in the master slide."
-msgstr ""
+msgstr "<span class=\"def\">Diapositiba maisua:</span> Hautatu uneko diapositibari lotutako diapositiba maisua. Eman formatua eta antolatu diapositiba maisuko elementuak."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:433-5
 msgid "<span class=\"def\">Slide transitions:</span> <span class=\"productname\">%productName</span> Impress provides visual effects when displaying a new slide in the slide show. Slide transitions are property of the slide, use the side bar to set the slide transition when in edit mode."
@@ -1459,7 +1459,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:435-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
-msgstr ""
+msgstr "<span class=\"def\">Taulak:</span> Txertatu taulak aurkezpenean. Erabili alboko barra taularen gaia hautatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.h4:439-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
@@ -1467,43 +1467,43 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:440-5
 msgid "<span class=\"productname\">%productName</span> supports both reading and writing for the following file formats:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioak honako fitxategi-formatuak irakurri eta idatzi ditzake:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:442-11
 msgid "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr ""
+msgstr "Testu-dokumentuak: Microsoften DOC, DOCX, RTF formatuak, ODT OpenDocument formatua"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:443-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "Kalkulu-orriak: Microsoften XLS, XLSX formatuak, ODS OpenDocument formatua"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:444-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Aurkezpenak: Microsoften PPT, PPTX formatuak, ODP OpenDocument formatua"
 
 #: html/loleaflet-help.html%2Bdiv.p:446-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
-msgstr ""
+msgstr "Horrez gain, Visio, Keynote, Numbers eta Pages formatuak bistaratu ditzake."
 
 #: html/loleaflet-help.html%2Bdiv.h4:447-5
 msgid "How do I save a document with another name?"
-msgstr ""
+msgstr "Nola gorde dokumentu bat beste izen batekin?"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:449-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr ""
+msgstr "Pasatu sagua dokumentu-izenaren gainetik, menu-barran."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:450-11
 msgid "Type the new file name in the text box and press <span class=\"kbd\">Enter</span>."
-msgstr ""
+msgstr "Idatzi fitxategi-izen berria testu-koadroan eta sakatu <span class=\"kbd\">⏎</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:452-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "Dokumentuaren kopia bat gordeko da izen berriarekin karpeta berean."
 
 #: html/loleaflet-help.html%2Bdiv.h4:453-5
 msgid "How can I quit <span class=\"productname\">%productName</span> without saving my edits?"
-msgstr ""
+msgstr "Nola irten naiteke <span class=\"productname\">%productName</span> aplikaziotik nire edizioak gorde gabe?"
 
 #: html/loleaflet-help.html%2Bdiv.p:454-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."
@@ -1511,31 +1511,31 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:455-5
 msgid "Can <span class=\"productname\">%productName</span> open a password-protected document?"
-msgstr ""
+msgstr "Ireki ahal du <span class=\"productname\">%productName</span> aplikazioak pasahitzez babestutako dokumentu bat?"
 
 #: html/loleaflet-help.html%2Bdiv.p:456-5
 msgid "Yes. <span class=\"productname\">%productName</span> opens password-protected documents, but it is necessary to supply the password in the “Enter password” prompt at load time."
-msgstr ""
+msgstr "Bai. <span class=\"productname\">%productName</span>k pasahitzez babestutako dokumentuak irekitzen ditu, baina derrigorrezkoa da pasahitza idaztea 'Sartu pasahitza' gonbitean kargako unean."
 
 #: html/loleaflet-help.html%2Bdiv.h4:457-5
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "Nola egiaztatu dezaket ortografia nire hizkuntzan?"
 
 #: html/loleaflet-help.html%2Bdiv.p:458-5
 msgid "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</span> and select the language for the whole document. Optionally you can set languages for the selected text and for the current paragraph."
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Tresnak</span> → <span class=\"ui\">Hizkuntzak</span> menua eta hautatu dokumentu osorako hizkuntza. Aukeran, hautatutako testuaren eta uneko paragrafoaren hizkuntza ere ezarri daiteke."
 
 #: html/loleaflet-help.html%2Bdiv.h4:459-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Nola kendu ditzaket dokumentuko marra uhindu gorriak?"
 
 #: html/loleaflet-help.html%2Bdiv.p:460-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Tresnak</span> eta kendu marka <span class=\"ui\">Ortografiaren egiaztapen automatikoa</span> aukerari."
 
 #: html/loleaflet-help.html%2Bdiv.h4:461-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "Zer da testuko zenbait hitzen azpian ageri den azpimarra uhindu urdina?"
 
 #: html/loleaflet-help.html%2Bdiv.p:462-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."

@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-23 05:31+0000\n"
-"Last-Translator: raal <raal@post.cz>\n"
+"PO-Revision-Date: 2019-12-31 09:37+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -914,10 +914,8 @@ msgstr "<span class=\"productname\">%productName</span> nápověda"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
-#, fuzzy
-#| msgid "Cell formatting"
 msgid "Collaborative editing"
-msgstr "Formátování buňky"
+msgstr "Spolupráce při úpravách"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
@@ -927,12 +925,12 @@ msgstr "<span class=\"productname\">%productName</span> uživatelské rozhraní"
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Otevírání, uzavírání, ukládání, tisk a stahování dokumentů"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr "Editace dokumentů"
+msgstr "Úpravy dokumentů"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -1029,203 +1027,203 @@ msgstr "Prezentace"
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> umožňuje jednoduše vytvářet a upravovat textové dokumenty, sešity a prezentace přímo v prohlížeči. Na dokumentu můžete pracovat sami, nebo ve spolupráci s dalšími autory."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
-msgstr ""
+msgstr "Každému uživateli se přiřadí určitá barva. Tuto barvu bude mít kurzor daného uživatele. Poznámka: svůj kurzor uvidíte vždy jako černý a blikající, zatímco ostatním se zobrazí barevný."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
-msgstr ""
+msgstr "Na kurzor určitého uživatele přejdete klepnutím na uživatelovo jméno (nebo obrázek). Uživatele, který dokument upravuje, je možné následovat."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
-msgstr ""
+msgstr "Malým oznámením v zápatí <span class=\"productname\">%productName</span> informuje, když se připojí nový uživatel nebo stávající uživatel dokument opustí."
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
-msgstr ""
+msgstr "Pomocí moderních technik pro prohlížeče <span class=\"productname\">%productName</span> zajišťuje, že se uživatelské rozhraní přizpůsobuje velikosti zobrazené oblasti. Platí to i pro obrazovky mobilních zařízení. Rozhraní se skládá z těchto částí:"
 
 #: html/loleaflet-help.html%2Bdiv.p:257-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."
-msgstr ""
+msgstr "<span class=\"def\">Oblast s dokumentem:</span> V této oblasti se zobrazuje obsah dokumentu: sešitu, prezentace nebo textového dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
-msgstr ""
+msgstr "<span class=\"def\">Hlavní nabídka:</span> Hlavní nabídka se nachází v horní části a obsahuje množství možností, příkazů pro tisk, úpravy, zobrazení a další pokročilé činnosti. Hlavní nabídku lze skrýt klepnutím na ikonu <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> úplně vpravo. Klepnutím na ikonu <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> hlavní nabídku opět zobrazíte."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
-msgstr ""
+msgstr "<span class=\"def\">Místní nabídky:</span> Po klepnutí pravým tlačítkem myši se zobrazí nabídku s příkazy příslušnými k objektu, který se nachází na místě klepnutí."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
-msgstr ""
+msgstr "<span class=\"def\">Nástrojová lišta:</span> Nástrojová lišta obsahuje při běžné práci nejpoužívanější možnosti. Tlačítka lišty jsou dynamická, jejich stav (zapnuto nebo vypnuto) závisí na různých okolnostech."
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid "<span class=\"def\">The status bar:</span> The status bar is shown in the bottom, and contains several useful options and features."
-msgstr ""
+msgstr "<span class=\"def\">Stavový řádek:</span> Stavový řádek se zobrazuje v dolní části a obsahuje několik užitečných možností a funkcí."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">The search bar:</span> Searching starts automatically when content is inserted in the search box, and the document window automatically moves to the first occurrence found. Searching is not case-sensitive. There are three buttons right next to the search box:"
-msgstr ""
+msgstr "<span class=\"def\">Vyhledávací lišta:</span> Jakmile zadáte do vyhledávacího pole obsah, automaticky se spustí vyhledávání a v okně s dokumentem se zobrazí místo prvního nalezeného výskytu. U hledání nezáleží na velikosti písmen. Vpravo od vyhledávacího pole se nacházejí tři tlačítka:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Najít předchozí"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr ""
+msgstr "Najít další"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Zrušit vyhledávání (zobrazí se pouze tehdy, je-li zadán text)"
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."
-msgstr ""
+msgstr "<span class=\"def\">Lišta přiblížení:</span> V pravé části stavového řádku se nachází sada tlačítek umožňujících změnit přiblížení na 100 %, přibližovat a oddalovat. Přiblížení se týká oblasti s dokumentem, neovlivňuje uživatelské rozhraní. V této části se zobrazuje také aktuální úroveň přiblížení."
 
 #: html/loleaflet-help.html%2Bdiv.p:270-5
 msgid "Text, charts, shapes and svg images will stay sharp, when zooming in, you will only see pixels appear at inserted images, such as jpg’s or png’s."
-msgstr ""
+msgstr "Text, grafy, tvary a obrázky formátu SVG zůstanou při přibližování ostré, kdežto jednotlivé pixely se zobrazí v případě vložených obrázků formátů např. JPG nebo PNG."
 
 #: html/loleaflet-help.html%2Bdiv.p:271-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "Pokud použijete funkci přiblížení, která je součástí prohlížeče, ovlivněna bude jak oblast dokumentu, tak uživatelské rozhraní."
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
-msgstr ""
+msgstr "<span class=\"def\">Lišta s informacemi:</span> Napravo od vyhledávací lišty se zobrazuje sada informací o dokumentu. Typ informací závisí na povaze dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.p:276-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
-msgstr ""
+msgstr "Dokumenty jsou uloženy a spravovány cloudovým úložištěm, v němž je integrován <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
-msgstr ""
+msgstr "Chcete-li dokument stáhnout, zvolte v <span class=\"productname\">%productName</span> nabídku <span class=\"ui\">Soubor</span>. To, jaké formáty jsou dostupné ke stažení, závisí na aplikaci. Všechny aplikace umožňují export ve formátu PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."
-msgstr ""
+msgstr "Dokument otevřete klepnutím na soubor; otevře se modul <span class=\"productname\">%productName</span> asociovaný s příslušným formátem dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Documents in <span class=\"productname\">%productName</span> save automatically, but if you are concerned that a document is synchronized as quickly as possible you can also force saving using the <span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
-msgstr ""
+msgstr "Dokumenty se v  <span class=\"productname\">%productName</span> ukládají automaticky, ale pokud si je přejete synchronizovat okamžitě, můžete také uložení vynutit pomocí položky <span class=\"ui\">Uložit</span> v nabídce <span class=\"ui\">Soubor</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
-msgstr ""
+msgstr "V závislostech na možnostech prohlížeče se může zobrazit okno pro tisk nebo se zobrazí vyskakovací okno „Stáhnout export do PDF?“. Toto PDF poté můžete vytisknout pomocí svou oblíbenou aplikací pro čtení PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "Dokument se při zavírání automaticky uloží, jestliže byl předtím změněn."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
-msgstr ""
+msgstr "S úpravami dokumentu si poradí každý, kdo je zvyklý používat kancelářský balík, nalezneme zde však několik výrazných rozdílů:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopírovat a Vložit"
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
-msgstr ""
+msgstr "Kopírování/vyjímání a vkládání formátovaného obsahu je podporováno, a to nejen v rámci dokumentu, ale také mezi dokumenty stejné nebo odlišné aplikace <span class=\"productname\">%productName</span>. Pro takovéto použití lze kopírovat/vyjímat obsah včetně obrázků a smíšeného obsahu, a to na PC přímo pomocí klávesových zkratek (<span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">V</span>). Z bezpečnostních důvodů je na PC nezbytné vkládat pomocí <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">V</span>, pro vyjímání a kopírování však lze použít místní nabídky. V systémech Android a iOS vyberete text poklepáním a dlouhým klepnutím získáte přístup do místní nabídku s příkazy kopírovat/vyjmout/vložit."
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
-msgstr ""
+msgstr "Chcete-li kopírovat větší části obsahu do jiných aplikací na vašem zařízení, je nutné stisknout tlačítko <span class=\"ui\">Zahájit stahování</span> a poté znovu zkopírovat obsah do schránky tohoto zařízení, čímž se stane pro cílovou aplikaci dostupný. Tento export obsahu pro vložení do externí aplikace zajišťuje vyskakovací prvek v pravém dolním rohu. V tomto kroku se rovněž převedou komplexní objekty na statické obrázky."
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
-msgstr ""
+msgstr "Oprava dokumentu"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Když upravuje dokument více lidí současně, jejich změny se mohou dostat do vzájemného konfliktu a to může vyústit ve zmatený obsah. Oprava dokumentu umožňuje  vrátit zpět změny ostatních uživatelů a obnovit tak předchozí stav dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
-msgstr ""
+msgstr "Na daný stav přejdete zpět tím, že jej vyberete myší a stisknete <span class=\"ui\">Přejít na stav</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
-msgstr ""
+msgstr "To může být velmi užitečné – představte si, že kolega při souběžných úpravách nechtěně vybral veškerý text dokumentu pomocí <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">A</span> a pokračoval v psaní a tím text smazal."
 
 #: html/loleaflet-help.html%2Bdiv.h4:293-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Neaktivní dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
-msgstr ""
+msgstr "Když <span class=\"productname\">%productName</span> zaznamená, že po nějaký čas neprobíhala v prohlížeči žádná aktivita, nastaví dokumentu stav „neaktivní“. Dokument se zobrazí s průhledným šedým popředím a zprávou „Dokument je neaktivní - pro pokračování v úpravách klikněte“."
 
 #: html/loleaflet-help.html%2Bdiv.p:296-5
 msgid "To continue editing, click on the document and the layover and message disappear. Any changes that may have been made by other users – while collaboratively editing the document – are re-loaded."
-msgstr ""
+msgstr "Klepnutím do dokumentu popředí a zpráva zmizí a můžete pokračovat v úpravách. Do dokumentu se načtou všechny změny, které během spolupráce při úpravách vytvořili ostatní uživatelé."
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Pasting"
-msgstr ""
+msgstr "Vkládání"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
-msgstr ""
+msgstr "Pokud vložíte obsah zkopírovaný v témže dokumentu, zachovají se jeho formát a prvky. Zkopírujete-li jej z jiného dokumentu na jiné kartě či v jiném okně prohlížeče, případně z aplikace mimo prohlížeč, ve vloženém obsahu se zachová formátování textu."
 
 #: html/loleaflet-help.html%2Bdiv.p:299-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr ""
+msgstr "Neformátovaný text můžete vložit pomocí klávesové zkratky: <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">Alt</span>+<span class=\"kbd\">Shift</span>+<span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:300-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
-msgstr ""
+msgstr "Při vkládání textu v témže dokumentu se zachová formátování. Můžete také vkládat objekty (například obrázky), pokud je zkopírujete ze stejného dokumentu, v němž pracujete."
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text."
-msgstr ""
+msgstr "Vložíte-li text, který z tohoto dokumentu nepochází (tj. z jiného okna prohlížeče nebo z jiné aplikace), vloží se jako formátovaný text."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
-msgstr ""
+msgstr "Pokud jste obsah vyjmuli nebo zkopírovali interně, můžete jej vložit pomocí nabídky vyvolané pravým tlačítkem myši."
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Přidávání grafů"
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> umožňuje vkládat do dokumentů grafy. Chcete-li graf přidat:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:308-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
-msgstr ""
+msgstr "Vyberte tabulku v textovém dokumentu, oblast v sešitu nebo tabulku v prezentaci."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
-msgstr ""
+msgstr "Zvolte <span class=\"ui\">Vložit</span> → <span class=\"ui\">Grafy</span>. Graf přizpůsobte na postranní liště:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
 msgid "If no table or range was selected, a prototype chart is displayed."
-msgstr ""
+msgstr "Jestliže jste nevybrali tabulku nebo oblast, zobrazí se ukázkový graf."
 
 #: html/loleaflet-help.html%2Bdiv.p:316-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
-msgstr ""
+msgstr "<span class=\"def\">Úpravy grafu:</span> Poklepání graf vyberte. Prvky grafu jako nadpis, popisy, osy a další přidáte pomocí místních nabídek. Chcete-li upravit data grafu nebo vybrat jeho typ, zvolte <span class=\"ui\">Oblast dat</span> a <span class=\"ui\">Typ grafu</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:317-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
-msgstr ""
+msgstr "<span class=\"def\">Formátování grafu:</span> Místní nabídka obsahuje příkazy pro výběr dat a typu grafu."
 
 #: html/loleaflet-help.html%2Bdiv.p:318-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
-msgstr ""
+msgstr "<span class=\"def\">Formátování datových řad:</span> Otevřete místní nabídku a zvolte <span class=\"ui\">Formát datových řad</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr ""
+msgstr "Práce s obrázky"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
