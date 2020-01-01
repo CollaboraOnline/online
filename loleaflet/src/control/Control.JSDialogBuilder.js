@@ -245,6 +245,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (iconPath) {
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
 			icon.src = iconPath;
+			icon.alt = '';
 			titleClass = 'menu-entry-with-icon'
 		}
 		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
@@ -901,6 +902,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var image = L.DomUtil.create('img', 'spinfieldimage', div);
 			var icon = builder._createIconPath(data.id);
 			image.src = icon;
+			icon.alt = '';
 		}
 
 		var spinfield = L.DomUtil.create('input', 'spinfield', div);
@@ -1421,6 +1423,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var iconPath = 'images/lc_' + commandName.toLowerCase() + '.svg';
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconPath;
+			icon.alt = '';
 		}
 		if (data.checked && data.checked === true) {
 			L.DomUtil.addClass(menuEntry, 'menu-entry-checked');
