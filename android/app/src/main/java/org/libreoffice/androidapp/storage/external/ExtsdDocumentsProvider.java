@@ -169,16 +169,16 @@ public class ExtsdDocumentsProvider implements IExternalDocumentProvider,
 
     @Override
     public boolean checkProviderAvailability(Context context) {
-        // too many devices (or I am just unlucky) don't report the mounted state properly, and other
-        // devices also consider dedicated part of internal storage to be "mounted" so cannot use
-        // getExternalStorageState().equals(Environment.MEDIA_MOUNTED) && isExternalStorageRemovable()
-        // but they refer to the primary external storage anyway, so what currently is covered by the
-        // "LocalDocumentsProvider"
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String rootPathURI = preferences.getString(DocumentProviderSettingsActivity.KEY_PREF_EXTERNAL_SD_PATH_URI, "");
 
-        return hasRemovableStorage && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        // either we know we have the storage or the user has set something explicitly
+        return (hasRemovableStorage || !rootPathURI.isEmpty()) && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     }
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
