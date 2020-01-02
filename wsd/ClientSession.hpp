@@ -35,6 +35,8 @@ public:
                   const Poco::URI& uriPublic,
                   const bool isReadOnly = false);
 
+    void construct();
+
     virtual ~ClientSession();
 
     void handleIncomingMessage(SocketDisposition &) override;
