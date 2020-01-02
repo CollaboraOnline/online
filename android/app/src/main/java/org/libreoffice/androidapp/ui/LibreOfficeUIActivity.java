@@ -66,6 +66,7 @@ import org.libreoffice.androidapp.storage.DocumentProviderFactory;
 import org.libreoffice.androidapp.storage.DocumentProviderSettingsActivity;
 import org.libreoffice.androidapp.storage.IDocumentProvider;
 import org.libreoffice.androidapp.storage.IFile;
+import org.libreoffice.androidapp.storage.external.BrowserSelectorActivity;
 import org.libreoffice.androidlib.LOActivity;
 
 import java.io.File;
@@ -115,7 +116,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     FilenameFilter filenameFilter;
     private List<IFile> filePaths = new ArrayList<IFile>();
     private DocumentProviderFactory documentProviderFactory;
-    private IDocumentProvider documentProvider;
+    private IDocumentProvider documentProvider = null;
     private IFile homeDirectory;
     private IFile currentDirectory;
     private int currentlySelectedFile;
@@ -168,6 +169,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     /** Request code to evaluate that we are returning from the LOActivity. */
     private static final int LO_ACTIVITY_REQUEST_CODE = 42;
+    private static final int SD_CARD_REQUEST_CODE = 43;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -199,9 +201,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     }
 
     public void createUI() {
-
         setContentView(R.layout.activity_document_browser);
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -279,27 +279,27 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                     }
 
                     case R.id.menu_provider_documents: {
-                        switchToDocumentProvider(documentProviderFactory.getProvider(0));
+                        switchToDocumentProvider(0);
                         return true;
                     }
 
                     case R.id.menu_provider_filesystem: {
-                        switchToDocumentProvider(documentProviderFactory.getProvider(1));
+                        switchToDocumentProvider(1);
                         return true;
                     }
 
                     case R.id.menu_provider_extsd: {
-                        switchToDocumentProvider(documentProviderFactory.getProvider(2));
+                        switchToDocumentProvider(DocumentProviderFactory.EXTSD_PROVIDER_INDEX);
                         return true;
                     }
 
                     case R.id.menu_provider_otg: {
-                        switchToDocumentProvider(documentProviderFactory.getProvider(3));
+                        switchToDocumentProvider(3);
                         return true;
                     }
 
                     case R.id.menu_provider_owncloud: {
-                        switchToDocumentProvider(documentProviderFactory.getProvider(4));
+                        switchToDocumentProvider(4);
                         return true;
                     }
 
@@ -430,11 +430,14 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         return viewMode == LIST_VIEW;
     }
 
-    private void switchToDocumentProvider(IDocumentProvider provider) {
+    private void switchToDocumentProvider(int providerId) {
+        IDocumentProvider provider = documentProviderFactory.getProvider(providerId);
 
         new AsyncTask<IDocumentProvider, Void, Void>() {
             @Override
             protected Void doInBackground(IDocumentProvider... provider) {
+                Log.d(LOGTAG, "switching to document provider " + provider[0].getId());
+
                 // switch document provider:
                 // these operations may imply network access and must be run in
                 // a different thread
@@ -453,15 +456,28 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                         }
                     }
                 } catch (final RuntimeException e) {
-                    final Activity activity = LibreOfficeUIActivity.this;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(activity, e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    startActivity(new Intent(activity, DocumentProviderSettingsActivity.class));
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LibreOfficeUIActivity.this);
+                    String sdPath = preferences.getString(DocumentProviderSettingsActivity.KEY_PREF_EXTERNAL_SD_PATH_URI, "");
+
+                    if (provider[0].getId() != DocumentProviderFactory.EXTSD_PROVIDER_INDEX || !sdPath.isEmpty()) {
+                        LibreOfficeUIActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(LibreOfficeUIActivity.this, e.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    if (provider[0].getId() == DocumentProviderFactory.EXTSD_PROVIDER_INDEX) {
+                        Intent i = new Intent(LibreOfficeUIActivity.this, BrowserSelectorActivity.class);
+                        i.putExtra(BrowserSelectorActivity.PREFERENCE_KEY_EXTRA, DocumentProviderSettingsActivity.KEY_PREF_EXTERNAL_SD_PATH_URI);
+                        i.putExtra(BrowserSelectorActivity.MODE_EXTRA, BrowserSelectorActivity.MODE_EXT_SD);
+                        startActivityForResult(i, SD_CARD_REQUEST_CODE);
+                    }
+                    else
+                        startActivity(new Intent(LibreOfficeUIActivity.this, DocumentProviderSettingsActivity.class));
+
                     Log.e(LOGTAG, "failed to switch document provider " + e.getMessage(), e.getCause());
                     return null;
                 }
@@ -1046,6 +1062,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             Log.d(LOGTAG, "LOActivity has finished.");
             saveFileToCloud();
         }
+        else if (requestCode == SD_CARD_REQUEST_CODE) {
+            Log.d(LOGTAG, "SD card chooser has finished.");
+            if (resultCode == RESULT_OK)
+                switchToDocumentProvider(DocumentProviderFactory.EXTSD_PROVIDER_INDEX);
+        }
     }
 
     /** Actually copy the file to the remote storage (if applicable). */
@@ -1109,7 +1130,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     PERMISSION_WRITE_EXTERNAL_STORAGE);
         } else {
-            switchToDocumentProvider(documentProviderFactory.getDefaultProvider());
+            if (documentProvider == null)
+                switchToDocumentProvider(0);
             setEditFABVisibility(View.VISIBLE);
         }
         Log.d(LOGTAG, "onStart");
@@ -1368,7 +1390,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         switch (requestCode) {
             case PERMISSION_WRITE_EXTERNAL_STORAGE:
                 if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    switchToDocumentProvider(documentProviderFactory.getDefaultProvider());
+                    if (documentProvider == null)
+                        switchToDocumentProvider(0);
                     setEditFABVisibility(View.VISIBLE);
                 } else {
                     setEditFABVisibility(View.INVISIBLE);

@@ -1,3 +1,12 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.libreoffice.androidapp.storage.external;
 
 import android.Manifest;
@@ -22,15 +31,15 @@ import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 
 /**
- * Implementation of IDocumentProvider for the external file system, for android 4.4+
+ * Implementation of IDocumentProvider for the external file system.
  *
- * The DocumentFile class is required when accessing files in external storage
- * for Android 4.4+. The ExternalFile class is used to handle this.
+ * https://stackoverflow.com/questions/40068984/universal-way-to-write-to-external-sd-card-on-android
+ * https://developer.android.com/training/data-storage/shared/documents-files
  *
- * Android 4.4 & 5+ use different types of root directory paths,
- * 5 using a DirectoryTree Uri and 4.4 using a normal File path.
- * As such, different methods are required to obtain the rootDirectory IFile.
- * 4.4 has to guess the location of the rootDirectory as well.
+ * On the Android versions we target, it's not possible to access files on a
+ * SD card directly, first you need to trigger the system file picker
+ * (Intert.ACTION_OPEN_DOCUMENT_TREE), and then you have to access the files
+ * via the content provider you've got.
  */
 public class ExtsdDocumentsProvider implements IExternalDocumentProvider,
         OnSharedPreferenceChangeListener{
@@ -38,7 +47,7 @@ public class ExtsdDocumentsProvider implements IExternalDocumentProvider,
 
     private int id;
     private File cacheDir;
-    private String rootPathURI;
+    private boolean hasRemovableStorage = false;
 
     public ExtsdDocumentsProvider(int id, Context context) {
         this.id = id;
@@ -47,16 +56,26 @@ public class ExtsdDocumentsProvider implements IExternalDocumentProvider,
     }
 
     private void setupRootPathUri(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        rootPathURI = preferences.getString(
-                DocumentProviderSettingsActivity.KEY_PREF_EXTERNAL_SD_PATH_URI, guessRootURI(context));
+        String rootURI = guessRootURI(context);
+        if (rootURI != null && !rootURI.isEmpty())
+            hasRemovableStorage = true;
     }
 
+    /**
+     * Even though this provides a file:///-like path, it is not possible to
+     * use the files there directly, we have to go through the content:// url
+     * that we get from the Intent.ACTION_OPEN_DOCUMENT_TREE.
+     *
+     * But it is useful to still keep this code, to decide whether we should
+     * show the "External SD" in the menu or not.
+     */
+    @Override
     public String guessRootURI(Context context) {
         // TODO: unfortunately the getExternalFilesDirs function relies on devices to actually
         // follow guidelines re external storage. Of course device manufacturers don't and as such
         // you cannot rely on it returning the actual paths (neither the compat, nor the native variant)
-        File[] possibleRemovables = ContextCompat.getExternalFilesDirs(context,null);
+        File[] possibleRemovables = ContextCompat.getExternalFilesDirs(context, null);
+
         // the primary dir that is already covered by the "LocalDocumentsProvider"
         // might be emulated/part of internal memory or actual SD card
         // TODO: change to not confuse android's "external storage" with "expandable storage"
@@ -65,17 +84,22 @@ public class ExtsdDocumentsProvider implements IExternalDocumentProvider,
         for (File option: possibleRemovables) {
             // Returned paths may be null if a storage device is unavailable.
             if (null == option) {
-                Log.w(LOGTAG,"path was a null option :-/"); continue; }
+                Log.w(LOGTAG, "path was a null option :-/");
+                continue;
+            }
+
             String optionPath = option.getAbsolutePath();
-            if(optionPath.contains(primaryExternal)) {
+            if (optionPath.startsWith(primaryExternal)) {
                 Log.v(LOGTAG, "did get file path - but is same as primary storage ("+ primaryExternal +")");
                 continue;
             }
 
-            return option.toURI().toString();
+            String optionURI = Uri.fromFile(option).toString();
+
+            Log.d(LOGTAG, "got the path: " + optionURI);
+            return optionURI;
         }
 
-        // TODO: do some manual probing of possible directories (/storage/sdcard1 and similar)
         Log.i(LOGTAG, "no secondary storage reported");
         return null;
     }
@@ -103,24 +127,11 @@ public class ExtsdDocumentsProvider implements IExternalDocumentProvider,
 
     @Override
     public IFile getRootDirectory(Context context) {
-        if(android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-            return android4RootDirectory(context);
-        } else {
-            return android5RootDirectory(context);
-        }
-    }
-
-    private ExternalFile android4RootDirectory(Context context) {
-        try{
-            File f = new File(new URI(rootPathURI));
-            return new ExternalFile(this, DocumentFile.fromFile(f), context);
-        } catch (Exception e) {
-            //invalid rootPathURI
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String rootPathURI = preferences.getString(DocumentProviderSettingsActivity.KEY_PREF_EXTERNAL_SD_PATH_URI, "");
+        if (rootPathURI.isEmpty())
             throw buildRuntimeExceptionForInvalidFileURI(context);
-        }
-    }
 
-    private ExternalFile android5RootDirectory(Context context) {
         try {
             return new ExternalFile(this,
                                     DocumentFile.fromTreeUri(context, Uri.parse(rootPathURI)),
@@ -164,16 +175,10 @@ public class ExtsdDocumentsProvider implements IExternalDocumentProvider,
         // but they refer to the primary external storage anyway, so what currently is covered by the
         // "LocalDocumentsProvider"
 
-        // FIXME temporarily disabled for good
-        return false;
-        //return rootPathURI!=null && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return hasRemovableStorage && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-        if (key.equals(DocumentProviderSettingsActivity.KEY_PREF_EXTERNAL_SD_PATH_URI)) {
-            rootPathURI = preferences.getString(key, "");
-        }
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     }
-
 }

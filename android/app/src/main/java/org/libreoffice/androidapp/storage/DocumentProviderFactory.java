@@ -106,15 +106,6 @@ public final class DocumentProviderFactory {
         return providerNames;
     }
 
-    /**
-     * Returns the default provider.
-     *
-     * @return default provider.
-     */
-    public IDocumentProvider getDefaultProvider() {
-        return providers[0];
-    }
-
     public Set<OnSharedPreferenceChangeListener> getChangeListeners() {
         Set<OnSharedPreferenceChangeListener> listeners =
                 new HashSet<OnSharedPreferenceChangeListener>();

@@ -124,6 +124,10 @@ public class BrowserSelectorActivity extends AppCompatActivity {
         unregisterListeners();
         Log.d(LOGTAG, "Preference saved: " +
                 preferences.getString(preferenceKey, getString(R.string.directory_not_saved)));
+
+        // pass the result to whoever has called us
+        Intent resultIntent = new Intent();
+        setResult(resultCode, resultIntent);
         finish();
     }
 
