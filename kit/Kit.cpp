@@ -948,6 +948,20 @@ public:
             return;
         }
 
+        // Find a session matching our view / render settings.
+        const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
+        if (!session)
+        {
+            LOG_ERR("Session is not found. Maybe exited after rendering request.");
+            return;
+        }
+
+#ifdef FIXME_RENDER_SETTINGS
+        // if necessary select a suitable rendering view eg. with 'show non-printing chars'
+        if (tileCombined.getNormalizedViewId())
+            _loKitDocument->setView(session->getViewId());
+#endif
+
         // Render the whole area
         const double area = pixmapWidth * pixmapHeight;
         auto start = std::chrono::system_clock::now();
@@ -971,16 +985,6 @@ public:
         // Compress the area as tiles
         const int pixelWidth = tileCombined.getWidth();
         const int pixelHeight = tileCombined.getHeight();
-
-        int nViewId = tileCombined.getNormalizedViewId();
-        const auto it = std::find_if(_sessions.begin(), _sessions.end(), [nViewId](const std::pair<std::string, std::shared_ptr<ChildSession>>& val){ return (val.second)->getHash() == nViewId; });
-        const auto& session = it->second;
-
-        if (it == _sessions.end())
-        {
-            LOG_ERR("Session is not found. Maybe exited after rendering request.");
-            return;
-        }
 
         std::vector<TileDesc> renderedTiles;
         std::vector<TileDesc> duplicateTiles;
@@ -1717,12 +1721,8 @@ private:
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
         if (session->hasWatermark())
-        {
             session->_docWatermark.reset(new Watermark(_loKitDocument, session));
-            session->setHash(session->getWatermarkText());
-        }
-        else
-            session->setHash(0);
+        session->recalcCanonicalViewId(_sessions);
 
         return _loKitDocument;
     }
@@ -2046,7 +2046,7 @@ private:
     int _editorId;
     bool _editorChangeWarning;
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
-    std::map<std::string, std::shared_ptr<ChildSession>> _sessions;
+    SessionMap<ChildSession> _sessions;
 
     std::map<int, std::chrono::steady_clock::time_point> _lastUpdatedAt;
     std::map<int, int> _speedCount;

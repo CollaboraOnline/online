@@ -261,7 +261,7 @@ private:
     /// Client is using a text document?
     bool _isTextDocument;
 
-    /// Rotating clipboard remote access identifiers - protected by SessionMapMutex
+    /// Rotating clipboard remote access identifiers - protected by GlobalSessionMapMutex
     std::string _clipboardKeys[2];
 
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.

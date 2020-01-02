@@ -32,6 +32,7 @@
 #include "net/WebSocketHandler.hpp"
 
 #include "common/SigUtil.hpp"
+#include "common/Session.hpp"
 
 #if !MOBILEAPP
 #include "Admin.hpp"
@@ -481,7 +482,7 @@ private:
     std::chrono::system_clock::time_point _lastFileModifiedTime;
 
     /// All session of this DocBroker by ID.
-    std::map<std::string, std::shared_ptr<ClientSession> > _sessions;
+    SessionMap<ClientSession> _sessions;
 
     /// If we set the user-requested inital (on load) settings to be forced.
     std::set<std::string> _isInitialStateSet;

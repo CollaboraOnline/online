@@ -35,8 +35,8 @@ using namespace LOOLProtocol;
 
 using Poco::Path;
 
-static std::mutex SessionMapMutex;
-static std::unordered_map<std::string, std::weak_ptr<ClientSession>> SessionMap;
+static std::mutex GlobalSessionMapMutex;
+static std::unordered_map<std::string, std::weak_ptr<ClientSession>> GlobalSessionMap;
 
 ClientSession::ClientSession(const std::string& id,
                              const std::shared_ptr<DocumentBroker>& docBroker,
@@ -73,8 +73,8 @@ ClientSession::ClientSession(const std::string& id,
 // Can't take a reference in the constructor.
 void ClientSession::construct()
 {
-    std::unique_lock<std::mutex> lock(SessionMapMutex);
-    SessionMap[getId()] = shared_from_this();
+    std::unique_lock<std::mutex> lock(GlobalSessionMapMutex);
+    GlobalSessionMap[getId()] = shared_from_this();
 }
 
 ClientSession::~ClientSession()
@@ -82,8 +82,8 @@ ClientSession::~ClientSession()
     const size_t curConnections = --LOOLWSD::NumConnections;
     LOG_INF("~ClientSession dtor [" << getName() << "], current number of connections: " << curConnections);
 
-    std::unique_lock<std::mutex> lock(SessionMapMutex);
-    SessionMap.erase(getId());
+    std::unique_lock<std::mutex> lock(GlobalSessionMapMutex);
+    GlobalSessionMap.erase(getId());
 }
 
 static const char *stateToString(ClientSession::SessionState s)
@@ -878,7 +878,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std:
     try
     {
         TileDesc tileDesc = TileDesc::parse(tokens);
-        tileDesc.setNormalizedViewId(getHash());
+        tileDesc.setNormalizedViewId(getCanonicalViewId());
         docBroker->handleTileRequest(tileDesc, shared_from_this());
     }
     catch (const std::exception& exc)
@@ -896,7 +896,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
     try
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
-        tileCombined.setNormalizedViewId(getHash());
+        tileCombined.setNormalizedViewId(getCanonicalViewId());
         docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
     }
     catch (const std::exception& exc)
@@ -1719,7 +1719,7 @@ void ClientSession::dumpState(std::ostream& os)
 void ClientSession::handleTileInvalidation(const std::string& message,
     const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    docBroker->invalidateTiles(message, getHash());
+    docBroker->invalidateTiles(message, getCanonicalViewId());
 
     // Skip requesting new tiles if we don't have client visible area data yet.
     if(!_clientVisibleArea.hasSurface() ||
@@ -1744,7 +1744,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if( part == -1 ) // If no part is specified we use the part used by the client
         part = _clientSelectedPart;
 
-    int normalizedViewId = getHash();
+    int normalizedViewId = getCanonicalViewId();
 
     std::vector<TileDesc> invalidTiles;
     if(part == _clientSelectedPart || _isTextDocument)

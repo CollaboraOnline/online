@@ -710,10 +710,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);
     session->setWatermarkText(watermarkText);
-    if(!watermarkText.empty())
-        session->setHash(watermarkText);
-    else
-        session->setHash(0);
+    session->recalcCanonicalViewId(_sessions);
 
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
     const StorageBase::FileInfo fileInfo = _storage->getFileInfo();

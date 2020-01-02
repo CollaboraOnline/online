@@ -14,7 +14,9 @@
 #include <cassert>
 #include <memory>
 #include <mutex>
+#include <map>
 #include <ostream>
+#include <type_traits>
 
 #include <Poco/Buffer.h>
 #include <Poco/Path.h>
@@ -27,6 +29,39 @@
 #include "Message.hpp"
 #include "TileCache.hpp"
 #include "WebSocketHandler.hpp"
+
+class Session;
+
+template<class T>
+class SessionMap : public std::map<std::string, std::shared_ptr<T> >
+{
+    std::map<std::string, int> _canonicalIds;
+public:
+    SessionMap() {
+        static_assert(std::is_base_of<Session, T>::value, "sessions must have base of Session");
+    }
+    /// Generate a unique key for this set of view properties
+    int getCanonicalId(const std::string &viewProps)
+    {
+        if (viewProps.empty())
+            return 0;
+        for (auto &it : _canonicalIds) {
+            if (it.first == viewProps)
+                return it.second;
+        }
+        size_t id = _canonicalIds.size() + 1;
+        _canonicalIds[viewProps] = id;
+        return id;
+    }
+    std::shared_ptr<T> findByCanonicalId(int id)
+    {
+        for (auto &it : *this) {
+            if (it.second->getCanonicalViewId() == id)
+                return it.second;
+        }
+        return std::shared_ptr<T>();
+    }
+};
 
 /// Base class of a WebSocket session.
 class Session : public WebSocketHandler
@@ -121,11 +156,11 @@ public:
 
     const std::string& getJailedFilePathAnonym() const { return _jailedFilePathAnonym; }
 
-    int getHash() { return _hash; }
-
-    void setHash(const std::string& text);
-
-    void setHash(const int hash) { _hash = hash; };
+    int  getCanonicalViewId() { return _canonicalViewId; }
+    template<class T> void recalcCanonicalViewId(SessionMap<T> &map)
+    {
+        _canonicalViewId = map.getCanonicalId(_watermarkText);
+    }
 
 protected:
     Session(const std::string& name, const std::string& id, bool readonly);
@@ -218,10 +253,8 @@ private:
     /// Language for the document based on what the user has in the UI.
     std::string _lang;
 
-    /// Hash for normalizedViewId which is basically an identity for the tile to
-    /// choose what to render on and send it to its subscribers
-    /// it is the close-to-unique integer representation of a string like Watermarks etc.
-    int _hash;
+    /// the canonical id unique to the set of rendering properties of this session
+    int _canonicalViewId;
 };
 
 #endif

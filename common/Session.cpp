@@ -255,23 +255,6 @@ void Session::getIOStats(uint64_t &sent, uint64_t &recv)
     }
 }
 
-void Session::setHash(const std::string& text)
- {
-    unsigned int hash = 0x811C9DC5;
-    unsigned int prime = 0x1000193;
-
-    if (!text.empty())
-    {
-       for (unsigned int i = 0; i < text.length(); ++i)
-       {
-           hash += hash ^ text[i];
-           hash *= prime;
-       }
-    }
-    _hash = abs(static_cast<int>(hash));
- }
-
-
 void Session::dumpState(std::ostream& os)
 {
     WebSocketHandler::dumpState(os);
