@@ -12,6 +12,10 @@ android {
         targetSdkVersion 28
     }
 
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+
     buildTypes {
         debug {
             resValue "string", "app_name", "${liboAppName} Debug"

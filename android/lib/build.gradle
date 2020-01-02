@@ -18,6 +18,10 @@ android {
         }
     }
 
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+
     buildTypes {
         debug {
             buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
