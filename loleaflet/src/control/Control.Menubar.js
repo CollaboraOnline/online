@@ -282,9 +282,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:ModifyPage'},
 				{uno: '.uno:SlideChangeWindow'},
 				{uno: '.uno:CustomAnimation'},
-				{uno: '.uno:MasterSlidesPanel'}]
+				{uno: '.uno:MasterSlidesPanel'},
 				{type: 'separator'},
-				{uno: '.uno:Sidebar'},
+				{uno: '.uno:Sidebar'}]
 			},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
