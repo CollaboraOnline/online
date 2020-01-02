@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="local_file_system">Sistema de ficheros llocal</string>
+    <string name="local_documents">Direutoriu de documentos</string>
+    <string name="filter_everything">Too</string>
+    <string name="sort_za">Z-A</string>
+    <string name="sort_az">A-Z</string>
+    <string name="pref_file_explorer_title">Distribución del xestor de ficheros</string>
+    <string name="pref_filter_title">Peñera de ficheros predeterminada</string>
+    <string name="pref_show_hidden_files">Ficheros/carpetes anubríos</string>
+    <string name="pref_category_explorer">Axustes del xestor de ficheros</string>
+    <string name="app_name_settings">Axustes</string>
+    <string name="list_view">Llista</string>
+    <string name="sort">Ordenar por</string>
+    <string name="filter">Peñerar por</string>
+    <string name="default_document_name">ensin títulu</string>
+    <string name="action_settings">Axustes</string>
+    <string name="action_about">Tocante a</string>
+    <string name="title_browser">Tolos ficheros</string>
+    <string name="open">Abrir</string>
+    <string name="filter_documents">Documentos</string>
+    <string name="document_locations">Allugamientos de documentos</string>
+</resources>

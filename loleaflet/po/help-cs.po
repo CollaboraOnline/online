@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-31 09:37+0000\n"
+"PO-Revision-Date: 2020-01-02 13:23+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -1227,97 +1227,95 @@ msgstr "Práce s obrázky"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
-msgstr ""
+msgstr "V <span class=\"productname\">%productName</span> lze do textového dokumentu vkládat obrázky z počítače nebo z cloudového úložiště. Do dokumentu se vždy ukládá celý obrázek, ne pouze odkaz na něj."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">Insert image</span> icon allows you to choose an image from the cloud storage's folders and shares."
-msgstr ""
+msgstr "<span class=\"def\">Vložit obrázek:</span> Po klepnutí na ikonu <span class=\"ui\">Vložit obrázek</span> budete moci vybrat obrázek ze složek a sdílených složek cloudového úložiště."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid "<span class=\"def\">Insert local image:</span> opens the browser file picker to upload the image from your local computer and insert it into the document."
-msgstr ""
+msgstr "<span class=\"def\">Vložit místní obrázek:</span> otevře souborový dialog prohlížeče, v němž můžete nahrát soubor z počítače a vložit jej do dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
 msgid "Images can be resized, rotated and anchored. Text can be wrapped around the image. Select the image and open the context menu. Use the images handles to resize the image with the mouse."
-msgstr ""
+msgstr "U obrázků lze měnit velikost, otáčet je a ukotvovat. Text může okolo obrázku obtékat. Nastavení jsou k dispozici po výběru obrázku a otevření místní nabídky. Chcete-li změnit velikost obrázku myší, použijte jeho úchyty."
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
-#, fuzzy
-#| msgid "Go to end of document"
 msgid "Comments in documents"
-msgstr "Přejít na konec dokumentu"
+msgstr "Komentáře v dokumentu"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
-msgstr ""
+msgstr "Komentáře se v <span class=\"productname\">%productName</span> vkládají na místa, která vyžadují od čtenáře zvláštní pozornost. Zobrazují se vpravo spolu se jménem autora a datem."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:327-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."
-msgstr ""
+msgstr "Chcete-li na komentář odpovědět, přesunout jej nebo smazat, klepněte na ikonu podnabídky (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">)."
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Kontrola pravopisu"
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> umožňuje kontrolovat pravopis v textových dokumentech, sešitech a prezentacích. Chybná slova jsou podtržena červenou vlnovkou. Klepnutím pravým tlačítkem myši otevřete místní nabídku s návrhy na opravu."
 
 #: html/loleaflet-help.html%2Bdiv.p:331-5
 msgid "To systematically spell-check the whole document use the <span class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
-msgstr ""
+msgstr "Systematickou kontrolu pravopisu celého dokumentu zahájíte volbou <span class=\"ui\">Pravopis</span> z nabídky <span class=\"ui\">Nástroje</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:337-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr ""
+msgstr "Sešit uložený online upravujete stejně jako sešit v desktopové aplikaci. Stejné zůstávají operace jako zadávání dat či výběr oblastí, sloupců, řádků nebo listů. Příkazy v sešitu spustíte pomocí klávesnice, nabídek nebo nástrojové lišty. Podporováno je také přetahování obsahu buněk, které vyplní do buněk data. Příkazy vyjmout, kopírovat a vložit jsou k dispozici v místní nabídce. Stisknete-li po zadání dat <span class=\"kbd\">Tab</span>, kurzor se přesune do buňky následující vpravo, po stisknutí klávesy <span class=\"kbd\">Enter</span> se přesune do buňky níže; tím snáze zadáte další záznam."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "Vzorce se zapisují do lišty vzorce. Zadejte „=“ a následně vzorec."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "Ve vzorcích jsou k dispozici všechny funkce sešitu a uplatňují se matematická pravidla."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
-msgstr ""
+msgstr "Zápis vzorců by měl být zřejmý všem uživatelům tabulkových procesorů. Podrobnosti jsou uvedeny ve <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">specifikaci OASIS OpenFormula</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
-msgstr ""
+msgstr "<span class=\"def\">Přímé formátování:</span> Buňky, sloupce, řádky a listy můžete formátovat přímo příkazy z nabídek, nástrojové lišty nebo místních nabídek. Přímé formátování se použije pouze na aktuálně vybraný objekt. Chcete-li formátovat buňky, použijte buď nabídku, nebo stiskněte <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">1</span>. Otevřete tím dialogové okno umožňující nastavit komplexní a vlastní formátování čísla, písma, ohraničení, pozadí, ochranu buňky a další možnosti."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."
-msgstr ""
+msgstr "<span class=\"def\">Řazení dat:</span> Seznam čísel nebo textu můžete řadit vzestupně nebo sestupně. <span class=\"productname\">%productName</span> automaticky rozpozná buňky tvořící záhlaví a sousedící buňky, o které rozšíří výběr."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:351-5
 msgid "<span class=\"def\">Filtering data:</span> Filters and advanced filters allow you to work on certain filtered rows (records) of a data range. In the spreadsheets in <span class=\"productname\">%productName</span> there are various possibilities for applying filters."
-msgstr ""
+msgstr "<span class=\"def\">Filtrování dat:</span> Filtry a rozšířené filtry umožňují pracovat pouze s určitými řádky (záznamy) oblasti dat. Sešity <span class=\"productname\">%productName</span> nabízí několik možností, jak filtry používat."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:354-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
-msgstr ""
+msgstr "Funkce <span class=\"ui\">Automatický filtr</span> umožňuje rychle omezit datové záznamy na ty, které jsou stejné jako položka vybraná v datovém poli."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:357-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
-msgstr ""
+msgstr "V dialogovém okně <span class=\"ui\">Standardní filtr</span> můžete také stanovit rozmezí, v němž se mají hodnoty určitého datového pole nacházet. V tomto filtru můžete spojovat podmínky logickými operátory A nebo NEBO."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:358-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
-msgstr ""
+msgstr "<span class=\"ui\">Rozšířený filtr</span> umožňuje použít až osm podmínek. V tomto filtru zadáváte podmínky přímo do sešitu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:360-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
-msgstr ""
+msgstr "<span class=\"def\">Souhrny:</span> hierarchická data můžete zobrazit pomocí souhrnu: seskupíte řádky a sloupce a poté můžete tyto skupiny rozbalovat a sbalovat jediným klepnutím."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:362-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"
-msgstr ""
+msgstr "<span class=\"def\">Platnost dat:</span> Pro každou buňku můžete definovat platné položky. Neplatné položky se do buňky neuloží. Chcete-li platnost dat povolit:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:365-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
-msgstr ""
+msgstr "Zvolte <span class=\"ui\">Platnost</span> z nabídky <span class=\"ui\">Data</span>. Otevře se dialogové okno <span class=\"ui\">Platnost</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."

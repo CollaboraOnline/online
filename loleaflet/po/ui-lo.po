@@ -8,40 +8,41 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-13 12:22+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-01-02 13:23+0000\n"
+"Last-Translator: Saikeo <kavhanxay@hotmail.com>\n"
+"Language-Team: Lao <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/lo/>\n"
+"Language: lo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /lo/libo_online/loleaflet-ui-lo.po\n"
 "X-Pootle-Revision: 3937965\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
-msgstr ""
+msgstr "ຫນ້າຕ່າງແອັດມິນ"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "ການຕັ້ງຄ່າ"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "ພາບລວມ"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(ປະຈຸບັນ)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "ວິເຄາະ"
 
 #: admin/admin.strings.js:11
 msgid "History"
-msgstr ""
+msgstr "ປະຫວັດ"
 
 #: admin/admin.strings.js:12
 msgid "Dashboard"
@@ -49,47 +50,47 @@ msgstr ""
 
 #: admin/admin.strings.js:13
 msgid "Users online"
-msgstr ""
+msgstr "ຜູ້ໃຊ້ອອນໄລນ໌"
 
 #: admin/admin.strings.js:14
 msgid "User Name"
-msgstr ""
+msgstr "ຊື່ຜູ້ໃຊ້"
 
 #: admin/admin.strings.js:15
 msgid "Documents opened"
-msgstr ""
+msgstr "ເອກະສານໄດ້ຖືກເປີດແລ້ວ"
 
 #: admin/admin.strings.js:16
 msgid "Number of Documents"
-msgstr ""
+msgstr "ຈຳນວນຂອງເອກະສານ"
 
 #: admin/admin.strings.js:17
 msgid "Memory consumed"
-msgstr ""
+msgstr "ຫນ່ວຍຄວາມຈຳທີ່ໃຊ້ໄປ"
 
 #: admin/admin.strings.js:18
 msgid "Bytes sent"
-msgstr ""
+msgstr "ຈຳນວນໄບທ໌ທີ່ສົງໄປ"
 
 #: admin/admin.strings.js:19
 msgid "Bytes received"
-msgstr ""
+msgstr "ຈຳນວນໄບທ໌ທີ່ໄດ້ຮັບ"
 
 #: admin/admin.strings.js:20
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin/admin.strings.js:21
 msgid "Document"
-msgstr ""
+msgstr "ເອກະສານ"
 
 #: admin/admin.strings.js:22
 msgid "Number of views"
-msgstr ""
+msgstr "ຈຳນວນການເຂົ້າໄປເບິງ"
 
 #: admin/admin.strings.js:23
 msgid "Elapsed time"
-msgstr ""
+msgstr "ເວລາທີ່ຜ່ານໄປ"
 
 #: admin/admin.strings.js:24
 msgid "Idle time"
@@ -97,7 +98,7 @@ msgstr ""
 
 #: admin/admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "ດັດແປງ"
 
 #: admin/admin.strings.js:26
 msgid "Kill"
@@ -105,24 +106,24 @@ msgstr ""
 
 #: admin/admin.strings.js:27
 msgid "Graphs"
-msgstr ""
+msgstr "ກຣາຟ"
 
 #: admin/admin.strings.js:28
 msgid "Memory Graph"
-msgstr ""
+msgstr "ກຣາຟຄວາມຈຳ"
 
 #: admin/admin.strings.js:29
 msgid "CPU Graph"
-msgstr ""
+msgstr "ກຣາຟ CPU"
 
 #: admin/admin.strings.js:30
 msgid "Network Graph"
-msgstr ""
+msgstr "ກຣາຟເນັດເວີກ"
 
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:251
 #: src/layer/tile/TileLayer.js:383
 msgid "Save"
-msgstr ""
+msgstr "ບັນທຶກ"
 
 #: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"
@@ -154,11 +155,11 @@ msgstr ""
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
-msgstr ""
+msgstr "ເອກະສານ:"
 
 #: admin/admin.strings.js:40
 msgid "Expired:"
-msgstr ""
+msgstr "ຫມົດອາຍຸ:"
 
 #: admin/admin.strings.js:41
 msgid "Refresh"
@@ -166,7 +167,7 @@ msgstr ""
 
 #: admin/admin.strings.js:42
 msgid "Shutdown Server"
-msgstr ""
+msgstr "ປິດເຊີເວີ"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
@@ -174,11 +175,11 @@ msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
-msgstr ""
+msgstr "ໄດ້ຮັບ"
 
 #: admin/src/AdminSocketAnalytics.js:223
 msgid "Sent"
-msgstr ""
+msgstr "ສົ່ງໄປແລ້ວ"
 
 #: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
