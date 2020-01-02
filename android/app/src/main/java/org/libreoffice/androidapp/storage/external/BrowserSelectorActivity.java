@@ -1,3 +1,12 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.libreoffice.androidapp.storage.external;
 
 import android.annotation.TargetApi;
@@ -9,6 +18,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.DocumentsContract;
 import android.util.Log;
 
 import org.libreoffice.androidapp.R;
@@ -55,11 +65,7 @@ public class BrowserSelectorActivity extends AppCompatActivity {
     }
 
     private void findSDCard() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            useDocumentTreeBrowser();
-        } else {
-            useInternalBrowser(DocumentProviderFactory.EXTSD_PROVIDER_INDEX);
-        }
+        useDocumentTreeBrowser(DocumentProviderFactory.EXTSD_PROVIDER_INDEX);
     }
 
     private void useInternalBrowser(int providerIndex) {
@@ -67,18 +73,25 @@ public class BrowserSelectorActivity extends AppCompatActivity {
                 (IExternalDocumentProvider) DocumentProviderFactory.getInstance()
                         .getProvider(providerIndex);
         String previousDirectoryPath = preferences.getString(preferenceKey, provider.guessRootURI(this));
+
         Intent i = new Intent(this, DirectoryBrowserActivity.class);
         i.putExtra(DirectoryBrowserActivity.DIRECTORY_PATH_EXTRA, previousDirectoryPath);
         startActivityForResult(i, REQUEST_INTERNAL_BROWSER);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void useDocumentTreeBrowser() {
+    private void useDocumentTreeBrowser(int providerIndex) {
+        IExternalDocumentProvider provider =
+                (IExternalDocumentProvider) DocumentProviderFactory.getInstance()
+                        .getProvider(providerIndex);
+        String previousDirectoryPath = preferences.getString(preferenceKey, provider.guessRootURI(this));
+
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, previousDirectoryPath);
         startActivityForResult(i, REQUEST_DOCUMENT_TREE);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //listeners are registered here as onActivityResult is called before onResume
@@ -152,3 +165,5 @@ public class BrowserSelectorActivity extends AppCompatActivity {
         }
     }
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
