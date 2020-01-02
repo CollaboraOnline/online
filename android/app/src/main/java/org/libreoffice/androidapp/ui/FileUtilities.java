@@ -101,6 +101,7 @@ public class FileUtilities {
 
         // Other
         mExtnMap.put(".csv",  CALC);
+        mExtnMap.put(".txt",  DOC);
         mExtnMap.put(".wps",  DOC);
         mExtnMap.put(".key",  IMPRESS);
         mExtnMap.put(".abw",  DOC);
