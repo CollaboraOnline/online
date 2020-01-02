@@ -68,7 +68,10 @@ public class DocumentProviderSettingsActivity extends AppCompatActivity {
             addPreferencesFromResource(R.xml.documentprovider_preferences);
 
             Preference extSDPreference = findPreference(KEY_PREF_EXTERNAL_SD_PATH_URI);
+
+            /* FIXME fix or remove
             Preference otgPreference = findPreference(KEY_PREF_OTG_PATH_URI);
+            */
 
             extSDPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -78,6 +81,8 @@ public class DocumentProviderSettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+
+            /* FIXME fix or remove
             otgPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -86,6 +91,7 @@ public class DocumentProviderSettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+            */
         }
 
         private void startBrowserSelectorActivity(String prefKey, String mode) {
@@ -97,3 +103,5 @@ public class DocumentProviderSettingsActivity extends AppCompatActivity {
 
     }
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

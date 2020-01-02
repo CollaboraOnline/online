@@ -33,11 +33,11 @@
             android:key="pref_extsd_path_uri"
             android:title="@string/external_sd_path"
             app:iconSpaceReserved="false" />
-        <Preference
+        <!-- FIXME fix or remove Preference
             android:key="pref_otg_path_uri"
             android:summary="@string/otg_warning"
             android:title="@string/otg_device_path"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false" /-->
     </PreferenceCategory>
 
 </PreferenceScreen>
