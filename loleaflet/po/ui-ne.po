@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-02 15:48+0100\n"
+"POT-Creation-Date: 2020-01-03 15:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -268,7 +268,7 @@ msgstr "टाइमस्ट्याम्प"
 msgid "Jump to state"
 msgstr "स्टेटमा जानुहोस्"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2437
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2459
 msgid "You"
 msgstr "तपाईँ"
 
@@ -321,7 +321,7 @@ msgid "Fixed size"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:736
-#: src/control/Control.Toolbar.js:1566
+#: src/control/Control.Toolbar.js:1588
 msgid "None"
 msgstr "कुनै पनि होइन"
 
@@ -370,7 +370,6 @@ msgid "Columns"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1494
-#: src/control/Control.Menubar.js:616 src/control/Control.Menubar.js:667
 #: src/control/Control.Toolbar.js:945
 msgid "Insert table"
 msgstr "तालिका घुसाउनुहोस्"
@@ -378,11 +377,11 @@ msgstr "तालिका घुसाउनुहोस्"
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:451
-#: src/control/Control.Toolbar.js:1953
+#: src/control/Control.Toolbar.js:1975
 msgid "None (Do not check spelling)"
 msgstr "कुनै पनि होइन (हिज्जे जाँच नगर्नुहोस्)"
 
-#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:465
+#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:456
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "रद्द गर्नुहोस्"
@@ -522,14 +521,7 @@ msgstr "Excel स्प्रेडसिट (.xlsx)"
 msgid "Export as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:640 src/control/Control.Menubar.js:659
-#: src/control/Control.Menubar.js:669
-#, fuzzy
-#| msgid "Insert shapes"
-msgid "Insert Shape"
-msgstr "पाना घुसाउनुहोस्"
-
-#: src/control/Control.Menubar.js:739 src/control/Control.Toolbar.js:1952
+#: src/control/Control.Menubar.js:739 src/control/Control.Toolbar.js:1974
 msgid "Reset to Default Language"
 msgstr "पूर्वनिर्धारित भाषामा पनु स्थापित गर्नुहोस्"
 
@@ -633,107 +625,107 @@ msgstr "सधैँ सम्पादकलाई पछ्याउनुह�
 msgid "Current"
 msgstr "हालको"
 
-#: src/control/Control.Toolbar.js:1217
+#: src/control/Control.Toolbar.js:1223
 msgid "%user has joined"
 msgstr "%user सहभागी हुनुभयो"
 
-#: src/control/Control.Toolbar.js:1218
+#: src/control/Control.Toolbar.js:1224
 msgid "%user has left"
 msgstr "%user ले छोड्नु भयो"
 
-#: src/control/Control.Toolbar.js:1531
+#: src/control/Control.Toolbar.js:1553
 msgid "Number of Sheets"
 msgstr "पानाका सङ्ख्याहरू"
 
-#: src/control/Control.Toolbar.js:1536
+#: src/control/Control.Toolbar.js:1558
 msgid "Selected range of cells"
 msgstr "छानिएको सेलको दायरा"
 
-#: src/control/Control.Toolbar.js:1541 src/control/Control.Toolbar.js:1598
+#: src/control/Control.Toolbar.js:1563 src/control/Control.Toolbar.js:1620
 msgid "Entering text mode"
 msgstr "पाठ मोडमा प्रवेश गर्दै"
 
-#: src/control/Control.Toolbar.js:1550 src/control/Control.Toolbar.js:1603
+#: src/control/Control.Toolbar.js:1572 src/control/Control.Toolbar.js:1625
 msgid "Selection Mode"
 msgstr "चयन मोड"
 
-#: src/control/Control.Toolbar.js:1555
+#: src/control/Control.Toolbar.js:1577
 msgid "Choice of functions"
 msgstr "प्रकार्यहरूको छनौट"
 
-#: src/control/Control.Toolbar.js:1559
+#: src/control/Control.Toolbar.js:1581
 msgid "Average"
 msgstr "औसत"
 
-#: src/control/Control.Toolbar.js:1560
+#: src/control/Control.Toolbar.js:1582
 msgid "CountA"
 msgstr "CountA"
 
-#: src/control/Control.Toolbar.js:1561
+#: src/control/Control.Toolbar.js:1583
 msgid "Count"
 msgstr "Count"
 
-#: src/control/Control.Toolbar.js:1562
+#: src/control/Control.Toolbar.js:1584
 msgid "Maximum"
 msgstr "अधिकतम"
 
-#: src/control/Control.Toolbar.js:1563
+#: src/control/Control.Toolbar.js:1585
 msgid "Minimum"
 msgstr "न्युनतम"
 
-#: src/control/Control.Toolbar.js:1564
+#: src/control/Control.Toolbar.js:1586
 msgid "Sum"
 msgstr "योगफल"
 
-#: src/control/Control.Toolbar.js:1565
+#: src/control/Control.Toolbar.js:1587
 msgid "Selection count"
 msgstr "छनौट गणना"
 
-#: src/control/Control.Toolbar.js:1588
+#: src/control/Control.Toolbar.js:1610
 msgid "Number of Pages"
 msgstr "पृष्ठहरूको संख्या"
 
-#: src/control/Control.Toolbar.js:1593
+#: src/control/Control.Toolbar.js:1615
 msgid "Word Counter"
 msgstr "शब्द गणक"
 
-#: src/control/Control.Toolbar.js:1628
+#: src/control/Control.Toolbar.js:1650
 msgid "Number of Slides"
 msgstr "स्लाइडहरूको सङ्ख्या"
 
-#: src/control/Control.Toolbar.js:1665
+#: src/control/Control.Toolbar.js:1687
 msgid "%n users"
 msgstr "%n प्रयोगकर्ताहरू"
 
-#: src/control/Control.Toolbar.js:1666
+#: src/control/Control.Toolbar.js:1688
 msgid "1 user"
 msgstr "1 प्रयोगकर्ता"
 
-#: src/control/Control.Toolbar.js:1667
+#: src/control/Control.Toolbar.js:1689
 msgid "0 users"
 msgstr "0 प्रयोगकर्ता"
 
-#: src/control/Control.Toolbar.js:2048
+#: src/control/Control.Toolbar.js:2070
 msgid "Style"
 msgstr "शैली"
 
-#: src/control/Control.Toolbar.js:2071
+#: src/control/Control.Toolbar.js:2093
 msgid "Font"
 msgstr "फन्ट"
 
-#: src/control/Control.Toolbar.js:2097
+#: src/control/Control.Toolbar.js:2119
 msgid "Previous slide"
 msgstr "अघिल्लो स्लाइड"
 
-#: src/control/Control.Toolbar.js:2098
+#: src/control/Control.Toolbar.js:2120
 msgid "Next slide"
 msgstr "पछिल्लो स्लाइड"
 
-#: src/control/Control.Toolbar.js:2156
+#: src/control/Control.Toolbar.js:2178
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "धेरै प्रयोगकर्ताहरू सँग विवादास्पद अनडू/रिडू। कृपया समाधान गर्नको लागि कागजात मर्मत प्रयोग गर्नुहोस्"
 
-#: src/control/Control.Toolbar.js:2443
+#: src/control/Control.Toolbar.js:2465
 msgid "Readonly"
 msgstr "पढ्ने मात्र"
 
@@ -885,23 +877,23 @@ msgstr "सङ्ग्रह गर्दै..."
 msgid "Renaming..."
 msgstr "पुन: नामाकरण गर्दै"
 
-#: src/control/Toolbar.js:363
+#: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
 msgstr "द्वारा यो संस्करणको %productName संचालित छ"
 
-#: src/control/Toolbar.js:458
+#: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:460
+#: src/control/Toolbar.js:451
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:461
+#: src/control/Toolbar.js:452
 msgid "Link"
 msgstr ""
 
-#: src/control/Toolbar.js:464
+#: src/control/Toolbar.js:455
 msgid "OK"
 msgstr ""
 
@@ -1207,6 +1199,11 @@ msgstr "टेम्प्लेटबाट नयाँ फाइल सिर
 #: src/map/handler/Map.WOPI.js:374
 msgid "Creating copy..."
 msgstr "प्रतिलिपि बनाउदै..."
+
+#, fuzzy
+#~| msgid "Insert shapes"
+#~ msgid "Insert Shape"
+#~ msgstr "पाना घुसाउनुहोस्"
 
 #~ msgid "Function"
 #~ msgstr "प्रकार्य"

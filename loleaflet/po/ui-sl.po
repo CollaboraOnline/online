@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-02 15:48+0100\n"
-"PO-Revision-Date: 2019-11-05 17:53+0100\n"
+"POT-Creation-Date: 2020-01-03 15:11+0100\n"
+"PO-Revision-Date: 2020-01-03 12:23+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: sl.libreoffice.org <users@sl.libreoffice.org>\n"
+"Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
-"X-Generator: Poedit 2.2.4\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -266,7 +266,7 @@ msgstr "Časovni žig"
 msgid "Jump to state"
 msgstr "Skoči na stanje"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2437
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2459
 msgid "You"
 msgstr "Vi"
 
@@ -292,62 +292,60 @@ msgstr "Brez barve"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Linearno"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "Osno"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "Radialno"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Elipsoidno"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "Pravokotno"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "Kvadratno"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "Fiksna velikost"
 
 #: src/control/Control.JSDialogBuilder.js:736
-#: src/control/Control.Toolbar.js:1566
+#: src/control/Control.Toolbar.js:1588
 msgid "None"
 msgstr "Brez"
 
 #: src/control/Control.JSDialogBuilder.js:739
-#, fuzzy
-#| msgid "No color"
 msgid "Color"
-msgstr "Brez barve"
+msgstr "Barvno"
 
 #: src/control/Control.JSDialogBuilder.js:742
 msgid "Gradient"
-msgstr ""
+msgstr "Preliv"
 
 #: src/control/Control.JSDialogBuilder.js:745
 msgid "Hatching"
-msgstr ""
+msgstr "Šrafiranje"
 
 #: src/control/Control.JSDialogBuilder.js:749
 msgid "Pattern"
-msgstr ""
+msgstr "Vzorec"
 
 #: src/control/Control.JSDialogBuilder.js:882
 msgid "From"
-msgstr ""
+msgstr "Od"
 
 #: src/control/Control.JSDialogBuilder.js:885
 msgid "To"
-msgstr ""
+msgstr "Do"
 
 #: src/control/Control.JSDialogBuilder.js:1017
 msgid "Font Name"
@@ -366,7 +364,6 @@ msgid "Columns"
 msgstr "Stolpci"
 
 #: src/control/Control.JSDialogBuilder.js:1494
-#: src/control/Control.Menubar.js:616 src/control/Control.Menubar.js:667
 #: src/control/Control.Toolbar.js:945
 msgid "Insert table"
 msgstr "Vstavi tabelo"
@@ -374,11 +371,11 @@ msgstr "Vstavi tabelo"
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:451
-#: src/control/Control.Toolbar.js:1953
+#: src/control/Control.Toolbar.js:1975
 msgid "None (Do not check spelling)"
 msgstr "Brez (ne preverjaj črkovanja)"
 
-#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:465
+#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:456
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "Prekliči"
@@ -518,12 +515,7 @@ msgstr "Preglednica Excel (.xslx)"
 msgid "Export as"
 msgstr "Izvozi kot"
 
-#: src/control/Control.Menubar.js:640 src/control/Control.Menubar.js:659
-#: src/control/Control.Menubar.js:669
-msgid "Insert Shape"
-msgstr "Vstavi lik"
-
-#: src/control/Control.Menubar.js:739 src/control/Control.Toolbar.js:1952
+#: src/control/Control.Menubar.js:739 src/control/Control.Toolbar.js:1974
 msgid "Reset to Default Language"
 msgstr "Ponastavi na privzeti jezik"
 
@@ -565,7 +557,7 @@ msgstr "Ali ste prepričani, da želite izbrisati to stran?"
 
 #: src/control/Control.Toolbar.js:838
 msgid "Default Style"
-msgstr ""
+msgstr "Privzeti slog"
 
 #: src/control/Control.Toolbar.js:889
 msgid "Borders"
@@ -584,10 +576,8 @@ msgid "Insert shapes"
 msgstr "Vstavi like"
 
 #: src/control/Control.Toolbar.js:958 src/layer/tile/WriterTileLayer.js:76
-#, fuzzy
-#| msgid "Text orientation"
 msgid "Toggle Page Orientation"
-msgstr "Usmerjenost besedila"
+msgstr "Preklopi usmerjenost strani"
 
 #: src/control/Control.Toolbar.js:1078 src/layer/tile/CalcTileLayer.js:180
 msgid "First sheet"
@@ -627,107 +617,107 @@ msgstr "Vedno sledi urejevalcu"
 msgid "Current"
 msgstr "Trenutno"
 
-#: src/control/Control.Toolbar.js:1217
+#: src/control/Control.Toolbar.js:1223
 msgid "%user has joined"
 msgstr "Pridružil se je uporabnik %user"
 
-#: src/control/Control.Toolbar.js:1218
+#: src/control/Control.Toolbar.js:1224
 msgid "%user has left"
 msgstr "Odšel je uporabnik %user"
 
-#: src/control/Control.Toolbar.js:1531
+#: src/control/Control.Toolbar.js:1553
 msgid "Number of Sheets"
 msgstr "Število delovnih listov"
 
-#: src/control/Control.Toolbar.js:1536
+#: src/control/Control.Toolbar.js:1558
 msgid "Selected range of cells"
 msgstr "Izbran obseg celic"
 
-#: src/control/Control.Toolbar.js:1541 src/control/Control.Toolbar.js:1598
+#: src/control/Control.Toolbar.js:1563 src/control/Control.Toolbar.js:1620
 msgid "Entering text mode"
 msgstr "Vstopanje v besedilni način"
 
-#: src/control/Control.Toolbar.js:1550 src/control/Control.Toolbar.js:1603
+#: src/control/Control.Toolbar.js:1572 src/control/Control.Toolbar.js:1625
 msgid "Selection Mode"
 msgstr "Izbirni način"
 
-#: src/control/Control.Toolbar.js:1555
+#: src/control/Control.Toolbar.js:1577
 msgid "Choice of functions"
 msgstr "Izbor funkcij"
 
-#: src/control/Control.Toolbar.js:1559
+#: src/control/Control.Toolbar.js:1581
 msgid "Average"
 msgstr "Povprečno"
 
-#: src/control/Control.Toolbar.js:1560
+#: src/control/Control.Toolbar.js:1582
 msgid "CountA"
 msgstr "ŠtevecA"
 
-#: src/control/Control.Toolbar.js:1561
+#: src/control/Control.Toolbar.js:1583
 msgid "Count"
 msgstr "Števec"
 
-#: src/control/Control.Toolbar.js:1562
+#: src/control/Control.Toolbar.js:1584
 msgid "Maximum"
 msgstr "Največ"
 
-#: src/control/Control.Toolbar.js:1563
+#: src/control/Control.Toolbar.js:1585
 msgid "Minimum"
 msgstr "Najmanj"
 
-#: src/control/Control.Toolbar.js:1564
+#: src/control/Control.Toolbar.js:1586
 msgid "Sum"
 msgstr "Vsota"
 
-#: src/control/Control.Toolbar.js:1565
+#: src/control/Control.Toolbar.js:1587
 msgid "Selection count"
 msgstr "Seštevek izbora"
 
-#: src/control/Control.Toolbar.js:1588
+#: src/control/Control.Toolbar.js:1610
 msgid "Number of Pages"
 msgstr "Število strani"
 
-#: src/control/Control.Toolbar.js:1593
+#: src/control/Control.Toolbar.js:1615
 msgid "Word Counter"
 msgstr "Števec besed"
 
-#: src/control/Control.Toolbar.js:1628
+#: src/control/Control.Toolbar.js:1650
 msgid "Number of Slides"
 msgstr "Število prosojnic"
 
-#: src/control/Control.Toolbar.js:1665
+#: src/control/Control.Toolbar.js:1687
 msgid "%n users"
 msgstr "%n uporabnikov"
 
-#: src/control/Control.Toolbar.js:1666
+#: src/control/Control.Toolbar.js:1688
 msgid "1 user"
 msgstr "1 uporabnik"
 
-#: src/control/Control.Toolbar.js:1667
+#: src/control/Control.Toolbar.js:1689
 msgid "0 users"
 msgstr "0 uporabnikov"
 
-#: src/control/Control.Toolbar.js:2048
+#: src/control/Control.Toolbar.js:2070
 msgid "Style"
 msgstr "Slog"
 
-#: src/control/Control.Toolbar.js:2071
+#: src/control/Control.Toolbar.js:2093
 msgid "Font"
 msgstr "Pisava"
 
-#: src/control/Control.Toolbar.js:2097
+#: src/control/Control.Toolbar.js:2119
 msgid "Previous slide"
 msgstr "Prejšnja prosojnica"
 
-#: src/control/Control.Toolbar.js:2098
+#: src/control/Control.Toolbar.js:2120
 msgid "Next slide"
 msgstr "Naslednja prosojnica"
 
-#: src/control/Control.Toolbar.js:2156
+#: src/control/Control.Toolbar.js:2178
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Spor razveljavljanja/ponavljanja med več uporabniki. Uporabite popravilo dokumenta za razrešitev težave."
 
-#: src/control/Control.Toolbar.js:2443
+#: src/control/Control.Toolbar.js:2465
 msgid "Readonly"
 msgstr "Samo za branje"
 
@@ -879,23 +869,23 @@ msgstr "Shranjevanje ..."
 msgid "Renaming..."
 msgstr "Preimenovanje ..."
 
-#: src/control/Toolbar.js:363
+#: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
 msgstr "To različico %productName poganja"
 
-#: src/control/Toolbar.js:458
+#: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
 msgstr "Vstavi hiperpovezavo"
 
-#: src/control/Toolbar.js:460
+#: src/control/Toolbar.js:451
 msgid "Text"
 msgstr "Besedilo"
 
-#: src/control/Toolbar.js:461
+#: src/control/Toolbar.js:452
 msgid "Link"
 msgstr "Povezava"
 
-#: src/control/Toolbar.js:464
+#: src/control/Toolbar.js:455
 msgid "OK"
 msgstr "V redu"
 
@@ -909,7 +899,7 @@ msgstr "Pri povezovanju z LibreOffice Online je prišlo do težave: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Streže:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -1195,6 +1185,9 @@ msgstr "Ustvarjanje nove datoteke iz predloge ..."
 #: src/map/handler/Map.WOPI.js:374
 msgid "Creating copy..."
 msgstr "Ustvarjanje kopije ..."
+
+#~ msgid "Insert Shape"
+#~ msgstr "Vstavi lik"
 
 #~ msgid "\""
 #~ msgstr " \""

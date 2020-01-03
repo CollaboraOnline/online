@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-02 15:48+0100\n"
+"POT-Creation-Date: 2020-01-03 15:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -268,7 +268,7 @@ msgstr "חותמת זמן"
 msgid "Jump to state"
 msgstr "קפיצה למצב"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2437
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2459
 msgid "You"
 msgstr "אני"
 
@@ -321,7 +321,7 @@ msgid "Fixed size"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:736
-#: src/control/Control.Toolbar.js:1566
+#: src/control/Control.Toolbar.js:1588
 msgid "None"
 msgstr "ללא"
 
@@ -370,7 +370,6 @@ msgid "Columns"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1494
-#: src/control/Control.Menubar.js:616 src/control/Control.Menubar.js:667
 #: src/control/Control.Toolbar.js:945
 msgid "Insert table"
 msgstr "הוספת טבלה"
@@ -378,11 +377,11 @@ msgstr "הוספת טבלה"
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:451
-#: src/control/Control.Toolbar.js:1953
+#: src/control/Control.Toolbar.js:1975
 msgid "None (Do not check spelling)"
 msgstr "ללא (לא לבדוק איות)"
 
-#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:465
+#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:456
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "ביטול"
@@ -522,14 +521,7 @@ msgstr "גיליון נתונים Excel ‏(‎.xlsx)"
 msgid "Export as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:640 src/control/Control.Menubar.js:659
-#: src/control/Control.Menubar.js:669
-#, fuzzy
-#| msgid "Insert shapes"
-msgid "Insert Shape"
-msgstr "הוספת צורות"
-
-#: src/control/Control.Menubar.js:739 src/control/Control.Toolbar.js:1952
+#: src/control/Control.Menubar.js:739 src/control/Control.Toolbar.js:1974
 msgid "Reset to Default Language"
 msgstr "איפוס לשפת בררת מחדל"
 
@@ -633,107 +625,107 @@ msgstr "תמיד לעקוב אחר העורך"
 msgid "Current"
 msgstr "נוכחי"
 
-#: src/control/Control.Toolbar.js:1217
+#: src/control/Control.Toolbar.js:1223
 msgid "%user has joined"
 msgstr "%user מעכשיו בערוץ"
 
-#: src/control/Control.Toolbar.js:1218
+#: src/control/Control.Toolbar.js:1224
 msgid "%user has left"
 msgstr "%user לא בערוץ עוד"
 
-#: src/control/Control.Toolbar.js:1531
+#: src/control/Control.Toolbar.js:1553
 msgid "Number of Sheets"
 msgstr "מספר גליונות"
 
-#: src/control/Control.Toolbar.js:1536
+#: src/control/Control.Toolbar.js:1558
 msgid "Selected range of cells"
 msgstr "טווח נבחר של תאים"
 
-#: src/control/Control.Toolbar.js:1541 src/control/Control.Toolbar.js:1598
+#: src/control/Control.Toolbar.js:1563 src/control/Control.Toolbar.js:1620
 msgid "Entering text mode"
 msgstr "כניסה למצב טקסט"
 
-#: src/control/Control.Toolbar.js:1550 src/control/Control.Toolbar.js:1603
+#: src/control/Control.Toolbar.js:1572 src/control/Control.Toolbar.js:1625
 msgid "Selection Mode"
 msgstr "מצב בחירה"
 
-#: src/control/Control.Toolbar.js:1555
+#: src/control/Control.Toolbar.js:1577
 msgid "Choice of functions"
 msgstr "בחירת פונקציות"
 
-#: src/control/Control.Toolbar.js:1559
+#: src/control/Control.Toolbar.js:1581
 msgid "Average"
 msgstr "ממוצע"
 
-#: src/control/Control.Toolbar.js:1560
+#: src/control/Control.Toolbar.js:1582
 msgid "CountA"
 msgstr "כמות (לא ריקים)"
 
-#: src/control/Control.Toolbar.js:1561
+#: src/control/Control.Toolbar.js:1583
 msgid "Count"
 msgstr "כמות"
 
-#: src/control/Control.Toolbar.js:1562
+#: src/control/Control.Toolbar.js:1584
 msgid "Maximum"
 msgstr "מרבי"
 
-#: src/control/Control.Toolbar.js:1563
+#: src/control/Control.Toolbar.js:1585
 msgid "Minimum"
 msgstr "מזערי"
 
-#: src/control/Control.Toolbar.js:1564
+#: src/control/Control.Toolbar.js:1586
 msgid "Sum"
 msgstr "סכום"
 
-#: src/control/Control.Toolbar.js:1565
+#: src/control/Control.Toolbar.js:1587
 msgid "Selection count"
 msgstr "מונה בחירות"
 
-#: src/control/Control.Toolbar.js:1588
+#: src/control/Control.Toolbar.js:1610
 msgid "Number of Pages"
 msgstr "מספר עמודים"
 
-#: src/control/Control.Toolbar.js:1593
+#: src/control/Control.Toolbar.js:1615
 msgid "Word Counter"
 msgstr "מונה מילים"
 
-#: src/control/Control.Toolbar.js:1628
+#: src/control/Control.Toolbar.js:1650
 msgid "Number of Slides"
 msgstr "מספר שקופיות"
 
-#: src/control/Control.Toolbar.js:1665
+#: src/control/Control.Toolbar.js:1687
 msgid "%n users"
 msgstr "%n משתמשים"
 
-#: src/control/Control.Toolbar.js:1666
+#: src/control/Control.Toolbar.js:1688
 msgid "1 user"
 msgstr "משתמש אחד"
 
-#: src/control/Control.Toolbar.js:1667
+#: src/control/Control.Toolbar.js:1689
 msgid "0 users"
 msgstr "אין משתמשים"
 
-#: src/control/Control.Toolbar.js:2048
+#: src/control/Control.Toolbar.js:2070
 msgid "Style"
 msgstr "סגנון"
 
-#: src/control/Control.Toolbar.js:2071
+#: src/control/Control.Toolbar.js:2093
 msgid "Font"
 msgstr "גופן"
 
-#: src/control/Control.Toolbar.js:2097
+#: src/control/Control.Toolbar.js:2119
 msgid "Previous slide"
 msgstr "השקופית הקודמת"
 
-#: src/control/Control.Toolbar.js:2098
+#: src/control/Control.Toolbar.js:2120
 msgid "Next slide"
 msgstr "השקופית הבאה"
 
-#: src/control/Control.Toolbar.js:2156
+#: src/control/Control.Toolbar.js:2178
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "סתירת ביטול/שחזור בין מספר משתמשים. נא להשתמש בתיקון מסמכים כדי לפתור זאת."
 
-#: src/control/Control.Toolbar.js:2443
+#: src/control/Control.Toolbar.js:2465
 msgid "Readonly"
 msgstr "קריאה בלבד"
 
@@ -885,23 +877,23 @@ msgstr "מתבצעת שמירה…"
 msgid "Renaming..."
 msgstr "ניתן שם אחר…"
 
-#: src/control/Toolbar.js:363
+#: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
 msgstr "גרסה זו של %productName מופעלת על גבי"
 
-#: src/control/Toolbar.js:458
+#: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:460
+#: src/control/Toolbar.js:451
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:461
+#: src/control/Toolbar.js:452
 msgid "Link"
 msgstr ""
 
-#: src/control/Toolbar.js:464
+#: src/control/Toolbar.js:455
 msgid "OK"
 msgstr ""
 
@@ -1208,6 +1200,11 @@ msgstr "נוצר קובץ חדש מתבנית…"
 #: src/map/handler/Map.WOPI.js:374
 msgid "Creating copy..."
 msgstr "נוצר עותק…"
+
+#, fuzzy
+#~| msgid "Insert shapes"
+#~ msgid "Insert Shape"
+#~ msgstr "הוספת צורות"
 
 #~ msgid "Function"
 #~ msgstr "פונקציה"

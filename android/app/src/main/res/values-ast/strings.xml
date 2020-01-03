@@ -20,4 +20,7 @@
     <string name="open">Abrir</string>
     <string name="filter_documents">Documentos</string>
     <string name="document_locations">Allugamientos de documentos</string>
+    <string name="filter_presentations">Presentaciones</string>
+    <string name="filter_spreadsheets">Fueyes de cálculu</string>
+    <string name="title_activity_show_html">Tocante a</string>
 </resources>

@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"PO-Revision-Date: 2020-01-03 10:08+0000\n"
 "Last-Translator: Andras Timar <timar74@gmail.com>\n"
-"Language-Team: Hungarian <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-help/hu/>\n"
+"Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -914,10 +914,8 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
-#, fuzzy
-#| msgid "Cell formatting"
 msgid "Collaborative editing"
-msgstr "Cellaformázás"
+msgstr "Közös szerkesztés"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
@@ -1244,10 +1242,8 @@ msgid "Images can be resized, rotated and anchored. Text can be wrapped around t
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
-#, fuzzy
-#| msgid "Go to end of document"
 msgid "Comments in documents"
-msgstr "Ugrás a dokumentum végére"
+msgstr "Megjegyzések a dokumentumban"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
@@ -1350,8 +1346,6 @@ msgid "Context menus are available on clicking the right mouse button. The comma
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
-#, fuzzy
-#| msgid "Text formatting"
 msgid "Formatting text"
 msgstr "Szövegformázás"
 

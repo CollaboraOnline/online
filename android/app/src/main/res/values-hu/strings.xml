@@ -98,4 +98,5 @@
     <string name="app_description">A $APP_NAME egy modern, könnyen használható, nyílt forrású programcsomag szövegszerkesztéshez, táblázatkezeléshez és bemutatókészítéshez.</string>
     <string name="app_version">Verzió: %1$s, Build ID: %2$s</string>
     <string name="app_name_settings">Beállítások</string>
+    <string name="share_document">Dokumentum megosztása</string>
 </resources>

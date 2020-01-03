@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-24 18:45+0000\n"
+"PO-Revision-Date: 2020-01-02 17:09+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ast/>\n"
 "Language: ast\n"
@@ -49,7 +49,7 @@ msgstr "Ctrl + X"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Paste as unformatted text"
-msgstr "Pegar como testu sin formatu"
+msgstr "Apegar como testu ensin formatu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-70
 msgid "Ctrl + Alt + Shift + V"

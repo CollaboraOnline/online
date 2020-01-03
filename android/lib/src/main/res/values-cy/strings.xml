@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="loading">Llwytho...</string>
+    <string name="cannot_open_file_chooser">Methu agor dewisydd ffeiliau</string>
+    <string name="failed_to_insert_image">Methwyd mewnosod delwedd</string>
+    <string name="failed_to_load_file">Methwyd penderfynu pa ffeil i\'w chadw</string>
+    <string name="storage_permission_required">Mae angen caniatâd cadw.</string>
+    <string name="temp_file_saving_disabled">Darllen yn unig yw\'r ffeil hon, mae cadw wedi ei analluogi.</string>
+</resources>

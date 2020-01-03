@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-02 15:48+0100\n"
-"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"POT-Creation-Date: 2020-01-03 15:11+0100\n"
+"PO-Revision-Date: 2020-01-03 10:08+0000\n"
 "Last-Translator: Andras Timar <timar74@gmail.com>\n"
-"Language-Team: Hungarian <https://vm137.documentfoundation.org/projects/libo_online/loleaflet-ui/hu/>\n"
+"Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -269,7 +269,7 @@ msgstr "Időbélyeg"
 msgid "Jump to state"
 msgstr "Ugrás állapotra"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2437
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2459
 msgid "You"
 msgstr "Ön"
 
@@ -291,87 +291,82 @@ msgstr "Másolás/beillesztés indítása"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Nincs szín"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Lineáris"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "Axiális"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "Radiális"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Ellipszoid"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "Kvadratikus"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "Négyzet"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "Fix méret"
 
 #: src/control/Control.JSDialogBuilder.js:736
-#: src/control/Control.Toolbar.js:1566
+#: src/control/Control.Toolbar.js:1588
 msgid "None"
 msgstr "Nincs"
 
 #: src/control/Control.JSDialogBuilder.js:739
 msgid "Color"
-msgstr ""
+msgstr "Szín"
 
 #: src/control/Control.JSDialogBuilder.js:742
 msgid "Gradient"
-msgstr ""
+msgstr "Színátmenet"
 
 #: src/control/Control.JSDialogBuilder.js:745
 msgid "Hatching"
-msgstr ""
+msgstr "Vonalkázás"
 
 #: src/control/Control.JSDialogBuilder.js:749
 msgid "Pattern"
-msgstr ""
+msgstr "Minta"
 
 #: src/control/Control.JSDialogBuilder.js:882
 msgid "From"
-msgstr ""
+msgstr "Kezdet"
 
 #: src/control/Control.JSDialogBuilder.js:885
 msgid "To"
-msgstr ""
+msgstr "Vég"
 
 #: src/control/Control.JSDialogBuilder.js:1017
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
 msgstr "Betűkészlet"
 
 #: src/control/Control.JSDialogBuilder.js:1019
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "Nincs aláírva"
+msgstr "Betűméret"
 
 #: src/control/Control.JSDialogBuilder.js:1473
 msgid "Rows"
-msgstr ""
+msgstr "Sorok"
 
 #: src/control/Control.JSDialogBuilder.js:1474
 msgid "Columns"
-msgstr ""
+msgstr "Oszlopok"
 
 #: src/control/Control.JSDialogBuilder.js:1494
-#: src/control/Control.Menubar.js:616 src/control/Control.Menubar.js:667
 #: src/control/Control.Toolbar.js:945
 msgid "Insert table"
 msgstr "Táblázat beszúrása"
@@ -379,11 +374,11 @@ msgstr "Táblázat beszúrása"
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:451
-#: src/control/Control.Toolbar.js:1953
+#: src/control/Control.Toolbar.js:1975
 msgid "None (Do not check spelling)"
 msgstr "Nincs (nincs helyesírás-ellenőrzés)"
 
-#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:465
+#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:456
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "Mégse"
@@ -471,7 +466,7 @@ msgstr "Szöveg iránya"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:340
 #: src/control/Control.Menubar.js:455
 msgid "Online Help"
-msgstr ""
+msgstr "Online súgó"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:456
@@ -523,14 +518,7 @@ msgstr "Excel munkafüzet (.xlsx)"
 msgid "Export as"
 msgstr "Exportálás mint"
 
-#: src/control/Control.Menubar.js:640 src/control/Control.Menubar.js:659
-#: src/control/Control.Menubar.js:669
-#, fuzzy
-#| msgid "Insert shapes"
-msgid "Insert Shape"
-msgstr "Alakzatok beszúrása"
-
-#: src/control/Control.Menubar.js:739 src/control/Control.Toolbar.js:1952
+#: src/control/Control.Menubar.js:739 src/control/Control.Toolbar.js:1974
 msgid "Reset to Default Language"
 msgstr "Vissza az alapértelmezett nyelvre"
 
@@ -572,7 +560,7 @@ msgstr "Biztosan törli ezt az oldalt?"
 
 #: src/control/Control.Toolbar.js:838
 msgid "Default Style"
-msgstr ""
+msgstr "Alapértelmezett stílus"
 
 #: src/control/Control.Toolbar.js:889
 msgid "Borders"
@@ -591,10 +579,8 @@ msgid "Insert shapes"
 msgstr "Alakzatok beszúrása"
 
 #: src/control/Control.Toolbar.js:958 src/layer/tile/WriterTileLayer.js:76
-#, fuzzy
-#| msgid "Text orientation"
 msgid "Toggle Page Orientation"
-msgstr "Szöveg iránya"
+msgstr "Oldal tájolásának átváltása"
 
 #: src/control/Control.Toolbar.js:1078 src/layer/tile/CalcTileLayer.js:180
 msgid "First sheet"
@@ -634,108 +620,108 @@ msgstr "Szerkesztő követése"
 msgid "Current"
 msgstr "Jelenleg"
 
-#: src/control/Control.Toolbar.js:1217
+#: src/control/Control.Toolbar.js:1223
 msgid "%user has joined"
 msgstr "%user csatlakozott"
 
-#: src/control/Control.Toolbar.js:1218
+#: src/control/Control.Toolbar.js:1224
 msgid "%user has left"
 msgstr "%user kilépett"
 
-#: src/control/Control.Toolbar.js:1531
+#: src/control/Control.Toolbar.js:1553
 msgid "Number of Sheets"
 msgstr "Munkalapok száma"
 
-#: src/control/Control.Toolbar.js:1536
+#: src/control/Control.Toolbar.js:1558
 msgid "Selected range of cells"
 msgstr "Kijelölt cellatartomány"
 
 # Mármint hogy insert vagy overwrite
-#: src/control/Control.Toolbar.js:1541 src/control/Control.Toolbar.js:1598
+#: src/control/Control.Toolbar.js:1563 src/control/Control.Toolbar.js:1620
 msgid "Entering text mode"
 msgstr "Szövegbevitel módja"
 
-#: src/control/Control.Toolbar.js:1550 src/control/Control.Toolbar.js:1603
+#: src/control/Control.Toolbar.js:1572 src/control/Control.Toolbar.js:1625
 msgid "Selection Mode"
 msgstr "Kijelölési mód"
 
-#: src/control/Control.Toolbar.js:1555
+#: src/control/Control.Toolbar.js:1577
 msgid "Choice of functions"
 msgstr "Függvények listája"
 
-#: src/control/Control.Toolbar.js:1559
+#: src/control/Control.Toolbar.js:1581
 msgid "Average"
 msgstr "Átlag"
 
-#: src/control/Control.Toolbar.js:1560
+#: src/control/Control.Toolbar.js:1582
 msgid "CountA"
 msgstr "Darab2"
 
-#: src/control/Control.Toolbar.js:1561
+#: src/control/Control.Toolbar.js:1583
 msgid "Count"
 msgstr "Darab"
 
-#: src/control/Control.Toolbar.js:1562
+#: src/control/Control.Toolbar.js:1584
 msgid "Maximum"
 msgstr "Maximum"
 
-#: src/control/Control.Toolbar.js:1563
+#: src/control/Control.Toolbar.js:1585
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.Toolbar.js:1564
+#: src/control/Control.Toolbar.js:1586
 msgid "Sum"
 msgstr "Összeg"
 
-#: src/control/Control.Toolbar.js:1565
+#: src/control/Control.Toolbar.js:1587
 msgid "Selection count"
 msgstr "Kijelöltek száma"
 
-#: src/control/Control.Toolbar.js:1588
+#: src/control/Control.Toolbar.js:1610
 msgid "Number of Pages"
 msgstr "Oldalak száma"
 
-#: src/control/Control.Toolbar.js:1593
+#: src/control/Control.Toolbar.js:1615
 msgid "Word Counter"
 msgstr "Szavak száma"
 
-#: src/control/Control.Toolbar.js:1628
+#: src/control/Control.Toolbar.js:1650
 msgid "Number of Slides"
 msgstr "Diák száma"
 
-#: src/control/Control.Toolbar.js:1665
+#: src/control/Control.Toolbar.js:1687
 msgid "%n users"
 msgstr "%n felhasználó"
 
-#: src/control/Control.Toolbar.js:1666
+#: src/control/Control.Toolbar.js:1688
 msgid "1 user"
 msgstr "1 felhasználó"
 
-#: src/control/Control.Toolbar.js:1667
+#: src/control/Control.Toolbar.js:1689
 msgid "0 users"
 msgstr "Nincsenek felhasználók"
 
-#: src/control/Control.Toolbar.js:2048
+#: src/control/Control.Toolbar.js:2070
 msgid "Style"
 msgstr "Stílus"
 
-#: src/control/Control.Toolbar.js:2071
+#: src/control/Control.Toolbar.js:2093
 msgid "Font"
 msgstr "Betűkészlet"
 
-#: src/control/Control.Toolbar.js:2097
+#: src/control/Control.Toolbar.js:2119
 msgid "Previous slide"
 msgstr "Előző dia"
 
-#: src/control/Control.Toolbar.js:2098
+#: src/control/Control.Toolbar.js:2120
 msgid "Next slide"
 msgstr "Következő dia"
 
-#: src/control/Control.Toolbar.js:2156
+#: src/control/Control.Toolbar.js:2178
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Feloldhatatlan visszavonási/újraalkalmazási helyzet. A dokumentum korábbi állapotának helyreállítása a megoldás."
 
-#: src/control/Control.Toolbar.js:2443
+#: src/control/Control.Toolbar.js:2465
 msgid "Readonly"
 msgstr "Írásvédett"
 
@@ -887,23 +873,23 @@ msgstr "Mentés…"
 msgid "Renaming..."
 msgstr "Átnevezés..."
 
-#: src/control/Toolbar.js:363
+#: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
 msgstr "%productName verzióinformációk:"
 
-#: src/control/Toolbar.js:458
+#: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
 msgstr "Hiperhivatkozás beszúrása"
 
-#: src/control/Toolbar.js:460
+#: src/control/Toolbar.js:451
 msgid "Text"
 msgstr "Szöveg"
 
-#: src/control/Toolbar.js:461
+#: src/control/Toolbar.js:452
 msgid "Link"
 msgstr "Hivatkozás"
 
-#: src/control/Toolbar.js:464
+#: src/control/Toolbar.js:455
 msgid "OK"
 msgstr "OK"
 
@@ -917,7 +903,7 @@ msgstr "Probléma történt a LibreOffice Online-hoz kapcsolódáskor: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Kiszolgáló:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -1045,7 +1031,7 @@ msgstr "Elhagyja a szerkesztőt, biztos, hogy át akar lépni ide: %url?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Nem sikerült betölteni a dokumentumot. A dokumentum vagy nem jó formátumban van, vagy az engedélyezettnél több erőforrást akar használni. Forduljon a rendszergazdához."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1087,11 +1073,11 @@ msgstr "A dokumentumot nem sikerült átnevezni. Ellenőrizze a jogosultságokat
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, a fájl nem található."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, a fájl túl nagy."
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1111,24 +1097,18 @@ msgstr "Válasz"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Keresés leállítása"
+msgstr "Keresősáv megjelenítése"
 
 #: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
 #: src/layer/tile/WriterTileLayer.js:159
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Keresés leállítása"
+msgstr "Keresőmező törlése"
 
 #: src/layer/tile/CalcTileLayer.js:239 src/layer/tile/ImpressTileLayer.js:224
 #: src/layer/tile/WriterTileLayer.js:161
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Keresés leállítása"
+msgstr "Keresősáv elrejtése"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1187,12 +1167,12 @@ msgstr "Betöltés…"
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "A fajltípus (%0) nem tölthető fel a kiszolgálóra, mert a fájlnak nincs neve."
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "A fájltípus (%0) nem tölthető fel a kiszolgálóra, mert a fájl üres."
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1200,7 +1180,7 @@ msgstr "Feltöltés…"
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, állapot: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
@@ -1209,6 +1189,9 @@ msgstr "Új fájl létrehozása sablonból..."
 #: src/map/handler/Map.WOPI.js:374
 msgid "Creating copy..."
 msgstr "Másolat létrehozása..."
+
+#~ msgid "Insert Shape"
+#~ msgstr "Alakzat beszúrása"
 
 #~ msgid "Mobile Wizard"
 #~ msgstr "Mobilvarázsló"
