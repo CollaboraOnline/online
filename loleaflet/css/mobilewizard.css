@@ -267,7 +267,7 @@
 	}
 
 	.ui-header.mobile-wizard {
-		width: 96%;
+		width: 92%;
 		height: 56px !important;
 		font-size: 11pt !important;
 		margin: 0px;
@@ -306,8 +306,8 @@
 	.ui-content.unospan {
 		line-height: 32px;
 		display: table;
+		padding-left: 4%;
 	}
-	#SetBorderStyle, div[id^=NumberFormat]{padding-left: 4%;}
 	.ui-content.unolabel {
 		display: table-cell;
 		vertical-align: middle;
@@ -554,9 +554,6 @@
 		width: 98%;
 		font-size: 12px;
 		font-weight: bold;
-	}
-	[title=Line] > #XLineColor {
-		width: 100%;
 	}
 	#DecrementIndent + input:disabled{display: none;}
 	div#mobile-wizard-content input[type=number]{
