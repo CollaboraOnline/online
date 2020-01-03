@@ -56,7 +56,41 @@ JNI_OnLoad(JavaVM* vm, void*) {
     return JNI_VERSION_1_6;
 }
 
-static void send2JS(jclass loActivityClz, jobject loActivityObj, const std::vector<char>& buffer)
+// Exception safe JVM detach, JNIEnv is TLS for Java - so per-thread.
+class JNIThreadContext
+{
+    JNIEnv *_env;
+public:
+    JNIThreadContext()
+    {
+        assert(javaVM != nullptr);
+        jint res = javaVM->GetEnv((void**)&_env, JNI_VERSION_1_6);
+        if (res == JNI_EDETACHED) {
+            LOG_DBG("Attach worker thread");
+            res = javaVM->AttachCurrentThread(&_env, nullptr);
+            if (JNI_OK != res) {
+                LOG_DBG("Failed to AttachCurrentThread");
+            }
+        }
+        else if (res == JNI_EVERSION) {
+            LOG_DBG("GetEnv version not supported");
+            return;
+        }
+        else if (res != JNI_OK) {
+            LOG_DBG("GetEnv another error " << res);
+            return;
+        }
+    }
+
+    ~JNIThreadContext()
+    {
+        javaVM->DetachCurrentThread();
+    }
+
+    JNIEnv *getEnv() const { return _env; }
+};
+
+static void send2JS(const JNIThreadContext &jctx, jclass loActivityClz, jobject loActivityObj, const std::vector<char>& buffer)
 {
     LOG_DBG("Send to JS: " << LOOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
 
@@ -114,33 +148,13 @@ static void send2JS(jclass loActivityClz, jobject loActivityObj, const std::vect
 
     LOG_DBG("Sending to JavaScript: " << subjs);
 
-    JNIEnv *env;
-    jint res = javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
-    if (res == JNI_EDETACHED) {
-        LOG_DBG("GetEnv need to attach thread");
-        res = javaVM->AttachCurrentThread(&env, nullptr);
-        if (JNI_OK != res) {
-            LOG_DBG("Failed to AttachCurrentThread");
-            return;
-        }
-    }
-    else if (res == JNI_EVERSION) {
-        LOG_DBG("GetEnv version not supported");
-        return;
-    }
-    else if (res != JNI_OK) {
-        LOG_DBG("GetEnv another error");
-        return;
-    }
-
+    JNIEnv *env = jctx.getEnv();
     jstring jstr = env->NewStringUTF(js.c_str());
     jmethodID callFakeWebsocket = env->GetMethodID(loActivityClz, "callFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
     env->CallVoidMethod(loActivityObj, callFakeWebsocket, jstr);
 
     if (env->ExceptionCheck())
         env->ExceptionDescribe();
-
-    javaVM->DetachCurrentThread();
 }
 
 /// Close the document.
@@ -191,6 +205,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
             std::thread([loActivityClz, loActivityObj, currentFakeClientFd]
                         {
                             Util::setThreadName("app2js");
+                            JNIThreadContext ctx;
                             while (true)
                             {
                                struct pollfd pollfd[2];
@@ -228,7 +243,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
                                            return;
                                        std::vector<char> buf(n);
                                        n = fakeSocketRead(currentFakeClientFd, buf.data(), n);
-                                       send2JS(loActivityClz, loActivityObj, buf);
+                                       send2JS(ctx, loActivityClz, loActivityObj, buf);
                                    }
                                }
                                else
