@@ -305,11 +305,12 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map.fire('closepopups');
 		this._map.fire('closemobilewizard');
 
+		var docLayer = this._map._docLayer;
 		// unselect if anything is selected already
-		if (this._map._docLayer && this._map._docLayer._annotations && this._map._docLayer._annotations.unselect) {
-			this._map._docLayer._annotations.unselect();
-			var pointPx = this._map._docLayer._twipsToPixels(mousePos);
-			var bounds = this._map._docLayer._annotations.getBounds();
+		if (docLayer && docLayer._annotations && docLayer._annotations.unselect) {
+			docLayer._annotations.unselect();
+			var pointPx = docLayer._twipsToPixels(mousePos);
+			var bounds = docLayer._annotations.getBounds();
 			if (bounds && bounds.contains(pointPx)) {
 				// not forward mouse events to core if the user tap on a comment box
 				// for instance on Writer that causes the text cursor to be moved
@@ -317,13 +318,16 @@ L.Map.TouchGesture = L.Handler.extend({
 			}
 		}
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
-		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
-		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 
-		if (this._state === L.Map.TouchGesture.MARKER || this._state === L.Map.TouchGesture.GRAPHIC) {
-			this._map._textInput.blur();
-		} else {
-			this._map.focus();
+		if (docLayer) {
+			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
+			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+
+			if (this._state === L.Map.TouchGesture.MARKER || (this._state === L.Map.TouchGesture.GRAPHIC && !docLayer._isCursorVisible)) {
+				this._map._textInput.blur();
+			} else if (!this._map.hasFocus()) {
+				this._map.focus();
+			}
 		}
 	},
 
