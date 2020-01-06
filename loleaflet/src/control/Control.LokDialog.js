@@ -194,6 +194,19 @@ L.Control.LokDialog = L.Control.extend({
 		this._sendPaintWindow(id, this._createRectStr(id, x, y, width, height));
 	},
 
+	_debugPaintWindow: function(id, rectangle) {
+		var strId = this._toStrId(id);
+		var canvas = document.getElementById(strId + '-canvas');
+		if (!canvas)
+			return; // no window to paint to
+		var ctx = canvas.getContext('2d');
+		ctx.beginPath();
+		var rect = rectangle.split(',');
+		ctx.rect(rect[0], rect[1], rect[2], rect[3]);
+		ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+		ctx.fill();
+	},
+
 	_sendPaintWindow: function(id, rectangle) {
 		if (!rectangle)
 			return; // Don't request rendering an empty area.
@@ -205,6 +218,9 @@ L.Control.LokDialog = L.Control.extend({
 		var dpiscale = L.getDpiScaleFactor();
 		//console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
 		this._map._socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
+
+		if (this._map._docLayer && this._map._docLayer._debug)
+			this._debugPaintWindow(id, rectangle);
 	},
 
 	_sendCloseWindow: function(id) {
