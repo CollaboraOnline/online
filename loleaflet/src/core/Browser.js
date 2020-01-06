@@ -44,6 +44,9 @@
 	var touch = !window.L_NO_TOUCH && (pointer || 'ontouchstart' in window ||
 			(window.DocumentTouch && document instanceof window.DocumentTouch));
 
+	var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
+			navigator.userAgent.toLowerCase().indexOf('trident') != -1);
+
 	L.Browser = {
 
 		// @property ie: Boolean
@@ -91,6 +94,10 @@
 		// @property ie3d: Boolean
 		// `true` for all Internet Explorer versions supporting CSS transforms.
 		ie3d: ie3d,
+
+		// @property isInternetExplorer: Boolean
+		// `true` for Internet Explorer
+		isInternetExplorer: isInternetExplorer,
 
 		// @property webkit3d: Boolean
 		// `true` for webkit-based browsers supporting CSS transforms.

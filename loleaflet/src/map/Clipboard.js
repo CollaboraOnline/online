@@ -40,7 +40,7 @@ L.Clipboard = L.Class.extend({
 
 		var that = this;
 		var beforeSelect = function(ev) { return that._beforeSelect(ev); }
-		if (window.isInternetExplorer)
+		if (L.Browser.isInternetExplorer)
 		{
 			document.addEventListener('cut',   function(ev)   { return that.cut(ev); });
 			document.addEventListener('copy',  function(ev)   { return that.copy(ev); });
@@ -61,7 +61,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	compatRemoveNode: function(node) {
-		if (window.isInternetExplorer)
+		if (L.Browser.isInternetExplorer)
 			node.removeNode(true);
 		else // standard
 			node.parentNode.removeChild(node);
@@ -455,7 +455,7 @@ L.Clipboard = L.Class.extend({
 	populateClipboard: function(ev) {
 		this._checkSelection();
 
-		if (window.isInternetExplorer)
+		if (L.Browser.isInternetExplorer)
 		{
 			var that = this;
 			setTimeout(function() { that._resetDiv(); }, 0);
@@ -494,7 +494,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_beforeSelectImpl: function(operation) {
-		if (window.isInternetExplorer && operation != 'paste')
+		if (L.Browser.isInternetExplorer && operation != 'paste')
 			// We need populate our content into the div for
 			// the brower to copy.
 			this._dummyDiv.innerHTML = this._getHtmlForClipboard();
@@ -508,7 +508,7 @@ L.Clipboard = L.Class.extend({
 
 		var selected = false;
 		var selectRange;
-		if (window.isInternetExplorer && operation != 'paste')
+		if (L.Browser.isInternetExplorer && operation != 'paste')
 		{
 			this._dummyDiv.focus();
 
@@ -572,7 +572,7 @@ L.Clipboard = L.Class.extend({
 		var serial = this._clipboardSerial;
 
 		// try a direct execCommand.
-		if (window.isInternetExplorer && operation != 'paste')
+		if (L.Browser.isInternetExplorer && operation != 'paste')
 			this._beforeSelectImpl(operation);
 		if (document.execCommand(operation) &&
 		    serial !== this._clipboardSerial) {
@@ -651,7 +651,7 @@ L.Clipboard = L.Class.extend({
 			ev.usePasteKeyEvent = true;
 
 		var that = this;
-		if (window.isInternetExplorer)
+		if (L.Browser.isInternetExplorer)
 		{
 			var active = document.activeElement;
 			// Can't get HTML until it is pasted ... so quick timeout
