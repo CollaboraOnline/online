@@ -3,7 +3,7 @@
 * Control.Menubar
 */
 
-/* global $ _ _UNO vex revHistoryEnabled L */
+/* global $ _ _UNO vex L */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
 	options: {
@@ -1134,7 +1134,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.showHyperlinkDialog();
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
 			this._map.showHelp(id);
-		} else if (revHistoryEnabled && (id === 'rev-history' || id === 'last-mod')) {
+		} else if (L.Params.revHistoryEnabled && (id === 'rev-history' || id === 'last-mod')) {
 			// if we are being loaded inside an iframe, ask
 			// our host to show revision history mode
 			this._map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
@@ -1289,7 +1289,7 @@ L.Control.Menubar = L.Control.extend({
 		}
 
 		if (menuItem.type === 'action') {
-			if ((menuItem.id === 'rev-history' && !revHistoryEnabled) ||
+			if ((menuItem.id === 'rev-history' && !L.Params.revHistoryEnabled) ||
 				(menuItem.id === 'closedocument' && !window.closebutton)) {
 				return false;
 			}

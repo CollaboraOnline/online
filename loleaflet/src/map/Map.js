@@ -24,7 +24,7 @@ function isAnyVexDialogActive() {
 	return res;
 }
 
-/* global vex revHistoryEnabled $ _ */
+/* global vex $ _ */
 L.Map = L.Evented.extend({
 
 	options: {
@@ -387,7 +387,7 @@ L.Map = L.Evented.extend({
 			lastModButton.firstChild.innerHTML = '';
 			lastModButton.firstChild.appendChild(mainSpan);
 
-			if (revHistoryEnabled) {
+			if (L.Params.revHistoryEnabled) {
 				L.DomUtil.setStyle(lastModButton, 'cursor', 'pointer');
 			}
 		}

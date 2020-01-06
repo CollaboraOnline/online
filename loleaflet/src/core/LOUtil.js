@@ -116,4 +116,7 @@ L.LOUtil = {
 L.Params = {
 	/// Shows close button if non-zero value provided
 	closeButtonEnabled: getParameterByName('closebutton'),
+
+	/// Shows revision history file menu option
+	revHistoryEnabled: getParameterByName('revisionhistory'),
 };

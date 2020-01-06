@@ -26,8 +26,6 @@ if (reuseCookies !== '') {
 var filePath = getParameterByName('file_path');
 var permission = getParameterByName('permission') || 'edit';
 var timestamp = getParameterByName('timestamp');
-// Shows revision history file menu option
-var revHistoryEnabled = getParameterByName('revisionhistory');
 // Should the document go inactive or not
 var alwaysActive = getParameterByName('alwaysactive');
 // Loleaflet Debug mode
@@ -39,9 +37,6 @@ if (host === '' && !window.ThisIsAMobileApp) {
 	vex.dialog.alert(errorMessages.emptyhosturl);
 }
 
-// loleaflet.js accesses these globals
-// TODO: Get rid of these globals
-global.revHistoryEnabled = revHistoryEnabled;
 var docURL, docParams;
 var isWopi = false;
 if (wopiSrc != '') {
