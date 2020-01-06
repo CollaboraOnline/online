@@ -1263,24 +1263,29 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
     int bufferWidth = 800, bufferHeight = 600;
     double dpiScale = 1.0;
     std::string paintRectangle;
-    if (tokens.size() > 2 && getTokenString(tokens[2], "rectangle", paintRectangle))
+    if (tokens.size() > 2 && getTokenString(tokens[2], "rectangle", paintRectangle)
+        && paintRectangle != "undefined")
     {
-        const std::vector<std::string> rectParts = LOOLProtocol::tokenize(paintRectangle.c_str(), paintRectangle.length(), ',');
-        startX = std::atoi(rectParts[0].c_str());
-        startY = std::atoi(rectParts[1].c_str());
-        bufferWidth = std::atoi(rectParts[2].c_str());
-        bufferHeight = std::atoi(rectParts[3].c_str());
-
-        std::string dpiScaleString;
-        if (tokens.size() > 3 && getTokenString(tokens[3], "dpiscale", dpiScaleString))
+        const std::vector<std::string> rectParts
+            = LOOLProtocol::tokenize(paintRectangle.c_str(), paintRectangle.length(), ',');
+        if (rectParts.size() == 4)
         {
-            dpiScale = std::stod(dpiScaleString);
-            if (dpiScale < 0.001)
-                dpiScale = 1.0;
+            startX = std::atoi(rectParts[0].c_str());
+            startY = std::atoi(rectParts[1].c_str());
+            bufferWidth = std::atoi(rectParts[2].c_str());
+            bufferHeight = std::atoi(rectParts[3].c_str());
         }
     }
     else
         LOG_WRN("windowpaint command doesn't specify a rectangle= attribute.");
+
+    std::string dpiScaleString;
+    if (tokens.size() > 3 && getTokenString(tokens[3], "dpiscale", dpiScaleString))
+    {
+        dpiScale = std::stod(dpiScaleString);
+        if (dpiScale < 0.001)
+            dpiScale = 1.0;
+    }
 
     size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
     std::vector<unsigned char> pixmap(pixmapDataSize);
