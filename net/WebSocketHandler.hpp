@@ -595,6 +595,9 @@ protected:
 
     void readPayload(unsigned char *data, size_t dataLen, unsigned char* mask, std::vector<char>& payload)
     {
+        if (dataLen == 0)
+            return;
+
         if (mask)
         {
             size_t end = payload.size();
