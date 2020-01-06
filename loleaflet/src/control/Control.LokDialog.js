@@ -1022,9 +1022,9 @@ L.Control.LokDialog = L.Control.extend({
 			// if dialog is hidden, show it
 			if (container)
 				 $(container).parent().show();
+
 			if (parentId in that._dialogs) {
 				// We might have closed the dialog by the time we render.
-				that.focus(parentId);
 				that._dialogs[parentId].isPainting = false;
 			}
 		};
