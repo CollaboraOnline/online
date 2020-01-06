@@ -172,13 +172,13 @@ L.Control.LokDialog = L.Control.extend({
 	// Create a rectangle string of form "x,y,width,height"
 	// if params are missing, assumes 0,0,dialog width, dialog height
 	_createRectStr: function(id, x, y, width, height) {
-		if (!width)
+		if (!width && id !== null)
 			width = this._dialogs[parseInt(id)].width;
-		if (width <= 0)
+		if (!width || width <= 0)
 			return null;
-		if (!height)
+		if (!height && id !== null)
 			height = this._dialogs[parseInt(id)].height;
-		if (height <= 0)
+		if (!height || height <= 0)
 			return null;
 		if (!x)
 			x = 0;
