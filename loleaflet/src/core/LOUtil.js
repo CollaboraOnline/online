@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global getParameterByName */
 /*
  * L.LOUtil contains various LO related utility functions used throughout the code
  */
@@ -110,4 +111,9 @@ L.LOUtil = {
 			return false;
 		return res;
 	}
+};
+
+L.Params = {
+	/// Shows close button if non-zero value provided
+	closeButtonEnabled: getParameterByName('closebutton'),
 };

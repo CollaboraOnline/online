@@ -2599,9 +2599,9 @@ function setupToolbar(e) {
 	map.on('commandstatechanged', onCommandStateChanged);
 	map.on('commandvalues', onCommandValues, this);
 
-	if (!window.closeButtonEnabled) {
+	if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
-	} else if (window.closeButtonEnabled && !L.Browser.mobile) {
+	} else if (L.Params.closeButtonEnabled && !L.Browser.mobile) {
 		$('#closebuttonwrapper').show();
 		$('.closebuttonimage').show();
 	}

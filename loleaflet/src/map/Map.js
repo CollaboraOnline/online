@@ -1676,7 +1676,7 @@ L.Map = L.Evented.extend({
 		if (!this.isMenubarHidden())
 			return;
 		$('.main-nav').show();
-		if (window.closeButtonEnabled && !window.mode.isTablet()) {
+		if (L.Params.closeButtonEnabled && !window.mode.isTablet()) {
 			$('#closebuttonwrapper').show();
 		}
 
@@ -1694,7 +1694,7 @@ L.Map = L.Evented.extend({
 		if (this.isMenubarHidden())
 			return;
 		$('.main-nav').hide();
-		if (window.closeButtonEnabled) {
+		if (L.Params.closeButtonEnabled) {
 			$('#closebuttonwrapper').hide();
 		}
 

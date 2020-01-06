@@ -26,8 +26,6 @@ if (reuseCookies !== '') {
 var filePath = getParameterByName('file_path');
 var permission = getParameterByName('permission') || 'edit';
 var timestamp = getParameterByName('timestamp');
-// Shows close button if non-zero value provided
-window.closeButtonEnabled = getParameterByName('closebutton');
 // Shows revision history file menu option
 var revHistoryEnabled = getParameterByName('revisionhistory');
 // Should the document go inactive or not
