@@ -2443,14 +2443,14 @@ void lokit_main(
                       S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                       makedev(1, 8)) != 0)
             {
-                LOG_SYS("mknod(" << jailPath.toString() << "/dev/random) failed.");
+                LOG_SYS("mknod(" << jailPath.toString() << "/dev/random) failed. Mount must not use nodev flag.");
             }
 
             if (mknod((jailPath.toString() + "/dev/urandom").c_str(),
                       S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
                       makedev(1, 9)) != 0)
             {
-                LOG_SYS("mknod(" << jailPath.toString() << "/dev/urandom) failed.");
+                LOG_SYS("mknod(" << jailPath.toString() << "/dev/random) failed. Mount must not use nodev flag.");
             }
 
             ProcSMapsFile = fopen("/proc/self/smaps", "r");
