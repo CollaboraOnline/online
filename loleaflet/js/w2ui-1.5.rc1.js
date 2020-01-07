@@ -2388,6 +2388,13 @@ w2utils.event = {
                     Y = (offset.top + w2utils.getSize(obj, 'height') + options.top + 7);
                     offsetTop = offset.top;
                 }
+
+                // tdf#129374 make the overlay wider so that it is more likely all we want to put in it will fit. Yes, this
+                // is just horrible heuristics. The sane thing would be if this w2ui code could itself make sure that the
+                // overlay thing grows in width if necessary as stuff is added to it so that they all show up.
+                if (window.ThisIsTheiOSApp && X > window.innerWidth - 300)
+		    X = window.innerWidth - 300;
+
                 div1.css({
                     left        :  X + 'px',
                     top         :  Y + 'px',
