@@ -91,10 +91,6 @@ window.addEventListener('beforeunload', function () {
 	}
 });
 
-if (!L.Browser.mobile) {
-	L.DomEvent.on(document, 'contextmenu', L.DomEvent.preventDefault);
-}
-
 window.bundlejsLoaded = true;
 
 }(window));

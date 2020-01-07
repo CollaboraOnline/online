@@ -1,6 +1,14 @@
 /* -*- js-indent-level: 8 -*- */
 (function (global) {
 
+	document.addEventListener('contextmenu', function(e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			e.returnValue = false;
+		}
+	}, false);
+
 	global.fakeWebSocketCounter = 0;
 	global.FakeWebSocket = function () {
 		this.binaryType = 'arraybuffer';
