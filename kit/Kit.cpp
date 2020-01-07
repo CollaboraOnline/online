@@ -899,6 +899,20 @@ public:
         renderedTiles.back().setImgSize(imgSize);
     }
 
+    struct RenderBuffer {
+        unsigned char *_data;
+        RenderBuffer(size_t x, size_t y)
+        {
+            _data = static_cast<unsigned char *>(calloc(x * y, 4));
+        }
+        ~RenderBuffer()
+        {
+            if (_data)
+                free (_data);
+        }
+        unsigned char *data() { return _data; }
+    };
+
     void renderTiles(TileCombined &tileCombined, bool combined)
     {
         auto& tiles = tileCombined.getTiles();
@@ -934,7 +948,7 @@ public:
             LOG_WRN("Unusual extremely large tile combine of size " << pixmapWidth << "x" << pixmapHeight);
 
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
-        std::vector<unsigned char> pixmap(pixmapSize, 0);
+        RenderBuffer pixmap(pixmapWidth, pixmapHeight);
 
         if (!_loKitDocument)
         {
