@@ -598,7 +598,7 @@ public:
     {
         int maxConcurrency = 2;
 #if MOBILEAPP && !defined(GTKAPP)
-#  warning "Good defaults ? - 2 for iOS, 4 for Android ?"
+        maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
 #else
         const char *max = getenv("MAX_CONCURRENCY");
         if (max)
