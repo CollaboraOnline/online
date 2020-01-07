@@ -496,6 +496,7 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:ControlCodes'},
+				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 			]
 			},
@@ -542,6 +543,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
 			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
+			{uno: '.uno:SpellOnline'},
 			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
@@ -603,6 +605,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:HideDetail'},
 					{uno: '.uno:ShowDetail'}]}
 			]},
+			{uno: '.uno:SpellOnline'},
 			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
@@ -657,6 +660,9 @@ L.Control.Menubar = L.Control.extend({
 					{type: 'separator'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
+					{uno: '.uno:InsertCurrentDate'},
+					{uno: '.uno:InsertCurrentTime'},
+					// other fields need EditEngine context & can't be disabled in the menu.
 				]
 			},
 			presentation : {
@@ -667,6 +673,17 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
+					{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
+						{uno: '.uno:InsertDateFieldFix'},
+						{uno: '.uno:InsertDateFieldVar'},
+						{uno: '.uno:InsertTimeFieldFix'},
+						{uno: '.uno:InsertTimeFieldVar'},
+						{type: 'separator'},
+						{uno: '.uno:InsertSlideField'},
+						{uno: '.uno:InsertSlideTitleField'},
+						{uno: '.uno:InsertSlidesField'},
+						{uno: '.uno:InsertFileField'},
+					]},
 				]
 			}
 		},
