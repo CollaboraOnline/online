@@ -6,7 +6,7 @@ if ENABLE_GTKAPP
 SUBDIRS = gtk loleaflet
 else
 if ENABLE_ANDROIDAPP
-SUBDIRS = android loleaflet
+SUBDIRS = loleaflet android
 else
 SUBDIRS = loleaflet
 endif
