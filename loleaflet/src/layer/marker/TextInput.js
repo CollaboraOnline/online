@@ -64,6 +64,7 @@ L.TextInput = L.Layer.extend({
 
 		this._emptyArea();
 
+		this._map.on('updatepermission', this._onPermission, this);
 		L.DomEvent.on(this._textArea, 'focus blur', this._onFocusBlur, this);
 
 		// Do not wait for a 'focus' event to attach events if the
@@ -80,11 +81,20 @@ L.TextInput = L.Layer.extend({
 		if (this._container) {
 			this.getPane().removeChild(this._container);
 		}
-		L.DomEvent.off(this._textArea, 'focus blur', this._onFocusBlur, this);
 
+		this._map.off('updatepermission', this._onPermission, this);
+		L.DomEvent.off(this._textArea, 'focus blur', this._onFocusBlur, this);
 		L.DomEvent.off(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
 
 		this._map.removeLayer(this._cursorHandler);
+	},
+
+	_onPermission: function(e) {
+		if (e.perm === 'edit') {
+			this._textArea.removeAttribute('disabled');
+		} else {
+			this._textArea.setAttribute('disabled', true);
+		}
 	},
 
 	_onFocusBlur: function(ev) {
@@ -190,6 +200,9 @@ L.TextInput = L.Layer.extend({
 		// just adding whitespace.
 		// See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#attr-wrap
 		this._textArea.setAttribute('wrap', 'off');
+
+		// Prevent autofocus
+		this._textArea.setAttribute('disabled', true);
 
 		this._setupStyles();
 
