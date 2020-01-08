@@ -1854,26 +1854,21 @@ private:
     }
 
 public:
-    bool hasQueued()
-    {
-        return !_tileQueue->isEmpty();
-    }
-
     void drainQueue(const std::chrono::steady_clock::time_point &now)
     {
         try
         {
-            while (hasQueued())
+            while (!_tileQueue->isEmpty())
             {
+                if (_stop || SigUtil::getTerminationFlag())
+                {
+                    LOG_INF("_stop or TerminationFlag is set, breaking Document::drainQueue of loop");
+                    break;
+                }
+
                 const TileQueue::Payload input = _tileQueue->pop();
 
                 LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
-
-                if (_stop || SigUtil::getTerminationFlag())
-                {
-                    LOG_INF("_stop or TerminationFlag is set, breaking out of loop");
-                    break;
-                }
 
                 const std::vector<std::string> tokens = LOOLProtocol::tokenize(input.data(), input.size());
 
