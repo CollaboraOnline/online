@@ -324,7 +324,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 
 			if (this._state === L.Map.TouchGesture.MARKER || (this._state === L.Map.TouchGesture.GRAPHIC && !docLayer._isCursorVisible)) {
-				this._map._textInput.blur();
+				this._map.blur();
 			} else if (!this._map.hasFocus()) {
 				this._map.focus();
 			}

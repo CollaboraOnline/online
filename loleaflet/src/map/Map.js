@@ -896,6 +896,10 @@ L.Map = L.Evented.extend({
 		this._textInput.focus();
 	},
 
+	blur: function () {
+		this._textInput.blur();
+	},
+
 	hasFocus: function () {
 		return document.activeElement === this._textInput.activeElement();
 	},
