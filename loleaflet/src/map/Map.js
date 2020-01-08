@@ -893,12 +893,7 @@ L.Map = L.Evented.extend({
 	},
 
 	focus: function () {
-		// Clicking or otherwise focusing the map should focus on the clipboard
-		// container in order for the user to input text (and on-screen keyboards
-		// to pop-up), unless the document is read only.
-		if (this._permission === 'edit') {
-			this._textInput.focus();
-		}
+		this._textInput.focus();
 	},
 
 	hasFocus: function () {

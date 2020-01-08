@@ -118,6 +118,9 @@ L.TextInput = L.Layer.extend({
 
 	// Focus the textarea/contenteditable
 	focus: function() {
+		// Clicking or otherwise focusing the map should focus on the clipboard
+		// container in order for the user to input text (and on-screen keyboards
+		// to pop-up), unless the document is read only.
 		if (this._map._permission !== 'edit') {
 			console.log('EPIC HORRORS HERE');
 			return;
