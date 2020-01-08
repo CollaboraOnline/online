@@ -82,6 +82,9 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			});
 		}, 1000);
 
+		// Dialog uses <a href='#' - which triggers popstate
+		vex.defaultOptions.closeAllOnPopState = false;
+
 		// Allow table rows to have a context menu for terminating sessions
 		$('body').on('contextmenu', '#docview tr', function(ev) {
 			$('#rowContextMenu').css({
