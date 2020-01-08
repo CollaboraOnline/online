@@ -738,7 +738,7 @@ function getColorPickerData(type) {
 			uno = '.uno:BackColor';
 	}
 	var data = {
-		id: 'box',
+		id: 'colorpicker',
 		type: 'window',
 		text: type,
 		enabled: 'true',
