@@ -248,9 +248,8 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_onMobileWizard: function(data) {
 		if (data) {
-			var isSidebar = data.id !== 'insert' && data.id !== 'menubar'
-				&& data.id !== 'insertshape' && data.id !== 'funclist'
-				&& data.executionType !== 'menu';
+			var isSidebar = (data.children && data.children.length >= 1 &&
+					 data.children[0].type == 'deck');
 
 			if (!this._isActive && isSidebar) {
 				if (this.map.showSidebar == false)
@@ -271,10 +270,9 @@ L.Control.MobileWizard = L.Control.extend({
 			this._showWizard();
 			this._hideKeyboard();
 
-			// We can change the sidebar as we want here
-			if (data.id === '') { // sidebar indicator
+			// Morph the sidebar into something prettier
+			if (isSidebar)
 				this._modifySidebarLayout(data);
-			}
 
 			L.control.jsDialogBuilder({mobileWizard: this, map: this.map}).build(this.content.get(0), [data]);
 
@@ -309,53 +307,44 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_modifySidebarLayout: function (data) {
-		this._mergeStylesAndTextPropertyPanels(data);
+		var deck = this._findItemByTypeRecursive(data, 'deck');
+		if (deck)
+		{
+			// merge styles into text-panel for elegance
+			var stylesIdx = this._findIdxInParentById(deck, 'SidebarStylesPanel');
+			var textIdx = this._findIdxInParentById(deck, 'SidebarTextPanel');
+			if (stylesIdx >= 0 && textIdx >= 0)
+			{
+				var moveContent = deck.children[stylesIdx].children;
+				deck.children.splice(stylesIdx, 1); // remove
+				textIdx = this._findIdxInParentById(deck, 'SidebarTextPanel'); // re-lookup
+				deck.children[textIdx].children = moveContent.concat(deck.children[textIdx].children);
+			}
+		}
+
 		this._removeItems(data, ['editcontour']);
 	},
 
-	_mergeStylesAndTextPropertyPanels: function (data) {
-		var stylesChildren = this._removeStylesPanelAndGetContent(data);
-		if (stylesChildren !== null) {
-			this._addChildrenToTextPanel(data, stylesChildren);
+	_findItemByTypeRecursive: function(data, t) {
+		var found = null;
+		if (data.type === t)
+			return data;
+		if (data.children)
+		{
+			for (var i = 0; !found && i < data.children.length; i++)
+				found = this._findItemByTypeRecursive(data.children[i], t);
 		}
+		return found;
 	},
 
-	_removeStylesPanelAndGetContent: function (data) {
-		if (data.children) {
-			for (var i = 0; i < data.children.length; i++) {
-				if (data.children[i].type === 'panel' && data.children[i].children &&
-					data.children[i].children.length > 0 && data.children[i].children[0].id === 'SidebarStylesPanel') {
-					var ret = data.children[i].children[0].children;
-					data.children.splice(i, 2);
-					return ret;
-				}
-
-				var childReturn = this._removeStylesPanelAndGetContent(data.children[i]);
-				if (childReturn !== null) {
-					return childReturn;
-				}
-			}
+	_findIdxInParentById: function(data, id) {
+		if (data.children)
+		{
+			for (var i = 0; i < data.children.length; i++)
+				if (data.children[i].id === id)
+					return i;
 		}
-		return null;
-	},
-
-	_addChildrenToTextPanel: function (data, children) {
-		if (data.id === 'SidebarTextPanel' && data.children && data.children.length > 0 &&
-			data.children[0].children && data.children[0].children.length > 0) {
-			data.children[0].children = children.concat(data.children[0].children);
-			data.children[0].children[0].id = 'box42';
-			return 'success';
-		}
-
-		if (data.children) {
-			for (var i = 0; i < data.children.length; i++) {
-				var childReturn = this._addChildrenToTextPanel(data.children[i], children);
-				if (childReturn !== null) {
-					return childReturn;
-				}
-			}
-		}
-		return null;
+		return -1;
 	},
 
 	_removeItems: function (data, items) {

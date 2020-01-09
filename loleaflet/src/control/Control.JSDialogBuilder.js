@@ -1518,16 +1518,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var childObject = needsToCreateContainer ? L.DomUtil.createWithId('div', childData.id, parent) : parent;
 
 			var handler = this._controlHandlers[childType];
-			var twoPanelsAsChildren = childData.children
-				&& (childData.children.length == 4 || childData.children.length == 5)
-				&& childData.children[0] && childData.children[0].type == 'panel'
-				&& childData.children[2] && childData.children[2].type == 'panel';
+			var twoPanelsAsChildren =
+			    childData.children && childData.children.length == 2
+			    && childData.children[0] && childData.children[0].type == 'panel'
+			    && childData.children[1] && childData.children[1].type == 'panel';
 
 			if (twoPanelsAsChildren) {
-				var tabsData = [childData.children[0], childData.children[2]];
-
 				handler = this._controlHandlers['paneltabs'];
-				processChildren = handler(childObject, tabsData, this);
+				processChildren = handler(childObject, childData.children, this);
 			} else {
 				if (handler)
 					processChildren = handler(childObject, childData, this);
