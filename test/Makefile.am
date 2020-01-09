@@ -36,6 +36,7 @@ noinst_LTLIBRARIES = \
 	unit-calc.la \
 	unit-insert-delete.la \
 	unit-close.la \
+	unit-bad-doc-load.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
@@ -85,8 +86,7 @@ test_all_source = \
 	TileCacheTests.cpp \
 	integration-http-server.cpp \
 	httpwstest.cpp \
-	httpcrashtest.cpp \
-	httpwserror.cpp
+	httpcrashtest.cpp
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 unittest_SOURCES = $(test_base_source) test.cpp
@@ -167,6 +167,8 @@ unit_insert_delete_la_SOURCES = UnitInsertDelete.cpp
 unit_insert_delete_la_LIBADD = $(CPPUNIT_LIBS)
 unit_close_la_SOURCES = UnitClose.cpp
 unit_close_la_LIBADD = $(CPPUNIT_LIBS)
+unit_bad_doc_load_la_SOURCES = UnitBadDocLoad.cpp
+unit_bad_doc_load_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -201,6 +203,7 @@ TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-t
 	unit-calc.la \
 	unit-insert-delete.la \
 	unit-close.la \
+	unit-bad-doc-load.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 # TESTS = unit-client.la
 # TESTS += unit-admin.la
