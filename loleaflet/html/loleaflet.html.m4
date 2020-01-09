@@ -65,6 +65,10 @@ ifelse(ANDROIDAPP,[true],
   [   window.ThisIsTheAndroidApp = false;]
 )
 
+if (window.ThisIsTheiOSApp) {
+  window.addEventListener("keydown", function(e) { e.preventDefault(); });
+}
+
 var Base64ToArrayBuffer = function(base64Str) {
   var binStr = atob(base64Str);
   var ab = new ArrayBuffer(binStr.length);
