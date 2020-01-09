@@ -43,60 +43,37 @@ L.Control.Tabs = L.Control.extend({
 		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
 
-		L.installContextMenu({
-			selector: '.spreadsheet-tab',
-			className: 'loleaflet-font',
-			callback: (function(key) {
-				if (key === 'insertsheetbefore') {
-					map.insertPage(this._tabForContextMenu);
-				}
-				if (key === 'insertsheetafter') {
-					map.insertPage(this._tabForContextMenu + 1);
-				}
-			}).bind(this),
-			items: {
-				'insertsheetbefore': {name: _('Insert sheet before this')},
-				'insertsheetafter': {name: _('Insert sheet after this')},
-				'deletesheet': {name: _UNO('.uno:Remove', 'spreadsheet', true),
-						callback: (function(key, options) {
-							var nPos = this._tabForContextMenu;
-							vex.dialog.confirm({
-								message: _('Are you sure you want to delete sheet, %sheet% ?').replace('%sheet%', options.$trigger.text()),
-								callback: function(data) {
-									if (data) {
-										map.deletePage(nPos);
-									}
-								}
-							});
-						}).bind(this)
-				 },
-				'renamesheet': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
-							callback: (function(key, options) {
-								var nPos = this._tabForContextMenu;
-								vex.dialog.open({
-									message: _('Enter new sheet name'),
-									input: '<input name="sheetname" type="text" value="' + options.$trigger.text() + '" required />',
-									callback: function(data) {
-										map.renamePage(data.sheetname, nPos);
-									}
-								});
-							}).bind(this)
-				} ,
-				'showsheets': {
-					name: _UNO('.uno:Show', 'spreadsheet', true),
-					callback: (function() {
-						map.showPage();
-					}).bind(this)
-				},
-				'hiddensheets': {
-					name: _UNO('.uno:Hide', 'spreadsheet', true),
-					callback: (function() {
-						map.hidePage();
-					}).bind(this)
-				}
+		this._menuItem = {
+			'insertsheetbefore': {name: _('Insert sheet before this'),
+				callback: (this._insertSheetBefore).bind(this)
 			},
-			zIndex: 1000
-		});
+			'insertsheetafter': {name: _('Insert sheet after this'),
+				callback: (this._insertSheetAfter).bind(this)
+			},
+			'deletesheet': {name: _UNO('.uno:Remove', 'spreadsheet', true),
+				callback: (this._deleteSheet).bind(this)
+			},
+			'renamesheet': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
+				callback: (this._renameSheet).bind(this)
+			} ,
+			'showsheets': {
+				name: _UNO('.uno:Show', 'spreadsheet', true),
+				callback: (this._showSheet).bind(this),
+			},
+			'hiddensheets': {
+				name: _UNO('.uno:Hide', 'spreadsheet', true),
+				callback: (this._hideSheet).bind(this)
+			}
+		};
+
+		if (!window.mode.isMobile()) {
+			L.installContextMenu({
+				selector: '.spreadsheet-tab',
+				className: 'loleaflet-font',
+				items: this._menuItem,
+				zIndex: 1000
+			});
+		}
 
 		map.on('updateparts', this._updateDisabled, this);
 	},
@@ -105,6 +82,8 @@ L.Control.Tabs = L.Control.extend({
 		var parts = e.parts;
 		var selectedPart = e.selectedPart;
 		var docType = e.docType;
+		var map = this._map;
+
 		if (docType === 'text') {
 			return;
 		}
@@ -127,20 +106,29 @@ L.Control.Tabs = L.Control.extend({
 				var ssTabScroll = L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
 
+				if (window.mode.isMobile()) {
+					var menuData = map.getMenuStructureForMobileWizard(this._menuItem, true, '');
+				}
+
 				for (var i = 0; i < parts; i++) {
 					if (e.hiddenParts.indexOf(i) !== -1)
 						continue;
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
 					L.DomEvent.enableLongTap(tab);
-					
+
 					L.DomEvent.on(tab, 'contextmenu', function(j) {
 						return function() {
 							this._tabForContextMenu = j;
-							$('spreadsheet-tab' + j).contextMenu();
+							if (window.mode.isMobile()) {
+								window.contextMenuWizard = true;
+								if (this._map._permission != 'readonly') this._map.fire('mobilewizard', menuData);
+							} else {
+								$('spreadsheet-tab' + j).contextMenu();
+							}
 						}
 					}(i).bind(this));
-					
+
 					tab.textContent = e.partNames[i];
 					tab.id = id;
 
@@ -168,7 +156,49 @@ L.Control.Tabs = L.Control.extend({
 			this._map._docLayer._clearReferences();
 			this._map.setPart(parseInt(part), /*external:*/ false, /*calledFromSetPartHandler:*/ true);
 		}
+	},
+
+	_insertSheetBefore: function() {
+		this._map.insertPage(this._tabForContextMenu);
+	},
+
+	_insertSheetAfter: function() {
+		this._map.insertPage(this._tabForContextMenu + 1);
+	},
+
+	_deleteSheet: function() {
+		var map = this._map;
+		var nPos = this._tabForContextMenu;
+		vex.dialog.confirm({
+			message: _('Are you sure you want to delete sheet, %sheet% ?').replace('%sheet%', $('#spreadsheet-tab' + this._tabForContextMenu).text()),
+			callback: function(data) {
+				if (data) {
+					map.deletePage(nPos);
+				}
+			}
+		});
+	},
+
+	_renameSheet: function() {
+		var map = this._map;
+		var nPos = this._tabForContextMenu;
+		vex.dialog.open({
+			message: _('Enter new sheet name'),
+			input: '<input name="sheetname" type="text" value="' + $('#spreadsheet-tab' + this._tabForContextMenu).text() + '" required />',
+			callback: function(data) {
+				map.renamePage(data.sheetname, nPos);
+			}
+		});
+	},
+
+	_showSheet: function() {
+		this._map.showPage();
+	},
+
+	_hideSheet: function() {
+		this._map.hidePage();
 	}
+
 });
 
 L.control.tabs = function (options) {

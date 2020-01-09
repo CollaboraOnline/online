@@ -114,7 +114,7 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 		if (window.mode.isMobile()) {
 			window.contextMenuWizard = true;
-			var menuData = this.getMenuStructureForMobileWizard(contextMenu, true, '');
+			var menuData = this._map.getMenuStructureForMobileWizard(contextMenu, true, '');
 			if (spellingContextMenu === true) {
 				vex.timer = setInterval(function() {
 					map.fire('mobilewizard', menuData);
@@ -257,53 +257,6 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 
 		return contextMenu;
-	},
-
-	getMenuStructureForMobileWizard: function(menu, mainMenu, itemCommand) {
-		if (itemCommand.includes('sep'))
-			return null;
-
-		var itemText = ''
-		if (menu.name)
-			itemText = menu.name;
-
-		var itemType = 'submenu';
-		var executionType = 'menu';
-		if (mainMenu) {
-			itemType = 'mainmenu';
-			executionType = 'menu';
-		} else if (!menu.items) {
-			itemType = 'menuitem';
-			executionType = 'command';
-		}
-
-		var menuStructure = {
-			type : itemType,
-			enabled : true,
-			text : itemText,
-			executionType : executionType,
-			children : []
-		};
-		if (itemCommand)
-			menuStructure['command'] = itemCommand;
-		if (menu.icon)
-			menuStructure['checked'] = true;
-
-		if (mainMenu) {
-			for (var menuItem in menu) {
-				var element = this.getMenuStructureForMobileWizard(menu[menuItem], false, menuItem);
-				if (element)
-					menuStructure['children'].push(element);
-			}
-		} else if (itemType == 'submenu') {
-			for (menuItem in menu.items) {
-				element = this.getMenuStructureForMobileWizard(menu.items[menuItem], false, menuItem);
-				if (element)
-					menuStructure['children'].push(element);
-			}
-		}
-
-		return menuStructure;
 	}
 });
 
