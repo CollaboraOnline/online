@@ -3,5 +3,5 @@ host=gerrit.libreoffice.org
 port=29418
 project=online
 defaultremote=logerrit
-defaultbranch=distro/collabora/code-4.2.0-3
+defaultbranch=master
 
