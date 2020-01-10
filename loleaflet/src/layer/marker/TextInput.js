@@ -1,8 +1,11 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.TextInput is the hidden textarea, which handles text
- * input events and clipboard selection.
+ * L.TextInput is the hidden textarea, which handles text input events
  *
+ * This is made significantly more difficult than expected by such a
+ * mess of browser, and mobile IME quirks that it is not possible to
+ * follow events, but we have to re-construct input from a browser
+ * text area itself.
  */
 
 /* global */
@@ -54,6 +57,27 @@ L.TextInput = L.Layer.extend({
 
 		var that = this;
 		this._selectionHandler = function(ev) { that._onEvent(ev); }
+
+		// Auto-correct characters can trigger auto-correction, but
+		// must be sent as key-up/down if we want correction.
+		// cf. SvxAutoCorrect::IsAutoCorrectChar
+		this._autoCorrectChars = {
+			// tab, newline - handled elsewhere
+			' ':  [ 32, 0,      0, 1284 ],
+			'!':  [ 33, 0,      0, 4353 ],
+			'"':  [ 34, 0,      0, 4353 ],
+			'%':  [ 37, 0,      0, 4357 ],
+			'\'': [ 39, 0,      0,  192 ],
+			'*':  [ 42, 0,      0, 4360 ],
+			',':  [ 44, 0,      0, 1291 ],
+			'-':  [ 45, 0,      0, 1288 ],
+			'.':  [ 46, 0,      0,  190 ],
+			'/':  [ 47, 0,      0,  191 ],
+			':':  [ 58, 0,      0, 5413 ],
+			';':  [ 59, 0,      0, 1317 ],
+			'?':  [ 63, 0,      0, 4287 ],
+			'_':  [ 95, 0,      0, 5384 ]
+		};
 	},
 
 	onAdd: function() {
@@ -518,8 +542,7 @@ L.TextInput = L.Layer.extend({
 					this._emptyArea();
 				}
 				if (parts[i].length > 0) {
-					this._sendCompositionEvent('input', parts[i]);
-					this._sendCompositionEvent('end', parts[i]);
+					this._sendCompositionEvent(parts[i]);
 				}
 			}
 		}
@@ -637,17 +660,29 @@ L.TextInput = L.Layer.extend({
 	},
 
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
-	// "type" is either "input" for updates or "end" for commits.
-	_sendCompositionEvent: function _sendCompositionEvent(type, text) {
-		console.log('sending to lowsd: ', type, text);
-		this._map._socket.sendMessage(
-			'textinput id=' +
-				this._map.getWinId() +
-				' type=' +
-				type +
-				' text=' +
-				encodeURIComponent(text)
-		);
+	// sends a pair of "input" for a composition update paird with an "end"
+	_sendCompositionEvent: function _sendCompositionEvent(text) {
+		console.log('sending to lowsd: ', text);
+
+		// We want to trigger auto-correction, but not if we may
+		// have to delete a count of characters in the future,
+		// which is specific to crazy mobile keyboard / IMEs:
+		if (!window.mode.isMobile() && !window.mode.isTablet() &&
+		    this._autoCorrectChars[text])
+		{
+			var codes = this._autoCorrectChars[text];
+			this._sendKeyEvent(codes[0], codes[1], 'input');
+			this._sendKeyEvent(codes[2], codes[3], 'up');
+		}
+		else
+		{
+			var encodedText = encodeURIComponent(text);
+			var winId = this._map.getWinId();
+			this._map._socket.sendMessage(
+				'textinput id=' + winId + ' type=input text=' + encodedText);
+			this._map._socket.sendMessage(
+				'textinput id=' + winId + ' type=end text=' + encodedText);
+		}
 	},
 
 	// Tiny helper - encapsulates sending a 'key' or 'windowkey' websocket message

@@ -22,6 +22,7 @@ L.Map.Keyboard = L.Handler.extend({
 		ctrlMac: 32768
 	},
 
+	// For UNO keycodes cf. offapi/com/sun/star/awt/Key.idl
 	keymap: {
 		8   : 1283, // backspace	: BACKSPACE
 		9   : 1282, // tab 		: TAB
