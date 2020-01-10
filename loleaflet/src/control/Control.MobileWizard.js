@@ -311,13 +311,14 @@ L.Control.MobileWizard = L.Control.extend({
 		if (deck)
 		{
 			// merge styles into text-panel for elegance
-			var stylesIdx = this._findIdxInParentById(deck, 'SidebarStylesPanel');
-			var textIdx = this._findIdxInParentById(deck, 'SidebarTextPanel');
+			var stylesIdx = this._findIdxInParentById(deck, 'StylesPropertyPanel');
+			var textName = 'TextPropertyPanel';
+			var textIdx = this._findIdxInParentById(deck, textName);
 			if (stylesIdx >= 0 && textIdx >= 0)
 			{
 				var moveContent = deck.children[stylesIdx].children;
 				deck.children.splice(stylesIdx, 1); // remove
-				textIdx = this._findIdxInParentById(deck, 'SidebarTextPanel'); // re-lookup
+				textIdx = this._findIdxInParentById(deck, textName); // re-lookup
 				deck.children[textIdx].children = moveContent.concat(deck.children[textIdx].children);
 			}
 		}

@@ -398,71 +398,76 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_createTabClick: function(builder, t, tabs, contentDivs, labels)
+	{
+		return function() {
+			$(tabs[t]).addClass('selected');
+			for (var i = 0; i < tabs.length; i++) {
+				if (i !== t)
+				{
+					$(tabs[i]).removeClass('selected');
+					$(contentDivs[i]).hide();
+				}
+			}
+			$(contentDivs[t]).show();
+			builder.wizard.selectedTab(labels[t]);
+		};
+	},
+
 	_panelTabsHandler: function(parentContainer, data, builder) {
 		var tabsContainer = L.DomUtil.create('div', 'ui-tabs mobile-wizard ui-widget');
 		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content mobile-wizard ui-widget', parentContainer);
 
-		var title1 = builder._cleanText(data[0].text);
+		var tabs = [];
+		var contentDivs = [];
+		var labels = [];
+		for (var tabIdx = 0; tabIdx < data.length; tabIdx++) {
+			var item = data[tabIdx];
 
-		var tab1 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
-		tab1.id = title1;
+			var title = builder._cleanText(item.text);
 
-		var label = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab1);
-		label.innerHTML = title1;
+			var tab = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
+			tab.id = title;
+			tabs[tabIdx] = tab;
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', contentsContainer);
-		contentDiv.title = title1;
+			var label = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab);
+			label.innerHTML = title;
+			labels[tabIdx] = title;
 
-		builder._currentDepth++;
-		for (var i = 0; i < data[0].children.length; i++) {
-			builder.build(contentDiv, [data[0].children[i]]);
+			var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', contentsContainer);
+			contentDiv.title = title;
+
+			builder._currentDepth++;
+			if (item.children)
+			{
+				for (var i = 0; i < item.children.length; i++) {
+					builder.build(contentDiv, [item.children[i]]);
+				}
+			}
+			else // build ourself inside there
+			{
+				builder.build(contentDiv, [item]);
+			}
+			builder._currentDepth--;
+
+			$(contentDiv).hide();
+			contentDivs[tabIdx] = contentDiv;
 		}
-		builder._currentDepth--;
 
-		$(contentDiv).hide();
-
-		var title2 = builder._cleanText(data[1].text);
-
-		var tab2 = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
-		tab2.id = title2;
-
-		var label2 = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab2);
-		label2.innerHTML = title2;
-
-		var contentDiv2 = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', contentsContainer);
-		contentDiv2.title = title2;
-
-		builder._currentDepth++;
-		for (i = 0; i < data[1].children.length; i++) {
-			builder.build(contentDiv2, [data[1].children[i]]);
-		}
-		builder._currentDepth--;
-
-		$(contentDiv2).hide();
 		if (builder.wizard) {
 			builder.wizard.setTabs(tabsContainer);
 
-			$(tab1).click(function() {
-				$(tab1).addClass('selected');
-				$(tab2).removeClass('selected');
-				$(contentDiv).show();
-				$(contentDiv2).hide();
-				builder.wizard.selectedTab(label.innerHTML);
-			});
-
-			$(tab2).click(function() {
-				$(tab2).addClass('selected');
-				$(tab1).removeClass('selected');
-				$(contentDiv).hide();
-				$(contentDiv2).show();
-				builder.wizard.selectedTab(label2.innerHTML);
-			});
+			for (var t = 0; t < tabs.length; t++) {
+				// to get capture of 't' right has to be a sub fn.
+				var fn = builder._createTabClick(
+					builder, t, tabs, contentDivs, labels);
+				$(tabs[t]).click(fn);
+			}
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
-
-		$(tab1).click();
-		builder.wizard.goLevelDown(contentDiv);
+		$(tabs[0]).click();
+		builder.wizard.goLevelDown(contentDivs[0]);
 
 		return false;
 	},
