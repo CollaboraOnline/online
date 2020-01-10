@@ -163,15 +163,14 @@ L.Control.PartsPreview = L.Control.extend({
 		img.hash = hashCode;
 		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
 		img.fetched = false;
-		L.DomEvent
-			.on(img, 'click', L.DomEvent.stopPropagation)
-			.on(img, 'click', L.DomEvent.stop)
-			.on(img, 'click', this._setPart, this)
-			.on(img, 'click', this._map.focus, this._map)
-			.on(img, 'click', function() {
-				this.partsFocused = true;
-				document.activeElement.blur();
-			}, this);
+		L.DomEvent.on(img, 'click', function (e) {
+			L.DomEvent.stopPropagation(e);
+			L.DomEvent.stop(e);
+			this._setPart(e);
+			this._map.focus();
+			this.partsFocused = true;
+			document.activeElement.blur();
+		}, this);
 
 		var topBound = this._previewContTop;
 		var previewFrameTop = 0;
