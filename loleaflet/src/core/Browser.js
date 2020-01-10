@@ -32,6 +32,7 @@
 	    win = navigator.platform.indexOf('Win') === 0,
 
 	    mobile = typeof orientation !== 'undefined' || ua.indexOf('mobile') !== -1,
+	    cypressMobileTest = ua.indexOf('cypress mobile test') !== -1,
 	    msPointer = !window.PointerEvent && window.MSPointerEvent,
 	    pointer = (window.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer,
 
@@ -136,6 +137,9 @@
 		// `true` for gecko-based browsers running in a mobile device.
 		mobileGecko: mobile && gecko,
 
+		// @property cypressMobileTest: Boolean
+		// `true` when running cypress in mobile mode
+		cypressMobileTest: cypressMobileTest,
 
 		// @property touch: Boolean
 		// `true` for all browsers supporting [touch events](https://developer.mozilla.org/docs/Web/API/Touch_events).

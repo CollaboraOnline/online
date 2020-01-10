@@ -11,6 +11,10 @@ var map;
 
 // has to match small screen size requirement
 function _inMobileMode() {
+	if (L.Browser.cypressMobileTest) {
+		return true;
+	}
+
 	return L.Browser.mobile && screen.width < 768;
 }
 

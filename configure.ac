@@ -960,6 +960,7 @@ AC_CONFIG_FILES([Makefile
                  android/lib/libSettings.gradle
                  android/lib/src/main/cpp/CMakeLists.txt
                  android/Makefile
+                 cypress_test/Makefile
                  gtk/Makefile
                  ios/config.h
                  ios/Mobile/Info.plist
