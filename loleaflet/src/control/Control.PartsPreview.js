@@ -3,7 +3,7 @@
  * L.Control.PartsPreview
  */
 
-/* global $ */
+/* global $ Hammer w2ui */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
@@ -163,6 +163,16 @@ L.Control.PartsPreview = L.Control.extend({
 		img.hash = hashCode;
 		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
 		img.fetched = false;
+		if (L.Browser.mobile) {
+			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
+			.on('press', L.bind(function () {
+				if (this._map._permission === 'edit') {
+					setTimeout(function () {
+						w2ui['actionbar'].click('mobile_wizard');
+					}, 0);
+				}
+			}, this));
+		}
 		L.DomEvent.on(img, 'click', function (e) {
 			L.DomEvent.stopPropagation(e);
 			L.DomEvent.stop(e);
