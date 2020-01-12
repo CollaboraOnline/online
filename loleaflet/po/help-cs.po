@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-03 15:21+0000\n"
+"PO-Revision-Date: 2020-01-03 17:34+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -910,7 +910,7 @@ msgstr "Vybrat vše na snímku/kresbě"
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "<span class=\"productname\">%productName</span> nápověda"
+msgstr "Nápověda <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
@@ -920,7 +920,7 @@ msgstr "Spolupráce při úpravách"
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "<span class=\"productname\">%productName</span> uživatelské rozhraní"
+msgstr "Uživatelské rozhraní <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
@@ -944,12 +944,12 @@ msgstr "Pokročilé funkce"
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> sešity"
+msgstr "Sešity <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr "Editace sešitů"
+msgstr "Úpravy sešitů"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
@@ -964,17 +964,17 @@ msgstr "Formátování sešitů"
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> textové dokumenty"
+msgstr "Textové dokumenty <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr "Editace textových dokumentů"
+msgstr "Úpravy textových dokumentů"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr "Kontextové nabídky"
+msgstr "Místní nabídky"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
@@ -984,12 +984,12 @@ msgstr "Pokročilé funkce editoru textových dokumentů"
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> prezentace"
+msgstr "Prezentace <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr "Editace prezentací"
+msgstr "Úpravy prezentací"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
@@ -999,7 +999,7 @@ msgstr "Prezentace"
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr "Panel snímku"
+msgstr "Panel snímků"
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
@@ -1031,7 +1031,7 @@ msgstr "<span class=\"productname\">%productName</span> umožňuje jednoduše vy
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
-msgstr "Každému uživateli se přiřadí určitá barva. Tuto barvu bude mít kurzor daného uživatele. Poznámka: svůj kurzor uvidíte vždy jako černý a blikající, zatímco ostatním se zobrazí barevný."
+msgstr "Každému uživateli se přiřadí určitá barva. Tuto barvu bude mít jeho kurzor. Poznámka: svůj kurzor uvidíte vždy jako černý a blikající, zatímco ostatním se zobrazí barevný."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
@@ -1055,11 +1055,11 @@ msgstr "<span class=\"def\">Hlavní nabídka:</span> Hlavní nabídka se nacház
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
-msgstr "<span class=\"def\">Místní nabídky:</span> Po klepnutí pravým tlačítkem myši se zobrazí nabídku s příkazy příslušnými k objektu, který se nachází na místě klepnutí."
+msgstr "<span class=\"def\">Místní nabídky:</span> Po klepnutí pravým tlačítkem myši se zobrazí nabídka s příkazy příslušnými k objektu, který se nachází na místě klepnutí."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
-msgstr "<span class=\"def\">Nástrojová lišta:</span> Nástrojová lišta obsahuje při běžné práci nejpoužívanější možnosti. Tlačítka lišty jsou dynamická, jejich stav (zapnuto nebo vypnuto) závisí na různých okolnostech."
+msgstr "<span class=\"def\">Nástrojová lišta:</span> Nástrojová lišta obsahuje možnosti, které se při běžné práci nejvíc používají. Tlačítka lišty jsou dynamická, tj. jejich stav (zapnuto nebo vypnuto) závisí na různých okolnostech."
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid "<span class=\"def\">The status bar:</span> The status bar is shown in the bottom, and contains several useful options and features."

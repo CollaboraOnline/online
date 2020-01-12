@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-01-10 19:01+0000\n"
+"Last-Translator: Mihail Balabanov <m.balabanov@gmail.com>\n"
+"Language-Team: Bulgarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /bg/libo_online/loleaflet-help-bg.po\n"
 "X-Pootle-Revision: 2706811\n"
 
@@ -909,29 +910,27 @@ msgstr "Избиране на всичко в кадъра / страницат�
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "Помощ на <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
-#, fuzzy
-#| msgid "Cell formatting"
 msgid "Collaborative editing"
-msgstr "Форматиране на клетки"
+msgstr "Съвместно редактиране"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "Потребителски интерфейс на <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Отваряне, затваряне, записване, печатане и изтегляне на документи"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Редактиране на документи"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -940,195 +939,195 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Разширени функции"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "Електронни таблици на <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Редактиране на електронни таблици"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr ""
+msgstr "Формули"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Форматиране на електронни таблици"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "Текстови документи на <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Редактиране на текстови документи"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr ""
+msgstr "Контекстни менюта"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Разширени възможности на редактора на текстови документи"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "Презентации на <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Редактиране на презентации"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr ""
+msgstr "Прожекция"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Панел за кадри"
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Често задавани въпроси"
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr ""
+msgstr "Общи"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr ""
+msgstr "Текстови документи"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Електронни таблици"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr ""
+msgstr "Презентации"
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> ви позволява да създавате и редактирате по прост и удобен начин текстови документи, електронни таблици и презентации направо в браузъра. Можете да работите по даден документ както сами, така и съвместно в екип."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
-msgstr ""
+msgstr "На всеки потребител се приписва цвят. Курсорът на потребителя се показва в този цвят. Бележка: вие винаги виждате собствения си курсор черен и мигащ, въпреки че другите ви виждат с различен цвят."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
-msgstr ""
+msgstr "Можете да преминете към позицията на курсора на даден потребител, като щракнете върху името (или аватара) на потребителя. Възможно е да следите редактирането."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> ви уведомява в долния колонтитул, когато влезе нов потребител или някой потребител напусне."
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> използва ресурсите на съвременните браузъри, за да приспособи потребителския интерфейс към размера на работната област, включително малките екрани на мобилните устройства. Интерфейсът е съставен от:"
 
 #: html/loleaflet-help.html%2Bdiv.p:257-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."
-msgstr ""
+msgstr "<span class=\"def\">Областта за документи:</span> областта на приложението показва съдържанието на документите – електронни таблици, презентации или текстове."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
-msgstr ""
+msgstr "<span class=\"def\">Лентата с менюта:</span> намира се отгоре и съдържа много настройки, команди за печатане, редактиране, разглеждане и други. Можете да я скриете, като щракнете върху иконата <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> най-вдясно. За да я покажете отново, щракнете върху иконата <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\">."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
-msgstr ""
+msgstr "<span class=\"def\">Контекстни менюта:</span> при щракване с десния бутон на мишката се появява меню с команди, свързани с обекта под курсора."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
-msgstr ""
+msgstr "<span class=\"def\">Лентата с инструменти:</span> съдържа най-често използваните команди за редактиране. Бутоните в нея са динамични, което означава, че състоянието им (включено или изключено) зависи от различни фактори."
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid "<span class=\"def\">The status bar:</span> The status bar is shown in the bottom, and contains several useful options and features."
-msgstr ""
+msgstr "<span class=\"def\">Лентата на състоянието:</span> показва се отдолу и съдържа няколко полезни настройки и функционалности."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">The search bar:</span> Searching starts automatically when content is inserted in the search box, and the document window automatically moves to the first occurrence found. Searching is not case-sensitive. There are three buttons right next to the search box:"
-msgstr ""
+msgstr "<span class=\"def\">Лентата за търсене:</span> търсенето започва автоматично, когато въведете нещо в полето за търсене, и прозорецът на документа автоматично показва първото намерено срещане. Търсенето не зачита регистъра на буквите. До полето за търсене се намират три бутона:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Търсене назад"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr ""
+msgstr "Търсене напред"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Отказ от търсенето (появява се само когато е бил търсен текст)"
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."
-msgstr ""
+msgstr "<span class=\"def\">Лентата за мащабиране:</span> вдясно от лентата на състоянието има набор от бутони, с които можете да зададете мащаб от 100%, да увеличавате и да намалявате мащаба. Мащабът важи за областта с документа и не влияе върху потребителския интерфейс. В тази област се показва текущият мащаб."
 
 #: html/loleaflet-help.html%2Bdiv.p:270-5
 msgid "Text, charts, shapes and svg images will stay sharp, when zooming in, you will only see pixels appear at inserted images, such as jpg’s or png’s."
-msgstr ""
+msgstr "Резките очертания на текстовете, диаграмите, фигурите и изображенията във формат SVG се запазват при увеличаване; видими пиксели се появяват само във вмъкнати пикселни изображения, например във формат JPG или PNG."
 
 #: html/loleaflet-help.html%2Bdiv.p:271-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "Командите за мащабиране на браузъра влияят както върху документа, така и върху областите с потребителски интерфейс."
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
-msgstr ""
+msgstr "<span class=\"def\">Информационната лента:</span> вдясно от лентата за търсене се показва информация за документа. Видът ѝ зависи от естеството на документа."
 
 #: html/loleaflet-help.html%2Bdiv.p:276-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
-msgstr ""
+msgstr "Документите се съхраняват и управляват в облачното хранилище, интегрирано с <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
-msgstr ""
+msgstr "За да изтеглите документ, използвайте менюто <span class=\"ui\">Файл</span> на приложението от <span class=\"productname\">%productName</span>. Наличните формати за изтегляне зависят от приложението. Всички приложения могат да експортират документи във формат PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."
-msgstr ""
+msgstr "За да отворите документ, щракнете върху файла; това ще стартира свързания с неговия формат модул от <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Documents in <span class=\"productname\">%productName</span> save automatically, but if you are concerned that a document is synchronized as quickly as possible you can also force saving using the <span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
-msgstr ""
+msgstr "Документите в <span class=\"productname\">%productName</span> се записват автоматично, но ако искате даден документ да се синхронизира възможно най-бързо, можете да го запишете принудително с командата <span class=\"ui\">Записване</span> от менюто <span class=\"ui\">Файл</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
-msgstr ""
+msgstr "В зависимост от възможностите на браузъра ви може да се покаже прозорец за печатане или подкана за изтегляне на експортиран PDF файл. Впоследствие можете да отпечатате PDF файла с предпочитания от вас четец за PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "Когато затваряте документ, той автоматично се записва, ако е бил променен."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
-msgstr ""
+msgstr "Редактирането на документи би трябвало да е познато на всекиго, който е използвал офис приложение, но ето някои отличителни черти:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Копиране и поставяне"
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."

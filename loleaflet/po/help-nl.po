@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-01-11 10:38+0000\n"
+"Last-Translator: vpanter <leo.moons@telenet.be>\n"
+"Language-Team: Dutch <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-help-nl.po\n"
 "X-Pootle-Revision: 832994\n"
 
@@ -362,7 +363,7 @@ msgstr "Woord voor woord naar rechts selecteren"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-77
 msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl+Shift+pijl naar rechts "
+msgstr "Ctrl+Shift+pijl naar rechts"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18

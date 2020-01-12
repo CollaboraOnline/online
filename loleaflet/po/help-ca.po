@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-24 18:45+0000\n"
+"PO-Revision-Date: 2020-01-07 10:58+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1079,7 +1079,7 @@ msgstr "Cerca cap endavant"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Cancel·la la cerca (apareix només quan s'ha cercat algun text)"
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."
@@ -1103,7 +1103,7 @@ msgstr "Els vostres documents s'emmagatzemen i es gestionen al magatzem al núvo
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
-msgstr ""
+msgstr "Per a baixar un document, feu servir l'ordre corresponent al menú <span class=\"ui\">Fitxer</span> del <span class=\"productname\">%productName</span>. Els formats de baixada disponibles depenen de l'aplicació. Totes les aplicacions permeten baixar en el format PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."
@@ -1223,7 +1223,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr ""
+msgstr "Manipulació d'imatges"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
@@ -1247,7 +1247,7 @@ msgstr "Comentaris als documents"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
-msgstr ""
+msgstr "Inseriu comentaris del <span class=\"productname\">%productName</span> als llocs que necessitin atenció especial del lector. Els comentaris són al costat dret i inclouen la data i el nom de l'emissor."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:327-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."

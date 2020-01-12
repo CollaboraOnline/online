@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-31 09:37+0000\n"
+"PO-Revision-Date: 2020-01-12 22:16+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/eu/>\n"
 "Language: eu\n"
@@ -29,7 +29,7 @@ msgstr "Desegin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:20-49
 msgid "Ctrl + Z"
-msgstr "Ktrl + Z"
+msgstr "Ctrl + Z"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:21-18
 msgid "Redo"
@@ -37,7 +37,7 @@ msgstr "Berregin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:21-49
 msgid "Ctrl + Y"
-msgstr "Ktrl + Y"
+msgstr "Ctrl + Y"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:22-18
 msgid "Cut"
@@ -45,7 +45,7 @@ msgstr "Ebaki"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:22-48
 msgid "Ctrl + X"
-msgstr "Ktrl + X"
+msgstr "Ctrl + X"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Paste as unformatted text"
@@ -53,7 +53,7 @@ msgstr "Itsatsi formaturik gabeko testu gisa"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-70
 msgid "Ctrl + Alt + Shift + V"
-msgstr "Ktrl + Alt + Maius + V"
+msgstr "Ctrl + Alt + ⇧ + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Print (Download as PDF)"
@@ -61,7 +61,7 @@ msgstr "Inprimatu (Deskargatu PDF gisa)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-68
 msgid "Ctrl + P"
-msgstr "Ktrl + P"
+msgstr "Ctrl + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-18
 msgid "Display the Keyboard shortcuts help"
@@ -69,7 +69,7 @@ msgstr "Erakutsi teklatuaren lasterbiden laguntza"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-80
 msgid "Ctrl + Shift + ?"
-msgstr "Ktrl + Maius + ?"
+msgstr "Ctrl + ⇧ + ?"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:29-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:151-9
@@ -86,7 +86,7 @@ msgstr "Lodia"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:128-49
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:153-49
 msgid "Ctrl + B"
-msgstr "Ktrl + B"
+msgstr "Ctrl + B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:32-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:129-18
@@ -98,7 +98,7 @@ msgstr "Etzana"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:129-51
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:154-51
 msgid "Ctrl + I"
-msgstr "Ktrl + I"
+msgstr "Ctrl + I"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:33-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:130-18
@@ -110,7 +110,7 @@ msgstr "Azpimarratu"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:130-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:155-54
 msgid "Ctrl + U"
-msgstr "Ktrl + U"
+msgstr "Ctrl + U"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:34-18
 msgid "Double Underline"
@@ -119,7 +119,7 @@ msgstr "Azpimarra bikoitza"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:34-61
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-54
 msgid "Ctrl + D"
-msgstr "Ktrl + D"
+msgstr "Ctrl + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:35-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:131-18
@@ -131,7 +131,7 @@ msgstr "Marratu"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:131-58
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:156-58
 msgid "Ctrl + Alt + 5"
-msgstr "Ktrl + Alt + 5"
+msgstr "Ctrl + Alt + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:157-18
@@ -141,7 +141,7 @@ msgstr "Goi-indizea"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:157-56
 msgid "Ctrl + Shift + P"
-msgstr "Ktrl + Maius + P"
+msgstr "Ctrl + ⇧ + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-18
@@ -151,7 +151,7 @@ msgstr "Azpi-indizea"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-54
 msgid "Ctrl + Shift + B"
-msgstr "Ktrl + Maius + B"
+msgstr "Ctrl + ⇧ + B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
@@ -161,7 +161,7 @@ msgstr "Kendu formatu zuzena"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-69
 msgid "Ctrl + M"
-msgstr "Ktrl + M"
+msgstr "Ctrl + M"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:40-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:161-9
@@ -178,7 +178,7 @@ msgstr "Lerrokatu erdian"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-57
 msgid "Ctrl + E"
-msgstr "Ktrl + E"
+msgstr "Ctrl + E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:43-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
@@ -190,7 +190,7 @@ msgstr "Lerrokatu ezkerrean"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:164-55
 msgid "Ctrl + L"
-msgstr "Ktrl + L"
+msgstr "Ctrl + L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:44-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
@@ -202,7 +202,7 @@ msgstr "Lerrokatu eskuinean"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:165-56
 msgid "Ctrl + R"
-msgstr "Ktrl + R"
+msgstr "Ctrl + R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
@@ -214,7 +214,7 @@ msgstr "Justifikatu"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-52
 msgid "Ctrl + J"
-msgstr "Ktrl + J"
+msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
 msgid "Apply Default paragraph style"
@@ -222,7 +222,7 @@ msgstr "Aplikatu paragrafo-estilo lehenetsia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-74
 msgid "Ctrl + 0"
-msgstr "Ktrl + 0"
+msgstr "Ctrl + 0"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-18
 msgid "Apply Heading 1 paragraph style"
@@ -230,7 +230,7 @@ msgstr "Aplikatu 1. izenburua paragrafo-estiloa"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-76
 msgid "Ctrl + 1"
-msgstr "Ktrl + 1"
+msgstr "Ctrl + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-18
 msgid "Apply Heading 2 paragraph style"
@@ -238,7 +238,7 @@ msgstr "Aplikatu 2. izenburua paragrafo-estiloa"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-76
 msgid "Ctrl + 2"
-msgstr "Ktrl + 2"
+msgstr "Ctrl + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-18
 msgid "Apply Heading 3 paragraph style"
@@ -247,7 +247,7 @@ msgstr "Aplikatu 3. izenburua paragrafo-estiloa"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-69
 msgid "Ctrl + 3"
-msgstr "Ktrl + 3"
+msgstr "Ctrl + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-18
 msgid "Apply Heading 4 paragraph style"
@@ -255,7 +255,7 @@ msgstr "Aplikatu 4. izenburua paragrafo-estiloa"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-76
 msgid "Ctrl + 4"
-msgstr "Ktrl + 4"
+msgstr "Ctrl + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
 msgid "Apply Heading 5 paragraph style"
@@ -263,7 +263,7 @@ msgstr "Aplikatu 5. izenburua paragrafo-estiloa"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-76
 msgid "Ctrl + 5"
-msgstr "Ktrl + 5"
+msgstr "Ctrl + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:53-9
 msgid "Text selection and navigation in document"
@@ -283,7 +283,7 @@ msgstr "Hautatu dena"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-79
 msgid "Ctrl + A"
-msgstr "Ktrl + A"
+msgstr "Ctrl + A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:173-18
@@ -303,7 +303,7 @@ msgstr "Eraman kurtsorea ezkerrerantz hautapenarekin"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:57-83
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:174-83
 msgid "Shift + Arrow Left"
-msgstr "Maius + Ezker-gezia"
+msgstr "⇧ + Ezker-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:58-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:175-18
@@ -313,7 +313,7 @@ msgstr "Joan hitz-hasierara"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:58-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:175-70
 msgid "Ctrl + Arrow Left"
-msgstr "Ktrl + Ezker-gezia"
+msgstr "Ctrl + Ezker-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-18
@@ -323,7 +323,7 @@ msgstr "Hautatu ezkerrerantz hitzez hitz"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-76
 msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ktrl + Maius + Ezker-gezia"
+msgstr "Ctrl + ⇧ + Ezker-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-18
@@ -343,7 +343,7 @@ msgstr "Eraman kurtsorea eskuinerantz hautapenarekin"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-84
 msgid "Shift + Arrow Right"
-msgstr "Maius + Eskuin-gezia"
+msgstr "⇧ + Eskuin-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-18
@@ -353,7 +353,7 @@ msgstr "Joan hurrengo hitzaren hasierara"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-73
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-73
 msgid "Ctrl + Arrow Right"
-msgstr "Ktrl + Eskuin-gezia"
+msgstr "Ctrl + Eskuin-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-18
@@ -363,7 +363,7 @@ msgstr "Hautatu eskuinerantz hitzez hitz"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-77
 msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ktrl + Maius + Eskuin-gezia"
+msgstr "Ctrl + ⇧ + Eskuin-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18
@@ -383,7 +383,7 @@ msgstr "Hautatu lerroak gorantz"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-78
 msgid "Shift + Arrow Up"
-msgstr "Maius + Gora-gezia"
+msgstr "⇧ + Gora-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
@@ -393,7 +393,7 @@ msgstr "Eraman kurtsorea aurreko paragrafoaren hasierara"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-95
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-95
 msgid "Ctrl + Arrow Up"
-msgstr "Ktrl + Gora-gezia"
+msgstr "Ctrl + Gora-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
@@ -403,7 +403,7 @@ msgstr "Hautatu paragrafoaren hasierara"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-77
 msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ktrl + Maius + Gora-gezia"
+msgstr "Ctrl + ⇧ + Gora-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
@@ -423,7 +423,7 @@ msgstr "Hautatu lerroak beherantz"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-80
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-80
 msgid "Shift + Arrow Down"
-msgstr "Maius + Behera-gezia"
+msgstr "⇧ + Behera-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
@@ -433,7 +433,7 @@ msgstr "Eraman kurtsorea hurrengo paragrafoaren hasierara"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-91
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-91
 msgid "Ctrl + Arrow Down"
-msgstr "Ktrl + Behera-gezia"
+msgstr "Ctrl + Behera-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-18
@@ -443,7 +443,7 @@ msgstr "Hautatu paragrafoaren amaierara"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-71
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ktrl + Maius + Behera-gezia"
+msgstr "Ctrl + ⇧ + Behera-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
@@ -463,7 +463,7 @@ msgstr "Joan lerroaren hasierara eta hautatu"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-85
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-85
 msgid "Shift + Home"
-msgstr "Maius + Hasiera"
+msgstr "⇧ + Hasiera"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
@@ -474,7 +474,7 @@ msgstr "Joan dokumentu-hasierara"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:94-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-68
 msgid "Ctrl + Home"
-msgstr "Ktrl + Hasiera"
+msgstr "Ctrl + Hasiera"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 msgid "Go and select text to start of document"
@@ -483,7 +483,7 @@ msgstr "Joan dokumentu-hasierara eta hautatu testua"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-83
 msgid "Ctrl + Shift + Home"
-msgstr "Ktrl + Maius + Hasiera"
+msgstr "Ctrl + ⇧ + Hasiera"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
@@ -503,7 +503,7 @@ msgstr "Joan lerroaren amaierara eta hautatu"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-79
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-79
 msgid "Shift + End"
-msgstr "Maius + Amaiera"
+msgstr "⇧ + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
@@ -514,7 +514,7 @@ msgstr "Joan dokumentu-amaierara"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:95-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-66
 msgid "Ctrl + End"
-msgstr "Ktrl + Amaiera"
+msgstr "Ctrl + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
 msgid "Go and select text to end of document"
@@ -523,7 +523,7 @@ msgstr "Joan dokumentu-amaierara eta hautatu testua"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-82
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-81
 msgid "Ctrl + Shift + End"
-msgstr "Ktrl + Maius + Amaiera"
+msgstr "Ctrl + ⇧ + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
 msgid "Move the view up one page"
@@ -539,7 +539,7 @@ msgstr "Mugitu kurtsorea testua eta goiburukoaren artean"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-82
 msgid "Ctrl + PageUp"
-msgstr "Ktrl + OrrGora"
+msgstr "Ctrl + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 msgid "Extend the selection up one page"
@@ -547,7 +547,7 @@ msgstr "Zabaldu hautaketa orrialde bat gora"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-77
 msgid "Shift + PageUp"
-msgstr "Maius + OrrGora"
+msgstr "⇧ + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Move the view down one page"
@@ -555,7 +555,7 @@ msgstr "Mugitu ikuspegia orrialde bat behera"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-72
 msgid "PageDown"
-msgstr "OrrBehera"
+msgstr "PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Switch cursor between text and footer"
@@ -563,7 +563,7 @@ msgstr "Mugitu kurtsorea testua eta orri-oinaren artean"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-82
 msgid "Ctrl + PageDown"
-msgstr "Ktrl + OrrBeh"
+msgstr "Ctrl + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 msgid "Extend the selection down one page"
@@ -571,7 +571,7 @@ msgstr "Zabaldu hautaketa orrialde bat behera"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-79
 msgid "Shift + PageDown"
-msgstr "Maius + OrrBeh"
+msgstr "⇧ + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Delete to beginning of word"
@@ -579,7 +579,7 @@ msgstr "Ezabatu hitzaren hasiera arte"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-72
 msgid "Ctrl + Backspace"
-msgstr "Ctrl + atzerako tekla"
+msgstr "Ctrl + ⌫"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Delete to end of word"
@@ -587,7 +587,7 @@ msgstr "Ezabatu hitzaren amaierara arte"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-66
 msgid "Ctrl + Del"
-msgstr "Ktrl + Ezabatu"
+msgstr "Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Delete to beginning of sentence"
@@ -595,7 +595,7 @@ msgstr "Ezabatu esaldiaren hasierara arte"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-76
 msgid "Ctrl + Shift + Backspace"
-msgstr "Ctrl + ⇧ + atzerako tekla"
+msgstr "Ctrl + ⇧ + ⌫"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Delete to end of sentence"
@@ -603,7 +603,7 @@ msgstr "Ezabatu esaldiaren amaierara arte"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-70
 msgid "Ctrl + Shift + Del"
-msgstr "Ktrl + Maius + Ezabatu"
+msgstr "Ctrl + ⇧ + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:91-9
 msgid "Shortcut Keys for Tables"
@@ -623,7 +623,7 @@ msgstr "Gelaxka aktiboa hutsik badago: taularen amaierara joaten da. Bestela: be
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Ctrl + Tab"
-msgstr "Ktrl + Tab"
+msgstr "Ctrl + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-56
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
@@ -631,7 +631,7 @@ msgstr "Tabulazio bat txertatzen du (tauletan besterik ez). Leiho kudeatzaileare
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-18
 msgid "Alt + Arrow Keys"
-msgstr "Alt + Gezi-teklak"
+msgstr "Alt + ↑,↓,← edo →"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-62
 msgid "Increases/decreases the size of the column/row on the right/bottom cell edge"
@@ -639,7 +639,7 @@ msgstr "Eskuineko/beheko gelaxkaren ertzean zutabearen/errenkadaren tamaina hand
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 msgid "Alt + Shift + Arrow Keys"
-msgstr "Alt + Maius + Gezi-teklak"
+msgstr "Alt + ⇧ + ↑,↓,← edo →"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -647,7 +647,7 @@ msgstr "Ezkerreko/goiko gelaxkaren ertzean zutabearen/errenkadaren tamaina handi
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-18
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr "Alt + Ktrl + Gezi-teklak"
+msgstr "Alt +Ctrl + ↑,↓,← edo →"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-77
@@ -656,7 +656,7 @@ msgstr "Alt bezala, baina gelaxka aktiboa besterik ez da aldatzen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr "Ktrl + Alt + Maius + Gezi-teklak"
+msgstr "Ctrl + Alt + ⇧ +↑,↓,← edo →"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt + Insert"
@@ -664,19 +664,19 @@ msgstr "Alt + Txertatu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-58
 msgid "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key inserts cell"
-msgstr "Txertatze moduan 3 segundotara, gezi-teklak errenkada/zutabea txertatzen du, Ktrl+Gezi-teklak gelaxka txertatzen du"
+msgstr "Txertatze moduan 3 segundotara, gezi-teklak errenkada/zutabea txertatzen du, Ctrl+Gezi-teklak gelaxka txertatzen du"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
 msgid "Alt + Del"
-msgstr "Alt + Ezabatu"
+msgstr "Alt + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-55
 msgid "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key merges cell with neighboring cell"
-msgstr "Ezabatze moduan 3 segundotara, gezi-teklak errenkada/zutabea ezabatzen du, Ktrl + Gezi-teklak gelaxka ondoko gelaxkarekin batzen du"
+msgstr "Ezabatze moduan 3 segundotara, gezi-teklak errenkada/zutabea ezabatzen du, Ctrl + Gezi-teklak gelaxka ondoko gelaxkarekin batzen du"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 msgid "Shift + Ctrl + Del"
-msgstr "Maius + Ktrl + Ezabatu"
+msgstr "⇧ + Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:103-86
 msgid "If no whole cell is selected, the text from the cursor to the end of the current sentence is deleted. If the cursor is at the end of a cell, and no whole cell is selected, the contents of the next cell are deleted."
@@ -700,7 +700,7 @@ msgstr "Txertatu oin-oharra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:110-60
 msgid "Ctrl + Alt + F"
-msgstr "Ktrl + Alt + F"
+msgstr "Ctrl + Alt + F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:111-18
 msgid "Insert endnote"
@@ -708,7 +708,7 @@ msgstr "Txertatu amaiera-oharra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:111-59
 msgid "Ctrl + Alt + D"
-msgstr "Ktrl + Alt + D"
+msgstr "Ctrl + Alt + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:112-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
@@ -726,7 +726,7 @@ msgstr "Txertatu marratxo biguna"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-63
 msgid "Ctrl + -"
-msgstr "Ktrl + -"
+msgstr "Ctrl + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-18
 msgid "Insert non-breaking hyphen"
@@ -734,7 +734,7 @@ msgstr "Txertatu hitz-zatiketa zatiezina"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-71
 msgid "Ctrl + Shift + -"
-msgstr "Ktrl + Maius + -"
+msgstr "Ctrl + ⇧ + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-18
 msgid "Insert non-breaking space"
@@ -742,7 +742,7 @@ msgstr "Txertatu zuriune zatiezina"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-70
 msgid "Ctrl + Shift + Space"
-msgstr "Ktrl + Maius + Espazioa"
+msgstr "Ctrl + ⇧ + Espazioa"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-18
 msgid "Insert line break"
@@ -750,7 +750,7 @@ msgstr "Txertatu lerro-jauzia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-62
 msgid "Shift + Enter"
-msgstr "Maius + Sartu"
+msgstr "⇧ + Sartu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-18
 msgid "Manual page break"
@@ -759,7 +759,7 @@ msgstr "Eskuzko orrialde-jauzia"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-93
 msgid "Ctrl + Enter"
-msgstr "Ktrl + Sartu"
+msgstr "Ctrl + Sartu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-18
 msgid "Column break (in multicolumnar text)"
@@ -767,7 +767,7 @@ msgstr "Zutabe-jauzia (zutabe anitzeko testuetan)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-81
 msgid "Ctrl + Shift + Enter"
-msgstr "Ktrl + Maius + Sartu"
+msgstr "Ctrl + ⇧ + Sartu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-18
 msgid "Insert new paragraph directly before or after a section, or before a table"
@@ -792,7 +792,7 @@ msgstr "Bistarazi iruzkina"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-60
 msgid "Ctrl + F1"
-msgstr "Ktrl + F1"
+msgstr "Ctrl + F1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Fill Down"
@@ -808,7 +808,7 @@ msgstr "Bi dezimal, milakoen bereizlea"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-84
 msgid "Ctrl + Shift + 1"
-msgstr "Ktrl + Maius + 1"
+msgstr "Ctrl + ⇧ + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
 msgid "Standard exponential format"
@@ -816,7 +816,7 @@ msgstr "Formatu esponentzial estandarra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-72
 msgid "Ctrl + Shift + 2"
-msgstr "Ktrl + Maius + 2"
+msgstr "Ctrl + ⇧ + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid "Standard date format"
@@ -824,7 +824,7 @@ msgstr "Data-formatu estandarra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-65
 msgid "Ctrl + Shift + 3"
-msgstr "Ktrl + Maius + 3"
+msgstr "Ctrl + ⇧ + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Standard currency format"
@@ -832,7 +832,7 @@ msgstr "Moneta-formatu estandarra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-69
 msgid "Ctrl + Shift + 4"
-msgstr "Ktrl + Maius + 4"
+msgstr "Ctrl + ⇧ + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Standard percentage format (two decimal places)"
@@ -840,7 +840,7 @@ msgstr "Portzentaje-formatu estandarra (bi dezimalekin)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-92
 msgid "Ctrl + Shift + 5"
-msgstr "Ktrl + Maius + 5"
+msgstr "Ctrl + ⇧ + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid "Standard format"
@@ -848,7 +848,7 @@ msgstr "Formatu estandarra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-60
 msgid "Ctrl + Shift + 6"
-msgstr "Ktrl + Maius + 6"
+msgstr "Ctrl + ⇧ + 6"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-18
 msgid "Demote list item (list item has to be selected)"
@@ -866,7 +866,7 @@ msgstr "Igo zerrendako elementuaren maila (zerrendako elementua hautatu behar da
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:202-107
 msgid "Shift + Tab"
-msgstr "Maius + Tab"
+msgstr "⇧ + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:170-9
 msgid "Text selection and navigation in a textbox"
@@ -1151,19 +1151,19 @@ msgstr "Hautatutako egoerara itzultzeko, hautatu hura saguarekin eta sakatu <spa
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
-msgstr ""
+msgstr "Ezaugarri hori bereziki erabilgarria da lankide batek dokumentuko testu guztia konturatu gabe hautatzen duenean <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">A</span> erabilita eta gainean idazten duenean eta horreal aurreko testu guztia ezabatzen duenean, aldi berean editatzen ari zaretenean."
 
 #: html/loleaflet-help.html%2Bdiv.h4:293-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Dokumentu inaktiboa"
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioak antzematen duenean nabigatzailean ez dela jarduerarik egon tarte batez, dokumentua egoera \"inaktiboan\" jartzen du. Dokumentua gainazal gris gardenarekin erakusten da orduan, \"Dokumentu inaktiboa - egin klik edizioa berrabiarazteko\" mezua gainean duela."
 
 #: html/loleaflet-help.html%2Bdiv.p:296-5
 msgid "To continue editing, click on the document and the layover and message disappear. Any changes that may have been made by other users – while collaboratively editing the document – are re-loaded."
-msgstr ""
+msgstr "Edizioari berrekiteko, egin klik dokumentuan, gainazala eta mezua desagertu daitezen. Beste erabiltzaile batzuek dokumentuan lankidetzan egin ahal izan dituzten aldaketak orduan kargatuko dira."
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Pasting"
@@ -1171,157 +1171,155 @@ msgstr "Itsastea"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
-msgstr ""
+msgstr "Dokumentu beretik kopiatutako edukia itsastzen denean, formatuari eta elementuei eutsi egiten zaie. Beste dokumentu batetik, nabigatzaileko beste fitxa batetik edo leiho batetik, edo nabigatzaile kanpotik kopiatzen bada, itsatsitako edukia testu aberatsekoa izango da."
 
 #: html/loleaflet-help.html%2Bdiv.p:299-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr ""
+msgstr "Formaturik gabe ere kopiatu daiteke honako lasterbidearekin: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">⇧</span> + <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:300-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
-msgstr ""
+msgstr "Testua dokumentu barrutik kopiatzen bada, formatua mantendu egingo da. Objektuak ere itsatsi daitezke, adibidez irudiak, aldatzen ari den dokumentutik kopiatzen badira."
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text."
-msgstr ""
+msgstr "Testua dokumentu kanpotik kopiatzen bada (nabigatzailearen beste leiho batetik edo mahaigaineko aplikazio batetik), testu aberats modura kopiatuko da."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
-msgstr ""
+msgstr "Barneko edukia moztu edo kopiatu ondoren, saguaren eskuineko botoiaren menua erabilita kopiatu daiteke."
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Diagramak gehitzea"
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioak dokumentuetan diagramak txertatzea eta bistaratzea onartzen du. Diagrama bat gehitzeko:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:308-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
-msgstr ""
+msgstr "Hautatu taula bat testu-dokumentuetan, barruti bat kalkulu-orrietan edo taula bat aurkezpenetan."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Txertatu</span>→ <span class=\"ui\">Diagramak</span>. Pertsonalizatu diagrama alboko barra erabilita:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
 msgid "If no table or range was selected, a prototype chart is displayed."
-msgstr ""
+msgstr "Ez bada taularik edo barrutirik hautatu, diagramen prototipo bat bistaratuko da."
 
 #: html/loleaflet-help.html%2Bdiv.p:316-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
-msgstr ""
+msgstr "<span class=\"def\">Diagramen edizioa:</span> Egin klik bikoitza diagraman hura hautatzeko. Erabili laster-menuak diagramari elementuak gehitzeko, esaterako izenburua, ardatzak edo beste batzuk. Aukeratu <span class=\"ui\">Datu-barrutia</span> eta <span class=\"ui\">Diagrama mota</span> diagramaren datuak editatzeko eta diagrama mota hautatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.p:317-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
-msgstr ""
+msgstr "<span class=\"def\">Diagrama-formatua:</span> Laster-menu berak diagramaren datu-taula eta diagrama motaren hautapena dakar."
 
 #: html/loleaflet-help.html%2Bdiv.p:318-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
-msgstr ""
+msgstr "<span class=\"def\">Datu-serieen formatua:</span> Ireki laster-menua eta aukeratu <span class=\"ui\">Datu-serieen formatua</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr ""
+msgstr "Irudiak maneiatzea"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioak irudiak txertatu ditzake testu-dokumentuetan, bai ordenagailutik bertatik bai hodeiko biltegi batetik. Txertatutako irudiak beti kapsulatuko dira dokumentuan."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">Insert image</span> icon allows you to choose an image from the cloud storage's folders and shares."
-msgstr ""
+msgstr "<span class=\"def\">Txertatu irudia:</span> <span class=\"ui\">Txertatu irudia</span> ikonoan klik eginda, hodeiko biltegiko karpetetan edo unitate partekatuetan dagoen irudi bat aukeratu daiteke."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid "<span class=\"def\">Insert local image:</span> opens the browser file picker to upload the image from your local computer and insert it into the document."
-msgstr ""
+msgstr "<span class=\"def\">Txertatu irudi lokala:</span> Nabigatzailearen fitxategi-aukeratzailea irekitzen du, ordenagailuko irudi bat kargatu ahal izateko eta hura dokumentuan txertatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
 msgid "Images can be resized, rotated and anchored. Text can be wrapped around the image. Select the image and open the context menu. Use the images handles to resize the image with the mouse."
-msgstr ""
+msgstr "Irudien tamaina aldatu daiteke, biratu egin daitezke eta ainguratuta kokatu daitezke. Testua irudiaren inguruan egokitu daiteke. Hautatu irudia eta ireki laster-menua. Erabili irudiaren heldulekuak irudiaren tamaina aldatzeko saguarekin."
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
-#, fuzzy
-#| msgid "Go to end of document"
 msgid "Comments in documents"
-msgstr "Joan dokumentu-amaierara"
+msgstr "Iruzkinak dokumentuetan"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
-msgstr ""
+msgstr "Txertatu iruzkinak irakurlearen arreta berezia behar duten tokietan <span class=\"productname\">%productName</span> aplikazioan. Iruzkinak eskuinean bistaratzen dira eta egilearen izena eta data dituzte."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:327-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."
-msgstr ""
+msgstr "Egin klik azpimenuaren ikonoa (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) iruzkinei erantzuteko edo haiek lekuz aldatzeko edo ezabatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Ortografia-egiaztapena"
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioak testu-dokumentuetako, kalkulu-orrietako eta aurkezpenetako ortografia egiaztatu dezake. Marra uhindu gorriek gaizki idatzitako hitzak markatuko dituzte. Egin klik saguaren eskuineko botoiarekin hitzak zuzentzeko iradokizunak erakutsiko dituen laster-menu bat irekitzeko."
 
 #: html/loleaflet-help.html%2Bdiv.p:331-5
 msgid "To systematically spell-check the whole document use the <span class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
-msgstr ""
+msgstr "Dokumentu osoaren ortografia sistematikoki egiaztatzeko, erabili <span class=\"ui\">Tresnak</span> menuko <span class=\"ui\">Ortografia</span> aukera."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:337-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr ""
+msgstr "Lineako kalkulu-orriak mahaiganekoak bezala editatzen dira. Datuak sartzea, barrutiak, zutabeak, errenkadak edo orriak hautatzea, berdin-berdin egiten da. Erabili teklatua, menuak edo tresna-barra kalkulu-orrian ekintzak gauzatzeko. Onartuta dago, baita ere, gelaxken edukiak arrastatzea beste gelaxka batzuk datuekin betetzeko. Kopiatu, moztu eta itsasteko komandoak laster-menuan daude. Datuak sartu ondoren <span class=\"kbd\">Tab</span> erabiltzen bada, kurtsorea eskuineko hurrengo gelaxkara joango da datu gehiago sartu ahal izateko, eta <span class=\"kbd\">⏎</span> sakatuta, azpiko gelaxkara."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "Formulak formula-barran sartzen dira. Sartu '=' eta txertatu formula."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "Kalkulu-orrien funtzio eta erregela matematiko guztiak aplikatu daitezke."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
-msgstr ""
+msgstr "Formulen lengoaia ezagun egingo zaio kalkulu-orrien edozein erabiltzaileri. Xehetasun gehiagorekin dago azaldutako <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula espezifikazioan</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
-msgstr ""
+msgstr "<span class=\"def\">Formatu zuzena:</span> Kalkulu-orrietako gelaxken, zutabeen, errenkaden eta orrien formatua zuzenean moldatu daiteke menuak, tresna-barra edo laster-menuak erabilita. Formatu zuzena hautatutako uneko objektuari soilik aplikatuko zaio. Gelaxka bati formatua emateko, erabili menua edo sakatu < span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. Elkarrizketa-koadroak zenbakien formatu konplexu eta pertsonalizatuak ahalbidetzen ditu, bai eta letra-tipoak, ertz konplexuak, atzeko planoa, gelaxken babesa eta beste elementu batzuk aldatzea ere."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."
-msgstr ""
+msgstr "<span class=\"def\">Datuak ordenatzea:</span> Zenbakien edo testuen zerrendak gorantz edo beherantz ordenatu daitezke. <span class=\"productname\">%productName</span> aplikazioak automatikoki detektatzen ditu goiburukoak diren gelaxkak, eta elkarren alboko zutabeak, hautapena hedatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:351-5
 msgid "<span class=\"def\">Filtering data:</span> Filters and advanced filters allow you to work on certain filtered rows (records) of a data range. In the spreadsheets in <span class=\"productname\">%productName</span> there are various possibilities for applying filters."
-msgstr ""
+msgstr "<span class=\"def\">Datuak iragaztea:</span> Iragazkiak eta iragazki aurreratuak erabilita, datu-barrutietako errenkada (erregistro) iragazietan lan egin daiteke. <span class=\"productname\">%productName</span> kalkulu-orrietan iragazkiak aplikatzeko hainbat aukera daude."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:354-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
-msgstr ""
+msgstr "<span class=\"ui\">Iragazki automatikoaren</span> funtzioaren erabilera bat datu-eremu batean sarrera berdin-berdina duten erregistroen bistaratzea mugatzea da."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:357-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
-msgstr ""
+msgstr "<span class=\"ui\">Iragazki estandarra</span> elkarrizketa-koadroan, datu-eremu jakinetan balioak dituzten barrutiak ere definitu daitezke. Baldintzak AND logiko batekin edo OR logiko batekin konektatzeko erabili daiteke iragazki estandarra."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:358-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
-msgstr ""
+msgstr "<span class=\"ui\">Iragazki aurreratua</span> aukerak zortzi iragazki-baldintza onartzen ditu. Iragazki aurreratuekin, baldintzak zuzenean orrian sartzen dira."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:360-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
-msgstr ""
+msgstr "<span class=\"def\">Eskema:</span> Datuen eskema bat sortu daiteke eta errenkadak eta zutabeak elkarrekin taldekatu, taldeak klik bakarrarekin hedatu eta tolestu ahal izateko, horrela datu hierarkikoak errazago adierazteko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:362-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"
-msgstr ""
+msgstr "<span class=\"def\">Datuen balioztatzea:</span> Gelaxka bakoitzeko, baliozkoak diren sarrerak definitu daitezke. Baliogabeko sarrerak baztertu egingo dira. Datuen balioztatzea gaitzeko:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:365-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Baliozkotasuna</span> aukera <span class=\"ui\">Datuak</span> menuan. <span class=\"ui\">Baliozkotasuna</span> elkarrizketa-koadroa irekiko da."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."
-msgstr ""
+msgstr "Hautatu baliozkotasun-irizpidea <span class=\"ui\">Onartu</span> goitibeherako zerrendan. Irizpidearen arabera, aukera gehiago erakutsiko dira. Bete beharrezkoak diren datuak."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:370-9
 msgid "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\">OK</span> to close the dialog."
@@ -1329,11 +1327,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:373-11
 msgid "To remove the validity of the cell, open the dialog and set the <span class=\"ui\">Allow</span> list to “All values”."
-msgstr ""
+msgstr "Gelaxkaren baliozkotasuna kentzeko, ireki elkarrizketa-koadroa eta ezarri 'Balio guztiak' aukera <span class=\"ui\">Onartu</span> zerrendan."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
-msgstr ""
+msgstr "<span class=\"def\">Iruzkinak:</span> Kalkulu-orrietan iruzkin bana sartu daiteke gelaxka bakoitzeko. <span class=\"ui\">Txertatu iruzkina</span> hautatzen denean, laster-leiho bat agertzen da iruzkinaren edukia idatzi ahal izateko. Puntu gorri bat agertzen da gelaxkaren goiko eskuineko izkinan gelaxkak iruzkin bat badu. Pasatu sagua gelaxkaren gainetik iruzkinak bistaratzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:377-5
 msgid "<span class=\"def\">Conditional formatting:</span> <span class=\"productname\">%productName</span> adds symbols to each cell of a range based on cells conditions. Select the cell range and click the <span class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the symbol set to apply on the range."
@@ -1345,21 +1343,19 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:388-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
-msgstr ""
+msgstr "Laster-menuak saguaren eskuineko botoiarekin klik egitean daude erabilgarri. Laster-menuan dauden komandoak azpian dituen dokumentuko objektuari lotuta daude gehien bat."
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
-#, fuzzy
-#| msgid "Text formatting"
 msgid "Formatting text"
-msgstr "Testu-formatua"
+msgstr "Testuari formatua ematea"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid "<span class=\"productname\">%productName</span> supports modern techniques for paragraph formatting through styles. A style is a set of text properties (font, color, background and many more) labeled with a name, the style name. Use style to apply the same set of properties to many paragraphs in the document and produce a uniform, professional look. Also, if you change one of the style formatting properties, all paragraphs with the same style changes formatting as well, simplifying the effort of formatting many paragraph individually."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioak teknika modernoak onartzen ditu paragrafoen formatua estiloen bidez ezartzeko. Estilo bat testu-propietateen multzo bat da (letra-tipoa, kolorea, atzeko planoa eta beste hainbat). Estiloak izen bat dauka. Erabili estiloa propietate multzo bera dokumentuko paragrafo askori aplikatzeko eta itxura uniforme eta profesionala sortzeko. Estiloaren formatu-propietate bat aldatzen bada, estilo bera duten paragrafo guztiak aldatuko dira, eta horrek paragrafo bakoitza eskuz banan-banan aldatzeak suposatuko lukeen ahalegina murrizten du."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:392-5
 msgid "In contrast, direct formatting applies formatting to selected excerpts of the document contents. On a long document, direct formatting must be applied in every text excerpt, turning text formatting a long task, subject to errors and delays."
-msgstr ""
+msgstr "Formatu zuzenak, aldiz, dokumentu-edukian hautatutako zatiei soilik aplikatzen die formatua. Dokumentu luze batean, formatu zuzena testu-zati guztiei aplikatu beharko litzaieke, testuen formatua zeregin luze bihurtuko litzateke eta erroreak eta atzerapenak errazago gertatuko lirateke."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:393-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format text document objects by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected."
@@ -1379,27 +1375,27 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:401-5
 msgid "<span class=\"def\">Formatting cells:</span> Click in the cell or range of cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\">Properties</span>. Fine tune the table with the properties dialog."
-msgstr ""
+msgstr "<span class=\"def\">Gelaxken formatua:</span> Egin klik gelaxkan edo gelaxka-barrutian eta aukeratu <span class=\"ui\">Taula</span> → <span class=\"ui\">Propietateak</span> menua. Doitu taula propietateen elkarrizketa-koadroa erabilita."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Track changes"
-msgstr ""
+msgstr "Aldaketen segimendua"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid "When you turn on Track Changes, <span class=\"productname\">%productName</span> marks up new changes made to the document. Select this option again to turn it off."
-msgstr ""
+msgstr "Aldaketen segimendua aktibatzen denean, <span class=\"productname\">%productName</span> aplikazioak dokumentuari egindako aldaketa berriak markatuta geratzen dira. Hautatu aukera hori berriro segimendua desaktibatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:405-5
 msgid "Changes made by different people are shown in different colors and each tracked change can be accepted or rejected, using the box the appears on the right. You can also add a comment there."
-msgstr ""
+msgstr "Pertsona bakoitzak egindako aldaketak kolore batean erakusten dira, eta aldaketa bakoitza onartu edo baztertu egin daiteke eskuinean ageri den koadroa erabilita. Iruzkin bat ere gehitu daiteke koadro horretan."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Beste eginbide aurreratu batzuk"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid "<span class=\"def\">Comments:</span> Comments are inserted in the text and displayed on the right side of the screen."
-msgstr ""
+msgstr "<span class=\"def\">Iruzkinak:</span> Iruzkinak testuan txertatzen dira eta pantailaren eskuineko aldean bistaratzen dira."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:408-5
 msgid "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable spaces are shown as marks to assisting text alignment, editing and formatting."
@@ -1558,10 +1554,8 @@ msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is use
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I get a word count of my document?"
-msgstr "Joan dokumentu-hasierara"
+msgstr "Nola zenbatu dezaket dokumentuko hitz kopurua?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
@@ -1605,61 +1599,59 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:488-5
 msgid "With track changes enabled your document show the following settings:"
-msgstr ""
+msgstr "Aldaketen segimendua gaituta, dokumentuak honako ezarpenak erakusten ditu:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:490-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "Ezabatzeak marratutako koloredun karaktereekin markatuta ageri dira."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:491-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "Gehitzeak azpimarratutako koloredun karaktereekin markatuta ageri dira."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:492-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "Aldaketa guztiak eskuineko marjinan barra bertikal batekin markatuta ageri dira."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Changes are displayed as comment in the right of the document area."
-msgstr ""
+msgstr "Aldaketak iruzkin gisa bistaratzen dira dokumentu-arearen eskuinaldean."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:496-5
 msgid "The color assigned to the changes depends on the user that changes the document."
-msgstr ""
+msgstr "Aldaketei esleitutako kolorea dokumentua aldatu duen erabiltzailearen araberakoa da."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:497-5
 msgid "To display or hide track changes choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. Beware that if track changes are enabled but hidden, you still record changes and may inadvertently leave unwanted text available in the document."
-msgstr ""
+msgstr "Aldaketen segimendua bistaratzeko edo ezkutatzeko, aukeratu <span class=\"ui\">Editatu</span> → <span class=\"ui\">Aldaketen segimendua </span> → <span class=\"ui\">Erakutsi</span>. Kontuan izan aldaketen segimendua gaituta baina ezkutuan egon daitekeela, eta modu horretan aldaketak grabatzen ari zarela eta konturatu gabe dokumentuak nahi ez duzun testua gorde dezakeela."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:498-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I set the margins of the document?"
-msgstr "Joan dokumentu-hasierara"
+msgstr "Nola ezarri dokumentuaren marjinak?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "Using the ruler drag the leftmost edge of the ruler to adjust the left margin, or the rightmost for the right margin."
-msgstr ""
+msgstr "Erregela erabilita, arrastatu erregelaren ezkerreko ertza ezkerreko marjina doitzeko, edo eskuinekoa eskuineko marjina doitzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:502-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Orrialde-estiloa erabilita"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:504-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and select the <span class=\"ui\">Page</span> tab"
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Formatua</span> → <span class=\"ui\">Orrialdea</span> eta hautatu <span class=\"ui\">Orrialdea</span> fitxa"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:505-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Ezarri orrialde-marjinak elkarrizketa-koadroan."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:508-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
+msgstr "Nola aldatu orrialde-orientazioa modu horizontalera dokumentuaren barruan?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:510-11
 msgid "Place the cursor at the place where the page orientation is to change. Add an empty paragraph."
@@ -1707,10 +1699,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
-#, fuzzy
-#| msgid "Apply Heading 1 paragraph style"
 msgid "Applying a paragraph style:"
-msgstr "Aplikatu 1. izenburua paragrafo-estiloa"
+msgstr "Paragrafo-estiloa aplikatuta:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"

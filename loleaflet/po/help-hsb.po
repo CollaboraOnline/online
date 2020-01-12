@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-23 05:31+0000\n"
+"PO-Revision-Date: 2020-01-07 10:58+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hsb/>\n"
 "Language: hsb\n"
@@ -1123,11 +1123,11 @@ msgstr "Hdyž so dokument začinja, składuje so awtomatisce, jeli je so změni�
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
-msgstr ""
+msgstr "Kóždy, kotryž  je hdy běrowe nałoženje wužiwał, so najskerje we wobdźěłowanju dokumentow wuznawa, ale tu su někotre typiske rozdźěle:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopěrować"
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
@@ -1139,15 +1139,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
-msgstr ""
+msgstr "Porjedźenje dokumenta"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Hdyž wjacore ludźo samsny dokument w samsnym času wobdźěłuja, móža so jich změny do konflikta dóstać a to móže zamylenosć zawinować. Funkcija porjedźenja dokumentow wužiwarjam zmóžnja, změny druhich wobdźěłarjow cofnyć a dokument na předchadny staw wróćo stajić."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
-msgstr ""
+msgstr "Zo byšće na wubrany staw wróćo skočił, wubjerće jón z myšku a klikńće na <span class=\"ui\">K stawej skočić</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
@@ -1155,7 +1155,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:293-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Inaktiwny dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
@@ -1167,7 +1167,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Pasting"
-msgstr ""
+msgstr "Zasadźenje"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
@@ -1191,7 +1191,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Diagramy přidać"
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
@@ -1223,7 +1223,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr ""
+msgstr "Wobchadźenje z wobrazami"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
@@ -1255,7 +1255,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Prawopisna kontrola"
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
@@ -1367,7 +1367,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:398-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Wobchadźenje z tabelemi"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:399-5
 msgid "Insert tables with proper icon in the toolbar. Select the initial number of rows and columns. Add rows and columns with the cell context menu. Merge cells with the <span class=\"ui\">Table</span> menu. The default paragraph style inside cells is “Table contents”."
@@ -1379,7 +1379,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Track changes"
-msgstr ""
+msgstr "Změny slědować"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid "When you turn on Track Changes, <span class=\"productname\">%productName</span> marks up new changes made to the document. Select this option again to turn it off."
@@ -1391,7 +1391,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Druhe rozšěrjene funkcije"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid "<span class=\"def\">Comments:</span> Comments are inserted in the text and displayed on the right side of the screen."
@@ -1639,7 +1639,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:502-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Předłohu strony nałožić"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:504-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and select the <span class=\"ui\">Page</span> tab"
@@ -1683,7 +1683,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:518-5
 msgid "Directly:"
-msgstr ""
+msgstr "Direktnje:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:520-11
 msgid "Select the text with the existing format"
@@ -1720,7 +1720,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:535-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Kak móžu daty za ćišćenje wubrać?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:536-5
 msgid "Insert column and row breaks in the spreadsheet to narrow the print range and print the document to download. On printing the PDF, select the pages of interest."

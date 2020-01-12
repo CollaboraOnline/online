@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-03 15:11+0100\n"
-"PO-Revision-Date: 2020-01-02 17:09+0000\n"
+"PO-Revision-Date: 2020-01-07 10:58+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
 "Language: es\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
-msgstr "Consola de administración"
+msgstr "Consola administrativa"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
@@ -286,7 +286,7 @@ msgstr "Iniciar carga"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr "Iniciar el copiado/pegado cruzado"
+msgstr "Iniciar copiado/pegado cruzado"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
@@ -925,7 +925,7 @@ msgstr "Se produjo un problema al conectar con el documento"
 
 #: src/core/Socket.js:386
 msgid "Server is recycling and will be available shortly"
-msgstr "El servidor se está reciclando y estará disponible pronto"
+msgstr "El servidor está reciclándose y estará disponible pronto"
 
 #: src/core/Socket.js:414
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."

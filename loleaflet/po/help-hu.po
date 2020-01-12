@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-03 10:08+0000\n"
+"PO-Revision-Date: 2020-01-12 22:16+0000\n"
 "Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hu/>\n"
 "Language: hu\n"
@@ -910,7 +910,7 @@ msgstr "Minden kijelölése a dián / rajzlapon"
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> súgó"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
@@ -920,17 +920,17 @@ msgstr "Közös szerkesztés"
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> felhasználói felület"
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Dokumentumok megnyitása, bezárása, mentése, nyomtatása és letöltése"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Dokumentumok szerkesztése"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -939,42 +939,42 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Advankált featúrák"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> munkafüzetek"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Munkafüzetek szerkesztése"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr ""
+msgstr "Képletek"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Munkafüzetek formázása"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> szöveges dokumentumok"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Szöveges dokumentumok szerkesztése"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr ""
+msgstr "Helyi menük"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
@@ -1539,7 +1539,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:463-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Van szókincstár?"
 
 #: html/loleaflet-help.html%2Bdiv.p:464-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
@@ -1554,10 +1554,8 @@ msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is use
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I get a word count of my document?"
-msgstr "Ugrás a dokumentum elejére"
+msgstr "Hogyan kaphatom meg a dokumentum szavainak számát?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
@@ -1632,10 +1630,8 @@ msgid "Changes can be accepted or rejected. To accept or reject changes, click o
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I set the margins of the document?"
-msgstr "Ugrás a dokumentum elejére"
+msgstr "Hogyan állíthatom be a dokumentum margóit?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "Using the ruler drag the leftmost edge of the ruler to adjust the left margin, or the rightmost for the right margin."
@@ -1703,10 +1699,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
-#, fuzzy
-#| msgid "Apply Heading 1 paragraph style"
 msgid "Applying a paragraph style:"
-msgstr "A Címsor 1 bekezdésstílus alkalmazása"
+msgstr "Bekezdésstílus alkalmazása:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"

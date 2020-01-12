@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-01-10 19:01+0000\n"
+"Last-Translator: sophie <gautier.sophie@gmail.com>\n"
+"Language-Team: French <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-help-fr.po\n"
 "X-Pootle-Revision: 3339432\n"
 
@@ -909,29 +910,27 @@ msgstr "Tous sélectionner dans une diapo / page de dessin"
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "Aide de <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
-#, fuzzy
-#| msgid "Cell formatting"
 msgid "Collaborative editing"
-msgstr "Formatage de cellule"
+msgstr "Édition collaborative"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "Interface utilisateur <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Ouverture, fermeture, enregistrement, impression et téléchargement des documents"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Édition des documents"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -940,147 +939,147 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Fonctions avancées"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "Classeurs <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Édition des classeurs"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formules"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Formatage des classeurs"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "Documents texte <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Édition des documents texte"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr ""
+msgstr "Menus contextuels"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Fonctions d'éditeur de documents texte avancées"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "Présentations <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Édition de présentations"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr ""
+msgstr "Diaporama"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Volet Diapo"
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Foire Aux Questions"
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr ""
+msgstr "Documents texte"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Classeurs"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr ""
+msgstr "Présentations"
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> permet de créer et d'éditer des documents bureautiques de type texte, classeurs et présentations directement dans le navigateur de façon simple et directe. Vous pouvez travailler seul sur un document ou de manière collaborative avec une équipe."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
-msgstr ""
+msgstr "Chaque utilisateur a une couleur qui lui est assignée. Le curseur de chaque utilisateur sera affiché dans la couleur assignée. Remarque : vous verrez votre curseur en noir et clignotant alors que les autres le verront dans une couleur différente."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
-msgstr ""
+msgstr "Vous pouvez sauter à l'emplacement du curseur d'un utilisateur en cliquant sur le nom (ou l'avatar) de l'utilisateur. Il est possible de suivre l'éditeur."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> vous indique, à l'aide d'une petite notification dans le pied de page, lorsqu'un nouvel utilisateur entre ou lorsqu'un utilisateur quitte."
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> utilise les ressources des navigateurs modernes pour adapter l'interface utilisateur à la taille de la zone d'affichage, incluant les petits écrans des périphériques mobiles. L'interface est composée de :"
 
 #: html/loleaflet-help.html%2Bdiv.p:257-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."
-msgstr ""
+msgstr "<span class=\"def\">La zone du document :</span> la zone de l'application affiche le contenu du document, aussi bien pour les classeurs, les présentations ou les documents texte."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
-msgstr ""
+msgstr "<span class=\"def\">La barre de menu :</span> Le menu principal est placé en haut et inclut de nombreuses options, commandes d'impression, d'édition, d'affichage et d'autres commandes avancées. Vous pouvez masquer la barre de menu en cliquant sur  l'<img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\">icône tout à droite. Cliquez sur l' <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icône pour afficher le menu."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
-msgstr ""
+msgstr "<span class=\"def\">Menus contextuels :</span> en cliquant avec le bouton droit de la souris, un menu apparaît contenant des commandes associées avec l'objet sélectionné."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
-msgstr ""
+msgstr "<span class=\"def\">La barre d'outils :</span> la barre d'outils contient les options les plus utilisées pour l'édition quotidienne. Les boutons de la barre d'outils sont dynamiques, cela veut dire que leur état (actif ou inactif) dépend de différents facteurs."
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid "<span class=\"def\">The status bar:</span> The status bar is shown in the bottom, and contains several useful options and features."
-msgstr ""
+msgstr "<span class=\"def\">La barre d'état :</span> la barre d'état est affichée en bas et contient différents options et fonctions utiles."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">The search bar:</span> Searching starts automatically when content is inserted in the search box, and the document window automatically moves to the first occurrence found. Searching is not case-sensitive. There are three buttons right next to the search box:"
-msgstr ""
+msgstr "<span class=\"def\">La barre de recherche :</span> la recherche démarre automatiquement lorsque le contenu est inséré dans la zone de recherche et la fenêtre du document se déplace automatiquement à la première occurrence trouvée. La recherche n'est pas sensible à la casse. Il y a trois boutons juste à côté de la zone de recherche :"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Rechercher en arrière"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr ""
+msgstr "Rechercher en avant"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Annuler la recherche (apparaît uniquement lorsqu'un texte a été recherché)"
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."

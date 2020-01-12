@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-03 15:11+0100\n"
-"PO-Revision-Date: 2020-01-02 17:09+0000\n"
+"PO-Revision-Date: 2020-01-12 22:16+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
 "Language: ca\n"
@@ -336,11 +336,11 @@ msgstr "Degradat"
 
 #: src/control/Control.JSDialogBuilder.js:745
 msgid "Hatching"
-msgstr ""
+msgstr "Ombreig"
 
 #: src/control/Control.JSDialogBuilder.js:749
 msgid "Pattern"
-msgstr ""
+msgstr "Patró"
 
 #: src/control/Control.JSDialogBuilder.js:882
 msgid "From"

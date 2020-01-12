@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="temp_file_saving_disabled">這個檔案唯讀，儲存已停用。</string>
+    <string name="no_items">沒有項目</string>
+    <string name="no_recent_items">沒有最近的項目</string>
+    <string name="app_vendor">本發行版由 $VENDOR 提供。</string>
+    <string name="app_description">$APP_NAME 是款現代、易用、開源的生產力套裝軟體，可用於文字處理、試算表、簡報等。</string>
+    <string name="app_version">版本：%1$s，組建 ID：%2$s</string>
+    <string name="app_name_settings">設定</string>
+</resources>

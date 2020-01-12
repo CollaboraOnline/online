@@ -5,29 +5,30 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-01-08 10:13+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/ios/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /eo/libo_online/ios-eo.po\n"
 "X-Pootle-Revision: 3937770\n"
 
 #: App+info
 msgid "App info"
-msgstr ""
+msgstr "Informoj pri la aplikaĵo"
 
 #: Version
 msgid "Version"
-msgstr ""
+msgstr "Versio"
 
 #: Settings
 msgid "Settings"
-msgstr ""
+msgstr "Agordoj"
 
 #: Template+list+URL
 msgid "Template list URL"
-msgstr ""
+msgstr "URL de la ŝablonlisto"

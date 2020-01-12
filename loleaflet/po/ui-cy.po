@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-03 15:11+0100\n"
-"PO-Revision-Date: 2020-01-03 15:21+0000\n"
+"PO-Revision-Date: 2020-01-07 10:58+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@yahoo.com>\n"
 "Language-Team: Welsh <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cy/>\n"
 "Language: cy\n"
@@ -351,16 +351,12 @@ msgid "To"
 msgstr "At"
 
 #: src/control/Control.JSDialogBuilder.js:1017
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
-msgstr "Ffont"
+msgstr "Enw Ffont"
 
 #: src/control/Control.JSDialogBuilder.js:1019
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "Heb lofnod"
+msgstr "Maint Ffont"
 
 #: src/control/Control.JSDialogBuilder.js:1473
 msgid "Rows"
@@ -564,7 +560,7 @@ msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r dudalen hon?"
 
 #: src/control/Control.Toolbar.js:838
 msgid "Default Style"
-msgstr ""
+msgstr "Arddull Ragosodedig"
 
 #: src/control/Control.Toolbar.js:889
 msgid "Borders"
@@ -583,10 +579,8 @@ msgid "Insert shapes"
 msgstr "Mewnosod siapiau"
 
 #: src/control/Control.Toolbar.js:958 src/layer/tile/WriterTileLayer.js:76
-#, fuzzy
-#| msgid "Text orientation"
 msgid "Toggle Page Orientation"
-msgstr "Cyfeiriad testun"
+msgstr "Toglo Cyfeiriad Tudalen"
 
 #: src/control/Control.Toolbar.js:1078 src/layer/tile/CalcTileLayer.js:180
 msgid "First sheet"
@@ -884,19 +878,19 @@ msgstr "Mae'r fersiwn yma o %productName yn cael ei yrru gan"
 
 #: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Mewnosod Dolen"
 
 #: src/control/Toolbar.js:451
 msgid "Text"
-msgstr ""
+msgstr "Testun"
 
 #: src/control/Toolbar.js:452
 msgid "Link"
-msgstr ""
+msgstr "Cyswllt"
 
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "Iawn"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -908,7 +902,7 @@ msgstr "Wps, mae anhawster cysylltu â LibreOffice Ar-lein : "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Gweinyddwyd gan:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -1036,7 +1030,7 @@ msgstr "Rydych yn gadael y golygydd, ydych chi'n siŵr eich bod am ymweld â %ur
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Methwyd â llwytho dogfen. Mae'r ddogfen un ai wedi ei hanffurfio neu'n cymryd mwy o adnoddau nag sy'n cael ei ganiatáu. Cysylltwch â'ch gweinyddwr"
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1078,11 +1072,11 @@ msgstr "Nid oes modd ailenwi'r ddogfen. Gwiriwch eich caniatâd neu cysylltwch �
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Methuwd llwytho dogfen i weinydd, heb ganfod y ffeil."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Methwyd llwytho ffeil i weinydd, mae'r ffeil yn rhy fawr"
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1102,24 +1096,18 @@ msgstr "Ateb"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Diddymu'r chwilio"
+msgstr "Dangos y bar chwilio"
 
 #: src/layer/tile/CalcTileLayer.js:237 src/layer/tile/ImpressTileLayer.js:222
 #: src/layer/tile/WriterTileLayer.js:159
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Diddymu'r chwilio"
+msgstr "Clirio'r maes chwilio"
 
 #: src/layer/tile/CalcTileLayer.js:239 src/layer/tile/ImpressTileLayer.js:224
 #: src/layer/tile/WriterTileLayer.js:161
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Diddymu'r chwilio"
+msgstr "Cuddio'r bar chwilio"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1146,7 +1134,6 @@ msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Defnyddiwch y botymau copïo a gludo ar eich bysellfwrdd ar-sgrin.</p>"
 
 #: src/map/Clipboard.js:791
-#, fuzzy
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr "<p>Os hoffech chi rannu elfennau mwy o'ch dogfennau gyda rhaglenni eraill mae'n angenrheidiol i'w llwytho i lawr i'ch dyfais yn gyntaf. I wneud hynny, cliciwch y botwm \"Cychwyn llwytho i lawr\" isod a phan fydd wedi cwblhau, clicio \"Cadarnhau copïo i'r clipfwrdd\". </p><p>Os ydych yn copïo a gludo rhwng dogfennau o fewn %productName, nid oes angen llwytho i lawr.</p>"
 
@@ -1179,12 +1166,12 @@ msgstr "Yn llwytho..."
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Nid oes modd llwytho ffeil o fath %0 i weinydd gan nad oes gan y ffeil enw."
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Nid oes modd llwytho ffeil o fath %0 i weinydd gan nad oes gan fod y ffeil yn wag"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1192,7 +1179,7 @@ msgstr "Yn llwytho..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Methodd llwytho ffeil i weinydd gyda statws: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

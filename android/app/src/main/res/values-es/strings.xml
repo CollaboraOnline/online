@@ -14,9 +14,9 @@
     <string name="failed_to_load_file">No se pudo determinar el archivo para cargar</string>
     <string name="list_view">Lista</string>
     <string name="grid_view">Cuadrícula</string>
-    <string name="pref_category_explorer">Configuración del explorador de archivos</string>
-    <string name="pref_show_hidden_files">Archivos/Carpetas Ocultas</string>
-    <string name="pref_show_hidden_files_summary">Habilitar para mostrar archivos/carpetas ocultas</string>
+    <string name="pref_category_explorer">Configuración del gestor de archivos</string>
+    <string name="pref_show_hidden_files">Archivos/carpetas ocultos</string>
+    <string name="pref_show_hidden_files_summary">Actívela para mostrar archivos y carpetas ocultos</string>
     <string name="pref_sort_summary">Seleccione cómo ordenar los archivos: A-Z, por tamaño o por fecha.</string>
     <string name="pref_viewmode_summary">Ver archivos como una cuadrícula o en una lista.</string>
     <string name="pref_file_explorer_title">Disposición de gestor de archivos</string>
@@ -24,7 +24,7 @@
     <string name="pref_filter_title">Filtro de archivos predeterminado</string>
     <string name="pref_filter_summary">Establezca qué filtro de archivo debe usarse de manera predeterminada.</string>
     <string name="pref_show_debug_info">Mostrar información de depuración</string>
-    <string name="pref_show_debug_info_summary">Habilite para mostrar información de depuración en el visor de documentos</string>
+    <string name="pref_show_debug_info_summary">Actívela para mostrar información de depuración en el visor de documentos</string>
     <string name="about_license">Mostrar licencia</string>
     <string name="about_notice">Mostrar aviso</string>
     <string name="about_moreinfo">Más información</string>
@@ -64,11 +64,11 @@
     <string name="external_sd_file_system">SD externa</string>
     <string name="otg_file_system">Dispositivo OTB (experimental)</string>
     <string name="remote_server">Servidor remoto</string>
-    <string name="usb_connected_configure">USB conectado, configure su dispositivo</string>
+    <string name="usb_connected_configure">USB conectado; configure el dispositivo.</string>
     <string name="owncloud_wrong_connection">Imposible conectar con el servidor en la nube. Revise su configuración.</string>
     <string name="owncloud_unauthorized">Imposible iniciar sesión en el servidor en la nube. Revise su configuración.</string>
     <string name="owncloud_unspecified_error">Error no especificado al conectarse al servidor en la nube. Revise su configuración y/o intente más tarde.</string>
-    <string name="ext_document_provider_error">Archivo raíz no válido. Verifique la configuración de su tarjeta sd.</string>
+    <string name="ext_document_provider_error">Archivo raíz no válido. Verifique la configuración de su tarjeta SD.</string>
     <string name="otg_missing_error">Archivo raíz no válido. Verifique su dispositivo OTG y/o la configuración.</string>
     <!-- Edit action names -->
     <!-- Feedback messages -->

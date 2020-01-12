@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-03 15:11+0100\n"
-"PO-Revision-Date: 2020-01-03 10:08+0000\n"
+"PO-Revision-Date: 2020-01-07 10:58+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/eo/>\n"
 "Language: eo\n"
@@ -572,7 +572,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:897
 msgid "More..."
-msgstr ""
+msgstr "Pli…"
 
 #: src/control/Control.Toolbar.js:950
 msgid "Insert Local Image"
@@ -890,7 +890,7 @@ msgstr ""
 
 #: src/control/Toolbar.js:451
 msgid "Text"
-msgstr ""
+msgstr "Teksto"
 
 #: src/control/Toolbar.js:452
 msgid "Link"
@@ -898,7 +898,7 @@ msgstr ""
 
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "Bone"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"

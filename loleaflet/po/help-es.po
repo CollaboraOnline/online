@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2019-12-24 18:45+0000\n"
+"PO-Revision-Date: 2020-01-09 07:59+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
@@ -1431,31 +1431,31 @@ msgstr "Para salir de la presentación de diapositivas del <span class=\"product
 
 #: html/loleaflet-help.html%2Bdiv.div.p:426-5
 msgid "Click on any slide thumbnail in the pane to switch to this slide to view or edit it."
-msgstr "Haga clic en una miniatura de la diapositiva para ir a la diapositiva para verla o editarla."
+msgstr "Pulse en la miniatura de una diapositiva para ver la diapositiva o editarla."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:427-5
 msgid "Use the slide pane toolbar in the bottom to start the slideshow, add slide, duplicate or delete the current slide."
-msgstr "Utilice la barra de herramientas debajo del panel de diapositivas para iniciar la presentación de diapositivas, agregar una diapositiva, duplicar o eliminar una diapositiva."
+msgstr "Utilice la barra de herramientas debajo del panel de diapositivas para iniciar el pase de diapositivas, añadir una diapositiva, duplicar la actual o eliminarla."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:430-5
 msgid "<span class=\"def\">Slide layouts:</span> <span class=\"productname\">%productName</span> Impress let you change the slide layout. Select the desired slide layout in the drop-down layout list."
-msgstr "<span class=\"def\">Disposición de diapositivas:</span> El <span class=\"productname\">%productName</span> Presentaciones permite cambiar la disposición de la diapositiva. Seleccione la disposición de diapositivas de la lista."
+msgstr "<span class=\"def\">Disposiciones de diapositivas:</span> <span class=\"productname\">%productName</span> Impress permite cambiar la disposición de la diapositiva. Seleccione la disposición de diapositivas que desee de la lista."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:432-5
 msgid "<span class=\"def\">Master slide:</span> Select the master slide associated to the current slide. Format and arrange slide elements in the master slide."
-msgstr "<span class=\"def\">Patrón de diapositiva:</span> Seleccione el patrón de diapositiva asociada a la diapositiva actual. Formatee y guarde los elementos de la diapositiva en el patrón de diapositiva."
+msgstr "<span class=\"def\">Patrón de diapositiva:</span> seleccione el patrón de diapositiva asociado a la diapositiva actual. Formatee y guarde los elementos de la diapositiva en el patrón de diapositiva."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:433-5
 msgid "<span class=\"def\">Slide transitions:</span> <span class=\"productname\">%productName</span> Impress provides visual effects when displaying a new slide in the slide show. Slide transitions are property of the slide, use the side bar to set the slide transition when in edit mode."
-msgstr "<span class=\"def\">Transición entre diapositivas:</span> El <span class=\"productname\">%productName</span> Presentaciones proporciona efectos visuales al mostrar una nueva diapositiva en la presentación de diapositivas. Las transiciones de diapositivas son propiedades de cada diapositiva. Utiliza la barra lateral para establecer la transición de la diapositiva cuando está en modo de edición."
+msgstr "<span class=\"def\">Transición entre diapositivas:</span> <span class=\"productname\">%productName</span> Impress proporciona efectos visuales al mostrar una diapositiva diapositiva en el pase de diapositivas. Las transiciones de diapositivas son propiedades de cada diapositiva. Utilice la barra lateral para establecer la transición de la diapositiva durante el en modo de edición."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:434-5
 msgid "<span class=\"def\">Object animation:</span> Individual object in the slide can have animation. Use the side bar to configure the slide transition for a selected object or set of objects."
-msgstr "<span class=\"def\">Animación de objetos:</span> Los objetos individuales pueden tener una animación propia definida. Utilice la barra lateral para configurar la animación de un objeto o conjunto de objetos seleccionados."
+msgstr "<span class=\"def\">Animación de objetos:</span> cada uno de los objetos puede tener una animación propia definida. Utilice la barra lateral para configurar la animación de un objeto individual o un conjunto de objetos seleccionados."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:435-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
-msgstr "<span class=\"def\">Tablas:</span> Inserta tablas en la presentación. Utilice la barra lateral para seleccionar un tema para la tabla."
+msgstr "<span class=\"def\">Tablas:</span> inserta tablas en la presentación. Utilice la barra lateral para seleccionar un tema para la tabla."
 
 #: html/loleaflet-help.html%2Bdiv.h4:439-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
@@ -1463,7 +1463,7 @@ msgstr "¿Cuáles son los formatos de documentos compatibles con <span class=\"p
 
 #: html/loleaflet-help.html%2Bdiv.p:440-5
 msgid "<span class=\"productname\">%productName</span> supports both reading and writing for the following file formats:"
-msgstr "El <span class=\"productname\">%productName</span> admite la lectura y escritura de los siguientes formatos de archivo:"
+msgstr "<span class=\"productname\">%productName</span> admite la lectura y escritura de los siguientes formatos de archivo:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:442-11
 msgid "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
@@ -1519,7 +1519,7 @@ msgstr "¿Cómo compruebo la ortografía en mi idioma?"
 
 #: html/loleaflet-help.html%2Bdiv.p:458-5
 msgid "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</span> and select the language for the whole document. Optionally you can set languages for the selected text and for the current paragraph."
-msgstr "Seleccione el menú <span class=\"ui\">Herramientas</span> → <span class=\"ui\">Idiomas</span> y seleccione el idioma para el documento completo."
+msgstr "Diríjase al menú <span class=\"ui\">Herramientas</span> ▸ <span class=\"ui\">Idiomas</span> y seleccione el idioma para el documento completo. Facultativamente puede escoger idiomas para el texto seleccionado y para el párrafo actual."
 
 #: html/loleaflet-help.html%2Bdiv.h4:459-5
 msgid "How can I remove the red wavy lines in my document?"
@@ -1535,7 +1535,7 @@ msgstr "¿Y las líneas onduladas azules en el texto?"
 
 #: html/loleaflet-help.html%2Bdiv.p:462-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
-msgstr "Los errores gramaticales en el texto se marcan con un subrayado ondulado azul. Haga clic con el botón derecho del ratón para abrir el menú con sugerencias para corregir el error gramatical y conocer la regla infringida. Seleccione la sugerencia correcta para cambiar el texto."
+msgstr "Los errores gramaticales en el texto se marcan con un subrayado ondulado azul. Pulse con el botón secundario del ratón para abrir un menú con sugerencias para corregir el error gramatical y conocer la regla infringida. Seleccione la sugerencia adecuada para cambiar el texto."
 
 #: html/loleaflet-help.html%2Bdiv.h4:463-5
 msgid "Is here a thesaurus?"
@@ -1559,7 +1559,7 @@ msgstr "¿Cómo puedo contar las palabras de mi documento?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
-msgstr "El contador de palabras está disponible en <span class=\"ui\">Herramientas</span> → <span class=\"ui\">Contador de palabras</span>. Un cuadro de diálogo muestra el recuento para todo el documento y para la selección activa."
+msgstr "El contador de palabras está disponible en <span class=\"ui\">Herramientas</span> ▸ <span class=\"ui\">Contador de palabras</span>. Un cuadro de diálogo muestra el recuento para todo el documento y para la selección activa."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:474-5
 msgid "Word count is also displayed in the status bar. If no text is selected the word count is for the whole document. Otherwise the word count is for the selected text."

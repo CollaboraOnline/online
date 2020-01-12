@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name_settings">Agordoj</string>
+    <string name="action_settings">Agordoj</string>
+    <string name="action_about">Pri</string>
+    <string name="title_activity_show_html">Pri</string>
+    <string name="loading">Ŝargas...</string>
+</resources>

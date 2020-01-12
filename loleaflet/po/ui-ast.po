@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-03 15:11+0100\n"
-"PO-Revision-Date: 2020-01-03 10:08+0000\n"
+"PO-Revision-Date: 2020-01-07 10:58+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -802,7 +802,7 @@ msgstr "Roblar"
 
 #: src/control/Signing.js:603
 msgid "Status:"
-msgstr ""
+msgstr "Estáu:"
 
 #: src/control/Signing.js:604
 msgid "N/A"
@@ -822,7 +822,7 @@ msgstr "Non robláu"
 
 #: src/control/Signing.js:619
 msgid "This document is digitally signed and the signature is valid."
-msgstr ""
+msgstr "Esti documentu roblóse dixitalmente y la robla ye válida."
 
 #: src/control/Signing.js:620
 msgid "Signed and validated"
@@ -1148,12 +1148,12 @@ msgstr ""
 #: src/map/Map.js:412
 #, javascript-format
 msgid "%d seconds ago"
-msgstr ""
+msgstr "Hai %d segundos"
 
 #: src/map/Map.js:415
 #, javascript-format
 msgid "%d minutes ago"
-msgstr ""
+msgstr "Hai %d minutos"
 
 #: src/map/Map.js:1241
 msgid "Inactive document - please click to resume editing"

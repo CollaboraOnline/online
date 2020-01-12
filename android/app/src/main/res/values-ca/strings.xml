@@ -91,4 +91,8 @@
     <string name="app_description">El $APP_NAME és un modern conjunt d\'aplicacions de productivitat de codi obert per a processar textos, fulls de càlcul i presentacions fàcilment.</string>
     <string name="app_version">Versió: %1$s, id. de muntatge: %2$s</string>
     <string name="app_name_settings">Configuració</string>
+    <string name="owncloud_unspecified_error">S\'ha produït un error no especificat en connectar amb el servidor al núvol. Comproveu la configuració o intenteu-ho de nou més tard.</string>
+    <string name="owncloud_unauthorized">No es pot iniciar una sessió al servidor al núvol. Comproveu la configuració.</string>
+    <string name="owncloud_wrong_connection">No es pot connectar amb el servidor al núvol. Comproveu la configuració.</string>
+    <string name="usb_connected_configure">S\'ha connectat via USB; configureu l\'aparell.</string>
 </resources>
