@@ -4,6 +4,7 @@ DESKTOP_TEST_FOLDER = integration_tests/desktop
 MOBILE_TEST_FOLDER = integration_tests/mobile
 MOBILE_USER_AGENT = "cypress mobile test"
 
+if HAVE_LO_PATH
 check-local: @JAILS_PATH@
 	@npm install
 	@echo
@@ -31,6 +32,7 @@ check-local: @JAILS_PATH@
 	@echo
 	$(CYPRESS_BINARY) run --browser chrome --config integrationFolder=$(MOBILE_TEST_FOLDER),video=false,userAgent=$(MOBILE_USER_AGENT) --headless
 	@pkill loolwsd || true
+endif
 
 clean-local:
 	rm -rf node_modules
