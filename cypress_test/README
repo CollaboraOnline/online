@@ -1,0 +1,42 @@
+Cypress based test framework for LibreOffice Online
+====================================================
+
+Running tests
+------------------
+
+All tests are part of the make check build. So you can
+just execute it in the top folder.
+
+    make check
+
+To run only cypress test cases, you need to start loolwsd
+server first and then run the given cyrun command.
+To run all cypress tests:
+
+    make run &
+    cd cypress
+    npm run cyrun
+
+To run all desktop tests:
+
+    cd cypress
+    npm run cyrun_desktop
+
+To run all mobile tests:
+
+    cd cypress
+    npm run cyrun_mobile
+
+You can also open cypress tests in the browser, so you can
+check what happens during test run. It's useful for writing
+new tests or checking why an existing test fails.
+
+To open desktop tests in browser:
+
+    cd cypress
+    npm run cyopen_desktop
+
+To open mobile tests in browser:
+
+    cd cypress
+    npm run cyopen_mobile
