@@ -38,10 +38,12 @@
 		display: none;
 	}
 	#toolbar-down .w2ui-scroll-left, #toolbar-down .w2ui-scroll-right{
-		background: linear-gradient(to left, #fff0 50%, #0b87e730 95%, #0a77cc52 100%);
+		background: linear-gradient(to left, #fff0 0%, #ccc 98%, #bbb 100%);
 		height: 100%;
+		width: 8px;
 		top: 0%;
 		box-shadow: none;
+		border-radius: 0px;
 	}
 	#toolbar-down .w2ui-scroll-right{
 		right: 0;
