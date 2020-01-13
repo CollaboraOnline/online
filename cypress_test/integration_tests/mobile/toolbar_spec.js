@@ -95,4 +95,99 @@ describe('Toolbar tests', function() {
     cy.get('#tb_actionbar_item_redo')
       .should('not.have.class', 'disabled')
   })
+
+  it('Open and close mobile wizard by toolbar item.', function() {
+    // Click on edit button
+    cy.get('#mobile-edit-button').click()
+
+    // Click on mobile wizard toolbar item
+    cy.get('#tb_actionbar_item_mobile_wizard')
+      .should('not.have.class', 'disabled')
+      .click()
+
+    // Mobile wizard is opened and it has any content
+    cy.get('#mobile-wizard-content')
+      .should('not.be.empty');
+
+    // Toolbar button is checked
+    cy.get('#tb_actionbar_item_mobile_wizard table')
+      .should('have.class', 'checked')
+
+    cy.get('#tb_actionbar_item_mobile_wizard')
+      .click()
+
+    // Mobile wizard is closed
+    cy.get('#mobile_wizard')
+      .should('not.be.visible');
+
+    cy.get('#tb_actionbar_item_mobile_wizard table')
+      .should('not.have.class', 'checked')
+
+    // Open mobile wizard again
+    cy.get('#tb_actionbar_item_mobile_wizard')
+      .click()
+
+    // Mobile wizard is opened and it has any content
+    // TODO: fix this bug
+    /*cy.get('#mobile-wizard-content')
+      .should('not.be.empty'); */
+  })
+
+  it('Open and close insertion mobile wizard by toolbar item.', function() {
+    // Click on edit button
+    cy.get('#mobile-edit-button').click()
+
+    // Click on toolbar item
+    cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+      .should('not.have.class', 'disabled')
+      .click()
+
+    // Mobile wizard is opened and it has any content
+    cy.get('#mobile-wizard-content')
+      .should('not.be.empty');
+
+    // Toolbar button is checked
+    cy.get('#tb_actionbar_item_insertion_mobile_wizard table')
+      .should('have.class', 'checked')
+
+    // Click on toolbar item again
+    cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+      .click()
+
+    // Mobile wizard is closed
+    cy.get('#mobile_wizard')
+      .should('not.be.visible');
+
+    cy.get('#tb_actionbar_item_insertion_mobile_wizard table')
+      .should('not.have.class', 'checked')
+
+    // Open mobile wizard again
+    cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+      .click()
+
+    // Mobile wizard is opened and it has any content
+    cy.get('#mobile-wizard-content')
+      .should('not.be.empty');
+  })
+
+  it('Open insert comment dialog by toolbar item.', function() {
+    // Click on edit button
+    cy.get('#mobile-edit-button').click()
+
+    // Click on toolbar item
+    cy.get('#tb_actionbar_item_insertcomment')
+      .should('not.have.class', 'disabled')
+      .click()
+
+    // Comment insertion dialog is opened
+    cy.get('.loleaflet-annotation-table')
+      .should('be.visible');
+
+    // Close the dialog
+    cy.contains('Cancel')
+      .click()
+
+    cy.get('.loleaflet-annotation-table')
+      .should('be.not.visible');
+  })
 })
