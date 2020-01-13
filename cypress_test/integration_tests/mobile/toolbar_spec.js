@@ -4,8 +4,8 @@ describe('Toolbar tests', function() {
     cy.viewport('iphone-3')
     cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file:///home/zolnai/libreoffice/online/test/data/hello-world.odt')
 
-    // Wait for the document to fully load (TODO: find an item which we can be used to wait for instead)
-    cy.wait(1000)
+    // Wait for the document to fully load
+    cy.get('.leaflet-tile-loaded')
   });
 
   it('State of mobile wizard toolbar item.', function() {
