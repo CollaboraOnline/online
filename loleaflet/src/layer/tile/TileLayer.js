@@ -2843,6 +2843,29 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._cellCursorMarker);
 		}
 		this._removeDropDownMarker();
+
+		//hyperlink pop-up from here
+		if (this._lastFormula && this._cellCursorMarker && this._lastFormula.substring(1, 10) == 'HYPERLINK')
+		{
+			var formula = this._lastFormula;
+			var targetURL = formula.substring(11, formula.length - 1).split(',')[0];
+			targetURL = targetURL.split('"').join('');
+			targetURL = this._map.makeURLFromStr(targetURL);
+
+			this._map.closePopup(this._map.hyperlinkPopup);
+			this._map.hyperlinkPopup = null;
+			if (targetURL) {
+				this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
+				.setContent('<a href="' + targetURL + '" target="_blank">' + targetURL + '</a>')
+				.setLatLng(this._cellCursorMarker._bounds._northEast)
+				.openOn(this._map);
+			}
+
+		}
+		else if (this._map.hyperlinkPopup)
+		{
+			this._map.closePopup(this._map.hyperlinkPopup);
+		}
 	},
 
 	_onValidityListButtonMsg: function(textMsg) {
