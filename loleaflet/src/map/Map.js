@@ -1331,24 +1331,20 @@ L.Map = L.Evented.extend({
 		}, map.options.outOfFocusTimeoutSecs * 1000);
 	},
 
-	// The editor lost focus (probably a dialog was created).
-	onEditorLostFocus: function onEditorLostFocus(dialog) {
+	// Change the focus to a dialog.
+	onFocusDialog: function onFocusDialog(dialog, winId) {
 		if (!this._loaded) { return; }
+
+		this._winId = winId;
+		this._activeDialog = dialog;
 
 		var doclayer = this._docLayer;
 		if (doclayer)
-		{
 			doclayer._updateCursorAndOverlay();
-		}
-
-		if (dialog) {
-			this._activeDialog = dialog;
-		}
 	},
 
 	// Our browser tab lost focus.
 	_onLostFocus: function () {
-		this.onEditorLostFocus();
 		this._deactivate();
 	},
 
@@ -1374,10 +1370,10 @@ L.Map = L.Evented.extend({
 
 	// Our browser tab got focus.
 	_onGotFocus: function () {
-		if (this._activeDialog === null) {
-			this._onEditorGotFocus();
-		} else {
+		if (this._activeDialog) {
 			this._activeDialog.focus(this._winId);
+		} else {
+			this.fire('editorgotfocus');
 		}
 
 		this._activate();
