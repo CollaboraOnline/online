@@ -810,11 +810,6 @@ L.Map = L.Evented.extend({
 		return this._container;
 	},
 
-	// Returns the instance of layer/marker/TextInput in this map.
-	getTextInput: function getTextInput() {
-		return this._textInput;
-	},
-
 	// We have one global winId that controls what window (dialog, sidebar, or
 	// the main document) has the actual focus.  0 means the document.
 	setWinId: function (id) {
@@ -903,10 +898,16 @@ L.Map = L.Evented.extend({
 		return this.layerPointToLatLng(this.mouseEventToLayerPoint(e));
 	},
 
+	// Give the focus to the text input to accept keyboard input.
+	// On mobile, it will show the virtual keyboard.
 	focus: function () {
+		//TODO: we should check if focus is going to edit the doc in
+		//TODO: read-only mode and prevent it (but allow for searching).
 		this._textInput.focus();
 	},
 
+	// Lose focus to stop accepting keyboard input.
+	// On mobile, it will hide the virtual keyboard.
 	blur: function () {
 		this._textInput.blur();
 	},
