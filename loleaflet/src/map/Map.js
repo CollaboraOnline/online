@@ -1375,7 +1375,7 @@ L.Map = L.Evented.extend({
 		if (this._activeDialog === null) {
 			this._onEditorGotFocus();
 		} else {
-			this._activeDialog.focus();
+			this._activeDialog.focus(this._winId);
 		}
 
 		this._activate();
