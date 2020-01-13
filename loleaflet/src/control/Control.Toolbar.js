@@ -720,15 +720,14 @@ function insertShapes(mobile) {
 function getColorPickerData(type) {
 	var uno;
 	if (type === 'Font Color') {
-		if (map.getDocType() === 'spreadsheet')
-			uno = '.uno:Color';
-		else if (map.getDocType() === 'presentation')
+		if (map.getDocType() === 'spreadsheet' ||
+		    map.getDocType() === 'presentation')
 			uno = '.uno:Color';
 		else
 			uno = '.uno:FontColor';
 	} else if (type === 'Highlight Color') {
 		if (map.getDocType() === 'spreadsheet')
-			uno = '.uno:BacgroundColor';
+			uno = '.uno:BackgroundColor';
 		else if (map.getDocType() === 'presentation')
 			uno = '.uno:CharBackColor';
 		else
@@ -768,8 +767,8 @@ function onColorPick(id, color) {
 	var fontcolor, backcolor;
 	if (id === 'fontcolor') {
 		fontcolor = {'text': 'FontColor',
-					 'spreadsheet': 'Color',
-					 'presentation': 'Color'}[map.getDocType()];
+			     'spreadsheet': 'Color',
+			     'presentation': 'Color'}[map.getDocType()];
 		command[fontcolor] = {};
 		command[fontcolor].type = 'long';
 		command[fontcolor].value = color;
@@ -779,7 +778,7 @@ function onColorPick(id, color) {
 	// "backgroundcolor" can be used in Writer and Calc and translates to "Background color".
 	else if (id === 'backcolor') {
 		backcolor = {'text': 'BackColor',
-					 'presentation': 'CharBackColor'}[map.getDocType()];
+			     'presentation': 'CharBackColor'}[map.getDocType()];
 		command[backcolor] = {};
 		command[backcolor].type = 'long';
 		command[backcolor].value = color;
@@ -787,7 +786,7 @@ function onColorPick(id, color) {
 	}
 	else if (id === 'backgroundcolor') {
 		backcolor = {'text': 'BackgroundColor',
-					 'spreadsheet': 'BackgroundColor'}[map.getDocType()];
+			     'spreadsheet': 'BackgroundColor'}[map.getDocType()];
 		command[backcolor] = {};
 		command[backcolor].type = 'long';
 		command[backcolor].value = color;
