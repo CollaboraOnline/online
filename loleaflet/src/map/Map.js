@@ -114,6 +114,12 @@ L.Map = L.Evented.extend({
 		this._activeDialog = null;
 		this.showSidebar = false;
 
+		// Focusing:
+		//
+		// Do we have focus - ie. should we render a cursor
+		this._isFocused = true;
+
+
 		vex.dialogID = -1;
 
 		this.callInitHooks();
@@ -1324,7 +1330,7 @@ L.Map = L.Evented.extend({
 		var doclayer = this._docLayer;
 		if (doclayer)
 		{
-			doclayer._isFocused = false;
+			this._isFocused = false;
 			doclayer._updateCursorAndOverlay();
 		}
 
@@ -1343,14 +1349,14 @@ L.Map = L.Evented.extend({
 	_onEditorGotFocus: function() {
 		if (!this._loaded) { return; }
 
-		var map = this;
 		var doclayer = this._docLayer;
 		if (doclayer)
 		{
-			doclayer._isFocused = true;
+			this._isFocused = true;
 			// we restore the old cursor position by a small delay, so that if the user clicks
 			// inside the document we skip to restore it, so that the user does not see the cursor
 			// jumping from the old position to the new one
+			var map = this;
 			setTimeout(function () {
 				console.debug('apply focus change in timeout');
 				map.setWinId(0);

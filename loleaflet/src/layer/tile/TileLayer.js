@@ -101,8 +101,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._documentInfo = '';
 		// Position and size of the visible cursor.
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
-		// Do we have focus - ie. should we render a cursor
-		this._isFocused = true;
 		// Last cursor position for invalidation
 		this.lastCursorPos = this._visibleCursor.getNorthWest();
 		// Are we zooming currently ? - if so, no cursor.
@@ -1119,7 +1117,7 @@ L.TileLayer = L.GridLayer.extend({
 				.openOn(this._map);
 		}
 
-		if (!this._isFocused && (modifierViewId === this._viewId) && (this._map.getWinId === 0) && (this._map._permission === 'edit')) {
+		if (!this._map._isFocused && (modifierViewId === this._viewId) && (this._map.getWinId === 0) && (this._map._permission === 'edit')) {
 			// Regain cursor if we had been out of focus and now have input.
 			// (only if it is our own cursor and the input is actually not
 			// going into a dialog)
@@ -2094,7 +2092,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._map._textInput.showCursor();
-		if (this._isFocused /* && !L.Browser.mobile */) {
+		if (this._map._isFocused /* && !L.Browser.mobile */) {
 			// On mobile, this is causing some key input to get lost.
 			this._map.focus();
 		}
@@ -2132,7 +2130,7 @@ L.TileLayer = L.GridLayer.extend({
 	_updateCursorAndOverlay: function (/*update*/) {
 		if (this._map._permission === 'edit'
 		&& this._isCursorVisible        // only when LOK has told us it is ok
-		&& this._isFocused              // not when document is not focused
+		&& this._map._isFocused         // not when document is not focused
 		&& !this._isZooming             // not when zooming
 //		&& !this.isGraphicVisible()     // not when sizing / positioning graphics
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
