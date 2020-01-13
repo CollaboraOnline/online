@@ -349,7 +349,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._dialogs[e.id].cursorVisible = e.visible === 'true';
 			if (this._dialogs[e.id].cursorVisible) {
 				$('#' + strId + '-cursor').css({display: 'block'});
-				this._map.fire('changefocuswidget', {winId: e.id, dialog: this}); // Us.
+				this._map.onFocusDialog(this, e.id);
 			}
 			else {
 				$('#' + strId + '-cursor').css({display: 'none'});
