@@ -5,27 +5,37 @@ Running tests
 ------------------
 
 All tests are part of the make check build. So you can
-just execute it in the top folder.
+just execute it from the root folder of online repository.
 
     make check
 
 To run only cypress test cases, you need to start loolwsd
-server first and then run the given cyrun command.
+server first. To do that you can call make run on a separate
+command line window, so LibreOffice online is started.
+
+After the server is running you can execute the test,
+calling the given run command. You need to run the
+command under cypress_test\ folder.
+
 To run all cypress tests:
 
-    make run &
-    cd cypress
     npm run cyrun
 
 To run all desktop tests:
 
-    cd cypress
     npm run cyrun_desktop
 
 To run all mobile tests:
 
-    cd cypress
     npm run cyrun_mobile
+
+To run one specific test suit of desktop tests:
+
+    npm run cyrun_desktop --spec example_desktop_test_spec.js
+
+To run one specific test suit of mobile tests:
+
+    npm run cyrun_mobile --spec toolbar_spec.js
 
 You can also open cypress tests in the browser, so you can
 check what happens during test run. It's useful for writing
@@ -33,10 +43,11 @@ new tests or checking why an existing test fails.
 
 To open desktop tests in browser:
 
-    cd cypress
     npm run cyopen_desktop
 
 To open mobile tests in browser:
 
-    cd cypress
     npm run cyopen_mobile
+
+During the build we run the tests with Chrome browser, so make sure
+you select Chrome browser on the GUI while checking tests.
