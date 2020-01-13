@@ -114,8 +114,6 @@ L.Map = L.Evented.extend({
 
 		// Focusing:
 		//
-		// Do we have focus - ie. should we render a cursor
-		this._isFocused = true;
 		// Cursor is visible or hidden (e.g. for graphic selection).
 		this._isCursorVisible = true;
 		// The ID of the window with focus. 0 for the document.
@@ -824,6 +822,11 @@ L.Map = L.Evented.extend({
 		return this._winId;
 	},
 
+	// Returns true iff the document has input focus.
+	editorHasFocus: function () {
+		return this.getWinId() === 0;
+	},
+
 	// TODO replace with universal implementation after refactoring projections
 
 	getZoomScale: function (toZoom, fromZoom) {
@@ -1335,7 +1338,6 @@ L.Map = L.Evented.extend({
 		var doclayer = this._docLayer;
 		if (doclayer)
 		{
-			this._isFocused = false;
 			doclayer._updateCursorAndOverlay();
 		}
 
@@ -1355,7 +1357,6 @@ L.Map = L.Evented.extend({
 		if (!this._loaded) { return; }
 
 		this._winId = 0;
-		this._isFocused = true;
 		this._activeDialog = null;
 
 		var doclayer = this._docLayer;

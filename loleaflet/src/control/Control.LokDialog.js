@@ -889,7 +889,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		$('#sidebar-dock-wrapper').css({display: ''});
-		if (this._map.getWinId() === 0) {
+		if (this._map.editorHasFocus()) {
 			this._map.fire('editorgotfocus');
 			this._map.focus();
 		}
@@ -1087,7 +1087,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._adjustCalcInputBar(deckOffset);
 		// If we didn't have the focus, don't steal it form the editor.
 		if ($('#' + this._currentDeck.strId + '-cursor').css('display') === 'none') {
-			if (this._map.getWinId() === 0) {
+			if (this._map.editorHasFocus()) {
 				this._map.fire('editorgotfocus');
 				this._map.focus();
 			}

@@ -691,7 +691,7 @@ L.TextInput = L.Layer.extend({
 		if (!type) {
 			type = 'input';
 		}
-		if (this._map.getWinId() === 0) {
+		if (this._map.editorHasFocus()) {
 			this._map._socket.sendMessage(
 				'key type=' + type + ' char=' + charCode + ' key=' + unoKeyCode + '\n'
 			);
