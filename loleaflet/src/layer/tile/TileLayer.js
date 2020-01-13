@@ -105,8 +105,6 @@ L.TileLayer = L.GridLayer.extend({
 		this.lastCursorPos = this._visibleCursor.getNorthWest();
 		// Are we zooming currently ? - if so, no cursor.
 		this._isZooming = false;
-		// Cursor is visible or hidden (e.g. for graphic selection).
-		this._isCursorVisible = true;
 		// Original rectangle graphic selection in twips
 		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		// Rectangle graphic selection
@@ -787,7 +785,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
-		this._isCursorVisible = command ? true : false;
+		this._map._isCursorVisible = command ? true : false;
 		this._onUpdateCursor();
 	},
 
@@ -2103,7 +2101,7 @@ L.TileLayer = L.GridLayer.extend({
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 
-		if (!zoom && scroll !== false && !this._map.getBounds().contains(this._visibleCursor) && this._isCursorVisible) {
+		if (!zoom && scroll !== false && !this._map.getBounds().contains(this._visibleCursor) && this._map._isCursorVisible) {
 			var center = this._map.project(cursorPos);
 			center = center.subtract(this._map.getSize().divideBy(2));
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
@@ -2129,7 +2127,7 @@ L.TileLayer = L.GridLayer.extend({
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (/*update*/) {
 		if (this._map._permission === 'edit'
-		&& this._isCursorVisible        // only when LOK has told us it is ok
+		&& this._map._isCursorVisible   // only when LOK has told us it is ok
 		&& this._map._isFocused         // not when document is not focused
 		&& !this._isZooming             // not when zooming
 //		&& !this.isGraphicVisible()     // not when sizing / positioning graphics

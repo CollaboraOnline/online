@@ -118,6 +118,8 @@ L.Map = L.Evented.extend({
 		//
 		// Do we have focus - ie. should we render a cursor
 		this._isFocused = true;
+		// Cursor is visible or hidden (e.g. for graphic selection).
+		this._isCursorVisible = true;
 
 
 		vex.dialogID = -1;
