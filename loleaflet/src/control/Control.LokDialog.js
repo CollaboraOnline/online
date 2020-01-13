@@ -116,7 +116,6 @@ L.Control.LokDialog = L.Control.extend({
 	onAdd: function (map) {
 		map.on('window', this._onDialogMsg, this);
 		map.on('windowpaint', this._onDialogPaint, this);
-		map.on('opendialog', this._openDialog, this);
 		map.on('docloaded', this._docLoaded, this);
 		map.on('closepopup', this.onCloseCurrentPopUp, this);
 		map.on('closepopups', this._onClosePopups, this);
@@ -367,10 +366,6 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'show') {
 			$('#' + strId).parent().css({display: 'block'});
 		}
-	},
-
-	_openDialog: function(e) {
-		this._map.sendUnoCommand(e.uno);
 	},
 
 	_updateDialogCursor: function(dlgId, x, y, height) {
