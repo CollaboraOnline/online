@@ -110,8 +110,6 @@ L.Map = L.Evented.extend({
 		this._documentIdle = false;
 		this._helpTarget = null; // help page that fits best the current context
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
-		this._winId = 0;
-		this._activeDialog = null;
 		this.showSidebar = false;
 
 		// Focusing:
@@ -120,6 +118,10 @@ L.Map = L.Evented.extend({
 		this._isFocused = true;
 		// Cursor is visible or hidden (e.g. for graphic selection).
 		this._isCursorVisible = true;
+		// The ID of the window with focus. 0 for the document.
+		this._winId = 0;
+		// The object of the dialog, if any (must have .focus callable).
+		this._activeDialog = null;
 
 
 		vex.dialogID = -1;
@@ -1351,22 +1353,21 @@ L.Map = L.Evented.extend({
 	_onEditorGotFocus: function() {
 		if (!this._loaded) { return; }
 
+		this._winId = 0;
+		this._isFocused = true;
+		this._activeDialog = null;
+
 		var doclayer = this._docLayer;
 		if (doclayer)
 		{
-			this._isFocused = true;
 			// we restore the old cursor position by a small delay, so that if the user clicks
 			// inside the document we skip to restore it, so that the user does not see the cursor
 			// jumping from the old position to the new one
-			var map = this;
 			setTimeout(function () {
 				console.debug('apply focus change in timeout');
-				map.setWinId(0);
 				doclayer._updateCursorAndOverlay();
 			}, 300);
 		}
-
-		this._activeDialog = null;
 	},
 
 	// Our browser tab got focus.
