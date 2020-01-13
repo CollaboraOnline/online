@@ -655,6 +655,7 @@ L.Socket = L.Class.extend({
 							this._map._docPassword = '';
 							this._map.loadDocument();
 						} else {
+							this._map.fire('postMessage', {msgId: 'UI_Cancel_Password'});
 							this._map.hideBusy();
 						}
 					}, this)
