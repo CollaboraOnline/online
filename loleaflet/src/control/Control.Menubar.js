@@ -497,6 +497,10 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:PreviousTrackedChange'},
 				{uno: '.uno:NextTrackedChange'}
 			]},
+			{name: _('Page Setup'), id: 'pagesetup', type: 'menu', menu: [
+				{name: _('Portrait'), id: 'setportrait', uno: '.uno:ToggleOrientation'},
+				{name: _('Landscape'), id: 'setlandscape', uno: '.uno:ToggleOrientation'}
+			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:ControlCodes'},
 				{uno: '.uno:SpellOnline'},
@@ -1292,6 +1296,12 @@ L.Control.Menubar = L.Control.extend({
 			return false;
 		}
 		if (menuItem.id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
+			return false;
+		}
+		if (menuItem.id === 'setportrait' && this._map['stateChangeHandler'].getItemValue('.uno:Orientation') === 'IsPortrait') {
+			return false;
+		}
+		else if (menuItem.id === 'setlandscape' && this._map['stateChangeHandler'].getItemValue('.uno:Orientation') === 'IsLandscape') {
 			return false;
 		}
 		if (this._map._permission === 'readonly' && menuItem.type === 'menu') {
