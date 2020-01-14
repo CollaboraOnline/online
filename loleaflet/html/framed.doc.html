@@ -158,11 +158,16 @@
     </form>
 
     <h3>Document frame</h3>
+    <h4>If the frame fails to load click <a id="link">here and accept security bits</a></h4>
     <iframe id="frame" height="1000" width="1000"></iframe>
 
+    <!-- 127.0.0.2 allows us to test CSS issues -->
     <script>
+      var uriBase = "https://127.0.0.2:9980/loleaflet/42/loleaflet.html" + window.location.search;
       var iframe = document.getElementById("frame");
-      iframe.src = "https://localhost:9980/loleaflet/42/loleaflet.html" + window.location.search + "&NotWOPIButIframe=true";
+      iframe.src = uriBase + "&NotWOPIButIframe=true";
+      var msg = document.getElementById("link");
+      link.href = uriBase;
     </script>
   </body>
 </html>
