@@ -1358,6 +1358,7 @@ function documentNameCancel() {
 }
 
 function onDocumentNameKeyPress(e) {
+	$('#document-name-input').css('width',(($('#document-name-input').val().length + 1) * 10) + 'px');
 	if (e.keyCode === 13) { // Enter key
 		documentNameConfirm();
 	} else if (e.keyCode === 27) { // Escape key
@@ -1512,6 +1513,7 @@ function onWopiProps(e) {
 		// set the document name into the name field
 		$('#document-name-input').val(e.BaseFileName);
 	}
+
 	if (e.UserCanNotWriteRelative === false) {
 		// Save As allowed
 		$('#document-name-input').prop('disabled', false);
