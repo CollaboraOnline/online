@@ -1,3 +1,8 @@
 node_modules
-cypress/
+cypress/fixtures
+cypress/integration
+cypress/screenshots
+cypress/support
+cypress/videos
 package-lock.json
+workdir

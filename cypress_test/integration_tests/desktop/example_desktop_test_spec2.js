@@ -1,8 +1,15 @@
 describe('Example test suit 2', function() {
   it('Example test case 1', function() {
+    // Get a clean test document
+    cy.task('copyFile', {
+      source_dir: Cypress.env('DATA_FOLDER'),
+      dest_dir: Cypress.env('WORKDIR'),
+      file_name: 'simple.odt',
+    });
+
     // Open test document
     cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file://' +
-      Cypress.env('TEST_DATA_FOLDER') + 'simple.odt')
+      Cypress.env('WORKDIR') + 'simple.odt')
 
     // Wait for the document to fully load
     cy.get('.leaflet-tile-loaded')

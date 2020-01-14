@@ -1,9 +1,16 @@
 describe('Toolbar tests', function() {
   beforeEach(function() {
+    // Get a clean test document
+    cy.task('copyFile', {
+      source_dir: Cypress.env('DATA_FOLDER'),
+      dest_dir: Cypress.env('WORKDIR'),
+      file_name: 'empty.odt',
+    });
+
     // Open test document
     cy.viewport('iphone-3')
     cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file://' +
-      Cypress.env('TEST_DATA_FOLDER') + 'empty.odt')
+      Cypress.env('WORKDIR') + 'empty.odt')
 
     // Wait for the document to fully load
     cy.get('.leaflet-tile-loaded')
