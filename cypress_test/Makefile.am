@@ -7,11 +7,34 @@ MOBILE_USER_AGENT = "cypress mobile test"
 if HAVE_LO_PATH
 check-local: @JAILS_PATH@
 	@npm install
-	@echo "Checking for loleaflet JS errors..."
-	@NODE_PATH=$(abs_srcdir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(abs_srcdir) \
-			--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_top_srcdir)/loleaflet/.eslintrc
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(call run_desktop_tests)
+	$(call run_mobile_tests)
+	@pkill loolwsd || true
 
+check-desktop: @JAILS_PATH@
+	@npm install
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(call run_desktop_tests)
+	@pkill loolwsd || true
+
+check-mobile: @JAILS_PATH@
+	@npm install
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(call run_mobile_tests)
+	@pkill loolwsd || true
+
+define run_JS_error_check
+	@echo "Checking for cypress JS errors..."
+	@NODE_PATH=$(abs_srcdir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(abs_srcdir) \
+		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_top_srcdir)/loleaflet/.eslintrc
 	@echo
+endef
+
+define start_loolwsd
 	@pkill loolwsd || true
 	@echo "Launching loolwsd for testing.."
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
@@ -25,6 +48,10 @@ check-local: @JAILS_PATH@
 			--o:logging.file[@enable]=true --o:logging.level=trace > /dev/null 2>&1 &
 	@sleep 10
 	@echo
+endef
+
+define run_desktop_tests
+	@echo
 	@echo "Running cypress desktop tests..."
 	@echo
 	$(CYPRESS_BINARY) run --browser chrome \
@@ -32,6 +59,9 @@ check-local: @JAILS_PATH@
 			--headless \
 			--env DATA_FOLDER=$(abs_srcdir)/data/desktop/,WORKDIR=$(abs_srcdir)/workdir/desktop/ || \
 			(pkill loolwsd && false)
+endef
+
+define run_mobile_tests
 	@echo
 	@echo "Running cypress mobile tests..."
 	@echo
@@ -40,7 +70,8 @@ check-local: @JAILS_PATH@
 			--headless \
 			--env DATA_FOLDER=$(abs_srcdir)/data/mobile/,WORKDIR=$(abs_srcdir)/workdir/mobile/ || \
 			(pkill loolwsd && false)
-	@pkill loolwsd || true
+endef
+
 endif
 
 clean-local:

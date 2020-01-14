@@ -20,11 +20,11 @@ command under cypress_test\ folder.
 
 To run all desktop tests:
 
-    npm run cyrun_desktop
+    make check-desktop
 
 To run all mobile tests:
 
-    npm run cyrun_mobile
+    make check-mobile
 
 To run one specific test suit of desktop tests:
 
