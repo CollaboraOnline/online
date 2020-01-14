@@ -326,6 +326,115 @@
 		BE34D1FE219076CF00815297 /* output2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = output2.cxx; path = "../../ios-device/sc/source/ui/view/output2.cxx"; sourceTree = "<group>"; };
 		BE34D1FF219076CF00815297 /* formatsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formatsh.cxx; path = "../../ios-device/sc/source/ui/view/formatsh.cxx"; sourceTree = "<group>"; };
 		BE34D200219076CF00815297 /* dbfunc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbfunc3.cxx; path = "../../ios-device/sc/source/ui/view/dbfunc3.cxx"; sourceTree = "<group>"; };
+		BE3C8B2723CC8E93008302F8 /* PreviewValueSet.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PreviewValueSet.cxx; path = "../../ios-device/sd/source/ui/sidebar/PreviewValueSet.cxx"; sourceTree = "<group>"; };
+		BE3C8B2823CC8E93008302F8 /* TableDesignPanel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TableDesignPanel.cxx; path = "../../ios-device/sd/source/ui/sidebar/TableDesignPanel.cxx"; sourceTree = "<group>"; };
+		BE3C8B2923CC8E93008302F8 /* DocumentHelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentHelper.cxx; path = "../../ios-device/sd/source/ui/sidebar/DocumentHelper.cxx"; sourceTree = "<group>"; };
+		BE3C8B2A23CC8E93008302F8 /* MasterPageContainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MasterPageContainer.cxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageContainer.cxx"; sourceTree = "<group>"; };
+		BE3C8B2B23CC8E93008302F8 /* PanelFactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PanelFactory.cxx; path = "../../ios-device/sd/source/ui/sidebar/PanelFactory.cxx"; sourceTree = "<group>"; };
+		BE3C8B2C23CC8E93008302F8 /* AllMasterPagesSelector.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AllMasterPagesSelector.cxx; path = "../../ios-device/sd/source/ui/sidebar/AllMasterPagesSelector.cxx"; sourceTree = "<group>"; };
+		BE3C8B2D23CC8E93008302F8 /* MasterPageObserver.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MasterPageObserver.cxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageObserver.cxx"; sourceTree = "<group>"; };
+		BE3C8B2E23CC8E93008302F8 /* SlideBackground.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlideBackground.hxx; path = "../../ios-device/sd/source/ui/sidebar/SlideBackground.hxx"; sourceTree = "<group>"; };
+		BE3C8B2F23CC8E93008302F8 /* CurrentMasterPagesSelector.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CurrentMasterPagesSelector.cxx; path = "../../ios-device/sd/source/ui/sidebar/CurrentMasterPagesSelector.cxx"; sourceTree = "<group>"; };
+		BE3C8B3023CC8E93008302F8 /* CustomAnimationPanel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomAnimationPanel.cxx; path = "../../ios-device/sd/source/ui/sidebar/CustomAnimationPanel.cxx"; sourceTree = "<group>"; };
+		BE3C8B3123CC8E93008302F8 /* NavigatorWrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NavigatorWrapper.cxx; path = "../../ios-device/sd/source/ui/sidebar/NavigatorWrapper.cxx"; sourceTree = "<group>"; };
+		BE3C8B3223CC8E93008302F8 /* ISidebarReceiver.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ISidebarReceiver.hxx; path = "../../ios-device/sd/source/ui/sidebar/ISidebarReceiver.hxx"; sourceTree = "<group>"; };
+		BE3C8B3323CC8E93008302F8 /* MasterPageContainer.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MasterPageContainer.hxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageContainer.hxx"; sourceTree = "<group>"; };
+		BE3C8B3423CC8E93008302F8 /* LayoutMenu.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = LayoutMenu.hxx; path = "../../ios-device/sd/source/ui/sidebar/LayoutMenu.hxx"; sourceTree = "<group>"; };
+		BE3C8B3523CC8E93008302F8 /* PanelFactory.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PanelFactory.hxx; path = "../../ios-device/sd/source/ui/sidebar/PanelFactory.hxx"; sourceTree = "<group>"; };
+		BE3C8B3623CC8E93008302F8 /* RecentlyUsedMasterPages.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RecentlyUsedMasterPages.cxx; path = "../../ios-device/sd/source/ui/sidebar/RecentlyUsedMasterPages.cxx"; sourceTree = "<group>"; };
+		BE3C8B3723CC8E93008302F8 /* AllMasterPagesSelector.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = AllMasterPagesSelector.hxx; path = "../../ios-device/sd/source/ui/sidebar/AllMasterPagesSelector.hxx"; sourceTree = "<group>"; };
+		BE3C8B3823CC8E93008302F8 /* MasterPageDescriptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MasterPageDescriptor.cxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageDescriptor.cxx"; sourceTree = "<group>"; };
+		BE3C8B3923CC8E94008302F8 /* MasterPageContainerProviders.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MasterPageContainerProviders.cxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageContainerProviders.cxx"; sourceTree = "<group>"; };
+		BE3C8B3A23CC8E94008302F8 /* RecentMasterPagesSelector.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RecentMasterPagesSelector.hxx; path = "../../ios-device/sd/source/ui/sidebar/RecentMasterPagesSelector.hxx"; sourceTree = "<group>"; };
+		BE3C8B3B23CC8E94008302F8 /* DocumentHelper.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DocumentHelper.hxx; path = "../../ios-device/sd/source/ui/sidebar/DocumentHelper.hxx"; sourceTree = "<group>"; };
+		BE3C8B3C23CC8E94008302F8 /* CurrentMasterPagesSelector.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CurrentMasterPagesSelector.hxx; path = "../../ios-device/sd/source/ui/sidebar/CurrentMasterPagesSelector.hxx"; sourceTree = "<group>"; };
+		BE3C8B3D23CC8E94008302F8 /* IDisposable.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = IDisposable.hxx; path = "../../ios-device/sd/source/ui/sidebar/IDisposable.hxx"; sourceTree = "<group>"; };
+		BE3C8B3E23CC8E94008302F8 /* TableDesignPanel.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TableDesignPanel.hxx; path = "../../ios-device/sd/source/ui/sidebar/TableDesignPanel.hxx"; sourceTree = "<group>"; };
+		BE3C8B3F23CC8E94008302F8 /* PanelBase.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PanelBase.hxx; path = "../../ios-device/sd/source/ui/sidebar/PanelBase.hxx"; sourceTree = "<group>"; };
+		BE3C8B4023CC8E94008302F8 /* MasterPagesSelector.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MasterPagesSelector.cxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPagesSelector.cxx"; sourceTree = "<group>"; };
+		BE3C8B4123CC8E94008302F8 /* RecentlyUsedMasterPages.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RecentlyUsedMasterPages.hxx; path = "../../ios-device/sd/source/ui/sidebar/RecentlyUsedMasterPages.hxx"; sourceTree = "<group>"; };
+		BE3C8B4223CC8E94008302F8 /* MasterPageContainerFiller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MasterPageContainerFiller.cxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageContainerFiller.cxx"; sourceTree = "<group>"; };
+		BE3C8B4323CC8E94008302F8 /* LayoutMenu.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutMenu.cxx; path = "../../ios-device/sd/source/ui/sidebar/LayoutMenu.cxx"; sourceTree = "<group>"; };
+		BE3C8B4423CC8E94008302F8 /* MasterPageContainerQueue.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MasterPageContainerQueue.cxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageContainerQueue.cxx"; sourceTree = "<group>"; };
+		BE3C8B4523CC8E94008302F8 /* SlideTransitionPanel.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlideTransitionPanel.hxx; path = "../../ios-device/sd/source/ui/sidebar/SlideTransitionPanel.hxx"; sourceTree = "<group>"; };
+		BE3C8B4623CC8E94008302F8 /* MasterPageDescriptor.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MasterPageDescriptor.hxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageDescriptor.hxx"; sourceTree = "<group>"; };
+		BE3C8B4723CC8E94008302F8 /* PreviewValueSet.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PreviewValueSet.hxx; path = "../../ios-device/sd/source/ui/sidebar/PreviewValueSet.hxx"; sourceTree = "<group>"; };
+		BE3C8B4823CC8E94008302F8 /* CustomAnimationPanel.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CustomAnimationPanel.hxx; path = "../../ios-device/sd/source/ui/sidebar/CustomAnimationPanel.hxx"; sourceTree = "<group>"; };
+		BE3C8B4923CC8E94008302F8 /* SlideBackground.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideBackground.cxx; path = "../../ios-device/sd/source/ui/sidebar/SlideBackground.cxx"; sourceTree = "<group>"; };
+		BE3C8B4A23CC8E94008302F8 /* MasterPageContainerFiller.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MasterPageContainerFiller.hxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageContainerFiller.hxx"; sourceTree = "<group>"; };
+		BE3C8B4B23CC8E95008302F8 /* PageMarginUtils.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PageMarginUtils.hxx; path = "../../ios-device/sd/source/ui/sidebar/PageMarginUtils.hxx"; sourceTree = "<group>"; };
+		BE3C8B4C23CC8E95008302F8 /* MasterPagesSelector.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MasterPagesSelector.hxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPagesSelector.hxx"; sourceTree = "<group>"; };
+		BE3C8B4D23CC8E95008302F8 /* MasterPageContainerProviders.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MasterPageContainerProviders.hxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageContainerProviders.hxx"; sourceTree = "<group>"; };
+		BE3C8B4E23CC8E95008302F8 /* PanelBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PanelBase.cxx; path = "../../ios-device/sd/source/ui/sidebar/PanelBase.cxx"; sourceTree = "<group>"; };
+		BE3C8B4F23CC8E95008302F8 /* NavigatorWrapper.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NavigatorWrapper.hxx; path = "../../ios-device/sd/source/ui/sidebar/NavigatorWrapper.hxx"; sourceTree = "<group>"; };
+		BE3C8B5023CC8E95008302F8 /* RecentMasterPagesSelector.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RecentMasterPagesSelector.cxx; path = "../../ios-device/sd/source/ui/sidebar/RecentMasterPagesSelector.cxx"; sourceTree = "<group>"; };
+		BE3C8B5123CC8E95008302F8 /* SlideTransitionPanel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideTransitionPanel.cxx; path = "../../ios-device/sd/source/ui/sidebar/SlideTransitionPanel.cxx"; sourceTree = "<group>"; };
+		BE3C8B5223CC8E95008302F8 /* MasterPageContainerQueue.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MasterPageContainerQueue.hxx; path = "../../ios-device/sd/source/ui/sidebar/MasterPageContainerQueue.hxx"; sourceTree = "<group>"; };
+		BE3C8B5423CCB8B9008302F8 /* drviews7.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews7.cxx; path = "../../ios-device/sd/source/ui/view/drviews7.cxx"; sourceTree = "<group>"; };
+		BE3C8B5523CCB8B9008302F8 /* MediaObjectBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MediaObjectBar.cxx; path = "../../ios-device/sd/source/ui/view/MediaObjectBar.cxx"; sourceTree = "<group>"; };
+		BE3C8B5623CCB8B9008302F8 /* sdview4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview4.cxx; path = "../../ios-device/sd/source/ui/view/sdview4.cxx"; sourceTree = "<group>"; };
+		BE3C8B5723CCB8B9008302F8 /* Outliner.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Outliner.cxx; path = "../../ios-device/sd/source/ui/view/Outliner.cxx"; sourceTree = "<group>"; };
+		BE3C8B5823CCB8B9008302F8 /* drviewsj.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsj.cxx; path = "../../ios-device/sd/source/ui/view/drviewsj.cxx"; sourceTree = "<group>"; };
+		BE3C8B5923CCB8B9008302F8 /* drviewsf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsf.cxx; path = "../../ios-device/sd/source/ui/view/drviewsf.cxx"; sourceTree = "<group>"; };
+		BE3C8B5A23CCB8B9008302F8 /* unmodpg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unmodpg.cxx; path = "../../ios-device/sd/source/ui/view/unmodpg.cxx"; sourceTree = "<group>"; };
+		BE3C8B5B23CCB8B9008302F8 /* ImpressViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ImpressViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/ImpressViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE3C8B5C23CCB8B9008302F8 /* drviews4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews4.cxx; path = "../../ios-device/sd/source/ui/view/drviews4.cxx"; sourceTree = "<group>"; };
+		BE3C8B5D23CCB8B9008302F8 /* SlideSorterViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideSorterViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/SlideSorterViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE3C8B5E23CCB8B9008302F8 /* sdview2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview2.cxx; path = "../../ios-device/sd/source/ui/view/sdview2.cxx"; sourceTree = "<group>"; };
+		BE3C8B5F23CCB8B9008302F8 /* outlnvs2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = outlnvs2.cxx; path = "../../ios-device/sd/source/ui/view/outlnvs2.cxx"; sourceTree = "<group>"; };
+		BE3C8B6023CCB8B9008302F8 /* ViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/ViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE3C8B6123CCB8B9008302F8 /* ViewShellImplementation.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewShellImplementation.cxx; path = "../../ios-device/sd/source/ui/view/ViewShellImplementation.cxx"; sourceTree = "<group>"; };
+		BE3C8B6223CCB8B9008302F8 /* drviewse.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewse.cxx; path = "../../ios-device/sd/source/ui/view/drviewse.cxx"; sourceTree = "<group>"; };
+		BE3C8B6323CCB8BA008302F8 /* frmview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frmview.cxx; path = "../../ios-device/sd/source/ui/view/frmview.cxx"; sourceTree = "<group>"; };
+		BE3C8B6423CCB8BA008302F8 /* drviews3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews3.cxx; path = "../../ios-device/sd/source/ui/view/drviews3.cxx"; sourceTree = "<group>"; };
+		BE3C8B6523CCB8BA008302F8 /* outlnvsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = outlnvsh.cxx; path = "../../ios-device/sd/source/ui/view/outlnvsh.cxx"; sourceTree = "<group>"; };
+		BE3C8B6623CCB8BA008302F8 /* sdruler.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdruler.cxx; path = "../../ios-device/sd/source/ui/view/sdruler.cxx"; sourceTree = "<group>"; };
+		BE3C8B6723CCB8BA008302F8 /* drbezob.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drbezob.cxx; path = "../../ios-device/sd/source/ui/view/drbezob.cxx"; sourceTree = "<group>"; };
+		BE3C8B6823CCB8BA008302F8 /* drviewsk.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsk.cxx; path = "../../ios-device/sd/source/ui/view/drviewsk.cxx"; sourceTree = "<group>"; };
+		BE3C8B6923CCB8BA008302F8 /* GraphicObjectBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicObjectBar.cxx; path = "../../ios-device/sd/source/ui/view/GraphicObjectBar.cxx"; sourceTree = "<group>"; };
+		BE3C8B6A23CCB8BA008302F8 /* ViewShellHint.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewShellHint.cxx; path = "../../ios-device/sd/source/ui/view/ViewShellHint.cxx"; sourceTree = "<group>"; };
+		BE3C8B6B23CCB8BA008302F8 /* drawview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawview.cxx; path = "../../ios-device/sd/source/ui/view/drawview.cxx"; sourceTree = "<group>"; };
+		BE3C8B6C23CCB8BA008302F8 /* ViewClipboard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewClipboard.cxx; path = "../../ios-device/sd/source/ui/view/ViewClipboard.cxx"; sourceTree = "<group>"; };
+		BE3C8B6D23CCB8BA008302F8 /* drviewsa.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsa.cxx; path = "../../ios-device/sd/source/ui/view/drviewsa.cxx"; sourceTree = "<group>"; };
+		BE3C8B6E23CCB8BA008302F8 /* WindowUpdater.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowUpdater.cxx; path = "../../ios-device/sd/source/ui/view/WindowUpdater.cxx"; sourceTree = "<group>"; };
+		BE3C8B6F23CCB8BA008302F8 /* PresentationViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PresentationViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/PresentationViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE3C8B7023CCB8BA008302F8 /* drviews5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews5.cxx; path = "../../ios-device/sd/source/ui/view/drviews5.cxx"; sourceTree = "<group>"; };
+		BE3C8B7123CCB8BA008302F8 /* ToolBarManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ToolBarManager.cxx; path = "../../ios-device/sd/source/ui/view/ToolBarManager.cxx"; sourceTree = "<group>"; };
+		BE3C8B7223CCB8BA008302F8 /* drviewsd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsd.cxx; path = "../../ios-device/sd/source/ui/view/drviewsd.cxx"; sourceTree = "<group>"; };
+		BE3C8B7323CCB8BA008302F8 /* presvish.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = presvish.cxx; path = "../../ios-device/sd/source/ui/view/presvish.cxx"; sourceTree = "<group>"; };
+		BE3C8B7423CCB8BA008302F8 /* drvwshrg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drvwshrg.cxx; path = "../../ios-device/sd/source/ui/view/drvwshrg.cxx"; sourceTree = "<group>"; };
+		BE3C8B7523CCB8BA008302F8 /* drviews1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews1.cxx; path = "../../ios-device/sd/source/ui/view/drviews1.cxx"; sourceTree = "<group>"; };
+		BE3C8B7623CCB8BA008302F8 /* drtxtob1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drtxtob1.cxx; path = "../../ios-device/sd/source/ui/view/drtxtob1.cxx"; sourceTree = "<group>"; };
+		BE3C8B7723CCB8BB008302F8 /* drviews2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews2.cxx; path = "../../ios-device/sd/source/ui/view/drviews2.cxx"; sourceTree = "<group>"; };
+		BE3C8B7823CCB8BB008302F8 /* FormShellManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FormShellManager.cxx; path = "../../ios-device/sd/source/ui/view/FormShellManager.cxx"; sourceTree = "<group>"; };
+		BE3C8B7923CCB8BB008302F8 /* drviewsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsh.cxx; path = "../../ios-device/sd/source/ui/view/drviewsh.cxx"; sourceTree = "<group>"; };
+		BE3C8B7A23CCB8BB008302F8 /* drviewsi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsi.cxx; path = "../../ios-device/sd/source/ui/view/drviewsi.cxx"; sourceTree = "<group>"; };
+		BE3C8B7B23CCB8BB008302F8 /* sdview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview.cxx; path = "../../ios-device/sd/source/ui/view/sdview.cxx"; sourceTree = "<group>"; };
+		BE3C8B7C23CCB8BB008302F8 /* sdview3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview3.cxx; path = "../../ios-device/sd/source/ui/view/sdview3.cxx"; sourceTree = "<group>"; };
+		BE3C8B7D23CCB8BB008302F8 /* grviewsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grviewsh.cxx; path = "../../ios-device/sd/source/ui/view/grviewsh.cxx"; sourceTree = "<group>"; };
+		BE3C8B7E23CCB8BB008302F8 /* clview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clview.cxx; path = "../../ios-device/sd/source/ui/view/clview.cxx"; sourceTree = "<group>"; };
+		BE3C8B7F23CCB8BB008302F8 /* tabcontr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tabcontr.cxx; path = "../../ios-device/sd/source/ui/view/tabcontr.cxx"; sourceTree = "<group>"; };
+		BE3C8B8023CCB8BB008302F8 /* GraphicViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/GraphicViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE3C8B8123CCB8BB008302F8 /* OutlinerIterator.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OutlinerIterator.cxx; path = "../../ios-device/sd/source/ui/view/OutlinerIterator.cxx"; sourceTree = "<group>"; };
+		BE3C8B8223CCB8BB008302F8 /* drviews6.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews6.cxx; path = "../../ios-device/sd/source/ui/view/drviews6.cxx"; sourceTree = "<group>"; };
+		BE3C8B8323CCB8BB008302F8 /* DocumentRenderer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentRenderer.cxx; path = "../../ios-device/sd/source/ui/view/DocumentRenderer.cxx"; sourceTree = "<group>"; };
+		BE3C8B8423CCB8BB008302F8 /* ViewTabBar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewTabBar.cxx; path = "../../ios-device/sd/source/ui/view/ViewTabBar.cxx"; sourceTree = "<group>"; };
+		BE3C8B8523CCB8BB008302F8 /* drviewsc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsc.cxx; path = "../../ios-device/sd/source/ui/view/drviewsc.cxx"; sourceTree = "<group>"; };
+		BE3C8B8623CCB8BB008302F8 /* drviewsg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsg.cxx; path = "../../ios-device/sd/source/ui/view/drviewsg.cxx"; sourceTree = "<group>"; };
+		BE3C8B8723CCB8BB008302F8 /* zoomlist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = zoomlist.cxx; path = "../../ios-device/sd/source/ui/view/zoomlist.cxx"; sourceTree = "<group>"; };
+		BE3C8B8823CCB8BC008302F8 /* drviews8.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews8.cxx; path = "../../ios-device/sd/source/ui/view/drviews8.cxx"; sourceTree = "<group>"; };
+		BE3C8B8923CCB8BC008302F8 /* viewshel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewshel.cxx; path = "../../ios-device/sd/source/ui/view/viewshel.cxx"; sourceTree = "<group>"; };
+		BE3C8B8A23CCB8BC008302F8 /* sdview5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdview5.cxx; path = "../../ios-device/sd/source/ui/view/sdview5.cxx"; sourceTree = "<group>"; };
+		BE3C8B8B23CCB8BC008302F8 /* sdwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdwindow.cxx; path = "../../ios-device/sd/source/ui/view/sdwindow.cxx"; sourceTree = "<group>"; };
+		BE3C8B8C23CCB8BC008302F8 /* OutlineViewShellBase.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OutlineViewShellBase.cxx; path = "../../ios-device/sd/source/ui/view/OutlineViewShellBase.cxx"; sourceTree = "<group>"; };
+		BE3C8B8D23CCB8BC008302F8 /* drviewsb.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviewsb.cxx; path = "../../ios-device/sd/source/ui/view/drviewsb.cxx"; sourceTree = "<group>"; };
+		BE3C8B8E23CCB8BC008302F8 /* drtxtob.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drtxtob.cxx; path = "../../ios-device/sd/source/ui/view/drtxtob.cxx"; sourceTree = "<group>"; };
+		BE3C8B8F23CCB8BC008302F8 /* viewshe2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewshe2.cxx; path = "../../ios-device/sd/source/ui/view/viewshe2.cxx"; sourceTree = "<group>"; };
+		BE3C8B9023CCB8BC008302F8 /* viewshe3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewshe3.cxx; path = "../../ios-device/sd/source/ui/view/viewshe3.cxx"; sourceTree = "<group>"; };
+		BE3C8B9123CCB8BC008302F8 /* outlview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = outlview.cxx; path = "../../ios-device/sd/source/ui/view/outlview.cxx"; sourceTree = "<group>"; };
+		BE3C8B9223CCB8BC008302F8 /* ViewShellManager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ViewShellManager.cxx; path = "../../ios-device/sd/source/ui/view/ViewShellManager.cxx"; sourceTree = "<group>"; };
+		BE3C8B9323CCB8BC008302F8 /* drviews9.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drviews9.cxx; path = "../../ios-device/sd/source/ui/view/drviews9.cxx"; sourceTree = "<group>"; };
+		BE3C8B9423CCB8BC008302F8 /* viewoverlaymanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewoverlaymanager.cxx; path = "../../ios-device/sd/source/ui/view/viewoverlaymanager.cxx"; sourceTree = "<group>"; };
 		BE43FD39222693F200376855 /* zcodec.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = zcodec.cxx; path = "../../ios-device/tools/source/zcodec/zcodec.cxx"; sourceTree = "<group>"; };
 		BE43FD4222286B0700376855 /* bootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bootstrap.cxx; path = "../../ios-device/sal/rtl/bootstrap.cxx"; sourceTree = "<group>"; };
 		BE484B50228CF36D001EE76C /* configitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configitem.cxx; path = "../../ios-device/unotools/source/config/configitem.cxx"; sourceTree = "<group>"; };
@@ -1276,6 +1385,146 @@
 			name = view;
 			sourceTree = "<group>";
 		};
+		BE3C8B2423CC8E60008302F8 /* sd */ = {
+			isa = PBXGroup;
+			children = (
+				BE3C8B2523CC8E6F008302F8 /* ui */,
+			);
+			name = sd;
+			sourceTree = "<group>";
+		};
+		BE3C8B2523CC8E6F008302F8 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				BE3C8B2623CC8E78008302F8 /* sidebar */,
+				BE3C8B5323CCB898008302F8 /* view */,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		BE3C8B2623CC8E78008302F8 /* sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				BE3C8B2C23CC8E93008302F8 /* AllMasterPagesSelector.cxx */,
+				BE3C8B3723CC8E93008302F8 /* AllMasterPagesSelector.hxx */,
+				BE3C8B2F23CC8E93008302F8 /* CurrentMasterPagesSelector.cxx */,
+				BE3C8B3C23CC8E94008302F8 /* CurrentMasterPagesSelector.hxx */,
+				BE3C8B3023CC8E93008302F8 /* CustomAnimationPanel.cxx */,
+				BE3C8B4823CC8E94008302F8 /* CustomAnimationPanel.hxx */,
+				BE3C8B2923CC8E93008302F8 /* DocumentHelper.cxx */,
+				BE3C8B3B23CC8E94008302F8 /* DocumentHelper.hxx */,
+				BE3C8B3D23CC8E94008302F8 /* IDisposable.hxx */,
+				BE3C8B3223CC8E93008302F8 /* ISidebarReceiver.hxx */,
+				BE3C8B4323CC8E94008302F8 /* LayoutMenu.cxx */,
+				BE3C8B3423CC8E93008302F8 /* LayoutMenu.hxx */,
+				BE3C8B2A23CC8E93008302F8 /* MasterPageContainer.cxx */,
+				BE3C8B3323CC8E93008302F8 /* MasterPageContainer.hxx */,
+				BE3C8B4223CC8E94008302F8 /* MasterPageContainerFiller.cxx */,
+				BE3C8B4A23CC8E94008302F8 /* MasterPageContainerFiller.hxx */,
+				BE3C8B3923CC8E94008302F8 /* MasterPageContainerProviders.cxx */,
+				BE3C8B4D23CC8E95008302F8 /* MasterPageContainerProviders.hxx */,
+				BE3C8B4423CC8E94008302F8 /* MasterPageContainerQueue.cxx */,
+				BE3C8B5223CC8E95008302F8 /* MasterPageContainerQueue.hxx */,
+				BE3C8B3823CC8E93008302F8 /* MasterPageDescriptor.cxx */,
+				BE3C8B4623CC8E94008302F8 /* MasterPageDescriptor.hxx */,
+				BE3C8B2D23CC8E93008302F8 /* MasterPageObserver.cxx */,
+				BE3C8B4023CC8E94008302F8 /* MasterPagesSelector.cxx */,
+				BE3C8B4C23CC8E95008302F8 /* MasterPagesSelector.hxx */,
+				BE3C8B3123CC8E93008302F8 /* NavigatorWrapper.cxx */,
+				BE3C8B4F23CC8E95008302F8 /* NavigatorWrapper.hxx */,
+				BE3C8B4B23CC8E95008302F8 /* PageMarginUtils.hxx */,
+				BE3C8B4E23CC8E95008302F8 /* PanelBase.cxx */,
+				BE3C8B3F23CC8E94008302F8 /* PanelBase.hxx */,
+				BE3C8B2B23CC8E93008302F8 /* PanelFactory.cxx */,
+				BE3C8B3523CC8E93008302F8 /* PanelFactory.hxx */,
+				BE3C8B2723CC8E93008302F8 /* PreviewValueSet.cxx */,
+				BE3C8B4723CC8E94008302F8 /* PreviewValueSet.hxx */,
+				BE3C8B3623CC8E93008302F8 /* RecentlyUsedMasterPages.cxx */,
+				BE3C8B4123CC8E94008302F8 /* RecentlyUsedMasterPages.hxx */,
+				BE3C8B5023CC8E95008302F8 /* RecentMasterPagesSelector.cxx */,
+				BE3C8B3A23CC8E94008302F8 /* RecentMasterPagesSelector.hxx */,
+				BE3C8B4923CC8E94008302F8 /* SlideBackground.cxx */,
+				BE3C8B2E23CC8E93008302F8 /* SlideBackground.hxx */,
+				BE3C8B5123CC8E95008302F8 /* SlideTransitionPanel.cxx */,
+				BE3C8B4523CC8E94008302F8 /* SlideTransitionPanel.hxx */,
+				BE3C8B2823CC8E93008302F8 /* TableDesignPanel.cxx */,
+				BE3C8B3E23CC8E94008302F8 /* TableDesignPanel.hxx */,
+			);
+			name = sidebar;
+			sourceTree = "<group>";
+		};
+		BE3C8B5323CCB898008302F8 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				BE3C8B7E23CCB8BB008302F8 /* clview.cxx */,
+				BE3C8B8323CCB8BB008302F8 /* DocumentRenderer.cxx */,
+				BE3C8B6B23CCB8BA008302F8 /* drawview.cxx */,
+				BE3C8B6723CCB8BA008302F8 /* drbezob.cxx */,
+				BE3C8B8E23CCB8BC008302F8 /* drtxtob.cxx */,
+				BE3C8B7623CCB8BA008302F8 /* drtxtob1.cxx */,
+				BE3C8B7523CCB8BA008302F8 /* drviews1.cxx */,
+				BE3C8B7723CCB8BB008302F8 /* drviews2.cxx */,
+				BE3C8B6423CCB8BA008302F8 /* drviews3.cxx */,
+				BE3C8B5C23CCB8B9008302F8 /* drviews4.cxx */,
+				BE3C8B7023CCB8BA008302F8 /* drviews5.cxx */,
+				BE3C8B8223CCB8BB008302F8 /* drviews6.cxx */,
+				BE3C8B5423CCB8B9008302F8 /* drviews7.cxx */,
+				BE3C8B8823CCB8BC008302F8 /* drviews8.cxx */,
+				BE3C8B9323CCB8BC008302F8 /* drviews9.cxx */,
+				BE3C8B6D23CCB8BA008302F8 /* drviewsa.cxx */,
+				BE3C8B8D23CCB8BC008302F8 /* drviewsb.cxx */,
+				BE3C8B8523CCB8BB008302F8 /* drviewsc.cxx */,
+				BE3C8B7223CCB8BA008302F8 /* drviewsd.cxx */,
+				BE3C8B6223CCB8B9008302F8 /* drviewse.cxx */,
+				BE3C8B5923CCB8B9008302F8 /* drviewsf.cxx */,
+				BE3C8B8623CCB8BB008302F8 /* drviewsg.cxx */,
+				BE3C8B7923CCB8BB008302F8 /* drviewsh.cxx */,
+				BE3C8B7A23CCB8BB008302F8 /* drviewsi.cxx */,
+				BE3C8B5823CCB8B9008302F8 /* drviewsj.cxx */,
+				BE3C8B6823CCB8BA008302F8 /* drviewsk.cxx */,
+				BE3C8B7423CCB8BA008302F8 /* drvwshrg.cxx */,
+				BE3C8B7823CCB8BB008302F8 /* FormShellManager.cxx */,
+				BE3C8B6323CCB8BA008302F8 /* frmview.cxx */,
+				BE3C8B6923CCB8BA008302F8 /* GraphicObjectBar.cxx */,
+				BE3C8B8023CCB8BB008302F8 /* GraphicViewShellBase.cxx */,
+				BE3C8B7D23CCB8BB008302F8 /* grviewsh.cxx */,
+				BE3C8B5B23CCB8B9008302F8 /* ImpressViewShellBase.cxx */,
+				BE3C8B5523CCB8B9008302F8 /* MediaObjectBar.cxx */,
+				BE3C8B5723CCB8B9008302F8 /* Outliner.cxx */,
+				BE3C8B8123CCB8BB008302F8 /* OutlinerIterator.cxx */,
+				BE3C8B8C23CCB8BC008302F8 /* OutlineViewShellBase.cxx */,
+				BE3C8B5F23CCB8B9008302F8 /* outlnvs2.cxx */,
+				BE3C8B6523CCB8BA008302F8 /* outlnvsh.cxx */,
+				BE3C8B9123CCB8BC008302F8 /* outlview.cxx */,
+				BE3C8B6F23CCB8BA008302F8 /* PresentationViewShellBase.cxx */,
+				BE3C8B7323CCB8BA008302F8 /* presvish.cxx */,
+				BE3C8B6623CCB8BA008302F8 /* sdruler.cxx */,
+				BE3C8B7B23CCB8BB008302F8 /* sdview.cxx */,
+				BE3C8B5E23CCB8B9008302F8 /* sdview2.cxx */,
+				BE3C8B7C23CCB8BB008302F8 /* sdview3.cxx */,
+				BE3C8B5623CCB8B9008302F8 /* sdview4.cxx */,
+				BE3C8B8A23CCB8BC008302F8 /* sdview5.cxx */,
+				BE3C8B8B23CCB8BC008302F8 /* sdwindow.cxx */,
+				BE3C8B5D23CCB8B9008302F8 /* SlideSorterViewShellBase.cxx */,
+				BE3C8B7F23CCB8BB008302F8 /* tabcontr.cxx */,
+				BE3C8B7123CCB8BA008302F8 /* ToolBarManager.cxx */,
+				BE3C8B5A23CCB8B9008302F8 /* unmodpg.cxx */,
+				BE3C8B6C23CCB8BA008302F8 /* ViewClipboard.cxx */,
+				BE3C8B9423CCB8BC008302F8 /* viewoverlaymanager.cxx */,
+				BE3C8B8F23CCB8BC008302F8 /* viewshe2.cxx */,
+				BE3C8B9023CCB8BC008302F8 /* viewshe3.cxx */,
+				BE3C8B8923CCB8BC008302F8 /* viewshel.cxx */,
+				BE3C8B6023CCB8B9008302F8 /* ViewShellBase.cxx */,
+				BE3C8B6A23CCB8BA008302F8 /* ViewShellHint.cxx */,
+				BE3C8B6123CCB8B9008302F8 /* ViewShellImplementation.cxx */,
+				BE3C8B9223CCB8BC008302F8 /* ViewShellManager.cxx */,
+				BE3C8B8423CCB8BB008302F8 /* ViewTabBar.cxx */,
+				BE3C8B6E23CCB8BA008302F8 /* WindowUpdater.cxx */,
+				BE3C8B8723CCB8BB008302F8 /* zoomlist.cxx */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
 		BE43FD38222693CC00376855 /* zcodec */ = {
 			isa = PBXGroup;
 			children = (
@@ -1437,6 +1686,7 @@
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
 				BE34D1892190712C00815297 /* sc */,
+				BE3C8B2423CC8E60008302F8 /* sd */,
 				BE8C0370223FC4AC0048B7EA /* svl */,
 				BE7E5B8F23AD192500F9462A /* svtools */,
 				BEB0E5DC21CA93950085A0CF /* svx */,
