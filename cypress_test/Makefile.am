@@ -1,4 +1,4 @@
-CYPRESS_BINARY = ${top_srcdir}/cypress_test/node_modules/cypress/bin/cypress
+CYPRESS_BINARY = ${abs_srcdir}/node_modules/cypress/bin/cypress
 
 DESKTOP_TEST_FOLDER = integration_tests/desktop
 MOBILE_TEST_FOLDER = integration_tests/mobile
@@ -7,6 +7,10 @@ MOBILE_USER_AGENT = "cypress mobile test"
 if HAVE_LO_PATH
 check-local: @JAILS_PATH@
 	@npm install
+	@echo "Checking for loleaflet JS errors..."
+	@NODE_PATH=$(abs_srcdir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(abs_srcdir) \
+			--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_top_srcdir)/loleaflet/.eslintrc
+
 	@echo
 	@pkill loolwsd || true
 	@echo "Launching loolwsd for testing.."
@@ -26,7 +30,7 @@ check-local: @JAILS_PATH@
 	$(CYPRESS_BINARY) run --browser chrome \
 			--config integrationFolder=$(DESKTOP_TEST_FOLDER) \
 			--headless \
-			--env DATA_FOLDER=$(abs_top_srcdir)/cypress_test/data/desktop/,WORKDIR=$(abs_top_srcdir)/cypress_test/workdir/desktop/ || \
+			--env DATA_FOLDER=$(abs_srcdir)/data/desktop/,WORKDIR=$(abs_srcdir)/workdir/desktop/ || \
 			(pkill loolwsd && false)
 	@echo
 	@echo "Running cypress mobile tests..."
@@ -34,7 +38,7 @@ check-local: @JAILS_PATH@
 	$(CYPRESS_BINARY) run --browser chrome \
 			--config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
 			--headless \
-			--env DATA_FOLDER=$(abs_top_srcdir)/cypress_test/data/mobile/,WORKDIR=$(abs_top_srcdir)/cypress_test/workdir/mobile/ || \
+			--env DATA_FOLDER=$(abs_srcdir)/data/mobile/,WORKDIR=$(abs_srcdir)/workdir/mobile/ || \
 			(pkill loolwsd && false)
 	@pkill loolwsd || true
 endif

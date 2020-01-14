@@ -1,10 +1,13 @@
-const tasks = require('./tasks');
+/* global require */
 
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  on('task', {
-    copyFile: tasks.copyFile,
-  });
+var tasks = require('./tasks');
 
-  return config;
-};
+function plugin(on, config) {
+	on('task', {
+		copyFile: tasks.copyFile
+	});
+
+	return config;
+}
+
+module.exports = plugin;

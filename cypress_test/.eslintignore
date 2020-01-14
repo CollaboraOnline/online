@@ -1,0 +1,2 @@
+# We only directly edit toolbar.js in dist/
+**/cypress

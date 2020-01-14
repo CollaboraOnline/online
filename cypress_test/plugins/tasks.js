@@ -1,16 +1,19 @@
-const fs = require('fs');
+/* global require Promise */
 
-const copyFile = args =>
-  new Promise(resolve => {
-    var source_file = args.source_dir + args.file_name
-    var dest_file = args.dest_dir + args.file_name
+var fs = require('fs');
 
-    if (fs.existsSync(source_file)) {
-      fs.mkdirSync(args.dest_dir, { recursive: true });
-      fs.writeFileSync(dest_file, fs.readFileSync(source_file));
-      resolve(`File ${source_file} copied to ${dest_file}`);
-    }
-    resolve(`File ${source_file} does not exist`);
-  });
+function copyFile(args) {
+	return new Promise(function(resolve) {
+		var sourceFile = args.sourceDir + args.fileName;
+		var destFile = args.destDir + args.fileName;
 
-module.exports = { copyFile };
+		if (fs.existsSync(sourceFile)) {
+			fs.mkdirSync(args.destDir, { recursive: true });
+			fs.writeFileSync(destFile, fs.readFileSync(sourceFile));
+			resolve('File ${sourceFile} copied to ${destFile}');
+		}
+		resolve('File ${sourceFile} does not exist');
+	});
+}
+
+module.exports.copyFile = copyFile;
