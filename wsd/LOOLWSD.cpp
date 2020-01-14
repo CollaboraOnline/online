@@ -1202,10 +1202,14 @@ void LOOLWSD::initialize(Application& self)
     Admin::instance().setDefDocProcSettings(docProcSettings, false);
 
 #if ENABLE_DEBUG
+    std::string postMessageURI =
+        getServiceURI("/loleaflet/dist/framed.doc.html?file_path="
+                      DEBUG_ABSSRCDIR "/" LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC);
     std::cerr << "\nLaunch one of these in your browser:\n\n"
-              << "    Writer:  " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
-              << "    Calc:    " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
-              << "    Impress: " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << std::endl;
+              << "    Writer:      " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
+              << "    Calc:        " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
+              << "    Impress:     " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << '\n'
+              << "    postMessage: " << postMessageURI << std::endl;
 
     const std::string adminURI = getServiceURI(LOOLWSD_TEST_ADMIN_CONSOLE, true);
     if (!adminURI.empty())

@@ -7,14 +7,6 @@
 
      This demonstrates using the Python InsertText.py and Capitalise.py
      scripts from javascript across iframes.
-
-     To test this, do 'make run', and then in your browser open the
-     equivalent of
-     http://snorken.local:9980/loleaflet/3304e9093/framed.doc.html if the
-     browser is running on a different machine, or
-     http://localhost:9980/loleaflet/3304e9093/framed.doc.html if running
-     on the same machine.
-
 -->
 
 <html>
@@ -82,6 +74,12 @@
             });
       }
 
+      function ShowMenubar(visible) {
+        var messageId = visible ? 'Show_Menubar' : 'Hide_Menubar';
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        window.frames[0].postMessage(JSON.stringify({'MessageId': messageId}), '*');
+      }
+
       // This function is invoked when the iframe posts a message back.
 
       function receiveMessage(event) {
@@ -126,14 +124,21 @@
 
   <body style="user-select: none;">
 
-    <p>Note: Set net/frame_ancestors in loolwsd.xml to contain 'file:' (without the quotes, but with the colon), otherwise you will get CSP violation. And force reload, or clear caches, otherwise you might get served from the browser cache..</p>
+    <h3>PostMessage test harness</h3>
+
+    <h4>Run python InsertText.py script</h4>
     <form id="insert-text-form">
       Click <button onclick="insertText(document.forms['insert-text-form'].elements['source'].value); return false;">here</button> to insert the following text into the document:
       <textarea name="source" value="" rows="5" cols="50"></textarea>
     </form>
 
+    <h4>Run Capitalize.py script</h4>
     <form id="insert-text-form">
       Click <button onclick="capitalize(); return false;">here</button> to capitalize selected text in the document.</br></br>
+    </form>
+
+    <h4>Various other messages to post</h4>
+    <form>
       <button onclick="save(); return false;">Save</button>
       <button onclick="closeDocument(); return false;">Close</button></br></br>
       <button onclick="hide_commands('save'); return false;">Hide Save Commands</button>
@@ -144,15 +149,20 @@
       <button onclick="disable_default_uiaction('UI_Save', false); return false;">Enable default save action</button></br></br>
     </form>
 
-    <p>Modified Status:
-    <span id="ModifiedStatus">Saved</span>
-    </p>
+    <h3>Modified Status: <span id="ModifiedStatus">Saved</span></h3>
 
-    <!-- The hostname and pathnames below are obviously specific to my
-    personal environment and need to be changed appropriately. Also
-    the hex string needs to be changed of course, to the right one as
-    shown by 'make run'. -->
+    <h3>UI modification</h3>
+    <form id="menubar-toggle">
+      <button onclick="ShowMenubar(false); return false;">Hide Menubar</button>
+      <button onclick="ShowMenubar(true); return false;">Show Menubar</button>
+    </form>
 
-    <iframe src="http://localhost:9980/loleaflet/ef3c798/loleaflet.html?file_path=file:///home/ash/prj/lo/online/test/data/empty.odt&NotWOPIButIframe=true" height="1000" width="1000"></iframe>
+    <h3>Document frame</h3>
+    <iframe id="frame" height="1000" width="1000"></iframe>
+
+    <script>
+      var iframe = document.getElementById("frame");
+      iframe.src = "https://localhost:9980/loleaflet/42/loleaflet.html" + window.location.search + "&NotWOPIButIframe=true";
+    </script>
   </body>
 </html>
