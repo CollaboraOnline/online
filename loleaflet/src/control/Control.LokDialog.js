@@ -339,6 +339,24 @@ L.Control.LokDialog = L.Control.extend({
 
 				this._updateDialogCursor(e.id, x, y, height);
 			}
+		} else if (e.action === 'text_selection') {
+			if (this._isOpen(e.id)) {
+				var rectangles = [];
+				if (e.rectangles) {
+					var dataList = e.rectangles.match(/\d+/g);
+					if (dataList != null) {
+						for (var i = 0; i < dataList.length; i += 4) {
+							var rect = {};
+							rect.x = parseInt(dataList[i]);
+							rect.y = parseInt(dataList[i + 1]);
+							rect.width = parseInt(dataList[i + 2]);
+							rect.height = parseInt(dataList[i + 3]);
+							rectangles.push(rect);
+						}
+					}
+				}
+				this._updateTextSelection(e.id, rectangles);
+			}
 		} else if (e.action === 'title_changed') {
 			if (e.title && this._dialogs[parseInt(e.id)]) {
 				this._dialogs[parseInt(e.id)].title = e.title;
@@ -388,6 +406,24 @@ L.Control.LokDialog = L.Control.extend({
 		var cursor = L.DomUtil.create('div', 'leaflet-cursor lokdialog-cursor', this._dialogs[id].cursor);
 		cursor.id = dialogId + '-cursor';
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
+	},
+
+	_updateTextSelection: function(dlgId, rectangles) {
+		var strId = this._toIntId(dlgId);
+		var selections = this._dialogs[strId].textSelection.rectangles;
+		L.DomUtil.empty(selections);
+		if (!rectangles)
+			return;
+
+		for (var i = 0; i < rectangles.length; ++i) {
+			var container = L.DomUtil.create('div', 'leaflet-text-selection-container', selections);
+			var selection = L.DomUtil.create('div', 'leaflet-text-selection', container);
+			var rect = rectangles[i];
+			L.DomUtil.setStyle(selection, 'width', rect.width + 'px');
+			L.DomUtil.setStyle(selection, 'height', rect.height + 'px');
+			L.DomUtil.setStyle(container, 'left',  rect.x + 'px');
+			L.DomUtil.setStyle(container, 'top', rect.y + 'px');
+		}
 	},
 
 	focus: function(dlgId, acceptInput) {
@@ -568,11 +604,16 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setStyle(container, 'width', '100%');
 		L.DomUtil.setStyle(container, 'height', height + 'px');
 
+		//var eventLayer = L.DomUtil.create('div', '', container);
 		// Create the canvas.
 		var canvas = L.DomUtil.create('canvas', 'inputbar_canvas', container);
 		L.DomUtil.setStyle(canvas, 'position', 'absolute');
 		this._setCanvasWidthHeight(canvas, width, height);
 		canvas.id = strId + '-canvas';
+
+		// create the text selections layer
+		var textSelectionLayer = L.DomUtil.create('div', 'inputbar_selection_layer', container);
+		var selections =  L.DomUtil.create('div', 'inputbar_selections', textSelectionLayer);
 
 		// Don't show the inputbar until we get the contents.
 		$(container).parent().hide();
@@ -588,6 +629,7 @@ L.Control.LokDialog = L.Control.extend({
 			width: width,
 			height: height,
 			cursor: null,
+			textSelection: {rectangles: selections},
 			child: null, // never used for inputbar
 			title: null  // never used for inputbar
 		};

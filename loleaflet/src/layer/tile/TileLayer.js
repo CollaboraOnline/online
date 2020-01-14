@@ -1958,6 +1958,9 @@ L.TileLayer = L.GridLayer.extend({
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		this._onUpdateGraphicSelection();
 		this._cellCursor = null;
+		this._cellCursorXY = null;
+		this._prevCellCursor = null;
+		this._prevCellCursorXY = null;
 		this._onUpdateCellCursor();
 		if (this._map._clip)
 			this._map._clip.clearSelection();
@@ -2776,6 +2779,10 @@ L.TileLayer = L.GridLayer.extend({
 	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn) {
 		this._onUpdateCellResizeMarkers();
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
+			if (this._map.dialog._calcInputBar && !this._cellCursorXY.equals(this._prevCellCursorXY)) {
+				var inputBarId = this._map.dialog._calcInputBar.id;
+				this._map.dialog._updateTextSelection(inputBarId);
+			}
 			var mapBounds = this._map.getBounds();
 			if (!mapBounds.contains(this._cellCursor) && !this._cellCursorXY.equals(this._prevCellCursorXY)) {
 				var scrollX = 0, scrollY = 0;

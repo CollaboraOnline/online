@@ -608,6 +608,7 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-cursor-container {
 	position: absolute;
 	text-align: center;
+	pointer-events: none;
 	}
 
 .leaflet-cursor {
@@ -680,6 +681,18 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 	50% {
 		background: transparent;
 	}
+}
+
+.leaflet-text-selection-container {
+	position: absolute;
+	text-align: center;
+	pointer-events: none;
+}
+
+.leaflet-text-selection {
+	background: #43ACE8B5;
+	pointer-events: none;
+	display: block;
 }
 
 .clipboard-container {

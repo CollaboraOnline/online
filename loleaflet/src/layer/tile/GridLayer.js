@@ -716,10 +716,12 @@ L.GridLayer = L.Layer.extend({
 			this._map.fire('updatescrolloffset', {x: 0, y: 0, updateHeaders: false});
 			this._map.scrollTop(0);
 			this._map.scrollLeft(0);
-			this._cellCursor = L.LatLngBounds.createDefault();
-			this._prevCellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1));
-			this._cellCursorXY = new L.Point(-1, -1);
-			this._prevCellCursorXY = new L.Point(0, 0);
+
+			// 2020-01-14 if no side effect occurs remove this code later
+			// this._cellCursor = L.LatLngBounds.createDefault();
+			// this._prevCellCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(1, 1));
+			// this._cellCursorXY = new L.Point(-1, -1);
+			// this._prevCellCursorXY = new L.Point(0, 0);
 		}
 	},
 
