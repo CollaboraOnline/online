@@ -141,12 +141,60 @@ L.Map.WOPI = L.Handler.extend({
 		this._map.fire('postMessage', {msgId: 'App_LoadingStatus', args: {Status: 'Document_Loaded', DocumentLoadedTime: this.DocumentLoadedTime}});
 	},
 
-	_postMessageListener: function(e) {
+	// Naturally we set a CSP to catch badness, but check here as well.
+	// Checking whether a message came from our iframe's parents is
+	// un-necessarily difficult.
+	_allowMessageOrigin: function(e) {
+		// cache - to avoid regexps.
+		if (this._cachedGoodOrigin && this._cachedGoodOrigin === e.origin)
+			return true;
 
 		// e.origin === 'null' when sandboxed (i.e. when the parent is a file on local filesystem).
-		if (e.origin !== 'null' && e.origin !== window.parent.origin) {
-			return;
+		if (e.origin === 'null')
+			return true;
+		try {
+			if (e.origin === window.parent.origin)
+				return true;
+		} catch (secErr) { // security error de-referencing window.parent.origin.
 		}
+
+		// sent from the server
+		var i;
+		if (!this._allowedOrigins && window.frameAncestors)
+		{
+			var ancestors = window.frameAncestors.trim().split(' ');
+			this._allowedOrigins = ancestors;
+			// convert to JS regexps from localhost:* to https*://localhost:.*
+			for (i = 0; i < ancestors.length; i++) {
+				this._allowedOrigins[i] = 'https*://' + ancestors[i].replace(/:\*/, ':.*');
+			}
+		}
+
+		if (this._allowedOrigins)
+		{
+			for (i = 0; i < this._allowedOrigins.length; i++) {
+				if (e.origin.match(this._allowedOrigins[i]))
+				{
+					this._cachedGoodOrigin = e.origin;
+					return true;
+				}
+			}
+		}
+
+		// chrome only
+		if (window.location.ancestorOrigins &&
+		    window.location.ancestorOrigins.contains(e.origin))
+		{
+			this._cachedGoodOrigin = e.origin;
+			return true;
+		}
+
+		return false;
+	},
+
+	_postMessageListener: function(e) {
+		if (!this._allowMessageOrigin(e))
+			return;
 
 		var msg;
 		try {

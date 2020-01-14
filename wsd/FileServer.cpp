@@ -699,19 +699,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
 
     const std::string mimeType = "text/html";
 
-    std::ostringstream oss;
-    oss << "HTTP/1.1 200 OK\r\n"
-        "Date: " << Util::getHttpTimeNow() << "\r\n"
-        "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-        "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-        "Cache-Control:max-age=11059200\r\n"
-        "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
-        "Content-Length: " << preprocess.size() << "\r\n"
-        "Content-Type: " << mimeType << "\r\n"
-        "X-Content-Type-Options: nosniff\r\n"
-        "X-XSS-Protection: 1; mode=block\r\n"
-        "Referrer-Policy: no-referrer\r\n";
-
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.
     std::ostringstream cspOss;
@@ -755,6 +742,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         //(it's deprecated anyway and CSP works in all major browsers)
         cspOss << "img-src 'self' data: " << frameAncestors << "; "
                 << "frame-ancestors " << frameAncestors;
+        Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), frameAncestors);
     }
     else
     {
@@ -763,6 +751,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     }
 
     cspOss << "\r\n";
+
+    std::ostringstream oss;
+    oss << "HTTP/1.1 200 OK\r\n"
+        "Date: " << Util::getHttpTimeNow() << "\r\n"
+        "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+        "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+        "Cache-Control:max-age=11059200\r\n"
+        "ETag: \"" LOOLWSD_VERSION_HASH "\"\r\n"
+        "Content-Length: " << preprocess.size() << "\r\n"
+        "Content-Type: " << mimeType << "\r\n"
+        "X-Content-Type-Options: nosniff\r\n"
+        "X-XSS-Protection: 1; mode=block\r\n"
+        "Referrer-Policy: no-referrer\r\n";
+
     // Append CSP to response headers too
     oss << cspOss.str();
 

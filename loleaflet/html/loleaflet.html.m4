@@ -231,6 +231,7 @@ ifelse(MOBILEAPP,[true],
       window.idleTimeoutSecs = 1000000;
       window.reuseCookies = '';
       window.protocolDebug = false;
+      window.frameAncestors = '';
       window.tileSize = 256;],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
@@ -242,6 +243,7 @@ ifelse(MOBILEAPP,[true],
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
       window.reuseCookies = '%REUSE_COOKIES%';
       window.protocolDebug = %PROTOCOL_DEBUG%;
+      window.frameAncestors = '%FRAME_ANCESTORS%';
       window.tileSize = 256;])
 syscmd([cat ]GLOBAL_JS)dnl
     </script>
