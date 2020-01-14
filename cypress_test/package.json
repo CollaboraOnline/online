@@ -11,7 +11,6 @@
     "url": "git://gerrit.libreoffice.org/online.git"
   },
   "scripts": {
-    "cyrun": "npm run cyrun_desktop && npm run cyrun_mobile",
     "cyrun_desktop": "node_modules/cypress/bin/cypress run --browser chrome --config integrationFolder=integration_tests/desktop --headless",
     "cyrun_mobile": "node_modules/cypress/bin/cypress run --browser chrome --config integrationFolder=integration_tests/mobile,userAgent=\"cypress mobile test\" --headless",
     "cyopen_desktop": "node_modules/cypress/bin/cypress open --config integrationFolder=integration_tests/desktop",

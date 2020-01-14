@@ -5,21 +5,18 @@ Running tests
 ------------------
 
 All tests are part of the make check build. So you can
-just execute it from the root folder of online repository.
+just execute it from the root folder or under the
+cypress_test folder to run cypress tests only.
 
     make check
 
-To run only cypress test cases, you need to start loolwsd
+To run cypress test cases selectively, you need to start loolwsd
 server first. To do that you can call make run on a separate
 command line window, so LibreOffice online is started.
 
-After the server is running you can execute the test,
+After the server is running you can execute the tests,
 calling the given run command. You need to run the
 command under cypress_test\ folder.
-
-To run all cypress tests:
-
-    npm run cyrun
 
 To run all desktop tests:
 
