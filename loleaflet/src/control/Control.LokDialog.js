@@ -121,6 +121,8 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('closepopups', this._onClosePopups, this);
 		map.on('closesidebar', this._closeSidebar, this);
 		map.on('editorgotfocus', this._onEditorGotFocus, this);
+		// Fired to signal that the input focus is being changed.
+		map.on('changefocuswidget', this._changeFocusWidget, this);
 		L.DomEvent.on(document, 'mouseup', this.onCloseCurrentPopUp, this);
 	},
 
@@ -343,13 +345,15 @@ L.Control.LokDialog = L.Control.extend({
 				$('#' + strId).dialog('option', 'title', e.title);
 			}
 		} else if (e.action === 'cursor_visible') {
+			// cursor_visible means focus has changed.
 			this._dialogs[e.id].cursorVisible = e.visible === 'true';
 			if (this._dialogs[e.id].cursorVisible) {
 				$('#' + strId + '-cursor').css({display: 'block'});
-				this._map.onFocusDialog(this, e.id);
+				this._map.fire('changefocuswidget', {winId: e.id, dialog: this}); // Us.
 			}
 			else {
 				$('#' + strId + '-cursor').css({display: 'none'});
+				this._map.fire('changefocuswidget', {winId: 0, dialog: null}); // Editor.
 			}
 		} else if (e.action === 'close') {
 			parent = this._getParentId(e.id);
@@ -952,6 +956,14 @@ L.Control.LokDialog = L.Control.extend({
 		// We need to lose focus on any dialogs/sidebars currently with focus.
 		for (var winId in this._dialogs) {
 			$('#' + this._dialogs[winId].strId + '-cursor').css({display: 'none'});
+		}
+	},
+
+	// Focus is being changed, update states.
+	_changeFocusWidget: function (e) {
+		if (e.winId === 0) {
+			// We lost the focus.
+			this._onEditorGotFocus();
 		}
 	},
 

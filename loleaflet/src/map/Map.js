@@ -245,6 +245,9 @@ L.Map = L.Evented.extend({
 
 		this.on('editorgotfocus', this._onEditorGotFocus, this);
 
+		// Fired to signal that the input focus is being changed.
+		this.on('changefocuswidget', this._changeFocusWidget, this);
+
 		// View info (user names and view ids)
 		this._viewInfo = {};
 		this._viewInfoByUserName = {};
@@ -1377,6 +1380,15 @@ L.Map = L.Evented.extend({
 		}
 
 		this._activate();
+	},
+
+	// Focus is being changed, update states.
+	_changeFocusWidget: function (e) {
+		if (e.winId === 0) {
+			this._onEditorGotFocus();
+		} else {
+			this.onFocusDialog(e.dialog, e.winId);
+		}
 	},
 
 	_onUpdateProgress: function (e) {
