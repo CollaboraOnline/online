@@ -26,11 +26,17 @@ check-local: @JAILS_PATH@
 	@echo
 	@echo "Running cypress desktop tests..."
 	@echo
-	$(CYPRESS_BINARY) run --browser chrome --config integrationFolder=$(DESKTOP_TEST_FOLDER),video=false --headless
+	$(CYPRESS_BINARY) run --browser chrome \
+			--config integrationFolder=$(DESKTOP_TEST_FOLDER),video=false \
+			--headless || \
+			(pkill loolwsd && false)
 	@echo
 	@echo "Running cypress mobile tests..."
 	@echo
-	$(CYPRESS_BINARY) run --browser chrome --config integrationFolder=$(MOBILE_TEST_FOLDER),video=false,userAgent=$(MOBILE_USER_AGENT) --headless
+	$(CYPRESS_BINARY) run --browser chrome \
+			--config integrationFolder=$(MOBILE_TEST_FOLDER),video=false,userAgent=$(MOBILE_USER_AGENT) \
+			--headless || \
+			(pkill loolwsd && false)
 	@pkill loolwsd || true
 endif
 
