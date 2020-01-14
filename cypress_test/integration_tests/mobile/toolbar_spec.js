@@ -1,8 +1,9 @@
 describe('Toolbar tests', function() {
   beforeEach(function() {
-    // Open test documnt
+    // Open test document
     cy.viewport('iphone-3')
-    cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file:///home/zolnai/libreoffice/online/test/data/hello-world.odt')
+    cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file://' +
+      Cypress.env('TEST_DATA_FOLDER') + 'empty.odt')
 
     // Wait for the document to fully load
     cy.get('.leaflet-tile-loaded')

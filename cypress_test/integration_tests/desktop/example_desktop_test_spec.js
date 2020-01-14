@@ -1,7 +1,8 @@
 describe('Example test suit 1', function() {
   it('Example test case 1', function() {
-    // Open test documnt
-    cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file:///home/zolnai/libreoffice/online/test/data/hello-world.odt')
+    // Open test document
+    cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file://' +
+      Cypress.env('TEST_DATA_FOLDER') + 'simple.odt')
 
     // Wait for the document to fully load
     cy.get('.leaflet-tile-loaded')

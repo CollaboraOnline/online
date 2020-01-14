@@ -11,9 +11,6 @@ check-local: @JAILS_PATH@
 	@pkill loolwsd || true
 	@echo "Launching loolwsd for testing.."
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@cp $(top_srcdir)/test/data/hello.odt $(top_srcdir)/test/data/hello-world.odt
-	@cp $(top_srcdir)/test/data/hello.ods $(top_srcdir)/test/data/hello-world.ods
-	@cp $(top_srcdir)/test/data/hello.odp $(top_srcdir)/test/data/hello-world.odp
 	@echo
 	../loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
@@ -28,14 +25,16 @@ check-local: @JAILS_PATH@
 	@echo
 	$(CYPRESS_BINARY) run --browser chrome \
 			--config integrationFolder=$(DESKTOP_TEST_FOLDER),video=false \
-			--headless || \
+			--headless \
+			--env TEST_DATA_FOLDER=$(abs_top_srcdir)/cypress_test/data/desktop/ || \
 			(pkill loolwsd && false)
 	@echo
 	@echo "Running cypress mobile tests..."
 	@echo
 	$(CYPRESS_BINARY) run --browser chrome \
 			--config integrationFolder=$(MOBILE_TEST_FOLDER),video=false,userAgent=$(MOBILE_USER_AGENT) \
-			--headless || \
+			--headless \
+			--env TEST_DATA_FOLDER=$(abs_top_srcdir)/cypress_test/data/mobile/ || \
 			(pkill loolwsd && false)
 	@pkill loolwsd || true
 endif
