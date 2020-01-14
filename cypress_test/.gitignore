@@ -1,8 +1,4 @@
 node_modules
-cypress/fixtures
-cypress/integration
-cypress/screenshots
-cypress/support
-cypress/videos
+cypress
 package-lock.json
 workdir

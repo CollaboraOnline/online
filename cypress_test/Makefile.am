@@ -24,7 +24,7 @@ check-local: @JAILS_PATH@
 	@echo "Running cypress desktop tests..."
 	@echo
 	$(CYPRESS_BINARY) run --browser chrome \
-			--config integrationFolder=$(DESKTOP_TEST_FOLDER),video=false \
+			--config integrationFolder=$(DESKTOP_TEST_FOLDER),video=false,pluginsFile=plugins/index.js \
 			--headless \
 			--env DATA_FOLDER=$(abs_top_srcdir)/cypress_test/data/desktop/,WORKDIR=$(abs_top_srcdir)/cypress_test/workdir/desktop/ || \
 			(pkill loolwsd && false)
@@ -32,7 +32,7 @@ check-local: @JAILS_PATH@
 	@echo "Running cypress mobile tests..."
 	@echo
 	$(CYPRESS_BINARY) run --browser chrome \
-			--config integrationFolder=$(MOBILE_TEST_FOLDER),video=false,userAgent=$(MOBILE_USER_AGENT) \
+			--config integrationFolder=$(MOBILE_TEST_FOLDER),video=false,userAgent=$(MOBILE_USER_AGENT),pluginsFile=plugins/index.js \
 			--headless \
 			--env DATA_FOLDER=$(abs_top_srcdir)/cypress_test/data/mobile/,WORKDIR=$(abs_top_srcdir)/cypress_test/workdir/mobile/ || \
 			(pkill loolwsd && false)
@@ -42,8 +42,4 @@ endif
 clean-local:
 	rm -rf node_modules
 	rm -rf workdir
-	rm -rf cypress/fixtures
-	rm -rf cypress/integration
-	rm -rf cypress/screenshots
-	rm -rf cypress/support
-	rm -rf cypress/videos
+	rm -rf cypress
