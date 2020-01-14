@@ -27,6 +27,7 @@ L.Control.MobileWizard = L.Control.extend({
 		map.on('mobilewizard', this._onMobileWizard, this);
 		map.on('closemobilewizard', this._hideWizard, this);
 		map.on('showwizardsidebar', this._showWizardSidebar, this);
+		map.on('mobilewizardback', this.goLevelUp, this);
 
 		this._setupBackButton();
 	},
@@ -58,6 +59,8 @@ L.Control.MobileWizard = L.Control.extend({
 	_showWizard: function() {
 		$('#mobile-wizard').show();
 		$('#toolbar-down').hide();
+		if (window.ThisIsTheAndroidApp)
+			window.postMobileMessage('MOBILEWIZARD show');
 	},
 
 	_showWizardSidebar: function() {
@@ -72,6 +75,8 @@ L.Control.MobileWizard = L.Control.extend({
 		if (this.map._permission === 'edit') {
 			$('#toolbar-down').show();
 		}
+		if (window.ThisIsTheAndroidApp)
+			window.postMobileMessage('MOBILEWIZARD hide');
 
 		this.map.showSidebar = false;
 		this._isActive = false;

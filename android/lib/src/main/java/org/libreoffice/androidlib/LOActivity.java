@@ -99,6 +99,9 @@ public class LOActivity extends AppCompatActivity {
     private Handler nativeHandler;
     private Looper nativeLooper;
 
+    /** In case the mobile-wizard is visible, we have to intercept the Android's Back button. */
+    private boolean mMobileWizardVisible = false;
+
     private ValueCallback<Uri[]> valueCallback;
     public static final int REQUEST_SELECT_FILE = 555;
 
@@ -448,6 +451,18 @@ public class LOActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mMobileWizardVisible)
+        {
+            // just return one level up in the mobile-wizard (or close it)
+            callFakeWebsocketOnMessage("'mobile: mobilewizardback'");
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
     private void loadDocument() {
         // setup the LOOLWSD
         ApplicationInfo applicationInfo = getApplicationInfo();
@@ -594,6 +609,17 @@ public class LOActivity extends AppCompatActivity {
                         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     }
                 });
+                return false;
+            }
+            case "MOBILEWIZARD": {
+                switch (messageAndParam[1]) {
+                    case "show":
+                        mMobileWizardVisible = true;
+                        break;
+                    case "hide":
+                        mMobileWizardVisible = false;
+                        break;
+                }
                 return false;
             }
         }

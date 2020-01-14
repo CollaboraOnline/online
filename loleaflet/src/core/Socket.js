@@ -755,6 +755,11 @@ L.Socket = L.Class.extend({
 				vex.closeAll();
 			}
 		}
+		else if (window.ThisIsAMobileApp && textMsg.startsWith('mobile:')) {
+			// allow passing some events easily from the mobile app
+			var mobileEvent = textMsg.substring('mobile: '.length);
+			this._map.fire(mobileEvent);
+		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 			// log the tile msg separately as we need the tile coordinates
 			L.Log.log(textMsg, L.INCOMING);

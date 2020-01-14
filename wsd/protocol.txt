@@ -544,6 +544,12 @@ shapeselectioncontent: <content>
 
     Current selection's content
 
+mobile: <event>
+
+    Available only in the mobile (Android and iOS) apps.  When you send
+    'mobile: eventname', the socket code will fire a 'eventname' event on the
+    map.
+
 
 child -> parent
 ===============
