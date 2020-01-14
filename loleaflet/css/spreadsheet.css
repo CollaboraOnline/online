@@ -202,12 +202,7 @@
 .spreadsheet-header-row-resize {
 	cursor: row-resize;
 	}
-.spreadsheet-document .leaflet-zoom-animated > path:nth-child(2){
-	stroke: none !important;
-}
-.spreadsheet-document .leaflet-zoom-animated:hover > path:nth-child(2){
-	stroke: none !important;
-}
+	
 .spreadsheet-cell-resize-marker {
 	margin-left: 0px;
 	margin-top: 0px;
