@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-12 22:16+0000\n"
+"PO-Revision-Date: 2020-01-14 14:15+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
 "Language: ca\n"
@@ -476,7 +476,7 @@ msgstr "Dreceres de teclat"
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459
 msgid "Report an issue"
-msgstr ""
+msgstr "Informa d'un problema"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:344
 #: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:506

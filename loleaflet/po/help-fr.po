@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-10 19:01+0000\n"
+"PO-Revision-Date: 2020-01-15 17:28+0000\n"
 "Last-Translator: sophie <gautier.sophie@gmail.com>\n"
 "Language-Team: French <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/fr/>\n"
 "Language: fr\n"
@@ -1083,27 +1083,27 @@ msgstr "Annuler la recherche (apparaît uniquement lorsqu'un texte a été reche
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."
-msgstr ""
+msgstr "<span class=\"def\">La barre de zoom :</span> à la droite de la barre d'état, il y a un ensemble de boutons qui permettent de zoomer à 100%, de diminuer ou d'augmenter le zoom. Le zoom s'applique à la zone du document, l'interface utilisateur n'est pas affectée. Le niveau de zoom actif est affiché dans cette zone."
 
 #: html/loleaflet-help.html%2Bdiv.p:270-5
 msgid "Text, charts, shapes and svg images will stay sharp, when zooming in, you will only see pixels appear at inserted images, such as jpg’s or png’s."
-msgstr ""
+msgstr "Les textes, les graphiques, les formes et les images svg resteront nets, lors du zoom avant, vous ne verrez que des pixels apparaître sur les images insérées, telles que les jpeg ou les pngs."
 
 #: html/loleaflet-help.html%2Bdiv.p:271-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "L'utilisation du zoom du navigateur affecte les zones du document et de l'interface utilisateur."
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
-msgstr ""
+msgstr "<span class=\"def\">La barre d'information :</span> à la droite de la barre de recherche, un ensemble d'informations sur le document est affiché. Les informations courantes dépendent de la nature du document."
 
 #: html/loleaflet-help.html%2Bdiv.p:276-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
-msgstr ""
+msgstr "Les documents sont gérés et stockés dans le stockage cloud qui est intégré avec <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
-msgstr ""
+msgstr "Pour télécharger un document, téléchargez-le à partir du menu <span class=\"ui\">Fichier</span> de l'application <span class=\"productname\">%productName</span>. Les formats de téléchargement disponibles dépendent de l'application. Toutes les applications exportent les documents au format PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."

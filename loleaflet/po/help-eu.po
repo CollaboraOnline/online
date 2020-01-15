@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-12 22:16+0000\n"
+"PO-Revision-Date: 2020-01-15 09:56+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/eu/>\n"
 "Language: eu\n"
@@ -1439,7 +1439,7 @@ msgstr "Erabili diapositiba-paneleko behealdean dagoen tresna-barra diapositiba-
 
 #: html/loleaflet-help.html%2Bdiv.div.p:430-5
 msgid "<span class=\"def\">Slide layouts:</span> <span class=\"productname\">%productName</span> Impress let you change the slide layout. Select the desired slide layout in the drop-down layout list."
-msgstr ""
+msgstr "<span class=\"def\">Diapositiba-diseinuak:</span> <span class=\"productname\">%productName</span> Impressen diapositiben diseinuak aldatu daitezke. Hautatu erabili nahi duzun diapositiba-diseinua goitibeherako diseinu-zerrendan."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:432-5
 msgid "<span class=\"def\">Master slide:</span> Select the master slide associated to the current slide. Format and arrange slide elements in the master slide."

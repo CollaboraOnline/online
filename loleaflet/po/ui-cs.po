@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-03 17:34+0000\n"
+"PO-Revision-Date: 2020-01-13 22:06+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
@@ -476,7 +476,7 @@ msgstr "Klávesové zkratky"
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459
 msgid "Report an issue"
-msgstr ""
+msgstr "Nahlásit chybu"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:344
 #: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:506

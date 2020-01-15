@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-13 08:37+0000\n"
+"PO-Revision-Date: 2020-01-14 16:50+0000\n"
 "Last-Translator: Valter Mura <valtermura@gmail.com>\n"
 "Language-Team: Italian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/it/>\n"
 "Language: it\n"
@@ -476,7 +476,7 @@ msgstr "Scorciatoie da tastiera"
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459
 msgid "Report an issue"
-msgstr ""
+msgstr "Segnala un problema"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:344
 #: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:506
