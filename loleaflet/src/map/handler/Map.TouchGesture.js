@@ -93,8 +93,6 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('pinchmove', L.bind(this._onPinch, this));
 		this._hammer.on('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.on('tripletap', L.bind(this._onTripleTap, this));
-		if (window.ThisIsTheiOSApp)
-			this._map.on('input.press', this._onInputPressiOSOnly, this);
 		this._map.on('updatepermission', this._onPermission, this);
 		this._onPermission({perm: this._map._permission});
 	},
@@ -520,13 +518,6 @@ L.Map.TouchGesture = L.Handler.extend({
 					annotations.update();
 				}, 250 /* ms */);
 		}
-	},
-
-	_onInputPressiOSOnly: function (e) {
-		var pos = this._map.latLngToContainerPoint(e);
-		this._toolbar.remove();
-		this._toolbar._pos = pos;
-		this._toolbar.addTo(this._map);
 	},
 
 	_constructFakeEvent: function (evt, type) {
