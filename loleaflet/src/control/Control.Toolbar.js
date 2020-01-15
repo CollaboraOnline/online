@@ -1681,7 +1681,10 @@ function onDocLayerInit() {
 		nUsers = '%n';
 		oneUser = '1';
 		noUser = '0';
-		$('#document-name-input').hide();
+		if (!window.ThisIsAMobileApp)
+			$('#document-name-input').hide();
+		else
+			$('#document-name-input').show();
 	} else {
 		nUsers = _('%n users');
 		oneUser = _('1 user');
@@ -1694,6 +1697,16 @@ function onDocLayerInit() {
 		toolbarUp.refresh();
 	if (statusbar)
 		statusbar.refresh();
+
+	if (window.ThisIsAMobileApp) {
+		// We can now set the document name in the menu bar
+		$('#document-name-input').prop('disabled', false);
+		$('#document-name-input').removeClass('editable');
+		$('#document-name-input').focus(function() { $(this).blur(); });
+		// Call decodecodeURIComponent twice: Reverse both our encoding and the encoding of
+		// the name in the file system.
+		$('#document-name-input').val(decodeURIComponent(decodeURIComponent(map.options.doc.replace(/.*\//, ''))));
+	}
 
 	if (!window.ThisIsTheiOSApp && window.mode.isTablet()) {
 		map.hideMenubar();
