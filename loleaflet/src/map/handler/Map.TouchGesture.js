@@ -206,7 +206,7 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if (window.ThisIsTheiOSApp) {
 			// console.log('==> ' + e.timeStamp);
-			if (!this._toolbar._map && this._map._docLayer.containsSelection(latlng)) {
+			if (!this._toolbar._map && (docLayer.containsSelection(latlng) || (docLayer._graphicSelection && docLayer._graphicSelection.contains(latlng)))) {
 				this._toolbar._pos = containerPoint;
 				// console.log('==> Adding context toolbar ' + e.timeStamp);
 				this._toolbar.addTo(this._map);
