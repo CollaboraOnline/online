@@ -305,9 +305,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        if (endPoint == loleafletHtml || endPoint == "clipboard.html")
+        if (endPoint == loleafletHtml)
         {
-            preprocessFile(request, message, socket, endPoint);
+            preprocessFile(request, message, socket);
             return;
         }
 
@@ -588,7 +588,7 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message,
-                                                const std::shared_ptr<StreamSocket>& socket, const std::string& endPoint)
+                                              const std::shared_ptr<StreamSocket>& socket)
 {
     const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://")
                     + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
@@ -828,27 +828,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     oss << "\r\n"
         << preprocess;
 
-    if (endPoint == "clipboard.html")
-    {
-        // Handle the clipboard request.
-        //FIXME: the request should contain the key to the document.
-        //FIXME: get the formats and list the links in the result.
-        // for (each format)
-        std::ostringstream ossClipboard;
-        ossClipboard <<
-            "<tr>"
-            "    <td id=\"clipboard-formats-row\">"
-            "        <a href=\"downloadhtml\">Copy as HTML</a>"
-            "    </td>"
-            "</tr>";
-
-        preprocess = oss.str();
-        Poco::replaceInPlace(preprocess, std::string("%CLIPBOARD_LINKS%"), ossClipboard.str());
-        oss.str(preprocess);
-    }
-
-    preprocess = oss.str();
-    socket->send(preprocess);
+    socket->send(oss.str());
     LOG_DBG("Sent file: " << relPath << ": " << preprocess);
 }
 
