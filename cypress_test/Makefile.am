@@ -10,30 +10,26 @@ MOBILE_DATA_FOLDER = ${abs_srcdir}/data/mobile/
 MOBILE_WORKDIR = ${abs_srcdir}/workdir/mobile/
 
 if HAVE_LO_PATH
-check-local: @JAILS_PATH@
-	@npm install
+check-local: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check,$(abs_srcdir))
 	$(call start_loolwsd)
 	$(call run_desktop_tests)
 	$(call run_mobile_tests)
 	@pkill loolwsd || true
 
-check-desktop: @JAILS_PATH@
-	@npm install
+check-desktop: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check,$(abs_srcdir)/integration_tests/desktop)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,$(spec))
 	@pkill loolwsd || true
 
-check-mobile: @JAILS_PATH@
-	@npm install
+check-mobile: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check,$(abs_srcdir)/integration_tests/mobile)
 	$(call start_loolwsd)
 	$(call run_mobile_tests,$(spec))
 	@pkill loolwsd || true
 
-run-desktop: @JAILS_PATH@
-	@npm install
+run-desktop: @JAILS_PATH@ node_modules
 	$(call start_loolwsd)
 	@echo
 	@echo "Open cypress with desktop tests..."
@@ -43,8 +39,7 @@ run-desktop: @JAILS_PATH@
 			|| true
 	@pkill loolwsd || true
 
-run-mobile: @JAILS_PATH@
-	@npm install
+run-mobile: @JAILS_PATH@ node_modules
 	$(call start_loolwsd)
 	@echo
 	@echo "Open cypress with mobile tests..."
@@ -101,6 +96,10 @@ define run_mobile_tests
 			$(if $(1), --spec=integration_tests/mobile/$(1)) \
 			|| (pkill loolwsd && false)
 endef
+
+node_modules:
+	@npm install
+	@touch node_modules
 
 endif
 
