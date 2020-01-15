@@ -520,8 +520,11 @@ public class LOActivity extends AppCompatActivity {
     public void postMobileMessage(String message) {
         Log.d(TAG, "postMobileMessage: " + message);
 
-        if (interceptMsgFromWebView(message)) {
+        String[] messageAndParameterArray= message.split(" ", 2); // the command and the rest (that can potentially contain spaces too)
+
+        if (beforeMessageFromWebView(messageAndParameterArray)) {
             postMobileMessageNative(message);
+            afterMessageFromWebView(messageAndParameterArray);
         }
 
         // Going back to document browser on BYE (called when pressing the top left exit button)
@@ -568,8 +571,7 @@ public class LOActivity extends AppCompatActivity {
     /**
      * return true to pass the message to the native part or false to block the message
      */
-    boolean interceptMsgFromWebView(String message) {
-        String[] messageAndParam = message.split(" ", 2); // the command and the rest (that can potentially contain spaces too)
+    private boolean beforeMessageFromWebView(String[] messageAndParam) {
         switch (messageAndParam[0]) {
             case "PRINT":
                 mainHandler.post(new Runnable() {
@@ -589,10 +591,6 @@ public class LOActivity extends AppCompatActivity {
                 switch (messageAndParam[1]) {
                     case ".uno:Paste":
                         return performPaste();
-                    case ".uno:Copy":
-                    case ".uno:Cut":
-                        populateClipboard();
-                        break;
                     default:
                         break;
                 }
@@ -628,6 +626,23 @@ public class LOActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    private void afterMessageFromWebView(String[] messageAndParameterArray) {
+        switch (messageAndParameterArray[0]) {
+            case "uno":
+                switch (messageAndParameterArray[1]) {
+                    case ".uno:Copy":
+                    case ".uno:Cut":
+                        populateClipboard();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private void initiatePrint() {
@@ -689,45 +704,39 @@ public class LOActivity extends AppCompatActivity {
     /// Needs to be executed after the .uno:Copy / Paste has executed
     public final void populateClipboard()
     {
-        /// FIXME: in theory we can do better with URIs to temporary files and so on...
-        nativeHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    File clipboardFile = new File(getApplicationContext().getCacheDir(), CLIPBOARD_FILE_PATH);
-                    if (clipboardFile.exists())
-                        clipboardFile.delete();
+        File clipboardFile = new File(getApplicationContext().getCacheDir(), CLIPBOARD_FILE_PATH);
+        if (clipboardFile.exists())
+            clipboardFile.delete();
 
-                    LokClipboardData clipboardData = new LokClipboardData();
-                    if (!LOActivity.this.getClipboardContent(clipboardData))
-                        Log.e(TAG, "no clipboard to copy");
-                    else
-                    {
-                        clipboardData.writeToFile(clipboardFile);
+        LokClipboardData clipboardData = new LokClipboardData();
+        if (!LOActivity.this.getClipboardContent(clipboardData))
+            Log.e(TAG, "no clipboard to copy");
+        else
+        {
+            clipboardData.writeToFile(clipboardFile);
 
-                        String text = clipboardData.getText();
-                        String html = clipboardData.getHtml();
+            String text = clipboardData.getText();
+            String html = clipboardData.getHtml();
 
-                        if (html != null) {
-                            int idx = html.indexOf("<meta name=\"generator\" content=\"");
+            if (html != null) {
+                int idx = html.indexOf("<meta name=\"generator\" content=\"");
 
-                            if (idx < 0)
-                                idx = html.indexOf("<meta http-equiv=\"content-type\" content=\"text/html;");
+                if (idx < 0)
+                    idx = html.indexOf("<meta http-equiv=\"content-type\" content=\"text/html;");
 
-                            if (idx >= 0) { // inject our magic
-                                StringBuffer newHtml = new StringBuffer(html);
-                                newHtml.insert(idx, "<meta name=\"origin\" content=\"" + getClipboardMagic() + "\"/>\n");
-                                html = newHtml.toString();
-                            }
-
-                            if (text == null || text.length() == 0)
-                                Log.i(TAG, "set text to clipoard with: text '" + text + "' and html '" + html + "'");
-
-                            clipData = ClipData.newHtmlText(ClipDescription.MIMETYPE_TEXT_HTML, text, html);
-                            clipboardManager.setPrimaryClip(clipData);
-                        }
-                    }
+                if (idx >= 0) { // inject our magic
+                    StringBuffer newHtml = new StringBuffer(html);
+                    newHtml.insert(idx, "<meta name=\"origin\" content=\"" + getClipboardMagic() + "\"/>\n");
+                    html = newHtml.toString();
                 }
-            });
+
+                if (text == null || text.length() == 0)
+                    Log.i(TAG, "set text to clipoard with: text '" + text + "' and html '" + html + "'");
+
+                clipData = ClipData.newHtmlText(ClipDescription.MIMETYPE_TEXT_HTML, text, html);
+                clipboardManager.setPrimaryClip(clipData);
+            }
+        }
     }
 
     /// Do the paste, and return true if we should short-circuit the paste locally
@@ -746,47 +755,33 @@ public class LOActivity extends AppCompatActivity {
                         return true;
                     } else {
                         Log.i(TAG, "clipboard comes from us - other instance: paste from clipboard file");
-                        nativeHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                File clipboardFile = new File(getApplicationContext().getCacheDir(), CLIPBOARD_FILE_PATH);
-                                LokClipboardData clipboardData = null;
-                                if (clipboardFile.exists()) {
-                                    clipboardData = new LokClipboardData();
-                                    clipboardData.loadFromFile(clipboardFile);
-                                }
-                                if (clipboardData != null) {
-                                    LOActivity.this.setClipboardContent(clipboardData);
-                                    LOActivity.this.postUnoCommand(".uno:Paste", null, false);
-                                } else {
-                                    // Couldn't get data from the clipboard file, but we can still paste html
-                                    byte[] htmlByteArray = html.getBytes(Charset.forName("UTF-8"));
-                                    LOActivity.this.paste("text/html", htmlByteArray);
-                                }
-                            }
-                        });
-                    }
-                } else {
-                    Log.i(TAG, "foreign html '" + html + "'");
-                    nativeHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
+
+                        File clipboardFile = new File(getApplicationContext().getCacheDir(), CLIPBOARD_FILE_PATH);
+                        LokClipboardData clipboardData = null;
+                        if (clipboardFile.exists()) {
+                            clipboardData = new LokClipboardData();
+                            clipboardData.loadFromFile(clipboardFile);
+                        }
+                        if (clipboardData != null) {
+                            LOActivity.this.setClipboardContent(clipboardData);
+                            LOActivity.this.postUnoCommand(".uno:Paste", null, false);
+                        } else {
+                            // Couldn't get data from the clipboard file, but we can still paste html
                             byte[] htmlByteArray = html.getBytes(Charset.forName("UTF-8"));
                             LOActivity.this.paste("text/html", htmlByteArray);
                         }
-                    });
+                    }
+                } else {
+                    Log.i(TAG, "foreign html '" + html + "'");
+                    byte[] htmlByteArray = html.getBytes(Charset.forName("UTF-8"));
+                    LOActivity.this.paste("text/html", htmlByteArray);
                 }
             }
             else if (clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
                 final ClipData.Item clipItem = clipData.getItemAt(0);
-                nativeHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String text = clipItem.getText().toString();
-                        byte[] textByteArray = text.getBytes(Charset.forName("UTF-16"));
-                        LOActivity.this.paste("text/plain;charset=utf-16", textByteArray);
-                    }
-                });
+                String text = clipItem.getText().toString();
+                byte[] textByteArray = text.getBytes(Charset.forName("UTF-16"));
+                LOActivity.this.paste("text/plain;charset=utf-16", textByteArray);
             }
         }
         return false;
