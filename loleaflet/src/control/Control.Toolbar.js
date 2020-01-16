@@ -264,10 +264,10 @@ function onClick(e, id, item, subItem) {
 		onColorPick(id, e.color);
 	}
 	else if (id === 'backcolor' && typeof e.color !== 'undefined') {
-		onColorPick(id, e.color)
+		onColorPick(id, e.color);
 	}
 	else if (id === 'backgroundcolor' && typeof e.color !== 'undefined') {
-		onColorPick(id, e.color)
+		onColorPick(id, e.color);
 	}
 	else if (id === 'sum') {
 		map.sendUnoCommand('.uno:AutoSum');
@@ -501,7 +501,7 @@ function insertTable() {
 
 			map._socket.sendMessage(msg);
 
-			closePopup()
+			closePopup();
 		}
 	}, '.col');
 }
@@ -1072,7 +1072,7 @@ function initNormalToolbar() {
 		});
 	}
 
-	toolbar = $('#spreadsheet-toolbar')
+	toolbar = $('#spreadsheet-toolbar');
 	toolbar.w2toolbar({
 		name: 'spreadsheet-toolbar',
 		tooltip: 'bottom',
@@ -1744,7 +1744,7 @@ function onDocLayerInit() {
 		tags: true,
 		sorter: function(data) { return data.sort(function(a, b) {
 			return parseFloat(a.text) - parseFloat(b.text);
-		})}
+		});}
 	});
 	$('.fontsizes-select').off('select2:select', onFontSizeSelect).on('select2:select', onFontSizeSelect);
 }
@@ -2205,7 +2205,7 @@ function onUpdatePermission(e) {
 		// copy the first array
 		var items = toolbar.items.slice();
 		for (var idx in items) {
-			var found = enabledButtons.filter(function(id) { return id === items[idx].id });
+			var found = enabledButtons.filter(function(id) { return id === items[idx].id; });
 			var alwaysEnable = found.length !== 0;
 
 			if (e.perm === 'edit') {

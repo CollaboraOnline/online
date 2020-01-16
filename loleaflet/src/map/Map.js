@@ -1761,7 +1761,7 @@ L.Map = L.Evented.extend({
 		if (itemCommand.includes('sep'))
 			return null;
 
-		var itemText = ''
+		var itemText = '';
 		if (menu.name)
 			itemText = menu.name;
 

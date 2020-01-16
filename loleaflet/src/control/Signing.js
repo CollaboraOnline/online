@@ -12,7 +12,7 @@ var passportCertificates = [];
 
 var oldtoolbarSize = null;
 var _map = null;
-var currentDocumentSigningStatus = 'N/A'
+var currentDocumentSigningStatus = 'N/A';
 
 var awaitForDocumentStatusToUpload = false;
 var currentDocumentType = null;
@@ -389,7 +389,7 @@ function vereignExportSignAndUploadToVereign(documentType) {
 						wopiUrl: getVereignWopiURL() + 'files',
 						token: resultArray[i].AccessToken,
 						type: documentType
-					}
+					};
 					var blob = new Blob(['exportsignanduploaddocument\n', JSON.stringify(parameters)]);
 					_map._socket.sendMessage(blob);
 				}

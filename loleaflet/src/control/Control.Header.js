@@ -222,7 +222,7 @@ L.Control.Header = L.Control.extend({
 	// Called whenever the cell cursor is in a cell corresponding to the cursorPos-th
 	// column/row.
 	updateCurrent: function (cursorPos, slim) {
-		if (!this._tickMap) {return}
+		if (!this._tickMap) {return;}
 
 		if (cursorPos < 0) {
 			this.unselect(this._tickMap.getGap(this._current));
@@ -845,7 +845,7 @@ L.Control.Header.GapTickMap = L.Class.extend({
 			end: end,
 			size: end - start,
 			pos: end,
-		}
+		};
 	},
 
 	// Returns true when the i-th gap has zero size.

@@ -51,7 +51,7 @@ L.CalcGridLines = L.LayerGroup.extend({
 					str = 'M0 0';
 				}
 
-				this._setPath(layer, str, closed)
+				this._setPath(layer, str, closed);
 			}.bind(this.options.renderer);
 		}
 

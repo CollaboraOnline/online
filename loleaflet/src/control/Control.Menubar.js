@@ -848,11 +848,11 @@ L.Control.Menubar = L.Control.extend({
 						return item.name === _(style);
 					};
 
-					var foundMenu = this._findSubMenuByName(target, _UNO('.uno:InsertPageHeader', 'text'))
+					var foundMenu = this._findSubMenuByName(target, _UNO('.uno:InsertPageHeader', 'text'));
 					if (foundMenu && foundMenu.menu.find(findFunction) === undefined)
 						foundMenu.menu.push({name: _(style), tag: style, uno: constHeader + encodeURIComponent(style) + constArg});
 
-					foundMenu = this._findSubMenuByName(target, _UNO('.uno:InsertPageFooter', 'text'))
+					foundMenu = this._findSubMenuByName(target, _UNO('.uno:InsertPageFooter', 'text'));
 					if (foundMenu && foundMenu.menu.find(findFunction) === undefined)
 						foundMenu.menu.push({name: _(style), tag: style, uno: constFooter + encodeURIComponent(style) + constArg});
 				}
@@ -1429,7 +1429,7 @@ L.Control.Menubar = L.Control.extend({
 			if (id && id == 'menu-' + targetId) {
 				return true;
 			}
-			return false
+			return false;
 		});
 		return found.length ? found : null;
 	},
@@ -1487,8 +1487,8 @@ L.Control.Menubar = L.Control.extend({
 		var docType = this._map.getDocType();
 		var target = this.options['mobileInsertMenu'][docType];
 
-		var menuStructure = this._generateMenuStructure(target, docType, true)
-		return menuStructure
+		var menuStructure = this._generateMenuStructure(target, docType, true);
+		return menuStructure;
 	},
 
 	_generateMenuStructure: function(item, docType, mainMenu) {

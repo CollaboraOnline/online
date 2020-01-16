@@ -126,7 +126,7 @@ L.Control.Tabs = L.Control.extend({
 							} else {
 								$('spreadsheet-tab' + j).contextMenu();
 							}
-						}
+						};
 					}(i).bind(this));
 
 					tab.textContent = e.partNames[i];

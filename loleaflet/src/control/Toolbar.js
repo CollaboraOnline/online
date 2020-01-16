@@ -231,7 +231,7 @@ L.Map.include({
 				buttons: {},
 				afterOpen: function() {
 					var $vexContent = $(this.contentEl);
-					this.contentEl.style.width = w + 'px'
+					this.contentEl.style.width = w + 'px';
 					map.enable(false);
 					var i;
 					// Display keyboard shortcut or online help

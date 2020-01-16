@@ -151,9 +151,9 @@ L.Draggable = L.Evented.extend({
 		this._newPos = this._startPos.add(offset);
 
 		if (this._freezeY)
-			this._newPos.y = this._startPos.y
+			this._newPos.y = this._startPos.y;
 		if (this._freezeX)
-			this._newPos.x = this._startPos.x
+			this._newPos.x = this._startPos.x;
 
 		this._moving = true;
 

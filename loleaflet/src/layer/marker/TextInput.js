@@ -56,7 +56,7 @@ L.TextInput = L.Layer.extend({
 		}).on('dragend', this._onCursorHandlerDragEnd, this);
 
 		var that = this;
-		this._selectionHandler = function(ev) { that._onEvent(ev); }
+		this._selectionHandler = function(ev) { that._onEvent(ev); };
 
 		// Auto-correct characters can trigger auto-correction, but
 		// must be sent as key-up/down if we want correction.

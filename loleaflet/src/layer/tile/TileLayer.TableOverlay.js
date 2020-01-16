@@ -19,7 +19,7 @@ L.TileLayer.include({
 		return point.x;
 	},
 	_convertTwipsToPixels: function(twips) {
-		var point = this._twipsToLatLng(twips)
+		var point = this._twipsToLatLng(twips);
 		point = this._map.project(point);
 		return point;
 	},
@@ -349,7 +349,7 @@ L.TileLayer.include({
 					type : 'int32',
 					value : offset
 				}
-			}
+			};
 
 			this._map.sendUnoCommand('.uno:TableChangeCurrentBorderPosition', params);
 		}

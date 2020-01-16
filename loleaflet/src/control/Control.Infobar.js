@@ -25,7 +25,7 @@ L.Control.Infobar = L.Control.extend({
 					var win = window.open(e.action, '_blank');
 					win.focus();
 				}
-			}
+			};
 		}
 
 		vex.dialog.open({

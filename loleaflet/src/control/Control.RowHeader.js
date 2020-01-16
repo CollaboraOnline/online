@@ -243,7 +243,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			var w = width - 4;
 			var size = 2;
 			var offset = 1;
-			ctx.fillStyle = '#BBBBBB'
+			ctx.fillStyle = '#BBBBBB';
 			ctx.fillRect(x + 2, center - size - offset, w - 4, size);
 			ctx.fillRect(x + 2, center + offset, w - 4, size);
 		}

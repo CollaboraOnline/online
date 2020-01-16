@@ -123,7 +123,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						$(controlElement).click(
 							// avoid to access mutable variable (that is `i` dependent) in closure
 							(function (lhandler, leventData) {
-								return function() { lhandler(leventData) };
+								return function() { lhandler(leventData); };
 							})(handler, eventData)
 						);
 					}
@@ -246,7 +246,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
 			icon.src = iconPath;
 			icon.alt = '';
-			titleClass = 'menu-entry-with-icon'
+			titleClass = 'menu-entry-with-icon';
 		}
 		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
 
@@ -269,7 +269,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			} else {
 				titleSpan.innerHTML = data.text;
 			}
-		}
+		};
 
 		updateCallback ? updateCallback(titleSpan) : updateFunction(titleSpan);
 
@@ -528,7 +528,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(checkbox).attr('checked', 'checked');
 			else if (state)
 				$(checkbox).removeAttr('checked', 'checked');
-		}
+		};
 
 		updateFunction();
 
@@ -942,7 +942,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				value = data.children[0].text;
 
 			$(spinfield).attr('value', builder._cleanValueFromUnits(value));
-		}
+		};
 
 		updateFunction();
 
@@ -1187,7 +1187,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					$(button).addClass('selected');
 				else
 					$(button).removeClass('selected');
-			}
+			};
 
 			updateFunction();
 
@@ -1444,7 +1444,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (window.insertionMobileWizard)
 					window.onClick(null, 'insertion_mobile_wizard');
 				else if (window.mobileMenuWizard)
-					$('#main-menu-state').click()
+					$('#main-menu-state').click();
 				else if (window.contextMenuWizard) {
 					window.contextMenuWizard = false;
 					builder.map.fire('closemobilewizard');
@@ -1462,7 +1462,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					    data.checked && data.checked === true) {
 						return;
 					}
-					builder.map.sendUnoCommand(data.command)
+					builder.map.sendUnoCommand(data.command);
 				}
 			});
 		} else {

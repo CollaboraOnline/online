@@ -155,7 +155,7 @@ L.Control.DownloadProgress = L.Control.extend({
 				var reader = new FileReader();
 				reader.onload = function() {
 					var text = reader.result;
-					console.log('async clipboard parse done: ' + text.substring(0, 256))
+					console.log('async clipboard parse done: ' + text.substring(0, 256));
 					var idx = text.indexOf('<!DOCTYPE HTML');
 					if (idx > 0)
 						text = text.substring(idx, text.length);

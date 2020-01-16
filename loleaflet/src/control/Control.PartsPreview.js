@@ -438,7 +438,7 @@ L.Control.PartsPreview = L.Control.extend({
 		if (elem) {
 			elem.setAttribute('draggable', true);
 			elem.addEventListener('dragstart', this._handleDragStart, false);
-			elem.addEventListener('dragenter', this._handleDragEnter, false)
+			elem.addEventListener('dragenter', this._handleDragEnter, false);
 			elem.addEventListener('dragover', this._handleDragOver, false);
 			elem.addEventListener('dragleave', this._handleDragLeave, false);
 			elem.addEventListener('drop', this._handleDrop, false);

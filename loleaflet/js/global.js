@@ -26,15 +26,15 @@
 		};
 		this.onopen = function() {
 		};
-	}
+	};
 
 	global.FakeWebSocket.prototype.close = function() {
-	}
+	};
 
 	global.FakeWebSocket.prototype.send = function(data) {
 		this.sendCounter++;
 		window.postMobileMessage(data);
-	}
+	};
 
 	// If not debug, don't print anything on the console
 	// except in tile debug mode (Ctrl-Shift-Alt-d)
@@ -71,7 +71,7 @@
 			}
 
 			return false;
-		}
+		};
 	}
 
 	// fix jquery-ui
@@ -122,7 +122,7 @@
 			wopiParams = { 'access_header': global.accessHeader };
 		}
 		docParams = Object.keys(wopiParams).map(function(key) {
-			return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key])
+			return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
 		}).join('&');
 	} else {
 		global.docURL = filePath;
@@ -168,15 +168,15 @@
 				}
 				global.socket.send(msg);
 			}
-		}
+		};
 
 		global.socket.onerror = function (event) {
 			console.log(event);
-		}
+		};
 
 		global.socket.onclose = function (event) {
 			console.log(event);
-		}
+		};
 
 		global.socket.onmessage = function (event) {
 			if (typeof global.socket._onMessage === 'function') {
@@ -184,7 +184,7 @@
 			} else {
 				global.queueMsg.push(event.data);
 			}
-		}
+		};
 
 		global.socket.binaryType = 'arraybuffer';
 

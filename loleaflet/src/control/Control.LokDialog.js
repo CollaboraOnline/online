@@ -790,7 +790,7 @@ L.Control.LokDialog = L.Control.extend({
 			startX: offsetX,
 			startY: offsetY,
 			initScale: ratio
-		}
+		};
 		var transformation = {
 			translate: { x: offsetX, y: offsetY },
 			scale: ratio,

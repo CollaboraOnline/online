@@ -39,7 +39,7 @@ L.Clipboard = L.Class.extend({
 		this._resetDiv();
 
 		var that = this;
-		var beforeSelect = function(ev) { return that._beforeSelect(ev); }
+		var beforeSelect = function(ev) { return that._beforeSelect(ev); };
 		if (L.Browser.isInternetExplorer)
 		{
 			document.addEventListener('cut',   function(ev)   { return that.cut(ev); });
@@ -261,7 +261,7 @@ L.Clipboard = L.Class.extend({
 					'POST', dest, formData,
 					function() {
 						console.log('up-load done, now paste');
-						that._map._socket.sendMessage('uno .uno:Paste')
+						that._map._socket.sendMessage('uno .uno:Paste');
 					},
 					function(progress) { return 50 + progress/2; }
 				);
@@ -289,7 +289,7 @@ L.Clipboard = L.Class.extend({
 					'POST', dest, formData,
 					function() {
 						console.log('up-load of fallback done, now paste');
-						that._map._socket.sendMessage('uno .uno:Paste')
+						that._map._socket.sendMessage('uno .uno:Paste');
 					},
 					function(progress) { return 50 + progress/2; },
 					function() {
@@ -381,7 +381,7 @@ L.Clipboard = L.Class.extend({
 					if (files !== null)
 					{
 						for (var f = 0; f < files.length; ++f)
-							this._asyncReadPasteImage(files[f])
+							this._asyncReadPasteImage(files[f]);
 					}
 					else // IE / Edge
 						this._asyncReadPasteImage(dataTransfer.items[t].getAsFile());
@@ -612,7 +612,7 @@ L.Clipboard = L.Class.extend({
 				console.log('help did not arive for ' + operation);
 				that._warnCopyPaste();
 			}
-		}, 150 /* ms */)
+		}, 150 /* ms */);
 	},
 
 	// Pull UNO clipboard commands out from menus and normal user input.

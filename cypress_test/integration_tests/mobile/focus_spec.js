@@ -16,18 +16,18 @@ describe('Focus tests', function() {
 
 		// Wait for the document to fully load
 		cy.get('.leaflet-tile-loaded');
-	})
+	});
 
 	it('Focus after document fully loaded.', function() {
 		// The document body should have the focus
 		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY')
-	})
+			.should('be.eq', 'BODY');
+	});
 
 	it('Focus after closing a dialog.', function() {
 		// The document body has the focus first
 		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY')
+			.should('be.eq', 'BODY');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
@@ -41,7 +41,7 @@ describe('Focus tests', function() {
 
 		// The dialog grabs the focus
 		cy.document().its('activeElement.className')
-			.should('be.eq', 'loleaflet-annotation-textarea')
+			.should('be.eq', 'loleaflet-annotation-textarea');
 
 		// Close the dialog
 		cy.contains('Cancel').click();
@@ -49,13 +49,13 @@ describe('Focus tests', function() {
 
 		// The document should have the focus again
 		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY')
-	})
+			.should('be.eq', 'BODY');
+	});
 
 	it('Focus when using insertion mobile wizard.', function() {
 		// The document body has the focus first
 		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY')
+			.should('be.eq', 'BODY');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
@@ -71,22 +71,22 @@ describe('Focus tests', function() {
 		// This fails here: the document still has the focus
 		// The wizard changes the focus
 		//cy.document().its('activeElement.className')
-		//	.should('be.eq', 'clipboard')
+		//	.should('be.eq', 'clipboard');
 
 		// Close the mobile wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard').click()
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard').click();
 		cy.get('#mobile-wizard').should('not.be.visible');
 
 		// This fails here: the focus is not on the document body
 		// The document should have the focus again
 		//cy.document().its('activeElement.tagName')
-		//	.should('be.eq', 'BODY')
-	})
+		//	.should('be.eq', 'BODY');
+	});
 
 	it('Focus after insertion.', function() {
 		// The document body has the focus first
 		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY')
+			.should('be.eq', 'BODY');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
@@ -97,7 +97,7 @@ describe('Focus tests', function() {
 			.click();
 
 		cy.get('#mobile-wizard-content')
-			.should('not.be.empty')
+			.should('not.be.empty');
 
 		// Select More Fields
 		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .sub-menu-title')
@@ -112,6 +112,6 @@ describe('Focus tests', function() {
 		// This fails here: the focus is not on the document body
 		// The document should have the focus again
 		//cy.document().its('activeElement.tagName')
-		//	.should('be.eq', 'BODY')
-	})
-})
+		//	.should('be.eq', 'BODY');
+	});
+});

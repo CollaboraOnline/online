@@ -773,7 +773,7 @@ L.TileLayer = L.GridLayer.extend({
 				index: idx,
 				enabled: true,
 				children: []
-			}
+			};
 			entries.push(entry);
 			entries[entries.length-1].children[0] = {
 				id: '',
@@ -1147,7 +1147,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		if (this._map._viewInfo[editorId])
-			this._map.fire('updateEditorName', {username: this._map._viewInfo[editorId].username})
+			this._map.fire('updateEditorName', {username: this._map._viewInfo[editorId].username});
 	},
 
 	_onInvalidateViewCursorMsg: function (textMsg) {

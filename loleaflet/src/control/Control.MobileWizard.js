@@ -185,11 +185,11 @@ L.Control.MobileWizard = L.Control.extend({
 			this._hideWizard();
 			this._currentDepth = 0;
 			if (window.mobileWizard === true) {
-				w2ui['actionbar'].click('mobile_wizard')
+				w2ui['actionbar'].click('mobile_wizard');
 			} else if (window.insertionMobileWizard === true) {
-				w2ui['actionbar'].click('insertion_mobile_wizard')
+				w2ui['actionbar'].click('insertion_mobile_wizard');
 			} else if (window.mobileMenuWizard === true) {
-				$('#main-menu-state').click()
+				$('#main-menu-state').click();
 			} else if (window.contextMenuWizard) {
 				window.contextMenuWizard = false;
 				this.map.fire('closemobilewizard');

@@ -271,7 +271,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 		if (!this._path.options.manualDrag && !moved) {
 			this._path._map._handleDOMEvent(this._mouseDown);
-			this._path._map._handleDOMEvent(evt)
+			this._path._map._handleDOMEvent(evt);
 		}
 	},
 

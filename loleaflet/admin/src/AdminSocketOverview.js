@@ -51,7 +51,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 		this.socket.send('active_users_count');
 		this.socket.send('sent_bytes');
 		this.socket.send('recv_bytes');
-		this.socket.send('uptime')
+		this.socket.send('uptime');
 	},
 
 	onSocketOpen: function() {
@@ -328,7 +328,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				nData = Util.humanizeMem(nData);
 			}
 			else if (sCommand === 'uptime') {
-				nData = Util.humanizeSecs(nData)
+				nData = Util.humanizeSecs(nData);
 			}
 			$(document.getElementById(sCommand)).text(nData);
 		}
