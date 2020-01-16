@@ -302,6 +302,7 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		this._map.fire('closepopups');
 		this._map.fire('closemobilewizard');
+		this._map.fire('editorgotfocus');
 
 		var docLayer = this._map._docLayer;
 		// unselect if anything is selected already
