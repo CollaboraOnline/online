@@ -577,6 +577,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._sendClientZoom();
 		// TODO: test it!
 		this._map.fire('updaterowcolumnheaders');
+		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
 
 	_onUpdateCurrentHeader: function() {
