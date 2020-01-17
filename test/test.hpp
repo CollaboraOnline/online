@@ -31,6 +31,9 @@ std::vector<int> getDocKitPids();
 /// Get the PID of the forkit
 std::vector<int> getForKitPids();
 
+/// Which port should we connect to get to WSD.
+int getClientPort();
+
 /// How many live loolkit processes do we have ?
 int getLoolKitProcessCount();
 

@@ -432,6 +432,8 @@ void TileCacheTests::testUnresponsiveClient()
 {
     const std::string testname = "unresponsiveClient-";
 
+    TST_LOG("testUnresponsiveClient.");
+
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 

@@ -70,55 +70,10 @@ fi
 echo "Test output is '$test_output'"
 echo > $test_output
 
-if test "z$tst" == "z"; then
-     # run the test on a dedicated port
-     export LOOL_TEST_CLIENT_PORT=9984
-     export LOOL_TEST_MASTER_PORT=9985
-
-     echo "Executing external tests"
-     ${trace} \
-     ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
-                                 --o:child_root_path="$jails_path" \
-                                 --o:storage.filesystem[@allow]=true \
-                                 --o:logging.level=trace \
-                                 --o:logging.file[@enable]=false \
-                                 --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
-                                 --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
-                                 --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
-                                 --o:admin_console.username=admin --o:admin_console.password=admin \
-                                 --o:storage.ssl.enable=false \
-                                 > "$tst_log" 2>&1 &
-     if test "z${SLEEPFORDEBUGGER}${SLEEPKITFORDEBUGGER}" != "z"; then
-	  echo "sleeping for debugger"
-          sleep ${SLEEPFORDEBUGGER:-0}
-          sleep ${SLEEPKITFORDEBUGGER:-0}
-     fi
-
-     echo "  executing test"
-
-     oldpath=`pwd`
-     cd "${abs_top_builddir}/test"
-     if eval ${trace} ./test ${verbose}; then
-	 echo "Test run_test.sh passed."
-	 echo ":test-result: PASS run_test.sh" >> $oldpath/$test_output
-	 retval=0
-     else
-	 echo ":test-result: FAIL run_test.sh" >> $oldpath/$test_output
-	 retval=1
-     fi
-
-     if test "z${SLEEPFORDEBUGGER}${SLEEPKITFORDEBUGGER}" == "z"; then
-         echo "killing $!"
-         kill $!
-     fi
-
-     exit $retval
-
-else # newer unit tests.
-    echo "Running $tst | $tst_log ...";
-    if ${trace} \
+echo "Running $tst | $tst_log ...";
+if ${trace} \
        ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
-                                   --o:child_root_path="$jails_path" \
+       --o:child_root_path="$jails_path" \
                                    --o:storage.filesystem[@allow]=true \
                                    --o:logging.level=trace \
                                    --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
@@ -129,7 +84,7 @@ else # newer unit tests.
                                    --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log"; then
         echo "Test $tst passed."
         echo ":test-result: PASS $tst" >> $test_output
-    else
+else
 	cat $tst_log
         echo "============================================================="
         echo "Test failed on unit: $tst re-run with:"
@@ -147,7 +102,6 @@ else # newer unit tests.
 	echo "   $ less $tst_log # for detailed failure log files"
         echo "============================================================="
         echo ":test-result: FAIL $tst" >> $test_output
-    fi
 fi
 
 # vim:set shiftwidth=4 expandtab:
