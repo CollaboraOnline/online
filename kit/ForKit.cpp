@@ -396,15 +396,6 @@ int main(int argc, char** argv)
     std::string sysTemplate;
     std::string loTemplate;
 
-#if ENABLE_DEBUG
-    static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
-    if (clientPort)
-        ClientPortNumber = std::stoi(clientPort);
-    static const char* masterPort = std::getenv("LOOL_TEST_MASTER_PORT");
-    if (masterPort)
-        MasterLocation = masterPort;
-#endif
-
     for (int i = 0; i < argc; ++i)
     {
         char *cmd = argv[i];

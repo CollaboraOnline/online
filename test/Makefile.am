@@ -2,12 +2,10 @@
 export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
 
-# unittest: tests that do not need loolwsd running, and that are run during a
-# normal build
-# test: tests that need loolwsd running, and that are run via 'make check'
-check_PROGRAMS = test fakesockettest
+# unittest: tests that run a captive loolwsd as part of themselves.
+check_PROGRAMS = fakesockettest
 
-noinst_PROGRAMS = test fakesockettest unittest
+noinst_PROGRAMS = fakesockettest unittest
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
@@ -86,10 +84,6 @@ test_base_source = \
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 unittest_SOURCES = $(test_base_source) test.cpp
 unittest_LDADD = $(CPPUNIT_LIBS)
-
-test_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
-test_SOURCES = $(test_all_source) test.cpp
-test_LDADD = $(CPPUNIT_LIBS)
 
 fakesockettest_SOURCES = fakesockettest.cpp ../net/FakeSocket.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)

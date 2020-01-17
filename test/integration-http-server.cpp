@@ -92,15 +92,13 @@ public:
     // A server URI which was not added to loolwsd.xml as post_allow IP or a wopi storage host
     Poco::URI getNotAllowedTestServerURI()
     {
-        static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
-
         static std::string serverURI(
 #if ENABLE_SSL
-        "https://165.227.162.232:"
+            "https://165.227.162.232:9980"
 #else
-        "http://165.227.162.232:"
+            "http://165.227.162.232:9980"
 #endif
-            + (clientPort? std::string(clientPort) : std::to_string(DEFAULT_CLIENT_PORT_NUMBER)));
+            );
 
         return Poco::URI(serverURI);
     }
@@ -236,9 +234,12 @@ void HTTPServerTest::testScriptsAndLinksPost()
 
 void HTTPServerTest::testConvertTo()
 {
+    const char *testname = "testConvertTo";
     const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(2, 0)); // 2 seconds.
+    session->setTimeout(Poco::Timespan(5, 0)); // 5 seconds.
+
+    TST_LOG("Convert-to odt -> txt");
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
     Poco::Net::HTMLForm form;
@@ -253,7 +254,7 @@ void HTTPServerTest::testConvertTo()
     catch (const std::exception& ex)
     {
         // In case the server is still starting up.
-        sleep(2);
+        sleep(5);
         form.write(session->sendRequest(request));
     }
 
@@ -279,9 +280,12 @@ void HTTPServerTest::testConvertTo()
 
 void HTTPServerTest::testConvertTo2()
 {
+    const char *testname = "testConvertTo2";
     const std::string srcPath = FileUtil::getTempFilePath(TDOC, "convert-to.xlsx", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(5, 0)); // 5 seconds.
+    session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
+
+    TST_LOG("Convert-to #2 xlsx -> png");
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
     Poco::Net::HTMLForm form;
@@ -296,7 +300,7 @@ void HTTPServerTest::testConvertTo2()
     catch (const std::exception& ex)
     {
         // In case the server is still starting up.
-        sleep(2);
+        sleep(5);
         form.write(session->sendRequest(request));
     }
 

@@ -1404,10 +1404,6 @@ void LOOLWSD::handleOption(const std::string& optionName,
     else if (optionName == "careerspan")
         careerSpanMs = std::stoi(value) * 1000; // Convert second to ms
 
-    static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
-    if (clientPort)
-        ClientPortNumber = std::stoi(clientPort);
-
     static const char* latencyMs = std::getenv("LOOL_DELAY_SOCKET_MS");
     if (latencyMs)
         SimulatedLatencyMs = std::stoi(latencyMs);
@@ -3668,6 +3664,11 @@ std::vector<std::shared_ptr<DocumentBroker>> LOOLWSD::getBrokersTestOnly()
     for (auto& brokerIt : DocBrokers)
         result.push_back(brokerIt.second);
     return result;
+}
+
+int LOOLWSD::getClientPortNumber()
+{
+    return ClientPortNumber;
 }
 
 std::vector<int> LOOLWSD::getKitPids()

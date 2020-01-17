@@ -187,11 +187,14 @@ Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
     return new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
 
+#ifndef UNIT_CLIENT_TESTS
+
 inline int getClientPort()
 {
-    static const char* clientPort = std::getenv("LOOL_TEST_CLIENT_PORT");
-    return clientPort? atoi(clientPort) : DEFAULT_CLIENT_PORT_NUMBER;
+    return DEFAULT_CLIENT_PORT_NUMBER;
 }
+
+#endif
 
 inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
 {

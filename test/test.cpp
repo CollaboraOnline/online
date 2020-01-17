@@ -183,8 +183,12 @@ bool runClientTests(bool standalone, bool verbose)
             std::cerr << "  (cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" gdb --args " << cmd << ")\n\n";
         }
 #else
+        std::string aLib = UnitBase::get().getUnitLibPath();
+        size_t lastSlash = aLib.rfind('/');
+        if (lastSlash != std::string::npos)
+            aLib = aLib.substr(lastSlash + 1, aLib.length() - lastSlash - 4) + ".la";
         std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() <<
-            "\" ./run_unit.sh --test-name " << UnitBase::get().getUnitLibPath() << ")\n\n";
+            "\" ./run_unit.sh --test-name " << aLib << ")\n\n";
 #endif
     }
 
@@ -312,6 +316,11 @@ std::vector<int> getForKitPids()
 int getLoolKitProcessCount()
 {
     return getKitPids().size();
+}
+
+int getClientPort()
+{
+    return LOOLWSD::getClientPortNumber();
 }
 
 #endif // UNIT_CLIENT_TESTS
