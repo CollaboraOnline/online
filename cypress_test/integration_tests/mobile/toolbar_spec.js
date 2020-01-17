@@ -131,15 +131,6 @@ describe('Toolbar tests', function() {
 
 		cy.get('#tb_actionbar_item_mobile_wizard table')
 			.should('not.have.class', 'checked')
-
-		// Open mobile wizard again
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click()
-
-		// Mobile wizard is opened and it has any content
-		// TODO: fix this bug
-		/*cy.get('#mobile-wizard-content')
-			.should('not.be.empty'); */
 	})
 
 	it('Open and close insertion mobile wizard by toolbar item.', function() {
