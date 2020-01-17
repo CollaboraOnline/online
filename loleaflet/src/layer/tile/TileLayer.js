@@ -2838,6 +2838,10 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.addLayer(this._cellCursorMarker);
 
 			this._addDropDownMarker();
+
+			// when the cell cursor is moving, the user is in the document,
+			// and the focus should leave the cell input bar
+			this._map.fire('editorgotfocus');
 		}
 		else if (this._cellCursorMarker) {
 			this._map.removeLayer(this._cellCursorMarker);
