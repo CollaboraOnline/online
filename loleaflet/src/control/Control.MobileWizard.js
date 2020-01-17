@@ -60,7 +60,7 @@ L.Control.MobileWizard = L.Control.extend({
 		var docType = this._map.getDocType();
 		var maxScrolled = 52;
 		if (ContentsLength > 1 || docType != 'spreadsheet')
-			$('#mobile-wizard-content').prepend('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 40px;position: fixed;z-index: 2;bottom: 0;background: linear-gradient(#fff0 20%, #0b87e7 400%);"></div>');
+			$('#mobile-wizard-content').append('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
 		if (docType == 'spreadsheet')
 			maxScrolled = 41;
 		$('#mobile-wizard').show();

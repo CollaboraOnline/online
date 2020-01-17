@@ -38,11 +38,11 @@
 		display: none;
 	}
 	#toolbar-down .w2ui-scroll-left, #toolbar-down .w2ui-scroll-right{
-		background: linear-gradient(to left, #fff0 0%, #ccc 98%, #bbb 100%);
+		background: none;
 		height: 100%;
-		width: 18px;
+		width: 0px;
 		top: 0%;
-		box-shadow: none;
+		box-shadow: 8px 0 13px 2px #0b87e7, -6px 0px 6px 6px #007cdc;
 		border-radius: 0px;
 	}
 	#toolbar-down .w2ui-scroll-right{
