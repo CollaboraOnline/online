@@ -237,19 +237,16 @@ namespace SigUtil
     void handleFatalSignal(const int signal)
     {
         SigHandlerTrap guard;
-        if (!guard.isExclusive())
-        {
-            Log::signalLogPrefix();
-            Log::signalLog(" Fatal double signal received: ");
-            Log::signalLog(signalName(signal));
-            Log::signalLog("\n Already handling a signal; will ignore this.");
-            return;
-        }
+        bool bReEntered = !guard.isExclusive();
 
         Log::signalLogPrefix();
-        Log::signalLog(" Fatal signal received: ");
+
+        // Heap corruption can re-enter through backtrace.
+        if (bReEntered)
+            Log::signalLog(" Fatal double signal received: ");
+        else
+            Log::signalLog(" Fatal signal received: ");
         Log::signalLog(signalName(signal));
-        Log::signalLog("\n");
 
         struct sigaction action;
 
@@ -259,7 +256,8 @@ namespace SigUtil
 
         sigaction(signal, &action, nullptr);
 
-        dumpBacktrace();
+        if (!bReEntered)
+            dumpBacktrace();
 
         // let default handler process the signal
         kill(getpid(), signal);
