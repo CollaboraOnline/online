@@ -107,7 +107,7 @@ describe('Focus tests', function() {
 		// Insert a field
 		cy.get('.ui-header.level-1.mobile-wizard.ui-widget .menu-entry-with-icon')
 			.contains('Page Number').click();
-		cy.get('#mobile_wizard').should('not.be.visible');
+		cy.get('#mobile-wizard').should('not.be.visible');
 
 		// This fails here: the focus is not on the document body
 		// The document should have the focus again

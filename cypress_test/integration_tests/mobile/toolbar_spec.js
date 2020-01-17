@@ -127,8 +127,7 @@ describe('Toolbar tests', function() {
 			.click()
 
 		// Mobile wizard is closed
-		cy.get('#mobile_wizard')
-			.should('not.be.visible');
+		cy.get('#mobile-wizard').should('not.be.visible');
 
 		cy.get('#tb_actionbar_item_mobile_wizard table')
 			.should('not.have.class', 'checked')
@@ -165,8 +164,7 @@ describe('Toolbar tests', function() {
 			.click()
 
 		// Mobile wizard is closed
-		cy.get('#mobile_wizard')
-			.should('not.be.visible');
+		cy.get('#mobile-wizard').should('not.be.visible');
 
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard table')
 			.should('not.have.class', 'checked')
