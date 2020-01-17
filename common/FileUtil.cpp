@@ -343,6 +343,30 @@ namespace FileUtil
         return true;
     }
 
+    namespace {
+        bool AnonymizeUserData = false;
+        std::uint64_t AnonymizationSalt = 82589933;
+    }
+
+    void setUrlAnonymization(bool anonymize, const std::uint64_t salt)
+    {
+        AnonymizeUserData = anonymize;
+        AnonymizationSalt = salt;
+    }
+
+    /// Anonymize the basename of filenames, preserving the path and extension.
+    std::string anonymizeUrl(const std::string& url)
+    {
+        return AnonymizeUserData ? Util::anonymizeUrl(url, AnonymizationSalt) : url;
+    }
+
+    /// Anonymize user names and IDs.
+    /// Will use the Obfuscated User ID if one is provied via WOPI.
+    std::string anonymizeUsername(const std::string& username)
+    {
+        return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
+    }
+
 } // namespace FileUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -17,6 +17,16 @@
 
 namespace FileUtil
 {
+    /// Used for anonymizing URLs
+    void setUrlAnonymization(bool anonymize, const std::uint64_t salt);
+
+    /// Anonymize the basename of filenames, preserving the path and extension.
+    std::string anonymizeUrl(const std::string& url);
+
+    /// Anonymize user names and IDs.
+    /// Will use the Obfuscated User ID if one is provied via WOPI.
+    std::string anonymizeUsername(const std::string& username);
+
     /// Create a secure, random directory path.
     std::string createRandomDir(const std::string& path);
 
