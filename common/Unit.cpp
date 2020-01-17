@@ -26,7 +26,7 @@
 #include <common/SigUtil.hpp>
 
 UnitBase *UnitBase::Global = nullptr;
-
+char * UnitBase::UnitLibPath;
 static std::thread TimeoutThread;
 static std::atomic<bool> TimeoutThreadRunning(false);
 std::timed_mutex TimeoutThreadMutex;
@@ -40,6 +40,9 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
         LOG_ERR("Failed to load " << unitLibPath << ": " << dlerror());
         return nullptr;
     }
+
+    // avoid std:string de-allocation during failure / exit.
+    UnitLibPath = strdup(unitLibPath.c_str());
 
     const char *symbol = nullptr;
     switch (type)

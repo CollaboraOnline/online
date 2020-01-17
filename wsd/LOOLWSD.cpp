@@ -3283,14 +3283,19 @@ private:
 
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ClientListenAddr, port, WebServerPoll, factory);
+
+        while (!socket &&
 #ifdef BUILDING_TESTS
-        while (!socket)
+               true
+#else
+               UnitWSD::isUnitTesting()
+#endif
+            )
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
-            socket = getServerSocket(port, WebServerPoll, factory);
+            socket = getServerSocket(ClientListenAddr, port, WebServerPoll, factory);
         }
-#endif
 
         if (!socket)
         {

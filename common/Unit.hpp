@@ -138,11 +138,17 @@ public:
         return *Global;
     }
 
+    static std::string getUnitLibPath() { return std::string(UnitLibPath); }
+
 private:
-    void setHandle(void *dlHandle) { _dlHandle = dlHandle; }
+    void setHandle(void *dlHandle)
+    {
+        _dlHandle = dlHandle;
+    }
     static UnitBase *linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
     void *_dlHandle;
+    static char *UnitLibPath;
     bool _setRetValue;
     int _retValue;
     int _timeoutMilliSeconds;

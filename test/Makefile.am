@@ -13,9 +13,10 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
 
 noinst_LTLIBRARIES = \
+	unit-base.la unit-tiletest.la \
+	unit-integration.la unit-httpws.la unit-crash.la \
 	unit-convert.la unit-typing.la unit-copy-paste.la \
-	unit-timeout.la unit-prefork.la \
-	unit-storage.la unit-client.la \
+	unit-timeout.la unit-prefork.la unit-storage.la \
 	unit-admin.la unit-tilecache.la \
 	unit-fuzz.la unit-oob.la unit-http.la unit-oauth.la \
 	unit-wopi.la unit-wopi-saveas.la \
@@ -82,13 +83,6 @@ test_base_source = \
 	DeltaTests.cpp \
 	$(wsd_sources)
 
-test_all_source = \
-	$(test_base_source) \
-	TileCacheTests.cpp \
-	integration-http-server.cpp \
-	httpwstest.cpp \
-	httpcrashtest.cpp
-
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS
 unittest_SOURCES = $(test_base_source) test.cpp
 unittest_LDADD = $(CPPUNIT_LIBS)
@@ -100,6 +94,18 @@ test_LDADD = $(CPPUNIT_LIBS)
 fakesockettest_SOURCES = fakesockettest.cpp ../net/FakeSocket.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
+# old-style unit tests - bootstrapped via UnitClient
+unit_base_la_SOURCES = UnitClient.cpp ${test_base_source}
+unit_base_la_LIBADD = $(CPPUNIT_LIBS)
+unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp
+unit_tiletest_la_LIBADD = $(CPPUNIT_LIBS)
+unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp
+unit_integration_la_LIBADD = $(CPPUNIT_LIBS)
+unit_httpws_la_SOURCES = UnitClient.cpp httpwstest.cpp
+unit_httpws_la_LIBADD = $(CPPUNIT_LIBS)
+unit_crash_la_SOURCES = UnitClient.cpp httpcrashtest.cpp
+unit_crash_la_LIBADD = $(CPPUNIT_LIBS)
+
 # unit test modules:
 unit_oob_la_SOURCES = UnitOOB.cpp
 unit_http_la_SOURCES = UnitHTTP.cpp
@@ -107,8 +113,6 @@ unit_http_la_LIBADD = $(CPPUNIT_LIBS)
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
-unit_client_la_SOURCES = UnitClient.cpp ${test_all_source}
-unit_client_la_LIBADD = $(CPPUNIT_LIBS)
 unit_typing_la_SOURCES = UnitTyping.cpp
 unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
@@ -183,16 +187,20 @@ if HAVE_LO_PATH
 check-local:
 	./fakesockettest
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	./run_unit.sh --log-file test.log --trs-file test.trs
+
 # FIXME 2: unit-oob.la fails with symbol undefined:
 # UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
-TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
+TESTS = \
+	unit-base.la unit-tiletest.la \
+	unit-integration.la unit-httpws.la unit-crash.la \
+	\
+	unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
         unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
         unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
         unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-http.la \
 	unit-tiff-load.la \
-	unit-large-paste.la \
+	unit.large-paste.la \
 	unit-paste.la \
 	unit-load-torture.la \
 	unit-rendering-options.la \
@@ -209,9 +217,8 @@ TESTS = unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-t
 	unit-bad-doc-load.la \
 	unit-hosting.la \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
-# TESTS = unit-client.la
-# TESTS += unit-admin.la
-# TESTS += unit-storage.la
+# TESTS += unit-admin.test
+# TESTS += unit-storage.test
 else
 TESTS = ${top_builddir}/test/test
 endif
