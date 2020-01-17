@@ -183,7 +183,8 @@ bool runClientTests(bool standalone, bool verbose)
             std::cerr << "  (cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" gdb --args " << cmd << ")\n\n";
         }
 #else
-        std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" make check)\n\n";
+        std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() <<
+            "\" ./run_unit.sh --test-name " << UnitBase::get().getUnitLibPath() << ")\n\n";
 #endif
     }
 

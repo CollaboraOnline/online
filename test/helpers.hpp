@@ -390,8 +390,12 @@ inline
 bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& testname, bool isView = true)
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
-    const auto message = getResponseString(ws, prefix, testname);
-    return LOOLProtocol::matchPrefix(prefix, message);
+    // Allow 20 secs to load
+    const auto message = getResponseString(ws, prefix, testname, 30 * 1000);
+    bool success = LOOLProtocol::matchPrefix(prefix, message);
+    if (!success)
+        TST_LOG("ERR: Timed out loading document");
+    return success;
 }
 
 inline

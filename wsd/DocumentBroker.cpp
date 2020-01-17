@@ -309,9 +309,9 @@ void DocumentBroker::pollThread()
 
         if (!_isLoaded && (limit_load_secs > 0) && (now > loadDeadline))
         {
-            LOG_WRN("Doc [" << _docKey << "] is taking too long to load. Will kill process ["
-                            << _childProcess->getPid() << "]. per_document.limit_load_secs set to "
-                            << limit_load_secs << " secs.");
+            LOG_ERR("Doc [" << _docKey << "] is taking too long to load. Will kill process ["
+                    << _childProcess->getPid() << "]. per_document.limit_load_secs set to "
+                    << limit_load_secs << " secs.");
             broadcastMessage("error: cmd=load kind=docloadtimeout");
 
             // Brutal but effective.

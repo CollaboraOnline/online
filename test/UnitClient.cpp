@@ -7,7 +7,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// Runs client tests in their own thread inside a WSD process.
+// Runs old-style CPPUNIT tests in their own thread inside a WSD process.
+// Depending which cppunit objects this is linked with this runs different
+// tests.
 
 #include <config.h>
 
