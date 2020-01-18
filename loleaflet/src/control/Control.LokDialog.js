@@ -409,7 +409,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		this._map.setWinId(dlgId);
-		if (dlgId in this._dialogs && this._dialogs[dlgId].cursorVisible) {
+		if (dlgId in this._dialogs) {
 			this._map.focus();
 		} else {
 			this._map.blur();
@@ -964,6 +964,8 @@ L.Control.LokDialog = L.Control.extend({
 		if (e.winId === 0) {
 			// We lost the focus.
 			this._onEditorGotFocus();
+		} else {
+			this.focus(e.winId);
 		}
 	},
 
@@ -1027,7 +1029,7 @@ L.Control.LokDialog = L.Control.extend({
 
 			// if dialog is hidden, show it
 			if (container)
-				 $(container).parent().show();
+				$(container).parent().show();
 
 			if (parentId in that._dialogs) {
 				// We might have closed the dialog by the time we render.
@@ -1041,11 +1043,12 @@ L.Control.LokDialog = L.Control.extend({
 
 	// Binary dialog msg recvd from core
 	_onDialogPaint: function (e) {
-		var parentId = this._getParentId(e.id);
+		var id = parseInt(e.id);
+		var parentId = this._getParentId(id);
 		if (parentId) {
 			this._paintDialogChild(parentId, e.img);
 		} else {
-			this._paintDialog(e.id, e.rectangle, e.img);
+			this._paintDialog(id, e.rectangle, e.img);
 		}
 	},
 
