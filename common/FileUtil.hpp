@@ -80,6 +80,9 @@ namespace FileUtil
         removeFile(path.toString(), recursive);
     }
 
+    /// Copy a file from @fromPath to @toPath, throws on failure.
+    void copyFileTo(const std::string &fromPath, const std::string &toPath);
+
     /// Make a temp copy of a file, and prepend it with a prefix.
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename,
                                 const std::string& dstFilenamePrefix);

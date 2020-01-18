@@ -25,6 +25,7 @@
 #include "Protocol.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
+#include "FileUtil.hpp"
 
 /// Dumps commands and notification trace.
 class TraceFileRecord
@@ -141,8 +142,7 @@ public:
                 filename += '.' + origPath.getExtension();
                 snapshot = Poco::Path(_path, filename).toString();
 
-                LOG_TRC("TraceFile: Copying local file [" << localPath << "] to snapshot [" << snapshot << "].");
-                Poco::File(localPath).copyTo(snapshot);
+                FileUtil::copyFileTo(localPath, snapshot);
                 snapshot = Poco::URI(Poco::URI("file://"), snapshot).toString();
 
                 LOG_TRC("TraceFile: Mapped URL " << url << " to " << snapshot);

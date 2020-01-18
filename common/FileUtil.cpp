@@ -88,6 +88,80 @@ namespace FileUtil
         return name;
     }
 
+    void copyFileTo(const std::string &fromPath, const std::string &toPath)
+    {
+        int from = -1, to = -1;
+        try {
+            from = open(fromPath.c_str(), O_RDONLY);
+            if (from < 0)
+            {
+                LOG_SYS("Failed to open src " << anonymizeUrl(fromPath));
+                throw;
+            }
+
+            struct stat st;
+            if (fstat(from, &st) != 0)
+            {
+                LOG_SYS("Failed to fstat src " << anonymizeUrl(fromPath));
+                throw;
+            }
+
+            to = open(toPath.c_str(), O_CREAT | O_TRUNC | O_WRONLY, st.st_mode);
+            if (to < 0)
+            {
+                LOG_SYS("Failed to fstat dest " << anonymizeUrl(toPath));
+                throw;
+            }
+
+            LOG_INF("Copying " << st.st_size << " bytes from " << anonymizeUrl(fromPath) << " to " << anonymizeUrl(toPath));
+
+            char buffer[64 * 1024];
+
+            int n;
+            off_t bytesIn = 0;
+            do {
+                while ((n = ::read(from, buffer, sizeof(buffer))) < 0 && errno == EINTR)
+                    LOG_TRC("EINTR reading from " << anonymizeUrl(fromPath));
+                if (n < 0)
+                {
+                    LOG_SYS("Failed to read from " << anonymizeUrl(fromPath) << " at " << bytesIn << " bytes in");
+                    throw;
+                }
+                bytesIn += n;
+                if (n == 0) // EOF
+                    break;
+                assert (off_t(sizeof (buffer)) >= n);
+                // Handle short writes and EINTR
+                for (int j = 0; j < n;)
+                {
+                    int written;
+                    while ((written = ::write(to, buffer + j, n - j)) < 0 && errno == EINTR)
+                        LOG_TRC("EINTR writing to " << anonymizeUrl(toPath));
+                    if (written < 0)
+                    {
+                        LOG_SYS("Failed to write " << n << " bytes to " << anonymizeUrl(toPath) << " at " <<
+                                bytesIn << " bytes into " << anonymizeUrl(fromPath));
+                        throw;
+                    }
+                    j += written;
+                }
+            } while(true);
+            if (bytesIn != st.st_size)
+            {
+                LOG_WRN("Unusual: file " << anonymizeUrl(fromPath) << " changed size "
+                        "during copy from " << st.st_size << " to " << bytesIn);
+            }
+        }
+        catch (...)
+        {
+            LOG_SYS("Failed to copy from " << anonymizeUrl(fromPath) << " to " << anonymizeUrl(toPath));
+            close(from);
+            close(to);
+            unlink(toPath.c_str());
+            throw Poco::Exception("failed to copy");
+        }
+    }
+
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
     {
         const std::string srcPath = srcDir + '/' + srcFilename;
@@ -100,7 +174,7 @@ namespace FileUtil
         fileDeleter.registerForDeletion(dstPath);
 #else
         const std::string dstPath = Poco::Path(Poco::Path::temp(), dstFilename).toString();
-        Poco::File(srcPath).copyTo(dstPath);
+        copyFileTo(srcPath, dstPath);
         Poco::TemporaryFile::registerForDeletion(dstPath);
 #endif
 
