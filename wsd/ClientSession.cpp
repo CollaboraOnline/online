@@ -56,6 +56,17 @@ ClientSession::ClientSession(const std::string& id,
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "], current number of connections: " << curConnections);
+
+    for (const auto& param : _uriPublic.getQueryParameters())
+    {
+        if (param.first == "reuse_cookies")
+        {
+            // Cache the cookies to avoid re-parsing the URI again.
+            _cookies = param.second;
+            break;
+        }
+    }
+
 }
 
 ClientSession::~ClientSession()

@@ -190,11 +190,19 @@ public:
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
-    virtual std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) = 0;
+    virtual std::string loadStorageFileToLocal(const Authorization& auth,
+                                               const std::string& cookies,
+                                               const std::string& templateUri)
+        = 0;
 
     /// Writes the contents of the file back to the source.
+    /// @param cookies A string representing key=value pairs that are set as cookies.
     /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
-    virtual SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) = 0;
+    virtual SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& cookies,
+                                              const std::string& saveAsPath,
+                                              const std::string& saveAsFilename,
+                                              const bool isRename)
+        = 0;
 
     static size_t getFileSize(const std::string& filename);
 
@@ -278,9 +286,13 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& cookies,
+                                       const std::string& templateUri) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& cookies,
+                                      const std::string& saveAsPath,
+                                      const std::string& saveAsFilename,
+                                      const bool isRename) override;
 
 private:
     /// True if the jailed file is not linked but copied.
@@ -494,12 +506,17 @@ public:
     /// provided during the initial creation of the WOPI storage.
     /// Also extracts the basic file information from the response
     /// which can then be obtained using getFileInfo()
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth);
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth,
+                                                  const std::string& cookies);
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& cookies,
+                                       const std::string& templateUri) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& cookies,
+                                      const std::string& saveAsPath,
+                                      const std::string& saveAsFilename,
+                                      const bool isRename) override;
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
@@ -529,9 +546,13 @@ public:
     // Implement me
     // WebDAVFileInfo getWebDAVFileInfo(const Poco::URI& uriPublic);
 
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& templateUri) override;
+    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& cookies,
+                                       const std::string& templateUri) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename) override;
+    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& cookies,
+                                      const std::string& saveAsPath,
+                                      const std::string& saveAsFilename,
+                                      const bool isRename) override;
 
 private:
     std::unique_ptr<AuthBase> _authAgent;

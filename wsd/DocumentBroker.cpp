@@ -519,7 +519,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(session->getAuthorization());
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo
+            = wopiStorage->getWOPIFileInfo(session->getAuthorization(), session->getCookies());
         userId = wopifileinfo->getUserId();
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
@@ -677,7 +678,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
-        std::string localPath = _storage->loadStorageFileToLocal(session->getAuthorization(), templateSource);
+        std::string localPath = _storage->loadStorageFileToLocal(
+            session->getAuthorization(), session->getCookies(), templateSource);
 
 #ifndef MOBILEAPP
         // Check if we have a prefilter "plugin" for this document format
@@ -885,7 +887,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
     assert(_storage && _tileCache);
-    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename, isRename);
+    const std::string cookies = it->second->getCookies();
+    const StorageBase::SaveResult storageSaveResult
+        = _storage->saveLocalFileToStorage(auth, cookies, saveAsPath, saveAsFilename, isRename);
     if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
         if (!isSaveAs && !isRename)

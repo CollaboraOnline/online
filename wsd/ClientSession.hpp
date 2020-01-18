@@ -93,6 +93,8 @@ public:
     /// The access token of this session.
     Authorization getAuthorization() const;
 
+    const std::string& getCookies() const { return _cookies; }
+
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
@@ -178,6 +180,9 @@ private:
 
     /// URI with which client made request to us
     const Poco::URI _uriPublic;
+
+    /// The cookies we should pass on to the storage on saving.
+    std::string _cookies;
 
     /// Whether this session is the owner of currently opened document
     bool _isDocumentOwner;
