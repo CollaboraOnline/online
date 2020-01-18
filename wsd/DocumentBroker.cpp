@@ -596,8 +596,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo =
-            wopiStorage->getWOPIFileInfo(session->getAuthorization(), *_lockCtx);
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(
+            session->getAuthorization(), session->getCookies(), *_lockCtx);
         userId = wopifileinfo->getUserId();
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
@@ -754,9 +754,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     if (!_storage->isLoaded())
     {
         std::string localPath = _storage->loadStorageFileToLocal(
-            session->getAuthorization(), *_lockCtx, templateSource);
+            session->getAuthorization(), session->getCookies(), *_lockCtx, templateSource);
 
-        if (!_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
+        if (!_storage->updateLockState(session->getAuthorization(), session->getCookies(), *_lockCtx, true))
             LOG_ERR("Failed to lock!");
 
 #if !MOBILEAPP
@@ -990,8 +990,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
     assert(_storage && _tileCache);
-    StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(
-        auth, *_lockCtx, saveAsPath, saveAsFilename, isRename);
+    const StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(
+        auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
     if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
 #if !MOBILEAPP
@@ -1146,7 +1146,7 @@ void DocumentBroker::refreshLock()
     else
     {
         std::shared_ptr<ClientSession> session = it->second;
-        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
+        if (!session || !_storage->updateLockState(session->getAuthorization(), session->getCookies(), *_lockCtx, true))
             LOG_ERR("Failed to refresh lock");
     }
 }
@@ -1418,7 +1418,7 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
             if (_markToDestroy && // last session to remove; FIXME: Editable?
                 _lockCtx->_isLocked && _storage)
             {
-                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false))
+                if (!_storage->updateLockState(it->second->getAuthorization(), it->second->getCookies(), *_lockCtx, false))
                     LOG_ERR("Failed to unlock!");
             }
 
@@ -1782,7 +1782,6 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     float tilesOnFlyUpperLimit = 0;
     if (normalizedVisArea.hasSurface() && session->getTileWidthInTwips() != 0 && session->getTileHeightInTwips() != 0)
     {
-
         const int tilesFitOnWidth = std::ceil(normalizedVisArea.getRight() / session->getTileWidthInTwips()) -
                                     std::ceil(normalizedVisArea.getLeft() / session->getTileWidthInTwips()) + 1;
         const int tilesFitOnHeight = std::ceil(normalizedVisArea.getBottom() / session->getTileHeightInTwips()) -
