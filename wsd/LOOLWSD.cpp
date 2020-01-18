@@ -3592,6 +3592,7 @@ void LOOLWSD::cleanup()
 {
 #if !MOBILEAPP
     FileServerRequestHandler::uninitialize();
+    JWTAuth::cleanup();
 
 #if ENABLE_SSL
     // Finally, we no longer need SSL.

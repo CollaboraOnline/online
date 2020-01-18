@@ -13,6 +13,7 @@
 
 #include <cassert>
 #include <string>
+#include <memory>
 
 #if !MOBILEAPP
 #include <Poco/Crypto/RSADigestEngine.h>
@@ -43,13 +44,15 @@ public:
         : _name(name),
           _sub(sub),
           _aud(aud),
-          _digestEngine(_key, "SHA256")
+          _digestEngine(*_key, "SHA256")
     {
     }
 
     const std::string getAccessToken() override;
 
     bool verify(const std::string& accessToken) override;
+
+    static void cleanup();
 
 private:
     const std::string createHeader();
@@ -65,7 +68,7 @@ private:
     const std::string _sub;
     const std::string _aud;
 
-    static const Poco::Crypto::RSAKey _key;
+    static std::unique_ptr<Poco::Crypto::RSAKey> _key;
     Poco::Crypto::RSADigestEngine _digestEngine;
 };
 
