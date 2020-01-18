@@ -56,16 +56,6 @@ echo "	$cmd_line"
 # drop .la suffix
 tst=`echo $tst | sed "s/\.la//"`;
 
-if test "z$tst" != "z" && test "z$CPPUNIT_TEST_NAME" != "z"; then
-    # $tst is not empty, but $CPPUNIT_TEST_NAME is set, exit early if they
-    # don't match.
-    if test "z$tst" != "z$CPPUNIT_TEST_NAME"; then
-        touch $tst_log
-        echo ":test-result: SKIP $tst (disabled by CPPUNIT_TEST_NAME)" > $test_output
-        exit 0;
-    fi
-fi
-
 export LOOL_LOGLEVEL=trace
 
 if test "z$enable_debug" != "ztrue"; then

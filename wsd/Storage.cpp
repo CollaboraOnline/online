@@ -331,8 +331,7 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/, 
         // Fallback to copying.
         if (!Poco::File(getRootFilePath()).exists())
         {
-            LOG_INF("Copying " << LOOLWSD::anonymizeUrl(publicFilePath) << " to " << getRootFilePathAnonym());
-            Poco::File(publicFilePath).copyTo(getRootFilePath());
+            FileUtil::copyFileTo(publicFilePath, getRootFilePath());
             _isCopy = true;
         }
     }
@@ -371,10 +370,7 @@ StorageBase::SaveResult LocalStorage::saveLocalFileToStorage(const Authorization
         LOG_TRC("Saving local file to local file storage (isCopy: " << _isCopy << ") for " << getRootFilePathAnonym());
         // Copy the file back.
         if (_isCopy && Poco::File(getRootFilePath()).exists())
-        {
-            LOG_INF("Copying " << getRootFilePathAnonym() << " to " << LOOLWSD::anonymizeUrl(getUri().getPath()));
-            Poco::File(getRootFilePath()).copyTo(getUri().getPath());
-        }
+            FileUtil::copyFileTo(getRootFilePath(), getUri().getPath());
 
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
