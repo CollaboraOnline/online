@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-07 10:58+0000\n"
+"PO-Revision-Date: 2020-01-20 09:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -295,7 +295,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Llinial"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
@@ -360,11 +360,11 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1478
 msgid "Rows"
-msgstr ""
+msgstr "Fileres"
 
 #: src/control/Control.JSDialogBuilder.js:1479
 msgid "Columns"
-msgstr ""
+msgstr "Columnes"
 
 #: src/control/Control.JSDialogBuilder.js:1499
 #: src/control/Control.Toolbar.js:945
@@ -466,7 +466,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
 msgid "Online Help"
-msgstr ""
+msgstr "Ayuda en llinia"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
@@ -508,15 +508,15 @@ msgstr "Presentación a pantalla completa"
 
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:564
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "Fueya de cálculu ODF (.ods)"
 
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:565
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Fueya de cálculu d'Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:566
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Fueya de cálculu d'Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:517
 #: src/control/Control.Menubar.js:562
@@ -565,7 +565,7 @@ msgstr "¿De xuru que quier desaniciar esta páxina?"
 
 #: src/control/Control.Toolbar.js:838
 msgid "Default Style"
-msgstr ""
+msgstr "Estilu predetermináu"
 
 #: src/control/Control.Toolbar.js:889
 msgid "Borders"
@@ -639,7 +639,7 @@ msgstr "Númberu de fueyes"
 
 #: src/control/Control.Toolbar.js:1558
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Estaya esbillada de caxelles"
 
 #: src/control/Control.Toolbar.js:1563 src/control/Control.Toolbar.js:1620
 msgid "Entering text mode"
@@ -783,7 +783,7 @@ msgstr ""
 
 #: src/control/Signing.js:488
 msgid "Select identity:"
-msgstr ""
+msgstr "Esbille la identidá:"
 
 #: src/control/Signing.js:489
 msgid "Login from mobile"
@@ -835,7 +835,7 @@ msgstr "Robláu y validáu"
 
 #: src/control/Signing.js:623
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "Esti documentu tien una robla que nun val."
 
 #: src/control/Signing.js:624
 msgid "Signature broken"
@@ -947,11 +947,11 @@ msgstr ""
 
 #: src/core/Socket.js:527
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #: src/core/Socket.js:532
 msgid "Overwrite"
-msgstr ""
+msgstr "Sobroscribir"
 
 #: src/core/Socket.js:537
 msgid "Save to new file"

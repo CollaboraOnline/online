@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-09 07:59+0000\n"
+"PO-Revision-Date: 2020-01-18 16:24+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
@@ -1267,7 +1267,7 @@ msgstr "Para comprobar la ortografía del documento completo, utilice el menú <
 
 #: html/loleaflet-help.html%2Bdiv.div.p:337-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr "Edite una hoja de cálculo en línea de la misma forma que una hoja de trabajo del escritorio. Las operaciones de entrada de datos, la selección de intervalos, filas, columnas o hojas de cálculo son las mismas. Utilice el teclado, los menús o la barra de herramientas para activar comandos en la hoja de cálculo. Arrastrar el contenido de las celdas para llenar otras celdas también es posible. Los comandos de copiar, cortar y pegar también están disponibles en los menús contextuales. Tecla <span class=\"kbd\">Tab</span> después de entrar datos mueve el cursor a la siguiente celda a la derecha y con un <span class=\"kbd\">Enter</span> se mueve a la celda siguiente facilitando la entrada de datos."
+msgstr "Edite una hoja de cálculo en línea de la misma forma que una hoja de trabajo del escritorio. Las operaciones de entrada de datos, la selección de intervalos, filas, columnas o hojas de cálculo son las mismas. Utilice el teclado, los menús o la barra de herramientas para activar órdenes en el libro. Arrastrar el contenido de las celdas para llenar otras celdas también es posible. Las órdenes de copiar, cortar y pegar también están disponibles en los menús contextuales. La tecla <span class=\"kbd\">Tab</span> después de introducir datos mueve el cursor a la siguiente celda a la derecha y con un <span class=\"kbd\">Intro</span> se mueve a la celda inmediatamente debajo, lo que facilita la entrada de más datos."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
@@ -1467,15 +1467,15 @@ msgstr "<span class=\"productname\">%productName</span> admite la lectura y escr
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:442-11
 msgid "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr "Documentos de texto: formatos Microsoft DOC, DOCX, RTF. OpenDocument Format ODT"
+msgstr "Documentos de texto.— Formatos de Microsoft DOC, DOCX y RTF. Formato OpenDocument ODT."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:443-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr "Hojas de calculo: formatos Microsoft XLS, XLSX, OpenDocument Format ODS"
+msgstr "Hojas de cálculo.— Formatos de Microsoft XLS y XLSX. Formato OpenDocument ODS."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:444-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr "Presentaciones: formatos Microsoft PPT, PPTX, OpenDocument Format ODP"
+msgstr "Presentaciones.— Formatos de Microsoft PPT y PPTX. Formato OpenDocument ODP."
 
 #: html/loleaflet-help.html%2Bdiv.p:446-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
@@ -1491,7 +1491,7 @@ msgstr "Pase el ratón por encima del nombre del documento en la barra de menús
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:450-11
 msgid "Type the new file name in the text box and press <span class=\"kbd\">Enter</span>."
-msgstr "Escriba un nuevo nombre de archivo en el cuadro de texto y pulse <span class=\"kbd\">Enter</span>."
+msgstr "Escriba un nombre de archivo nuevo en el cuadro de texto y oprima <span class=\"kbd\">Intro</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:452-5
 msgid "A copy of the document is saved with the new name in the same folder."

@@ -95,4 +95,5 @@
     <string name="owncloud_unauthorized">No es pot iniciar una sessió al servidor al núvol. Comproveu la configuració.</string>
     <string name="owncloud_wrong_connection">No es pot connectar amb el servidor al núvol. Comproveu la configuració.</string>
     <string name="usb_connected_configure">S\'ha connectat via USB; configureu l\'aparell.</string>
+    <string name="up_description">Al directori superior</string>
 </resources>

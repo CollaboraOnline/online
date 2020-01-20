@@ -28,4 +28,14 @@
     <string name="new_presentation">Presentación nueva</string>
     <string name="new_textdocument">Documentu de testu nuevu</string>
     <string name="temp_file_saving_disabled">Esti ficheru ye namái de llectura; nun se pue guardar.</string>
+    <string name="action_overwrite">Sobroscribir</string>
+    <string name="search_label">Dir</string>
+    <string name="cancel_label">Encaboxar</string>
+    <string name="positive_ok">Aceutar</string>
+    <string name="action_cancel">Encaboxar</string>
+    <string name="negative_cancel">Encaboxar</string>
+    <string name="about_notice">Amosar avisu</string>
+    <string name="about_license">Amosar llicencia</string>
+    <string name="no_items">Nun hai elementos</string>
+    <string name="no_recent_items">Nun hai elementos recientes</string>
 </resources>

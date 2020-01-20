@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-14 14:15+0000\n"
+"PO-Revision-Date: 2020-01-20 09:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
 "Language: ca\n"
@@ -903,7 +903,7 @@ msgstr "L'IE11 ha assolit el seu nombre màxim de connexions. Vegeu aquest docum
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Ep! s'ha produït un problema en intentar connectar amb el LibreOffice Online: "
+msgstr "Ep! S'ha produït un problema en intentar connectar amb el LibreOffice Online: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
@@ -1128,20 +1128,19 @@ msgstr "Resolució"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "Per a enganxar fora del %productName, primer feu clic al botó «baixa»"
+msgstr "Per a enganxar fora del %productName, primer feu clic al botó «Baixa»"
 
 #: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr "No s'ha pogut baixar el porta-retalls, torneu a copiar"
+msgstr "No s'ha pogut baixar el porta-retalls; torneu a copiar"
 
 #: src/map/Clipboard.js:766
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Useu els botons de copiar i enganxar en el teclat de pantalla.</p>"
 
 #: src/map/Clipboard.js:791
-#, fuzzy
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr "<p>Si voleu compartir elements més grans que el vostre document amb altres aplicacions cal baixar-los primer en el vostre aparell. Per a fer això pitgeu el botó «Inicia la baixada» de sota i aleshores feu clic en «Confirma la còpia al porta-retalls».</p><p>Si esteu copiant i baixant entre documents de %productName, no cal baixar-los.</p>"
+msgstr "<p>Si voleu compartir elements més grans que el vostre document amb altres aplicacions cal baixar-los primer en el vostre aparell. Per a fer això pitgeu el botó «Inicia la baixada» de sota i aleshores feu clic en «Confirma la còpia al porta-retalls».</p><p>Si esteu copiant i baixant entre documents del %productName, no cal baixar-los.</p>"
 
 #: src/map/Clipboard.js:807
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"

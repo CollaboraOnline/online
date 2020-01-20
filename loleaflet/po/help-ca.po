@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-07 10:58+0000\n"
+"PO-Revision-Date: 2020-01-18 18:26+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1143,7 +1143,7 @@ msgstr "Reparació del document"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Quan diverses persones editen el mateix document simultàniament, és possible que llurs modificacions entrin en conflicte i provoquin confusió. La funció Reparació del document permet als usuaris desfer les modificacions fetes per altres usuaris i restablir el document a un estat anterior."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
@@ -1227,7 +1227,7 @@ msgstr "Manipulació d'imatges"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
-msgstr ""
+msgstr "El <span class=\"productname\">%productName</span> insereix imatges al document de text des del vostre ordinador local o a partir del magatzem al núvol. Les imatges inserides són sempre incrustades al document."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">Insert image</span> icon allows you to choose an image from the cloud storage's folders and shares."
@@ -1263,7 +1263,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:331-5
 msgid "To systematically spell-check the whole document use the <span class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
-msgstr ""
+msgstr "Per a comprovar sistemàticament l'ortografia de tot el document, trieu <span class=\"ui\">Eines</span> ▸ <span class=\"ui\">Ortografia</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:337-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
@@ -1271,7 +1271,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "Les fórmules s'insereixen a la barra de fórmules. Introduïu «=» i inseriu la fórmula."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "All spreadsheets functions and mathematical rules applies."
@@ -1327,7 +1327,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:373-11
 msgid "To remove the validity of the cell, open the dialog and set the <span class=\"ui\">Allow</span> list to “All values”."
-msgstr ""
+msgstr "Per a suprimir la validesa d'una cel·la, obriu el diàleg i definiu «Tots els valors» a la llista <span class=\"ui\">Permet</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
@@ -1367,7 +1367,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:398-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Manipulació de taules"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:399-5
 msgid "Insert tables with proper icon in the toolbar. Select the initial number of rows and columns. Add rows and columns with the cell context menu. Merge cells with the <span class=\"ui\">Table</span> menu. The default paragraph style inside cells is “Table contents”."
@@ -1391,7 +1391,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Altres funcionalitats avançades"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid "<span class=\"def\">Comments:</span> Comments are inserted in the text and displayed on the right side of the screen."
@@ -1431,11 +1431,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:426-5
 msgid "Click on any slide thumbnail in the pane to switch to this slide to view or edit it."
-msgstr ""
+msgstr "Feu clic a qualsevol miniatura de diapositiva per a canviar a aquesta i visualitzar-la o editar-la."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:427-5
 msgid "Use the slide pane toolbar in the bottom to start the slideshow, add slide, duplicate or delete the current slide."
-msgstr ""
+msgstr "Feu servir la barra d'eines a la part inferior de la subfinestra de diapositives per a iniciar la presentació o afegir, duplicar o suprimir diapositives."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:430-5
 msgid "<span class=\"def\">Slide layouts:</span> <span class=\"productname\">%productName</span> Impress let you change the slide layout. Select the desired slide layout in the drop-down layout list."
@@ -1459,31 +1459,31 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:439-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
-msgstr ""
+msgstr "Quins són els formats de fitxer compatibles amb el <span class=\"productname\">%productName</span>?"
 
 #: html/loleaflet-help.html%2Bdiv.p:440-5
 msgid "<span class=\"productname\">%productName</span> supports both reading and writing for the following file formats:"
-msgstr ""
+msgstr "El <span class=\"productname\">%productName</span> admet la lectura i l'escriptura dels formats de fitxer següents:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:442-11
 msgid "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr ""
+msgstr "Documents de text.— Formats de Microsoft DOC, DOCX i RTF. Format OpenDocument ODT."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:443-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "Fulls de càlcul.— Formats de Microsoft XLS i XLSX. Format OpenDocument ODS."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:444-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Presentacions.— Formats de Microsoft PPT i PPTX. Format OpenDocument ODP."
 
 #: html/loleaflet-help.html%2Bdiv.p:446-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
-msgstr ""
+msgstr "També és possible visualitzar els formats del Visio, el Keynote, el Numbers i el Pages."
 
 #: html/loleaflet-help.html%2Bdiv.h4:447-5
 msgid "How do I save a document with another name?"
-msgstr ""
+msgstr "Com pot desar un document amb un altre nom?"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:449-11
 msgid "Hover the mouse on the document name in the menu bar."
@@ -1808,4 +1808,4 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Definiu les propietats de l'element de l'objecte."

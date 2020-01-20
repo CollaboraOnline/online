@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-15 09:56+0000\n"
+"PO-Revision-Date: 2020-01-20 09:13+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/eu/>\n"
 "Language: eu\n"
@@ -1283,7 +1283,7 @@ msgstr "Formulen lengoaia ezagun egingo zaio kalkulu-orrien edozein erabiltzaile
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
-msgstr "<span class=\"def\">Formatu zuzena:</span> Kalkulu-orrietako gelaxken, zutabeen, errenkaden eta orrien formatua zuzenean moldatu daiteke menuak, tresna-barra edo laster-menuak erabilita. Formatu zuzena hautatutako uneko objektuari soilik aplikatuko zaio. Gelaxka bati formatua emateko, erabili menua edo sakatu < span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. Elkarrizketa-koadroak zenbakien formatu konplexu eta pertsonalizatuak ahalbidetzen ditu, bai eta letra-tipoak, ertz konplexuak, atzeko planoa, gelaxken babesa eta beste elementu batzuk aldatzea ere."
+msgstr "<span class=\"def\">Formatu zuzena:</span> Kalkulu-orrietako gelaxken, zutabeen, errenkaden eta orrien formatua zuzenean moldatu daiteke menuak, tresna-barra edo laster-menuak erabilita. Formatu zuzena hautatutako uneko objektuari soilik aplikatuko zaio. Gelaxka bati formatua emateko, erabili menua edo sakatu <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. Elkarrizketa-koadroak zenbakien formatu konplexu eta pertsonalizatuak ahalbidetzen ditu, bai eta letra-tipoak, ertz konplexuak, atzeko planoa, gelaxken babesa eta beste elementu batzuk aldatzea ere."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."
@@ -1323,7 +1323,7 @@ msgstr "Hautatu baliozkotasun-irizpidea <span class=\"ui\">Onartu</span> goitibe
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:370-9
 msgid "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\">OK</span> to close the dialog."
-msgstr ""
+msgstr "Erabili <span class=\"ui\">Sarreraren laguntza</span> eta <span class=\"ui\">Errore-mezua</span> fitxak erabiltzaile-elkarrekintzak hobetzeko. Egin klik <span class=\"ui\">Ados</span> aukeran elkarrizketa-koadroa ixteko."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:373-11
 msgid "To remove the validity of the cell, open the dialog and set the <span class=\"ui\">Allow</span> list to “All values”."
@@ -1335,11 +1335,11 @@ msgstr "<span class=\"def\">Iruzkinak:</span> Kalkulu-orrietan iruzkin bana sart
 
 #: html/loleaflet-help.html%2Bdiv.div.p:377-5
 msgid "<span class=\"def\">Conditional formatting:</span> <span class=\"productname\">%productName</span> adds symbols to each cell of a range based on cells conditions. Select the cell range and click the <span class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the symbol set to apply on the range."
-msgstr ""
+msgstr "<span class=\"def\">Baldintzapeko formatua:</span> <span class=\"productname\">%productName</span> aplikazioak ikurrak gehitzen dizkie barruti bateko gelaxkei, gelaxken baldintzetan oinarrituta. Hautatu gelaxka-barrutia eta egin klik tresna-barrako <span class=\"ui\">Baldintzapeko formatua</span> ikonoan. Hautatu barrutian aplikatuko den ikur multzoa."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:385-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioarekin testu-dokumentuak editatzeko modua mahaigaineko dokumentuetan erabiltzen den bera da. Ikusten Duzuna Eskuratzen Duzu (WYSIWYG) motako diseinua du: horren arabera, dokumentuaren diseinua inprimatuta agertuko den bera da. Testua idaztea, edukiak moztu, kopiatu eta itsastea, irudiak txertatu, tamainaz aldatu eta ainguratzea, taulak eta diagramak gehitzea eta maneiatzea, eta antzeko beste eragiketa batzuk mahaigaineko testu-prozesatzaileen antzekoak dira. Erabili teklatua, menuak eta tresna-barrak dokumentuarekin lan egiteko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:388-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
@@ -1359,19 +1359,19 @@ msgstr "Formatu zuzenak, aldiz, dokumentu-edukian hautatutako zatiei soilik apli
 
 #: html/loleaflet-help.html%2Bdiv.div.p:393-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format text document objects by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected."
-msgstr ""
+msgstr "<span class=\"def\">Formatu zuzena:</span> Testu-dokumentuko objektuei formatua emateko modu zuzena dago menuak, tresna-barra eta laster-menuak erabilita. Formatu zuzena unean hautatutako objektuari soilik aplikatzen zaio."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:394-5
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
-msgstr ""
+msgstr "<span class=\"def\">Estiloen bidezko formatua:</span> <span class=\"productname\">%productName</span> aplikazioak paragrafo-estiloak onartzen ditu. Lehendik dagoen paragrafo-estiloak aplika dakizkieke paragrafoei. Aukeratu <span class=\"ui\">Editatu</span> → <span class=\"ui\">Editatu estiloak</span> estiloa aldatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:398-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Taulak maneiatzea"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:399-5
 msgid "Insert tables with proper icon in the toolbar. Select the initial number of rows and columns. Add rows and columns with the cell context menu. Merge cells with the <span class=\"ui\">Table</span> menu. The default paragraph style inside cells is “Table contents”."
-msgstr ""
+msgstr "Txertatu taulak tresna-barran horretarako dagoen ikonoa erabilita. Hautatu errenkaden eta zutabeen hasierako kopurua. Gehitu errenkadak eta zutabeak gelaxken laster-menua erabilita. Batu gelaxkak <span class=\"ui\">Taula</span> menuaren bidez. Gelaxken barruko paragrafo-estilo lehenetsia \"Taula-edukiak\" da."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:401-5
 msgid "<span class=\"def\">Formatting cells:</span> Click in the cell or range of cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\">Properties</span>. Fine tune the table with the properties dialog."
@@ -1399,11 +1399,11 @@ msgstr "<span class=\"def\">Iruzkinak:</span> Iruzkinak testuan txertatzen dira 
 
 #: html/loleaflet-help.html%2Bdiv.div.p:408-5
 msgid "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable spaces are shown as marks to assisting text alignment, editing and formatting."
-msgstr ""
+msgstr "<span class=\"def\">Formatu-markak:</span> Paragrafoak, orrialdeak eta zuriune zatiezinak marka gisa erakusten dira testuen lerrokatzean, edizioan eta formatua ematean lagungarri izan daitezen."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:409-5
 msgid "<span class=\"def\">Fields:</span> A basic set of fields is available to insert in the document."
-msgstr ""
+msgstr "<span class=\"def\">Eremuak:</span>Eremuen oinarrizko multzo bat dago erabilgarri dokumentuan txertatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:410-5
 msgid "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index can be updated with new entries."
@@ -1411,23 +1411,23 @@ msgstr "<span class=\"def\">Indize alfabetikoa:</span> Lehendik dagoen indize al
 
 #: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid "<span class=\"def\">Page header and footer:</span> Headers and footers are available for the existing page style applied in the document at the cursor position."
-msgstr ""
+msgstr "<span class=\"def\">Goiburukoa eta orri-oina:</span> Badaude goiburukoak eta orri-oinak erabilgarri dokumentuari aplikatutako orrialde-estilorako, kurtsorearen kokalekuan."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:412-5
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported, being rendered as they are shown."
-msgstr ""
+msgstr "<span class=\"def\">Oin-oharrak eta amaiera-oharrak:</span> Oin-oharrak eta amaiera-oharrak onartzen dira, eta bistaratzen diren moduan errendatzen dira."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:419-5
 msgid "<span class=\"productname\">%productName</span> Impress edits presentations in a way that should be familiar to people. Operations like typing text, cut, copy and pasting contents, selecting text , inserting, resizing, anchoring images, adding and handling tables, are similar to a desktop presentation application. Use the keyboard, menus and toolbars to perform actions in your document."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Impress aplikazioak jende gehienarentzat ezaguna izango den moduan editatzen ditu aurkezpenak. Testua idaztea, edukiak moztu, kopiatu eta itsastea, testua hautatzea, irudiak txertatu, tamainaz aldatu eta ainguratzea eta taulak maneiatzea mahaigaineko aurkezpen-aplikazioetan bezala egiten dira. Erabili teklatua, menuak eta tresna-barrak dokumentuaren gainean ekintza desberdinak gauzatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
 msgid "<span class=\"productname\">%productName</span> displays presentation slide shows, including a subset of slide transitions and object animations. Choose the slide show from the menu or click on icon in the bottom left toolbar in the slide pane."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioak diapositiba-aurkezpenak bistaratzen ditu, diapositiba-trantsizioen eta objektu-animazioen azpimultzo bat barne. Aukeratu diapositiba-aurkezpena menuan edo egin klik diapositiba-paneleko behe ezkerreko tresna-barrako ikonoan."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:423-5
 msgid "To exit a <span class=\"productname\">%productName</span> slide show, press the <span class=\"kbd\">Esc</span> key to return to the presentation edit mode."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> diapositiba-aurzkezpen batetik irteteko, dakatu <span class=\"kbd\">Esc</span> tekla aurkezpena editatzeko modura itzultzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:426-5
 msgid "Click on any slide thumbnail in the pane to switch to this slide to view or edit it."
@@ -1447,11 +1447,11 @@ msgstr "<span class=\"def\">Diapositiba maisua:</span> Hautatu uneko diapositiba
 
 #: html/loleaflet-help.html%2Bdiv.div.p:433-5
 msgid "<span class=\"def\">Slide transitions:</span> <span class=\"productname\">%productName</span> Impress provides visual effects when displaying a new slide in the slide show. Slide transitions are property of the slide, use the side bar to set the slide transition when in edit mode."
-msgstr ""
+msgstr "<span class=\"def\">Diapositiba-trantsizioak:</span> <span class=\"productname\">%productName</span> Impressek efektu bisualak eskaintzen ditu diapositiba-aurkezpenean hurrengo diapositiba erakusten denerako. Diapositiba-trantsizioak diapositibaren propietate dira, edizioan zehar erabili alboko barra diapositiba-aurkezpena ezartzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:434-5
 msgid "<span class=\"def\">Object animation:</span> Individual object in the slide can have animation. Use the side bar to configure the slide transition for a selected object or set of objects."
-msgstr ""
+msgstr "<span class=\"def\">Objektu-animazioa:</span> Diapositibako objektu guztiek izan ditzakete animazioak. Erabili alboko barra objektu baten edo objektu multzo baten diapositiba-trantsizioa konfiguratzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:435-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
@@ -1459,7 +1459,7 @@ msgstr "<span class=\"def\">Taulak:</span> Txertatu taulak aurkezpenean. Erabili
 
 #: html/loleaflet-help.html%2Bdiv.h4:439-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
-msgstr ""
+msgstr "Zein dira <span class=\"productname\">%productName</span> aplikazioak onartzen ditu fitxategi-formatuak?"
 
 #: html/loleaflet-help.html%2Bdiv.p:440-5
 msgid "<span class=\"productname\">%productName</span> supports both reading and writing for the following file formats:"
@@ -1503,7 +1503,7 @@ msgstr "Nola irten naiteke <span class=\"productname\">%productName</span> aplik
 
 #: html/loleaflet-help.html%2Bdiv.p:454-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> aplikazioak atzeko planoan gordetzen ditu dokumentuak aldizka, aplikazioa aldaketak gorde gabe itxi daiteke arazorik gabe. Aldaketak baztertzeko, haiek desegin behar dira edo <span class=\"ui\">Fitxategia</span> menuko <span class=\"ui\">Berrikuspenen historia </span> erabili behar da."
 
 #: html/loleaflet-help.html%2Bdiv.h4:455-5
 msgid "Can <span class=\"productname\">%productName</span> open a password-protected document?"
@@ -1535,23 +1535,23 @@ msgstr "Zer da testuko zenbait hitzen azpian ageri den azpimarra uhindu urdina?"
 
 #: html/loleaflet-help.html%2Bdiv.p:462-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
-msgstr ""
+msgstr "Testuak dituen gramatika-erroreak azpamarra uhin urginarekin markatzen dira. Egin klik azpimarratutako testuan saguaren eskuineko botoiarekin gramatika-errorea zuzentzeko iradokizunak dituen menu bat irekitzeko. Hautatu iradokizun zuzena testua aldatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.h4:463-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Ba al dago sinonimoen hiztegirik?"
 
 #: html/loleaflet-help.html%2Bdiv.p:464-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
-msgstr ""
+msgstr "Bai. Egin klik hautatu nahi duzun hitzean eta aukeratu <span class=\"ui\">Tresnak</span> → <span class=\"ui\">Sinonimoak</span> aukeran. Hitzak ordezkatzeko iradokizunak dituen elkarrizketa-koadro bat irekiko da."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"
-msgstr ""
+msgstr "Zer dira <span class=\"blue\">¶</span> ikur urdinak eta nola kendu daitezke dokumentutik?"
 
 #: html/loleaflet-help.html%2Bdiv.p:467-5
 msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to help text alignment and editing and is not printed. To toggle it in the document display, choose menu <span class=\"ui\">View</span> → <span class=\"ui\">Formatting mark</span>."
-msgstr ""
+msgstr "<span class=\"blue\">¶</span> ikurra formatu-marka bat da. Testuak lerrokatzen eta edizioan laguntzeko erabiltzen da, eta ez da inprimatzen. Ikur hori ikustea aktibatzeko/desaktibatzeko, aukeratu <span class=\"ui\">Ikusi</span> → <span class=\"ui\">Formatu-marka</span> menua."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
 msgid "How do I get a word count of my document?"
@@ -1559,35 +1559,35 @@ msgstr "Nola zenbatu dezaket dokumentuko hitz kopurua?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
-msgstr ""
+msgstr "Hitzen zenbaketa <span class=\"ui\">Tresnak</span> → <span class=\"ui\">Hitz kopurua</span> atalean dago. Elkarrizketa-koadro batek hautapenaren edo dokumentu osoaren hitz kopurua erakusten du."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:474-5
 msgid "Word count is also displayed in the status bar. If no text is selected the word count is for the whole document. Otherwise the word count is for the selected text."
-msgstr ""
+msgstr "Hitz kopurua egoera-barran ere bistaratzen da. Ez bada testurik hautatzen, hitz kopurua dokumentu osoarena izango da. Bestela, hautatutako testuarena izango da."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:475-5
 msgid "How can I insert a currency, copyright or trademark symbol in the document?"
-msgstr ""
+msgstr "Nola txertatu daiteke moneta, copyright edo marka erregistratu bat dokumentuan?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:476-5
 msgid "You can insert these special characters in the document using the <span class=\"ui\">Special Character</span> dialog."
-msgstr ""
+msgstr "Karaktere berezi horiek dokumentuan txertatzeko, erabili <span class=\"ui\">Karaktere berezia</span> elkarrizketa-koadroa."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:478-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Kokatu kurtsorea karakterea txertatu nahi den kokalekuan."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:480-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Txertatu</span> → <span class=\"ui\">Karaktere bereziak</span> edo egin klik tresna-barran horretarako dagoen ikonoan. Elkarrizketa-koadro bat irekiko da."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-11
 msgid "You can either browse the characters displayed with the drop lists or type a search key in the <span class=\"ui\">Search</span> box. If you know the Unicode numeric code of the special character, enter in the boxes on the right."
-msgstr ""
+msgstr "Goitibeherako zerrendetan bistaratzen diren karaktereak arakatu daitezke edo bilaketa-gako bat idatzi daiteke <span class=\"ui\">Bilatu</span> koadroan. Karaktere bereziaren Unicode zenbakizko kodea ezagutzen baduzu, sartu eskuineko koadroan."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:484-11
 msgid "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <span class=\"ui\">Cancel</span>."
-msgstr ""
+msgstr "Sakatu <span class=\"ui\">Txertatu</span> botoia. Elkarrizketa-koadroa ixteko, sakatu <span class=\"ui\">Utzi</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:486-5
 msgid "Why can't I delete text? It just gets a strike-through?"
