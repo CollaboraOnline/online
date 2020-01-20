@@ -157,8 +157,12 @@ namespace Util
             return -1;
         }
         int tasks = 0;
-        while (readdir(fdDir))
-            tasks++;
+        struct dirent *i;
+        while ((i = readdir(fdDir)))
+        {
+            if (i->d_name[0] != '.')
+                tasks++;
+        }
         closedir(fdDir);
         return tasks;
     }
