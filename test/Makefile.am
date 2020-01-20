@@ -213,6 +213,52 @@ TESTS = \
 	unit-wopi-loadencoded.la unit-wopi-temp.la
 # TESTS += unit-admin.test
 # TESTS += unit-storage.test
+
+# force serialization for now:
+
+# unit-base.log
+unit-tiletest.log : unit-base.log
+unit-integration.log : unit-tiletest.log
+unit-httpws.log : unit-integration.log
+unit-crash.log : unit-httpws.log
+
+unit-copy-paste.log : unit-crash.log
+unit-typing.log : unit-copy-paste.log
+unit-convert.log : unit-typing.log
+unit-prefork.log : unit-convert.log
+unit-tilecache.log : unit-prefork.log
+unit-timeout.log : unit-tilecache.log
+unit-oauth.log : unit-timeout.log
+unit-wopi.log : unit-oauth.log
+unit-wopi-saveas.log : unit-wopi.log
+unit-wopi-ownertermination.log : unit-wopi-saveas.log
+unit-wopi-versionrestore.log : unit-wopi-ownertermination.log
+unit-wopi-documentconflict.log : unit-wopi-versionrestore.log
+unit_wopi_renamefile.log : unit-wopi-documentconflict.log
+unit_wopi_watermark.log : unit_wopi_renamefile.log
+unit-http.log : unit_wopi_watermark.log
+unit-tiff-load.log : unit-http.log
+unit.logrge-paste.log : unit-tiff-load.log
+unit-paste.log : unit.logrge-paste.log
+unit-load-torture.log : unit-paste.log
+unit-rendering-options.log : unit-load-torture.log
+unit-password-protected.log : unit-rendering-options.log
+unit-render-shape.log : unit-password-protected.log
+unit-each-view.log : unit-render-shape.log
+unit-session.log : unit-each-view.log
+unit-uno-command.log : unit-session.log
+unit-load.log : unit-uno-command.log
+unit-cursor.log : unit-load.log
+unit-calc.log : unit-cursor.log
+unit-insert-delete.log : unit-calc.log
+unit-close.log : unit-insert-delete.log
+unit-bad-doc-load.log : unit-close.log
+unit-hosting.log : unit-bad-doc-load.log
+unit-wopi-loadencoded.log : unit-hosting.log
+unit-wopi-temp.log : unit-wopi-loadencoded.log
+
+# end force serialization
+
 else
 TESTS = ${top_builddir}/test/test
 endif
