@@ -261,22 +261,22 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
     try
     {
         int flags = 0;
-        int retries = timeoutMs / 500;
-        const Poco::Timespan waitTime(retries ? timeoutMs * 1000 / retries : timeoutMs * 1000);
         std::vector<char> response;
 
-        bool timedout = false;
+        auto endTime = std::chrono::steady_clock::now() + std::chrono::milliseconds(timeoutMs);
+
         ws.setReceiveTimeout(0);
         do
         {
-            if (ws.poll(waitTime, Poco::Net::Socket::SELECT_READ))
+            auto now = std::chrono::steady_clock::now();
+            if (now > endTime) // timedout
             {
-                if (timedout)
-                {
-                    TST_LOG_END;
-                    timedout = false;
-                }
-
+                TST_LOG("Timeout.");
+                break;
+            }
+            long waitTimeUs = std::chrono::duration_cast<std::chrono::microseconds>(endTime - now).count();
+            if (ws.poll(Poco::Timespan(waitTimeUs), Poco::Net::Socket::SELECT_READ))
+            {
                 response.resize(READ_BUFFER_SIZE * 8);
                 const int bytes = ws.receiveFrame(response.data(), response.size(), flags);
                 response.resize(std::max(bytes, 0));
@@ -312,31 +312,11 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                             LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags));
                 }
             }
-            else
-            {
-                if (!timedout)
-                {
-                    TST_LOG_BEGIN("Timeout (" << (retries > 1 ? "retrying" : "giving up") << ") ");
-                }
-                else
-                {
-                    TST_LOG_APPEND(retries << ' ');
-                }
-
-                --retries;
-                timedout = true;
-            }
         }
-        while (retries > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-
-        if (timedout)
-        {
-            TST_LOG_END;
-        }
+        while ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
     }
     catch (const Poco::Net::WebSocketException& exc)
     {
-        TST_LOG_END;
         TST_LOG(exc.message());
     }
 
