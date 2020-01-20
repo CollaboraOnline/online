@@ -445,6 +445,7 @@
 "Outlined Yellow":"Omriss gult",
 "Overwrite":"Overskriv",
 "Page %1 of %2":"Side: %1 av %2",
+"Page %1 of %2 (Page %3 of %4 to print)":"Side %1 av %2 (Side %3 av %4 som skal skrivast ut)",
 "Page %1 of %2 (Page %3)":"Side %1 av %2 (Side %3)",
 "Page Number":"Sidetal",
 "Pali Latin":"Pali-latin",
