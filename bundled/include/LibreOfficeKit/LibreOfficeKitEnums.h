@@ -131,12 +131,7 @@ typedef enum
     /**
      * The size and/or the position of the visible cursor changed.
      *
-     * Old format is the same as LOK_CALLBACK_INVALIDATE_TILES.
-     * New format is a JSON with 3 elements the 'viewId' element represented by
-     * an integer value, a 'rectangle' element in the format "x, y, width, height",
-     * and a 'mispelledWord' element represented by an integer value: '1' when
-     * a mispelled word is at the cursor position, '0' when the word is
-     * not mispelled.
+     * Rectangle format is the same as LOK_CALLBACK_INVALIDATE_TILES.
      */
     LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR = 1,
     /**
@@ -267,6 +262,10 @@ typedef enum
      *
      * Payload format is "width, height", i.e. clients get the new size without
      * having to do an explicit lok::Document::getDocumentSize() call.
+     *
+     * A size change is always preceded by a series of
+     * LOK_CALLBACK_INVALIDATE_TILES events invalidating any areas
+     * need re-rendering to adapt.
      */
     LOK_CALLBACK_DOCUMENT_SIZE_CHANGED = 13,
 

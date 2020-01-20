@@ -177,10 +177,11 @@ public:
                      const int y,
                      const int width,
                      const int height,
-                     const double dpiscale = 1.0)
+                     const double dpiscale = 1.0,
+                     const int viewId = -1)
     {
-        return mpDoc->pClass->paintWindowDPI(mpDoc, nWindowId, pBuffer,
-                                             x, y, width, height, dpiscale);
+        return mpDoc->pClass->paintWindowForView(mpDoc, nWindowId, pBuffer, x, y,
+                                                 width, height, dpiscale, viewId);
     }
 
     /**
@@ -314,7 +315,7 @@ public:
     }
 
     /**
-     * Posts an UNO command to the document.
+     * Posts a UNO command to the document.
      *
      * Example argument string:
      *
@@ -557,7 +558,7 @@ public:
                           const char *pChar,
                           int *pFontWidth,
                           int *pFontHeight,
-                          int pOrientation = 0)
+                          int pOrientation=0)
     {
         if (LIBREOFFICEKIT_DOCUMENT_HAS(mpDoc, renderFontOrientation))
             return mpDoc->pClass->renderFontOrientation(mpDoc, pFontName, pChar, pFontWidth, pFontHeight, pOrientation);
