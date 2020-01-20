@@ -2,12 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0100\n"
+"POT-Creation-Date: 2020-01-20 11:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-ui-is.po\n"
-"X-Pootle-Revision: 3943593\n"
+"X-Pootle-Revision: 3937885\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -171,7 +170,7 @@ msgstr "Slökkva á þjóni"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr "Keyrslutími þjóns"
+msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -181,7 +180,7 @@ msgstr "Móttekið"
 msgid "Sent"
 msgstr "Sent"
 
-#: admin/src/AdminSocketBase.js:46
+#: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
 msgstr "Tengingarvilla"
 
@@ -275,43 +274,33 @@ msgstr "Þú"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr "Hefja niðurhal"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr "Staðfesta afritun á klippispjald"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr "Hefja sendingu"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr "Hefja að afrita og líma yfir"
+msgstr ""
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:435
-msgid "\""
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:437
-msgid "%"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:439
-msgid "°"
-msgstr ""
-
 #: src/control/Control.JSDialogBuilder.js:726
+#, fuzzy
 msgid "Font Name"
-msgstr ""
+msgstr "Letur"
 
 #: src/control/Control.JSDialogBuilder.js:728
+#, fuzzy
 msgid "Font Size"
-msgstr ""
+msgstr "Óundirritað"
 
 #: src/control/Control.JSDialogBuilder.js:1109
 msgid "Rows"
@@ -335,7 +324,7 @@ msgid "None (Do not check spelling)"
 msgstr "Ekkert (ekki yfirfara stafsetningu)"
 
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Toolbar.js:969
-#: src/control/Toolbar.js:432 src/layer/marker/Annotation.js:183
+#: src/control/Toolbar.js:454 src/layer/marker/Annotation.js:183
 #: src/layer/tile/CalcTileLayer.js:165 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "Hætta við"
@@ -403,7 +392,7 @@ msgstr "Frumstilla aðdrátt"
 
 #: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:498
 msgid "Show Ruler"
-msgstr "Sýna reglustiku"
+msgstr ""
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:288
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:618
@@ -489,7 +478,8 @@ msgstr "Endursetja í sjálfgefið tungumál"
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ertu viss um að þú viljir eyða þessari skyggnu?"
 
-#: src/control/Control.Menubar.js:1133 src/map/Clipboard.js:751
+#: src/control/Control.Menubar.js:1132 src/map/Clipboard.js:767
+#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
@@ -497,7 +487,7 @@ msgid ""
 msgstr ""
 "<p>Vafrinn þinn er með mjög takmarkaðan aðgang að klippispjaldinu, þannig að "
 "þú ættir að nota þessa flýtilykla:<ul><li><b>Ctrl+C</b>: til að "
-"afrita.</li><li><b>Ctrl+X</b>: til að klippa.</li><li><b>Ctrl+V</b>: til að "
+"afrita.</li><li><b>Ctrl+X</b>: til að klippa.</li><li><b>Ctrl+P</b>: til að "
 "líma.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
@@ -527,6 +517,10 @@ msgstr "Settu inn nýtt nafn á blaðinu"
 #: src/control/Control.Toolbar.js:225
 msgid "Are you sure you want to delete this page?"
 msgstr "Ertu viss um að þú viljir eyða þessari síðu?"
+
+#: src/control/Control.Toolbar.js:770
+msgid "Default Style"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:821
 msgid "Borders"
@@ -850,23 +844,23 @@ msgstr "Vista..."
 msgid "Renaming..."
 msgstr "Endurnefni..."
 
-#: src/control/Toolbar.js:341
+#: src/control/Toolbar.js:363
 msgid "This version of %productName is powered by"
 msgstr "Þessi útgáfa %productName er keyrð með"
 
-#: src/control/Toolbar.js:425
+#: src/control/Toolbar.js:447
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:427
+#: src/control/Toolbar.js:449
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:428
+#: src/control/Toolbar.js:450
 msgid "Link"
 msgstr ""
 
-#: src/control/Toolbar.js:431
+#: src/control/Toolbar.js:453
 msgid "OK"
 msgstr ""
 
@@ -1080,13 +1074,11 @@ msgstr ""
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr "Gat ekki hlaðið inn skjalinu."
+msgstr ""
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
-"Vistun misfórst því ekkert diskpláss er eftir. Skjalið verður núna einungis "
-"lesanlegt."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1094,11 +1086,11 @@ msgstr "Ekki er hægt að vista skjal vegna útrunnins eða ógilds aðgangsteik
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr "Ekki er hægt að vista skjal."
+msgstr ""
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr "Ekki er hægt að endurnefna skjal."
+msgstr ""
 
 #: src/errormessages.js:38
 #, javascript-format
@@ -1162,18 +1154,21 @@ msgstr "Svara"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:116
 #: src/layer/tile/WriterTileLayer.js:56
+#, fuzzy
 msgid "Show the search bar"
-msgstr ""
+msgstr "Hætta við leitina"
 
 #: src/layer/tile/CalcTileLayer.js:256 src/layer/tile/ImpressTileLayer.js:242
 #: src/layer/tile/WriterTileLayer.js:181
+#, fuzzy
 msgid "Clear the search field"
-msgstr ""
+msgstr "Hætta við leitina"
 
 #: src/layer/tile/CalcTileLayer.js:258 src/layer/tile/ImpressTileLayer.js:244
 #: src/layer/tile/WriterTileLayer.js:183
+#, fuzzy
 msgid "Hide the search bar"
-msgstr ""
+msgstr "Hætta við leitina"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1185,22 +1180,21 @@ msgstr "Fjarlægja"
 
 #: src/layer/tile/TileLayer.js:258
 msgid "Resolve"
-msgstr "Leysa"
+msgstr ""
 
-#: src/map/Clipboard.js:123
+#: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "Til að líma utan %productName, smelltu fyrst á 'niðurhal' hnappinn"
+msgstr ""
 
-#: src/map/Clipboard.js:269
+#: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr "Tókst ekki að sækja klippispjald, afritaðu aftur"
+msgstr ""
 
-#: src/map/Clipboard.js:749
+#: src/map/Clipboard.js:765
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Notaðu afrita/líma hnappana á skjályklaborðinu þínu.</p>"
+msgstr ""
 
-#: src/map/Clipboard.js:771
-#, fuzzy
+#: src/map/Clipboard.js:790
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1208,21 +1202,13 @@ msgid ""
 "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
-"<p>Ef þú ætlar að deila stærri hlutum skjalsins með öðrum forritum, er "
-"nauðsynlegt að sækja þau fyrst yfir á tækið þitt. Það er gert með því að ýta "
-"á \"Hefja niðurhal\" hnappinn hér fyrir neðan, og þegar því er lokið að ýta "
-"á \"Staðfesta afritun á klippispjald\".</p><p>Ef þú ert að afrita og líma "
-"milli skjala innan %productName, er ekki þörf á að sækja skjölin.</p>"
 
-#: src/map/Clipboard.js:787
+#: src/map/Clipboard.js:806
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
-"<p>Niðurhal er hafið vegna stórrar afrita/líma aðgerðar. Þú skalt endilega "
-"bíða eftir að því sé lokið eða hætta við aðgerðina áður en þú hefur nýja "
-"slíka aðgerð</p>"
 
 #: src/map/Map.js:239
 msgid "Initializing..."
@@ -1274,11 +1260,7 @@ msgstr "Bý til nýja skrá út frá sniðmáti..."
 msgid "Creating copy..."
 msgstr "Bý til afrit..."
 
-#~ msgid "Save as PDF"
-#~ msgstr "Vista sem PDF"
-
-#~ msgid "<p>Your browser has very limited access to the clipboard</p>"
-#~ msgstr "<p>Vafrinn þinn er með mjög takmarkaðan aðgang að klippispjaldinu</p>"
-
-#~ msgid "Master Slides"
-#~ msgstr "Yfirskyggnur"
+#, fuzzy
+#~| msgid "Text orientation"
+#~ msgid "Toggle Page Orientation"
+#~ msgstr "Snúningur texta"

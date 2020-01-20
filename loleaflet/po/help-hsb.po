@@ -2,17 +2,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
+"PO-Revision-Date: 2020-01-07 10:58+0000\n"
+"Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
+"Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/"
+"projects/libo_online/loleaflet-help/hsb/>\n"
 "Language: hsb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : "
+"((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /hsb/libo_online/loleaflet-help-hsb.po\n"
-"X-Pootle-Revision: 3943874\n"
+"X-Pootle-Revision: 2524295\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -964,27 +967,27 @@ msgstr "Wšitko na foliji/rysowanskej płoninje wubrać"
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "Pomoc <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
 msgid "Collaborative editing"
-msgstr ""
+msgstr "Zhromadne wobdźěłowanje"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "Wužiwarski powjerch <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Wočinjenje, začinjenje, ćišćenja sćahowanje dokumentow"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Wobdźěłowanje dokumentow"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -993,91 +996,91 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Rozšěrjene funkcije"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "Tabele <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Wobdźěłowanje tabelow"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formle"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Formatowanje tabelow"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "Tekstowe dokumenty <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Wobdźěłowanje tekstowych dokumentow"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr ""
+msgstr "Kontekstowe menije"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Rozšěrjene funkcije editora tekstowych dokumentow"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "Prezentacije <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Wobdźěłowanje prezentacijow"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr ""
+msgstr "Prezentacija"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Folijowe wokno"
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Husto stajene prašenja"
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr ""
+msgstr "Powšitkowne"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr ""
+msgstr "Tekstowe dokumenty"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Tabele"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr ""
+msgstr "Prezentacije"
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid ""
@@ -1086,6 +1089,10 @@ msgid ""
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
+"<span class=\"productname\">%productName</span> wam zmóžnja, běrowe "
+"dokumenty, tekstowe dokumenty, tabele a prezentacije direktnje w swojim "
+"wobhladowku na jednore a njekomplokowane wašnje wutworić a wobdźěłać. Móžeće "
+"sam na dokumenće dźěłać, abo jako dźěl teama."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid ""
@@ -1093,18 +1100,25 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
+"Kóždemu wužiwarjej so barba přidźěluje. Kursor kóždeho wužiwarja so w "
+"přidźělenej barbje pokazuje. Kedźbu: Budźeće swój kursor jako čorny, "
+"błyskotacy kursor widźeć, hačrunjež druzy budu was w druhej barbje widźeć."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
+"Klikńće na mjeno (abo awatar) wužiwarja, zo byšće ke kursorej wužiwarja "
+"skočił. Móžeće wobdźěłarjej slědować."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
+"<span class=\"productname\">%productName</span> wam w nohowej lince zdźěla, "
+"hdyž nowy wužiwar zastupuje abo hdyž wužiwar wustupuje."
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid ""
@@ -1113,12 +1127,17 @@ msgid ""
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
+"<span class=\"productname\">%productName</span> moderne resursy wobhladowaka "
+"wužiwa, zo by wužiwarski powjerch wulkosći widźomneho wobłuka přiměrił, "
+"inkluziwnje małe wobrazowki mobilnych gratow. Powjerch so zestaja z:"
 
 #: html/loleaflet-help.html%2Bdiv.p:257-5
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
+"<span class=\"def\">Dokumentoweho wobłuka:</span> Wobłuk nałoženja "
+"dokumentowy wobsah, pak tabele, prezentacije pak tekstowe dokumenty."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid ""
@@ -1129,12 +1148,21 @@ msgid ""
 "Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold."
 "svg\"> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Menijowa lajsta:</span> Hłowny meni je horjeka  a "
+"wobsahuje wjele nastajenjow, přikazow za cišćenje, wobdźěłowanje, "
+"pokazowanje a dalše rozšěrjene přikazy. Móžeće menijowu lajstu schować, hdyž "
+"na  symbol <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> "
+"cyle naprawo kliknjeće. Klikńće na symbol <img style=\""
+"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\">, zo byšće meni zaso "
+"pokazał."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
 msgstr ""
+"<span class=\"def\">Kontekstowe menije:</span> Hdyž z prawej tastu myški "
+"kliknjeće, so meni z přikazami jewi, kotrež k přisłušnemu objektej słušeja."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid ""
@@ -1142,12 +1170,18 @@ msgid ""
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
 "state (on or off) depends on different factors."
 msgstr ""
+"<span class=\"def\">Symbolowa lajsta:</span> Symbolowa lajsta najhusćišo "
+"wužite móžnosće za wšědne wobdźěłowanje wobsahuje. Tłóčatkowe symboloweje "
+"lajsty su dynamiske, to rěka, zo jich status (aktiwny abo inaktiwny) wot "
+"rozdźělnych faktorow wotwisuje."
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
+"<span class=\"def\">Statusowa lajsta:</span> Statusowa lajsta so deleka "
+"pokazuje a wobsahuje wjacore wužitne nastajenja a funkcije."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid ""
@@ -1156,18 +1190,22 @@ msgid ""
 "automatically moves to the first occurrence found. Searching is not case-"
 "sensitive. There are three buttons right next to the search box:"
 msgstr ""
+"<span class=\"def\">Pytanska lajsta:</span> Pytanje so awtomatisce započina, "
+"hdyž so wobsah do pytanskeho pola zapodawa, a dokumentowe wokno přesuwa so "
+"awtomatisce  k prěnjemu wustopowanju. Pytanje na wulkopisanje njedźiwa. Su "
+"tři tłóčatka naprawo pódla pytanskeho pola:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Dozady pytać"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr ""
+msgstr "Doprědka pytać"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Pytanje přetorhnyć (jewi so jenož, hdyž je so tekst pytał)"
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid ""
@@ -1176,16 +1214,26 @@ msgid ""
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
+"<span class=\"def\">Skalowanska lajsta:</span> W statusowej lajsće naprawo "
+"je sadźba tłóčatkow, kotrež wam zmóžnjeja, na 100% skalować, pomjeńšić a "
+"powjetšić. Skalowanje so na dokumentowy wobłuk nałožuje, wužiwarski powjerch "
+"njeje potrjecheny. Aktualny skalowanski schodźenk so w tutym wobłuku "
+"pokazuje."
 
 #: html/loleaflet-help.html%2Bdiv.p:270-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
+"Teksty, diagramy, twary a SVG-wobrazy wótre wostanu, hdyž so powjetšeja, "
+"budźeće jenož piksele jenož w zasadźenych wobrazach kaž na přikład jpg- abo "
+"png-wobrazy widźeć."
 
 #: html/loleaflet-help.html%2Bdiv.p:271-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
+"Hdyž skalowanje wobhladowaka wužiwaće, su wobłuki dokumentow a wužiwarskeho "
+"powjercha potrjechene."
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 msgid ""
@@ -1193,12 +1241,17 @@ msgid ""
 "bar, a set of information on the on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
+"<span class=\"def\">Informaciska lajsta:</span> Naprawo wot pytanskeje "
+"lajsty so informacije wo dokumenće pokazuja. Woprawdźite informacije wot "
+"družiny dokumenta wotwisuja."
 
 #: html/loleaflet-help.html%2Bdiv.p:276-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
+"Waše dokumenty so w mróčelowym składowaku składuja a rjaduja, kotryž je w <"
+"span class=\"productname\">%productName</span> integrowany."
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid ""
@@ -1207,12 +1260,19 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
+"Zo byšće dokument sćahnył, sćehńće jón z menija <span class=\"ui\""
+">Dataja</span> nałoženja <span class=\"productname\">%productName</span>. "
+"Sćehnjenske formaty, kotrež su k dispoziciji, wot nałoženja wotwisuja. Wšě "
+"nałoženja dokumenty w PDF-formaće eksportuja."
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">%productName</span> module associated to the document format."
 msgstr ""
+"Zo byšće dokument wočinił, klikńće na dataju, zo byšće modul <span class=\""
+"productname\">%productName</span> wočinił, kotryž je z dokumentowym formatom "
+"zwjazany."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid ""
@@ -1221,6 +1281,11 @@ msgid ""
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
+"Dokumenty w <span class=\"productname\">%productName</span> so awtomatisce "
+"składuja, ale jeli chceće, zo so dokument tak chětře kaž móžno "
+"synchronizuje, móžeće tež z pomocu zapiska <span class=\"ui\""
+">Składować</span> menija <span class=\"ui\">Dataja</span> składowanje "
+"wunuzować."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid ""
@@ -1228,21 +1293,26 @@ msgid ""
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
 msgstr ""
+"Wotwisujo wot kmanosćow wašeho wobhladowaka, so ćišćerske wokno abo "
+"wuskakowace wokno pokazuje. Móžeće tutón PDF-dokument w swojim najlubšim PDF-"
+"čitaku ćišćeć."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "Hdyž so dokument začinja, składuje so awtomatisce, jeli je so změnił."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
+"Kóždy, kotryž  je hdy běrowe nałoženje wužiwał, so najskerje we "
+"wobdźěłowanju dokumentow wuznawa, ale tu su někotre typiske rozdźěle:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopěrować"
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid ""
@@ -1272,7 +1342,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
-msgstr ""
+msgstr "Porjedźenje dokumenta"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid ""
@@ -1281,12 +1351,18 @@ msgid ""
 "Repair function allows users to undo other editor’s changes to the document "
 "to a previous state."
 msgstr ""
+"Hdyž wjacore ludźo samsny dokument w samsnym času wobdźěłuja, móža so jich "
+"změny do konflikta dóstać a to móže zamylenosć zawinować. Funkcija "
+"porjedźenja dokumentow wužiwarjam zmóžnja, změny druhich wobdźěłarjow cofnyć "
+"a dokument na předchadny staw wróćo stajić."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
 msgstr ""
+"Zo byšće na wubrany staw wróćo skočił, wubjerće jón z myšku a klikńće na <"
+"span class=\"ui\">K stawej skočić</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid ""
@@ -1298,7 +1374,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:293-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Inaktiwny dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid ""
@@ -1317,7 +1393,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Pasting"
-msgstr ""
+msgstr "Zasadźenje"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid ""
@@ -1355,7 +1431,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Diagramy přidać"
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid ""
@@ -1372,7 +1448,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
@@ -1401,7 +1477,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr ""
+msgstr "Wobchadźenje z wobrazami"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid ""
@@ -1432,7 +1508,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
 msgid "Comments in documents"
-msgstr ""
+msgstr "Komentary w dokumentach"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""
@@ -1449,7 +1525,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Prawopisna kontrola"
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid ""
@@ -1584,7 +1660,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
@@ -1620,7 +1696,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
 msgid "Formatting text"
-msgstr ""
+msgstr "Tekst formatować"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""
@@ -1659,7 +1735,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:398-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Wobchadźenje z tabelemi"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:399-5
 msgid ""
@@ -1678,7 +1754,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Track changes"
-msgstr ""
+msgstr "Změny slědować"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid ""
@@ -1696,7 +1772,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Druhe rozšěrjene funkcije"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -1943,7 +2019,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
 msgid "How do I get a word count of my document?"
-msgstr ""
+msgstr "Kak dóstanu ličbu słowow swojeho dokumenta?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
@@ -2056,7 +2132,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "Kak móžu kromy dokumenta nastajić?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""
@@ -2066,7 +2142,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:502-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Předłohu strony nałožić"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:504-11
 msgid ""
@@ -2120,7 +2196,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:518-5
 msgid "Directly:"
-msgstr ""
+msgstr "Direktnje:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:520-11
 msgid "Select the text with the existing format"
@@ -2139,9 +2215,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
-#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr "Wotstawkowu předłohu Nadpismo 1 nałožić"
+msgstr "Wotstawkowu předłohu nałožić"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"
@@ -2169,7 +2244,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:535-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Kak móžu daty za ćišćenje wubrać?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:536-5
 msgid ""

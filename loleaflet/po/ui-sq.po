@@ -2,12 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0100\n"
+"POT-Creation-Date: 2020-01-20 11:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /sq/libo_online/loleaflet-ui-sq.po\n"
-"X-Pootle-Revision: 3946193\n"
+"X-Pootle-Revision: 3938151\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -97,7 +96,7 @@ msgstr ""
 
 #: admin/admin.strings.js:25
 msgid "Modified"
-msgstr "Ndryshuar "
+msgstr ""
 
 #: admin/admin.strings.js:26
 msgid "Kill"
@@ -105,7 +104,7 @@ msgstr ""
 
 #: admin/admin.strings.js:27
 msgid "Graphs"
-msgstr "Grafikë "
+msgstr ""
 
 #: admin/admin.strings.js:28
 msgid "Memory Graph"
@@ -113,7 +112,7 @@ msgstr ""
 
 #: admin/admin.strings.js:29
 msgid "CPU Graph"
-msgstr "Grafik i CPU-së "
+msgstr ""
 
 #: admin/admin.strings.js:30
 msgid "Network Graph"
@@ -129,9 +128,8 @@ msgid "Cache size of memory statistics"
 msgstr ""
 
 #: admin/admin.strings.js:33
-#, fuzzy
 msgid "Time interval of memory statistics (in ms)"
-msgstr "Intervali kohor i statistikave të CPU-së (në ms)"
+msgstr ""
 
 #: admin/admin.strings.js:34
 msgid "Cache size of CPU statistics"
@@ -139,7 +137,7 @@ msgstr ""
 
 #: admin/admin.strings.js:35
 msgid "Time interval of CPU statistics (in ms)"
-msgstr "Intervali kohor i statistikave të CPU-së (në ms)"
+msgstr ""
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -154,8 +152,9 @@ msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 
 #: admin/admin.strings.js:39
+#, fuzzy
 msgid "Documents:"
-msgstr "Dokument:"
+msgstr "Dokument"
 
 #: admin/admin.strings.js:40
 msgid "Expired:"
@@ -163,7 +162,7 @@ msgstr ""
 
 #: admin/admin.strings.js:41
 msgid "Refresh"
-msgstr "Rifresko "
+msgstr ""
 
 #: admin/admin.strings.js:42
 msgid "Shutdown Server"
@@ -175,23 +174,24 @@ msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
-msgstr "Marrë "
+msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:223
 msgid "Sent"
-msgstr "Dërguar "
+msgstr ""
 
-#: admin/src/AdminSocketBase.js:46
+#: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
-msgstr "Gabim i lidhjes "
+msgstr ""
 
 #: admin/src/AdminSocketOverview.js:102
 msgid "Are you sure you want to terminate this session?"
-msgstr "A je i sigurt nëse do të përfundosh këtë sesion?"
+msgstr ""
 
 #: admin/src/AdminSocketOverview.js:183 admin/src/AdminSocketOverview.js:285
+#, fuzzy
 msgid "Documents"
-msgstr "Dokumente"
+msgstr "Dokument"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
@@ -243,23 +243,24 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
-msgstr "Riparo Dokumentin"
+msgstr ""
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
-msgstr "Lloji "
+msgstr ""
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "Index"
-msgstr "Treguesi "
+msgstr ""
 
 #: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:279
 msgid "Comment"
 msgstr "Koment"
 
 #: src/control/Control.DocumentRepair.js:50
+#, fuzzy
 msgid "User name"
-msgstr "Emri i përdoruesit "
+msgstr "Emri i përdoruesit"
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
@@ -271,11 +272,11 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2359
 msgid "You"
-msgstr "Ju"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr "Fillo shkarkimin"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
@@ -283,7 +284,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr "Fillo ngarkimin"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
@@ -291,20 +292,6 @@ msgstr ""
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:435
-#, fuzzy
-msgid "\""
-msgstr "\""
-
-#: src/control/Control.JSDialogBuilder.js:437
-#, fuzzy
-msgid "%"
-msgstr "%"
-
-#: src/control/Control.JSDialogBuilder.js:439
-msgid "°"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:726
@@ -316,14 +303,12 @@ msgid "Font Size"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1109
-#, fuzzy
 msgid "Rows"
-msgstr "Rresht"
+msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1110
-#, fuzzy
 msgid "Columns"
-msgstr "Kolonë"
+msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1130
 #: src/control/Control.Menubar.js:621 src/control/Control.Menubar.js:672
@@ -339,7 +324,7 @@ msgid "None (Do not check spelling)"
 msgstr ""
 
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Toolbar.js:969
-#: src/control/Toolbar.js:432 src/layer/marker/Annotation.js:183
+#: src/control/Toolbar.js:454 src/layer/marker/Annotation.js:183
 #: src/layer/tile/CalcTileLayer.js:165 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "Anulo"
@@ -398,7 +383,7 @@ msgstr "Mbyll dokumentin"
 #: src/control/Control.Menubar.js:363 src/control/Control.Menubar.js:479
 #: src/control/Control.Menubar.js:523 src/control/Control.Menubar.js:569
 msgid "Repair"
-msgstr "Riparo "
+msgstr ""
 
 #: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:278
 #: src/control/Control.Toolbar.js:1086
@@ -418,7 +403,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:634 src/control/Control.Menubar.js:636
 msgid "All"
-msgstr "Të gjitha"
+msgstr ""
 
 #: src/control/Control.Menubar.js:142
 msgid "Text orientation"
@@ -438,12 +423,12 @@ msgstr ""
 #: src/control/Control.Menubar.js:455 src/control/Control.Menubar.js:503
 #: src/control/Control.Menubar.js:549 src/control/Control.Menubar.js:612
 msgid "About"
-msgstr "Rreth"
+msgstr ""
 
 #: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:457 src/map/Map.js:391
 msgid "Last modification"
-msgstr "Modifikimi i fundit"
+msgstr ""
 
 #: src/control/Control.Menubar.js:255 src/control/Control.Menubar.js:516
 msgid "ODF presentation (.odp)"
@@ -481,19 +466,19 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:645 src/control/Control.Menubar.js:664
 #: src/control/Control.Menubar.js:674
+#, fuzzy
 msgid "Insert Shape"
-msgstr ""
+msgstr "Fut tabelë"
 
 #: src/control/Control.Menubar.js:744 src/control/Control.Toolbar.js:1881
 msgid "Reset to Default Language"
-msgstr "Riktheje në gjuhën e parazgjedhur"
+msgstr ""
 
 #: src/control/Control.Menubar.js:1100
-#, fuzzy
 msgid "Are you sure you want to delete this slide?"
-msgstr "Je i sigurt që dëshiron ta fshish këtë faqe?"
+msgstr ""
 
-#: src/control/Control.Menubar.js:1133 src/map/Clipboard.js:751
+#: src/control/Control.Menubar.js:1132 src/map/Clipboard.js:767
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
@@ -517,9 +502,8 @@ msgid "Insert sheet after this"
 msgstr ""
 
 #: src/control/Control.Tabs.js:64
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr "Je i sigurt që dëshiron ta fshish këtë faqe?"
+msgstr ""
 
 #: src/control/Control.Tabs.js:77
 msgid "Enter new sheet name"
@@ -527,7 +511,11 @@ msgstr "Fut emrin e ri të fletës"
 
 #: src/control/Control.Toolbar.js:225
 msgid "Are you sure you want to delete this page?"
-msgstr "Je i sigurt që dëshiron ta fshish këtë faqe?"
+msgstr ""
+
+#: src/control/Control.Toolbar.js:770
+msgid "Default Style"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:821
 msgid "Borders"
@@ -535,15 +523,16 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:829
 msgid "More..."
-msgstr "Më tepër..."
+msgstr ""
 
 #: src/control/Control.Toolbar.js:882
 msgid "Insert Local Image"
 msgstr ""
 
 #: src/control/Control.Toolbar.js:886
+#, fuzzy
 msgid "Insert shapes"
-msgstr ""
+msgstr "Fut tabelë"
 
 #: src/control/Control.Toolbar.js:967 src/control/Control.Toolbar.js:1511
 #: src/layer/tile/CalcTileLayer.js:163
@@ -595,7 +584,7 @@ msgstr ""
 #: src/control/Control.Toolbar.js:1079 src/layer/tile/CalcTileLayer.js:124
 #: src/layer/tile/ImpressTileLayer.js:163 src/layer/tile/WriterTileLayer.js:110
 msgid "Current"
-msgstr "Aktual"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1156
 msgid "%user has joined"
@@ -606,9 +595,8 @@ msgid "%user has left"
 msgstr ""
 
 #: src/control/Control.Toolbar.js:1478
-#, fuzzy
 msgid "Number of Sheets"
-msgstr "Numri i faqeve"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1483
 msgid "Selected range of cells"
@@ -640,11 +628,11 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1509
 msgid "Maximum"
-msgstr "Maksimum"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1510
 msgid "Minimum"
-msgstr "Minimum"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1512
 msgid "Selection count"
@@ -652,33 +640,31 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1513
 msgid "None"
-msgstr "Asnjë"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1535
 msgid "Number of Pages"
-msgstr "Numri i faqeve"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1540
 msgid "Word Counter"
 msgstr ""
 
 #: src/control/Control.Toolbar.js:1575
-#, fuzzy
 msgid "Number of Slides"
-msgstr "Numri i faqeve"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1612
-#, fuzzy
 msgid "%n users"
-msgstr "0 përdorues"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1613
 msgid "1 user"
-msgstr "1 përdorues"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1614
 msgid "0 users"
-msgstr "0 përdorues"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:1975
 msgid "Style"
@@ -716,15 +702,15 @@ msgstr ""
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
-msgstr "Ju lutem vendosni Kodin PIN"
+msgstr ""
 
 #: src/control/Signing.js:214
 msgid "Error at login."
-msgstr "Gabim në hyrje."
+msgstr ""
 
 #: src/control/Signing.js:227
 msgid "Please scan the code"
-msgstr "Të lutem skano kodin"
+msgstr ""
 
 #: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
@@ -751,9 +737,8 @@ msgid "Select document type to upload"
 msgstr ""
 
 #: src/control/Signing.js:330
-#, fuzzy
 msgid "Type:"
-msgstr "Lloji "
+msgstr ""
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
@@ -797,7 +782,7 @@ msgstr ""
 
 #: src/control/Signing.js:608
 msgid "Close"
-msgstr "Mbyll"
+msgstr ""
 
 #: src/control/Signing.js:616
 msgid "Not Signed"
@@ -806,15 +791,14 @@ msgstr ""
 #: src/control/Signing.js:619
 msgid "This document is digitally signed and the signature is valid."
 msgstr ""
-"Ky dokument është i nënshkruar në formë dixhitale dhe firma është e vlefshme."
 
 #: src/control/Signing.js:620
 msgid "Signed and validated"
-msgstr "Nënshkruar dhe validuar"
+msgstr ""
 
 #: src/control/Signing.js:623
 msgid "This document has an invalid signature."
-msgstr "Ky dokument ka një nënshkrim të pavlefshëm."
+msgstr ""
 
 #: src/control/Signing.js:624
 msgid "Signature broken"
@@ -822,19 +806,19 @@ msgstr ""
 
 #: src/control/Signing.js:627
 msgid "The signature was valid, but the document has been modified"
-msgstr "Nënshkrimi ishte i vlefshëm, por dokumenti është modifikuar"
+msgstr ""
 
 #: src/control/Signing.js:628
 msgid "Signed but document modified"
-msgstr "Nënshkruar, por dokument i modifikuar"
+msgstr ""
 
 #: src/control/Signing.js:631
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr "Nënshkrimi është në rregull, por certefikata nuk mund të validohet."
+msgstr ""
 
 #: src/control/Signing.js:632
 msgid "Signed but not validated"
-msgstr "Nënshkruar, por e pa validuar"
+msgstr ""
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
@@ -856,23 +840,23 @@ msgstr "Duke ruajtur..."
 msgid "Renaming..."
 msgstr ""
 
-#: src/control/Toolbar.js:341
+#: src/control/Toolbar.js:363
 msgid "This version of %productName is powered by"
 msgstr ""
 
-#: src/control/Toolbar.js:425
+#: src/control/Toolbar.js:447
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:427
+#: src/control/Toolbar.js:449
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:428
+#: src/control/Toolbar.js:450
 msgid "Link"
 msgstr ""
 
-#: src/control/Toolbar.js:431
+#: src/control/Toolbar.js:453
 msgid "OK"
 msgstr ""
 
@@ -1148,19 +1132,19 @@ msgstr ""
 msgid "Resolve"
 msgstr ""
 
-#: src/map/Clipboard.js:123
+#: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr ""
 
-#: src/map/Clipboard.js:269
+#: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:749
+#: src/map/Clipboard.js:765
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:771
+#: src/map/Clipboard.js:790
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1169,7 +1153,7 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:787
+#: src/map/Clipboard.js:806
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "

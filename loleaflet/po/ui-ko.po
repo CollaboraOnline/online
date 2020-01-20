@@ -2,12 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0100\n"
+"POT-Creation-Date: 2020-01-20 11:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
 "X-Pootle-Path: /ko/libo_online/loleaflet-ui-ko.po\n"
-"X-Pootle-Revision: 3942528\n"
+"X-Pootle-Revision: 3937940\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -170,7 +169,7 @@ msgstr "서버 내리기"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr "서버 가동시간"
+msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -180,7 +179,7 @@ msgstr "받음"
 msgid "Sent"
 msgstr "보냄"
 
-#: admin/src/AdminSocketBase.js:46
+#: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
 msgstr "연결 오류"
 
@@ -238,7 +237,7 @@ msgstr "서버에서 %1 명령을 구문 분석하는 동안 %0 오류가 발생
 
 #: src/control/Control.ContextMenu.js:172
 msgid "Paste Special"
-msgstr "선택하여 붙여넣기"
+msgstr ""
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -274,15 +273,15 @@ msgstr "본인"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr "다운로드 시작"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr "클립보드로 복사 확인"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr "업로드 시작"
+msgstr ""
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
@@ -292,25 +291,15 @@ msgstr ""
 msgid "No color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:435
-msgid "\""
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:437
-msgid "%"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:439
-msgid "°"
-msgstr ""
-
 #: src/control/Control.JSDialogBuilder.js:726
+#, fuzzy
 msgid "Font Name"
-msgstr ""
+msgstr "글꼴"
 
 #: src/control/Control.JSDialogBuilder.js:728
+#, fuzzy
 msgid "Font Size"
-msgstr ""
+msgstr "서명안됨"
 
 #: src/control/Control.JSDialogBuilder.js:1109
 msgid "Rows"
@@ -334,7 +323,7 @@ msgid "None (Do not check spelling)"
 msgstr "없음 (맞춤법 검사 안함)"
 
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Toolbar.js:969
-#: src/control/Toolbar.js:432 src/layer/marker/Annotation.js:183
+#: src/control/Toolbar.js:454 src/layer/marker/Annotation.js:183
 #: src/layer/tile/CalcTileLayer.js:165 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "취소"
@@ -402,7 +391,7 @@ msgstr "배율 초기화"
 
 #: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:498
 msgid "Show Ruler"
-msgstr "눈금자 보이기"
+msgstr ""
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:288
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:618
@@ -488,13 +477,14 @@ msgstr "기본 언어로 다시 설정"
 msgid "Are you sure you want to delete this slide?"
 msgstr "이 슬라이드를 정말 삭제하겠습니까?"
 
-#: src/control/Control.Menubar.js:1133 src/map/Clipboard.js:751
+#: src/control/Control.Menubar.js:1132 src/map/Clipboard.js:767
+#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
-"<p>브라우저가 클립보드 접근에 제한이 있으므로, 다음의 키보드 단축키를 이용하세요:<ul><li><b>Ctrl+C</b>: "
+"<p>브라우저가 클릭보드 접근에 제한이 있으므로, 다음의 키보드 단축키를 이용하세요:<ul><li><b>Ctrl+C</b>: "
 "복사.</li><li><b>Ctrl+X</b>: 잘라내기.</li><li><b>Ctrl+P</b>: 붙여넣기.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
@@ -524,6 +514,10 @@ msgstr "새 시트 이름을 입력하십시오"
 #: src/control/Control.Toolbar.js:225
 msgid "Are you sure you want to delete this page?"
 msgstr "이 페이지를 정말 삭제하겠습니까?"
+
+#: src/control/Control.Toolbar.js:770
+msgid "Default Style"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:821
 msgid "Borders"
@@ -846,23 +840,23 @@ msgstr "저장 중..."
 msgid "Renaming..."
 msgstr "이름 바꾸기..."
 
-#: src/control/Toolbar.js:341
+#: src/control/Toolbar.js:363
 msgid "This version of %productName is powered by"
 msgstr "%productName 의 이 버전 제공자: "
 
-#: src/control/Toolbar.js:425
+#: src/control/Toolbar.js:447
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:427
+#: src/control/Toolbar.js:449
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:428
+#: src/control/Toolbar.js:450
 msgid "Link"
 msgstr ""
 
-#: src/control/Toolbar.js:431
+#: src/control/Toolbar.js:453
 msgid "OK"
 msgstr ""
 
@@ -1048,11 +1042,11 @@ msgstr ""
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr "문서 읽는데 실패하였습니다."
+msgstr ""
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr "디스크 용량 부족으로 저장 실패하였습니다. 문서는 읽기 전용으로 전환합니다."
+msgstr ""
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1060,11 +1054,11 @@ msgstr "만료되었거나 유효하지 않은 액세스 토큰으로 인해 문
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr "문서를 저장할 수 없습니다."
+msgstr ""
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr "문서 이름을 변경할 수 없습니다."
+msgstr ""
 
 #: src/errormessages.js:38
 #, javascript-format
@@ -1121,18 +1115,21 @@ msgstr "답변"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:116
 #: src/layer/tile/WriterTileLayer.js:56
+#, fuzzy
 msgid "Show the search bar"
-msgstr ""
+msgstr "검색 취소"
 
 #: src/layer/tile/CalcTileLayer.js:256 src/layer/tile/ImpressTileLayer.js:242
 #: src/layer/tile/WriterTileLayer.js:181
+#, fuzzy
 msgid "Clear the search field"
-msgstr ""
+msgstr "검색 취소"
 
 #: src/layer/tile/CalcTileLayer.js:258 src/layer/tile/ImpressTileLayer.js:244
 #: src/layer/tile/WriterTileLayer.js:183
+#, fuzzy
 msgid "Hide the search bar"
-msgstr ""
+msgstr "검색 취소"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1144,21 +1141,21 @@ msgstr "제거하기"
 
 #: src/layer/tile/TileLayer.js:258
 msgid "Resolve"
-msgstr "해결"
+msgstr ""
 
-#: src/map/Clipboard.js:123
+#: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "%productName 밖에 붙이려면, 우선 '다운로드' 버튼을 클릭하세요."
+msgstr ""
 
-#: src/map/Clipboard.js:269
+#: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr "클립보드 내용 다운로드가 실패하였으니, 다시 복사하세요."
+msgstr ""
 
-#: src/map/Clipboard.js:749
+#: src/map/Clipboard.js:765
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>화면 키보드의 복사/붙여넣기 버튼을 이용하세요.</p>"
+msgstr ""
 
-#: src/map/Clipboard.js:771
+#: src/map/Clipboard.js:790
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1167,7 +1164,7 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:787
+#: src/map/Clipboard.js:806
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -1224,11 +1221,7 @@ msgstr "템플릿으로 새로운 파일 만들기..."
 msgid "Creating copy..."
 msgstr "복사본 만드는 중..."
 
-#~ msgid "Save as PDF"
-#~ msgstr "PDF로 저장"
-
-#~ msgid "<p>Your browser has very limited access to the clipboard</p>"
-#~ msgstr "<p>브라우저가 클립보드 접근 제한이 있습니다.</p>"
-
-#~ msgid "Master Slides"
-#~ msgstr "마스터 슬라이드"
+#, fuzzy
+#~| msgid "Text orientation"
+#~ msgid "Toggle Page Orientation"
+#~ msgstr "텍스트 방향"

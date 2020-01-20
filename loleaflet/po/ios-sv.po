@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,20 +14,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /sv/libo_online/ios-sv.po\n"
-"X-Pootle-Revision: 3940961\n"
+"X-Pootle-Revision: 3938163\n"
 
 #: App+info
 msgid "App info"
-msgstr "Appinfo"
+msgstr ""
 
 #: Version
 msgid "Version"
-msgstr "Version"
+msgstr ""
 
 #: Settings
 msgid "Settings"
-msgstr "Inställningar"
+msgstr ""
 
 #: Template+list+URL
 msgid "Template list URL"
-msgstr "URL för mall-lista"
+msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /sq/libo_online/loleaflet-help-sq.po\n"
-"X-Pootle-Revision: 3946833\n"
+"X-Pootle-Revision: 3938149\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -159,7 +159,7 @@ msgstr "Ctrl + Shift + B"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Remove direct formatting"
-msgstr "Hiq formatimin direkt"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-69
@@ -203,7 +203,7 @@ msgstr "Ctrl + L"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:165-18
 msgid "Align Right"
-msgstr "Radhit djathtas"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:44-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-56
@@ -216,7 +216,7 @@ msgstr "Ctrl + R"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-18
 msgid "Justify"
-msgstr "Pëhap"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-52
@@ -227,7 +227,7 @@ msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
 msgid "Apply Default paragraph style"
-msgstr "Zbato stilin Default të paragrafit"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-74
 msgid "Ctrl + 0"
@@ -235,7 +235,7 @@ msgstr "Ctrl + 0"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-18
 msgid "Apply Heading 1 paragraph style"
-msgstr "Zbato stilin Kreu 1 për paragrafin"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-76
 msgid "Ctrl + 1"
@@ -243,7 +243,7 @@ msgstr "Ctrl + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-18
 msgid "Apply Heading 2 paragraph style"
-msgstr "Zbato stilin Kreu 2 për paragrafin"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-76
 msgid "Ctrl + 2"
@@ -251,7 +251,7 @@ msgstr "Ctrl + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-18
 msgid "Apply Heading 3 paragraph style"
-msgstr "Zbato stilin Kreu 3 për paragrafin"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-69
@@ -261,7 +261,7 @@ msgstr "Ctrl + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-18
 msgid "Apply Heading 4 paragraph style"
-msgstr "Zbato stilin Kreu 4 për paragrafin"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-76
 msgid "Ctrl + 4"
@@ -269,7 +269,7 @@ msgstr "Ctrl + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
 msgid "Apply Heading 5 paragraph style"
-msgstr "Zbato stilin Kreu 5 për paragrafin"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-76
 msgid "Ctrl + 5"
@@ -277,14 +277,15 @@ msgstr "Ctrl + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:53-9
 msgid "Text selection and navigation in document"
-msgstr "Zgjedhje teksti dhe lundrimi në dokument"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:159-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-18
+#, fuzzy
 msgid "Select All"
-msgstr "Zgjidhi të Gjitha"
+msgstr "Zgjidh gjithçka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-18
@@ -304,12 +305,12 @@ msgstr "Lëvize kursorin majtas"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:173-68
 msgid "Arrow Left"
-msgstr "Shigjeta e majtë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:57-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:174-18
 msgid "Move cursor with selection to the left"
-msgstr "Lëviz kursorin me përzgjedhjen në të majtë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:57-83
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:174-83
@@ -350,7 +351,7 @@ msgstr "Shigjeta e djathtë"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-18
 msgid "Move cursor with selection to the right"
-msgstr "Lëviz kursorin me përzgjedhjen në të djathtë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-84
@@ -390,7 +391,7 @@ msgstr "Shigjeta Lart"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-18
 msgid "Select lines in upwards direction"
-msgstr "Zgjidh rreshtat në drejtimin për nga sipër"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-78
@@ -400,7 +401,7 @@ msgstr "Shift + Shigjetë Lart"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Lëviz kursorin në fillim të paragrafit paraardhës"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-95
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-95
@@ -411,7 +412,7 @@ msgstr "Ctrl + Shigjeta Majtas"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
 msgid "Select to beginning of paragraph"
-msgstr "Zgjidh në fillim të paragrafit"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-77
@@ -420,18 +421,19 @@ msgstr "Ctrl + Shift + Shigjetë Lart"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
+#, fuzzy
 msgid "Move cursor down one line"
-msgstr "Lëvizni kursorin poshtë me një rresht"
+msgstr "Lëvizni kursorin lart një rresht"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-70
 msgid "Arrow Down"
-msgstr "Shigjeta poshtë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-18
 msgid "Select lines in downwards direction"
-msgstr "Zgjidh rreshtat në drejtimin për nga poshtë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-80
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-80
@@ -442,7 +444,7 @@ msgstr "Shift + Shigjetë Lart"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Lëviz kursorin në fillim të paragrafit tjetër"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-91
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-91
@@ -453,7 +455,7 @@ msgstr "Ctrl + Shigjeta Majtas"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-18
 msgid "Select to end of paragraph"
-msgstr "Zgjidh në fund të paragrafit"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-71
@@ -463,24 +465,24 @@ msgstr "Ctrl + Shift + Shigjetë Lart"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
+#, fuzzy
 msgid "Go to beginning of line"
-msgstr "Shko në fillimi të rreshtit"
+msgstr "Shko në fillimin e një fjale"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-68
 msgid "Home"
-msgstr "Fillimi"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-18
-#, fuzzy
 msgid "Go and select to the beginning of a line"
-msgstr "Shko dhe zgjidh në fund të një rreshti"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-85
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-85
 msgid "Shift + Home"
-msgstr "Shift + Home"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
@@ -492,37 +494,37 @@ msgstr "Shko të fillim të dokumentit"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:94-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-68
 msgid "Ctrl + Home"
-msgstr "Ctrl + Home"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
-#, fuzzy
 msgid "Go and select text to start of document"
-msgstr "Shko dhe zgjidh tekstin në fund të dokumentit"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-83
+#, fuzzy
 msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Shift + Home"
+msgstr "Ctrl + Shift + Hapësirë"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
 msgid "Go to end of line"
-msgstr "Shko në fund të rreshtit"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-62
 msgid "End"
-msgstr "Fundi"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-18
 msgid "Go and select to the end of a line"
-msgstr "Shko dhe zgjidh në fund të një rreshti"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-79
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-79
 msgid "Shift + End"
-msgstr "Shift + End"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
@@ -533,25 +535,27 @@ msgstr "Shko në fund të dokumentit"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-66
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:95-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-66
+#, fuzzy
 msgid "Ctrl + End"
-msgstr "Ctrl + End"
+msgstr "Ctrl + E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
 msgid "Go and select text to end of document"
-msgstr "Shko dhe zgjidh tekstin në fund të dokumentit"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-82
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-81
+#, fuzzy
 msgid "Ctrl + Shift + End"
-msgstr "Ctrl + Shift + End"
+msgstr "Ctrl + Shift + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
 msgid "Move the view up one page"
-msgstr "Lëviz pamjen një faqe më lart"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-70
 msgid "PageUp"
-msgstr "PageUp"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-18
 msgid "Switch cursor between text and header"
@@ -559,23 +563,23 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-82
 msgid "Ctrl + PageUp"
-msgstr "Ctrl + PageUp"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 msgid "Extend the selection up one page"
-msgstr "Zgjero përzgjedhjen një faqe më lart"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-77
 msgid "Shift + PageUp"
-msgstr "Shift + PageUp"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Move the view down one page"
-msgstr "Zhvendos pamjen një faqe më poshtë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-72
 msgid "PageDown"
-msgstr "PageDown"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Switch cursor between text and footer"
@@ -583,27 +587,27 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-82
 msgid "Ctrl + PageDown"
-msgstr "Ctrl + PageDown"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 msgid "Extend the selection down one page"
-msgstr "Zgjero përzgjedhjen një faqe më poshtë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-79
 msgid "Shift + PageDown"
-msgstr "Shift + PageDown"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Delete to beginning of word"
-msgstr "Fshij në fillim të fjalës"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-72
 msgid "Ctrl + Backspace"
-msgstr "Ctrl + Backspace"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Delete to end of word"
-msgstr "Fshij në fund të fjalës"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-66
 #, fuzzy
@@ -612,7 +616,7 @@ msgstr "Ctrl + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Delete to beginning of sentence"
-msgstr "Fshij në fillim të fjalisë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-76
 #, fuzzy
@@ -621,7 +625,7 @@ msgstr "Ctrl + Shift + Hapësirë"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Delete to end of sentence"
-msgstr "Fshij në fund të fjalisë"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-70
 #, fuzzy
@@ -630,16 +634,13 @@ msgstr "Ctrl + Shift + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:91-9
 msgid "Shortcut Keys for Tables"
-msgstr "Çelësat Përshpejtues për Tabelat"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-54
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
-"Nëse qeliza aktive është bosh: përzgjedh të gjithë tabelën. Përndryshe: "
-"përzgjedh përmbajtjen e qelizës aktive. Duke e shtypur sërish përzgjedh "
-"tabelën e plotë. "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:94-57
 msgid ""
@@ -647,9 +648,6 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
-"Nëse qeliza aktive është bosh: shkon në fillim të tabelës. Përndryshe: "
-"shtypja e parë shkon në fillim të qelizës aktive, shtypja e dytë shkon në "
-"fillim të tabelës aktuale, shtypja e tretë shkon në fillim të dokumentit. "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:95-56
 msgid ""
@@ -657,13 +655,10 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
-"Nëse qeliza aktive është bosh: shkon në fund të tabelës. Përndryshe: shtypja "
-"e parë shkon në fund të qelizës aktive, shtypja e dytë shkon në fund të "
-"tabelës aktuale, shtypja e tretë shkon në fund të dokumentit."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-18
 msgid "Ctrl + Tab"
-msgstr "Ctrl + Tab"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-56
 msgid ""
@@ -673,41 +668,37 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-18
 msgid "Alt + Arrow Keys"
-msgstr "Alt + Tastet e shigjetave"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-62
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
-"Zmadhon/zvogëlon madhësinë e kolonës/rreshtit në skajin e djathtë/poshtëm të "
-"qelizës"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 msgid "Alt + Shift + Arrow Keys"
-msgstr "Alt + Shift + Tastet e shigjetave"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
-"Zmadhon/zvogëlon madhësinë e kolonës/rreshtit në skajin e majtë/sipërm të "
-"qelizës"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-18
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr "Alt + Ctrl + Tastet e shigjetave"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-77
 msgid "Like Alt, but only the active cell is modified"
-msgstr "Njësoj si Alt, por vetëm qeliza aktive është e modifikuar"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr "Ctrl + Alt + Shift + Tastet e shigjetave"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt + Insert"
-msgstr "Alt + Shto"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-58
 msgid ""
@@ -717,7 +708,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
 msgid "Alt + Del"
-msgstr "Alt + Del"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-55
 msgid ""
@@ -727,7 +718,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 msgid "Shift + Ctrl + Del"
-msgstr "Shift + Ctrl + Del"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:103-86
 msgid ""
@@ -811,9 +802,8 @@ msgid "Insert line break"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-62
-#, fuzzy
 msgid "Shift + Enter"
-msgstr "Shift + End"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-18
 msgid "Manual page break"
@@ -841,9 +831,8 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-155
-#, fuzzy
 msgid "Alt + Enter"
-msgstr "Alt + Shto"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
 msgid ""
@@ -926,7 +915,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-92
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-99
 msgid "Tab"
-msgstr "Tab"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-18
 msgid "Promote list item (list item has to be selected)"
@@ -938,18 +927,16 @@ msgid "Shift + Tab"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:170-9
-#, fuzzy
 msgid "Text selection and navigation in a textbox"
-msgstr "Zgjedhje teksti dhe lundrimi në dokument"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
 msgid "Go and select text to start of textbox"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-18
-#, fuzzy
 msgid "Go and select text to end of textbox"
-msgstr "Shko dhe zgjidh tekstin në fund të dokumentit"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:198-9
 msgid "Slide / draw page keyboard shortcuts"
@@ -987,8 +974,9 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
+#, fuzzy
 msgid "Collaborative editing"
-msgstr ""
+msgstr "Formatimi i qelisë"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
@@ -1391,7 +1379,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
@@ -1450,8 +1438,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
+#, fuzzy
 msgid "Comments in documents"
-msgstr ""
+msgstr "Shko në fund të dokumentit"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""
@@ -1603,7 +1592,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
@@ -1638,8 +1627,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
+#, fuzzy
 msgid "Formatting text"
-msgstr ""
+msgstr "Formatim Teksti"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""
@@ -1961,8 +1951,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
+#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr ""
+msgstr "Shko të fillim të dokumentit"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
@@ -2074,8 +2065,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
+#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "Shko të fillim të dokumentit"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""
@@ -2158,9 +2150,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
-#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr "Zbato stilin Kreu 1 për paragrafin"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"

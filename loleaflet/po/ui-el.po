@@ -2,22 +2,23 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-01-20 11:59+0100\n"
+"PO-Revision-Date: 2019-12-23 05:31+0000\n"
+"Last-Translator: Dimitris Spingos <dmtrs32@gmail.com>\n"
+"Language-Team: Greek <https://weblate.documentfoundation.org/projects/"
+"libo_online/loleaflet-ui/el/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
-"X-Pootle-Revision: 3950235\n"
+"X-Pootle-Revision: 3940107\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -182,7 +183,7 @@ msgstr "Ελήφθησαν"
 msgid "Sent"
 msgstr "Απεστάλησαν"
 
-#: admin/src/AdminSocketBase.js:46
+#: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
 msgstr "Σφάλμα σύνδεσης"
 
@@ -294,18 +295,6 @@ msgstr "Έναρξη διασταυρούμενης αντιγραφής/επι�
 msgid "No color"
 msgstr "Χωρίς χρώμα"
 
-#: src/control/Control.JSDialogBuilder.js:435
-msgid "\""
-msgstr "\""
-
-#: src/control/Control.JSDialogBuilder.js:437
-msgid "%"
-msgstr "%"
-
-#: src/control/Control.JSDialogBuilder.js:439
-msgid "°"
-msgstr ""
-
 #: src/control/Control.JSDialogBuilder.js:726
 msgid "Font Name"
 msgstr "Όνομα γραμματοσειράς"
@@ -336,7 +325,7 @@ msgid "None (Do not check spelling)"
 msgstr "Καμία (χωρίς ορθογραφικό έλεγχο)"
 
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Toolbar.js:969
-#: src/control/Toolbar.js:432 src/layer/marker/Annotation.js:183
+#: src/control/Toolbar.js:454 src/layer/marker/Annotation.js:183
 #: src/layer/tile/CalcTileLayer.js:165 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "Ακύρωση"
@@ -489,7 +478,7 @@ msgstr "Επαναφορά στην προεπιλεγμένη γλώσσα"
 msgid "Are you sure you want to delete this slide?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη διαφάνεια;"
 
-#: src/control/Control.Menubar.js:1133 src/map/Clipboard.js:751
+#: src/control/Control.Menubar.js:1132 src/map/Clipboard.js:767
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
@@ -527,6 +516,10 @@ msgstr "Εισάγετε ένα νέο όνομα φύλλου."
 #: src/control/Control.Toolbar.js:225
 msgid "Are you sure you want to delete this page?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη σελίδα;"
+
+#: src/control/Control.Toolbar.js:770
+msgid "Default Style"
+msgstr "Προεπιλεγμένη τεχνοτροπία"
 
 #: src/control/Control.Toolbar.js:821
 msgid "Borders"
@@ -853,23 +846,23 @@ msgstr "Αποθήκευση..."
 msgid "Renaming..."
 msgstr "Μετονομάζεται..."
 
-#: src/control/Toolbar.js:341
+#: src/control/Toolbar.js:363
 msgid "This version of %productName is powered by"
 msgstr "Αυτή η έκδοση του %productName παρέχεται από"
 
-#: src/control/Toolbar.js:425
+#: src/control/Toolbar.js:447
 msgid "Insert hyperlink"
 msgstr "Εισαγωγή υπερσυνδέσμου"
 
-#: src/control/Toolbar.js:427
+#: src/control/Toolbar.js:449
 msgid "Text"
 msgstr "Κείμενο"
 
-#: src/control/Toolbar.js:428
+#: src/control/Toolbar.js:450
 msgid "Link"
 msgstr "Σύνδεσμος"
 
-#: src/control/Toolbar.js:431
+#: src/control/Toolbar.js:453
 msgid "OK"
 msgstr "Εντάξει"
 
@@ -892,7 +885,7 @@ msgstr "Όπα, υπάρχει πρόβλημα στη σύνδεση με το 
 
 #: src/core/Socket.js:279
 msgid "Served by:"
-msgstr "Εξυπηρετούμενος από:"
+msgstr "Εξυπηρετούμενο από:"
 
 #: src/core/Socket.js:283
 msgid "Unsupported server version."
@@ -1087,9 +1080,9 @@ msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
-"Αποτυχία φόρτωσης του εγγράφου. Αυτό το έγγραφο είτε είναι ακατάλληλο, είτε "
-"παίρνει περισσότερους από τους επιτρεπόμενους πόρους. Επικοινωνήστε με τον "
-"διαχειριστή σας."
+"Αποτυχία φόρτωσης του εγγράφου. Αυτό το έγγραφο είναι είτε αλλοιωμένο ή "
+"παίρνει περισσότερους πόρους από τους επιτρεπόμενους. Επικοινωνήστε με τον "
+"διαχειριστή."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1155,12 +1148,12 @@ msgstr ""
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr "Η αποστολή αρχείου στον διακομιστή απέτυχε, το αρχείο δεν βρέθηκε."
+msgstr "Αποτυχία αποστολής αρχείου στον διακομιστή, δεν βρέθηκε το αρχείο."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
-"Η αποστολή αρχείου στον διακομιστή απέτυχε, το αρχείο είναι υπερβολικά "
+"Αποτυχία αποστολής του αρχείου στον διακομιστή, το αρχείο είναι υπερβολικά "
 "μεγάλο."
 
 #: src/layer/marker/Annotation.js:219
@@ -1187,12 +1180,12 @@ msgstr "Εμφάνιση της γραμμής αναζήτησης"
 #: src/layer/tile/CalcTileLayer.js:256 src/layer/tile/ImpressTileLayer.js:242
 #: src/layer/tile/WriterTileLayer.js:181
 msgid "Clear the search field"
-msgstr "Καθαρισμός του πεδίου αναζήτησης"
+msgstr "Καθαρισμός πεδίου αναζήτησης"
 
 #: src/layer/tile/CalcTileLayer.js:258 src/layer/tile/ImpressTileLayer.js:244
 #: src/layer/tile/WriterTileLayer.js:183
 msgid "Hide the search bar"
-msgstr "Απόκρυψη της γραμμής αναζήτησης"
+msgstr "Απόκρυψη γραμμής αναζήτησης"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1206,21 +1199,21 @@ msgstr "Αφαίρεση"
 msgid "Resolve"
 msgstr "Επίλυση"
 
-#: src/map/Clipboard.js:123
+#: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "Για επικόλληση εκτός του %productName, πατήστε πρώτα το πλήκτρο 'λήψη'"
 
-#: src/map/Clipboard.js:269
+#: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Αποτυχία λήψης του προχείρου, ξαναντιγράψτε"
 
-#: src/map/Clipboard.js:749
+#: src/map/Clipboard.js:765
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Χρησιμοποιήστε τα πλήκτρα αντιγραφής/επικόλλησης στο πληκτρολόγιο της "
 "οθόνης σας.</p>"
 
-#: src/map/Clipboard.js:771
+#: src/map/Clipboard.js:790
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1228,14 +1221,14 @@ msgid ""
 "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
-"<p>Εάν θέλετε να μοιραστείτε μεγαλύτερα στοιχεία του εγγράφου σας με άλλες "
+"<p>Εάν θέλετε να μοιραστείτε μεγαλύτερα τμήματα του εγγράφου σας με άλλες "
 "εφαρμογές, είναι απαραίτητο να τα μεταφορτώσετε πρώτα στη συσκευή σας. Για "
 "να το κάνετε αυτό, πατήστε το παρακάτω πλήκτρο \"Έναρξη μεταφόρτωσης\" και "
 "όταν ολοκληρωθεί πατήστε \"Επιβεβαίωση αντιγραφής στο πρόχειρο\".</p><p>Εάν "
 "αντιγράφετε και επικολλάτε μεταξύ εγγράφων μέσα στο %productName, δεν "
 "χρειάζεται να μεταφορτώσετε.</p>"
 
-#: src/map/Clipboard.js:787
+#: src/map/Clipboard.js:806
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -1270,15 +1263,15 @@ msgid "Loading..."
 msgstr "Φόρτωση..."
 
 #: src/map/handler/Map.FileInserter.js:96
-#, javascript-format
+#, fuzzy, javascript-format
 msgid ""
 "The file of type: %0 can not be uploaded to server since the file has no name"
 msgstr ""
-"Το αρχείο με τύπο %0 δεν μπορεί να αποσταλεί στον διακομιστή, επειδή το "
-"αρχείο δεν έχει όνομα"
+"Το αρχείο τύπου: %0 δεν μπορεί να αποσταλεί στον διακομιστή επειδή το αρχείο "
+"δεν έχει όνομα"
 
 #: src/map/handler/Map.FileInserter.js:98
-#, javascript-format
+#, fuzzy, javascript-format
 msgid ""
 "The file of type: %0 can not be uploaded to server since the file is empty"
 msgstr ""
@@ -1291,7 +1284,7 @@ msgstr "Ανεβαίνει..."
 
 #: src/map/handler/Map.FileInserter.js:144
 msgid "Uploading file to server failed with status: %0"
-msgstr "Η αποστολή του αρχείου στον διακομιστή απέτυχε με κατάσταση: %0"
+msgstr "Αποτυχία αποστολής αρχείου στον διακομιστή με κατάσταση: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
@@ -1300,3 +1293,56 @@ msgstr "Δημιουργία νέου αρχείου από πρότυπο..."
 #: src/map/handler/Map.WOPI.js:371
 msgid "Creating copy..."
 msgstr "Δημιουργείται αντίγραφο..."
+
+#~ msgid "Linear"
+#~ msgstr "Γραμμικό"
+
+#~ msgid "Axial"
+#~ msgstr "Αξονικό"
+
+#~ msgid "Radial"
+#~ msgstr "Ακτινικό"
+
+#~ msgid "Ellipsoid"
+#~ msgstr "Ελλειψοειδές"
+
+#~ msgid "Quadratic"
+#~ msgstr "Δευτεροβάθμιο"
+
+#~ msgid "Square"
+#~ msgstr "Τετράγωνο"
+
+#~ msgid "Fixed size"
+#~ msgstr "Σταθερό μέγεθος"
+
+#~ msgid "Color"
+#~ msgstr "Χρώμα"
+
+#~ msgid "Gradient"
+#~ msgstr "Διαβάθμιση"
+
+#~ msgid "Hatching"
+#~ msgstr "Γραμμοσκίαση"
+
+#~ msgid "Pattern"
+#~ msgstr "Μοτίβο"
+
+#~ msgid "From"
+#~ msgstr "Από"
+
+#~ msgid "To"
+#~ msgstr "Σε"
+
+#, fuzzy
+#~| msgid "Text orientation"
+#~ msgid "Toggle Page Orientation"
+#~ msgstr "Προσανατολισμός κειμένου"
+
+#~ msgid "Save as PDF"
+#~ msgstr "Αποθήκευση ως PDF"
+
+#~ msgid "<p>Your browser has very limited access to the clipboard</p>"
+#~ msgstr "<p>Ο πλοηγητής σας έχει πολύ περιορισμένη πρόσβαση στο πρόχειρο</p>"
+
+#~ msgid "Master Slides"
+#~ msgstr "Κύριες διαφάνειες"

@@ -2,17 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
+"PO-Revision-Date: 2020-01-02 17:09+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"Language-Team: Asturian <https://weblate.documentfoundation.org/projects/"
+"libo_online/loleaflet-help/ast/>\n"
 "Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /ast/libo_online/loleaflet-help-ast.po\n"
-"X-Pootle-Revision: 3943639\n"
+"X-Pootle-Revision: 826924\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -48,7 +50,7 @@ msgstr "Ctrl + X"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Paste as unformatted text"
-msgstr "Pegar como testu sin formatu"
+msgstr "Apegar como testu ensin formatu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-70
 msgid "Ctrl + Alt + Shift + V"
@@ -80,7 +82,6 @@ msgstr "Formatu de testu"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:31-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:128-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:153-18
-#, fuzzy
 msgid "Bold"
 msgstr "Negrina"
 
@@ -94,7 +95,6 @@ msgstr "Ctrl + B"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:32-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:129-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:154-18
-#, fuzzy
 msgid "Italic"
 msgstr "Cursiva"
 
@@ -108,7 +108,6 @@ msgstr "Ctrl + I"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:33-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:130-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:155-18
-#, fuzzy
 msgid "Underline"
 msgstr "Sorrayáu"
 
@@ -145,7 +144,6 @@ msgstr "Ctrl + Alt + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:157-18
-#, fuzzy
 msgid "Superscript"
 msgstr "Superíndiz"
 
@@ -157,7 +155,6 @@ msgstr "Ctrl + Mayús + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-18
-#, fuzzy
 msgid "Subscript"
 msgstr "Subíndiz"
 
@@ -230,7 +227,6 @@ msgstr "Ctrl + R"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-18
-#, fuzzy
 msgid "Justify"
 msgstr "Xustificar"
 
@@ -243,7 +239,7 @@ msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
 msgid "Apply Default paragraph style"
-msgstr "Aplicar estilu de párrafu predetermináu"
+msgstr "Aplicar l'estilu de párrafu Predetermináu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-74
 msgid "Ctrl + 0"
@@ -1021,7 +1017,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
 msgid "Collaborative editing"
-msgstr ""
+msgstr "Edición collaborativa"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
@@ -1424,7 +1420,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
@@ -1636,7 +1632,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
@@ -1671,8 +1667,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
+#, fuzzy
 msgid "Formatting text"
-msgstr ""
+msgstr "Formatu de testu"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""

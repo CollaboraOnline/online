@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-help-he.po\n"
-"X-Pootle-Revision: 3949492\n"
+"X-Pootle-Revision: 3930691\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -958,27 +958,28 @@ msgstr "לבחור הכול בשקופית / עמוד ציור"
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "העזרה של <span class=\"productname\">%productName</span>"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
+#, fuzzy
 msgid "Collaborative editing"
-msgstr "עריכה שיתופית"
+msgstr "עיצוב תא"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "מנשק המשתמש של <span class=\"productname\">%productName</span>"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr "פתיחה, סגירה, שמירה, הדפסה והורדה של מסמכים"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr "עריכת מסמכים"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -987,91 +988,91 @@ msgstr "עריכת מסמכים"
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr "תכונות מתקדמות"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "גיליונות של <span class=\"productname\">%productName</span>"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr "עריכת גיליונות נתונים"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr "נוסחאות"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr "עיצוב גיליונות נתונים"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "מסמכי טקסט של <span class=\"productname\">%productName</span>"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr "עריכת מסמכי טקסט"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr "תפריטי הקשר"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr "תכונות מתקדמות של עורך מסמכי טקסט"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "מצגות של <span class=\"productname\">%productName</span>"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr "עריכת מצגות"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr "מצגת שקופיות"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr "חלונית שקופיות"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr "שאלות נפוצות"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr "כללי"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr "מסמכי טקסט"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr "גיליונות נתונים"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr "מצגות"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid ""
@@ -1153,11 +1154,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr "חיפוש אחורה"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr "חיפוש קדימה"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
@@ -1236,7 +1237,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr "העתקה והדבקה"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid ""
@@ -1266,7 +1267,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
-msgstr "תיקון מסמכים"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid ""
@@ -1311,7 +1312,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Pasting"
-msgstr "הדבקה"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid ""
@@ -1349,7 +1350,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr "הוספת תרשימים"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid ""
@@ -1366,7 +1367,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
@@ -1395,7 +1396,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr "טיפול בתמונות"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid ""
@@ -1425,8 +1426,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
+#, fuzzy
 msgid "Comments in documents"
-msgstr ""
+msgstr "מעבר לסוף המסמך"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""
@@ -1474,7 +1476,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr "יש להוסיף נוסחאות דרך סרגל הנוסחאות. יש להקליד ‚=’ ולהקליד את הנוסחה."
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "All spreadsheets functions and mathematical rules applies."
@@ -1578,7 +1580,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
@@ -1613,8 +1615,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
+#, fuzzy
 msgid "Formatting text"
-msgstr ""
+msgstr "עיצוב טקסט"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""
@@ -1936,8 +1939,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
+#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr ""
+msgstr "מעבר לתחילת המסמך"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
@@ -2049,8 +2053,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
+#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "מעבר לתחילת המסמך"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""

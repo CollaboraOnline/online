@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-help-da.po\n"
-"X-Pootle-Revision: 3943729\n"
+"X-Pootle-Revision: 2471973\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -978,8 +978,9 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
+#, fuzzy
 msgid "Collaborative editing"
-msgstr ""
+msgstr "Celleformatering"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
@@ -1382,7 +1383,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
@@ -1441,8 +1442,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
+#, fuzzy
 msgid "Comments in documents"
-msgstr ""
+msgstr "Gå til slutningen af dokumentet"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""
@@ -1594,7 +1596,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
@@ -1629,8 +1631,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
+#, fuzzy
 msgid "Formatting text"
-msgstr ""
+msgstr "Tekstformatering"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""
@@ -1952,8 +1955,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
+#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr ""
+msgstr "Gå til begyndelsen af dokumentet"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
@@ -2065,8 +2069,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
+#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "Gå til begyndelsen af dokumentet"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""

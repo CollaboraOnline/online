@@ -2,17 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
+"PO-Revision-Date: 2019-12-26 22:40+0000\n"
+"Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
+"Language-Team: Turkish <https://weblate.documentfoundation.org/projects/"
+"libo_online/loleaflet-help/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /tr/libo_online/loleaflet-help-tr.po\n"
-"X-Pootle-Revision: 3944225\n"
+"X-Pootle-Revision: 828276\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -965,27 +967,27 @@ msgstr "Slaytın / çizim sayfasının tümünü seç"
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Yardım"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
 msgid "Collaborative editing"
-msgstr ""
+msgstr "Ortak düzenleme"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> kullanıcı arayüzü"
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Açma, kapama, kaydetme, yazdırma ve belge indirme"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Belge düzenleme"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -994,91 +996,91 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Gelişmiş özellikler"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> hesap tablosu"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Hesap tablosu düzenlemek"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formül"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Hesap tablosu biçimlendirmek"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> metin belgesi"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Metin belgesini düzenlemek"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr ""
+msgstr "İçerik menüsü"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Gelişmiş metin belgesi düzenleyici özellikleri"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> sunum"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Sunum düzenlemek"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr ""
+msgstr "Slayt gösterisi"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Slayt paneli"
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Sıkça Sorulan Sorular"
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr ""
+msgstr "Metin belgesi"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Hesap tablosu"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr ""
+msgstr "Sunum"
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid ""
@@ -1094,18 +1096,25 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
+"Her kullanıcıya bir renk atanır. Her kullanıcının imleci atanan renkte "
+"görüntülenir. Not: kendi imlecinizi siyah göreceksiniz, ancak diğer "
+"kullanıcılar sizi farklı renkte görecekler."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
+"Bir kullanıcının adını (veya simgesini) sağ tıklayarak o kullanıcının "
+"imlecine geçebilirsiniz. Bu düzenleyici takip etmenizi mümkün kılar."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
+"<span class=\"productname\">%productName</span> bir kullanıcı girdiğinde "
+"yanda ayrıldığında aşağıda küçük bir bildirim ile sizi uyarır."
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid ""
@@ -1120,6 +1129,8 @@ msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
+"<span class=\"def\">Belge alanı:</span> Uygulama alanı belge içeriğini ("
+"hesap tablosu, sunum ya da metin belgesi) gösterir."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid ""
@@ -1160,11 +1171,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Geriye doğru arama"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr ""
+msgstr "İleriye doğru arama"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
@@ -1234,6 +1245,7 @@ msgstr ""
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
 msgstr ""
+"Belge kapatılırken eğer değişiklik yapılmışsa otomatik olarak kaydedilir."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid ""
@@ -1373,7 +1385,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
@@ -1432,8 +1444,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
+#, fuzzy
 msgid "Comments in documents"
-msgstr ""
+msgstr "Belgenin sonuna git"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""
@@ -1585,7 +1598,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
@@ -1620,8 +1633,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
+#, fuzzy
 msgid "Formatting text"
-msgstr ""
+msgstr "Metin biçimlendirme"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""
@@ -1943,8 +1957,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
+#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr ""
+msgstr "Belgenin başına git"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
@@ -2056,8 +2071,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
+#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "Belgenin başına git"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""
@@ -2288,4 +2304,4 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Nesnenin ögelerinin özelliklerini ayarla."

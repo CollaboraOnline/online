@@ -2,17 +2,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
+"PO-Revision-Date: 2020-01-07 10:58+0000\n"
+"Last-Translator: Rhoslyn Prys <rprys@yahoo.com>\n"
+"Language-Team: Welsh <https://weblate.documentfoundation.org/projects/"
+"libo_online/loleaflet-help/cy/>\n"
 "Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
+"(n==3) ? 3 :(n==6) ? 4 : 5;\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-help-cy.po\n"
-"X-Pootle-Revision: 3943723\n"
+"X-Pootle-Revision: 3737521\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -667,7 +670,7 @@ msgstr "Cynyddu neu leihau maint y golofn/rhes ar ymyl y gell chwith/gwaelod"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-18
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr "Alt + Ctrl + Arrow Keys"
+msgstr "Bysellau Alt + Ctrl + Saeth"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-77
@@ -967,27 +970,27 @@ msgstr "Dewiswch popeth ar y dudalen sleid / lluniadu"
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Cymorth"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
 msgid "Collaborative editing"
-msgstr ""
+msgstr "Fformatio celloedd"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> rhyngwyneb defnyddiwr"
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Agor, cau, cadw, argraffu a llwytho dogfennau i lawr"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Golygu dogfennau"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -996,91 +999,91 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Nodweddion uwch"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> taenlenni"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Golygu taenlenni"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr ""
+msgstr "Fformiwlâu"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Fformatio taenlenni"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> dogfennau testun"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Golygu dogfennau testun"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr ""
+msgstr "Dewislenni cyd-destun"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Nodweddion golygydd dogfen testun uwch"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> cyflwyniadau"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Golygu cyflwyniadau"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr ""
+msgstr "Sioe sleidiau"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Paen sleidiau"
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Cwestiynau Cyffredin"
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr ""
+msgstr "Cyffredinol"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr ""
+msgstr "Dogfennau testun"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Taenlenni"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr ""
+msgstr "Cyflwyniadau"
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid ""
@@ -1089,6 +1092,10 @@ msgid ""
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
+"<span class=\"productname\">Mae %productName</span> yn caniatáu i chi greu a "
+"golygu dogfennau swyddfa; dogfennau testun, taenlenni a  chyflwyniadau yn "
+"uniongyrchol o fewn eich porwr, mewn ffordd syml a hawdd. Gallwch weithio ar "
+"eich pen eich hun ar ddogfen, neu'n gydweithredol fel rhan o dîm."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid ""
@@ -1096,18 +1103,26 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
+"Mae lliw'n cel ei roi i bob defnyddiwr. Bydd cyrchwr pob defnyddiwr yn cael "
+"ei ddangos yn y lliw a neilltuwyd. Sylwch: fe welwch eich cyrchwr fel "
+"cyrchwr du, sy'n chwincio, er y bydd eraill yn eich gweld â lliw gwahanol."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
+"Gallwch neidio at gyrchwr defnyddiwr trwy glicio ar enw (neu afatar) y "
+"defnyddiwr. Mae'n bosib dilyn y golygydd."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
+"Mae <span class=\"productname\">%productName</span> yn eich hysbysu gyda "
+"hysbysiad bach yn y troedyn pan fydd defnyddiwr newydd yn ymuno neu "
+"ddefnyddiwr yn gadael."
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid ""
@@ -1375,7 +1390,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
@@ -1435,7 +1450,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
 msgid "Comments in documents"
-msgstr ""
+msgstr "Mynd i ddiwedd y ddogfen"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""
@@ -1587,7 +1602,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
@@ -1623,7 +1638,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
 msgid "Formatting text"
-msgstr ""
+msgstr "Fformatio testun"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""
@@ -1946,7 +1961,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
 msgid "How do I get a word count of my document?"
-msgstr ""
+msgstr "Sut mae cael cyfrif geiriau o'm dogfen?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
@@ -2059,7 +2074,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "Sut mae gosod ymylon y ddogfen?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""
@@ -2142,9 +2157,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
-#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr "Gosod arddull paragraff Pennawd 1"
+msgstr "Gosod arddull paragraff:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"

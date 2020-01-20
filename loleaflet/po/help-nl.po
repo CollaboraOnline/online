@@ -2,17 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
+"PO-Revision-Date: 2020-01-20 09:13+0000\n"
+"Last-Translator: vpanter <leo.moons@telenet.be>\n"
+"Language-Team: Dutch <https://weblate.documentfoundation.org/projects/"
+"libo_online/loleaflet-help/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-help-nl.po\n"
-"X-Pootle-Revision: 3947032\n"
+"X-Pootle-Revision: 832994\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -362,7 +364,7 @@ msgstr "Woord voor woord naar rechts selecteren"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-77
 msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl+Shift+pijl naar rechts "
+msgstr "Ctrl+Shift+pijl naar rechts"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18
@@ -980,7 +982,7 @@ msgstr "<span class=\"productname\">%productName</span> Help"
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
 msgid "Collaborative editing"
-msgstr "Gezamenlijk bewerken"
+msgstr "Bewerken door samenwerking"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
@@ -990,12 +992,12 @@ msgstr "<span class=\"productname\">%productName</span> gebruikersinterface"
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr "Documenten openen, sluiten, afdrukken en downloaden"
+msgstr "Openen, sluiten, opslaan, afdrukken en downloaden van documenten"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr "Documenten bewerken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -1004,91 +1006,94 @@ msgstr "Documenten bewerken"
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr "Uitgebreide mogelijkheden"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> werkbladen"
+msgstr "<span class=\"productname\">%productName</span> Help"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr "Werkbladen bewerken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr "Formules"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr "Werkbladen opmaken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> tekstdocumenten"
+msgstr "<span class=\"productname\">%productName</span> Help"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr "Tekstdocumenten bewerken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr "Contextmenu's"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr "Geavanceerde functies voor het bewerken van tekstdocumenten"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> presentaties"
+msgstr "<span class=\"productname\">%productName</span> gebruikersinterface"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr "Presentaties bewerken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr "Diapresentatie"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr "Diavenster"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr "Veelgestelde vragen"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr "Algemeen"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr "Tekstdocumenten"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr "Werkbladen"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr "Presentaties"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid ""
@@ -1097,10 +1102,6 @@ msgid ""
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
-"Met <span class=\"productname\">%productName</span> kunt u tekstdocumenten, "
-"spreadsheets en presentaties rechtstreeks en eenvoudig in uw browser maken "
-"en bewerken. U kunt alleen werken aan een document of samen als onderdeel "
-"van een team."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid ""
@@ -1108,26 +1109,18 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
-"Elke gebruiker krijgt een kleur toegewezen. De cursor van elke gebruiker "
-"wordt weergegeven in de toegewezen kleur. Opmerking: u ziet uw cursor als "
-"een zwarte, knipperende cursor, hoewel anderen u met een andere kleur zien."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
-"U kunt naar de cursor van een gebruiker springen door op de naam (of avatar) "
-"van de gebruiker te klikken. Het is mogelijk om de editor te volgen."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
-"<span class=\"productname\">%productName</span> waarschuwt u met een kleine "
-"melding in de voettekst wanneer een nieuwe gebruiker binnenkomt of wanneer "
-"een gebruiker vertrekt."
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid ""
@@ -1136,18 +1129,12 @@ msgid ""
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
-"<span class=\"productname\">%productName</span> gebruikt moderne "
-"browserbronnen om de gebruikersinterface aan te passen aan de grootte van "
-"het weergavegebied, inclusief kleine schermen op mobiele apparaten. De "
-"interface bestaat uit:"
 
 #: html/loleaflet-help.html%2Bdiv.p:257-5
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
-"<span class=\"def\">Het documentgebied:</span> Het toepassingsgebied toont "
-"de documentinhoud, werkbladen, presentaties of tekstdocumenten."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid ""
@@ -1158,20 +1145,12 @@ msgid ""
 "Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold."
 "svg\"> icon to show the menu."
 msgstr ""
-"<span class=\"def\">De menubalk:</span> Het hoofdmenu bevindt zich bovenaan "
-"en bevat veel opties, opdrachten voor afdrukken, bewerken, bekijken en "
-"andere geavanceerde opdrachten. U kunt de menubalk verbergen door te klikken "
-"op het pictogram <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold."
-"svg\"> uiterst rechts. Klik op het pictogram <img style=\""
-"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> om het menu te tonen."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
 msgstr ""
-"<span class=\"def\">Contextmenu's:</span> Als u met rechts klikt, verschijnt "
-"een menu met opdrachten die aan het onderliggende object zijn gekoppeld."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid ""
@@ -1179,18 +1158,12 @@ msgid ""
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
 "state (on or off) depends on different factors."
 msgstr ""
-"<span class=\"def\">De werkbalk:</span> De werkbalk bevat de meest gebruikte "
-"opties voor dagelijkse bewerking. Werkbalkknoppen zijn dynamisch, wat "
-"betekent dat hun status (aan of uit) afhankelijk is van verschillende "
-"factoren."
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
-"<span class=\"def\">De statusbalk:</span> De statusbalk wordt onderaan "
-"weergegeven en bevat verschillende handige opties en functies."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid ""
@@ -1199,23 +1172,18 @@ msgid ""
 "automatically moves to the first occurrence found. Searching is not case-"
 "sensitive. There are three buttons right next to the search box:"
 msgstr ""
-"<span class=\"def\">De zoekbalk:</span> Het zoeken begint automatisch "
-"wanneer inhoud in het zoekvak wordt ingevoegd en het documentvenster wordt "
-"automatisch verplaatst naar het eerste gevonden exemplaar. Zoeken is niet "
-"hoofdlettergevoelig. Er zijn drie knoppen direct naast het zoekvak:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr "Achterwaarts zoeken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr "Voorwaarts zoeken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
 msgstr ""
-"Annuleer de zoekopdracht (verschijnt alleen wanneer een tekst is doorzocht)"
 
 #: html/loleaflet-help.html%2Bdiv.p:269-5
 msgid ""
@@ -1224,26 +1192,16 @@ msgid ""
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
-"<span class=\"def\">De zoombalk:</span> Aan de rechterkant van de statusbalk "
-"bevindt zich een set knoppen waarmee u kunt zoomen naar 100%, uitzoomen en "
-"inzoomen. De zoomfunctie is van toepassing op de documentgebied, de "
-"gebruikersinterface wordt niet beïnvloed. Het huidige zoomniveau wordt in "
-"dit gebied weergegeven."
 
 #: html/loleaflet-help.html%2Bdiv.p:270-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
-"Tekst, grafieken, vormen en svg-afbeeldingen blijven scherp. Bij het "
-"inzoomen ziet u alleen pixels verschijnen bij ingevoegde afbeeldingen, zoals "
-"jpgs of pngs."
 
 #: html/loleaflet-help.html%2Bdiv.p:271-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
-"Het gebruik van de browserzoom beïnvloedt het document en de "
-"gebruikersinterface."
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 msgid ""
@@ -1251,17 +1209,12 @@ msgid ""
 "bar, a set of information on the on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
-"<span class=\"def\">De informatiebalk:</span> Rechts van de zoekbalk wordt "
-"een set informatie op het document weergegeven. De feitelijke informatie is "
-"afhankelijk van de aard van het document."
 
 #: html/loleaflet-help.html%2Bdiv.p:276-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
-"Uw documenten worden opgeslagen en beheerd in de cloudopslag die is "
-"geïntegreerd met <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:277-5
 msgid ""
@@ -1270,19 +1223,12 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
-"Als u een document wilt downloaden, downloadt u het uit het <span class=\""
-"productname\">%productName</span> menu <span class=\"ui\">Bestand</span>. De "
-"beschikbare downloadindelingen zijn afhankelijk van de toepassing. Alle "
-"toepassingen exporteren documenten in PDF-formaat."
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">%productName</span> module associated to the document format."
 msgstr ""
-"Om het document te openen, klikt u op het bestand om de module van <span "
-"class=\"productname\">%productName</span> te openen, die is gekoppeld aan de "
-"documentindeling."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid ""
@@ -1291,11 +1237,6 @@ msgid ""
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
-"Documenten in <span class=\"productname\">%productName</span> worden "
-"automatisch opgeslagen, maar als u zich zorgen maakt dat een document zo "
-"snel mogelijk wordt gesynchroniseerd, kunt u het opslaan ook forceren met "
-"behulp van de menukeuze <span class=\"ui\">Bestand</span> - <span class=\""
-"ui\">Opslaan</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid ""
@@ -1303,29 +1244,21 @@ msgid ""
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
 msgstr ""
-"Afhankelijk van de mogelijkheden van uw browser kan het afdrukvenster "
-"verschijnen of verschijnt er een pop-up \"PDF-export downloaden?\". U kunt "
-"deze PDF afdrukken in uw favoriete PDF-lezer."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
 msgstr ""
-"Bij het sluiten van een document wordt het automatisch opgeslagen als het is "
-"gewijzigd."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
-"Het bewerken van documenten moet bekend zijn bij iedereen die eerder een "
-"Office-toepassing heeft gebruikt, maar hier zijn enkele onderscheidende "
-"kenmerken:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr "Kopiëren en plakken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid ""
@@ -1341,19 +1274,6 @@ msgid ""
 "copy. On Android or iOS selecting text by double tapping, and using a long-"
 "tap to access copy/cut/paste via the context menu is required."
 msgstr ""
-"Platte tekstinhoud kopiëren/knippen en plakken wordt ondersteund, niet "
-"alleen binnen een bepaald document, maar ook in documenten van dezelfde of "
-"verschillende <span class=\"productname\">%productName</span>. Voor dit "
-"interne gebruik kunnen gebruikers inhoud, inclusief afbeeldingen en gemengde "
-"inhoud, op pc kopiëren/knippen met behulp van de sneltoetsen (<span class=\""
-"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\""
-">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> "
-"+ <span class=\"kbd\">V</span>). Om veiligheidsredenen is het noodzakelijk "
-"om <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> te "
-"gebruiken om op een pc te plakken, maar contextmenu's kunnen worden gebruikt "
-"voor knippen en kopiëren. Op Android of iOS is het selecteren van tekst door "
-"dubbeltikken en lang tikken nodig om toegang te krijgen tot kopiëren/knippen/"
-"plakken via het contextmenu."
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid ""
@@ -1365,17 +1285,10 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
-"Om grotere stukken inhoud naar andere toepassingen op uw apparaat te "
-"kopiëren, moeten gebruikers op de knop <span class=\"ui\">Start "
-"download</span> drukken en dit vervolgens naar hun klembord kopiëren, om het "
-"beschikbaar te maken voor de doeltoepassing om te lezen. Dit is mogelijk via "
-"een kleine widget die in de rechterbenedenhoek verschijnt en is alleen nodig "
-"om de inhoud te exporteren voor plakken in externe toepassingen. Deze stap "
-"converteert ook complexe objecttypen naar statische afbeeldingen."
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
-msgstr "Document repareren"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid ""
@@ -1384,18 +1297,12 @@ msgid ""
 "Repair function allows users to undo other editor’s changes to the document "
 "to a previous state."
 msgstr ""
-"Wanneer meerdere mensen hetzelfde document tegelijkertijd bewerken, is het "
-"mogelijk dat hun wijzigingen conflicteren en dit kan enige verwarring "
-"veroorzaken. Met de functie Documentreparatie kunnen gebruikers wijzigingen "
-"van het document in een eerdere status ongedaan maken."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
 msgstr ""
-"Om terug te gaan naar de geselecteerde status, selecteert u deze met de muis "
-"en drukt u op <span class=\"ui\">Wissel naar status</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid ""
@@ -1404,14 +1311,10 @@ msgid ""
 "\"kbd\">A</span> and proceeded to type over it destroying it – while you "
 "were concurrently editing."
 msgstr ""
-"Dit is met name handig - stel bijvoorbeeld dat een collega per ongeluk alle "
-"tekst in het document met <span class=\"kbd\">Ctrl</span> + <span class=\""
-"kbd\">A</span> heeft geselecteerd en er vervolgens overheen heeft getypt - "
-"terwijl u het tegelijkertijd aan het bewerken was."
 
 #: html/loleaflet-help.html%2Bdiv.h4:293-5
 msgid "Inactive document"
-msgstr "Inactief document"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid ""
@@ -1420,11 +1323,6 @@ msgid ""
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
-"Wanneer <span class=\"productname\">%productName</span> detecteert dat er "
-"enige tijd geen activiteit in de browser is geweest, wordt het document in "
-"de status \"Inactief\" geplaatst. Het document wordt weergegeven met een "
-"transparante grijze overlay, met het bericht \"Niet actief document - klik "
-"om het bewerken te hervatten\"."
 
 #: html/loleaflet-help.html%2Bdiv.p:296-5
 msgid ""
@@ -1432,13 +1330,10 @@ msgid ""
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
 msgstr ""
-"Klik in het document om door te gaan met bewerken. De lay-out en het bericht "
-"verdwijnen. Alle wijzigingen die door andere gebruikers zijn aangebracht - "
-"tijdens het gezamenlijk bewerken van het document - worden opnieuw geladen."
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Pasting"
-msgstr "Plakken"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid ""
@@ -1447,10 +1342,6 @@ msgid ""
 "or browser window, of from outside of the browser, the pasted content will "
 "preserve rich text."
 msgstr ""
-"Wanneer u inhoud plakt die vanuit hetzelfde document is gekopieerd, blijven "
-"de indeling en elementen behouden. Als u kopieert vanuit een ander document, "
-"in een ander tabblad of browservenster, of van buiten de browser, behoudt de "
-"geplakte inhoud platte tekst."
 
 #: html/loleaflet-help.html%2Bdiv.p:299-5
 msgid ""
@@ -1458,9 +1349,6 @@ msgid ""
 "kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\""
 ">Shift</span> + <span class=\"kbd\">V</span>"
 msgstr ""
-"U kunt als niet-opgemaakte tekst plakken met de sneltoets: <span class=\""
-"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\""
-">Shift</span> + <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:300-5
 msgid ""
@@ -1468,59 +1356,44 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
-"Wanneer u tekst vanuit het document plakt, wordt de opmaak behouden. U kunt "
-"ook objecten, zoals afbeeldingen, plakken als deze worden gekopieerd uit het "
-"document waarin u werkt."
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application, it will be pasted as rich text."
 msgstr ""
-"Wanneer u tekst van buiten het document plakt (een ander browservenster of "
-"een bureaubladtoepassing, wordt deze geplakt als platte tekst."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid ""
 "When you have internal cut or copied content, you can paste this content "
 "with the right mouse button menu."
 msgstr ""
-"Wanneer u interne geknipte of gekopieerde inhoud hebt, kunt u deze inhoud "
-"met het rechtermuisknopmenu plakken."
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr "Grafieken toevoegen"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid ""
 "<span class=\"productname\">%productName</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
-"<span class=\"productname\">%productName</span> ondersteunt het invoegen en "
-"visualiseren van grafieken in documenten. Om een grafiek toe te voegen:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:308-11
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
 msgstr ""
-"Selecteer een tabel in een tekstdocument, een bereik in een werkblad of een "
-"tabel in een presentatie."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
-"Kies <span class=\"ui\">Invoegen</span> → <span class=\"ui\">Diagram</span>. "
-"Volg de Assistent diagram om de grafiek aan te passen."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
 msgid "If no table or range was selected, a prototype chart is displayed."
 msgstr ""
-"Als er geen tabel of bereik is geselecteerd, wordt een prototypediagram "
-"weergegeven."
 
 #: html/loleaflet-help.html%2Bdiv.p:316-5
 msgid ""
@@ -1529,31 +1402,22 @@ msgid ""
 "Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart "
 "Type</span> to edit chart data and select chart type."
 msgstr ""
-"<span class=\"def\">Diagrambewerking:</span> Dubbelklik op het diagram om te "
-"selecteren. Gebruik contextmenu's om grafiekelementen toe te voegen, zoals "
-"titel, as en andere. Kies <span class=\"ui\">Gegevensbereik</span> en <span "
-"class=\"ui\">Diagramtype</span> om diagramgegevens te bewerken en het "
-"diagramtype te selecteren."
 
 #: html/loleaflet-help.html%2Bdiv.p:317-5
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
 msgstr ""
-"<span class=\"def\">Grafiekopmaak:</span> Hetzelfde contextmenu brengt u "
-"naar de grafiek van de gegevenstabel en de selectie van het grafiektype."
 
 #: html/loleaflet-help.html%2Bdiv.p:318-5
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
 msgstr ""
-"<span class=\"def\">Opmaak van gegevensreeksen:</span> Open het contextmenu "
-"en kies <span class=\"ui\">Gegevensreeksen opmaken</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr "Omgaan met afbeeldingen"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid ""
@@ -1561,9 +1425,6 @@ msgid ""
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
-"<span class=\"productname\">%productName</span> voegt afbeeldingen in het "
-"tekstdocument in, vanaf uw lokale computer of vanuit uw cloudopslag. "
-"Ingevoegde afbeeldingen worden altijd ingesloten in het document."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid ""
@@ -1571,18 +1432,12 @@ msgid ""
 "Insert image</span> icon allows you to choose an image from the cloud "
 "storage's folders and shares."
 msgstr ""
-"<span class=\"def\">Afbeelding invoegen:</span> Als u op het pictogram <span "
-"class=\"ui\">Afbeelding invoegen</span> klikt, kunt u een afbeelding kiezen "
-"uit de mappen en gedeelde mappen van de cloudopslag."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
-"<span class=\"def\">Plaats lokale afbeelding:</span> opent de browser "
-"bestandskiezer om de afbeelding van uw lokale computer te uploaden en in het "
-"document in te voegen."
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
 msgid ""
@@ -1590,14 +1445,11 @@ msgid ""
 "image. Select the image and open the context menu. Use the images handles to "
 "resize the image with the mouse."
 msgstr ""
-"Afbeeldingen kunnen in grootte worden aangepast, gedraaid en verankerd. "
-"Tekst kan rond de afbeelding doorlopen. Selecteer de afbeelding en open het "
-"contextmenu. Gebruik de afbeeldingshandgrepen om het formaat van de "
-"afbeelding met de muis te wijzigen."
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
+#, fuzzy
 msgid "Comments in documents"
-msgstr "Notities in documenten"
+msgstr "Naar einde van document"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""
@@ -1605,23 +1457,16 @@ msgid ""
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
-"Plaats notities in <span class=\"productname\">%productName</span> op "
-"plaatsen die speciale aandacht van de lezer nodig hebben. Notities worden "
-"aan de rechterkant weergegeven en voorzien van de naam en datum van de "
-"schrijver."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:327-5
 msgid ""
 "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
 "\"images/submenu.svg\">) icon to reply, move and delete comments."
 msgstr ""
-"Klik op het pictogram <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-"\"images/submenu.svg\"> submenu om notities te beantwoorden, verplaatsen en "
-"verwijderen."
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Spellchecking"
-msgstr "Spellingscontrole"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid ""
@@ -1630,19 +1475,12 @@ msgid ""
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
-"<span class=\"productname\">%productName</span> kan de spelling controleren "
-"in tekstdocumenten, werkbladen en presentaties. Een rode golvende "
-"onderstreping duidt op verkeerd gespelde woorden. Klik met de "
-"rechtermuisknop om een contextmenu met voorgestelde correcties te openen."
 
 #: html/loleaflet-help.html%2Bdiv.p:331-5
 msgid ""
 "To systematically spell-check the whole document use the <span class=\"ui\""
 ">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
-"Gebruik de optie <span class=\"ui\">Extra</span> - <span class=\"ui\""
-">Spelling</span> om het hele document systematisch op spelling te "
-"controleren."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:337-5
 msgid ""
@@ -1655,26 +1493,15 @@ msgid ""
 "will move the cursor to the next cell to the right, and with an <span class="
 "\"kbd\">Enter</span> to the cell below for easy further data entry."
 msgstr ""
-"U bewerkt een online werkblad op dezelfde manier als een desktopwerkblad. "
-"Bewerkingen zoals het invoeren van gegevens, het selecteren van bereiken, "
-"kolommen, rijen of bladen zijn hetzelfde. Gebruik het toetsenbord, de menu's "
-"of de werkbalk om acties in het werkblad uit te voeren. Het slepen van "
-"celleninhoud om cellen met gegevens te vullen wordt ook ondersteund. Kopieer-"
-", knip- en plakopdrachten zijn beschikbaar in het contextmenu. Met een <span "
-"class=\"kbd\">Tab</span>, na ingevoerde gegevens, wordt de cursor naar de "
-"volgende cel rechts verplaatst en met een <span class=\"kbd\">Enter</span> "
-"naar de onderliggende cel, voor eenvoudige verdere gegevensinvoer."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
 msgstr ""
-"Formules worden ingevoerd in de formulebalk. Voer '=' in en voeg de formule "
-"in."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr "Alle werkbladfuncties en rekenkundige regels zijn van toepassing."
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid ""
@@ -1683,10 +1510,6 @@ msgid ""
 "committees/download.php/16826/openformula-spec-20060221.html\">OASIS "
 "OpenFormula specification</a>."
 msgstr ""
-"De formuletaal moet zeer bekend zijn bij elke werkbladgebruiker en wordt "
-"zeer gedetailleerd gespecificeerd in de <a href=\"https://www.oasis-open.org/"
-"committees/download.php/16826/openformula-spec-20060221.html\">OASIS "
-"OpenFormula-specificatie</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid ""
@@ -1698,13 +1521,6 @@ msgid ""
 "and custom number formatting, as well as font, complex border, background, "
 "cell protection and other options."
 msgstr ""
-"<span class=\"def\">Directe opmaak:</span> U kunt werkbladcellen, kolommen, "
-"rijen en bladen rechtstreeks vanuit de menu's, werkbalk of contextmenu's "
-"opmaken. Directe opmaak is alleen van toepassing op het huidige "
-"geselecteerde object. Gebruik het menu om een cel op te maken of druk op <"
-"span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. Het "
-"dialoogvenster maakt complexe en aangepaste nummeropmaak mogelijk, evenals "
-"lettertype, complexe rand, achtergrond, celbeveiliging en andere opties."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid ""
@@ -1713,10 +1529,6 @@ msgid ""
 " automatically detects cells that are headers, and adjoining columns, to "
 "extend the selection."
 msgstr ""
-"<span class=\"def\">Gegevens sorteren:</span> U kunt een lijst met getallen "
-"of tekst oplopend of aflopend sorteren. <span class=\"productname\""
-">%productName</span> detecteert automatisch cellen die koppen zijn en "
-"aangrenzende kolommen om de selectie uit te breiden."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:351-5
 msgid ""
@@ -1725,20 +1537,12 @@ msgid ""
 "spreadsheets in <span class=\"productname\">%productName</span> there are "
 "various possibilities for applying filters."
 msgstr ""
-"<span class=\"def\">Gegevens filteren:</span> Met filters en geavanceerde "
-"filters kunt u werken aan bepaalde gefilterde rijen (records) van een "
-"gegevensbereik. In de werkbladen in <span class=\"productname\""
-">%productName</span> zijn er verschillende mogelijkheden om filters toe te "
-"passen."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:354-10
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
 msgstr ""
-"Een mogelijkheid van de <span class=\"ui\">AutoFilter</span> functie is om "
-"snel de weergave te beperken tot records met identieke invoer in een "
-"gegevensveld."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:357-11
 msgid ""
@@ -1747,10 +1551,6 @@ msgid ""
 "standard filter to connect the conditions with either a logical AND or a "
 "logical OR operator."
 msgstr ""
-"In het dialoogvenster <span class=\"ui\">Standaardfilter</span> kunt u "
-"bereiken definiëren die bepaalde waarden in specifieke gegevensvelden "
-"bevatten. U kunt het standaardfilter gebruiken om drie voorwaarden op te "
-"geven met ofwel de logische EN ofwel de logische OF operator."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:358-11
 msgid ""
@@ -1758,9 +1558,6 @@ msgid ""
 "filter conditions. With advanced filters you enter the conditions directly "
 "into the sheet."
 msgstr ""
-"Het <span class=\"ui\">Speciaal filter</span> geeft u de mogelijkheid een "
-"totaal van acht voorwaarden voor filters op te geven. Met speciale filters "
-"voert u de voorwaarden direct in het werkblad in."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:360-5
 msgid ""
@@ -1768,10 +1565,6 @@ msgid ""
 "and group rows and columns together so that you can collapse and expand the "
 "groups with a single click making it easy to represent hierarchical data."
 msgstr ""
-"<span class=\"def\">Overzicht:</span> U kunt een overzicht van uw gegevens "
-"en groepsrijen en -kolommen samen maken, zodat u de groepen met één klik "
-"kunt samenvouwen en uitbreiden, zodat u gemakkelijk hiërarchische gegevens "
-"kunt weergeven."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:362-5
 msgid ""
@@ -1779,18 +1572,12 @@ msgid ""
 "entries to be valid. Invalid entries to a cell will be rejected. To enable "
 "data validation:"
 msgstr ""
-"<span class=\"def\">Gegevensvalidatie:</span> Voor elke cel kunt u invoer "
-"als geldig definiëren. Ongeldige invoer voor een cel worden geweigerd. "
-"Gegevensvalidatie inschakelen:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:365-9
 msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\""
 ">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
-"Kies <span class=\"ui\">Geldigheid</span> in het menu <span class=\"ui\""
-">Gegevens</span>. Het dialoogvenster <span class=\"ui\">Geldigheid</span> "
-"wordt geopend."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-11
 msgid ""
@@ -1798,9 +1585,6 @@ msgid ""
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
-"Selecteer het geldigheidscriterium in de keuzelijst <span class=\"ui\""
-">Toestaan</span>. Afhankelijk van het criterium worden meer opties "
-"weergegeven. Vul de vereiste gegevens in."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:370-9
 msgid ""
@@ -1808,32 +1592,21 @@ msgid ""
 "Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
 ">OK</span> to close the dialog."
 msgstr ""
-"Gebruik de tabbladen <span class=\"ui\">Invoerhulp</span> en <span class=\""
-"ui\">Foutmelding</span> om de gebruikersinteracties te verbeteren. Klik op <"
-"span class=\"ui\">OK</span> om het dialoogvenster te sluiten."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:373-11
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
 msgstr ""
-"Om de geldigheid van de cel te verwijderen, opent u het dialoogvenster en "
-"stelt u de lijst <span class=\"ui\">Toestaan</span> in op \"Elke waarde\"."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
 "the mouse on the cell to display comments."
 msgstr ""
-"<span class=\"def\">Notities:</span> In een werkblad kunt u één notitie per "
-"cel invoegen. Wanneer u <span class=\"ui\">Invoegen - Notitie</span> "
-"selecteert, verschijnt een venster waarin u de inhoud voor de notitie kunt "
-"schrijven. Er verschijnt een rode stip in de rechterbovenhoek van de cel "
-"wanneer deze een notitie bevat. Beweeg de muis over de cel om notities weer "
-"te geven."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:377-5
 msgid ""
@@ -1843,11 +1616,6 @@ msgid ""
 "Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
-"<span class=\"def\">Voorwaardelijke opmaak:</span> <span class=\""
-"productname\">%productName</span> voegt symbolen toe aan elke cel van een "
-"bereik op basis van celomstandigheden. Selecteer het celbereik en klik op "
-"het pictogram <span class=\"ui\">Voorwaardelijke opmaak</span> op de "
-"werkbalk. Selecteer de symbolenset die u op het bereik wilt toepassen."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:385-5
 msgid ""
@@ -1859,15 +1627,6 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> bewerkt tekstdocumenten op "
-"dezelfde manier als u een bureaubladdocument bewerkt. Het biedt een lay-out "
-"Wat u ziet is wat u krijgt (WYSIWYG) - die het document overzichtelijk "
-"weergeeft zoals het wordt afgedrukt. Bewerkingen zoals het typen van tekst, "
-"knippen, kopiëren en plakken van inhoud, tekst selecteren, invoegen, "
-"vergroten of verkleinen, afbeeldingen verankeren, tabellen en grafieken "
-"toevoegen en verwerken, zijn vergelijkbaar met een tekstverwerker op het "
-"bureaublad. Gebruik het toetsenbord, de menu's en de werkbalken om met uw "
-"document te communiceren."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:388-5
 msgid ""
@@ -1875,13 +1634,11 @@ msgid ""
 "available in the context menu are related - not extensively - to the "
 "underlying object in the document."
 msgstr ""
-"Contextmenu's zijn beschikbaar door met rechts te klikken. De opdrachten die "
-"beschikbaar zijn in het contextmenu zijn gerelateerd - niet uitgebreid - aan "
-"het onderliggende object in het document."
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
+#, fuzzy
 msgid "Formatting text"
-msgstr "Tekst opmaken"
+msgstr "Tekstopmaak"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""
@@ -1894,15 +1651,6 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
-"<span class=\"productname\">%productName</span> ondersteunt moderne "
-"technieken voor alinea-opmaak via opmaakprofielen. Een opmaakprofiel is een "
-"set teksteigenschappen (lettertype, kleur, achtergrond en nog veel meer) met "
-"een naam, de opmaakprofielnaam. Gebruik opmaakprofielen om dezelfde set "
-"eigenschappen toe te passen op veel alinea's in het document en een "
-"uniforme, professionele uitstraling te produceren. Als u één van de "
-"eigenschappen van een opmaakprofiel wijzigt, wijzigen alle alinea's met "
-"hetzelfde opmaakprofiel ook de opmaak, waardoor het eenvoudiger wordt om "
-"veel alinea's afzonderlijk op te maken."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:392-5
 msgid ""
@@ -1911,10 +1659,6 @@ msgid ""
 "in every text excerpt, turning text formatting a long task, subject to "
 "errors and delays."
 msgstr ""
-"Directe opmaak past daarentegen opmaak toe op geselecteerde fragmenten van "
-"de documentinhoud. In een lang document moet directe opmaak in elk "
-"tekstfragment worden toegepast, waardoor het opmaken van tekst een lange "
-"taak wordt, onder voorbehoud van fouten en vertragingen."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:393-5
 msgid ""
@@ -1922,9 +1666,6 @@ msgid ""
 "objects by formatting directly from the menus, toolbar or context menus. "
 "Direct formatting applies only to the current object selected."
 msgstr ""
-"<span class=\"def\">Directe opmaak:</span> U kunt tekstdocumentobjecten "
-"rechtstreeks vanuit de menu's, werkbalk of contextmenu's opmaken. Directe "
-"opmaak is alleen van toepassing op het huidige geselecteerde object."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:394-5
 msgid ""
@@ -1933,15 +1674,10 @@ msgid ""
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
-"<span class=\"def\">Opmaakprofielen:</span> <span class=\"productname\">%"
-"productName </span>ondersteunt alinea-opmaakprofielen. U kunt een bestaande "
-"alinea-opmaakprofiel op een alinea toepassen. Kies menu <span class=\"ui\""
-">Opmaakprofielen</span> → <span class=\"ui\">Opmaakprofielen bewerken</span> "
-"om het opmaakprofiel te wijzigen."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:398-5
 msgid "Handling Tables"
-msgstr "Omgaan met tabellen"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:399-5
 msgid ""
@@ -1950,11 +1686,6 @@ msgid ""
 "cells with the <span class=\"ui\">Table</span> menu. The default paragraph "
 "style inside cells is “Table contents”."
 msgstr ""
-"Voeg tabellen met het juiste pictogram in de werkbalk in. Selecteer het "
-"eerste aantal rijen en kolommen. Voeg rijen en kolommen toe met het "
-"contextmenu van de cel. Cellen samenvoegen met het menu <span class=\"ui\""
-">Tabel</span>. Het standaard alinea-opmaakprofiel in cellen is \"Inhoud van "
-"tabel\"."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:401-5
 msgid ""
@@ -1962,14 +1693,10 @@ msgid ""
 "cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
 ">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
-"<span class=\"def\">Cellen opmaken:</span> Klik in de cel of het "
-"cellenbereik en kies menu <span class=\"ui\">Tabel</span> → <span class=\""
-"ui\">Eigenschappen</span>. Stel de tabel nauwkeurig in met het "
-"dialoogvenster Eigenschappen."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Track changes"
-msgstr "Wijzigingen bijhouden"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid ""
@@ -1977,9 +1704,6 @@ msgid ""
 ">%productName</span> marks up new changes made to the document. Select this "
 "option again to turn it off."
 msgstr ""
-"Wanneer u Wijzigingen bijhouden inschakelt, markeert <span class=\""
-"productname\">%productName</span> nieuwe wijzigingen in het document. "
-"Selecteer deze optie opnieuw om deze uit te schakelen."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:405-5
 msgid ""
@@ -1987,22 +1711,16 @@ msgid ""
 "tracked change can be accepted or rejected, using the box the appears on the "
 "right. You can also add a comment there."
 msgstr ""
-"Wijzigingen die door verschillende personen zijn aangebracht, worden in "
-"verschillende kleuren weergegeven en elke bijgehouden wijziging kan worden "
-"geaccepteerd of afgewezen, met behulp van het vak aan de rechterkant. U kunt "
-"daar ook een notitie toevoegen."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
 msgid "Other advanced features"
-msgstr "Andere geavanceerde functies"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid ""
 "<span class=\"def\">Comments:</span> Comments are inserted in the text and "
 "displayed on the right side of the screen."
 msgstr ""
-"<span class=\"def\">Notities:</span> Notities worden in de tekst ingevoegd "
-"en aan de rechterkant van het scherm weergegeven."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:408-5
 msgid ""
@@ -2010,25 +1728,18 @@ msgid ""
 "spaces are shown as marks to assisting text alignment, editing and "
 "formatting."
 msgstr ""
-"<span class=\"def\">Opmaakmarkeringen:</span> Alinea, pagina en onbreekbare "
-"spaties worden weergegeven als markeringen die helpen bij het uitlijnen, "
-"bewerken en opmaken van tekst."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:409-5
 msgid ""
 "<span class=\"def\">Fields:</span> A basic set of fields is available to "
 "insert in the document."
 msgstr ""
-"<span class=\"def\">Velden:</span> Er is een basisset velden beschikbaar om "
-"in het document in te voegen."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:410-5
 msgid ""
 "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index "
 "can be updated with new entries."
 msgstr ""
-"<span class=\"def\">Alfabetische index:</span> Bestaande alfabetische index "
-"kan worden bijgewerkt met nieuwe vermeldingen."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid ""
@@ -2036,17 +1747,12 @@ msgid ""
 "available for the existing page style applied in the document at the cursor "
 "position."
 msgstr ""
-"<span class=\"def\">Kop- en voettekst op pagina:</span> Kop- en voetteksten "
-"zijn beschikbaar voor het bestaande pagina-opmaakprofiel die in het document "
-"op de cursorpositie wordt toegepast."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:412-5
 msgid ""
 "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes "
 "are supported, being rendered as they are shown."
 msgstr ""
-"<span class=\"def\">Voetnoten en eindnoten:</span> Voetnoten en eindnoten "
-"worden ondersteund en worden op volgorde weergegeven."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:419-5
 msgid ""
@@ -2254,8 +1960,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
+#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr ""
+msgstr "Naar begin van document"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
@@ -2367,8 +2074,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
+#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "Naar begin van document"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""

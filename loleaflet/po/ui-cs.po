@@ -2,22 +2,23 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-01-20 11:59+0100\n"
+"PO-Revision-Date: 2020-01-13 22:06+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
+"Language-Team: Czech <https://weblate.documentfoundation.org/projects/"
+"libo_online/loleaflet-ui/cs/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-ui-cs.po\n"
-"X-Pootle-Revision: 3943719\n"
+"X-Pootle-Revision: 3937718\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -171,7 +172,7 @@ msgstr "Vypnout server"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Doba běhu serveru"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -181,7 +182,7 @@ msgstr "Přijaté"
 msgid "Sent"
 msgstr "Odeslané"
 
-#: admin/src/AdminSocketBase.js:46
+#: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
 msgstr "Chyba spojení"
 
@@ -275,46 +276,31 @@ msgstr "Vy"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "Zahájit stahování"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "Potvrdit kopírování do schránky"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "Zahájit nahrávání"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "Zahájit kopírování/vkládání"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:435
-#, fuzzy
-msgid "\""
-msgstr "\""
-
-#: src/control/Control.JSDialogBuilder.js:437
-#, fuzzy
-msgid "%"
-msgstr "%"
-
-#: src/control/Control.JSDialogBuilder.js:439
-msgid "°"
-msgstr ""
+msgstr "Automatická"
 
 #: src/control/Control.JSDialogBuilder.js:726
-#, fuzzy
 msgid "Font Name"
-msgstr "Název písma:"
+msgstr "Název písma"
 
 #: src/control/Control.JSDialogBuilder.js:728
 msgid "Font Size"
-msgstr ""
+msgstr "Velikost písma"
 
 #: src/control/Control.JSDialogBuilder.js:1109
 msgid "Rows"
@@ -338,7 +324,7 @@ msgid "None (Do not check spelling)"
 msgstr "Žádný (bez kontroly pravopisu)"
 
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Toolbar.js:969
-#: src/control/Toolbar.js:432 src/layer/marker/Annotation.js:183
+#: src/control/Toolbar.js:454 src/layer/marker/Annotation.js:183
 #: src/layer/tile/CalcTileLayer.js:165 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "Zrušit"
@@ -406,7 +392,7 @@ msgstr "Obnovit přiblížení"
 
 #: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:498
 msgid "Show Ruler"
-msgstr ""
+msgstr "Zobrazit pravítko"
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:288
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:618
@@ -426,7 +412,7 @@ msgstr "Orientace textu"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:338
 #: src/control/Control.Menubar.js:453
 msgid "Online Help"
-msgstr ""
+msgstr "Online nápověda"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:339
 #: src/control/Control.Menubar.js:454
@@ -476,13 +462,12 @@ msgstr "Sešit Excel (.xlsx)"
 #: src/control/Control.Menubar.js:469 src/control/Control.Menubar.js:514
 #: src/control/Control.Menubar.js:560
 msgid "Export as"
-msgstr ""
+msgstr "Exportovat jako"
 
 #: src/control/Control.Menubar.js:645 src/control/Control.Menubar.js:664
 #: src/control/Control.Menubar.js:674
-#, fuzzy
 msgid "Insert Shape"
-msgstr "Vložit tvary"
+msgstr "Vložit tvar"
 
 #: src/control/Control.Menubar.js:744 src/control/Control.Toolbar.js:1881
 msgid "Reset to Default Language"
@@ -492,16 +477,15 @@ msgstr "Obnovit výchozí jazyk"
 msgid "Are you sure you want to delete this slide?"
 msgstr "Opravdu si přejete smazat tento snímek?"
 
-#: src/control/Control.Menubar.js:1133 src/map/Clipboard.js:751
-#, fuzzy
+#: src/control/Control.Menubar.js:1132 src/map/Clipboard.js:767
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
-"<p>Váš prohlížeč má velmi omezený přístup do schránky, takže používejte tyto "
+"<p>Prohlížeč má velmi omezený přístup ke schránce, proto používejte tyto "
 "klávesové zkratky:<ul><li><b>Ctrl+C</b>: pro "
-"kopírování.</li><li><b>Ctrl+X</b>: pro vyjmutí.</li><li><b>Ctrl+P</b>: pro "
+"kopírování.</li><li><b>Ctrl+X</b>: pro vyjímání.</li><li><b>Ctrl+V</b>: pro "
 "vkládání.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
@@ -531,6 +515,10 @@ msgstr "Zadejte nový název listu"
 #: src/control/Control.Toolbar.js:225
 msgid "Are you sure you want to delete this page?"
 msgstr "Opravdu si přejete smazat tuto stránku?"
+
+#: src/control/Control.Toolbar.js:770
+msgid "Default Style"
+msgstr "Výchozí styl"
 
 #: src/control/Control.Toolbar.js:821
 msgid "Borders"
@@ -854,25 +842,25 @@ msgstr "Ukládání..."
 msgid "Renaming..."
 msgstr "Přejmenovávání..."
 
-#: src/control/Toolbar.js:341
+#: src/control/Toolbar.js:363
 msgid "This version of %productName is powered by"
 msgstr "Tato verze aplikace %productName využívá"
 
-#: src/control/Toolbar.js:425
+#: src/control/Toolbar.js:447
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Vložit hypertextový odkaz"
 
-#: src/control/Toolbar.js:427
+#: src/control/Toolbar.js:449
 msgid "Text"
 msgstr "Text"
 
-#: src/control/Toolbar.js:428
+#: src/control/Toolbar.js:450
 msgid "Link"
-msgstr ""
+msgstr "Odkaz"
 
-#: src/control/Toolbar.js:431
+#: src/control/Toolbar.js:453
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: src/core/Socket.js:57
 msgid ""
@@ -892,7 +880,7 @@ msgstr "Jejda, nastal problém s přípojením k LibreOffice Online: "
 
 #: src/core/Socket.js:279
 msgid "Served by:"
-msgstr ""
+msgstr "Ze serveru:"
 
 #: src/core/Socket.js:283
 msgid "Unsupported server version."
@@ -980,14 +968,15 @@ msgstr "Připojování..."
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr "Toto je nepříjemné, nemůžeme se připojit k dokumentu. Zkuste to znovu."
+msgstr ""
+"Toto je nepříjemné, není možné se připojit k dokumentu. Zkuste to znovu."
 
 #: src/errormessages.js:13
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
 msgstr ""
-"Nedostatek volného místa na serveru, pro pokračování se prosím obraťte na "
+"Nedostatek volného místa na serveru. Chcete-li pokračovat, obraťte se na "
 "správce serveru."
 
 #: src/errormessages.js:14
@@ -996,7 +985,7 @@ msgid ""
 "contact the administrator."
 msgstr ""
 "Hostitelská URL je prázdná. Loolwsd server je pravděpodobně nesprávně "
-"nakonfigurován, obraťte se prosím na správce."
+"nakonfigurován, obraťte se na správce."
 
 #: src/errormessages.js:15
 msgid ""
@@ -1018,24 +1007,24 @@ msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Tato služba je administrátorem omezena na %0 dokumentů a %1 spojení. Toto "
-"omezení bylo dosaženo. Zkuste to prosím znovu později."
+"Tato služba je správcem omezena na %0 dokumentů a %1 spojení. Tohoto omezení "
+"bylo dosaženo. Zkuste to znovu později."
 
 #: src/errormessages.js:18
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Služba není dostupná. Prosím zkuste to později a v případě setrvání problému "
-"konktaktujte svého správce."
+"Služba není dostupná. Zkuste to později a v případě přetrvávajících problémů "
+"kontaktujte správce."
 
 #: src/errormessages.js:19
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Neoprávněný WOPI hostitel. Zkuste to prosím později a v případě setrvání "
-"problému kontaktujte svého správce."
+"Neoprávněný WOPI hostitel. Zkuste to později a v případě přetrvávajících "
+"problémů kontaktujte správce."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -1046,7 +1035,7 @@ msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
-"Relace vyprší v %time. Pro pokračování prosím uložte Vaši práci a obnovte "
+"Relace vyprší v %time. Chcete-li pokračovat, uložte si práci a obnovte "
 "relaci (nebo webovou stránku)."
 
 #: src/errormessages.js:22
@@ -1054,16 +1043,16 @@ msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
-"Vaše relace vypršela. Další změny dokumentu nemusí být uloženy. Pro "
-"pokračování prosím obnovte relaci (nebo webovou stránku)."
+"Vaše relace vypršela. Další změny dokumentu se neuloží. Chcete-li "
+"pokračovat, obnovte relaci (nebo webovou stránku)."
 
 #: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
-"Nepodařilo se načíst dokument. Ujistěte se prosím, že je tento typ souboru "
-"podporován a soubor není poškozen a zkuste to znovu."
+"Dokument se nepodařilo načíst. Ujistěte se, že je tento typ souboru "
+"podporován a soubor není poškozen, a zkuste to znovu."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1078,14 +1067,18 @@ msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"Dokument se nepodařilo načíst. Je buď poškozený, nebo vyžaduje více zdrojů, "
+"než je povoleno. Obraťte se na správce."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr ""
+msgstr "Nepodařilo se načíst dokument."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
+"Kvůli nedostatku místa na disku se dokument nepodařilo uložit. Dokument se "
+"zobrazí v režimu pouze pro čtení."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1093,11 +1086,11 @@ msgstr "Dokument nelze uložit. Přístupový token vypršel nebo není platný.
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Dokument nelze uložit."
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Dokument nelze přejmenovat."
 
 #: src/errormessages.js:38
 #, javascript-format
@@ -1105,8 +1098,8 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
-"Nepodařilo se načíst dokument. Prosím kontaktujte správce vašeho síťového "
-"úložiště (%storageserver)."
+"Nepodařilo se načíst dokument. Kontaktujte správce síťového úložiště "
+"(%storageserver)."
 
 #: src/errormessages.js:39
 #, javascript-format
@@ -1117,7 +1110,7 @@ msgid ""
 msgstr ""
 "Z důvodu nedostatku volného místa na serveru se nepodařilo dokument uložit. "
 "Dokument je nyní pouze pro čtení. Chcete-li pokračovat v úpravách, "
-"kontaktujte prosím správce síťového úložiště (%storageserver)."
+"kontaktujte správce síťového úložiště (%storageserver)."
 
 #: src/errormessages.js:41
 msgid ""
@@ -1137,11 +1130,11 @@ msgstr ""
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Nahrávání souboru na server selhalo, soubor nebyl nalezen."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Nahrávání souboru na server selhalo, soubor je příliš velký."
 
 #: src/layer/marker/Annotation.js:219
 msgid "Accept change"
@@ -1162,17 +1155,17 @@ msgstr "Odpověď"
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:116
 #: src/layer/tile/WriterTileLayer.js:56
 msgid "Show the search bar"
-msgstr ""
+msgstr "Zobrazit vyhledávací lištu"
 
 #: src/layer/tile/CalcTileLayer.js:256 src/layer/tile/ImpressTileLayer.js:242
 #: src/layer/tile/WriterTileLayer.js:181
 msgid "Clear the search field"
-msgstr ""
+msgstr "Vymazat vyhledávací pole"
 
 #: src/layer/tile/CalcTileLayer.js:258 src/layer/tile/ImpressTileLayer.js:244
 #: src/layer/tile/WriterTileLayer.js:183
 msgid "Hide the search bar"
-msgstr ""
+msgstr "Skrýt vyhledávací lištu"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1184,21 +1177,21 @@ msgstr "Odstranit"
 
 #: src/layer/tile/TileLayer.js:258
 msgid "Resolve"
-msgstr ""
+msgstr "Vyřešit"
 
-#: src/map/Clipboard.js:123
+#: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "Při vkládání mimo %productName nejprve klikněte na tlačítko Stáhnout"
 
-#: src/map/Clipboard.js:269
+#: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Nepodařilo se stáhnout schránku, zkuste zkopírovat znovu"
 
-#: src/map/Clipboard.js:749
+#: src/map/Clipboard.js:765
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr ""
+msgstr "<p>Použijte tlačítka kopírovat/vložit na klávesnici na obrazovce.</p>"
 
-#: src/map/Clipboard.js:771
+#: src/map/Clipboard.js:790
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1206,13 +1199,20 @@ msgid ""
 "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
+"<p>Pokud si přejete sdílet větší části dokumentu s jinou aplikací, je "
+"nezbytné je napřed stáhnout na vaše zařízení. K tomu slouží níže zobrazené "
+"tlačítko „Zahájit stahování“, po skončení klikněte na „Potvrdit kopírování "
+"do schránky“.</p><p>Jestliže kopírujete a vkládáte mezi dokumenty v rámci %"
+"productName, nic stahovat nepotřebujete.</p>"
 
-#: src/map/Clipboard.js:787
+#: src/map/Clipboard.js:806
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
+"<p>Stahování za účelem rozsáhlého kopírování/vkládání již začalo. Počkejte "
+"na jeho dokončení, nebo ho před zahájením nového nejprve zrušte.</p>"
 
 #: src/map/Map.js:239
 msgid "Initializing..."
@@ -1230,23 +1230,23 @@ msgstr "před %d minutami"
 
 #: src/map/Map.js:1234
 msgid "Inactive document - please click to resume editing"
-msgstr "Dokument je neaktivní - pro pokračování v úpravách klikněte"
+msgstr "Neaktivní dokument - po kliknutí budete moci pokračovat v úpravách"
 
 #: src/map/Map.js:1375
 msgid "Loading..."
 msgstr "Načítání..."
 
 #: src/map/handler/Map.FileInserter.js:96
-#, javascript-format
+#, fuzzy, javascript-format
 msgid ""
 "The file of type: %0 can not be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Soubor typu: %0 nelze nahrát na server, protože soubor nemá název"
 
 #: src/map/handler/Map.FileInserter.js:98
-#, javascript-format
+#, fuzzy, javascript-format
 msgid ""
 "The file of type: %0 can not be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Soubor typu: %0 nelze nahrát na server, protože je prázdný"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1254,7 +1254,7 @@ msgstr "Nahrávání..."
 
 #: src/map/handler/Map.FileInserter.js:144
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Nahrávání souboru na server selhalo se stavem: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
@@ -1263,3 +1263,51 @@ msgstr "Vytváří se nový soubor ze šablony ..."
 #: src/map/handler/Map.WOPI.js:371
 msgid "Creating copy..."
 msgstr "Vytváření kopie..."
+
+#~ msgid "Linear"
+#~ msgstr "Lineární"
+
+#~ msgid "Axial"
+#~ msgstr "Axiální"
+
+#~ msgid "Radial"
+#~ msgstr "Radiální"
+
+#~ msgid "Ellipsoid"
+#~ msgstr "Oválný"
+
+#~ msgid "Quadratic"
+#~ msgstr "Krychlový"
+
+#~ msgid "Square"
+#~ msgstr "Čtvercový"
+
+#~ msgid "Fixed size"
+#~ msgstr "Neměnná velikost"
+
+#~ msgid "Color"
+#~ msgstr "Barva"
+
+#~ msgid "Gradient"
+#~ msgstr "Přechod"
+
+#~ msgid "Hatching"
+#~ msgstr "Šrafování"
+
+#~ msgid "Pattern"
+#~ msgstr "Vzorek"
+
+#~ msgid "From"
+#~ msgstr "Od"
+
+#~ msgid "To"
+#~ msgstr "Do"
+
+#~ msgid "Report an issue"
+#~ msgstr "Nahlásit chybu"
+
+#~ msgid "Toggle Page Orientation"
+#~ msgstr "Přepnout orientaci stránky"
+
+#~ msgid "Mobile Wizard"
+#~ msgstr "Mobilní průvodce"

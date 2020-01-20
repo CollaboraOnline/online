@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0200\n"
+"POT-Creation-Date: 2020-01-20 11:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.4.0\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-help-is.po\n"
-"X-Pootle-Revision: 3944371\n"
+"X-Pootle-Revision: 2357047\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:16-5
 msgid "Keyboard Shortcuts"
@@ -968,27 +968,28 @@ msgstr "Velja allt á skyggnu / teikningu"
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "<span class=\"productname\">%productName</span> hjálp"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
+#, fuzzy
 msgid "Collaborative editing"
-msgstr "Samstarfsvinnsla"
+msgstr "Snið reita"
 
 #: html/loleaflet-help.html%2Bdiv.p:211-5
 #: html/loleaflet-help.html%2Bdiv.h3:255-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "<span class=\"productname\">%productName</span> notandaviðmót"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr "Opnun, lokun, vistun, prentun og niðurhal skjala"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr "Breytingar á skjölum"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -997,91 +998,91 @@ msgstr "Breytingar á skjölum"
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Advanced features"
-msgstr "Ítarlegri eiginleikar"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> töflureikniskjöl"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:217-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:336-5
 msgid "Editing spreadsheets"
-msgstr "Breytingar á töflureikniskjölum"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:218-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Formulas"
-msgstr "Formúlur"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:345-5
 msgid "Formatting spreadsheets"
-msgstr "Að sníða töflureikniskjöl"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:382-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> textaskjöl"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:384-5
 msgid "Editing text documents"
-msgstr "Breytingar á textaskjölum"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:225-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Context menus"
-msgstr "Samhengisvalmyndir"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Advanced text document editor features"
-msgstr "Ítarlegri eiginleikar í textaritli"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:416-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> kynningar"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr "Breytingar á kynningum"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Slide show"
-msgstr "Skyggnusýning"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide pane"
-msgstr "Skyggnuspjald"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr "Oft spurðar spurningar (FAQ)"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr "Almennt"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr "Textaskjöl"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr "Töflureikniskjöl"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr "Kynningar"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid ""
@@ -1163,11 +1164,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
-msgstr "Leita aftur á bak"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:266-11
 msgid "Search forward"
-msgstr "Leita áfram"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:267-11
 msgid "Cancel the search (appears only when a text has been searched)"
@@ -1246,7 +1247,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr "Afrita og líma"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid ""
@@ -1276,7 +1277,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
-msgstr "Gera við skjal"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid ""
@@ -1302,7 +1303,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:293-5
 msgid "Inactive document"
-msgstr "Óvirkt skjal"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid ""
@@ -1321,7 +1322,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Pasting"
-msgstr "Líming"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid ""
@@ -1359,7 +1360,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr "Að bæta inn línuritum"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid ""
@@ -1376,7 +1377,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:310-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
-"Follow the chart wizard to customize the chart."
+"Customize your chart on the sidebar:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-11
@@ -1405,7 +1406,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:319-5
 msgid "Handling images"
-msgstr "Meðhöndlun mynda"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid ""
@@ -1435,8 +1436,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:324-5
+#, fuzzy
 msgid "Comments in documents"
-msgstr "Athugasemdir í skjölum"
+msgstr "Fara á enda skjals"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""
@@ -1453,7 +1455,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Spellchecking"
-msgstr "Yfirfara stafsetningu"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid ""
@@ -1588,7 +1590,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:375-5
 msgid ""
-"i<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
+"<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
 "a popup appears that allows you to write the content for the comment. A red "
 "dot shows on the top right corner of the cell when it has a comment. Hover "
@@ -1623,8 +1625,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
+#, fuzzy
 msgid "Formatting text"
-msgstr "Að sníða texta"
+msgstr "Snið á texta"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid ""
@@ -1663,7 +1666,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:398-5
 msgid "Handling Tables"
-msgstr "Meðhöndlun taflna"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:399-5
 msgid ""
@@ -1682,7 +1685,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Track changes"
-msgstr "Rekja breytingar"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid ""
@@ -1700,7 +1703,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
 msgid "Other advanced features"
-msgstr "Aðrir ítarlegir eiginleikar"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -1946,8 +1949,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:471-5
+#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr ""
+msgstr "Fara á byrjun skjals"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
@@ -2059,8 +2063,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
+#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "Fara á byrjun skjals"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""
@@ -2124,7 +2129,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:518-5
 msgid "Directly:"
-msgstr "Beint:"
+msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:520-11
 msgid "Select the text with the existing format"
@@ -2143,8 +2148,9 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
+#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr "Virkja málsgeinarstíl"
+msgstr "Virkja málsgeinarstíl Fyrirsögn 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"

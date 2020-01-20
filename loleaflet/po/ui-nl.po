@@ -2,22 +2,23 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 14:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-01-20 11:59+0100\n"
+"PO-Revision-Date: 2019-12-14 18:56+0000\n"
+"Last-Translator: kees538 <kees538@gmail.com>\n"
+"Language-Team: Dutch <https://vm137.documentfoundation.org/projects/"
+"libo_online/loleaflet-ui/nl/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
-"X-Pootle-Revision: 3946436\n"
+"X-Pootle-Revision: 3939479\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -185,7 +186,7 @@ msgstr "Ontvangen"
 msgid "Sent"
 msgstr "Verzonden"
 
-#: admin/src/AdminSocketBase.js:46
+#: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
 msgstr "Verbindingsfout"
 
@@ -296,35 +297,25 @@ msgstr "Start kopiëren/plakken tussen programma's"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr "Geen kleur"
-
-#: src/control/Control.JSDialogBuilder.js:435
-msgid "\""
-msgstr "\""
-
-#: src/control/Control.JSDialogBuilder.js:437
-msgid "%"
-msgstr "%"
-
-#: src/control/Control.JSDialogBuilder.js:439
-msgid "°"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:726
+#, fuzzy
 msgid "Font Name"
 msgstr "Lettertype"
 
 #: src/control/Control.JSDialogBuilder.js:728
+#, fuzzy
 msgid "Font Size"
-msgstr "Tekengrootte"
+msgstr "Niet ondertekend"
 
 #: src/control/Control.JSDialogBuilder.js:1109
 msgid "Rows"
-msgstr "Rijen"
+msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1110
 msgid "Columns"
-msgstr "Kolommen"
+msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1130
 #: src/control/Control.Menubar.js:621 src/control/Control.Menubar.js:672
@@ -340,7 +331,7 @@ msgid "None (Do not check spelling)"
 msgstr "Geen (geen spellingcontrole)"
 
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Toolbar.js:969
-#: src/control/Toolbar.js:432 src/layer/marker/Annotation.js:183
+#: src/control/Toolbar.js:454 src/layer/marker/Annotation.js:183
 #: src/layer/tile/CalcTileLayer.js:165 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
 msgstr "Annuleren"
@@ -428,7 +419,7 @@ msgstr "Tekstoriëntatie"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:338
 #: src/control/Control.Menubar.js:453
 msgid "Online Help"
-msgstr "Online hulp"
+msgstr ""
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:339
 #: src/control/Control.Menubar.js:454
@@ -482,8 +473,9 @@ msgstr "Exporteren als"
 
 #: src/control/Control.Menubar.js:645 src/control/Control.Menubar.js:664
 #: src/control/Control.Menubar.js:674
+#, fuzzy
 msgid "Insert Shape"
-msgstr "Vorm invoegen"
+msgstr "Vormen invoegen"
 
 #: src/control/Control.Menubar.js:744 src/control/Control.Toolbar.js:1881
 msgid "Reset to Default Language"
@@ -493,7 +485,7 @@ msgstr "Herstellen naar standaard taal"
 msgid "Are you sure you want to delete this slide?"
 msgstr "Bent u zeker dat u deze dia wilt verwijderen?"
 
-#: src/control/Control.Menubar.js:1133 src/map/Clipboard.js:751
+#: src/control/Control.Menubar.js:1132 src/map/Clipboard.js:767
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
@@ -530,6 +522,10 @@ msgstr "Voer een nieuwe bladnaam in."
 #: src/control/Control.Toolbar.js:225
 msgid "Are you sure you want to delete this page?"
 msgstr "Weet u zeker dat u deze pagina wilt verwijderen?"
+
+#: src/control/Control.Toolbar.js:770
+msgid "Default Style"
+msgstr ""
 
 #: src/control/Control.Toolbar.js:821
 msgid "Borders"
@@ -855,23 +851,23 @@ msgstr "Opslaan..."
 msgid "Renaming..."
 msgstr "Hernoemen..."
 
-#: src/control/Toolbar.js:341
+#: src/control/Toolbar.js:363
 msgid "This version of %productName is powered by"
 msgstr "Deze versie van %productName werk op basis van"
 
-#: src/control/Toolbar.js:425
+#: src/control/Toolbar.js:447
 msgid "Insert hyperlink"
 msgstr "Hyperlink invoegen"
 
-#: src/control/Toolbar.js:427
+#: src/control/Toolbar.js:449
 msgid "Text"
 msgstr "Tekst"
 
-#: src/control/Toolbar.js:428
+#: src/control/Toolbar.js:450
 msgid "Link"
 msgstr "Koppeling"
 
-#: src/control/Toolbar.js:431
+#: src/control/Toolbar.js:453
 msgid "OK"
 msgstr "OK"
 
@@ -893,7 +889,7 @@ msgstr "Oops, er is een probleem bij het verbinden met LibreOffice Online : "
 
 #: src/core/Socket.js:279
 msgid "Served by:"
-msgstr "Opgenomen door:"
+msgstr ""
 
 #: src/core/Socket.js:283
 msgid "Unsupported server version."
@@ -1083,9 +1079,6 @@ msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
-"Het laden van het document is mislukt. Dit document is ofwel misvormd of "
-"heeft meer bronnen nodig dan toegelaten. Gelieve contact op te nemen met de "
-"beheerder."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1150,13 +1143,10 @@ msgstr ""
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
 msgstr ""
-"Opladen van het bestand naar de server is mislukt, het bestand werd niet "
-"gevonden."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
-"Opladen van het bestand naar de server is mislukt, het bestand is te groot."
 
 #: src/layer/marker/Annotation.js:219
 msgid "Accept change"
@@ -1176,18 +1166,21 @@ msgstr "Beantwoorden"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:116
 #: src/layer/tile/WriterTileLayer.js:56
+#, fuzzy
 msgid "Show the search bar"
-msgstr "De zoekbalk tonen"
+msgstr "Zoekopdracht annuleren"
 
 #: src/layer/tile/CalcTileLayer.js:256 src/layer/tile/ImpressTileLayer.js:242
 #: src/layer/tile/WriterTileLayer.js:181
+#, fuzzy
 msgid "Clear the search field"
-msgstr "Maak zoekveld leeg"
+msgstr "Zoekopdracht annuleren"
 
 #: src/layer/tile/CalcTileLayer.js:258 src/layer/tile/ImpressTileLayer.js:244
 #: src/layer/tile/WriterTileLayer.js:183
+#, fuzzy
 msgid "Hide the search bar"
-msgstr "De zoekbalk verbergen"
+msgstr "Zoekopdracht annuleren"
 
 #: src/layer/tile/TileLayer.js:240
 msgid "Modify"
@@ -1201,20 +1194,20 @@ msgstr "Verwijderen"
 msgid "Resolve"
 msgstr "Oplossen"
 
-#: src/map/Clipboard.js:123
+#: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "Klik eerst op de knop 'download', om buiten %productName te plakken"
 
-#: src/map/Clipboard.js:269
+#: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Downloaden van het klembord is mislukt; kopieer opnieuw"
 
-#: src/map/Clipboard.js:749
+#: src/map/Clipboard.js:765
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Gebruik de knoppen kopiëren/plakken op het toetsenbord op uw scherm.</p>"
 
-#: src/map/Clipboard.js:771
+#: src/map/Clipboard.js:790
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1223,12 +1216,12 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 "<p>Als u grotere delen van het document wilt delen met andere programma's, "
-"is het nodig die eerst te downloaden naar uw apparaat. Om dat te doen klikt "
-"u de knop \"Download starten\" hieronder en klik daarna \"Kopiëren naar "
-"klembord bevestigen\". </p><p>Downloaden is niet nodig als u kopieert en "
-"plakt tussen documenten in %productName.</p>"
+"is het nodig die eerst te downloaden naar uw apparaat. Om dat te doen klik u "
+"de knop 'Start download' hieronder, en klik daarna 'Bevestig kopiëren naar "
+"klembord'. </p><p>Downloaden is niet nodig als u kopieert en plakt tussen "
+"documenten in %productName.</p>"
 
-#: src/map/Clipboard.js:787
+#: src/map/Clipboard.js:806
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -1264,16 +1257,12 @@ msgstr "Laden…"
 msgid ""
 "The file of type: %0 can not be uploaded to server since the file has no name"
 msgstr ""
-"Het bestand met type: %0 kan niet geüpload worden naar de server omdat het "
-"bestand geen naam heeft"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid ""
 "The file of type: %0 can not be uploaded to server since the file is empty"
 msgstr ""
-"Het bestand met type: %0 kan niet geüpload worden naar de server omdat het "
-"bestand leeg is"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1281,7 +1270,7 @@ msgstr "Bezig met laden…"
 
 #: src/map/handler/Map.FileInserter.js:144
 msgid "Uploading file to server failed with status: %0"
-msgstr "Opladen van het bestand met status: %0 naar de server is mislukt"
+msgstr ""
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
@@ -1290,3 +1279,17 @@ msgstr "Nieuw bestand van sjabloon maken..."
 #: src/map/handler/Map.WOPI.js:371
 msgid "Creating copy..."
 msgstr "Kopie maken..."
+
+#, fuzzy
+#~| msgid "Text orientation"
+#~ msgid "Toggle Page Orientation"
+#~ msgstr "Tekstoriëntatie"
+
+#~ msgid "Save as PDF"
+#~ msgstr "Opslaan als PDF"
+
+#~ msgid "<p>Your browser has very limited access to the clipboard</p>"
+#~ msgstr "<p>Uw browser heeft zeer beperkte toegang tot het klembord</p>"
+
+#~ msgid "Master Slides"
+#~ msgstr "Hoofddia's"
