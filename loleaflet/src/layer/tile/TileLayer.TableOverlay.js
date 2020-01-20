@@ -18,6 +18,11 @@ L.TileLayer.include({
 		var point = this._latLngToTwips(this._map.unproject(new L.Point(pixel, 0)));
 		return point.x;
 	},
+	_convertTwipsToPixels: function(twips) {
+		var point = this._twipsToLatLng(twips)
+		point = this._map.project(point);
+		return point;
+	},
 	hasTableSelection: function () {
 		return this._currentTableData.rows != null || this._currentTableData.columns != null;
 	},
@@ -218,10 +223,14 @@ L.TileLayer.include({
 			return;
 
 		var startX, endX, startY, endY;
-		var point1, point2;
+		var point1;
 
 		var delta1 = this._convertPixelToTwips(this._selectionHeaderDistanceFromTable);
-		var delta2 = this._convertPixelToTwips(this._selectionHeaderDistanceFromTable + this._selectionHeaderHeight);
+
+		// The 24 is the height and width of the .table-row-or-column-select-marker in loleaflet.css
+		var height = 24;
+		var width = height;
+		var selectionMarkerNominalSize = this._convertPixelToTwips(width);
 
 		for (var i = 0; i < positions.length - 1; i++) {
 			if (type === 'column') {
@@ -229,23 +238,29 @@ L.TileLayer.include({
 				endX = this._tablePositionColumnOffset + positions[i + 1];
 				startY = start;
 				endY = end;
-				point1 = this._twipsToLatLng(new L.Point(startX, startY  - delta1), this._map.getZoom());
-				point2 = this._twipsToLatLng(new L.Point(endX, startY  - delta2), this._map.getZoom());
+				point1 = this._twipsToLatLng(new L.Point(startX, startY - delta1 - selectionMarkerNominalSize),
+							     this._map.getZoom());
+				width = this._convertTwipsToPixels(new L.Point(endX - startX, 0)).x - 2;
 			}
 			else {
 				startX = start;
 				endX = end;
 				startY = this._tablePositionRowOffset + positions[i];
 				endY = this._tablePositionRowOffset + positions[i + 1];
-				point1 = this._twipsToLatLng(new L.Point(startX - delta1, startY), this._map.getZoom());
-				point2 = this._twipsToLatLng(new L.Point(startX - delta2, endY), this._map.getZoom());
+				point1 = this._twipsToLatLng(new L.Point(startX - delta1 - selectionMarkerNominalSize, startY),
+							     this._map.getZoom());
+				height = this._convertTwipsToPixels(new L.Point(0, endY - startY)).y - 2;
 			}
 
-			var bounds = new L.LatLngBounds(point1, point2);
-			var selectionRectangle = new L.Rectangle(bounds, {
-				stroke: true, weight: 1, color: '#777777',
-				fillOpacity: 1, fillColor: '#dddddd'
-			});
+			var selectionRectangle = L.marker(point1,
+				{
+					icon: L.divIcon({
+						className: 'table-row-or-column-select-marker',
+						iconSize: [width, height],
+						iconAnchor: [0, 0],
+					}),
+					draggable: true,
+				});
 
 			selectionRectangle._start = { x: startX, y: startY };
 			selectionRectangle._end = { x: endX, y: endY };
@@ -255,7 +270,10 @@ L.TileLayer.include({
 			else
 				this._tableSelectionRowMarkers.push(selectionRectangle);
 
-			selectionRectangle.on('click', this._onSelectRowColumnClick, this);
+			selectionRectangle.on('down', this._onSelectRowColumnClick, this);
+			// We don't actually want this to be draggable of course, so use a dragstart
+			// handler that freezes it.
+			selectionRectangle.on('dragstart drag dragend', this._onSelectRowColumnDrag, this);
 			this._map.addLayer(selectionRectangle);
 		}
 	},
@@ -263,6 +281,10 @@ L.TileLayer.include({
 		// fake seelcting a column
 		this._postSelectTextEvent('start', e.target._start.x + 5, e.target._start.y + 5);
 		this._postSelectTextEvent('end', e.target._end.x - 5, e.target._end.y - 5);
+	},
+	_onSelectRowColumnDrag: function(e) {
+		e.target.freezeX(true);
+		e.target.freezeY(true);
 	},
 
 	// Update dragged text selection.

@@ -91,6 +91,15 @@
 	cursor: row-resize;
 }
 
+.table-row-or-column-select-marker {
+	margin: 0px;
+	width: 24px;
+	height: 24px;
+	background-image: url('images/table-row-or-column-select-marker.svg');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
 .table-move-marker {
 	margin-left: 0px;
 	margin-top: 0px;
