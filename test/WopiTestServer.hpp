@@ -175,19 +175,19 @@ protected:
         else if (request.getMethod() == "POST" && regInfo.match(uriReq.getPath()))
         {
             LOG_INF("Fake wopi host request, handling PutRelativeFile: " << uriReq.getPath());
-            std::string wopiURL = helpers::getTestServerURI() + "/something wopi/files/1?access_token=anything";
+            std::string wopiURL = helpers::getTestServerURI() + "/something wopi/files/1?access_token=anything&reuse_cookies=cook=well";
             std::string content;
 
             if(request.get("X-WOPI-Override") == std::string("PUT_RELATIVE"))
             {
-                CPPUNIT_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
+                LOK_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
                 assertPutRelativeFileRequest(request);
                 content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
             }
             else
             {
                 // rename file; response should be the file name without the url and the extension
-                CPPUNIT_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
+                LOK_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
                 assertRenameFileRequest(request);
                 content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
             }

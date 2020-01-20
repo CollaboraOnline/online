@@ -11,7 +11,7 @@
 #include <string>
 
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -60,8 +60,8 @@ void UnitLargePaste::invokeTest()
     helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
     helpers::sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
     const auto selection = helpers::assertResponseString(socket, "textselectioncontent:", testname);
-    CPPUNIT_ASSERT_EQUAL_MESSAGE("Pasted text was either corrupted or couldn't be read back",
-                                 "textselectioncontent: " + documentContents, selection);
+    LOK_ASSERT_EQUAL_MESSAGE("Pasted text was either corrupted or couldn't be read back",
+                             "textselectioncontent: " + documentContents, selection);
 
     exitTest(TestResult::Ok);
 }

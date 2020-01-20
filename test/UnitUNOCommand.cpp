@@ -15,7 +15,7 @@
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <helpers.hpp>
@@ -52,7 +52,7 @@ void testStateChanged(const std::string& filename, std::set<std::string>& comman
             ostr << itUno << std::endl;
         }
 
-        CPPUNIT_FAIL(ostr.str());
+        LOK_ASSERT_FAIL(ostr.str());
     }
 }
 }
@@ -130,7 +130,7 @@ UnitBase::TestResult UnitUNOCommand::testStateUnoCommandWriter()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -191,7 +191,7 @@ UnitBase::TestResult UnitUNOCommand::testStateUnoCommandCalc()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -252,7 +252,7 @@ UnitBase::TestResult UnitUNOCommand::testStateUnoCommandImpress()
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }

@@ -27,7 +27,7 @@
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 
-#include <cppunit/extensions/HelperMacros.h>
+#include <test/lokassert.hpp>
 
 #include <Common.hpp>
 #include "common/FileUtil.hpp"
@@ -381,7 +381,7 @@ template <typename T>
 std::string assertResponseString(T& ws, const std::string& prefix, const std::string& testname)
 {
     const auto res = getResponseString(ws, prefix, testname);
-    CPPUNIT_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
+    LOK_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
     return res;
 }
 
@@ -390,7 +390,7 @@ template <typename T>
 std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string& testname)
 {
     const auto res = getResponseString(ws, prefix, testname, 1000);
-    CPPUNIT_ASSERT_MESSAGE(testname + "Did not expect getting message [" + res + "].", res.empty());
+    LOK_ASSERT_MESSAGE(testname + "Did not expect getting message [" + res + "].", res.empty());
     return res;
 }
 
@@ -487,14 +487,14 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const s
         {
             return nullptr;
         }
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL, isLoaded);
+        LOK_ASSERT_MESSAGE("cannot load the document " + documentURL, isLoaded);
 
         TST_LOG("Loaded document [" << documentURL << "].");
         return socket;
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     // Really couldn't reach here, but the compiler doesn't know any better.
@@ -512,7 +512,7 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilenam
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     // Really couldn't reach here, but the compiler doesn't know any better.
@@ -565,7 +565,7 @@ void parseDocSize(const std::string& message, const std::string& type,
     width = std::stoi(tokens[3].substr(std::string("width=").size()));
     height = std::stoi(tokens[4].substr(std::string("height=").size()));
     viewid = std::stoi(tokens[5].substr(std::string("viewid=").size()));
-    CPPUNIT_ASSERT_EQUAL(type, text);
+    LOK_ASSERT_EQUAL(type, text);
     CPPUNIT_ASSERT(parts > 0);
     CPPUNIT_ASSERT(part >= 0);
     CPPUNIT_ASSERT(width > 0);
@@ -586,14 +586,14 @@ std::vector<char> assertTileMessage(LOOLWebSocket& ws, const std::string& testna
 
     const std::string firstLine = LOOLProtocol::getFirstLine(response);
     StringVector tileTokens(LOOLProtocol::tokenize(firstLine, ' '));
-    CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tileTokens[0]);
-    CPPUNIT_ASSERT_EQUAL(std::string("part="), tileTokens[1].substr(0, std::string("part=").size()));
-    CPPUNIT_ASSERT_EQUAL(std::string("width="), tileTokens[2].substr(0, std::string("width=").size()));
-    CPPUNIT_ASSERT_EQUAL(std::string("height="), tileTokens[3].substr(0, std::string("height=").size()));
-    CPPUNIT_ASSERT_EQUAL(std::string("tileposx="), tileTokens[4].substr(0, std::string("tileposx=").size()));
-    CPPUNIT_ASSERT_EQUAL(std::string("tileposy="), tileTokens[5].substr(0, std::string("tileposy=").size()));
-    CPPUNIT_ASSERT_EQUAL(std::string("tilewidth="), tileTokens[6].substr(0, std::string("tilewidth=").size()));
-    CPPUNIT_ASSERT_EQUAL(std::string("tileheight="), tileTokens[7].substr(0, std::string("tileheight=").size()));
+    LOK_ASSERT_EQUAL(std::string("tile:"), tileTokens[0]);
+    LOK_ASSERT_EQUAL(std::string("part="), tileTokens[1].substr(0, std::string("part=").size()));
+    LOK_ASSERT_EQUAL(std::string("width="), tileTokens[2].substr(0, std::string("width=").size()));
+    LOK_ASSERT_EQUAL(std::string("height="), tileTokens[3].substr(0, std::string("height=").size()));
+    LOK_ASSERT_EQUAL(std::string("tileposx="), tileTokens[4].substr(0, std::string("tileposx=").size()));
+    LOK_ASSERT_EQUAL(std::string("tileposy="), tileTokens[5].substr(0, std::string("tileposy=").size()));
+    LOK_ASSERT_EQUAL(std::string("tilewidth="), tileTokens[6].substr(0, std::string("tilewidth=").size()));
+    LOK_ASSERT_EQUAL(std::string("tileheight="), tileTokens[7].substr(0, std::string("tileheight=").size()));
 
     return response;
 }

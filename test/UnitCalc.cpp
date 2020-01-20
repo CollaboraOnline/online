@@ -15,7 +15,7 @@
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Png.hpp>
 #include <Unit.hpp>
@@ -32,16 +32,16 @@ double getColRowSize(const std::string& property, const std::string& message, in
     const auto& command = result.extract<Poco::JSON::Object::Ptr>();
     std::string text = command->get("commandName").toString();
 
-    CPPUNIT_ASSERT_EQUAL(std::string(".uno:ViewRowColumnHeaders"), text);
-    CPPUNIT_ASSERT(command->isArray(property));
+    LOK_ASSERT_EQUAL(std::string(".uno:ViewRowColumnHeaders"), text);
+    LOK_ASSERT(command->isArray(property));
 
     Poco::JSON::Array::Ptr array = command->getArray(property);
 
-    CPPUNIT_ASSERT(array->isObject(index));
+    LOK_ASSERT(array->isObject(index));
 
     Poco::SharedPtr<Poco::JSON::Object> item = array->getObject(index);
 
-    CPPUNIT_ASSERT(item->has("size"));
+    LOK_ASSERT(item->has("size"));
 
     return item->getValue<double>("size");
 }
@@ -51,7 +51,7 @@ double getColRowSize(const std::shared_ptr<LOOLWebSocket>& socket, const std::st
 {
     std::vector<char> response;
     response = helpers::getResponseMessage(socket, "commandvalues:", testname);
-    CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
+    LOK_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
                            !response.empty());
     std::vector<char> json(response.begin() + std::string("commandvalues:").length(),
                            response.end());
@@ -124,9 +124,9 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
     png_uint_32 rowBytesExp = 0;
     std::vector<png_bytep> rowsExp = Png::decodePNG(streamExp, heightExp, widthExp, rowBytesExp);
 
-    CPPUNIT_ASSERT_EQUAL(heightExp, height);
-    CPPUNIT_ASSERT_EQUAL(widthExp, width);
-    CPPUNIT_ASSERT_EQUAL(rowBytesExp, rowBytes);
+    LOK_ASSERT_EQUAL(heightExp, height);
+    LOK_ASSERT_EQUAL(widthExp, width);
+    LOK_ASSERT_EQUAL(rowBytesExp, rowBytes);
 
     for (png_uint_32 itRow = 0; itRow < height; ++itRow)
     {
@@ -135,7 +135,7 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
         {
             // This is a very strict test that breaks often/easily due to slight rendering
             // differences. So for now just keep it informative only.
-            //CPPUNIT_ASSERT_MESSAGE("Tile not rendered as expected @ row #" + std::to_string(itRow), eq);
+            //LOK_ASSERT_MESSAGE("Tile not rendered as expected @ row #" + std::to_string(itRow), eq);
             TST_LOG("\nFAILURE: Tile not rendered as expected @ row #" << itRow);
             break;
         }
@@ -198,7 +198,7 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView51()
     const std::vector<char> tile2
         = helpers::getTileAndSave(socket, req, "/tmp/calc_render_51_sec.png", testname);
 
-    CPPUNIT_ASSERT(tile1 == tile2);
+    LOK_ASSERT(tile1 == tile2);
     return TestResult::Ok;
 }
 
@@ -246,7 +246,7 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView53()
     const std::vector<char> tile2
         = helpers::getTileAndSave(socket, req, "/tmp/calc_render_53_sec.png", testname);
 
-    CPPUNIT_ASSERT(tile1 == tile2);
+    LOK_ASSERT(tile1 == tile2);
 
     // Don't let them go out of scope and disconnect.
     socket2->shutdown();
@@ -271,7 +271,7 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
         const std::string commandValues = "commandvalues command=.uno:ViewRowColumnHeaders";
         helpers::sendTextFrame(socket, commandValues);
         response = helpers::getResponseMessage(socket, "commandvalues:", testname);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
+        LOK_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
                                !response.empty());
         {
             std::vector<char> json(response.begin() + std::string("commandvalues:").length(),
@@ -304,13 +304,13 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
             helpers::sendTextFrame(socket, "uno .uno:ColumnWidth " + oss.str(), testname);
             helpers::sendTextFrame(socket, commandValues, testname);
             response = helpers::getResponseMessage(socket, "commandvalues:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
+            LOK_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
                                    !response.empty());
             std::vector<char> json(response.begin() + std::string("commandvalues:").length(),
                                    response.end());
             json.push_back(0);
             newWidth = getColRowSize("columns", json.data(), 1);
-            CPPUNIT_ASSERT(newWidth > oldWidth);
+            LOK_ASSERT(newWidth > oldWidth);
         }
 
         // send row height
@@ -333,18 +333,18 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
             helpers::sendTextFrame(socket, "uno .uno:RowHeight " + oss.str(), testname);
             helpers::sendTextFrame(socket, commandValues, testname);
             response = helpers::getResponseMessage(socket, "commandvalues:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
+            LOK_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
                                    !response.empty());
             std::vector<char> json(response.begin() + std::string("commandvalues:").length(),
                                    response.end());
             json.push_back(0);
             newHeight = getColRowSize("rows", json.data(), 1);
-            CPPUNIT_ASSERT(newHeight > oldHeight);
+            LOK_ASSERT(newHeight > oldHeight);
         }
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -419,7 +419,7 @@ UnitBase::TestResult UnitCalc::testOptimalResize()
             helpers::sendTextFrame(socket, "uno .uno:SetOptimalColumnWidthDirect", testname);
             helpers::sendTextFrame(socket, commandValues, testname);
             optimalWidth = getColRowSize(socket, "columns", 0, testname);
-            CPPUNIT_ASSERT(optimalWidth < newWidth);
+            LOK_ASSERT(optimalWidth < newWidth);
         }
 
         // send optimal row height
@@ -446,12 +446,12 @@ UnitBase::TestResult UnitCalc::testOptimalResize()
 
             helpers::sendTextFrame(socket, commandValues, testname);
             optimalHeight = getColRowSize(socket, "rows", 0, testname);
-            CPPUNIT_ASSERT(optimalHeight < newHeight);
+            LOK_ASSERT(optimalHeight < newHeight);
         }
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }

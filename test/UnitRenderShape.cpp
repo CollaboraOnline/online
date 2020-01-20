@@ -11,7 +11,7 @@
 #include <string>
 
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -103,18 +103,18 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionImpress()
         helpers::sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG
             = helpers::getResponseMessage(socket, "shapeselectioncontent:", testname);
-        CPPUNIT_ASSERT(!responseSVG.empty());
+        LOK_ASSERT(!responseSVG.empty());
         auto it = std::find(responseSVG.begin(), responseSVG.end(), '\n');
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
         stripDescriptions(responseSVG);
 
-        CPPUNIT_ASSERT(helpers::svgMatch(testname, responseSVG, "shapes_impress.svg"));
+        LOK_ASSERT(helpers::svgMatch(testname, responseSVG, "shapes_impress.svg"));
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     return TestResult::Ok;
@@ -137,18 +137,18 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionWriterImage()
         helpers::sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
         std::vector<char> responseSVG
             = helpers::getResponseMessage(socket, "shapeselectioncontent:", testname);
-        CPPUNIT_ASSERT(!responseSVG.empty());
+        LOK_ASSERT(!responseSVG.empty());
         auto it = std::find(responseSVG.begin(), responseSVG.end(), '\n');
         if (it != responseSVG.end())
             responseSVG.erase(responseSVG.begin(), ++it);
 
         stripDescriptions(responseSVG);
 
-        CPPUNIT_ASSERT(helpers::svgMatch(testname, responseSVG, "non_shape_writer_image.svg"));
+        LOK_ASSERT(helpers::svgMatch(testname, responseSVG, "non_shape_writer_image.svg"));
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     return TestResult::Ok;

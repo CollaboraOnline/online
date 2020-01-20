@@ -16,6 +16,8 @@
 #include <regex>
 #include <vector>
 
+#include <test/lokassert.hpp>
+
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/TestResult.h>
@@ -66,42 +68,42 @@ void FakeSocketTest::testBasic()
     // First check invalid fds.
 
     rc = fakeSocketListen(10);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EBADF);
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EBADF);
 
     rc = fakeSocketWrite(20, "hah", 3);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EBADF);
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EBADF);
 
     rc = fakeSocketRead(30, buf, 3);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EBADF);
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EBADF);
 
     // Create three sockets: s0, s1 and s2.
     int s0 = fakeSocketSocket();
-    CPPUNIT_ASSERT(s0 >= 0);
+    LOK_ASSERT(s0 >= 0);
     int s1 = fakeSocketSocket();
-    CPPUNIT_ASSERT(s1 >= 0);
+    LOK_ASSERT(s1 >= 0);
     int s2 = fakeSocketSocket();
-    CPPUNIT_ASSERT(s2 >= 0);
+    LOK_ASSERT(s2 >= 0);
 
-    CPPUNIT_ASSERT(s0 != s1);
-    CPPUNIT_ASSERT(s1 != s2);
+    LOK_ASSERT(s0 != s1);
+    LOK_ASSERT(s1 != s2);
 
     // Close s1 and create it anew
     fakeSocketClose(s1);
 
     s1 = fakeSocketSocket();
-    CPPUNIT_ASSERT(s1 >= 0);
+    LOK_ASSERT(s1 >= 0);
 
     // Listen on s0
     rc = fakeSocketListen(s0);
-    CPPUNIT_ASSERT(rc != -1);
+    LOK_ASSERT(rc != -1);
 
     // Start a thread that accepts two connections to s0, producing sockets s3 and s4.
     int s3 = -1, s4 = -1;
     std::thread t0([&] {
-            // Cannot use CPPUNIT_ASSERT here as that throws and this thread has no Cppunit
+            // Cannot use LOK_ASSERT here as that throws and this thread has no Cppunit
             // exception handler. We check below after joining this thread.
             s3 = fakeSocketAccept4(s0);
             s4 = fakeSocketAccept4(s0);
@@ -110,139 +112,139 @@ void FakeSocketTest::testBasic()
     // Connect s1 and s2 to s0 (that is, to the sockets produced by accepting connections to
     // s0).
     rc = fakeSocketConnect(s1, s0);
-    CPPUNIT_ASSERT(rc != -1);
+    LOK_ASSERT(rc != -1);
 
     rc = fakeSocketConnect(s2, s0);
-    CPPUNIT_ASSERT(rc != -1);
+    LOK_ASSERT(rc != -1);
 
     // Verify that we got the accepts.
     t0.join();
-    CPPUNIT_ASSERT(s3 != -1);
-    CPPUNIT_ASSERT(s4 != -1);
+    LOK_ASSERT(s3 != -1);
+    LOK_ASSERT(s4 != -1);
 
     // s1 should now be connected to s3, and s2 to s4.
-    CPPUNIT_ASSERT(fakeSocketPeer(s1) == s3);
-    CPPUNIT_ASSERT(fakeSocketPeer(s3) == s1);
-    CPPUNIT_ASSERT(fakeSocketPeer(s2) == s4);
-    CPPUNIT_ASSERT(fakeSocketPeer(s4) == s2);
+    LOK_ASSERT(fakeSocketPeer(s1) == s3);
+    LOK_ASSERT(fakeSocketPeer(s3) == s1);
+    LOK_ASSERT(fakeSocketPeer(s2) == s4);
+    LOK_ASSERT(fakeSocketPeer(s4) == s2);
 
     // Some writing and reading
     rc = fakeSocketWrite(s1, "hello", 5);
-    CPPUNIT_ASSERT(rc != -1);
+    LOK_ASSERT(rc != -1);
 
     rc = fakeSocketWrite(s1, "greetings", 9);
-    CPPUNIT_ASSERT(rc != -1);
+    LOK_ASSERT(rc != -1);
 
     rc = fakeSocketWrite(s2, "moin", 4);
-    CPPUNIT_ASSERT(rc != -1);
+    LOK_ASSERT(rc != -1);
 
     rc = fakeSocketAvailableDataLength(s3);
-    CPPUNIT_ASSERT(rc == 5);
+    LOK_ASSERT(rc == 5);
 
     rc = fakeSocketRead(s3, buf, 100);
-    CPPUNIT_ASSERT(rc == 5);
+    LOK_ASSERT(rc == 5);
 
     rc = fakeSocketAvailableDataLength(s3);
-    CPPUNIT_ASSERT(rc == 9);
+    LOK_ASSERT(rc == 9);
 
     rc = fakeSocketRead(s4, buf, 100);
-    CPPUNIT_ASSERT(rc == 4);
+    LOK_ASSERT(rc == 4);
 
     rc = fakeSocketWrite(s3, "goodbye", 7);
-    CPPUNIT_ASSERT(rc > 0);
+    LOK_ASSERT(rc > 0);
 
     rc = fakeSocketRead(s1, buf, 4);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EAGAIN); // Note: not really the right errno, but what else? See
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EAGAIN); // Note: not really the right errno, but what else? See
                                      // FakeSocket.cpp.
 
     rc = fakeSocketRead(s1, buf, 100);
-    CPPUNIT_ASSERT(rc > 0);
+    LOK_ASSERT(rc > 0);
 
     // Close s3. Reading from s1 should then return an EOF indication (0).
     fakeSocketClose(s3);
 
     rc = fakeSocketAvailableDataLength(s1);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketRead(s1, buf, 100);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketAvailableDataLength(s1);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketRead(s1, buf, 100);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     // Test the "pipe" functionality, that creates an already connected socket pair.
     int pipe[2];
     rc = fakeSocketPipe2(pipe);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketWrite(pipe[0], "x", 1);
-    CPPUNIT_ASSERT(rc == 1);
+    LOK_ASSERT(rc == 1);
 
     rc = fakeSocketAvailableDataLength(pipe[1]);
-    CPPUNIT_ASSERT(rc == 1);
+    LOK_ASSERT(rc == 1);
 
     rc = fakeSocketRead(pipe[1], buf, 1);
-    CPPUNIT_ASSERT(rc == 1);
+    LOK_ASSERT(rc == 1);
 
-    CPPUNIT_ASSERT(buf[0] == 'x');
+    LOK_ASSERT(buf[0] == 'x');
 
     rc = fakeSocketWrite(pipe[1], "y", 1);
-    CPPUNIT_ASSERT(rc == 1);
+    LOK_ASSERT(rc == 1);
 
     rc = fakeSocketRead(pipe[0], buf, 1);
-    CPPUNIT_ASSERT(rc == 1);
-    CPPUNIT_ASSERT(buf[0] == 'y');
+    LOK_ASSERT(rc == 1);
+    LOK_ASSERT(buf[0] == 'y');
 
     rc = fakeSocketWrite(pipe[0], "z", 1);
-    CPPUNIT_ASSERT(rc == 1);
+    LOK_ASSERT(rc == 1);
 
     rc = fakeSocketShutdown(pipe[0]);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketRead(pipe[1], buf, 1);
-    CPPUNIT_ASSERT(rc == 1);
-    CPPUNIT_ASSERT(buf[0] == 'z');
+    LOK_ASSERT(rc == 1);
+    LOK_ASSERT(buf[0] == 'z');
 
     rc = fakeSocketWrite(pipe[0], "a", 1);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EPIPE);
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EPIPE);
 
     rc = fakeSocketRead(pipe[0], buf, 1);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketRead(pipe[0], buf, 1);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketClose(pipe[0]);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketClose(pipe[0]);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EBADF);
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EBADF);
 
     rc = fakeSocketClose(pipe[1]);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketClose(pipe[1]);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EBADF);
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EBADF);
 
     // Create a pipe again.
 
     rc = fakeSocketPipe2(pipe);
-    CPPUNIT_ASSERT(rc == 0);
+    LOK_ASSERT(rc == 0);
 
     rc = fakeSocketAvailableDataLength(pipe[0]);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EAGAIN);
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EAGAIN);
 
     rc = fakeSocketAvailableDataLength(pipe[1]);
-    CPPUNIT_ASSERT(rc == -1);
-    CPPUNIT_ASSERT(errno == EAGAIN);
+    LOK_ASSERT(rc == -1);
+    LOK_ASSERT(errno == EAGAIN);
 
     // Test poll functionality.
 
@@ -260,11 +262,11 @@ void FakeSocketTest::testBasic()
     rc = fakeSocketPoll(pollfds, 4, -1);
     // Hmm, does a real poll() set POLLIN for a listening socket? Probably only if there is a
     // connection in progress, and that is not the case here for s0.
-    CPPUNIT_ASSERT(rc == 3);
-    CPPUNIT_ASSERT(pollfds[0].revents == 0);
-    CPPUNIT_ASSERT(pollfds[1].revents == POLLIN);
-    CPPUNIT_ASSERT(pollfds[2].revents == POLLOUT);
-    CPPUNIT_ASSERT(pollfds[3].revents == POLLNVAL);
+    LOK_ASSERT(rc == 3);
+    LOK_ASSERT(pollfds[0].revents == 0);
+    LOK_ASSERT(pollfds[1].revents == POLLIN);
+    LOK_ASSERT(pollfds[2].revents == POLLOUT);
+    LOK_ASSERT(pollfds[3].revents == POLLNVAL);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(FakeSocketTest);

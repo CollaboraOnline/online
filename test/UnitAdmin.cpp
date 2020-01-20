@@ -95,9 +95,9 @@ private:
         response.getCookies(cookies);
 
         // For now we only set one cookie
-        CPPUNIT_ASSERT_EQUAL(1, static_cast<int>(cookies.size()));
+        LOK_ASSERT_EQUAL(1, static_cast<int>(cookies.size()));
         // and it is jwt=
-        CPPUNIT_ASSERT_EQUAL(std::string("jwt"), cookies[0].getName());
+        LOK_ASSERT_EQUAL(std::string("jwt"), cookies[0].getName());
 
         // Check cookie properties
         std::string cookiePath = cookies[0].getPath();

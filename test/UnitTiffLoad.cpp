@@ -11,7 +11,7 @@
 #include <string>
 
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -49,7 +49,7 @@ void UnitTiffLoad::invokeTest()
     // broken.
     const std::string content
         = helpers::assertResponseString(socket, "shapeselectioncontent:", testname);
-    CPPUNIT_ASSERT(Util::startsWith(content, "shapeselectioncontent:\n"));
+    LOK_ASSERT(Util::startsWith(content, "shapeselectioncontent:\n"));
 
     exitTest(TestResult::Ok);
 }

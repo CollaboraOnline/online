@@ -11,7 +11,7 @@
 #include <string>
 
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -50,20 +50,20 @@ void UnitRenderingOptions::invokeTest()
         const auto status = helpers::assertResponseString(socket, "status:", testname);
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
-        
+
         StringVector tokens(LOOLProtocol::tokenize(status, ' '));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size());
+        LOK_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size());
 
         const std::string token = tokens[5];
         const std::string prefix = "height=";
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
+        LOK_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
         const int height = std::stoi(token.substr(prefix.size()));
         // HideWhitespace was ignored, this was 32532, should be around 16706.
-        CPPUNIT_ASSERT(height < 20000);
+        LOK_ASSERT(height < 20000);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     exitTest(TestResult::Ok);

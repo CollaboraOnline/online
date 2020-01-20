@@ -48,12 +48,12 @@ public:
             if (fileIndex == 0)
             {
                 OAuth20Credentials creds(request);
-                CPPUNIT_ASSERT_EQUAL(std::string("s3hn3ct0k3v"), creds.getBearerToken());
+                LOK_ASSERT_EQUAL(std::string("s3hn3ct0k3v"), creds.getBearerToken());
             }
             else
             {
                 OAuth20Credentials creds(request, "Basic");
-                CPPUNIT_ASSERT_EQUAL(std::string("basic=="), creds.getBearerToken());
+                LOK_ASSERT_EQUAL(std::string("basic=="), creds.getBearerToken());
             }
         }
         catch (const std::exception&)

@@ -15,7 +15,7 @@
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Png.hpp>
 #include <Unit.hpp>
@@ -39,11 +39,11 @@ void getPartHashCodes(const std::string& testname, const std::string& response,
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
     CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size());
 #else
-    CPPUNIT_ASSERT_MESSAGE("Expected at least 7 tokens.", static_cast<size_t>(7) <= tokens.size());
+    LOK_ASSERT_MESSAGE("Expected at least 7 tokens.", static_cast<size_t>(7) <= tokens.size());
 #endif
 
     const std::string type = tokens[0].substr(std::string("type=").size());
-    CPPUNIT_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
+    LOK_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
                            type == "presentation" || type == "spreadsheet");
 
     const int totalParts = std::stoi(tokens[1].substr(std::string("parts=").size()));
@@ -57,7 +57,7 @@ void getPartHashCodes(const std::string& testname, const std::string& response,
     parts.clear();
     while (endLine.match(response, offset, matches) > 0)
     {
-        CPPUNIT_ASSERT_EQUAL(1, (int)matches.size());
+        LOK_ASSERT_EQUAL(1, (int)matches.size());
         const std::string str = response.substr(matches[0].offset, matches[0].length);
         if (number.match(str, 0))
         {
@@ -70,7 +70,7 @@ void getPartHashCodes(const std::string& testname, const std::string& response,
     TST_LOG("Found " << parts.size() << " part names/codes.");
 
     // Validate that Core is internally consistent when emitting status messages.
-    CPPUNIT_ASSERT_EQUAL(totalParts, (int)parts.size());
+    LOK_ASSERT_EQUAL(totalParts, (int)parts.size());
 }
 }
 
@@ -105,16 +105,16 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
             = helpers::connectLOKit(uri, request, httpResponse, testname);
 
         helpers::sendTextFrame(socket, "load url=" + documentURL);
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL,
+        LOK_ASSERT_MESSAGE("cannot load the document " + documentURL,
                                helpers::isDocumentLoaded(socket, testname));
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
         helpers::sendTextFrame(socket, "status");
         response = helpers::getResponseString(socket, "status:", testname);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+        LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
-        CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
+        LOK_ASSERT_EQUAL(1, (int)parts.size());
 
         const std::string slide1Hash = parts[0];
 
@@ -124,13 +124,13 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         {
             helpers::sendTextFrame(socket, "uno .uno:InsertPage");
             response = helpers::getResponseString(socket, "status:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected",
+            LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
             getPartHashCodes(testname, response.substr(7), parts);
-            CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
+            LOK_ASSERT_EQUAL(it + 1, parts.size());
         }
 
-        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after inserting extra slides.",
+        LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after inserting extra slides.",
                                parts[0] == slide1Hash);
         const std::vector<std::string> parts_after_insert(parts.begin(), parts.end());
 
@@ -142,13 +142,13 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
             helpers::sendTextFrame(socket, "setclientpart part=" + std::to_string(it));
             helpers::sendTextFrame(socket, "uno .uno:DeletePage");
             response = helpers::getResponseString(socket, "status:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected",
+            LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
             getPartHashCodes(testname, response.substr(7), parts);
-            CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
+            LOK_ASSERT_EQUAL(11 - it, parts.size());
         }
 
-        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after deleting extra slides.",
+        LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after deleting extra slides.",
                                parts[0] == slide1Hash);
 
         // undo delete slides
@@ -157,16 +157,16 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         {
             helpers::sendTextFrame(socket, "uno .uno:Undo");
             response = helpers::getResponseString(socket, "status:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected",
+            LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
             getPartHashCodes(testname, response.substr(7), parts);
-            CPPUNIT_ASSERT_EQUAL(it + 1, parts.size());
+            LOK_ASSERT_EQUAL(it + 1, parts.size());
         }
 
-        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after undoing slide delete.",
+        LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after undoing slide delete.",
                                parts[0] == slide1Hash);
         const std::vector<std::string> parts_after_undo(parts.begin(), parts.end());
-        CPPUNIT_ASSERT_MESSAGE("Hash codes changed between deleting and undo.",
+        LOK_ASSERT_MESSAGE("Hash codes changed between deleting and undo.",
                                parts_after_insert == parts_after_undo);
 
         // redo inserted slides
@@ -175,26 +175,26 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         {
             helpers::sendTextFrame(socket, "uno .uno:Redo");
             response = helpers::getResponseString(socket, "status:", testname);
-            CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected",
+            LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
             getPartHashCodes(testname, response.substr(7), parts);
-            CPPUNIT_ASSERT_EQUAL(11 - it, parts.size());
+            LOK_ASSERT_EQUAL(11 - it, parts.size());
         }
 
-        CPPUNIT_ASSERT_MESSAGE("Hash code of slide #1 changed after redoing slide delete.",
+        LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after redoing slide delete.",
                                parts[0] == slide1Hash);
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
         helpers::sendTextFrame(socket, "status");
         response = helpers::getResponseString(socket, "status:", testname);
-        CPPUNIT_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
+        LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
-        CPPUNIT_ASSERT_EQUAL(1, (int)parts.size());
+        LOK_ASSERT_EQUAL(1, (int)parts.size());
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -216,11 +216,11 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
 
         // Check if the document contains the pasted text.
         const std::string selection = helpers::getAllText(socket, testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
+        LOK_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -241,11 +241,11 @@ UnitBase::TestResult UnitInsertDelete::testGetTextSelection()
 
         static const std::string expected = "Hello world";
         const std::string selection = helpers::getAllText(socket, testname, expected);
-        CPPUNIT_ASSERT_EQUAL("textselectioncontent: " + expected, selection);
+        LOK_ASSERT_EQUAL("textselectioncontent: " + expected, selection);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -272,11 +272,11 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
         Poco::JSON::Parser parser0;
         const Poco::Dynamic::Var result0 = parser0.parse(response.substr(17));
         const auto& command0 = result0.extract<Poco::JSON::Object::Ptr>();
-        CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command0->has("rectangle"));
+        LOK_ASSERT_MESSAGE("missing property rectangle", command0->has("rectangle"));
 
         StringVector cursorTokens(
             LOOLProtocol::tokenize(command0->get("rectangle").toString(), ','));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.size());
+        LOK_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.size());
 
         // Create second view
         std::shared_ptr<LOOLWebSocket> socket1
@@ -288,21 +288,21 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
         Poco::JSON::Parser parser;
         const Poco::Dynamic::Var result = parser.parse(response.substr(21));
         const auto& command = result.extract<Poco::JSON::Object::Ptr>();
-        CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command->has("rectangle"));
+        LOK_ASSERT_MESSAGE("missing property rectangle", command->has("rectangle"));
 
         StringVector viewTokens(
             LOOLProtocol::tokenize(command->get("rectangle").toString(), ','));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.size());
+        LOK_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.size());
 
         // check both cursor should be equal
-        CPPUNIT_ASSERT_EQUAL(cursorTokens[0], viewTokens[0]);
-        CPPUNIT_ASSERT_EQUAL(cursorTokens[1], viewTokens[1]);
-        CPPUNIT_ASSERT_EQUAL(cursorTokens[2], viewTokens[2]);
-        CPPUNIT_ASSERT_EQUAL(cursorTokens[3], viewTokens[3]);
+        LOK_ASSERT_EQUAL(cursorTokens[0], viewTokens[0]);
+        LOK_ASSERT_EQUAL(cursorTokens[1], viewTokens[1]);
+        LOK_ASSERT_EQUAL(cursorTokens[2], viewTokens[2]);
+        LOK_ASSERT_EQUAL(cursorTokens[3], viewTokens[3]);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }

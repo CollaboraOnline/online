@@ -9,7 +9,7 @@
 
 #include <config.h>
 
-#include <cppunit/extensions/HelperMacros.h>
+#include <test/lokassert.hpp>
 
 #include <Delta.hpp>
 #include <Util.hpp>
@@ -66,13 +66,13 @@ std::vector<char> DeltaTests::applyDelta(
     png_uint_32 width, png_uint_32 height,
     const std::vector<char> &delta)
 {
-    CPPUNIT_ASSERT(delta.size() >= 4);
-    CPPUNIT_ASSERT(delta[0] == 'D');
+    LOK_ASSERT(delta.size() >= 4);
+    LOK_ASSERT(delta[0] == 'D');
 
     // start with the same state.
     std::vector<char> output = pixmap;
-    CPPUNIT_ASSERT_EQUAL(output.size(), size_t(pixmap.size()));
-    CPPUNIT_ASSERT_EQUAL(output.size(), size_t(width * height * 4));
+    LOK_ASSERT_EQUAL(output.size(), size_t(pixmap.size()));
+    LOK_ASSERT_EQUAL(output.size(), size_t(width * height * 4));
 
     size_t offset = 0, i;
     for (i = 1; i < delta.size() && offset < output.size();)
@@ -104,7 +104,7 @@ std::vector<char> DeltaTests::applyDelta(
             i += 4;
 
 //            std::cout << "new " << length << " at " << destCol << ", " << destRow << "\n";
-            CPPUNIT_ASSERT(length <= width - destCol);
+            LOK_ASSERT(length <= width - destCol);
 
             char *dest = &output[width * destRow * 4 + destCol * 4];
             for (size_t j = 0; j < length * 4 && i < delta.size(); ++j)
@@ -113,11 +113,11 @@ std::vector<char> DeltaTests::applyDelta(
         }
         default:
             std::cout << "Unknown delta code " << delta[i] << "\n";
-            CPPUNIT_ASSERT(false);
+            LOK_ASSERT(false);
             break;
         }
     }
-    CPPUNIT_ASSERT_EQUAL(delta.size(), i);
+    LOK_ASSERT_EQUAL(delta.size(), i);
     return output;
 }
 
@@ -125,7 +125,7 @@ void DeltaTests::assertEqual(const std::vector<char> &a,
                              const std::vector<char> &b,
                              int width, int /* height */)
 {
-    CPPUNIT_ASSERT_EQUAL(a.size(), b.size());
+    LOK_ASSERT_EQUAL(a.size(), b.size());
     for (size_t i = 0; i < a.size(); ++i)
     {
         if (a[i] != b[i])
@@ -141,7 +141,7 @@ void DeltaTests::assertEqual(const std::vector<char> &a,
                     std::cout<< "\n";
             }
             std::cout << " size " << len << "\n";
-            CPPUNIT_ASSERT(false);
+            LOK_ASSERT(false);
         }
     }
 }
@@ -155,30 +155,30 @@ void DeltaTests::testDeltaSequence()
     std::vector<char> text =
         DeltaTests::loadPng(TDOC "/delta-text.png",
                             height, width, rowBytes);
-    CPPUNIT_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
-    CPPUNIT_ASSERT_EQUAL(size_t(256 * 256 * 4), text.size());
+    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text.size());
 
     const TileWireId text2Wid = 2;
     std::vector<char> text2 =
         DeltaTests::loadPng(TDOC "/delta-text2.png",
                             height, width, rowBytes);
-    CPPUNIT_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
-    CPPUNIT_ASSERT_EQUAL(size_t(256 * 256 * 4), text2.size());
+    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text2.size());
 
     std::vector<char> delta;
     // Stash it in the cache
-    CPPUNIT_ASSERT(gen.createDelta(
+    LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
                        delta, textWid, 0) == false);
-    CPPUNIT_ASSERT(delta.size() == 0);
+    LOK_ASSERT(delta.size() == 0);
 
     // Build a delta between text2 & textWid
-    CPPUNIT_ASSERT(gen.createDelta(
+    LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text2[0]),
                        0, 0, width, height, width, height,
                        delta, text2Wid, textWid) == true);
-    CPPUNIT_ASSERT(delta.size() > 0);
+    LOK_ASSERT(delta.size() > 0);
 
     // Apply it to move to the second frame
     std::vector<char> reText2 = applyDelta(text, width, height, delta);
@@ -186,11 +186,11 @@ void DeltaTests::testDeltaSequence()
 
     // Build a delta between text & text2Wid
     std::vector<char> two2one;
-    CPPUNIT_ASSERT(gen.createDelta(
+    LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
                        two2one, textWid, text2Wid) == true);
-    CPPUNIT_ASSERT(two2one.size() > 0);
+    LOK_ASSERT(two2one.size() > 0);
 
     // Apply it to get back to where we started
     std::vector<char> reText = applyDelta(text2, width, height, two2one);

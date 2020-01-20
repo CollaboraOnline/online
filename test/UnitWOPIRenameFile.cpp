@@ -35,7 +35,7 @@ public:
     void assertRenameFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         // spec says UTF-7...
-        CPPUNIT_ASSERT_EQUAL(std::string("hello"), request.get("X-WOPI-RequestedName"));
+        LOK_ASSERT_EQUAL(std::string("hello"), request.get("X-WOPI-RequestedName"));
     }
 
     bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/) override

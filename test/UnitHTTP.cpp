@@ -94,7 +94,7 @@ public:
     {
         std::vector<char> buffer(str.size() + 64);
         const int got = socket->receiveBytes(buffer.data(), str.size());
-        CPPUNIT_ASSERT_EQUAL(str, std::string(buffer.data(), got));
+        LOK_ASSERT_EQUAL(str, std::string(buffer.data(), got));
 
         if (got != (int)str.size() ||
             strncmp(buffer.data(), str.c_str(), got))
@@ -173,7 +173,7 @@ public:
         static const std::string start =
             "HTTP/1.0 200 OK\r\n"
             "Content-Disposition: attachment; filename=\"test.txt\"\r\n";
-        CPPUNIT_ASSERT(Util::startsWith(std::string(buffer), start));
+        LOK_ASSERT(Util::startsWith(std::string(buffer), start));
 
         if (strncmp(buffer, start.c_str(), start.size()))
         {
@@ -185,7 +185,7 @@ public:
         // TODO: check content-length etc.
 
         const char *ptr = strstr(buffer, "\r\n\r\n");
-        CPPUNIT_ASSERT_MESSAGE("Missing separator, got " + std::string(buffer), ptr);
+        LOK_ASSERT_MESSAGE("Missing separator, got " + std::string(buffer), ptr);
         if (!ptr)
         {
             std::cerr << "missing separator " << got << " '" << buffer << "\n";
@@ -201,7 +201,7 @@ public:
 
         // Oddly we need another read to get the content.
         got = socket->receiveBytes(buffer, 4096);
-        CPPUNIT_ASSERT_MESSAGE("No content returned.", got >= 0);
+        LOK_ASSERT_MESSAGE("No content returned.", got >= 0);
         if (got >=0 )
             buffer[got] = '\0';
         else

@@ -107,7 +107,7 @@ public:
             LOG_INF("Fake wopi host request, handling PutFile: " << uriReq.getPath());
 
             std::streamsize size = request.getContentLength();
-            CPPUNIT_ASSERT( size > 0 );
+            LOK_ASSERT( size > 0 );
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
@@ -118,7 +118,7 @@ public:
             socket->send(oss.str());
             socket->shutdown();
 
-            CPPUNIT_ASSERT_EQUAL(static_cast<int>(Phase::SaveDoc), static_cast<int>(_phase));
+            LOK_ASSERT_EQUAL(static_cast<int>(Phase::SaveDoc), static_cast<int>(_phase));
             _phase = Phase::CloseDoc;
 
             return true;

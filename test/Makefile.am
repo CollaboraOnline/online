@@ -54,7 +54,7 @@ endif
 # the server side and here in unit tests with conditional compilation
 # based on BUILDING_TESTS
 
-AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS
+AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS -DLOK_ABORT_ON_ASSERTION
 
 wsd_sources = \
             ../common/FileUtil.cpp \

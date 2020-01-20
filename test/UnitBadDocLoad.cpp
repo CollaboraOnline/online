@@ -15,7 +15,7 @@
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Png.hpp>
 #include <Unit.hpp>
@@ -58,18 +58,18 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
 
         const auto response = helpers::getResponseString(socket, "error:", testname);
         StringVector tokens(LOOLProtocol::tokenize(response, ' '));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
+        LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
         std::string errorCommand;
         std::string errorKind;
         LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
         LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
-        CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-        CPPUNIT_ASSERT_EQUAL(std::string("faileddocloading"), errorKind);
+        LOK_ASSERT_EQUAL(std::string("load"), errorCommand);
+        LOK_ASSERT_EQUAL(std::string("faileddocloading"), errorKind);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -119,14 +119,14 @@ UnitBase::TestResult UnitBadDocLoad::testMaxDocuments()
 
         std::string message;
         const int statusCode = helpers::getErrorCode(socket, message, testname);
-        CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION),
+        LOK_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION),
                              statusCode);
 
         socket->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -181,14 +181,14 @@ UnitBase::TestResult UnitBadDocLoad::testMaxConnections()
 
         std::string message;
         const int statusCode = helpers::getErrorCode(socketN, message, testname);
-        CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION),
+        LOK_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION),
                              statusCode);
 
         socketN->shutdown();
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -239,12 +239,12 @@ UnitBase::TestResult UnitBadDocLoad::testMaxViews()
 
         std::string message;
         const int statusCode = helpers::getErrorCode(socketN, message, testname);
-        CPPUNIT_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION),
+        LOK_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_POLICY_VIOLATION),
                              statusCode);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }

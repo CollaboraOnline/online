@@ -19,7 +19,7 @@
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Png.hpp>
 #include <Unit.hpp>
@@ -50,16 +50,16 @@ UnitBase::TestResult UnitHosting::testDiscovery()
 
     Poco::Net::HTTPResponse response;
     session->receiveResponse(response);
-    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-    CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
+    LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+    LOK_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
 
     Poco::Net::HTTPRequest request2(Poco::Net::HTTPRequest::HTTP_GET, "/hosting/discovery/");
     session->sendRequest(request2);
 
     Poco::Net::HTTPResponse response2;
     session->receiveResponse(response2);
-    CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response2.getStatus());
-    CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response2.getContentType());
+    LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response2.getStatus());
+    LOK_ASSERT_EQUAL(std::string("text/xml"), response2.getContentType());
     return TestResult::Ok;
 }
 
@@ -76,8 +76,8 @@ UnitBase::TestResult UnitHosting::testCapabilities()
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = session->receiveResponse(response);
-        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-        CPPUNIT_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
+        LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+        LOK_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
 
         std::string discoveryXML;
         Poco::StreamCopier::copyToString(rs, discoveryXML);
@@ -100,8 +100,8 @@ UnitBase::TestResult UnitHosting::testCapabilities()
             }
         }
 
-        CPPUNIT_ASSERT(foundCapabilities);
-        CPPUNIT_ASSERT_EQUAL(uri.toString() + CAPABILITIES_END_POINT, capabilitiesURI);
+        LOK_ASSERT(foundCapabilities);
+        LOK_ASSERT_EQUAL(uri.toString() + CAPABILITIES_END_POINT, capabilitiesURI);
     }
 
     // Then get the capabilities json
@@ -111,8 +111,8 @@ UnitBase::TestResult UnitHosting::testCapabilities()
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = session->receiveResponse(response);
-        CPPUNIT_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-        CPPUNIT_ASSERT_EQUAL(std::string("application/json"), response.getContentType());
+        LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+        LOK_ASSERT_EQUAL(std::string("application/json"), response.getContentType());
 
         std::ostringstream oss;
         Poco::StreamCopier::copyStream(rs, oss);
@@ -121,13 +121,13 @@ UnitBase::TestResult UnitHosting::testCapabilities()
         Poco::JSON::Parser parser;
         Poco::Dynamic::Var jsonFile = parser.parse(responseString);
         Poco::JSON::Object::Ptr features = jsonFile.extract<Poco::JSON::Object::Ptr>();
-        CPPUNIT_ASSERT(features);
-        CPPUNIT_ASSERT(features->has("convert-to"));
+        LOK_ASSERT(features);
+        LOK_ASSERT(features->has("convert-to"));
 
         Poco::JSON::Object::Ptr convert_to
             = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
-        CPPUNIT_ASSERT(convert_to->has("available"));
-        CPPUNIT_ASSERT(convert_to->get("available"));
+        LOK_ASSERT(convert_to->has("available"));
+        LOK_ASSERT(convert_to->get("available"));
     }
     return TestResult::Ok;
 }

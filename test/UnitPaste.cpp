@@ -11,7 +11,7 @@
 #include <string>
 
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -54,7 +54,7 @@ void UnitPaste::invokeTest()
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
         helpers::sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
         const auto selection = helpers::assertResponseString(socket, "textselectioncontent:", testname);
-        CPPUNIT_ASSERT_EQUAL(expected, selection);
+        LOK_ASSERT_EQUAL(expected, selection);
     }
 
     exitTest(TestResult::Ok);

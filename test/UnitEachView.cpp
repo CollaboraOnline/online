@@ -11,7 +11,7 @@
 #include <string>
 
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -65,7 +65,7 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         // Double of the default.
         size_t timeoutMs = 20000;
         response = helpers::getResponseString(socket, protocol, Poco::format(view, itView), timeoutMs);
-        CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
+        LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
         // Connect and load 0..N Views, where N<=limit
         std::vector<std::shared_ptr<LOOLWebSocket>> views;
@@ -82,18 +82,18 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         for (const auto& socketView : views)
         {
             helpers::getResponseString(socket, protocolView, Poco::format(view, itView), timeoutMs);
-            CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
+            LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
             ++itView;
             (void)socketView;
         }
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     catch (const std::exception& exc)
     {
-        CPPUNIT_FAIL(exc.what());
+        LOK_ASSERT_FAIL(exc.what());
     }
 }
 }

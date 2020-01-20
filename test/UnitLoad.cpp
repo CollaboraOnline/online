@@ -15,7 +15,7 @@
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <helpers.hpp>
@@ -41,7 +41,7 @@ void loadDoc(const std::string& documentURL, const std::string& testname)
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 }
 }
@@ -75,7 +75,7 @@ UnitBase::TestResult UnitLoad::testConnectNoLoad()
     Poco::URI uri(helpers::getTestServerURI());
     std::shared_ptr<LOOLWebSocket> socket
         = helpers::connectLOKit(uri, request, response, testname1);
-    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket);
+    LOK_ASSERT_MESSAGE("Failed to connect.", socket);
     TST_LOG_NAME(testname1, "Disconnecting first.");
     socket.reset();
 
@@ -85,16 +85,16 @@ UnitBase::TestResult UnitLoad::testConnectNoLoad()
     TST_LOG_NAME(testname2, "Connecting second to load first view.");
     std::shared_ptr<LOOLWebSocket> socket1
         = helpers::connectLOKit(uri, request, response, testname2);
-    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket1);
+    LOK_ASSERT_MESSAGE("Failed to connect.", socket1);
     helpers::sendTextFrame(socket1, "load url=" + documentURL, testname2);
-    CPPUNIT_ASSERT_MESSAGE("cannot load the document " + documentURL,
+    LOK_ASSERT_MESSAGE("cannot load the document " + documentURL,
                            helpers::isDocumentLoaded(socket1, testname2));
 
     // Connect but don't load second view.
     TST_LOG_NAME(testname3, "Connecting third to disconnect without loading.");
     std::shared_ptr<LOOLWebSocket> socket2
         = helpers::connectLOKit(uri, request, response, testname3);
-    CPPUNIT_ASSERT_MESSAGE("Failed to connect.", socket2);
+    LOK_ASSERT_MESSAGE("Failed to connect.", socket2);
     TST_LOG_NAME(testname3, "Disconnecting third.");
     socket2.reset();
 
@@ -136,11 +136,11 @@ UnitBase::TestResult UnitLoad::testBadLoad()
         helpers::sendTextFrame(socket, "status");
 
         const auto line = helpers::assertResponseString(socket, "error:", testname);
-        CPPUNIT_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
+        LOK_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }
@@ -160,11 +160,11 @@ UnitBase::TestResult UnitLoad::testExcelLoad()
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142 viewid=0\n...'.
         StringVector tokens(LOOLProtocol::tokenize(status, ' '));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size());
+        LOK_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size());
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
 }

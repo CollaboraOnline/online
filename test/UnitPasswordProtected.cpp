@@ -11,7 +11,7 @@
 #include <string>
 
 #include <Poco/URI.h>
-#include <cppunit/TestAssert.h>
+#include <test/lokassert.hpp>
 
 #include <Unit.hpp>
 #include <Util.hpp>
@@ -52,18 +52,18 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
 
         const auto response = helpers::getResponseString(socket, "error:", testname);
         StringVector tokens(LOOLProtocol::tokenize(response, ' '));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
+        LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
         std::string errorCommand;
         std::string errorKind;
         LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
         LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
-        CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-        CPPUNIT_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
+        LOK_ASSERT_EQUAL(std::string("load"), errorCommand);
+        LOK_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     return TestResult::Ok;
@@ -88,18 +88,18 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithWro
 
         const auto response = helpers::getResponseString(socket, "error:", testname);
         StringVector tokens(LOOLProtocol::tokenize(response, ' '));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
+        LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
         std::string errorCommand;
         std::string errorKind;
         LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
         LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
-        CPPUNIT_ASSERT_EQUAL(std::string("load"), errorCommand);
-        CPPUNIT_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
+        LOK_ASSERT_EQUAL(std::string("load"), errorCommand);
+        LOK_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     return TestResult::Ok;
@@ -122,12 +122,12 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithCor
         // Send a load request with correct password
         helpers::sendTextFrame(socket, "load url=" + documentURL + " password=1");
 
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
+        LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
                                helpers::isDocumentLoaded(socket, testname));
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     return TestResult::Ok;
@@ -155,12 +155,12 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedOOXMLDocument()
         // Send a load request with correct password
         helpers::sendTextFrame(socket, "load url=" + documentURL + " password=abc");
 
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
+        LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
                                helpers::isDocumentLoaded(socket, testname));
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     return TestResult::Ok;
@@ -183,12 +183,12 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedBinaryMSOfficeD
         // Send a load request with correct password
         helpers::sendTextFrame(socket, "load url=" + documentURL + " password=abc");
 
-        CPPUNIT_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
+        LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
                                helpers::isDocumentLoaded(socket, testname));
     }
     catch (const Poco::Exception& exc)
     {
-        CPPUNIT_FAIL(exc.displayText());
+        LOK_ASSERT_FAIL(exc.displayText());
     }
 
     return TestResult::Ok;

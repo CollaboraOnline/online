@@ -34,11 +34,11 @@ public:
     void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         // spec says UTF-7...
-        CPPUNIT_ASSERT_EQUAL(std::string("/jan/hole+AWE-ovsk+AP0-/hello world+ACU-1.pdf"), request.get("X-WOPI-SuggestedTarget"));
+        LOK_ASSERT_EQUAL(std::string("/jan/hole+AWE-ovsk+AP0-/hello world+ACU-1.pdf"), request.get("X-WOPI-SuggestedTarget"));
 
         // make sure it is a pdf - or at least that it is larger than what it
         // used to be
-        CPPUNIT_ASSERT(std::stoul(request.get("X-WOPI-Size")) > getFileContent().size());
+        LOK_ASSERT(std::stoul(request.get("X-WOPI-Size")) > getFileContent().size());
     }
 
     bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/) override
