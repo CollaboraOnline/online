@@ -448,7 +448,7 @@ static void addStorageReuseCookie(Poco::Net::HTTPRequest& request, const std::st
 
 void addWopiProof(Poco::Net::HTTPRequest& request, const std::string& access_token)
 {
-    for (const auto header : GetProofHeaders(access_token, request.getURI()))
+    for (const auto& header : GetProofHeaders(access_token, request.getURI()))
         request.set(header.first, header.second);
 }
 
