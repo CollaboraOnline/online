@@ -30,6 +30,13 @@ To run one specific test suit of mobile tests:
 
     make check-mobile spec=toolbar_spec.js
 
+To run one test case of a test suit you can use Mocha's
+'only' feature. Just replace the it(...) function with
+it.only(...) in the spec file for the selected test case
+and run the test suit using the spec parameter (see above).
+This 'only' feature affects both make check and make run
+commands.
+
 You can also open cypress tests in the browser, so you can
 check what happens during test run. It's useful for writing
 new tests or checking why an existing test fails.
