@@ -474,11 +474,13 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
     struct stat fileStat;
     DIR *workingdir;
 
-    LOG_TRC("Pre-reading directory: " << basePath << path);
     workingdir = opendir((basePath + path).c_str());
 
     if (!workingdir)
         return;
+
+    size_t fileCount = 0;
+    std::string filesRead;
 
     while ((currentFile = readdir(workingdir)) != nullptr)
     {
@@ -493,7 +495,9 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
         else if (S_ISREG(fileStat.st_mode))
         {
-            LOG_TRC("Reading file: '" << basePath << relPath << " as '" << relPath << "'");
+            fileCount++;
+            filesRead.append(currentFile->d_name);
+            filesRead.append(" ");
 
             std::ifstream file(basePath + relPath, std::ios::binary);
 
@@ -539,6 +543,9 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         }
     }
     closedir(workingdir);
+
+    if (fileCount > 0)
+        LOG_TRC("Pre-read " << fileCount << " file(s) from directory: " << basePath << path << ": " << filesRead);
 }
 
 void FileServerRequestHandler::initialize()
