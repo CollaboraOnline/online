@@ -139,8 +139,8 @@ describe('Mobile wizard state tests', function() {
 			.click();
 
 		// Mobile wizard is opened and it has any content
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .ui-header-left')
+			.contains('Style');
 		cy.get('#tb_actionbar_item_mobile_wizard table')
 			.should('have.class', 'checked');
 
