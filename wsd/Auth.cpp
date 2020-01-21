@@ -40,7 +40,7 @@ using Poco::OutputLineEndingConverter;
 std::unique_ptr<Poco::Crypto::RSAKey> JWTAuth::_key(
     new Poco::Crypto::RSAKey(Poco::Crypto::RSAKey(Poco::Crypto::RSAKey::KL_2048, Poco::Crypto::RSAKey::EXP_LARGE)));
 
-// avoid obscure doublef rees on exit.
+// avoid obscure double frees on exit.
 void JWTAuth::cleanup()
 {
     _key.reset();
