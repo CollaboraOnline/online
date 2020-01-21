@@ -54,6 +54,7 @@
 
 #include "ChildSession.hpp"
 #include <Common.hpp>
+#include <FileUtil.hpp>
 #include <IoUtil.hpp>
 #include "KitHelper.hpp"
 #include "Kit.hpp"
@@ -1636,13 +1637,14 @@ private:
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
 
-            LOG_DBG("Calling lokit::documentLoad(" << uriAnonym << ", \"" << options << "\").");
+            const char *pURL = docTemplate.empty() ? uri.c_str() : docTemplate.c_str();
+            LOG_DBG("Calling lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ", \"" << options << "\").");
             const auto start = std::chrono::system_clock::now();
-            _loKitDocument.reset(_loKit->documentLoad(docTemplate.empty() ? uri.c_str() : docTemplate.c_str(), options.c_str()));
+            _loKitDocument.reset(_loKit->documentLoad(pURL, options.c_str()));
             const auto duration = std::chrono::system_clock::now() - start;
             const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
             const double totalTime = elapsed/1000.;
-            LOG_DBG("Returned lokit::documentLoad(" << uriAnonym << ") in " << totalTime << "ms.");
+            LOG_DBG("Returned lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ") in " << totalTime << "ms.");
 #ifdef IOS
             // The iOS app (and the Android one) has max one document open at a time, so we can keep
             // a pointer to it in a global.
