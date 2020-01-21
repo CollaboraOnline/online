@@ -863,6 +863,10 @@ L.TileLayer = L.GridLayer.extend({
 	_onShapeSelectionContent: function (textMsg) {
 		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
 		if (this._graphicMarker) {
+			var extraInfo = this._graphicSelection.extraInfo;
+			if (extraInfo.id) {
+				this._map._cacheSVG[extraInfo.id] = textMsg;
+			}
 			this._graphicMarker.removeEmbeddedSVG();
 			this._graphicMarker.addEmbeddedSVG(textMsg);
 		}
@@ -2731,6 +2735,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker = L.svgGroup(this._graphicSelection, {
 				draggable: extraInfo.isDraggable,
 				dragConstraint: extraInfo.dragInfo,
+				svg: this._map._cacheSVG[extraInfo.id],
 				transform: true,
 				stroke: false,
 				fillOpacity: 0,

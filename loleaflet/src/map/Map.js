@@ -72,6 +72,7 @@ L.Map = L.Evented.extend({
 		}
 
 		this._initEvents();
+		this._cacheSVG = [];
 
 		if (options.maxBounds) {
 			this.setMaxBounds(options.maxBounds);
