@@ -72,7 +72,9 @@ UnitBase *unit_create_wsd(void)
 }
 
 // Allows re-use of UnitClient in test.cpp impls.
-#define UNIT_CLIENT_TESTS
+#ifdef STANDALONE_CPPUNIT
+#  error "Should never be compiled this way";
+#endif
 #include <test.cpp>
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
