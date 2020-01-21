@@ -1,6 +1,16 @@
 Cypress based test framework for LibreOffice Online
 ====================================================
 
+Installation
+------------------
+In most of the cases you need only cypress npm module
+for running cypress tests. This is installed by the build
+system, so running 'make check' will do the basic installation.
+https://docs.cypress.io/guides/getting-started/installing-cypress.html#npm-install
+
+For CI you might need install some additional dependencies:
+https://docs.cypress.io/guides/guides/continuous-integration.html#Dependencies
+
 Running tests
 ------------------
 
@@ -37,17 +47,27 @@ and run the test suit using the spec parameter (see above).
 This 'only' feature affects both make check and make run
 commands.
 
-You can also open cypress tests in the browser, so you can
-check what happens during test run. It's useful for writing
-new tests or checking why an existing test fails.
+Openning interactive test runner
+----------------------------------
 
-To open desktop tests in browser:
+Cypress has an interactive test runner application which
+runs the test in the browser. So you can see the result of
+the different steps your test makes in the browser. It's useful
+during writing new tests or checking why an existing
+test fails.
+https://docs.cypress.io/guides/core-concepts/test-runner.html
+
+To open desktop tests in the test runner:
 
     make run-desktop
 
-To open mobile tests in browser:
+To open mobile tests in the test runner:
 
     make run-mobile
 
 During the build we run the tests with Chrome browser, so make sure
 you select Chrome browser on the GUI while checking tests.
+We are using different configuration and environment variables for
+mobile and desktop tests, that's why there are two separate commands
+for them and there is no option to open all the tests in the
+test runner.
