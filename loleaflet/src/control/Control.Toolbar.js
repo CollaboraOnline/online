@@ -1034,7 +1034,7 @@ function initNormalToolbar() {
 			{type: 'html',  id: 'left'},
 			{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
 			{type: 'break'},
-			{type: 'button',  id: 'functiondialog', img: 'functiondialog', hint: _UNO('.uno:FunctionDialog', '', true), uno: '.uno:FunctionDialog'},
+			{type: 'button',  id: 'functiondialog', img: 'functiondialog', hint: _('Function Wizard'), uno: '.uno:FunctionDialog'},
 			{type: 'html', id: 'formula', html: '<div id="calc-inputbar-wrapper"><div id="calc-inputbar"></div></div>'}
 		],
 		onClick: function (e) {

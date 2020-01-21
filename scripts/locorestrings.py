@@ -64,6 +64,10 @@ if __name__ == "__main__":
         poFile = dir + lang + '/sc/messages.po'
         extractFromPo(poFile, ["STR_STYLENAME_", "STR_FILTER_SELCOUNT", "STR_ROWCOL_SELCOUNT", "STR_FUN_TEXT_", "STR_UNDO_INSERTCELLS", "STR_TABLE_COUNT"], translations)
 
+        # extract Function Wizard name for formula bar
+        poFile = dir + lang +'/formula/messages.po'
+        extractFromPo(poFile, ["STR_TITLE1"], translations)
+
         # extract language names
         poFile = dir + lang + '/svtools/messages.po'
         extractFromPo(poFile, ["STR_ARR_SVT_LANGUAGE_TABLE"], translations)
