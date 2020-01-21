@@ -58,11 +58,16 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_showWizard: function(ContentsLength) {
 		var docType = this._map.getDocType();
+		//console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
 		var maxScrolled = 52;
-		if (ContentsLength > 1 || docType != 'spreadsheet')
+		if (ContentsLength > 5 || this._tabs) {
+			console.log('INDICATOR');
 			$('#mobile-wizard-content').append('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
+		}
 		if (docType == 'spreadsheet')
-			maxScrolled = 41;
+			maxScrolled = 30;
+		else if (docType == 'presentation')
+			maxScrolled = 20;
 		$('#mobile-wizard').show();
 		$('#mobile-wizard-content').on('scroll', function() {
 			var mWizardContentScroll = $('#mobile-wizard-content').scrollTop();
@@ -285,7 +290,12 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._reset();
 
-			this._showWizard(data.children.length);
+			var mWizardContentLength;
+			if (data.children[0].type == 'menuitem')
+				mWizardContentLength = data.children.length;
+			else mWizardContentLength = data.children[0].children.length;
+
+			this._showWizard(mWizardContentLength);
 			this._hideKeyboard();
 
 			// Morph the sidebar into something prettier
