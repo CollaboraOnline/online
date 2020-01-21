@@ -3254,7 +3254,6 @@ private:
         LOG_INF("Listening to prisoner connections on " << location);
         MasterLocation = location;
 #else
-        // TESTME ...
         constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
         std::shared_ptr<ServerSocket> socket = getServerSocket(
             ServerSocket::Type::Public, DEFAULT_MASTER_PORT_NUMBER, PrisonerPoll, factory);
