@@ -68,8 +68,8 @@ define start_loolwsd
 			--o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			--o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			--o:admin_console.username=admin --o:admin_console.password=admin \
-			--o:logging.file[@enable]=true --o:logging.level=trace > /dev/null 2>&1 & \
-	node_modules/wait-on/bin/wait-on http://localhost:9980
+			--o:logging.file[@enable]=true --o:logging.level=trace > /dev/null 2>&1 &
+	@node_modules/wait-on/bin/wait-on http://localhost:9980
 	@echo
 endef
 
