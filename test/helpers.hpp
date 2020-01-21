@@ -31,6 +31,7 @@
 
 #include <Common.hpp>
 #include "common/FileUtil.hpp"
+#include "test/test.hpp"
 #include <LOOLWebSocket.hpp>
 #include <Util.hpp>
 
@@ -187,15 +188,6 @@ Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
     return new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 }
 
-#ifndef UNIT_CLIENT_TESTS
-
-inline int getClientPort()
-{
-    return DEFAULT_CLIENT_PORT_NUMBER;
-}
-
-#endif
-
 inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
 {
     return
@@ -204,7 +196,7 @@ inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
 #else
         std::make_shared<Poco::Net::StreamSocket>
 #endif
-            (Poco::Net::SocketAddress("127.0.0.1", getClientPort()));
+        (Poco::Net::SocketAddress("127.0.0.1", ClientPortNumber));
 }
 
 inline
@@ -216,7 +208,7 @@ std::string const & getTestServerURI()
 #else
             "http://127.0.0.1:"
 #endif
-            + std::to_string(getClientPort()));
+            + std::to_string(ClientPortNumber));
 
     return serverURI;
 }

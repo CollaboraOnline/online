@@ -14,7 +14,6 @@
 #include <Delta.hpp>
 #include <Util.hpp>
 #include <Png.hpp>
-#include <helpers.hpp>
 
 /// Delta unit-tests.
 class DeltaTests : public CPPUNIT_NS::TestFixture

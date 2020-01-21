@@ -194,7 +194,7 @@ TESTS = \
         unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-http.la \
 	unit-tiff-load.la \
-	unit.large-paste.la \
+	unit-large-paste.la \
 	unit-paste.la \
 	unit-load-torture.la \
 	unit-rendering-options.la \
@@ -214,7 +214,7 @@ TESTS = \
 # TESTS += unit-admin.test
 # TESTS += unit-storage.test
 
-# force serialization for now:
+# mostly force serialization for now:
 
 # unit-base.log
 unit-tiletest.log : unit-base.log
@@ -226,8 +226,11 @@ unit-copy-paste.log : unit-crash.log
 unit-typing.log : unit-copy-paste.log
 unit-convert.log : unit-typing.log
 unit-prefork.log : unit-convert.log
+
+# try a couple in parallel
 unit-tilecache.log : unit-prefork.log
-unit-timeout.log : unit-tilecache.log
+unit-timeout.log : unit-prefork.log
+
 unit-oauth.log : unit-timeout.log
 unit-wopi.log : unit-oauth.log
 unit-wopi-saveas.log : unit-wopi.log
@@ -236,17 +239,21 @@ unit-wopi-versionrestore.log : unit-wopi-ownertermination.log
 unit-wopi-documentconflict.log : unit-wopi-versionrestore.log
 unit_wopi_renamefile.log : unit-wopi-documentconflict.log
 unit_wopi_watermark.log : unit_wopi_renamefile.log
+
 unit-http.log : unit_wopi_watermark.log
-unit-tiff-load.log : unit-http.log
-unit.logrge-paste.log : unit-tiff-load.log
-unit-paste.log : unit.logrge-paste.log
+unit-tiff-load.log : unit_wopi_watermark.log
+
+unit-large-paste.log : unit-tiff-load.log
+unit-paste.log : unit-large-paste.log
 unit-load-torture.log : unit-paste.log
 unit-rendering-options.log : unit-load-torture.log
 unit-password-protected.log : unit-rendering-options.log
+
 unit-render-shape.log : unit-password-protected.log
-unit-each-view.log : unit-render-shape.log
-unit-session.log : unit-each-view.log
-unit-uno-command.log : unit-session.log
+unit-each-view.log : unit-password-protected.log
+unit-session.log : unit-password-protected.log
+unit-uno-command.log : unit-password-protected.log
+
 unit-load.log : unit-uno-command.log
 unit-cursor.log : unit-load.log
 unit-calc.log : unit-cursor.log
@@ -257,10 +264,8 @@ unit-hosting.log : unit-bad-doc-load.log
 unit-wopi-loadencoded.log : unit-hosting.log
 unit-wopi-temp.log : unit-wopi-loadencoded.log
 
-# end force serialization
+# end forced serialization
 
-else
-TESTS = ${top_builddir}/test/test
 endif
 
 TEST_EXTENSIONS = .la

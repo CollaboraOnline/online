@@ -34,6 +34,8 @@
 #include <TraceFile.hpp>
 #include <test/helpers.hpp>
 
+int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+
 /// Stress testing and performance/scalability benchmarking tool.
 class Stress: public Poco::Util::Application
 {
