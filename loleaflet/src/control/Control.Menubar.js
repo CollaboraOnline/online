@@ -1092,7 +1092,7 @@ L.Control.Menubar = L.Control.extend({
 			if (this._map._permission !== 'readonly') {
 				this._map.fire('postMessage', {msgId: 'UI_Save'});
 				if (!this._map._disableDefaultAction['UI_Save']) {
-					this._map.save(true, true);
+					this._map.save(false, false);
 				}
 			}
 		} else if (id === 'saveas') {
