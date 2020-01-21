@@ -114,7 +114,7 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 		if (window.mode.isMobile()) {
 			window.contextMenuWizard = true;
-			var menuData = this._map.getMenuStructureForMobileWizard(contextMenu, true, '');
+			var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(contextMenu, true, '');
 			if (spellingContextMenu === true) {
 				vex.timer = setInterval(function() {
 					map.fire('mobilewizard', menuData);

@@ -82,7 +82,6 @@ L.Control.Tabs = L.Control.extend({
 		var parts = e.parts;
 		var selectedPart = e.selectedPart;
 		var docType = e.docType;
-		var map = this._map;
 
 		if (docType === 'text') {
 			return;
@@ -107,7 +106,7 @@ L.Control.Tabs = L.Control.extend({
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
 
 				if (window.mode.isMobile()) {
-					var menuData = map.getMenuStructureForMobileWizard(this._menuItem, true, '');
+					var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
 				}
 
 				for (var i = 0; i < parts; i++) {
@@ -198,7 +197,6 @@ L.Control.Tabs = L.Control.extend({
 	_hideSheet: function() {
 		this._map.hidePage();
 	}
-
 });
 
 L.control.tabs = function (options) {
