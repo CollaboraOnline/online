@@ -30,6 +30,9 @@
 #include <Poco/FileStream.h>
 #include <Poco/StreamCopier.h>
 
+#include <Unit.hpp>
+#include <wsd/LOOLWSD.hpp>
+
 #include <Log.hpp>
 
 #include "common/Protocol.hpp"
@@ -172,16 +175,10 @@ bool runClientTests(bool standalone, bool verbose)
     if (!envar && failures.size() > 0)
     {
         std::cerr << "\nTo reproduce the first test failure use:\n\n";
-#ifndef UNIT_CLIENT_TESTS
-        const char *cmd = "./run_unit.sh --verbose";
-        if (getenv("UNITTEST"))
-            cmd = "./unittest";
-        std::cerr << "  (cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" " << cmd << ")\n\n";
-        if (getenv("UNITTEST"))
-        {
-            std::cerr << "To debug:\n\n";
-            std::cerr << "  (cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" gdb --args " << cmd << ")\n\n";
-        }
+#ifdef STANDALONE_CPPUNIT // unittest
+        const char *cmd = "./unittest";
+        std::cerr << "To debug:\n\n";
+        std::cerr << "  (cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" gdb --args " << cmd << ")\n\n";
 #else
         std::string aLib = UnitBase::get().getUnitLibPath();
         size_t lastSlash = aLib.rfind('/');
@@ -195,108 +192,8 @@ bool runClientTests(bool standalone, bool verbose)
     return result.wasSuccessful();
 }
 
-// Versions assuming a single user, on a single machine
-#ifndef UNIT_CLIENT_TESTS
-
-std::vector<int> getProcPids(const char* exec_filename)
-{
-    std::vector<int> pids;
-
-    // Ensure we're in the same group.
-    const int grp = getpgrp();
-
-    // Get all lokit processes.
-    for (auto it = Poco::DirectoryIterator(std::string("/proc")); it != Poco::DirectoryIterator(); ++it)
-    {
-        try
-        {
-            const Poco::Path& procEntry = it.path();
-            const std::string& fileName = procEntry.getFileName();
-            int pid;
-            std::size_t endPos = 0;
-            try
-            {
-                pid = std::stoi(fileName, &endPos);
-            }
-            catch (const std::invalid_argument&)
-            {
-                pid = 0;
-            }
-
-            if (pid > 1 && endPos == fileName.length())
-            {
-                Poco::FileInputStream stat(procEntry.toString() + "/stat");
-                std::string statString;
-                Poco::StreamCopier::copyToString(stat, statString);
-                std::vector<std::string> tokens(LOOLProtocol::tokenize(statString, ' '));
-                if (tokens.size() > 6 && tokens[1].find(exec_filename) == 0)
-                {
-                    // We could have several make checks running at once.
-                    int kidGrp = std::atoi(tokens[4].c_str());
-                    // Don't require matching grp for --debugrun invocations.
-                    if (kidGrp != grp && !IsDebugrun)
-                        continue;
-
-                    switch (tokens[2].c_str()[0])
-                    {
-                    // Dead & zombie markers for old and new kernels.
-                    case 'x':
-                    case 'X':
-                    case 'Z':
-                        break;
-                    default:
-                        pids.push_back(pid);
-                        break;
-                    }
-                }
-            }
-        }
-        catch (const Poco::Exception&)
-        {
-        }
-    }
-    return pids;
-}
-
-std::vector<int> getSpareKitPids()
-{
-    return getProcPids("(kit_spare_");
-}
-
-std::vector<int> getDocKitPids()
-{
-    return getProcPids("(kitbroker_");
-}
-
-std::vector<int> getKitPids()
-{
-    std::vector<int> pids = getSpareKitPids();
-    for (int pid : getDocKitPids())
-        pids.push_back(pid);
-
-    return pids;
-}
-
-int getLoolKitProcessCount()
-{
-    return getKitPids().size();
-}
-
-std::vector<int> getForKitPids()
-{
-    std::vector<int> pids, pids2;
-
-    pids = getProcPids("(loolforkit)");
-    pids2 = getProcPids("(forkit)");
-    pids.insert(pids.end(), pids2.begin(), pids2.end());
-
-    return pids;
-}
-
-#else // UNIT_CLIENT_TESTS
-
-// Here we are compiled inside UnitClient.cpp and we have
-// full access to the WSD process internals.
+// Standalone tests don't really use WSD
+#ifndef STANDALONE_CPPUNIT
 
 std::vector<int> getKitPids()
 {
@@ -317,12 +214,6 @@ int getLoolKitProcessCount()
 {
     return getKitPids().size();
 }
-
-int getClientPort()
-{
-    return LOOLWSD::getClientPortNumber();
-}
-
-#endif // UNIT_CLIENT_TESTS
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
