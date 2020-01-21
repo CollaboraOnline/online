@@ -240,6 +240,7 @@ unit-wopi-documentconflict.log : unit-wopi-versionrestore.log
 unit_wopi_renamefile.log : unit-wopi-documentconflict.log
 unit_wopi_watermark.log : unit_wopi_renamefile.log
 
+# parallelize a couple at least.
 unit-http.log : unit_wopi_watermark.log
 unit-tiff-load.log : unit_wopi_watermark.log
 
@@ -248,12 +249,10 @@ unit-paste.log : unit-large-paste.log
 unit-load-torture.log : unit-paste.log
 unit-rendering-options.log : unit-load-torture.log
 unit-password-protected.log : unit-rendering-options.log
-
 unit-render-shape.log : unit-password-protected.log
-unit-each-view.log : unit-password-protected.log
-unit-session.log : unit-password-protected.log
-unit-uno-command.log : unit-password-protected.log
-
+unit-each-view.log : unit-render-shape.log
+unit-session.log : unit-each-view.log
+unit-uno-command.log : unit-session.log
 unit-load.log : unit-uno-command.log
 unit-cursor.log : unit-load.log
 unit-calc.log : unit-cursor.log
