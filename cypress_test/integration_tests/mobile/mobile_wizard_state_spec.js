@@ -11,7 +11,9 @@ describe('Mobile wizard state tests', function() {
 
 		// Open test document
 		cy.viewport('iphone-3');
-		cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file://' +
+		cy.visit('http://localhost:9980/loleaflet/' +
+			Cypress.env('WSD_VERSION_HASH') +
+			'/loleaflet.html?file_path=file://' +
 			Cypress.env('WORKDIR') + 'empty.odt');
 
 		// Wait for the document to fully load

@@ -10,7 +10,9 @@ describe('Example test suit 1', function() {
 		});
 
 		// Open test document
-		cy.visit('http://localhost:9980/loleaflet/fc04ba550/loleaflet.html?file_path=file://' +
+		cy.visit('http://localhost:9980/loleaflet/' +
+			Cypress.env('WSD_VERSION_HASH') +
+			'/loleaflet.html?file_path=file://' +
 			Cypress.env('WORKDIR') + 'simple.odt');
 
 		// Wait for the document to fully load

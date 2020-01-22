@@ -35,7 +35,7 @@ run-desktop: @JAILS_PATH@ node_modules
 	@echo "Open cypress with desktop tests..."
 	@echo
 	$(CYPRESS_BINARY) open --config integrationFolder=$(DESKTOP_TEST_FOLDER) \
-			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR) \
+			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
 			|| true
 	@pkill loolwsd || true
 
@@ -45,7 +45,7 @@ run-mobile: @JAILS_PATH@ node_modules
 	@echo "Open cypress with mobile tests..."
 	@echo
 	$(CYPRESS_BINARY) open --config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
-			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR) \
+			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
 			|| true
 	@pkill loolwsd || true
 
@@ -80,7 +80,7 @@ define run_desktop_tests
 	$(CYPRESS_BINARY) run --browser chrome \
 			--config integrationFolder=$(DESKTOP_TEST_FOLDER) \
 			--headless \
-			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR) \
+			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
 			$(if $(1), --spec=integration_tests/desktop/$(1)) \
 			|| (pkill loolwsd && false)
 endef
@@ -92,7 +92,7 @@ define run_mobile_tests
 	$(CYPRESS_BINARY) run --browser chrome \
 			--config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
 			--headless \
-			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR) \
+			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
 			$(if $(1), --spec=integration_tests/mobile/$(1)) \
 			|| (pkill loolwsd && false)
 endef
