@@ -98,39 +98,6 @@ describe('Mobile wizard state tests', function() {
 			.should('have.class', 'checked');
 	});
 
-	it('Close mobile wizard by back button.', function() {
-		// Click on edit button
-		cy.get('#mobile-edit-button').click();
-
-		// Click on mobile wizard toolbar item
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
-
-		// Mobile wizard is opened and it has any content
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('have.class', 'checked');
-
-		// Close mobile wizard by clicking on the back button
-		cy.get('#mobile-wizard-back').click();
-		cy.get('#mobile-wizard')
-			.should('not.be.visible');
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('not.have.class', 'checked');
-
-		// Open mobile wizard again
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// TODO: fix this bug
-		//cy.get('#mobile-wizard-content')
-		//	.should('not.be.empty');
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('have.class', 'checked');
-	});
-
 	it('Close mobile wizard by context wizard.', function() {
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
@@ -141,8 +108,7 @@ describe('Mobile wizard state tests', function() {
 			.click();
 
 		// Mobile wizard is opened and it has any content
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .ui-header-left')
-			.contains('Style');
+		cy.get('#Character');
 		cy.get('#tb_actionbar_item_mobile_wizard table')
 			.should('have.class', 'checked');
 
