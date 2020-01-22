@@ -3109,6 +3109,13 @@ public:
         stop();
     }
 
+    // allocate port & hold temporarily.
+    std::shared_ptr<ServerSocket> _serverSocket;
+    void findClientPort()
+    {
+        _serverSocket = findServerPort(ClientPortNumber);
+    }
+
     void startPrisoners()
     {
         PrisonerPoll.startThread();
@@ -3120,11 +3127,11 @@ public:
         PrisonerPoll.joinThread();
     }
 
-    void start(const int port)
+    void start()
     {
         _acceptPoll.startThread();
-        std::shared_ptr<ServerSocket> serverSocket(findServerPort(port));
-        _acceptPoll.insertNewSocket(serverSocket);
+        _acceptPoll.insertNewSocket(_serverSocket);
+        _serverSocket.reset();
 
 #if MOBILEAPP
         loolwsd_server_socket_fd = serverSocket->getFD();
@@ -3396,6 +3403,9 @@ int LOOLWSD::innerMain()
 
     ClientRequestDispatcher::InitStaticFileContentCache();
 
+    // Allocate our port - passed to prisoners.
+    srv.findClientPort();
+
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
     srv.startPrisoners();
@@ -3447,7 +3457,7 @@ int LOOLWSD::innerMain()
     Util::mapAnonymized("contents", "contents");
 
     // Start the server.
-    srv.start(ClientPortNumber);
+    srv.start();
 
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
