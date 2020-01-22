@@ -3,7 +3,7 @@
 * Control.ColumnHeader
 */
 
-/* global $ _UNO */
+/* global $ _UNO Hammer */
 L.Control.ColumnHeader = L.Control.Header.extend({
 	options: {
 		cursor: 'col-resize'
@@ -63,59 +63,46 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		L.DomEvent.on(this._cornerCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.addListener(this._cornerCanvas, 'click', this._onCornerHeaderClick, this);
 
-		var colHeaderObj = this;
-		L.installContextMenu({
-			selector: '.spreadsheet-header-columns',
-			className: 'loleaflet-font',
-			items: {
-				'insertcolbefore': {
-					name: _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true),
-					callback: function() {
-						var index = colHeaderObj._lastMouseOverIndex;
-						if (index) {
-							colHeaderObj.insertColumn.call(colHeaderObj, index);
-						}
-					}
-				},
-				'deleteselectedcol': {
-					name: _UNO('.uno:DeleteColumns', 'spreadsheet', true),
-					callback: function() {
-						var index = colHeaderObj._lastMouseOverIndex;
-						if (index) {
-							colHeaderObj.deleteColumn.call(colHeaderObj, index);
-						}
-					}
-				},
-				'optimalwidth': {
-					name: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true),
-					callback: function() {
-						var index = colHeaderObj._lastMouseOverIndex;
-						if (index) {
-							colHeaderObj.optimalWidth.call(colHeaderObj, index);
-						}
-					}
-				},
-				'hideColumn': {
-					name: _UNO('.uno:HideColumn', 'spreadsheet', true),
-					callback: function() {
-						var index = colHeaderObj._lastMouseOverIndex;
-						if (index) {
-							colHeaderObj.hideColumn.call(colHeaderObj, index);
-						}
-					}
-				},
-				'showColumn': {
-					name: _UNO('.uno:ShowColumn', 'spreadsheet', true),
-					callback: function() {
-						var index = colHeaderObj._lastMouseOverIndex;
-						if (index) {
-							colHeaderObj.showColumn.call(colHeaderObj, index);
-						}
-					}
-				}
+		this._menuItem = {
+			'insertcolbefore': {
+				name: _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true),
+				callback: (this._insertColBefore).bind(this)
 			},
-			zIndex: 10
-		});
+			'deleteselectedcol': {
+				name: _UNO('.uno:DeleteColumns', 'spreadsheet', true),
+				callback: (this._deleteSelectedCol).bind(this)
+			},
+			'optimalwidth': {
+				name: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true),
+				callback: (this._optimalWidth).bind(this)
+			},
+			'hideColumn': {
+				name: _UNO('.uno:HideColumn', 'spreadsheet', true),
+				callback: (this._hideColumn).bind(this)
+			},
+			'showColumn': {
+				name: _UNO('.uno:ShowColumn', 'spreadsheet', true),
+				callback: (this._showColumn).bind(this)
+			}
+		};
+
+		if (!window.mode.isMobile()) {
+			L.installContextMenu({
+				selector: '.spreadsheet-header-columns',
+				className: 'loleaflet-font',
+				items: this._menuItem,
+				zIndex: 10
+			});
+		} else {
+			var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
+			(new Hammer(this._canvas, {recognizers: [[Hammer.Press]]}))
+			.on('press', L.bind(function () {
+				if (this._map._permission === 'edit') {
+					window.contextMenuWizard = true;
+					this._map.fire('mobilewizard', menuData);
+				}
+			}, this));
+		}
 	},
 
 	optimalWidth: function(index) {
@@ -654,8 +641,42 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._setCanvasHeight(height);
 
 		this._map.fire('updatecornerheader');
-	}
+	},
 
+	_insertColBefore: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.insertColumn.call(this, index);
+		}
+	},
+
+	_deleteSelectedCol: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.deleteColumn.call(this, index);
+		}
+	},
+
+	_optimalWidth: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.optimalWidth.call(this, index);
+		}
+	},
+
+	_hideColumn: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.hideColumn.call(this, index);
+		}
+	},
+
+	_showColumn: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.showColumn.call(this, index);
+		}
+	}
 });
 
 L.control.columnHeader = function (options) {
