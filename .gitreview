@@ -3,5 +3,5 @@ host=logerrit
 port=29418
 project=online
 defaultremote=logerrit
-defaultbranch=distro/collabora/collabora-online-4
+defaultbranch=distro/collabora/collabora-online-4-0
 

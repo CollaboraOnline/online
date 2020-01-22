@@ -3392,6 +3392,10 @@ void LOOLWSD::cleanup()
     }
 #endif
 #endif
+
+    // Delete these while the static Admin instance is still alive.
+    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
+    DocBrokers.clear();
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
