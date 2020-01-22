@@ -50,14 +50,9 @@ L.SVGGroup = L.Layer.extend({
 		if (doc.lastChild.localName !== 'svg' || this._dragStarted)
 			return;
 
-		L.DomUtil.remove(this._rect._path);
-		this._svg = this._path.appendChild(doc.lastChild);
-		this._svg.setAttribute('pointer-events', 'visiblePainted');
-		this._dragShape = this._svg;
-		if (!this.options.manualDrag) {
-			L.DomEvent.on(this._svg, 'mousedown', this._onDragStart, this);
-		}
-
+		this._svg = this._path.insertBefore(doc.lastChild, this._rect._path);
+		this._dragShape = this._rect._path;
+		this._svg.setAttribute('pointer-events', 'none');
 		this._svg.setAttribute('opacity', 0);
 		this.sizeSVG();
 		this._update();
