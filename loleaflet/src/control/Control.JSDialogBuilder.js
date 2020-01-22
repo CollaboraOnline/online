@@ -1422,7 +1422,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var menuEntry = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 
 		var icon = null;
-		var commandName = data.command ? data.command.substring('.uno:'.length) : data.id;
+		var commandName = data.command && data.command.substring(0, '.uno:'.length) === '.uno:' ? data.command.substring('.uno:'.length) : data.id;
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName)) {
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + commandName.toLowerCase(), menuEntry);
 			var iconPath = 'images/lc_' + commandName.toLowerCase() + '.svg';
