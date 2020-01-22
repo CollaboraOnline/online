@@ -16,7 +16,7 @@ describe('Example test suit 1', function() {
 			Cypress.env('WORKDIR') + 'simple.odt');
 
 		// Wait for the document to fully load
-		cy.get('.leaflet-tile-loaded');
+		cy.get('.leaflet-tile-loaded', {timeout : 10000});
 
 		// Select a text
 		cy.get('#document-container').dblclick();

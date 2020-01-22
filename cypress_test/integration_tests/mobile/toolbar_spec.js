@@ -17,7 +17,7 @@ describe('Toolbar tests', function() {
 			Cypress.env('WORKDIR') + 'empty.odt');
 
 		// Wait for the document to fully load
-		cy.get('.leaflet-tile-loaded');
+		cy.get('.leaflet-tile-loaded', {timeout : 10000});
 	});
 
 	it('State of mobile wizard toolbar item.', function() {

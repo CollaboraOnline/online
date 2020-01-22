@@ -17,7 +17,7 @@ describe('Focus tests', function() {
 			Cypress.env('WORKDIR') + 'empty.odt');
 
 		// Wait for the document to fully load
-		cy.get('.leaflet-tile-loaded');
+		cy.get('.leaflet-tile-loaded', {timeout : 10000});
 	});
 
 	it('Focus after document fully loaded.', function() {
