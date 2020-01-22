@@ -47,13 +47,13 @@ L.SVGGroup = L.Layer.extend({
 	addEmbeddedSVG: function (svgString) {
 		var doc = this.parseSVG(svgString);
 
-		if (doc.lastChild.localName !== 'svg' || this._dragStarted)
+		if (doc.lastChild.localName !== 'svg')
 			return;
 
 		this._svg = this._path.insertBefore(doc.lastChild, this._rect._path);
 		this._dragShape = this._rect._path;
 		this._svg.setAttribute('pointer-events', 'none');
-		this._svg.setAttribute('opacity', 0);
+		this._svg.setAttribute('opacity', this._dragStarted ? 1 : 0);
 		this.sizeSVG();
 		this._update();
 	},
