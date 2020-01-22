@@ -75,7 +75,7 @@ define run_desktop_tests
 	@echo
 	@echo "Running cypress desktop tests..."
 	@echo
-	$(CYPRESS_BINARY) run --browser chrome \
+	$(CYPRESS_BINARY) run --browser $(CHROME) \
 			--config integrationFolder=$(DESKTOP_TEST_FOLDER) \
 			--headless \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
@@ -87,7 +87,7 @@ define run_mobile_tests
 	@echo
 	@echo "Running cypress mobile tests..."
 	@echo
-	$(CYPRESS_BINARY) run --browser chrome \
+	$(CYPRESS_BINARY) run --browser $(CHROME) \
 			--config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
 			--headless \
 			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \

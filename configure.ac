@@ -881,6 +881,11 @@ AS_IF([test `uname -s` = "Linux"],
                AC_MSG_ERROR([This node version is old, upgrade to >= 6.0.0])
            fi
        fi
+       AC_PATH_PROG(CHROME, chrome, google-chrome, chromium, no)
+       if test "$CHROME" = "no"; then
+           # Only a warning till these tests are not part of toplevel 'make check'.
+           AC_MSG_WARN([chrome or chromium is required to run the JS tests, but not installed])
+       fi
        ])
 
 # need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
