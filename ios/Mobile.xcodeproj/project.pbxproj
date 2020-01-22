@@ -979,6 +979,21 @@
 		BEB6524E216FD0CA00B8C09A /* stream.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stream.cxx; path = "../../ios-device/tools/source/stream/stream.cxx"; sourceTree = "<group>"; };
 		BEB6524F216FD0CA00B8C09A /* strmwnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmwnt.cxx; path = "../../ios-device/tools/source/stream/strmwnt.cxx"; sourceTree = "<group>"; };
 		BEB65250216FD0CA00B8C09A /* strmunx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmunx.cxx; path = "../../ios-device/tools/source/stream/strmunx.cxx"; sourceTree = "<group>"; };
+		BECBD30323D7152900DA5582 /* SlsFramePainter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsFramePainter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.cxx"; sourceTree = "<group>"; };
+		BECBD30423D7152900DA5582 /* SlideSorterView.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideSorterView.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlideSorterView.cxx"; sourceTree = "<group>"; };
+		BECBD30523D7152900DA5582 /* SlsFramePainter.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlsFramePainter.hxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.hxx"; sourceTree = "<group>"; };
+		BECBD30623D7152900DA5582 /* SlsViewCacheContext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsViewCacheContext.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsViewCacheContext.cxx"; sourceTree = "<group>"; };
+		BECBD30723D7152900DA5582 /* SlsPageObjectPainter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsPageObjectPainter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsPageObjectPainter.cxx"; sourceTree = "<group>"; };
+		BECBD30823D7152900DA5582 /* SlsViewCacheContext.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlsViewCacheContext.hxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsViewCacheContext.hxx"; sourceTree = "<group>"; };
+		BECBD30923D7152900DA5582 /* SlsInsertionIndicatorOverlay.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsInsertionIndicatorOverlay.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsInsertionIndicatorOverlay.cxx"; sourceTree = "<group>"; };
+		BECBD30A23D7152900DA5582 /* SlsTheme.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsTheme.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsTheme.cxx"; sourceTree = "<group>"; };
+		BECBD30B23D7152900DA5582 /* SlsLayeredDevice.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlsLayeredDevice.hxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsLayeredDevice.hxx"; sourceTree = "<group>"; };
+		BECBD30C23D7152900DA5582 /* SlsLayeredDevice.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsLayeredDevice.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsLayeredDevice.cxx"; sourceTree = "<group>"; };
+		BECBD30D23D7152900DA5582 /* SlsPageObjectLayouter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsPageObjectLayouter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsPageObjectLayouter.cxx"; sourceTree = "<group>"; };
+		BECBD30E23D7152900DA5582 /* SlsFontProvider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsFontProvider.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFontProvider.cxx"; sourceTree = "<group>"; };
+		BECBD30F23D7152900DA5582 /* SlsInsertAnimator.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsInsertAnimator.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsInsertAnimator.cxx"; sourceTree = "<group>"; };
+		BECBD31023D7152900DA5582 /* SlsLayouter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsLayouter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsLayouter.cxx"; sourceTree = "<group>"; };
+		BECBD31123D7152900DA5582 /* SlsToolTip.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsToolTip.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsToolTip.cxx"; sourceTree = "<group>"; };
 		BEFB1EDF21C29CC70081D757 /* L10n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L10n.h; sourceTree = "<group>"; };
 		BEFB1EE021C29CC70081D757 /* L10n.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = L10n.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1396,6 +1411,7 @@
 		BE3C8B2523CC8E6F008302F8 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				BECBD30123D7150100DA5582 /* slidesorter */,
 				BE3C8B2623CC8E78008302F8 /* sidebar */,
 				BE3C8B5323CCB898008302F8 /* view */,
 			);
@@ -2401,6 +2417,36 @@
 				BEB6524D216FD0CA00B8C09A /* vcompat.cxx */,
 			);
 			name = stream;
+			sourceTree = "<group>";
+		};
+		BECBD30123D7150100DA5582 /* slidesorter */ = {
+			isa = PBXGroup;
+			children = (
+				BECBD30223D7150C00DA5582 /* view */,
+			);
+			name = slidesorter;
+			sourceTree = "<group>";
+		};
+		BECBD30223D7150C00DA5582 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				BECBD30423D7152900DA5582 /* SlideSorterView.cxx */,
+				BECBD30E23D7152900DA5582 /* SlsFontProvider.cxx */,
+				BECBD30323D7152900DA5582 /* SlsFramePainter.cxx */,
+				BECBD30523D7152900DA5582 /* SlsFramePainter.hxx */,
+				BECBD30F23D7152900DA5582 /* SlsInsertAnimator.cxx */,
+				BECBD30923D7152900DA5582 /* SlsInsertionIndicatorOverlay.cxx */,
+				BECBD30C23D7152900DA5582 /* SlsLayeredDevice.cxx */,
+				BECBD30B23D7152900DA5582 /* SlsLayeredDevice.hxx */,
+				BECBD31023D7152900DA5582 /* SlsLayouter.cxx */,
+				BECBD30D23D7152900DA5582 /* SlsPageObjectLayouter.cxx */,
+				BECBD30723D7152900DA5582 /* SlsPageObjectPainter.cxx */,
+				BECBD30A23D7152900DA5582 /* SlsTheme.cxx */,
+				BECBD31123D7152900DA5582 /* SlsToolTip.cxx */,
+				BECBD30623D7152900DA5582 /* SlsViewCacheContext.cxx */,
+				BECBD30823D7152900DA5582 /* SlsViewCacheContext.hxx */,
+			);
+			name = view;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
