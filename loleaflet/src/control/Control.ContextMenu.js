@@ -50,7 +50,7 @@ L.Control.ContextMenu = L.Control.extend({
 				   'SpellCheckIgnore', 'SpellCheckIgnoreAll', 'SpellCheckApplySuggestion'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog',
-						  'ShowNote', 'DeleteNote'],
+				          'ShowNote', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
 
 			presentation: [],
 			drawing: []

@@ -264,6 +264,8 @@ var unoCommandsArray = {
 	SelectTable:{presentation:{menu:_('~Select...'),},text:{menu:_('~Table'),},},
 	SendToBack:{global:{menu:_('~Send to Back'),},},
 	SetAnchorAtChar:{text:{menu:_('To ~Character'),},},
+	SetAnchorToCell:{spreadsheet:{menu:_('To ~Cell'),},},
+	SetAnchorToCellResize:{spreadsheet:{menu:_('To Cell (~resize with cell)'),},},
 	SetAnchorToChar:{text:{menu:_('As C~haracter'),},},
 	SetAnchorToFrame:{text:{menu:_('To ~Frame'),},},
 	SetAnchorToPage:{spreadsheet:{menu:_('To P~age'),},text:{menu:_('To P~age'),},},
