@@ -250,6 +250,10 @@ AC_ARG_ENABLE([werror],
 AC_ARG_ENABLE([vereign],
             AS_HELP_STRING([--enable-vereign],
                           [Set Vereign document_signing_url configuration key to the default app.vereign.com.]))
+
+AC_ARG_ENABLE([cypress],
+            AS_HELP_STRING([--enable-cypress],
+                           [Enable cypress tests.]))
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -960,6 +964,19 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       ])
 AC_SUBST(IOSAPP_FONTS)
 
+ENABLE_CYPRESS=false
+if test "$enable_cypress" = "yes"; then
+   cypress_msg="cypress is enabled"
+   ENABLE_CYPRESS=true
+   AC_DEFINE([ENABLE_CYPRESS],1,[Whether to enable cypress tests])
+else
+   cypress_msg="cypress is disabled"
+   ENABLE_CYPRESS=false
+   AC_DEFINE([ENABLE_CYPRESS],0,[Whether to enable cypress tests])
+fi
+AM_CONDITIONAL([ENABLE_CYPRESS], [$ENABLE_CYPRESS])
+AC_SUBST(ENABLE_CYPRESS)
+
 AC_CONFIG_FILES([Makefile
                  android/app/appSettings.gradle
                  android/lib/libSettings.gradle
@@ -1043,6 +1060,7 @@ Configuration:
     Anonymization           $anonym_msg
     Set capabilities        $setcap_msg
     Browsersync             $browsersync_msg
+    cypress                 $cypress_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then

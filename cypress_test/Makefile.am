@@ -1,3 +1,4 @@
+if ENABLE_CYPRESS
 CYPRESS_BINARY = ${abs_srcdir}/node_modules/cypress/bin/cypress
 
 DESKTOP_TEST_FOLDER = integration_tests/desktop
@@ -106,3 +107,4 @@ clean-local:
 	rm -rf workdir
 	rm -rf cypress
 	rm -rf package-lock.json
+endif
