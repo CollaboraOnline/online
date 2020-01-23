@@ -349,6 +349,7 @@ L.Control.MobileWizard = L.Control.extend({
 				textIdx = this._findIdxInParentById(deck, textName); // re-lookup
 				deck.children[textIdx].children = moveContent.concat(deck.children[textIdx].children);
 			}
+			this._removeItems(deck, ['cellbordertype', 'borderlinestyle', 'borderlinecolor']);
 		}
 
 		this._removeItems(data, ['editcontour']);
@@ -384,14 +385,12 @@ L.Control.MobileWizard = L.Control.extend({
 					if (data.children[i].id === items[j]) {
 						data.children.splice(i, 1);
 						childRemoved = true;
-						continue;
 					}
 				}
-				if (childRemoved === true) {
+				if (childRemoved && i > 0)
 					i = i - 1;
-				} else {
+				if (data.children[i])
 					this._removeItems(data.children[i], items);
-				}
 			}
 		}
 	},
