@@ -3131,12 +3131,12 @@ public:
     {
         _acceptPoll.startThread();
         _acceptPoll.insertNewSocket(_serverSocket);
-        _serverSocket.reset();
 
 #if MOBILEAPP
-        loolwsd_server_socket_fd = serverSocket->getFD();
+        loolwsd_server_socket_fd = _serverSocket->getFD();
 #endif
 
+        _serverSocket.reset();
         WebServerPoll.startThread();
 
 #if !MOBILEAPP
