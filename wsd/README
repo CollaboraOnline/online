@@ -265,11 +265,10 @@ Set LOOL_DEBUG=1 to trap SIGSEGV and SEGBUS and prompt for debugger.
 
 if you choose PAUSEFORDEBUGGER send the signal SIGUSR1 to resume the process
 
-In order to run and debug one unit test, set CPPUNIT_TEST_NAME to something
-non-empty:
+In order to run and debug one unit test, run the commandline that is printed
+when the test fails. To run one single CppUnit test from a suite, additionally use:
 
-    make check CPPUNIT_TEST_NAME="unit-prefork"
-    make check CPPUNIT_TEST_NAME="HTTPWSTest::testCalcEditRendering"
+    CPPUNIT_TEST_NAME="HTTPWSTest::testCalcEditRendering" <printed commandline>
 
 Protocol description
 --------------------
