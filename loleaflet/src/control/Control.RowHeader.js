@@ -3,7 +3,7 @@
  * L.Control.RowHeader
 */
 
-/* global $ _UNO */
+/* global $ _UNO Hammer */
 L.Control.RowHeader = L.Control.Header.extend({
 	options: {
 		cursor: 'row-resize'
@@ -60,59 +60,47 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._startOffset = 0;
 		this._position = 0;
 
-		var rowHeaderObj = this;
-		L.installContextMenu({
-			selector: '.spreadsheet-header-rows',
-			className: 'loleaflet-font',
-			items: {
-				'insertrowabove': {
-					name: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true),
-					callback: function() {
-						var index = rowHeaderObj._lastMouseOverIndex;
-						if (index) {
-							rowHeaderObj.insertRow.call(rowHeaderObj, index);
-						}
-					}
-				},
-				'deleteselectedrow': {
-					name: _UNO('.uno:DeleteRows', 'spreadsheet', true),
-					callback: function() {
-						var index = rowHeaderObj._lastMouseOverIndex;
-						if (index) {
-							rowHeaderObj.deleteRow.call(rowHeaderObj, index);
-						}
-					}
-				},
-				'optimalheight': {
-					name: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true),
-					callback: function() {
-						var index = rowHeaderObj._lastMouseOverIndex;
-						if (index) {
-							rowHeaderObj.optimalHeight.call(rowHeaderObj, index);
-						}
-					}
-				},
-				'hideRow': {
-					name: _UNO('.uno:HideRow', 'spreadsheet', true),
-					callback: function() {
-						var index = rowHeaderObj._lastMouseOverIndex;
-						if (index) {
-							rowHeaderObj.hideRow.call(rowHeaderObj, index);
-						}
-					}
-				},
-				'showRow': {
-					name: _UNO('.uno:ShowRow', 'spreadsheet', true),
-					callback: function() {
-						var index = rowHeaderObj._lastMouseOverIndex;
-						if (index) {
-							rowHeaderObj.showRow.call(rowHeaderObj, index);
-						}
-					}
-				}
+		this._menuItem = {
+			'insertrowabove': {
+				name: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true),
+				callback: (this._insertRowAbove).bind(this)
 			},
-			zIndex: 10
-		});
+			'deleteselectedrow': {
+				name: _UNO('.uno:DeleteRows', 'spreadsheet', true),
+				callback: (this._deleteSelectedRow).bind(this)
+			},
+			'optimalheight': {
+				name: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true),
+				callback: (this._optimalHeight).bind(this)
+			},
+			'hideRow': {
+				name: _UNO('.uno:HideRow', 'spreadsheet', true),
+				callback: (this._hideRow).bind(this)
+			},
+			'showRow': {
+				name: _UNO('.uno:ShowRow', 'spreadsheet', true),
+				callback: (this._showRow).bind(this)
+			}
+		};
+
+		if (!window.mode.isMobile()) {
+			L.installContextMenu({
+				selector: '.spreadsheet-header-rows',
+				className: 'loleaflet-font',
+				items: this._menuItem,
+				zIndex: 10
+			});
+		} else {
+			var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
+			(new Hammer(this._canvas, {recognizers: [[Hammer.Press]]}))
+			.on('press', L.bind(function () {
+				if (this._map._permission === 'edit') {
+					window.contextMenuWizard = true;
+					this._map.fire('mobilewizard', menuData);
+				}
+			}, this));
+		}
+
 	},
 
 	optimalHeight: function(index) {
@@ -618,6 +606,41 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._setCanvasWidth(width);
 
 		this._map.fire('updatecornerheader');
+	},
+
+	_insertRowAbove: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.insertRow.call(this, index);
+		}
+	},
+
+	_deleteSelectedRow: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.deleteRow.call(this, index);
+		}
+	},
+
+	_optimalHeight: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.optimalHeight.call(this, index);
+		}
+	},
+
+	_hideRow: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.hideRow.call(this, index);
+		}
+	},
+
+	_showRow: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.showRow.call(this, index);
+		}
 	}
 });
 
