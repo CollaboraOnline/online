@@ -919,7 +919,6 @@
 		BEA8CDC62199E621009FE17E /* languagetag.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = languagetag.cxx; path = "../../ios-device/i18nlangtag/source/languagetag/languagetag.cxx"; sourceTree = "<group>"; };
 		BEB0E5D821C7CA800085A0CF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEB0E5DB21CA7C780085A0CF /* graphicfilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicfilter.cxx; path = "../../ios-device/vcl/source/filter/graphicfilter.cxx"; sourceTree = "<group>"; };
-		BEB0E5DE21CA93D80085A0CF /* svdograf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdograf.cxx; path = "../../ios-device/svx/source/svdraw/svdograf.cxx"; sourceTree = "<group>"; };
 		BEB0E5E021CA9DC00085A0CF /* salbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salbmp.cxx; path = "../../ios-device/vcl/quartz/salbmp.cxx"; sourceTree = "<group>"; };
 		BEB0E5E121CA9DDC0085A0CF /* salgdi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdi.cxx; path = "../../ios-device/vcl/quartz/salgdi.cxx"; sourceTree = "<group>"; };
 		BEB0E5E221CA9DDC0085A0CF /* salvd.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salvd.cxx; path = "../../ios-device/vcl/quartz/salvd.cxx"; sourceTree = "<group>"; };
@@ -994,6 +993,108 @@
 		BECBD30F23D7152900DA5582 /* SlsInsertAnimator.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsInsertAnimator.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsInsertAnimator.cxx"; sourceTree = "<group>"; };
 		BECBD31023D7152900DA5582 /* SlsLayouter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsLayouter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsLayouter.cxx"; sourceTree = "<group>"; };
 		BECBD31123D7152900DA5582 /* SlsToolTip.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsToolTip.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsToolTip.cxx"; sourceTree = "<group>"; };
+		BECBD31323D9C5CF00DA5582 /* lathe3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lathe3d.cxx; path = "../../ios-device/svx/source/engine3d/lathe3d.cxx"; sourceTree = "<group>"; };
+		BECBD31423D9C5CF00DA5582 /* e3dsceneupdater.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = e3dsceneupdater.cxx; path = "../../ios-device/svx/source/engine3d/e3dsceneupdater.cxx"; sourceTree = "<group>"; };
+		BECBD31523D9C5CF00DA5582 /* dragmt3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dragmt3d.cxx; path = "../../ios-device/svx/source/engine3d/dragmt3d.cxx"; sourceTree = "<group>"; };
+		BECBD31623D9C5CF00DA5582 /* view3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = view3d.cxx; path = "../../ios-device/svx/source/engine3d/view3d.cxx"; sourceTree = "<group>"; };
+		BECBD31723D9C5D000DA5582 /* objfac3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objfac3d.cxx; path = "../../ios-device/svx/source/engine3d/objfac3d.cxx"; sourceTree = "<group>"; };
+		BECBD31823D9C5D000DA5582 /* extrud3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = extrud3d.cxx; path = "../../ios-device/svx/source/engine3d/extrud3d.cxx"; sourceTree = "<group>"; };
+		BECBD31923D9C5D000DA5582 /* helperminimaldepth3d.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = helperminimaldepth3d.hxx; path = "../../ios-device/svx/source/engine3d/helperminimaldepth3d.hxx"; sourceTree = "<group>"; };
+		BECBD31A23D9C5D000DA5582 /* obj3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = obj3d.cxx; path = "../../ios-device/svx/source/engine3d/obj3d.cxx"; sourceTree = "<group>"; };
+		BECBD31B23D9C5D000DA5582 /* scene3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scene3d.cxx; path = "../../ios-device/svx/source/engine3d/scene3d.cxx"; sourceTree = "<group>"; };
+		BECBD31C23D9C5D000DA5582 /* camera3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = camera3d.cxx; path = "../../ios-device/svx/source/engine3d/camera3d.cxx"; sourceTree = "<group>"; };
+		BECBD31D23D9C5D000DA5582 /* polygn3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = polygn3d.cxx; path = "../../ios-device/svx/source/engine3d/polygn3d.cxx"; sourceTree = "<group>"; };
+		BECBD31E23D9C5D000DA5582 /* view3d1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = view3d1.cxx; path = "../../ios-device/svx/source/engine3d/view3d1.cxx"; sourceTree = "<group>"; };
+		BECBD31F23D9C5D000DA5582 /* helperminimaldepth3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = helperminimaldepth3d.cxx; path = "../../ios-device/svx/source/engine3d/helperminimaldepth3d.cxx"; sourceTree = "<group>"; };
+		BECBD32023D9C5D000DA5582 /* cube3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cube3d.cxx; path = "../../ios-device/svx/source/engine3d/cube3d.cxx"; sourceTree = "<group>"; };
+		BECBD32123D9C5D000DA5582 /* e3dundo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = e3dundo.cxx; path = "../../ios-device/svx/source/engine3d/e3dundo.cxx"; sourceTree = "<group>"; };
+		BECBD32223D9C5D000DA5582 /* svx3ditems.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svx3ditems.cxx; path = "../../ios-device/svx/source/engine3d/svx3ditems.cxx"; sourceTree = "<group>"; };
+		BECBD32323D9C5D000DA5582 /* viewpt3d2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewpt3d2.cxx; path = "../../ios-device/svx/source/engine3d/viewpt3d2.cxx"; sourceTree = "<group>"; };
+		BECBD32423D9C5D000DA5582 /* helperhittest3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = helperhittest3d.cxx; path = "../../ios-device/svx/source/engine3d/helperhittest3d.cxx"; sourceTree = "<group>"; };
+		BECBD32523D9C5D000DA5582 /* float3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = float3d.cxx; path = "../../ios-device/svx/source/engine3d/float3d.cxx"; sourceTree = "<group>"; };
+		BECBD32623D9C5D000DA5582 /* sphere3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sphere3d.cxx; path = "../../ios-device/svx/source/engine3d/sphere3d.cxx"; sourceTree = "<group>"; };
+		BECBD32723D9C5D000DA5582 /* deflt3d.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = deflt3d.cxx; path = "../../ios-device/svx/source/engine3d/deflt3d.cxx"; sourceTree = "<group>"; };
+		BECBD3C423D9C98000DA5582 /* svdotxtr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotxtr.cxx; path = "../../ios-device/svx/source/svdraw/svdotxtr.cxx"; sourceTree = "<group>"; };
+		BECBD3C523D9C98000DA5582 /* svdpage.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdpage.cxx; path = "../../ios-device/svx/source/svdraw/svdpage.cxx"; sourceTree = "<group>"; };
+		BECBD3C623D9C98000DA5582 /* textchain.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textchain.cxx; path = "../../ios-device/svx/source/svdraw/textchain.cxx"; sourceTree = "<group>"; };
+		BECBD3C723D9C98000DA5582 /* svdsnpv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdsnpv.cxx; path = "../../ios-device/svx/source/svdraw/svdsnpv.cxx"; sourceTree = "<group>"; };
+		BECBD3C823D9C98000DA5582 /* svditer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svditer.cxx; path = "../../ios-device/svx/source/svdraw/svditer.cxx"; sourceTree = "<group>"; };
+		BECBD3C923D9C98000DA5582 /* svdedtv1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdedtv1.cxx; path = "../../ios-device/svx/source/svdraw/svdedtv1.cxx"; sourceTree = "<group>"; };
+		BECBD3CA23D9C98000DA5582 /* svdotextpathdecomposition.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotextpathdecomposition.cxx; path = "../../ios-device/svx/source/svdraw/svdotextpathdecomposition.cxx"; sourceTree = "<group>"; };
+		BECBD3CB23D9C98000DA5582 /* svdmrkv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdmrkv.cxx; path = "../../ios-device/svx/source/svdraw/svdmrkv.cxx"; sourceTree = "<group>"; };
+		BECBD3CC23D9C98000DA5582 /* svdibrow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdibrow.cxx; path = "../../ios-device/svx/source/svdraw/svdibrow.cxx"; sourceTree = "<group>"; };
+		BECBD3CD23D9C98000DA5582 /* svdobjplusdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdobjplusdata.cxx; path = "../../ios-device/svx/source/svdraw/svdobjplusdata.cxx"; sourceTree = "<group>"; };
+		BECBD3CE23D9C98000DA5582 /* svdouno.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdouno.cxx; path = "../../ios-device/svx/source/svdraw/svdouno.cxx"; sourceTree = "<group>"; };
+		BECBD3CF23D9C98000DA5582 /* svdundo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdundo.cxx; path = "../../ios-device/svx/source/svdraw/svdundo.cxx"; sourceTree = "<group>"; };
+		BECBD3D023D9C98000DA5582 /* svdviter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdviter.cxx; path = "../../ios-device/svx/source/svdraw/svdviter.cxx"; sourceTree = "<group>"; };
+		BECBD3D123D9C98000DA5582 /* svdedtv2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdedtv2.cxx; path = "../../ios-device/svx/source/svdraw/svdedtv2.cxx"; sourceTree = "<group>"; };
+		BECBD3D223D9C98000DA5582 /* svdoole2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdoole2.cxx; path = "../../ios-device/svx/source/svdraw/svdoole2.cxx"; sourceTree = "<group>"; };
+		BECBD3D323D9C98000DA5582 /* ActionDescriptionProvider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ActionDescriptionProvider.cxx; path = "../../ios-device/svx/source/svdraw/ActionDescriptionProvider.cxx"; sourceTree = "<group>"; };
+		BECBD3D423D9C98100DA5582 /* textchaincursor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textchaincursor.cxx; path = "../../ios-device/svx/source/svdraw/textchaincursor.cxx"; sourceTree = "<group>"; };
+		BECBD3D523D9C98100DA5582 /* sdrpaintwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdrpaintwindow.cxx; path = "../../ios-device/svx/source/svdraw/sdrpaintwindow.cxx"; sourceTree = "<group>"; };
+		BECBD3D623D9C98100DA5582 /* svdedtv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdedtv.cxx; path = "../../ios-device/svx/source/svdraw/svdedtv.cxx"; sourceTree = "<group>"; };
+		BECBD3D723D9C98100DA5582 /* svdogrp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdogrp.cxx; path = "../../ios-device/svx/source/svdraw/svdogrp.cxx"; sourceTree = "<group>"; };
+		BECBD3D823D9C98100DA5582 /* svdmodel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdmodel.cxx; path = "../../ios-device/svx/source/svdraw/svdmodel.cxx"; sourceTree = "<group>"; };
+		BECBD3D923D9C98100DA5582 /* svdfmtf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdfmtf.cxx; path = "../../ios-device/svx/source/svdraw/svdfmtf.cxx"; sourceTree = "<group>"; };
+		BECBD3DA23D9C98100DA5582 /* svddrgm1.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = svddrgm1.hxx; path = "../../ios-device/svx/source/svdraw/svddrgm1.hxx"; sourceTree = "<group>"; };
+		BECBD3DB23D9C98100DA5582 /* svdotxat.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotxat.cxx; path = "../../ios-device/svx/source/svdraw/svdotxat.cxx"; sourceTree = "<group>"; };
+		BECBD3DC23D9C98100DA5582 /* svdhdl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdhdl.cxx; path = "../../ios-device/svx/source/svdraw/svdhdl.cxx"; sourceTree = "<group>"; };
+		BECBD3DD23D9C98100DA5582 /* svdopage.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdopage.cxx; path = "../../ios-device/svx/source/svdraw/svdopage.cxx"; sourceTree = "<group>"; };
+		BECBD3DE23D9C98100DA5582 /* sdrmasterpagedescriptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdrmasterpagedescriptor.cxx; path = "../../ios-device/svx/source/svdraw/sdrmasterpagedescriptor.cxx"; sourceTree = "<group>"; };
+		BECBD3DF23D9C98100DA5582 /* svdorect.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdorect.cxx; path = "../../ios-device/svx/source/svdraw/svdorect.cxx"; sourceTree = "<group>"; };
+		BECBD3E023D9C98100DA5582 /* svdotxdr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotxdr.cxx; path = "../../ios-device/svx/source/svdraw/svdotxdr.cxx"; sourceTree = "<group>"; };
+		BECBD3E123D9C98100DA5582 /* svdocapt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdocapt.cxx; path = "../../ios-device/svx/source/svdraw/svdocapt.cxx"; sourceTree = "<group>"; };
+		BECBD3E223D9C98100DA5582 /* svdotxed.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotxed.cxx; path = "../../ios-device/svx/source/svdraw/svdotxed.cxx"; sourceTree = "<group>"; };
+		BECBD3E323D9C98100DA5582 /* svdobj.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdobj.cxx; path = "../../ios-device/svx/source/svdraw/svdobj.cxx"; sourceTree = "<group>"; };
+		BECBD3E423D9C98200DA5582 /* selectioncontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = selectioncontroller.cxx; path = "../../ios-device/svx/source/svdraw/selectioncontroller.cxx"; sourceTree = "<group>"; };
+		BECBD3E523D9C98200DA5582 /* svdhlpln.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdhlpln.cxx; path = "../../ios-device/svx/source/svdraw/svdhlpln.cxx"; sourceTree = "<group>"; };
+		BECBD3E623D9C98200DA5582 /* svdopath.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdopath.cxx; path = "../../ios-device/svx/source/svdraw/svdopath.cxx"; sourceTree = "<group>"; };
+		BECBD3E723D9C98200DA5582 /* svdobjuserdatalist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdobjuserdatalist.cxx; path = "../../ios-device/svx/source/svdraw/svdobjuserdatalist.cxx"; sourceTree = "<group>"; };
+		BECBD3E823D9C98200DA5582 /* svdoutl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdoutl.cxx; path = "../../ios-device/svx/source/svdraw/svdoutl.cxx"; sourceTree = "<group>"; };
+		BECBD3E923D9C98200DA5582 /* polypolygoneditor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = polypolygoneditor.cxx; path = "../../ios-device/svx/source/svdraw/polypolygoneditor.cxx"; sourceTree = "<group>"; };
+		BECBD3EA23D9C98200DA5582 /* svdattr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdattr.cxx; path = "../../ios-device/svx/source/svdraw/svdattr.cxx"; sourceTree = "<group>"; };
+		BECBD3EB23D9C98200DA5582 /* textchainflow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textchainflow.cxx; path = "../../ios-device/svx/source/svdraw/textchainflow.cxx"; sourceTree = "<group>"; };
+		BECBD3EC23D9C98200DA5582 /* svdpdf.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = svdpdf.hxx; path = "../../ios-device/svx/source/svdraw/svdpdf.hxx"; sourceTree = "<group>"; };
+		BECBD3ED23D9C98200DA5582 /* svdotxln.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotxln.cxx; path = "../../ios-device/svx/source/svdraw/svdotxln.cxx"; sourceTree = "<group>"; };
+		BECBD3EE23D9C98200DA5582 /* charthelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = charthelper.cxx; path = "../../ios-device/svx/source/svdraw/charthelper.cxx"; sourceTree = "<group>"; };
+		BECBD3EF23D9C98200DA5582 /* svdomedia.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdomedia.cxx; path = "../../ios-device/svx/source/svdraw/svdomedia.cxx"; sourceTree = "<group>"; };
+		BECBD3F023D9C98200DA5582 /* svdotextdecomposition.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotextdecomposition.cxx; path = "../../ios-device/svx/source/svdraw/svdotextdecomposition.cxx"; sourceTree = "<group>"; };
+		BECBD3F123D9C98200DA5582 /* svdoutlinercache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdoutlinercache.cxx; path = "../../ios-device/svx/source/svdraw/svdoutlinercache.cxx"; sourceTree = "<group>"; };
+		BECBD3F223D9C98200DA5582 /* svdxcgv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdxcgv.cxx; path = "../../ios-device/svx/source/svdraw/svdxcgv.cxx"; sourceTree = "<group>"; };
+		BECBD3F323D9C98200DA5582 /* sdrundomanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdrundomanager.cxx; path = "../../ios-device/svx/source/svdraw/sdrundomanager.cxx"; sourceTree = "<group>"; };
+		BECBD3F423D9C98300DA5582 /* svdotext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotext.cxx; path = "../../ios-device/svx/source/svdraw/svdotext.cxx"; sourceTree = "<group>"; };
+		BECBD3F523D9C98300DA5582 /* svdglue.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdglue.cxx; path = "../../ios-device/svx/source/svdraw/svdglue.cxx"; sourceTree = "<group>"; };
+		BECBD3F623D9C98300DA5582 /* svdpagv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdpagv.cxx; path = "../../ios-device/svx/source/svdraw/svdpagv.cxx"; sourceTree = "<group>"; };
+		BECBD3F723D9C98300DA5582 /* gradtrns.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gradtrns.cxx; path = "../../ios-device/svx/source/svdraw/gradtrns.cxx"; sourceTree = "<group>"; };
+		BECBD3F823D9C98300DA5582 /* svddrgv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svddrgv.cxx; path = "../../ios-device/svx/source/svdraw/svddrgv.cxx"; sourceTree = "<group>"; };
+		BECBD3F923D9C98300DA5582 /* svdetc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdetc.cxx; path = "../../ios-device/svx/source/svdraw/svdetc.cxx"; sourceTree = "<group>"; };
+		BECBD3FA23D9C98300DA5582 /* svdpoev.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdpoev.cxx; path = "../../ios-device/svx/source/svdraw/svdpoev.cxx"; sourceTree = "<group>"; };
+		BECBD3FB23D9C98300DA5582 /* svdomeas.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdomeas.cxx; path = "../../ios-device/svx/source/svdraw/svdomeas.cxx"; sourceTree = "<group>"; };
+		BECBD3FC23D9C98300DA5582 /* svdoattr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdoattr.cxx; path = "../../ios-device/svx/source/svdraw/svdoattr.cxx"; sourceTree = "<group>"; };
+		BECBD3FD23D9C98300DA5582 /* svdmark.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdmark.cxx; path = "../../ios-device/svx/source/svdraw/svdmark.cxx"; sourceTree = "<group>"; };
+		BECBD3FE23D9C98300DA5582 /* svdmrkv1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdmrkv1.cxx; path = "../../ios-device/svx/source/svdraw/svdmrkv1.cxx"; sourceTree = "<group>"; };
+		BECBD3FF23D9C98300DA5582 /* svdoashp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdoashp.cxx; path = "../../ios-device/svx/source/svdraw/svdoashp.cxx"; sourceTree = "<group>"; };
+		BECBD40023D9C98300DA5582 /* svdovirt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdovirt.cxx; path = "../../ios-device/svx/source/svdraw/svdovirt.cxx"; sourceTree = "<group>"; };
+		BECBD40123D9C98300DA5582 /* svdoedge.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdoedge.cxx; path = "../../ios-device/svx/source/svdraw/svdoedge.cxx"; sourceTree = "<group>"; };
+		BECBD40223D9C98300DA5582 /* svdfmtf.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = svdfmtf.hxx; path = "../../ios-device/svx/source/svdraw/svdfmtf.hxx"; sourceTree = "<group>"; };
+		BECBD40323D9C98300DA5582 /* svdpdf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdpdf.cxx; path = "../../ios-device/svx/source/svdraw/svdpdf.cxx"; sourceTree = "<group>"; };
+		BECBD40423D9C98300DA5582 /* svdograf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdograf.cxx; path = "../../ios-device/svx/source/svdraw/svdograf.cxx"; sourceTree = "<group>"; };
+		BECBD40523D9C98400DA5582 /* svdcrtv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdcrtv.cxx; path = "../../ios-device/svx/source/svdraw/svdcrtv.cxx"; sourceTree = "<group>"; };
+		BECBD40623D9C98400DA5582 /* svdtext.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdtext.cxx; path = "../../ios-device/svx/source/svdraw/svdtext.cxx"; sourceTree = "<group>"; };
+		BECBD40723D9C98400DA5582 /* svdview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdview.cxx; path = "../../ios-device/svx/source/svdraw/svdview.cxx"; sourceTree = "<group>"; };
+		BECBD40823D9C98400DA5582 /* sdrpagewindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdrpagewindow.cxx; path = "../../ios-device/svx/source/svdraw/sdrpagewindow.cxx"; sourceTree = "<group>"; };
+		BECBD40923D9C98400DA5582 /* svdotxfl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdotxfl.cxx; path = "../../ios-device/svx/source/svdraw/svdotxfl.cxx"; sourceTree = "<group>"; };
+		BECBD40A23D9C98400DA5582 /* svdglev.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdglev.cxx; path = "../../ios-device/svx/source/svdraw/svdglev.cxx"; sourceTree = "<group>"; };
+		BECBD40B23D9C98400DA5582 /* svdpntv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdpntv.cxx; path = "../../ios-device/svx/source/svdraw/svdpntv.cxx"; sourceTree = "<group>"; };
+		BECBD40C23D9C98400DA5582 /* gradtrns.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = gradtrns.hxx; path = "../../ios-device/svx/source/svdraw/gradtrns.hxx"; sourceTree = "<group>"; };
+		BECBD40D23D9C98400DA5582 /* sdrhittesthelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdrhittesthelper.cxx; path = "../../ios-device/svx/source/svdraw/sdrhittesthelper.cxx"; sourceTree = "<group>"; };
+		BECBD40E23D9C98400DA5582 /* svddrag.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svddrag.cxx; path = "../../ios-device/svx/source/svdraw/svddrag.cxx"; sourceTree = "<group>"; };
+		BECBD40F23D9C98400DA5582 /* svdocirc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdocirc.cxx; path = "../../ios-device/svx/source/svdraw/svdocirc.cxx"; sourceTree = "<group>"; };
+		BECBD41023D9C98400DA5582 /* svdtrans.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdtrans.cxx; path = "../../ios-device/svx/source/svdraw/svdtrans.cxx"; sourceTree = "<group>"; };
+		BECBD41123D9C98400DA5582 /* svdlayer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdlayer.cxx; path = "../../ios-device/svx/source/svdraw/svdlayer.cxx"; sourceTree = "<group>"; };
+		BECBD41223D9C98400DA5582 /* svdedxv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdedxv.cxx; path = "../../ios-device/svx/source/svdraw/svdedxv.cxx"; sourceTree = "<group>"; };
+		BECBD41323D9C98400DA5582 /* clonelist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clonelist.cxx; path = "../../ios-device/svx/source/svdraw/clonelist.cxx"; sourceTree = "<group>"; };
+		BECBD41423D9C98500DA5582 /* svddrgmt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svddrgmt.cxx; path = "../../ios-device/svx/source/svdraw/svddrgmt.cxx"; sourceTree = "<group>"; };
 		BEFB1EDF21C29CC70081D757 /* L10n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L10n.h; sourceTree = "<group>"; };
 		BEFB1EE021C29CC70081D757 /* L10n.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = L10n.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2298,6 +2399,7 @@
 		BEB0E5DC21CA93950085A0CF /* svx */ = {
 			isa = PBXGroup;
 			children = (
+				BECBD31223D9C5B300DA5582 /* engine3d */,
 				BE9273B72372E04500ADB598 /* form */,
 				BE9273AD2372DC6B00ADB598 /* sidebar */,
 				BEB0E5DD21CA93A50085A0CF /* svdraw */,
@@ -2309,7 +2411,87 @@
 		BEB0E5DD21CA93A50085A0CF /* svdraw */ = {
 			isa = PBXGroup;
 			children = (
-				BEB0E5DE21CA93D80085A0CF /* svdograf.cxx */,
+				BECBD3D323D9C98000DA5582 /* ActionDescriptionProvider.cxx */,
+				BECBD3EE23D9C98200DA5582 /* charthelper.cxx */,
+				BECBD41323D9C98400DA5582 /* clonelist.cxx */,
+				BECBD3F723D9C98300DA5582 /* gradtrns.cxx */,
+				BECBD40C23D9C98400DA5582 /* gradtrns.hxx */,
+				BECBD3E923D9C98200DA5582 /* polypolygoneditor.cxx */,
+				BECBD40D23D9C98400DA5582 /* sdrhittesthelper.cxx */,
+				BECBD3DE23D9C98100DA5582 /* sdrmasterpagedescriptor.cxx */,
+				BECBD40823D9C98400DA5582 /* sdrpagewindow.cxx */,
+				BECBD3D523D9C98100DA5582 /* sdrpaintwindow.cxx */,
+				BECBD3F323D9C98200DA5582 /* sdrundomanager.cxx */,
+				BECBD3E423D9C98200DA5582 /* selectioncontroller.cxx */,
+				BECBD3EA23D9C98200DA5582 /* svdattr.cxx */,
+				BECBD40523D9C98400DA5582 /* svdcrtv.cxx */,
+				BECBD40E23D9C98400DA5582 /* svddrag.cxx */,
+				BECBD3DA23D9C98100DA5582 /* svddrgm1.hxx */,
+				BECBD41423D9C98500DA5582 /* svddrgmt.cxx */,
+				BECBD3F823D9C98300DA5582 /* svddrgv.cxx */,
+				BECBD3D623D9C98100DA5582 /* svdedtv.cxx */,
+				BECBD3C923D9C98000DA5582 /* svdedtv1.cxx */,
+				BECBD3D123D9C98000DA5582 /* svdedtv2.cxx */,
+				BECBD41223D9C98400DA5582 /* svdedxv.cxx */,
+				BECBD3F923D9C98300DA5582 /* svdetc.cxx */,
+				BECBD3D923D9C98100DA5582 /* svdfmtf.cxx */,
+				BECBD40223D9C98300DA5582 /* svdfmtf.hxx */,
+				BECBD40A23D9C98400DA5582 /* svdglev.cxx */,
+				BECBD3F523D9C98300DA5582 /* svdglue.cxx */,
+				BECBD3DC23D9C98100DA5582 /* svdhdl.cxx */,
+				BECBD3E523D9C98200DA5582 /* svdhlpln.cxx */,
+				BECBD3CC23D9C98000DA5582 /* svdibrow.cxx */,
+				BECBD3C823D9C98000DA5582 /* svditer.cxx */,
+				BECBD41123D9C98400DA5582 /* svdlayer.cxx */,
+				BECBD3FD23D9C98300DA5582 /* svdmark.cxx */,
+				BECBD3D823D9C98100DA5582 /* svdmodel.cxx */,
+				BECBD3CB23D9C98000DA5582 /* svdmrkv.cxx */,
+				BECBD3FE23D9C98300DA5582 /* svdmrkv1.cxx */,
+				BECBD3FF23D9C98300DA5582 /* svdoashp.cxx */,
+				BECBD3FC23D9C98300DA5582 /* svdoattr.cxx */,
+				BECBD3E323D9C98100DA5582 /* svdobj.cxx */,
+				BECBD3CD23D9C98000DA5582 /* svdobjplusdata.cxx */,
+				BECBD3E723D9C98200DA5582 /* svdobjuserdatalist.cxx */,
+				BECBD3E123D9C98100DA5582 /* svdocapt.cxx */,
+				BECBD40F23D9C98400DA5582 /* svdocirc.cxx */,
+				BECBD40123D9C98300DA5582 /* svdoedge.cxx */,
+				BECBD40423D9C98300DA5582 /* svdograf.cxx */,
+				BECBD3D723D9C98100DA5582 /* svdogrp.cxx */,
+				BECBD3FB23D9C98300DA5582 /* svdomeas.cxx */,
+				BECBD3EF23D9C98200DA5582 /* svdomedia.cxx */,
+				BECBD3D223D9C98000DA5582 /* svdoole2.cxx */,
+				BECBD3DD23D9C98100DA5582 /* svdopage.cxx */,
+				BECBD3E623D9C98200DA5582 /* svdopath.cxx */,
+				BECBD3DF23D9C98100DA5582 /* svdorect.cxx */,
+				BECBD3F423D9C98300DA5582 /* svdotext.cxx */,
+				BECBD3F023D9C98200DA5582 /* svdotextdecomposition.cxx */,
+				BECBD3CA23D9C98000DA5582 /* svdotextpathdecomposition.cxx */,
+				BECBD3DB23D9C98100DA5582 /* svdotxat.cxx */,
+				BECBD3E023D9C98100DA5582 /* svdotxdr.cxx */,
+				BECBD3E223D9C98100DA5582 /* svdotxed.cxx */,
+				BECBD40923D9C98400DA5582 /* svdotxfl.cxx */,
+				BECBD3ED23D9C98200DA5582 /* svdotxln.cxx */,
+				BECBD3C423D9C98000DA5582 /* svdotxtr.cxx */,
+				BECBD3CE23D9C98000DA5582 /* svdouno.cxx */,
+				BECBD3E823D9C98200DA5582 /* svdoutl.cxx */,
+				BECBD3F123D9C98200DA5582 /* svdoutlinercache.cxx */,
+				BECBD40023D9C98300DA5582 /* svdovirt.cxx */,
+				BECBD3C523D9C98000DA5582 /* svdpage.cxx */,
+				BECBD3F623D9C98300DA5582 /* svdpagv.cxx */,
+				BECBD40323D9C98300DA5582 /* svdpdf.cxx */,
+				BECBD3EC23D9C98200DA5582 /* svdpdf.hxx */,
+				BECBD40B23D9C98400DA5582 /* svdpntv.cxx */,
+				BECBD3FA23D9C98300DA5582 /* svdpoev.cxx */,
+				BECBD3C723D9C98000DA5582 /* svdsnpv.cxx */,
+				BECBD40623D9C98400DA5582 /* svdtext.cxx */,
+				BECBD41023D9C98400DA5582 /* svdtrans.cxx */,
+				BECBD3CF23D9C98000DA5582 /* svdundo.cxx */,
+				BECBD40723D9C98400DA5582 /* svdview.cxx */,
+				BECBD3D023D9C98000DA5582 /* svdviter.cxx */,
+				BECBD3F223D9C98200DA5582 /* svdxcgv.cxx */,
+				BECBD3C623D9C98000DA5582 /* textchain.cxx */,
+				BECBD3D423D9C98100DA5582 /* textchaincursor.cxx */,
+				BECBD3EB23D9C98200DA5582 /* textchainflow.cxx */,
 			);
 			name = svdraw;
 			sourceTree = "<group>";
@@ -2447,6 +2629,34 @@
 				BECBD30823D7152900DA5582 /* SlsViewCacheContext.hxx */,
 			);
 			name = view;
+			sourceTree = "<group>";
+		};
+		BECBD31223D9C5B300DA5582 /* engine3d */ = {
+			isa = PBXGroup;
+			children = (
+				BECBD31C23D9C5D000DA5582 /* camera3d.cxx */,
+				BECBD32023D9C5D000DA5582 /* cube3d.cxx */,
+				BECBD32723D9C5D000DA5582 /* deflt3d.cxx */,
+				BECBD31523D9C5CF00DA5582 /* dragmt3d.cxx */,
+				BECBD31423D9C5CF00DA5582 /* e3dsceneupdater.cxx */,
+				BECBD32123D9C5D000DA5582 /* e3dundo.cxx */,
+				BECBD31823D9C5D000DA5582 /* extrud3d.cxx */,
+				BECBD32523D9C5D000DA5582 /* float3d.cxx */,
+				BECBD32423D9C5D000DA5582 /* helperhittest3d.cxx */,
+				BECBD31F23D9C5D000DA5582 /* helperminimaldepth3d.cxx */,
+				BECBD31923D9C5D000DA5582 /* helperminimaldepth3d.hxx */,
+				BECBD31323D9C5CF00DA5582 /* lathe3d.cxx */,
+				BECBD31A23D9C5D000DA5582 /* obj3d.cxx */,
+				BECBD31723D9C5D000DA5582 /* objfac3d.cxx */,
+				BECBD31D23D9C5D000DA5582 /* polygn3d.cxx */,
+				BECBD31B23D9C5D000DA5582 /* scene3d.cxx */,
+				BECBD32623D9C5D000DA5582 /* sphere3d.cxx */,
+				BECBD32223D9C5D000DA5582 /* svx3ditems.cxx */,
+				BECBD31623D9C5CF00DA5582 /* view3d.cxx */,
+				BECBD31E23D9C5D000DA5582 /* view3d1.cxx */,
+				BECBD32323D9C5D000DA5582 /* viewpt3d2.cxx */,
+			);
+			name = engine3d;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
