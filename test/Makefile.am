@@ -54,26 +54,14 @@ AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS
 
 wsd_sources = \
             ../common/FileUtil.cpp \
-            ../common/SigUtil.cpp \
             ../common/IoUtil.cpp \
-            ../common/Log.cpp \
             ../common/Protocol.cpp \
-            ../common/Session.cpp \
             ../common/SpookyV2.cpp \
             ../common/Util.cpp \
-            ../common/MessageQueue.cpp \
             ../common/Authorization.cpp \
             ../kit/Kit.cpp \
             ../kit/TestStubs.cpp \
-            ../wsd/Auth.cpp \
-            ../wsd/TileCache.cpp \
-            ../wsd/TestStubs.cpp \
-            ../common/Unit.cpp \
-            ../net/Socket.cpp
-
-if ENABLE_SSL
-wsd_sources += ../net/Ssl.cpp
-endif
+            ../wsd/TileCache.cpp
 
 test_base_source = \
 	TileQueueTests.cpp \
@@ -82,7 +70,22 @@ test_base_source = \
 	$(wsd_sources)
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT
-unittest_SOURCES = $(test_base_source) test.cpp
+unittest_SOURCES = \
+    $(test_base_source) \
+    ../common/Log.cpp \
+    ../common/MessageQueue.cpp \
+    ../common/Session.cpp \
+    ../common/SigUtil.cpp \
+    ../common/Unit.cpp \
+    ../net/Socket.cpp \
+    ../wsd/Auth.cpp \
+    ../wsd/TestStubs.cpp \
+    test.cpp
+
+if ENABLE_SSL
+unittest_SOURCES += ../net/Ssl.cpp
+endif
+
 unittest_LDADD = $(CPPUNIT_LIBS)
 
 fakesockettest_SOURCES = fakesockettest.cpp ../net/FakeSocket.cpp
