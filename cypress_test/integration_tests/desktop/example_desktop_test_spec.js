@@ -1,22 +1,10 @@
-/* global describe it cy Cypress */
+/* global describe it cy require*/
+
+var helper = require('../common/helper');
 
 describe('Example test suit 1', function() {
 	it('Example test case 1', function() {
-		// Get a clean test document
-		cy.task('copyFile', {
-			sourceDir: Cypress.env('DATA_FOLDER'),
-			destDir: Cypress.env('WORKDIR'),
-			fileName: 'simple.odt',
-		});
-
-		// Open test document
-		cy.visit('http://localhost:9980/loleaflet/' +
-			Cypress.env('WSD_VERSION_HASH') +
-			'/loleaflet.html?file_path=file://' +
-			Cypress.env('WORKDIR') + 'simple.odt');
-
-		// Wait for the document to fully load
-		cy.get('.leaflet-tile-loaded', {timeout : 10000});
+		helper.loadTestDoc('simple.odt');
 
 		// Select a text
 		cy.get('#document-container').dblclick();

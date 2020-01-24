@@ -1,23 +1,10 @@
-/* global describe it cy Cypress beforeEach*/
+/* global describe it cy beforeEach require*/
+
+var helper = require('../common/helper');
 
 describe('Mobile wizard state tests', function() {
 	beforeEach(function() {
-		// Get a clean test document
-		cy.task('copyFile', {
-			sourceDir: Cypress.env('DATA_FOLDER'),
-			destDir: Cypress.env('WORKDIR'),
-			fileName: 'empty.odt',
-		});
-
-		// Open test document
-		cy.viewport('iphone-3');
-		cy.visit('http://localhost:9980/loleaflet/' +
-			Cypress.env('WSD_VERSION_HASH') +
-			'/loleaflet.html?file_path=file://' +
-			Cypress.env('WORKDIR') + 'empty.odt');
-
-		// Wait for the document to fully load
-		cy.get('.leaflet-tile-loaded', {timeout : 10000});
+		helper.loadTestDoc('empty.odt', true);
 	});
 
 	it('Open and close mobile wizard by toolbar item.', function() {
