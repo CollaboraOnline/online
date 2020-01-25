@@ -246,7 +246,7 @@ L.Map = L.Evented.extend({
 		this.on('editorgotfocus', this._onEditorGotFocus, this);
 
 		// Fired to signal that the input focus is being changed.
-		this.on('changefocuswidget', this._changeFocusWidget, this);
+		this.on('changefocuswidget', this._onChangeFocusWidget, this);
 
 		// View info (user names and view ids)
 		this._viewInfo = {};
@@ -1334,8 +1334,8 @@ L.Map = L.Evented.extend({
 		}, map.options.outOfFocusTimeoutSecs * 1000);
 	},
 
-	// Change the focus to a dialog.
-	onFocusDialog: function onFocusDialog(dialog, winId) {
+	// Change the focus to a dialog or editor.
+	_changeFocusWidget: function (dialog, winId) {
 		if (!this._loaded) { return; }
 
 		this._winId = winId;
@@ -1353,22 +1353,7 @@ L.Map = L.Evented.extend({
 
 	// The editor got focus (probably a dialog closed or user clicked to edit).
 	_onEditorGotFocus: function() {
-		if (!this._loaded) { return; }
-
-		this._winId = 0;
-		this._activeDialog = null;
-
-		var doclayer = this._docLayer;
-		if (doclayer)
-		{
-			// we restore the old cursor position by a small delay, so that if the user clicks
-			// inside the document we skip to restore it, so that the user does not see the cursor
-			// jumping from the old position to the new one
-			setTimeout(function () {
-				console.debug('apply focus change in timeout');
-				doclayer._updateCursorAndOverlay();
-			}, 300);
-		}
+		this._changeFocusWidget(null, 0);
 	},
 
 	// Our browser tab got focus.
@@ -1383,12 +1368,12 @@ L.Map = L.Evented.extend({
 		this._activate();
 	},
 
-	// Focus is being changed, update states.
-	_changeFocusWidget: function (e) {
+	// Event to change the focus to dialog or editor.
+	_onChangeFocusWidget: function (e) {
 		if (e.winId === 0) {
 			this._onEditorGotFocus();
 		} else {
-			this.onFocusDialog(e.dialog, e.winId);
+			this._changeFocusWidget(e.dialog, e.winId);
 		}
 	},
 
