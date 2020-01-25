@@ -1429,6 +1429,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconPath;
 			icon.alt = '';
+			icon.addEventListener('error', function() {
+				icon.style.display = 'none';
+			});
 		}
 		if (data.checked && data.checked === true) {
 			L.DomUtil.addClass(menuEntry, 'menu-entry-checked');
