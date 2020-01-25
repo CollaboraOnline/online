@@ -72,8 +72,6 @@ L.WriterTileLayer = L.TileLayer.extend({
 			{type: 'break', id: 'breakbullet', hidden: true},
 			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _UNO('.uno:IncrementIndent', '', true), uno: 'IncrementIndent', disabled: true},
 			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: 'DecrementIndent', disabled: true},
-			{type: 'break'},
-			{type: 'button',  id: 'toggleorientation',  img: 'orientation', hint: _('Toggle Page Orientation'), uno: 'ToggleOrientation'},
 		];
 
 		var toolbar = $('#toolbar-up');
