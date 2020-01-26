@@ -904,12 +904,13 @@ L.Map = L.Evented.extend({
 		return this.layerPointToLatLng(this.mouseEventToLayerPoint(e));
 	},
 
-	// Give the focus to the text input to accept keyboard input.
-	// On mobile, it will show the virtual keyboard.
-	focus: function () {
-		//TODO: we should check if focus is going to edit the doc in
-		//TODO: read-only mode and prevent it (but allow for searching).
+	// Give the focus to the text input.
+	// @acceptInput (on mobile only) true if we want to
+	// accept key input, and show the virtual keyboard.
+	focus: function (acceptInput) {
 		this._textInput.focus();
+		if (window.mode.isMobile() && acceptInput !== true)
+			this.blur();
 	},
 
 	// Lose focus to stop accepting keyboard input.

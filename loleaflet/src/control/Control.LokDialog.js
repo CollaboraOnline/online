@@ -411,8 +411,6 @@ L.Control.LokDialog = L.Control.extend({
 		this._map.setWinId(dlgId);
 		if (dlgId in this._dialogs) {
 			this._map.focus();
-		} else {
-			this._map.blur();
 		}
 	},
 

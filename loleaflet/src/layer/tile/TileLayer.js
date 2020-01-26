@@ -2091,8 +2091,8 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._map._textInput.showCursor();
 		if (this._map.editorHasFocus() /* && !L.Browser.mobile */) {
-			// On mobile, this is causing some key input to get lost.
-			this._map.focus();
+			// User is editing, show the keyboard.
+			this._map.focus(true);
 		}
 	},
 

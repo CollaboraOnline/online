@@ -322,11 +322,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 
-			if (this._state === L.Map.TouchGesture.MARKER || (this._state === L.Map.TouchGesture.GRAPHIC && !docLayer._isCursorVisible)) {
-				this._map.blur();
-			} else if (!this._map.hasFocus()) {
-				this._map.focus();
-			}
+			// Take focus, but keyboard show only in Writer (double-tap to edit Calc/Impress).
+			this._map.focus(this._map._docLayer._docType === 'text');
 		}
 	},
 
@@ -337,8 +334,14 @@ L.Map.TouchGesture = L.Handler.extend({
 		    latlng = this._map.layerPointToLatLng(layerPoint),
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
-		this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
-		this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+		var docLayer = this._map._docLayer;
+		if (docLayer) {
+			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
+			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+
+			// Show keyboard.
+			this._map.focus(true);
+		}
 	},
 
 	_onTripleTap: function (e) {
