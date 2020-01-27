@@ -16,8 +16,10 @@ function loadTestDoc(fileName, mobile) {
 	cy.visit('http://localhost:9980/loleaflet/' +
 		Cypress.env('WSD_VERSION_HASH') +
 		'/loleaflet.html?file_path=file://' +
-		Cypress.env('WORKDIR') + fileName);
-
+		Cypress.env('WORKDIR') + fileName, {
+		onLoad: function(win) {
+			win.onerror = cy.onUncaughtException;
+		}});
 	// Wait for the document to fully load
 	cy.get('.leaflet-tile-loaded', {timeout : 10000});
 }
