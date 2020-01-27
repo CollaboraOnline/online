@@ -53,8 +53,11 @@
 		padding-bottom: 3px;
 	}
 
-	.spreadsheet-tabs-container{
+	.spreadsheet-tabs-container {
 		left: 0px;
+		overflow-x: scroll;
+		scrollbar-width: none; /*css draft (firefox only)*/
+		-ms-scrollbar: none; /*ie*/
 	}
 
 	.spreadsheet-tabs-container, #spreadsheet-toolbar{
