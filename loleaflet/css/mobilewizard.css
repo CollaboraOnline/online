@@ -318,13 +318,18 @@
 	}
 
 	.sub-menu-arrow {
+		-webkit-transform: rotate(180deg);
+		-moz-transform: rotate(180deg);
+		-ms-transform: rotate(180deg);
+		-o-transform: rotate(180deg);
+		transform: rotate(180deg);
 		display: table-cell;
 		padding-left: 10px;
 		padding-right: 10px;
-		background: transparent;
+		background: url(images/lc_closedocmobile.svg) no-repeat left / 10px;
 		font-size: 1.5em;
 		font-weight: bold;
-		color: #aaa !important;
+		color: transparent !important;
 		vertical-align: middle;
 	}
 
