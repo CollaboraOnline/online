@@ -33,7 +33,7 @@
 		filter: none !important;
 	}
 
-	#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage{
+	#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage, .menu-entry-icon.setanchoratchar, .menu-entry-icon.setanchortochar, .menu-entry-icon.setanchortopage, .menu-entry-icon.setanchortocellresize, .menu-entry-icon.setanchortocell{
 		display: none;
 	}
 	.ui-header.level-1.mobile-wizard.ui-widget img[src^='images/lc_downloadas-doc'], .ui-header.level-1.mobile-wizard.ui-widget img[src^='images/lc_downloadas-pp'],.ui-header.level-1.mobile-wizard.ui-widget img[src^='images/lc_downloadas-xls'], .ui-header.level-2.mobile-wizard.ui-widget img[src='images/lc_deleterowbreak.svg'], .ui-header.level-2.mobile-wizard.ui-widget img[src='images/lc_deletecolumnbreak.svg']{
