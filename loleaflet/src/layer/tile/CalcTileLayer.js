@@ -171,31 +171,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			e.isCancelled = true;
 		});
 
-		toolbar = $('#spreadsheet-toolbar');
-		toolbar.w2toolbar({
-			name: 'spreadsheet-toolbar',
-			tooltip: 'bottom',
-			hidden: true,
-			items: [
-				{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hint: _('First sheet')},
-				{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hint: _('Previous sheet')},
-				{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hint: _('Next sheet')},
-				{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hint: _('Last sheet')},
-				{type: 'button',  id: 'insertsheet', img: 'insertsheet', hint: _('Insert sheet')}
-			],
-			onClick: function (e) {
-				window.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
-			}
-		});
-		toolbar.bind('touchstart', function(e) {
-			w2ui['spreadsheet-toolbar'].touchStarted = true;
-			var touchEvent = e.originalEvent;
-			if (touchEvent && touchEvent.touches.length > 1) {
-				L.DomEvent.preventDefault(e);
-			}
-		});
-		toolbar.show();
+		L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 
 		toolbar = $('#toolbar-down');
 		toolbar.w2toolbar({

@@ -53,6 +53,10 @@
 		padding-bottom: 3px;
 	}
 
+	.spreadsheet-tabs-container{
+		left: 0px;
+	}
+
 	.spreadsheet-tabs-container, #spreadsheet-toolbar{
 		background-color: #fff;
 		border-top: 1px solid #eceff4;
