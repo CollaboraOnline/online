@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-20 09:13+0000\n"
+"PO-Revision-Date: 2020-01-27 08:44+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -38,7 +38,7 @@ msgstr ""
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "Analises"
 
 #: admin/admin.strings.js:11
 msgid "History"
@@ -487,7 +487,7 @@ msgstr "Tocante a"
 #: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:346
 #: src/control/Control.Menubar.js:462 src/map/Map.js:377
 msgid "Last modification"
-msgstr ""
+msgstr "Cabera modificación"
 
 #: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:519
 msgid "ODF presentation (.odp)"
@@ -601,7 +601,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1081 src/layer/tile/CalcTileLayer.js:183
 msgid "Last sheet"
-msgstr ""
+msgstr "Cabera fueya"
 
 #: src/control/Control.Toolbar.js:1082 src/layer/tile/CalcTileLayer.js:184
 msgid "Insert sheet"
@@ -1166,7 +1166,7 @@ msgstr ""
 
 #: src/map/Map.js:1381
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando…"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format

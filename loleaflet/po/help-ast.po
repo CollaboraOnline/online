@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-02 17:09+0000\n"
+"PO-Revision-Date: 2020-01-20 21:05+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ast/>\n"
 "Language: ast\n"
@@ -57,7 +57,7 @@ msgstr "Ctrl + Alt + Mayús + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Print (Download as PDF)"
-msgstr "Imprimir (Descargar como PDF)"
+msgstr "Imprentar (baxar como PDF)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-68
 msgid "Ctrl + P"
@@ -65,7 +65,7 @@ msgstr "Ctrl + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-18
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Amosar l'ayuda de les combinaciones de tecles"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-80
 #, fuzzy
@@ -982,7 +982,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h1:209-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "Ayuda de <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:210-5
 #: html/loleaflet-help.html%2Bdiv.h3:248-5
@@ -997,7 +997,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Abrir, zarrar, atroxar, imprentar y baxar documentos"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
@@ -1756,7 +1756,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:518-5
 msgid "Directly:"
-msgstr ""
+msgstr "Direutamente:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:520-11
 msgid "Select the text with the existing format"
@@ -1772,10 +1772,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
-#, fuzzy
-#| msgid "Apply Heading 1 paragraph style"
 msgid "Applying a paragraph style:"
-msgstr "Aplicar estilu de párrafu Testera 1"
+msgstr "N'aplicando un estilu de párrafu:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"

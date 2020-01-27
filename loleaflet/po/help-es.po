@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-18 16:24+0000\n"
+"PO-Revision-Date: 2020-01-23 08:20+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
@@ -1027,7 +1027,7 @@ msgstr "Presentaciones"
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
-msgstr "El <span class=\"productname\">%productName</span> permite crear y editar documentos de oficina, hojas de cálculo y presentaciones directamente en su navegador de Internet, de forma sencilla y directa. Usted puede trabajar solo en el documento o de forma colaborativa como parte de un equipo."
+msgstr "<span class=\"productname\">%productName</span> permite crear y editar documentos de oficina, hojas de cálculo y presentaciones directamente en su navegador de Internet, de forma sencilla y directa. Puede trabajar tanto de forma individual como colaborativa, como parte de un equipo."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
@@ -1043,7 +1043,7 @@ msgstr "En la parte superior derecha de la pantalla del <span class=\"productnam
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
-msgstr "El <span class=\"productname\">%productName</span> las modernas características de los navegadores web para adaptar la interfaz de usuario al tamaño del área de visualización, incluyendo pantallas pequeñas de los dispositivos móviles. La interfaz está compuesta de:"
+msgstr "<span class=\"productname\">%productName</span> utiliza características modernas de los navegadores web para adaptar la interfaz de usuario al tamaño del área de visualización, incluidas las pantallas pequeñas de los dispositivos móviles. La interfaz se compone de:"
 
 #: html/loleaflet-help.html%2Bdiv.p:257-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."
@@ -1107,7 +1107,7 @@ msgstr "Para descargar un documento, descárguelo desde el menú <span class=\"u
 
 #: html/loleaflet-help.html%2Bdiv.p:278-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."
-msgstr "Para abrir un documento, haga clic en el archivo para abrirlo en el módulo de <span class=\"productname\">%productName</span> asociado a ese formato de documento."
+msgstr "Para abrir un documento, pulse en el archivo para abrirlo en el programa de <span class=\"productname\">%productName</span> asociado a ese formato de documento."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Documents in <span class=\"productname\">%productName</span> save automatically, but if you are concerned that a document is synchronized as quickly as possible you can also force saving using the <span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
@@ -1135,7 +1135,7 @@ msgstr "Se admite el corte y la copia de contenido enriquecido, no solo dentro d
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
-msgstr ""
+msgstr "Para copiar contenidos de dimensiones elevadas en otras aplicaciones del equipo, hace falta pulsar en el botón <span class=\"ui\">Iniciar descarga</span> —⁠aparece en la esquina inferior derecha⁠— y, acto seguido, copiarlos de nuevo en el portapapeles; así quedarán disponibles para que la aplicación de destino los lea. Este proceso además transforma los tipos de objeto complejos en imágenes estáticas."
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Document repair"
@@ -1363,7 +1363,7 @@ msgstr "<span class=\"def\">Formato directo:</span> Puede formatear objetos del 
 
 #: html/loleaflet-help.html%2Bdiv.div.p:394-5
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
-msgstr "<span class=\"def\">Formato por estilo:</span> El <span class=\"productname\">%productName</span> admite estilos de párrafo. Puede aplicar un estilo de párrafo existente a varios párrafos. Seleccione el menú <span class=\"ui\">Editar</span> → <span class=\"ui\">Editar estilo</span> para modificar el estilo."
+msgstr "<span class=\"def\">Formato por estilo:</span> <span class=\"productname\">%productName</span> admite estilos de párrafo. Puede aplicar un estilo de párrafo existente a varios párrafos. Seleccione el menú <span class=\"ui\">Editar</span> ▸ <span class=\"ui\">Editar estilo</span> para modificar el estilo."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:398-5
 msgid "Handling Tables"
@@ -1543,7 +1543,7 @@ msgstr "¿Hay un diccionario de sinónimos?"
 
 #: html/loleaflet-help.html%2Bdiv.p:464-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
-msgstr "Sí. Pero solo para textos en inglés. Haga clic en la palabra que desee y seleccione <span class=\"ui\">Herramientas</span> → <span class=\"ui\">Diccionario de sinónimos</span>. Un cuadro de diálogo se abre con varias sugerencias para reemplazar."
+msgstr "Sí. Pero solo para textos en inglés. Pulse en la palabra que desee y seleccione <span class=\"ui\">Herramientas</span> ▸ <span class=\"ui\">Diccionario de sinónimos</span>. Un cuadro de diálogo se abre con varias sugerencias para reemplazar."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"
@@ -1595,7 +1595,7 @@ msgstr "¿Por qué no puedo eliminar el texto? ¿Por qué la palabra aparece tac
 
 #: html/loleaflet-help.html%2Bdiv.div.p:487-5
 msgid "You have the Track Changes feature enabled for the document. Track Changes records all changes in the text and shows the editions for later revision. Useful for marking changes in text and spreadsheets. Track changes are enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Record</span>."
-msgstr "Usted tiene el seguimiento de cambios activado. El seguimiento de cambios escribe todos los cambios en el texto y muestra las ediciones para una revisión posterior. Es muy útil para marcar cambios en textos y hojas de cálculo. El seguimiento de cambios se activa al elegir <span class=\"ui\">Editar</span> → <span class=\"ui\">Seguimiento de cambios</span> → <span class=\"ui\">Grabar</span>."
+msgstr "Usted tiene el seguimiento de cambios activado. El seguimiento de cambios escribe todos los cambios en el texto y muestra las ediciones para una revisión posterior. Es muy útil para marcar cambios en textos y hojas de cálculo. El seguimiento de cambios se activa al elegir <span class=\"ui\">Editar</span> ▸ <span class=\"ui\">Seguimiento de cambios</span> ▸ <span class=\"ui\">Grabar</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:488-5
 msgid "With track changes enabled your document show the following settings:"
@@ -1623,11 +1623,11 @@ msgstr "El color asignado a los cambios depende del usuario que hizo los cambios
 
 #: html/loleaflet-help.html%2Bdiv.div.p:497-5
 msgid "To display or hide track changes choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. Beware that if track changes are enabled but hidden, you still record changes and may inadvertently leave unwanted text available in the document."
-msgstr "Para ver u ocultar los cambios, seleccione <span class=\"ui\">Editar</span> → <span class=\"ui\">Seguimiento de cambio</span> → <span class=\"ui\">Mostrar</span>. Tenga en cuenta que, si el segimiento de cambios está activado pero oculto, sigue grabando los cambios y puede olvidar sin advertir extractos indeseables y disponibles dentro del documento."
+msgstr "Para ver u ocultar los cambios, seleccione <span class=\"ui\">Editar</span> ▸ <span class=\"ui\">Seguimiento de cambios</span> ▸ <span class=\"ui\">Mostrar</span>. Tenga en cuenta que, si el segimiento de cambios está activado pero oculto, sigue grabando los cambios y puede olvidar sin advertir extractos indeseables y disponibles dentro del documento."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:498-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
-msgstr "Los cambios se aceptan o se rechazan. Para aceptar los cambios, haga clic en los iconos correspondientes en el cuadro de comentarios a la derecha del documento. Alternativamente, seleccione <span class=\"ui\">Editar</span> → <span class=\"ui\">Seguimiento de cambio</span> → <span class=\"ui\">Aceptar todo</span> o <span class=\"ui\">Rechazar todo</span>. Si desea filtrar los cambios antes de aceptar o rechazar, seleccione <span class=\"ui\">Editar</span> → <span class=\"ui\">Seguimiento de cambio</span> → <span class=\"ui\">Gestionar</span>. Un cuadro de diálogo muestra la lista de todos los cambios filtrados. Utilice los botones de acuerdo con su juicio."
+msgstr "Los cambios se aceptan o se rechazan. Para aceptar los cambios, pulse en los iconos correspondientes en el cuadro de comentarios a la derecha del documento. Alternativamente, seleccione <span class=\"ui\">Editar</span> ▸ <span class=\"ui\">Seguimiento de cambios</span> ▸ <span class=\"ui\">Aceptar todo</span> o <span class=\"ui\">Rechazar todo</span>. Si desea filtrar los cambios antes de aceptar o rechazar, seleccione <span class=\"ui\">Editar</span> ▸ <span class=\"ui\">Seguimiento de cambios</span> ▸ <span class=\"ui\">Gestionar</span>. Un cuadro de diálogo muestra la lista de todos los cambios filtrados. Utilice los botones de acuerdo con su juicio."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
 msgid "How do I set the margins of the document?"
@@ -1716,7 +1716,7 @@ msgstr "¿Por qué mi texto cambia tan pronto como escribió? ¿cómo puedo impe
 
 #: html/loleaflet-help.html%2Bdiv.div.p:530-5
 msgid "You have the AutoCorrection enabled. AutoCorrection changes the text just typed into an internal table of corresponding text. In most cases, AutoCorrection fixes typos while you are typing. If AutoCorrection is not necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
-msgstr "Usted tiene la corrección automática activada. La corrección automática cambia el texto recién escrito por un texto de una tabla de correspondencia interna. En la mayoría de los casos, la corrección automática acierta errores de escritura. Si la corrección automática no es necesaria, desactívela en <span class=\"ui\">Herramientas</span> → <span class=\"ui\">Corrección automática</span> → <span class=\"ui\">Al escribir</span>."
+msgstr "Usted tiene la corrección automática activada. La corrección automática cambia el texto recién escrito por un texto de una tabla de correspondencia interna. En la mayoría de los casos, la corrección automática acierta errores de escritura. Si la corrección automática no es necesaria, desactívela en <span class=\"ui\">Herramientas</span> ▸ <span class=\"ui\">Corrección automática</span> ▸ <span class=\"ui\">Al escribir</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:535-5
 msgid "How can I select data to print?"
@@ -1772,7 +1772,7 @@ msgstr "¿Para qué sirve el botón «Limpiar formato directo»?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:556-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
-msgstr "El formato directo es el formato aplicado directamente en el contenido seleccionado de un párrafo o una celda de la hoja de cálculo, superponiendo el formato del estilo aplicado. Para restablecer el formato al estilo aplicado, seleccione el texto o las celdas de la hoja de cálculo y elija <span class=\"ui\">Formato</span> → <span class=\"ui\">Limpiar formato directo</span> o utilice el botón de la barra de herramientas."
+msgstr "El formato directo es el formato aplicado directamente en el contenido seleccionado de un párrafo o una celda de la hoja de cálculo, superponiendo el formato del estilo aplicado. Para restablecer el formato al estilo aplicado, seleccione el texto o las celdas de la hoja de cálculo y elija <span class=\"ui\">Formato</span> ▸ <span class=\"ui\">Limpiar formato directo</span> o utilice el botón de la barra de herramientas."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:557-5
 msgid "How do I rename a sheet?"

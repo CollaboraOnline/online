@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-18 18:26+0000\n"
+"PO-Revision-Date: 2020-01-23 08:20+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1543,7 +1543,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:464-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
-msgstr ""
+msgstr "Sí. Feu clic al mot que voleu reemplaçar i trieu <span class=\"ui\">Eines</span> ▸ <span class=\"ui\">Tesaurus</span>. Es mostra un diàleg amb suggeriments de substitucions."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"
@@ -1804,7 +1804,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:572-9
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or <span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</span>). A dialog opens."
-msgstr ""
+msgstr "Trieu <span class=\"ui\">Format</span> ▸ <span class=\"ui\">Línia</span> (o bé <span class=\"ui\">Àrea</span> o <span class=\"ui\">Posició i mida</span>). S'obre un diàleg."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Set the properties of the element of the object."

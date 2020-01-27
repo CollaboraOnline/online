@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-13 22:06+0000\n"
+"PO-Revision-Date: 2020-01-27 08:44+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
@@ -1097,7 +1097,7 @@ msgstr "Otevřít nabídku"
 
 #: src/layer/marker/Annotation.js:255 src/layer/tile/TileLayer.js:246
 msgid "Reply"
-msgstr "Odpověď"
+msgstr "Odpovědět"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:117
 #: src/layer/tile/WriterTileLayer.js:56

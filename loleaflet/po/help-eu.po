@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-20 09:13+0000\n"
+"PO-Revision-Date: 2020-01-23 20:03+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/eu/>\n"
 "Language: eu\n"
@@ -1591,11 +1591,11 @@ msgstr "Sakatu <span class=\"ui\">Txertatu</span> botoia. Elkarrizketa-koadroa i
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:486-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "Zergatik ezin da testua ezabatu? Marratuta ageri da."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:487-5
 msgid "You have the Track Changes feature enabled for the document. Track Changes records all changes in the text and shows the editions for later revision. Useful for marking changes in text and spreadsheets. Track changes are enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Record</span>."
-msgstr ""
+msgstr "'Aldaketen jarraipena' eginbidea gaituta dago dokumentuan. Eginbide horrek testuko aldaketa guztiak grabatzen ditu eta edizioak erakusten ditu geroago errebisatuak izan daitezen. Erabilgarria da testuetan eta kalkulu-orrietan egiten diren aldaketak markatzeko. Aldaketen jarraipena gaitzeko, aukeratu <span class=\"ui\">Editatu</span>→ <span class=\"ui\">Aldaketen jarraipena</span> → <span class=\"ui\">Grabatu</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:488-5
 msgid "With track changes enabled your document show the following settings:"
@@ -1627,7 +1627,7 @@ msgstr "Aldaketen segimendua bistaratzeko edo ezkutatzeko, aukeratu <span class=
 
 #: html/loleaflet-help.html%2Bdiv.div.p:498-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
-msgstr ""
+msgstr "Aldaketak onartu edo baztertu egin daitezke. Aldaketak onartzeko edo baztertzeko, egin klik dokumentuaren eskuinaldean ageri den iruzkin-koadroko ikonoetan. Bestela, aukeratu <span class=\"ui\">Editatu</span> → <span class=\"ui\">Aldaketen jarraipena</span> → <span class=\"ui\">Onartu</span> edo <span class=\"ui\">Baztertu</span>. Horrez gain, aldaketak iragazi nahi badira haiek onartu edo baztertu baino lehen, aukeratu <span class=\"ui\">Editatu</span> → <span class=\"ui\">Aldaketen jarraipena</span> → <span class=\"ui\">Kudeatu</span>. Elkarrizketa-koadro batek aldaketa guztien zerrenda bat erakutsiko du. Erabili elkarrizketa-koadroko botoiak ekintzak gauzatzeko."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:500-5
 msgid "How do I set the margins of the document?"
@@ -1655,48 +1655,48 @@ msgstr "Nola aldatu orrialde-orientazioa modu horizontalera dokumentuaren barrua
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:510-11
 msgid "Place the cursor at the place where the page orientation is to change. Add an empty paragraph."
-msgstr ""
+msgstr "Kokatu kurtsorea orrialdearen orientazioa aldatuko den tokian. Gehitu paragrafo hutsa."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:511-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>, <span class=\"ui\">Text Flow </span> tab"
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Formatua</span> → <span class=\"ui\">Paragrafoa</span>, <span class=\"ui\">Testu-fluxua</span> fitxa"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:512-11
 msgid "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, Position: Before."
-msgstr ""
+msgstr "<span class=\"ui\">Jauziak</span> arean, markatu 'Txertatu, Mota: Orrialde-jauzia, Kokagunea: Aurretik."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid "Select Landscape in “With Page Style”"
-msgstr ""
+msgstr "Hautatu 'Bertikala' aukera 'Orrialde-estiloarekin' atalean."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:514-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "Hautatu orrialde-zenbakitzea aldatu nahi bada."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:516-5
 msgid "To return to portrait orientation, repeat the procedure, choosing Portrait in “With page style”."
-msgstr ""
+msgstr "Orientazio horizontalera itzultzeko, errepikatu prozedura eta hautatu 'Horizontala' aukera 'Orrialde-estiloarekin' atalean."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:517-5
 msgid "How can I make the new text look like other existing text?"
-msgstr ""
+msgstr "Nola lortu daiteke testu batek lehendik dagoen beste testu baten itxura izan dezan?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:518-5
 msgid "Directly:"
-msgstr ""
+msgstr "Zuzenean:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:520-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Hautatu dagoeneko formatua duen testua."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:521-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:552-11
 msgid "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
-msgstr ""
+msgstr "Egin klik formatua klonatzeko ikonoan <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Saguaren erakuslea pintura-ontzi bihurtuko da."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:522-11
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "Hautatu formatu berria aplikatu nahi diozun testua."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:524-5
 msgid "Applying a paragraph style:"
@@ -1704,108 +1704,108 @@ msgstr "Paragrafo-estiloa aplikatuta:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr ""
+msgstr "Kokatu kurtsorea formatua eman nahi zaion paragrafoan."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:527-11
 msgid "Select the style to apply in the style dropdown list. The paragraph displays the styles attributes."
-msgstr ""
+msgstr "Hautatu aplikatuko den estiloa estiloen goitibeherako zerrendan. Paragrafoak estilo-atributuak erakutsiko ditu."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:529-5
 msgid "Why did the text I just typed change automatically? How can I revert it?"
-msgstr ""
+msgstr "Zergatik aldatzen da automatikoki idatzi berri dudan testua? Nola aldatu dezaket portaera hori?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:530-5
 msgid "You have the AutoCorrection enabled. AutoCorrection changes the text just typed into an internal table of corresponding text. In most cases, AutoCorrection fixes typos while you are typing. If AutoCorrection is not necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
-msgstr ""
+msgstr "Autozuzenketa gaituta dago. Autozuzenketak idatzi berri den testua aldatzen du, taula batean adierazi den ordezko testua erabilita. Kasu gehienetan, autozuzenketak gaizki idatzitako hitzak zuzentzen ditu. Autozuzenketa behar ez bada, desgaitu aukera hori <span class=\"ui\">Tresnak</span> → <span class=\"ui\">Autozuzenketa</span> → <span class=\"ui\">Idaztean</span> atalean."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:535-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Nola hautatu ditzaket inprimatuko diren datuak?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:536-5
 msgid "Insert column and row breaks in the spreadsheet to narrow the print range and print the document to download. On printing the PDF, select the pages of interest."
-msgstr ""
+msgstr "Txertatu zutabe- eta errenkada-jauziak kalkulu-orrian, horrela inprimatze-barrutia mugatzeko eta deskargatuko den dokumentua inprimatzeko. PDFa inprimatzean, hautatu interesekoak diren orrialdeak."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:537-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "Nola inportatu ditzaket CSV datuak?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:539-11
 msgid "Load your CSV data in some native tool to your platform, select and copy it to the clipboard"
-msgstr ""
+msgstr "Kargatu CSV datuak zure plataformako jatorrizko tresna batean, hautatu datuak eta kopiatu arbelean."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:540-11
 msgid "Activate the <span class=\"productname\">%productName</span> spreadsheet window."
-msgstr ""
+msgstr "Aktibatu <span class=\"productname\">%productName</span> kalkulu-orriaren leihoa."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:542-9
 msgid "Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\">Paste</span> or press <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>. The <span class=\"ui\">Text Import</span> dialog opens to let you describe the precise format of the CSV data."
-msgstr ""
+msgstr "Itsatsi nabigatzailetik: <span class=\"ui\">Editati</span> → <span class=\"ui\">Itsatsi</span> edo sakatu <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>. <span class=\"ui\">Testu-inportazioa</span> elkarrizketa-koadroa irekiko da CSV datuen formatu zehatza deskribatu dezazun."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:545-11
 msgid "Select the character set, language and separator options for the CSV file."
-msgstr ""
+msgstr "Hautatu CSV fitxategiaren karaktere multzoa, hizkuntza eta bereizlea."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:547-5
 msgid "The CSV data is loaded into the selected cell where you pasted, according to these settings."
-msgstr ""
+msgstr "CSV datuak itsatsi diren hautatutako gelaxkan kargatzen dira, ezarpen horien arabera."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:548-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "Nola kopiatu dezaket lehendik dauden gelaxken formatua gelaxka berrietan?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:549-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
-msgstr ""
+msgstr "Hori erraz egiten da tresna-barran dagoen 'Brotxa' tresnarekin."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:551-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "Eman formatua iturburuko gelaxkari nahi duzun letra-tipoarekin, atzeko planoko kolorearekin eta beste edozein formaturekin."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:553-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "Hautatu formatua eman nahi diezun gelaxkak. Askatu saguaren botoia."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:555-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "Zer da 'Garbitu formatu zuzena' ikonoa?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:556-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
-msgstr ""
+msgstr "Formatu zuzena paragrafo bateko edo kalkulu-orri bateko gelaxketako edukiei zuzenean aplikatzen zaien formatua da, eta estiloen bidezko formatuarekin gainjartzen da. Formatua estiloaren ezarpenetara bueltatzeko, hautatu testua edo kalkulu-orriaren gelaxka eta aukeratu <span class=\"ui\">Formatua</span> → <span class=\"ui\">Garbitu formatu zuzena</span> edo erabili tresna-barrako botoia."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:557-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Nola aldatu diezaioket izena kalkulu-orri bati?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:558-5
 msgid "Rename a sheet in the spreadsheet document using the context menu (using the right mouse button) over the sheet tab in the bottom. Enter the new sheet name in the dialog that follows."
-msgstr ""
+msgstr "Aldatu kalkulu-orriaren izena laster-menua erabilita (saguaren eskuineko botoiaren bidez) behealdeko orri-fitxan. Sartu orriaren izen berria agertuko den elkarrizketa-koadroan."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:563-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Nola exekutatu dezaket diapositiba-aurkezpen bat?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:565-11
 msgid "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "Ireki aurkezpena <span class=\"productname\">%productName</span> aplikazioan."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:566-11
 msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Diapositiba-aurkezpena</span> → <span class=\"ui\">Pantaila osoko aurkezpena</span> edo egin klik diapositiba-panelaren behealdean ezkerrerago dagoen ikonoan: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:568-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr ""
+msgstr "Nola aldatu dezaket nire diapositibetako forma baten lerroa, area eta kokagunea?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:570-11
 msgid "Select the shape in your slide. A set of handles shows."
-msgstr ""
+msgstr "Hautatu diapositibako forma. Heldulekuen multzo bat agertuko da."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:572-9
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or <span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</span>). A dialog opens."
-msgstr ""
+msgstr "Aukeratu <span class=\"ui\">Formatua</span> → <span class=\"ui\">Lerroa</span> (edo <span class=\"ui\">Area</span>, edo <span class=\"ui\">Kokagunea eta tamaina</span>). Elkarrizketa-koadro bat irekiko da."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Ezarri objektu-elementuaren propietateak."

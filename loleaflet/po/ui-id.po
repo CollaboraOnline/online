@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-01-26 05:49+0000\n"
+"Last-Translator: Budi Aryo <venera.android.phone@gmail.com>\n"
+"Language-Team: Indonesian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/id/>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-ui-id.po\n"
 "X-Pootle-Revision: 3937880\n"
 
@@ -290,11 +291,11 @@ msgstr ""
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Tanpa warna"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Linier"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
@@ -327,11 +328,11 @@ msgstr "Nihil"
 
 #: src/control/Control.JSDialogBuilder.js:744
 msgid "Color"
-msgstr ""
+msgstr "Warna"
 
 #: src/control/Control.JSDialogBuilder.js:747
 msgid "Gradient"
-msgstr ""
+msgstr "Gradien"
 
 #: src/control/Control.JSDialogBuilder.js:750
 msgid "Hatching"
@@ -353,13 +354,13 @@ msgstr ""
 #, fuzzy
 #| msgid "Font"
 msgid "Font Name"
-msgstr "Fonta"
+msgstr "Nama Fonta"
 
 #: src/control/Control.JSDialogBuilder.js:1024
 #, fuzzy
 #| msgid "Not Signed"
 msgid "Font Size"
-msgstr "Tidak ditandai"
+msgstr "Ukuran Fonta"
 
 #: src/control/Control.JSDialogBuilder.js:1478
 msgid "Rows"

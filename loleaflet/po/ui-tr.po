@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2019-12-26 22:40+0000\n"
+"PO-Revision-Date: 2020-01-23 10:22+0000\n"
 "Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
 "Language-Team: Turkish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/tr/>\n"
 "Language: tr\n"
@@ -171,7 +171,7 @@ msgstr "Sunucuyu Kapat"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Sunucu çalışma süresi"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -287,7 +287,7 @@ msgstr "Yüklemeyi başlat"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "Çapraz kopyala/yapıştırı başlat"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
@@ -295,31 +295,31 @@ msgstr "Renk yok"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Doğrusal"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "Eksenel"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "Dairesel"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Eliptik"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "Karesel"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "Kare"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "Sabit boyut"
 
 #: src/control/Control.JSDialogBuilder.js:741
 #: src/control/Control.Toolbar.js:1588
@@ -332,11 +332,11 @@ msgstr "Renk"
 
 #: src/control/Control.JSDialogBuilder.js:747
 msgid "Gradient"
-msgstr ""
+msgstr "Geçiş"
 
 #: src/control/Control.JSDialogBuilder.js:750
 msgid "Hatching"
-msgstr ""
+msgstr "Tarama"
 
 #: src/control/Control.JSDialogBuilder.js:754
 msgid "Pattern"
@@ -476,7 +476,7 @@ msgstr "Klavye kısayolları"
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459
 msgid "Report an issue"
-msgstr ""
+msgstr "Bir hata olarak bildir"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:344
 #: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:506
@@ -584,10 +584,8 @@ msgid "Insert shapes"
 msgstr "Şekil ekle"
 
 #: src/control/Control.Toolbar.js:958 src/layer/tile/WriterTileLayer.js:76
-#, fuzzy
-#| msgid "Text orientation"
 msgid "Toggle Page Orientation"
-msgstr "Metin yönlendirme"
+msgstr "Sayfa Yönünü Değiştir"
 
 #: src/control/Control.Toolbar.js:1078 src/layer/tile/CalcTileLayer.js:180
 msgid "First sheet"
@@ -909,7 +907,7 @@ msgstr "LibreOffice Online'a bağlanırken bir sorunla karşılaşıldı: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Hizmet veren:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -1037,7 +1035,7 @@ msgstr "Düzenleyiciden çıkıyorsunuz, %url adresini ziyaret etmek istediğini
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Belge yükleme başarısız. Bu belge hatalı biçimlendirilmiş ya da izin verilenden daha fazla kaynak alıyor. Lütfen yöneticinize başvurun."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1045,7 +1043,7 @@ msgstr "Belge yükleme başarısız oldu."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
+msgstr "Diskte yeterli alan olmadığından kaydedilemedi. Belge artık salt okunur olacak."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1079,11 +1077,11 @@ msgstr "Belge yeniden adlandırılamadı. İzinlerinizi kontrol edin veya sistem
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Dosya sunucuya yükleme başarısız, dosya bulunamadı."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Doya sunucuya yükleme başarısız oldu, dosya çok büyük."
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1126,7 +1124,7 @@ msgstr "Sil"
 
 #: src/layer/tile/TileLayer.js:258
 msgid "Resolve"
-msgstr ""
+msgstr "Çöz"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1138,7 +1136,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:766
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr ""
+msgstr "<p>Lütfen ekran klavyesindeki kopyala/yapıştır düğmelerini kullanın.</p>"
 
 #: src/map/Clipboard.js:791
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"

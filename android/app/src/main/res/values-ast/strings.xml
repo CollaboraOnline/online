@@ -27,7 +27,7 @@
     <string name="new_spreadsheet">Fueya de cálculu nueva</string>
     <string name="new_presentation">Presentación nueva</string>
     <string name="new_textdocument">Documentu de testu nuevu</string>
-    <string name="temp_file_saving_disabled">Esti ficheru ye namái de llectura; nun se pue guardar.</string>
+    <string name="temp_file_saving_disabled">Esti ficheru ye namái de llectura; nun se pue atroxar.</string>
     <string name="action_overwrite">Sobroscribir</string>
     <string name="search_label">Dir</string>
     <string name="cancel_label">Encaboxar</string>
@@ -38,4 +38,6 @@
     <string name="about_license">Amosar llicencia</string>
     <string name="no_items">Nun hai elementos</string>
     <string name="no_recent_items">Nun hai elementos recientes</string>
+    <string name="loading">Cargando…</string>
+    <string name="pref_show_debug_info">Amosar mensaxes de depuración</string>
 </resources>

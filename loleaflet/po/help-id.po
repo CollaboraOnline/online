@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-01-26 05:49+0000\n"
+"Last-Translator: Budi Aryo <venera.android.phone@gmail.com>\n"
+"Language-Team: Indonesian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-help-id.po\n"
 "X-Pootle-Revision: 3755739\n"
 
@@ -926,12 +927,12 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:212-5
 #: html/loleaflet-help.html%2Bdiv.h3:275-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Membuka, menutup, menyimpan, mencetak dan mengunduh dokumen"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:283-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Menyunting dokumen"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
@@ -939,8 +940,9 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.h3:304-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
+#, fuzzy
 msgid "Advanced features"
-msgstr ""
+msgstr "Fitur Lanjut"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:216-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:334-5
@@ -990,7 +992,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:418-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Menyunting presentasi"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:231-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
@@ -1128,7 +1130,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:285-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Salin dan Tempel"
 
 #: html/loleaflet-help.html%2Bdiv.p:286-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
@@ -1139,8 +1141,9 @@ msgid "To copy larger pieces of content to other applications on your device, us
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
+#, fuzzy
 msgid "Document repair"
-msgstr ""
+msgstr "Perbaikan dokumen"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
@@ -1155,8 +1158,9 @@ msgid "This is particularly useful – say when a colleague inadvertently select
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:293-5
+#, fuzzy
 msgid "Inactive document"
-msgstr ""
+msgstr "Dokumen tidak aktif"
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
@@ -1167,8 +1171,9 @@ msgid "To continue editing, click on the document and the layover and message di
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
+#, fuzzy
 msgid "Pasting"
-msgstr ""
+msgstr "Menempel"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
@@ -1192,11 +1197,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:305-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Menambahkan grafik"
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName2</span> mendukung penyisipan dan visualisasi grafik ke dokumen. Untuk menambahkan grafik:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:308-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
@@ -1246,7 +1251,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Go to end of document"
 msgid "Comments in documents"
-msgstr "Ke akhir dokumen"
+msgstr "Komentar dalam dokumen"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
@@ -1257,8 +1262,9 @@ msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" s
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
+#, fuzzy
 msgid "Spellchecking"
-msgstr ""
+msgstr "Pemeriksaan ejaan"
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
@@ -1384,23 +1390,26 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Track changes"
-msgstr ""
+msgstr "Lacak perubahan"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
+#, fuzzy
 msgid "When you turn on Track Changes, <span class=\"productname\">%productName</span> marks up new changes made to the document. Select this option again to turn it off."
-msgstr ""
+msgstr "Ketika Anda menyalakan Lacak Perubahan, 1<span class=\"productname\">%productName2</span> menandai perubahan baru yang dibuat pada dokumen. Pilih opsi ini lagi untuk mematikannya."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:405-5
+#, fuzzy
 msgid "Changes made by different people are shown in different colors and each tracked change can be accepted or rejected, using the box the appears on the right. You can also add a comment there."
-msgstr ""
+msgstr "Perubahan yang dibuat oleh orang yang berbeda akan ditampilkan dalam warna yang berbeda dan setiap perubahan yang terlacak dapat disetujui atau ditolak, menggunakan kotak yang muncul di sebelah kanan. Anda juga dapat menambahkan komentar di sini."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
+#, fuzzy
 msgid "Other advanced features"
-msgstr ""
+msgstr "Fitur lanjut lainnya"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid "<span class=\"def\">Comments:</span> Comments are inserted in the text and displayed on the right side of the screen."
-msgstr ""
+msgstr "<span class=\"def\">Komentar:2</span> Komentar disisipkan di dalam teks dan ditampilkan di sisi kanan layar."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:408-5
 msgid "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable spaces are shown as marks to assisting text alignment, editing and formatting."
@@ -1464,7 +1473,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:439-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
-msgstr ""
+msgstr "Apa saja format berkas dokumen yang didukung oleh 1<span class=\"productname\">%productName2</span>?"
 
 #: html/loleaflet-help.html%2Bdiv.p:440-5
 msgid "<span class=\"productname\">%productName</span> supports both reading and writing for the following file formats:"
@@ -1488,7 +1497,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:447-5
 msgid "How do I save a document with another name?"
-msgstr ""
+msgstr "Bagaimana saya menyimpan sebuah dokumen dengan nama lain?"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:449-11
 msgid "Hover the mouse on the document name in the menu bar."
@@ -1503,24 +1512,27 @@ msgid "A copy of the document is saved with the new name in the same folder."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:453-5
+#, fuzzy
 msgid "How can I quit <span class=\"productname\">%productName</span> without saving my edits?"
-msgstr ""
+msgstr "Bagaimana saya dapat keluar 1<span class=\"productname\">%productName2</span> tanpa menyimpan suntingan saya?"
 
 #: html/loleaflet-help.html%2Bdiv.p:454-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:455-5
+#, fuzzy
 msgid "Can <span class=\"productname\">%productName</span> open a password-protected document?"
-msgstr ""
+msgstr "Dapatkah 1<span class=\"productname\">%productName2</span> membuka dokumen yang terlindung-sandi?"
 
 #: html/loleaflet-help.html%2Bdiv.p:456-5
 msgid "Yes. <span class=\"productname\">%productName</span> opens password-protected documents, but it is necessary to supply the password in the “Enter password” prompt at load time."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:457-5
+#, fuzzy
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "Bagaimana saya memeriksa ejaan dalam bahasa saya?"
 
 #: html/loleaflet-help.html%2Bdiv.p:458-5
 msgid "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</span> and select the language for the whole document. Optionally you can set languages for the selected text and for the current paragraph."
@@ -1543,8 +1555,9 @@ msgid "Grammar errors in the text is marked with the blue wavy underline. Click 
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:463-5
+#, fuzzy
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Apakah di sini ada tesaurus?"
 
 #: html/loleaflet-help.html%2Bdiv.p:464-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
@@ -1562,7 +1575,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Go to start of document"
 msgid "How do I get a word count of my document?"
-msgstr "Ke awal dokumen "
+msgstr "Bagaimana saya mengetahui jumlah kata pada dokumen saya?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
@@ -1573,8 +1586,9 @@ msgid "Word count is also displayed in the status bar. If no text is selected th
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:475-5
+#, fuzzy
 msgid "How can I insert a currency, copyright or trademark symbol in the document?"
-msgstr ""
+msgstr "Bagaimana cara menyisipkan simbol pecahan mata uang, hak cipta atau merek dagang dalam dokumen?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:476-5
 msgid "You can insert these special characters in the document using the <span class=\"ui\">Special Character</span> dialog."
@@ -1640,7 +1654,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Go to start of document"
 msgid "How do I set the margins of the document?"
-msgstr "Ke awal dokumen "
+msgstr "Bagaimana saya dapat mengatur margin dokumen?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "Using the ruler drag the leftmost edge of the ruler to adjust the left margin, or the rightmost for the right margin."
@@ -1738,8 +1752,9 @@ msgid "Insert column and row breaks in the spreadsheet to narrow the print range
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:537-5
+#, fuzzy
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "Bagaimana saya dapat mengimpor data CSV?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:539-11
 msgid "Load your CSV data in some native tool to your platform, select and copy it to the clipboard"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-02 13:23+0000\n"
+"PO-Revision-Date: 2020-01-21 09:30+0000\n"
 "Last-Translator: Saikeo <kavhanxay@hotmail.com>\n"
 "Language-Team: Lao <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/lo/>\n"
 "Language: lo\n"
@@ -46,7 +46,7 @@ msgstr "ປະຫວັດ"
 
 #: admin/admin.strings.js:12
 msgid "Dashboard"
-msgstr ""
+msgstr "ເດສບອດ"
 
 #: admin/admin.strings.js:13
 msgid "Users online"
@@ -102,7 +102,7 @@ msgstr "ດັດແປງ"
 
 #: admin/admin.strings.js:26
 msgid "Kill"
-msgstr ""
+msgstr "ຂ້າ"
 
 #: admin/admin.strings.js:27
 msgid "Graphs"
@@ -127,7 +127,7 @@ msgstr "ບັນທຶກ"
 
 #: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "ສະຖິຕິຂະຫນາດເຄສຂອງຄວາມຈຳ"
 
 #: admin/admin.strings.js:33
 msgid "Time interval of memory statistics (in ms)"

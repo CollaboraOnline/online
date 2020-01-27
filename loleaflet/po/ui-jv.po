@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-01-26 05:49+0000\n"
+"Last-Translator: Budi Aryo <venera.android.phone@gmail.com>\n"
+"Language-Team: Javanese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/jv/>\n"
+"Language: jv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /jv/libo_online/loleaflet-ui-jv.po\n"
 "X-Pootle-Revision: 3937900\n"
 
@@ -102,7 +103,7 @@ msgstr "Diowahi"
 
 #: admin/admin.strings.js:26
 msgid "Kill"
-msgstr "Paténi"
+msgstr "Patèni"
 
 #: admin/admin.strings.js:27
 msgid "Graphs"
@@ -176,11 +177,11 @@ msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
-msgstr ""
+msgstr "Ditrima"
 
 #: admin/src/AdminSocketAnalytics.js:223
 msgid "Sent"
-msgstr ""
+msgstr "Dikirim"
 
 #: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
@@ -412,7 +413,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:475
 #: src/control/Control.Menubar.js:518 src/control/Control.Menubar.js:563
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "Dokumèn PDF (.pdf)"
 
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:476
 msgid "ODF text document (.odt)"
@@ -420,11 +421,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:477
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Dokumèn Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:478
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Dokumèn Word (.docx)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:479
 msgid "Rich Text (.rtf)"
