@@ -281,7 +281,8 @@ L.Annotation = L.Layer.extend({
 		this._nodeModifyText.value = this._contentText.origText;
 		this._nodeReplyText.value = '';
 		this.show();
-		this._map.fire('AnnotationCancel', {annotation: this});
+		if (this._map)
+			this._map.fire('AnnotationCancel', {annotation: this});
 	},
 
 	_onSaveComment: function (e) {

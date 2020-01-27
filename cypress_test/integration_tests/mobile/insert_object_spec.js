@@ -39,7 +39,6 @@ describe('Insert objects via insertion wizard.', function() {
 		// Push cancel to close the dialog
 		cy.get('.vex-dialog-button-secondary.vex-dialog-button.vex-last')
 			.click();
-		// TODO: fix console error here
 	});
 
 	it('Insert table.', function() {
