@@ -237,11 +237,23 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert shape.', function() {
 		// Do insertion
-		// TODO: it crashes
 		cy.get('.menu-entry-with-icon')
 			.contains('Shape')
 			.click();
-		// regression from: 298f4297c21f4b7cd5836b90bafcc803f13adb00
+
+		cy.get('.col.w2ui-icon.basicshapes_rectangle').
+			click();
+
+		// Check that the shape is there
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+			.should('exist');
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
+			.then(function(svg) {
+				expect(svg).to.have.lengthOf(1);
+				expect(svg[0].getBBox().width).to.be.greaterThan(0);
+				expect(svg[0].getBBox().height).to.be.greaterThan(0);
+			});
 	});
 
 	it('Insert formatting mark.', function() {
