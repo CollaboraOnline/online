@@ -249,7 +249,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		}
 		// draw text content
 		ctx.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
-		ctx.font = this._font;
+		ctx.font = this._font.getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText(content, startOrt + (width / 2), endPar - (height / 2));
@@ -337,7 +337,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		ctx.strokeRect(startOrt, startPar, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
 		ctx.fillStyle = this._textColor;
-		ctx.font = this._font;
+		ctx.font = this._font.getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText(level + 1, startOrt + (ctrlHeadSize / 2), startPar + (ctrlHeadSize / 2));

@@ -256,7 +256,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 		// draw text content
 		ctx.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
-		ctx.font = this._font;
+		ctx.font = this._font.getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
 		// The '+ 1' below is a hack - it's currently not possible to measure
@@ -348,7 +348,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		ctx.strokeRect(startPar, startOrt, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
 		ctx.fillStyle = this._textColor;
-		ctx.font = this._font;
+		ctx.font = this._font.getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText(level + 1, startPar + (ctrlHeadSize / 2), startOrt + (ctrlHeadSize / 2));
