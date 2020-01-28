@@ -1201,7 +1201,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button.innerHTML = builder._cleanText(data.text);
 		}
 
-		$(button).click(function () {
+		$(div).click(function () {
 			builder.callback('toolbutton', 'click', button, data.command, builder);
 		});
 
