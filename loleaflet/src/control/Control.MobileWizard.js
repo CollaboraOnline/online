@@ -344,10 +344,9 @@ L.Control.MobileWizard = L.Control.extend({
 			var textIdx = this._findIdxInParentById(deck, textName);
 			if (stylesIdx >= 0 && textIdx >= 0)
 			{
-				var moveContent = deck.children[stylesIdx].children;
-				deck.children.splice(stylesIdx, 1); // remove
-				textIdx = this._findIdxInParentById(deck, textName); // re-lookup
-				deck.children[textIdx].children = moveContent.concat(deck.children[textIdx].children);
+				var moveContent = deck.children[stylesIdx].children[0].children;
+				deck.children[textIdx].children[0].children = moveContent.concat(deck.children[textIdx].children[0].children);
+				deck.children.splice(stylesIdx, 1); //remove the styles property
 			}
 			this._removeItems(deck, ['cellbordertype', 'borderlinestyle', 'borderlinecolor']);
 		}
