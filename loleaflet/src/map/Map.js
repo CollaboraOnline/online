@@ -909,7 +909,7 @@ L.Map = L.Evented.extend({
 	// accept key input, and show the virtual keyboard.
 	focus: function (acceptInput) {
 		this._textInput.focus();
-		if (window.mode.isMobile() && acceptInput !== true)
+		if (window.mode.isMobile() && acceptInput !== true && !L.Browser.cypressTest)
 			this.blur();
 	},
 
