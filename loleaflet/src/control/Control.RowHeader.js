@@ -108,7 +108,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	optimalHeight: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:SetOptimalRowHeight');
@@ -118,35 +118,35 @@ L.Control.RowHeader = L.Control.Header.extend({
 		// First select the corresponding row because
 		// .uno:InsertRows doesn't accept any row number
 		// as argument and just inserts before the selected row
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRows');
 	},
 
 	insertRowBelow: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRowsAfter');
 	},
 
 	deleteRow: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteRows');
 	},
 
 	hideRow: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideRow');
 	},
 
 	showRow: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowRow');

@@ -110,7 +110,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	optimalWidth: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:SetOptimalColumnWidth');
@@ -120,7 +120,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// First select the corresponding column because
 		// .uno:InsertColumn doesn't accept any column number
 		// as argument and just inserts before the selected column
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumns');
@@ -128,7 +128,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	insertColumnAfter: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumnsAfter');
@@ -136,7 +136,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	deleteColumn: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteColumns');
@@ -144,7 +144,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	hideColumn: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideColumn');
@@ -152,7 +152,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	showColumn: function(index) {
-		if (this._map._docLayer._selections.getLayers().length === 0) {
+		if (!this.isHighlighted(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowColumn');
