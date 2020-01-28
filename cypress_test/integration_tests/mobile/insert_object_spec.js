@@ -43,7 +43,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert table.', function() {
 		// Open Table submenu
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon.flex-fullwidth')
 			.contains('Table')
 			.click();
 		cy.get('.mobile-wizard.ui-text')
