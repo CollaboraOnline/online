@@ -65,6 +65,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 				name: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true),
 				callback: (this._insertRowAbove).bind(this)
 			},
+			'insertrowbelow': {
+				name: _UNO('.uno:InsertRowsAfter', 'spreadsheet', true),
+				callback: (this._insertRowBelow).bind(this)
+			},
 			'deleteselectedrow': {
 				name: _UNO('.uno:DeleteRows', 'spreadsheet', true),
 				callback: (this._deleteSelectedRow).bind(this)
@@ -110,7 +114,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:SetOptimalRowHeight');
 	},
 
-	insertRow: function(index) {
+	insertRowAbove: function(index) {
 		// First select the corresponding row because
 		// .uno:InsertRows doesn't accept any row number
 		// as argument and just inserts before the selected row
@@ -118,6 +122,13 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRows');
+	},
+
+	insertRowBelow: function(index) {
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectRow(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:InsertRowsAfter');
 	},
 
 	deleteRow: function(index) {
@@ -611,7 +622,14 @@ L.Control.RowHeader = L.Control.Header.extend({
 	_insertRowAbove: function() {
 		var index = this._lastMouseOverIndex;
 		if (index) {
-			this.insertRow.call(this, index);
+			this.insertRowAbove.call(this, index);
+		}
+	},
+
+	_insertRowBelow: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.insertRowBelow.call(this, index);
 		}
 	},
 
