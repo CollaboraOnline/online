@@ -363,6 +363,9 @@
 	.ui-header.level-1.mobile-wizard.ui-widget .ui-header-left span.menu-entry-with-icon {
 		vertical-align: middle;
 	}
+	.flex-fullwidth {
+		flex-grow: 100;
+	}
 
 	.ui-tabs.mobile-wizard {
 		text-align: center;

@@ -343,12 +343,30 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_explorableMenu: function(parentContainer, title, children, builder, customContent) {
+	_explorableMenu: function(parentContainer, title, children, builder, customContent, dataid) {
+		dataid = dataid || 0;
+		var icon = null;
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 
-		var titleSpan = L.DomUtil.create('span', 'sub-menu-title', sectionTitle);
-		titleSpan.innerHTML = title;
+
+		if (dataid === 'inserttable') {
+			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon inserttable', sectionTitle);
+			var iconPath = 'images/lc_inserttable_mono.svg';
+			icon = L.DomUtil.create('img', '', iconSpan);
+			icon.src = iconPath;
+			icon.alt = '';
+			icon.addEventListener('error', function() {
+				icon.style.display = 'none';
+			});
+
+			var titleSpan2 = L.DomUtil.create('span', 'menu-entry-with-icon flex-fullwidth', sectionTitle);
+			titleSpan2.innerHTML = title;
+		}
+		else {
+			var titleSpan = L.DomUtil.create('span', 'sub-menu-title', sectionTitle);
+			titleSpan.innerHTML = title;
+		}
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', sectionTitle);
 		arrowSpan.innerHTML = '>';
 
@@ -1509,7 +1527,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.fire('closemobilewizard');
 		});
 
-		builder._explorableMenu(parentContainer, title, data.children, builder, content);
+		builder._explorableMenu(parentContainer, title, data.children, builder, content, data.id);
 	},
 
 	build: function(parent, data) {
