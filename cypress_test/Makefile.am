@@ -1,11 +1,12 @@
 if ENABLE_CYPRESS
 CYPRESS_BINARY = ${abs_srcdir}/node_modules/cypress/bin/cypress
 
+DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = integration_tests/desktop
 DESKTOP_DATA_FOLDER = ${abs_srcdir}/data/desktop/
 DESKTOP_WORKDIR = ${abs_srcdir}/workdir/desktop/
 
-MOBILE_USER_AGENT = "cypress mobile test"
+MOBILE_USER_AGENT = "cypress mobile"
 MOBILE_TEST_FOLDER = integration_tests/mobile
 MOBILE_DATA_FOLDER = ${abs_srcdir}/data/mobile/
 MOBILE_WORKDIR = ${abs_srcdir}/workdir/mobile/
@@ -35,7 +36,7 @@ run-desktop: @JAILS_PATH@ node_modules
 	@echo
 	@echo "Open cypress with desktop tests..."
 	@echo
-	$(CYPRESS_BINARY) open --config integrationFolder=$(DESKTOP_TEST_FOLDER) \
+	$(CYPRESS_BINARY) open --config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
 			|| true
 	@pkill loolwsd || true
@@ -77,7 +78,7 @@ define run_desktop_tests
 	@echo "Running cypress desktop tests..."
 	@echo
 	$(CYPRESS_BINARY) run --browser $(CHROME) \
-			--config integrationFolder=$(DESKTOP_TEST_FOLDER) \
+			--config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
 			--headless \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
 			$(if $(1), --spec=integration_tests/desktop/$(1)) \
