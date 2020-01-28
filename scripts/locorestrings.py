@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
         # extract 'Clear formatting', shape group names, and some status bar strings
         poFile = dir + lang + '/svx/messages.po'
-        extractFromPo(poFile, ["RID_SVXSTR_CLEARFORM", "RID_SVXSTR_OVERWRITE_TEXT", "selectionmenu|", "defaultshapespanel|"], translations)
+        extractFromPo(poFile, ["RID_SVXSTR_CLEARFORM", "RID_SVXSTR_OVERWRITE_TEXT", "RID_SVXITEMS_PAGE_LAND_TRUE", "RID_SVXITEMS_PAGE_LAND_FALSE", "selectionmenu|", "defaultshapespanel|"], translations)
 
         # extract Writer style names and status bar strings
         poFile = dir + lang + '/sw/messages.po'
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
         # extract Impress/Draw style names, layout names and 'Slide %1 of %2'
         poFile = dir + lang + '/sd/messages.po'
-        extractFromPo(poFile, ["STR_STANDARD_STYLESHEET_NAME", "STR_POOL", "STR_PSEUDOSHEET", "STR_AUTOLAYOUT", "STR_AL_", "STR_SD_PAGE_COUNT"], translations)
+        extractFromPo(poFile, ["STR_STANDARD_STYLESHEET_NAME", "STR_POOL", "STR_PSEUDOSHEET", "STR_AUTOLAYOUT", "STR_AL_", "STR_SD_PAGE_COUNT", "drawpagedialog|DrawPageDialog"], translations)
 
         # extract Calc style names and strings for status bar
         poFile = dir + lang + '/sc/messages.po'
