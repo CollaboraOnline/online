@@ -1891,7 +1891,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var icon = null;
-		var commandName = data.command && data.command.substring(0, '.uno:'.length) === '.uno:' ? data.command.substring('.uno:'.length) : data.id;
+		var commandName = data.command && data.command.startsWith('.uno:') ? data.command.substring('.uno:'.length) : data.id;
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, menuEntry);

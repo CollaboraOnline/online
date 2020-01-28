@@ -244,6 +244,13 @@ L.Util = {
 	L.Util.MIN_SAFE_INTEGER = -L.Util.MAX_SAFE_INTEGER;
 })();
 
+if (!String.prototype.startsWith) {
+	String.prototype.startsWith = function(searchString, position) {
+		position = position || 0;
+		return this.substr(position, searchString.length) === searchString;
+	};
+}
+
 // shortcuts for most used utility functions
 L.extend = L.Util.extend;
 L.bind = L.Util.bind;
