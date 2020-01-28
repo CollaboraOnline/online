@@ -68,6 +68,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				name: _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true),
 				callback: (this._insertColBefore).bind(this)
 			},
+			'insertcolafter': {
+				name: _UNO('.uno:InsertColumnsAfter', 'spreadsheet', true),
+				callback: (this._insertColAfter).bind(this)
+			},
 			'deleteselectedcol': {
 				name: _UNO('.uno:DeleteColumns', 'spreadsheet', true),
 				callback: (this._deleteSelectedCol).bind(this)
@@ -112,7 +116,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:SetOptimalColumnWidth');
 	},
 
-	insertColumn: function(index) {
+	insertColumnBefore: function(index) {
 		// First select the corresponding column because
 		// .uno:InsertColumn doesn't accept any column number
 		// as argument and just inserts before the selected column
@@ -120,6 +124,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumns');
+		this._updateColumnHeader();
+	},
+
+	insertColumnAfter: function(index) {
+		if (this._map._docLayer._selections.getLayers().length === 0) {
+			this._selectColumn(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:InsertColumnsAfter');
 		this._updateColumnHeader();
 	},
 
@@ -646,7 +658,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	_insertColBefore: function() {
 		var index = this._lastMouseOverIndex;
 		if (index) {
-			this.insertColumn.call(this, index);
+			this.insertColumnBefore.call(this, index);
+		}
+	},
+
+	_insertColAfter: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.insertColumnAfter.call(this, index);
 		}
 	},
 
