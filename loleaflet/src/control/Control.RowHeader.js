@@ -61,27 +61,27 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._position = 0;
 
 		this._menuItem = {
-			'insertrowabove': {
+			'.uno:InsertRowsBefore': {
 				name: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true),
 				callback: (this._insertRowAbove).bind(this)
 			},
-			'insertrowbelow': {
+			'.uno:InsertRowsAfter': {
 				name: _UNO('.uno:InsertRowsAfter', 'spreadsheet', true),
 				callback: (this._insertRowBelow).bind(this)
 			},
-			'deleteselectedrow': {
+			'.uno:DeleteRows': {
 				name: _UNO('.uno:DeleteRows', 'spreadsheet', true),
 				callback: (this._deleteSelectedRow).bind(this)
 			},
-			'optimalheight': {
+			'.uno:SetOptimalRowHeight': {
 				name: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true),
 				callback: (this._optimalHeight).bind(this)
 			},
-			'hideRow': {
+			'.uno:HideRow': {
 				name: _UNO('.uno:HideRow', 'spreadsheet', true),
 				callback: (this._hideRow).bind(this)
 			},
-			'showRow': {
+			'.uno:ShowRow': {
 				name: _UNO('.uno:ShowRow', 'spreadsheet', true),
 				callback: (this._showRow).bind(this)
 			}

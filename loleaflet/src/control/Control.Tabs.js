@@ -50,17 +50,17 @@ L.Control.Tabs = L.Control.extend({
 			'insertsheetafter': {name: _('Insert sheet after this'),
 				callback: (this._insertSheetAfter).bind(this)
 			},
-			'deletesheet': {name: _UNO('.uno:Remove', 'spreadsheet', true),
+			'.uno:Remove': {name: _UNO('.uno:Remove', 'spreadsheet', true),
 				callback: (this._deleteSheet).bind(this)
 			},
-			'renamesheet': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
+			'.uno:Name': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
 				callback: (this._renameSheet).bind(this)
 			} ,
-			'showsheets': {
+			'.uno:Show': {
 				name: _UNO('.uno:Show', 'spreadsheet', true),
 				callback: (this._showSheet).bind(this),
 			},
-			'hiddensheets': {
+			'.uno:Hide': {
 				name: _UNO('.uno:Hide', 'spreadsheet', true),
 				callback: (this._hideSheet).bind(this)
 			}

@@ -64,27 +64,27 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		L.DomEvent.addListener(this._cornerCanvas, 'click', this._onCornerHeaderClick, this);
 
 		this._menuItem = {
-			'insertcolbefore': {
+			'.uno:InsertColumnsBefore': {
 				name: _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true),
 				callback: (this._insertColBefore).bind(this)
 			},
-			'insertcolafter': {
+			'.uno:InsertColumnsAfter': {
 				name: _UNO('.uno:InsertColumnsAfter', 'spreadsheet', true),
 				callback: (this._insertColAfter).bind(this)
 			},
-			'deleteselectedcol': {
+			'.uno:DeleteColumns': {
 				name: _UNO('.uno:DeleteColumns', 'spreadsheet', true),
 				callback: (this._deleteSelectedCol).bind(this)
 			},
-			'optimalwidth': {
+			'.uno:SetOptimalColumnWidth': {
 				name: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true),
 				callback: (this._optimalWidth).bind(this)
 			},
-			'hideColumn': {
+			'.uno:HideColumn': {
 				name: _UNO('.uno:HideColumn', 'spreadsheet', true),
 				callback: (this._hideColumn).bind(this)
 			},
-			'showColumn': {
+			'.uno:ShowColumn': {
 				name: _UNO('.uno:ShowColumn', 'spreadsheet', true),
 				callback: (this._showColumn).bind(this)
 			}
