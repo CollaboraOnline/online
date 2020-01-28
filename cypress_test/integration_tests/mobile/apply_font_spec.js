@@ -21,6 +21,18 @@ describe('Apply font changes.', function() {
 	});
 
 	function generateTextHTML() {
+		// Do a new selection
+		cy.get('#document-container').click();
+		cy.get('.leaflet-marker-icon')
+			.should('not.exist');
+
+		cy.wait(200);
+
+		cy.get('body').type('{shift}{home}');
+		cy.get('.leaflet-marker-icon');
+
+		cy.wait(200);
+
 		// Open context menu
 		cy.get('.leaflet-marker-icon')
 			.then(function(marker) {
@@ -68,6 +80,280 @@ describe('Apply font changes.', function() {
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Linux Libertine G');
+	});
+
+	it('Apply font size.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Change font size
+		cy.get('#fontsizecombobox')
+			.click();
+
+		cy.get('.mobile-wizard.ui-combobox-text')
+			.contains('36')
+			.click();
+
+		cy.get('#mobile-wizard-back')
+			.click();
+
+		// Combobox entry contains the selected font name
+		cy.get('#fontsizecombobox .ui-header-right')
+			.contains('36');
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p font')
+			.should('have.attr', 'style', 'font-size: 36pt');
+	});
+
+	it('Apply bold font.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Apply bold
+		cy.get('#Bold')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p b')
+			.should('exist');
+	});
+
+	it('Apply italic font.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Apply italic
+		cy.get('#Italic')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p i')
+			.should('exist');
+	});
+
+	it('Apply underline.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Change underline
+		cy.get('#Underlineimg')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p u')
+			.should('exist');
+	});
+
+	it('Apply strikeout.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Change strikeout
+		cy.get('#Strikeoutimg')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p strike')
+			.should('exist');
+	});
+
+	it('Apply shadowed.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Apply shadowed
+		cy.get('#Shadowedimg')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		// TODO: Shadowed is not in the clipboard content.
+	});
+
+	it('Apply grow.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Push grow
+		cy.get('#Growimg')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p font')
+			.should('have.attr', 'style', 'font-size: 42pt');
+	});
+
+	it('Apply shrink.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Push shrink
+		cy.get('#Shrinkimg')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p font')
+			.should('have.attr', 'style', 'font-size: 38pt');
+	});
+
+	it('Apply font color.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Change font color
+		cy.get('#FontColor')
+			.click();
+
+		cy.get('#color-picker-0-basic-color-5')
+			.click();
+
+		cy.get('#color-picker-0-tint-3')
+			.click();
+
+		cy.get('#mobile-wizard-back')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p font')
+			.should('have.attr', 'color', '#00ff00');
+	});
+
+	it('Apply highlight color.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Change highlight color
+		cy.get('#BackColor')
+			.click();
+
+		cy.get('#color-picker-1-basic-color-5')
+			.click();
+
+		cy.get('#color-picker-1-tint-3')
+			.click();
+
+		cy.get('#mobile-wizard-back')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p font span')
+			.should('have.attr', 'style', 'background: #00ff00');
+	});
+
+	it('Apply superscript.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Apply superscript
+		cy.get('#SuperScriptimg')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p sup')
+			.should('exist');
+	});
+
+	it('Apply subscript.', function() {
+		// Select text
+		cy.get('#document-container').dblclick();
+		cy.get('.leaflet-marker-icon');
+
+		// Apply superscript
+		cy.get('#SubScriptimg')
+			.click();
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		generateTextHTML();
+
+		cy.get('#copy-paste-container p sub')
+			.should('exist');
 	});
 });
 
