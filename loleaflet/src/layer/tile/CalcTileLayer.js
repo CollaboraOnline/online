@@ -171,7 +171,25 @@ L.CalcTileLayer = L.TileLayer.extend({
 			e.isCancelled = true;
 		});
 
-		L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
+		toolbar = $('#spreadsheet-toolbar');
+		toolbar.w2toolbar({
+			name: 'spreadsheet-toolbar',
+			tooltip: 'bottom',
+			hidden: true,
+			items: [{type: 'button',  id: 'insertsheet', img: 'insertsheet', hint: _('Insert sheet')}],
+			onClick: function (e) {
+				window.onClick(e, e.target);
+				window.hideTooltip(this, e.target);
+			}
+		});
+		toolbar.bind('touchstart', function(e) {
+			w2ui['spreadsheet-toolbar'].touchStarted = true;
+			var touchEvent = e.originalEvent;
+			if (touchEvent && touchEvent.touches.length > 1) {
+				L.DomEvent.preventDefault(e);
+			}
+		});
+		toolbar.show();
 
 		toolbar = $('#toolbar-down');
 		toolbar.w2toolbar({
