@@ -317,7 +317,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
-			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !docLayer._isCursorVisible))) {
+			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !this._map._isCursorVisible))) {
 				keyEventFn('input', charCode, unoKeyCode);
 				ev.preventDefault();
 				return;

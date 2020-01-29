@@ -7,7 +7,7 @@
 L.WriterTileLayer = L.TileLayer.extend({
 
 	newAnnotation: function (comment) {
-		if (!comment.anchorPos && this._isCursorVisible) {
+		if (!comment.anchorPos && this._map._isCursorVisible) {
 			comment.anchorPos = L.bounds(this._latLngToTwips(this._visibleCursor.getSouthWest()),
 				this._latLngToTwips(this._visibleCursor.getNorthEast()));
 			comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
