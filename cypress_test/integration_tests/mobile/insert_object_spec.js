@@ -66,22 +66,6 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('have.length', 2);
 	});
 
-	it('Insert field.', function() {
-		// Open fields submenu
-		cy.get('.sub-menu-title')
-			.contains('More Fields...')
-			.click();
-		cy.get('.menu-entry-with-icon')
-			.contains('Page Number')
-			.click();
-
-		// Do a selection to see something is inserted
-		cy.get('body').type('{shift}{leftarrow}');
-		cy.get('.leaflet-marker-icon')
-			.should('exist')
-			.should('have.length', 2);
-	});
-
 	it('Insert header.', function() {
 		// Get the blinking cursor pos
 		cy.get('#document-container').type('xxxx');
