@@ -41,7 +41,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 	});
 
-	it('Insert table.', function() {
+	it('Insert default table.', function() {
 		// Open Table submenu
 		cy.get('.menu-entry-with-icon.flex-fullwidth')
 			.contains('Table')
@@ -64,6 +64,37 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('exist')
 			.should('have.length', 2);
+	});
+
+	it('Insert custom table.', function() {
+		// Open Table submenu
+		cy.get('.menu-entry-with-icon.flex-fullwidth')
+			.contains('Table')
+			.click();
+		cy.get('.mobile-wizard.ui-text')
+			.should('be.visible');
+
+		// Scroll to the bottom
+		cy.get('#mobile-wizard-content').scrollTo(0, 1000);
+
+		// Change rows and columns
+		cy.get('.inserttablecontrols #rows .sinfieldcontrols .plus')
+			.click();
+		cy.get('.inserttablecontrols #cols .sinfieldcontrols .plus')
+			.click();
+
+		// Push insert table button
+		cy.get('.inserttablecontrols button')
+			.should('be.visible')
+			.click();
+
+		// Table is inserted with the markers shown
+		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+			.should('exist')
+			.should('have.length', 4);
+		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+			.should('exist')
+			.should('have.length', 3);
 	});
 
 	it('Insert header.', function() {
@@ -100,6 +131,43 @@ describe('Insert objects via insertion wizard.', function() {
 			.then(function(cursor) {
 				expect(cursor).to.have.lengthOf(1);
 				expect(cursor[0].getBoundingClientRect().left).to.be.lessThan(cursorOrigLeft);
+			});
+	});
+
+	it.only('Insert footer.', function() {
+		// Get the blinking cursor pos
+		cy.get('#document-container').type('xxxx');
+		var cursorOrigTop = 0;
+		cy.get('.blinking-cursor')
+			.then(function(cursor) {
+				expect(cursor).to.have.lengthOf(1) ;
+				cursorOrigTop = cursor[0].getBoundingClientRect().top;
+			});
+
+		// Open header/footer submenu
+		cy.get('.sub-menu-title')
+			.contains('Header and Footer')
+			.click();
+		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
+			.should('be.visible');
+
+		// Open footer submenu
+		cy.get('.ui-header.level-1.mobile-wizard.ui-widget .sub-menu-title')
+			.contains('Footer')
+			.click();
+
+		// Insert footer for All
+		cy.get('.ui-content.level-1.mobile-wizard[title~="Footer"] .ui-header.level-2.mobile-wizard.ui-widget .menu-entry-no-icon')
+			.contains('All')
+			.click();
+
+		cy.wait(100);
+
+		// Check that the cursor was moved
+		cy.get('.blinking-cursor')
+			.then(function(cursor) {
+				expect(cursor).to.have.lengthOf(1);
+				expect(cursor[0].getBoundingClientRect().top).to.be.greaterThan(cursorOrigTop);
 			});
 	});
 
