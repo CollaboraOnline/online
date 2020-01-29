@@ -134,7 +134,7 @@ describe('Insert objects via insertion wizard.', function() {
 			});
 	});
 
-	it.only('Insert footer.', function() {
+	it('Insert footer.', function() {
 		// Get the blinking cursor pos
 		cy.get('#document-container').type('xxxx');
 		var cursorOrigTop = 0;
