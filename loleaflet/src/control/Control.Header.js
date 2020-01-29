@@ -72,17 +72,16 @@ L.Control.Header = L.Control.extend({
 		var fontHeight = parseInt(L.DomUtil.getStyle(elem, 'line-height'));
 		var rate = fontHeight / fontSize;
 		this._font = {
-			_map: this._map,
+			_hdr: this,
 			_baseFontSize: fontSize,
 			_fontSizeRate: rate,
 			_fontFamily: fontFamily,
 			getFont: function() {
-				var zoomScale = this._map.getZoomScale(this._map.getZoom(),
-					this._map.options.defaultZoom);
 				// Limit zoomScale to 115%. At 120% the row ids at the bottom eat all
 				// horizontal margins and it looks ugly. Beyond 120% the row ids get
 				// clipped out visibly.
-				zoomScale = Math.min(zoomScale, 1.15);
+				var zoomScale = this._hdr.getHeaderZoomScale(
+					/* lowerBound */ 0.5, /* upperBound */ 1.15);
 
 				return Math.floor(this._baseFontSize * zoomScale) +
 					'px/' +
@@ -741,6 +740,20 @@ L.Control.Header = L.Control.extend({
 				}
 			}
 		}
+	},
+
+	getHeaderZoomScale : function(lowerBound, upperBound) {
+		if (typeof lowerBound === 'undefined' || lowerBound < 0)
+			lowerBound = 0.5;
+		if (typeof upperBound === 'undefined' || upperBound < 0)
+			upperBound = 2.0;
+		if (lowerBound > upperBound) {
+			lowerBound = 0.5;
+			upperBound = 2.0;
+		}
+		var zoomScale = this._map.getZoomScale(this._map.getZoom(),
+			this._map.options.defaultZoom);
+		return Math.min(Math.max(zoomScale, lowerBound), upperBound);
 	},
 
 	onDragStart: function () {},

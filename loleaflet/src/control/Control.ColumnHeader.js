@@ -36,6 +36,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._canvasContext = this._canvas.getContext('2d');
 		this._setCanvasWidth();
 		this._setCanvasHeight();
+		this._canvasBaseHeight = this._canvasHeight;
 
 		var scale = L.getDpiScaleFactor();
 		this._canvasContext.scale(scale, scale);
@@ -388,6 +389,12 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._setCanvasWidth();
 		this._setCanvasHeight();
 		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+		// Adjust (column) _headerHeight according to zoomlevel. This is used below to call resize()
+		// where column/corner header are resized. Besides the document container and row header container
+		// are moved up or down as required so that there is no gap/overlap below column header.
+		// Limit zoomScale so that the column header is not too small (unreadable) or too big.
+		this._headerHeight = Math.ceil(this._canvasBaseHeight *
+			this.getHeaderZoomScale(/* lowerBound */ 0.74, /* upperBound */ 1.15));
 
 		// Reset state
 		this._current = -1;
@@ -648,7 +655,11 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var rowHdrTop = parseInt(L.DomUtil.getStyle(rowHeader, 'top')) + deltaTop;
 		var docTop = parseInt(L.DomUtil.getStyle(document, 'top')) + deltaTop;
 		L.DomUtil.setStyle(rowHeader, 'top', rowHdrTop + 'px');
-		L.DomUtil.setStyle(document, 'top', docTop + 'px');
+		// L.DomUtil.setStyle does not seem to affect the attributes when
+		// one of the media queries of document-container element are
+		// active (non-desktop case). Using style.setProperty directly
+		// seems to work as expected for both mobile/desktop.
+		document.style.setProperty('top', docTop + 'px', 'important');
 
 		this._setCanvasHeight(height);
 
