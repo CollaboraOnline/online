@@ -238,23 +238,4 @@ describe('Insert objects via insertion wizard.', function() {
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
 			});
 	});
-
-	it('Insert formatting mark.', function() {
-		// Open formatting marks
-		cy.get('.sub-menu-title')
-			.contains('Formatting Mark')
-			.click();
-
-		// Do the insertion
-		cy.get('.menu-entry-no-icon')
-			.contains('Non-breaking space')
-			.should('be.visible')
-			.click();
-
-		// Do a selection to see something is inserted
-		cy.get('body').type('{shift}{leftarrow}');
-		cy.get('.leaflet-marker-icon')
-			.should('exist')
-			.should('have.length', 2);
-	});
 });
