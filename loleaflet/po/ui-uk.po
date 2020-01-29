@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-01-28 16:49+0000\n"
+"Last-Translator: Євген Кондратюк <lachend@gmail.com>\n"
+"Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/uk/>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
 "X-Pootle-Revision: 3938227\n"
 
@@ -274,11 +275,12 @@ msgstr "Ви"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "Почати завантаження"
 
 #: src/control/Control.DownloadProgress.js:51
+#, fuzzy
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "Підтвердіть копіювання в буфер"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
@@ -290,27 +292,30 @@ msgstr ""
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Безбарвно"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:154
+#, fuzzy
 msgid "Axial"
-msgstr ""
+msgstr "Осьовий"
 
 #: src/control/Control.JSDialogBuilder.js:157
+#, fuzzy
 msgid "Radial"
-msgstr ""
+msgstr "Радіальний"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Еліпсоїд"
 
 #: src/control/Control.JSDialogBuilder.js:164
+#, fuzzy
 msgid "Quadratic"
-msgstr ""
+msgstr "Квадратичний"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"

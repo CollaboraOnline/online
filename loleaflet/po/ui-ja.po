@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-01-28 08:10+0000\n"
+"Last-Translator: 村上正記 <mucky85236@gmail.com>\n"
+"Language-Team: Japanese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-ui-ja.po\n"
 "X-Pootle-Revision: 3937895\n"
 
@@ -226,11 +227,11 @@ msgstr " 秒"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "Open link"
-msgstr ""
+msgstr "リンクを開く"
 
 #: src/control/Control.AlertDialog.js:54
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #: src/control/Control.AlertDialog.js:76
 msgid "The server encountered a %0 error while parsing the %1 command."

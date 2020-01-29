@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="pref_sort_title">Röðun skráa</string>
+    <string name="pref_show_hidden_files">Faldar skrár/möppur</string>
+    <string name="grid_view">Reitir</string>
+    <string name="list_view">Listi</string>
+    <string name="failed_to_load_file">Mistókst að ákvarða hvaða skrá eigi að hlaða inn</string>
+    <string name="storage_permission_required">Heimild til aðgangs að gagnageymslu er nauðsynleg</string>
+    <string name="file_creation_failed">Mistókst að útbúa skrá</string>
+    <string name="temp_file_saving_disabled">Þessi skrá er aðeins lesanleg, vistun er óvirk.</string>
+    <string name="no_items">Engin atriði</string>
+    <string name="no_recent_items">Engin nýleg atriði</string>
+    <string name="app_vendor">Þessi útgáfa er í boði $VENDOR.</string>
+    <string name="app_version">Útgáfa: %1$s, byggingarauðkenni: %2$s</string>
+    <string name="app_name_settings">Stillingar</string>
+</resources>
