@@ -345,15 +345,15 @@ L.Control.LokDialog = L.Control.extend({
 				$('#' + strId).dialog('option', 'title', e.title);
 			}
 		} else if (e.action === 'cursor_visible') {
-			// cursor_visible means focus has changed.
+			// cursor_visible implies focus has changed, but can
+			// be misleading when it flips back on forth on typing!
 			this._dialogs[e.id].cursorVisible = e.visible === 'true';
 			if (this._dialogs[e.id].cursorVisible) {
 				$('#' + strId + '-cursor').css({display: 'block'});
-				this._map.onFocusDialog(this, e.id);
+				this._map.fire('changefocuswidget', {winId: e.id, dialog: this, acceptInput: true}); // Us.
 			}
 			else {
 				$('#' + strId + '-cursor').css({display: 'none'});
-				this._map.fire('changefocuswidget', {winId: 0, dialog: null}); // Editor.
 			}
 		} else if (e.action === 'close') {
 			parent = this._getParentId(e.id);
@@ -380,7 +380,6 @@ L.Control.LokDialog = L.Control.extend({
 		// set the position of the cursor container element
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
-		this._map.focus();
 	},
 
 	_createDialogCursor: function(dialogId) {
@@ -391,7 +390,7 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
-	focus: function(dlgId) {
+	focus: function(dlgId, acceptInput) {
 		// In case of the sidebar we should be careful about
 		// grabbing the focus from the main window.
 		if (this._isSidebar(dlgId)) {
@@ -410,7 +409,7 @@ L.Control.LokDialog = L.Control.extend({
 
 		this._map.setWinId(dlgId);
 		if (dlgId in this._dialogs) {
-			this._map.focus();
+			this._map.focus(acceptInput);
 		}
 	},
 
@@ -963,7 +962,7 @@ L.Control.LokDialog = L.Control.extend({
 			// We lost the focus.
 			this._onEditorGotFocus();
 		} else {
-			this.focus(e.winId);
+			this.focus(e.winId, e.acceptInput);
 		}
 	},
 

@@ -1336,7 +1336,10 @@ L.Map = L.Evented.extend({
 	},
 
 	// Change the focus to a dialog or editor.
-	_changeFocusWidget: function (dialog, winId) {
+	// @dialog is the instance of the dialog class.
+	// @winId is the ID of the dialog/sidebar, or 0 for the editor.
+	// @acceptInput iff defined, map.focus is called and passed to it.
+	_changeFocusWidget: function (dialog, winId, acceptInput) {
 		if (!this._loaded) { return; }
 
 		this._winId = winId;
@@ -1345,6 +1348,9 @@ L.Map = L.Evented.extend({
 		var doclayer = this._docLayer;
 		if (doclayer)
 			doclayer._updateCursorAndOverlay();
+
+		if (acceptInput !== undefined)
+			this.focus(acceptInput);
 	},
 
 	// Our browser tab lost focus.
@@ -1374,7 +1380,7 @@ L.Map = L.Evented.extend({
 		if (e.winId === 0) {
 			this._onEditorGotFocus();
 		} else {
-			this._changeFocusWidget(e.dialog, e.winId);
+			this._changeFocusWidget(e.dialog, e.winId, e.acceptInput);
 		}
 	},
 
