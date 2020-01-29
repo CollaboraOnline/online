@@ -252,7 +252,7 @@ body {
 	}
 
 	#document-container.spreadsheet-document {
-		top: 97px !important;
+		top: 93px !important;
 		bottom: 68px;
 	}
 
@@ -263,7 +263,7 @@ body {
 	}
 
 	#spreadsheet-row-column-frame {
-		top: 77px !important;
+		top: 73px !important;
 		bottom: 68px;
 	}
 
