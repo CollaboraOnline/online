@@ -12,9 +12,11 @@ package org.libreoffice.androidlib;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -39,7 +41,10 @@ public class SlideShowActivity extends AppCompatActivity {
             slidesSvgUri = savedInstanceState.getString(SVG_URI_KEY);
         }
         Log.d(TAG, "SlideShow Svg Uri "+slidesSvgUri);
-        if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean isChromeDebugEnabled = sPrefs.getBoolean("ENABLE_CHROME_DEBUGGING", false);
+
+        if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 || isChromeDebugEnabled) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
         slideShowWebView.setBackgroundColor(Color.BLACK);
