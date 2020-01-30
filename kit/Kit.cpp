@@ -210,7 +210,7 @@ namespace
         if (link(fpath, newPath.toString().c_str()) == -1)
         {
             LOG_INF("link(\"" << fpath << "\", \"" <<
-                    newPath.toString() << "\") failed. Will copy.");
+                    newPath.toString() << "\") failed: " << strerror(errno) << ". Will copy.");
             try
             {
                 File(fpath).copyTo(newPath.toString());
@@ -226,7 +226,7 @@ namespace
     }
 
     int linkOrCopyFunction(const char *fpath,
-                           const struct stat* /*sb*/,
+                           const struct stat* sb,
                            int typeflag,
                            struct FTW* /*ftwbuf*/)
     {
@@ -282,6 +282,22 @@ namespace
                 }
             }
             break;
+        case FTW_SL:
+            {
+                size_t size = sb->st_size;
+                char target[size + 1];
+                ssize_t written = readlink(fpath, target, size);
+                if (written <= 0 || static_cast<size_t>(written) > size) {
+                    LOG_FTL("readlink(\"" << std::string(fpath) << "\") failed: " << strerror(errno));
+                    Log::shutdown();
+                    std::_Exit(EX_SOFTWARE);
+                }
+                target[written] = '\0';
+
+                File(newPath.parent()).createDirectories();
+                File(target).linkTo(newPath.toString(), Poco::File::LinkType::LINK_SYMBOLIC);
+            }
+            break;
         case FTW_DNR:
             LOG_ERR("Cannot read directory '" << fpath << "'");
             return 1;
@@ -306,7 +322,7 @@ namespace
             sourceForLinkOrCopy.pop_back();
         destinationForLinkOrCopy = destination;
         linkOrCopyStartTime = std::chrono::steady_clock::now();
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL) == -1)
+        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
         {
             LOG_ERR("linkOrCopy: nftw() failed for '" << source << "'");
         }
