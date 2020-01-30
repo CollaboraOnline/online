@@ -30,6 +30,7 @@ class UnitLoadTorture : public UnitWSD
     TestResult testLoadTorture();
 
 public:
+    UnitLoadTorture();
     void invokeTest() override;
 };
 
@@ -192,6 +193,13 @@ UnitBase::TestResult UnitLoadTorture::testLoadTorture()
         thread.join();
     }
     return TestResult::Ok;
+}
+
+UnitLoadTorture::UnitLoadTorture()
+{
+    // Double of the default.
+    int timeout_minutes = 1;
+    setTimeout(timeout_minutes * 60 * 1000);
 }
 
 void UnitLoadTorture::invokeTest()
