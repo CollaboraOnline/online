@@ -461,6 +461,43 @@
 	.spinfieldcontainer input.spinfield {
 		padding-top: 0px;
 	}
+	/*insert table special layout*/
+	.inserttablecontrols p.ui-text{
+		position: absolute;
+		margin-left: 14%;
+		width: 50%;
+		border: none;
+		top: 82px;
+		color: #555 !important;
+	}
+	.inserttablecontrols p.ui-text:first-child {
+		top: 21px;
+	}
+	.inserttablecontrols #rows, .inserttablecontrols #cols{
+		background: url('images/lc_inserttable_row_mono.svg') no-repeat left;
+		border: none !important;
+		border-bottom: 1px solid #ccc !important;
+		width: 90%;
+		border-radius: none;
+	}
+	.inserttablecontrols #cols{
+		background: url('images/lc_inserttable_col_mono.svg') no-repeat left;
+	}
+	.inserttablecontrols .spinfield{
+		width: 35% !important;
+		margin-left: 32% !important;
+		text-align: center;
+	}
+	.inserttablecontrols .sinfieldcontrols{
+		border: none;
+		background: none;
+	}
+	.inserttablecontrols .plus, .inserttablecontrols .minus{
+		border: none;
+		font-weight: bold;
+	}
+	/*END insert table special layout*/
+
 	.leaflet-control-zoom.leaflet-bar{
 		border: none !important;
 	}
@@ -660,14 +697,14 @@
 		margin-right: 0px !important;
 	}
 	#mobile-wizard button{
-		height: 38px;
-		width: 100%;
+		height: 44px;
+		width: 92%;
 		border-radius: 4px;
-		color: #0b87e7 !important;
+		color: #fff !important;
 		font-weight: bold;
-		background-color: #fff;
-		text-transform: uppercase;
+		background-color: #0b87e7;
 		border: 1px solid #0b87e7;
+		margin: 0 4%;
 	}
 	#mobile-wizard button:focus{
 		outline: none;
