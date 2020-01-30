@@ -418,7 +418,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		this.mouseInit(canvas);
 
-		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
 		if ($('.spreadsheet-header-rows').length > 0) {
 			$('.spreadsheet-header-rows').contextMenu(this._map._permission === 'edit');
 		}

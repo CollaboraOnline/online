@@ -77,7 +77,6 @@ L.AnnotationManager = L.Class.extend({
 				opacity: 0.25
 			});
 			comment.textSelected.addEventParent(this._map);
-			L.DomEvent.on(comment.textSelected, 'contextmenu', L.DomEvent.preventDefault);
 			comment.textSelected.on('click', function() {
 				this.selectById(comment.id);
 			}, this);
@@ -106,7 +105,6 @@ L.AnnotationManager = L.Class.extend({
 				opacity: 0
 			});
 			redline.textSelected.addEventParent(this._map);
-			L.DomEvent.on(redline.textSelected, 'contextmenu', L.DomEvent.preventDefault);
 			redline.textSelected.on('click', function() {
 				this.selectById(redline.id);
 			}, this);

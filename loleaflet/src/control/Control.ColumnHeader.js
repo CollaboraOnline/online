@@ -60,7 +60,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._startOffset = 0;
 		this._position = 0;
 
-		L.DomEvent.on(this._cornerCanvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.addListener(this._cornerCanvas, 'click', this._onCornerHeaderClick, this);
 
 		this._menuItem = {
@@ -429,7 +428,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		this.mouseInit(canvas);
 
-		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
 		if ($('.spreadsheet-header-columns').length > 0) {
 			$('.spreadsheet-header-columns').contextMenu(this._map._permission === 'edit');
 		}
