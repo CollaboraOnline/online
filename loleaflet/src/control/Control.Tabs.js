@@ -3,7 +3,7 @@
  * L.Control.Tabs is used to switch sheets in Calc
  */
 
-/* global $ vex _ _UNO */
+/* global $ vex _ _UNO Hammer */
 L.Control.Tabs = L.Control.extend({
 	onAdd: function(map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
@@ -114,19 +114,24 @@ L.Control.Tabs = L.Control.extend({
 						continue;
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
-					L.DomEvent.enableLongTap(tab);
 
-					L.DomEvent.on(tab, 'contextmenu', function(j) {
-						return function() {
-							this._tabForContextMenu = j;
-							if (window.mode.isMobile()) {
+					if (window.mode.isMobile()) {
+						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
+						.on('press', function (j) {
+							return function() {
+								this._tabForContextMenu = j;
 								window.contextMenuWizard = true;
 								if (this._map._permission != 'readonly') this._map.fire('mobilewizard', menuData);
-							} else {
+							};
+						}(i).bind(this));
+					} else {
+						L.DomEvent.on(tab, 'contextmenu', function(j) {
+							return function() {
+								this._tabForContextMenu = j;
 								$('spreadsheet-tab' + j).contextMenu();
-							}
-						};
-					}(i).bind(this));
+							};
+						}(i).bind(this));
+					}
 
 					tab.textContent = e.partNames[i];
 					tab.id = id;
