@@ -103,6 +103,21 @@ function _cancelSearch() {
 	map._onGotFocus();
 }
 
+function getUNOCommand(unoData) {
+	if (typeof unoData !== 'object')
+		return unoData;
+
+	if (!map._clip)
+		return unoData.textCommand;
+
+	var selectionType = map._clip._selectionType;
+
+	if (!selectionType || selectionType === 'text')
+		return unoData.textCommand;
+
+	return unoData.objectCommand;
+}
+
 function onClick(e, id, item, subItem) {
 	if (w2ui['editbar'].get(id) !== null) {
 		var toolbar = w2ui['editbar'];
@@ -152,7 +167,7 @@ function onClick(e, id, item, subItem) {
 			map.toggleCommandState(item.unosheet);
 		}
 		else {
-			map.toggleCommandState(item.uno);
+			map.toggleCommandState(getUNOCommand(item.uno));
 		}
 	}
 	else if (id === 'print') {
@@ -884,9 +899,15 @@ function initNormalToolbar() {
 		{type: 'color',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor', 'text'), hidden: true},
 		{type: 'color',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor'), hidden: true},
 		{type: 'break' , id: 'breakcolor', mobile:false},
-		{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true), uno: 'LeftPara', hidden: true, unosheet: 'AlignLeft', disabled: true},
-		{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true), uno: 'CenterPara', hidden: true, unosheet: 'AlignHorizontalCenter', disabled: true},
-		{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _UNO('.uno:RightPara', '', true), uno: 'RightPara', hidden: true, unosheet: 'AlignRight', disabled: true},
+		{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true),
+			uno: {textCommand: 'LeftPara', objectCommand: 'ObjectAlignLeft'},
+			hidden: true, unosheet: 'AlignLeft', disabled: true},
+		{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true),
+			uno: {textCommand: 'CenterPara', objectCommand: 'AlignCenter'},
+			hidden: true, unosheet: 'AlignHorizontalCenter', disabled: true},
+		{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _UNO('.uno:RightPara', '', true),
+			uno: {textCommand: 'RightPara', objectCommand: 'ObjectAlignRight'},
+			hidden: true, unosheet: 'AlignRight', disabled: true},
 		{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: 'JustifyPara', hidden: true, unosheet: '', disabled: true},
 		{type: 'break', id: 'breakpara', hidden: true},
 		{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), hidden: true,
@@ -2216,7 +2237,7 @@ function onUpdatePermission(e) {
 			var alwaysEnable = found.length !== 0;
 
 			if (e.perm === 'edit') {
-				var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : items[idx].uno;
+				var unoCmd = map.getDocType() === 'spreadsheet' ? items[idx].unosheet : getUNOCommand(items[idx].uno);
 				var keepDisabled = map['stateChangeHandler'].getItemValue(unoCmd) === 'disabled';
 				if (!keepDisabled || alwaysEnable) {
 					toolbar.enable(items[idx].id);
