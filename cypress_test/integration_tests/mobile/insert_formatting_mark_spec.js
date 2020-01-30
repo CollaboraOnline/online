@@ -20,29 +20,6 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.wait(200); // wait some time to actually release the document
 	});
 
-	function generateTextHTML() {
-		// Do a new selection
-		helper.selectAllMobile();
-
-		// Open context menu
-		cy.get('.leaflet-marker-icon')
-			.then(function(marker) {
-				expect(marker).to.have.lengthOf(2);
-				var XPos = (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;
-				var YPos = marker[0].getBoundingClientRect().top;
-				cy.get('body').rightclick(XPos, YPos);
-			});
-
-		// Execute copy
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon .context-menu-link')
-			.contains('Copy')
-			.click();
-
-		// Close warning about clipboard operations
-		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
-			.click();
-	}
-
 	it('Insert non-breaking space.', function() {
 		// Open formatting marks
 		cy.get('.sub-menu-title')
@@ -54,7 +31,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Non-breaking space')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -74,7 +51,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Non-breaking hyphen')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -94,7 +71,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Soft hyphen')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -114,7 +91,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('No-width optional break')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -134,7 +111,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('No-width no break')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -154,7 +131,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Left-to-right mark')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -174,7 +151,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Right-to-left mark')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {

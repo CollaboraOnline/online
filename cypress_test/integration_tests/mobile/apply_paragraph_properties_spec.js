@@ -27,29 +27,6 @@ describe('Apply paragraph properties.', function() {
 		cy.wait(200); // wait some time to actually release the document
 	});
 
-	function generateTextHTML() {
-		// Select text
-		helper.selectAllMobile();
-
-		// Open context menu
-		cy.get('.leaflet-marker-icon')
-			.then(function(marker) {
-				expect(marker).to.have.lengthOf(2);
-				var XPos = (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;
-				var YPos = marker[0].getBoundingClientRect().top - 5;
-				cy.get('body').rightclick(XPos, YPos);
-			});
-
-		// Execute copy
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon .context-menu-link')
-			.contains('Copy')
-			.click();
-
-		// Close warning about clipboard operations
-		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
-			.click();
-	}
-
 	it('Apply left alignment.', function() {
 		// Change alignment
 		cy.get('#CenterPara')
@@ -59,7 +36,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
@@ -83,7 +60,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'left');
@@ -98,7 +75,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
@@ -113,7 +90,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'right');
@@ -128,7 +105,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'justify');
@@ -143,7 +120,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'dir', 'rtl');
@@ -167,7 +144,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.should('not.have.attr', 'dir');
@@ -181,7 +158,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container ul li p')
 			.should('exist');
@@ -195,7 +172,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container ol li p')
 			.should('exist');
@@ -219,7 +196,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -239,7 +216,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -267,7 +244,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -307,7 +284,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -328,7 +305,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -355,7 +332,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -379,7 +356,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -403,7 +380,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -427,7 +404,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {

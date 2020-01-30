@@ -1,4 +1,4 @@
-/* global cy Cypress */
+/* global cy Cypress expect*/
 
 function loadTestDoc(fileName, mobile) {
 	// Get a clean test document
@@ -56,5 +56,33 @@ function selectAllMobile() {
 		.click();
 }
 
+function copyTextToClipboard() {
+	// Do a new selection
+	selectAllMobile();
+
+	// Open context menu
+	cy.get('.leaflet-marker-icon')
+		.then(function(marker) {
+			expect(marker).to.have.lengthOf(2);
+			var XPos =  (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;
+			var YPos = marker[0].getBoundingClientRect().top - 5;
+			cy.get('body').rightclick(XPos, YPos);
+		});
+
+	// Execute copy
+	cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon .context-menu-link')
+		.contains('Copy')
+		.click();
+
+	// Close warning about clipboard operations
+	cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+		.click();
+
+	// Wait until it's closed
+	cy.get('.vex-overlay')
+		.should('not.exist');
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.selectAllMobile = selectAllMobile;
+module.exports.copyTextToClipboard = copyTextToClipboard;

@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require expect afterEach*/
+/* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../common/helper');
 
@@ -20,29 +20,6 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.wait(200); // wait some time to actually release the document
 	});
 
-	function generateTextHTML() {
-		// Do a new selection
-		helper.selectAllMobile();
-
-		// Open context menu
-		cy.get('.leaflet-marker-icon')
-			.then(function(marker) {
-				expect(marker).to.have.lengthOf(2);
-				var XPos = (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;
-				var YPos = marker[0].getBoundingClientRect().top;
-				cy.get('body').rightclick(XPos, YPos);
-			});
-
-		// Execute copy
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon .context-menu-link')
-			.contains('Copy')
-			.click();
-
-		// Close warning about clipboard operations
-		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
-			.click();
-	}
-
 	it('Insert page number field.', function() {
 		// Open fields submenu
 		cy.get('.sub-menu-title')
@@ -54,7 +31,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Page Number')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'PAGE')
@@ -72,7 +49,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Page Count')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCSTAT')
@@ -90,7 +67,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Date')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DATETIME')
@@ -108,7 +85,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Time')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DATETIME')
@@ -126,7 +103,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Title')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
@@ -144,7 +121,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('First Author')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
@@ -163,7 +140,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Subject')
 			.click();
 
-		generateTextHTML();
+		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
