@@ -235,7 +235,6 @@ var deps = {
 
 	TouchZoom: {
 		src: ['dom/DomEvent.js',
-		      'dom/DomEvent.DoubleTap.js',
 		      'dom/DomEvent.Pointer.js',
 		      'core/Handler.js',
 		      'map/handler/Map.TouchGesture.js'],
@@ -362,7 +361,6 @@ var deps = {
 	ControlTabs: {
 		src: ['control/Control.js',
 		      'dom/DomEvent.js',
-		      'dom/DomEvent.LongTap.js',
 		      'control/Control.Tabs.js'],
 		heading: 'Controls',
 		desc: 'Tabs for switching sheets'
