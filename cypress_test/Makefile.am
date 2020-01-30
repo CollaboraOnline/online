@@ -13,20 +13,20 @@ MOBILE_WORKDIR = ${abs_srcdir}/workdir/mobile/
 
 if HAVE_LO_PATH
 check-local: @JAILS_PATH@ node_modules
-	$(call run_JS_error_check,$(abs_srcdir))
+	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests)
 	$(call run_mobile_tests)
 	@pkill loolwsd || true
 
 check-desktop: @JAILS_PATH@ node_modules
-	$(call run_JS_error_check,$(abs_srcdir)/integration_tests/desktop)
+	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,$(spec))
 	@pkill loolwsd || true
 
 check-mobile: @JAILS_PATH@ node_modules
-	$(call run_JS_error_check,$(abs_srcdir)/integration_tests/mobile)
+	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_mobile_tests,$(spec))
 	@pkill loolwsd || true
@@ -52,9 +52,9 @@ run-mobile: @JAILS_PATH@ node_modules
 	@pkill loolwsd || true
 
 define run_JS_error_check
-	@echo "Checking for JS errors in the next folder..."
-	@echo $(1)
-	@NODE_PATH=$(abs_srcdir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(1) \
+	@echo "Checking for JS errors in test code..."
+	@echo
+	@NODE_PATH=$(abs_srcdir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(abs_srcdir) \
 		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_top_srcdir)/loleaflet/.eslintrc
 	@echo
 endef
