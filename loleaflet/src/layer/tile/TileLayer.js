@@ -2732,6 +2732,9 @@ L.TileLayer = L.GridLayer.extend({
 	// Update group layer selection handler.
 	_onUpdateGraphicSelection: function () {
 		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
+			// Hide the keyboard on graphic selection, unless cursor is visible.
+			this._map.focus(this.isCursorVisible());
+
 			if (this._graphicMarker) {
 				this._graphicMarker.removeEventParent(this._map);
 				this._graphicMarker.off('scalestart scaleend', this._onGraphicEdit, this);

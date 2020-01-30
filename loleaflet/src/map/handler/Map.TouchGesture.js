@@ -327,13 +327,37 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 
+		var acceptInput = false; // No keyboard by default.
+		var sendMouseEvents = true; // By default, this is a single-click.
 		if (docLayer) {
+			if (docLayer.hasGraphicSelection()) {
+				// Need keyboard when cursor is visible.
+				acceptInput = this._map._docLayer.isCursorVisible();
+			} else if (docLayer._docType === 'text') {
+				acceptInput = true; // Always show the keyboard in Writer on tap.
+			} else if (docLayer._docType === 'spreadsheet') {
+				// If the tap is in the current cell, start editing.
+				var cellCursor = docLayer._cellCursor;
+				acceptInput = (cellCursor && cellCursor.contains(latlng));
+				if (acceptInput) {
+					// Enter cell-edit mode on second tap of a selected cell.
+					if (this._map._permission === 'edit') {
+						docLayer.postKeyboardEvent('input', 0, 769); // F2
+						sendMouseEvents = false; // Mouse events will exit editing mode.
+					}
+
+				}
+			}
+		}
+
+		if (sendMouseEvents) {
 			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
 			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
-
-			// Take focus, but keyboard show only in Writer (double-tap to edit Calc/Impress).
-			this._map.focus(this._map._docLayer._docType === 'text');
 		}
+
+		// Always move the focus to the document on tap,
+		// but only show the keyboard when we need editing.
+		this._map.focus(acceptInput);
 	},
 
 	_onDoubleTap: function (e) {
@@ -345,11 +369,19 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		var docLayer = this._map._docLayer;
 		if (docLayer) {
-			docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
-			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+			if (docLayer._docType === 'spreadsheet' && !docLayer.hasGraphicSelection()) {
+				// Enter cell-edit mode on double-taping a cell.
+				if (this._map._permission === 'edit') {
+					docLayer.postKeyboardEvent('input', 0, 769); // F2
+				}
+			} else {
+				docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 2, 1, 0);
+				docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 2, 1, 0);
+			}
 
-			// Show keyboard.
-			this._map.focus(true);
+			// Show keyboard when no graphic selection, or  cursor is visible.
+			var acceptInput = !docLayer.hasGraphicSelection() || docLayer.isCursorVisible();
+			this._map.focus(acceptInput);
 		}
 	},
 
