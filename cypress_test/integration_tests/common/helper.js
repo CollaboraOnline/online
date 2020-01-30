@@ -24,4 +24,37 @@ function loadTestDoc(fileName, mobile) {
 	cy.get('.leaflet-tile-loaded', {timeout : 10000});
 }
 
+function selectAllMobile() {
+	// Remove selection if exist
+	cy.get('#document-container').click();
+	cy.get('.leaflet-marker-icon')
+		.should('not.exist');
+
+	// Enable editing if it's in read-only mode
+	cy.get('#mobile-edit-button')
+		.then(function(button) {
+			if (button.css('display') !== 'none') {
+				cy.get('#mobile-edit-button')
+					.click();
+			}
+		});
+
+	// Open hamburger menu
+	cy.get('#toolbar-hamburger')
+		.click();
+
+	// Open edit menu
+	cy.get('.ui-header.level-0 .sub-menu-title')
+		.contains('Edit')
+		.click();
+
+	cy.wait(200);
+
+	// Do the selection
+	cy.get('.ui-header.level-1 .menu-entry-with-icon')
+		.contains('Select All')
+		.click();
+}
+
 module.exports.loadTestDoc = loadTestDoc;
+module.exports.selectAllMobile = selectAllMobile;

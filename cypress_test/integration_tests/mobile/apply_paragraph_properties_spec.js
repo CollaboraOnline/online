@@ -9,6 +9,9 @@ describe('Apply paragraph properties.', function() {
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
 
+		// Do a selection
+		helper.selectAllMobile();
+
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.should('not.have.class', 'disabled')
@@ -25,17 +28,8 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	function generateTextHTML() {
-		// Do a new selection
-		cy.get('#document-container').click();
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
-
-		cy.wait(200);
-
-		cy.get('body').type('{shift}{home}');
-		cy.get('.leaflet-marker-icon');
-
-		cy.wait(200);
+		// Select text
+		helper.selectAllMobile();
 
 		// Open context menu
 		cy.get('.leaflet-marker-icon')
@@ -57,10 +51,6 @@ describe('Apply paragraph properties.', function() {
 	}
 
 	it('Apply left alignment.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change alignment
 		cy.get('#CenterPara')
 			.click();
@@ -75,8 +65,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'align', 'center');
 
 		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
+		helper.selectAllMobile();
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -101,10 +90,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply center alignment.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change alignment
 		cy.get('#CenterPara')
 			.click();
@@ -120,10 +105,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply right alignment.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change alignment
 		cy.get('#RightPara')
 			.click();
@@ -139,10 +120,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply justify alignment.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change alignment
 		cy.get('#JustifyPara')
 			.click();
@@ -158,10 +135,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Change writing direction.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change writing mode
 		cy.get('#ParaRightToLeft')
 			.click();
@@ -176,8 +149,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'dir', 'rtl');
 
 		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
+		helper.selectAllMobile();
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -202,10 +174,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply default bulleting.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		cy.get('#DefaultBullet')
 			.click();
 
@@ -220,10 +188,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply default numbering.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		cy.get('#DefaultNumbering')
 			.click();
 
@@ -238,10 +202,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply background color.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change background color
 		cy.get('#BackgroundColor')
 			.click();
@@ -269,10 +229,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Increase / decrease para spacing.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Increase para spacing
 		cy.get('#ParaspaceIncrease')
 			.click();
@@ -293,8 +249,7 @@ describe('Apply paragraph properties.', function() {
 			});
 
 		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
+		helper.selectAllMobile();
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -323,10 +278,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Change para spacing via combobox.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Check para spacing current value
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.0');
@@ -367,10 +318,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Increase / decrease indent.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Increase indent
 		cy.get('#IncrementIndent')
 			.click();
@@ -390,8 +337,7 @@ describe('Apply paragraph properties.', function() {
 			});
 
 		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
+		helper.selectAllMobile();
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -419,10 +365,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply before text indent.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change indent
 		cy.get('#beforetextindent .sinfieldcontrols .plus')
 			.click();
@@ -447,10 +389,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply after text indent.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change indent
 		cy.get('#aftertextindent .sinfieldcontrols .plus')
 			.click();
@@ -475,10 +413,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply first line indent.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Increase firstline indent
 		cy.get('#firstlineindent .sinfieldcontrols .plus')
 			.click();

@@ -22,16 +22,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	function generateTextHTML() {
 		// Do a new selection
-		cy.get('#document-container').click();
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
-
-		cy.wait(200);
-
-		cy.get('body').type('{shift}{home}');
-		cy.get('.leaflet-marker-icon');
-
-		cy.wait(200);
+		helper.selectAllMobile();
 
 		// Open context menu
 		cy.get('.leaflet-marker-icon')

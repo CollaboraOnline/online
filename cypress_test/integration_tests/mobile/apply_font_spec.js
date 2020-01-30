@@ -9,6 +9,9 @@ describe('Apply font changes.', function() {
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
 
+		// Do a new selection
+		helper.selectAllMobile();
+
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.should('not.have.class', 'disabled')
@@ -22,16 +25,7 @@ describe('Apply font changes.', function() {
 
 	function generateTextHTML() {
 		// Do a new selection
-		cy.get('#document-container').click();
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
-
-		cy.wait(200);
-
-		cy.get('body').type('{shift}{home}');
-		cy.get('.leaflet-marker-icon');
-
-		cy.wait(200);
+		helper.selectAllMobile();
 
 		// Open context menu
 		cy.get('.leaflet-marker-icon')
@@ -53,10 +47,6 @@ describe('Apply font changes.', function() {
 	}
 
 	it('Apply font name.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change font name
 		cy.get('#fontnamecombobox')
 			.click();
@@ -83,10 +73,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font size.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change font size
 		cy.get('#fontsizecombobox')
 			.click();
@@ -113,10 +99,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply bold font.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Apply bold
 		cy.get('#Bold')
 			.click();
@@ -132,10 +114,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply italic font.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Apply italic
 		cy.get('#Italic')
 			.click();
@@ -151,10 +129,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply underline.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change underline
 		cy.get('#Underlineimg')
 			.click();
@@ -172,10 +146,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply strikeout.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change strikeout
 		cy.get('#Strikeoutimg')
 			.click();
@@ -193,10 +163,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply shadowed.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Apply shadowed
 		cy.get('#Shadowedimg')
 			.click();
@@ -213,10 +179,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply grow.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Push grow
 		cy.get('#Growimg')
 			.click();
@@ -234,10 +196,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply shrink.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Push shrink
 		cy.get('#Shrinkimg')
 			.click();
@@ -255,10 +213,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font color.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change font color
 		cy.get('#FontColor')
 			.click();
@@ -285,10 +239,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply highlight color.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Change highlight color
 		cy.get('#BackColor')
 			.click();
@@ -315,10 +265,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply superscript.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Apply superscript
 		cy.get('#SuperScriptimg')
 			.click();
@@ -336,10 +282,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply subscript.', function() {
-		// Select text
-		cy.get('#document-container').dblclick();
-		cy.get('.leaflet-marker-icon');
-
 		// Apply superscript
 		cy.get('#SubScriptimg')
 			.click();
