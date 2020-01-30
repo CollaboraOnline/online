@@ -83,6 +83,13 @@ function copyTextToClipboard() {
 		.should('not.exist');
 }
 
+function afterAllMobile() {
+	cy.visit('http://localhost:9980/loleaflet/' +
+		Cypress.env('WSD_VERSION_HASH') +
+		'/loleaflet.html?file_path=file://');
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.selectAllMobile = selectAllMobile;
 module.exports.copyTextToClipboard = copyTextToClipboard;
+module.exports.afterAllMobile = afterAllMobile;

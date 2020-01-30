@@ -1,10 +1,14 @@
-/* global describe it cy beforeEach require*/
+/* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../common/helper');
 
 describe('Focus tests', function() {
 	beforeEach(function() {
 		helper.loadTestDoc('empty.odt', true);
+	});
+
+	afterEach(function() {
+		helper.afterAllMobile();
 	});
 
 	it('Focus after document fully loaded.', function() {

@@ -23,8 +23,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	afterEach(function() {
-		cy.get('.closemobile').click();
-		cy.wait(200); // wait some time to actually release the document
+		helper.afterAllMobile();
 	});
 
 	it('Apply left alignment.', function() {

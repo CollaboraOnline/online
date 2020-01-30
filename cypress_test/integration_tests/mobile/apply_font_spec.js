@@ -19,8 +19,7 @@ describe('Apply font changes.', function() {
 	});
 
 	afterEach(function() {
-		cy.get('.closemobile').click();
-		cy.wait(200); // wait some time to actually release the document
+		helper.afterAllMobile();
 	});
 
 	it('Apply font name.', function() {

@@ -1,10 +1,14 @@
-/* global describe it cy beforeEach require*/
+/* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../common/helper');
 
 describe('Mobile wizard state tests', function() {
 	beforeEach(function() {
 		helper.loadTestDoc('empty.odt', true);
+	});
+
+	afterEach(function() {
+		helper.afterAllMobile();
 	});
 
 	it('Open and close mobile wizard by toolbar item.', function() {
