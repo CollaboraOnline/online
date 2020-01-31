@@ -273,5 +273,17 @@ describe('Apply font changes.', function() {
 		cy.get('#copy-paste-container p sub')
 			.should('exist');
 	});
+
+	it('Character spacing item is hidden.', function() {
+		// Check that mobile wizard is opened
+		cy.get('#SubScript')
+			.scrollIntoView()
+			.should('be.visible');
+
+		// Character spacing item triggers the character dialog
+		// So better to hide it.
+		cy.get('#Spacing')
+			.should('not.exist');
+	});
 });
 
