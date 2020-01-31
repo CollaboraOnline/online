@@ -411,4 +411,11 @@ describe('Apply paragraph properties.', function() {
 				expect(item[0].style['text-indent']).to.be.equal('0.04in');
 			});
 	});
+
+	it('Linespacing item is hidden.', function() {
+		// Linespacing item triggers a drop down menu in core
+		// which is not implemented in online yet.
+		cy.get('#LineSpacing')
+			.should('not.exist');
+	});
 });

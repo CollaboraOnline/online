@@ -351,7 +351,7 @@ L.Control.MobileWizard = L.Control.extend({
 			this._removeItems(deck, ['cellbordertype', 'borderlinestyle', 'borderlinecolor']);
 		}
 
-		this._removeItems(data, ['editcontour', 'spacingbar']);
+		this._removeItems(data, ['editcontour', 'spacingbar', 'linespacing']);
 	},
 
 	_findItemByTypeRecursive: function(data, t) {
