@@ -118,6 +118,11 @@ task copyUnpackAssets(type: Copy) {
                 )
         }
     }
+    into('share') {
+        from "${liboInstdir}/share"
+        // liblangtag data is needed for locales like en-CH
+        includes = ['liblangtag/**']
+    }
 }
 
 task copyAssets(type: Copy) {
