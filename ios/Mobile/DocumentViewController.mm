@@ -12,6 +12,9 @@
 #import <string>
 #import <vector>
 
+#import <objc/message.h>
+#import <objc/runtime.h>
+
 #import <poll.h>
 
 #import "ios.h"
@@ -30,7 +33,45 @@ static DocumentViewController* theSingleton = nil;
 
 @end
 
+// From https://gist.github.com/myell0w/d8dfabde43f8da543f9c
+static BOOL isExternalKeyboardAttached()
+{
+    BOOL externalKeyboardAttached = NO;
+
+    @try {
+        NSString *keyboardClassName = [@[@"UI", @"Key", @"boa", @"rd", @"Im", @"pl"] componentsJoinedByString:@""];
+        Class c = NSClassFromString(keyboardClassName);
+        SEL sharedInstanceSEL = NSSelectorFromString(@"sharedInstance");
+        if (c == Nil || ![c respondsToSelector:sharedInstanceSEL]) {
+            return NO;
+        }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        id sharedKeyboardInstance = [c performSelector:sharedInstanceSEL];
+#pragma clang diagnostic pop
+
+        if (![sharedKeyboardInstance isKindOfClass:NSClassFromString(keyboardClassName)]) {
+            return NO;
+        }
+
+        NSString *externalKeyboardSelectorName = [@[@"is", @"InH", @"ardw", @"areK", @"eyb", @"oard", @"Mode"] componentsJoinedByString:@""];
+        SEL externalKeyboardSEL = NSSelectorFromString(externalKeyboardSelectorName);
+        if (![sharedKeyboardInstance respondsToSelector:externalKeyboardSEL]) {
+            return NO;
+        }
+
+        externalKeyboardAttached = ((BOOL ( *)(id, SEL))objc_msgSend)(sharedKeyboardInstance, externalKeyboardSEL);
+    } @catch(__unused NSException *ex) {
+        externalKeyboardAttached = NO;
+    }
+
+    return externalKeyboardAttached;
+}
+
 @implementation DocumentViewController
+
+static IMP standardImpOfInputAccessoryView = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,6 +104,29 @@ static DocumentViewController* theSingleton = nil;
 
     self.webView.navigationDelegate = self;
     self.webView.UIDelegate = self;
+
+    // Hack for tdf#129380: Don't show the "shortcut bar" if a hardware keyboard is used.
+
+    // From https://inneka.com/programming/objective-c/hide-shortcut-keyboard-bar-for-uiwebview-in-ios-9/
+    Class webBrowserClass = NSClassFromString(@"WKContentView");
+    Method method = class_getInstanceMethod(webBrowserClass, @selector(inputAccessoryView));
+
+    if (isExternalKeyboardAttached()) {
+        IMP newImp = imp_implementationWithBlock(^(id _s) {
+                if ([self.webView respondsToSelector:@selector(inputAssistantItem)]) {
+                    UITextInputAssistantItem *inputAssistantItem = [self.webView inputAssistantItem];
+                    inputAssistantItem.leadingBarButtonGroups = @[];
+                    inputAssistantItem.trailingBarButtonGroups = @[];
+                }
+                return nil;
+            });
+
+        IMP oldImp = method_setImplementation(method, newImp);
+        if (standardImpOfInputAccessoryView == nil)
+            standardImpOfInputAccessoryView = oldImp;
+    } else if (standardImpOfInputAccessoryView != nil) {
+        method_setImplementation(method, standardImpOfInputAccessoryView);
+    }
 
     WKWebView *webViewP = self.webView;
     NSDictionary *views = NSDictionaryOfVariableBindings(webViewP);
