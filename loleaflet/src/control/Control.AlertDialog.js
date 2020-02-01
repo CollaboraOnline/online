@@ -19,7 +19,26 @@ L.Control.AlertDialog = L.Control.extend({
 		}
 
 		if (e.msg) {
-			vex.dialog.alert(e.msg);
+			if (window.ThisIsAMobileApp && this._map._fatal) {
+				var buttonsList = [];
+				buttonsList.push({
+					text: _('Close'),
+					type: 'button',
+					className: 'vex-dialog-button-primary',
+					click: function openClick () {
+						window.postMobileMessage('BYE');
+						vex.closeAll();
+					}
+				});
+
+				vex.dialog.alert({
+					message: e.msg,
+					buttons: buttonsList,
+					callback: function() {},
+				});
+			}
+			else
+				vex.dialog.alert(e.msg);
 		}
 		else if (e.cmd == 'load' && e.kind == 'docunloading') {
 			// Handled by transparently retrying.
@@ -35,7 +54,7 @@ L.Control.AlertDialog = L.Control.extend({
 			}
 
 			messageText = messageText.replace('%url', url);
-			var buttonsList = [];
+			buttonsList = [];
 
 			if (isLinkValid) {
 				buttonsList.push({
