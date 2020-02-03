@@ -19,7 +19,7 @@ describe('Example test suit 1', function() {
 		cy.get('#tb_editbar_item_bold').click();
 
 		// Remove selection and do a reselection
-		cy.get('#document-container').click();
+		cy.get('#document-container').type('{leftarrow}');
 		cy.get('.leaflet-marker-icon').should('not.be.visible');
 
 		cy.get('#document-container').dblclick();
