@@ -1177,10 +1177,27 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return 'images/lc_' + cleanName.toLowerCase() + '.svg';
 	},
 
+	// make a class identifier from parent's id by walking up the tree
+	_getParentId : function(it) {
+		while (it.parent && !it.id)
+			it = it.parent;
+		if (it && it.id)
+			return '-' + it.id;
+		else
+			return '';
+	},
+
+	// Create a DOM node with an identifiable parent class
+	_createIdentifiable : function(type, classNames, parentContainer, data) {
+		return L.DomUtil.create(
+			type, classNames + this._getParentId(data),
+			parentContainer);
+	},
+
 	_unoToolButton: function(parentContainer, data, builder) {
 		var button = null;
 
-		var div = L.DomUtil.create('div', 'ui-content unospan', parentContainer);
+		var div = this._createIdentifiable('div', 'ui-content unospan', parentContainer, data);
 
 		if (data.command) {
 			var id = data.command.substr('.uno:'.length);
@@ -1530,9 +1547,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder._explorableMenu(parentContainer, title, data.children, builder, content, data.id);
 	},
 
+	// link each node to its parent, should do one recursive descent
+	_parentize: function(data, parent) {
+		if (data.parent)
+			return;
+		if (data.children !== undefined) {
+			for (var idx in data.children) {
+				this._parentize(data.children[idx], data);
+			}
+		}
+		data.parent = parent;
+	},
+
 	build: function(parent, data) {
 		for (var childIndex in data) {
 			var childData = data[childIndex];
+			this._parentize(childData);
 			var childType = childData.type;
 			var processChildren = true;
 			var needsToCreateContainer =
