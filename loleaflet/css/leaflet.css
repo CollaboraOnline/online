@@ -859,14 +859,6 @@ input.clipboard {
 	z-index: 10;
 	}
 
-.loleaflet-ruler-tabstopwrapper {
-	position: absolute;
-	height: 100%;
-	overflow: hidden;
-	width: inherit;
-	z-index: 10;
-	}
-
 .loleaflet-ruler-face {
 	height: 100%;
 	background-color: white;
