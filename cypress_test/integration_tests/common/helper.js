@@ -9,7 +9,7 @@ function loadTestDoc(fileName, mobile) {
 	});
 
 	if (mobile === true) {
-		cy.viewport('iphone-3');
+		cy.viewport('iphone-6');
 	}
 
 	// Open test document

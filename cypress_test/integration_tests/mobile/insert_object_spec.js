@@ -48,9 +48,6 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.mobile-wizard.ui-text')
 			.should('be.visible');
 
-		// Scroll to the bottom
-		cy.get('#mobile-wizard-content').scrollTo(0, 1000);
-
 		// Push insert table button
 		cy.get('.inserttablecontrols button')
 			.should('be.visible')
@@ -72,9 +69,6 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 		cy.get('.mobile-wizard.ui-text')
 			.should('be.visible');
-
-		// Scroll to the bottom
-		cy.get('#mobile-wizard-content').scrollTo(0, 1000);
 
 		// Change rows and columns
 		cy.get('.inserttablecontrols #rows .sinfieldcontrols .plus')
