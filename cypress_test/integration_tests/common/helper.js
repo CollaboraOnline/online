@@ -83,13 +83,16 @@ function copyTextToClipboard() {
 		.should('not.exist');
 }
 
-function afterAllMobile() {
-	cy.visit('http://localhost:9980/loleaflet/' +
-		Cypress.env('WSD_VERSION_HASH') +
-		'/loleaflet.html?file_path=file://');
+function afterAll() {
+	// Make sure that the document is closed
+	cy.visit('http://admin:admin@localhost:9980/loleaflet/dist/admin/admin.html');
+	cy.get('#doclist')
+		.should('exist');
+	cy.get('#doclist tr')
+		.should('not.exist', {timeout : 10000});
 }
 
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.selectAllMobile = selectAllMobile;
 module.exports.copyTextToClipboard = copyTextToClipboard;
-module.exports.afterAllMobile = afterAllMobile;
+module.exports.afterAll = afterAll;

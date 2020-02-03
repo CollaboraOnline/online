@@ -16,7 +16,7 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	it('Insert page number field.', function() {

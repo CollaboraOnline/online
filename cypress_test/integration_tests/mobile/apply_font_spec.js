@@ -19,7 +19,7 @@ describe('Apply font changes.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	it('Apply font name.', function() {

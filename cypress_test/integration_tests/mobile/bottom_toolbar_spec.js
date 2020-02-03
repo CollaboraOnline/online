@@ -14,7 +14,7 @@ describe('Pushing bottom toolbar items.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	it('Apply bold.', function() {

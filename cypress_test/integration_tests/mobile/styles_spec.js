@@ -11,7 +11,7 @@ describe('Apply/modify styles.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	function applyStyle(styleName) {

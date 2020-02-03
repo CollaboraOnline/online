@@ -23,7 +23,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	it('Apply left alignment.', function() {

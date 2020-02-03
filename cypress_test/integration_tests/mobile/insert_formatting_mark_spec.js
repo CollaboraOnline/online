@@ -16,7 +16,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	it('Insert non-breaking space.', function() {

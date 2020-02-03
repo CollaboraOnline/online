@@ -1,8 +1,13 @@
-/* global describe it cy require expect*/
+/* global describe it cy require expect afterEach*/
 
 var helper = require('../common/helper');
 
 describe('Shape operations', function() {
+
+	afterEach(function() {
+		helper.afterAll();
+	});
+
 	it('Insert a simple shape.', function() {
 		helper.loadTestDoc('empty.odt');
 

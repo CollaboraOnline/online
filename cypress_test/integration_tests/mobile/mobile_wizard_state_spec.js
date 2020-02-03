@@ -8,7 +8,7 @@ describe('Mobile wizard state tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	it('Open and close mobile wizard by toolbar item.', function() {

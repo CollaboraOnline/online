@@ -16,7 +16,7 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	it('Insert local image.', function() {

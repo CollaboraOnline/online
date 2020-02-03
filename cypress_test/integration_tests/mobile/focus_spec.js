@@ -8,7 +8,7 @@ describe('Focus tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAllMobile();
+		helper.afterAll();
 	});
 
 	it('Focus after document fully loaded.', function() {

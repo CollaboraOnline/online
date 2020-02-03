@@ -1,8 +1,13 @@
-/* global describe it cy require*/
+/* global describe it cy require afterEach*/
 
 var helper = require('../common/helper');
 
 describe('Example test suit 1', function() {
+
+	afterEach(function() {
+		helper.afterAll();
+	});
+
 	it('Example test case 1', function() {
 		helper.loadTestDoc('simple.odt');
 

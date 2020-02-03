@@ -1,10 +1,14 @@
-/* global describe it cy beforeEach require expect*/
+/* global describe it cy beforeEach require expect afterEach*/
 
 var helper = require('../common/helper');
 
 describe('Clipboard operations.', function() {
 	beforeEach(function() {
 		helper.loadTestDoc('simple.odt');
+	});
+
+	afterEach(function() {
+		helper.afterAll();
 	});
 
 	it('Copy and Paste text.', function() {
