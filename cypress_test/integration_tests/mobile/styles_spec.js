@@ -34,7 +34,12 @@ describe('Apply/modify styles.', function() {
 
 		cy.get('.mobile-wizard.ui-combobox-text')
 			.contains(styleName)
-			.scrollIntoView()
+			.scrollIntoView();
+
+		cy.wait(200);
+
+		cy.get('.mobile-wizard.ui-combobox-text')
+			.contains(styleName)
 			.click();
 
 		// Combobox entry contains the selected font name
