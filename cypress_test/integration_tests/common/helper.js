@@ -83,6 +83,41 @@ function copyTextToClipboard() {
 		.should('not.exist');
 }
 
+function copyTableToClipboard() {
+	// Do a new selection
+	selectAllMobile();
+
+	// Open context menu
+	cy.get('.leaflet-marker-icon')
+		.then(function(markers) {
+			expect(markers.length).to.have.greaterThan(1);
+			for (var i = 0; i < markers.length; i++) {
+				if (markers[i].classList.contains('leaflet-selection-marker-start')) {
+					var startPos = markers[i].getBoundingClientRect();
+				} else if (markers[i].classList.contains('leaflet-selection-marker-end')) {
+					var endPos = markers[i].getBoundingClientRect();
+				}
+			}
+
+			var XPos = startPos.right + 30;
+			var YPos = endPos.top - 10;
+			cy.get('body').rightclick(XPos, YPos);
+		});
+
+	// Execute copy
+	cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon .context-menu-link')
+		.contains('Copy')
+		.click();
+
+	// Close warning about clipboard operations
+	cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+		.click();
+
+	// Wait until it's closed
+	cy.get('.vex-overlay')
+		.should('not.exist');
+}
+
 function afterAll() {
 	// Make sure that the document is closed
 	cy.visit('http://admin:admin@localhost:9980/loleaflet/dist/admin/admin.html');
@@ -95,4 +130,5 @@ function afterAll() {
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.selectAllMobile = selectAllMobile;
 module.exports.copyTextToClipboard = copyTextToClipboard;
+module.exports.copyTableToClipboard = copyTableToClipboard;
 module.exports.afterAll = afterAll;

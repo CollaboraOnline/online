@@ -55,11 +55,16 @@ describe('Insert objects via insertion wizard.', function() {
 
 		// Table is inserted with the markers shown
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
-			.should('exist')
-			.should('have.length', 3);
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
-			.should('exist')
+			.should('exist');
+
+		helper.copyTableToClipboard();
+
+		// Two rows
+		cy.get('#copy-paste-container tr')
 			.should('have.length', 2);
+		// Four cells
+		cy.get('#copy-paste-container td')
+			.should('have.length', 4);
 	});
 
 	it('Insert custom table.', function() {
@@ -83,11 +88,16 @@ describe('Insert objects via insertion wizard.', function() {
 
 		// Table is inserted with the markers shown
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
-			.should('exist')
-			.should('have.length', 4);
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
-			.should('exist')
+			.should('exist');
+
+		helper.copyTableToClipboard();
+
+		// Three rows
+		cy.get('#copy-paste-container tr')
 			.should('have.length', 3);
+		// Nine cells
+		cy.get('#copy-paste-container td')
+			.should('have.length', 9);
 	});
 
 	it('Insert header.', function() {
