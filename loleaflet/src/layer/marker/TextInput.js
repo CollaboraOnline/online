@@ -156,7 +156,6 @@ L.TextInput = L.Layer.extend({
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
 		if (this._map._permission !== 'edit') {
-			console.log('EPIC HORRORS HERE');
 			return;
 		}
 		this._textArea.focus();
