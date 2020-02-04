@@ -348,12 +348,13 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_moveTabstop: function(e) {
-		var diff = this._map._docLayer._pixelsToTwips({x: e.layerX - e.currentTarget.tabStopPrevPos, y:0}).x;
+		var pixelDiff = e.layerX - e.currentTarget.tabStopPrevPos;
+		var diff = this._map._docLayer._pixelsToTwips({x: pixelDiff, y:0}).x;
 		if (diff === 0)
 			return;
 
-		// console.log('===> _moveTabstop ' + e.currentTarget.tabStopBeingDragged + ' ' + diff);
-		this._map.sendUnoCommand('.uno:MoveTabstop?Tabstop=' + e.currentTarget.tabStopBeingDragged + '&Amount=' + (e.layerX - e.currentTarget.tabStopPrevPos));
+		// console.log('===> _moveTabstop ' + e.currentTarget.tabStopBeingDragged + ' pixels:' + pixelDiff + ', twips:' + diff);
+		this._map.sendUnoCommand('.uno:MoveTabstop?Tabstop=' + e.currentTarget.tabStopBeingDragged + '&Amount=' + diff);
 		e.currentTarget.tabStopPrevPos = e.layerX;
 	},
 
