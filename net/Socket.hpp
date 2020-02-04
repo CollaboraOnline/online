@@ -696,22 +696,6 @@ public:
 
     virtual void dumpState(std::ostream& os);
 
-    /// Removes a socket from this poller.
-    /// NB. this must be called from the socket poll that
-    /// owns the socket.
-    void releaseSocket(const std::shared_ptr<Socket>& socket)
-    {
-        assert(socket);
-        assertCorrectThread();
-        socket->assertCorrectThread();
-        auto it = std::find(_pollSockets.begin(), _pollSockets.end(), socket);
-        assert(it != _pollSockets.end());
-
-        _pollSockets.erase(it);
-        LOG_DBG("Removing socket #" << socket->getFD() << " (of " <<
-                _pollSockets.size() << ") from " << _name);
-    }
-
     size_t getSocketCount() const
     {
         assertCorrectThread();
