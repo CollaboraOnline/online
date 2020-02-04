@@ -278,6 +278,9 @@ L.Control.MobileWizard = L.Control.extend({
 				if (this.map.showSidebar == false)
 					return;
 			}
+			if (isSidebar && !this.map.showSidebar) {
+				return;
+			}
 
 			this._isActive = true;
 			var currentPath = null;
