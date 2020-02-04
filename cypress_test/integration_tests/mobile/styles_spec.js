@@ -108,6 +108,10 @@ describe('Apply/modify styles.', function() {
 		cy.get('#Italic')
 			.click();
 
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
 		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p i')
