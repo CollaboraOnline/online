@@ -961,13 +961,15 @@ L.Map = L.Evented.extend({
 			throw new Error('Map container is already initialized.');
 		}
 
-		this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
+		if (!L.Browser.mobile) {
+			this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
+			this._resizeDetector.contentWindow.addEventListener('touchstart', L.DomEvent.preventDefault, {passive: false});
+			L.DomEvent.on(this._resizeDetector.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
+		}
+
 		this._fileDownloader = L.DomUtil.create('iframe', '', container);
 		L.DomUtil.setStyle(this._fileDownloader, 'display', 'none');
 
-		this._resizeDetector.contentWindow.addEventListener('touchstart', L.DomEvent.preventDefault, {passive: false});
-
-		L.DomEvent.on(this._resizeDetector.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(this._fileDownloader.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.addListener(container, 'scroll', this._onScroll, this);
 		container._leaflet = true;
@@ -1095,7 +1097,7 @@ L.Map = L.Evented.extend({
 
 		this._mainEvents(onOff);
 
-		if (this.options.trackResize && this._resizeDetector.contentWindow) {
+		if (this.options.trackResize && this._resizeDetector && this._resizeDetector.contentWindow) {
 			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);
 		}
 
