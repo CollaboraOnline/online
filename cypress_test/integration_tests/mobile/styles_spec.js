@@ -133,19 +133,18 @@ describe('Apply/modify styles.', function() {
 			.should('exist');
 	});
 
-	it('Add new style.', function() {
-		// Do a new selection
-		helper.selectAllMobile();
+	it('New style item is hidden.', function() {
+		// New style item opens a tunneled dialog
+		// what we try to avoid.
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		cy.get('#StyleNewByExample')
-			.click();
-
-		// We have a dialog here?!
-		cy.get('.lokdialog_canvas')
+		cy.get('#StyleUpdateByExample')
 			.should('exist');
+
+		cy.get('#StyleNewByExample')
+			.should('not.exist');
 	});
 });

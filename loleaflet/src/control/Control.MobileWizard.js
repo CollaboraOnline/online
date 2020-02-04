@@ -348,7 +348,7 @@ L.Control.MobileWizard = L.Control.extend({
 				deck.children[textIdx].children[0].children = moveContent.concat(deck.children[textIdx].children[0].children);
 				deck.children.splice(stylesIdx, 1); //remove the styles property
 			}
-			this._removeItems(deck, ['cellbordertype', 'borderlinestyle', 'borderlinecolor', 'editcontour', 'spacingbar', 'linespacing']);
+			this._removeItems(deck, ['cellbordertype', 'borderlinestyle', 'borderlinecolor', 'editcontour', 'spacingbar', 'linespacing', 'stylenew']);
 		}
 	},
 
@@ -382,6 +382,7 @@ L.Control.MobileWizard = L.Control.extend({
 					if (data.children[i].id === items[j]) {
 						data.children.splice(i, 1);
 						childRemoved = true;
+						break;
 					}
 				}
 				if (childRemoved && i > 0)
