@@ -99,7 +99,7 @@ function copyTableToClipboard() {
 				}
 			}
 
-			var XPos = startPos.right + 30;
+			var XPos = startPos.right + 10;
 			var YPos = endPos.top - 10;
 			cy.get('body').rightclick(XPos, YPos);
 		});
