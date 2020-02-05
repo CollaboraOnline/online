@@ -2085,16 +2085,22 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
 		var cursorPos = this._visibleCursor.getNorthWest();
 
+		var updated = true;
 		if (!this._cursorMarker) {
 			this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true});
 		}
 		else {
+			var oldLatLng = this._cursorMarker.getLatLng();
 			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
+			var newLatLng = this._cursorMarker.getLatLng();
+			updated = !newLatLng.equals(oldLatLng);
 		}
 
 		this._map._textInput.showCursor();
-		if (this._map.editorHasFocus() /* && !L.Browser.mobile */) {
-			// User is editing, show the keyboard.
+
+		if (!window.mobileWizard && updated && this._map.editorHasFocus()) {
+			// If the user is editing, show the keyboard, but don't change
+			// anything if nothing is changed, or the wizard is visible.
 			this._map.focus(true);
 		}
 	},
