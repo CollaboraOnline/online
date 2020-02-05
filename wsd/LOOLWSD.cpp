@@ -254,7 +254,7 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
+        LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
     }
 }
 #endif
@@ -275,7 +275,7 @@ inline void checkSessionLimitsAndWarnClients()
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("Error while shuting down socket on reaching limit: " << ex.what());
+            LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
         }
     }
 #endif
