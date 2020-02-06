@@ -262,13 +262,16 @@ L.Map.TouchGesture = L.Handler.extend({
 			// we trigger the context menu by sending a right click
 			var graphicSelection = docLayer._graphicSelection;
 			var cellCursor = docLayer._cellCursor;
+			var bContainsSel = false;
+			if (cellCursor)
+				bContainsSel = docLayer.containsSelection(latlng);
 			var textSelection;
 			if (docLayer._textSelectionStart && docLayer._textSelectionEnd)
 				textSelection = new L.LatLngBounds(docLayer._textSelectionStart.getSouthWest(), docLayer._textSelectionEnd.getNorthEast());
 
 			if ((textSelection && textSelection.inBand(latlng))
 				|| (graphicSelection && graphicSelection.contains(latlng))
-				|| (cellCursor && cellCursor.contains(latlng))) {
+				|| (cellCursor && cellCursor.contains(latlng)) || bContainsSel) {
 				// long touched an already selected object
 				// send right click to trigger context menus
 				this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
