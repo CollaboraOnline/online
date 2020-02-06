@@ -42,44 +42,44 @@
 
 namespace{
 
-std::vector<unsigned char> getBytesLE(const unsigned char* bytesInSystemOrder, const size_t n)
+std::vector<unsigned char> getBytesLE(const unsigned char* bytesInHostOrder, const size_t n)
 {
     std::vector<unsigned char> ret(n);
 #if !defined __BYTE_ORDER__
     static_assert(false, "Byte order is not detected on this platform!");
 #elif __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-    std::copy_n(bytesInSystemOrder, n, ret.begin());
+    std::copy_n(bytesInHostOrder, n, ret.begin());
 #else
-    std::copy_n(bytesInSystemOrder, n, ret.rbegin());
+    std::copy_n(bytesInHostOrder, n, ret.rbegin());
 #endif
     return ret;
 }
 
-// Returns a number as vector of bytes (little-endian)
+std::vector<unsigned char> getBytesBE(const unsigned char* bytesInHostOrder, const size_t n)
+{
+    std::vector<unsigned char> ret(n);
+#if !defined __BYTE_ORDER__
+    static_assert(false, "Byte order is not detected on this platform!");
+#elif __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+    std::copy_n(bytesInHostOrder, n, ret.rbegin());
+#else
+    std::copy_n(bytesInHostOrder, n, ret.begin());
+#endif
+    return ret;
+}
+
+// Returns passed number as vector of bytes (little-endian)
 template <typename T>
-std::vector<unsigned char> getBytesLE(const T& x)
+std::vector<unsigned char> ToLEBytes(const T& x)
 {
     return getBytesLE(reinterpret_cast<const unsigned char*>(&x), sizeof(x));
 }
 
-// https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-mqqb/ade9efde-3ec8-4e47-9ae9-34b64d8081bb
-std::vector<unsigned char> RSA2CapiBlob(const std::vector<unsigned char>& modulus,
-                                        const std::vector<unsigned char>& exponent)
+// Returns passed number as vector of bytes (network order = big-endian)
+template <typename T>
+std::vector<unsigned char> ToNetworkOrderBytes(const T& x)
 {
-    std::vector<unsigned char> capiBlob = {
-        0x06, 0x02, 0x00, 0x00,
-        0x00, 0xA4, 0x00, 0x00,
-        0x52, 0x53, 0x41, 0x31,
-    };
-    // modulus size in bits - 4 bytes (little-endian)
-    const auto bitLen = getBytesLE<std::uint32_t>(modulus.size() * 8);
-    capiBlob.reserve(capiBlob.size() + bitLen.size() + exponent.size() + modulus.size());
-    std::copy(bitLen.begin(), bitLen.end(), std::back_inserter(capiBlob));
-    // exponent - 4 bytes (little-endian)
-    std::copy(exponent.rbegin(), exponent.rend(), std::back_inserter(capiBlob));
-    // modulus (little-endian)
-    std::copy(modulus.rbegin(), modulus.rend(), std::back_inserter(capiBlob));
-    return capiBlob;
+    return getBytesBE(reinterpret_cast<const unsigned char*>(&x), sizeof(x));
 }
 
 std::string BytesToBase64(const std::vector<unsigned char>& bytes)
@@ -102,14 +102,19 @@ public:
 private:
     static std::string ProofKeyPath();
 
+    // https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-mqqb/ade9efde-3ec8-4e47-9ae9-34b64d8081bb
+    static std::vector<unsigned char> RSA2CapiBlob(const std::vector<unsigned char>& modulus,
+                                                   const std::vector<unsigned char>& exponent);
+
     // Returns .Net tick (=100ns) count since 0001-01-01 00:00:00 Z
     // See https://docs.microsoft.com/en-us/dotnet/api/system.datetime.ticks
     static int64_t DotNetTicks(const std::chrono::system_clock::time_point& utc);
-    // Returns string of bytes to sign and base64-encode
+    // Returns bytes to sign and base64-encode
     // See http://www.wictorwilen.se/sharepoint-2013-building-your-own-wopi-client-part-2
-    static std::string GetProof(const std::string& access_token, const std::string& uri, int64_t ticks);
-    // Signs string of bytes and returns base64-encoded string
-    std::string SignProof(const std::string& proof) const;
+    static std::vector<unsigned char> GetProof(const std::string& access_token,
+                                               const std::string& uri, int64_t ticks);
+    // Signs bytes and returns base64-encoded string
+    std::string SignProof(const std::vector<unsigned char>& proof) const;
 
     const std::unique_ptr<const Poco::Crypto::RSAKey> m_pKey;
     VecOfStringPairs m_aAttribs;
@@ -163,6 +168,25 @@ std::string Proof::ProofKeyPath()
     return keyPath;
 }
 
+std::vector<unsigned char> Proof::RSA2CapiBlob(const std::vector<unsigned char>& modulus,
+                                               const std::vector<unsigned char>& exponent)
+{
+    std::vector<unsigned char> capiBlob = {
+        0x06, 0x02, 0x00, 0x00,
+        0x00, 0xA4, 0x00, 0x00,
+        0x52, 0x53, 0x41, 0x31,
+    };
+    // modulus size in bits - 4 bytes (little-endian)
+    const auto bitLen = ToLEBytes<std::uint32_t>(modulus.size() * 8);
+    capiBlob.reserve(capiBlob.size() + bitLen.size() + exponent.size() + modulus.size());
+    std::copy(bitLen.begin(), bitLen.end(), std::back_inserter(capiBlob));
+    // exponent - 4 bytes (little-endian)
+    std::copy(exponent.rbegin(), exponent.rend(), std::back_inserter(capiBlob));
+    // modulus (little-endian)
+    std::copy(modulus.rbegin(), modulus.rend(), std::back_inserter(capiBlob));
+    return capiBlob;
+}
+
 int64_t Proof::DotNetTicks(const std::chrono::system_clock::time_point& utc)
 {
     // Get time point for Unix epoch; unfortunately from_time_t isn't constexpr
@@ -171,40 +195,36 @@ int64_t Proof::DotNetTicks(const std::chrono::system_clock::time_point& utc)
     return duration_ns.count() / 100 + 621355968000000000;
 }
 
-std::string Proof::GetProof(const std::string& access_token, const std::string& uri, int64_t ticks)
+std::vector<unsigned char> Proof::GetProof(const std::string& access_token, const std::string& uri,
+                                           int64_t ticks)
 {
     std::string decoded_access_token;
     Poco::URI::decode(access_token, decoded_access_token);
     assert(decoded_access_token.size() <= static_cast<size_t>(std::numeric_limits<int32_t>::max()));
     assert(uri.size() <= static_cast<size_t>(std::numeric_limits<int32_t>::max()));
-    const size_t size = 4 + decoded_access_token.size() + 4 + uri.size() + 4 + 8;
-    Poco::Buffer<char> buffer(size); // allocate enough size
-    buffer.resize(0); // start from empty buffer
-    Poco::MemoryBinaryWriter writer(buffer, Poco::BinaryWriter::NETWORK_BYTE_ORDER);
-    writer << static_cast<int32_t>(decoded_access_token.size())
-           << decoded_access_token
-           << static_cast<int32_t>(uri.size())
-           << uri
-           << int32_t(8)
-           << ticks;
-    assert(buffer.size() == size);
-    return std::string(buffer.begin(), buffer.end());
+    const auto access_token_size = ToNetworkOrderBytes<int32_t>(decoded_access_token.size());
+    const auto uri_size = ToNetworkOrderBytes<int32_t>(uri.size());
+    const auto ticks_bytes = ToNetworkOrderBytes(ticks);
+    const auto ticks_size = ToNetworkOrderBytes<int32_t>(ticks_bytes.size());
+    const size_t size = access_token_size.size() + decoded_access_token.size()
+                        + uri_size.size() + uri.size() + ticks_size.size()
+                        + ticks_bytes.size();
+    std::vector<unsigned char> buf(size);
+    auto pos = std::copy(access_token_size.begin(), access_token_size.end(), buf.begin());
+    pos = std::copy(decoded_access_token.begin(), decoded_access_token.end(), pos);
+    pos = std::copy(uri_size.begin(), uri_size.end(), pos);
+    pos = std::copy(uri.begin(), uri.end(), pos);
+    pos = std::copy(ticks_size.begin(), ticks_size.end(), pos);
+    std::copy(ticks_bytes.begin(), ticks_bytes.end(), pos);
+    return buf;
 }
 
-std::string Proof::SignProof(const std::string& proof) const
+std::string Proof::SignProof(const std::vector<unsigned char>& proof) const
 {
     assert(m_pKey);
-    std::ostringstream ostr;
     static Poco::Crypto::RSADigestEngine digestEngine(*m_pKey, "SHA256");
-    digestEngine.update(proof.c_str(), proof.length());
-    Poco::Crypto::DigestEngine::Digest digest = digestEngine.signature();
-    // The signature generated contains CRLF line endings.
-    // Use a line ending converter to remove these CRLF
-    Poco::OutputLineEndingConverter lineEndingConv(ostr, "");
-    Poco::Base64Encoder encoder(lineEndingConv);
-    encoder << std::string(digest.begin(), digest.end());
-    encoder.close();
-    return ostr.str();
+    digestEngine.update(proof.data(), proof.size());
+    return BytesToBase64(digestEngine.signature());
 }
 
 VecOfStringPairs Proof::GetProofHeaders(const std::string& access_token, const std::string& uri) const
