@@ -1097,8 +1097,10 @@ L.Map = L.Evented.extend({
 
 		this._mainEvents(onOff);
 
-		if (this.options.trackResize && this._resizeDetector && this._resizeDetector.contentWindow) {
-			L.DomEvent[onOff](this._resizeDetector.contentWindow, 'resize', this._onResize, this);
+		if (this.options.trackResize) {
+			var winTarget = this._resizeDetector && this._resizeDetector.contentWindow ? this._resizeDetector.contentWindow :
+				window;
+			L.DomEvent[onOff](winTarget, 'resize', this._onResize, this);
 		}
 
 		L.DomEvent[onOff](window, 'blur', this._onLostFocus, this);
