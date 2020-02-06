@@ -1279,6 +1279,11 @@ function updateToolbarItem(toolbar, id, html) {
 function unoCmdToToolbarId(commandname)
 {
 	var id = commandname.toLowerCase().substr(5);
+	var selectionType = 'text';
+
+	if (map._clip && map._clip._selectionType)
+		selectionType = map._clip._selectionType;
+
 	if (map.getDocType() === 'spreadsheet') {
 		switch (id) {
 		case 'alignleft':
@@ -1291,6 +1296,32 @@ function unoCmdToToolbarId(commandname)
 			id = 'rightpara';
 			break;
 		}
+	}
+	else if (selectionType == 'complex') {
+
+		// ignore the text align state messages.
+		if (id === 'leftpara' || id === 'rightpara' ||
+			id === 'centerpara') {
+			id = '';
+		}
+
+		// convert the object align statemessages to align button ids.
+		switch (id) {
+		case 'objectalignleft':
+			id = 'leftpara';
+			break;
+		case 'aligncenter':
+			id = 'centerpara';
+			break;
+		case 'objectalignright':
+			id = 'rightpara';
+			break;
+		}
+	}
+	else if (id === 'objectalignleft' || id === 'aligncenter' ||
+		id === 'objectalignright') {
+		// selectionType is 'text', so ignore object align state messages.
+		id = '';
 	}
 	return id;
 }
@@ -1979,6 +2010,10 @@ function onCommandStateChanged(e) {
 	}
 
 	var id = unoCmdToToolbarId(commandName);
+	// id is set to '' by unoCmdToToolbarId() if the statechange message should be ignored.
+	if (id === '')
+		return;
+
 	if (state === 'true') {
 		if (map._permission === 'edit') {
 			toolbar.enable(id);
