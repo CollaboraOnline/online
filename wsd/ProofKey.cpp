@@ -123,15 +123,15 @@ Proof::Proof()
         }
         catch (const Poco::Exception& e)
         {
-            LOG_ERR("Could not open proof RSA key: " << e.displayText());
+            LOG_WRN("Could not open proof RSA key: " << e.displayText());
         }
         catch (const std::exception& e)
         {
-            LOG_ERR("Could not open proof RSA key: " << e.what());
+            LOG_WRN("Could not open proof RSA key: " << e.what());
         }
         catch (...)
         {
-            LOG_ERR("Could not open proof RSA key: unknown exception");
+            LOG_WRN("Could not open proof RSA key: unknown exception");
         }
         return nullptr;
     }())
@@ -157,7 +157,6 @@ std::string Proof::ProofKeyPath()
             "\nNo proof-key will be present in discovery."
             "\nGenerate an RSA key using this command line:"
             "\n    ssh-keygen -t rsa -N \"\" -f \"" + keyPath + "\"";
-        fprintf(stderr, "%s\n", msg.c_str());
         LOG_WRN(msg);
     }
 
