@@ -127,8 +127,37 @@ function afterAll() {
 		.should('not.exist', {timeout : 10000});
 }
 
+function detectLOCoreVersion() {
+	if (Cypress.env('LO_CORE_VERSION') === undefined) {
+		// Open hamburger menu
+		cy.get('#toolbar-hamburger')
+			.click();
+
+		// Open about dialog
+		cy.get('.ui-header.level-0 .menu-entry-with-icon')
+			.contains('About')
+			.click();
+
+		// Get the version
+		cy.get('#lokit-version')
+			.then(function(items) {
+				expect(items).have.lengthOf(1);
+				if (items[0].textContent.includes('Collabora OfficeDev 6.2')) {
+					Cypress.env('LO_CORE_VERSION', 'cp-6-2');}
+				else {
+					Cypress.env('LO_CORE_VERSION', 'master');
+				}
+			});
+
+		// Close about dialog
+		cy.get('body')
+			.type('{esc}');
+	}
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.selectAllMobile = selectAllMobile;
 module.exports.copyTextToClipboard = copyTextToClipboard;
 module.exports.copyTableToClipboard = copyTableToClipboard;
 module.exports.afterAll = afterAll;
+module.exports.detectLOCoreVersion = detectLOCoreVersion;
