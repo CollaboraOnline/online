@@ -243,12 +243,17 @@ L.ColorPicker = L.Class.extend({
 			return;
 		this._selectedBasicColorIndex = this._updateSelectedSample(basicColorIndex, this._selectedBasicColorIndex, L.ColorPicker.BASIC_COLOR);
 		this._updateTintsView(basicColorIndex);
+		this._selectTintIndex(3);
 	},
 
 	onClickTintSample: function (e) {
 		var tintIndex = this._extractTintIndex(e.id);
 		if (tintIndex < 0)
 			return;
+		this._selectTintIndex(tintIndex);
+	},
+
+	_selectTintIndex: function (tintIndex) {
 		this._selectedTintIndex = this._updateSelectedSample(tintIndex, this._selectedTintIndex, L.ColorPicker.TINT);
 		this._selectedColor = '#' + this._getColorCode(this._selectedTintIndex, L.ColorPicker.TINT);
 		this._updateNoColorControl(false);
