@@ -43,10 +43,7 @@ describe('Apply/modify styles.', function() {
 			.click();
 
 		// Combobox entry contains the selected font name
-		if (styleName === 'Clear formatting') {
-			cy.get('#applystyle .ui-header-right .entry-value')
-				.contains('Default Style');
-		} else {
+		if (styleName !== 'Clear formatting') {
 			cy.get('#applystyle .ui-header-right .entry-value')
 				.contains(styleName);
 		}
