@@ -117,21 +117,30 @@ private:
 
 Proof::Proof()
     : m_pKey([]() -> Poco::Crypto::RSAKey* {
+        const auto keyPath = ProofKeyPath();
         try
         {
-            return new Poco::Crypto::RSAKey("", ProofKeyPath());
+            return new Poco::Crypto::RSAKey("", keyPath);
+        }
+        catch (const Poco::FileNotFoundException& e)
+        {
+            std::string msg = e.displayText() +
+                "\nNo proof-key will be present in discovery."
+                "\nIf you need to use WOPI security, generate an RSA key using this command line:"
+                "\n    ssh-keygen -t rsa -N \"\" -f \"" + keyPath + "\"";
+            LOG_WRN(msg);
         }
         catch (const Poco::Exception& e)
         {
-            LOG_WRN("Could not open proof RSA key: " << e.displayText());
+            LOG_ERR("Could not open proof RSA key: " << e.displayText());
         }
         catch (const std::exception& e)
         {
-            LOG_WRN("Could not open proof RSA key: " << e.what());
+            LOG_ERR("Could not open proof RSA key: " << e.what());
         }
         catch (...)
         {
-            LOG_WRN("Could not open proof RSA key: unknown exception");
+            LOG_ERR("Could not open proof RSA key: unknown exception");
         }
         return nullptr;
     }())
@@ -150,16 +159,7 @@ Proof::Proof()
 
 std::string Proof::ProofKeyPath()
 {
-    const std::string keyPath = LOOLWSD_CONFIGDIR "/proof_key";
-    if (!Poco::File(keyPath).exists())
-    {
-        std::string msg = "Could not find " + keyPath +
-            "\nNo proof-key will be present in discovery."
-            "\nGenerate an RSA key using this command line:"
-            "\n    ssh-keygen -t rsa -N \"\" -f \"" + keyPath + "\"";
-        LOG_WRN(msg);
-    }
-
+    static const std::string keyPath = LOOLWSD_CONFIGDIR "/proof_key";
     return keyPath;
 }
 
