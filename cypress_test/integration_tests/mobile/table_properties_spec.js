@@ -1,10 +1,10 @@
-/* global describe it cy require afterEach expect Cypress*/
+/* global describe it cy require afterEach expect Cypress beforeEach*/
 
 var helper = require('../common/helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
 	beforeEach(function() {
-		helper.detectLOCoreVersion();
+		helper.beforeAllMobile('empty.odt');
 	});
 
 	afterEach(function() {

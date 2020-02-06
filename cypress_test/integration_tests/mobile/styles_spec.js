@@ -4,7 +4,7 @@ var helper = require('../common/helper');
 
 describe('Apply/modify styles.', function() {
 	beforeEach(function() {
-		helper.loadTestDoc('simple.odt', true);
+		helper.beforeAllMobile('simple.odt');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

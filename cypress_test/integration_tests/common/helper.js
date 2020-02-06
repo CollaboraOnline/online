@@ -118,6 +118,12 @@ function copyTableToClipboard() {
 		.should('not.exist');
 }
 
+function beforeAllMobile(fileName) {
+	loadTestDoc(fileName, true);
+
+	detectLOCoreVersion();
+}
+
 function afterAll() {
 	// Make sure that the document is closed
 	cy.visit('http://admin:admin@localhost:9980/loleaflet/dist/admin/admin.html');
@@ -160,4 +166,4 @@ module.exports.selectAllMobile = selectAllMobile;
 module.exports.copyTextToClipboard = copyTextToClipboard;
 module.exports.copyTableToClipboard = copyTableToClipboard;
 module.exports.afterAll = afterAll;
-module.exports.detectLOCoreVersion = detectLOCoreVersion;
+module.exports.beforeAllMobile = beforeAllMobile;

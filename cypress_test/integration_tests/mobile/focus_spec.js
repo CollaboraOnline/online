@@ -4,7 +4,7 @@ var helper = require('../common/helper');
 
 describe('Focus tests', function() {
 	beforeEach(function() {
-		helper.loadTestDoc('empty.odt', true);
+		helper.beforeAllMobile('empty.odt');
 	});
 
 	afterEach(function() {

@@ -4,9 +4,7 @@ var helper = require('../common/helper');
 
 describe('Insert objects via insertion wizard.', function() {
 	beforeEach(function() {
-		helper.loadTestDoc('empty.odt', true);
-
-		helper.detectLOCoreVersion();
+		helper.beforeAllMobile('empty.odt');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

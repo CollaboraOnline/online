@@ -4,9 +4,7 @@ var helper = require('../common/helper');
 
 describe('Apply paragraph properties.', function() {
 	beforeEach(function() {
-		helper.loadTestDoc('simple.odt', true);
-
-		helper.detectLOCoreVersion();
+		helper.beforeAllMobile('simple.odt');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
