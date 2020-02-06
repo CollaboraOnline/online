@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-13 16:27+0000\n"
-"Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
+"PO-Revision-Date: 2020-02-05 12:44+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Lower Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/dsb/>\n"
 "Language: dsb\n"
 "MIME-Version: 1.0\n"
@@ -147,7 +147,7 @@ msgstr "Maksimalny wirtuelny skład za dokumentowy proces (w MB) - jano reducěr
 
 #: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Maksimalny štaplowy składowak za dokumentowy proces (w MB) - jano reducěrowaś"
+msgstr "Maksimalny štaplowy składowak za dokumentowy proces (w kB) - jano reducěrowaś"
 
 #: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-20 09:13+0000\n"
+"PO-Revision-Date: 2020-02-05 12:44+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/eo/>\n"
 "Language: eo\n"
@@ -26,7 +26,7 @@ msgstr "Administra konzolo"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
-msgstr "Agordoj"
+msgstr "Agordaro"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
@@ -171,7 +171,7 @@ msgstr ""
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Daŭro de funkciado de la servilo"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -344,31 +344,27 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:887
 msgid "From"
-msgstr ""
+msgstr "El"
 
 #: src/control/Control.JSDialogBuilder.js:890
 msgid "To"
-msgstr ""
+msgstr "Al"
 
 #: src/control/Control.JSDialogBuilder.js:1022
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
-msgstr "Tiparo"
+msgstr "Tiparnomo"
 
 #: src/control/Control.JSDialogBuilder.js:1024
-#, fuzzy
-#| msgid "Font"
 msgid "Font Size"
-msgstr "Tiparo"
+msgstr "Tipargrando"
 
 #: src/control/Control.JSDialogBuilder.js:1478
 msgid "Rows"
-msgstr ""
+msgstr "Vicoj"
 
 #: src/control/Control.JSDialogBuilder.js:1479
 msgid "Columns"
-msgstr ""
+msgstr "Kolumnoj"
 
 #: src/control/Control.JSDialogBuilder.js:1499
 #: src/control/Control.Toolbar.js:945
@@ -385,7 +381,7 @@ msgstr "Neniu (Ne kontroli literumadon)"
 #: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:456
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:384
 msgid "Cancel"
-msgstr "Nuligi"
+msgstr "Rezigni"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:251
 #: src/control/Control.Menubar.js:353 src/control/Control.Menubar.js:469

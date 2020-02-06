@@ -96,4 +96,9 @@
     <string name="owncloud_wrong_connection">No es pot connectar amb el servidor al núvol. Comproveu la configuració.</string>
     <string name="usb_connected_configure">S\'ha connectat via USB; configureu l\'aparell.</string>
     <string name="up_description">Al directori superior</string>
+    <string name="pref_enable_chrome_debugger_info">Activeu aquesta opció per a depurar el document amb l\'eina del Chrome</string>
+    <string name="share_document">Comparteix el document</string>
+    <string name="otg_missing_error">El fitxer d\'arrel no és vàlid. Comproveu el dispositiu OTG o la seva configuració.</string>
+    <string name="ext_document_provider_error">El fitxer d\'arrel no és vàlid. Comproveu la configuració de la targeta SD.</string>
+    <string name="pref_enable_chrome_debugger">Depuració del Chrome</string>
 </resources>

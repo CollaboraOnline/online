@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="loading">Loading...</string>
+    <string name="cannot_open_file_chooser">Cannot open file chooser</string>
+    <string name="failed_to_insert_image">Failed to insert image</string>
+    <string name="failed_to_load_file">Failed to determine the file to load</string>
+    <string name="storage_permission_required">Storage permission is required</string>
+    <string name="temp_file_saving_disabled">This file is read-only, saving is disabled.</string>
+</resources>

@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="loading">ロード中...</string>
+    <string name="temp_file_saving_disabled">読み取り専用です。保存できません。</string>
+</resources>

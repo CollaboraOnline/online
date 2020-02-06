@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_settings">Agordoj</string>
-    <string name="action_settings">Agordoj</string>
+    <string name="app_name_settings">Agordaro</string>
+    <string name="action_settings">Agordaro</string>
     <string name="action_about">Pri</string>
     <string name="title_activity_show_html">Pri</string>
     <string name="loading">Ŝargas...</string>
+    <string name="sort">Ordigi laŭ</string>
+    <string name="filter">Filtri laŭ</string>
+    <string name="default_document_name">sentitola</string>
+    <string name="title_browser">Ĉiuj dosieroj</string>
+    <string name="open">Malfermi</string>
+    <string name="user_name">Uzantnomo</string>
+    <string name="password">Pasvorto</string>
+    <string name="cancel_label">Rezigni</string>
+    <string name="action_cancel">Rezigni</string>
+    <string name="negative_cancel">Rezigni</string>
+    <string name="about_moreinfo">Pli da informoj</string>
 </resources>

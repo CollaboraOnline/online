@@ -99,4 +99,6 @@
     <string name="app_vendor">Tute wozjewjenje je so wot $VENDOR k dispoziciji stajiło.</string>
     <string name="app_version">Wersija: %1$s, Build ID: %2$s</string>
     <string name="app_name_settings">Nastajenja</string>
+    <string name="pref_enable_chrome_debugger_info">"Wužiwanje nastroja  za pytanje zmylkow Chrome w dokumenće zmóžnić"</string>
+    <string name="pref_enable_chrome_debugger">Pytanje zmylkow Chrome</string>
 </resources>
