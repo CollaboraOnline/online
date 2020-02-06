@@ -441,6 +441,7 @@ public class LOActivity extends AppCompatActivity {
         super.onDestroy();
         Log.i(TAG, "onDestroy() - we know we are leaving the document");
         nativeLooper.quit();
+        mWebView.destroy();
         postMobileMessageNative("BYE");
     }
 
