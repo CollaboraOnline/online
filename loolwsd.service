@@ -11,5 +11,13 @@ User=lool
 KillMode=control-group
 Restart=always
 
+ProtectSystem=strict
+ReadWritePaths=/opt/lool
+
+ProtectHome=yes
+PrivateTmp=yes
+ProtectControlGroups=yes
+CapabilityBoundingSet=CAP_FOWNER CAP_MKNOD CAP_SYS_CHROOT
+
 [Install]
 WantedBy=multi-user.target
