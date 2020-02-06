@@ -4,6 +4,7 @@
     <string name="failed_to_load_file">Failed to determine the file to load</string>
     <string name="failed_to_insert_image">Failed to insert image</string>
     <string name="cannot_open_file_chooser">Cannot open file chooser</string>
+    <string name="saving">Saving...</string>
 
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Loading...</string>

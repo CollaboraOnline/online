@@ -33,12 +33,15 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.provider.DocumentsContract;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -458,6 +461,10 @@ public class LOActivity extends AppCompatActivity {
         Log.i(TAG, "onDestroy() - we know we are leaving the document");
         nativeLooper.quit();
         mWebView.destroy();
+
+        // Most probably the native part has already got a 'BYE' from
+        // finishWithProgress(), but it is actually better to send it twice
+        // than never, so let's call it from here too anyway
         postMobileMessageNative("BYE");
     }
 
@@ -528,6 +535,38 @@ public class LOActivity extends AppCompatActivity {
         return null;
     }
 
+    /** Show the Saving progress and finish the app. */
+    private void finishWithProgress() {
+        LayoutInflater inflater = this.getLayoutInflater();
+        View loadingView = inflater.inflate(R.layout.lolib_dialog_loading, null);
+        TextView loadingText = loadingView.findViewById(R.id.lolib_loading_dialog_text);
+        loadingText.setText(getText(R.string.saving));
+        final AlertDialog savingProgress = new AlertDialog.Builder(LOActivity.this)
+            .setView(loadingView)
+            .setCancelable(true)
+            .create();
+
+        savingProgress.show();
+
+        // The 'BYE' takes a considerable amount of time, we need to post it
+        // so that it starts after the saving progress is actually shown
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                postMobileMessageNative("BYE");
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        savingProgress.dismiss();
+                    }
+                });
+
+                finish();
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
         if (mMobileWizardVisible)
@@ -537,8 +576,7 @@ public class LOActivity extends AppCompatActivity {
             return;
         }
 
-        postMobileMessageNative("BYE");
-        super.onBackPressed();
+        finishWithProgress();
     }
 
     private void loadDocument() {
@@ -600,10 +638,6 @@ public class LOActivity extends AppCompatActivity {
             postMobileMessageNative(message);
             afterMessageFromWebView(messageAndParameterArray);
         }
-
-        // Going back to document browser on BYE (called when pressing the top left exit button)
-        if (message.equals("BYE"))
-            finish();
     }
 
     /**
@@ -647,6 +681,9 @@ public class LOActivity extends AppCompatActivity {
      */
     private boolean beforeMessageFromWebView(String[] messageAndParam) {
         switch (messageAndParam[0]) {
+            case "BYE":
+                finishWithProgress();
+                return false;
             case "PRINT":
                 mainHandler.post(new Runnable() {
                     @Override
