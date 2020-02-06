@@ -66,7 +66,7 @@ function copyTextToClipboard() {
 			expect(marker).to.have.lengthOf(2);
 			var XPos =  (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;
 			var YPos = marker[0].getBoundingClientRect().top - 5;
-			cy.get('body').rightclick(XPos, YPos);
+			longPressOnDocument(XPos, YPos);
 		});
 
 	// Execute copy
@@ -101,7 +101,7 @@ function copyTableToClipboard() {
 
 			var XPos = startPos.right + 10;
 			var YPos = endPos.top - 10;
-			cy.get('body').rightclick(XPos, YPos);
+			longPressOnDocument(XPos, YPos);
 		});
 
 	// Execute copy
@@ -161,9 +161,34 @@ function detectLOCoreVersion() {
 	}
 }
 
+function longPressOnDocument(posX, posY) {
+	cy.get('#document-container')
+		.then(function(items) {
+			expect(items).have.length(1);
+
+			var eventOptions = {
+				force: true,
+				button: 0,
+				pointerType: 'mouse',
+				x: posX - items[0].getBoundingClientRect().left,
+				y: posY - items[0].getBoundingClientRect().top
+			};
+
+			cy.get('.leaflet-pane.leaflet-map-pane')
+				.trigger('pointerdown', eventOptions)
+				.trigger('pointermove', eventOptions);
+
+			cy.wait(600);
+
+			cy.get('.leaflet-pane.leaflet-map-pane')
+				.trigger('pointerup', eventOptions);
+		});
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.selectAllMobile = selectAllMobile;
 module.exports.copyTextToClipboard = copyTextToClipboard;
 module.exports.copyTableToClipboard = copyTableToClipboard;
 module.exports.afterAll = afterAll;
 module.exports.beforeAllMobile = beforeAllMobile;
+module.exports.longPressOnDocument = longPressOnDocument;

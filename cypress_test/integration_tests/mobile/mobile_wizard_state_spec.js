@@ -104,7 +104,7 @@ describe('Mobile wizard state tests', function() {
 			.should('have.class', 'checked');
 
 		// Open context wizard by right click on document
-		cy.get('#document-container').rightclick();
+		helper.longPressOnDocument(40, 40);
 		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon')
 			.contains('Paste');
 

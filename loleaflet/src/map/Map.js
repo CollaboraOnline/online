@@ -128,7 +128,7 @@ L.Map = L.Evented.extend({
 
 		this.addHandler('keyboard', L.Map.Keyboard);
 		this.addHandler('dragging', L.Map.Drag);
-		if (L.Browser.touch && !L.Browser.pointer) {
+		if ((L.Browser.touch && !L.Browser.pointer) || (L.Browser.cypressTest && L.Browser.mobile)) {
 			this.dragging.disable();
 			this.options.inertia = false;
 			this.dragging._draggable._manualDrag = true;
@@ -909,7 +909,7 @@ L.Map = L.Evented.extend({
 	// accept key input, and show the virtual keyboard.
 	focus: function (acceptInput) {
 		this._textInput.focus();
-		if (window.mode.isMobile() && acceptInput !== true && !L.Browser.cypressTest)
+		if (window.mode.isMobile() && acceptInput !== true)
 			this.blur();
 	},
 

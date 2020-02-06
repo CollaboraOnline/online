@@ -8,11 +8,6 @@ describe('Insert objects via insertion wizard.', function() {
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
-
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
 	});
 
 	afterEach(function() {
@@ -20,6 +15,10 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert local image.', function() {
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+
 		// We check whether the entry is there
 		cy.get('.menu-entry-with-icon')
 			.contains('Local Image...');
@@ -27,6 +26,10 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert comment.', function() {
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+
 		cy.get('.menu-entry-with-icon')
 			.contains('Comment')
 			.click();
@@ -44,6 +47,10 @@ describe('Insert objects via insertion wizard.', function() {
 		// TODO: Select all does not work with core/master
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
+
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
 
 		// Open Table submenu
 		cy.get('.menu-entry-with-icon.flex-fullwidth')
@@ -75,6 +82,10 @@ describe('Insert objects via insertion wizard.', function() {
 		// TODO: Select all does not work with core/master
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
+
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
 
 		// Open Table submenu
 		cy.get('.menu-entry-with-icon.flex-fullwidth')
@@ -111,12 +122,17 @@ describe('Insert objects via insertion wizard.', function() {
 	it('Insert header.', function() {
 		// Get the blinking cursor pos
 		cy.get('#document-container').type('xxxx');
+
 		var cursorOrigLeft = 0;
 		cy.get('.blinking-cursor')
 			.then(function(cursor) {
 				expect(cursor).to.have.lengthOf(1) ;
 				cursorOrigLeft = cursor[0].getBoundingClientRect().left;
 			});
+
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
 
 		// Open header/footer submenu
 		cy.get('.sub-menu-title')
@@ -155,6 +171,10 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+
 		// Open header/footer submenu
 		cy.get('.sub-menu-title')
 			.contains('Header and Footer')
@@ -192,6 +212,10 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+
 		// Insert footnote
 		cy.get('.menu-entry-with-icon')
 			.contains('Footnote')
@@ -216,6 +240,10 @@ describe('Insert objects via insertion wizard.', function() {
 				expect(cursor).to.have.lengthOf(1);
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
+
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
 
 		// Insert endnote
 		cy.get('.menu-entry-with-icon')
@@ -242,6 +270,10 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+
 		// Insert endnote
 		cy.get('.menu-entry-with-icon')
 			.contains('Page Break')
@@ -267,6 +299,10 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+
 		// Do insertion
 		cy.get('.menu-entry-with-icon')
 			.contains('Column Break')
@@ -283,6 +319,10 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+
 		// Open hyperlink dialog
 		cy.get('.menu-entry-with-icon')
 			.contains('Hyperlink...')
@@ -298,6 +338,10 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert shape.', function() {
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+
 		// Do insertion
 		cy.get('.menu-entry-with-icon')
 			.contains('Shape')
