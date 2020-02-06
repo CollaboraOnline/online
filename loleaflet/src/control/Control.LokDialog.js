@@ -158,6 +158,20 @@ L.Control.LokDialog = L.Control.extend({
 		return (id in this._dialogs) && this._dialogs[id].isCalcInputBar;
 	},
 
+	_isSelectionHandle: function(el) {
+		return L.DomUtil.hasClass(el, 'leaflet-selection-marker-start')	||
+			L.DomUtil.hasClass(el, 'leaflet-selection-marker-end');
+	},
+
+	_isSelectionHandleDragged: function() {
+		if (this._calcInputBar) {
+			var selectionInfo = this._calcInputBar.textSelection;
+			return (selectionInfo.startHandle && selectionInfo.startHandle.isDragged) ||
+				(selectionInfo.endHandle && selectionInfo.endHandle.isDragged);
+		}
+		return false;
+	},
+
 	// Given a prefixed dialog id like 'lokdialog-323', gives a raw id, 323.
 	_toIntId: function(id) {
 		if (typeof(id) === 'string')
@@ -412,8 +426,16 @@ L.Control.LokDialog = L.Control.extend({
 		var strId = this._toIntId(dlgId);
 		var selections = this._dialogs[strId].textSelection.rectangles;
 		L.DomUtil.empty(selections);
-		if (!rectangles)
+		var handles = this._dialogs[strId].textSelection.handles;
+		var startHandle = this._dialogs[strId].textSelection.startHandle;
+		var endHandle = this._dialogs[strId].textSelection.endHandle;
+
+		if (!rectangles || rectangles.length < 1) {
+			if (!startHandle.isDragged && !endHandle.isDragged) {
+				L.DomUtil.empty(handles);
+			}
 			return;
+		}
 
 		for (var i = 0; i < rectangles.length; ++i) {
 			var container = L.DomUtil.create('div', 'leaflet-text-selection-container', selections);
@@ -424,6 +446,117 @@ L.Control.LokDialog = L.Control.extend({
 			L.DomUtil.setStyle(container, 'left',  rect.x + 'px');
 			L.DomUtil.setStyle(container, 'top', rect.y + 'px');
 		}
+
+		var startRect = rectangles[0];
+		var endRect  = rectangles[rectangles.length - 1];
+		if (startRect.width < 1 || endRect.width < 1)
+			return;
+		startRect = {x: startRect.x, y: startRect.y, width: 1, height: startRect.height};
+		endRect = {x: endRect.x + endRect.width - 1, y: endRect.y, width: 1, height: endRect.height};
+		var startPos = L.point(startRect.x, startRect.y + startRect.height);
+		startPos = startPos.subtract(L.point(0, 2));
+		startHandle.lastPos = startPos;
+		startHandle.rowHeight = startRect.height;
+		var endPos = L.point(endRect.x, endRect.y + endRect.height);
+		endPos = endPos.subtract(L.point(0, 2));
+		endHandle.lastPos = endPos;
+		endHandle.rowHeight = endRect.height;
+
+		if (!startHandle.isDragged) {
+			if (!handles.children || !handles.children[0])
+				handles.appendChild(startHandle);
+			//console.log('lokdialog: _updateTextSelection: startPos: x: ' + startPos.x + ', y: ' + startPos.y);
+			startHandle.pos = startPos;
+			L.DomUtil.setStyle(startHandle, 'left',  startPos.x + 'px');
+			L.DomUtil.setStyle(startHandle, 'top', startPos.y + 'px');
+		}
+
+		if (!endHandle.isDragged) {
+			if (!handles.children || !handles.children[1])
+				handles.appendChild(endHandle);
+			//console.log('lokdialog: _updateTextSelection: endPos: x: ' + endPos.x + ', y: ' + endPos.y);
+			endHandle.pos = endPos;
+			L.DomUtil.setStyle(endHandle, 'left',  endPos.x + 'px');
+			L.DomUtil.setStyle(endHandle, 'top', endPos.y + 'px');
+		}
+	},
+
+	_onSelectionHandleDragStart: function (e) {
+		L.DomEvent.stop(e);
+		var handles = e.target.parentNode;
+		var mousePos = L.DomEvent.getMousePosition(e.pointers ? e.srcEvent : e, handles);
+		e.target.isDragged = true;
+		e.target.dragStartPos = mousePos;
+
+		if (!handles.lastDraggedHandle)
+			handles.lastDraggedHandle = 'end';
+		var swap = handles.lastDraggedHandle !== e.target.type;
+		if (swap) {
+			handles.lastDraggedHandle = e.target.type;
+			var pos = e.target.pos;
+			this._map._socket.sendMessage('windowselecttext id=' + e.target.dialogId +
+				                          ' swap=true x=' + pos.x + ' y=' + pos.y);
+		}
+	},
+
+	_onSelectionHandleDrag: function (e) {
+		var handles = this._calcInputBar.textSelection.handles;
+		var startHandle = handles.children[0];
+		var endHandle = handles.children[1];
+		if (!endHandle || !startHandle)
+			return;
+
+		var draggedHandle;
+		if (startHandle.isDragged)
+			draggedHandle = startHandle;
+		else if (endHandle.isDragged)
+			draggedHandle = endHandle;
+		if (!draggedHandle)
+			return;
+
+		var dragEnd = e.type === 'mouseup' || e.type === 'mouseout' || e.type === 'panend';
+		if (dragEnd)
+			draggedHandle.isDragged = false;
+		var mousePos = L.DomEvent.getMousePosition(e.pointers ? e.srcEvent : e, handles);
+		var pos = draggedHandle.pos.add(mousePos.subtract(draggedHandle.dragStartPos));
+		var maxX = parseInt(handles.style.width) - 5;
+		var maxY = parseInt(handles.style.height) - 5;
+		if (pos.x < handles.offsetX)
+			pos.x = dragEnd ? draggedHandle.lastPos.x : handles.offsetX;
+		else if (mousePos.x > maxX)
+			pos.x = dragEnd ? draggedHandle.lastPos.x : maxX;
+		if (pos.y < handles.offsetY)
+			pos.y = dragEnd ? draggedHandle.lastPos.y : handles.offsetY;
+		else if (mousePos.y > maxY)
+			pos.y = dragEnd ? draggedHandle.lastPos.y : maxY;
+
+		if (Math.abs(pos.y - draggedHandle.lastPos.y) < 6) {
+			pos.y = draggedHandle.lastPos.y;
+		}
+
+		if (draggedHandle.type === 'end') {
+			if (startHandle.pos.y - pos.y > 2)
+				pos.y = draggedHandle.lastPos.y;
+			if (startHandle.pos.y - pos.y > -2 && pos.x - startHandle.pos.x < 2)
+				pos = draggedHandle.lastPos;
+		}
+		if (draggedHandle.type === 'start') {
+			if (pos.y - endHandle.pos.y > 2)
+				pos.y = draggedHandle.lastPos.y;
+			if (pos.y - endHandle.pos.y > -endHandle.rowHeight && endHandle.pos.x - pos.x < 2)
+				pos = draggedHandle.lastPos;
+		}
+
+		var handlePos = pos;
+		if (dragEnd) {
+			handlePos = draggedHandle.lastPos;
+			draggedHandle.pos = pos;
+		}
+
+		L.DomUtil.setStyle(draggedHandle, 'left', handlePos.x + 'px');
+		L.DomUtil.setStyle(draggedHandle, 'top', handlePos.y + 'px');
+		this._map._socket.sendMessage('windowselecttext id=' + draggedHandle.dialogId +
+			                          ' swap=false x=' + pos.x + ' y=' + pos.y);
 	},
 
 	focus: function(dlgId, acceptInput) {
@@ -615,6 +748,24 @@ L.Control.LokDialog = L.Control.extend({
 		var textSelectionLayer = L.DomUtil.create('div', 'inputbar_selection_layer', container);
 		var selections =  L.DomUtil.create('div', 'inputbar_selections', textSelectionLayer);
 
+		// create text selection handles
+		var handles =  L.DomUtil.create('div', 'inputbar_selection_handles', textSelectionLayer);
+		L.DomUtil.setStyle(handles, 'position', 'absolute');
+		L.DomUtil.setStyle(handles, 'background', 'transparent');
+		this._setCanvasWidthHeight(handles, width, height);
+		handles.offsetX = 48;
+		handles.offsetY = 0;
+		var startHandle = document.createElement('div');
+		L.DomUtil.addClass(startHandle, 'leaflet-selection-marker-start');
+		startHandle.dialogId = id;
+		startHandle.type = 'start';
+		L.DomEvent.on(startHandle, 'mousedown', this._onSelectionHandleDragStart, this);
+		var endHandle = document.createElement('div');
+		L.DomUtil.addClass(endHandle, 'leaflet-selection-marker-end');
+		endHandle.dialogId = id;
+		endHandle.type = 'end';
+		L.DomEvent.on(endHandle, 'mousedown', this._onSelectionHandleDragStart, this);
+
 		// Don't show the inputbar until we get the contents.
 		$(container).parent().hide();
 
@@ -629,14 +780,15 @@ L.Control.LokDialog = L.Control.extend({
 			width: width,
 			height: height,
 			cursor: null,
-			textSelection: {rectangles: selections},
+			textSelection: {rectangles: selections, handles: handles, startHandle: startHandle, endHandle: endHandle},
 			child: null, // never used for inputbar
 			title: null  // never used for inputbar
 		};
 
 		this._createDialogCursor(strId);
 
-		this._postLaunch(id, container, canvas);
+		this._postLaunch(id, container, handles);
+		this._setupCalcInputBarGestures(id, handles, startHandle, endHandle);
 
 		this._calcInputBar = this._dialogs[id];
 		console.log('_launchCalcInputBar: end');
@@ -759,16 +911,17 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_postLaunch: function(id, panelContainer, panelCanvas) {
+		if (window.mode.isDesktop()) {
+			this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
 
-		this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
-
-		L.DomEvent.on(panelContainer, 'mouseleave', function() {
-			// Move the mouse off-screen when we leave the sidebar
-			// so we don't leave edge-elements highlighted as if
-			// the mouse is still over them.
-			this._map.lastActiveTime = Date.now();
-			this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
-		}, this);
+			L.DomEvent.on(panelContainer, 'mouseleave', function () {
+				// Move the mouse off-screen when we leave the sidebar
+				// so we don't leave edge-elements highlighted as if
+				// the mouse is still over them.
+				this._map.lastActiveTime = Date.now();
+				this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
+			}, this);
+		}
 
 		// Render window.
 		this._sendPaintWindowRect(id);
@@ -777,13 +930,32 @@ L.Control.LokDialog = L.Control.extend({
 	_setupWindowEvents: function(id, canvas/*, dlgInput*/) {
 		L.DomEvent.on(canvas, 'contextmenu', L.DomEvent.preventDefault);
 		L.DomEvent.on(canvas, 'mousemove', function(e) {
-			this._postWindowMouseEvent('move', id, e.offsetX, e.offsetY, 1, 0, 0);
+			if (this._isSelectionHandleDragged()) {
+				this._onSelectionHandleDrag(e);
+				return;
+			}
+			var pos = this._isSelectionHandle(e.target) ? L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
+			this._postWindowMouseEvent('move', id, pos.x, pos.y, 1, 0, 0);
 			// Keep map active while user is playing with sidebar/dialog.
 			this._map.lastActiveTime = Date.now();
 		}, this);
 
+		L.DomEvent.on(canvas, 'mouseleave', function(e) {
+			if (this._isSelectionHandleDragged()) {
+				this._onSelectionHandleDrag(e);
+			}
+		}, this);
+
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stop(e);
+			if (this._isSelectionHandleDragged() && e.type === 'mouseup') {
+				this._onSelectionHandleDrag(e);
+				return;
+			}
+
+			if (canvas.lastDraggedHandle)
+				canvas.lastDraggedHandle = null;
+
 			var buttons = 0;
 			if (this._map['mouse']) {
 				buttons |= e.button === this._map['mouse'].JSButtons.left ? this._map['mouse'].LOButtons.left : 0;
@@ -792,9 +964,18 @@ L.Control.LokDialog = L.Control.extend({
 			} else {
 				buttons = 1;
 			}
+
+			var modifier = 0;
+			var shift = e.shiftKey ? this._map.keyboard.keyModifier.shift : 0;
+			var ctrl = e.ctrlKey ? this._map.keyboard.keyModifier.ctrl : 0;
+			var alt = e.altKey ? this._map.keyboard.keyModifier.alt : 0;
+			var cmd = e.metaKey ? this._map.keyboard.keyModifier.ctrlMac : 0;
+			modifier = shift | ctrl | alt | cmd;
+
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
-			this._postWindowMouseEvent(lokEventType, id, e.offsetX, e.offsetY, 1, buttons, 0);
+			var pos = this._isSelectionHandle(e.target) ? L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
+			this._postWindowMouseEvent(lokEventType, id, pos.x, pos.y, 1, buttons, modifier);
 			this._map.setWinId(id);
 			//dlgInput.focus();
 		}, this);
@@ -804,6 +985,48 @@ L.Control.LokDialog = L.Control.extend({
 			// focus change - therefore the event is stopped and preventDefault()ed.
 			L.DomEvent.stop(ev);
 		});
+	},
+
+	_setupCalcInputBarGestures: function(id, canvas, startHandle, endHandle) {
+		if (window.mode.isDesktop())
+			return;
+
+		var hammerContent = new Hammer.Manager(canvas, {});
+		var that = this;
+		var singleTap = new Hammer.Tap({event: 'singletap' });
+		var doubleTap = new Hammer.Tap({event: 'doubletap', taps: 2 });
+		var pan = new Hammer.Pan({event: 'pan' });
+		hammerContent.add([doubleTap, singleTap, pan]);
+		singleTap.requireFailure(doubleTap);
+
+
+		hammerContent.on('singletap doubletap', function(ev) {
+			var handles = that._calcInputBar.textSelection.handles;
+			handles.lastDraggedHandle = null;
+			var startHandle = handles.children[0];
+			var endHandle = handles.children[1];
+			if (startHandle)
+				startHandle.isDragged = false;
+			if (endHandle)
+				endHandle.isDragged = false;
+
+			var point = L.DomEvent.getMousePosition(ev.srcEvent, handles);
+
+			that._postWindowMouseEvent('buttondown', id, point.x, point.y, 1, 1, 0);
+			that._postWindowMouseEvent('buttonup', id, point.x, point.y, 1, 1, 0);
+			if (ev.type === 'doubletap') {
+				that._postWindowMouseEvent('buttondown', id, point.x, point.y, 1, 1, 0);
+				that._postWindowMouseEvent('buttonup', id, point.x, point.y, 1, 1, 0);
+			}
+		});
+
+		hammerContent.on('panmove panend', L.bind(this._onSelectionHandleDrag, this));
+
+		var hammerEndHandle = new Hammer.Manager(endHandle, {recognizers:[[Hammer.Pan]]});
+		hammerEndHandle.on('panstart',  L.bind(this._onSelectionHandleDragStart, this));
+
+		var hammerStartHandle = new Hammer.Manager(startHandle, {recognizers:[[Hammer.Pan]]});
+		hammerStartHandle.on('panstart',  L.bind(this._onSelectionHandleDragStart, this));
 	},
 
 	_setupGestures: function(dialogContainer, id, canvas) {

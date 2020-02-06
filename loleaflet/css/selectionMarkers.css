@@ -1,4 +1,5 @@
 .leaflet-selection-marker-start {
+	position: absolute;
 	margin-left: -28px;
 	width: 30px;
 	height: 44px;
@@ -6,6 +7,7 @@
 	}
 
 .leaflet-selection-marker-end {
+	position: absolute;
 	margin-left: -2px;
 	width: 30px;
 	height: 44px;

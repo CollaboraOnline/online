@@ -417,6 +417,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "savetostorage" &&
              tokens[0] != "selectgraphic" &&
              tokens[0] != "selecttext" &&
+             tokens[0] != "windowselecttext" &&
              tokens[0] != "setclientpart" &&
              tokens[0] != "selectclientpart" &&
              tokens[0] != "moveselectedclientparts" &&

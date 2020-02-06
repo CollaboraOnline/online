@@ -285,6 +285,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens[0] == "windowgesture" ||
                tokens[0] == "uno" ||
                tokens[0] == "selecttext" ||
+               tokens[0] == "windowselecttext" ||
                tokens[0] == "selectgraphic" ||
                tokens[0] == "resetselection" ||
                tokens[0] == "saveas" ||
@@ -379,7 +380,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens[0] == "selecttext")
         {
-            return selectText(buffer, length, tokens);
+            return selectText(buffer, length, tokens, LokEventTargetEnum::Document);
+        }
+        else if (tokens[0] == "windowselecttext")
+        {
+            return selectText(buffer, length, tokens, LokEventTargetEnum::Window);
         }
         else if (tokens[0] == "selectgraphic")
         {
@@ -1478,25 +1483,55 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const std:
     return true;
 }
 
-bool ChildSession::selectText(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::selectText(const char* /*buffer*/, int /*length*/,
+                              const std::vector<std::string>& tokens,
+                              const LokEventTargetEnum target)
 {
+    std::string swap;
+    unsigned winId = 0;
     int type, x, y;
-    if (tokens.size() != 4 ||
-        !getTokenKeyword(tokens[1], "type",
-                         {{"start", LOK_SETTEXTSELECTION_START},
-                          {"end", LOK_SETTEXTSELECTION_END},
-                          {"reset", LOK_SETTEXTSELECTION_RESET}},
-                         type) ||
-        !getTokenInteger(tokens[2], "x", x) ||
-        !getTokenInteger(tokens[3], "y", y))
+    if (target == LokEventTargetEnum::Window)
     {
-        sendTextFrame("error: cmd=selecttext kind=syntax");
-        return false;
+        if (tokens.size() != 5 ||
+            !getTokenUInt32(tokens[1], "id", winId) ||
+            !getTokenString(tokens[2], "swap", swap) ||
+            (swap != "true" && swap != "false") ||
+            !getTokenInteger(tokens[3], "x", x) ||
+            !getTokenInteger(tokens[4], "y", y))
+        {
+            LOG_ERR("error: cmd=windowselecttext kind=syntax");
+            return false;
+        }
+    }
+    else if (target == LokEventTargetEnum::Document)
+    {
+        if (tokens.size() != 4 ||
+            !getTokenKeyword(tokens[1], "type",
+                             {{"start", LOK_SETTEXTSELECTION_START},
+                              {"end", LOK_SETTEXTSELECTION_END},
+                              {"reset", LOK_SETTEXTSELECTION_RESET}},
+                             type) ||
+            !getTokenInteger(tokens[2], "x", x) ||
+            !getTokenInteger(tokens[3], "y", y))
+        {
+            sendTextFrame("error: cmd=selecttext kind=syntax");
+            return false;
+        }
     }
 
     getLOKitDocument()->setView(_viewId);
 
-    getLOKitDocument()->setTextSelection(type, x, y);
+    switch (target)
+    {
+    case LokEventTargetEnum::Document:
+        getLOKitDocument()->setTextSelection(type, x, y);
+        break;
+    case LokEventTargetEnum::Window:
+        getLOKitDocument()->setWindowTextSelection(winId, swap == "true", x, y);
+        break;
+    default:
+        assert(false && "Unsupported select text target type");
+    }
 
     return true;
 }
