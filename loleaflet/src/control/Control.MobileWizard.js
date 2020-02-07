@@ -109,6 +109,8 @@ L.Control.MobileWizard = L.Control.extend({
 		if (!this.map.hasFocus()) {
 			this.map.focus();
 		}
+
+		this._updateMapSize();
 	},
 
 	_hideKeyboard: function() {
@@ -268,6 +270,11 @@ L.Control.MobileWizard = L.Control.extend({
 		}, 400);
 	},
 
+	_updateMapSize: function() {
+		window.updateMapSizeForWizard = this._map.getDocType() === 'presentation' && this._isActive;
+		this._map.invalidateSize();
+	},
+
 	_onMobileWizard: function(data) {
 		if (data) {
 			var isSidebar = (data.children && data.children.length >= 1 &&
@@ -333,6 +340,8 @@ L.Control.MobileWizard = L.Control.extend({
 				this._goToPath(currentPath);
 				this._scrollToPosition(lastScrollPosition);
 			}
+
+			this._updateMapSize();
 		}
 	},
 
