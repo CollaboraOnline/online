@@ -88,9 +88,6 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#color-picker-0-basic-color-7')
 			.click();
 
-		cy.get('#color-picker-0-tint-3')
-			.click();
-
 		cy.get('.w2ui-tb-image.w2ui-icon.textcolor')
 			.should('have.attr', 'style', 'box-shadow: rgb(255, 255, 255) 0px -2px inset, rgb(0, 0, 255) 0px -6px inset;');
 
@@ -105,9 +102,6 @@ describe('Pushing bottom toolbar items.', function() {
 			.click();
 
 		cy.get('#color-picker-0-basic-color-9')
-			.click();
-
-		cy.get('#color-picker-0-tint-3')
 			.click();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.backcolor')

@@ -200,7 +200,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#color-picker-2-basic-color-5')
 			.click();
 
-		cy.get('#color-picker-2-tint-3')
+		cy.get('#color-picker-2-tint-2')
 			.click();
 
 		cy.get('#mobile-wizard-back')
@@ -215,7 +215,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
 				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['background']).to.be.equal('rgb(0, 255, 0)');
+				expect(item[0].style['background']).to.be.equal('rgb(106, 168, 79)');
 			});
 	});
 

@@ -196,7 +196,7 @@ describe('Apply font changes.', function() {
 		cy.get('#color-picker-0-basic-color-5')
 			.click();
 
-		cy.get('#color-picker-0-tint-3')
+		cy.get('#color-picker-0-tint-2')
 			.click();
 
 		cy.get('#mobile-wizard-back')
@@ -211,7 +211,7 @@ describe('Apply font changes.', function() {
 		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
-			.should('have.attr', 'color', '#00ff00');
+			.should('have.attr', 'color', '#6aa84f');
 	});
 
 	it('Apply highlight color.', function() {
@@ -222,7 +222,7 @@ describe('Apply font changes.', function() {
 		cy.get('#color-picker-1-basic-color-5')
 			.click();
 
-		cy.get('#color-picker-1-tint-3')
+		cy.get('#color-picker-1-tint-4')
 			.click();
 
 		cy.get('#mobile-wizard-back')
@@ -237,7 +237,7 @@ describe('Apply font changes.', function() {
 		helper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font span')
-			.should('have.attr', 'style', 'background: #00ff00');
+			.should('have.attr', 'style', 'background: #93c47d');
 	});
 
 	it('Apply superscript.', function() {
