@@ -276,12 +276,15 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		// Do a new selection
+		helper.selectAllMobile();
 
-		cy.get('#copy-paste-container title')
-			.should('exist');
-		cy.get('#copy-paste-container table')
-			.should('not.exist');
+		// Check markers are in the same row (we have text selection only)
+		cy.get('.leaflet-marker-icon')
+			.then(function(markers) {
+				expect(markers).to.have.lengthOf(2);
+				expect(markers[0].getBoundingClientRect().top).to.equal(markers[1].getBoundingClientRect().top);
+			});
 	});
 
 	it('Merge cells.', function() {
@@ -292,7 +295,11 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		cy.get('body').type('{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		// Select All + left arrow -> we have the cursor in the table
+		helper.selectAllMobile();
+		cy.get('body').type('{leftarrow}');
+
+		cy.get('body').type('{shift}{downarrow}{rightarrow}');
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -306,9 +313,6 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#MergeCells')
 			.click();
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
-			.should('not.exist');
-
 		// Close mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
@@ -317,9 +321,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
-			.should('have.length', 1);
+			.should('have.length', 2);
 		cy.get('#copy-paste-container td')
-			.should('have.length', 1);
+			.should('have.length', 3);
 	});
 
 	it('Change row height.', function() {
@@ -404,6 +408,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
+		// Select All + left arrow -> we have the cursor in the table
+		helper.selectAllMobile();
+		cy.get('body').type('{leftarrow}');
+
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		// Open mobile wizard
@@ -435,6 +443,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			return;
 
 		before('table_with_text.odt');
+
+		// Select All + left arrow -> we have the cursor in the table
+		helper.selectAllMobile();
+		cy.get('body').type('{leftarrow}');
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
@@ -478,6 +490,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
+		// Select All + left arrow -> we have the cursor in the table
+		helper.selectAllMobile();
+		cy.get('body').type('{leftarrow}');
+
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		// Open mobile wizard
@@ -520,6 +536,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
+		// Select All + left arrow -> we have the cursor in the table
+		helper.selectAllMobile();
+		cy.get('body').type('{leftarrow}');
+
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		// Open mobile wizard
@@ -556,6 +576,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			return;
 
 		before('table_with_text.odt');
+
+		// Select All + left arrow -> we have the cursor in the table
+		helper.selectAllMobile();
+		cy.get('body').type('{leftarrow}');
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
@@ -596,6 +620,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			return;
 
 		before('table_with_text.odt');
+
+		// Select All + left arrow -> we have the cursor in the table
+		helper.selectAllMobile();
+		cy.get('body').type('{leftarrow}');
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 

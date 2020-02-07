@@ -54,6 +54,9 @@ function selectAllMobile() {
 	cy.get('.ui-header.level-1 .menu-entry-with-icon')
 		.contains('Select All')
 		.click();
+
+	cy.get('.leaflet-marker-icon')
+		.should('exist');
 }
 
 function copyTextToClipboard() {
