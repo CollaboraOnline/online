@@ -8,7 +8,6 @@
  */
 
 #include <config.h>
-
 #include "LOOLWSD.hpp"
 #include "ProofKey.hpp"
 
@@ -37,6 +36,7 @@
 // number of child processes, each which handles a viewing (editing) session for one document.
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <sysexits.h>
 
 #include <sys/stat.h>
@@ -84,7 +84,6 @@ using Poco::Net::PartHandler;
 #include <Poco/DOM/NodeList.h>
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/DirectoryIterator.h>
-#include <Poco/Environment.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
@@ -157,7 +156,6 @@ using Poco::Net::PartHandler;
 using namespace LOOLProtocol;
 
 using Poco::DirectoryIterator;
-using Poco::Environment;
 using Poco::Exception;
 using Poco::File;
 using Poco::Net::HTTPRequest;
@@ -3351,7 +3349,7 @@ int LOOLWSD::innerMain()
 
 #ifdef __linux
     // down-pay all the forkit linking cost once & early.
-    Environment::set("LD_BIND_NOW", "1");
+    setenv("LD_BIND_NOW", "1", 1);
 
 #if !MOBILEAPP
     HostIdentifier = Util::rng::getHexString(8);
