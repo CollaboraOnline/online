@@ -679,6 +679,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
+					{uno: '.uno:Text'},
 					{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
 						{uno: '.uno:InsertDateFieldFix'},
 						{uno: '.uno:InsertDateFieldVar'},
