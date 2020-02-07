@@ -42,6 +42,10 @@ L.Map.TouchGesture = L.Handler.extend({
 				time: 500
 			});
 
+			this._hammer.get('swipe').set({
+				threshold: 5
+			});
+
 			var singleTap = this._hammer.get('tap');
 			var doubleTap = this._hammer.get('doubletap');
 			var tripleTap = new Hammer.Tap({event: 'tripletap', taps: 3 });
@@ -93,6 +97,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.on('pinchmove', L.bind(this._onPinch, this));
 		this._hammer.on('pinchend', L.bind(this._onPinchEnd, this));
 		this._hammer.on('tripletap', L.bind(this._onTripleTap, this));
+		this._hammer.on('swipe', L.bind(this._onSwipe, this));
 		this._map.on('updatepermission', this._onPermission, this);
 		this._onPermission({perm: this._map._permission});
 	},
@@ -109,6 +114,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._hammer.off('doubletap', L.bind(this._onDoubleTap, this));
 		this._hammer.off('press', L.bind(this._onPress, this));
 		this._hammer.off('tripletap', L.bind(this._onTripleTap, this));
+		this._hammer.off('swipe', L.bind(this._onSwipe, this));
 		this._map.off('updatepermission', this._onPermission, this);
 	},
 
@@ -359,6 +365,7 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPanStart: function (e) {
+		L.Util.cancelAnimFrame(this.autoscrollAnimReq);
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
@@ -546,5 +553,55 @@ L.Map.TouchGesture = L.Handler.extend({
 		};
 
 		return fakeEvt;
+	},
+
+	// Code and maths for the ergonomic scrolling is inspired formul
+	// https://ariya.io/2013/11/javascript-kinetic-scrolling-part-2
+	// Some constants are changed based on the testing/experimenting/trial-error
+
+	_onSwipe: function (e) {
+		this._velocity = new L.Point(e.velocityX, e.velocityY);
+		this._amplitude = this._velocity.multiplyBy(32);
+		this._newPos = L.DomUtil.getPosition(this._map._mapPane);
+		var evt = this._constructFakeEvent({
+			clientX: e.center.x,
+			clientY: e.center.y,
+			target: this._map._mapPane
+		},'mousedown');
+		this._startSwipePoint = new L.Point(evt.clientX, evt.clientY);
+		this._map.dragging._draggable._onDown(evt);
+		this._timeStamp = Date.now();
+		L.Util.requestAnimFrame(this._autoscroll, this, true);
+	},
+
+	_autoscroll: function() {
+		var elapsed, delta;
+		elapsed = Date.now() - this._timeStamp;
+		delta = this._amplitude.multiplyBy(Math.exp(-elapsed / 325));
+		var e = this._constructFakeEvent({
+			clientX: delta.x + this._startSwipePoint.x,
+			clientY: delta.y + this._startSwipePoint.y,
+			target: this._map._mapPane,
+		}, 'mousemove');
+		e.autoscroll = true;
+		if (delta.x > 0.2 || delta.x < -0.2 || delta.y > 0.2 || delta.y < -0.2) {
+			if (this._map.getDocSize().x < this._map.getSize().x) {
+				//don't scroll horizontally if document fits the view
+				delta.x = 0;
+			}
+			if (this._map.getDocSize().y < this._map.getSize().y) {
+				//don't scroll vertically if document fits the view
+				delta.y = 0;
+			}
+
+			this._map.dragging._draggable._startPoint = this._startSwipePoint;
+			this._map.dragging._draggable._startPos = this._newPos;
+			this._newPos._add(delta);
+			this._map.dragging._draggable._onMove(e);
+			this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);
+		}
+		else {
+			this._map.dragging._draggable._onUp(e);
+		}
 	}
 });
