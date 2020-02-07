@@ -175,6 +175,7 @@ task createRCfiles {
     def fundamentalrc = file('src/main/assets/program/fundamentalrc')
     def bootstraprc = file('src/main/assets/program/bootstraprc')
     def unorc = file('src/main/assets/program/unorc')
+    def lounorc = file('src/main/assets/program/lounorc')
     def versionrc = file('src/main/assets/program/versionrc')
 
     outputs.files sofficerc, fundamentalrc, unorc, bootstraprc, versionrc
@@ -196,6 +197,13 @@ BRAND_BASE_DIR=file:///assets
 BRAND_SHARE_SUBDIR=share
 CONFIGURATION_LAYERS=xcsxcu:${BRAND_BASE_DIR}/share/registry res:${BRAND_BASE_DIR}/share/registry
 URE_BIN_DIR=file:///assets/ure/bin/dir/nothing-here/we-can/exec-anyway
+BAK_EXTENSIONS=${$ORIGIN/lounorc:TMP_EXTENSIONS}
+BUNDLED_EXTENSIONS=${$ORIGIN/lounorc:BUNDLED_EXTENSIONS}
+BUNDLED_EXTENSIONS_USER=${$ORIGIN/lounorc:BUNDLED_EXTENSIONS_USER}
+SHARED_EXTENSIONS_USER=${$ORIGIN/lounorc:SHARED_EXTENSIONS_USER}
+UNO_SHARED_PACKAGES_CACHE=${$ORIGIN/lounorc:UNO_SHARED_PACKAGES_CACHE}
+TMP_EXTENSIONS=${$ORIGIN/lounorc:TMP_EXTENSIONS}
+UNO_USER_PACKAGES_CACHE=${$ORIGIN/lounorc:UNO_USER_PACKAGES_CACHE}
 '''.stripIndent()
 
         bootstraprc.text = '''\
@@ -210,6 +218,22 @@ UserInstallation=file://$APP_DATA_DIR
 URE_INTERNAL_LIB_DIR=file://$APP_DATA_DIR/lib/
 UNO_TYPES=file://$APP_DATA_DIR/program/udkapi.rdb file://$APP_DATA_DIR/program/offapi.rdb file://$APP_DATA_DIR/program/oovbaapi.rdb
 UNO_SERVICES=file:///assets/program/services.rdb file:///assets/program/services/services.rdb
+'''.stripIndent()
+
+        lounorc.text = '''\
+[Bootstrap]
+PKG_BundledUnoFile=$BUNDLED_EXTENSIONS_USER/registry/com.sun.star.comp.deployment.component.PackageRegistryBackend/unorc
+PKG_SharedUnoFile=$SHARED_EXTENSIONS_USER/registry/com.sun.star.comp.deployment.component.PackageRegistryBackend/unorc
+PKG_UserUnoFile=$UNO_USER_PACKAGES_CACHE/registry/com.sun.star.comp.deployment.component.PackageRegistryBackend/unorc
+BAK_EXTENSIONS=${$BRAND_BASE_DIR/program/bootstraprc:UserInstallation}/user/extensions/bak
+BUNDLED_EXTENSIONS=$BRAND_BASE_DIR/share/extensions
+BUNDLED_EXTENSIONS_USER=${$BRAND_BASE_DIR/program/bootstraprc:UserInstallation}/user/extensions/bundled
+TMP_EXTENSIONS=${$BRAND_BASE_DIR/program/bootstraprc:UserInstallation}/user/extensions/tmp
+SHARED_EXTENSIONS_USER=${$BRAND_BASE_DIR/program/bootstraprc:UserInstallation}/user/extensions/shared
+UNO_SHARED_PACKAGES=$BRAND_BASE_DIR/share/uno_packages
+UNO_SHARED_PACKAGES_CACHE=$UNO_SHARED_PACKAGES/cache
+UNO_USER_PACKAGES=${$BRAND_BASE_DIR/program/bootstraprc:UserInstallation}/user/uno_packages
+UNO_USER_PACKAGES_CACHE=$UNO_USER_PACKAGES/cache
 '''.stripIndent()
 
         versionrc.text = '''\
