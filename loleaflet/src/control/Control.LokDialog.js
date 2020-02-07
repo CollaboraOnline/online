@@ -911,7 +911,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_postLaunch: function(id, panelContainer, panelCanvas) {
-		if (window.mode.isDesktop()) {
+		if (!this._isCalcInputBar(id) || window.mode.isDesktop()) {
 			this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
 
 			L.DomEvent.on(panelContainer, 'mouseleave', function () {
