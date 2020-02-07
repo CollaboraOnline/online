@@ -905,11 +905,11 @@ L.Map = L.Evented.extend({
 	},
 
 	// Give the focus to the text input.
-	// @acceptInput (on mobile only) true if we want to
+	// @acceptInput (only on "mobile" (= mobile phone) or on iOS and Android in general) true if we want to
 	// accept key input, and show the virtual keyboard.
 	focus: function (acceptInput) {
 		this._textInput.focus();
-		if (window.mode.isMobile() && acceptInput !== true)
+		if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true)
 			this.blur();
 	},
 
