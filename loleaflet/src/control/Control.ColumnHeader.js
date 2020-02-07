@@ -389,12 +389,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._setCanvasWidth();
 		this._setCanvasHeight();
 		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-		// Adjust (column) _headerHeight according to zoomlevel. This is used below to call resize()
-		// where column/corner header are resized. Besides the document container and row header container
-		// are moved up or down as required so that there is no gap/overlap below column header.
-		// Limit zoomScale so that the column header is not too small (unreadable) or too big.
-		this._headerHeight = Math.ceil(this._canvasBaseHeight *
-			this.getHeaderZoomScale(/* lowerBound */ 0.74, /* upperBound */ 1.15));
+		if (this._map._permission === 'edit') {
+			// Adjust (column) _headerHeight according to zoomlevel. This is used below to call resize()
+			// where column/corner header are resized. Besides the document container and row header container
+			// are moved up or down as required so that there is no gap/overlap below column header.
+			// Limit zoomScale so that the column header is not too small (unreadable) or too big.
+			this._headerHeight = Math.ceil(this._canvasBaseHeight *
+				this.getHeaderZoomScale(/* lowerBound */ 0.74, /* upperBound */ 1.15));
+		}
 
 		// Reset state
 		this._current = -1;
