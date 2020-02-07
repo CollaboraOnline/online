@@ -190,6 +190,10 @@ body {
 	z-index: 1001;
 }
 
+#mobile-edit-button.impress {
+	bottom: 70px;
+}
+
 #mobile-edit-button-image {
 	position: relative;
 	left: 16px;

@@ -14,6 +14,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 		if (window.mode.isMobile()) {
 			this._addButton = L.control.mobileSlide();
+			L.DomUtil.addClass(L.DomUtil.get('mobile-edit-button'), 'impress');
 		}
 	},
 
