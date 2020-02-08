@@ -615,8 +615,9 @@ public:
             return;
 
         // FIXME: needs wrapping - until then - keep in sync with ~ConvertToBroker
-        Path tempPath = _convertTo? Path::forDirectory(Poco::TemporaryFile::tempName("/tmp/convert-to") + "/") :
-                                    Path::forDirectory(Poco::TemporaryFile::tempName() + "/");
+        Path tempPath = Path::forDirectory(
+            Poco::TemporaryFile::tempName(_convertTo ? "/tmp/convert-to" : "") + '/');
+        LOG_TRC("Creating temporary convert-to path: " << tempPath.toString());
         File(tempPath).createDirectories();
         chmod(tempPath.toString().c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
 
@@ -2100,7 +2101,6 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
-        // LOG_TRC("***** ClientRequestDispatcher::handleIncomingMessage()");
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
 #if !MOBILEAPP
@@ -2126,6 +2126,7 @@ private:
         if (!socket->parseHeader("Client", startmessage, request, &map))
             return;
 
+        LOG_INF("Handling request: " << request.getURI());
         try
         {
             // We may need to re-write the chunks moving the inBuffer.
@@ -2273,7 +2274,11 @@ private:
         }
         catch (const std::exception& exc)
         {
+            LOG_INF("#" << socket->getFD() << " Exception while processing incoming request: [" <<
+                    LOOLProtocol::getAbbreviatedMessage(socket->getInBuffer()) << "]: " << exc.what());
+
             // Bad request.
+            // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
             std::ostringstream oss;
             oss << "HTTP/1.1 400\r\n"
                 << "Date: " << Util::getHttpTimeNow() << "\r\n"
@@ -2282,10 +2287,6 @@ private:
                 << "\r\n";
             socket->send(oss.str());
             socket->shutdown();
-
-            // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
-            LOG_INF("#" << socket->getFD() << " Exception while processing incoming request: [" <<
-                    LOOLProtocol::getAbbreviatedMessage(socket->getInBuffer()) << "]: " << exc.what());
             return;
         }
 
