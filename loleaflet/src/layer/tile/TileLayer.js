@@ -1009,7 +1009,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._prevCellCursorXY = new L.Point(-1, -1);
 		}
 
-		if (textMsg.match('EMPTY')) {
+		if (textMsg.match('EMPTY') || this._map._permission !== 'edit') {
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
