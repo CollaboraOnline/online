@@ -105,8 +105,8 @@ L.TileLayer.include({
 		marker.on('dragstart drag dragend', this._onTableBorderResizeMarkerDrag, this);
 		return marker;
 	},
-	_updateTableMarkers: function() {
-	// Clean-up first
+
+	_clearTableMarkers: function() {
 		var markerIndex;
 		for (markerIndex = 0; markerIndex < this._tableColumnMarkers.length; markerIndex++) {
 			this._map.removeLayer(this._tableColumnMarkers[markerIndex]);
@@ -129,6 +129,11 @@ L.TileLayer.include({
 		this._tableSelectionRowMarkers = [];
 
 		this._map.removeLayer(this._tableMoveMarker);
+	},
+
+	_updateTableMarkers: function() {
+		// Clean-up first
+		this._clearTableMarkers();
 
 		// Create markers
 		if (this._currentTableData.rows && this._currentTableData.rows.entries.length > 0 && this._currentTableData.columns && this._currentTableData.columns.entries.length > 0) {
@@ -208,6 +213,11 @@ L.TileLayer.include({
 		this._updateTableMarkers();
 	},
 	_onTableSelectedMsg: function (textMsg) {
+		if (this._map._permission !== 'edit') {
+			this._clearTableMarkers();
+			return;
+		}
+
 		if (this._tableMarkersDragged == true) {
 			return;
 		}
@@ -358,7 +368,7 @@ L.TileLayer.include({
 			e.originalEvent.preventDefault();
 	},
 	_onTableMoveMarkerDrag: function (event) {
-		var mouseEvent; 
+		var mouseEvent;
 		if (this._graphicMarker == null)
 			return;
 		if (event.type == 'dragstart') {
