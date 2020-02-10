@@ -67,7 +67,6 @@
     <string name="local_file_system">Локална файлова система</string>
     <string name="local_documents">Директория с документи</string>
     <string name="document_locations">Местоположения на документи</string>
-    <string name="filter_drawings">Рисунки</string>
     <string name="filter_presentations">Презентации</string>
     <string name="filter_spreadsheets">Електронни таблици</string>
     <string name="filter_documents">Документи</string>
@@ -89,7 +88,6 @@
     <string name="sort">Сортиране по</string>
     <string name="filter">Филтриране по</string>
     <string name="default_document_name">неозаглавено</string>
-    <string name="new_drawing">Нова рисунка</string>
     <string name="new_spreadsheet">Нова електронна таблица</string>
     <string name="new_presentation">Нова презентация</string>
     <string name="new_textdocument">Нов текстов документ</string>

@@ -11,7 +11,6 @@
     <string name="new_textdocument">Yeni Kelime İşlemci</string>
     <string name="new_presentation">Yeni Sunum</string>
     <string name="new_spreadsheet">Yeni Hesap Tablosu</string>
-    <string name="new_drawing">Yeni Çizim</string>
     <string name="default_document_name">adsız</string>
     <string name="list_view">Liste</string>
     <string name="grid_view">Grid</string>
@@ -40,7 +39,6 @@
     <string name="filter_documents">Kelime İşlemci</string>
     <string name="filter_spreadsheets">Hesap Tablosu</string>
     <string name="filter_presentations">Sunum</string>
-    <string name="filter_drawings">Çizimler</string>
     <!-- Document provider names -->
     <string name="document_locations">Belge dizinleri</string>
     <string name="close_document_locations">Belge dizinlerini kapat</string>

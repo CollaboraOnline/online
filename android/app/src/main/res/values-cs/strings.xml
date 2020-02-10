@@ -46,7 +46,6 @@
     <string name="local_documents">Složka dokumentů</string>
     <string name="close_document_locations">Uzavřít umístění dokumentu</string>
     <string name="document_locations">Umístění dokumentu</string>
-    <string name="filter_drawings">Kresby</string>
     <string name="filter_presentations">Prezentace</string>
     <string name="filter_spreadsheets">Sešity</string>
     <string name="filter_documents">Dokumenty</string>
@@ -68,7 +67,6 @@
     <string name="sort">Řadit podle</string>
     <string name="filter">Filtrovat podle</string>
     <string name="default_document_name">nepojmenovaný</string>
-    <string name="new_drawing">Nová kresba</string>
     <string name="new_spreadsheet">Nová sešit</string>
     <string name="new_presentation">Nová prezentace</string>
     <string name="new_textdocument">Nový textový dokument</string>

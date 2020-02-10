@@ -46,7 +46,6 @@
     <string name="local_documents">Répertoire des documents</string>
     <string name="close_document_locations">Fermer l\'emplacement des documents</string>
     <string name="document_locations">Emplacement des documents</string>
-    <string name="filter_drawings">Dessins</string>
     <string name="filter_presentations">Présentations</string>
     <string name="filter_spreadsheets">Classeurs</string>
     <string name="filter_documents">Documents</string>
@@ -68,7 +67,6 @@
     <string name="sort">Trier par</string>
     <string name="filter">Filtrer par</string>
     <string name="default_document_name">sans titre</string>
-    <string name="new_drawing">Nouveau dessin</string>
     <string name="new_spreadsheet">Nouveau classeur</string>
     <string name="new_presentation">Nouvelle présentation</string>
     <string name="new_textdocument">Nouveau document texte</string>

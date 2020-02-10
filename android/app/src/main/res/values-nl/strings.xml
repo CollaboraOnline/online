@@ -45,7 +45,6 @@
     <string name="local_documents">Documentmap</string>
     <string name="close_document_locations">Documentlocaties sluiten</string>
     <string name="document_locations">Documentlocaties</string>
-    <string name="filter_drawings">Tekeningen</string>
     <string name="filter_presentations">Presentaties</string>
     <string name="filter_spreadsheets">Werkbladen</string>
     <string name="filter_documents">Documenten</string>
@@ -67,7 +66,6 @@
     <string name="sort">Sorteren op</string>
     <string name="filter">Filteren op</string>
     <string name="default_document_name">naamloos</string>
-    <string name="new_drawing">Nieuwe tekening</string>
     <string name="new_spreadsheet">Nieuw werkblad</string>
     <string name="new_presentation">Nieuwe presentatie</string>
     <string name="new_textdocument">Nieuw tekstdocument</string>

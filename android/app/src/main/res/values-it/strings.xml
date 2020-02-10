@@ -30,7 +30,6 @@
     <string name="new_textdocument">Nuovo documento di testo</string>
     <string name="new_presentation">Nuova presentazione</string>
     <string name="new_spreadsheet">Nuovo foglio elettronico</string>
-    <string name="new_drawing">Nuovo disegno</string>
     <string name="default_document_name">senza nome</string>
     <string name="filter">Filtra per</string>
     <string name="sort">Ordina per</string>
@@ -52,7 +51,6 @@
     <string name="filter_documents">Documenti</string>
     <string name="filter_spreadsheets">Fogli elettronici</string>
     <string name="filter_presentations">Presentazioni</string>
-    <string name="filter_drawings">Disegni</string>
     <string name="document_locations">Posizioni documenti</string>
     <string name="close_document_locations">Chiudi posizioni documenti</string>
     <string name="local_documents">Cartella documenti</string>

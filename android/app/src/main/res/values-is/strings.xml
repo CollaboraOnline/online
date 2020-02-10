@@ -21,7 +21,6 @@
     <string name="new_textdocument">Nýtt textaskjal</string>
     <string name="new_presentation">Ný kynning</string>
     <string name="new_spreadsheet">Nýtt töflureikniblað</string>
-    <string name="new_drawing">Ný teikning</string>
     <string name="default_document_name">ónefnt</string>
     <string name="filter">Sía eftir</string>
     <string name="sort">Raða eftir</string>
@@ -43,7 +42,6 @@
     <string name="filter_documents">Skjöl</string>
     <string name="filter_spreadsheets">Töflureiknisskjöl</string>
     <string name="filter_presentations">Kynningar</string>
-    <string name="filter_drawings">Teikningar</string>
     <string name="document_locations">Staðsetningar skjala</string>
     <string name="close_document_locations">Loka staðsetningum skjala</string>
     <string name="local_documents">Skjalamappa</string>

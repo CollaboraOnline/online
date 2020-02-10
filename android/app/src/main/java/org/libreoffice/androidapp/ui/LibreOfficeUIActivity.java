@@ -220,12 +220,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         writerFAB.setOnClickListener(this);
         calcFAB = findViewById(R.id.newCalcFAB);
         calcFAB.setOnClickListener(this);
-        drawFAB = findViewById(R.id.newDrawFAB);
-        drawFAB.setOnClickListener(this);
         writerLayout = findViewById(R.id.writerLayout);
         impressLayout = findViewById(R.id.impressLayout);
         calcLayout = findViewById(R.id.calcLayout);
-        drawLayout = findViewById(R.id.drawLayout);
 
         recentRecyclerView = findViewById(R.id.list_recent);
         noRecentItemsTextView = findViewById(R.id.no_recent_items_msg);
@@ -841,10 +838,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             case FileUtilities.IMPRESS:
                 menu.findItem(R.id.menu_filter_presentations).setChecked(true);
                 break;
-
-            case FileUtilities.DRAWING:
-                menu.findItem(R.id.menu_filter_drawings).setChecked(true);
-                break;
         }
 
         return true;
@@ -885,12 +878,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             case R.id.menu_filter_presentations:
                 item.setChecked(true);
                 filterMode = FileUtilities.IMPRESS;
-                openDirectory(currentDirectory);
-                break;
-
-            case R.id.menu_filter_drawings:
-                item.setChecked(true);
-                filterMode = FileUtilities.DRAWING;
                 openDirectory(currentDirectory);
                 break;
 
@@ -1254,9 +1241,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 break;
             case R.id.newCalcFAB:
                 createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, NEW_CALC_STRING_KEY, FileUtilities.DEFAULT_SPREADSHEET_EXTENSION);
-                break;
-            case R.id.newDrawFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_DRAWING_EXTENSION, NEW_DRAW_STRING_KEY, FileUtilities.DEFAULT_DRAWING_EXTENSION);
                 break;
         }
     }

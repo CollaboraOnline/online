@@ -261,36 +261,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/drawLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/calcLayout"
-        app:layout_constraintRight_toRightOf="@id/editFAB">
-
-        <TextView
-            android:id="@+id/newDrawTextView"
-            style="@style/NewDocumentTextView"
-            android:layout_marginBottom="@dimen/new_doc_fab_tweak_bottom"
-            android:layout_marginTop="@dimen/new_doc_fab_tweak_top"
-            android:text="@string/new_drawing" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/newDrawFAB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/new_doc_fab_tweak_bottom"
-            android:layout_marginTop="@dimen/new_doc_fab_tweak_top"
-            android:clickable="true"
-            app:backgroundTint="@color/background_normal"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/draw"
-            app:useCompatPadding="true" />
-
-    </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

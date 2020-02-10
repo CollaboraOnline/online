@@ -40,7 +40,6 @@
     <string name="negative_cancel">Cancel·la</string>
     <string name="negative_im_sure">Segur</string>
     <string name="positive_ok">D\'acord</string>
-    <string name="filter_drawings">Dibuixos</string>
     <string name="filter_presentations">Presentacions</string>
     <string name="filter_spreadsheets">Fulls de càlcul</string>
     <string name="filter_documents">Documents</string>
@@ -62,7 +61,6 @@
     <string name="sort">Ordena per</string>
     <string name="filter">Filtra per</string>
     <string name="default_document_name">sense títol</string>
-    <string name="new_drawing">Dibuix nou</string>
     <string name="new_spreadsheet">Full de càlcul nou</string>
     <string name="new_presentation">Presentació nova</string>
     <string name="new_textdocument">Document de text nou</string>

@@ -9,7 +9,6 @@
     <string name="local_documents">Cyfeiriadur dogfennau</string>
     <string name="close_document_locations">Cau lleoliad dogfennau</string>
     <string name="document_locations">Lleoliadau dogfennau</string>
-    <string name="filter_drawings">Lluniadau</string>
     <string name="filter_presentations">Cyflwyniadau</string>
     <string name="filter_spreadsheets">Taenlenni</string>
     <string name="filter_documents">Dogfennau</string>
@@ -31,7 +30,6 @@
     <string name="sort">Trefnu yn ôl</string>
     <string name="filter">Hidlo yn ôl</string>
     <string name="default_document_name">dideitl</string>
-    <string name="new_drawing">Lluniad Newydd</string>
     <string name="new_spreadsheet">Taenlen Newydd</string>
     <string name="new_presentation">Cyflwyniad Newydd</string>
     <string name="new_textdocument">Dogfen Testun Newydd</string>

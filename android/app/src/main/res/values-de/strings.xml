@@ -26,7 +26,6 @@
     <string name="external_sd_file_system">Externe SD</string>
     <string name="local_file_system">Lokales Dateisystem</string>
     <string name="local_documents">Dokumentenverzeichnis</string>
-    <string name="filter_drawings">Zeichnungen</string>
     <string name="filter_presentations">Präsentationen</string>
     <string name="filter_spreadsheets">Tabellendokumente</string>
     <string name="filter_documents">Dokumente</string>
@@ -46,7 +45,6 @@
     <string name="sort">Sortieren nach</string>
     <string name="filter">Filtern nach</string>
     <string name="default_document_name">unbenannt</string>
-    <string name="new_drawing">Neue Zeichnung</string>
     <string name="new_spreadsheet">Neues Tabellendokument</string>
     <string name="new_presentation">Neue Präsentation</string>
     <string name="new_textdocument">Neues Textdokument</string>

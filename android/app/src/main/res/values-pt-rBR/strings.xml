@@ -31,7 +31,6 @@
     <string name="new_textdocument">Novo documento de texto</string>
     <string name="new_presentation">Nova apresentação </string>
     <string name="new_spreadsheet">Nova folha de cálculo</string>
-    <string name="new_drawing">Novo desenho</string>
     <string name="default_document_name">Sem nome</string>
     <string name="filter">Filtrado por</string>
     <string name="sort">Ordenado por</string>
@@ -55,7 +54,6 @@
     <string name="filter_documents">Documentos</string>
     <string name="filter_spreadsheets">Folhas de cálculo</string>
     <string name="filter_presentations">Apresentações</string>
-    <string name="filter_drawings">Desenhos</string>
     <!-- Document provider names -->
     <string name="document_locations">Locais de arquivos</string>
     <string name="close_document_locations">Fechar Locais de arquivos</string>

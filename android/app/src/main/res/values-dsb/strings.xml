@@ -46,7 +46,6 @@
     <string name="local_documents">Dokumentowy zarědnik</string>
     <string name="close_document_locations">Dokumentowe městna zacyniś</string>
     <string name="document_locations">Dokumentowe městna</string>
-    <string name="filter_drawings">Kreslanki</string>
     <string name="filter_presentations">Prezentacije</string>
     <string name="filter_spreadsheets">Tabele</string>
     <string name="filter_documents">Dokumenty</string>
@@ -68,7 +67,6 @@
     <string name="sort">Sortěrowaś pó</string>
     <string name="filter">Filtrowaś pó</string>
     <string name="default_document_name">bźez titela</string>
-    <string name="new_drawing">Nowa kreslanka</string>
     <string name="new_spreadsheet">Nowa tabela</string>
     <string name="new_presentation">Nowa prezentacija</string>
     <string name="new_textdocument">Nowy tekstowy dokument</string>

@@ -46,7 +46,6 @@
     <string name="local_documents">Κατάλογος εγγράφων</string>
     <string name="close_document_locations">Κλείσιμο τοποθεσιών εγγράφων</string>
     <string name="document_locations">Τοποθεσίες εγγράφων</string>
-    <string name="filter_drawings">Σχέδια</string>
     <string name="filter_presentations">Παρουσιάσεις</string>
     <string name="filter_spreadsheets">Υπολογιστικά φύλλα</string>
     <string name="filter_documents">Έγγραφα</string>
@@ -68,7 +67,6 @@
     <string name="sort">Ταξινόμηση κατά</string>
     <string name="filter">Φιλτράρισμα κατά</string>
     <string name="default_document_name">χωρίς τίτλο</string>
-    <string name="new_drawing">Νέο σχέδιο</string>
     <string name="new_spreadsheet">Νέο υπολογιστικό φύλλο</string>
     <string name="new_presentation">Νέα παρουσίαση</string>
     <string name="new_textdocument">Νέο έγγραφο κειμένου</string>

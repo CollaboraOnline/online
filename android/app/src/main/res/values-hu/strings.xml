@@ -45,7 +45,6 @@
     <string name="local_documents">Dokumentumok könyvtára</string>
     <string name="close_document_locations">Dokumentumok helyeinek bezárása</string>
     <string name="document_locations">Dokumentumok helyei</string>
-    <string name="filter_drawings">Rajzok</string>
     <string name="filter_presentations">Bemutatók</string>
     <string name="filter_spreadsheets">Munkafüzetek</string>
     <string name="filter_documents">Dokumentumok</string>
@@ -67,7 +66,6 @@
     <string name="sort">Rendezés</string>
     <string name="filter">Szűrés</string>
     <string name="default_document_name">névtelen</string>
-    <string name="new_drawing">Új rajz</string>
     <string name="new_spreadsheet">Új munkafüzet</string>
     <string name="new_presentation">Új bemutató</string>
     <string name="new_textdocument">Új szöveges dokumentum</string>

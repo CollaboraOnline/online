@@ -47,7 +47,6 @@
     <string name="local_documents">Dokumentowy zapis</string>
     <string name="close_document_locations">Dokumentowe městna začinić</string>
     <string name="document_locations">Dokumentowe městna</string>
-    <string name="filter_drawings">Rysowanki</string>
     <string name="filter_presentations">Prezentacije</string>
     <string name="filter_spreadsheets">Tabele</string>
     <string name="filter_documents">Dokumenty</string>
@@ -69,7 +68,6 @@
     <string name="sort">Sortěrować po</string>
     <string name="filter">Filtrować po</string>
     <string name="default_document_name">bjez titula</string>
-    <string name="new_drawing">Nowa rysowanka</string>
     <string name="new_spreadsheet">Nowa tabela</string>
     <string name="new_presentation">Nowa prezentacija</string>
     <string name="new_textdocument">Nowy tekstowy dokument</string>

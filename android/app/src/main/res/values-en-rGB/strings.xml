@@ -5,7 +5,6 @@
     <string name="app_version">Version: %1$s, Build ID: %2$s</string>
     <string name="app_name_settings">Settings</string>
     <string name="default_document_name">untitled</string>
-    <string name="new_drawing">New Drawing</string>
     <string name="new_spreadsheet">New Spreadsheet</string>
     <string name="new_presentation">New Presentation</string>
     <string name="new_textdocument">New Text Document</string>
@@ -81,7 +80,6 @@
     <string name="local_documents">Documents directory</string>
     <string name="close_document_locations">Close document locations</string>
     <string name="document_locations">Document locations</string>
-    <string name="filter_drawings">Drawings</string>
     <string name="filter_spreadsheets">Spreadsheets</string>
     <string name="filter_documents">Documents</string>
     <string name="filter_everything">Everything</string>

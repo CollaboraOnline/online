@@ -37,7 +37,6 @@
     <string name="local_documents">Directorio de documentos</string>
     <string name="close_document_locations">Pechar localizacións dos documentos</string>
     <string name="document_locations">Localización dos ficheiros</string>
-    <string name="filter_drawings">Debuxos</string>
     <string name="filter_presentations">Presentacións</string>
     <string name="filter_spreadsheets">Follas de cálculo</string>
     <string name="filter_documents">Documentos</string>
@@ -59,7 +58,6 @@
     <string name="sort">Ordenar por</string>
     <string name="filter">Filtrar por</string>
     <string name="default_document_name">sen nome</string>
-    <string name="new_drawing">Novo debuxo</string>
     <string name="new_spreadsheet">Nova folla de cálculo</string>
     <string name="new_presentation">Nova presentación</string>
     <string name="new_textdocument">Novo documento de texto</string>

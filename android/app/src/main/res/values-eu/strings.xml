@@ -48,7 +48,6 @@
     <string name="local_documents">Dokumentuen direktorioa</string>
     <string name="close_document_locations">Itxi dokumentu-kokalekuak</string>
     <string name="document_locations">Dokumentu-kokalekuak</string>
-    <string name="filter_drawings">Marrazkiak</string>
     <string name="filter_presentations">Aurkezpenak</string>
     <string name="filter_spreadsheets">Kalkulu-orriak</string>
     <string name="filter_documents">Dokumentuak</string>
@@ -70,7 +69,6 @@
     <string name="sort">Ordenatu:</string>
     <string name="filter">Iragazi:</string>
     <string name="default_document_name">izengabea</string>
-    <string name="new_drawing">Marrazki berria</string>
     <string name="new_spreadsheet">Kalkulu-orri berria</string>
     <string name="new_presentation">Aurkezpen berria</string>
     <string name="new_textdocument">Testu-dokumentu berria</string>

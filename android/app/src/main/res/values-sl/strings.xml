@@ -49,7 +49,6 @@
     <string name="local_file_system">Krajevni datotečni sistem</string>
     <string name="remote_server">Oddaljeni strežnik</string>
     <string name="local_documents">Mapa dokumentov</string>
-    <string name="filter_drawings">Risbe</string>
     <string name="filter_presentations">Predstavitve</string>
     <string name="filter_spreadsheets">Preglednice</string>
     <string name="filter_everything">Vse</string>
@@ -62,7 +61,6 @@
     <string name="sort_za">Ž-A</string>
     <string name="sort_az">A-Ž</string>
     <string name="default_document_name">neimenovano</string>
-    <string name="new_drawing">Nova risba</string>
     <string name="new_spreadsheet">Nova preglednica</string>
     <string name="new_presentation">Nova predstavitev</string>
     <string name="new_textdocument">Nov besedilni dokument</string>
