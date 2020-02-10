@@ -320,7 +320,17 @@ L.TileLayer = L.GridLayer.extend({
 			this._exportFormats = [];
 		}
 
-		this._exportFormats.push({label: label, format: format});
+		var duplicate = false;
+		for (var i = 0; i < this._exportFormats.length; i++) {
+			if (this._exportFormats[i].label == label && this._exportFormats[i].format == format) {
+				duplicate = true;
+				break;
+			}
+		}
+
+		if (duplicate == false) {
+			this._exportFormats.push({label: label, format: format});
+		}
 	},
 
 	setUrl: function (url, noRedraw) {
