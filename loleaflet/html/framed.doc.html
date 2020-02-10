@@ -163,7 +163,7 @@
 
     <!-- 127.0.0.2 allows us to test CSS issues -->
     <script>
-      var uriBase = "https://127.0.0.2:9980/loleaflet/42/loleaflet.html" + window.location.search;
+      var uriBase = document.location.protocol + "//127.0.0.2:9980/loleaflet/42/loleaflet.html" + window.location.search;
       var iframe = document.getElementById("frame");
       iframe.src = uriBase + "&NotWOPIButIframe=true";
       var msg = document.getElementById("link");
