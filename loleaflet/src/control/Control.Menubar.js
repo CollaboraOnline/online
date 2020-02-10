@@ -1316,8 +1316,12 @@ L.Control.Menubar = L.Control.extend({
 			if (!found)
 				return false;
 		}
-		if (this._map._permission === 'readonly' && menuItem.id === 'last-mod') {
-			return false;
+		if (this._map._permission === 'readonly') {
+			switch (menuItem.id) {
+			case 'last-mod':
+			case 'save':
+				return false;
+			}
 		}
 
 		if (menuItem.type === 'action') {
