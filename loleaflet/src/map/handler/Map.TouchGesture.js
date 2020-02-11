@@ -637,6 +637,7 @@ L.Map.TouchGesture = L.Handler.extend({
 
 	_autoscroll: function() {
 		var elapsed, delta;
+
 		elapsed = Date.now() - this._timeStamp;
 		delta = this._amplitude.multiplyBy(Math.exp(-elapsed / 325));
 		var e = this._constructFakeEvent({
@@ -646,13 +647,24 @@ L.Map.TouchGesture = L.Handler.extend({
 		}, 'mousemove');
 		e.autoscroll = true;
 		if (delta.x > 0.2 || delta.x < -0.2 || delta.y > 0.2 || delta.y < -0.2) {
+			var org = this._map.getPixelOrigin();
+			var docSize = this._map.getLayerMaxBounds().getSize().subtract(this._map.getSize());
+			var horizontalEnd, verticalEnd;
+
 			if (this._map.getDocSize().x < this._map.getSize().x) {
 				//don't scroll horizontally if document fits the view
 				delta.x = 0;
+				horizontalEnd = true;
+			} else {
+				horizontalEnd = Math.max(Math.min(org.x, this._newPos.x), org.x - Math.max(docSize.x, 0)) !== this._newPos.x;
 			}
+
 			if (this._map.getDocSize().y < this._map.getSize().y) {
 				//don't scroll vertically if document fits the view
 				delta.y = 0;
+				verticalEnd = true;
+			} else {
+				verticalEnd = Math.max(Math.min(org.y, this._newPos.y), org.y - Math.max(docSize.y, 0)) !== this._newPos.y;
 			}
 
 			this._map.dragging._draggable._startPoint = this._startSwipePoint;
@@ -666,7 +678,9 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._map._docLayer._preFetchBorder = null;
 			this._map._docLayer._preFetchTiles();
 
-			this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);
+			if (!horizontalEnd || !verticalEnd) {
+				this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);
+			}
 		}
 		else {
 			this._map.dragging._draggable._onUp(e);
