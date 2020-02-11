@@ -35,4 +35,5 @@ RUN chown lool: /opt/lool/child-roots
 RUN loolwsd-systemplate-setup /opt/lool/systemplate /opt/libreoffice >/dev/null 2>&1
 RUN touch /var/log/loolwsd.log
 RUN chown lool /var/log/loolwsd.log
+EXPOSE 9980
 CMD bash /run-lool.sh
