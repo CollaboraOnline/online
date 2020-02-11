@@ -463,6 +463,10 @@ public class LOActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
         switch (requestCode) {
             case REQUEST_SELECT_IMAGE_FILE:
                 if (valueCallback == null)
@@ -481,6 +485,9 @@ public class LOActivity extends AppCompatActivity {
             case REQUEST_SAVEAS_DOC:
             case REQUEST_SAVEAS_PPT:
             case REQUEST_SAVEAS_XLS:
+                if (intent == null) {
+                    return;
+                }
                 String format = getFormatForRequestCode(requestCode);
                 if (format != null) {
                     final File tempFile = new File(LOActivity.this.getCacheDir(), "temp.file");
