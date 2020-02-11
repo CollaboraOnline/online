@@ -71,6 +71,8 @@
     </trace>
 
     <net desc="Network settings">
+      <!-- On systems where localhost resolves to IPv6 [::1] address first, when net.proto is all and net.listen is loopback, loolwsd unexpectedly listens on [::1] only.
+           You need to change net.proto to IPv4, if you want to use 127.0.0.1. -->
       <proto type="string" default="all" desc="Protocol to use IPv4, IPv6 or all for both">all</proto>
       <listen type="string" default="any" desc="Listen address that loolwsd binds to. Can be 'any' or 'loopback'.">any</listen>
       <service_root type="path" default="" desc="Prefix all the pages, websockets, etc. with this path."></service_root>
