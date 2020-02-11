@@ -24,12 +24,14 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
+import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
@@ -53,6 +55,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,7 +111,19 @@ public class LOActivity extends AppCompatActivity {
     private boolean mMobileWizardVisible = false;
 
     private ValueCallback<Uri[]> valueCallback;
-    public static final int REQUEST_SELECT_FILE = 555;
+
+    public static final int REQUEST_SELECT_IMAGE_FILE = 500;
+    public static final int REQUEST_SAVEAS_PDF = 501;
+    public static final int REQUEST_SAVEAS_RTF = 502;
+    public static final int REQUEST_SAVEAS_ODT = 503;
+    public static final int REQUEST_SAVEAS_ODP = 504;
+    public static final int REQUEST_SAVEAS_ODS = 505;
+    public static final int REQUEST_SAVEAS_DOCX = 506;
+    public static final int REQUEST_SAVEAS_PPTX = 507;
+    public static final int REQUEST_SAVEAS_XLSX = 508;
+    public static final int REQUEST_SAVEAS_DOC = 509;
+    public static final int REQUEST_SAVEAS_PPT = 510;
+    public static final int REQUEST_SAVEAS_XLS = 511;
 
     /** Broadcasting event for passing info back to the shell. */
     public static final String LO_ACTIVITY_BROADCAST = "LOActivityBroadcast";
@@ -328,7 +344,7 @@ public class LOActivity extends AppCompatActivity {
 
                 try {
                     intent.setType("image/*");
-                    startActivityForResult(intent, REQUEST_SELECT_FILE);
+                    startActivityForResult(intent, REQUEST_SELECT_IMAGE_FILE);
                 } catch (ActivityNotFoundException e) {
                     valueCallback = null;
                     Toast.makeText(LOActivity.this, getString(R.string.cannot_open_file_chooser), Toast.LENGTH_LONG).show();
@@ -447,14 +463,62 @@ public class LOActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_SELECT_FILE) {
-            if (valueCallback == null)
+        switch (requestCode) {
+            case REQUEST_SELECT_IMAGE_FILE:
+                if (valueCallback == null)
+                    return;
+                valueCallback.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, intent));
+                valueCallback = null;
                 return;
-            valueCallback.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, intent));
-            valueCallback = null;
-        } else {
-            Toast.makeText(this, getString(R.string.failed_to_insert_image), Toast.LENGTH_LONG).show();
+            case REQUEST_SAVEAS_PDF:
+            case REQUEST_SAVEAS_RTF:
+            case REQUEST_SAVEAS_ODT:
+            case REQUEST_SAVEAS_ODP:
+            case REQUEST_SAVEAS_ODS:
+            case REQUEST_SAVEAS_DOCX:
+            case REQUEST_SAVEAS_PPTX:
+            case REQUEST_SAVEAS_XLSX:
+            case REQUEST_SAVEAS_DOC:
+            case REQUEST_SAVEAS_PPT:
+            case REQUEST_SAVEAS_XLS:
+                String format = getFormatForRequestCode(requestCode);
+                if (format != null) {
+                    final File tempFile = new File(LOActivity.this.getCacheDir(), "temp.file");
+                    LOActivity.this.saveAs(tempFile.toURI().toString(), format);
+                    try (InputStream inputStream = new FileInputStream(tempFile)) {
+                        OutputStream outputStream = getContentResolver().openOutputStream(intent.getData());
+                        byte[] buffer = new byte[4096];
+                        int len;
+                        while ((len = inputStream.read(buffer)) > 0) {
+                            outputStream.write(buffer, 0, len);
+                        }
+                        outputStream.flush();
+                        outputStream.close();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Something went wrong while Saving as: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                    return;
+                }
         }
+        Toast.makeText(this, "Unknown request", Toast.LENGTH_LONG).show();
+    }
+
+    private String getFormatForRequestCode(int requestCode) {
+        switch(requestCode) {
+            case REQUEST_SAVEAS_PDF: return "pdf";
+            case REQUEST_SAVEAS_RTF: return "rtf";
+            case REQUEST_SAVEAS_ODT: return "odt";
+            case REQUEST_SAVEAS_ODP: return "odp";
+            case REQUEST_SAVEAS_ODS: return "ods";
+            case REQUEST_SAVEAS_DOCX: return "docx";
+            case REQUEST_SAVEAS_PPTX: return "pptx";
+            case REQUEST_SAVEAS_XLSX: return "xlsx";
+            case REQUEST_SAVEAS_DOC: return "doc";
+            case REQUEST_SAVEAS_PPT: return "ppt";
+            case REQUEST_SAVEAS_XLS: return "xls";
+        }
+        return null;
     }
 
     @Override
@@ -589,6 +653,9 @@ public class LOActivity extends AppCompatActivity {
             case "SAVE":
                 sendBroadcast(messageAndParam[0], messageAndParam[1]);
                 return false;
+            case "downloadas":
+                initiateSaveAs(messageAndParam[1]);
+                return false;
             case "uno":
                 switch (messageAndParam[1]) {
                     case ".uno:Paste":
@@ -628,6 +695,67 @@ public class LOActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    private void initiateSaveAs(String optionsString) {
+        Map<String, String> optionsMap = new HashMap<>();
+        String[] options = optionsString.split(" ");
+        for (String option : options) {
+            String[] keyValue = option.split("=", 2);
+            if (keyValue.length == 2)
+                optionsMap.put(keyValue[0], keyValue[1]);
+        }
+        String format = optionsMap.get("format");
+        String mime = getMimeForFormat(format);
+        if (format != null && mime != null) {
+            String filename = optionsMap.get("name");
+            if (filename == null)
+                filename = "document." + format;
+            int requestID = getRequestIDForFormat(format);
+
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.setType(mime);
+            intent.putExtra(Intent.EXTRA_TITLE, filename);
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, false);
+            File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, Uri.fromFile(folder).toString());
+            intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
+            startActivityForResult(intent, requestID);
+        }
+    }
+
+    private int getRequestIDForFormat(String format) {
+        switch (format) {
+            case "pdf": return REQUEST_SAVEAS_PDF;
+            case "rtf": return REQUEST_SAVEAS_RTF;
+            case "odt": return REQUEST_SAVEAS_ODT;
+            case "odp": return REQUEST_SAVEAS_ODP;
+            case "ods": return REQUEST_SAVEAS_ODS;
+            case "docx": return REQUEST_SAVEAS_DOCX;
+            case "pptx": return REQUEST_SAVEAS_PPTX;
+            case "xlsx": return REQUEST_SAVEAS_XLSX;
+            case "doc": return REQUEST_SAVEAS_DOC;
+            case "ppt": return REQUEST_SAVEAS_PPT;
+            case "xls": return REQUEST_SAVEAS_XLS;
+        }
+        return 0;
+    }
+
+    private String getMimeForFormat(String format) {
+        switch(format) {
+            case "pdf": return "application/pdf";
+            case "rtf": return "text/rtf";
+            case "odt": return "application/vnd.oasis.opendocument.text";
+            case "odp": return "application/vnd.oasis.opendocument.presentation";
+            case "ods": return "application/vnd.oasis.opendocument.spreadsheet";
+            case "docx": return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            case "pptx": return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+            case "xlsx": return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            case "doc": return "application/msword";
+            case "ppt": return "application/vnd.ms-powerpoint";
+            case "xls": return "application/vnd.ms-excel";
+        }
+        return null;
     }
 
     private void afterMessageFromWebView(String[] messageAndParameterArray) {
