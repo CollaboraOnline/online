@@ -119,14 +119,23 @@ public:
 
             // Shutdown the socket.
             if (_ws)
+            {
                 _ws->shutdown();
+                // If socket was shutdown and buffers cleared then there's no
+                // reason to keep the object. This is crucial for DocumentBroker
+                // to be considered as not alive and associated kit process
+                // terminated in cleanupDocBrokers. Otherwise if kit process
+                // hangs then the asociated DocumentBroker object won't be
+                // removed and kit process won't be forcefully terminated. This
+                // is in conjunction with not clearing _pid data member which
+                // is needed later in call to terminate().
+                _ws.reset();
+            }
         }
         catch (const std::exception& ex)
         {
             LOG_ERR("Error while closing child process: " << ex.what());
         }
-
-        _pid = -1;
     }
 
     /// Kill or abandon the child.
