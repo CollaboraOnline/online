@@ -30,10 +30,16 @@ RUN mkdir -p /var/cache/loolwsd && chown lool: /var/cache/loolwsd
 RUN rm -rf /var/cache/loolwsd/*
 RUN rm -rf /opt/lool
 RUN mkdir -p /opt/lool/child-roots
-RUN chown lool: /opt/lool
-RUN chown lool: /opt/lool/child-roots
 RUN loolwsd-systemplate-setup /opt/lool/systemplate /opt/libreoffice >/dev/null 2>&1
 RUN touch /var/log/loolwsd.log
-RUN chown lool /var/log/loolwsd.log
+# Fix permissions
+RUN chown lool:lool /var/log/loolwsd.log
+RUN chown -R lool:lool /opt/
+RUN chown -R lool:lool /etc/loolwsd
+
 EXPOSE 9980
+
+# switch to lool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
+USER 101
+
 CMD bash /run-lool.sh
