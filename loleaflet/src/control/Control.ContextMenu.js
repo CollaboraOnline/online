@@ -20,7 +20,7 @@ L.Control.ContextMenu = L.Control.extend({
 			 * in following list is just for reference and ease of locating uno command
 			 * from context menu structure.
 			 */
-			general: ['Cut', 'Copy', 'Paste',
+			general: ['Cut', 'Copy', 'Paste', 'Delete',
 					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
 					  'OpenHyperlinkOnCursor', 'CopyHyperlinkLocation', 'RemoveHyperlink',
 					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
@@ -104,6 +104,8 @@ L.Control.ContextMenu = L.Control.extend({
 			this._onClosePopup();
 		}
 
+		this._amendContextMenuData(obj);
+
 		var contextMenu = this._createContextMenuStructure(obj);
 		var spellingContextMenu = false;
 		for (var menuItem in contextMenu) {
@@ -152,6 +154,27 @@ L.Control.ContextMenu = L.Control.extend({
 			$('.leaflet-layer').contextMenu(this._prevMousePos);
 			this.hasContextMenu = true;
 		}
+	},
+
+	_amendContextMenuData: function(obj) {
+
+		// Add a 'delete' entry for mobile when selection is ole/image/shape
+		if (this._map._clip && this._map._clip._selectionType === 'complex' &&
+			window.mode.isMobile()) {
+
+			var insertIndex = -1;
+			obj.menu.forEach(function(item, index) {
+				if (item.command === '.uno:Paste') {
+					insertIndex = index + 1;
+				}
+			});
+
+			if (insertIndex != -1) {
+				obj.menu.splice(insertIndex, 0,
+					{ text: _('Delete'), type: 'command', command: '.uno:Delete', enabled: true });
+			}
+		}
+
 	},
 
 	_createContextMenuStructure: function(obj) {
@@ -205,7 +228,7 @@ L.Control.ContextMenu = L.Control.extend({
 						item.command = '.uno:HideNote';
 				}
 
-				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph') {
+				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph' || commandName === 'Delete') {
 					itemName = window.removeAccessKey(item.text);
 					itemName = itemName.replace(' ', '\u00a0');
 				} else {
