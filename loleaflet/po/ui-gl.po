@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-29 09:28+0000\n"
+"PO-Revision-Date: 2020-02-07 15:40+0000\n"
 "Last-Translator: Xosé <xosecalvo@gmail.com>\n"
 "Language-Team: Galician <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/gl/>\n"
 "Language: gl\n"
@@ -903,7 +903,7 @@ msgstr "IE11 acadou o seu máximo número de conexións. Indique se este documen
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Vaites! Produciuse un problema ao conectar co LibreOffice Online:"
+msgstr "Vaites! Produciuse un problema ao conectar co LibreOffice Online: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"

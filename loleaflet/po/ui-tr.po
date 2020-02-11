@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-11 23:45+0100\n"
-"PO-Revision-Date: 2020-01-23 10:22+0000\n"
+"PO-Revision-Date: 2020-02-10 11:01+0000\n"
 "Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
 "Language-Team: Turkish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/tr/>\n"
 "Language: tr\n"
@@ -1128,11 +1128,11 @@ msgstr "Çöz"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "% ProductName dışına yapıştırmak için lütfen önce 'indir' düğmesini tıklayın"
 
 #: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Pano indirilemedi, lütfen tekrar kopyalayın"
 
 #: src/map/Clipboard.js:766
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
@@ -1140,11 +1140,11 @@ msgstr "<p>Lütfen ekran klavyesindeki kopyala/yapıştır düğmelerini kullan�
 
 #: src/map/Clipboard.js:791
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr ""
+msgstr "<p>Belgenizin daha büyük öğelerini diğer uygulamalarla paylaşmak istiyorsanız, bunları önce cihazınıza indirmeniz gerekir.  Bunu yapmak için aşağıdaki \"İndirmeyi başlat\" düğmesine basın ve tamamlandığında \"Panoya kopyalamayı onayla\" yı tıklayın.</p> <p>%productName içindeki belgeler arasında kopyalayıp yapıştırma yapıyorsanız, indirmenize gerek yoktur. </p>"
 
 #: src/map/Clipboard.js:807
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr ""
+msgstr "<p>Büyük bir kopya/yapıştır işlemi nedeniyle indirme işlemi zaten başladı.  Lütfen yeni bir indirme işlemine başlamadan önce mevcut indirmeyi bekleyin veya iptal edin</p>"
 
 #: src/map/Map.js:234
 msgid "Initializing..."
@@ -1171,12 +1171,12 @@ msgstr "Yükleniyor..."
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Dosya türü: %0 dosya adı olmadığından sunucuya yüklenemiyor"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Dosya türü: %0 dosya boş olduğundan sunucuya yüklenemiyor"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."

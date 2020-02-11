@@ -115,4 +115,6 @@
     <string name="directory_not_saved">Diretório não salvo.</string>
     <string name="title_activity_show_html">Sobre</string>
     <string name="share_document">Compartilhar documento</string>
+    <string name="pref_enable_chrome_debugger_info">Ative para utilizar a ferramenta de debug do Chrome no documento</string>
+    <string name="pref_enable_chrome_debugger">Debug do Chrome</string>
 </resources>

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-23 08:20+0000\n"
+"PO-Revision-Date: 2020-02-10 11:01+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1047,27 +1047,27 @@ msgstr "El <span class=\"productname\">%productName</span> utilitza tecnologies 
 
 #: html/loleaflet-help.html%2Bdiv.p:257-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."
-msgstr ""
+msgstr "<span class=\"def\">L'àrea del document:</span> L'àrea de l'aplicació mostra el contingut del document, sigui un full de càlcul, una presentació o un document de text."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:258-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
-msgstr ""
+msgstr "<span class=\"def\">La barra de menús:</span> el menú principal és a la part superior i inclou nombroses opcions i ordres per a imprimir, editar i visualitzar documents, entre altres funcionalitats avançades. Podeu amagar la barra de menús fent clic a la icona <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> que apareix a l'extrem dret. Feu clic a la icona <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> per a mostrar el menú."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
-msgstr ""
+msgstr "<span class=\"def\">Menús contextuals:</span> en fer clic amb el botó dret del ratolí a un objecte, es mostra un menú que inclou ordres associades amb aquest objecte."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
-msgstr ""
+msgstr "<span class=\"def\">La barra d'eines:</span> la barra d'eines conté les opcions més utilitzades en l'edició cotidiana. Els botons de la barra són dinàmics; això vol dir que el seu estat (activat o desactivat) depèn de diferents factors."
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid "<span class=\"def\">The status bar:</span> The status bar is shown in the bottom, and contains several useful options and features."
-msgstr ""
+msgstr "<span class=\"def\">La barra d'estat:</span> aquesta barra és a sota de la finestra i conté diverses opcions i funcionalitats útils."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">The search bar:</span> Searching starts automatically when content is inserted in the search box, and the document window automatically moves to the first occurrence found. Searching is not case-sensitive. There are three buttons right next to the search box:"
-msgstr ""
+msgstr "<span class=\"def\">La barra de cerca:</span> la cerca comença automàticament quan s'insereix un terme a la barra de cerca; la finestra del document es desplaça automàticament per a mostrar la primera ocurrència trobada del terme. La cerca no distingeix majúscules i minúscules. A prop d'aquesta barra hi ha tres botons:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:265-11
 msgid "Search backwards"
@@ -1215,7 +1215,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:317-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
-msgstr ""
+msgstr "<span class=\"def\">Formatació de diagrames:</span> el mateix menú contextual us brinda ordres per a les taules de dades i la selecció del tipus de diagrama."
 
 #: html/loleaflet-help.html%2Bdiv.p:318-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
@@ -1427,7 +1427,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:423-5
 msgid "To exit a <span class=\"productname\">%productName</span> slide show, press the <span class=\"kbd\">Esc</span> key to return to the presentation edit mode."
-msgstr ""
+msgstr "Per a sortir d'una presentació de diapositives del <span class=\"productname\">%productName</span> i tornar al mode d'edició, premeu la tecla <span class=\"kbd\">Esc</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:426-5
 msgid "Click on any slide thumbnail in the pane to switch to this slide to view or edit it."

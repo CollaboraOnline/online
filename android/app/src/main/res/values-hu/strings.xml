@@ -97,4 +97,6 @@
     <string name="app_version">Verzió: %1$s, Build ID: %2$s</string>
     <string name="app_name_settings">Beállítások</string>
     <string name="share_document">Dokumentum megosztása</string>
+    <string name="pref_enable_chrome_debugger_info">A Chrome hibakereső eszközének engedélyezése a dokumentumban</string>
+    <string name="pref_enable_chrome_debugger">Hibakeresés Chrome-mal</string>
 </resources>

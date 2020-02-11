@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-07 10:58+0000\n"
+"PO-Revision-Date: 2020-02-10 11:01+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hsb/>\n"
 "Language: hsb\n"
@@ -1175,7 +1175,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:299-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr ""
+msgstr "Móžeće z tastowej kombinaciju jako njeformatowany tekst zasadźić: <span class=\"kbd\">Strg</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Umsch</span> + <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:300-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."

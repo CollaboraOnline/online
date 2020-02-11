@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-20 10:55+0000\n"
-"Last-Translator: vpanter <Leo.Moons@proximus.be>\n"
+"PO-Revision-Date: 2020-02-08 22:17+0000\n"
+"Last-Translator: Joachim Vincent <jojorealisateur@outlook.com>\n"
 "Language-Team: Dutch <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -1031,15 +1031,16 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:250-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
-msgstr ""
+msgstr "Elke gebruiker krijg een kleur toegewezen. Het muis van elke gebruiker zal in dit kleur verschenen zijn. NB : U zalt uw muis en uw knipperende cursor in zwart zien, hoewel de andere U met een andere kleur zullen zien."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:251-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:252-11
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> informeer U met een kleinje melding in het footer als een nieuwe gebruiker arriveert of gaat weg."
 
 #: html/loleaflet-help.html%2Bdiv.p:256-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"

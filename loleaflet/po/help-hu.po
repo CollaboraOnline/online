@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-01-12 22:16+0000\n"
+"PO-Revision-Date: 2020-02-10 11:01+0000\n"
 "Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hu/>\n"
 "Language: hu\n"
@@ -1004,26 +1004,26 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:235-5
 #: html/loleaflet-help.html%2Bdiv.h2:438-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Gyakori kérdések"
 
 #: html/loleaflet-help.html%2Bdiv.p:236-5
 msgid "General"
-msgstr ""
+msgstr "Általános"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:238-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:470-5
 msgid "Text documents"
-msgstr ""
+msgstr "Szöveges dokumentumok"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:534-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Munkafüzetek"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:562-5
 msgid "Presentations"
-msgstr ""
+msgstr "Bemutatók"
 
 #: html/loleaflet-help.html%2Bdiv.p:246-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."

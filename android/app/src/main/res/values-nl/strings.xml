@@ -96,4 +96,7 @@
     <string name="app_description">$APP_NAME is een moderne, gebruiksvriendelijke, open source productiviteitssuite voor tekstverwerking, werkbladen, presentaties en meer.</string>
     <string name="app_version">Versie: %1$s, Build ID: %2$s</string>
     <string name="app_name_settings">Instellingen</string>
+    <string name="pref_enable_chrome_debugger">Foutopsporing Chrome</string>
+    <string name="share_document">Delen dit document</string>
+    <string name="pref_enable_chrome_debugger_info">Activeren om het werktuig voor foutopsporing in Chrome in dit document te gebruiken.</string>
 </resources>

@@ -96,4 +96,7 @@
     <string name="pref_filter_summary">Defina o filtro de ficheiros que será utilizado como padrão.</string>
     <string name="pref_filter_title">Filtro padrão</string>
     <string name="pref_viewmode_summary">Ver ficheiros em lista ou em grelha.</string>
+    <string name="share_document">Partilhar documento</string>
+    <string name="pref_enable_chrome_debugger_info">Possibilita a utilização da ferramentas de depuração do Chrome no documento</string>
+    <string name="pref_enable_chrome_debugger">Depuração Chrome</string>
 </resources>

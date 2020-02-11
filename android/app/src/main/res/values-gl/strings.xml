@@ -97,4 +97,6 @@
     <string name="bmp_null">BMP é nulo!</string>
     <string name="unable_to_go_further">Non foi posíbel ir máis lonxe.</string>
     <string name="share_document">Compartir documento</string>
+    <string name="pref_enable_chrome_debugger_info">Activar o uso da ferramenta de depuración de Chrome no documento</string>
+    <string name="pref_enable_chrome_debugger">Depuracion de Chrome</string>
 </resources>
