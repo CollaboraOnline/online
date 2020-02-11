@@ -49,6 +49,7 @@ class UnitClose : public UnitWSD
     TestResult testAlertAllUsers();
 
 public:
+    UnitClose();
     void invokeTest() override;
 };
 
@@ -207,6 +208,12 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
         CPPUNIT_FAIL(exc.displayText());
     }
     return TestResult::Ok;
+}
+
+UnitClose::UnitClose()
+{
+    int timeout_minutes = 2;
+    setTimeout(timeout_minutes * 60 * 1000);
 }
 
 void UnitClose::invokeTest()
