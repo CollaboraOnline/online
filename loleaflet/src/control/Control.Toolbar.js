@@ -1372,8 +1372,9 @@ function onSearchKeyPress(e) {
 }
 
 function onSearchFocus() {
-	// hide the caret in the main document
-	map._onLostFocus();
+	// Start searching.
+	map.fire('searchstart');
+
 	updateSearchButtons();
 }
 

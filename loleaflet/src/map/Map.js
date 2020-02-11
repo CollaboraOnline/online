@@ -120,6 +120,8 @@ L.Map = L.Evented.extend({
 		this._winId = 0;
 		// The object of the dialog, if any (must have .focus callable).
 		this._activeDialog = null;
+		// True only when searching within the doc, as we need to use winId==0.
+		this._isSearching = false;
 
 
 		vex.dialogID = -1;
@@ -247,6 +249,8 @@ L.Map = L.Evented.extend({
 
 		// Fired to signal that the input focus is being changed.
 		this.on('changefocuswidget', this._onChangeFocusWidget, this);
+
+		this.on('searchstart', this._onSearchStart, this);
 
 		// View info (user names and view ids)
 		this._viewInfo = {};
@@ -947,6 +951,10 @@ L.Map = L.Evented.extend({
 		this.fire('hyperlinkclicked', {url: helpURL});
 	},
 
+	isSearching: function() {
+		return this._isSearching;
+	},
+
 	_fireInitComplete: function (condition) {
 		if (this.initComplete) {
 			return;
@@ -1358,6 +1366,7 @@ L.Map = L.Evented.extend({
 
 		this._winId = winId;
 		this._activeDialog = dialog;
+		this._isSearching = false;
 
 		var doclayer = this._docLayer;
 		if (doclayer)
@@ -1400,6 +1409,10 @@ L.Map = L.Evented.extend({
 		} else {
 			this._changeFocusWidget(e.dialog, e.winId, e.acceptInput);
 		}
+	},
+
+	_onSearchStart: function () {
+		this._isSearching = true;
 	},
 
 	_onUpdateProgress: function (e) {
