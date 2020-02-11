@@ -2159,6 +2159,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._map._permission === 'edit'
 		&& this._map._isCursorVisible   // only when LOK has told us it is ok
 		&& this._map.editorHasFocus()   // not when document is not focused
+		&& !this._map.isSearching()  	// not when searching within the doc
 		&& !this._isZooming             // not when zooming
 //		&& !this.isGraphicVisible()     // not when sizing / positioning graphics
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
