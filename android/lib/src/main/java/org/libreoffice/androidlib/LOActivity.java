@@ -537,6 +537,7 @@ public class LOActivity extends AppCompatActivity {
             return;
         }
 
+        postMobileMessageNative("BYE");
         super.onBackPressed();
     }
 
