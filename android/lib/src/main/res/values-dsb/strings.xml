@@ -6,4 +6,5 @@
     <string name="failed_to_load_file">Njejo se raźiło, dataju zwěsćiś, kótaraž ma se zacytaś.</string>
     <string name="storage_permission_required">Pšawo za składowanje jo trěbne.</string>
     <string name="temp_file_saving_disabled">Toś ta dataja dajo se janož cytaś, składowanje jo znjemóžnjone.</string>
+    <string name="saving">Składujo se...</string>
 </resources>

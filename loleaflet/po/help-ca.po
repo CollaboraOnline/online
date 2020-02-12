@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-15 17:50+0200\n"
-"PO-Revision-Date: 2020-02-10 11:01+0000\n"
+"PO-Revision-Date: 2020-02-11 10:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1752,7 +1752,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:548-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "Com pot copiar la formatació de cel·les existents en cel·les noves?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:549-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
@@ -1764,11 +1764,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:553-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "Seleccioneu les cel·les que voleu formatar. Deixeu anar el botó del ratolí."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:555-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "Què funció té el botó «Neteja la formatació directa»?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:556-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
@@ -1776,7 +1776,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:557-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Com es canvia el nom d'un full?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:558-5
 msgid "Rename a sheet in the spreadsheet document using the context menu (using the right mouse button) over the sheet tab in the bottom. Enter the new sheet name in the dialog that follows."
@@ -1784,7 +1784,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:563-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Com inicio la projecció de la meva presentació?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:565-11
 msgid "Open the presentation in <span class=\"productname\">%productName</span>"
@@ -1796,7 +1796,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:568-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr ""
+msgstr "Com pot canviar la línia, l'àrea i la posició d'una forma a una diapositiva meva?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:570-11
 msgid "Select the shape in your slide. A set of handles shows."
