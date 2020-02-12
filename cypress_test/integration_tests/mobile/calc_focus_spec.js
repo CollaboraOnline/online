@@ -22,6 +22,16 @@ describe('Calc focus tests', function() {
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
+		// One tap on an other cell -> no focus on the document
+		cy.get('#document-container')
+			.click(120, 120);
+
+		cy.get('.leaflet-marker-icon.spreadsheet-cell-resize-marker');
+
+		// No focus
+		cy.document().its('activeElement.tagName')
+			.should('be.eq', 'BODY');
+
 		// Double tap on a cell gives the focus to the document
 		cy.get('#document-container')
 			.dblclick(20, 20);
@@ -29,16 +39,6 @@ describe('Calc focus tests', function() {
 		// Document has the focus
 		cy.document().its('activeElement.className')
 			.should('be.eq', 'clipboard');
-
-		// One tap on an other cell -> no focus on the document
-		cy.get('#document-container')
-			.click(0, 0);
-
-		cy.get('.leaflet-marker-icon.spreadsheet-cell-resize-marker');
-
-		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
 	});
 
 	it('Focus on second tap.', function() {
