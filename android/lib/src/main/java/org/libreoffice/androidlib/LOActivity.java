@@ -35,6 +35,7 @@ import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -460,6 +461,11 @@ public class LOActivity extends AppCompatActivity {
         super.onDestroy();
         Log.i(TAG, "onDestroy() - we know we are leaving the document");
         nativeLooper.quit();
+
+        // Remove the webview from the hierarchy & destroy
+        final ViewGroup viewGroup = (ViewGroup) mWebView.getParent();
+        if (viewGroup != null)
+            viewGroup.removeView(mWebView);
         mWebView.destroy();
 
         // Most probably the native part has already got a 'BYE' from
