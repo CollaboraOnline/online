@@ -407,11 +407,15 @@ L.Control.LokDialog = L.Control.extend({
 	_updateDialogCursor: function(dlgId, x, y, height) {
 		var strId = this._toStrId(dlgId);
 		var dialogCursor = L.DomUtil.get(strId + '-cursor');
+		var cursorVisible = dlgId in this._dialogs && this._dialogs[dlgId].cursorVisible;
 		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
-		L.DomUtil.setStyle(dialogCursor, 'display', this._dialogs[dlgId].cursorVisible ? 'block' : 'none');
+		L.DomUtil.setStyle(dialogCursor, 'display', cursorVisible ? 'block' : 'none');
 		// set the position of the cursor container element
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
+
+		// Make sure the keyboard is visible if the user can type.
+		this._map.focus(cursorVisible);
 	},
 
 	_createDialogCursor: function(dialogId) {
