@@ -60,8 +60,7 @@ L.Control.MobileWizard = L.Control.extend({
 		var docType = this._map.getDocType();
 		//console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
 		var maxScrolled = 52;
-		if (ContentsLength > 5 || this._tabs) {
-			console.log('INDICATOR');
+		if ((ContentsLength > 5 || this._tabs) && !window.mobileMenuWizard) {
 			$('#mobile-wizard-content').append('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
 		}
 		if (docType == 'spreadsheet')
