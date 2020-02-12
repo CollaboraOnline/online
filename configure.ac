@@ -922,6 +922,9 @@ AC_SUBST(ENABLE_SETCAP)
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
 AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
 AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
+AC_CONFIG_LINKS([cypress_test/package.json:cypress_test/package.json])
+AC_CONFIG_LINKS([cypress_test/cypress.json:cypress_test/cypress.json])
+AC_LINK_FILES([cypress_test/plugins], [cypress_test/plugins])
 AC_LINK_FILES([loleaflet/archived-packages], [loleaflet/archived-packages])
 
 APP_BRANDING_DIR=
