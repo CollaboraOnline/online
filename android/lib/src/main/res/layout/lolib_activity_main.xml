@@ -13,4 +13,23 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-6dp" />
 
+    <ProgressBar
+        android:id="@+id/assetsProgressbar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assetsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/preparing_for_the_first_start_after_an_update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assetsProgressbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

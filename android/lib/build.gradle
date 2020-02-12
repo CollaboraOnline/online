@@ -63,6 +63,8 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+
 }
 
 task copyUnpackAssets(type: Copy) {
