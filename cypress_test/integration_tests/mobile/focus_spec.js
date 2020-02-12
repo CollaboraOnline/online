@@ -186,9 +186,9 @@ describe('Focus tests', function() {
 					.click(posX, posY);
 			});
 
-		// Document grabs the focus
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		// No focus on the document
+		cy.document().its('activeElement.tagName')
+			.should('be.eq', 'BODY');
 
 		// Double tap on the shape
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
