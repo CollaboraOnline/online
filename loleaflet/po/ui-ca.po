@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0100\n"
-"PO-Revision-Date: 2020-01-27 08:44+0000\n"
+"PO-Revision-Date: 2020-02-12 12:26+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
 "Language: ca\n"
@@ -243,7 +243,7 @@ msgstr "Aquest servidor ha trobat un error %0 en processar l'ordre %1."
 
 #: src/control/Control.ContextMenu.js:174
 msgid "Delete"
-msgstr ""
+msgstr "Suprimeix"
 
 #: src/control/Control.ContextMenu.js:259
 msgid "Paste Special"
@@ -533,15 +533,15 @@ msgstr "Exporta com a"
 
 #: src/control/Control.Menubar.js:500
 msgid "Page Setup"
-msgstr ""
+msgstr "Configuració de la pàgina"
 
 #: src/control/Control.Menubar.js:501
 msgid "Portrait"
-msgstr ""
+msgstr "Vertical"
 
 #: src/control/Control.Menubar.js:502
 msgid "Landscape"
-msgstr ""
+msgstr "Horitzontal"
 
 #: src/control/Control.Menubar.js:763 src/control/Control.Toolbar.js:2054
 msgid "Reset to Default Language"
@@ -604,10 +604,8 @@ msgid "Insert shapes"
 msgstr "Insereix formes"
 
 #: src/control/Control.Toolbar.js:1057
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Funció"
+msgstr "Auxiliar de funcions"
 
 #: src/control/Control.Toolbar.js:1101
 msgid "First sheet"

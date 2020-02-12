@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0100\n"
-"PO-Revision-Date: 2020-02-03 11:28+0000\n"
+"PO-Revision-Date: 2020-02-12 14:09+0000\n"
 "Last-Translator: Stuart Swales <stuart.swales.croftnuisk@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/en_GB/>\n"
 "Language: en_GB\n"
@@ -243,7 +243,7 @@ msgstr "The server encountered a %0 error while parsing the %1 command."
 
 #: src/control/Control.ContextMenu.js:174
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: src/control/Control.ContextMenu.js:259
 msgid "Paste Special"
@@ -533,15 +533,15 @@ msgstr "Export as"
 
 #: src/control/Control.Menubar.js:500
 msgid "Page Setup"
-msgstr ""
+msgstr "Page Setup"
 
 #: src/control/Control.Menubar.js:501
 msgid "Portrait"
-msgstr ""
+msgstr "Portrait"
 
 #: src/control/Control.Menubar.js:502
 msgid "Landscape"
-msgstr ""
+msgstr "Landscape"
 
 #: src/control/Control.Menubar.js:763 src/control/Control.Toolbar.js:2054
 msgid "Reset to Default Language"
@@ -604,10 +604,8 @@ msgid "Insert shapes"
 msgstr "Insert shapes"
 
 #: src/control/Control.Toolbar.js:1057
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Function"
+msgstr "Function Wizard"
 
 #: src/control/Control.Toolbar.js:1101
 msgid "First sheet"

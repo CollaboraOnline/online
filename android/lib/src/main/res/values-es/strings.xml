@@ -7,4 +7,5 @@
     <string name="cannot_open_file_chooser">No se puede abrir el selector de archivos</string>
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Cargando…</string>
+    <string name="saving">Guardando…</string>
 </resources>

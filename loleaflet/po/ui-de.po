@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0100\n"
-"PO-Revision-Date: 2020-02-03 13:38+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"PO-Revision-Date: 2020-02-12 12:26+0000\n"
+"Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: German <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -242,7 +242,7 @@ msgstr "Der Server ist auf einen Fehler %0 beim Ausführen des Befehls %1 gesto�
 
 #: src/control/Control.ContextMenu.js:174
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: src/control/Control.ContextMenu.js:259
 msgid "Paste Special"
@@ -302,15 +302,15 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Linear"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "Axial"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "Radial"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
@@ -318,11 +318,11 @@ msgstr "Elliptisch"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "Quadratisch"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "Rechteckig"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
@@ -335,27 +335,27 @@ msgstr "Keine"
 
 #: src/control/Control.JSDialogBuilder.js:762
 msgid "Color"
-msgstr ""
+msgstr "Farbe"
 
 #: src/control/Control.JSDialogBuilder.js:765
 msgid "Gradient"
-msgstr ""
+msgstr "Farbverlauf"
 
 #: src/control/Control.JSDialogBuilder.js:768
 msgid "Hatching"
-msgstr ""
+msgstr "Schraffur"
 
 #: src/control/Control.JSDialogBuilder.js:772
 msgid "Pattern"
-msgstr ""
+msgstr "Muster"
 
 #: src/control/Control.JSDialogBuilder.js:905
 msgid "From"
-msgstr ""
+msgstr "Von"
 
 #: src/control/Control.JSDialogBuilder.js:908
 msgid "To"
-msgstr ""
+msgstr "Bis"
 
 #: src/control/Control.JSDialogBuilder.js:1040
 msgid "Font Name"
@@ -473,7 +473,7 @@ msgstr "Textausrichtung"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
 msgid "Online Help"
-msgstr ""
+msgstr "Online-Hilfe"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
@@ -532,15 +532,15 @@ msgstr "Exportieren als"
 
 #: src/control/Control.Menubar.js:500
 msgid "Page Setup"
-msgstr ""
+msgstr "Seiten-Einstellungen"
 
 #: src/control/Control.Menubar.js:501
 msgid "Portrait"
-msgstr ""
+msgstr "Hochformat"
 
 #: src/control/Control.Menubar.js:502
 msgid "Landscape"
-msgstr ""
+msgstr "Querformat"
 
 #: src/control/Control.Menubar.js:763 src/control/Control.Toolbar.js:2054
 msgid "Reset to Default Language"
@@ -551,7 +551,6 @@ msgid "Are you sure you want to delete this slide?"
 msgstr "Sind Sie sicher, dass Sie diese Folie löschen möchten?"
 
 #: src/control/Control.Menubar.js:1182 src/map/Clipboard.js:769
-#, fuzzy
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr "<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage, verwenden Sie deshalb nur folgende Tastaturkürzel:<ul><li><b>Strg+C</b>: Zum Kopieren.</li><li><b>Strg+X</b>: Zum Ausschneiden.</li><li><b>Strg+V</b>: Zum Einfügen.</li></ul></p>"
 
@@ -585,7 +584,7 @@ msgstr "Sind Sie sicher, dass Sie diese Folie löschen möchten?"
 
 #: src/control/Control.Toolbar.js:856
 msgid "Default Style"
-msgstr ""
+msgstr "Standardvorlage"
 
 #: src/control/Control.Toolbar.js:913
 msgid "Borders"
@@ -604,10 +603,8 @@ msgid "Insert shapes"
 msgstr "Formen einfügen"
 
 #: src/control/Control.Toolbar.js:1057
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Funktion"
+msgstr "Funktions-Assistent"
 
 #: src/control/Control.Toolbar.js:1101
 msgid "First sheet"

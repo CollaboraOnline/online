@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0100\n"
-"PO-Revision-Date: 2020-01-27 08:44+0000\n"
+"PO-Revision-Date: 2020-02-12 12:26+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -593,7 +593,7 @@ msgstr "Berbesos"
 
 #: src/control/Control.Toolbar.js:921
 msgid "More..."
-msgstr ""
+msgstr "Más…"
 
 #: src/control/Control.Toolbar.js:974
 msgid "Insert Local Image"

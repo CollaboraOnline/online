@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0100\n"
-"PO-Revision-Date: 2020-01-14 14:15+0000\n"
+"PO-Revision-Date: 2020-02-12 12:26+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
 "Language: es\n"
@@ -238,11 +238,11 @@ msgstr "Editar"
 
 #: src/control/Control.AlertDialog.js:95
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Se produjo el error %0 en el servidor durante el procesamiento de la orden %1."
+msgstr "Se produjo el error %0 en el servidor mientras se procesaba la orden %1."
 
 #: src/control/Control.ContextMenu.js:174
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: src/control/Control.ContextMenu.js:259
 msgid "Paste Special"
@@ -286,7 +286,7 @@ msgstr "Iniciar descarga"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr "Confirmar copia en el portapapeles"
+msgstr "Confirmar copia en portapapeles"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
@@ -532,15 +532,15 @@ msgstr "Exportar como"
 
 #: src/control/Control.Menubar.js:500
 msgid "Page Setup"
-msgstr ""
+msgstr "Configuración de página"
 
 #: src/control/Control.Menubar.js:501
 msgid "Portrait"
-msgstr ""
+msgstr "Vertical"
 
 #: src/control/Control.Menubar.js:502
 msgid "Landscape"
-msgstr ""
+msgstr "Horizontal"
 
 #: src/control/Control.Menubar.js:763 src/control/Control.Toolbar.js:2054
 msgid "Reset to Default Language"
@@ -603,10 +603,8 @@ msgid "Insert shapes"
 msgstr "Insertar formas"
 
 #: src/control/Control.Toolbar.js:1057
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Función"
+msgstr "Asistente de funciones"
 
 #: src/control/Control.Toolbar.js:1101
 msgid "First sheet"
