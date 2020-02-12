@@ -159,10 +159,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private boolean isFabMenuOpen = false;
     private FloatingActionButton editFAB;
     private FloatingActionButton writerFAB;
-    private FloatingActionButton drawFAB;
     private FloatingActionButton impressFAB;
     private FloatingActionButton calcFAB;
-    private LinearLayout drawLayout;
     private LinearLayout writerLayout;
     private LinearLayout impressLayout;
     private LinearLayout calcLayout;
@@ -333,13 +331,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     private void expandFabMenu() {
         ViewCompat.animate(editFAB).rotation(45.0F).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(10.0F)).start();
-        drawLayout.startAnimation(fabOpenAnimation);
         impressLayout.startAnimation(fabOpenAnimation);
         writerLayout.startAnimation(fabOpenAnimation);
         calcLayout.startAnimation(fabOpenAnimation);
         writerFAB.setClickable(true);
         impressFAB.setClickable(true);
-        drawFAB.setClickable(true);
         calcFAB.setClickable(true);
         isFabMenuOpen = true;
     }
@@ -348,11 +344,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         ViewCompat.animate(editFAB).rotation(0.0F).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(10.0F)).start();
         writerLayout.startAnimation(fabCloseAnimation);
         impressLayout.startAnimation(fabCloseAnimation);
-        drawLayout.startAnimation(fabCloseAnimation);
         calcLayout.startAnimation(fabCloseAnimation);
         writerFAB.setClickable(false);
         impressFAB.setClickable(false);
-        drawFAB.setClickable(false);
         calcFAB.setClickable(false);
         isFabMenuOpen = false;
     }
