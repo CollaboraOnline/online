@@ -635,7 +635,14 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._map.dragging._draggable._startPoint = this._startSwipePoint;
 			this._map.dragging._draggable._startPos = this._newPos;
 			this._newPos._add(delta);
+
 			this._map.dragging._draggable._onMove(e);
+
+			// Updates the tiles
+			clearInterval(this._map._docLayer._tilesPreFetcher);
+			this._map._docLayer._preFetchBorder = null;
+			this._map._docLayer._preFetchTiles();
+
 			this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);
 		}
 		else {
