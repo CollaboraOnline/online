@@ -1,10 +1,10 @@
 /* global describe it cy require afterEach expect Cypress beforeEach*/
 
-var helper = require('../common/helper');
+var helper = require('../../common/helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt');
+		helper.beforeAllMobile('empty.odt', 'writer');
 	});
 
 	afterEach(function() {
@@ -12,7 +12,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	function before(testFile) {
-		helper.loadTestDoc(testFile, true);
+		helper.loadTestDoc(testFile, 'writer', true);
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

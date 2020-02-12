@@ -1,10 +1,10 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
-var helper = require('../common/helper');
+var helper = require('../../common/helper');
 
 describe('Focus tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt');
+		helper.beforeAllMobile('empty.odt', 'writer');
 	});
 
 	afterEach(function() {

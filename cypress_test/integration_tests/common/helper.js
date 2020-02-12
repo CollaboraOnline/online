@@ -1,22 +1,40 @@
 /* global cy Cypress expect*/
 
-function loadTestDoc(fileName, mobile) {
+function loadTestDoc(fileName, subFolder, mobile) {
 	// Get a clean test document
-	cy.task('copyFile', {
-		sourceDir: Cypress.env('DATA_FOLDER'),
-		destDir: Cypress.env('WORKDIR'),
-		fileName: fileName,
-	});
+	if (subFolder === undefined) {
+		cy.task('copyFile', {
+			sourceDir: Cypress.env('DATA_FOLDER'),
+			destDir: Cypress.env('WORKDIR'),
+			fileName: fileName,
+		});
+	} else {
+		cy.task('copyFile', {
+			sourceDir: Cypress.env('DATA_FOLDER') + subFolder + '/',
+			destDir: Cypress.env('WORKDIR') + subFolder + '/',
+			fileName: fileName,
+		});
+	}
 
 	if (mobile === true) {
 		cy.viewport('iphone-6');
 	}
 
 	// Open test document
-	cy.visit('http://localhost:9980/loleaflet/' +
-		Cypress.env('WSD_VERSION_HASH') +
-		'/loleaflet.html?file_path=file://' +
-		Cypress.env('WORKDIR') + fileName, {
+	var URI;
+	if (subFolder === undefined) {
+		URI = 'http://localhost:9980/loleaflet/' +
+			Cypress.env('WSD_VERSION_HASH') +
+			'/loleaflet.html?file_path=file://' +
+			Cypress.env('WORKDIR') + fileName;
+	} else {
+		URI = 'http://localhost:9980/loleaflet/' +
+			Cypress.env('WSD_VERSION_HASH') +
+			'/loleaflet.html?file_path=file://' +
+			Cypress.env('WORKDIR') + subFolder + '/' + fileName;
+	}
+
+	cy.visit(URI, {
 		onLoad: function(win) {
 			win.onerror = cy.onUncaughtException;
 		}});
@@ -121,8 +139,8 @@ function copyTableToClipboard() {
 		.should('not.exist');
 }
 
-function beforeAllMobile(fileName) {
-	loadTestDoc(fileName, true);
+function beforeAllMobile(fileName, subFolder) {
+	loadTestDoc(fileName, subFolder, true);
 
 	detectLOCoreVersion();
 }

@@ -1,10 +1,10 @@
 /* global describe it cy beforeEach require expect afterEach Cypress*/
 
-var helper = require('../common/helper');
+var helper = require('../../common/helper');
 
 describe('Insert objects via insertion wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt');
+		helper.beforeAllMobile('empty.odt', 'writer');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

@@ -1,10 +1,10 @@
 /* global describe it cy beforeEach require afterEach*/
 
-var helper = require('../common/helper');
+var helper = require('../../common/helper');
 
 describe('Apply/modify styles.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('simple.odt');
+		helper.beforeAllMobile('simple.odt', 'writer');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

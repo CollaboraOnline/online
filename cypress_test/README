@@ -35,13 +35,17 @@ To run all mobile tests:
 
     make check-mobile
 
-To run one specific test suit of desktop tests:
+To run one specific test suit of desktop tests,
+use spec argument with a relative path to
+cypress_test/data/desktop/:
 
     make check-desktop spec=example_desktop_test_spec.js
 
-To run one specific test suit of mobile tests:
+To run one specific test suit of mobile tests,
+use spec argument with a relative path to
+cypress_test/data/mobile/:
 
-    make check-mobile spec=toolbar_spec.js
+    make check-mobile spec=writer/toolbar_spec.js
 
 
 Running one specific test
@@ -60,7 +64,7 @@ inside apply_font_spec.js file, you need to add it.only():
 
 Then run the test suit with:
 
-    make check-mobile spec=apply_font_spec.js
+    make check-mobile spec=writer/apply_font_spec.js
 
 Or open the file in the interactive test runner.
 
