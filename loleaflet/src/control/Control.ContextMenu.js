@@ -234,7 +234,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
-					name: '<a href="#" class="context-menu-link">' +  _(itemName) + '</a',
+					name: (window.mode.isMobile() ? _(itemName) : '<a href="#" class="context-menu-link">' +  _(itemName) + '</a'),
 					isHtmlName: true,
 				};
 

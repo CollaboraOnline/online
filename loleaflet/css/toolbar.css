@@ -823,6 +823,7 @@ tr.useritem > td > img {
 .context-menu-link {
 		text-decoration: none;
 		color: black;
+		width: 100%;
 }
 .menu-entry-icon {
 	width: 32px;

@@ -1456,6 +1456,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var menuEntry = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 
+		if (data.hyperlink) {
+			menuEntry = L.DomUtil.create('a', 'context-menu-link', menuEntry);
+			menuEntry.href = '#';
+		}
+
 		var icon = null;
 		var commandName = data.command && data.command.substring(0, '.uno:'.length) === '.uno:' ? data.command.substring('.uno:'.length) : data.id;
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName)) {
@@ -1634,6 +1639,8 @@ L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainM
 		menuStructure['checked'] = true;
 	if (menu.callback)
 		menuStructure['callback'] = menu.callback;
+	if (menu.isHtmlName)
+		menuStructure['hyperlink'] = true;
 
 	if (mainMenu) {
 		for (var menuItem in menu) {

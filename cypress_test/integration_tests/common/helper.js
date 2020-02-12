@@ -91,7 +91,7 @@ function copyTextToClipboard() {
 		});
 
 	// Execute copy
-	cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon .context-menu-link', {timeout : 10000})
+	cy.get('.ui-header.level-0.mobile-wizard.ui-widget .context-menu-link .menu-entry-with-icon', {timeout : 10000})
 		.contains('Copy')
 		.click();
 
@@ -126,7 +126,7 @@ function copyTableToClipboard() {
 		});
 
 	// Execute copy
-	cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon .context-menu-link')
+	cy.get('.ui-header.level-0.mobile-wizard.ui-widget .context-menu-link .menu-entry-with-icon')
 		.contains('Copy')
 		.click();
 
