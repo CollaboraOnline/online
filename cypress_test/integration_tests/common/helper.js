@@ -25,12 +25,12 @@ function loadTestDoc(fileName, subFolder, mobile) {
 	if (subFolder === undefined) {
 		URI = 'http://localhost:9980/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
-			'/loleaflet.html?file_path=file://' +
+			'/loleaflet.html?lang=en&file_path=file://' +
 			Cypress.env('WORKDIR') + fileName;
 	} else {
 		URI = 'http://localhost:9980/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
-			'/loleaflet.html?file_path=file://' +
+			'/loleaflet.html?lang=en&file_path=file://' +
 			Cypress.env('WORKDIR') + subFolder + '/' + fileName;
 	}
 
