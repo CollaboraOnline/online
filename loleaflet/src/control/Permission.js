@@ -100,6 +100,8 @@ L.Map.include({
 			this.setZoom(10);
 		}
 
+		if (window.ThisIsTheAndroidApp)
+			window.postMobileMessage('EDITMODE on');
 	},
 
 	_enterReadOnlyMode: function (perm) {
@@ -112,6 +114,10 @@ L.Map.include({
 		this._docLayer._onUpdateTextSelection();
 
 		this.fire('updatepermission', {perm : perm});
+		this.fire('closemobilewizard');
+
+		if (window.ThisIsTheAndroidApp)
+			window.postMobileMessage('EDITMODE off');
 	},
 
 	enableSelection: function () {

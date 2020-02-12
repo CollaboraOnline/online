@@ -187,9 +187,11 @@ L.Control.UIManager = L.Control.extend({
 	onUpdatePermission: function(e) {
 		if (window.mode.isMobile()) {
 			if (e.perm === 'edit') {
+				history.pushState({context: 'app-started'}, 'edit-mode');
 				$('#toolbar-down').show();
 			}
 			else {
+				history.pushState({context: 'app-started'}, 'readonly-mode');
 				$('#toolbar-down').hide();
 			}
 		}
@@ -198,16 +200,31 @@ L.Control.UIManager = L.Control.extend({
 		this.map.invalidateSize();
 	},
 
+	enterReadonlyOrClose: function() {
+		if (this.map.isPermissionEdit()) {
+			// in edit mode, passing 'edit' actually enters readonly mode
+			// and bring the blue circle editmode button back
+			this.map.setPermission('edit');
+			var toolbar = w2ui['actionbar'];
+			if (toolbar) {
+				toolbar.uncheck('closemobile');
+				toolbar.uncheck('close');
+			}
+		} else {
+			window.onClose();
+		}
+	},
+
 	onGoBack: function(popStateEvent) {
 		if (popStateEvent.state && popStateEvent.state.context) {
 			if (popStateEvent.state.context === 'mobile-wizard' && this.mobileWizard) {
 				if (this.mobileWizard.isOpen()) {
 					this.mobileWizard.goLevelUp(true);
 				} else {
-					window.onClose();
+					this.enterReadonlyOrClose();
 				}
 			} else if (popStateEvent.state.context === 'app-started') {
-				window.onClose();
+				this.enterReadonlyOrClose();
 			}
 		}
 	},

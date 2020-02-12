@@ -710,6 +710,7 @@ button.leaflet-control-search-next
 .w2ui-icon.users{ background: url('images/contacts-dark.svg') no-repeat center; }
 .w2ui-icon.fullscreen{ background: url('images/lc_fullscreen.svg') no-repeat center !important; }
 .w2ui-icon.closemobile{ background: url('images/lc_closedocmobile.svg') no-repeat center !important; }
+.w2ui-icon.editmode { background: url("images/lc_listitem-selected.svg") no-repeat center / 28px !important; }
 .w2ui-icon.closetoolbar{ background: url('images/close_toolbar.svg') no-repeat center !important; }
 .w2ui-icon.sidebar_modify_page{ background: url('images/lc_formproperties.svg') no-repeat center !important; }
 .w2ui-icon.sidebar_slide_change{ background: url('images/sidebar-transition-large.svg') no-repeat center !important; }

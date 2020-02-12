@@ -142,7 +142,7 @@ function onClick(e, id, item) {
 		map.uiManager.toggleMenubar();
 	}
 	else if (id === 'close' || id === 'closemobile') {
-		onClose();
+		map.uiManager.enterReadonlyOrClose();
 	}
 	else if (id === 'link') {
 		map.showHyperlinkDialog();
@@ -971,6 +971,12 @@ function onUpdatePermission(e) {
 				toolbar.disable(items[idx].id);
 			}
 		}
+		if (e.perm === 'edit') {
+			toolbar.set('closemobile', {img: 'editmode'});
+		} else {
+			toolbar.set('closemobile', {img: 'closemobile'});
+		}
+
 	}
 }
 
