@@ -41,8 +41,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testSaveOnDisconnect);
     CPPUNIT_TEST(testSavePassiveOnDisconnect);
-    // This test is failing
-    //CPPUNIT_TEST(testReloadWhileDisconnecting);
+    CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testInactiveClient);
     CPPUNIT_TEST(testViewInfoMsg);
     CPPUNIT_TEST(testUndoConflict);
