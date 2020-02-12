@@ -193,6 +193,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				toolbarDownButtons.forEach(function(id) {
 					toolbar.enable(id);
 				});
+				toolbar.set('closemobile', {img: 'editmode'});
 			}
 		} else {
 			toolbar = w2ui['actionbar'];
@@ -200,6 +201,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				toolbarDownButtons.forEach(function(id) {
 					toolbar.disable(id);
 				});
+				toolbar.set('closemobile', {img: 'closemobile'});
 			}
 		}
 	},
