@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress*/
+/* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../common/helper');
 
@@ -49,12 +49,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font size.', function() {
-		// TODO: font size HTML item is not a combobox anymore.
-		// The ID changes from fontsizecombobox to fontsize.
-		// and applying font size does not affect the selected text.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
-			return;
-
 		// Change font size
 		cy.get('#fontsizecombobox')
 			.click();
