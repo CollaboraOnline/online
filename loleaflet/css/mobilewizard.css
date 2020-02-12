@@ -316,7 +316,17 @@
 	.sub-menu-title {
 		padding-left: 42px;
 	}
-
+	.sub-menu-title::before {
+		width: 22px;
+		height: 22px;
+		content: ' ';
+		display: block;
+		position: absolute;
+		left: 4%;
+		margin: 0px 4px;
+		background-color: #eee;
+		border-radius: 20px;
+	}
 	.sub-menu-arrow {
 		-webkit-transform: rotate(180deg);
 		-moz-transform: rotate(180deg);
