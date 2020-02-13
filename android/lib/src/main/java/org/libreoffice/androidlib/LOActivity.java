@@ -266,8 +266,10 @@ public class LOActivity extends AppCompatActivity {
         if (getIntent().getData() != null) {
 
             if (getIntent().getData().getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-                isDocEditable = false;
-                Toast.makeText(this, getResources().getString(R.string.temp_file_saving_disabled), Toast.LENGTH_SHORT).show();
+                isDocEditable = (getIntent().getFlags() & Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != 0;
+                if (!isDocEditable)
+                    Toast.makeText(this, getResources().getString(R.string.temp_file_saving_disabled), Toast.LENGTH_SHORT).show();
+
                 if (copyFileToTemp() && mTempFile != null) {
                     documentUri = mTempFile.toURI();
                     urlToLoad = documentUri.toString();
@@ -397,6 +399,7 @@ public class LOActivity extends AppCompatActivity {
         }
     }
 
+    /** When we get the file via a content: URI, we need to put it to a temp file. */
     private boolean copyFileToTemp() {
         ContentResolver contentResolver = getContentResolver();
         FileChannel inputChannel = null;
@@ -434,6 +437,42 @@ public class LOActivity extends AppCompatActivity {
             return false;
         } catch (IOException e) {
             return false;
+        }
+    }
+
+    /** Check that we have created a temp file, and if yes, copy it back to the content: URI. */
+    private void copyTempBackToIntent() {
+        if (!isDocEditable || mTempFile == null || getIntent().getData() == null || !getIntent().getData().getScheme().equals(ContentResolver.SCHEME_CONTENT))
+            return;
+
+        ContentResolver contentResolver = getContentResolver();
+        FileChannel inputChannel = null;
+        FileChannel outputChannel = null;
+
+        try {
+            try {
+                AssetFileDescriptor assetFD = contentResolver.openAssetFileDescriptor(getIntent().getData(), "w");
+                if (assetFD == null) {
+                    Log.e(TAG, "couldn't create assetfiledescriptor from " + getIntent().getDataString());
+                    return;
+                }
+                outputChannel = assetFD.createOutputStream().getChannel();
+                inputChannel = new FileInputStream(mTempFile).getChannel();
+
+                long bytesTransferred = 0;
+                // might not  copy all at once, so make sure everything gets copied....
+                while (bytesTransferred < inputChannel.size()) {
+                    bytesTransferred += outputChannel.transferFrom(inputChannel, bytesTransferred, inputChannel.size());
+                }
+                Log.e(TAG, "Success copying " + bytesTransferred + " bytes");
+            } finally {
+                if (inputChannel != null) inputChannel.close();
+                if (outputChannel != null) outputChannel.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "file not found: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "exception: " + e.getMessage());
         }
     }
 
@@ -560,6 +599,7 @@ public class LOActivity extends AppCompatActivity {
             @Override
             public void run() {
                 postMobileMessageNative("BYE");
+                copyTempBackToIntent();
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -702,6 +742,7 @@ public class LOActivity extends AppCompatActivity {
                 initiateSlideShow();
                 return false;
             case "SAVE":
+                copyTempBackToIntent();
                 sendBroadcast(messageAndParam[0], messageAndParam[1]);
                 return false;
             case "downloadas":
