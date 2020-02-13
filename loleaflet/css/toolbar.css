@@ -33,6 +33,12 @@
 #tb_actionbar_item_LanguageStatus .w2ui-tb-caption{
 	float: none;
 }
+#tb_actionbar_item_zoom .w2ui-tb-caption{
+	min-width: 43px;
+}
+#tb_actionbar_item_zoom .w2ui-tb-caption::after {
+	content: '%';
+}
 #document-signing-bar {
 		background-color: #ef324e;;
 }
