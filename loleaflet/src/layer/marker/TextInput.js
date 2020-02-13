@@ -151,14 +151,27 @@ L.TextInput = L.Layer.extend({
 	},
 
 	// Focus the textarea/contenteditable
-	focus: function() {
+	// @acceptInput (only on "mobile" (= mobile phone) or on iOS and Android in general) true if we want to
+	// accept key input, and show the virtual keyboard.
+	focus: function(acceptInput) {
 		// Clicking or otherwise focusing the map should focus on the clipboard
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
 		if (this._map._permission !== 'edit') {
 			return;
 		}
+
+		// Trick to avoid showing the software keyboard: Set the textarea
+		// read-only before focus() and reset it again after the blur()
+		if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true)
+			this._textArea.setAttribute('readonly', true);
+
 		this._textArea.focus();
+
+		if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true) {
+			this._textArea.blur();
+			this._textArea.removeAttribute('readonly');
+		}
 	},
 
 	blur: function() {
