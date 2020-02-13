@@ -1,4 +1,6 @@
 if ENABLE_CYPRESS
+
+abs_dir = $(if $(filter $(abs_builddir),$(abs_srcdir)),.,$(abs_srcdir))
 CYPRESS_BINARY = ${abs_builddir}/node_modules/cypress/bin/cypress
 
 DESKTOP_USER_AGENT = "cypress"
@@ -54,7 +56,7 @@ run-mobile: @JAILS_PATH@ node_modules
 define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
 	@echo
-	@NODE_PATH=$(abs_srcdir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(abs_srcdir) \
+	@NODE_PATH=${abs_dir}/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(abs_srcdir) \
 		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_top_srcdir)/loleaflet/.eslintrc
 	@echo
 endef
@@ -81,7 +83,7 @@ define run_desktop_tests
 			--config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
 			--headless \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
-			$(if $(1), --spec=integration_tests/desktop/$(1)) \
+			$(if $(1), --spec=${abs_dir}/integration_tests/desktop/$(1)) \
 			|| (pkill loolwsd && false)
 endef
 
@@ -93,7 +95,7 @@ define run_mobile_tests
 			--config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
 			--headless \
 			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
-			$(if $(1), --spec=integration_tests/mobile/$(1)) \
+			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
 			|| (pkill loolwsd && false)
 endef
 
