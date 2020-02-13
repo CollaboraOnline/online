@@ -306,6 +306,7 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
 		if (map.options.autoFitWidth !== false) {
+			// always true since autoFitWidth is never set
 			map.on('resize', this._fitWidthZoom, this);
 		}
 		// Retrieve the initial cell cursor position (as LOK only sends us an
@@ -3106,10 +3107,12 @@ L.TileLayer = L.GridLayer.extend({
 		this._map._socket.sendMessage('requestloksession');
 	},
 
+	// This is really just called on zoomend
 	_fitWidthZoom: function (e, maxZoom) {
 		if (isNaN(this._docWidthTwips)) { return; }
 		var oldSize = e ? e.oldSize : this._map.getSize();
 		var newSize = e ? e.newSize : this._map.getSize();
+
 		if (this._docType !== 'presentation' && newSize.x - oldSize.x === 0) { return; }
 
 		var widthTwips = newSize.x * this._map.options.tileWidthTwips / this._tileSize;
@@ -3123,6 +3126,13 @@ L.TileLayer = L.GridLayer.extend({
 
 			zoom = Math.min(maxZoom, Math.max(1, zoom));
 			if (this._docWidthTwips * this._map.getZoomScale(zoom, 10) < widthTwips) {
+				// Not clear why we wanted to zoom in the past.
+				// This resets the view & scroll area and does a 'panTo'
+				// to keep the cursor in view.
+				// But of course, zoom to fit the first time.
+				if (this._firstFitDone)
+					zoom = this._map._zoom;
+				this._firstFitDone = true;
 				this._map.setZoom(zoom, {animate: false});
 			}
 		}
