@@ -3161,7 +3161,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_invalidatePreviews: function () {
-		if (this._map._docPreviews && this._previewInvalidations.length > 0) {
+		if (this._map && this._map._docPreviews && this._previewInvalidations.length > 0) {
 			var toInvalidate = {};
 			for (var i = 0; i < this._previewInvalidations.length; i++) {
 				var invalidBounds = this._previewInvalidations[i];

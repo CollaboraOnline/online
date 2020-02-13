@@ -279,6 +279,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	onRemove: function (map) {
 		map.off('updatemaxbounds', this._onUpdateMaxBounds, this);
+		clearTimeout(this._previewInvalidator);
 	},
 
 	onAnnotationCancel: function () {
