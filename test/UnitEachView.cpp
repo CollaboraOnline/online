@@ -62,7 +62,9 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         Poco::format(text, "mouse type=%s x=%d y=%d count=1 buttons=1 modifier=0",
                      std::string("buttonup"), docWidth / 2, docHeight / 6);
         helpers::sendTextFrame(socket, text, Poco::format(view, itView));
-        response = helpers::getResponseString(socket, protocol, Poco::format(view, itView));
+        // Double of the default.
+        size_t timeoutMs = 20000;
+        response = helpers::getResponseString(socket, protocol, Poco::format(view, itView), timeoutMs);
         CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
         // Connect and load 0..N Views, where N<=limit
@@ -79,7 +81,7 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         itView = 0;
         for (const auto& socketView : views)
         {
-            helpers::getResponseString(socket, protocolView, Poco::format(view, itView));
+            helpers::getResponseString(socket, protocolView, Poco::format(view, itView), timeoutMs);
             CPPUNIT_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
             ++itView;
             (void)socketView;
