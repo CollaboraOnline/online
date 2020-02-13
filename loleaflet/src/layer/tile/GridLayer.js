@@ -446,6 +446,7 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_updateScrollOffset: function () {
+		if (!this._map) return;
 		var centerPixel = this._map.project(this._map.getCenter());
 		var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));
 		var x = Math.round(newScrollPos.x < 0 ? 0 : newScrollPos.x);
