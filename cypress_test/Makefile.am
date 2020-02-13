@@ -6,12 +6,12 @@ CYPRESS_BINARY = ${abs_builddir}/node_modules/cypress/bin/cypress
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = ${abs_srcdir}/integration_tests/desktop
 DESKTOP_DATA_FOLDER = ${abs_srcdir}/data/desktop/
-DESKTOP_WORKDIR = ${abs_srcdir}/workdir/desktop/
+DESKTOP_WORKDIR = ${abs_builddir}/workdir/desktop/
 
 MOBILE_USER_AGENT = "cypress mobile"
 MOBILE_TEST_FOLDER = ${abs_srcdir}/integration_tests/mobile
 MOBILE_DATA_FOLDER = ${abs_srcdir}/data/mobile/
-MOBILE_WORKDIR = ${abs_srcdir}/workdir/mobile/
+MOBILE_WORKDIR = ${abs_builddir}/workdir/mobile/
 
 if HAVE_LO_PATH
 check-local: @JAILS_PATH@ node_modules
