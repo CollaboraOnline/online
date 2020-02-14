@@ -3,7 +3,7 @@
  * L.Control.Scroll handles scrollbars
  */
 
-/* global $ clearTimeout setTimeout */
+/* global $ clearTimeout setTimeout Hammer */
 L.Control.Scroll = L.Control.extend({
 
 	onAdd: function (map) {
@@ -62,6 +62,22 @@ L.Control.Scroll = L.Control.extend({
 				alwaysTriggerOffsets: false
 			}
 		});
+
+		if (!this._hammer && map.touchGesture) {
+			this._hammer = new Hammer(this._scrollContainer);
+			this._hammer.get('pan').set({
+				direction: Hammer.DIRECTION_ALL
+			});
+
+			if (L.Browser.touch) {
+				L.DomEvent.on(this._scrollContainer, 'touchmove', L.DomEvent.preventDefault);
+			}
+
+			var mapTouchGesture = map.touchGesture;
+			this._hammer.on('panstart', L.bind(mapTouchGesture._onPanStart, mapTouchGesture));
+			this._hammer.on('pan', L.bind(mapTouchGesture._onPan, mapTouchGesture));
+			this._hammer.on('panend', L.bind(mapTouchGesture._onPanEnd, mapTouchGesture));
+		}
 	},
 
 	_onCalcScroll: function (e) {
