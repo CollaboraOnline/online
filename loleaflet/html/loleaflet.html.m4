@@ -40,6 +40,9 @@ dnl# and window.ThisIsTheGtkApp
 
 ifelse(MOBILEAPP,[true],
   [   window.ThisIsAMobileApp = true;
+   window.open = function (url, windowName, windowFeatures) {
+     window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */
+   }
    window.MobileAppName='MOBILEAPPNAME';],
   [   window.ThisIsAMobileApp = false;]
 )

@@ -1155,12 +1155,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'about') {
 			this._map.showLOAboutDialog();
 		} else if (id === 'report-an-issue') {
-			var bugLink = 'https://bugs.documentfoundation.org/enter_bug.cgi?product=LibreOffice%20Online';
-			if (window.ThisIsAMobileApp) {
-				window.postMobileMessage('HYPERLINK ' + bugLink);
-			} else {
-				window.open(bugLink, '_blank');
-			}
+			window.open('https://bugs.documentfoundation.org/enter_bug.cgi?product=LibreOffice%20Online', '_blank');
 		} else if (id === 'inserthyperlink') {
 			this._map.showHyperlinkDialog();
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
