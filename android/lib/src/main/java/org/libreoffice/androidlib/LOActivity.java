@@ -785,6 +785,12 @@ public class LOActivity extends AppCompatActivity {
                 }
                 return false;
             }
+            case "HYPERLINK": {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(messageAndParam[1]));
+                startActivity(intent);
+                return false;
+            }
         }
         return true;
     }

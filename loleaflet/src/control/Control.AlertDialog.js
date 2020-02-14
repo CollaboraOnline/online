@@ -62,7 +62,11 @@ L.Control.AlertDialog = L.Control.extend({
 					type: 'button',
 					className: 'vex-dialog-button-primary',
 					click: function openClick () {
-						window.open(url, '_blank');
+						if (window.ThisIsAMobileApp) {
+							window.postMobileMessage('HYPERLINK ' + url);
+						} else {
+							window.open(url, '_blank');
+						}
 						vex.closeAll();
 					}
 				});

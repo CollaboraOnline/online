@@ -22,7 +22,11 @@ L.Control.Infobar = L.Control.extend({
 					return;
 
 				if (e.action.startsWith('http')) { // We have a link
-					var win = window.open(e.action, '_blank');
+					if (window.ThisIsAMobileApp) {
+						window.postMobileMessage('HYPERLINK ' + e.action);
+					} else {
+						var win = window.open(e.action, '_blank');
+					}
 					win.focus();
 				}
 			};
