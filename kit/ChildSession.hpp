@@ -220,14 +220,12 @@ public:
     bool sendTextFrame(const char* buffer, int length) override
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        const std::unique_lock<std::mutex> lock = getLock();
         return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Text);
     }
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
-        const std::unique_lock<std::mutex> lock = getLock();
         return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
     }
 
@@ -328,10 +326,6 @@ private:
 
     /// If we are copying to clipboard.
     bool _copyToClipboard;
-
-    /// Synchronize _loKitDocument access.
-    /// This should be owned by Document.
-    static std::recursive_mutex Mutex;
 };
 
 #endif

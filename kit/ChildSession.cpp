@@ -50,8 +50,6 @@ using Poco::URI;
 
 using namespace LOOLProtocol;
 
-std::recursive_mutex ChildSession::Mutex;
-
 namespace {
 
 std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
@@ -88,8 +86,6 @@ void ChildSession::disconnect()
 {
     if (!isDisconnected())
     {
-        std::unique_lock<std::recursive_mutex> lock(Mutex);
-
         if (_viewId >= 0)
         {
             if (_docManager)
@@ -125,8 +121,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         // Client is getting active again.
         // Send invalidation and other sync-up messages.
-        std::unique_lock<std::recursive_mutex> lock(Mutex); //TODO: Move to top of function?
-
         getLOKitDocument()->setView(_viewId);
 
         int curPart = 0;
@@ -609,8 +603,6 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
 
     assert(!getDocURL().empty());
     assert(!getJailedFilePath().empty());
-
-    std::unique_lock<std::recursive_mutex> lock(Mutex);
 
 #if defined(ENABLE_DEBUG) && !MOBILEAPP
     if (std::getenv("PAUSEFORDEBUGGER"))
@@ -2219,7 +2211,6 @@ bool ChildSession::removeTextContext(const char* /*buffer*/, int /*length*/,
         return false;
     }
 
-    std::unique_lock<std::mutex> lock(getLock());
     getLOKitDocument()->setView(_viewId);
     getLOKitDocument()->removeTextContext(id, before, after);
 
@@ -2233,7 +2224,6 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
 {
     if (type == LOK_CALLBACK_INVALIDATE_TILES)
     {
-        std::unique_lock<std::mutex> lock(getLock());
         _stateRecorder.recordInvalidate(); // TODO remember the area, not just a bool ('true' invalidates everything)
     }
     else if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR ||
@@ -2249,7 +2239,6 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_CELL_ADDRESS ||
              type == LOK_CALLBACK_REFERENCE_MARKS)
     {
-        std::unique_lock<std::mutex> lock(getLock());
         _stateRecorder.recordEvent(type, payload);
     }
     else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
@@ -2259,7 +2248,6 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_VIEW_CURSOR_VISIBLE ||
              type == LOK_CALLBACK_VIEW_LOCK)
     {
-        std::unique_lock<std::mutex> lock(getLock());
         Poco::JSON::Parser parser;
 
         Poco::JSON::Object::Ptr root = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
@@ -2272,7 +2260,6 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
         std::string value;
         if (LOOLProtocol::parseNameValuePair(payload, name, value, '='))
         {
-            std::unique_lock<std::mutex> lock(getLock());
             _stateRecorder.recordState(name, payload);
         }
     }
@@ -2280,7 +2267,6 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_REDLINE_TABLE_ENTRY_MODIFIED ||
              type == LOK_CALLBACK_COMMENT)
     {
-        std::unique_lock<std::mutex> lock(getLock());
         _stateRecorder.recordEventSequence(type, payload);
     }
 }

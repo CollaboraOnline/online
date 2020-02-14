@@ -175,12 +175,6 @@ protected:
         _lastActivityTime = std::chrono::steady_clock::now();
     }
 
-    /// Internal lock shared with derived classes.
-    std::unique_lock<std::mutex> getLock()
-    {
-        return std::unique_lock<std::mutex>(_mutex);
-    }
-
     void dumpState(std::ostream& os) override;
 
 private:
