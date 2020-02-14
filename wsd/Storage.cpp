@@ -547,6 +547,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             }
 
             LOG_END(logger, true);
+            logger.flush();
         }
 
         if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
