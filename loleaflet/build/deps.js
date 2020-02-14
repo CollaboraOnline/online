@@ -11,7 +11,6 @@ var deps = {
 		      'core/Class.js',
 		      'core/Events.js',
 		      'core/Socket.js',
-		      'core/Browser.js',
 		      'core/Matrix.js',
 		      'geometry/Point.js',
 		      'geometry/Bounds.js',
