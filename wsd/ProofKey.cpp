@@ -164,7 +164,13 @@ Proof::Proof()
 
 std::string Proof::ProofKeyPath()
 {
-    static const std::string keyPath = LOOLWSD_CONFIGDIR "/proof_key";
+    static const std::string keyPath =
+#if ENABLE_DEBUG
+        DEBUG_ABSSRCDIR
+#else
+        LOOLWSD_CONFIGDIR
+#endif
+        "/proof_key";
     return keyPath;
 }
 
