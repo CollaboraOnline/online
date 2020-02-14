@@ -21,6 +21,7 @@ typedef std::vector<std::pair<std::string, std::string>> VecOfStringPairs;
 // The headers returned are X-WOPI-TimeStamp, X-WOPI-Proof
 // If no proof key, returns empty vector
 // Both parameters are utf-8-encoded strings
+// access_token must not be URI-encoded
 VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri);
 
 // Returns pairs <attribute, value> to set in proof-key element in discovery xml.

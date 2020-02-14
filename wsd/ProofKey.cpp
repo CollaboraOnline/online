@@ -204,22 +204,24 @@ int64_t Proof::DotNetTicks(const std::chrono::system_clock::time_point& utc)
 std::vector<unsigned char> Proof::GetProof(const std::string& access_token, const std::string& uri,
                                            int64_t ticks)
 {
-    std::string decoded_access_token;
-    Poco::URI::decode(access_token, decoded_access_token);
-    assert(decoded_access_token.size() <= static_cast<size_t>(std::numeric_limits<int32_t>::max()));
-    assert(uri.size() <= static_cast<size_t>(std::numeric_limits<int32_t>::max()));
-    const auto access_token_size = ToNetworkOrderBytes<int32_t>(decoded_access_token.size());
-    const auto uri_size = ToNetworkOrderBytes<int32_t>(uri.size());
+    assert(access_token.size() <= static_cast<size_t>(std::numeric_limits<int32_t>::max()));
+    std::string uri_upper = uri;
+    for (auto& c : uri_upper)
+        if (c >= 'a' && c <= 'z')
+            c -= 'a' - 'A';
+    assert(uri_upper.size() <= static_cast<size_t>(std::numeric_limits<int32_t>::max()));
+    const auto access_token_size = ToNetworkOrderBytes<int32_t>(access_token.size());
+    const auto uri_size = ToNetworkOrderBytes<int32_t>(uri_upper.size());
     const auto ticks_bytes = ToNetworkOrderBytes(ticks);
     const auto ticks_size = ToNetworkOrderBytes<int32_t>(ticks_bytes.size());
-    const size_t size = access_token_size.size() + decoded_access_token.size()
-                        + uri_size.size() + uri.size() + ticks_size.size()
+    const size_t size = access_token_size.size() + access_token.size()
+                        + uri_size.size() + uri_upper.size() + ticks_size.size()
                         + ticks_bytes.size();
     std::vector<unsigned char> buf(size);
     auto pos = std::copy(access_token_size.begin(), access_token_size.end(), buf.begin());
-    pos = std::copy(decoded_access_token.begin(), decoded_access_token.end(), pos);
+    pos = std::copy(access_token.begin(), access_token.end(), pos);
     pos = std::copy(uri_size.begin(), uri_size.end(), pos);
-    pos = std::copy(uri.begin(), uri.end(), pos);
+    pos = std::copy(uri_upper.begin(), uri_upper.end(), pos);
     pos = std::copy(ticks_size.begin(), ticks_size.end(), pos);
     std::copy(ticks_bytes.begin(), ticks_bytes.end(), pos);
     return buf;
