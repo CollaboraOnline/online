@@ -25,6 +25,7 @@
 #import "Document.h"
 
 #import "FakeSocket.hpp"
+#import "Kit.hpp"
 #import "Log.hpp"
 #import "LOOLWSD.hpp"
 #import "Util.hpp"
@@ -187,7 +188,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     if (!trace)
         trace = strdup("warning");
 
-    setenv("SAL_LOK_OPTIONS", "unipoll", 0);
+    setupKitEnvironment();
 
     Log::initialize("Mobile", trace, false, false, {});
     Util::setThreadName("main");

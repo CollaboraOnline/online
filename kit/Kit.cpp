@@ -2292,6 +2292,43 @@ void wakeCallback(void* pData)
         return reinterpret_cast<KitSocketPoll*>(pData)->wakeup();
 }
 
+void setupKitEnvironment()
+{
+    // Setup & check environment
+    const std::string layers(
+        "xcsxcu:${BRAND_BASE_DIR}/share/registry "
+        "res:${BRAND_BASE_DIR}/share/registry "
+        "bundledext:${${BRAND_BASE_DIR}/program/lounorc:BUNDLED_EXTENSIONS_USER}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
+        "sharedext:${${BRAND_BASE_DIR}/program/lounorc:SHARED_EXTENSIONS_USER}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
+        "userext:${${BRAND_BASE_DIR}/program/lounorc:UNO_USER_PACKAGES_CACHE}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
+#ifdef IOS
+        "user:*${BRAND_BASE_DIR}/loolkitconfig.xcu "
+#else
+#if ENABLE_DEBUG // '*' denotes non-writable.
+        "user:*file://" DEBUG_ABSSRCDIR "/loolkitconfig.xcu "
+#else
+        "user:*file://" LOOLWSD_CONFIGDIR "/loolkitconfig.xcu "
+#endif
+#endif
+        );
+    ::setenv("CONFIGURATION_LAYERS", layers.c_str(),
+             1 /* override */);
+
+#if !MOBILEAPP
+    // No-caps tracing can spawn eg. glxinfo & other oddness.
+    unsetenv("DISPLAY");
+#endif
+
+    // Set various options we need.
+    std::string options = "unipoll";
+#if !MOBILEAPP
+    if (Log::logger().trace())
+        options += ":profile_events";
+#endif
+//    options += ":sc_no_grid_bg"; // leave this disabled for now, merged-cells needs more work.
+    ::setenv("SAL_LOK_OPTIONS", options.c_str(), 0);
+}
+
 #ifndef BUILDING_TESTS
 
 void lokit_main(
@@ -2569,6 +2606,9 @@ void lokit_main(
         }
 
 #else // MOBILEAPP
+
+        // was not done by the preload
+        setupKitEnvironment();
 
 #if defined(__linux) && !defined(__ANDROID__)
         Poco::URI userInstallationURI("file", LO_PATH);

@@ -31,6 +31,7 @@
 		BE5EB5DA2140363100E0826C /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D92140363100E0826C /* ios.mm */; };
 		BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* ICU.dat */; };
 		BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* MobileCoreServices.framework */; };
+		BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */; };
 		BE80E43221AD92F700859C97 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BE80E43121AD92F600859C97 /* Fonts */; };
 		BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE80E45721B68F5700859C97 /* TemplateCollectionViewController.mm */; };
 		BE80E45E21B6CEF200859C97 /* TemplateSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE80E45D21B6CEF200859C97 /* TemplateSectionHeaderView.m */; };
@@ -46,7 +47,6 @@
 		BE8D85CA214055F3009F1860 /* offapi.rdb in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85BC214055F2009F1860 /* offapi.rdb */; };
 		BE8D85CB214055F3009F1860 /* share in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85BD214055F2009F1860 /* share */; };
 		BE8D85CC214055F3009F1860 /* config in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85BE214055F2009F1860 /* config */; };
-		BE8D85CD214055F3009F1860 /* registry in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85BF214055F2009F1860 /* registry */; };
 		BE8D85CE214055F3009F1860 /* oovbaapi.rdb in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C0214055F2009F1860 /* oovbaapi.rdb */; };
 		BE8D85CF214055F3009F1860 /* udkapi.rdb in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C1214055F2009F1860 /* udkapi.rdb */; };
 		BE8D85D0214055F3009F1860 /* services in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C2214055F2009F1860 /* services */; };
@@ -527,6 +527,78 @@
 		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE7D6A2123FA9C2300C2E605 /* winreg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = winreg.cxx; path = "../../ios-device/configmgr/source/winreg.cxx"; sourceTree = "<group>"; };
+		BE7D6A2223FA9C2300C2E605 /* propertynode.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = propertynode.hxx; path = "../../ios-device/configmgr/source/propertynode.hxx"; sourceTree = "<group>"; };
+		BE7D6A2323FA9C2300C2E605 /* childaccess.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = childaccess.hxx; path = "../../ios-device/configmgr/source/childaccess.hxx"; sourceTree = "<group>"; };
+		BE7D6A2423FA9C2300C2E605 /* readwriteaccess.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = readwriteaccess.hxx; path = "../../ios-device/configmgr/source/readwriteaccess.hxx"; sourceTree = "<group>"; };
+		BE7D6A2523FA9C2300C2E605 /* dconf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dconf.cxx; path = "../../ios-device/configmgr/source/dconf.cxx"; sourceTree = "<group>"; };
+		BE7D6A2623FA9C2300C2E605 /* type.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = type.cxx; path = "../../ios-device/configmgr/source/type.cxx"; sourceTree = "<group>"; };
+		BE7D6A2723FA9C2300C2E605 /* parsemanager.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = parsemanager.hxx; path = "../../ios-device/configmgr/source/parsemanager.hxx"; sourceTree = "<group>"; };
+		BE7D6A2823FA9C2300C2E605 /* rootnode.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = rootnode.hxx; path = "../../ios-device/configmgr/source/rootnode.hxx"; sourceTree = "<group>"; };
+		BE7D6A2923FA9C2300C2E605 /* xmldata.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = xmldata.hxx; path = "../../ios-device/configmgr/source/xmldata.hxx"; sourceTree = "<group>"; };
+		BE7D6A2A23FA9C2300C2E605 /* xcsparser.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = xcsparser.hxx; path = "../../ios-device/configmgr/source/xcsparser.hxx"; sourceTree = "<group>"; };
+		BE7D6A2B23FA9C2300C2E605 /* xcuparser.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = xcuparser.cxx; path = "../../ios-device/configmgr/source/xcuparser.cxx"; sourceTree = "<group>"; };
+		BE7D6A2C23FA9C2300C2E605 /* lock.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lock.cxx; path = "../../ios-device/configmgr/source/lock.cxx"; sourceTree = "<group>"; };
+		BE7D6A2D23FA9C2300C2E605 /* partial.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = partial.cxx; path = "../../ios-device/configmgr/source/partial.cxx"; sourceTree = "<group>"; };
+		BE7D6A2E23FA9C2400C2E605 /* partial.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = partial.hxx; path = "../../ios-device/configmgr/source/partial.hxx"; sourceTree = "<group>"; };
+		BE7D6A2F23FA9C2400C2E605 /* config_map.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = config_map.hxx; path = "../../ios-device/configmgr/source/config_map.hxx"; sourceTree = "<group>"; };
+		BE7D6A3023FA9C2400C2E605 /* localizedpropertynode.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = localizedpropertynode.hxx; path = "../../ios-device/configmgr/source/localizedpropertynode.hxx"; sourceTree = "<group>"; };
+		BE7D6A3123FA9C2400C2E605 /* configurationprovider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configurationprovider.cxx; path = "../../ios-device/configmgr/source/configurationprovider.cxx"; sourceTree = "<group>"; };
+		BE7D6A3223FA9C2400C2E605 /* groupnode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = groupnode.cxx; path = "../../ios-device/configmgr/source/groupnode.cxx"; sourceTree = "<group>"; };
+		BE7D6A3323FA9C2400C2E605 /* components.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = components.hxx; path = "../../ios-device/configmgr/source/components.hxx"; sourceTree = "<group>"; };
+		BE7D6A3423FA9C2400C2E605 /* localizedvaluenode.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = localizedvaluenode.hxx; path = "../../ios-device/configmgr/source/localizedvaluenode.hxx"; sourceTree = "<group>"; };
+		BE7D6A3523FA9C2400C2E605 /* xcdparser.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = xcdparser.cxx; path = "../../ios-device/configmgr/source/xcdparser.cxx"; sourceTree = "<group>"; };
+		BE7D6A3623FA9C2400C2E605 /* localizedpropertynode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = localizedpropertynode.cxx; path = "../../ios-device/configmgr/source/localizedpropertynode.cxx"; sourceTree = "<group>"; };
+		BE7D6A3723FA9C2400C2E605 /* dconf.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = dconf.hxx; path = "../../ios-device/configmgr/source/dconf.hxx"; sourceTree = "<group>"; };
+		BE7D6A3823FA9C2400C2E605 /* valueparser.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = valueparser.hxx; path = "../../ios-device/configmgr/source/valueparser.hxx"; sourceTree = "<group>"; };
+		BE7D6A3923FA9C2400C2E605 /* update.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = update.cxx; path = "../../ios-device/configmgr/source/update.cxx"; sourceTree = "<group>"; };
+		BE7D6A3A23FA9C2400C2E605 /* xcsparser.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = xcsparser.cxx; path = "../../ios-device/configmgr/source/xcsparser.cxx"; sourceTree = "<group>"; };
+		BE7D6A3B23FA9C2400C2E605 /* additions.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = additions.hxx; path = "../../ios-device/configmgr/source/additions.hxx"; sourceTree = "<group>"; };
+		BE7D6A3C23FA9C2400C2E605 /* broadcaster.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = broadcaster.hxx; path = "../../ios-device/configmgr/source/broadcaster.hxx"; sourceTree = "<group>"; };
+		BE7D6A3D23FA9C2400C2E605 /* type.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = type.hxx; path = "../../ios-device/configmgr/source/type.hxx"; sourceTree = "<group>"; };
+		BE7D6A3E23FA9C2400C2E605 /* xcdparser.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = xcdparser.hxx; path = "../../ios-device/configmgr/source/xcdparser.hxx"; sourceTree = "<group>"; };
+		BE7D6A3F23FA9C2400C2E605 /* writemodfile.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = writemodfile.cxx; path = "../../ios-device/configmgr/source/writemodfile.cxx"; sourceTree = "<group>"; };
+		BE7D6A4023FA9C2400C2E605 /* defaultprovider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = defaultprovider.cxx; path = "../../ios-device/configmgr/source/defaultprovider.cxx"; sourceTree = "<group>"; };
+		BE7D6A4123FA9C2500C2E605 /* nodemap.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = nodemap.hxx; path = "../../ios-device/configmgr/source/nodemap.hxx"; sourceTree = "<group>"; };
+		BE7D6A4223FA9C2500C2E605 /* broadcaster.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = broadcaster.cxx; path = "../../ios-device/configmgr/source/broadcaster.cxx"; sourceTree = "<group>"; };
+		BE7D6A4323FA9C2500C2E605 /* rootaccess.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = rootaccess.hxx; path = "../../ios-device/configmgr/source/rootaccess.hxx"; sourceTree = "<group>"; };
+		BE7D6A4423FA9C2500C2E605 /* modifications.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = modifications.hxx; path = "../../ios-device/configmgr/source/modifications.hxx"; sourceTree = "<group>"; };
+		BE7D6A4523FA9C2500C2E605 /* data.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = data.cxx; path = "../../ios-device/configmgr/source/data.cxx"; sourceTree = "<group>"; };
+		BE7D6A4623FA9C2500C2E605 /* readwriteaccess.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = readwriteaccess.cxx; path = "../../ios-device/configmgr/source/readwriteaccess.cxx"; sourceTree = "<group>"; };
+		BE7D6A4723FA9C2500C2E605 /* xcuparser.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = xcuparser.hxx; path = "../../ios-device/configmgr/source/xcuparser.hxx"; sourceTree = "<group>"; };
+		BE7D6A4823FA9C2500C2E605 /* nodemap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = nodemap.cxx; path = "../../ios-device/configmgr/source/nodemap.cxx"; sourceTree = "<group>"; };
+		BE7D6A4923FA9C2500C2E605 /* node.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = node.hxx; path = "../../ios-device/configmgr/source/node.hxx"; sourceTree = "<group>"; };
+		BE7D6A4A23FA9C2500C2E605 /* readonlyaccess.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = readonlyaccess.hxx; path = "../../ios-device/configmgr/source/readonlyaccess.hxx"; sourceTree = "<group>"; };
+		BE7D6A4B23FA9C2500C2E605 /* valueparser.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = valueparser.cxx; path = "../../ios-device/configmgr/source/valueparser.cxx"; sourceTree = "<group>"; };
+		BE7D6A4C23FA9C2500C2E605 /* parsemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = parsemanager.cxx; path = "../../ios-device/configmgr/source/parsemanager.cxx"; sourceTree = "<group>"; };
+		BE7D6A4D23FA9C2500C2E605 /* modifications.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = modifications.cxx; path = "../../ios-device/configmgr/source/modifications.cxx"; sourceTree = "<group>"; };
+		BE7D6A4E23FA9C2500C2E605 /* update.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = update.hxx; path = "../../ios-device/configmgr/source/update.hxx"; sourceTree = "<group>"; };
+		BE7D6A4F23FA9C2600C2E605 /* configmgr.component */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = configmgr.component; path = "../../ios-device/configmgr/source/configmgr.component"; sourceTree = "<group>"; };
+		BE7D6A5023FA9C2600C2E605 /* groupnode.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = groupnode.hxx; path = "../../ios-device/configmgr/source/groupnode.hxx"; sourceTree = "<group>"; };
+		BE7D6A5123FA9C2600C2E605 /* configurationprovider.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = configurationprovider.hxx; path = "../../ios-device/configmgr/source/configurationprovider.hxx"; sourceTree = "<group>"; };
+		BE7D6A5223FA9C2600C2E605 /* access.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = access.cxx; path = "../../ios-device/configmgr/source/access.cxx"; sourceTree = "<group>"; };
+		BE7D6A5323FA9C2600C2E605 /* node.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = node.cxx; path = "../../ios-device/configmgr/source/node.cxx"; sourceTree = "<group>"; };
+		BE7D6A5423FA9C2600C2E605 /* rootaccess.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rootaccess.cxx; path = "../../ios-device/configmgr/source/rootaccess.cxx"; sourceTree = "<group>"; };
+		BE7D6A5523FA9C2600C2E605 /* configurationregistry.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = configurationregistry.hxx; path = "../../ios-device/configmgr/source/configurationregistry.hxx"; sourceTree = "<group>"; };
+		BE7D6A5623FA9C2600C2E605 /* localizedvaluenode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = localizedvaluenode.cxx; path = "../../ios-device/configmgr/source/localizedvaluenode.cxx"; sourceTree = "<group>"; };
+		BE7D6A5723FA9C2600C2E605 /* xmldata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = xmldata.cxx; path = "../../ios-device/configmgr/source/xmldata.cxx"; sourceTree = "<group>"; };
+		BE7D6A5823FA9C2600C2E605 /* services.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = services.cxx; path = "../../ios-device/configmgr/source/services.cxx"; sourceTree = "<group>"; };
+		BE7D6A5923FA9C2600C2E605 /* lock.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = lock.hxx; path = "../../ios-device/configmgr/source/lock.hxx"; sourceTree = "<group>"; };
+		BE7D6A5A23FA9C2600C2E605 /* configurationregistry.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configurationregistry.cxx; path = "../../ios-device/configmgr/source/configurationregistry.cxx"; sourceTree = "<group>"; };
+		BE7D6A5B23FA9C2600C2E605 /* data.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = data.hxx; path = "../../ios-device/configmgr/source/data.hxx"; sourceTree = "<group>"; };
+		BE7D6A5C23FA9C2600C2E605 /* childaccess.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = childaccess.cxx; path = "../../ios-device/configmgr/source/childaccess.cxx"; sourceTree = "<group>"; };
+		BE7D6A5D23FA9C2700C2E605 /* propertynode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = propertynode.cxx; path = "../../ios-device/configmgr/source/propertynode.cxx"; sourceTree = "<group>"; };
+		BE7D6A5E23FA9C2700C2E605 /* access.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = access.hxx; path = "../../ios-device/configmgr/source/access.hxx"; sourceTree = "<group>"; };
+		BE7D6A5F23FA9C2700C2E605 /* readonlyaccess.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = readonlyaccess.cxx; path = "../../ios-device/configmgr/source/readonlyaccess.cxx"; sourceTree = "<group>"; };
+		BE7D6A6023FA9C2700C2E605 /* components.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = components.cxx; path = "../../ios-device/configmgr/source/components.cxx"; sourceTree = "<group>"; };
+		BE7D6A6123FA9C2700C2E605 /* setnode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = setnode.cxx; path = "../../ios-device/configmgr/source/setnode.cxx"; sourceTree = "<group>"; };
+		BE7D6A6223FA9C2700C2E605 /* setnode.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = setnode.hxx; path = "../../ios-device/configmgr/source/setnode.hxx"; sourceTree = "<group>"; };
+		BE7D6A6323FA9C2700C2E605 /* winreg.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = winreg.hxx; path = "../../ios-device/configmgr/source/winreg.hxx"; sourceTree = "<group>"; };
+		BE7D6A6423FA9C2700C2E605 /* writemodfile.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = writemodfile.hxx; path = "../../ios-device/configmgr/source/writemodfile.hxx"; sourceTree = "<group>"; };
+		BE7D6A6523FA9C2700C2E605 /* defaultprovider.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = defaultprovider.hxx; path = "../../ios-device/configmgr/source/defaultprovider.hxx"; sourceTree = "<group>"; };
+		BE7D6A6623FA9C2700C2E605 /* parser.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = parser.hxx; path = "../../ios-device/configmgr/source/parser.hxx"; sourceTree = "<group>"; };
+		BE7D6A6723FA9C2700C2E605 /* rootnode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rootnode.cxx; path = "../../ios-device/configmgr/source/rootnode.cxx"; sourceTree = "<group>"; };
+		BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = loolkitconfig.xcu; path = ../../../loolkitconfig.xcu; sourceTree = "<group>"; };
 		BE7E5B7623AD07BE00F9462A /* SvxPresetListBox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SvxPresetListBox.cxx; path = "../../ios-device/svx/source/tbxctrls/SvxPresetListBox.cxx"; sourceTree = "<group>"; };
 		BE7E5B7723AD07BE00F9462A /* tbxcolor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxcolor.cxx; path = "../../ios-device/svx/source/tbxctrls/tbxcolor.cxx"; sourceTree = "<group>"; };
 		BE7E5B7823AD07BE00F9462A /* tbxdrctl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxdrctl.cxx; path = "../../ios-device/svx/source/tbxctrls/tbxdrctl.cxx"; sourceTree = "<group>"; };
@@ -715,7 +787,6 @@
 		BE8D85BC214055F2009F1860 /* offapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = offapi.rdb; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/offapi.rdb"; sourceTree = "<group>"; };
 		BE8D85BD214055F2009F1860 /* share */ = {isa = PBXFileReference; lastKnownFileType = folder; name = share; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/share"; sourceTree = "<group>"; };
 		BE8D85BE214055F2009F1860 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/config"; sourceTree = "<group>"; };
-		BE8D85BF214055F2009F1860 /* registry */ = {isa = PBXFileReference; lastKnownFileType = folder; name = registry; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/registry"; sourceTree = "<group>"; };
 		BE8D85C0214055F2009F1860 /* oovbaapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = oovbaapi.rdb; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/oovbaapi.rdb"; sourceTree = "<group>"; };
 		BE8D85C1214055F2009F1860 /* udkapi.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; name = udkapi.rdb; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/udkapi.rdb"; sourceTree = "<group>"; };
 		BE8D85C2214055F2009F1860 /* services */ = {isa = PBXFileReference; lastKnownFileType = folder; name = services; path = "../../../lobuilddir-symlink/workdir/CustomTarget/ios/resources/services"; sourceTree = "<group>"; };
@@ -1142,6 +1213,7 @@
 		BE00F8922139494E001CE2D4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */,
 				BE18C7DD226DE09A001AD27E /* Branding */,
 				BEB0E5D821C7CA800085A0CF /* Settings.bundle */,
 				BE80E46721B7066C00859C97 /* Templates */,
@@ -1152,7 +1224,6 @@
 				BE8D85C0214055F2009F1860 /* oovbaapi.rdb */,
 				BE8D85C4214055F3009F1860 /* program */,
 				BE8D85C8214055F3009F1860 /* rc */,
-				BE8D85BF214055F2009F1860 /* registry */,
 				BE8D85C2214055F2009F1860 /* services */,
 				BE8D85C3214055F2009F1860 /* services.rdb */,
 				BE8D85BD214055F2009F1860 /* share */,
@@ -1822,6 +1893,7 @@
 		BE6362BE2153A79200F4237E /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BE7D6A2023FA9BFB00C2E605 /* configmgr */,
 				BEA8CDC12199AC7A009FE17E /* comphelper */,
 				BE80E43321B5629300859C97 /* cppuhelper */,
 				BE34D182218CFC6C00815297 /* desktop */,
@@ -1839,6 +1911,84 @@
 				BE93D420216CAA52007A39F4 /* vcl */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		BE7D6A2023FA9BFB00C2E605 /* configmgr */ = {
+			isa = PBXGroup;
+			children = (
+				BE7D6A5223FA9C2600C2E605 /* access.cxx */,
+				BE7D6A5E23FA9C2700C2E605 /* access.hxx */,
+				BE7D6A3B23FA9C2400C2E605 /* additions.hxx */,
+				BE7D6A4223FA9C2500C2E605 /* broadcaster.cxx */,
+				BE7D6A3C23FA9C2400C2E605 /* broadcaster.hxx */,
+				BE7D6A5C23FA9C2600C2E605 /* childaccess.cxx */,
+				BE7D6A2323FA9C2300C2E605 /* childaccess.hxx */,
+				BE7D6A6023FA9C2700C2E605 /* components.cxx */,
+				BE7D6A3323FA9C2400C2E605 /* components.hxx */,
+				BE7D6A2F23FA9C2400C2E605 /* config_map.hxx */,
+				BE7D6A4F23FA9C2600C2E605 /* configmgr.component */,
+				BE7D6A3123FA9C2400C2E605 /* configurationprovider.cxx */,
+				BE7D6A5123FA9C2600C2E605 /* configurationprovider.hxx */,
+				BE7D6A5A23FA9C2600C2E605 /* configurationregistry.cxx */,
+				BE7D6A5523FA9C2600C2E605 /* configurationregistry.hxx */,
+				BE7D6A4523FA9C2500C2E605 /* data.cxx */,
+				BE7D6A5B23FA9C2600C2E605 /* data.hxx */,
+				BE7D6A2523FA9C2300C2E605 /* dconf.cxx */,
+				BE7D6A3723FA9C2400C2E605 /* dconf.hxx */,
+				BE7D6A4023FA9C2400C2E605 /* defaultprovider.cxx */,
+				BE7D6A6523FA9C2700C2E605 /* defaultprovider.hxx */,
+				BE7D6A3223FA9C2400C2E605 /* groupnode.cxx */,
+				BE7D6A5023FA9C2600C2E605 /* groupnode.hxx */,
+				BE7D6A3623FA9C2400C2E605 /* localizedpropertynode.cxx */,
+				BE7D6A3023FA9C2400C2E605 /* localizedpropertynode.hxx */,
+				BE7D6A5623FA9C2600C2E605 /* localizedvaluenode.cxx */,
+				BE7D6A3423FA9C2400C2E605 /* localizedvaluenode.hxx */,
+				BE7D6A2C23FA9C2300C2E605 /* lock.cxx */,
+				BE7D6A5923FA9C2600C2E605 /* lock.hxx */,
+				BE7D6A4D23FA9C2500C2E605 /* modifications.cxx */,
+				BE7D6A4423FA9C2500C2E605 /* modifications.hxx */,
+				BE7D6A5323FA9C2600C2E605 /* node.cxx */,
+				BE7D6A4923FA9C2500C2E605 /* node.hxx */,
+				BE7D6A4823FA9C2500C2E605 /* nodemap.cxx */,
+				BE7D6A4123FA9C2500C2E605 /* nodemap.hxx */,
+				BE7D6A4C23FA9C2500C2E605 /* parsemanager.cxx */,
+				BE7D6A2723FA9C2300C2E605 /* parsemanager.hxx */,
+				BE7D6A6623FA9C2700C2E605 /* parser.hxx */,
+				BE7D6A2D23FA9C2300C2E605 /* partial.cxx */,
+				BE7D6A2E23FA9C2400C2E605 /* partial.hxx */,
+				BE7D6A5D23FA9C2700C2E605 /* propertynode.cxx */,
+				BE7D6A2223FA9C2300C2E605 /* propertynode.hxx */,
+				BE7D6A5F23FA9C2700C2E605 /* readonlyaccess.cxx */,
+				BE7D6A4A23FA9C2500C2E605 /* readonlyaccess.hxx */,
+				BE7D6A4623FA9C2500C2E605 /* readwriteaccess.cxx */,
+				BE7D6A2423FA9C2300C2E605 /* readwriteaccess.hxx */,
+				BE7D6A5423FA9C2600C2E605 /* rootaccess.cxx */,
+				BE7D6A4323FA9C2500C2E605 /* rootaccess.hxx */,
+				BE7D6A6723FA9C2700C2E605 /* rootnode.cxx */,
+				BE7D6A2823FA9C2300C2E605 /* rootnode.hxx */,
+				BE7D6A5823FA9C2600C2E605 /* services.cxx */,
+				BE7D6A6123FA9C2700C2E605 /* setnode.cxx */,
+				BE7D6A6223FA9C2700C2E605 /* setnode.hxx */,
+				BE7D6A2623FA9C2300C2E605 /* type.cxx */,
+				BE7D6A3D23FA9C2400C2E605 /* type.hxx */,
+				BE7D6A3923FA9C2400C2E605 /* update.cxx */,
+				BE7D6A4E23FA9C2500C2E605 /* update.hxx */,
+				BE7D6A4B23FA9C2500C2E605 /* valueparser.cxx */,
+				BE7D6A3823FA9C2400C2E605 /* valueparser.hxx */,
+				BE7D6A2123FA9C2300C2E605 /* winreg.cxx */,
+				BE7D6A6323FA9C2700C2E605 /* winreg.hxx */,
+				BE7D6A3F23FA9C2400C2E605 /* writemodfile.cxx */,
+				BE7D6A6423FA9C2700C2E605 /* writemodfile.hxx */,
+				BE7D6A3523FA9C2400C2E605 /* xcdparser.cxx */,
+				BE7D6A3E23FA9C2400C2E605 /* xcdparser.hxx */,
+				BE7D6A3A23FA9C2400C2E605 /* xcsparser.cxx */,
+				BE7D6A2A23FA9C2300C2E605 /* xcsparser.hxx */,
+				BE7D6A2B23FA9C2300C2E605 /* xcuparser.cxx */,
+				BE7D6A4723FA9C2500C2E605 /* xcuparser.hxx */,
+				BE7D6A5723FA9C2600C2E605 /* xmldata.cxx */,
+				BE7D6A2923FA9C2300C2E605 /* xmldata.hxx */,
+			);
+			name = configmgr;
 			sourceTree = "<group>";
 		};
 		BE7E5B7523AD079F00F9462A /* tbxctrls */ = {
@@ -2783,7 +2933,6 @@
 				BE8D85D6214055F3009F1860 /* rc in Resources */,
 				BE8D85D0214055F3009F1860 /* services in Resources */,
 				BE8D85D4214055F3009F1860 /* fundamentalrc in Resources */,
-				BE8D85CD214055F3009F1860 /* registry in Resources */,
 				BE80E43221AD92F700859C97 /* Fonts in Resources */,
 				BE00F8A821396585001CE2D4 /* images in Resources */,
 				BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */,
@@ -2791,6 +2940,7 @@
 				BE00F8A721396585001CE2D4 /* loleaflet-help.html in Resources */,
 				BE8D773D2136762600AC58EA /* LaunchScreen.storyboard in Resources */,
 				BE00F8A121396585001CE2D4 /* bundle.css in Resources */,
+				BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */,
 				BE8D85CF214055F3009F1860 /* udkapi.rdb in Resources */,
 				BE18C7DE226DE09A001AD27E /* Branding in Resources */,
 				BE8D85D5214055F3009F1860 /* unorc in Resources */,

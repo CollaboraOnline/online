@@ -45,7 +45,7 @@ JNI_OnLoad(JavaVM* vm, void*) {
         return JNI_ERR; // JNI version not supported.
     }
 
-    setenv("SAL_LOK_OPTIONS", "unipoll", 0);
+    setupKitEnvironment();
 
     // Uncomment the following to see the logs from the core too
     //setenv("SAL_LOG", "+WARN+INFO", 0);

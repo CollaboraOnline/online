@@ -489,25 +489,7 @@ int main(int argc, char** argv)
         return EX_USAGE;
     }
 
-    // Setup & check environment
-    const std::string layers(
-        "xcsxcu:${BRAND_BASE_DIR}/share/registry "
-        "res:${BRAND_BASE_DIR}/share/registry "
-        "bundledext:${${BRAND_BASE_DIR}/program/lounorc:BUNDLED_EXTENSIONS_USER}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
-        "sharedext:${${BRAND_BASE_DIR}/program/lounorc:SHARED_EXTENSIONS_USER}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
-        "userext:${${BRAND_BASE_DIR}/program/lounorc:UNO_USER_PACKAGES_CACHE}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
-#if ENABLE_DEBUG // '*' denotes non-writable.
-        "user:*file://" DEBUG_ABSSRCDIR "/loolkitconfig.xcu "
-#else
-        "user:*file://" LOOLWSD_CONFIGDIR "/loolkitconfig.xcu "
-#endif
-        );
-
-    // No-caps tracing can spawn eg. glxinfo & other oddness.
-    unsetenv("DISPLAY");
-
-    ::setenv("CONFIGURATION_LAYERS", layers.c_str(),
-             1 /* override */);
+    setupKitEnvironment();
 
     if (!std::getenv("LD_BIND_NOW")) // must be set by parent.
         LOG_INF("Note: LD_BIND_NOW is not set.");
@@ -519,13 +501,6 @@ int main(int argc, char** argv)
         std::cerr << "If you are on SLES11, please set 'file_caps=1' as kernel boot option." << std::endl << std::endl;
         return EX_SOFTWARE;
     }
-
-    // Set various options we need.
-    std::string options = "unipoll";
-    if (Log::logger().trace())
-        options += ":profile_events";
-//    options += ":sc_no_grid_bg"; // leave ths disabled for now, merged-cells needs more work.
-    ::setenv("SAL_LOK_OPTIONS", options.c_str(), 0);
 
     // Initialize LoKit
     if (!globalPreinit(loTemplate))

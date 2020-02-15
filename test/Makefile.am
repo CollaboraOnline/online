@@ -8,7 +8,11 @@ check_PROGRAMS = fakesockettest
 noinst_PROGRAMS = fakesockettest unittest
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
-	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit
+	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
+	-pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' \
+	-DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' \
+	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
+	${include_paths}
 
 noinst_LTLIBRARIES = \
 	unit-base.la unit-tiletest.la \
