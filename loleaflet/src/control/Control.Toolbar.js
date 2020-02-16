@@ -1691,7 +1691,7 @@ function onDocLayerInit() {
 		break;
 	case 'presentation':
 		if (toolbarUp) {
-			toolbarUp.show('breaksidebar', 'sidebar', 'modifypage');
+			toolbarUp.show('breaksidebar', 'modifypage');
 		}
 
 		var presentationToolbar = w2ui['presentation-toolbar'];
@@ -1718,7 +1718,7 @@ function onDocLayerInit() {
 		if (toolbarUp)
 			toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
-			'breaksidebar', 'sidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
+			'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
 		if (statusbar)
 			statusbar.show('prev', 'next');
 
