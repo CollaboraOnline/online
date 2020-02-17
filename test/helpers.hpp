@@ -289,7 +289,8 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
 
                 if (bytes <= 0)
                 {
-                    break;
+                    // Try again, timeout will be handled above.
+                    continue;
                 }
 
                 if ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
