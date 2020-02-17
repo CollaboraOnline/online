@@ -951,6 +951,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled == 'false')
 			$(spinfield).attr('disabled', 'disabled');
 
+		if (data.readOnly === true)
+			$(spinfield).attr('readOnly', 'true');
+
 		var updateFunction = function() {
 			var value = builder._getUnoStateForItemId(data.id, builder);
 
@@ -1398,7 +1401,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var currentWidth = parseInt(builder.map['stateChangeHandler'].getItemValue('.uno:LineWidth'));
 		var currentWidthText = currentWidth ? String(parseFloat(currentWidth)/100.0) : '0.5';
 
-		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: currentWidthText };
+		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: currentWidthText, readOnly: true };
 
 		var callbackFunction = function(objectType, eventType, object) {
 			var newValue = 0;
