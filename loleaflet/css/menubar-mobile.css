@@ -1,4 +1,4 @@
-@media (max-width: 767px), (max-device-height: 767px) {
+@media screen (max-width: 900px) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (any-pointer: coarse) and (hover: none){
 	.logo {
 		background-size: 100px;
 		max-width: 24px;

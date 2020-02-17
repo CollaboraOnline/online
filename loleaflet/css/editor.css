@@ -19,7 +19,7 @@
 	text-align: center;
 	padding: 3px 5px;
 }
-@media (max-width: 767px), (max-device-height: 767px) {
+@media screen (max-width: 900px) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (any-pointer: coarse) and (hover: none){
 	#editor-btn{
 		max-width: 160px;
 	}
