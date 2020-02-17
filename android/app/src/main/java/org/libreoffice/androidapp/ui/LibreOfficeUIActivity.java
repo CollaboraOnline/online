@@ -603,6 +603,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         input.setSelection(0, input.getText().toString().lastIndexOf('.'));
         input.requestFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // We should just focus on the input EditText so the keyboard would hide automatically.
+        // imm.showSoftInput(input,0); Should be enough, alas this is the wrong place, so doesn't work.
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 
         // warning text to notify the user that such a file already exists
@@ -618,6 +621,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             .setPositiveButton(tempFile.exists() ? R.string.action_overwrite : R.string.action_create, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    // Hide the keyboard, which we show forcefully.
+                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+
                     final String path = currentDirectory.getUri().getPath() + input.getText().toString();
                     Uri newDocUri = createNewFile(path, extension);
                     if (newDocUri != null) {
@@ -639,6 +645,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
+                    // Hide the keyboard, which we show forcefully.
+                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+
                     dialog.cancel();
                 }
             });
