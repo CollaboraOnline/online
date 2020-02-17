@@ -598,9 +598,6 @@
 		padding: 20px 20px 20px 20px !important;
 	}
 	#belowparaspacing, #spacinglabel, #OutlineRight, #DefaultBullet, #CellVertTop, #rowheight, #columnwidth{float: left;}
-	#Color {
-		padding: 20px 20px 0px 20px !important;
-	}
 	#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel, #spacinglabel, #sizelabel{clear:both;}
 	#BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel, .mobile-wizard.ui-text {
 		border-bottom: 1px solid #c2d5ed;
