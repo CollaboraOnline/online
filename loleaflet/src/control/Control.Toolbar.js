@@ -242,6 +242,10 @@ function onClick(e, id, item, subItem) {
 	else if (id === 'deletepage') {
 		vex.dialog.confirm({
 			message: _('Are you sure you want to delete this page?'),
+			buttons: [
+				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+			],
 			callback: onDelete
 		});
 	}
