@@ -151,6 +151,7 @@ static void send2JS(const JNIThreadContext &jctx, jclass loActivityClz, jobject 
     jstring jstr = env->NewStringUTF(js.c_str());
     jmethodID callFakeWebsocket = env->GetMethodID(loActivityClz, "callFakeWebsocketOnMessage", "(Ljava/lang/String;)V");
     env->CallVoidMethod(loActivityObj, callFakeWebsocket, jstr);
+    env->DeleteLocalRef(jstr);
 
     if (env->ExceptionCheck())
         env->ExceptionDescribe();
@@ -417,6 +418,7 @@ Java_org_libreoffice_androidlib_LOActivity_getClipboardContent(JNIEnv *env, jobj
             jstring mimeType = tojstringAndFree(env, outMimeTypes[i]);
             // clipboardEntry.mime= mimeType
             env->SetObjectField(clipboardEntry, fieldId_LokClipboardEntry_Mime, mimeType);
+            env->DeleteLocalRef(mimeType);
 
             size_t aByteArraySize = outSizes[i];
             jbyteArray aByteArray = env->NewByteArray(aByteArraySize);
@@ -454,6 +456,7 @@ Java_org_libreoffice_androidlib_LOActivity_getClipboardContent(JNIEnv *env, jobj
             jstring mimeType = tojstringAndFree(env, outMimeTypes[i]);
             // clipboardEntry.mime= mimeType
             env->SetObjectField(clipboardEntry, fieldId_LokClipboardEntry_Mime, mimeType);
+            env->DeleteLocalRef(mimeType);
 
             size_t aByteArraySize = outSizes[i];
             jbyteArray aByteArray = env->NewByteArray(aByteArraySize);
