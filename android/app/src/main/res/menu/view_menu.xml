@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/action_open_file"
+        android:title="@string/open"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_folder_black_24dp"/>
+
     <item
         android:id="@+id/menu_filter"
         android:title="@string/filter"
-        android:icon="@drawable/ic_filter_list_black_24dp"
-        app:showAsAction="ifRoom">
+        android:icon="@drawable/ic_filter_list_black_24dp">
         <menu>
             <group
                 android:checkableBehavior="single">
@@ -29,8 +33,7 @@
     <item
         android:id="@+id/menu_sort"
         android:title="@string/sort"
-        android:icon="@drawable/ic_sort_by_alpha_black_24dp"
-        app:showAsAction="ifRoom">
+        android:icon="@drawable/ic_sort_by_alpha_black_24dp">
         <menu>
             <group android:checkableBehavior="single">
                 <item android:id="@+id/menu_sort_size_asc"
