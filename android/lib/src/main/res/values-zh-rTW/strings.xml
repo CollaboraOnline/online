@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="loading">正在載入…</string>
+    <string name="preparing_for_the_first_start_after_an_update">正在準備更新後的首次啟動。</string>
+    <string name="saving">正在儲存…</string>
+    <string name="cannot_open_file_chooser">無法開啟檔案選擇器</string>
+    <string name="failed_to_insert_image">無法插入影像</string>
+    <string name="failed_to_load_file">無法確定欲載入的檔案</string>
+    <string name="storage_permission_required">需要儲存空間權限</string>
+    <string name="temp_file_saving_disabled">此檔案唯讀，已停用儲存。</string>
+</resources>

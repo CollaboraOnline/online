@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-02-11 10:13+0000\n"
+"PO-Revision-Date: 2020-02-17 13:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-help-ca.po\n"
 "X-Pootle-Revision: 827117\n"
 
@@ -1291,7 +1291,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:354-5
 msgid "<span class=\"def\">Filtering data:</span> Filters and advanced filters allow you to work on certain filtered rows (records) of a data range. In the spreadsheets in <span class=\"productname\">%productName</span> there are various possibilities for applying filters."
-msgstr ""
+msgstr "<span class=\"def\">Filtratge de dades:</span> els filtres estàndards i avançats us permeten treballar amb determinades files filtrades (registres) d'un interval de dades. Els fulls de càlcul del <span class=\"productname\">%productName</span> us ofereixen diverses possibilitats d'aplicació de filtres."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:357-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
@@ -1451,11 +1451,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:437-5
 msgid "<span class=\"def\">Object animation:</span> Individual object in the slide can have animation. Use the side bar to configure the slide transition for a selected object or set of objects."
-msgstr ""
+msgstr "<span class=\"def\">Animació d'objectes:</span> cadascun dels objectes a la diapositiva pot animar-se. Feu servir la barra lateral per a configurar l'animació de l'objecte o els objectes de la selecció."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:438-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
-msgstr ""
+msgstr "<span class=\"def\">Taules:</span> podeu inserir taules a la presentació. Utilitzeu la barra lateral per a seleccionar el tema de la taula."
 
 #: html/loleaflet-help.html%2Bdiv.h4:442-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
@@ -1780,7 +1780,7 @@ msgstr "Com es canvia el nom d'un full?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:561-5
 msgid "Rename a sheet in the spreadsheet document using the context menu (using the right mouse button) over the sheet tab in the bottom. Enter the new sheet name in the dialog that follows."
-msgstr ""
+msgstr "Trobareu l'opció per a canviar-ne el nom al menú contextual (utilitzeu el botó secundari del ratolí) de la pestanya del full que és a la part inferior de la pantalla. Escriviu el nom nou del full al diàleg que es mostrarà."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:566-5
 msgid "How can I run my slide show?"

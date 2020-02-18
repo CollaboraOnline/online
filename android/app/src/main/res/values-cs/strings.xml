@@ -67,12 +67,12 @@
     <string name="sort">Řadit podle</string>
     <string name="filter">Filtrovat podle</string>
     <string name="default_document_name">nepojmenovaný</string>
-    <string name="new_spreadsheet">Nová sešit</string>
+    <string name="new_spreadsheet">Nový sešit</string>
     <string name="new_presentation">Nová prezentace</string>
     <string name="new_textdocument">Nový textový dokument</string>
     <string name="about_moreinfo">Více informací</string>
     <string name="about_notice">Zobrazit oznámení</string>
-    <string name="about_license">Zobrazit icenci</string>
+    <string name="about_license">Zobrazit licenci</string>
     <string name="pref_show_debug_info_summary">Umožňuje zobrazit informace o ladění v prohlížeči dokumentů</string>
     <string name="pref_show_debug_info">Zobrazit informace o ladění</string>
     <string name="pref_filter_summary">Nastavte, který filtr souborů by měl být ve výchozím nastavení používán.</string>

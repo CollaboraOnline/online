@@ -6,4 +6,6 @@
     <string name="failed_to_load_file">Non foi posíbel determinar que ficheiro cargar</string>
     <string name="storage_permission_required">Requírese permiso de almacenamento</string>
     <string name="temp_file_saving_disabled">Este ficheiro só permite a lectura e non pode ser gardado.</string>
+    <string name="saving">A gardar...</string>
+    <string name="preparing_for_the_first_start_after_an_update">Preparándose para o primeiro inicio despois dunha actualización.</string>
 </resources>

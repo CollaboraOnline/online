@@ -2,4 +2,7 @@
 <resources>
     <string name="loading">Ŝargas...</string>
     <string name="saving">Konservas...</string>
+    <string name="temp_file_saving_disabled">La dosiero estas nurlegebla; la konservo estas malŝaltita.</string>
+    <string name="preparing_for_the_first_start_after_an_update">Preparas sin por la unua komencigo post ĝisdatigo.</string>
+    <string name="cannot_open_file_chooser">Neeblis malfermi la dosierelektilon</string>
 </resources>

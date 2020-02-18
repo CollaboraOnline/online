@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_vendor">This release was supplied by %OOOVENDOR.</string>
+    <string name="app_vendor">This release was supplied by $VENDOR.</string>
     <string name="app_description">$APP_NAME is a modern, easy-to-use, open source productivity suite for word processing, spreadsheets, presentations and more.</string>
     <string name="app_version">Version: %1$s, Build ID: %2$s</string>
     <string name="app_name_settings">Settings</string>

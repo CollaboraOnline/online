@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-01-23 08:20+0000\n"
+"PO-Revision-Date: 2020-02-17 13:49+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
 "X-Pootle-Revision: 3713610\n"
 
@@ -1575,7 +1575,7 @@ msgstr "Puede insertar estos símbolos en el documento por medio del cuadro de d
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:481-11
 msgid "Place the cursor in the position to insert the character."
-msgstr "Coloque el cursor en la posición de inserción del carácter."
+msgstr "Coloque el cursor en la posición donde se habrá de insertar el carácter."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."

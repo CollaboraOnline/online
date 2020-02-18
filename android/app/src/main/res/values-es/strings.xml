@@ -103,7 +103,7 @@
     <string name="action_create">Crear</string>
     <string name="action_overwrite">Sobrescribir</string>
     <!-- Loading SlideShow Dialog Strings -->
-    <string name="loading">Cargando...</string>
+    <string name="loading">Cargando…</string>
     <!-- Presentation Mode Strings -->
     <!-- Calc Header Menu Strings -->
     <!-- Password dialog strings -->

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0100\n"
-"PO-Revision-Date: 2020-02-07 15:40+0000\n"
+"PO-Revision-Date: 2020-02-12 19:04+0000\n"
 "Last-Translator: Xosé <xosecalvo@gmail.com>\n"
 "Language-Team: Galician <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/gl/>\n"
 "Language: gl\n"
@@ -243,7 +243,7 @@ msgstr "O servidor atopou un erro %0 ao procesar a orde %1."
 
 #: src/control/Control.ContextMenu.js:174
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: src/control/Control.ContextMenu.js:259
 msgid "Paste Special"
@@ -533,15 +533,15 @@ msgstr "Exportar como"
 
 #: src/control/Control.Menubar.js:500
 msgid "Page Setup"
-msgstr ""
+msgstr "Configuración da páxina"
 
 #: src/control/Control.Menubar.js:501
 msgid "Portrait"
-msgstr ""
+msgstr "Retrato"
 
 #: src/control/Control.Menubar.js:502
 msgid "Landscape"
-msgstr ""
+msgstr "Apaisado"
 
 #: src/control/Control.Menubar.js:763 src/control/Control.Toolbar.js:2054
 msgid "Reset to Default Language"
@@ -604,10 +604,8 @@ msgid "Insert shapes"
 msgstr "Inserir formas"
 
 #: src/control/Control.Toolbar.js:1057
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Función"
+msgstr "Asistente de funcións"
 
 #: src/control/Control.Toolbar.js:1101
 msgid "First sheet"

@@ -7,4 +7,5 @@
     <string name="storage_permission_required">Prawo za składowanje je trěbne.</string>
     <string name="temp_file_saving_disabled">Tuta dataja da so jenož čitać, składowanje je znjemóžnjene.</string>
     <string name="saving">Składuje so...</string>
+    <string name="preparing_for_the_first_start_after_an_update">Přihotowanje na prěni start po aktualizaciji.</string>
 </resources>

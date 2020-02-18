@@ -7,4 +7,5 @@
     <string name="storage_permission_required">Pšawo za składowanje jo trěbne.</string>
     <string name="temp_file_saving_disabled">Toś ta dataja dajo se janož cytaś, składowanje jo znjemóžnjone.</string>
     <string name="saving">Składujo se...</string>
+    <string name="preparing_for_the_first_start_after_an_update">Pśigótowanje na prědny start pó aktualizaciji.</string>
 </resources>
