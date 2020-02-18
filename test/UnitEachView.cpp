@@ -156,8 +156,8 @@ UnitBase::TestResult UnitEachView::testGraphicViewSelectionImpress()
 
 UnitEachView::UnitEachView()
 {
-    // Quadruple the default.
-    setTimeout(120 * 1000);
+    // 8 times larger then the default.
+    setTimeout(240 * 1000);
 }
 
 void UnitEachView::invokeTest()
