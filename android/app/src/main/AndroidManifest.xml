@@ -53,6 +53,10 @@
                 <data android:scheme="file" />
                 <data android:scheme="content" />
 
+                <!-- NOTE: If adding or removing mime types below, update also
+                     the list in openDocument() in LibreOfficeUIActivity.java.
+                     Unfortunately I found no way to manage this from one place :-( -->
+
                 <!-- ODF -->
                 <data android:mimeType="application/vnd.oasis.opendocument.text" />
                 <data android:mimeType="application/vnd.oasis.opendocument.graphics" />

@@ -168,6 +168,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     /** Request code to evaluate that we are returning from the LOActivity. */
     private static final int LO_ACTIVITY_REQUEST_CODE = 42;
     private static final int SD_CARD_REQUEST_CODE = 43;
+    private static final int OPEN_FILE_REQUEST_CODE = 44;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -847,6 +848,73 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         return true;
     }
 
+    /** Start an ACTION_OPEN_DOCUMENT Intent to trigger opening a document. */
+    private void openDocument() {
+        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+        // set only the allowed mime types
+        // NOTE: If updating the list here, also check the AndroidManifest.xml,
+        // I didn't find a way how to do it from one central place :-(
+        i.setType("*/*");
+        final String[] mimeTypes = new String[] {
+            // ODF
+            "application/vnd.oasis.opendocument.text",
+            "application/vnd.oasis.opendocument.graphics",
+            "application/vnd.oasis.opendocument.presentation",
+            "application/vnd.oasis.opendocument.spreadsheet",
+            "application/vnd.oasis.opendocument.text-flat-xml",
+            "application/vnd.oasis.opendocument.graphics-flat-xml",
+            "application/vnd.oasis.opendocument.presentation-flat-xml",
+            "application/vnd.oasis.opendocument.spreadsheet-flat-xml",
+
+            // ODF templates
+            "application/vnd.oasis.opendocument.text-template",
+            "application/vnd.oasis.opendocument.spreadsheet-template",
+            "application/vnd.oasis.opendocument.graphics-template",
+            "application/vnd.oasis.opendocument.presentation-template",
+
+            // MS
+            "application/rtf",
+            "text/rtf",
+            "application/msword",
+            "application/vnd.ms-powerpoint",
+            "application/vnd.ms-excel",
+            "application/vnd.visio",
+            "application/vnd.visio.xml",
+            "application/x-mspublisher",
+
+            // OOXML
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
+            // OOXML templates
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+            "application/vnd.openxmlformats-officedocument.presentationml.template",
+
+            // other
+            "text/csv",
+            "text/comma-separated-values",
+            "application/vnd.ms-works",
+            "application/vnd.apple.keynote",
+            "application/x-abiword",
+            "application/x-pagemaker",
+            "image/x-emf",
+            "image/x-svm",
+            "image/x-wmf",
+            "image/svg+xml"
+        };
+        i.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+        // TODO remember where the user picked the file the last time
+        // TODO and that should default to Context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        //i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, previousDirectoryPath);
+
+        startActivityForResult(i, OPEN_FILE_REQUEST_CODE);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Will close the drawer if the home button is pressed
@@ -855,6 +923,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         }
 
         switch (item.getItemId()) {
+            case R.id.action_open_file:
+                openDocument();
+                break;
+
             case android.R.id.home:
                 if (!currentDirectory.equals(homeDirectory)) {
                     openParentDirectory();
@@ -1057,6 +1129,23 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             Log.d(LOGTAG, "SD card chooser has finished.");
             if (resultCode == RESULT_OK)
                 switchToDocumentProvider(DocumentProviderFactory.EXTSD_PROVIDER_INDEX);
+        }
+        else if (requestCode == OPEN_FILE_REQUEST_CODE) {
+            Log.d(LOGTAG, "File open chooser has finished, starting the LOActivity.");
+            if (resultCode == RESULT_OK) {
+                Uri uri = data.getData();
+                getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                Intent i = new Intent(Intent.ACTION_EDIT, uri);
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                String packageName = getApplicationContext().getPackageName();
+                ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
+                i.setComponent(componentName);
+
+                startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
+            }
         }
     }
 
