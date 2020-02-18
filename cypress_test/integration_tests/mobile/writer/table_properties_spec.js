@@ -22,6 +22,19 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('not.have.class', 'disabled');
 	}
 
+	function moveCursorToFirstCell() {
+		helper.selectAllMobile();
+
+		cy.get('.blinking-cursor')
+			.then(function(cursor) {
+				expect(cursor).to.have.lengthOf(1) ;
+				var posX = cursor[0].getBoundingClientRect().right + 10;
+				var posY = cursor[0].getBoundingClientRect().top + 10;
+				cy.get('body')
+					.click(posX, posY);
+			});
+	}
+
 	it('Insert row before.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
@@ -295,9 +308,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Select All + left arrow -> we have the cursor in the table
-		helper.selectAllMobile();
-		cy.get('body').type('{leftarrow}');
+		moveCursorToFirstCell();
 
 		cy.get('body').type('{shift}{downarrow}{rightarrow}');
 
@@ -408,9 +419,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
-		// Select All + left arrow -> we have the cursor in the table
-		helper.selectAllMobile();
-		cy.get('body').type('{leftarrow}');
+		moveCursorToFirstCell();
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
@@ -444,9 +453,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
-		// Select All + left arrow -> we have the cursor in the table
-		helper.selectAllMobile();
-		cy.get('body').type('{leftarrow}');
+		moveCursorToFirstCell();
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
@@ -490,9 +497,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
-		// Select All + left arrow -> we have the cursor in the table
-		helper.selectAllMobile();
-		cy.get('body').type('{leftarrow}');
+		moveCursorToFirstCell();
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
@@ -536,9 +541,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
-		// Select All + left arrow -> we have the cursor in the table
-		helper.selectAllMobile();
-		cy.get('body').type('{leftarrow}');
+		moveCursorToFirstCell();
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
@@ -577,9 +580,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
-		// Select All + left arrow -> we have the cursor in the table
-		helper.selectAllMobile();
-		cy.get('body').type('{leftarrow}');
+		moveCursorToFirstCell();
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
@@ -621,9 +622,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table_with_text.odt');
 
-		// Select All + left arrow -> we have the cursor in the table
-		helper.selectAllMobile();
-		cy.get('body').type('{leftarrow}');
+		moveCursorToFirstCell();
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
