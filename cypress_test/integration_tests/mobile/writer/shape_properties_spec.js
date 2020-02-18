@@ -46,11 +46,9 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#PosSizePropertyPanel')
 			.click();
 
-		cy.get('#selectwidth .spinfield')
+		cy.get('#selectwidth .plus')
 			.should('be.visible')
-			.clear()
-			.type('4.2')
-			.type('{enter}');
+			.click();
 	}
 
 	it('Check default shape geometry.', function() {
@@ -228,5 +226,109 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
 			.should('have.attr', 'stroke', 'rgb(152,0,0)');
+	});
+
+	it('Change line style', function() {
+		// TODO: Two issues are found here with core/master
+		// 1) The mobile wizard keeps rerendering after it was already opened which leads
+		// detached item error.
+		// 2) Layout of the line properties panel is completely broken.
+		if (Cypress.env('LO_CORE_VERSION') === 'master')
+			return;
+
+		// Open mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		// Change line color
+		cy.get('#LinePropertyPanel')
+			.click();
+
+		cy.get('#linestyle')
+			.click();
+
+		cy.get('.ui-combobox-text')
+			.contains('Fine Dotted')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
+			.should('have.length.greaterThan', 20);
+	});
+
+	it('Change line width', function() {
+		// TODO: Two issues are found here with core/master
+		// 1) The mobile wizard keeps rerendering after it was already opened which leads
+		// detached item error.
+		// 2) Layout of the line properties panel is completely broken.
+		if (Cypress.env('LO_CORE_VERSION') === 'master')
+			return;
+
+		// Open mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		// Change line width
+		cy.get('#LinePropertyPanel')
+			.click();
+
+		cy.get('#linewidth .plus')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
+			.should('have.attr', 'stroke-width', '141');
+
+		// Reopen mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard')
+			.should('not.be.visible');
+
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
+
+		// Change line width
+		cy.get('#LinePropertyPanel')
+			.click();
+
+		cy.get('#linewidth .minus')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
+			.should('have.attr', 'stroke-width', '141');
+	});
+
+	it('Change line transparency', function() {
+		// TODO: Two issues are found here with core/master
+		// 1) The mobile wizard keeps rerendering after it was already opened which leads
+		// detached item error.
+		// 2) Layout of the line properties panel is completely broken.
+		if (Cypress.env('LO_CORE_VERSION') === 'master')
+			return;
+
+		// Open mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		// Change line color
+		cy.get('#LinePropertyPanel')
+			.click();
+
+		cy.get('#linetransparency .spinfield')
+			.clear()
+			.type('20')
+			.type('{enter}');
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g defs mask linearGradient')
+			.should('exist');
 	});
 });
