@@ -202,7 +202,14 @@ body {
 	height: 24px;
 	background: url('images/baseline-edit-24px.svg') no-repeat center !important;
 }
-
+#mobile-edit-button:active{
+	transform: scale(1.2);
+	transition: transform 0.5s;
+}
+#mobile-edit-button-image:active {
+	transform: rotate(45deg);
+	transition: transform 0.5s;
+}
 @media (max-width: 900px) {
 	#menu-last-mod {
 		display: none;
