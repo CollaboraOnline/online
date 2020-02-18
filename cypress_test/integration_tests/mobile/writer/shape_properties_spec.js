@@ -31,11 +31,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	function triggerNewSVG() {
-		// Reopen mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('not.be.visible');
+		helper.clearMobileWizardState();
 
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
@@ -281,11 +277,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
 			.should('have.attr', 'stroke-width', '141');
 
-		// Reopen mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('not.be.visible');
+		helper.clearMobileWizardState();
 
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
@@ -317,7 +309,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		// Change line color
+		// Change line transparency
 		cy.get('#LinePropertyPanel')
 			.click();
 

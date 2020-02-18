@@ -206,6 +206,27 @@ function longPressOnDocument(posX, posY) {
 		});
 }
 
+// Use this method when a test openes the same mobile
+// wizard more times during a test.
+// Recent issue with this scenario is that the mobile
+// wizard is opened first with an old content, then
+// when the sidebar's state arrives the wizard is
+// rerendered again which might cause a test failure
+// because the test finds the old HTML item
+// which will be detached from DOM.
+function clearMobileWizardState() {
+	// Open hamburger menu
+	cy.get('#toolbar-hamburger')
+		.click();
+
+	cy.get('.ui-header.level-0 .menu-entry-with-icon')
+		.contains('About');
+
+	// Close hamburger menu
+	cy.get('#toolbar-hamburger')
+		.click();
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.selectAllMobile = selectAllMobile;
 module.exports.copyTextToClipboard = copyTextToClipboard;
@@ -213,3 +234,4 @@ module.exports.copyTableToClipboard = copyTableToClipboard;
 module.exports.afterAll = afterAll;
 module.exports.beforeAllMobile = beforeAllMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
+module.exports.clearMobileWizardState = clearMobileWizardState;
