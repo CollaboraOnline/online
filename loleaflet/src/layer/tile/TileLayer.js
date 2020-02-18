@@ -2104,7 +2104,9 @@ L.TileLayer = L.GridLayer.extend({
 			var oldLatLng = this._cursorMarker.getLatLng();
 			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			var newLatLng = this._cursorMarker.getLatLng();
-			updated = !newLatLng.equals(oldLatLng);
+			// Assume the user didn't update the cursor if there is a selection.
+			// The update can happen when the font has changed, for example.
+			updated = !newLatLng.equals(oldLatLng) && !this.hasTextSelection();
 		}
 
 		this._map._textInput.showCursor();
@@ -3070,6 +3072,12 @@ L.TileLayer = L.GridLayer.extend({
 	hasGraphicSelection: function() {
 		return (this._graphicSelection !== null &&
 			!this._isEmptyRectangle(this._graphicSelection));
+	},
+
+	// Returns true iff there is a text selection.
+	hasTextSelection: function() {
+		return (!this._isEmptyRectangle(this._textSelectionStart) &&
+			!this._isEmptyRectangle(this._textSelectionEnd));
 	},
 
 	_onDragOver: function (e) {
