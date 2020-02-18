@@ -1,4 +1,4 @@
-@media screen (max-width: 900px) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (any-pointer: coarse) and (hover: none){
+@media (max-width: 767px), (max-device-height: 767px), screen (max-width: 900px) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (any-pointer: coarse) and (hover: none){
 	span.menu-entry-icon img {
 		width: 24px !important;
 		margin: 4px !important;
