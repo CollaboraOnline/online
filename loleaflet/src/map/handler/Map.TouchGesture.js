@@ -530,7 +530,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		// we need to invert the offset or the map is moved in the opposite direction
 		var offset = {x: e.center.x - this._pinchStartCenter.x, y: e.center.y - this._pinchStartCenter.y};
 		var center = {x: this._pinchStartCenter.x - offset.x, y: this._pinchStartCenter.y - offset.y};
-		this._zoom = this._map.getScaleZoom(e.scale);
+		this._zoom = this._map._limitZoom(this._map.getScaleZoom(e.scale));
 		this._center = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
 						      this._zoom, this._map.options.maxBounds);
 
@@ -570,6 +570,8 @@ L.Map.TouchGesture = L.Handler.extend({
 					annotations.update();
 				}, 250 /* ms */);
 		}
+
+		this._pinchStartCenter = undefined;
 	},
 
 	_constructFakeEvent: function (evt, type) {
