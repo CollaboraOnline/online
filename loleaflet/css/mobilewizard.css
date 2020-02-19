@@ -183,7 +183,7 @@
 	.menuwizard #mobile-wizard-content > div .ui-widget {
 		padding-left: 0px !important;
 	}
-	#mobile-wizard-content > div .ui-widget,  #mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-widget{
+	#mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-header.level-0.mobile-wizard.ui-widget{
 		padding-left: 2% !important;
 		width: 100%;
 	}
