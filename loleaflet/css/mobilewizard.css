@@ -200,7 +200,8 @@
 		color: #0867af !important;
 	}
 	#mobile-wizard-content {
-		overflow: scroll;
+		overflow-y: scroll;
+		overflow-x: hidden;
 		position: absolute;
 		top: 111px;
 		bottom: 0px;
@@ -501,6 +502,9 @@
 		border-color: #0b87e7;
 		-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 		filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
+		background-color:#0087ff75;
+		font-size: 22px;
+		font-weight: bold
 	}
 	.spinfieldimage {
 		width: 24px;
