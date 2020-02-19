@@ -180,9 +180,12 @@
 		line-height: 42px;
 		padding-left: 4%;
 	}
+	.menuwizard #mobile-wizard-content > div .ui-widget {
+		padding-left: 0px !important;
+	}
 	#mobile-wizard-content > div .ui-widget,  #mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-widget{
 		padding-left: 2% !important;
-		width: 96%;
+		width: 100%;
 	}
 	#BackgroundColor > .ui-header-left {
 		width: 100% !important;
@@ -209,7 +212,7 @@
 	#mobile-wizard.funcwizard div#mobile-wizard-content.showHelpBG {
 		background: url(images/lc_helpindex_secondary.svg) no-repeat right 16px bottom 88px / 124px !important;
 	}
-	#mobile-wizard-content:not(.with-slide-sorter-above){
+	#mobile-wizard-content:not(.with-slide-sorter-above), .menuwizard #mobile-wizard-content.with-slide-sorter-above{
 		top: 48px !important;
 	}
 	#mobile-wizard-content.with-slide-sorter-above {
@@ -258,7 +261,10 @@
 	@media (orientation: portrait) {
 		#mobile-wizard-header{display: block;}
 	}
-
+	.menuwizard #mobile-wizard-back {
+		background-position-x: 22px;
+		width: 52px;
+	}
 	#mobile-wizard-back.close-button {
 		transform: rotate(-90deg);
 		background-position-x: center;
