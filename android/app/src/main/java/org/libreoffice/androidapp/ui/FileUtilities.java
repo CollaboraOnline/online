@@ -8,8 +8,6 @@
  */
 package org.libreoffice.androidapp.ui;
 
-import org.libreoffice.androidapp.storage.IFile;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
@@ -200,6 +198,7 @@ public class FileUtilities {
         };
     }
 
+    /*
     static void sortFiles(List<IFile> files, int sortMode) {
         if (files == null)
             return;
@@ -252,6 +251,7 @@ public class FileUtilities {
                 Log.e(LOGTAG, "uncatched sortMode: " + sortMode);
         }
     }
+    */
 
     static boolean isHidden(File file) {
         return file.getName().startsWith(".");

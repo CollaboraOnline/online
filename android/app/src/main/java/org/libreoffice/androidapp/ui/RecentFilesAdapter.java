@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.libreoffice.androidapp.R;
-import org.libreoffice.androidapp.storage.IFile;
 
 import java.util.List;
 
@@ -27,11 +26,11 @@ import androidx.recyclerview.widget.RecyclerView;
 class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHolder> {
 
     private LibreOfficeUIActivity mActivity;
-    private List<IFile> recentFiles;
+    //private List<IFile> recentFiles;
 
-    RecentFilesAdapter(LibreOfficeUIActivity activity, List<IFile> recentFiles) {
+    RecentFilesAdapter(LibreOfficeUIActivity activity/*, List<IFile> recentFiles*/) {
         this.mActivity = activity;
-        this.recentFiles = recentFiles;
+        //this.recentFiles = recentFiles;
     }
 
     @Override
@@ -43,6 +42,7 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        /*
         final IFile iFile = recentFiles.get(position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -75,16 +75,20 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
         if (compoundDrawableInt != 0)
             holder.imageView.setImageDrawable(ContextCompat.getDrawable(mActivity, compoundDrawableInt));
+        */
     }
 
     @Override
     public int getItemCount() {
+        /*
         if (recentFiles.size() == 0) {
             mActivity.noRecentItemsTextView.setVisibility(View.VISIBLE);
         } else {
             mActivity.noRecentItemsTextView.setVisibility(View.GONE);
         }
         return recentFiles.size();
+        */
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
