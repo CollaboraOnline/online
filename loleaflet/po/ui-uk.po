@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0100\n"
-"PO-Revision-Date: 2020-02-18 19:55+0000\n"
+"PO-Revision-Date: 2020-02-19 23:15+0000\n"
 "Last-Translator: Євген Кондратюк <lachend@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/uk/>\n"
 "Language: uk\n"
@@ -1164,7 +1164,7 @@ msgstr "<p>Для обміну великими частинами докуме�
 
 #: src/map/Clipboard.js:808
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr ""
+msgstr "<p>Іде завантаження для копіювання/вставки великого фрагменту. Будь ласка, дочекайтесь завершення завантаження або відмініть його, щоб почати нове</p>"
 
 #: src/map/Map.js:243
 msgid "Initializing..."
@@ -1187,12 +1187,12 @@ msgstr "Неактивний документ - клацніть для відн
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Файл типу: %0 неможливо завантажити на сервер, тому що у файла немає імені"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Файл типу: %0 неможливо завантажити на сервер, тому що файл пустий"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1200,7 +1200,7 @@ msgstr "Вивантаження…"
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Завантаження файлу на сервер не вдалось, результат: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

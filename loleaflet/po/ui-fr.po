@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0100\n"
-"PO-Revision-Date: 2020-01-15 17:28+0000\n"
-"Last-Translator: sophie <gautier.sophie@gmail.com>\n"
+"PO-Revision-Date: 2020-02-19 23:15+0000\n"
+"Last-Translator: Jean-Baptiste Faure <jbfaure@libreoffice.org>\n"
 "Language-Team: French <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-ui-fr.po\n"
 "X-Pootle-Revision: 3937804\n"
 
@@ -243,7 +243,7 @@ msgstr "Le serveur a rencontré une erreur %0 lors de l'analyse de la commande %
 
 #: src/control/Control.ContextMenu.js:174
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: src/control/Control.ContextMenu.js:259
 msgid "Paste Special"
@@ -533,15 +533,15 @@ msgstr "Exporter comme"
 
 #: src/control/Control.Menubar.js:500
 msgid "Page Setup"
-msgstr ""
+msgstr "Configuration de la page"
 
 #: src/control/Control.Menubar.js:501
 msgid "Portrait"
-msgstr ""
+msgstr "Portrait"
 
 #: src/control/Control.Menubar.js:502
 msgid "Landscape"
-msgstr ""
+msgstr "Paysage"
 
 #: src/control/Control.Menubar.js:763 src/control/Control.Toolbar.js:2054
 msgid "Reset to Default Language"
@@ -604,10 +604,8 @@ msgid "Insert shapes"
 msgstr "Insérer des formes"
 
 #: src/control/Control.Toolbar.js:1057
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Fonction"
+msgstr "Assistant Fonctions"
 
 #: src/control/Control.Toolbar.js:1101
 msgid "First sheet"
