@@ -93,49 +93,6 @@
 
                 </FrameLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:id="@+id/header_browser"
-                    android:text="@string/title_browser"
-                    android:gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:padding="16dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:padding="7dp"
-                    android:id="@+id/text_directory_path"
-                    android:background="@color/background_normal"
-                    />
-
-
-                <!--Document browser-->
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/file_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/background_normal"
-                        android:orientation="vertical" />
-
-                    <TextView
-                        android:id="@+id/no_items_msg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textSize="14sp"
-                        android:text="@string/no_items" />
-
-                </FrameLayout>
-
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
