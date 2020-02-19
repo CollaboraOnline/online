@@ -19,6 +19,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.UriPermission;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
@@ -78,6 +79,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
@@ -222,20 +224,17 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         Set<String> recentFileStrings = prefs.getStringSet(RECENT_DOCUMENTS_KEY, new HashSet<String>());
 
-        /*final ArrayList<IFile> recentFiles = new ArrayList<IFile>();
+        final ArrayList<Uri> recentUris = new ArrayList<Uri>();
         for (String recentFileString : recentFileStrings) {
             try {
-                if (documentProvider != null)
-                    recentFiles.add(documentProvider.createFromUri(this, new URI(recentFileString)));
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
+                recentUris.add(Uri.parse(recentFileString));
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
 
         recentRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        //recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentFiles));
+        recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentUris));
 
         fileRecyclerView = findViewById(R.id.file_recycler_view);
         noItemsTextView = findViewById(R.id.no_items_msg);
@@ -548,51 +547,23 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     }
     */
 
-    /*
-    public void open(final IFile document) {
-        addDocumentToRecents(document);
-        mCurrentDocument = document;
-        new AsyncTask<IFile, Void, File>() {
-            @Override
-            protected File doInBackground(IFile... document) {
-                // this operation may imply network access and must be run in
-                // a different thread
-                try {
-                    return document[0].getDocument();
-                } catch (final RuntimeException e) {
-                    final Activity activity = LibreOfficeUIActivity.this;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(activity, e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Log.e(LOGTAG, e.getMessage(), e.getCause());
-                    return null;
-                }
-            }
+    /** Start editing of the given Uri. */
+    public void open(final Uri uri) {
+        if (uri == null)
+            return;
 
-            @Override
-            protected void onPostExecute(File file) {
-                if (file != null) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
-                    String packageName = getApplicationContext().getPackageName();
-                    ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
-                    i.setComponent(componentName);
+        addDocumentToRecents(uri);
 
-                    // these extras allow to rebuild the IFile object in LOActivity
-                    i.putExtra("org.libreoffice.document_provider_id",
-                            documentProvider.getId());
-                    i.putExtra("org.libreoffice.document_uri",
-                            document.getUri());
+        Intent i = new Intent(Intent.ACTION_EDIT, uri);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-                    startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
-                }
-            }
-        }.execute(document);
+        String packageName = getApplicationContext().getPackageName();
+        ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
+        i.setComponent(componentName);
+
+        startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
     }
-    */
 
     // Opens an Input dialog to get the name of new file
     private void createNewFileInputDialog(final String defaultFileName, final String newDocumentType, final String extension) {
@@ -1144,19 +1115,14 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         }*/
         else if (requestCode == OPEN_FILE_REQUEST_CODE) {
             Log.d(LOGTAG, "File open chooser has finished, starting the LOActivity.");
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK && data != null) {
                 Uri uri = data.getData();
+                if (uri == null)
+                    return;
+
                 getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-                Intent i = new Intent(Intent.ACTION_EDIT, uri);
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
-                String packageName = getApplicationContext().getPackageName();
-                ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
-                i.setComponent(componentName);
-
-                startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
+                open(uri);
             }
         }
     }
@@ -1250,9 +1216,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         return (int) (dp * scale + 0.5f);
     }
 
-    /*
-    private void addDocumentToRecents(IFile iFile) {
-        String newRecent = iFile.getUri().toString();
+    private void addDocumentToRecents(Uri uri) {
+        String newRecent = uri.toString();
         Set<String> recentsSet = prefs.getStringSet(RECENT_DOCUMENTS_KEY, new HashSet<String>());
 
         //create array to work with
@@ -1267,7 +1232,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         /*
          * 4 because the number of recommended items in App Shortcuts is 4, and also
          * because it's a good number of recent items in general
-         * /
+         */
         final int RECENTS_SIZE = 4;
 
         while (recentsArrayList.size() > RECENTS_SIZE) {
@@ -1329,7 +1294,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             shortcutManager.setDynamicShortcuts(shortcuts);
         }
     }
-    */
 
     @Override
     public void onClick(View v) {

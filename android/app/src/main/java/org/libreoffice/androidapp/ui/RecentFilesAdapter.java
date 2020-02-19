@@ -9,7 +9,9 @@
 
 package org.libreoffice.androidapp.ui;
 
-
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +28,11 @@ import androidx.recyclerview.widget.RecyclerView;
 class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHolder> {
 
     private LibreOfficeUIActivity mActivity;
-    //private List<IFile> recentFiles;
+    private List<Uri> recentUris;
 
-    RecentFilesAdapter(LibreOfficeUIActivity activity/*, List<IFile> recentFiles*/) {
+    RecentFilesAdapter(LibreOfficeUIActivity activity, List<Uri> recentUris) {
         this.mActivity = activity;
-        //this.recentFiles = recentFiles;
+        this.recentUris = recentUris;
     }
 
     @Override
@@ -42,17 +44,33 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        /*
-        final IFile iFile = recentFiles.get(position);
+        final Uri uri = recentUris.get(position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.open(iFile);
+                mActivity.open(uri);
             }
         });
 
-        String filename = iFile.getName();
+        String filename = "";
+
+        // Try to get it from the content resolver first, fallback to path
+        Cursor cursor = mActivity.getContentResolver().query(uri, null, null, null, null);
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        if (filename.isEmpty()) {
+            List<String> segments = uri.getPathSegments();
+            if (segments.size() > 0)
+                filename = segments.get(segments.size() - 1);
+        }
 
         holder.textView.setText(filename);
 
@@ -75,20 +93,16 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
         if (compoundDrawableInt != 0)
             holder.imageView.setImageDrawable(ContextCompat.getDrawable(mActivity, compoundDrawableInt));
-        */
     }
 
     @Override
     public int getItemCount() {
-        /*
-        if (recentFiles.size() == 0) {
+        if (recentUris.size() == 0) {
             mActivity.noRecentItemsTextView.setVisibility(View.VISIBLE);
         } else {
             mActivity.noRecentItemsTextView.setVisibility(View.GONE);
         }
-        return recentFiles.size();
-        */
-        return 0;
+        return recentUris.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -103,3 +117,5 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
         }
     }
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
