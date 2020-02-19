@@ -38,6 +38,9 @@ To update any of the dependency, process often goes like this:
 If you have not installed `shrinkpack' globally using `npm install -g shrinkpack@next', it should be
 in node_modules/.bin/shrinkpack, so you can use the binary from there.
 
+If you need to get the sources:
+	make libs
+
 Building
 --------
 

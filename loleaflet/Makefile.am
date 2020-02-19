@@ -60,6 +60,20 @@ $(foreach file,$(1),$(call file_target,\
 	$(file)))
 endef
 
+define npm_source
+	for package in $(1); do \
+		npm pack $${package}; \
+		fname=$$(ls *.tgz); \
+		pdir=$${fname%%.tgz}; \
+		mkdir -p $${pdir}; \
+		tar -xzf $${fname} -C $${pdir} --strip-components=1; \
+		rm $${fname}; \
+	done
+endef
+
+NODE_MODULES_SRC =\
+	l10n-for-node@0.0.1
+
 LOLEAFLET_CSS =\
 	$(builddir)/node_modules/select2/dist/css/select2.css \
 	$(srcdir)/css/w2ui-1.5.rc1.css \
@@ -111,14 +125,16 @@ NODE_MODULES_JS =\
 	node_modules/vex-js/dist/js/vex.combined.js \
 	node_modules/@braintree/sanitize-url/dist.js
 
-LOLEAFLET_LIBS_JS =\
-	jquery.mCustomScrollbar.js \
-	w2ui-1.5.rc1.js
+LOLEAFLET_LIBS_JS =
 
 if !ENABLE_MOBILEAPP
-NODE_MODULES_JS +=\
-	node_modules/l10n-for-node/l10n.js
+LOLEAFLET_LIBS_JS +=\
+	l10n.js
 endif
+
+LOLEAFLET_LIBS_JS +=\
+	jquery.mCustomScrollbar.js \
+	w2ui-1.5.rc1.js
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
 NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
@@ -330,6 +346,11 @@ $(builddir)/dist/admin/%: $(srcdir)/admin/%
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/loleaflet; \
 	cp -ar dist/ $(DESTDIR)$(pkgdatadir)/loleaflet/;
+
+libs:
+	@mkdir -p $(abs_srcdir)/libs
+	@cd $(abs_srcdir)/libs \
+	&& $(call npm_source,$(NODE_MODULES_SRC))
 
 pot:
 	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
