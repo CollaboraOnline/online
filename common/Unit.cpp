@@ -198,6 +198,11 @@ UnitKit::~UnitKit()
 
 void UnitBase::exitTest(TestResult result)
 {
+    if (_setRetValue)
+    {
+        return;
+    }
+
     LOG_INF("exitTest: " << (int)result << ". Flagging for termination.");
     _setRetValue = true;
     _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;
