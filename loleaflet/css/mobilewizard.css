@@ -652,9 +652,12 @@
 		padding-left: 8%;
 		border: none;
 		-moz-appearance: textfield;
+		-webkit-appearance: textfield;
 	}
 	div#mobile-wizard-content .spinfieldcontainer{
 		height: 48px;
+		width: -moz-available;
+		width: -webkit-fill-available;
 		margin: 0px 4% 8px 4% !important;
 		border: 1px solid #ccc;
 		border-radius: 2px;
