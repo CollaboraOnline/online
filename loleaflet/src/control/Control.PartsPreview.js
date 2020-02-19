@@ -8,8 +8,8 @@ L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
 		autoUpdate: true,
-		maxWidth: window.mode.isMobile() ? 60 : 180,
-		maxHeight: window.mode.isMobile() ? 60 : 180
+		maxWidth: L.Browser.mobile ? 60 : 180,
+		maxHeight: L.Browser.mobile ? 60 : 180
 	},
 	partsFocused: false,
 
