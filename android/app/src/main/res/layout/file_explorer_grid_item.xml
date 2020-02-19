@@ -15,28 +15,28 @@
 
     <ImageView
         android:id="@+id/file_item_icon"
-        tools:src="@drawable/ic_folder_black_24dp"
-        tools:tint="@color/text_color_secondary"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:scaleType="fitStart"
         android:layout_gravity="center"
-        android:contentDescription="@string/file_icon_desc" >
-    </ImageView>
+        android:contentDescription="@string/file_icon_desc"
+        android:scaleType="fitCenter"
+        tools:src="@drawable/ic_folder_black_24dp"
+        tools:tint="@color/text_color_secondary"/>
 
     <TextView
         android:id="@+id/file_item_name"
-        tools:text="file or dirname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:maxLines="2"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textColor="@android:color/secondary_text_light"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:textColor="@android:color/secondary_text_light"
-        android:maxLines="2">
-    </TextView>
+        tools:text="file or dirname"/>
 
 </LinearLayout>
