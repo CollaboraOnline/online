@@ -41,6 +41,9 @@ in node_modules/.bin/shrinkpack, so you can use the binary from there.
 If you need to get the sources:
 	make libs
 
+To bundle the file sanitize-url.js
+	browserify braintree-sanitize-url/index.js --standalone sanitizeUrl > sanitize-url.js
+
 Building
 --------
 

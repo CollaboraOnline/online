@@ -36,8 +36,5 @@
     "libreoffice",
     "lool"
   ],
-  "scripts": {
-    "postinstall": "browserify node_modules/@braintree/sanitize-url/index.js --standalone sanitizeUrl > node_modules/@braintree/sanitize-url/dist.js"
-  },
   "license": "BSD-2-Clause"
 }
