@@ -452,10 +452,11 @@ static void addStorageReuseCookie(Poco::Net::HTTPRequest& request, const std::st
 }
 
 // access_token must be decoded
-void addWopiProof(Poco::Net::HTTPRequest& request, const std::string& uri,
+void addWopiProof(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
                   const std::string& access_token)
 {
-    for (const auto& header : GetProofHeaders(access_token, uri))
+    assert(!uri.isRelative());
+    for (const auto& header : GetProofHeaders(access_token, uri.toString()))
         request.set(header.first, header.second);
 }
 
@@ -527,7 +528,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         addStorageDebugCookie(request);
         if (_reuseCookies)
             addStorageReuseCookie(request, cookies);
-        addWopiProof(request, uriObject.toString(), params["access_token"]);
+        addWopiProof(request, uriObject, params["access_token"]);
         const auto startTime = std::chrono::steady_clock::now();
 
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
@@ -759,7 +760,7 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
         addStorageDebugCookie(request);
         if (_reuseCookies)
             addStorageReuseCookie(request, cookies);
-        addWopiProof(request, uriObject.toString(), params["access_token"]);
+        addWopiProof(request, uriObject, params["access_token"]);
 
         psession->sendRequest(request);
         Poco::Net::HTTPResponse response;
@@ -838,7 +839,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
         addStorageDebugCookie(request);
         if (_reuseCookies)
             addStorageReuseCookie(request, cookies);
-        addWopiProof(request, uriObject.toString(), params["access_token"]);
+        addWopiProof(request, uriObject, params["access_token"]);
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
@@ -997,7 +998,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
         addStorageDebugCookie(request);
         if (_reuseCookies)
             addStorageReuseCookie(request, cookies);
-        addWopiProof(request, uriObject.toString(), params["access_token"]);
+        addWopiProof(request, uriObject, params["access_token"]);
         std::ostream& os = psession->sendRequest(request);
 
         std::ifstream ifs(filePath);
