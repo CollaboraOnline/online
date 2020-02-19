@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -68,8 +69,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -108,7 +109,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     public static final String EXPLORER_VIEW_TYPE_KEY = "EXPLORER_VIEW_TYPE";
     public static final String EXPLORER_PREFS_KEY = "EXPLORER_PREFS";
     public static final String SORT_MODE_KEY = "SORT_MODE";
-    private static final String RECENT_DOCUMENTS_KEY = "RECENT_DOCUMENTS";
+    private static final String RECENT_DOCUMENTS_KEY = "RECENT_DOCUMENTS_LIST";
     private static final String ENABLE_SHOW_HIDDEN_FILES_KEY = "ENABLE_SHOW_HIDDEN_FILES";
 
     public static final String NEW_FILE_PATH_KEY = "NEW_FILE_PATH_KEY";
@@ -177,6 +178,15 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close);
     }
 
+    private String[] getRecentDocuments() {
+        String joinedStrings = prefs.getString(RECENT_DOCUMENTS_KEY, "");
+        if (joinedStrings.isEmpty())
+            return new String[]{};
+
+        // we are using \n as delimiter
+        return joinedStrings.split("\n", 0);
+    }
+
     /** Update the recent files list. */
     public void updateRecentFiles() {
         // update also the icon switching between list and grid
@@ -185,7 +195,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         else
             mRecentFilesListOrGrid.setImageResource(R.drawable.ic_list_black_24dp);
 
-        Set<String> recentFileStrings = prefs.getStringSet(RECENT_DOCUMENTS_KEY, new HashSet<String>());
+        String[] recentFileStrings = getRecentDocuments();
 
         final ArrayList<Uri> recentUris = new ArrayList<Uri>();
         for (String recentFileString : recentFileStrings) {
@@ -989,13 +999,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     private void addDocumentToRecents(Uri uri) {
         String newRecent = uri.toString();
-        Set<String> recentsSet = prefs.getStringSet(RECENT_DOCUMENTS_KEY, new HashSet<String>());
 
-        //create array to work with
-        ArrayList<String> recentsArrayList = new ArrayList<String>(recentsSet);
+        // Create array to work with (have to copy the content)
+        ArrayList<String> recentsArrayList = new ArrayList<String>(Arrays.asList(getRecentDocuments()));
 
         //remove string if present, so that it doesn't appear multiple times
-        recentsSet.remove(newRecent);
+        recentsArrayList.remove(newRecent);
 
         //put the new value in the first place
         recentsArrayList.add(0, newRecent);
@@ -1003,14 +1012,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         final int RECENTS_SIZE = 30;
 
         while (recentsArrayList.size() > RECENTS_SIZE) {
-            recentsArrayList.remove(RECENTS_SIZE);
+            recentsArrayList.remove(recentsArrayList.size() - 1);
         }
 
-        //switch to Set, so that it could be inserted into prefs
-        recentsSet = new HashSet<String>(recentsArrayList);
-
-        prefs.edit().putStringSet(RECENT_DOCUMENTS_KEY, recentsSet).apply();
-
+        // Join the array, use \n's as delimiters
+        String joined = TextUtils.join("\n", recentsArrayList);
+        prefs.edit().putString(RECENT_DOCUMENTS_KEY, joined).apply();
 
         //update app shortcuts (7.0 and above)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
@@ -1021,6 +1028,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
             ArrayList<ShortcutInfo> shortcuts = new ArrayList<ShortcutInfo>();
             for (String pathString : recentsArrayList) {
+                if (pathString.isEmpty())
+                    continue;
 
                 //find the appropriate drawable
                 int drawable = 0;
@@ -1039,6 +1048,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                         break;
                 }
 
+                // TODO better way to get the filename for content: uris
                 File file = new File(pathString);
 
                 //for some reason, getName uses %20 instead of space
