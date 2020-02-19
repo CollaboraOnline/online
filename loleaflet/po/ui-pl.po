@@ -652,9 +652,8 @@ msgid "Select document type to upload"
 msgstr "Wybierz typ dokumentu do przesłania"
 
 #: src/control/Signing.js:329
-#, fuzzy
 msgid "Type:"
-msgstr "Typ"
+msgstr "Typ:"
 
 #: src/control/Signing.js:360 src/control/Signing.js:657
 msgid "Document uploaded."
