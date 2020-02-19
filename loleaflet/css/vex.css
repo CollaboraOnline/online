@@ -148,8 +148,8 @@
 	button.vex-dialog-button-primary.vex-dialog-button.vex-first {
 		border: 1px solid #0b87e7 !important;
 		border-radius: 4px !important;
-		background-color: #fff !important;
-		color: #0b87e7 !important;
+		background-color: #0b87e7 !important;
+		color: #fff !important;
 	}
 	button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 		border-radius: 4px;
