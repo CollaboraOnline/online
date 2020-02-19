@@ -10,7 +10,6 @@
 package org.libreoffice.androidapp.ui;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -19,14 +18,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.UriPermission;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -42,8 +39,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
@@ -72,14 +67,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
@@ -89,7 +78,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -101,7 +89,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private String LOGTAG = LibreOfficeUIActivity.class.getSimpleName();
     private SharedPreferences prefs;
     private int filterMode = FileUtilities.ALL;
-    private int viewMode;
     private int sortMode;
     private boolean showHiddenFiles;
 
@@ -131,8 +118,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     public static final String NEW_CALC_STRING_KEY = "private:factory/scalc";
     public static final String NEW_DRAW_STRING_KEY = "private:factory/sdraw";
 
-    public static final int GRID_VIEW = 0;
-    public static final int LIST_VIEW = 1;
+    public static final String GRID_VIEW = "0";
+    public static final String LIST_VIEW = "1";
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
@@ -153,6 +140,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private LinearLayout writerLayout;
     private LinearLayout impressLayout;
     private LinearLayout calcLayout;
+
+    /** Recent files list vs. grid switch. */
+    private ImageView mRecentFilesListOrGrid;
 
     /** Request code to evaluate that we are returning from the LOActivity. */
     private static final int LO_ACTIVITY_REQUEST_CODE = 42;
@@ -188,7 +178,13 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     }
 
     /** Update the recent files list. */
-    public void updateRecentFilesAdapter() {
+    public void updateRecentFiles() {
+        // update also the icon switching between list and grid
+        if (isViewModeList())
+            mRecentFilesListOrGrid.setImageResource(R.drawable.ic_view_module_black_24dp);
+        else
+            mRecentFilesListOrGrid.setImageResource(R.drawable.ic_list_black_24dp);
+
         Set<String> recentFileStrings = prefs.getStringSet(RECENT_DOCUMENTS_KEY, new HashSet<String>());
 
         final ArrayList<Uri> recentUris = new ArrayList<Uri>();
@@ -232,7 +228,17 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         recentRecyclerView = findViewById(R.id.list_recent);
         noRecentItemsTextView = findViewById(R.id.no_recent_items_msg);
 
-        updateRecentFilesAdapter();
+        // Icon to switch showing the recent files as list vs. as grid
+        mRecentFilesListOrGrid = (ImageView) findViewById(R.id.recent_list_or_grid);
+        mRecentFilesListOrGrid.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleViewMode();
+                updateRecentFiles();
+            }
+        });
+
+        updateRecentFiles();
 
         //registerForContextMenu(fileRecyclerView);
 
@@ -337,7 +343,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     private void refreshView() {
         // refresh view
-        updateRecentFilesAdapter();
+        updateRecentFiles();
 
         // close drawer if it was open
         drawerLayout.closeDrawer(navigationDrawer);
@@ -384,7 +390,15 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     }
 
     public boolean isViewModeList() {
-        return viewMode == LIST_VIEW;
+        return prefs.getString(EXPLORER_VIEW_TYPE_KEY, GRID_VIEW).equals(LIST_VIEW);
+    }
+
+    /** Change the view state (without updating the UI). */
+    private void toggleViewMode() {
+        if (isViewModeList())
+            prefs.edit().putString(EXPLORER_VIEW_TYPE_KEY, GRID_VIEW).apply();
+        else
+            prefs.edit().putString(EXPLORER_VIEW_TYPE_KEY, LIST_VIEW).apply();
     }
 
     /** Start editing of the given Uri. */
@@ -813,7 +827,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         prefs = getSharedPreferences(EXPLORER_PREFS_KEY, MODE_PRIVATE);
         sortMode = prefs.getInt(SORT_MODE_KEY, FileUtilities.SORT_AZ);
         SharedPreferences defaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        viewMode = Integer.valueOf(defaultPrefs.getString(EXPLORER_VIEW_TYPE_KEY, "" + GRID_VIEW));
         filterMode = Integer.valueOf(defaultPrefs.getString(FILTER_MODE_KEY, "-1"));
         showHiddenFiles = defaultPrefs.getBoolean(ENABLE_SHOW_HIDDEN_FILES_KEY, false);
 
@@ -832,11 +845,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             filterMode = i.getIntExtra(FILTER_MODE_KEY, FileUtilities.ALL);
             Log.d(LOGTAG, FILTER_MODE_KEY);
         }
-
-        if (i.hasExtra(EXPLORER_VIEW_TYPE_KEY)) {
-            viewMode = i.getIntExtra(EXPLORER_VIEW_TYPE_KEY, GRID_VIEW);
-            Log.d(LOGTAG, EXPLORER_VIEW_TYPE_KEY);
-        }
     }
 
 
@@ -851,15 +859,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         // TODO Auto-generated method stub
         super.onSaveInstanceState(outState);
 
-        /*if (currentDirectory != null) {
-            outState.putString(CURRENT_DIRECTORY_KEY, currentDirectory.getUri().toString());
-            Log.d(LOGTAG, currentDirectory.toString() + Integer.toString(filterMode) + Integer.toString(viewMode));
-        }
         outState.putInt(FILTER_MODE_KEY, filterMode);
-        outState.putInt(EXPLORER_VIEW_TYPE_KEY, viewMode);
-        if (documentProvider != null)
-            outState.putInt(DOC_PROVIDER_KEY, documentProvider.getId());
-        */
 
         outState.putBoolean(ENABLE_SHOW_HIDDEN_FILES_KEY, showHiddenFiles);
 
@@ -886,11 +886,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             currentDirectory = documentProvider.getRootDirectory(this);
         }*/
         filterMode = savedInstanceState.getInt(FILTER_MODE_KEY, FileUtilities.ALL);
-        viewMode = savedInstanceState.getInt(EXPLORER_VIEW_TYPE_KEY, GRID_VIEW);
         showHiddenFiles = savedInstanceState.getBoolean(ENABLE_SHOW_HIDDEN_FILES_KEY, false);
         //openDirectory(currentDirectory);
         Log.d(LOGTAG, "onRestoreInstanceState");
-        //Log.d(LOGTAG, currentDirectory.toString() + Integer.toString(filterMode) + Integer.toString(viewMode));
+        //Log.d(LOGTAG, currentDirectory.toString() + Integer.toString(filterMode));
     }
 
     private final BroadcastReceiver mUSBReceiver = new BroadcastReceiver() {

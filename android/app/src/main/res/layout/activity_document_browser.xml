@@ -60,15 +60,30 @@
                 android:divider="@color/doorhanger_divider_light"
                 android:showDividers="middle">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:id="@+id/header_recents"
-                    android:text="@string/title_recents"
-                    android:gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:padding="16dp"
-                    android:textStyle="bold" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/header_recents"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:padding="16dp"
+                        android:text="@string/title_recents"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/recent_list_or_grid"
+                        android:layout_width="96dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_list_black_24dp" />
+                </LinearLayout>
 
                 <!--Recent files-->
                 <FrameLayout

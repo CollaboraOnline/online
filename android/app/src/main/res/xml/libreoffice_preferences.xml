@@ -21,14 +21,6 @@
             android:defaultValue="0"
             android:entryValues="@array/SortModeStringValues"
             app:iconSpaceReserved="false" />
-        <ListPreference
-            android:entries="@array/ViewModeNames"
-            android:entryValues="@array/ViewModeStringValues"
-            android:defaultValue="@integer/grid_view_integer"
-            android:title="@string/pref_file_explorer_title"
-            android:key="EXPLORER_VIEW_TYPE"
-            android:summary="@string/pref_viewmode_summary"
-            app:iconSpaceReserved="false" />
 
         <CheckBoxPreference
             android:title="@string/pref_show_hidden_files"
