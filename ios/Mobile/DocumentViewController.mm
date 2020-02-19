@@ -125,8 +125,41 @@ static IMP standardImpOfInputAccessoryView = nil;
         IMP oldImp = method_setImplementation(method, newImp);
         if (standardImpOfInputAccessoryView == nil)
             standardImpOfInputAccessoryView = oldImp;
-    } else if (standardImpOfInputAccessoryView != nil) {
-        method_setImplementation(method, standardImpOfInputAccessoryView);
+    } else {
+        // If the external keyboard has been disconnected, restore the normal behaviour.
+        if (standardImpOfInputAccessoryView != nil) {
+            method_setImplementation(method, standardImpOfInputAccessoryView);
+        }
+
+        // Hack to make the on-screen keyboard pop up more eagerly when focus set to the textarea
+        // using JavaScript.
+
+        // From https://stackoverflow.com/questions/32449870/programmatically-focus-on-a-form-in-a-webview-wkwebview/32845699
+
+        static bool doneThisAlready = false;
+        if (!doneThisAlready) {
+            const char * methodSignature;
+            doneThisAlready = true;
+
+            if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion: (NSOperatingSystemVersion){13, 0, 0}]) {
+                methodSignature = "_elementDidFocus:userIsInteracting:blurPreviousNode:activityStateChanges:userObject:";
+            } else {
+                methodSignature = "_elementDidFocus:userIsInteracting:blurPreviousNode:changingActivityState:userObject:";
+            }
+
+            // Override that internal method with an own wrapper that always passes the
+            // userIsInteracting parameter as TRUE. That will cause the on-screen keyboard to pop up
+            // when we call the focus() method on the textarea element in JavaScript.
+            SEL selector = sel_getUid(methodSignature);
+            Method method = class_getInstanceMethod(webBrowserClass, selector);
+            if (method != nil) {
+                IMP original = method_getImplementation(method);
+                IMP override = imp_implementationWithBlock(^void(id me, void* arg0, BOOL arg1, BOOL arg2, BOOL arg3, id arg4) {
+                        ((void (*)(id, SEL, void*, BOOL, BOOL, BOOL, id))original)(me, selector, arg0, TRUE, arg2, arg3, arg4);
+                    });
+                method_setImplementation(method, override);
+            }
+        }
     }
 
     WKWebView *webViewP = self.webView;
