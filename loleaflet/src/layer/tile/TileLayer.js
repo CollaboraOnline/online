@@ -1135,7 +1135,7 @@ L.TileLayer = L.GridLayer.extend({
 				.openOn(this._map);
 		}
 
-		if (!this._map.editorHasFocus() && (modifierViewId === this._viewId) && (this._map.getWinId === 0) && (this._map._permission === 'edit')) {
+		if (!this._map.editorHasFocus() && (modifierViewId === this._viewId) && (this._map._permission === 'edit')) {
 			// Regain cursor if we had been out of focus and now have input.
 			// (only if it is our own cursor and the input is actually not
 			// going into a dialog)
@@ -2108,8 +2108,7 @@ L.TileLayer = L.GridLayer.extend({
 		var updated = true;
 		if (!this._cursorMarker) {
 			this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true});
-		}
-		else {
+		} else {
 			var oldLatLng = this._cursorMarker.getLatLng();
 			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
 			var newLatLng = this._cursorMarker.getLatLng();
