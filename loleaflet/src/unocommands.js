@@ -287,7 +287,6 @@ var unoCommandsArray = {
 	SlideChangeWindow:{presentation:{menu:_('Slide Transition'),},},
 	SlideMasterPage:{presentation:{menu:_('~Master Slide'),},},
 	SlideMenu:{presentation:{menu:_('S~lide'),},},
-	SlideShowMenu:{presentation:{menu:_('~Slide Show'),},},
 	SmallCaps:{global:{menu:_('Small capitals'),},},
 	SortAscending:{spreadsheet:{menu:_('Sort Ascending'),},},
 	SortDescending:{spreadsheet:{menu:_('Sort Descending'),},},
