@@ -93,9 +93,17 @@
 	#toolbar-up .checked{
 		border-color: #fff;
 	}
-	#toolbar-up .checked .w2ui-tb-image{
+	#toolbar-up .checked .w2ui-tb-image, #toolbar-up .w2ui-tb-image:hover, #toolbar-up .w2ui-tb-image:focus, #toolbar-up .w2ui-tb-image:active, #toolbar-hamburger.menuwizard-closed:active{
 		-webkit-filter:  drop-shadow(0px 0px 4px #0b87e7);
 		filter: drop-shadow(0px 0px 4px #0b87e7);
+	}
+	#toolbar-up .over{
+		border-color: #fff !important;
+	}
+	#toolbar-up .over:hover .w2ui-tb-image, #toolbar-up .over:active .w2ui-tb-image{
+		-webkit-filter:  drop-shadow(0px 0px 4px #0b87e7);
+		filter: drop-shadow(0px 0px 4px #0b87e7);
+		border-color: #fff transparent;
 	}
 	#toolbar-down table.w2ui-button .w2ui-tb-image {
 		margin: 5px 9px 3px 9px!important;
