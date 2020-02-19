@@ -195,6 +195,24 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close);
     }
 
+    /** Update the recent files list. */
+    public void updateRecentFilesAdapter() {
+        Set<String> recentFileStrings = prefs.getStringSet(RECENT_DOCUMENTS_KEY, new HashSet<String>());
+
+        final ArrayList<Uri> recentUris = new ArrayList<Uri>();
+        for (String recentFileString : recentFileStrings) {
+            try {
+                recentUris.add(Uri.parse(recentFileString));
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+        // TODO FileUtilities.sortFiles(filePaths, sortMode);
+
+        recentRecyclerView.setLayoutManager(isViewModeList() ? new LinearLayoutManager(this) : new GridLayoutManager(this, 2));
+        recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentUris));
+    }
+
     public void createUI() {
         setContentView(R.layout.activity_document_browser);
 
@@ -222,19 +240,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         recentRecyclerView = findViewById(R.id.list_recent);
         noRecentItemsTextView = findViewById(R.id.no_recent_items_msg);
 
-        Set<String> recentFileStrings = prefs.getStringSet(RECENT_DOCUMENTS_KEY, new HashSet<String>());
-
-        final ArrayList<Uri> recentUris = new ArrayList<Uri>();
-        for (String recentFileString : recentFileStrings) {
-            try {
-                recentUris.add(Uri.parse(recentFileString));
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-            }
-        }
-
-        recentRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentUris));
+        updateRecentFilesAdapter();
 
         fileRecyclerView = findViewById(R.id.file_recycler_view);
         noItemsTextView = findViewById(R.id.no_items_msg);
@@ -359,12 +365,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         } else {
             drawerToggle.setDrawerIndicatorEnabled(true);
         }
-
-        FileUtilities.sortFiles(filePaths, sortMode);
-        // refresh view
-        fileRecyclerView.setLayoutManager(isViewModeList() ? new LinearLayoutManager(this) : new GridLayoutManager(this, 3));
-        fileRecyclerView.setAdapter(new ExplorerItemAdapter(this, filePaths));
         */
+        // refresh view
+        updateRecentFilesAdapter();
+
         // close drawer if it was open
         drawerLayout.closeDrawer(navigationDrawer);
         if (isFabMenuOpen) {
@@ -412,7 +416,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         }
     }
 
-    private boolean isViewModeList() {
+    public boolean isViewModeList() {
         return viewMode == LIST_VIEW;
     }
 
