@@ -6,7 +6,7 @@
     <string name="app_description">$APP_NAME is a modern, easy-to-use, open source productivity suite for word processing, spreadsheets, presentations and more.</string>
     <string name="app_vendor">This release was supplied by $VENDOR.</string>
 
-    <string name="no_recent_items">No recent items</string>
+    <string name="no_recent_items">Please open a file using the folder icon in the toolbar.</string>
     <string name="no_items">No items</string>
     <string name="temp_file_saving_disabled">This file is read-only, saving is disabled.</string>
     <string name="file_exists_warning">A file with this name already exists, and will be overwritten.</string>
