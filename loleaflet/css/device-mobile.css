@@ -195,6 +195,9 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #tb_formulabar_item_formula > div, #tb_formulabar_item_address > div {
 	margin-top: -16px;
 }
+#tb_formulabar_item_functiondialog > div {
+	margin-top: -20px;
+}
 .inputbar_multiline #tb_formulabar_item_formula > div,
 .inputbar_multiline #tb_formulabar_item_address > div {
 	margin-top:0px;

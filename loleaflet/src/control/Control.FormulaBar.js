@@ -5,9 +5,6 @@
 
 /* global $ w2ui _ */
 L.Control.FormulaBar = L.Control.extend({
-	options: {
-		showfunctionwizard: true
-	},
 
 	onAdd: function (map) {
 		this.map = map;
@@ -34,8 +31,8 @@ L.Control.FormulaBar = L.Control.extend({
 			items: [
 				{type: 'html',  id: 'left'},
 				{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
-				{type: 'break', hidden: !this.options.showfunctionwizard},
-				{type: 'button', hidden: !this.options.showfunctionwizard, id: 'functiondialog', img: 'functiondialog', hint: _('Function Wizard'), uno: '.uno:FunctionDialog'},
+				{type: 'break'},
+				{type: 'button', id: 'functiondialog', img: 'functiondialog', hint: _('Function Wizard')},
 				{type: 'html', id: 'formula', html: '<div id="calc-inputbar-wrapper"><div id="calc-inputbar"></div></div>'}
 			],
 			onClick: function (e) {
@@ -81,6 +78,14 @@ L.Control.FormulaBar = L.Control.extend({
 			}
 			else {
 				this.map.toggleCommandState(window.getUNOCommand(item.uno));
+			}
+		}
+		else if (id === 'functiondialog') {
+			if (window.mode.isMobile() && this.map._functionWizardData) {
+				this.map._docLayer._closeMobileWizard();
+				this.map._docLayer._openMobileWizard(this.map._functionWizardData);
+			} else {
+				this.map.sendUnoCommand('.uno:FunctionDialog');
 			}
 		}
 	},

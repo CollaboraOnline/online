@@ -789,7 +789,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCalcFunctionListMsg: function (textMsg) {
-		var funcList = JSON.parse(textMsg);
+		var funcData = JSON.parse(textMsg);
 		this._closeMobileWizard();
 
 		var data = {
@@ -800,6 +800,18 @@ L.TileLayer = L.GridLayer.extend({
 			children: []
 		};
 
+		if (funcData.categories)
+			this._onCalcFunctionListWithCategories(funcData, data);
+		else
+			this._onCalcFunctionList(funcData, data);
+
+		if (funcData.wholeList)
+			this._map._functionWizardData = data;
+
+		this._openMobileWizard(data);
+	},
+
+	_onCalcFunctionList: function (funcList, data) {
 		var entries = data.children;
 		for (var idx = 0; idx < funcList.length; ++idx) {
 			var func =  funcList[idx];
@@ -808,7 +820,7 @@ L.TileLayer = L.GridLayer.extend({
 				id: '',
 				type: 'calcfuncpanel',
 				text: name,
-				index: idx,
+				index: func.index,
 				enabled: true,
 				children: []
 			};
@@ -821,8 +833,48 @@ L.TileLayer = L.GridLayer.extend({
 				style: 'func-info'
 			};
 		}
+	},
 
-		this._openMobileWizard(data);
+	_onCalcFunctionListWithCategories: function (funcData, data) {
+		var categoryList = funcData.categories;
+		var categoryEntries = data.children;
+		for (var idx = 0; idx < categoryList.length; ++idx) {
+			var category = categoryList[idx];
+			var categoryEntry = {
+				id: '',
+				type: 'panel',
+				text: category.name,
+				index: idx,
+				enabled: true,
+				children: []
+			};
+			categoryEntries.push(categoryEntry);
+		}
+
+		var funcList = funcData.functions;
+		for (idx = 0; idx < funcList.length; ++idx) {
+			var func =  funcList[idx];
+			var name = func.signature.split('(')[0];
+			var funcEntry = {
+				id: '',
+				type: 'calcfuncpanel',
+				text: name,
+				index: func.index,
+				category: func.category,
+				enabled: true,
+				children: []
+			};
+			var funcEntries = categoryEntries[func.category].children;
+			funcEntries.push(funcEntry);
+
+			funcEntries[funcEntries.length-1].children[0] = {
+				id: '',
+				type: 'fixedtext',
+				text: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
+				enabled: true,
+				style: 'func-info'
+			};
+		}
 	},
 
 	_onCursorVisibleMsg: function(textMsg) {

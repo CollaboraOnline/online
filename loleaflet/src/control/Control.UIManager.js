@@ -71,7 +71,7 @@ L.Control.UIManager = L.Control.extend({
 
 		if (docType === 'spreadsheet') {
 			this.map.addControl(L.control.sheetsBar({shownavigation: isDesktop}));
-			this.map.addControl(L.control.formulaBar({showfunctionwizard: isDesktop}));
+			this.map.addControl(L.control.formulaBar());
 		}
 
 		if (isDesktop && docType === 'presentation') {

@@ -349,7 +349,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_explorableEntry: function(parentContainer, data, contentNode, builder, valueNode, iconPath, updateCallback) {
+	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconPath, updateCallback) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 		if (data && data.id)
@@ -418,8 +418,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
 		contentDiv.title = data.text;
 
+		var contentData = content.length ? content : [content];
+		var contentNode = contentData.length === 1 ? contentData[0] : null;
+
 		builder._currentDepth++;
-		builder.build(contentDiv, [contentNode]);
+		builder.build(contentDiv, contentData);
 		builder._currentDepth--;
 
 		if (!data.nosubmenu)
@@ -471,6 +474,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 			$(leftDiv).click(function() {
 				that.map._socket.sendMessage('completefunction index=' + data.index);
+				that.map.fire('closemobilewizard');
 			});
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
@@ -565,17 +569,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_panelHandler: function(parentContainer, data, builder) {
-		var contentNode = data.children[0];
+		var content = data.children;
+		var contentData = content.length ? content : [content];
+		var contentNode = contentData.length === 1 ? contentData[0] : null;
 
-		var entryId = contentNode.id;
 		var iconPath = null;
-
-		if (entryId && entryId.length) {
-			iconPath = builder._createIconPath(entryId);
+		if (contentNode) {
+			var entryId = contentNode.id;
+			if (entryId && entryId.length) {
+				iconPath = builder._createIconPath(entryId);
+			}
 		}
 
-		builder._explorableEntry(parentContainer, data, contentNode, builder, null, iconPath);
-
+		builder._explorableEntry(parentContainer, data, content, builder, null, iconPath);
 		return false;
 	},
 
@@ -1316,7 +1322,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (builder.wizard) {
 				$(sectionTitle).click(function(event, data) {
 					builder.wizard.goLevelDown(contentDiv, data);
-					if (contentNode.onshow)
+					if (contentNode && contentNode.onshow)
 						contentNode.onshow();
 				});
 			} else {
