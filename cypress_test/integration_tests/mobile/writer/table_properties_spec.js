@@ -22,6 +22,20 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('not.have.class', 'disabled');
 	}
 
+	function openTablePanel() {
+		// Open mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		// Open table panel
+		cy.get('#TableEditPanel')
+			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible')
+			.wait(100);
+	}
+
 	function moveCursorToFirstCell() {
 		helper.selectAllMobile();
 
@@ -43,13 +57,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Insert row
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#InsertRowsBefore')
 			.click();
 
@@ -81,13 +90,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Insert row
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#InsertRowsAfter')
 			.click();
 
@@ -119,13 +123,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Insert column
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#InsertColumnsBefore')
 			.click();
 
@@ -157,13 +156,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Insert column
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#InsertColumnsAfter')
 			.click();
 
@@ -195,13 +189,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Delete row
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#DeleteRows')
 			.click();
 
@@ -233,13 +222,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Delete column
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#DeleteColumns')
 			.click();
 
@@ -272,13 +256,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Delete table
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#DeleteTable')
 			.click();
 
@@ -312,13 +291,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('body').type('{shift}{downarrow}{rightarrow}');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Merge cells
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#MergeCells')
 			.scrollIntoView();
 		cy.get('#MergeCells')
@@ -345,13 +319,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Check current row height
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#rowheight .spinfield')
 			.should('have.attr', 'value', '0');
 
@@ -382,13 +351,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		before('table.odt');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		openTablePanel();
 
-		// Check current column width
-		cy.get('#TableEditPanel')
-			.click();
 		cy.get('#columnwidth .spinfield')
 			.should('have.attr', 'value', '3.462');
 
@@ -423,13 +387,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
 
-		// Set minimal row height
-		cy.get('#TableEditPanel')
-			.click();
+		openTablePanel();
 
 		cy.get('#SetMinimalRowHeight')
 			.click();
@@ -457,13 +416,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Set optimal row height
-		cy.get('#TableEditPanel')
-			.click();
+		openTablePanel();
 
 		cy.get('#SetOptimalRowHeight')
 			.click();
@@ -501,13 +454,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Distribute rows
-		cy.get('#TableEditPanel')
-			.click();
+		openTablePanel();
 
 		cy.get('#DistributeRows')
 			.click();
@@ -545,13 +492,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Set minimal column width
-		cy.get('#TableEditPanel')
-			.click();
+		openTablePanel();
 
 		cy.get('#SetMinimalColumnWidth')
 			.click();
@@ -584,13 +525,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Set optimal column width
-		cy.get('#TableEditPanel')
-			.click();
+		openTablePanel();
 
 		cy.get('#SetOptimalColumnWidth')
 			.click();
@@ -626,13 +561,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Distribute columns
-		cy.get('#TableEditPanel')
-			.click();
+		openTablePanel();
 
 		cy.get('#DistributeColumns')
 			.click();

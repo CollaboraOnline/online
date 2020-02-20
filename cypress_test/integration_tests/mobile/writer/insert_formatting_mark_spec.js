@@ -13,6 +13,15 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.should('not.have.class', 'disabled')
 			.click();
+
+		// Open formatting marks
+		cy.get('.sub-menu-title')
+			.contains('Formatting Mark')
+			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible')
+			.wait(100);
 	});
 
 	afterEach(function() {
@@ -20,12 +29,6 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert non-breaking space.', function() {
-		// Open formatting marks
-		cy.get('.sub-menu-title')
-			.contains('Formatting Mark')
-			.click();
-
-		// Do the insertion
 		cy.get('.menu-entry-no-icon')
 			.contains('Non-breaking space')
 			.click();
@@ -40,12 +43,6 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert non-breaking hyphen.', function() {
-		// Open formatting marks
-		cy.get('.sub-menu-title')
-			.contains('Formatting Mark')
-			.click();
-
-		// Do the insertion
 		cy.get('.menu-entry-no-icon')
 			.contains('Non-breaking hyphen')
 			.click();
@@ -60,12 +57,6 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert soft hyphen.', function() {
-		// Open formatting marks
-		cy.get('.sub-menu-title')
-			.contains('Formatting Mark')
-			.click();
-
-		// Do the insertion
 		cy.get('.menu-entry-no-icon')
 			.contains('Soft hyphen')
 			.click();
@@ -80,12 +71,6 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert no-width optional break.', function() {
-		// Open formatting marks
-		cy.get('.sub-menu-title')
-			.contains('Formatting Mark')
-			.click();
-
-		// Do the insertion
 		cy.get('.menu-entry-no-icon')
 			.contains('No-width optional break')
 			.click();
@@ -100,12 +85,6 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert no-width no break.', function() {
-		// Open formatting marks
-		cy.get('.sub-menu-title')
-			.contains('Formatting Mark')
-			.click();
-
-		// Do the insertion
 		cy.get('.menu-entry-no-icon')
 			.contains('No-width no break')
 			.click();
@@ -120,12 +99,6 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert left-to-right mark.', function() {
-		// Open formatting marks
-		cy.get('.sub-menu-title')
-			.contains('Formatting Mark')
-			.click();
-
-		// Do the insertion
 		cy.get('.menu-entry-no-icon')
 			.contains('Left-to-right mark')
 			.click();
@@ -140,12 +113,6 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert right-to-left mark.', function() {
-		// Open formatting marks
-		cy.get('.sub-menu-title')
-			.contains('Formatting Mark')
-			.click();
-
-		// Do the insertion
 		cy.get('.menu-entry-no-icon')
 			.contains('Right-to-left mark')
 			.click();

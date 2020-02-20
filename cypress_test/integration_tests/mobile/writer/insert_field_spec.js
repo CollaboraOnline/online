@@ -13,6 +13,15 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.should('not.have.class', 'disabled')
 			.click();
+
+		// Open fields submenu
+		cy.get('.sub-menu-title')
+			.contains('More Fields...')
+			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible')
+			.wait(100);
 	});
 
 	afterEach(function() {
@@ -20,11 +29,6 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	it('Insert page number field.', function() {
-		// Open fields submenu
-		cy.get('.sub-menu-title')
-			.contains('More Fields...')
-			.click();
-
 		// Insert field
 		cy.get('.menu-entry-with-icon')
 			.contains('Page Number')
@@ -38,11 +42,6 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	it('Insert page count field.', function() {
-		// Open fields submenu
-		cy.get('.sub-menu-title')
-			.contains('More Fields...')
-			.click();
-
 		// Insert field
 		cy.get('.menu-entry-with-icon')
 			.contains('Page Count')
@@ -56,11 +55,6 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	it('Insert date field.', function() {
-		// Open fields submenu
-		cy.get('.sub-menu-title')
-			.contains('More Fields...')
-			.click();
-
 		// Insert field
 		cy.get('.menu-entry-with-icon')
 			.contains('Date')
@@ -74,11 +68,6 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	it('Insert time field.', function() {
-		// Open fields submenu
-		cy.get('.sub-menu-title')
-			.contains('More Fields...')
-			.click();
-
 		// Insert field
 		cy.get('.menu-entry-with-icon')
 			.contains('Time')
@@ -92,11 +81,6 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	it('Insert title field.', function() {
-		// Open fields submenu
-		cy.get('.sub-menu-title')
-			.contains('More Fields...')
-			.click();
-
 		// Insert field
 		cy.get('.menu-entry-with-icon')
 			.contains('Title')
@@ -110,11 +94,6 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	it('Insert author field.', function() {
-		// Open fields submenu
-		cy.get('.sub-menu-title')
-			.contains('More Fields...')
-			.click();
-
 		// Insert field
 		cy.get('.menu-entry-with-icon')
 			.contains('First Author')
@@ -129,11 +108,6 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	it('Insert subject field.', function() {
-		// Open fields submenu
-		cy.get('.sub-menu-title')
-			.contains('More Fields...')
-			.click();
-
 		// Insert field
 		cy.get('.menu-entry-with-icon')
 			.contains('Subject')

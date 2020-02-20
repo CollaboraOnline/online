@@ -47,6 +47,37 @@ describe('Change shape properties via mobile wizard.', function() {
 			.click();
 	}
 
+	function openPosSizePanel() {
+		// Open mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		// Do mirroring
+		cy.get('#PosSizePropertyPanel')
+			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible')
+			.wait(100);
+	}
+
+	function openLinePropertyPanel() {
+		// Open mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+
+		cy.get('#mobile-wizard')
+			.should('be.visible');
+
+		// Do mirroring
+		cy.get('#LinePropertyPanel')
+			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible')
+			.wait(100);
+	}
+
 	it('Check default shape geometry.', function() {
 		// Geometry
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
@@ -57,20 +88,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change shape width.', function() {
-		// TODO: Two issues are found here with core/master
-		// 1) The mobile wizard keeps rerendering after it was already opened which leads
-		// detached item error.
-		// 2) Entering a value inside the spinbutton has no effect on the shape.
+		// TODO: Entering a value inside the spinbutton has no effect on the shape.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Change width
-		cy.get('#PosSizePropertyPanel')
-			.click();
+		openPosSizePanel();
 
 		cy.get('#selectwidth .spinfield')
 			.clear()
@@ -82,20 +104,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change shape height.', function() {
-		// TODO: Two issues are found here with core/master
-		// 1) The mobile wizard keeps rerendering after it was already opened which leads
-		// detached item error.
-		// 2) Entering a value inside the spinbutton has no effect on the shape.
+		// TODO: Entering a value inside the spinbutton has no effect on the shape.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Change width
-		cy.get('#PosSizePropertyPanel')
-			.click();
+		openPosSizePanel();
 
 		cy.get('#selectheight .spinfield')
 			.clear()
@@ -107,19 +120,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change size with keep ratio enabled.', function() {
-		// TODO: Two issues are found here with core/master
-		// 1) The mobile wizard keeps rerendering after it was already opened which leads
-		// detached item error.
-		// 2) Entering a value inside the spinbutton has no effect on the shape.
+		// TODO: Entering a value inside the spinbutton has no effect on the shape.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		cy.get('#PosSizePropertyPanel')
-			.click();
+		openPosSizePanel();
 
 		// Enable keep ratio
 		cy.get('#ratio #ratio')
@@ -139,17 +144,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Vertical mirroring', function() {
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Do mirroring
-		cy.get('#PosSizePropertyPanel')
-			.click();
-
-		cy.get('.ui-content.level-0.mobile-wizard')
-			.should('be.visible')
-			.wait(100);
+		openPosSizePanel();
 
 		cy.get('#FlipVertical')
 			.click();
@@ -159,18 +154,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Horizontal mirroring', function() {
-
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Do mirroring
-		cy.get('#PosSizePropertyPanel')
-			.click();
-
-		cy.get('.ui-content.level-0.mobile-wizard')
-			.should('be.visible')
-			.wait(100);
+		openPosSizePanel();
 
 		cy.get('#FlipHorizontal')
 			.click();
@@ -180,16 +164,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Trigger moving backward / forward', function() {
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		cy.get('#PosSizePropertyPanel')
-			.click();
-
-		cy.get('.ui-content.level-0.mobile-wizard')
-			.should('be.visible')
-			.wait(100);
+		openPosSizePanel();
 
 		// We can't test the result, so we just trigger
 		// the events to catch crashes, consoler errors.
@@ -210,20 +185,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change line color', function() {
-		// TODO: Two issues are found here with core/master
-		// 1) The mobile wizard keeps rerendering after it was already opened which leads
-		// detached item error.
-		// 2) Layout of the line properties panel is completely broken.
+		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Change line color
-		cy.get('#LinePropertyPanel')
-			.click();
+		openLinePropertyPanel();
 
 		cy.get('#XLineColor')
 			.click();
@@ -238,20 +204,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change line style', function() {
-		// TODO: Two issues are found here with core/master
-		// 1) The mobile wizard keeps rerendering after it was already opened which leads
-		// detached item error.
-		// 2) Layout of the line properties panel is completely broken.
+		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Change line color
-		cy.get('#LinePropertyPanel')
-			.click();
+		openLinePropertyPanel();
 
 		cy.get('#linestyle')
 			.click();
@@ -267,20 +224,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change line width', function() {
-		// TODO: Two issues are found here with core/master
-		// 1) The mobile wizard keeps rerendering after it was already opened which leads
-		// detached item error.
-		// 2) Layout of the line properties panel is completely broken.
+		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Change line width
-		cy.get('#LinePropertyPanel')
-			.click();
+		openLinePropertyPanel();
 
 		cy.get('#linewidth .spinfield')
 			.should('have.attr', 'readonly', 'readonly');
@@ -295,14 +243,7 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		helper.clearMobileWizardState();
 
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
-
-		// Change line width
-		cy.get('#LinePropertyPanel')
-			.click();
+		openLinePropertyPanel();
 
 		cy.get('#linewidth .minus')
 			.click();
@@ -314,20 +255,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change line transparency', function() {
-		// TODO: Two issues are found here with core/master
-		// 1) The mobile wizard keeps rerendering after it was already opened which leads
-		// detached item error.
-		// 2) Layout of the line properties panel is completely broken.
+		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Change line transparency
-		cy.get('#LinePropertyPanel')
-			.click();
+		openLinePropertyPanel();
 
 		cy.get('#linetransparency .spinfield')
 			.clear()
@@ -341,20 +273,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Arrow style items are hidden.', function() {
-		// TODO: Two issues are found here with core/master
-		// 1) The mobile wizard keeps rerendering after it was already opened which leads
-		// detached item error.
-		// 2) Layout of the line properties panel is completely broken.
+		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Change line transparency
-		cy.get('#LinePropertyPanel')
-			.click();
+		openLinePropertyPanel();
 
 		cy.get('#linestyle')
 			.should('be.visible');
