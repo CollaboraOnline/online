@@ -839,7 +839,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.limit_stack_mem_kb", "8000" },
             { "per_document.limit_virt_mem_mb", "0" },
             { "per_document.max_concurrency", "4" },
-            { "per_document.redlining_as_comments", "true" },
+            { "per_document.redlining_as_comments", "false" },
             { "per_view.idle_timeout_secs", "900" },
             { "per_view.out_of_focus_timeout_secs", "120" },
             { "security.capabilities", "true" },
@@ -1086,7 +1086,7 @@ void LOOLWSD::initialize(Application& self)
     LOG_INF("MAX_CONCURRENCY set to " << maxConcurrency << ".");
 #endif
 
-    const auto redlining = getConfigValue<bool>(conf, "per_document.redlining_as_comments", true);
+    const auto redlining = getConfigValue<bool>(conf, "per_document.redlining_as_comments", false);
     if (!redlining)
     {
         setenv("DISABLE_REDLINE", "1", 1);
