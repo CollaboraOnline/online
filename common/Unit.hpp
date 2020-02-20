@@ -270,7 +270,7 @@ public:
     static UnitKit& get()
     {
         assert(Global);
-#if !MOBILEAPP
+#if !MOBILEAPP && !defined(KIT_IN_PROCESS)
         assert(Global->_type == UnitType::Kit);
 #endif
         return *static_cast<UnitKit *>(Global);
