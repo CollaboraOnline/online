@@ -114,10 +114,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     public static final String NEW_FILE_PATH_KEY = "NEW_FILE_PATH_KEY";
     public static final String NEW_DOC_TYPE_KEY = "NEW_DOC_TYPE_KEY";
-    public static final String NEW_WRITER_STRING_KEY = "private:factory/swriter";
-    public static final String NEW_IMPRESS_STRING_KEY = "private:factory/simpress";
-    public static final String NEW_CALC_STRING_KEY = "private:factory/scalc";
-    public static final String NEW_DRAW_STRING_KEY = "private:factory/sdraw";
 
     public static final String GRID_VIEW = "0";
     public static final String LIST_VIEW = "1";
@@ -148,6 +144,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     /** Request code to evaluate that we are returning from the LOActivity. */
     private static final int LO_ACTIVITY_REQUEST_CODE = 42;
     private static final int OPEN_FILE_REQUEST_CODE = 43;
+    private static final int CREATE_DOCUMENT_REQUEST_CODE = 44;
+    private static final int CREATE_SPREADSHEET_REQUEST_CODE = 45;
+    private static final int CREATE_PRESENTATION_REQUEST_CODE = 46;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -429,121 +428,36 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
     }
 
-    // Opens an Input dialog to get the name of new file
-    private void createNewFileInputDialog(final String defaultFileName, final String newDocumentType, final String extension) {
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_create_file, null);
+    /** Opens an Input dialog to get the name of new file. */
+    private void createNewFileInputDialog(final String defaultFileName, final String mimeType, final int requestCode) {
+        Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 
-        // file name input
-        final EditText input = (EditText)view.findViewById(R.id.fileName);
-        input.setText(defaultFileName);
-        input.setSelection(0, input.getText().toString().lastIndexOf('.'));
-        input.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        // The mime type and category must be set
+        i.setType(mimeType);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
 
-        // We should just focus on the input EditText so the keyboard would hide automatically.
-        // imm.showSoftInput(input,0); Should be enough, alas this is the wrong place, so doesn't work.
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        i.putExtra(Intent.EXTRA_TITLE, defaultFileName);
 
-        // warning text to notify the user that such a file already exists
-        final TextView warningText = (TextView)view.findViewById(R.id.overwriteWarning);
+        // TODO remember where the user picked the file the last time
+        // TODO and that should default to Context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        //i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, previousDirectoryPath);
 
-        // check if the file exists when showing the create dialog
-        //File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
-        //warningText.setVisibility(tempFile.exists() ? View.VISIBLE : View.GONE);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.create_new_document_title)
-            .setView(view)
-            .setPositiveButton(/*tempFile.exists() ? R.string.action_overwrite :*/ R.string.action_create, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Hide the keyboard, which we show forcefully.
-                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
-
-                    /*
-                    final String path = currentDirectory.getUri().getPath() + input.getText().toString();
-                    Uri newDocUri = createNewFile(path, extension);
-                    if (newDocUri != null) {
-                        Intent i = new Intent(Intent.ACTION_VIEW, newDocUri);
-
-                        String packageName = getApplicationContext().getPackageName();
-                        ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
-                        i.setComponent(componentName);
-
-                        //i.putExtra("org.libreoffice.document_provider_id", documentProvider.getId());
-                        i.putExtra("org.libreoffice.document_uri", newDocUri);
-
-                        startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
-                    } else {
-                        Toast.makeText(LibreOfficeUIActivity.this, getString(R.string.file_creation_failed), Toast.LENGTH_SHORT).show();
-                    }
-                    */
-                }
-            })
-            .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    // Hide the keyboard, which we show forcefully.
-                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
-
-                    dialog.cancel();
-                }
-            });
-
-        final AlertDialog alertDialog = builder.show();
-
-        // check if a file with this name already exists and notify the user
-        input.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence c, int start, int before, int count) {
-                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                boolean emptyInput = input.getText().toString().isEmpty();
-
-                /*File tempFile = new File(currentDirectory.getUri().getPath() + input.getText().toString());
-                if (!emptyInput && tempFile.exists()) {
-                    warningText.setVisibility(View.VISIBLE);
-                    positiveButton.setText(R.string.action_overwrite);
-                }
-                else {
-                    warningText.setVisibility(View.GONE);
-                    positiveButton.setText(R.string.action_create);
-                }*/
-
-                // hide the button completely if empty
-                if (emptyInput)
-                    positiveButton.setVisibility(View.GONE);
-                else
-                    positiveButton.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-        });
+        startActivityForResult(i, requestCode);
     }
 
     /**
      * Creates a new file at the specified path, by copying an empty template to that location.
      *
-     * @param path      the complete path (including the file name) where the file will be created
+     * @param uri       uri that we should overwrite with the new file content
      * @param extension is required to know what template should be used when creating the document
-     * @return Uri of newFile if newFile is successfully created else null
      */
-    private Uri createNewFile(final String path, final String extension) {
+    private void createNewFile(final Uri uri, final String extension) {
         InputStream templateFileStream = null;
-        //create a new file where the template will be written
-        File newFile = new File(path);
         OutputStream newFileStream = null;
         try {
             //read the template and copy it to the new file
-            templateFileStream = getAssets().open("templates/untitled" + extension);
-            newFileStream = new FileOutputStream(newFile);
+            templateFileStream = getAssets().open("templates/untitled." + extension);
+            newFileStream = getContentResolver().openOutputStream(uri);
             byte[] buffer = new byte[1024];
             int length;
             while ((length = templateFileStream.read(buffer)) > 0) {
@@ -551,7 +465,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         } finally {
             try {
                 //close the streams
@@ -561,7 +474,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 e.printStackTrace();
             }
         }
-        return Uri.fromFile(newFile);
     }
 
     /** Context menu item handling. */
@@ -678,6 +590,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     /** Start an ACTION_OPEN_DOCUMENT Intent to trigger opening a document. */
     private void openDocument() {
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+        i.addCategory(Intent.CATEGORY_OPENABLE);
 
         // set only the allowed mime types
         // NOTE: If updating the list here, also check the AndroidManifest.xml,
@@ -932,13 +846,17 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     /** Uploading back when we return from the LOActivity. */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == LO_ACTIVITY_REQUEST_CODE) {
-            // TODO probably kill this, we don't need to do anything here any more
-            Log.d(LOGTAG, "LOActivity has finished.");
-        }
-        else if (requestCode == OPEN_FILE_REQUEST_CODE) {
-            Log.d(LOGTAG, "File open chooser has finished, starting the LOActivity.");
-            if (resultCode == RESULT_OK && data != null) {
+        switch (requestCode) {
+            case LO_ACTIVITY_REQUEST_CODE: {
+                // TODO probably kill this, we don't need to do anything here any more
+                Log.d(LOGTAG, "LOActivity has finished.");
+                break;
+            }
+            case OPEN_FILE_REQUEST_CODE: {
+                Log.d(LOGTAG, "File open chooser has finished, starting the LOActivity.");
+                if (resultCode != RESULT_OK || data == null)
+                    return;
+
                 Uri uri = data.getData();
                 if (uri == null)
                     return;
@@ -946,6 +864,22 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
                 open(uri);
+                break;
+            }
+            case CREATE_DOCUMENT_REQUEST_CODE:
+            case CREATE_SPREADSHEET_REQUEST_CODE:
+            case CREATE_PRESENTATION_REQUEST_CODE: {
+                if (resultCode != RESULT_OK || data == null)
+                    return;
+
+                Uri uri = data.getData();
+                getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                String extension = (requestCode == CREATE_DOCUMENT_REQUEST_CODE)? "odt": ((requestCode == CREATE_SPREADSHEET_REQUEST_CODE)? "ods": "odp");
+                createNewFile(uri, extension);
+
+                open(uri);
+                break;
             }
         }
     }
@@ -1084,13 +1018,13 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 }
                 break;
             case R.id.newWriterFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_WRITER_EXTENSION, NEW_WRITER_STRING_KEY, FileUtilities.DEFAULT_WRITER_EXTENSION);
+                createNewFileInputDialog(getString(R.string.new_textdocument) + FileUtilities.DEFAULT_WRITER_EXTENSION, "application/vnd.oasis.opendocument.text", CREATE_DOCUMENT_REQUEST_CODE);
                 break;
             case R.id.newImpressFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, NEW_IMPRESS_STRING_KEY, FileUtilities.DEFAULT_IMPRESS_EXTENSION);
+                createNewFileInputDialog(getString(R.string.new_presentation) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, "application/vnd.oasis.opendocument.presentation", CREATE_PRESENTATION_REQUEST_CODE);
                 break;
             case R.id.newCalcFAB:
-                createNewFileInputDialog(getString(R.string.default_document_name) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, NEW_CALC_STRING_KEY, FileUtilities.DEFAULT_SPREADSHEET_EXTENSION);
+                createNewFileInputDialog(getString(R.string.new_spreadsheet) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, "application/vnd.oasis.opendocument.spreadsheet", CREATE_SPREADSHEET_REQUEST_CODE);
                 break;
         }
     }
