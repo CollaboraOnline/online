@@ -13,8 +13,7 @@ MOBILE_TEST_FOLDER = ${abs_srcdir}/integration_tests/mobile
 MOBILE_DATA_FOLDER = ${abs_srcdir}/data/mobile/
 MOBILE_WORKDIR = ${abs_builddir}/workdir/mobile/
 
-ALLOWED_PORTS = 9980 9979 9978 9977 9976 9975 9974 9973 9972 9971 9970
-
+ALLOWED_PORTS = $(shell seq 9900 1 9980)
 FREE_PORT=$(shell node_modules/get-port-cli/cli.js --host=127.0.0.1 $(ALLOWED_PORTS))
 
 if HAVE_LO_PATH
