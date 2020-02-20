@@ -52,7 +52,6 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		// Do mirroring
 		cy.get('#PosSizePropertyPanel')
 			.click();
 
@@ -69,7 +68,6 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#mobile-wizard')
 			.should('be.visible');
 
-		// Do mirroring
 		cy.get('#LinePropertyPanel')
 			.click();
 
