@@ -17,25 +17,27 @@ MOBILE_WORKDIR = ${abs_builddir}/workdir/mobile/
 ALLOWED_PORTS = $(shell seq 9900 1 9980)
 FREE_PORT=$(shell node_modules/get-port-cli/cli.js --host=127.0.0.1 $(ALLOWED_PORTS))
 
+KILL_COMMAND=pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)
+
 if HAVE_LO_PATH
 check-local: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests)
 	$(call run_mobile_tests)
-	@pkill -F $(PID_FILE) || true
+	@$(KILL_COMMAND) || true
 
 check-desktop: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,$(spec))
-	@pkill -F $(PID_FILE) || true
+	@$(KILL_COMMAND) || true
 
 check-mobile: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_mobile_tests,$(spec))
-	@pkill -F $(PID_FILE) || true
+	@$(KILL_COMMAND) || true
 
 run-desktop: @JAILS_PATH@ node_modules
 	$(call start_loolwsd)
@@ -45,7 +47,7 @@ run-desktop: @JAILS_PATH@ node_modules
 	$(CYPRESS_BINARY) open --config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			|| true
-	@pkill -F $(PID_FILE) || true
+	@$(KILL_COMMAND) || true
 
 run-mobile: @JAILS_PATH@ node_modules
 	$(call start_loolwsd)
@@ -55,7 +57,7 @@ run-mobile: @JAILS_PATH@ node_modules
 	$(CYPRESS_BINARY) open --config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
 			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			|| true
-	@pkill -F $(PID_FILE) || true
+	@$(KILL_COMMAND) || true
 
 define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
@@ -91,7 +93,7 @@ define run_desktop_tests
 			--headless \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=${abs_dir}/integration_tests/desktop/$(1)) \
-			|| (@pkill -F $(PID_FILE) && false)
+			|| ($(KILL_COMMAND) && false)
 endef
 
 define run_mobile_tests
@@ -103,7 +105,7 @@ define run_mobile_tests
 			--headless \
 			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
-			|| (@pkill -F $(PID_FILE) && false)
+			|| ($(KILL_COMMAND) && false)
 endef
 
 node_modules:
