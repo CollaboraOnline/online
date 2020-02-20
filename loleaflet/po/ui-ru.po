@@ -439,19 +439,19 @@ msgstr "Сервер столкнулся с ошибкой %0 при анали
 
 #: src/control/Control.ContextMenu.js:131
 msgid "Internal Cut"
-msgstr ""
+msgstr "Вырезать (внутр.)"
 
 #: src/control/Control.ContextMenu.js:134
 msgid "Internal Copy"
-msgstr ""
+msgstr "Копировать (внутр.)"
 
 #: src/control/Control.ContextMenu.js:137
 msgid "Internal Paste"
-msgstr ""
+msgstr "Вставить (внутр.)"
 
 #: src/control/Control.ContextMenu.js:159
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Специальная вставка (внутр.)"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
