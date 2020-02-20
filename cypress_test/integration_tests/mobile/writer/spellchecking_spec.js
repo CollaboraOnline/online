@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Spell checking menu.', function() {
+describe.skip('Spell checking menu.', function() {
 	beforeEach(function() {
 		helper.beforeAllMobile('spellcheck.odt', 'writer');
 
