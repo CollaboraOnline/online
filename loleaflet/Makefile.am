@@ -72,8 +72,9 @@ define npm_source
 endef
 
 NODE_MODULES_SRC =\
-	@braintree/sanitize-url@3.0.0 \
-	l10n-for-node@0.0.1
+	vex-js@4.1.0 \
+	l10n-for-node@0.0.1 \
+	@braintree/sanitize-url@3.0.0
 
 LOLEAFLET_CSS =\
 	$(builddir)/node_modules/select2/dist/css/select2.css \
@@ -122,10 +123,10 @@ NODE_MODULES_JS =\
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
 	node_modules/autolinker/dist/Autolinker.js \
 	node_modules/json-js/json2.js \
-	node_modules/select2/dist/js/select2.js \
-	node_modules/vex-js/dist/js/vex.combined.js
+	node_modules/select2/dist/js/select2.js
 
 LOLEAFLET_LIBS_JS =\
+	vex.combined.js \
 	sanitize-url.js
 
 if !ENABLE_MOBILEAPP
