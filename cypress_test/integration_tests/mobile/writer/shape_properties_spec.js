@@ -139,11 +139,6 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Vertical mirroring', function() {
-		// TODO: The sidebar's content is send twice when opening the mobile
-		// wizard.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
-			return;
-
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
@@ -151,6 +146,10 @@ describe('Change shape properties via mobile wizard.', function() {
 		// Do mirroring
 		cy.get('#PosSizePropertyPanel')
 			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible')
+			.wait(100);
 
 		cy.get('#FlipVertical')
 			.click();
@@ -160,10 +159,6 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Horizontal mirroring', function() {
-		// TODO: The sidebar's content is send twice when opening the mobile
-		// wizard.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
-			return;
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -173,6 +168,10 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#PosSizePropertyPanel')
 			.click();
 
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible')
+			.wait(100);
+
 		cy.get('#FlipHorizontal')
 			.click();
 
@@ -181,17 +180,16 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Trigger moving backward / forward', function() {
-		// TODO: The sidebar's content is send twice when opening the mobile
-		// wizard.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
-			return;
-
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
 		cy.get('#PosSizePropertyPanel')
 			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible')
+			.wait(100);
 
 		// We can't test the result, so we just trigger
 		// the events to catch crashes, consoler errors.
