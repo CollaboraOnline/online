@@ -93,6 +93,9 @@ describe('Apply/modify styles.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
+		cy.get('#applystyle')
+			.should('exist');
+
 		cy.get('#StyleUpdateByExample')
 			.should('not.exist');
 
