@@ -367,7 +367,7 @@ L.Control.MobileWizard = L.Control.extend({
 			var textIdx = this._findIdxInParentById(deck, textName);
 
 			if (stylesIdx >= 0 && this.map.getDocType() === 'spreadsheet')
-			{       // remove rather useless styles panel
+			{       // remove rather useless calc styles panel
 				deck.children.splice(stylesIdx, 1);
 			}
 			else if (stylesIdx >= 0 && textIdx >= 0)
@@ -376,10 +376,15 @@ L.Control.MobileWizard = L.Control.extend({
 				deck.children[textIdx].children[0].children = moveContent.concat(deck.children[textIdx].children[0].children);
 				deck.children.splice(stylesIdx, 1); //remove the styles property
 			}
-			this._removeItems(deck, ['cellbordertype', 'borderlinestyle', 'borderlinecolor',
-						 'editcontour', 'spacingbar', 'linespacing',
-						 'stylenew', 'styleupdate',
-						 'beginarrowstyle', 'endarrowstyle']);
+			var removeItems = ['cellbordertype', 'borderlinestyle', 'borderlinecolor',
+					   'editcontour', 'spacingbar', 'linespacing',
+					   'stylenew', 'styleupdate',
+					   'beginarrowstyle', 'endarrowstyle'];
+
+			if (this.map.getDocType() === 'presentation')
+				removeItems.push('indentfieldbox');
+
+			this._removeItems(deck, removeItems);
 		}
 	},
 
