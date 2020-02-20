@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Calc focus tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.ods', 'calc');
+		helper.beforeAllMobile('focus.ods', 'calc');
 	});
 
 	afterEach(function() {

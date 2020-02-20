@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Pushing bottom toolbar items.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('simple.odt', 'writer');
+		helper.beforeAllMobile('bottom_toolbar.odt', 'writer');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

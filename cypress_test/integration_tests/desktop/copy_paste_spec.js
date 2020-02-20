@@ -4,7 +4,7 @@ var helper = require('../common/helper');
 
 describe('Clipboard operations.', function() {
 	beforeEach(function() {
-		helper.loadTestDoc('simple.odt');
+		helper.loadTestDoc('copy_paste.odt');
 	});
 
 	afterEach(function() {

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Insert objects via insertion wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt', 'writer');
+		helper.beforeAllMobile('insert_object.odt', 'writer');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

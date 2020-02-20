@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Mobile wizard state tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt', 'writer');
+		helper.beforeAllMobile('mobile_wizard_state.odt', 'writer');
 	});
 
 	afterEach(function() {

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Focus tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt', 'writer');
+		helper.beforeAllMobile('focus.odt', 'writer');
 	});
 
 	afterEach(function() {
@@ -151,7 +151,7 @@ describe('Focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	it('Shape related focus.', function() {
+	it.skip('Shape related focus.', function() {
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
 

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe.skip('Spell checking menu.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('spellcheck.odt', 'writer');
+		helper.beforeAllMobile('spellchecking.odt', 'writer');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Impress focus tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odp', 'impress');
+		helper.beforeAllMobile('focus.odp', 'impress');
 	});
 
 	afterEach(function() {

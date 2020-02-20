@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Apply font changes.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('simple.odt', 'writer');
+		helper.beforeAllMobile('apply_font.odt', 'writer');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

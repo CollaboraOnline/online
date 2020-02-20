@@ -9,7 +9,7 @@ describe('Shape operations', function() {
 	});
 
 	it('Insert a simple shape.', function() {
-		helper.loadTestDoc('empty.odt');
+		helper.loadTestDoc('shape_operations.odt');
 
 		// Scroll on the up toolbar
 		cy.get('#toolbar-up .w2ui-scroll-right').click();

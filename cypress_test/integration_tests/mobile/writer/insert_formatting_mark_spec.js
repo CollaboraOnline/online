@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Insert formatting mark via insertion wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('simple.odt', 'writer');
+		helper.beforeAllMobile('insert_formatting_mark.odt', 'writer');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();

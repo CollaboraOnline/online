@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Change shape properties via mobile wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt', 'writer');
+		helper.beforeAllMobile('shape_properties.odt', 'writer');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
@@ -201,7 +201,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'stroke', 'rgb(152,0,0)');
 	});
 
-	it('Change line style', function() {
+	it.skip('Change line style', function() {
 		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;

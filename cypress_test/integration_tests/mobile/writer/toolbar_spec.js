@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Toolbar tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt', 'writer');
+		helper.beforeAllMobile('toolbar.odt', 'writer');
 	});
 
 	afterEach(function() {

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('empty.odt', 'writer');
+		helper.beforeAllMobile('table_properties.odt', 'writer');
 	});
 
 	afterEach(function() {
@@ -55,7 +55,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 
@@ -88,7 +88,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 
@@ -121,7 +121,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 
@@ -154,7 +154,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 
@@ -187,7 +187,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 
@@ -220,7 +220,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 
@@ -254,7 +254,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 
@@ -285,7 +285,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		moveCursorToFirstCell();
 
@@ -317,7 +317,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 
@@ -349,7 +349,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table.odt');
+		before('table_properties2.odt');
 
 		openTablePanel();
 

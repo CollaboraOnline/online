@@ -9,7 +9,7 @@ describe('Example test suit 1', function() {
 	});
 
 	it('Example test case 1', function() {
-		helper.loadTestDoc('simple.odt');
+		helper.loadTestDoc('example.odt');
 
 		// Select a text
 		cy.get('#document-container').dblclick();
