@@ -1,4 +1,5 @@
 # We only directly edit toolbar.js in dist/
+**/js/Autolinker.js
 **/js/json2.js
 **/js/select2.js
 **/js/vex.combined.js

@@ -72,6 +72,7 @@ define npm_source
 endef
 
 NODE_MODULES_SRC =\
+	autolinker@1.4.3 \
 	json-js@1.1.2 \
 	select2@4.0.1 \
 	vex-js@4.1.0 \
@@ -122,10 +123,10 @@ NODE_MODULES_JS =\
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
 	node_modules/jquery-ui/jquery-ui.js \
-	node_modules/smartmenus/dist/jquery.smartmenus.js \
-	node_modules/autolinker/dist/Autolinker.js
+	node_modules/smartmenus/dist/jquery.smartmenus.js
 
 LOLEAFLET_LIBS_JS =\
+	Autolinker.js \
 	json2.js \
 	select2.js \
 	vex.combined.js \
