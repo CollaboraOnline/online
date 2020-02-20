@@ -3,7 +3,7 @@
  * L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
-/* global _ vex brandProductName */
+/* global _ vex brandProductName isAnyVexDialogActive */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -648,6 +648,10 @@ L.Clipboard = L.Class.extend({
 
 	paste: function(ev) {
 		console.log('Paste');
+
+		if (isAnyVexDialogActive() && !this._map.hasFocus())
+			return;
+
 		if (this._map._activeDialog)
 			ev.usePasteKeyEvent = true;
 
