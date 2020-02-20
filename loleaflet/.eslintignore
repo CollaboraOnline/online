@@ -1,4 +1,5 @@
 # We only directly edit toolbar.js in dist/
+**/js/select2.js
 **/js/vex.combined.js
 **/js/sanitize-url.js
 **/js/l10n.js
