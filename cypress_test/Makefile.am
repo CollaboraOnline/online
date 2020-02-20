@@ -2,6 +2,7 @@ if ENABLE_CYPRESS
 
 abs_dir = $(if $(filter $(abs_builddir),$(abs_srcdir)),.,$(abs_srcdir))
 CYPRESS_BINARY = ${abs_builddir}/node_modules/cypress/bin/cypress
+PID_FILE=$(abs_builddir)/loolwsd.pid
 
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = ${abs_srcdir}/integration_tests/desktop
@@ -22,19 +23,19 @@ check-local: @JAILS_PATH@ node_modules
 	$(call start_loolwsd)
 	$(call run_desktop_tests)
 	$(call run_mobile_tests)
-	@pkill loolwsd || true
+	@pkill -F $(PID_FILE) || true
 
 check-desktop: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,$(spec))
-	@pkill loolwsd || true
+	@pkill -F $(PID_FILE) || true
 
 check-mobile: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_mobile_tests,$(spec))
-	@pkill loolwsd || true
+	@pkill -F $(PID_FILE) || true
 
 run-desktop: @JAILS_PATH@ node_modules
 	$(call start_loolwsd)
@@ -44,7 +45,7 @@ run-desktop: @JAILS_PATH@ node_modules
 	$(CYPRESS_BINARY) open --config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			|| true
-	@pkill loolwsd || true
+	@pkill -F $(PID_FILE) || true
 
 run-mobile: @JAILS_PATH@ node_modules
 	$(call start_loolwsd)
@@ -54,7 +55,7 @@ run-mobile: @JAILS_PATH@ node_modules
 	$(CYPRESS_BINARY) open --config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
 			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			|| true
-	@pkill loolwsd || true
+	@pkill -F $(PID_FILE) || true
 
 define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
@@ -65,7 +66,6 @@ define run_JS_error_check
 endef
 
 define start_loolwsd
-	@pkill loolwsd || true
 	@echo "Found available port for testing: $(FREE_PORT)"
 	@echo
 	@echo "Launching loolwsd..."
@@ -76,7 +76,8 @@ define start_loolwsd
 			--disable-ssl \
 			--o:admin_console.username=admin --o:admin_console.password=admin \
 			--o:logging.file[@enable]=true --o:logging.level=trace > /dev/null 2>&1 \
-			--port=$(FREE_PORT) &
+			--port=$(FREE_PORT) \
+			--pidfile=$(PID_FILE) &
 	@node_modules/wait-on/bin/wait-on http://localhost:$(FREE_PORT)
 	@echo
 endef
@@ -90,7 +91,7 @@ define run_desktop_tests
 			--headless \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=${abs_dir}/integration_tests/desktop/$(1)) \
-			|| (pkill loolwsd && false)
+			|| (@pkill -F $(PID_FILE) && false)
 endef
 
 define run_mobile_tests
@@ -102,7 +103,7 @@ define run_mobile_tests
 			--headless \
 			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
-			|| (pkill loolwsd && false)
+			|| (@pkill -F $(PID_FILE) && false)
 endef
 
 node_modules:
