@@ -425,8 +425,9 @@ public class LOActivity extends AppCompatActivity {
     /** When we get the file via a content: URI, we need to put it to a temp file. */
     private boolean copyFileToTemp() {
         ContentResolver contentResolver = getContentResolver();
-        FileChannel inputChannel = null;
-        FileChannel outputChannel = null;
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+
         // CSV files need a .csv suffix to be opened in Calc.
         String suffix = null;
         String intentType = getIntent().getType();
@@ -436,25 +437,24 @@ public class LOActivity extends AppCompatActivity {
 
         try {
             try {
-                AssetFileDescriptor assetFD = contentResolver.openAssetFileDescriptor(getIntent().getData(), "r");
-                if (assetFD == null) {
-                    Log.e(TAG, "couldn't create assetfiledescriptor from " + getIntent().getDataString());
-                    return false;
-                }
-                inputChannel = assetFD.createInputStream().getChannel();
-                mTempFile = File.createTempFile("LibreOffice", suffix, this.getCacheDir());
+                Uri uri = getIntent().getData();
+                inputStream = contentResolver.openInputStream(uri);
 
-                outputChannel = new FileOutputStream(mTempFile).getChannel();
-                long bytesTransferred = 0;
-                // might not  copy all at once, so make sure everything gets copied....
-                while (bytesTransferred < inputChannel.size()) {
-                    bytesTransferred += outputChannel.transferFrom(inputChannel, bytesTransferred, inputChannel.size());
+                mTempFile = File.createTempFile("LibreOffice", suffix, this.getCacheDir());
+                outputStream = new FileOutputStream(mTempFile);
+
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
                 }
-                Log.e(TAG, "Success copying " + bytesTransferred + " bytes");
+                Log.e(TAG, "Success copying from " + uri + " to " + mTempFile);
                 return true;
             } finally {
-                if (inputChannel != null) inputChannel.close();
-                if (outputChannel != null) outputChannel.close();
+                if (inputStream != null)
+                    inputStream.close();
+                if (outputStream != null)
+                    outputStream.close();
             }
         } catch (FileNotFoundException e) {
             return false;
@@ -469,28 +469,26 @@ public class LOActivity extends AppCompatActivity {
             return;
 
         ContentResolver contentResolver = getContentResolver();
-        FileChannel inputChannel = null;
-        FileChannel outputChannel = null;
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
 
         try {
             try {
-                AssetFileDescriptor assetFD = contentResolver.openAssetFileDescriptor(getIntent().getData(), "w");
-                if (assetFD == null) {
-                    Log.e(TAG, "couldn't create assetfiledescriptor from " + getIntent().getDataString());
-                    return;
-                }
-                outputChannel = assetFD.createOutputStream().getChannel();
-                inputChannel = new FileInputStream(mTempFile).getChannel();
+                Uri uri = getIntent().getData();
+                outputStream = contentResolver.openOutputStream(uri);
+                inputStream = new FileInputStream(mTempFile);
 
-                long bytesTransferred = 0;
-                // might not  copy all at once, so make sure everything gets copied....
-                while (bytesTransferred < inputChannel.size()) {
-                    bytesTransferred += outputChannel.transferFrom(inputChannel, bytesTransferred, inputChannel.size());
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
                 }
-                Log.e(TAG, "Success copying " + bytesTransferred + " bytes");
+                Log.e(TAG, "Success copying from " + mTempFile + " to " + uri);
             } finally {
-                if (inputChannel != null) inputChannel.close();
-                if (outputChannel != null) outputChannel.close();
+                if (inputStream != null)
+                    inputStream.close();
+                if (outputStream != null)
+                    outputStream.close();
             }
         } catch (FileNotFoundException e) {
             Log.e(TAG, "file not found: " + e.getMessage());
