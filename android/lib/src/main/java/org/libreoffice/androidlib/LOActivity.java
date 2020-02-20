@@ -532,6 +532,7 @@ public class LOActivity extends AppCompatActivity {
         // Most probably the native part has already got a 'BYE' from
         // finishWithProgress(), but it is actually better to send it twice
         // than never, so let's call it from here too anyway
+        documentLoaded = false;
         postMobileMessageNative("BYE");
     }
 
@@ -620,6 +621,7 @@ public class LOActivity extends AppCompatActivity {
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
+                documentLoaded = false;
                 postMobileMessageNative("BYE");
                 copyTempBackToIntent();
 
