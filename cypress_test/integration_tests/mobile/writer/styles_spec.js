@@ -85,55 +85,6 @@ describe('Apply/modify styles.', function() {
 			.should('have.attr', 'style', 'margin-bottom: 0in; line-height: 100%');
 	});
 
-	it('Modify existing style.', function() {
-		// Apply Title style
-		applyStyle('Title');
-
-		helper.copyTextToClipboard();
-
-		cy.get('#copy-paste-container p font')
-			.should('have.attr', 'face', 'Liberation Sans, sans-serif');
-		cy.get('#copy-paste-container p font font')
-			.should('have.attr', 'style', 'font-size: 28pt');
-
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
-
-		// Apply italic
-		cy.get('#Italic')
-			.click();
-
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		helper.copyTextToClipboard();
-
-		cy.get('#copy-paste-container p i')
-			.should('exist');
-
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
-
-		cy.get('#StyleUpdateByExample')
-			.click();
-
-		// Clear formatting
-		applyStyle('Clear formatting');
-
-		// Apply Title style with italic font
-		applyStyle('Title');
-
-		helper.copyTextToClipboard();
-
-		cy.get('#copy-paste-container p i')
-			.should('exist');
-	});
-
 	it('New style item is hidden.', function() {
 		// New style item opens a tunneled dialog
 		// what we try to avoid.
@@ -143,7 +94,7 @@ describe('Apply/modify styles.', function() {
 			.click();
 
 		cy.get('#StyleUpdateByExample')
-			.should('exist');
+			.should('not.exist');
 
 		cy.get('#StyleNewByExample')
 			.should('not.exist');

@@ -335,7 +335,7 @@ L.Control.MobileWizard = L.Control.extend({
 				else if (data.id === 'insertshape') {
 					$('#mobile-wizard').addClass('shapeswizard');
 				}
-				if (this.map .getDocType() === 'spreadsheet')
+				if (this.map.getDocType() === 'spreadsheet')
 					$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
 				else
 					$('#mobile-wizard').css('top', $('#document-container').css('top'));
@@ -365,13 +365,21 @@ L.Control.MobileWizard = L.Control.extend({
 			var stylesIdx = this._findIdxInParentById(deck, 'StylesPropertyPanel');
 			var textName = 'TextPropertyPanel';
 			var textIdx = this._findIdxInParentById(deck, textName);
-			if (stylesIdx >= 0 && textIdx >= 0)
+
+			if (stylesIdx >= 0 && this.map.getDocType() === 'spreadsheet')
+			{       // remove rather useless styles panel
+				deck.children.splice(stylesIdx, 1);
+			}
+			else if (stylesIdx >= 0 && textIdx >= 0)
 			{
 				var moveContent = deck.children[stylesIdx].children[0].children;
 				deck.children[textIdx].children[0].children = moveContent.concat(deck.children[textIdx].children[0].children);
 				deck.children.splice(stylesIdx, 1); //remove the styles property
 			}
-			this._removeItems(deck, ['cellbordertype', 'borderlinestyle', 'borderlinecolor', 'editcontour', 'spacingbar', 'linespacing', 'stylenew', 'beginarrowstyle', 'endarrowstyle']);
+			this._removeItems(deck, ['cellbordertype', 'borderlinestyle', 'borderlinecolor',
+						 'editcontour', 'spacingbar', 'linespacing',
+						 'stylenew', 'styleupdate',
+						 'beginarrowstyle', 'endarrowstyle']);
 		}
 	},
 
