@@ -20,6 +20,9 @@ describe('Apply paragraph properties.', function() {
 		// Open paragraph properties
 		cy.get('#Paragraph')
 			.click();
+
+		cy.get('#Paragraph')
+			.should('have.class', 'selected');
 	});
 
 	afterEach(function() {
