@@ -1093,8 +1093,17 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onHyperlinkClickedMsg: function (textMsg) {
-		var link = textMsg.substring(18);
-		this._map.fire('hyperlinkclicked', {url: link});
+		var link = null;
+		var coords = null;
+
+		if (textMsg.includes('coordinates')) {
+			var coordpos = textMsg.indexOf(' coordinates');
+			link = textMsg.substring(18, coordpos);
+			coords = textMsg.substring(coordpos+12);
+		} else
+			link = textMsg.substring(18);
+
+		this._map.fire('hyperlinkclicked', {url: link, coordinates: coords});
 	},
 
 	_onInvalidateCursorMsg: function (textMsg) {

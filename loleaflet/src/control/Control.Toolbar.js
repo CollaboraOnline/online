@@ -2609,7 +2609,25 @@ function setupToolbar(e) {
 	});
 
 	map.on('hyperlinkclicked', function (e) {
-		map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
+		if (e.url) {
+			if (e.coordinates) {
+				var strTwips = e.coordinates.match(/\d+/g);
+				var topLeftTwips = new L.Point(parseInt(strTwips[6]), parseInt(strTwips[1]));
+				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+				var bottomRightTwips = topLeftTwips.add(offset);
+				var cellCursor = new L.LatLngBounds(
+								map._docLayer._twipsToLatLng(topLeftTwips, map.getZoom()),
+								map._docLayer._twipsToLatLng(bottomRightTwips, map.getZoom()));
+				//click pos tweak
+				cellCursor._northEast.lng = cellCursor._southWest.lng;
+				map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
+				.setContent('<a href="' + e.url + '" target="_blank">' + e.url + '</a>')
+				.setLatLng(cellCursor._northEast)
+				.openOn(map);
+			} else {
+				map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
+			}
+		}
 	});
 
 	map.on('zoomend', function () {
