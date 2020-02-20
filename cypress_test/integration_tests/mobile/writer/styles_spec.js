@@ -85,10 +85,7 @@ describe('Apply/modify styles.', function() {
 			.should('have.attr', 'style', 'margin-bottom: 0in; line-height: 100%');
 	});
 
-	it('New style item is hidden.', function() {
-		// New style item opens a tunneled dialog
-		// what we try to avoid.
-
+	it('New style and update style items are hidden.', function() {
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
