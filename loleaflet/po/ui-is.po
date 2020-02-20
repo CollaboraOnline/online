@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-18 23:51+0100\n"
+"POT-Creation-Date: 2020-02-20 15:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -181,14 +181,14 @@ msgstr "Ertu viss um að þú viljir ljúka þessari setu?"
 
 #: admin/src/AdminSocketOverview.js:104 admin/src/AdminSocketSettings.js:36
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
 msgstr "Í lagi"
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
 #: src/control/Control.Menubar.js:770 src/control/Control.Tabs.js:75
-#: src/layer/marker/Annotation.js:181
+#: src/control/Control.Tabs.js:92 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "Hætta við"
 
@@ -757,7 +757,7 @@ msgstr "Hægri spássía"
 msgid "Downloading..."
 msgstr "Sæki..."
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1193
+#: src/control/Toolbar.js:103 src/map/Map.js:1206
 msgid "Saving..."
 msgstr "Vista..."
 
@@ -785,31 +785,31 @@ msgstr ""
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Úbbs, það kom upp villa við að tengjast LibreOffice Online : "
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:280
 msgid "Unsupported server version."
 msgstr "Óstudd útgáfa vefþjóns."
 
-#: src/core/Socket.js:334
+#: src/core/Socket.js:336
 msgid "Session terminated by document owner"
 msgstr "Setu er lokað af eiganda skjals"
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:340
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Óvirkt skjal - smelltu til að endurhlaða og halda áfram með breytingar"
 
-#: src/core/Socket.js:345
+#: src/core/Socket.js:347
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Slökkt verður á kerfi vegna viðhalds (sjálfvirk vistun)"
 
-#: src/core/Socket.js:349
+#: src/core/Socket.js:351
 msgid "Oops, there is a problem connecting the document"
 msgstr "Úbbs, það kom upp villa við að tengjast skjalinu"
 
-#: src/core/Socket.js:353
+#: src/core/Socket.js:355
 msgid "Server is recycling and will be available shortly"
 msgstr "Þjónninn er að keyra sig upp og verður tiltækur innan skamms"
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:387
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -817,7 +817,7 @@ msgstr ""
 "Skjali hefur verið breytt í geymslu. Hleð inn nýja skjalinu. Útgáfan þín er "
 "tiltæk sem sérstök skráarútgáfa."
 
-#: src/core/Socket.js:391
+#: src/core/Socket.js:393
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -825,7 +825,7 @@ msgstr ""
 "Endurheimti eldri útgáfu. Allar óvistaðar breytingar verða tiltækar í "
 "vinnsluferilskrá"
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:515
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -833,40 +833,40 @@ msgstr ""
 "Skjali hefur verið breytt í gagnageymslu. Hvað  viltu gera við óvistaðar "
 "breytingar?"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:520
 msgid "Discard"
 msgstr "Henda"
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:525
 msgid "Overwrite"
 msgstr "Skrifa yfir"
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:530
 msgid "Save to new file"
 msgstr "Vista í nýja skrá"
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:601
 msgid "Document requires password to view."
 msgstr "Krafist er lykilorðs til að hægt sé að skoða skjalið."
 
-#: src/core/Socket.js:602
+#: src/core/Socket.js:604
 msgid "Document requires password to modify."
 msgstr "Krafist er lykilorðs til að hægt sé að breyta skjalinu."
 
-#: src/core/Socket.js:604
+#: src/core/Socket.js:606
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 "Ýttu á \"Hætta við\" til að opna þetta skjal einungis lesanlegt (skrifvarið)."
 
-#: src/core/Socket.js:608
+#: src/core/Socket.js:610
 msgid "Wrong password provided. Please try again."
 msgstr "Rangt lykilorð, reyndu aftur."
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:726
 msgid "Connecting..."
 msgstr "Tengist..."
 
-#: src/core/Socket.js:884
+#: src/core/Socket.js:886
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1035,11 +1035,21 @@ msgstr "Fjarlægja"
 msgid "Initializing..."
 msgstr "Frumstilli..."
 
-#: src/map/Map.js:1052
+#: src/map/Map.js:344
+#, javascript-format
+msgid "%d seconds ago"
+msgstr "fyrir %d sekúndum síðan"
+
+#: src/map/Map.js:347
+#, javascript-format
+msgid "%d minutes ago"
+msgstr "fyrir %d mínútum síðan"
+
+#: src/map/Map.js:1065
 msgid "Inactive document - please click to resume editing"
 msgstr "Óvirkt skjal - smelltu til að halda áfram með breytingar"
 
-#: src/map/Map.js:1196
+#: src/map/Map.js:1209
 msgid "Loading..."
 msgstr "Hleð inn..."
 

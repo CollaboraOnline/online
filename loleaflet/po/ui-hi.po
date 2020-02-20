@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-18 23:51+0100\n"
+"POT-Creation-Date: 2020-02-20 15:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,14 +180,14 @@ msgstr "क्या आप निश्चित हैं कि आप इस
 
 #: admin/src/AdminSocketOverview.js:104 admin/src/AdminSocketSettings.js:36
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
 #: src/control/Control.Menubar.js:770 src/control/Control.Tabs.js:75
-#: src/layer/marker/Annotation.js:181
+#: src/control/Control.Tabs.js:92 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "रद्द करें"
 
@@ -757,7 +757,7 @@ msgstr ""
 msgid "Downloading..."
 msgstr "डाउनलोड कीया जा रहा है"
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1193
+#: src/control/Toolbar.js:103 src/map/Map.js:1206
 msgid "Saving..."
 msgstr "सहेजा जा रहा है..."
 
@@ -781,31 +781,31 @@ msgstr ""
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "ओह, लिब्रेऑफिस ऑनलाइन को संपर्क करने में कुछ बाधा हो रही है "
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:280
 msgid "Unsupported server version."
 msgstr "असमर्थित सर्वर संस्करण"
 
-#: src/core/Socket.js:334
+#: src/core/Socket.js:336
 msgid "Session terminated by document owner"
 msgstr "सत्र दस्तावेज़ मालिक द्वारा खत्म कर दिया गया है"
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:340
 msgid "Idle document - please click to reload and resume editing"
 msgstr "निष्क्रिय दस्तावेज़ - फिर लोड करने आैर दुबारा संपादन करने के लिये क्लिक करें।"
 
-#: src/core/Socket.js:345
+#: src/core/Socket.js:347
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "सर्वर रखरखाव के लिये बंद हो रहा है (अपने आप सहेज दिया जायेगा)"
 
-#: src/core/Socket.js:349
+#: src/core/Socket.js:351
 msgid "Oops, there is a problem connecting the document"
 msgstr "उफ़, दस्तावेज़ से संपर्क करने में कुछ गडबड है।"
 
-#: src/core/Socket.js:353
+#: src/core/Socket.js:355
 msgid "Server is recycling and will be available shortly"
 msgstr "सर्वर पुनरावृत्त हो रहा है आैर जल्द ही उपलब्ध होगा।"
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:387
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -813,52 +813,52 @@ msgstr ""
 "दस्तावेज़ भंडारण में बदल गया है। अब नया दस्तावेज़ खोला जा रहा है। आपका संस्करण संशोधन के रूप "
 "में उपलब्ध है।"
 
-#: src/core/Socket.js:391
+#: src/core/Socket.js:393
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
 "पुराना संशोधन खोला जा रहा है। कोइ भी ना सहेजा हुआ बदलाव संस्करण इतिहास मे उपलब्ध रहेगा।"
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:515
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:520
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:525
 msgid "Overwrite"
 msgstr ""
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:530
 msgid "Save to new file"
 msgstr ""
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:601
 msgid "Document requires password to view."
 msgstr "दस्तावेज़ को खोलने के लिये कूटशब्द चाहिये।"
 
-#: src/core/Socket.js:602
+#: src/core/Socket.js:604
 msgid "Document requires password to modify."
 msgstr "दस्तावेज़ को बदलने के लिये कूटशब्द चाहिये।"
 
-#: src/core/Socket.js:604
+#: src/core/Socket.js:606
 msgid "Hit Cancel to open in view-only mode."
 msgstr "केवल देकनें के लिये रद्द दबायें"
 
-#: src/core/Socket.js:608
+#: src/core/Socket.js:610
 msgid "Wrong password provided. Please try again."
 msgstr "गलत कूटशब्द दिया गया है। कृप्या फिर प्रयास करें।"
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:726
 msgid "Connecting..."
 msgstr "सर्वर से संपर्क हो रहा हैं ..."
 
-#: src/core/Socket.js:884
+#: src/core/Socket.js:886
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1016,11 +1016,21 @@ msgstr "मिटाएँ"
 msgid "Initializing..."
 msgstr "आरंभ हो रहा है..."
 
-#: src/map/Map.js:1052
+#: src/map/Map.js:344
+#, javascript-format
+msgid "%d seconds ago"
+msgstr ""
+
+#: src/map/Map.js:347
+#, javascript-format
+msgid "%d minutes ago"
+msgstr ""
+
+#: src/map/Map.js:1065
 msgid "Inactive document - please click to resume editing"
 msgstr "निष्क्रिय दस्तावेज़ - संपादन करने के लिये कृप्या क्लिक करें।"
 
-#: src/map/Map.js:1196
+#: src/map/Map.js:1209
 msgid "Loading..."
 msgstr "लोड कर रहा है..."
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-18 23:51+0100\n"
+"POT-Creation-Date: 2020-02-20 15:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -181,14 +181,14 @@ msgstr "Er du sikker på at du vil avslutte denne økten?"
 
 #: admin/src/AdminSocketOverview.js:104 admin/src/AdminSocketSettings.js:36
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
 #: src/control/Control.Menubar.js:770 src/control/Control.Tabs.js:75
-#: src/layer/marker/Annotation.js:181
+#: src/control/Control.Tabs.js:92 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -756,7 +756,7 @@ msgstr "Høyre marg"
 msgid "Downloading..."
 msgstr "Laster ned …"
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1193
+#: src/control/Toolbar.js:103 src/map/Map.js:1206
 msgid "Saving..."
 msgstr "Lagrer..."
 
@@ -785,31 +785,31 @@ msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr ""
 "Uff. Det har oppstått et problem med tilkoblingen til LibreOffice Online:  "
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:280
 msgid "Unsupported server version."
 msgstr "Denne serverversjonen støttes ikke"
 
-#: src/core/Socket.js:334
+#: src/core/Socket.js:336
 msgid "Session terminated by document owner"
 msgstr "Sesjonen er avsluttet av dokumenteier."
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:340
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Inaktivt dokument, vennligst klikk for å fortsette redigering"
 
-#: src/core/Socket.js:345
+#: src/core/Socket.js:347
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Tjeneren tas ned for vedlikehold (autolagring)"
 
-#: src/core/Socket.js:349
+#: src/core/Socket.js:351
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oops, problem med å koble til dokumentet"
 
-#: src/core/Socket.js:353
+#: src/core/Socket.js:355
 msgid "Server is recycling and will be available shortly"
 msgstr "Tjeneren starter opp og vil snart være tilgjengelig"
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:387
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -817,7 +817,7 @@ msgstr ""
 "Dokumentet har blitt endret på tjeneren. Laster det nye dokumentet. Din "
 "versjon er tilgjengelig som en revisjon."
 
-#: src/core/Socket.js:391
+#: src/core/Socket.js:393
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -825,7 +825,7 @@ msgstr ""
 "Gjenoppretter en eldre versjon. Alle endringer som ikke er lagret er "
 "tilgjengelige i versjonsloggen"
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:515
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -833,39 +833,39 @@ msgstr ""
 "Dokumentet i lageret er endret. Hva vil du gjøre med endringene som ikke er "
 "lagret?"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:520
 msgid "Discard"
 msgstr "Forkast"
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:525
 msgid "Overwrite"
 msgstr "Overskriv"
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:530
 msgid "Save to new file"
 msgstr "Lagre til ny fil"
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:601
 msgid "Document requires password to view."
 msgstr "Passord kreves for å se dokumentet."
 
-#: src/core/Socket.js:602
+#: src/core/Socket.js:604
 msgid "Document requires password to modify."
 msgstr "Passord kreves for å endre dokumentet."
 
-#: src/core/Socket.js:604
+#: src/core/Socket.js:606
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Trykk avbryt for å åpne som skrivebeskyttet."
 
-#: src/core/Socket.js:608
+#: src/core/Socket.js:610
 msgid "Wrong password provided. Please try again."
 msgstr "Feil passord. Prøv igjen:"
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:726
 msgid "Connecting..."
 msgstr "Kobler til …"
 
-#: src/core/Socket.js:884
+#: src/core/Socket.js:886
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1029,11 +1029,21 @@ msgstr "Slett"
 msgid "Initializing..."
 msgstr "Klargjør …"
 
-#: src/map/Map.js:1052
+#: src/map/Map.js:344
+#, javascript-format
+msgid "%d seconds ago"
+msgstr "%d sekunder siden"
+
+#: src/map/Map.js:347
+#, javascript-format
+msgid "%d minutes ago"
+msgstr "%d minutter siden"
+
+#: src/map/Map.js:1065
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dkument, vennligs klikk for å fortsette redigering"
 
-#: src/map/Map.js:1196
+#: src/map/Map.js:1209
 msgid "Loading..."
 msgstr "Laster …"
 

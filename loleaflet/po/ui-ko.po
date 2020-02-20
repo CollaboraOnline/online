@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-18 23:51+0100\n"
+"POT-Creation-Date: 2020-02-20 15:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,14 +180,14 @@ msgstr "이 세션을 정말 종료하겠습니까?"
 
 #: admin/src/AdminSocketOverview.js:104 admin/src/AdminSocketSettings.js:36
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
 #: src/control/Control.Menubar.js:770 src/control/Control.Tabs.js:75
-#: src/layer/marker/Annotation.js:181
+#: src/control/Control.Tabs.js:92 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "취소"
 
@@ -756,7 +756,7 @@ msgstr "오른쪽 여백"
 msgid "Downloading..."
 msgstr "내려 받는 중..."
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1193
+#: src/control/Toolbar.js:103 src/map/Map.js:1206
 msgid "Saving..."
 msgstr "저장 중..."
 
@@ -784,31 +784,31 @@ msgstr ""
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "리브레오피스 온라인에 연결하는데 문제가 발생하였습니다. : "
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:280
 msgid "Unsupported server version."
 msgstr "지원하지 않는 서버 버전"
 
-#: src/core/Socket.js:334
+#: src/core/Socket.js:336
 msgid "Session terminated by document owner"
 msgstr "문서 소유자에 의해 세션이 만료되었습니다."
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:340
 msgid "Idle document - please click to reload and resume editing"
 msgstr "대기중인 문서 - 편집을 계속하려면 클릭하십시오.(새로 고침됨)"
 
-#: src/core/Socket.js:345
+#: src/core/Socket.js:347
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "유지보수를 위해 서버가 종료됩니다.(자동 저장됨)"
 
-#: src/core/Socket.js:349
+#: src/core/Socket.js:351
 msgid "Oops, there is a problem connecting the document"
 msgstr "문서를 여는데 문제가 발생했습니다."
 
-#: src/core/Socket.js:353
+#: src/core/Socket.js:355
 msgid "Server is recycling and will be available shortly"
 msgstr "서버를 재부팅하는 중으로 곧 사용이 가능합니다."
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:387
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -816,7 +816,7 @@ msgstr ""
 "저장소의 문서가 변경되었습니다. 새 문서를 불러 옵니다. 작업한 내용은 개정 이"
 "력에서 확인할 수 있습니다."
 
-#: src/core/Socket.js:391
+#: src/core/Socket.js:393
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -824,46 +824,46 @@ msgstr ""
 "이전 버전으로 복구합니다. 저장되지 않은 변경 사항은 개정 내역에서 확인할 수 "
 "있습니다."
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:515
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 "저장소에 있는 문서가 변경되었습니다. 변경 사항을 어떻게 처리하겠습니까?"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:520
 msgid "Discard"
 msgstr "버리기"
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:525
 msgid "Overwrite"
 msgstr "덮어쓰기"
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:530
 msgid "Save to new file"
 msgstr "새 파일로 저장"
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:601
 msgid "Document requires password to view."
 msgstr "문서를 보려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:602
+#: src/core/Socket.js:604
 msgid "Document requires password to modify."
 msgstr "문서를 수정하려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:604
+#: src/core/Socket.js:606
 msgid "Hit Cancel to open in view-only mode."
 msgstr "보기 전용 모드로 열려면 [취소]를 클릭하십시오."
 
-#: src/core/Socket.js:608
+#: src/core/Socket.js:610
 msgid "Wrong password provided. Please try again."
 msgstr "암호가 틀렸습니다. 다시 시도하십시오"
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:726
 msgid "Connecting..."
 msgstr "연결하는 중.."
 
-#: src/core/Socket.js:884
+#: src/core/Socket.js:886
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1027,11 +1027,21 @@ msgstr "제거하기"
 msgid "Initializing..."
 msgstr "초기화하는 중..."
 
-#: src/map/Map.js:1052
+#: src/map/Map.js:344
+#, javascript-format
+msgid "%d seconds ago"
+msgstr "%d 초 전"
+
+#: src/map/Map.js:347
+#, javascript-format
+msgid "%d minutes ago"
+msgstr "%d 분 전"
+
+#: src/map/Map.js:1065
 msgid "Inactive document - please click to resume editing"
 msgstr "비활성화된 문서 - 편집을 계속하려면 클릭하십시오."
 
-#: src/map/Map.js:1196
+#: src/map/Map.js:1209
 msgid "Loading..."
 msgstr "불러오는 중..."
 

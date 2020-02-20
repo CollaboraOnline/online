@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-18 23:51+0100\n"
+"POT-Creation-Date: 2020-02-20 15:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -184,14 +184,14 @@ msgstr "Biztosan be szeretné zárni ezt a munkamenetet?"
 
 #: admin/src/AdminSocketOverview.js:104 admin/src/AdminSocketSettings.js:36
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
-#: src/control/Control.Tabs.js:74
+#: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
 #: src/control/Control.Menubar.js:770 src/control/Control.Tabs.js:75
-#: src/layer/marker/Annotation.js:181
+#: src/control/Control.Tabs.js:92 src/layer/marker/Annotation.js:181
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -761,7 +761,7 @@ msgstr "Jobb margó"
 msgid "Downloading..."
 msgstr "Letöltés…"
 
-#: src/control/Toolbar.js:103 src/map/Map.js:1193
+#: src/control/Toolbar.js:103 src/map/Map.js:1206
 msgid "Saving..."
 msgstr "Mentés…"
 
@@ -789,32 +789,32 @@ msgstr ""
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Probléma történt a LibreOffice Online-hoz kapcsolódáskor: "
 
-#: src/core/Socket.js:278
+#: src/core/Socket.js:280
 msgid "Unsupported server version."
 msgstr "Nem támogatott kiszolgálóverzió."
 
-#: src/core/Socket.js:334
+#: src/core/Socket.js:336
 msgid "Session terminated by document owner"
 msgstr "A dokumentum tulajdonosa bezárta a munkamenetet "
 
-#: src/core/Socket.js:338
+#: src/core/Socket.js:340
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Inaktív dokumentum – kattintson az újratöltéshez és szerkesztés folytatásához"
 
-#: src/core/Socket.js:345
+#: src/core/Socket.js:347
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "A kiszolgáló karbantartásra leáll (automatikus mentés)"
 
-#: src/core/Socket.js:349
+#: src/core/Socket.js:351
 msgid "Oops, there is a problem connecting the document"
 msgstr "Probléma történt a dokumentumhoz kapcsolódás során."
 
-#: src/core/Socket.js:353
+#: src/core/Socket.js:355
 msgid "Server is recycling and will be available shortly"
 msgstr "A kiszolgáló éppen újraindul, hamarosan elérhető lesz."
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:387
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -822,7 +822,7 @@ msgstr ""
 "A dokumentum megváltozott a tárhelyen. Az új dokumentum fog betöltődni. Az "
 "Ön verziója egy korábbi állapotként lesz elérhető."
 
-#: src/core/Socket.js:391
+#: src/core/Socket.js:393
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -830,47 +830,47 @@ msgstr ""
 "Régebbi változat visszaállítása. A nem mentett változtatások a "
 "verzióelőzményekben meglesznek."
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:515
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 "A dokumentum megváltozott a tárhelyen. Mi legyen a nem mentett változásokkal?"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:520
 msgid "Discard"
 msgstr "Elvetés"
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:525
 msgid "Overwrite"
 msgstr "Felülírás"
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:530
 msgid "Save to new file"
 msgstr "Új fájlba mentés"
 
-#: src/core/Socket.js:599
+#: src/core/Socket.js:601
 msgid "Document requires password to view."
 msgstr "A dokumentum megnyitásához jelszó szükséges."
 
-#: src/core/Socket.js:602
+#: src/core/Socket.js:604
 msgid "Document requires password to modify."
 msgstr "A dokumentum módosításához jelszó szükséges."
 
-#: src/core/Socket.js:604
+#: src/core/Socket.js:606
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 "A Mégse gombra kattintva a dokumentum csak olvasható módban fog megnyílni."
 
-#: src/core/Socket.js:608
+#: src/core/Socket.js:610
 msgid "Wrong password provided. Please try again."
 msgstr "A megadott jelszó nem jó. Próbálja újra."
 
-#: src/core/Socket.js:724
+#: src/core/Socket.js:726
 msgid "Connecting..."
 msgstr "Kapcsolódás..."
 
-#: src/core/Socket.js:884
+#: src/core/Socket.js:886
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1041,11 +1041,21 @@ msgstr "Eltávolítás"
 msgid "Initializing..."
 msgstr "Előkészítés…"
 
-#: src/map/Map.js:1052
+#: src/map/Map.js:344
+#, javascript-format
+msgid "%d seconds ago"
+msgstr "%d másodperce"
+
+#: src/map/Map.js:347
+#, javascript-format
+msgid "%d minutes ago"
+msgstr "%d perce"
+
+#: src/map/Map.js:1065
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktív dokumentum – kattintson a szerkesztés folytatásához"
 
-#: src/map/Map.js:1196
+#: src/map/Map.js:1209
 msgid "Loading..."
 msgstr "Betöltés…"
 
