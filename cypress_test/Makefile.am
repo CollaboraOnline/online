@@ -13,6 +13,10 @@ MOBILE_TEST_FOLDER = ${abs_srcdir}/integration_tests/mobile
 MOBILE_DATA_FOLDER = ${abs_srcdir}/data/mobile/
 MOBILE_WORKDIR = ${abs_builddir}/workdir/mobile/
 
+ALLOWED_PORTS = 9980 9979 9978 9977 9976 9975 9974 9973 9972 9971 9970
+
+FREE_PORT=$(shell node_modules/get-port-cli/cli.js --host=127.0.0.1 $(ALLOWED_PORTS))
+
 if HAVE_LO_PATH
 check-local: @JAILS_PATH@ node_modules
 	$(call run_JS_error_check)
@@ -39,7 +43,7 @@ run-desktop: @JAILS_PATH@ node_modules
 	@echo "Open cypress with desktop tests..."
 	@echo
 	$(CYPRESS_BINARY) open --config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
-			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
+			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			|| true
 	@pkill loolwsd || true
 
@@ -49,7 +53,7 @@ run-mobile: @JAILS_PATH@ node_modules
 	@echo "Open cypress with mobile tests..."
 	@echo
 	$(CYPRESS_BINARY) open --config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
-			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
+			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			|| true
 	@pkill loolwsd || true
 
@@ -63,15 +67,18 @@ endef
 
 define start_loolwsd
 	@pkill loolwsd || true
-	@echo "Launching loolwsd for testing..."
+	@echo "Found available port for testing: $(FREE_PORT)"
+	@echo
+	@echo "Launching loolwsd..."
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@echo
 	../loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			--disable-ssl \
 			--o:admin_console.username=admin --o:admin_console.password=admin \
-			--o:logging.file[@enable]=true --o:logging.level=trace > /dev/null 2>&1 &
-	@node_modules/wait-on/bin/wait-on http://localhost:9980
+			--o:logging.file[@enable]=true --o:logging.level=trace > /dev/null 2>&1 \
+			--port=$(FREE_PORT) &
+	@node_modules/wait-on/bin/wait-on http://localhost:$(FREE_PORT)
 	@echo
 endef
 
@@ -82,7 +89,7 @@ define run_desktop_tests
 	$(CYPRESS_BINARY) run --browser $(CHROME) \
 			--config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
 			--headless \
-			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
+			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=${abs_dir}/integration_tests/desktop/$(1)) \
 			|| (pkill loolwsd && false)
 endef
@@ -94,7 +101,7 @@ define run_mobile_tests
 	$(CYPRESS_BINARY) run --browser $(CHROME) \
 			--config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
 			--headless \
-			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH) \
+			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
 			|| (pkill loolwsd && false)
 endef

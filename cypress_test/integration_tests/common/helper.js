@@ -23,12 +23,16 @@ function loadTestDoc(fileName, subFolder, mobile) {
 	// Open test document
 	var URI;
 	if (subFolder === undefined) {
-		URI = 'http://localhost:9980/loleaflet/' +
+		URI = 'http://localhost:'+
+			Cypress.env('SERVER_PORT') +
+			'/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/loleaflet.html?lang=en-US&file_path=file://' +
 			Cypress.env('WORKDIR') + fileName;
 	} else {
-		URI = 'http://localhost:9980/loleaflet/' +
+		URI = 'http://localhost:'+
+			Cypress.env('SERVER_PORT') +
+			'/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/loleaflet.html?lang=en-US&file_path=file://' +
 			Cypress.env('WORKDIR') + subFolder + '/' + fileName;
@@ -147,7 +151,9 @@ function beforeAllMobile(fileName, subFolder) {
 
 function afterAll() {
 	// Make sure that the document is closed
-	cy.visit('http://admin:admin@localhost:9980/loleaflet/dist/admin/admin.html');
+	cy.visit('http://admin:admin@localhost:' +
+			Cypress.env('SERVER_PORT') +
+			'/loleaflet/dist/admin/admin.html');
 	cy.get('#doclist')
 		.should('exist');
 	cy.get('#doclist tr')
