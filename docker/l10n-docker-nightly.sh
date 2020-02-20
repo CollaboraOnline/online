@@ -13,6 +13,7 @@
 # * LIBREOFFICE_BUILD_TARGET - which make target to run (in core repo)
 # * ONLINE_EXTRA_BUILD_OPTIONS - extra build options for online
 # * NO_DOCKER_IMAGE - if set, don't build the docker image itself, just do all the preps
+# * NO_DOCKER_PUSH - don't push to docker hub
 
 # check we can sudo without asking a pwd
 echo "Trying if sudo works without a password"
@@ -101,6 +102,9 @@ if [ -z "$NO_DOCKER_IMAGE" ]; then
   cd "$SRCDIR"
   docker build --no-cache -t $DOCKER_HUB_REPO:$DOCKER_HUB_TAG . || exit 1
   docker push $DOCKER_HUB_REPO:$DOCKER_HUB_TAG || exit 1
+  if [ -z "$NO_DOCKER_PUSH" ]; then
+    docker push $DOCKER_HUB_REPO:$DOCKER_HUB_TAG || exit 1
+  fi;
 else
   echo "Skipping docker image build"
 fi;
