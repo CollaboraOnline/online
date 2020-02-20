@@ -399,7 +399,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_removeItems: function (data, items) {
 		if (data.children) {
-			for (var i = 0; i < data.children.length; i++) {
+			for (var i = 0; i < data.children.length;) {
 				var childRemoved = false;
 				for (var j = 0; j < items.length; j++) {
 					if (data.children[i].id === items[j]) {
@@ -408,10 +408,12 @@ L.Control.MobileWizard = L.Control.extend({
 						break;
 					}
 				}
-				if (childRemoved && i > 0)
-					i = i - 1;
-				if (data.children[i])
-					this._removeItems(data.children[i], items);
+				if (!childRemoved)
+				{
+					if (data.children[i])
+						this._removeItems(data.children[i], items);
+					i++;
+				}
 			}
 		}
 	},
