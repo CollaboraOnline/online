@@ -138,12 +138,7 @@ L.Socket = L.Class.extend({
 		}
 
 		if (socketState === 1) {
-			this.socket.send(msg);
-			// Only attempt to log text frames, not binary ones.
-			if (typeof msg === 'string') {
-				L.Log.log(msg, L.OUTGOING, coords);
-				this._logSocket('OUTGOING', msg);
-			}
+			this._doSend(msg);
 		}
 		else {
 			// push message while trying to connect socket again.
