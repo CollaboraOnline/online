@@ -59,6 +59,10 @@ L.Control.LokDialog = L.Control.extend({
 
 	dialogIdPrefix: 'lokdialog-',
 
+	hasDialogInMobilePanelOpened: function() {
+		return window.mobileDialogId !== undefined;
+	},
+
 	onPan: function (ev) {
 		if (!draggedObject)
 			return;
@@ -289,7 +293,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		if (e.action === 'created') {
-			if (e.winType === 'dialog') {
+			if (e.winType === 'dialog' && !window.mode.isMobile()) {
 				// When left/top are invalid, the dialog shows in the center.
 				this._launchDialog(e.id, left, top, width, height, e.title);
 			} else if (e.winType === 'calc-input-win') {
@@ -335,7 +339,17 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		// All other callbacks doen't make sense without an active dialog.
-		if (!(this._isOpen(e.id) || this._getParentId(e.id)))
+		if (!(this._isOpen(e.id) || this._getParentId(e.id))) {
+			if (e.action == 'close' && window.mobileDialogId == e.id) {
+				window.mobileDialogId = undefined;
+				this._map.fire('closemobilewizard');
+			}
+
+			return;
+		}
+
+		// We don't want dialogs and sidebar on smartphones, only calc input window is allowed
+		if (window.mode.isMobile() && e.winType !== 'calc-input-win' && !this.isCalcInputBar(e.id))
 			return;
 
 		if (e.action === 'invalidate') {
@@ -1400,6 +1414,9 @@ L.Control.LokDialog = L.Control.extend({
 			if (!this._isSidebar(dialogId) && !this.isCalcInputBar(dialogId)) {
 				this._onDialogClose(dialogId, true);
 			}
+		}
+		if (this.hasDialogInMobilePanelOpened()) {
+			this._onDialogClose(window.mobileDialogId, true);
 		}
 	},
 

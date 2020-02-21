@@ -93,6 +93,12 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_hideWizard: function() {
+		// dialog
+		if (this.map.dialog.hasDialogInMobilePanelOpened()) {
+			this.map.dialog._onDialogClose(window.mobileDialogId, true);
+			window.mobileDialogId = undefined;
+		}
+
 		$('#mobile-wizard').hide();
 		$('#mobile-wizard-content').empty();
 		if (this.map._permission === 'edit') {
@@ -318,6 +324,11 @@ L.Control.MobileWizard = L.Control.extend({
 			}
 			if (isSidebar && !this.map.showSidebar) {
 				return;
+			}
+
+			if (data.id && !isNaN(data.id) && !isSidebar) {
+				// id is a number - remember window id for interaction
+				window.mobileDialogId = data.id;
 			}
 
 			// Sometimes it happens that we get the same sidebar

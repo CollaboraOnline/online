@@ -228,7 +228,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.sendUnoCommand(encodedCommand);
 		} else if (object) {
 			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
-			var message = 'dialogevent ' + (window.sidebarId !== undefined ? window.sidebarId : -1) +
+			var windowId = window.mobileDialogId !== undefined ? window.mobileDialogId :
+								(window.sidebarId !== undefined ? window.sidebarId : -1);
+			var message = 'dialogevent ' + windowId +
 			    ' {\"id\":\"' + object.id + '\", \"cmd\": \"' + eventType + '\", \"data\":\"' + data + '\"}';
 			builder.map._socket.sendMessage(message);
 		}
