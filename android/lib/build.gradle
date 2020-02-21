@@ -151,7 +151,7 @@ task copyAssets(type: Copy) {
     into('share') {
         from "${liboInstdir}/share"
         // Filter data is needed by e.g. the drawingML preset shape import.
-        includes = ['registry/**', 'filter/**', 'gallery/**']
+        includes = ['registry/**', 'filter/**', 'gallery/**', 'palette/**']
     }
 }
 
