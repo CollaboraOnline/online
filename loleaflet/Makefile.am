@@ -378,11 +378,13 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(LOLEAFLET_LIBS_JS_SRC)
 	@echo "Uglify loleaflet js files..."
+	@m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
+		-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS)) \
+		-DLOLEAFLET_LIBS_JS=$(subst $(SPACE),$(COMMA),$(LOLEAFLET_LIBS_JS_SRC)) \
+		-DLOLEAFLET_JS=$(builddir)/build/dist/loleaflet-src.js \
+		$(srcdir)/bundle.js.m4 > $(LOLEAFLET_PREFIX)/dist/bundle.js
 	NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs \
-		$(L10N_IOS_ALL_JS) \
-		$(NODE_MODULES_JS) \
-		$(LOLEAFLET_LIBS_JS_SRC) \
-		$(builddir)/build/dist/loleaflet-src.js \
+		$(LOLEAFLET_PREFIX)/dist/bundle.js \
 		--output $@
 endif
 
