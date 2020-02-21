@@ -2,6 +2,10 @@ if ENABLE_CYPRESS
 
 abs_dir = $(if $(filter $(abs_builddir),$(abs_srcdir)),.,$(abs_srcdir))
 CYPRESS_BINARY = ${abs_builddir}/node_modules/cypress/bin/cypress
+ESLINT_BINARY = ${abs_builddir}/node_modules/eslint/bin/eslint.js
+WAIT_ON_BINARY = ${abs_builddir}/node_modules/wait-on/bin/wait-on
+GET_PORT_BINARY = ${abs_builddir}/node_modules/get-port-cli/cli.js
+
 PID_FILE=$(abs_builddir)/loolwsd.pid
 
 DESKTOP_USER_AGENT = "cypress"
@@ -15,31 +19,31 @@ MOBILE_DATA_FOLDER = ${abs_srcdir}/data/mobile/
 MOBILE_WORKDIR = ${abs_builddir}/workdir/mobile/
 
 ALLOWED_PORTS = $(shell seq 9900 1 9980)
-FREE_PORT=$(shell node_modules/get-port-cli/cli.js --host=127.0.0.1 $(ALLOWED_PORTS))
+FREE_PORT=$(shell $(GET_PORT_BINARY) --host=127.0.0.1 $(ALLOWED_PORTS))
 
 KILL_COMMAND=pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)
 
 if HAVE_LO_PATH
-check-local: @JAILS_PATH@ node_modules
+check-local: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests)
 	$(call run_mobile_tests)
 	@$(KILL_COMMAND) || true
 
-check-desktop: @JAILS_PATH@ node_modules
+check-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,$(spec))
 	@$(KILL_COMMAND) || true
 
-check-mobile: @JAILS_PATH@ node_modules
+check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_mobile_tests,$(spec))
 	@$(KILL_COMMAND) || true
 
-run-desktop: @JAILS_PATH@ node_modules
+run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call start_loolwsd)
 	@echo
 	@echo "Open cypress with desktop tests..."
@@ -49,7 +53,7 @@ run-desktop: @JAILS_PATH@ node_modules
 			|| true
 	@$(KILL_COMMAND) || true
 
-run-mobile: @JAILS_PATH@ node_modules
+run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call start_loolwsd)
 	@echo
 	@echo "Open cypress with mobile tests..."
@@ -62,7 +66,7 @@ run-mobile: @JAILS_PATH@ node_modules
 define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
 	@echo
-	@NODE_PATH=${abs_dir}/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(abs_srcdir) \
+	@NODE_PATH=${abs_dir}/node_modules $(NODE) $(ESLINT_BINARY) $(abs_srcdir) \
 		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_top_srcdir)/loleaflet/.eslintrc
 	@echo
 endef
@@ -80,7 +84,7 @@ define start_loolwsd
 			--o:logging.file[@enable]=true --o:logging.level=trace > /dev/null 2>&1 \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) &
-	@node_modules/wait-on/bin/wait-on http://localhost:$(FREE_PORT) --timeout 60000
+	@$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000
 	@echo
 endef
 
@@ -108,9 +112,14 @@ define run_mobile_tests
 			|| ($(KILL_COMMAND) && false)
 endef
 
-node_modules:
+NODE_BINS = \
+	$(CYPRESS_BINARY) \
+	$(ESLINT_BINARY) \
+	$(WAIT_ON_BINARY) \
+	$(GET_PORT_BINARY)
+
+$(NODE_BINS):
 	@npm install
-	@touch node_modules
 
 endif
 
