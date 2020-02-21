@@ -403,7 +403,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_panelHandler: function(parentContainer, data, builder) {
 		var contentNode = data.children[0];
 
-		builder._explorableEntry(parentContainer, data, contentNode, builder);
+		var entryId = contentNode.id;
+		var iconPath = null;
+
+		if (entryId && entryId.length) {
+			iconPath = builder._createIconPath(entryId);
+		}
+
+		builder._explorableEntry(parentContainer, data, contentNode, builder, null, iconPath);
 
 		return false;
 	},
