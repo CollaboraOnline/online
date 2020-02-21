@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.DocumentsContract;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -553,9 +554,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         i.putExtra(Intent.EXTRA_TITLE, defaultFileName);
 
-        // TODO remember where the user picked the file the last time
-        // TODO and that should default to Context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
-        //i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, previousDirectoryPath);
+        // Try to default to the Documents folder
+        Uri documentsUri = Uri.parse("content://com.android.externalstorage.documents/document/home%3A");
+        i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, documentsUri);
 
         startActivityForResult(i, requestCode);
     }
