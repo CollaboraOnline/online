@@ -349,10 +349,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 
-
-		if (dataid === 'inserttable') {
-			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon inserttable', sectionTitle);
-			var iconPath = 'images/lc_inserttable_mono.svg';
+		var commandName = dataid;
+		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName)) {
+			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + commandName.toLowerCase(), sectionTitle);
+			var iconPath = 'images/lc_' + commandName.toLowerCase() + '.svg';
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconPath;
 			icon.alt = '';
@@ -1443,7 +1443,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_subMenuHandler: function(parentContainer, data, builder) {
 		var title = data.text;
-		builder._explorableMenu(parentContainer, title, data.children, builder);
+		builder._explorableMenu(parentContainer, title, data.children, builder, undefined, data.id);
 
 		return false;
 	},
