@@ -256,7 +256,7 @@
 	background-position: bottom;
 }
 
-@media (max-width: 767px),(max-device-height: 767px), screen (max-width: 900px) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (any-pointer: coarse) and (hover: none){
+@media (max-width: 767px),(max-device-height: 767px), (max-width: 900px) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (any-pointer: coarse) and (hover: none){
     .document-logo {
         width: 35px;
         height: 38px;
