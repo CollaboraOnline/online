@@ -1,22 +1,22 @@
 if ENABLE_CYPRESS
 
 abs_dir = $(if $(filter $(abs_builddir),$(abs_srcdir)),.,$(abs_srcdir))
-CYPRESS_BINARY = ${abs_builddir}/node_modules/cypress/bin/cypress
-ESLINT_BINARY = ${abs_builddir}/node_modules/eslint/bin/eslint.js
-WAIT_ON_BINARY = ${abs_builddir}/node_modules/wait-on/bin/wait-on
-GET_PORT_BINARY = ${abs_builddir}/node_modules/get-port-cli/cli.js
+CYPRESS_BINARY = $(abs_builddir)/node_modules/cypress/bin/cypress
+ESLINT_BINARY = $(abs_builddir)/node_modules/eslint/bin/eslint.js
+WAIT_ON_BINARY = $(abs_builddir)/node_modules/wait-on/bin/wait-on
+GET_PORT_BINARY = $(abs_builddir)/node_modules/get-port-cli/cli.js
 
 PID_FILE=$(abs_builddir)/loolwsd.pid
 
 DESKTOP_USER_AGENT = "cypress"
-DESKTOP_TEST_FOLDER = ${abs_srcdir}/integration_tests/desktop
-DESKTOP_DATA_FOLDER = ${abs_srcdir}/data/desktop/
-DESKTOP_WORKDIR = ${abs_builddir}/workdir/desktop/
+DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
+DESKTOP_DATA_FOLDER = $(abs_srcdir)/data/desktop/
+DESKTOP_WORKDIR = $(abs_builddir)/workdir/desktop/
 
 MOBILE_USER_AGENT = "cypress mobile"
-MOBILE_TEST_FOLDER = ${abs_srcdir}/integration_tests/mobile
-MOBILE_DATA_FOLDER = ${abs_srcdir}/data/mobile/
-MOBILE_WORKDIR = ${abs_builddir}/workdir/mobile/
+MOBILE_TEST_FOLDER = $(abs_srcdir)/integration_tests/mobile
+MOBILE_DATA_FOLDER = $(abs_srcdir)/data/mobile/
+MOBILE_WORKDIR = $(abs_builddir)/workdir/mobile/
 
 ALLOWED_PORTS = $(shell seq 9900 1 9980)
 FREE_PORT=$(shell $(GET_PORT_BINARY) --host=127.0.0.1 $(ALLOWED_PORTS))
@@ -66,7 +66,7 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
 	@echo
-	@NODE_PATH=${abs_dir}/node_modules $(NODE) $(ESLINT_BINARY) $(abs_srcdir) \
+	@NODE_PATH=$(abs_dir)/node_modules $(NODE) $(ESLINT_BINARY) $(abs_srcdir) \
 		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_top_srcdir)/loleaflet/.eslintrc
 	@echo
 endef
@@ -96,7 +96,7 @@ define run_desktop_tests
 			--config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
 			--headless \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
-			$(if $(1), --spec=${abs_dir}/integration_tests/desktop/$(1)) \
+			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
 			|| ($(KILL_COMMAND) && false)
 endef
 
