@@ -96,6 +96,7 @@ task copyUnpackAssets(type: Copy) {
         // Note: restrict list of fonts due to size considerations - no technical reason anymore
         // ToDo: fonts would be good candidate for using Expansion Files instead
         includes = [
+                "EmojiOne*.ttf",
                 "Liberation*.ttf",
                 "Caladea-*.ttf",
                 "Carlito-*.ttf",
