@@ -1,0 +1,12 @@
+<svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <g transform="rotate(-90 16.014 16)" fill="none" stroke="#4d82b8" stroke-linecap="round" stroke-width="2">
+  <g transform="matrix(-1 0 0 1 33.028 -7)">
+   <path d="m17.014 23h12"/>
+   <path d="m24 18 5 5-5 5" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(-1,-7)">
+   <path d="m17.014 23h12"/>
+   <path d="m24 18 5 5-5 5" stroke-linejoin="round"/>
+  </g>
+ </g>
+</svg>
