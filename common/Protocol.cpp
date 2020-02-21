@@ -36,11 +36,18 @@ namespace LOOLProtocol
         {
             major = std::stoi(firstTokens[0]);
 
-            StringTokenizer secondTokens(firstTokens[1], "-", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-            minor = std::stoi(secondTokens[0]);
+            std::unique_ptr<StringTokenizer> secondTokens;
+            if (firstTokens.count() > 1)
+            {
+                secondTokens.reset(new StringTokenizer(firstTokens[1], "-", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM));
+            }
+            if (secondTokens && secondTokens->count() > 0)
+            {
+                minor = std::stoi((*secondTokens)[0]);
+            }
 
-            if (secondTokens.count() > 1)
-                patch = secondTokens[1];
+            if (secondTokens && secondTokens->count() > 1)
+                patch = (*secondTokens)[1];
         }
         return std::make_tuple(major, minor, patch);
     }
