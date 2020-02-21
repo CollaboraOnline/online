@@ -86,7 +86,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LibreOfficeUIActivity extends AppCompatActivity implements SettingsListenerModel.OnSettingsPreferenceChangedListener, View.OnClickListener {
+public class LibreOfficeUIActivity extends AppCompatActivity implements SettingsListenerModel.OnSettingsPreferenceChangedListener {
     private String LOGTAG = LibreOfficeUIActivity.class.getSimpleName();
     private SharedPreferences prefs;
     private int filterMode = FileUtilities.ALL;
@@ -339,9 +339,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
                 supportInvalidateOptionsMenu();
                 navigationDrawer.requestFocus(); // Make keypad navigation easier
-                if (isFabMenuOpen) {
-                    collapseFabMenu(); //Collapse FAB Menu when drawer is opened
-                }
+                collapseFabMenu();
             }
 
             @Override
@@ -367,17 +365,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        editFAB = findViewById(R.id.editFAB);
-        editFAB.setOnClickListener(this);
-        impressFAB = findViewById(R.id.newImpressFAB);
-        impressFAB.setOnClickListener(this);
-        writerFAB = findViewById(R.id.newWriterFAB);
-        writerFAB.setOnClickListener(this);
-        calcFAB = findViewById(R.id.newCalcFAB);
-        calcFAB.setOnClickListener(this);
-        writerLayout = findViewById(R.id.writerLayout);
-        impressLayout = findViewById(R.id.impressLayout);
-        calcLayout = findViewById(R.id.calcLayout);
+        setupFloatingActionButton();
 
         recentRecyclerView = findViewById(R.id.list_recent);
         noRecentItemsTextView = findViewById(R.id.no_recent_items_msg);
@@ -400,9 +388,54 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         setupNavigationDrawer();
     }
 
+    /** Initialize the FloatingActionButton. */
+    private void setupFloatingActionButton() {
+        editFAB = findViewById(R.id.editFAB);
+        editFAB.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFabMenuOpen)
+                    collapseFabMenu();
+                else
+                    expandFabMenu();
+            }
+        });
+
+        writerFAB = findViewById(R.id.newWriterFAB);
+        writerFAB.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewFileInputDialog(getString(R.string.new_textdocument) + FileUtilities.DEFAULT_WRITER_EXTENSION, "application/vnd.oasis.opendocument.text", CREATE_DOCUMENT_REQUEST_CODE);
+            }
+        });
+
+        calcFAB = findViewById(R.id.newCalcFAB);
+        calcFAB.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewFileInputDialog(getString(R.string.new_spreadsheet) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, "application/vnd.oasis.opendocument.spreadsheet", CREATE_SPREADSHEET_REQUEST_CODE);
+            }
+        });
+
+        impressFAB = findViewById(R.id.newImpressFAB);
+        impressFAB.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewFileInputDialog(getString(R.string.new_presentation) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, "application/vnd.oasis.opendocument.presentation", CREATE_PRESENTATION_REQUEST_CODE);
+            }
+        });
+
+        writerLayout = findViewById(R.id.writerLayout);
+        impressLayout = findViewById(R.id.impressLayout);
+        calcLayout = findViewById(R.id.calcLayout);
+    }
+
     /** Expand the Floating action button. */
     private void expandFabMenu() {
-        ViewCompat.animate(editFAB).rotation(45.0F).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(10.0F)).start();
+        if (isFabMenuOpen)
+            return;
+
+        ViewCompat.animate(editFAB).rotation(45f).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(0f)).start();
         impressLayout.startAnimation(fabOpenAnimation);
         writerLayout.startAnimation(fabOpenAnimation);
         calcLayout.startAnimation(fabOpenAnimation);
@@ -414,7 +447,10 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     /** Collapse the Floating action button. */
     private void collapseFabMenu() {
-        ViewCompat.animate(editFAB).rotation(0.0F).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(10.0F)).start();
+        if (!isFabMenuOpen)
+            return;
+
+        ViewCompat.animate(editFAB).rotation(0f).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(0f)).start();
         writerLayout.startAnimation(fabCloseAnimation);
         impressLayout.startAnimation(fabCloseAnimation);
         calcLayout.startAnimation(fabCloseAnimation);
@@ -437,18 +473,14 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         // close drawer if it was open
         drawerLayout.closeDrawer(navigationDrawer);
-        if (isFabMenuOpen) {
-            collapseFabMenu();
-        }
+        collapseFabMenu();
     }
 
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(navigationDrawer)) {
             drawerLayout.closeDrawer(navigationDrawer);
-            if (isFabMenuOpen) {
-                collapseFabMenu();
-            }
+            collapseFabMenu();
         } else if (isFabMenuOpen) {
             collapseFabMenu();
         } else {
@@ -511,6 +543,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     /** Opens an Input dialog to get the name of new file. */
     private void createNewFileInputDialog(final String defaultFileName, final String mimeType, final int requestCode) {
+        collapseFabMenu();
+
         Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 
         // The mime type and category must be set
@@ -621,6 +655,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     /** Start an ACTION_OPEN_DOCUMENT Intent to trigger opening a document. */
     private void openDocument() {
+        collapseFabMenu();
+
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
 
         i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -962,29 +998,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 shortcuts.add(shortcut);
             }
             shortcutManager.setDynamicShortcuts(shortcuts);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.editFAB:
-                if (isFabMenuOpen) {
-                    collapseFabMenu();
-                } else {
-                    expandFabMenu();
-                }
-                break;
-            case R.id.newWriterFAB:
-                createNewFileInputDialog(getString(R.string.new_textdocument) + FileUtilities.DEFAULT_WRITER_EXTENSION, "application/vnd.oasis.opendocument.text", CREATE_DOCUMENT_REQUEST_CODE);
-                break;
-            case R.id.newImpressFAB:
-                createNewFileInputDialog(getString(R.string.new_presentation) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, "application/vnd.oasis.opendocument.presentation", CREATE_PRESENTATION_REQUEST_CODE);
-                break;
-            case R.id.newCalcFAB:
-                createNewFileInputDialog(getString(R.string.new_spreadsheet) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, "application/vnd.oasis.opendocument.spreadsheet", CREATE_SPREADSHEET_REQUEST_CODE);
-                break;
         }
     }
 
