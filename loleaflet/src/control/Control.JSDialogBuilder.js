@@ -1580,7 +1580,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var labelData = {
 				// This adds a label widget just before the
 				// control with id 'linestyle'
-				'linestyle' : _('Line style')
+				'linestyle' : _('Line style:')
 			};
 
 			var mLD = this._missingLabelData;
