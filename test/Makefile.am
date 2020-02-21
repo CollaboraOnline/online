@@ -233,10 +233,8 @@ unit-copy-paste.log : unit-crash.log
 unit-typing.log : unit-copy-paste.log
 unit-convert.log : unit-typing.log
 unit-prefork.log : unit-convert.log
-
-# try a couple in parallel
 unit-tilecache.log : unit-prefork.log
-unit-timeout.log : unit-prefork.log
+unit-timeout.log : unit-tilecache.log
 
 unit-oauth.log : unit-timeout.log
 unit-wopi.log : unit-oauth.log
@@ -247,9 +245,8 @@ unit-wopi-documentconflict.log : unit-wopi-versionrestore.log
 unit_wopi_renamefile.log : unit-wopi-documentconflict.log
 unit_wopi_watermark.log : unit_wopi_renamefile.log
 
-# parallelize a couple at least.
 unit-http.log : unit_wopi_watermark.log
-unit-tiff-load.log : unit_wopi_watermark.log
+unit-tiff-load.log : unit-http.log
 
 unit-large-paste.log : unit-tiff-load.log
 unit-paste.log : unit-large-paste.log
