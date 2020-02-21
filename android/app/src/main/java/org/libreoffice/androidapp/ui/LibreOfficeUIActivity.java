@@ -87,6 +87,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static androidx.core.content.pm.ShortcutManagerCompat.getMaxShortcutCountPerActivity;
+
 public class LibreOfficeUIActivity extends AppCompatActivity implements SettingsListenerModel.OnSettingsPreferenceChangedListener {
     private String LOGTAG = LibreOfficeUIActivity.class.getSimpleName();
     private SharedPreferences prefs;
@@ -524,13 +526,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             prefs.edit().putString(EXPLORER_VIEW_TYPE_KEY, LIST_VIEW).apply();
     }
 
-    /** Start editing of the given Uri. */
-    public void open(final Uri uri) {
-        if (uri == null)
-            return;
-
-        addDocumentToRecents(uri);
-
+    /** Build Intent to edit a Uri. */
+    public Intent getIntentToEdit(Uri uri) {
         Intent i = new Intent(Intent.ACTION_EDIT, uri);
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -539,6 +536,17 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
         i.setComponent(componentName);
 
+        return i;
+    }
+
+    /** Start editing of the given Uri. */
+    public void open(final Uri uri) {
+        if (uri == null)
+            return;
+
+        addDocumentToRecents(uri);
+
+        Intent i = getIntentToEdit(uri);
         startActivityForResult(i, LO_ACTIVITY_REQUEST_CODE);
     }
 
@@ -949,19 +957,27 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         String joined = TextUtils.join("\n", recentsArrayList);
         prefs.edit().putString(RECENT_DOCUMENTS_KEY, joined).apply();
 
-        //update app shortcuts (7.0 and above)
+        // Update app shortcuts (7.0 and above)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
             ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
 
-            //Remove all shortcuts, and apply new ones.
+            // Remove all shortcuts, and apply new ones.
             shortcutManager.removeAllDynamicShortcuts();
 
             ArrayList<ShortcutInfo> shortcuts = new ArrayList<ShortcutInfo>();
+            int i = 0;
             for (String pathString : recentsArrayList) {
                 if (pathString.isEmpty())
                     continue;
 
-                //find the appropriate drawable
+                // I cannot see more than 3 anyway, and with too many we get
+                // an exception, so let's limit to 3
+                if (i >= 3 || i >= getMaxShortcutCountPerActivity(this))
+                    break;
+
+                ++i;
+
+                // Find the appropriate drawable
                 int drawable = 0;
                 switch (FileUtilities.getType(pathString)) {
                     case FileUtilities.DOC:
@@ -978,27 +994,26 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                         break;
                 }
 
-                // TODO better way to get the filename for content: uris
-                File file = new File(pathString);
+                Uri shortcutUri = Uri.parse(pathString);
+                String filename = RecentFilesAdapter.getUriFilename(this, shortcutUri);
 
-                //for some reason, getName uses %20 instead of space
-                String filename = file.getName().replace("%20", " ");
-
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pathString));
-                String packageName = this.getApplicationContext().getPackageName();
-                ComponentName componentName = new ComponentName(packageName, LOActivity.class.getName());
-                intent.setComponent(componentName);
-
-                ShortcutInfo shortcut = new ShortcutInfo.Builder(this, filename)
+                Intent intent = getIntentToEdit(shortcutUri);
+                ShortcutInfo.Builder builder = new ShortcutInfo.Builder(this, filename)
                         .setShortLabel(filename)
                         .setLongLabel(filename)
-                        .setIcon(Icon.createWithResource(this, drawable))
-                        .setIntent(intent)
-                        .build();
+                        .setIntent(intent);
 
-                shortcuts.add(shortcut);
+                if (drawable != 0)
+                    builder.setIcon(Icon.createWithResource(this, drawable));
+
+                shortcuts.add(builder.build());
             }
-            shortcutManager.setDynamicShortcuts(shortcuts);
+
+            try {
+                shortcutManager.setDynamicShortcuts(shortcuts);
+            } catch (Exception e) {
+                Log.e(LOGTAG, "Failed to set the dynamic shortcuts: " + e.getMessage());
+            }
         }
     }
 

@@ -9,6 +9,7 @@
 
 package org.libreoffice.androidapp.ui;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
@@ -46,29 +47,13 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
         return new ViewHolder(item);
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final Uri uri = recentUris.get(position);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mActivity.open(uri);
-            }
-        });
-
+    /** Return the filename of the given Uri. */
+    public static String getUriFilename(Activity activity, Uri uri) {
         String filename = "";
-        long length = 0;
-        // TODO Date not avaiable now
-        //Date date = null;
-
-        // Try to get it from the content resolver first, fallback to path
-        Cursor cursor = mActivity.getContentResolver().query(uri, null, null, null, null);
+        Cursor cursor = activity.getContentResolver().query(uri, null, null, null, null);
         try {
-            if (cursor != null && cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst())
                 filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                length = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE));
-            }
         } finally {
             if (cursor != null)
                 cursor.close();
@@ -80,9 +65,43 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
                 filename = segments.get(segments.size() - 1);
         }
 
+        return filename;
+    }
+
+    /** Return the size of the given Uri. */
+    public static long getUriFileLength(Activity activity, Uri uri) {
+        long length = 0;
+        Cursor cursor = activity.getContentResolver().query(uri, null, null, null, null);
+        try {
+            if (cursor != null && cursor.moveToFirst())
+                length = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE));
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
         if (length == 0) {
             // TODO maybe try to get File & return File.length()?
         }
+
+        return length;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final Uri uri = recentUris.get(position);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.open(uri);
+            }
+        });
+
+        String filename = getUriFilename(mActivity, uri);
+        long length = getUriFileLength(mActivity, uri);
+        // TODO Date not avaiable now
+        //Date date = null;
 
         holder.filenameView.setText(filename);
 
