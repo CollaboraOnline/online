@@ -32,8 +32,15 @@ namespace LOOLProtocol
         {
             major = std::stoi(firstTokens[0]);
 
-            std::vector<std::string> secondTokens(tokenize(firstTokens[1], '-'));
-            minor = std::stoi(secondTokens[0]);
+            std::vector<std::string> secondTokens;
+            if (firstTokens.size() > 1)
+            {
+                secondTokens = tokenize(firstTokens[1], '-');
+            }
+            if (secondTokens.size() > 0)
+            {
+                minor = std::stoi(secondTokens[0]);
+            }
 
             if (secondTokens.size() > 1)
                 patch = secondTokens[1];
