@@ -245,15 +245,6 @@ public class LOActivity extends AppCompatActivity {
         return true;
     }
 
-    private void updatePreferences() {
-        if (!sPrefs.getString(ASSETS_EXTRACTED_GIT_COMMIT, "").equals(BuildConfig.GIT_COMMIT)) {
-            if (copyFromAssets(getAssets(), "unpack", getApplicationInfo().dataDir) &&
-                    copyFonts("/system/fonts", getApplicationInfo().dataDir + "/user/fonts")) {
-                sPrefs.edit().putString(ASSETS_EXTRACTED_GIT_COMMIT, BuildConfig.GIT_COMMIT).apply();
-            }
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -264,26 +255,37 @@ public class LOActivity extends AppCompatActivity {
         init();
     }
 
+    /** Initialize the app - copy the assets and create the UI. */
     private void init() {
+        if (sPrefs.getString(ASSETS_EXTRACTED_GIT_COMMIT, "").equals(BuildConfig.GIT_COMMIT)) {
+            // all is fine, we have already copied the assets
+            initUI();
+            return;
+        }
+
+        final AlertDialog assetsProgress = createProgressDialog(R.string.preparing_for_the_first_start_after_an_update);
+        assetsProgress.show();
+
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                updatePreferences();
+                // copy the new assets
+                if (copyFromAssets(getAssets(), "unpack", getApplicationInfo().dataDir) && copyFonts("/system/fonts", getApplicationInfo().dataDir + "/user/fonts")) {
+                    sPrefs.edit().putString(ASSETS_EXTRACTED_GIT_COMMIT, BuildConfig.GIT_COMMIT).apply();
+                }
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
+                assetsProgress.dismiss();
                 initUI();
             }
         }.execute();
     }
 
+    /** Actual initialization of the UI. */
     private void initUI() {
-        TextView assetsTextView = findViewById(R.id.assetsTextView);
-        ProgressBar assetsProgressbar = findViewById(R.id.assetsProgressbar);
-        assetsProgressbar.setVisibility(View.GONE);
-        assetsTextView.setVisibility(View.GONE);
         isDocDebuggable = sPrefs.getBoolean(KEY_ENABLE_SHOW_DEBUG_INFO, false) && BuildConfig.DEBUG;
 
         if (getIntent().getData() != null) {
@@ -501,10 +503,6 @@ public class LOActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume..");
-
-        // check for config change
-        if (documentLoaded)
-            updatePreferences();
     }
 
     @Override
@@ -603,17 +601,23 @@ public class LOActivity extends AppCompatActivity {
         return null;
     }
 
-    /** Show the Saving progress and finish the app. */
-    private void finishWithProgress() {
+    /** Create the progress dialog. */
+    private AlertDialog createProgressDialog(int id) {
         LayoutInflater inflater = this.getLayoutInflater();
+
         View loadingView = inflater.inflate(R.layout.lolib_dialog_loading, null);
         TextView loadingText = loadingView.findViewById(R.id.lolib_loading_dialog_text);
-        loadingText.setText(getText(R.string.saving));
-        final AlertDialog savingProgress = new AlertDialog.Builder(LOActivity.this)
+        loadingText.setText(getText(id));
+
+        return new AlertDialog.Builder(LOActivity.this)
             .setView(loadingView)
             .setCancelable(true)
             .create();
+    }
 
+    /** Show the Saving progress and finish the app. */
+    private void finishWithProgress() {
+        final AlertDialog savingProgress = createProgressDialog(R.string.saving);
         savingProgress.show();
 
         // The 'BYE' takes a considerable amount of time, we need to post it
@@ -904,11 +908,7 @@ public class LOActivity extends AppCompatActivity {
     }
 
     private void initiateSlideShow() {
-        final AlertDialog slideShowProgress = new AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setView(R.layout.lolib_dialog_loading)
-                .create();
-
+        final AlertDialog slideShowProgress = createProgressDialog(R.string.loading);
         slideShowProgress.show();
 
         nativeHandler.post(new Runnable() {
