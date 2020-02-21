@@ -357,11 +357,14 @@ $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
 	@echo "Checking for loleaflet JS errors..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	@(cat $(srcdir)/src/copyright.js | sed 's/{VERSION}/$(LOLEAFLET_VERSION)/' - \
-		&& echo "(function (window, document, undefined) {" \
-		&& awk 'FNR == 1 {print ""} 1' \
-		$(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_JS)) \
-		&& echo "}(window, document));") > $@
+	@m4 -PE -DIOSAPP=$(ENABLE_IOSAPP) \
+		-DGTKAPP=$(ENABLE_GTKAPP) \
+		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
+		-DMOBILEAPPNAME="$(APP_NAME)" \
+		-DVERSION=$(LOLEAFLET_VERSION) \
+		-DCOPYRIGHT=$(srcdir)/src/copyright.js \
+		-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_JS))) \
+		$(srcdir)/loleaflet-src.js.m4 > $@
 
 $(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
 	@echo "Uglify loleaflet css files..."
