@@ -684,7 +684,7 @@ bool ClientSession::filterMessage(const std::string& message) const
     if (tokens[0] == "downloadas")
     {
         std::string id;
-        if (getTokenString(tokens[2], "id", id))
+        if (tokens.count() >= 3 && getTokenString(tokens[2], "id", id))
         {
             if (id == "print" && _wopiFileInfo && _wopiFileInfo->getDisablePrint())
             {
