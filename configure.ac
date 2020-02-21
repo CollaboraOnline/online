@@ -122,6 +122,11 @@ AC_ARG_ENABLE([gtkapp],
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view. See gtk/README.]))
 
+AC_ARG_ENABLE(fuzzers,
+    AS_HELP_STRING([--enable-fuzzers],
+        [Enables building libfuzzer targets for fuzz testing.])
+)
+
 AC_ARG_ENABLE([androidapp],
               AS_HELP_STRING([--enable-androidapp],
                              [Use in a tree where the only purpose is to build the Android app that is supposed
@@ -584,6 +589,20 @@ if test "x$with_sanitizer" != "x"; then
 else
     AC_MSG_RESULT([no])
 fi
+
+AC_MSG_CHECKING([whether to build fuzzers])
+if test "$enable_fuzzers" = "yes"; then
+    AC_MSG_RESULT([yes])
+    LIBFUZZER_FLAGS="-fsanitize=fuzzer-no-link"
+    CXXFLAGS="$CXXFLAGS $LIBFUZZER_FLAGS"
+    CFLAGS="$CFLAGS $LIBFUZZER_FLAGS"
+    LIBFUZZER=1
+else
+    AC_MSG_RESULT([no])
+    LIBFUZZER=0
+fi
+AC_DEFINE_UNQUOTED([LIBFUZZER],[$LIBFUZZER],[Define to 1 if this is a libfuzzer build.])
+AM_CONDITIONAL([ENABLE_LIBFUZZER], [test "$LIBFUZZER" = "1"])
 
 # check for C++11 support
 HAVE_CXX11=

@@ -3734,7 +3734,8 @@ void dump_state()
     LOG_TRC(msg);
 }
 
-#if !MOBILEAPP
+// Avoid this in the Util::isFuzzing() case because libfuzzer defines its own main().
+#if !MOBILEAPP && !LIBFUZZER
 
 POCO_SERVER_MAIN(LOOLWSD)
 

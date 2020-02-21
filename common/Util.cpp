@@ -913,6 +913,15 @@ namespace Util
                 std::chrono::system_clock::now() + (time - now)));
         return std::ctime(&t);
     }
+
+    bool isFuzzing()
+    {
+#if LIBFUZZER
+        return true;
+#else
+        return false;
+#endif
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

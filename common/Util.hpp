@@ -964,6 +964,12 @@ int main(int argc, char**argv)
 
         std::function<void()> m_func;
     };
+
+    /**
+     * Avoid using the configuration layer and rely on defaults which is only useful for special
+     * test tool targets (typically fuzzing) where start-up speed is critical.
+     */
+    bool isFuzzing();
 } // end namespace Util
 
 #endif

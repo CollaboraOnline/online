@@ -133,6 +133,11 @@ public:
     static
     T getConfigValue(const std::string& name, const T def)
     {
+        if (Util::isFuzzing())
+        {
+            return def;
+        }
+
         return getConfigValue(Application::instance().config(), name, def);
     }
 

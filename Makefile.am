@@ -19,8 +19,13 @@ SUBDIRS = . test loleaflet cypress_test
 export ENABLE_DEBUG
 
 bin_PROGRAMS = \
-	loolwsd loolforkit \
+	loolforkit \
 	loolconvert loolconfig
+
+if ENABLE_LIBFUZZER
+else
+bin_PROGRAMS += loolwsd
+endif
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup
 
@@ -119,11 +124,16 @@ loolwsd_SOURCES = $(loolwsd_sources) \
 noinst_PROGRAMS = clientnb \
                   connect \
                   lokitclient \
-                  loolwsd_fuzzer \
                   loolmap \
                   loolstress \
                   loolmount \
                   loolsocketdump
+
+if ENABLE_LIBFUZZER
+noinst_PROGRAMS += clientsession_fuzzer
+else
+noinst_PROGRAMS += loolwsd_fuzzer
+endif
 
 connect_SOURCES = tools/Connect.cpp \
                   common/Log.cpp \
@@ -147,6 +157,16 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          $(loolforkit_sources) \
                          $(shared_sources) \
                          kit/DummyLibreOfficeKit.cpp
+
+clientsession_fuzzer_CPPFLAGS = \
+				-DKIT_IN_PROCESS=1 \
+				$(AM_CPPFLAGS)
+clientsession_fuzzer_SOURCES = \
+			       $(loolwsd_sources) \
+			       $(loolforkit_sources) \
+			       $(shared_sources) \
+			       fuzzer/ClientSession.cpp
+clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
 clientnb_SOURCES = net/clientnb.cpp \
                    common/Log.cpp \

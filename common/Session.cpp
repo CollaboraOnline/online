@@ -219,7 +219,7 @@ void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &
     try
     {
         std::unique_ptr< std::vector<char> > replace;
-        if (UnitBase::get().filterSessionInput(this, &data[0], data.size(), replace))
+        if (!Util::isFuzzing() && UnitBase::get().filterSessionInput(this, &data[0], data.size(), replace))
         {
             if (!replace || replace->empty())
                 _handleInput(replace->data(), replace->size());
