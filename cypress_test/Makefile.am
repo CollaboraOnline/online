@@ -80,7 +80,7 @@ define start_loolwsd
 			--o:logging.file[@enable]=true --o:logging.level=trace > /dev/null 2>&1 \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) &
-	@node_modules/wait-on/bin/wait-on http://localhost:$(FREE_PORT)
+	@node_modules/wait-on/bin/wait-on http://localhost:$(FREE_PORT) --timeout 60000
 	@echo
 endef
 
