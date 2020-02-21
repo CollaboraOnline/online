@@ -59,7 +59,8 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
         String filename = "";
         long length = 0;
-        Date date = null; // TODO get it at least for files
+        // TODO Date not avaiable now
+        //Date date = null;
 
         // Try to get it from the content resolver first, fallback to path
         Cursor cursor = mActivity.getContentResolver().query(uri, null, null, null, null);
@@ -108,20 +109,26 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
         // Date and Size field only exist when we are displaying items in a list.
         if (mActivity.isViewModeList()) {
             String size;
+            String unit = "B";
             if (length < KB) {
-                size = Long.toString(length) + "B";
+                size = Long.toString(length);
             } else if (length < MB) {
-                size = Long.toString(length / KB) + "KB";
+                size = Long.toString(length / KB);
+                unit = "KB";
             } else {
-                size = Long.toString(length / MB) + "MB";
+                size = Long.toString(length / MB);
+                unit = "MB";
             }
             holder.fileSizeView.setText(size);
+            holder.fileSizeUnitView.setText(unit);
 
+            /* TODO Date not avaiable now
             if (date != null) {
                 SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy hh:ss");
                 //TODO format date
                 holder.fileDateView.setText(df.format(date));
             }
+            */
         }
     }
 
@@ -137,7 +144,7 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView filenameView, fileSizeView, fileDateView;
+        TextView filenameView, fileSizeView, fileSizeUnitView/*, fileDateView*/;
         ImageView imageView;
 
         ViewHolder(View itemView) {
@@ -147,7 +154,8 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
             // Check if view mode is List, only then initialise Size and Date field
             if (mActivity.isViewModeList()) {
                 fileSizeView = itemView.findViewById(R.id.file_item_size);
-                fileDateView = itemView.findViewById(R.id.file_item_date);
+                fileSizeUnitView = itemView.findViewById(R.id.file_item_size_unit);
+                //fileDateView = itemView.findViewById(R.id.file_item_date);
             }
         }
     }
