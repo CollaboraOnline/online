@@ -2303,12 +2303,10 @@ void setupKitEnvironment()
         "userext:${${BRAND_BASE_DIR}/program/lounorc:UNO_USER_PACKAGES_CACHE}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
 #ifdef IOS
         "user:*${BRAND_BASE_DIR}/loolkitconfig.xcu "
-#else
-#if ENABLE_DEBUG // '*' denotes non-writable.
+#elif ENABLE_DEBUG && !defined(ANDROID) // '*' denotes non-writable.
         "user:*file://" DEBUG_ABSSRCDIR "/loolkitconfig.xcu "
 #else
         "user:*file://" LOOLWSD_CONFIGDIR "/loolkitconfig.xcu "
-#endif
 #endif
         );
     ::setenv("CONFIGURATION_LAYERS", layers.c_str(),
