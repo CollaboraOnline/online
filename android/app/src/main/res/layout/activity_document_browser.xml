@@ -253,6 +253,7 @@
             android:layout_gravity="start"
             android:background="@color/background_normal"
             android:theme="@style/LibreOfficeTheme.NavigationView"
+            app:headerLayout="@layout/navigation_header"
             app:menu="@menu/navigation_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

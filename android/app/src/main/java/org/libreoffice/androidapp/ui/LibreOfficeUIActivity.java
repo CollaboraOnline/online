@@ -210,6 +210,151 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentUris));
     }
 
+    /** Create the Navigation menu and set up the actions and everything there. */
+    public void setupNavigationDrawer() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationDrawer = findViewById(R.id.navigation_drawer);
+        navigationDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    /* TODO Currently we don't support sorting of the recent files
+                    case R.id.menu_filter_everything:
+                        item.setChecked(true);
+                        filterMode = FileUtilities.ALL;
+                        //openDirectory(currentDirectory);
+                        break;
+
+                    case R.id.menu_filter_documents:
+                        item.setChecked(true);
+                        filterMode = FileUtilities.DOC;
+                        //openDirectory(currentDirectory);
+                        break;
+
+                    case R.id.menu_filter_spreadsheets:
+                        item.setChecked(true);
+                        filterMode = FileUtilities.CALC;
+                        //openDirectory(currentDirectory);
+                        break;
+
+                    case R.id.menu_filter_presentations:
+                        item.setChecked(true);
+                        filterMode = FileUtilities.IMPRESS;
+                        //openDirectory(currentDirectory);
+                        break;
+
+                    case R.id.menu_sort_size_asc:
+                        sortMode = FileUtilities.SORT_SMALLEST;
+                        this.onResume();
+                        break;
+
+                    case R.id.menu_sort_size_desc:
+                        sortMode = FileUtilities.SORT_LARGEST;
+                        this.onResume();
+                        break;
+
+                    case R.id.menu_sort_az:
+                        sortMode = FileUtilities.SORT_AZ;
+                        this.onResume();
+                        break;
+
+                    case R.id.menu_sort_za:
+                        sortMode = FileUtilities.SORT_ZA;
+                        this.onResume();
+                        break;
+
+                    case R.id.menu_sort_modified_newest:
+                        sortMode = FileUtilities.SORT_NEWEST;
+                        this.onResume();
+                        break;
+
+                    case R.id.menu_sort_modified_oldest:
+                        sortMode = FileUtilities.SORT_OLDEST;
+                        this.onResume();
+                        break;
+                    */
+
+                    case R.id.action_about:
+                        AboutDialogFragment aboutDialogFragment = new AboutDialogFragment();
+                        aboutDialogFragment.show(getSupportFragmentManager(), "AboutDialogFragment");
+                        return true;
+
+                    /*case R.id.action_settings:
+                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                        return true;*/
+                }
+                return false;
+            }
+        });
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.document_locations, R.string.close_document_locations) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+                /* TODO Currently we don't support sorting of the recent files
+                switch (sortMode) {
+                    case FileUtilities.SORT_SMALLEST:
+                        menu.findItem(R.id.menu_sort_size_asc).setChecked(true);
+                        break;
+
+                    case FileUtilities.SORT_LARGEST:
+                        menu.findItem(R.id.menu_sort_size_desc).setChecked(true);
+                        break;
+
+                    case FileUtilities.SORT_AZ:
+                        menu.findItem(R.id.menu_sort_az).setChecked(true);
+                        break;
+
+                    case FileUtilities.SORT_ZA:
+                        menu.findItem(R.id.menu_sort_za).setChecked(true);
+                        break;
+
+                    case FileUtilities.SORT_NEWEST:
+                        menu.findItem(R.id.menu_sort_modified_newest).setChecked(true);
+                        break;
+
+                    case FileUtilities.SORT_OLDEST:
+                        menu.findItem(R.id.menu_sort_modified_oldest).setChecked(true);
+                        break;
+                }
+
+                switch (filterMode) {
+                    case FileUtilities.ALL:
+                        menu.findItem(R.id.menu_filter_everything).setChecked(true);
+                        break;
+
+                    case FileUtilities.DOC:
+                        menu.findItem(R.id.menu_filter_documents).setChecked(true);
+                        break;
+
+                    case FileUtilities.CALC:
+                        menu.findItem(R.id.menu_filter_presentations).setChecked(true);
+                        break;
+
+                    case FileUtilities.IMPRESS:
+                        menu.findItem(R.id.menu_filter_presentations).setChecked(true);
+                        break;
+                }
+                */
+
+                supportInvalidateOptionsMenu();
+                navigationDrawer.requestFocus(); // Make keypad navigation easier
+                if (isFabMenuOpen) {
+                    collapseFabMenu(); //Collapse FAB Menu when drawer is opened
+                }
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                supportInvalidateOptionsMenu();
+            }
+        };
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+    }
+
     public void createUI() {
         setContentView(R.layout.activity_document_browser);
 
@@ -249,78 +394,13 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         updateRecentFiles();
 
+        // TODO allow context menu for the various files - for Open and Share
         //registerForContextMenu(fileRecyclerView);
 
-        //Setting up navigation drawer
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationDrawer = findViewById(R.id.navigation_drawer);
-
-        navigationDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.menu_storage_preferences: {
-                        //startActivity(new Intent(LibreOfficeUIActivity.this, DocumentProviderSettingsActivity.class));
-                        return true;
-                    }
-
-                    case R.id.menu_provider_documents: {
-                        //switchToDocumentProvider(0);
-                        return true;
-                    }
-
-                    case R.id.menu_provider_filesystem: {
-                        //switchToDocumentProvider(1);
-                        return true;
-                    }
-
-                    case R.id.menu_provider_extsd: {
-                        //switchToDocumentProvider(DocumentProviderFactory.EXTSD_PROVIDER_INDEX);
-                        return true;
-                    }
-
-                    case R.id.menu_provider_otg: {
-                        //switchToDocumentProvider(3);
-                        return true;
-                    }
-
-                    case R.id.menu_provider_owncloud: {
-                        //switchToDocumentProvider(4);
-                        return true;
-                    }
-
-                    default:
-                        return false;
-                }
-
-
-            }
-        });
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                R.string.document_locations, R.string.close_document_locations) {
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                supportInvalidateOptionsMenu();
-                navigationDrawer.requestFocus(); // Make keypad navigation easier
-                if (isFabMenuOpen) {
-                    collapseFabMenu(); //Collapse FAB Menu when drawer is opened
-                }
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                supportInvalidateOptionsMenu();
-            }
-        };
-        drawerToggle.setDrawerIndicatorEnabled(true);
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+        setupNavigationDrawer();
     }
 
+    /** Expand the Floating action button. */
     private void expandFabMenu() {
         ViewCompat.animate(editFAB).rotation(45.0F).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(10.0F)).start();
         impressLayout.startAnimation(fabOpenAnimation);
@@ -332,6 +412,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         isFabMenuOpen = true;
     }
 
+    /** Collapse the Floating action button. */
     private void collapseFabMenu() {
         ViewCompat.animate(editFAB).rotation(0.0F).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(10.0F)).start();
         writerLayout.startAnimation(fabCloseAnimation);
@@ -529,60 +610,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         */
     }
 
+    /** Setup the toolbar's menu. */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.view_menu, menu);
-
-        switch (sortMode) {
-            case FileUtilities.SORT_SMALLEST: {
-                menu.findItem(R.id.menu_sort_size_asc).setChecked(true);
-            }
-            break;
-
-            case FileUtilities.SORT_LARGEST: {
-                menu.findItem(R.id.menu_sort_size_desc).setChecked(true);
-            }
-            break;
-
-            case FileUtilities.SORT_AZ: {
-                menu.findItem(R.id.menu_sort_az).setChecked(true);
-            }
-            break;
-
-            case FileUtilities.SORT_ZA: {
-                menu.findItem(R.id.menu_sort_za).setChecked(true);
-            }
-            break;
-
-            case FileUtilities.SORT_NEWEST: {
-                menu.findItem(R.id.menu_sort_modified_newest).setChecked(true);
-            }
-            break;
-
-            case FileUtilities.SORT_OLDEST: {
-                menu.findItem(R.id.menu_sort_modified_oldest).setChecked(true);
-            }
-            break;
-        }
-
-        switch (filterMode) {
-            case FileUtilities.ALL:
-                menu.findItem(R.id.menu_filter_everything).setChecked(true);
-                break;
-
-            case FileUtilities.DOC:
-                menu.findItem(R.id.menu_filter_documents).setChecked(true);
-                break;
-
-            case FileUtilities.CALC:
-                menu.findItem(R.id.menu_filter_presentations).setChecked(true);
-                break;
-
-            case FileUtilities.IMPRESS:
-                menu.findItem(R.id.menu_filter_presentations).setChecked(true);
-                break;
-        }
 
         return true;
     }
@@ -667,79 +699,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             case R.id.action_open_file:
                 openDocument();
                 break;
-
-            case android.R.id.home:
-                // TODO probably kill
-                break;
-
-            case R.id.menu_filter_everything:
-                item.setChecked(true);
-                filterMode = FileUtilities.ALL;
-                //openDirectory(currentDirectory);
-                break;
-
-            case R.id.menu_filter_documents:
-                item.setChecked(true);
-                filterMode = FileUtilities.DOC;
-                //openDirectory(currentDirectory);
-                break;
-
-            case R.id.menu_filter_spreadsheets:
-                item.setChecked(true);
-                filterMode = FileUtilities.CALC;
-                //openDirectory(currentDirectory);
-                break;
-
-            case R.id.menu_filter_presentations:
-                item.setChecked(true);
-                filterMode = FileUtilities.IMPRESS;
-                //openDirectory(currentDirectory);
-                break;
-
-            case R.id.menu_sort_size_asc: {
-                sortMode = FileUtilities.SORT_SMALLEST;
-                this.onResume();
-            }
-            break;
-
-            case R.id.menu_sort_size_desc: {
-                sortMode = FileUtilities.SORT_LARGEST;
-                this.onResume();
-            }
-            break;
-
-            case R.id.menu_sort_az: {
-                sortMode = FileUtilities.SORT_AZ;
-                this.onResume();
-            }
-            break;
-
-            case R.id.menu_sort_za: {
-                sortMode = FileUtilities.SORT_ZA;
-                this.onResume();
-            }
-            break;
-
-            case R.id.menu_sort_modified_newest: {
-                sortMode = FileUtilities.SORT_NEWEST;
-                this.onResume();
-            }
-            break;
-
-            case R.id.menu_sort_modified_oldest: {
-                sortMode = FileUtilities.SORT_OLDEST;
-                this.onResume();
-            }
-            break;
-
-            case R.id.action_about: {
-                AboutDialogFragment aboutDialogFragment = new AboutDialogFragment();
-                aboutDialogFragment.show(getSupportFragmentManager(), "AboutDialogFragment");
-            }
-            return true;
-            case R.id.action_settings:
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
