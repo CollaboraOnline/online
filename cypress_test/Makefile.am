@@ -23,6 +23,7 @@ MOBILE_TRACK_FOLDER=$(abs_builddir)/workdir/track/mobile
 
 ALLOWED_PORTS = $(shell seq 9900 1 9980)
 KILL_COMMAND=pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)
+PARALLEL_BUILD = $(findstring jobserver,$(MAKEFLAGS))
 
 if HAVE_LO_PATH
 MOBILE_TEST_FILES= \
@@ -130,27 +131,29 @@ define start_loolwsd
 endef
 
 define run_desktop_tests
+	@echo $(if $(1),"Running cypress desktop test: $(1)","Running cypress desktop tests...")
 	@echo
-	@echo "Running cypress desktop tests..."
-	@echo
-	$(CYPRESS_BINARY) run --browser $(CHROME) \
+	$(eval RUN_COMMAND = \
+		$(CYPRESS_BINARY) run --browser $(CHROME) \
 			--config integrationFolder=$(DESKTOP_TEST_FOLDER),userAgent=$(DESKTOP_USER_AGENT) \
 			--headless \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
-			|| ($(KILL_COMMAND) && false)
+			|| ($(KILL_COMMAND) && false))
+	$(if $(PARALLEL_BUILD),@echo "`echo $(RUN_COMMAND) && $(RUN_COMMAND)`",$(RUN_COMMAND))
 endef
 
 define run_mobile_tests
+	@echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
 	@echo
-	@echo "Running cypress mobile tests..."
-	@echo
-	$(CYPRESS_BINARY) run --browser $(CHROME) \
+	$(eval RUN_COMMAND = \
+		$(CYPRESS_BINARY) run --browser $(CHROME) \
 			--config integrationFolder=$(MOBILE_TEST_FOLDER),userAgent=$(MOBILE_USER_AGENT) \
 			--headless \
 			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
-			|| ($(KILL_COMMAND) && false)
+			|| ($(KILL_COMMAND) && false))
+	$(if $(PARALLEL_BUILD),@echo "`echo $(RUN_COMMAND) && $(RUN_COMMAND)`",$(RUN_COMMAND))
 endef
 
 NODE_BINS = \
