@@ -48,7 +48,14 @@ L.Map.TouchGesture = L.Handler.extend({
 
 			var singleTap = this._hammer.get('tap');
 			var doubleTap = this._hammer.get('doubletap');
-			var tripleTap = new Hammer.Tap({event: 'tripletap', taps: 3 });
+
+			// Multi-tap detection tolerates a slight change in coordinates
+			// between the taps. The default of 10 is too small for our needs.
+			// So we use something more sensible to make it easier for users.
+			var posThreshold = 100;
+			doubleTap.options.posThreshold = posThreshold;
+
+			var tripleTap = new Hammer.Tap({event: 'tripletap', taps: 3, posThreshold: posThreshold });
 			this._hammer.add(tripleTap);
 			tripleTap.recognizeWith([doubleTap, singleTap]);
 
