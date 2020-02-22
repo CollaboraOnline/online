@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="loading">Laster...</string>
+    <string name="preparing_for_the_first_start_after_an_update">Forbereder seg på første start etter en oppdatering.</string>
+    <string name="saving">Lagrer....</string>
+    <string name="cannot_open_file_chooser">Kan ikke åpne filvelgeren</string>
+    <string name="failed_to_insert_image">Kunne ikke sette inn bilde</string>
+    <string name="failed_to_load_file">Kunne ikke bestemme filen som skal lastes inn</string>
+    <string name="storage_permission_required">Lagringstillatelse er nødvendig</string>
+    <string name="temp_file_saving_disabled">Denne filen er skrivebeskyttet, lagring er deaktivert.</string>
+</resources>

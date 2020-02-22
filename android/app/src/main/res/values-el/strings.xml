@@ -97,4 +97,6 @@
     <string name="app_description">"Το $APP_NAME είναι μια σύγχρονη, εύχρηστη,  σειρά προγραμμάτων για επεξεργασία κειμένου, υπολογιστικά φύλλα, παρουσιάσεις και άλλα."</string>
     <string name="app_version">"Έκδοση: %1$s,  Αναγνωριστικό δόμησης: %2$s"</string>
     <string name="app_name_settings">Ρυθμίσεις</string>
+    <string name="pref_enable_chrome_debugger_info">Ενεργοποίηση της χρήσης του εργαλείου αποσφαλμάτωσης Chrome στο έγγραφο.</string>
+    <string name="pref_enable_chrome_debugger">Αποσφαλμάτωση Chrome</string>
 </resources>

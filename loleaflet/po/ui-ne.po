@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-12 11:04+0100\n"
+"POT-Creation-Date: 2020-02-21 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,7 +120,7 @@ msgid "Network Graph"
 msgstr "सञ्जाल मानचित्र"
 
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:252
-#: src/layer/tile/TileLayer.js:379
+#: src/layer/tile/TileLayer.js:380
 msgid "Save"
 msgstr "सङ्ग्रह गर्नुहोस्"
 
@@ -188,7 +188,22 @@ msgstr "जडान त्रुटि"
 msgid "Are you sure you want to terminate this session?"
 msgstr "के तपाईँ यो सेसनलाई मेट्न चहानुहुन्छ?"
 
-#: admin/src/AdminSocketOverview.js:186 admin/src/AdminSocketOverview.js:288
+#: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
+#: src/control/Control.Menubar.js:1149 src/control/Control.Tabs.js:179
+#: src/control/Control.Tabs.js:196 src/control/Control.Toolbar.js:246
+#: src/control/Toolbar.js:455
+msgid "OK"
+msgstr ""
+
+#: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1150
+#: src/control/Control.Tabs.js:180 src/control/Control.Tabs.js:197
+#: src/control/Control.Toolbar.js:247 src/control/Toolbar.js:456
+#: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:381
+msgid "Cancel"
+msgstr "रद्द गर्नुहोस्"
+
+#: admin/src/AdminSocketOverview.js:190 admin/src/AdminSocketOverview.js:292
 msgid "Documents"
 msgstr "कागजात"
 
@@ -240,11 +255,11 @@ msgstr "सम्पादन गर्नु"
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "सर्भरमा त्रुटी %0 %1 कमान्ड कार्यान्वयनको क्रममा देखा पर्‍यो ।"
 
-#: src/control/Control.ContextMenu.js:174
+#: src/control/Control.ContextMenu.js:171
 msgid "Delete"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:259
+#: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
 msgstr "विषेश टाँस्नुहोस्"
 
@@ -276,7 +291,7 @@ msgstr "टाइमस्ट्याम्प"
 msgid "Jump to state"
 msgstr "स्टेटमा जानुहोस्"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2539
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2543
 msgid "You"
 msgstr "तपाईँ"
 
@@ -328,130 +343,129 @@ msgstr ""
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:759
-#: src/control/Control.Toolbar.js:1644
+#: src/control/Control.JSDialogBuilder.js:766
+#: src/control/Control.Toolbar.js:1648
 msgid "None"
 msgstr "कुनै पनि होइन"
 
-#: src/control/Control.JSDialogBuilder.js:762
+#: src/control/Control.JSDialogBuilder.js:769
 msgid "Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:765
+#: src/control/Control.JSDialogBuilder.js:772
 msgid "Gradient"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:768
+#: src/control/Control.JSDialogBuilder.js:775
 msgid "Hatching"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:772
+#: src/control/Control.JSDialogBuilder.js:779
 msgid "Pattern"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:905
+#: src/control/Control.JSDialogBuilder.js:912
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:908
+#: src/control/Control.JSDialogBuilder.js:915
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1040
+#: src/control/Control.JSDialogBuilder.js:1050
 #, fuzzy
 #| msgid "Font"
 msgid "Font Name"
 msgstr "फन्ट"
 
-#: src/control/Control.JSDialogBuilder.js:1042
+#: src/control/Control.JSDialogBuilder.js:1052
 #, fuzzy
 #| msgid "Not Signed"
 msgid "Font Size"
 msgstr "हस्ताक्षर गरिएको छैन"
 
-#: src/control/Control.JSDialogBuilder.js:1518
+#: src/control/Control.JSDialogBuilder.js:1533
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1519
+#: src/control/Control.JSDialogBuilder.js:1534
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1539
-#: src/control/Control.Toolbar.js:969
+#: src/control/Control.JSDialogBuilder.js:1554
+#: src/control/Control.Toolbar.js:973
 msgid "Insert table"
 msgstr "तालिका घुसाउनुहोस्"
 
+#: src/control/Control.JSDialogBuilder.js:1583
+msgid "Line style:"
+msgstr ""
+
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
-#: src/control/Control.Menubar.js:338 src/control/Control.Menubar.js:453
-#: src/control/Control.Toolbar.js:2055
+#: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:452
+#: src/control/Control.Toolbar.js:2059
 msgid "None (Do not check spelling)"
 msgstr "कुनै पनि होइन (हिज्जे जाँच नगर्नुहोस्)"
 
-#: src/control/Control.LanguageDialog.js:86 src/control/Toolbar.js:456
-#: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:380
-msgid "Cancel"
-msgstr "रद्द गर्नुहोस्"
-
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:251
-#: src/control/Control.Menubar.js:353 src/control/Control.Menubar.js:469
-#: src/control/Control.Menubar.js:517 src/control/Control.Menubar.js:562
+#: src/control/Control.Menubar.js:352 src/control/Control.Menubar.js:468
+#: src/control/Control.Menubar.js:516 src/control/Control.Menubar.js:561
 msgid "Share..."
 msgstr "साझा गर्नुहोस्..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:253
-#: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:471
-#: src/control/Control.Menubar.js:519 src/control/Control.Menubar.js:564
+#: src/control/Control.Menubar.js:354 src/control/Control.Menubar.js:470
+#: src/control/Control.Menubar.js:518 src/control/Control.Menubar.js:563
 msgid "See revision history"
 msgstr "पुनरावलोकन इतिहास गर्नुहोस्"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:254
-#: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:474
-#: src/control/Control.Menubar.js:521 src/control/Control.Menubar.js:566
+#: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:473
+#: src/control/Control.Menubar.js:520 src/control/Control.Menubar.js:565
 msgid "Download as"
 msgstr "मा डाउनलोड"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:255
-#: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:475
-#: src/control/Control.Menubar.js:522 src/control/Control.Menubar.js:567
+#: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:474
+#: src/control/Control.Menubar.js:521 src/control/Control.Menubar.js:566
 msgid "PDF Document (.pdf)"
 msgstr "PDF कागजात (.pdf)"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:476
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:475
 msgid "ODF text document (.odt)"
 msgstr "ODF पाठ कागजात (.odt)"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:477
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:476
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 कागजात (.doc)"
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:478
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:477
 msgid "Word Document (.docx)"
 msgstr "Word कागजात (.docx)"
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:479
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:478
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:472
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:471
 #: src/control/Signing.js:601
 msgid "Sign document"
 msgstr "कागजात हस्ताक्षर गर्नुहोस्"
 
 #: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:260
-#: src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:361
 msgid "Close document"
 msgstr "कागजात बन्द गर्नुहोस्"
 
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:265
-#: src/control/Control.Menubar.js:367 src/control/Control.Menubar.js:484
-#: src/control/Control.Menubar.js:530 src/control/Control.Menubar.js:575
+#: src/control/Control.Menubar.js:366 src/control/Control.Menubar.js:483
+#: src/control/Control.Menubar.js:529 src/control/Control.Menubar.js:574
 msgid "Repair"
 msgstr "मर्मत गर्नुहोस्"
 
 #: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:279
-#: src/control/Control.Toolbar.js:1170
+#: src/control/Control.Toolbar.js:1174
 msgid "Reset zoom"
 msgstr "जुम रिसेट गर्नुहोस्"
 
@@ -460,13 +474,13 @@ msgid "Show Ruler"
 msgstr ""
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:291
-#: src/control/Control.Menubar.js:382 src/control/Control.Menubar.js:623
-#: src/control/Control.Menubar.js:663 src/control/Control.Menubar.js:676
+#: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:622
+#: src/control/Control.Menubar.js:662 src/control/Control.Menubar.js:675
 msgid "Local Image..."
 msgstr "स्थानीय छवि..."
 
 #: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:93
-#: src/control/Control.Menubar.js:639 src/control/Control.Menubar.js:641
+#: src/control/Control.Menubar.js:638 src/control/Control.Menubar.js:640
 msgid "All"
 msgstr "सबै"
 
@@ -474,87 +488,87 @@ msgstr "सबै"
 msgid "Text orientation"
 msgstr "पाठ अभिमूखिकरण"
 
-#: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:341
-#: src/control/Control.Menubar.js:457
+#: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:340
+#: src/control/Control.Menubar.js:456
 msgid "Online Help"
 msgstr ""
 
-#: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:342
-#: src/control/Control.Menubar.js:458
+#: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
+#: src/control/Control.Menubar.js:457
 msgid "Keyboard shortcuts"
 msgstr "कुञ्जीपाटी सर्टकट"
 
-#: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:343
-#: src/control/Control.Menubar.js:459
+#: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
+#: src/control/Control.Menubar.js:458
 msgid "Report an issue"
 msgstr ""
 
-#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:344
-#: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:510
-#: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:617
+#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
+#: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:509
+#: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:616
 msgid "About"
 msgstr "बारेमा"
 
-#: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:346
-#: src/control/Control.Menubar.js:462 src/map/Map.js:389
+#: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:345
+#: src/control/Control.Menubar.js:461 src/map/Map.js:389
 msgid "Last modification"
 msgstr "अन्तिम संशोधन"
 
-#: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:523
+#: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:522
 msgid "ODF presentation (.odp)"
 msgstr "ODF प्रस्तुतिकरण (.odp)"
 
-#: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:524
+#: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:523
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 प्रस्तुति (.ppt)"
 
-#: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:525
+#: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:524
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint प्रस्तुति (.pptx)"
 
-#: src/control/Control.Menubar.js:332 src/control/Control.Menubar.js:554
-#: src/control/Control.Toolbar.js:1123
+#: src/control/Control.Menubar.js:331 src/control/Control.Menubar.js:553
+#: src/control/Control.Toolbar.js:1127
 msgid "Fullscreen presentation"
 msgstr "पूरा स्क्रिन प्रस्तुति"
 
-#: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:568
+#: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:567
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF स्प्रेडसिट (.ods)"
 
-#: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:569
+#: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:568
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 स्प्रेडसिट (.xls)"
 
-#: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:570
+#: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:569
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel स्प्रेडसिट (.xlsx)"
 
-#: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:521
-#: src/control/Control.Menubar.js:566
+#: src/control/Control.Menubar.js:473 src/control/Control.Menubar.js:520
+#: src/control/Control.Menubar.js:565
 msgid "Export as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:500
+#: src/control/Control.Menubar.js:499
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:501
+#: src/control/Control.Menubar.js:500
 msgid "Portrait"
 msgstr ""
 
-#: src/control/Control.Menubar.js:502
+#: src/control/Control.Menubar.js:501
 msgid "Landscape"
 msgstr ""
 
-#: src/control/Control.Menubar.js:763 src/control/Control.Toolbar.js:2054
+#: src/control/Control.Menubar.js:762 src/control/Control.Toolbar.js:2058
 msgid "Reset to Default Language"
 msgstr "पूर्वनिर्धारित भाषामा पनु स्थापित गर्नुहोस्"
 
-#: src/control/Control.Menubar.js:1148
+#: src/control/Control.Menubar.js:1147
 msgid "Are you sure you want to delete this slide?"
 msgstr "यस स्लाइड मेट्ने कुरामा निश्चित हुनुहुन्छ?"
 
-#: src/control/Control.Menubar.js:1182 src/map/Clipboard.js:769
+#: src/control/Control.Menubar.js:1185 src/map/Clipboard.js:773
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr "<p>तपाईँको ब्राउजरको क्लिपबोर्डमा धेरै सीमित पहुँच छ, त्यसैले यी कुञ्जीपाटी सर्टकटहरू प्रयोग गर्नुहोस्:<ul><li><b>Ctrl+C</b>: प्रतिलिपि गर्न।</li><li><b>Ctrl+X</b>: काट्न।</li><li><b>Ctrl+P</b>: टाँस्न।</li></ul></p> "
 
@@ -578,7 +592,7 @@ msgstr "यस पछि एक सिट घुसार्नुहोस्"
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "के तपाईं पाना %sheet% मेटाउन निश्चित हुनुहुन्छ?"
 
-#: src/control/Control.Tabs.js:190
+#: src/control/Control.Tabs.js:194
 msgid "Enter new sheet name"
 msgstr "नयाँ पानाको नाम यहाँ प्रविष्ट गर्नुहोस्"
 
@@ -586,171 +600,171 @@ msgstr "नयाँ पानाको नाम यहाँ प्रवि�
 msgid "Are you sure you want to delete this page?"
 msgstr "पृष्ठ मेट्न चाहनुमा विश्वस्त हुनुहुन्छ?"
 
-#: src/control/Control.Toolbar.js:856
+#: src/control/Control.Toolbar.js:860
 msgid "Default Style"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:913
+#: src/control/Control.Toolbar.js:917
 msgid "Borders"
 msgstr "किनाराहरू"
 
-#: src/control/Control.Toolbar.js:921
+#: src/control/Control.Toolbar.js:925
 msgid "More..."
 msgstr "थप..."
 
-#: src/control/Control.Toolbar.js:974
+#: src/control/Control.Toolbar.js:978
 msgid "Insert Local Image"
 msgstr "स्थानीय छवि सम्मिलित गर्नुहोस्"
 
-#: src/control/Control.Toolbar.js:978
+#: src/control/Control.Toolbar.js:982
 msgid "Insert shapes"
 msgstr "पाना घुसाउनुहोस्"
 
-#: src/control/Control.Toolbar.js:1057
+#: src/control/Control.Toolbar.js:1061
 #, fuzzy
 #| msgid "Function"
 msgid "Function Wizard"
 msgstr "प्रकार्य"
 
-#: src/control/Control.Toolbar.js:1101
+#: src/control/Control.Toolbar.js:1105
 msgid "First sheet"
 msgstr "पहिलो पाना"
 
-#: src/control/Control.Toolbar.js:1102
+#: src/control/Control.Toolbar.js:1106
 msgid "Previous sheet"
 msgstr "अघिल्लो पाना"
 
-#: src/control/Control.Toolbar.js:1103
+#: src/control/Control.Toolbar.js:1107
 msgid "Next sheet"
 msgstr "पछिल्लो पाना"
 
-#: src/control/Control.Toolbar.js:1104
+#: src/control/Control.Toolbar.js:1108
 msgid "Last sheet"
 msgstr "अन्तिम पाना"
 
-#: src/control/Control.Toolbar.js:1105 src/layer/tile/CalcTileLayer.js:179
+#: src/control/Control.Toolbar.js:1109 src/layer/tile/CalcTileLayer.js:179
 msgid "Insert sheet"
 msgstr "पाना घुसाउनुहोस्"
 
-#: src/control/Control.Toolbar.js:1147
+#: src/control/Control.Toolbar.js:1151
 msgid "Search"
 msgstr "खोजी गर्नुहोस्"
 
-#: src/control/Control.Toolbar.js:1153
+#: src/control/Control.Toolbar.js:1157
 msgid "Cancel the search"
 msgstr "खोज रद्द गर्नुहोस्"
 
-#: src/control/Control.Toolbar.js:1160 src/layer/tile/CalcTileLayer.js:120
+#: src/control/Control.Toolbar.js:1164 src/layer/tile/CalcTileLayer.js:120
 #: src/layer/tile/ImpressTileLayer.js:155 src/layer/tile/WriterTileLayer.js:100
 msgid "Always follow the editor"
 msgstr "सधैँ सम्पादकलाई पछ्याउनुहोस्"
 
-#: src/control/Control.Toolbar.js:1163 src/layer/tile/CalcTileLayer.js:123
+#: src/control/Control.Toolbar.js:1167 src/layer/tile/CalcTileLayer.js:123
 #: src/layer/tile/ImpressTileLayer.js:158 src/layer/tile/WriterTileLayer.js:103
 msgid "Current"
 msgstr "हालको"
 
-#: src/control/Control.Toolbar.js:1246
+#: src/control/Control.Toolbar.js:1250
 msgid "%user has joined"
 msgstr "%user सहभागी हुनुभयो"
 
-#: src/control/Control.Toolbar.js:1247
+#: src/control/Control.Toolbar.js:1251
 msgid "%user has left"
 msgstr "%user ले छोड्नु भयो"
 
-#: src/control/Control.Toolbar.js:1609
+#: src/control/Control.Toolbar.js:1613
 msgid "Number of Sheets"
 msgstr "पानाका सङ्ख्याहरू"
 
-#: src/control/Control.Toolbar.js:1614
+#: src/control/Control.Toolbar.js:1618
 msgid "Selected range of cells"
 msgstr "छानिएको सेलको दायरा"
 
-#: src/control/Control.Toolbar.js:1619 src/control/Control.Toolbar.js:1676
+#: src/control/Control.Toolbar.js:1623 src/control/Control.Toolbar.js:1680
 msgid "Entering text mode"
 msgstr "पाठ मोडमा प्रवेश गर्दै"
 
-#: src/control/Control.Toolbar.js:1628 src/control/Control.Toolbar.js:1681
+#: src/control/Control.Toolbar.js:1632 src/control/Control.Toolbar.js:1685
 msgid "Selection Mode"
 msgstr "चयन मोड"
 
-#: src/control/Control.Toolbar.js:1633
+#: src/control/Control.Toolbar.js:1637
 msgid "Choice of functions"
 msgstr "प्रकार्यहरूको छनौट"
 
-#: src/control/Control.Toolbar.js:1637
+#: src/control/Control.Toolbar.js:1641
 msgid "Average"
 msgstr "औसत"
 
-#: src/control/Control.Toolbar.js:1638
+#: src/control/Control.Toolbar.js:1642
 msgid "CountA"
 msgstr "CountA"
 
-#: src/control/Control.Toolbar.js:1639
+#: src/control/Control.Toolbar.js:1643
 msgid "Count"
 msgstr "Count"
 
-#: src/control/Control.Toolbar.js:1640
+#: src/control/Control.Toolbar.js:1644
 msgid "Maximum"
 msgstr "अधिकतम"
 
-#: src/control/Control.Toolbar.js:1641
+#: src/control/Control.Toolbar.js:1645
 msgid "Minimum"
 msgstr "न्युनतम"
 
-#: src/control/Control.Toolbar.js:1642
+#: src/control/Control.Toolbar.js:1646
 msgid "Sum"
 msgstr "योगफल"
 
-#: src/control/Control.Toolbar.js:1643
+#: src/control/Control.Toolbar.js:1647
 msgid "Selection count"
 msgstr "छनौट गणना"
 
-#: src/control/Control.Toolbar.js:1666
+#: src/control/Control.Toolbar.js:1670
 msgid "Number of Pages"
 msgstr "पृष्ठहरूको संख्या"
 
-#: src/control/Control.Toolbar.js:1671
+#: src/control/Control.Toolbar.js:1675
 msgid "Word Counter"
 msgstr "शब्द गणक"
 
-#: src/control/Control.Toolbar.js:1706
+#: src/control/Control.Toolbar.js:1710
 msgid "Number of Slides"
 msgstr "स्लाइडहरूको सङ्ख्या"
 
-#: src/control/Control.Toolbar.js:1746
+#: src/control/Control.Toolbar.js:1750
 msgid "%n users"
 msgstr "%n प्रयोगकर्ताहरू"
 
-#: src/control/Control.Toolbar.js:1747
+#: src/control/Control.Toolbar.js:1751
 msgid "1 user"
 msgstr "1 प्रयोगकर्ता"
 
-#: src/control/Control.Toolbar.js:1748
+#: src/control/Control.Toolbar.js:1752
 msgid "0 users"
 msgstr "0 प्रयोगकर्ता"
 
-#: src/control/Control.Toolbar.js:2150
+#: src/control/Control.Toolbar.js:2154
 msgid "Style"
 msgstr "शैली"
 
-#: src/control/Control.Toolbar.js:2173
+#: src/control/Control.Toolbar.js:2177
 msgid "Font"
 msgstr "फन्ट"
 
-#: src/control/Control.Toolbar.js:2199
+#: src/control/Control.Toolbar.js:2203
 msgid "Previous slide"
 msgstr "अघिल्लो स्लाइड"
 
-#: src/control/Control.Toolbar.js:2200
+#: src/control/Control.Toolbar.js:2204
 msgid "Next slide"
 msgstr "पछिल्लो स्लाइड"
 
-#: src/control/Control.Toolbar.js:2258
+#: src/control/Control.Toolbar.js:2262
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "धेरै प्रयोगकर्ताहरू सँग विवादास्पद अनडू/रिडू। कृपया समाधान गर्नको लागि कागजात मर्मत प्रयोग गर्नुहोस्"
 
-#: src/control/Control.Toolbar.js:2545
+#: src/control/Control.Toolbar.js:2549
 msgid "Readonly"
 msgstr "पढ्ने मात्र"
 
@@ -890,7 +904,7 @@ msgstr "हस्ताक्षरित तर सबै फाईलहरू
 msgid "Downloading..."
 msgstr "डाउनलोड गर्दै..."
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1399
+#: src/control/Toolbar.js:104 src/map/Map.js:1409
 msgid "Saving..."
 msgstr "सङ्ग्रह गर्दै..."
 
@@ -912,10 +926,6 @@ msgstr ""
 
 #: src/control/Toolbar.js:452
 msgid "Link"
-msgstr ""
-
-#: src/control/Toolbar.js:455
-msgid "OK"
 msgstr ""
 
 #: src/core/Socket.js:59
@@ -994,7 +1004,7 @@ msgstr "भियु-अन्ली मोडमा खोल्न रद्�
 msgid "Wrong password provided. Please try again."
 msgstr "गलत पासवर्ड प्रदान गरियो। कृपया पुन: प्रयास गर्नुहोस।"
 
-#: src/core/Socket.js:751 src/map/Map.js:1402
+#: src/core/Socket.js:751 src/map/Map.js:1412
 msgid "Loading..."
 msgstr "लोडहुँदै छ..."
 
@@ -1165,15 +1175,15 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:767
+#: src/map/Clipboard.js:771
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:792
+#: src/map/Clipboard.js:796
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:808
+#: src/map/Clipboard.js:812
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
 msgstr ""
 
@@ -1191,7 +1201,7 @@ msgstr "%d सेकेन्ड पहिले"
 msgid "%d minutes ago"
 msgstr "%d मिनेट पहिले"
 
-#: src/map/Map.js:1263
+#: src/map/Map.js:1273
 msgid "Inactive document - please click to resume editing"
 msgstr "निस्क्रिय कागजात - स्पादन पुनःसुरु गर्न क्लिक गर्नुहोस्"
 
