@@ -93,7 +93,7 @@
     <string name="file_exists_warning">Dataja z tutym mjenom hižo eksistuje a so přepisa.</string>
     <string name="temp_file_saving_disabled">Tuta dataja da so jenož čitać, składowanje je znjemóžnjene.</string>
     <string name="no_items">Žane zapiski</string>
-    <string name="no_recent_items">Žane aktualne zapiski</string>
+    <string name="no_recent_items">Prošu wočińće dataju z pomocu rjadowakoweho symbola w symbolowej lajsće.</string>
     <string name="app_vendor">Tute wozjewjenje je so wot $VENDOR k dispoziciji stajiło.</string>
     <string name="app_version">Wersija: %1$s, Build ID: %2$s</string>
     <string name="app_name_settings">Nastajenja</string>

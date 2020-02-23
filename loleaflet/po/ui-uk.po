@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-02-19 23:15+0000\n"
-"Last-Translator: Євген Кондратюк <lachend@gmail.com>\n"
+"PO-Revision-Date: 2020-02-23 18:15+0000\n"
+"Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -396,7 +396,7 @@ msgstr "Вставити таблицю"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Стиль лінії:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231

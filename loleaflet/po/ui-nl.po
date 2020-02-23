@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-02-17 04:11+0000\n"
-"Last-Translator: kees538 <kees538@gmail.com>\n"
+"PO-Revision-Date: 2020-02-23 18:15+0000\n"
+"Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Dutch <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -396,7 +396,7 @@ msgstr "Tabel invoegen"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Lijnstijl:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231

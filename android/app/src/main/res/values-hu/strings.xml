@@ -91,7 +91,7 @@
     <string name="file_exists_warning">Már létezik ilyen nevű fájl, felül lesz írva.</string>
     <string name="temp_file_saving_disabled">Ez a fájl írásvédett, a mentés le van tiltva.</string>
     <string name="no_items">Nincsenek elemek</string>
-    <string name="no_recent_items">Nincsenek előzmények</string>
+    <string name="no_recent_items">A fájlok megnyitásához használja az eszköztáron levő mappa ikont.</string>
     <string name="app_vendor">Ezt a kiadást a $VENDOR adta ki.</string>
     <string name="app_description">A $APP_NAME egy modern, könnyen használható, nyílt forrású programcsomag szövegszerkesztéshez, táblázatkezeléshez és bemutatókészítéshez.</string>
     <string name="app_version">Verzió: %1$s, Build ID: %2$s</string>

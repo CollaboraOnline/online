@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-02-18 14:03+0000\n"
-"Last-Translator: pan93412 <pan93412@gmail.com>\n"
+"PO-Revision-Date: 2020-02-23 18:15+0000\n"
+"Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -396,7 +396,7 @@ msgstr "插入表格"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "線條樣式:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
@@ -929,7 +929,7 @@ msgstr "IE11 已達其最大連線數。請查看此文件視需要調高限制�
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "糟糕，連接至 LibreOffice Online 時發生問題："
+msgstr "糟糕，連接至 LibreOffice Online 時發生問題： "
 
 #: src/core/Socket.js:294
 msgid "Served by:"

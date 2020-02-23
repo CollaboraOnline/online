@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-02-12 12:29+0000\n"
+"PO-Revision-Date: 2020-02-23 18:15+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hsb/>\n"
 "Language: hsb\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /hsb/libo_online/loleaflet-ui-hsb.po\n"
 "X-Pootle-Revision: 3938371\n"
 
@@ -396,7 +396,7 @@ msgstr "Tabelu zasadźić"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Linijowy stil:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231

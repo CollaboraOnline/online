@@ -92,7 +92,7 @@
     <string name="file_exists_warning">Soubor s tímto názvem již existuje a bude přepsán.</string>
     <string name="temp_file_saving_disabled">Soubor je pouze pro čtení, ukládání je zakázáno.</string>
     <string name="no_items">Žádné položky</string>
-    <string name="no_recent_items">Žádné nedávné položky</string>
+    <string name="no_recent_items">Otevřete soubor klepnutím na ikonu složky v nástrojové liště.</string>
     <string name="app_vendor">Toto vydání bylo dodáno společností $VENDOR.</string>
     <string name="app_description">$APP_NAME je moderní, snadno použitelný, open source kancelářský balík pro zpracování textu, tabulky, prezentace a další.</string>
     <string name="app_version">Verze: %1$s, ID sestavení: %2$s</string>

@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-01-15 17:28+0000\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"PO-Revision-Date: 2020-02-23 18:15+0000\n"
+"Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -255,7 +255,7 @@ msgstr "Strežnik je naletel na napako %0 pri razčlenjevanju ukaza %1."
 
 #: src/control/Control.ContextMenu.js:171
 msgid "Delete"
-msgstr ""
+msgstr "Izbriši"
 
 #: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
@@ -393,7 +393,7 @@ msgstr "Vstavi tabelo"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Slog črte:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
@@ -544,15 +544,15 @@ msgstr "Izvozi kot"
 
 #: src/control/Control.Menubar.js:499
 msgid "Page Setup"
-msgstr ""
+msgstr "Priprava strani"
 
 #: src/control/Control.Menubar.js:500
 msgid "Portrait"
-msgstr ""
+msgstr "Pokončno"
 
 #: src/control/Control.Menubar.js:501
 msgid "Landscape"
-msgstr ""
+msgstr "Ležeče"
 
 #: src/control/Control.Menubar.js:762 src/control/Control.Toolbar.js:2058
 msgid "Reset to Default Language"
@@ -615,10 +615,8 @@ msgid "Insert shapes"
 msgstr "Vstavi like"
 
 #: src/control/Control.Toolbar.js:1061
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Funkcija"
+msgstr "Čarovnik za funkcije"
 
 #: src/control/Control.Toolbar.js:1105
 msgid "First sheet"

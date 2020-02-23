@@ -93,7 +93,7 @@
     <string name="file_exists_warning">Badago izen hori duen fitxategi bat, eta gainidatzi egingo da.</string>
     <string name="temp_file_saving_disabled">Fitxategia irakurtzeko soilik da, gordetzea desgaituta dago.</string>
     <string name="no_items">Ez dago elementurik</string>
-    <string name="no_recent_items">Ez dago azken aldiko elementurik</string>
+    <string name="no_recent_items">Ireki fitxategi bat tresna-barrako karpeta-ikonoa erabilita.</string>
     <string name="app_vendor">Bertsio honen hornitzailea $VENDOR da.</string>
     <string name="app_version">Bertsioa: %1$s, eraikuntza IDa: %2$s</string>
     <string name="app_name_settings">Ezarpenak</string>

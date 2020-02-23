@@ -92,7 +92,7 @@
     <string name="file_exists_warning">Dataja z toś tym mjenim južo eksistěrujo a se pśepišo.</string>
     <string name="temp_file_saving_disabled">Toś ta dataja dajo se janož cytaś, składowanje jo znjemóžnjone.</string>
     <string name="no_items">Žedne zapiski</string>
-    <string name="no_recent_items">Žedne aktualne zapiski</string>
+    <string name="no_recent_items">Pšosym wócyńśo dataju z pomocu zarědnikowego symbola w symbolowej rědce.</string>
     <string name="app_vendor">"Toś to wózjawjenje jo se  wót $VENDOR k dispoziciji stajiło."</string>
     <string name="app_description">$APP_NAME jo moderny, lažko wužywajobny běrowy paket wótwórjonego žrědła za pśeźěłowanje tekstow, tabelow, prezentacijow a wěcej.</string>
     <string name="app_version">Wersija: %1$s, Build ID: %2$s</string>
