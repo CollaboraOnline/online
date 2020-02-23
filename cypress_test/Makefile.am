@@ -7,7 +7,7 @@ WAIT_ON_BINARY = $(abs_builddir)/node_modules/wait-on/bin/wait-on
 GET_PORT_BINARY = $(abs_builddir)/node_modules/get-port-cli/cli.js
 NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
 
-PID_FILE=$(abs_builddir)/loolwsd.pid
+PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
 
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
