@@ -5,6 +5,7 @@ CYPRESS_BINARY = $(abs_builddir)/node_modules/cypress/bin/cypress
 ESLINT_BINARY = $(abs_builddir)/node_modules/eslint/bin/eslint.js
 WAIT_ON_BINARY = $(abs_builddir)/node_modules/wait-on/bin/wait-on
 GET_PORT_BINARY = $(abs_builddir)/node_modules/get-port-cli/cli.js
+NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
 
 PID_FILE=$(abs_builddir)/loolwsd.pid
 
@@ -118,8 +119,12 @@ NODE_BINS = \
 	$(WAIT_ON_BINARY) \
 	$(GET_PORT_BINARY)
 
-$(NODE_BINS):
+$(NODE_BINS): $(NPM_INSTALLED);
+
+$(NPM_INSTALLED):
 	@npm install
+	@mkdir -p $(dir $(NPM_INSTALLED))
+	@touch $(NPM_INSTALLED)
 
 endif
 
