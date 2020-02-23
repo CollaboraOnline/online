@@ -3518,9 +3518,10 @@ int LOOLWSD::innerMain()
         SigUtil::requestShutdown();
     }
 #endif
+
     // Don't stop the DocBroker, they will exit.
     constexpr size_t sleepMs = 500;
-    constexpr size_t count = (COMMAND_TIMEOUT_MS * 4) / sleepMs;
+    constexpr size_t count = (COMMAND_TIMEOUT_MS * 6) / sleepMs;
     for (size_t i = 0; i < count; ++i)
     {
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -3533,6 +3534,12 @@ int LOOLWSD::innerMain()
 
         // Give them time to save and cleanup.
         std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
+    }
+
+    if (UnitWSD::isUnitTesting() && !SigUtil::getTerminationFlag())
+    {
+        LOG_INF("Setting TerminationFlag to avoid deadlocking unittest.");
+        SigUtil::setTerminationFlag();
     }
 
     // Disable thread checking - we'll now cleanup lots of things if we can

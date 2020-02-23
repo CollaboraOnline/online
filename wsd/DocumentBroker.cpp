@@ -1381,8 +1381,8 @@ size_t DocumentBroker::removeSession(const std::string& id)
                 << " sessions. IsReadOnly: " << session->isReadOnly()
                 << ", IsViewLoaded: " << session->isViewLoaded() << ", IsWaitDisconnected: "
                 << session->inWaitDisconnected() << ", MarkToDestroy: " << _markToDestroy
-                << ", LastEditableSession: " << lastEditableSession
-                << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
+                << ", LastEditableSession: " << lastEditableSession << ", DontSaveIfUnmodified: "
+                << dontSaveIfUnmodified << ", IsPossiblyModified: " << isPossiblyModified());
 
         // If last editable, save and don't remove until after uploading to storage.
         if (!lastEditableSession || !autoSave(isPossiblyModified(), dontSaveIfUnmodified))

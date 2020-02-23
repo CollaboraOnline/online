@@ -113,7 +113,7 @@ public:
             // Request the child to exit
             if (isAlive())
             {
-                LOG_DBG("Stopping ChildProcess [" << _pid << "]");
+                LOG_DBG("Stopping ChildProcess [" << _pid << "] by sending 'exit' command.");
                 sendTextFrame("exit");
             }
 
@@ -126,7 +126,7 @@ public:
             LOG_ERR("Error while closing child process: " << ex.what());
         }
 
-        _pid = -1;
+        _pid = -1; // Detach from child.
     }
 
     /// Kill or abandon the child.

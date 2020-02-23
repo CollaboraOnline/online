@@ -203,10 +203,10 @@ void UnitBase::exitTest(TestResult result)
         return;
     }
 
-    LOG_INF("exitTest: " << (int)result << ". Flagging for termination.");
+    LOG_INF("exitTest: " << (int)result << ". Flagging to shutdown.");
     _setRetValue = true;
     _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;
-    SigUtil::setTerminationFlag();
+    SigUtil::requestShutdown();
     SocketPoll::wakeupWorld();
 }
 
