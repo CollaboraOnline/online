@@ -302,6 +302,20 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onTap: function (e) {
+
+		// We receive each tap here, even when double- and triple-taps
+		// are detected. This is undesirable as the subsequent taps
+		// processed here interfere with the double- and triple-tap
+		// handlers, confusing Core (and the user) as the result
+		// is not what's expected (objects not getting selected,
+		// edit mode not entered, or toggled, keyboard toggles, etc.).
+		// We only process the first tap and subsequent ones are handled
+		// by the double-tap and triple-tap handlers below.
+		// Note: Hammer has requireFailure() which supressses this call
+		// when multi-taps are detected. This isn't working for us.
+		if (e.tapCount > 1)
+			return;
+
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
