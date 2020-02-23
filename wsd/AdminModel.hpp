@@ -13,6 +13,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <list>
 
 #include <Poco/Process.h>
 
