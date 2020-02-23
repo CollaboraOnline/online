@@ -14,6 +14,7 @@
 #include <set>
 #include <string>
 #include <cmath>
+#include <list>
 
 #include <Poco/Process.h>
 
