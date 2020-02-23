@@ -30,6 +30,7 @@
 #include <Poco/FileStream.h>
 #include <Poco/StreamCopier.h>
 
+#include <helpers.hpp>
 #include <Unit.hpp>
 #include <wsd/LOOLWSD.hpp>
 
@@ -100,20 +101,49 @@ bool isStandalone()
     return IsStandalone;
 }
 
-static std::mutex errorMutex;
+static std::mutex ErrorMutex;
 static bool IsVerbose = false;
-static std::stringstream errors;
+static std::ostringstream ErrorsStream;
 
 void tstLog(const std::ostringstream &stream)
 {
     if (IsVerbose)
-        std::cerr << stream.str() << std::endl;
+        writeTestLog(stream.str() + '\n');
     else
     {
-        std::lock_guard<std::mutex> lock(errorMutex);
-        errors << stream.str();
+        std::lock_guard<std::mutex> lock(ErrorMutex);
+        ErrorsStream << stream.str();
     }
 }
+
+class TestProgressListener : public CppUnit::TestListener
+{
+    TestProgressListener(const TestProgressListener& copy) = delete;
+    void operator=(const TestProgressListener& copy) = delete;
+
+public:
+    TestProgressListener() {}
+    virtual ~TestProgressListener() {}
+
+    void startTest(CppUnit::Test* test)
+    {
+        _name = test->getName();
+        writeTestLog("\n=============== START " + _name + '\n');
+    }
+
+    void addFailure(const CppUnit::TestFailure& failure)
+    {
+        if (failure.isError())
+            writeTestLog("\n>>>>>>>> FAILED " + _name + " <<<<<<<<<\n");
+        else
+            writeTestLog("\n>>>>>>>> PASS " + _name + " <<<<<<<<<\n");
+    }
+
+    void done() { writeTestLog("\n=============== END " + _name + " ===============\n"); }
+
+private:
+    std::string _name;
+};
 
 // returns true on success
 bool runClientTests(bool standalone, bool verbose)
@@ -124,9 +154,7 @@ bool runClientTests(bool standalone, bool verbose)
     CPPUNIT_NS::TestResult controller;
     CPPUNIT_NS::TestResultCollector result;
     controller.addListener(&result);
-    CPPUNIT_NS::BriefTestProgressListener progress;
-    controller.addListener(&progress);
-    CPPUNIT_NS::TextTestProgressListener listener;
+    TestProgressListener listener;
     controller.addListener(&listener);
 
     CPPUNIT_NS::Test* testRegistry = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
@@ -158,9 +186,9 @@ bool runClientTests(bool standalone, bool verbose)
     {
         runner.run(controller);
 
-        // output the errors we got during the testing
+        // output the ErrorsStream we got during the testing
         if (!result.wasSuccessful())
-            std::cerr << errors.str() << std::endl;
+            writeTestLog(ErrorsStream.str() + '\n');
     }
     else
     {

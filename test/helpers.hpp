@@ -31,7 +31,6 @@
 
 #include <Common.hpp>
 #include "common/FileUtil.hpp"
-#include "test/test.hpp"
 #include <LOOLWebSocket.hpp>
 #include <Util.hpp>
 
@@ -41,22 +40,71 @@
 
 // Oh dear std::cerr and/or its re-direction is not
 // necessarily thread safe on Linux
+// This is the canonical test log function.
+inline void writeTestLog(const char* const p)
+{
+    fputs(p, stderr);
+    fflush(stderr);
+}
+
+inline void writeTestLog(const std::string& s) { writeTestLog(s.c_str()); }
+
 #ifdef TST_LOG_REDIRECT
-  void tstLog(const std::ostringstream &stream);
+void tstLog(const std::ostringstream& stream);
 #else
-  inline void tstLog(const std::ostringstream &stream)
-  {
-      fprintf(stderr, "%s", stream.str().c_str());
-  }
+inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()); }
 #endif
-#define TST_LOG_NAME_BEGIN(NAME, X) do { \
-                        char t[64]; Poco::DateTime time; snprintf(t, sizeof(t), "%.2u:%.2u:%.2u.%.6u (@%zums) ", \
-                        time.hour(), time.minute(), time.second(), time.millisecond() * 1000 + time.microsecond(), helpers::timeSinceTestStartMs()); \
-                        std::ostringstream str; str << NAME << t << X; tstLog(str); } while (false)
-#define TST_LOG_BEGIN(X) TST_LOG_NAME_BEGIN(testname, X)
-#define TST_LOG_APPEND(X) do { std::ostringstream str; str << X; tstLog(str); } while (false)
-#define TST_LOG_END do { std::ostringstream str; str << "| " << __FILE__ << ':' << __LINE__ << std::endl; tstLog(str); } while (false)
-#define TST_LOG_NAME(NAME, X) TST_LOG_NAME_BEGIN(NAME, X); TST_LOG_END
+
+#define TST_LOG_NAME_BEGIN(OSS, NAME, X, FLUSH)                                                    \
+    do                                                                                             \
+    {                                                                                              \
+        char t[64];                                                                                \
+        Poco::DateTime time;                                                                       \
+        snprintf(t, sizeof(t), "%.2u:%.2u:%.2u.%.6u (@%zums) ", time.hour(), time.minute(),        \
+                 time.second(), time.millisecond() * 1000 + time.microsecond(),                    \
+                 helpers::timeSinceTestStartMs());                                                 \
+        OSS << NAME << t << X;                                                                     \
+        if (FLUSH)                                                                                 \
+            tstLog(OSS);                                                                           \
+    } while (false)
+
+#define TST_LOG_BEGIN(X)                                                                           \
+    do                                                                                             \
+    {                                                                                              \
+        std::ostringstream oss;                                                                    \
+        TST_LOG_NAME_BEGIN(oss, testname, X, true);                                                \
+    } while (false)
+
+#define TST_LOG_APPEND(X)                                                                          \
+    do                                                                                             \
+    {                                                                                              \
+        std::ostringstream str;                                                                    \
+        str << X;                                                                                  \
+        tstLog(str);                                                                               \
+    } while (false)
+
+#define TST_LOG_END_X(OSS)                                                                         \
+    do                                                                                             \
+    {                                                                                              \
+        OSS << "| " __FILE__ ":" << __LINE__ << '\n';                                              \
+        tstLog(OSS);                                                                               \
+    } while (false)
+
+#define TST_LOG_END                                                                                \
+    do                                                                                             \
+    {                                                                                              \
+        std::ostringstream oss_log_end;                                                            \
+        TST_LOG_END_X(oss_log_end);                                                                \
+    } while (false)
+
+#define TST_LOG_NAME(NAME, X)                                                                      \
+    do                                                                                             \
+    {                                                                                              \
+        std::ostringstream oss_log_name;                                                           \
+        TST_LOG_NAME_BEGIN(oss_log_name, NAME, X, false);                                          \
+        TST_LOG_END_X(oss_log_name);                                                               \
+    } while (false)
+
 #define TST_LOG(X) TST_LOG_NAME(testname, X)
 
 // Sometimes we need to retry some commands as they can (due to timing or load) soft-fail.
