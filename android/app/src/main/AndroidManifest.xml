@@ -23,11 +23,15 @@
         android:supportsRtl="true"
         android:theme="@style/LibreOfficeTheme">
         <!-- SlideShow Activity -->
-        <activity android:name="org.libreoffice.androidlib.SlideShowActivity"
+        <activity
+            android:name="org.libreoffice.androidlib.SlideShowActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:screenOrientation="sensorLandscape"/>
+
         <!-- Document Browser Activity -->
         <activity
             android:name=".ui.LibreOfficeUIActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +46,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="org.libreoffice.androidlib.LOActivity">
+
+        <!-- The main document editing Activity -->
+        <activity
+            android:name="org.libreoffice.androidlib.LOActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
@@ -108,12 +116,18 @@
                 <data android:mimeType="image/svg+xml" />
             </intent-filter>
         </activity>
+
+        <!-- The Activity to show license or notice -->
         <activity
             android:name=".ShowHTMLActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:label="@string/title_activity_show_html" />
+
+        <!-- The Settings Activity -->
         <activity
             android:name=".SettingsActivity"
             android:label="@string/app_name_settings"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light" />
 
         <provider
