@@ -3,6 +3,8 @@
 var helper = require('../../common/helper');
 
 describe('Change shape properties via mobile wizard.', function() {
+	var defaultGeometry = 'M 1965,4810 L 7957,10802 1965,10802 1965,4810 1965,4810 Z';
+
 	beforeEach(function() {
 		helper.beforeAllMobile('shape_properties.odt', 'writer');
 
@@ -79,7 +81,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Check default shape geometry.', function() {
 		// Geometry
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', 'M 1965,4810 L 7957,10802 1965,10802 1965,4810 1965,4810 Z');
+			.should('have.attr', 'd', defaultGeometry);
 		// Fill color
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('have.attr', 'fill', 'rgb(114,159,207)');
@@ -98,6 +100,9 @@ describe('Change shape properties via mobile wizard.', function() {
 			.type('{enter}');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('have.attr', 'd', defaultGeometry);
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('have.attr', 'd', 'M 1965,4810 L 12635,10802 1965,10802 1965,4810 1965,4810 Z');
 	});
 
@@ -112,6 +117,9 @@ describe('Change shape properties via mobile wizard.', function() {
 			.clear()
 			.type('5.2')
 			.type('{enter}');
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('not.have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('have.attr', 'd', 'M 1965,4810 L 7957,18020 1965,18020 1965,4810 1965,4810 Z');
@@ -138,6 +146,9 @@ describe('Change shape properties via mobile wizard.', function() {
 			.type('{enter}');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('not.have.attr', 'd', defaultGeometry);
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('have.attr', 'd', 'M 1965,4810 L 15175,18020 1965,18020 1965,4810 1965,4810 Z');
 	});
 
@@ -146,6 +157,9 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		cy.get('#FlipVertical')
 			.click();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('not.have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('have.attr', 'd', 'M 1965,10800 L 7957,4808 1965,4808 1965,10800 1965,10800 Z');
@@ -157,8 +171,13 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#FlipHorizontal')
 			.click();
 
+		triggerNewSVG();
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', 'M 1965,4810 L 7957,10802 1965,10802 1965,4810 1965,4810 Z');
+			.should('not.have.attr', 'd', defaultGeometry);
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('have.attr', 'd', 'M 8010,4810 L 1963,10802 8010,10802 8010,4810 8010,4810 Z');
 	});
 
 	it('Trigger moving backward / forward', function() {
