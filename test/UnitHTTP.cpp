@@ -193,6 +193,12 @@ public:
             return;
         }
 
+        // Sometimes we get the content with the first recieve.
+        if (strstr(buffer, "\357\273\277This is some text.\nAnd some more.\n"))
+        {
+            return;
+        }
+
         // Oddly we need another read to get the content.
         got = socket->receiveBytes(buffer, 4096);
         CPPUNIT_ASSERT_MESSAGE("No content returned.", got >= 0);
