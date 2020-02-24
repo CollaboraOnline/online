@@ -219,7 +219,7 @@ body {
 	.w2ui-tag .w2ui-tag-top{display:none !important;}
 }
 
-@media (max-width: 767px), (max-device-height: 767px), (max-width: 900px) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (any-pointer: coarse) and (hover: none){
+@media (max-width: 767px), (max-device-height: 767px) {
 	/* Show slidesorter beyond 768px only */
 	#presentation-controls-wrapper {
 		top: initial;
@@ -294,7 +294,8 @@ body {
 		display: block !important;
 	}
 }
-@media (max-width: 767px) and (orientation: portrait),(max-device-height: 767px) and (orientation: portrait), (max-width: 900px) and (orientation: portrait) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (orientation: portrait)  and (any-pointer: coarse)  and (hover: none){
+
+@media (max-width: 767px) and (orientation: portrait), (max-device-height: 767px) and (orientation: portrait) {
 	#presentation-controls-wrapper {
 		top: initial;
 		left: initial;
@@ -325,7 +326,7 @@ body {
 		bottom: 33px;
 	}
 }
-@media (max-width: 767px) and (orientation: landscape),(max-device-height: 767px) and (orientation: landscape), (max-width: 900px) and (orientation: landscape) and (any-pointer: coarse) and (hover: none), (max-height: 900px) and (orientation: landscape)  and (any-pointer: coarse)  and (hover: none){
+@media (max-width: 767px) and (orientation: landscape), (max-device-height: 767px) and (orientation: landscape) {
 	#document-container.parts-preview-document {
 		left: 66px !important;
 		bottom: 33px;
