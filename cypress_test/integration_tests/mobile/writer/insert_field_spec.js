@@ -15,7 +15,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.click();
 
 		// Open fields submenu
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon.flex-fullwidth')
 			.contains('More Fields...')
 			.click();
 

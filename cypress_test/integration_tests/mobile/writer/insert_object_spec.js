@@ -53,7 +53,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Open Table submenu
-		cy.get('.menu-entry-with-icon.flex-fullwidth')
+		cy.get('.ui-header.level-0.mobile-wizard.ui-widget')
 			.contains('Table')
 			.click();
 		cy.get('.mobile-wizard.ui-text')
@@ -88,7 +88,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Open Table submenu
-		cy.get('.menu-entry-with-icon.flex-fullwidth')
+		cy.get('.ui-header.level-0.mobile-wizard.ui-widget')
 			.contains('Table')
 			.click();
 		cy.get('.mobile-wizard.ui-text')
@@ -135,14 +135,14 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Open header/footer submenu
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon')
 			.contains('Header and Footer')
 			.click();
 		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
 			.should('be.visible');
 
 		// Open header submenu
-		cy.get('.ui-header.level-1.mobile-wizard.ui-widget .sub-menu-title')
+		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
 			.contains('Header')
 			.click();
 
@@ -176,14 +176,14 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Open header/footer submenu
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon')
 			.contains('Header and Footer')
 			.click();
 		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
 			.should('be.visible');
 
 		// Open footer submenu
-		cy.get('.ui-header.level-1.mobile-wizard.ui-widget .sub-menu-title')
+		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
 			.contains('Footer')
 			.click();
 

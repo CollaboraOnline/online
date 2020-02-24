@@ -15,7 +15,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.click();
 
 		// Open formatting marks
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon.flex-fullwidth')
 			.contains('Formatting Mark')
 			.click();
 
@@ -29,7 +29,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert non-breaking space.', function() {
-		cy.get('.menu-entry-no-icon')
+		cy.get('.menu-entry-with-icon')
 			.contains('Non-breaking space')
 			.click();
 
