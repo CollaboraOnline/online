@@ -284,6 +284,7 @@ describe('Apply font changes.', function() {
 		// So better to hide it.
 		cy.get('#Spacing')
 			.should('not.exist');
+		cy.wait(2000);
 	});
 });
 
