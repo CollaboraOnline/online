@@ -21,7 +21,7 @@ add_library(androidapp SHARED
             ../../../../../wsd/Storage.cpp
             ../../../../../wsd/TileCache.cpp)
 
-target_compile_definitions(androidapp PRIVATE LOOLWSD_CONFIGDIR="/etc/loolwsd") # TODO somewhere in assets maybe?
+target_compile_definitions(androidapp PRIVATE LOOLWSD_CONFIGDIR="/assets/etc/loolwsd")
 
 # According to the ABI, we need to use different source trees
 if(${ANDROID_ABI} STREQUAL "armeabi-v7a")

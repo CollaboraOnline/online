@@ -25,3 +25,5 @@
 <item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="VerticalText" oor:op="fuse"><value>false</value></prop></item>
 <item oor:path="/org.openoffice.Office.Common/I18N/CTL"><prop oor:name="CTLFont" oor:op="fuse"><value>false</value></prop></item>
 
+</oor:items>
+
