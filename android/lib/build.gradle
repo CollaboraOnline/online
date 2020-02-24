@@ -127,9 +127,21 @@ task copyUnpackAssets(type: Copy) {
     }
     into('share') {
         from "${liboInstdir}/share"
-        // extensions - for the dictionaries for hunspell
         // liblangtag data is needed for locales like en-CH
-        includes = ['extensions/dict-de/**', 'extensions/dict-en/**', 'extensions/dict-es/**', 'extensions/dict-pt-BR/**', 'liblangtag/**']
+        include 'liblangtag/**'
+    }
+
+    into('share') {
+        from "${liboInstdir}/share"
+        // extensions - for the dictionaries for hunspell
+        includes = ['extensions/dict-de/**', 'extensions/dict-en/**', 'extensions/dict-es/**', 'extensions/dict-pt-BR/**']
+        exclude { FileTreeElement details ->
+            !(details.file.isDirectory() ||
+                details.file.name.endsWith('.xcu') ||
+                details.file.name.endsWith('.dic') ||
+                details.file.name.endsWith('.aff') ||
+                details.file.name.endsWith('.xml'))
+        }
     }
 }
 
