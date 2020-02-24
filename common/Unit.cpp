@@ -206,7 +206,9 @@ void UnitBase::exitTest(TestResult result)
     LOG_INF("exitTest: " << (int)result << ". Flagging to shutdown.");
     _setRetValue = true;
     _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;
+#if !MOBILEAPP
     SigUtil::requestShutdown();
+#endif
     SocketPoll::wakeupWorld();
 }
 
