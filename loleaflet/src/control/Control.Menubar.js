@@ -622,9 +622,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 					{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
 					{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
-					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
+					{name: _UNO('.uno:TableMenu'), id: 'inserttable_mono', type: 'action'},
 					{type: 'separator'},
-					{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
+					{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
 						{uno: '.uno:InsertPageNumberField'},
 						{uno: '.uno:InsertPageCountField'},
 						{uno: '.uno:InsertDateField'},
@@ -633,10 +633,10 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertAuthorField'},
 						{uno: '.uno:InsertTopicField'}
 					]},
-					{name: _UNO('.uno:InsertHeaderFooterMenu', 'text'), type: 'menu', menu: [
-						{name: _UNO('.uno:InsertPageHeader', 'text'), type: 'menu', menu: [
+					{name: _UNO('.uno:InsertHeaderFooterMenu', 'text'), id: 'insertheaderfooter', type: 'menu', menu: [
+						{name: _UNO('.uno:InsertPageHeader', 'text'), id: 'insertpageheader', type: 'menu', menu: [
 							{name: _('All'), disabled: true, id: 'insertheader', tag: '_ALL_', uno: '.uno:InsertPageHeader?On:bool=true'}]},
-						{name: _UNO('.uno:InsertPageFooter', 'text'), type: 'menu', menu: [
+						{name: _UNO('.uno:InsertPageFooter', 'text'), id: 'insertpagefooter', type: 'menu', menu: [
 							{name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?On:bool=true'}]}
 					]},
 					{uno: '.uno:InsertFootnote'},
@@ -647,8 +647,8 @@ L.Control.Menubar = L.Control.extend({
 					{type: 'separator'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
-					{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
-						{uno: '.uno:InsertNonBreakingSpace'},
+					{name: _UNO('.uno:FormattingMarkMenu', 'text'), id: 'formattingmark', type: 'menu', menu: [
+						{name: _UNO('.uno:InsertNonBreakingSpace'), id: 'insertnonbreakingspace', type: 'action'},
 						{uno: '.uno:InsertHardHyphen'},
 						{uno: '.uno:InsertSoftHyphen'},
 						{uno: '.uno:InsertZWSP'},
@@ -679,7 +679,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
 					{uno: '.uno:Text'},
-					{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
+					{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
 						{uno: '.uno:InsertDateFieldFix'},
 						{uno: '.uno:InsertDateFieldVar'},
 						{uno: '.uno:InsertTimeFieldFix'},
