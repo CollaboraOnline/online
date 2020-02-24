@@ -29,7 +29,7 @@ L.Map.SlideShow = L.Handler.extend({
 			return;
 		}
 
-		if (!window.RichDocumentsMobileInterface) {
+		if (!this._map['wopi'].DownloadAsPostMessage) {
 			this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);
 			if (this._slideShow.requestFullscreen) {
 				this._slideShow.requestFullscreen();
@@ -53,7 +53,7 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onFullScreenChange: function () {
-		if (window.RichDocumentsMobileInterface) {
+		if (this._map['wopi'].DownloadAsPostMessage) {
 			return;
 		}
 
@@ -67,12 +67,8 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onSlideDownloadReady: function (e) {
-		if (window.RichDocumentsMobileInterface) {
-			window.RichDocumentsMobileInterface.slideShow(e.url);
-		} else {
-			this._slideShow.src = e.url;
-			this._slideShow.contentWindow.focus();
-		}
+		this._slideShow.src = e.url;
+		this._slideShow.contentWindow.focus();
 	}
 });
 
