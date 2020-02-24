@@ -35,29 +35,14 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#CenterPara')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		cy.get('#CenterParaimg')
+			.should('have.class', 'selected');
 
-		helper.copyTextToClipboard();
-
-		cy.get('#copy-paste-container p')
-			.should('have.attr', 'align', 'center');
-
-		// Select text
-		helper.selectAllMobile();
-
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Open paragraph properties
-		cy.get('#Paragraph')
-			.click();
-
-		// Change alignment
 		cy.get('#LeftPara')
 			.click();
+
+		cy.get('#LeftParaimg')
+			.should('have.class', 'selected');
 
 		// Close mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
