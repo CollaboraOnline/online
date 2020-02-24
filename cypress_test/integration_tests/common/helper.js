@@ -127,7 +127,7 @@ function copyTableToClipboard() {
 			}
 
 			var XPos = startPos.right + 10;
-			var YPos = endPos.top - 10;
+			var YPos = (startPos.top + endPos.top) / 2;
 			longPressOnDocument(XPos, YPos);
 		});
 

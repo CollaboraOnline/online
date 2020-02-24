@@ -326,11 +326,11 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('#rowheight .spinfield')
 			.clear()
-			.type('3.4')
+			.type('1.4')
 			.type('{enter}');
 
 		cy.get('#rowheight .spinfield')
-			.should('have.attr', 'value', '3.4');
+			.should('have.attr', 'value', '1.4');
 
 		// Close mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -340,7 +340,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		// Check row height
 		cy.get('#copy-paste-container td')
-			.should('have.attr', 'height', '317');
+			.should('have.attr', 'height', '125');
 	});
 
 	it('Change column width.', function() {
@@ -433,9 +433,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 				expect(items).have.lengthOf(6);
 				for (var i = 0; i < items.length; i++) {
 					if (i == 0 || i == 4)
-						expect(items[i]).have.attr('height', '106');
+						expect(items[i]).have.attr('height', '33');
 					else if (i == 2)
-						expect(items[i]).have.attr('height', '107');
+						expect(items[i]).have.attr('height', '34');
 					else
 						expect(items[i]).not.have.attr('height');
 				}
@@ -471,9 +471,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 				expect(items).have.lengthOf(6);
 				for (var i = 0; i < items.length; i++) {
 					if (i == 0 || i == 4)
-						expect(items[i]).have.attr('height', '106');
+						expect(items[i]).have.attr('height', '33');
 					else if (i == 2)
-						expect(items[i]).have.attr('height', '107');
+						expect(items[i]).have.attr('height', '34');
 					else
 						expect(items[i]).not.have.attr('height');
 				}
