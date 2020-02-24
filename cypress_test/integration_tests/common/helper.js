@@ -70,7 +70,9 @@ function selectAllMobile() {
 		.contains('Edit')
 		.click();
 
-	cy.wait(200);
+	cy.get('.ui-header.level-1 .menu-entry-with-icon')
+		.should('be.visible')
+		.wait(100);
 
 	// Do the selection
 	cy.get('.ui-header.level-1 .menu-entry-with-icon')
