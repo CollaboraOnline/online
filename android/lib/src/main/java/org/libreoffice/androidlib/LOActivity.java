@@ -670,7 +670,11 @@ public class LOActivity extends AppCompatActivity {
                 urlToLoad + "&closebutton=1";
 
         // set the language
-        finalUrlToLoad += "&lang=" + getResources().getConfiguration().locale.toLanguageTag();
+        String language = getResources().getConfiguration().locale.toLanguageTag();
+
+        Log.i(TAG, "Loading with language:  " + language);
+
+        finalUrlToLoad += "&lang=" + language;
 
         if (isDocEditable) {
             finalUrlToLoad += "&permission=edit";
