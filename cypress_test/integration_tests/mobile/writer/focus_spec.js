@@ -135,7 +135,7 @@ describe('Focus tests', function() {
 			.should('not.be.empty');
 
 		// Select More Fields
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .sub-menu-title')
+		cy.get('.ui-header.level-0.mobile-wizard.ui-widget')
 			.contains('More Fields...')
 			.parent().click();
 
