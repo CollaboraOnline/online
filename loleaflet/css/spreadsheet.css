@@ -2,7 +2,7 @@
 				border-top: 1px solid #B6B6B6;
 				top: 137px;
 				left: 50px;
-				bottom: 68px;
+				bottom: 75px;
 }
 
 #document-container.spreadsheet-document.readonly {
@@ -24,7 +24,7 @@
 	bottom: 33px;
 	position: absolute;
 	cursor: pointer;
-	height: 32px;
+	height: 39px;
 	overflow: hidden;
 	white-space: nowrap;
 
@@ -46,8 +46,8 @@
 	margin-right: 3px;
 	padding-left: 9px;
 	padding-right: 9px;
-	padding-top: 3px;
-	padding-bottom: 3px;
+	padding-top: 10px;
+	padding-bottom: 5px;
 
 	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
 	display: inline-block;
@@ -60,7 +60,7 @@
 	background: white !important;
 	color: black !important;
 	margin-top: 0px;
-	padding-top: 6px;
+	padding-top: 12px;
 	border: 1px solid #dfdfdf;
 	border-top: 0px;
 	}
@@ -202,7 +202,7 @@
 .spreadsheet-header-row-resize {
 	cursor: row-resize;
 	}
-	
+
 .spreadsheet-cell-resize-marker {
 	margin-left: 0px;
 	margin-top: 0px;
