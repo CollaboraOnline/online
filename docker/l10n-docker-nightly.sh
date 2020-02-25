@@ -9,6 +9,7 @@
 # * DOCKER_HUB_REPO - which Docker Hub repo to use
 # * DOCKER_HUB_TAG  - which Docker Hub tag to create
 # * LIBREOFFICE_BRANCH  - which branch to build in core
+# * LIBREOFFICE_ONLINE_REPO - which git repo to clone online from
 # * LIBREOFFICE_ONLINE_BRANCH - which branch to build in online
 # * LIBREOFFICE_BUILD_TARGET - which make target to run (in core repo)
 # * ONLINE_EXTRA_BUILD_OPTIONS - extra build options for online
@@ -47,6 +48,11 @@ if [ -z "$LIBREOFFICE_BUILD_TARGET" ]; then
 fi;
 echo "LibreOffice build target: '$LIBREOFFICE_BUILD_TARGET'"
 
+if [ -z "$LIBREOFFICE_ONLINE_REPO" ]; then
+  LIBREOFFICE_ONLINE_REPO="https://git.libreoffice.org/online"
+fi;
+echo "LibreOffice build target: '$LIBREOFFICE_BUILD_TARGET'"
+
 # do everything in the builddir
 SRCDIR=$(realpath `dirname $0`)
 INSTDIR="$SRCDIR/instdir"
@@ -69,7 +75,7 @@ fi
 
 # online repo
 if test ! -d online ; then
-    git clone https://git.libreoffice.org/online online || exit 1
+    git clone "$LIBREOFFICE_ONLINE_REPO" online || exit 1
 fi
 
 ( cd online && git fetch --all && git checkout -f $LIBREOFFICE_ONLINE_BRANCH && git clean -f -d && git pull -r ) || exit 1
