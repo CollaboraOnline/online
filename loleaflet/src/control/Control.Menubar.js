@@ -648,7 +648,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
 					{name: _UNO('.uno:FormattingMarkMenu', 'text'), id: 'formattingmark', type: 'menu', menu: [
-						{name: _UNO('.uno:InsertNonBreakingSpace'), id: 'insertnonbreakingspace'},
+						{uno: '.uno:InsertNonBreakingSpace'},
 						{uno: '.uno:InsertHardHyphen'},
 						{uno: '.uno:InsertSoftHyphen'},
 						{uno: '.uno:InsertZWSP'},
