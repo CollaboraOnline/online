@@ -24,6 +24,9 @@ MOBILE_TRACK_FOLDER=$(abs_builddir)/workdir/track/mobile
 ALLOWED_PORTS = $(shell seq 9900 1 9980)
 KILL_COMMAND=pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)
 PARALLEL_BUILD = $(findstring jobserver,$(MAKEFLAGS))
+DISPLAY_NUMBER = 100
+HEADLESS_BUILD := $(findstring Command failed,$(shell xhost > /dev/null 2>&1 || echo "Command failed, so we are in a headless environment."))
+export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY))
 
 if HAVE_LO_PATH
 MOBILE_TEST_FILES= \
@@ -56,9 +59,11 @@ DESKTOP_TEST_FILES_DONE= \
 
 check-local: $(MOBILE_TEST_FILES_DONE) $(DESKTOP_TEST_FILES_DONE)
 	@$(KILL_COMMAND) || true
+	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 
 $(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_loolwsd)
 
 $(MOBILE_TEST_FILES_DONE): $(PID_FILE)
@@ -127,6 +132,14 @@ define start_loolwsd
 			--pidfile=$(PID_FILE) \
 			 > /dev/null 2>&1 &
 	@$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000
+	@echo
+endef
+
+#https://docs.cypress.io/guides/guides/continuous-integration.html#Xvfb
+define start_Xvfb
+	@echo "Launching Xvfb..."
+	Xvfb :$(DISPLAY_NUMBER) &
+	sleep 10
 	@echo
 endef
 
