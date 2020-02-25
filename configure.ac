@@ -983,6 +983,7 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
               # iOS app.
               touch ios/Mobile/Branding/branding.css
           fi
+          cp loolkitconfig-mobile.xcu ios/Mobile/loolkitconfig.xcu
        fi
       ])
 AC_SUBST(IOSAPP_FONTS)
