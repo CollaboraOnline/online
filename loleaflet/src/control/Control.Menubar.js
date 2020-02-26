@@ -684,11 +684,6 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertDateFieldVar'},
 						{uno: '.uno:InsertTimeFieldFix'},
 						{uno: '.uno:InsertTimeFieldVar'},
-						{type: 'separator'},
-						{uno: '.uno:InsertSlideField'},
-						{uno: '.uno:InsertSlideTitleField'},
-						{uno: '.uno:InsertSlidesField'},
-						{uno: '.uno:InsertFileField'},
 					]},
 				]
 			}
