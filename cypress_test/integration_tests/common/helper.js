@@ -66,7 +66,7 @@ function selectAllMobile() {
 		.click();
 
 	// Open edit menu
-	cy.get('.ui-header.level-0 .sub-menu-title')
+	cy.get('.ui-header.level-0 .menu-entry-with-icon')
 		.contains('Edit')
 		.click();
 

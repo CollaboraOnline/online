@@ -31,7 +31,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
-			{name: _UNO('.uno:EditMenu', 'text'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -259,7 +259,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
-			{name: _UNO('.uno:EditMenu', 'presentation'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -360,7 +360,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
-			{name: _UNO('.uno:EditMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'spreadsheet'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -477,7 +477,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
 				{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}
 			]},
-			{name: _UNO('.uno:EditMenu', 'text'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -523,7 +523,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
 				{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'},
 			]},
-			{name: _UNO('.uno:EditMenu', 'presentation'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -533,7 +533,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
+			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
 				{uno: '.uno:InsertRowsBefore'},
 				{uno: '.uno:InsertRowsAfter'},
 				{type: 'separator'},
@@ -543,7 +543,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:DeleteColumns'},
 				{uno: '.uno:MergeCells'}]
 			},
-			{name: _UNO('.uno:SlideMenu', 'presentation'), type: 'menu', menu: [
+			{name: _UNO('.uno:SlideMenu', 'presentation'), id: 'slidemenu', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
@@ -568,7 +568,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action'},
 				{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}
 			]},
-			{name: _UNO('.uno:EditMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:EditMenu', 'spreadsheet'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
 				{uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
@@ -578,7 +578,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:Paste'), id: 'warn-copy-paste',  type: 'action', mobileappuno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), id: 'sheetmenu', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
 					{uno: '.uno:InsertRowsAfter'}]},
@@ -595,7 +595,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:DeleteRowbreak'},
 					{uno: '.uno:DeleteColumnbreak'}]}
 			]},
-			{name: _UNO('.uno:DataMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:DataMenu', 'spreadsheet'), id: 'datamenu', type: 'menu', menu: [
 				{uno: '.uno:DataSort'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
