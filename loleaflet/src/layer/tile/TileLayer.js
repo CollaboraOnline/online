@@ -1096,7 +1096,7 @@ L.TileLayer = L.GridLayer.extend({
 		var link = null;
 		var coords = null;
 
-		if (textMsg.includes('coordinates')) {
+		if ($.inArray('coordinates', textMsg) !== -1) {
 			var coordpos = textMsg.indexOf(' coordinates');
 			link = textMsg.substring(18, coordpos);
 			coords = textMsg.substring(coordpos+12);
