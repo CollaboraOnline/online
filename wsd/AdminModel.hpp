@@ -350,10 +350,10 @@ private:
     unsigned _cpuStatsSize = 100;
 
     std::list<unsigned> _sentStats;
-    unsigned _sentStatsSize = 100;
+    unsigned _sentStatsSize = 200;
 
     std::list<unsigned> _recvStats;
-    unsigned _recvStatsSize = 100;
+    unsigned _recvStatsSize = 200;
 
     uint64_t _sentBytesTotal;
     uint64_t _recvBytesTotal;

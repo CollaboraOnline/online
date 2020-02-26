@@ -45,7 +45,7 @@ using Poco::Net::HTTPResponse;
 using Poco::Util::Application;
 
 const int Admin::MinStatsIntervalMs = 50;
-const int Admin::DefStatsIntervalMs = 2500;
+const int Admin::DefStatsIntervalMs = 1000;
 
 /// Process incoming websocket messages
 void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,

@@ -13,9 +13,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 	_memStatsData: [],
 	_cpuStatsData: [],
 	_sentStatsData: [],
-	_sentAvgStats: [],
 	_recvStatsData: [],
-	_recvAvgStats: [],
 
 	_memStatsSize: 0,
 	_memStatsInterval: 0,
@@ -23,7 +21,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 	_cpuStatsSize: 0,
 	_cpuStatsInterval: 0,
 
-	_netAvgSize: 10,
 	_netStatsSize: 0,
 	_netStatsInterval: 0,
 
@@ -48,10 +45,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			this._sentStatsData = actualData;
 		else if (option === 'recv')
 			this._recvStatsData = actualData;
-		else if (option === 'sent_avg')
-			this._sentAvgStats = actualData;
-		else if (option === 'recv_avg')
-			this._recvAvgStats = actualData;
 	},
 
 	onSocketOpen: function() {
@@ -102,7 +95,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		else if (option === 'cpu')
 			data = this._cpuStatsData;
 		else if (option === 'net')
-			data = this._sentAvgStats.concat(this._recvAvgStats);
+			data = this._sentStatsData.concat(this._recvStatsData);
 
 		xScale = d3.scale.linear().range([this._graphMargins.left, this._graphWidth - this._graphMargins.right]).domain([d3.min(data, function(d) {
 			return d.time;
@@ -142,7 +135,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			.y(function(d) {
 				return yScale(d.value);
 			})
-			.interpolate('basis');
+			.interpolate('monotone');
 
 		if (option === 'mem') {
 			this._xMemScale = xScale;
@@ -264,14 +257,14 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		else if (option === 'net') {
 
 			vis.append('svg:path')
-				.attr('d', this._d3NetSentLine(this._sentAvgStats))
+				.attr('d', this._d3NetSentLine(this._sentStatsData))
 				.attr('class', 'lineSent')
 				.attr('stroke', 'red')
 				.attr('stroke-width', 1)
 				.attr('fill', 'none');
 
 			vis.append('svg:path')
-				.attr('d', this._d3NetRecvLine(this._recvAvgStats))
+				.attr('d', this._d3NetRecvLine(this._recvStatsData))
 				.attr('class', 'lineRecv')
 				.attr('stroke', 'green')
 				.attr('stroke-width', 1)
@@ -293,16 +286,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			size = this._cpuStatsSize;
 			graphName = '#CpuVisualisation';
 			line = 'line';
-		}
-		else if (option === 'sent_avg') {
-			size = this._netStatsSize - this._netAvgSize + 1;
-			graphName = '#NetVisualisation';
-			line = 'lineSent';
-		}
-		else if (option === 'recv_avg') {
-			size = this._netStatsSize - this._netAvgSize + 1;
-			graphName = '#NetVisualisation';
-			line = 'lineRecv';
 		}
 		else if (option === 'sent' || option === 'recv')
 			size = this._netStatsSize;
@@ -370,9 +353,9 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		this._setUpAxis('net');
 
 		svg.select('.lineSent')
-		.attr('d', this._d3NetSentLine(this._sentAvgStats));
+		.attr('d', this._d3NetSentLine(this._sentStatsData));
 		svg.select('.lineRecv')
-		.attr('d', this._d3NetRecvLine(this._recvAvgStats));
+		.attr('d', this._d3NetRecvLine(this._recvStatsData));
 
 		svg.select('.x-axis')
 		.call(this._d3NetXAxis);
@@ -381,34 +364,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		.select('.y-axis')
 		.duration(500)
 		.call(this._d3NetYAxis);
-	},
-
-	_updateAverage: function(option, reset) {
-		var data, res, tempSum;
-		if (option === 'sent') {
-			data = this._sentStatsData;
-			res = this._sentAvgStats;
-		}
-		else if (option === 'recv') {
-			data = this._recvStatsData;
-			res = this._recvAvgStats;
-		}
-
-		if (reset) {
-			for (var i = 0; i <= this._netStatsSize - this._netAvgSize; i++) {
-				tempSum = 0;
-				for (var j = 0; j < this._netAvgSize; j++) {
-					tempSum += data[i + j].value;
-				}
-				tempSum /= this._netAvgSize;
-				res[i].value = tempSum;
-			}
-		}
-		else {
-			tempSum = res[res.length - 1].value + (data[data.length - 1].value - data[data.length - 1 - this._netAvgSize].value) / this._netAvgSize;
-
-			this._addNewData(res, tempSum, 'sent_avg');
-		}
 	},
 
 	onSocketMessage: function(e) {
@@ -488,8 +443,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 
 			this._initStatsData('sent', this._netStatsSize, this._netStatsInterval, true);
 			this._initStatsData('recv', this._netStatsSize, this._netStatsInterval, true);
-			this._initStatsData('sent_avg', this._netStatsSize - this._netAvgSize + 1, this._netStatsInterval, true);
-			this._initStatsData('recv_avg', this._netStatsSize - this._netAvgSize + 1, this._netStatsInterval, true);
 
 		}
 		else if (textMsg.startsWith('mem_stats')) {
@@ -538,7 +491,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				for (i = this._sentStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
 					this._sentStatsData[i].value = parseInt(data[j]);
 				}
-				this._updateAverage('sent', true);
 
 				if ($('#NetVisualisation').html() === '')
 					this._createGraph('net');
@@ -547,7 +499,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				// this is a notification data; append to _sentStatsData
 				data = textMsg.trim();
 				this._addNewData(this._sentStatsData, parseInt(data), 'sent');
-				this._updateAverage('sent', false);
 				this._updateNetGraph();
 			}
 		}
@@ -560,7 +511,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				for (i = this._recvStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
 					this._recvStatsData[i].value = parseInt(data[j]);
 				}
-				this._updateAverage('recv', true);
 
 				if ($('#NetVisualisation').html() === '')
 					this._createGraph('net');
@@ -569,7 +519,6 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 				// this is a notification data; append to _recvStatsData
 				data = textMsg.trim();
 				this._addNewData(this._recvStatsData, parseInt(data), 'recv');
-				this._updateAverage('recv', false);
 				this._updateNetGraph();
 			}
 		}
