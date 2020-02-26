@@ -1595,6 +1595,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		for (var idx = 0; idx < data.length; ++idx) {
+			if (!data[idx])
+				continue;
 			var controlId = data[idx].id;
 			if (controlId && this._missingLabelData.hasOwnProperty(controlId)) {
 				data.splice(idx, 0, this._missingLabelData[controlId]);
@@ -1613,6 +1615,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._amendJSDialogData(data);
 		for (var childIndex in data) {
 			var childData = data[childIndex];
+			if (!childData)
+				continue;
 			this._parentize(childData);
 			var childType = childData.type;
 			var processChildren = true;
