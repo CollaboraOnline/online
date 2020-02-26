@@ -1112,6 +1112,21 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_showURLPopUp: function(position, url) {
+		// # for internal links
+		if (!url.startsWith('#')) {
+			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
+			.setContent('<div id="hyperlinkpopup" style="color: #000099; text-decoration: underline;">'+url+'</div>')
+			.setLatLng(position)
+			.openOn(this._map);
+		}
+	},
+
+	_closeURLPopUp: function() {
+		this._map.closePopup(this._map.hyperlinkPopup);
+		this._map.hyperlinkPopup = null;
+	},
+
 	_onHyperlinkClickedMsg: function (textMsg) {
 		var link = null;
 		var coords = null;
@@ -1148,13 +1163,9 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.lastActionByUser = false;
 
 		this._map.hyperlinkUnderCursor = obj.hyperlink;
-		this._map.closePopup(this._map.hyperlinkPopup);
-		this._map.hyperlinkPopup = null;
+		this._closeURLPopUp();
 		if (obj.hyperlink && obj.hyperlink.link) {
-			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
-				.setContent('<a href="' + obj.hyperlink.link + '" target="_blank">' + obj.hyperlink.link + '</a>')
-				.setLatLng(cursorPos)
-				.openOn(this._map);
+			this._showURLPopUp(cursorPos, obj.hyperlink.link);
 		}
 
 		if (!this._map.editorHasFocus() && (modifierViewId === this._viewId) && (this._map._permission === 'edit')) {
@@ -2915,19 +2926,15 @@ L.TileLayer = L.GridLayer.extend({
 			targetURL = targetURL.split('"').join('');
 			targetURL = this._map.makeURLFromStr(targetURL);
 
-			this._map.closePopup(this._map.hyperlinkPopup);
-			this._map.hyperlinkPopup = null;
+			this._closeURLPopUp();
 			if (targetURL) {
-				this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
-				.setContent('<a href="' + targetURL + '" target="_blank">' + targetURL + '</a>')
-				.setLatLng(this._cellCursorMarker._bounds._northEast)
-				.openOn(this._map);
+				this._showURLPopUp(this._cellCursorMarker._bounds._northEast, targetURL);
 			}
 
 		}
 		else if (this._map.hyperlinkPopup)
 		{
-			this._map.closePopup(this._map.hyperlinkPopup);
+			this._closeURLPopUp();
 		}
 	},
 

@@ -2626,10 +2626,8 @@ function setupToolbar(e) {
 								map._docLayer._twipsToLatLng(bottomRightTwips, map.getZoom()));
 				//click pos tweak
 				cellCursor._northEast.lng = cellCursor._southWest.lng;
-				map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
-				.setContent('<a href="' + e.url + '" target="_blank">' + e.url + '</a>')
-				.setLatLng(cellCursor._northEast)
-				.openOn(map);
+				map._docLayer._closeURLPopUp();
+				map._docLayer._showURLPopUp(cellCursor._northEast, e.url);
 			} else {
 				map.fire('warn', {url: e.url, map: map, cmd: 'openlink'});
 			}
