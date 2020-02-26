@@ -254,7 +254,7 @@ body {
 
 	#document-container.readonly.spreadsheet-document {
 		top: 61px !important;
-		bottom: 42px;
+		bottom: 35px;
 	}
 
 	#document-container.parts-preview-document {

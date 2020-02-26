@@ -38,7 +38,7 @@
 		border-radius: 3px;
 		border-color: #fbfbfb;
 		padding-top: 2px;
-		padding-bottom: 6px;
+		padding-bottom: 2px;
 		margin-top: 4px;
 	}
 
@@ -49,7 +49,7 @@
 		border-top-right-radius: 0px;
 		margin-top: 2px;
 		padding-top: 5px;
-		padding-bottom: 7px;
+		padding-bottom: 3px;
 	}
 
 	.spreadsheet-tabs-container {
@@ -70,11 +70,7 @@
 	#spreadsheet-toolbar{
 		background-color: #fbfbfb;
 		border-top: 1px solid #eceff4;
-		height: 40px;
-		padding-top: 6px;
-		padding-left: 0px;
-		padding-bottom: 0px;
-		padding-right: 0px;
+		height: 33px;
 	}
 	#spreadsheet-toolbar .w2ui-tb-image{
 		padding-top: 0px !important;
