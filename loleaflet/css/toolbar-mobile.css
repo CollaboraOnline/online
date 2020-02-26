@@ -171,4 +171,9 @@
 	#toolbar-search #search-input-group > label{
 		display: none;
 	}
+	.context-menu-link{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
 }
