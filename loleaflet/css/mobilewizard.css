@@ -413,7 +413,7 @@
 	}
 	.ui-header-left {
 		margin-left: 2%;
-		width: 42% !important;
+		min-width: 42% !important;
 	}
 	.ui-header.level-1.mobile-wizard.ui-widget .ui-header-left span.menu-entry-with-icon {
 		vertical-align: middle;
