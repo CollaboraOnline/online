@@ -109,7 +109,7 @@ L.Control.ContextMenu = L.Control.extend({
 		var contextMenu = this._createContextMenuStructure(obj);
 		var spellingContextMenu = false;
 		for (var menuItem in contextMenu) {
-			if (menuItem.includes('.uno:SpellCheckIgnore')) {
+			if ($.inArray('.uno:SpellCheckIgnore', menuItem)) {
 				spellingContextMenu = true;
 				break;
 			}
