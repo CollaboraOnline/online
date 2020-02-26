@@ -99,7 +99,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'align', 'justify');
 	});
 
-	it.skip('Change writing direction.', function() {
+	it('Change writing direction.', function() {
 		// Change writing mode
 		cy.get('#ParaRightToLeft')
 			.click();
