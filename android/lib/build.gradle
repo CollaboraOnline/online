@@ -134,7 +134,7 @@ task copyUnpackAssets(type: Copy) {
     into('share') {
         from "${liboInstdir}/share"
         // extensions - for the dictionaries for hunspell
-        includes = ['extensions/dict-de/**', 'extensions/dict-en/**', 'extensions/dict-es/**', 'extensions/dict-pt-BR/**']
+        includes = ['extensions/dict-de/**', 'extensions/dict-en/**', 'extensions/dict-es/**', 'extensions/dict-fr/**', 'extensions/dict-pt-BR/**']
         exclude { FileTreeElement details ->
             !(details.file.isDirectory() ||
                 details.file.name.endsWith('.xcu') ||
