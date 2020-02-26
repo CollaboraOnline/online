@@ -414,8 +414,11 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'left', x + 'px');
 		L.DomUtil.setStyle(this._dialogs[dlgId].cursor, 'top', y + 'px');
 
-		// Make sure the keyboard is visible if the user can type.
-		this._map.focus(cursorVisible);
+		// Make sure the keyboard is visible if there is a cursor.
+		// But don't hide the keyboard otherwise.
+		// At least the formula-input hides the cursor after each key input.
+		if (cursorVisible)
+			this._map.focus(true);
 	},
 
 	_createDialogCursor: function(dialogId) {
