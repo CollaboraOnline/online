@@ -71,7 +71,6 @@ void stripDescriptions(std::vector<char>& svg)
 class UnitRenderShape : public UnitWSD
 {
     TestResult testRenderShapeSelectionImpress();
-    TestResult testRenderShapeSelectionWriter();
     TestResult testRenderShapeSelectionWriterImage();
 
 public:
@@ -121,39 +120,6 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionImpress()
     return TestResult::Ok;
 }
 
-UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionWriter()
-{
-    const char* testname = "testRenderShapeSelectionWriter ";
-    try
-    {
-        std::string documentPath, documentURL;
-        helpers::getDocumentPathAndURL("shape.odt", documentPath, documentURL, testname);
-
-        std::shared_ptr<LOOLWebSocket> socket = helpers::loadDocAndGetSocket(
-            Poco::URI(helpers::getTestServerURI()), documentURL, testname);
-
-        // Select the shape with SHIFT + F4
-        helpers::sendKeyPress(socket, 0, 771 | helpers::SpecialKey::skShift, testname);
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
-        helpers::sendTextFrame(socket, "rendershapeselection mimetype=image/svg+xml", testname);
-        std::vector<char> responseSVG
-            = helpers::getResponseMessage(socket, "shapeselectioncontent:", testname);
-        CPPUNIT_ASSERT(!responseSVG.empty());
-        auto it = std::find(responseSVG.begin(), responseSVG.end(), '\n');
-        if (it != responseSVG.end())
-            responseSVG.erase(responseSVG.begin(), ++it);
-
-        stripDescriptions(responseSVG);
-
-        CPPUNIT_ASSERT(helpers::svgMatch(testname, responseSVG, "shapes_writer.svg"));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        CPPUNIT_FAIL(exc.displayText());
-    }
-    return TestResult::Ok;
-}
-
 UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionWriterImage()
 {
     const char* testname = "testRenderShapeSelectionWriterImage ";
@@ -191,10 +157,6 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionWriterImage()
 void UnitRenderShape::invokeTest()
 {
     UnitBase::TestResult result = testRenderShapeSelectionImpress();
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testRenderShapeSelectionWriter();
     if (result != TestResult::Ok)
         exitTest(result);
 
