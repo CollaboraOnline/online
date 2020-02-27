@@ -47,7 +47,7 @@
 	margin-right: 3px;
 	padding-left: 9px;
 	padding-right: 9px;
-	padding-top: 10px;
+	padding-top: 8px;
 	padding-bottom: 5px;
 
 	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
@@ -61,7 +61,9 @@
 	background: white !important;
 	color: black !important;
 	margin-top: 0px;
-	padding-top: 12px;
+	padding-top: 9px;
+	padding-bottom: 5px;
+	margin-top: 2px;
 	border: 1px solid #dfdfdf;
 	border-top: 0px;
 	}
