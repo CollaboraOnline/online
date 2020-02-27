@@ -974,7 +974,7 @@ bool ClientSession::filterMessage(const std::string& message) const
         }
         else if (tokens[0] == "uno")
         {
-            if (tokens[1] == ".uno:ExecuteSearch")
+            if (tokens.size() > 1 && tokens[1] == ".uno:ExecuteSearch")
             {
                 allowed = true;
             }
