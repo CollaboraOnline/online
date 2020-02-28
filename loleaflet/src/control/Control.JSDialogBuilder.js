@@ -114,7 +114,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['comboboxentry'] = this._comboboxEntry;
-		this._controlHandlers['listbox'] = this._comboboxControl;
+		this._controlHandlers['listbox'] = this._listboxControl;
 		this._controlHandlers['valueset'] = this._valuesetControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
 		this._controlHandlers['htmlcontrol'] = this._htmlControl;
@@ -1167,7 +1167,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_editControl: function(parentContainer, data, builder) {
+	_editControl: function(parentContainer, data, builder, callback) {
 		var edit = L.DomUtil.create('input', '', parentContainer);
 		edit.value = builder._cleanText(data.text);
 		edit.id = data.id;
@@ -1176,7 +1176,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(edit).attr('disabled', 'disabled');
 
 		edit.addEventListener('change', function() {
-			builder.callback('edit', 'change', edit, this.value, builder);
+			if (callback)
+				callback(this.value);
+			else
+				builder.callback('edit', 'change', edit, this.value, builder);
+		});
+
+		edit.addEventListener('click', function(e) {
+			e.stopPropagation();
 		});
 
 		if (data.hidden)
@@ -1235,7 +1242,74 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	_explorableEditControl: function(parentContainer, data, builder) {
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		$(sectionTitle).css('justify-content', 'space-between');
+		if (data && data.id)
+			sectionTitle.id = data.id;
+
+		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
+
+		var editCallback = function(value) {
+			builder.callback('combobox', 'change', data, value, builder);
+		};
+		builder._editControl(leftDiv, data, builder, editCallback);
+
+		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
+
+		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
+		arrowSpan.innerHTML = '>';
+
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+		contentDiv.title = data.text;
+
+		var entries = [];
+		if (data.entries) {
+			for (var index in data.entries) {
+				var style = 'ui-combobox-text';
+				if ((data.selectedEntries && index == data.selectedEntries[0])
+					|| data.entries[index] == data.text) {
+					style += ' selected';
+				}
+
+				var entry = { type: 'comboboxentry', text: data.entries[index], pos: index, parent: data, style: style };
+				entries.push(entry);
+			}
+		}
+
+		var contentNode = {type: 'container', children: entries};
+
+		builder._currentDepth++;
+		builder.build(contentDiv, [contentNode]);
+		builder._currentDepth--;
+
+		if (!data.nosubmenu)
+		{
+			$(contentDiv).hide();
+			if (builder.wizard) {
+				$(sectionTitle).click(function(event, data) {
+					builder.wizard.goLevelDown(contentDiv, data);
+					if (contentNode.onshow)
+						contentNode.onshow();
+				});
+			} else {
+				console.debug('Builder used outside of mobile wizard: please implement the click handler');
+			}
+		}
+		else
+			$(sectionTitle).hide();
+	},
+
 	_comboboxControl: function(parentContainer, data, builder) {
+		if (data.id === 'applystyle' ||
+			data.id === 'fontnamecombobox' ||
+			data.id === 'fontsizecombobox')
+			builder._listboxControl(parentContainer, data, builder);
+		else
+			builder._explorableEditControl(parentContainer, data, builder);
+	},
+
+	_listboxControl: function(parentContainer, data, builder) {
 		// TODO: event listener in the next level...
 
 		if (!data.entries || data.entries.length === 0)
