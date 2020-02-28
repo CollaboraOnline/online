@@ -14,17 +14,36 @@
 #include <vector>
 
 /**
+ * Stores an offset and a length into the single underlying string of StringVector.
+ */
+struct StringToken
+{
+    size_t _index;
+    size_t _length;
+
+    StringToken() = default;
+
+    StringToken(size_t index, size_t length)
+        : _index(index),
+        _length(length)
+    {
+    }
+};
+
+/**
  * Safe wrapper around an std::vector<std::string>. Gives you an empty string if you would read past
  * the ends of the vector.
  */
 class StringVector
 {
-    std::vector<std::string> _vector;
+    /// All tokens are substrings of this string.
+    std::string _string;
+    std::vector<StringToken> _tokens;
 
 public:
     explicit StringVector();
 
-    explicit StringVector(const std::vector<std::string>& vector);
+    explicit StringVector(const std::string& string, const std::vector<StringToken>& tokens);
 
     /// Unlike std::vector, gives an empty string if index is unexpected.
     std::string operator[](size_t index) const;
@@ -33,17 +52,23 @@ public:
 
     bool empty() const;
 
-    std::vector<std::string>::const_iterator begin() const;
+    std::vector<StringToken>::const_iterator begin() const;
 
-    std::vector<std::string>::iterator begin();
+    std::vector<StringToken>::iterator begin();
 
-    std::vector<std::string>::const_iterator end() const;
+    std::vector<StringToken>::const_iterator end() const;
 
-    std::vector<std::string>::iterator end();
+    std::vector<StringToken>::iterator end();
 
-    std::vector<std::string>::iterator erase(std::vector<std::string>::const_iterator it);
+    std::vector<StringToken>::iterator erase(std::vector<StringToken>::const_iterator it);
 
     void push_back(const std::string& string);
+
+    /// Gets the underlying string of a single token.
+    std::string getParam(const StringToken& token) const;
+
+    /// Concats tokens starting from begin, using separator as separator.
+    std::string cat(const std::string& separator, size_t begin) const;
 };
 
 #endif

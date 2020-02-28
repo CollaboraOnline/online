@@ -85,7 +85,7 @@ namespace LOOLProtocol
     {
         for (const auto& token : tokens)
         {
-            if (getTokenString(token, name, value))
+            if (getTokenString(tokens.getParam(token), name, value))
             {
                 return true;
             }
@@ -101,10 +101,10 @@ namespace LOOLProtocol
     inline
     StringVector tokenize(const char* data, const size_t size, const char delimiter = ' ')
     {
-        std::vector<std::string> tokens;
+        std::vector<StringToken> tokens;
         if (size == 0 || data == nullptr)
         {
-            return StringVector(tokens);
+            return StringVector(std::string(), {});
         }
         tokens.reserve(8);
 
@@ -116,7 +116,7 @@ namespace LOOLProtocol
             {
                 if (start != end && *start != delimiter)
                 {
-                    tokens.emplace_back(start, end);
+                    tokens.emplace_back(start - data, end - start);
                 }
 
                 start = end;
@@ -129,10 +129,10 @@ namespace LOOLProtocol
 
         if (start != end && *start != delimiter && *start != '\n')
         {
-            tokens.emplace_back(start, end);
+            tokens.emplace_back(start - data, end - start);
         }
 
-        return StringVector(tokens);
+        return StringVector(std::string(data, size), tokens);
     }
 
     inline

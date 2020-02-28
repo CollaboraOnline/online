@@ -41,6 +41,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testJson);
     CPPUNIT_TEST(testAnonymization);
     CPPUNIT_TEST(testTime);
+    CPPUNIT_TEST(testStringVector);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -57,6 +58,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testJson();
     void testAnonymization();
     void testTime();
+    void testStringVector();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -793,6 +795,28 @@ void WhiteBoxTests::testTime()
         // Allow a small delay to get a different timestamp on next iteration.
         sleep(0);
     }
+}
+
+void WhiteBoxTests::testStringVector()
+{
+    // Test push_back() and getParam().
+    StringVector vector;
+    vector.push_back("a");
+    vector.push_back("b");
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), vector.size());
+    auto it = vector.begin();
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), vector.getParam(*it));
+    ++it;
+    CPPUNIT_ASSERT_EQUAL(std::string("b"), vector.getParam(*it));
+
+    // Test cat().
+    CPPUNIT_ASSERT_EQUAL(std::string("a b"), vector.cat(" ", 0));
+    CPPUNIT_ASSERT_EQUAL(std::string(), vector.cat(" ", 3));
+    CPPUNIT_ASSERT_EQUAL(std::string(), vector.cat(" ", 42));
+
+    // Test operator []().
+    CPPUNIT_ASSERT_EQUAL(std::string("a"), vector[0]);
+    CPPUNIT_ASSERT_EQUAL(std::string(""), vector[2]);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);

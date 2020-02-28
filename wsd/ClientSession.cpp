@@ -878,7 +878,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, const Stri
     TileCache::Tile cachedTile = docBroker->tileCache().lookupCachedStream(TileCache::StreamType::Font, font+text);
     if (cachedTile)
     {
-        const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+        const std::string response = "renderfont: " + tokens.cat(std::string(" "), 1) + "\n";
         return sendTile(response, cachedTile);
     }
 
@@ -1410,7 +1410,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             {
                 // Need to get the initial part id from status message
                 int part = -1;
-                if(getTokenInteger(token, "current", part))
+                if(getTokenInteger(tokens.getParam(token), "current", part))
                 {
                     _clientSelectedPart = part;
                     resetWireIdMap();
@@ -1418,14 +1418,14 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
                 // Get document type too
                 std::string docType;
-                if(getTokenString(token, "type", docType))
+                if(getTokenString(tokens.getParam(token), "type", docType))
                 {
                     _isTextDocument = docType.find("text") != std::string::npos;
                 }
 
                 // Store our Kit ViewId
                 int viewId = -1;
-                if(getTokenInteger(token, "viewid", viewId))
+                if(getTokenInteger(tokens.getParam(token), "viewid", viewId))
                     _kitViewId = viewId;
             }
 

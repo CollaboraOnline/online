@@ -222,7 +222,7 @@ public:
                             std::string newData;
                             for (const auto& token : tokens)
                             {
-                                newData += token + ' ';
+                                newData += tokens.getParam(token) + ' ';
                             }
 
                             writeLocked(id, sessionId, newData, static_cast<char>(TraceFileRecord::Direction::Incoming));

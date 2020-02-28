@@ -11,35 +11,79 @@
 
 StringVector::StringVector() = default;
 
-StringVector::StringVector(const std::vector<std::string>& vector) { _vector = vector; }
+StringVector::StringVector(const std::string& string, const std::vector<StringToken>& tokens)
+    : _string(string),
+    _tokens(tokens)
+{
+}
 
 std::string StringVector::operator[](size_t index) const
 {
-    if (index >= _vector.size())
+    if (index >= _tokens.size())
     {
         return std::string();
     }
 
-    return _vector[index];
+    const StringToken& token = _tokens[index];
+    return _string.substr(token._index, token._length);
 }
 
-size_t StringVector::size() const { return _vector.size(); }
+size_t StringVector::size() const { return _tokens.size(); }
 
-bool StringVector::empty() const { return _vector.empty(); }
+bool StringVector::empty() const { return _tokens.empty(); }
 
-std::vector<std::string>::const_iterator StringVector::begin() const { return _vector.begin(); }
+std::vector<StringToken>::const_iterator StringVector::begin() const { return _tokens.begin(); }
 
-std::vector<std::string>::iterator StringVector::begin() { return _vector.begin(); }
+std::vector<StringToken>::iterator StringVector::begin() { return _tokens.begin(); }
 
-std::vector<std::string>::const_iterator StringVector::end() const { return _vector.end(); }
+std::vector<StringToken>::const_iterator StringVector::end() const { return _tokens.end(); }
 
-std::vector<std::string>::iterator StringVector::end() { return _vector.end(); }
+std::vector<StringToken>::iterator StringVector::end() { return _tokens.end(); }
 
-std::vector<std::string>::iterator StringVector::erase(std::vector<std::string>::const_iterator it)
+std::vector<StringToken>::iterator StringVector::erase(std::vector<StringToken>::const_iterator it)
 {
-    return _vector.erase(it);
+    return _tokens.erase(it);
 }
 
-void StringVector::push_back(const std::string& string) { _vector.push_back(string); }
+void StringVector::push_back(const std::string& string)
+{
+    StringToken token;
+    token._index = _string.length();
+    token._length = string.length();
+    _tokens.push_back(token);
+    _string += string;
+}
+
+std::string StringVector::getParam(const StringToken& token) const
+{
+    return _string.substr(token._index, token._length);
+}
+
+std::string StringVector::cat(const std::string& separator, size_t begin) const
+{
+    std::string ret;
+    bool first = true;
+
+    if (begin >= _tokens.size())
+    {
+        return ret;
+    }
+
+    for (auto it = _tokens.begin() + begin; it != _tokens.end(); ++it)
+    {
+        if (first)
+        {
+            first = false;
+        }
+        else
+        {
+            ret += separator;
+        }
+
+        ret += getParam(*it);
+    }
+
+    return ret;
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

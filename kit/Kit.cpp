@@ -2106,16 +2106,16 @@ protected:
         if (logger.enabled())
         {
             logger << _socketName << ": recv [";
-            for (const std::string& token : tokens)
+            for (const auto& token : tokens)
             {
                 // Don't log user-data, there are anonymized versions that get logged instead.
-                if (Util::startsWith(token, "jail") ||
-                    Util::startsWith(token, "author") ||
-                    Util::startsWith(token, "name") ||
-                    Util::startsWith(token, "url"))
+                if (Util::startsWith(tokens.getParam(token), "jail") ||
+                    Util::startsWith(tokens.getParam(token), "author") ||
+                    Util::startsWith(tokens.getParam(token), "name") ||
+                    Util::startsWith(tokens.getParam(token), "url"))
                     continue;
 
-                logger << token << ' ';
+                logger << tokens.getParam(token) << ' ';
             }
 
             LOG_END(logger, true);

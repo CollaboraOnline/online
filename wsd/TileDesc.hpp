@@ -472,7 +472,7 @@ public:
         {
             std::string name;
             std::string value;
-            if (LOOLProtocol::parseNameValuePair(token, name, value))
+            if (LOOLProtocol::parseNameValuePair(tokens.getParam(token), name, value))
             {
                 if (name == "tileposx")
                 {

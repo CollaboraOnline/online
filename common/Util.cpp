@@ -257,9 +257,16 @@ namespace Util
             }
         }
 
+        // Create a vector of zero-terminated strings.
+        std::vector<std::string> argStrings(args.size());
+        for (const auto& arg : args)
+        {
+            argStrings.emplace_back(args.getParam(arg));
+        }
+
         std::vector<char *> params;
         params.push_back(const_cast<char *>(cmd.c_str()));
-        for (const auto& i : args)
+        for (const auto& i : argStrings)
             params.push_back(const_cast<char *>(i.c_str()));
         params.push_back(nullptr);
 

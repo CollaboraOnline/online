@@ -439,7 +439,7 @@ static void addStorageReuseCookie(Poco::Net::HTTPRequest& request, const std::st
         StringVector cookies = LOOLProtocol::tokenize(reuseStorageCookies, ':');
         for (auto cookie : cookies)
         {
-            StringVector cookieTokens = LOOLProtocol::tokenize(cookie, '=');
+            StringVector cookieTokens = LOOLProtocol::tokenize(cookies.getParam(cookie), '=');
             if (cookieTokens.size() == 2)
             {
                 nvcCookies.add(cookieTokens[0], cookieTokens[1]);

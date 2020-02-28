@@ -182,7 +182,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         if (getTokenString(tokens[offset], "options", _docOptions))
         {
             if (tokens.size() > offset + 1)
-                _docOptions += Poco::cat(std::string(" "), tokens.begin() + offset + 1, tokens.end());
+                _docOptions += tokens.cat(std::string(" "), offset + 1);
         }
     }
 }

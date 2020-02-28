@@ -767,7 +767,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             {
                 const std::string extension(plugin->getString("prefilter.extension"));
                 const std::string newExtension(plugin->getString("prefilter.newextension"));
-                const std::string commandLine(plugin->getString("prefilter.commandline"));
+                std::string commandLine(plugin->getString("prefilter.commandline"));
 
                 if (localPath.length() > extension.length()+1 &&
                     strcasecmp(localPath.substr(localPath.length() - extension.length() -1).data(), (std::string(".") + extension).data()) == 0)
@@ -777,26 +777,29 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
                     const std::string newRootPath = _storage->getRootFilePath() + "." + newExtension;
 
-                    StringVector args(LOOLProtocol::tokenize(commandLine, ' '));
-                    std::string command(args[0]);
-                    args.erase(args.begin()); // strip the command
-
                     // The commandline must contain the space-separated substring @INPUT@ that is
                     // replaced with the input file name, and @OUTPUT@ for the output file name.
                     int inputs(0), outputs(0);
-                    for (auto it = args.begin(); it != args.end(); ++it)
+
+                    std::string input("@INPUT");
+                    size_t pos = commandLine.find(input);
+                    if (pos != std::string::npos)
                     {
-                        if (*it == "@INPUT@")
-                        {
-                            *it = _storage->getRootFilePath();
-                            ++inputs;
-                        }
-                        else if (*it == "@OUTPUT@")
-                        {
-                            *it = newRootPath;
-                            ++outputs;
-                        }
+                        commandLine.replace(pos, input.length(), _storage->getRootFilePath());
+                        ++inputs;
                     }
+
+                    std::string output("@OUTPUT@");
+                    pos = commandLine.find(output);
+                    if (pos != std::string::npos)
+                    {
+                        commandLine.replace(pos, output.length(), newRootPath);
+                        ++outputs;
+                    }
+
+                    StringVector args(LOOLProtocol::tokenize(commandLine, ' '));
+                    std::string command(args[0]);
+                    args.erase(args.begin()); // strip the command
 
                     if (inputs != 1 || outputs != 1)
                         throw std::exception();
@@ -2019,7 +2022,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
             msg = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];
             msg += " jail=" + _uriJailed;
             msg += " xjail=" + _uriJailedAnonym;
-            msg += ' ' + Poco::cat(std::string(" "), tokens.begin() + 3, tokens.end());
+            msg += ' ' + tokens.cat(std::string(" "), 3);
         }
 
         _childProcess->sendTextFrame(msg);

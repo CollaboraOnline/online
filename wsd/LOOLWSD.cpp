@@ -1666,7 +1666,7 @@ bool LOOLWSD::createForKit()
     ++OutstandingForks;
 
     LOG_INF("Launching forkit process: " << forKitPath << ' ' <<
-            Poco::cat(std::string(" "), args.begin(), args.end()));
+            args.cat(std::string(" "), 0));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
     int childStdin = -1;
@@ -2063,9 +2063,10 @@ public:
         {
             const std::string fowardedData = request.get("X-Forwarded-For");
             StringVector tokens = LOOLProtocol::tokenize(fowardedData, ',');
-            for(std::string& token : tokens)
+            for (const auto& token : tokens)
             {
-                addressToCheck = Util::trim(token);
+                std::string param = tokens.getParam(token);
+                addressToCheck = Util::trim(param);
                 try
                 {
                     hostToCheck = Poco::Net::DNS::resolve(addressToCheck).name();

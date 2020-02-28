@@ -365,10 +365,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             if (tokens[1].find(".uno:SpellCheckApplySuggestion") != std::string::npos ||
                 tokens[1].find(".uno:LanguageStatus") != std::string::npos)
             {
-                std::vector<std::string> newTokens;
+                StringVector newTokens;
                 newTokens.push_back(tokens[0]);
                 newTokens.push_back(firstLine.substr(4)); // Copy the remaining part.
-                return unoCommand(buffer, length, StringVector(newTokens));
+                return unoCommand(buffer, length, newTokens);
             }
             return unoCommand(buffer, length, tokens);
         }
@@ -686,7 +686,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
         return false;
     }
 
-    const std::string response = "renderfont: " + Poco::cat(std::string(" "), tokens.begin() + 1, tokens.end()) + "\n";
+    const std::string response = "renderfont: " + tokens.cat(std::string(" "), 1) + "\n";
 
     std::vector<char> output;
     output.resize(response.size());
@@ -903,7 +903,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
     {
         if (tokens.size() > 5)
         {
-            filterOptions += Poco::cat(std::string(" "), tokens.begin() + 5, tokens.end());
+            filterOptions += tokens.cat(std::string(" "), 5);
         }
     }
 
@@ -1413,7 +1413,7 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
 
     unsigned nLOKWindowId = std::stoi(tokens[1].c_str());
     getLOKitDocument()->sendDialogEvent(nLOKWindowId,
-        Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str());
+        tokens.cat(std::string(" "), 2).c_str());
 
     return true;
 }
@@ -1468,7 +1468,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
     else
     {
         getLOKitDocument()->postUnoCommand(tokens[1].c_str(),
-                                       Poco::cat(std::string(" "), tokens.begin() + 2, tokens.end()).c_str(),
+                                       tokens.cat(std::string(" "), 2).c_str(),
                                        bNotify);
     }
 
@@ -2002,7 +2002,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
     {
         if (tokens.size() > 4)
         {
-            filterOptions += Poco::cat(std::string(" "), tokens.begin() + 4, tokens.end());
+            filterOptions += tokens.cat(std::string(" "), 4);
         }
     }
 

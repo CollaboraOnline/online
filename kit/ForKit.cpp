@@ -442,13 +442,16 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             const std::string rlimits = std::string(eq+1);
             StringVector tokens = LOOLProtocol::tokenize(rlimits, ';');
-            for (const std::string& cmdLimit : tokens)
+            for (const auto& cmdLimit : tokens)
             {
-                const std::pair<std::string, std::string> pair = Util::split(cmdLimit, ':');
-                StringVector tokensLimit({ "setconfig", pair.first, pair.second });
+                const std::pair<std::string, std::string> pair = Util::split(tokens.getParam(cmdLimit), ':');
+                StringVector tokensLimit;
+                tokensLimit.push_back("setconfig");
+                tokensLimit.push_back(pair.first);
+                tokensLimit.push_back(pair.second);
                 if (!Rlimit::handleSetrlimitCommand(tokensLimit))
                 {
-                    LOG_ERR("Unknown rlimits command: " << cmdLimit);
+                    LOG_ERR("Unknown rlimits command: " << tokens.getParam(cmdLimit));
                 }
             }
         }
