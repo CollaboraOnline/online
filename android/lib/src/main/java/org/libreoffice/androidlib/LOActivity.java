@@ -43,7 +43,6 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,6 +112,8 @@ public class LOActivity extends AppCompatActivity {
     private Handler nativeHandler;
     private Looper nativeLooper;
     private Bundle savedInstanceState;
+
+    private ProgressDialog mProgressDialog = null;
 
     /** In case the mobile-wizard is visible, we have to intercept the Android's Back button. */
     private boolean mMobileWizardVisible = false;
@@ -251,7 +252,10 @@ public class LOActivity extends AppCompatActivity {
         this.savedInstanceState = savedInstanceState;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         setContentView(R.layout.lolib_activity_main);
+        mProgressDialog = new ProgressDialog(this);
+
         init();
     }
 
@@ -263,8 +267,7 @@ public class LOActivity extends AppCompatActivity {
             return;
         }
 
-        final AlertDialog assetsProgress = createProgressDialog(R.string.preparing_for_the_first_start_after_an_update);
-        assetsProgress.show();
+        mProgressDialog.indeterminate(R.string.preparing_for_the_first_start_after_an_update);
 
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -278,7 +281,6 @@ public class LOActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                assetsProgress.dismiss();
                 initUI();
             }
         }.execute();
@@ -507,18 +509,16 @@ public class LOActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause() - hinting to save, we might need to return to the doc");
-
         // A Save similar to an autosave
         if (documentLoaded)
             postMobileMessageNative("save dontTerminateEdit=true dontSaveIfUnmodified=true");
+
+        super.onPause();
+        Log.d(TAG, "onPause() - hinting to save, we might need to return to the doc");
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy() - we know we are leaving the document");
         nativeLooper.quit();
 
         // Remove the webview from the hierarchy & destroy
@@ -532,6 +532,11 @@ public class LOActivity extends AppCompatActivity {
         // than never, so let's call it from here too anyway
         documentLoaded = false;
         postMobileMessageNative("BYE");
+
+        mProgressDialog.dismiss();
+
+        super.onDestroy();
+        Log.i(TAG, "onDestroy() - we know we are leaving the document");
     }
 
     @Override
@@ -601,24 +606,9 @@ public class LOActivity extends AppCompatActivity {
         return null;
     }
 
-    /** Create the progress dialog. */
-    private AlertDialog createProgressDialog(int id) {
-        LayoutInflater inflater = this.getLayoutInflater();
-
-        View loadingView = inflater.inflate(R.layout.lolib_dialog_loading, null);
-        TextView loadingText = loadingView.findViewById(R.id.lolib_loading_dialog_text);
-        loadingText.setText(getText(id));
-
-        return new AlertDialog.Builder(LOActivity.this)
-            .setView(loadingView)
-            .setCancelable(true)
-            .create();
-    }
-
     /** Show the Saving progress and finish the app. */
     private void finishWithProgress() {
-        final AlertDialog savingProgress = createProgressDialog(R.string.saving);
-        savingProgress.show();
+        mProgressDialog.indeterminate(R.string.saving);
 
         // The 'BYE' takes a considerable amount of time, we need to post it
         // so that it starts after the saving progress is actually shown
@@ -629,12 +619,12 @@ public class LOActivity extends AppCompatActivity {
                 postMobileMessageNative("BYE");
                 copyTempBackToIntent();
 
-                runOnUiThread(new Runnable() {
+                /*runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        savingProgress.dismiss();
+                        mProgressDialog.dismiss();
                     }
-                });
+                });*/
 
                 finish();
             }
@@ -654,6 +644,8 @@ public class LOActivity extends AppCompatActivity {
     }
 
     private void loadDocument() {
+        mProgressDialog.determinate(R.string.loading);
+
         // setup the LOOLWSD
         ApplicationInfo applicationInfo = getApplicationInfo();
         String dataDir = applicationInfo.dataDir;
@@ -752,6 +744,31 @@ public class LOActivity extends AppCompatActivity {
                 mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data':" + message + "});");
             }
         });
+
+        // update progress bar when loading
+        if (message.startsWith("'statusindicator")) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // update progress bar if it exists
+                    final String statusIndicatorSetValue = "'statusindicatorsetvalue: ";
+                    if (message.startsWith(statusIndicatorSetValue)) {
+                        int start = statusIndicatorSetValue.length();
+                        int end = message.indexOf("'", start);
+
+                        int progress = 0;
+                        try {
+                            progress = Integer.parseInt(message.substring(start, end));
+                        } catch (Exception e) {
+                        }
+
+                        mProgressDialog.determinateProgress(progress);
+                    }
+                    else if (message.startsWith("'statusindicatorfinish:")) {
+                        mProgressDialog.dismiss();
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -912,8 +929,7 @@ public class LOActivity extends AppCompatActivity {
     }
 
     private void initiateSlideShow() {
-        final AlertDialog slideShowProgress = createProgressDialog(R.string.loading);
-        slideShowProgress.show();
+        mProgressDialog.indeterminate(R.string.loading);
 
         nativeHandler.post(new Runnable() {
             @Override
@@ -924,7 +940,7 @@ public class LOActivity extends AppCompatActivity {
                 LOActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        slideShowProgress.dismiss();
+                        mProgressDialog.dismiss();
                         Intent slideShowActIntent = new Intent(LOActivity.this, SlideShowActivity.class);
                         slideShowActIntent.putExtra(SlideShowActivity.SVG_URI_KEY, slideShowFileUri);
                         LOActivity.this.startActivity(slideShowActIntent);

@@ -4,16 +4,31 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="20dp">
-    <ProgressBar
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress_indeterminate"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_determinate"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:indeterminate="false"
+            android:min="0"
+            android:max="100"
+            android:visibility="invisible" />
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/lolib_loading_dialog_text"
+        android:id="@+id/progress_dialog_text"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:gravity="center"
-        android:text="@string/loading" />
+        android:layout_weight="1"
+        android:gravity="center"/>
 </LinearLayout>

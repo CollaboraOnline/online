@@ -441,6 +441,9 @@ L.Map = L.Evented.extend({
 	},
 
 	showBusy: function(label, bar) {
+		if (window.ThisIsTheAndroidApp)
+			return;
+
 		// If document is already loaded, ask the toolbar widget to show busy
 		// status on the bottom statusbar
 		if (this._docLayer) {
@@ -451,6 +454,9 @@ L.Map = L.Evented.extend({
 	},
 
 	hideBusy: function () {
+		if (window.ThisIsTheAndroidApp)
+			return;
+
 		this.fire('hidebusy');
 		this._progressBar.end(this);
 	},
