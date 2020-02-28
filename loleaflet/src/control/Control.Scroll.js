@@ -68,6 +68,7 @@ L.Control.Scroll = L.Control.extend({
 			this._hammer.get('pan').set({
 				direction: Hammer.DIRECTION_ALL
 			});
+			this._hammer.get('swipe').set({ threshold: 5 });
 
 			if (L.Browser.touch) {
 				L.DomEvent.on(this._scrollContainer, 'touchmove', L.DomEvent.preventDefault);
@@ -77,6 +78,7 @@ L.Control.Scroll = L.Control.extend({
 			this._hammer.on('panstart', L.bind(mapTouchGesture._onPanStart, mapTouchGesture));
 			this._hammer.on('pan', L.bind(mapTouchGesture._onPan, mapTouchGesture));
 			this._hammer.on('panend', L.bind(mapTouchGesture._onPanEnd, mapTouchGesture));
+			this._hammer.on('swipe', L.bind(mapTouchGesture._onSwipe, mapTouchGesture));
 		}
 	},
 
