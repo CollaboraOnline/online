@@ -1244,7 +1244,7 @@ function initNormalToolbar() {
 
 function setupSearchInput() {
 	$('#search-input').off('input', onSearchInput).on('input', onSearchInput);
-	$('#search-input').off('keypress', onSearchKeyPress).on('keypress', onSearchKeyPress);
+	$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
 	$('#search-input').off('focus', onSearchFocus).on('focus', onSearchFocus);
 	$('#search-input').off('blur', onSearchBlur).on('blur', onSearchBlur);
 }
@@ -1355,7 +1355,7 @@ function onSearchInput() {
 	}
 }
 
-function onSearchKeyPress(e) {
+function onSearchKeyDown(e) {
 	var entry = L.DomUtil.get('search-input');
 	if ((e.keyCode === 71 && e.ctrlKey) || e.keyCode === 114 || e.keyCode === 13) {
 		if (e.shiftKey) {
