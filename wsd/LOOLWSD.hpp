@@ -262,7 +262,7 @@ private:
             ConfigValueGetter(config, name)(value);
             return true;
         }
-        catch (const std::exception&)
+        catch (...)
         {
         }
 
