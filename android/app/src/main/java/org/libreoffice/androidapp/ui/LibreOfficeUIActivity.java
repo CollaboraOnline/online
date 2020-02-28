@@ -164,12 +164,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         SettingsListenerModel.getInstance().setListener(this);
 
-        // Registering the USB detect broadcast receiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-        registerReceiver(mUSBReceiver, filter);
-
         // Register the LOActivity events broadcast receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mLOActivityReceiver,
               new IntentFilter(LOActivity.LO_ACTIVITY_BROADCAST));
@@ -820,19 +814,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         //Log.d(LOGTAG, currentDirectory.toString() + Integer.toString(filterMode));
     }
 
-    private final BroadcastReceiver mUSBReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
-                Toast.makeText(context, R.string.usb_connected_configure, Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(context, DocumentProviderSettingsActivity.class));
-                Log.d(LOGTAG, "USB device attached");
-            } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
-                Log.d(LOGTAG, "USB device detached");
-            }
-        }
-    };
-
     /** Receiver for receiving messages from LOActivity - like that Save was performed and similar. */
     private final BroadcastReceiver mLOActivityReceiver = new BroadcastReceiver() {
         @Override
@@ -925,7 +906,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mUSBReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLOActivityReceiver);
         Log.d(LOGTAG, "onDestroy");
     }
