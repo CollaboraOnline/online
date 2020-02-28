@@ -1090,7 +1090,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
         std::istringstream istr(response.substr(8));
         std::getline(istr, line);
 
-        std::vector<std::string> tokens(LOOLProtocol::tokenize(line, ' '));
+        StringVector tokens(LOOLProtocol::tokenize(line, ' '));
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
         if (docType == "presentation")
             CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size()); // We have an extra field.
@@ -1200,7 +1200,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
             sendTextFrame(socket, text, name);
             tile = assertResponseString(socket, "tile:", name);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(tile, ' '));
+            StringVector tokens(LOOLProtocol::tokenize(tile, ' '));
             CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
             CPPUNIT_ASSERT_EQUAL(0, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
             CPPUNIT_ASSERT_EQUAL(part, std::stoi(tokens[2].substr(std::string("part=").size())));
@@ -1348,7 +1348,7 @@ void TileCacheTests::testTileProcessed()
             ++arrivedTile;
 
             // Store tileID, so we can send it back
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(tile, ' '));
+            StringVector tokens(LOOLProtocol::tokenize(tile, ' '));
             std::string tileID = tokens[2].substr(std::string("part=").size()) + ":" +
                                  tokens[5].substr(std::string("tileposx=").size()) + ":" +
                                  tokens[6].substr(std::string("tileposy=").size()) + ":" +
@@ -1396,7 +1396,7 @@ void TileCacheTests::testTileInvalidatedOutside()
 
     // First wsd forwards the invalidation
     std::string sInvalidate = assertResponseString(socket, "invalidatetiles:", testname);
-    std::vector<std::string> tokens(LOOLProtocol::tokenize(sInvalidate, ' '));
+    StringVector tokens(LOOLProtocol::tokenize(sInvalidate, ' '));
     int y = std::stoi(tokens[3].substr(std::string("y=").size()));
     int height = std::stoi(tokens[5].substr(std::string("height=").size()));
 

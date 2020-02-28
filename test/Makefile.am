@@ -81,6 +81,7 @@ unittest_SOURCES = \
     ../common/Session.cpp \
     ../common/SigUtil.cpp \
     ../common/Unit.cpp \
+    ../common/StringVector.cpp \
     ../net/Socket.cpp \
     ../wsd/Auth.cpp \
     ../wsd/TestStubs.cpp \

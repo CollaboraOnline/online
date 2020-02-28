@@ -9,8 +9,7 @@
 #ifndef INCLUDED_SECCOMP_HPP
 #define INCLUDED_SECCOMP_HPP
 
-#include <string>
-#include <vector>
+#include <Protocol.hpp>
 
 namespace Seccomp {
     enum Type { KIT, WSD };
@@ -22,7 +21,7 @@ namespace Seccomp {
 namespace Rlimit {
     /// Handles setconfig command with limit_... subcommands.
     /// Returns true iff it handled the command, regardless of success/failure.
-    bool handleSetrlimitCommand(const std::vector<std::string>& tokens);
+    bool handleSetrlimitCommand(const StringVector& tokens);
 };
 
 #endif

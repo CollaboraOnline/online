@@ -75,11 +75,11 @@ namespace LOOLProtocol
     bool getTokenString(const std::string& token, const std::string& name, std::string& value);
     bool getTokenKeyword(const std::string& token, const std::string& name, const std::map<std::string, int>& map, int& value);
 
-    bool getTokenKeyword(const std::vector<std::string>& tokens, const std::string& name, const std::map<std::string, int>& map, int& value);
+    bool getTokenKeyword(const StringVector& tokens, const std::string& name, const std::map<std::string, int>& map, int& value);
 
-    bool getTokenInteger(const std::vector<std::string>& tokens, const std::string& name, int& value);
+    bool getTokenInteger(const StringVector& tokens, const std::string& name, int& value);
 
-    inline bool getTokenString(const std::vector<std::string>& tokens,
+    inline bool getTokenString(const StringVector& tokens,
                                const std::string& name,
                                std::string& value)
     {
@@ -99,12 +99,12 @@ namespace LOOLProtocol
 
     /// Tokenize space-delimited values until we hit new-line or the end.
     inline
-    std::vector<std::string> tokenize(const char* data, const size_t size, const char delimiter = ' ')
+    StringVector tokenize(const char* data, const size_t size, const char delimiter = ' ')
     {
         std::vector<std::string> tokens;
         if (size == 0 || data == nullptr)
         {
-            return tokens;
+            return StringVector(tokens);
         }
         tokens.reserve(8);
 
@@ -132,11 +132,11 @@ namespace LOOLProtocol
             tokens.emplace_back(start, end);
         }
 
-        return tokens;
+        return StringVector(tokens);
     }
 
     inline
-    std::vector<std::string> tokenize(const std::string& s, const char delimiter = ' ')
+    StringVector tokenize(const std::string& s, const char delimiter = ' ')
     {
         return tokenize(s.data(), s.size(), delimiter);
     }

@@ -27,12 +27,12 @@ namespace LOOLProtocol
         int minor = -1;
         std::string patch;
 
-        std::vector<std::string> firstTokens(tokenize(version, '.'));
+        StringVector firstTokens(tokenize(version, '.'));
         if (firstTokens.size() > 0)
         {
             major = std::stoi(firstTokens[0]);
 
-            std::vector<std::string> secondTokens;
+            StringVector secondTokens;
             if (firstTokens.size() > 1)
             {
                 secondTokens = tokenize(firstTokens[1], '-');
@@ -170,7 +170,7 @@ namespace LOOLProtocol
         return false;
     }
 
-    bool getTokenInteger(const std::vector<std::string>& tokens, const std::string& name, int& value)
+    bool getTokenInteger(const StringVector& tokens, const std::string& name, int& value)
     {
         for (size_t i = 0; i < tokens.size(); i++)
         {
@@ -180,7 +180,7 @@ namespace LOOLProtocol
         return false;
     }
 
-    bool getTokenKeyword(const std::vector<std::string>& tokens, const std::string& name, const std::map<std::string, int>& map, int& value)
+    bool getTokenKeyword(const StringVector& tokens, const std::string& name, const std::map<std::string, int>& map, int& value)
     {
         for (size_t i = 0; i < tokens.size(); i++)
         {

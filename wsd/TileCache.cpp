@@ -321,7 +321,7 @@ void TileCache::invalidateTiles(const std::string& tiles, int normalizedViewId)
 
 std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string& tiles)
 {
-    std::vector<std::string> tokens = LOOLProtocol::tokenize(tiles);
+    StringVector tokens = LOOLProtocol::tokenize(tiles);
 
     assert(tokens.size() > 0 && tokens[0] == "invalidatetiles:");
 

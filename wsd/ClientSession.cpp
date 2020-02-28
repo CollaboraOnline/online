@@ -324,7 +324,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": handling incoming [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
-    const std::vector<std::string> tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
+    const StringVector tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
     std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     if (!docBroker || docBroker->isMarkedToDestroy())
@@ -758,7 +758,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 }
 
 bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
-                                 const std::vector<std::string>& tokens,
+                                 const StringVector& tokens,
                                  const std::shared_ptr<DocumentBroker>& docBroker)
 {
     if (tokens.size() < 2)
@@ -849,7 +849,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
     return false;
 }
 
-bool ClientSession::getCommandValues(const char *buffer, int length, const std::vector<std::string>& tokens,
+bool ClientSession::getCommandValues(const char *buffer, int length, const StringVector& tokens,
                                      const std::shared_ptr<DocumentBroker>& docBroker)
 {
     std::string command;
@@ -863,7 +863,7 @@ bool ClientSession::getCommandValues(const char *buffer, int length, const std::
     return forwardToChild(std::string(buffer, length), docBroker);
 }
 
-bool ClientSession::sendFontRendering(const char *buffer, int length, const std::vector<std::string>& tokens,
+bool ClientSession::sendFontRendering(const char *buffer, int length, const StringVector& tokens,
                                       const std::shared_ptr<DocumentBroker>& docBroker)
 {
     std::string font, text;
@@ -885,7 +885,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, const std:
     return forwardToChild(std::string(buffer, length), docBroker);
 }
 
-bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
+bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const StringVector& tokens,
                              const std::shared_ptr<DocumentBroker>& docBroker)
 {
     try
@@ -903,7 +903,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const std:
     return true;
 }
 
-bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens,
+bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, const StringVector& tokens,
                                       const std::shared_ptr<DocumentBroker>& docBroker)
 {
     try
@@ -931,7 +931,7 @@ bool ClientSession::forwardToChild(const std::string& message,
 bool ClientSession::filterMessage(const std::string& message) const
 {
     bool allowed = true;
-    std::vector<std::string> tokens(LOOLProtocol::tokenize(message, ' '));
+    StringVector tokens(LOOLProtocol::tokenize(message, ' '));
 
     // Set allowed flag to false depending on if particular WOPI properties are set
     if (tokens[0] == "downloadas")
@@ -1282,7 +1282,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 #endif
     else if (tokens.size() == 2 && tokens[0] == "statechanged:")
     {
-        std::vector<std::string> stateTokens(LOOLProtocol::tokenize(tokens[1], '='));
+        StringVector stateTokens(LOOLProtocol::tokenize(tokens[1], '='));
         if (stateTokens.size() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
         {
             docBroker->setModified(stateTokens[1] == "true");
@@ -1471,7 +1471,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             const Poco::Dynamic::Var result = parser.parse(stringJSON);
             const auto& object = result.extract<Poco::JSON::Object::Ptr>();
             const std::string rectangle = object->get("rectangle").toString();
-            std::vector<std::string> rectangleTokens(LOOLProtocol::tokenize(rectangle, ','));
+            StringVector rectangleTokens(LOOLProtocol::tokenize(rectangle, ','));
             int x = 0, y = 0, w = 0, h = 0;
             if (rectangleTokens.size() > 2 &&
                 stringToInteger(rectangleTokens[0], x) &&

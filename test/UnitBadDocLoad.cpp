@@ -57,7 +57,7 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
 
         const auto response = helpers::getResponseString(socket, "error:", testname);
-        std::vector<std::string> tokens(LOOLProtocol::tokenize(response, ' '));
+        StringVector tokens(LOOLProtocol::tokenize(response, ' '));
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
         std::string errorCommand;

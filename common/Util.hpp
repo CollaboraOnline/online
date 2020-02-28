@@ -38,6 +38,8 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
+#include <StringVector.hpp>
+
 namespace Util
 {
     namespace rng
@@ -68,7 +70,7 @@ namespace Util
 
     /// Spawn a process if stdInput is non-NULL it contains a writable descriptor
     /// to send data to the child.
-    int spawnProcess(const std::string &cmd, const std::vector<std::string> &args,
+    int spawnProcess(const std::string &cmd, const StringVector &args,
                      const std::vector<int>* fdsToKeep = nullptr, int *stdInput = nullptr);
     
 #endif

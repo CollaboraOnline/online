@@ -184,7 +184,7 @@ UnitBase::TestResult UnitSession::testSlideShow()
         CPPUNIT_ASSERT_MESSAGE("did not receive a downloadas: message as expected",
                                !response.empty());
 
-        std::vector<std::string> tokens(LOOLProtocol::tokenize(response.substr(11), ' '));
+        StringVector tokens(LOOLProtocol::tokenize(response.substr(11), ' '));
         // "downloadas: jail= dir= name=slideshow.svg port= id=slideshow"
         const std::string jail = tokens[0].substr(std::string("jail=").size());
         const std::string dir = tokens[1].substr(std::string("dir=").size());

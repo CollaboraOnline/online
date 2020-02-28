@@ -245,7 +245,7 @@ namespace Util
         }
     }
 
-    int spawnProcess(const std::string &cmd, const std::vector<std::string> &args, const std::vector<int>* fdsToKeep, int *stdInput)
+    int spawnProcess(const std::string &cmd, const StringVector &args, const std::vector<int>* fdsToKeep, int *stdInput)
     {
         int pipeFds[2] = { -1, -1 };
         if (stdInput)

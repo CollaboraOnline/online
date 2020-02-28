@@ -418,7 +418,7 @@ static void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
     if (std::getenv("LOOL_STORAGE_COOKIE"))
     {
         Poco::Net::NameValueCollection nvcCookies;
-        std::vector<std::string> cookieTokens = LOOLProtocol::tokenize(std::string(std::getenv("LOOL_STORAGE_COOKIE")), ':');
+        StringVector cookieTokens = LOOLProtocol::tokenize(std::string(std::getenv("LOOL_STORAGE_COOKIE")), ':');
         if (cookieTokens.size() == 2)
         {
             nvcCookies.add(cookieTokens[0], cookieTokens[1]);
@@ -436,10 +436,10 @@ static void addStorageReuseCookie(Poco::Net::HTTPRequest& request, const std::st
         Poco::Net::NameValueCollection nvcCookies;
         request.getCookies(nvcCookies); // Preserve existing cookies.
 
-        std::vector<std::string> cookies = LOOLProtocol::tokenize(reuseStorageCookies, ':');
+        StringVector cookies = LOOLProtocol::tokenize(reuseStorageCookies, ':');
         for (auto cookie : cookies)
         {
-            std::vector<std::string> cookieTokens = LOOLProtocol::tokenize(cookie, '=');
+            StringVector cookieTokens = LOOLProtocol::tokenize(cookie, '=');
             if (cookieTokens.size() == 2)
             {
                 nvcCookies.add(cookieTokens[0], cookieTokens[1]);

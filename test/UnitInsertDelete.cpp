@@ -35,7 +35,7 @@ void getPartHashCodes(const std::string& testname, const std::string& response,
     TST_LOG("Reading parts from [" << response << "].");
 
     // Expected format is something like 'type= parts= current= width= height= viewid= [hiddenparts=]'.
-    std::vector<std::string> tokens(LOOLProtocol::tokenize(line, ' '));
+    StringVector tokens(LOOLProtocol::tokenize(line, ' '));
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
     CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size());
 #else
@@ -274,7 +274,7 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
         const auto& command0 = result0.extract<Poco::JSON::Object::Ptr>();
         CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command0->has("rectangle"));
 
-        std::vector<std::string> cursorTokens(
+        StringVector cursorTokens(
             LOOLProtocol::tokenize(command0->get("rectangle").toString(), ','));
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.size());
 
@@ -290,7 +290,7 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
         const auto& command = result.extract<Poco::JSON::Object::Ptr>();
         CPPUNIT_ASSERT_MESSAGE("missing property rectangle", command->has("rectangle"));
 
-        std::vector<std::string> viewTokens(
+        StringVector viewTokens(
             LOOLProtocol::tokenize(command->get("rectangle").toString(), ','));
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.size());
 

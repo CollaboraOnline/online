@@ -30,7 +30,7 @@ void TileQueue::put_impl(const Payload& value)
     {
         LOG_TRC("Processing [" << LOOLProtocol::getAbbreviatedMessage(msg) << "]. Before canceltiles have " << getQueue().size() << " in queue.");
         const std::string seqs = msg.substr(12);
-        std::vector<std::string> tokens(LOOLProtocol::tokenize(seqs, ','));
+        StringVector tokens(LOOLProtocol::tokenize(seqs, ','));
         getQueue().erase(std::remove_if(getQueue().begin(), getQueue().end(),
                 [&tokens](const Payload& v)
                 {
@@ -126,7 +126,7 @@ void TileQueue::removeTileDuplicate(const std::string& tileMsg)
 namespace {
 
 /// Read the viewId from the tokens.
-std::string extractViewId(const std::string& origMsg, const std::vector<std::string>& tokens)
+std::string extractViewId(const std::string& origMsg, const StringVector& tokens)
 {
     size_t nonJson = tokens[0].size() + tokens[1].size() + tokens[2].size() + 3; // including spaces
     std::string jsonString(origMsg.data() + nonJson, origMsg.size() - nonJson);
@@ -151,7 +151,7 @@ std::string extractUnoCommand(const std::string& command)
 }
 
 /// Extract rectangle from the invalidation callback
-bool extractRectangle(const std::vector<std::string>& tokens, int& x, int& y, int& w, int& h, int& part)
+bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h, int& part)
 {
     x = 0;
     y = 0;
@@ -186,7 +186,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
 {
     assert(LOOLProtocol::matchPrefix("callback", callbackMsg, /*ignoreWhitespace*/ true));
 
-    std::vector<std::string> tokens = LOOLProtocol::tokenize(callbackMsg);
+    StringVector tokens = LOOLProtocol::tokenize(callbackMsg);
 
     if (tokens.size() < 3)
         return std::string();
@@ -211,7 +211,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
         {
             auto& it = getQueue()[i];
 
-            std::vector<std::string> queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
+            StringVector queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
             if (queuedTokens.size() < 3)
             {
                 ++i;
@@ -316,7 +316,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
         {
             auto& it = getQueue()[i];
 
-            std::vector<std::string> queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
+            StringVector queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
             if (queuedTokens.size() < 4)
                 continue;
 
@@ -362,7 +362,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             if (!LOOLProtocol::matchPrefix("callback", it))
                 continue;
 
-            std::vector<std::string> queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
+            StringVector queuedTokens = LOOLProtocol::tokenize(it.data(), it.size());
             if (queuedTokens.size() < 3)
                 continue;
 

@@ -194,7 +194,7 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
         {
             const std::string response
                 = helpers::assertResponseString(socket[i], "error:", testname);
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(response.substr(6), ' '));
+            StringVector tokens(LOOLProtocol::tokenize(response.substr(6), ' '));
             std::string cmd;
             LOOLProtocol::getTokenString(tokens, "cmd", cmd);
             CPPUNIT_ASSERT_EQUAL(std::string("internal"), cmd);

@@ -51,7 +51,7 @@ void UnitRenderingOptions::invokeTest()
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
         
-        std::vector<std::string> tokens(LOOLProtocol::tokenize(status, ' '));
+        StringVector tokens(LOOLProtocol::tokenize(status, ' '));
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size());
 
         const std::string token = tokens[5];

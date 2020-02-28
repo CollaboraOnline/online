@@ -80,11 +80,11 @@ public:
     size_t size() const { return _data.size(); }
     const std::vector<char>& data() const { return _data; }
 
-    const std::vector<std::string>& tokens() const { return _tokens; }
+    const StringVector& tokens() const { return _tokens; }
     const std::string& forwardToken() const { return _forwardToken; }
-    const std::string& firstToken() const { return _tokens[0]; }
+    std::string firstToken() const { return _tokens[0]; }
     const std::string& firstLine() const { return _firstLine; }
-    const std::string& operator[](size_t index) const { return _tokens[index]; }
+    std::string operator[](size_t index) const { return _tokens[index]; }
 
     bool getTokenInteger(const std::string& name, int& value)
     {
@@ -177,7 +177,7 @@ private:
 private:
     const std::string _forwardToken;
     std::vector<char> _data;
-    const std::vector<std::string> _tokens;
+    const StringVector _tokens;
     const std::string _id;
     const std::string _firstLine;
     const std::string _abbr;

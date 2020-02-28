@@ -269,7 +269,7 @@ void setRLimit(rlim_t confLim, int resource, const std::string &resourceText, co
         LOG_INF("Ignored setting " << resourceText << " to " << limTextWithUnit << ".");
 }
 
-bool handleSetrlimitCommand(const std::vector<std::string>& tokens)
+bool handleSetrlimitCommand(const StringVector& tokens)
 {
     if (tokens.size() == 3 && tokens[0] == "setconfig")
     {

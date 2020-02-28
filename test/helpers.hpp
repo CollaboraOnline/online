@@ -556,7 +556,7 @@ inline
 void parseDocSize(const std::string& message, const std::string& type,
                   int& part, int& parts, int& width, int& height, int& viewid)
 {
-    std::vector<std::string> tokens(LOOLProtocol::tokenize(message, ' '));
+    StringVector tokens(LOOLProtocol::tokenize(message, ' '));
 
     // Expected format is something like 'type= parts= current= width= height='.
     const std::string text = tokens[0].substr(std::string("type=").size());
@@ -585,7 +585,7 @@ std::vector<char> assertTileMessage(LOOLWebSocket& ws, const std::string& testna
     const std::vector<char> response = getTileMessage(ws, testname);
 
     const std::string firstLine = LOOLProtocol::getFirstLine(response);
-    std::vector<std::string> tileTokens(LOOLProtocol::tokenize(firstLine, ' '));
+    StringVector tileTokens(LOOLProtocol::tokenize(firstLine, ' '));
     CPPUNIT_ASSERT_EQUAL(std::string("tile:"), tileTokens[0]);
     CPPUNIT_ASSERT_EQUAL(std::string("part="), tileTokens[1].substr(0, std::string("part=").size()));
     CPPUNIT_ASSERT_EQUAL(std::string("width="), tileTokens[2].substr(0, std::string("width=").size()));

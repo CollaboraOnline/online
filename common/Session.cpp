@@ -75,7 +75,7 @@ bool Session::sendBinaryFrame(const char *buffer, int length)
     return sendMessage(buffer, length, WSOpCode::Binary) >= length;
 }
 
-void Session::parseDocOptions(const std::vector<std::string>& tokens, int& part, std::string& timestamp, std::string& doctemplate)
+void Session::parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp, std::string& doctemplate)
 {
     // First token is the "load" command itself.
     size_t offset = 1;

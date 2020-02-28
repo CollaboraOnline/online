@@ -196,7 +196,7 @@ public:
     }
 
     /// Deserialize a TileDesc from a tokenized string.
-    static TileDesc parse(const std::vector<std::string>& tokens)
+    static TileDesc parse(const StringVector& tokens)
     {
         // We don't expect undocumented fields and
         // assume all values to be int.
@@ -300,12 +300,12 @@ private:
             throw BadArgumentException("Invalid tilecombine descriptor.");
         }
 
-        std::vector<std::string> positionXtokens(LOOLProtocol::tokenize(tilePositionsX, ','));
-        std::vector<std::string> positionYtokens(LOOLProtocol::tokenize(tilePositionsY, ','));
-        std::vector<std::string> imgSizeTokens(LOOLProtocol::tokenize(imgSizes, ','));
-        std::vector<std::string> verTokens(LOOLProtocol::tokenize(vers, ','));
-        std::vector<std::string> oldWireIdTokens(LOOLProtocol::tokenize(oldWireIds, ','));
-        std::vector<std::string> wireIdTokens(LOOLProtocol::tokenize(wireIds, ','));
+        StringVector positionXtokens(LOOLProtocol::tokenize(tilePositionsX, ','));
+        StringVector positionYtokens(LOOLProtocol::tokenize(tilePositionsY, ','));
+        StringVector imgSizeTokens(LOOLProtocol::tokenize(imgSizes, ','));
+        StringVector verTokens(LOOLProtocol::tokenize(vers, ','));
+        StringVector oldWireIdTokens(LOOLProtocol::tokenize(oldWireIds, ','));
+        StringVector wireIdTokens(LOOLProtocol::tokenize(wireIds, ','));
 
         const size_t numberOfPositions = positionXtokens.size();
 
@@ -455,7 +455,7 @@ public:
     }
 
     /// Deserialize a TileDesc from a tokenized string.
-    static TileCombined parse(const std::vector<std::string>& tokens)
+    static TileCombined parse(const StringVector& tokens)
     {
         // We don't expect undocumented fields and
         // assume all values to be int.

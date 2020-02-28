@@ -106,7 +106,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
-    const std::vector<std::string> tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
+    const StringVector tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {
@@ -368,7 +368,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 std::vector<std::string> newTokens;
                 newTokens.push_back(tokens[0]);
                 newTokens.push_back(firstLine.substr(4)); // Copy the remaining part.
-                return unoCommand(buffer, length, newTokens);
+                return unoCommand(buffer, length, StringVector(newTokens));
             }
             return unoCommand(buffer, length, tokens);
         }
@@ -467,7 +467,7 @@ std::string getMimeFromFileType(const std::string & fileType)
     return std::string();
 }
 
-bool ChildSession::uploadSignedDocument(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
+bool ChildSession::uploadSignedDocument(const char* buffer, int length, const StringVector& /*tokens*/)
 {
     std::string filename;
     std::string wopiUrl;
@@ -578,7 +578,7 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const st
 
 #endif
 
-bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int part = -1;
     if (tokens.size() < 2)
@@ -660,7 +660,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const s
     return true;
 }
 
-bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     std::string font, text, decodedFont, decodedChar;
     bool bSuccess;
@@ -774,7 +774,7 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
 
 }
 
-bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     bool success;
     char* values;
@@ -813,7 +813,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, cons
     return success;
 }
 
-bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
 
@@ -833,7 +833,7 @@ bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, const std:
     return true;
 }
 
-bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int x;
     int y;
@@ -856,7 +856,7 @@ bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, con
     return true;
 }
 
-bool ChildSession::outlineState(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::outlineState(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     std::string type, state;
     int level, index;
@@ -882,7 +882,7 @@ bool ChildSession::outlineState(const char* /*buffer*/, int /*length*/, const st
     return true;
 }
 
-bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     std::string name, id, format, filterOptions;
 
@@ -966,7 +966,7 @@ std::string ChildSession::getTextSelectionInternal(const std::string& mimeType)
     return str;
 }
 
-bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     std::string mimeType;
 
@@ -1006,7 +1006,7 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
     return true;
 }
 
-bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     const char **pMimeTypes = nullptr; // fetch all for now.
     const char  *pOneType[2];
@@ -1068,7 +1068,7 @@ bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const st
     return true;
 }
 
-bool ChildSession::setClipboard(const char* buffer, int length, const std::vector<std::string>& /* tokens */)
+bool ChildSession::setClipboard(const char* buffer, int length, const StringVector& /* tokens */)
 {
     try {
         ClipboardData data;
@@ -1107,7 +1107,7 @@ bool ChildSession::setClipboard(const char* buffer, int length, const std::vecto
     return false;
 }
 
-bool ChildSession::paste(const char* buffer, int length, const std::vector<std::string>& tokens)
+bool ChildSession::paste(const char* buffer, int length, const StringVector& tokens)
 {
     std::string mimeType;
     if (tokens.size() < 2 || !getTokenString(tokens[1], "mimetype", mimeType) ||
@@ -1151,7 +1151,7 @@ bool ChildSession::paste(const char* buffer, int length, const std::vector<std::
     return true;
 }
 
-bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     std::string name, type;
 
@@ -1213,7 +1213,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const std:
 }
 
 bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
-                                     const std::vector<std::string>& tokens)
+                                     const StringVector& tokens)
 {
     int id, type;
     std::string text;
@@ -1239,7 +1239,7 @@ bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
 }
 
 bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
-                            const std::vector<std::string>& tokens,
+                            const StringVector& tokens,
                             const LokEventTargetEnum target)
 {
     int type, charcode, keycode;
@@ -1296,7 +1296,7 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
 }
 
 bool ChildSession::gestureEvent(const char* /*buffer*/, int /*length*/,
-                              const std::vector<std::string>& tokens)
+                              const StringVector& tokens)
 {
     bool success = true;
 
@@ -1333,7 +1333,7 @@ bool ChildSession::gestureEvent(const char* /*buffer*/, int /*length*/,
 }
 
 bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
-                              const std::vector<std::string>& tokens,
+                              const StringVector& tokens,
                               const LokEventTargetEnum target)
 {
     int type, x, y, count;
@@ -1401,7 +1401,7 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
     return true;
 }
 
-bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     if (tokens.size() <= 2)
     {
@@ -1418,7 +1418,7 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const std
     return true;
 }
 
-bool ChildSession::completeFunction(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::completeFunction(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int index;
 
@@ -1435,7 +1435,7 @@ bool ChildSession::completeFunction(const char* /*buffer*/, int /*length*/, cons
     return true;
 }
 
-bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     if (tokens.size() <= 1)
     {
@@ -1476,7 +1476,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const std:
 }
 
 bool ChildSession::selectText(const char* /*buffer*/, int /*length*/,
-                              const std::vector<std::string>& tokens,
+                              const StringVector& tokens,
                               const LokEventTargetEnum target)
 {
     std::string swap;
@@ -1528,7 +1528,7 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/,
     return true;
 }
 
-bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1]) : 0);
 
@@ -1539,7 +1539,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
     if (tokens.size() > 2 && getTokenString(tokens[2], "rectangle", paintRectangle)
         && paintRectangle != "undefined")
     {
-        const std::vector<std::string> rectParts
+        const StringVector rectParts
             = LOOLProtocol::tokenize(paintRectangle.c_str(), paintRectangle.length(), ',');
         if (rectParts.size() == 4)
         {
@@ -1604,7 +1604,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const st
     return true;
 }
 
-bool ChildSession::resizeWindow(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::resizeWindow(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1].c_str(), nullptr, 10) : 0);
 
@@ -1625,7 +1625,7 @@ bool ChildSession::resizeWindow(const char* /*buffer*/, int /*length*/, const st
     return true;
 }
 
-bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1]) : 0);
 
@@ -1686,7 +1686,7 @@ std::string extractPrivateKey(const std::string & privateKey)
 
 }
 
-bool ChildSession::signDocumentContent(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
+bool ChildSession::signDocumentContent(const char* buffer, int length, const StringVector& /*tokens*/)
 {
     bool bResult = true;
 
@@ -1729,7 +1729,7 @@ bool ChildSession::signDocumentContent(const char* buffer, int length, const std
 
 #if !MOBILEAPP
 
-bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
+bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, const StringVector& /*tokens*/)
 {
     bool bResult = false;
 
@@ -1892,7 +1892,7 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
 
 #endif
 
-bool ChildSession::askSignatureStatus(const char* buffer, int length, const std::vector<std::string>& /*tokens*/)
+bool ChildSession::askSignatureStatus(const char* buffer, int length, const StringVector& /*tokens*/)
 {
     bool bResult = true;
 
@@ -1929,7 +1929,7 @@ bool ChildSession::askSignatureStatus(const char* buffer, int length, const std:
     return true;
 }
 
-bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int type, x, y;
     if (tokens.size() != 4 ||
@@ -1951,7 +1951,7 @@ bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, const s
     return true;
 }
 
-bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     if (tokens.size() != 1)
     {
@@ -1966,7 +1966,7 @@ bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, const 
     return true;
 }
 
-bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     std::string wopiFilename, url, format, filterOptions;
 
@@ -2064,7 +2064,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const std::vec
     return true;
 }
 
-bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int part;
     if (tokens.size() < 2 ||
@@ -2084,7 +2084,7 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const s
     return true;
 }
 
-bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int nPart;
     int nSelect;
@@ -2118,7 +2118,7 @@ bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, cons
     return true;
 }
 
-bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int nPosition;
     if (tokens.size() < 2 ||
@@ -2147,7 +2147,7 @@ bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*
     return true; // Non-fatal to fail.
 }
 
-bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     int page;
     if (tokens.size() < 2 ||
@@ -2163,7 +2163,7 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const std::ve
     return true;
 }
 
-bool ChildSession::renderShapeSelection(const char* /*buffer*/, int /*length*/, const std::vector<std::string>& tokens)
+bool ChildSession::renderShapeSelection(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     std::string mimeType;
     if (tokens.size() != 2 ||
@@ -2198,7 +2198,7 @@ bool ChildSession::renderShapeSelection(const char* /*buffer*/, int /*length*/, 
 }
 
 bool ChildSession::removeTextContext(const char* /*buffer*/, int /*length*/,
-                                     const std::vector<std::string>& tokens)
+                                     const StringVector& tokens)
 {
     int id, before, after;
     std::string text;
@@ -2333,7 +2333,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     {
     case LOK_CALLBACK_INVALIDATE_TILES:
         {
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(payload, ','));
+            StringVector tokens(LOOLProtocol::tokenize(payload, ','));
             if (tokens.size() == 5)
             {
                 int part, x, y, width, height;

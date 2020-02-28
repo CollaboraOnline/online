@@ -880,13 +880,13 @@ public:
         LOG_INF("setDocumentPassword returned");
     }
 
-    void renderTile(const std::vector<std::string>& tokens)
+    void renderTile(const StringVector& tokens)
     {
         TileCombined tileCombined(TileDesc::parse(tokens));
         renderTiles(tileCombined, false);
     }
 
-    void renderCombinedTiles(const std::vector<std::string>& tokens)
+    void renderCombinedTiles(const StringVector& tokens)
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
         renderTiles(tileCombined, true);
@@ -1242,7 +1242,7 @@ public:
 
         if (type == LOK_CALLBACK_CELL_CURSOR)
         {
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(payload, ','));
+            StringVector tokens(LOOLProtocol::tokenize(payload, ','));
             // Payload may be 'EMPTY'.
             if (tokens.size() == 4)
             {
@@ -1260,7 +1260,7 @@ public:
             const Poco::Dynamic::Var result = parser.parse(payload);
             const auto& command = result.extract<Poco::JSON::Object::Ptr>();
             std::string rectangle = command->get("rectangle").toString();
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(rectangle, ','));
+            StringVector tokens(LOOLProtocol::tokenize(rectangle, ','));
             // Payload may be 'EMPTY'.
             if (tokens.size() == 4)
             {
@@ -1281,7 +1281,7 @@ public:
             targetViewId = command->get("viewId").toString();
             std::string part = command->get("part").toString();
             std::string text = command->get("rectangle").toString();
-            std::vector<std::string> tokens(LOOLProtocol::tokenize(text, ','));
+            StringVector tokens(LOOLProtocol::tokenize(text, ','));
             // Payload may be 'EMPTY'.
             if (tokens.size() == 4)
             {
@@ -1872,7 +1872,7 @@ public:
 
                 LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
 
-                const std::vector<std::string> tokens = LOOLProtocol::tokenize(input.data(), input.size());
+                const StringVector tokens = LOOLProtocol::tokenize(input.data(), input.size());
 
                 if (tokens[0] == "eof")
                 {
@@ -2101,7 +2101,7 @@ protected:
         if (UnitKit::get().filterKitMessage(this, message))
             return;
 #endif
-        std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
+        StringVector tokens = LOOLProtocol::tokenize(message);
         Log::StreamLogger logger = Log::debug();
         if (logger.enabled())
         {

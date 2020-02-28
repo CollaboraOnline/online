@@ -92,6 +92,7 @@ shared_sources = common/FileUtil.cpp \
                  common/IoUtil.cpp \
                  common/Log.cpp \
                  common/Protocol.cpp \
+                 common/StringVector.cpp \
                  common/Session.cpp \
                  common/Seccomp.cpp \
                  common/MessageQueue.cpp \
@@ -138,12 +139,14 @@ endif
 connect_SOURCES = tools/Connect.cpp \
                   common/Log.cpp \
                   common/Protocol.cpp \
+                  common/StringVector.cpp \
                   common/Util.cpp
 
 lokitclient_SOURCES = common/IoUtil.cpp \
                       common/Log.cpp \
                       tools/KitClient.cpp \
                       common/Protocol.cpp \
+                      common/StringVector.cpp \
                       common/Util.cpp
 
 loolforkit_sources = kit/ChildSession.cpp \
@@ -170,6 +173,7 @@ clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
 clientnb_SOURCES = net/clientnb.cpp \
                    common/Log.cpp \
+		   common/StringVector.cpp \
                    common/Util.cpp
 
 loolmount_SOURCES = tools/mount.cpp
@@ -181,12 +185,14 @@ loolconvert_SOURCES = tools/Tool.cpp
 loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
 loolstress_SOURCES = tools/Stress.cpp \
                      common/Protocol.cpp \
+                     common/StringVector.cpp \
                      common/Log.cpp \
 		     common/Util.cpp
 
 loolconfig_SOURCES = tools/Config.cpp \
 		     common/Crypto.cpp \
 		     common/Log.cpp \
+		     common/StringVector.cpp \
 		     common/Util.cpp
 
 loolsocketdump_SOURCES = tools/WebSocketDump.cpp \
@@ -218,6 +224,7 @@ shared_headers = common/Common.hpp \
                  common/Log.hpp \
                  common/LOOLWebSocket.hpp \
                  common/Protocol.hpp \
+                 common/StringVector.hpp \
                  common/Seccomp.hpp \
                  common/Session.hpp \
                  common/Unit.hpp \

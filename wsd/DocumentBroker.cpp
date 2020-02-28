@@ -777,7 +777,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
                     const std::string newRootPath = _storage->getRootFilePath() + "." + newExtension;
 
-                    std::vector<std::string> args(LOOLProtocol::tokenize(commandLine, ' '));
+                    StringVector args(LOOLProtocol::tokenize(commandLine, ' '));
                     std::string command(args[0]);
                     args.erase(args.begin()); // strip the command
 
@@ -2012,7 +2012,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     {
         assert(!_uriJailed.empty());
 
-        std::vector<std::string> tokens = LOOLProtocol::tokenize(msg);
+        StringVector tokens = LOOLProtocol::tokenize(msg);
         if (tokens.size() > 1 && tokens[1] == "load")
         {
             // The json options must come last.

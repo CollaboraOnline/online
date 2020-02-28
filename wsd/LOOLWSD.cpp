@@ -1602,7 +1602,7 @@ bool LOOLWSD::createForKit()
 
     std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
 
-    std::vector<std::string> args;
+    StringVector args;
 #ifdef STRACE_LOOLFORKIT
     // if you want to use this, you need to setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/strace
     args.push_back("-o");
@@ -2062,7 +2062,7 @@ public:
         if(request.has("X-Forwarded-For"))
         {
             const std::string fowardedData = request.get("X-Forwarded-For");
-            std::vector<std::string> tokens = LOOLProtocol::tokenize(fowardedData, ',');
+            StringVector tokens = LOOLProtocol::tokenize(fowardedData, ',');
             for(std::string& token : tokens)
             {
                 addressToCheck = Util::trim(token);

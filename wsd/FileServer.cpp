@@ -145,7 +145,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
 #if HAVE_PKCS5_PBKDF2_HMAC
         // Extract the salt from the config
         std::vector<unsigned char> saltData;
-        std::vector<std::string> tokens = LOOLProtocol::tokenize(securePass, '.');
+        StringVector tokens = LOOLProtocol::tokenize(securePass, '.');
         if (tokens.size() != 5 ||
             tokens[0] != "pbkdf2" ||
             tokens[1] != "sha512" ||

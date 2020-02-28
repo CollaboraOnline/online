@@ -34,7 +34,7 @@ void getCursor(const std::string& message, int& cursorX, int& cursorY, int& curs
     CPPUNIT_ASSERT_EQUAL(std::string(".uno:CellCursor"), text);
     text = command->get("commandValues").toString();
     CPPUNIT_ASSERT(!text.empty());
-    std::vector<std::string> position(LOOLProtocol::tokenize(text, ','));
+    StringVector position(LOOLProtocol::tokenize(text, ','));
     cursorX = std::stoi(position[0]);
     cursorY = std::stoi(position[1]);
     cursorWidth = std::stoi(position[2]);

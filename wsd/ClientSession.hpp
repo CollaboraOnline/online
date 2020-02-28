@@ -187,18 +187,18 @@ private:
 
     virtual bool _handleInput(const char* buffer, int length) override;
 
-    bool loadDocument(const char* buffer, int length, const std::vector<std::string>& tokens,
+    bool loadDocument(const char* buffer, int length, const StringVector& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
     bool getStatus(const char* buffer, int length,
                    const std::shared_ptr<DocumentBroker>& docBroker);
-    bool getCommandValues(const char* buffer, int length, const std::vector<std::string>& tokens,
+    bool getCommandValues(const char* buffer, int length, const StringVector& tokens,
                           const std::shared_ptr<DocumentBroker>& docBroker);
-    bool sendTile(const char* buffer, int length, const std::vector<std::string>& tokens,
+    bool sendTile(const char* buffer, int length, const StringVector& tokens,
                   const std::shared_ptr<DocumentBroker>& docBroker);
-    bool sendCombinedTiles(const char* buffer, int length, const std::vector<std::string>& tokens,
+    bool sendCombinedTiles(const char* buffer, int length, const StringVector& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
 
-    bool sendFontRendering(const char* buffer, int length, const std::vector<std::string>& tokens,
+    bool sendFontRendering(const char* buffer, int length, const StringVector& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
 
     bool forwardToChild(const std::string& message,

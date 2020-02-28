@@ -96,7 +96,7 @@ public:
         LOG_INF("ForKit command: [" << message << "].");
         try
         {
-            std::vector<std::string> tokens = LOOLProtocol::tokenize(message);
+            StringVector tokens = LOOLProtocol::tokenize(message);
             if (tokens.size() == 2 && tokens[0] == "spawn")
             {
                 const int count = std::stoi(tokens[1]);
@@ -441,11 +441,11 @@ int main(int argc, char** argv)
         {
             eq = std::strchr(cmd, '=');
             const std::string rlimits = std::string(eq+1);
-            std::vector<std::string> tokens = LOOLProtocol::tokenize(rlimits, ';');
+            StringVector tokens = LOOLProtocol::tokenize(rlimits, ';');
             for (const std::string& cmdLimit : tokens)
             {
                 const std::pair<std::string, std::string> pair = Util::split(cmdLimit, ':');
-                std::vector<std::string> tokensLimit = { "setconfig", pair.first, pair.second };
+                StringVector tokensLimit({ "setconfig", pair.first, pair.second });
                 if (!Rlimit::handleSetrlimitCommand(tokensLimit))
                 {
                     LOG_ERR("Unknown rlimits command: " << cmdLimit);
