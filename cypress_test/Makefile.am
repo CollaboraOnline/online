@@ -57,7 +57,7 @@ MOBILE_TEST_FILES_DONE= \
 DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DEKSTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
-check-local: $(MOBILE_TEST_FILES_DONE) $(DESKTOP_TEST_FILES_DONE)
+check-local: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE)
 	@$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 
@@ -67,14 +67,24 @@ $(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
 	$(call start_loolwsd)
 
 $(MOBILE_TEST_FILES_DONE): $(PID_FILE)
-	$(call run_mobile_tests,$(subst $(MOBILE_TRACK_FOLDER),,$(basename $@)))
-	@mkdir -p $(dir $@)
-	@touch $@
+	$(if $(PARALLEL_BUILD),\
+		$(call run_mobile_tests,$(subst $(MOBILE_TRACK_FOLDER)/,,$(basename $@))),\
+		$(call run_mobile_tests))
+	$(if $(PARALLEL_BUILD),\
+		@mkdir -p $(dir $@) && touch $@\
+		,\
+		@$(foreach done_file,$(MOBILE_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
+	)
 
 $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
-	$(call run_desktop_tests,$(subst $(DESKTOP_TRACK_FOLDER),,$(basename $@)))
-	@mkdir -p $(dir $@)
-	@touch $@
+	$(if $(PARALLEL_BUILD),\
+		$(call run_desktop_tests,$(subst $(DESKTOP_TRACK_FOLDER)/,,$(basename $@))),\
+		$(call run_desktop_tests))
+	$(if $(PARALLEL_BUILD),\
+		@mkdir -p $(dir $@) && touch $@\
+		,\
+		@$(foreach done_file,$(DESKTOP_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
+	)
 
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
