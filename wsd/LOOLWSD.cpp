@@ -213,7 +213,6 @@ static int careerSpanMs = 0;
 
 /// The timeout for a child to spawn, initially high, then reset to the default.
 int ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS * 4;
-bool LOOLWSD::NoCapsForKit = false;
 std::atomic<unsigned> LOOLWSD::NumConnections;
 std::set<std::string> LOOLWSD::EditFileExtensions;
 
@@ -699,8 +698,11 @@ std::atomic<uint64_t> LOOLWSD::NextConnectionId(1);
 std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
 #endif
+#if !MOBILEAPP
+bool LOOLWSD::NoCapsForKit = false;
 bool LOOLWSD::NoSeccomp = false;
 bool LOOLWSD::AdminEnabled = true;
+#endif
 #ifdef FUZZER
 bool LOOLWSD::DummyLOK = false;
 std::string LOOLWSD::FuzzFileName;
@@ -1100,9 +1102,11 @@ void LOOLWSD::initialize(Application& self)
     LOOLWSD::MaxConnections = MAX_CONNECTIONS;
     LOOLWSD::MaxDocuments = MAX_DOCUMENTS;
 
+#if !MOBILEAPP
     NoSeccomp = !getConfigValue<bool>(conf, "security.seccomp", true);
     NoCapsForKit = !getConfigValue<bool>(conf, "security.capabilities", true);
     AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
+#endif
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
