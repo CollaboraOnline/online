@@ -49,9 +49,11 @@ public:
     // so just keep these as statics.
     static std::atomic<uint64_t> NextConnectionId;
     static unsigned int NumPreSpawnedChildren;
+#if !MOBILEAPP
     static bool NoCapsForKit;
     static bool NoSeccomp;
     static bool AdminEnabled;
+#endif
     static std::atomic<int> ForKitWritePipe;
     static std::atomic<int> ForKitProcId;
     static bool DummyLOK;
