@@ -66,7 +66,6 @@ var map = L.map('map', {
 	alwaysActive: alwaysActive,
 	idleTimeoutSecs: idleTimeoutSecs,  // Dim when user is idle.
 	outOfFocusTimeoutSecs: outOfFocusTimeoutSecs, // Dim after switching tabs.
-	inertia: false
 });
 
 ////// Controls /////

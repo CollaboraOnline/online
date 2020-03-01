@@ -132,7 +132,6 @@ L.Map = L.Evented.extend({
 		this.addHandler('dragging', L.Map.Drag);
 		if ((L.Browser.touch && !L.Browser.pointer) || (L.Browser.cypressTest && L.Browser.mobile)) {
 			this.dragging.disable();
-			this.options.inertia = false;
 			this.dragging._draggable._manualDrag = true;
 			this._mainEvents('off');
 			this.addHandler('touchGesture', L.Map.TouchGesture);
