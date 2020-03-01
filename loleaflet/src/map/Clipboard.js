@@ -610,7 +610,7 @@ L.Clipboard = L.Class.extend({
 			}
 			else
 			{
-				console.log('help did not arive for ' + operation);
+				console.log('help did not arrive for ' + operation);
 				that._warnCopyPaste();
 			}
 		}, 150 /* ms */);

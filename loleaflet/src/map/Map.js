@@ -97,6 +97,11 @@ L.Map = L.Evented.extend({
 		// lead to URL's of the form <webserver>//insertfile/...
 		options.webserver = options.webserver.replace(/\/*$/, '');
 
+		if (L.Browser.cypressTest) {
+			// Expose us in test mode.
+			window.map = this;
+		}
+
 		this._handlers = [];
 		this._layers = {};
 		this._zoomBoundLayers = {};
@@ -188,8 +193,7 @@ L.Map = L.Evented.extend({
 				L.DomUtil.addClass(L.DomUtil.get('main-menu'), 'readonly');
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'readonly');
 				L.DomUtil.addClass(L.DomUtil.get('spreadsheet-row-column-frame'), 'readonly');
-			}
-			else {
+			} else {
 				L.DomUtil.removeClass(this._container.parentElement, 'readonly');
 				if (!L.Browser.mobile) {
 					L.DomUtil.removeClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');

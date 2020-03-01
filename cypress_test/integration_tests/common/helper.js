@@ -46,6 +46,75 @@ function loadTestDoc(fileName, subFolder, mobile) {
 	cy.get('.leaflet-tile-loaded', {timeout : 10000});
 }
 
+// Enable editing if we are in read-only mode.
+function enableEditingMobile() {
+	cy.get('#mobile-edit-button')
+		.then(function(button) {
+			if (button.css('display') !== 'none') {
+				cy.get('#mobile-edit-button')
+					.click();
+			}
+		});
+}
+
+// Assert that we have cursor and focus.
+function assertCursorAndFocus() {
+	cy.log('Verifying Cursor and Focus.');
+
+	// In edit mode, we should have the blinking cursor.
+	cy.get('.leaflet-cursor.blinking-cursor')
+		.should('exist');
+	cy.get('.leaflet-cursor-container')
+		.should('exist');
+
+	cy.log('Cursor and Focus verified.');
+}
+
+// Select all text via CTRL+A shortcut.
+function selectAllText() {
+	assertCursorAndFocus();
+
+	cy.log('Select all text');
+
+	cy.get('textarea.clipboard')
+		.type('{ctrl}a').wait(300);
+}
+
+// Clear all text by selecting all and deleting.
+function clearAllText() {
+	assertCursorAndFocus();
+
+	cy.log('Clear all text');
+
+	cy.get('textarea.clipboard')
+		.type('{ctrl}a{del}').wait(300);
+}
+
+// Returns the text that should go to the
+// clipboard on Ctrl+C.
+// So this isn't equivalent to reading the
+// clipboard (which Cypress doesn't support).
+// Takes a closure f that takes the text
+// string as argument. Use as follows:
+// helper.getTextForClipboard((htmlText, plainText) => {
+// 	expect(plainText, 'Selection Text').to.equal(testText);
+// });
+function getTextForClipboard(f) {
+	cy.window().then(win => {
+		var htmlText = win.map._clip._getHtmlForClipboard();
+		var plainText = win.map._clip.stripHTML(htmlText);
+		f(htmlText, plainText);
+	});
+}
+
+// Expects getTextForClipboard return the given
+// plain-text, and asserts equality.
+function expectTextForClipboard(expectedPlainText) {
+	getTextForClipboard((htmlText, plainText) => {
+		expect(plainText, 'Selection Text').to.equal(expectedPlainText);
+	});
+}
+
 function beforeAllMobile(fileName, subFolder) {
 	loadTestDoc(fileName, subFolder, true);
 
@@ -124,6 +193,12 @@ function longPressOnDocument(posX, posY) {
 }
 
 module.exports.loadTestDoc = loadTestDoc;
+module.exports.enableEditingMobile = enableEditingMobile;
+module.exports.assertCursorAndFocus = assertCursorAndFocus;
+module.exports.selectAllText = selectAllText;
+module.exports.clearAllText = clearAllText;
+module.exports.getTextForClipboard = getTextForClipboard;
+module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.afterAll = afterAll;
 module.exports.beforeAllMobile = beforeAllMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
