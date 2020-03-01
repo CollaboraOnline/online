@@ -2399,6 +2399,9 @@ function onUpdatePermission(e) {
 			$('#toolbar-down').hide();
 		}
 	}
+
+	// We've resized the document container.
+	map.invalidateSize();
 }
 
 function onUseritemClicked(e) { // eslint-disable-line no-unused-vars
