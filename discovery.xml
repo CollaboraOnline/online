@@ -11,7 +11,7 @@
             <action name="edit" ext="xla"/>
         </app>
 
-	<!-- Writer documents -->
+        <!-- Writer documents -->
         <app name="application/vnd.sun.xml.writer">
             <action name="view" ext="sxw"/>
         </app>
@@ -22,7 +22,7 @@
             <action name="edit" ext="fodt"/>
         </app>
 
-	<!-- Calc documents -->
+        <!-- Calc documents -->
         <app name="application/vnd.sun.xml.calc">
             <action name="view" ext="sxc"/>
         </app>
@@ -33,85 +33,85 @@
             <action name="edit" ext="fods"/>
         </app>
 
-	<!-- Impress documents -->
+        <!-- Impress documents -->
         <app name="application/vnd.sun.xml.impress">
             <action name="view" ext="sxi"/>
         </app>
         <app name="application/vnd.oasis.opendocument.presentation">
             <action name="edit" ext="odp"/>
         </app>
-	<app name="application/vnd.oasis.opendocument.presentation-flat-xml">
+        <app name="application/vnd.oasis.opendocument.presentation-flat-xml">
             <action name="edit" ext="fodp"/>
         </app>
 
-	<!-- Draw documents -->
+        <!-- Draw documents -->
         <app name="application/vnd.sun.xml.draw">
             <action name="view" ext="sxd"/>
         </app>
         <app name="application/vnd.oasis.opendocument.graphics">
             <action name="view" ext="odg"/>
         </app>
-	<app name="application/vnd.oasis.opendocument.graphics-flat-xml">
+        <app name="application/vnd.oasis.opendocument.graphics-flat-xml">
             <action name="view" ext="fodg"/>
         </app>
 
-	<!-- Chart documents -->
+        <!-- Chart documents -->
         <app name="application/vnd.oasis.opendocument.chart">
             <action name="edit" ext="odc"/>
         </app>
 
-	<!-- Text master documents -->
+        <!-- Text master documents -->
         <app name="application/vnd.sun.xml.writer.global">
             <action name="view" ext="sxg"/>
         </app>
-	<app name="application/vnd.oasis.opendocument.text-master">
+        <app name="application/vnd.oasis.opendocument.text-master">
             <action name="edit" ext="odm"/>
         </app>
 
-	<!-- Math documents -->
-	<!-- In fact Math documents are not supported at all.
-	     See: https://bugs.documentfoundation.org/show_bug.cgi?id=97006
-	<app name="application/vnd.sun.xml.math">
+        <!-- Math documents -->
+        <!-- In fact Math documents are not supported at all.
+             See: https://bugs.documentfoundation.org/show_bug.cgi?id=97006
+        <app name="application/vnd.sun.xml.math">
             <action name="view" ext="sxm"/>
         </app>
-	<app name="application/vnd.oasis.opendocument.formula">
+        <app name="application/vnd.oasis.opendocument.formula">
             <action name="edit" ext="odf"/>
         </app>
-	-->
-	<!-- Text template documents -->
-	<app name="application/vnd.sun.xml.writer.template">
+        -->
+        <!-- Text template documents -->
+        <app name="application/vnd.sun.xml.writer.template">
             <action name="view" ext="stw"/>
         </app>
-	<app name="application/vnd.oasis.opendocument.text-template">
+        <app name="application/vnd.oasis.opendocument.text-template">
             <action name="edit" ext="ott"/>
         </app>
 
-	<!-- Writer master document templates -->
-	<app name="application/vnd.oasis.opendocument.text-master-template">
+        <!-- Writer master document templates -->
+        <app name="application/vnd.oasis.opendocument.text-master-template">
             <action name="edit" ext="otm"/>
         </app>
 
-	<!-- Spreadsheet template documents -->
-	<app name="application/vnd.sun.xml.calc.template">
+        <!-- Spreadsheet template documents -->
+        <app name="application/vnd.sun.xml.calc.template">
             <action name="view" ext="stc"/>
         </app>
-	<app name="application/vnd.oasis.opendocument.spreadsheet-template">
+        <app name="application/vnd.oasis.opendocument.spreadsheet-template">
             <action name="edit" ext="ots"/>
         </app>
 
-	<!-- Presentation template documents -->
-	<app name="application/vnd.sun.xml.impress.template">
+        <!-- Presentation template documents -->
+        <app name="application/vnd.sun.xml.impress.template">
             <action name="view" ext="sti"/>
         </app>
-	<app name="application/vnd.oasis.opendocument.presentation-template">
+        <app name="application/vnd.oasis.opendocument.presentation-template">
             <action name="edit" ext="otp"/>
         </app>
 
-	<!-- Drawing template documents -->
-	<app name="application/vnd.sun.xml.draw.template">
+        <!-- Drawing template documents -->
+        <app name="application/vnd.sun.xml.draw.template">
             <action name="view" ext="std"/>
         </app>
-	<app name="application/vnd.oasis.opendocument.graphics-template">
+        <app name="application/vnd.oasis.opendocument.graphics-template">
             <action name="edit" ext="otg"/>
         </app>
 
@@ -133,104 +133,104 @@
             <action name="edit" ext="ppt"/>
         </app>
 
-	<!-- OOXML wordprocessing -->
-	<app name="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+        <!-- OOXML wordprocessing -->
+        <app name="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
             <action name="edit" ext="docx"/>
         </app>
-	<app name="application/vnd.ms-word.document.macroEnabled.12">
+        <app name="application/vnd.ms-word.document.macroEnabled.12">
             <action name="edit" ext="docm"/>
         </app>
-	<app name="application/vnd.openxmlformats-officedocument.wordprocessingml.template">
+        <app name="application/vnd.openxmlformats-officedocument.wordprocessingml.template">
             <action name="view" ext="dotx"/>
         </app>
-	<app name="application/vnd.ms-word.template.macroEnabled.12">
+        <app name="application/vnd.ms-word.template.macroEnabled.12">
             <action name="view" ext="dotm"/>
         </app>
 
-	<!-- OOXML spreadsheet -->
-	<app name="application/vnd.openxmlformats-officedocument.spreadsheetml.template">
+        <!-- OOXML spreadsheet -->
+        <app name="application/vnd.openxmlformats-officedocument.spreadsheetml.template">
             <action name="view" ext="xltx"/>
         </app>
-	<app name="application/vnd.ms-excel.template.macroEnabled.12">
+        <app name="application/vnd.ms-excel.template.macroEnabled.12">
             <action name="view" ext="xltm"/>
         </app>
-	<app name="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        <app name="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
             <action name="edit" ext="xlsx"/>
         </app>
-	<app name="application/vnd.ms-excel.sheet.binary.macroEnabled.12">
+        <app name="application/vnd.ms-excel.sheet.binary.macroEnabled.12">
             <action name="edit" ext="xlsb"/>
         </app>
-	<app name="application/vnd.ms-excel.sheet.macroEnabled.12">
+        <app name="application/vnd.ms-excel.sheet.macroEnabled.12">
             <action name="edit" ext="xlsm"/>
         </app>
 
-	<!-- OOXML presentation -->
-	<app name="application/vnd.openxmlformats-officedocument.presentationml.presentation">
+        <!-- OOXML presentation -->
+        <app name="application/vnd.openxmlformats-officedocument.presentationml.presentation">
             <action name="edit" ext="pptx"/>
         </app>
-	<app name="application/vnd.ms-powerpoint.presentation.macroEnabled.12">
+        <app name="application/vnd.ms-powerpoint.presentation.macroEnabled.12">
             <action name="edit" ext="pptm"/>
         </app>
-	<app name="application/vnd.openxmlformats-officedocument.presentationml.template">
+        <app name="application/vnd.openxmlformats-officedocument.presentationml.template">
             <action name="edit" ext="potx"/>
         </app>
-	<app name="application/vnd.ms-powerpoint.template.macroEnabled.12">
+        <app name="application/vnd.ms-powerpoint.template.macroEnabled.12">
             <action name="edit" ext="potm"/>
         </app>
 
-	<!-- Others -->
-	<app name="application/vnd.wordperfect">
+        <!-- Others -->
+        <app name="application/vnd.wordperfect">
             <action name="view" ext="wpd"/>
         </app>
-	<app name="application/x-aportisdoc">
+        <app name="application/x-aportisdoc">
             <action name="view" ext="pdb"/>
         </app>
-	<app name="application/x-hwp">
+        <app name="application/x-hwp">
             <action name="view" ext="hwp"/>
         </app>
-	<app name="application/vnd.ms-works">
+        <app name="application/vnd.ms-works">
             <action name="view" ext="wps"/>
         </app>
-	<app name="application/x-mswrite">
+        <app name="application/x-mswrite">
             <action name="view" ext="wri"/>
         </app>
-	<app name="application/x-dif-document">
+        <app name="application/x-dif-document">
             <action name="edit" ext="dif"/>
         </app>
-	<app name="text/spreadsheet">
+        <app name="text/spreadsheet">
             <action name="edit" ext="slk"/>
         </app>
-	<app name="text/csv">
+        <app name="text/csv">
             <action name="edit" ext="csv"/>
         </app>
-	<app name="application/x-dbase">
+        <app name="application/x-dbase">
             <action name="edit" ext="dbf"/>
         </app>
-	<app name="application/vnd.lotus-1-2-3">
+        <app name="application/vnd.lotus-1-2-3">
             <action name="view" ext="wk1"/>
         </app>
-	<app name="image/cgm">
+        <app name="image/cgm">
             <action name="view" ext="cgm"/>
         </app>
-	<app name="image/vnd.dxf">
+        <app name="image/vnd.dxf">
             <action name="view" ext="dxf"/>
         </app>
-	<app name="image/x-emf">
+        <app name="image/x-emf">
             <action name="view" ext="emf"/>
         </app>
-	<app name="image/x-wmf">
+        <app name="image/x-wmf">
             <action name="view" ext="wmf"/>
         </app>
-	<app name="application/coreldraw">
+        <app name="application/coreldraw">
             <action name="view" ext="cdr"/>
         </app>
-	<app name="application/vnd.visio2013">
+        <app name="application/vnd.visio2013">
             <action name="view" ext="vsd"/>
         </app>
-	<app name="application/vnd.visio">
+        <app name="application/vnd.visio">
             <action name="view" ext="vss"/>
         </app>
-	<app name="application/x-mspublisher">
+        <app name="application/x-mspublisher">
             <action name="view" ext="pub"/>
         </app>
         <app name="application/x-sony-bbeb">
