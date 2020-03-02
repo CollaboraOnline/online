@@ -115,16 +115,6 @@
             <action name="edit" ext="otg"/>
         </app>
 
-	<!-- Base documents -->
-	<app name="application/vnd.oasis.opendocument.database">
-            <action name="edit" ext="odb"/>
-        </app>
-
-	<!-- Extensions -->
-	<app name="application/vnd.openofficeorg.extension">
-            <action name="edit" ext="oxt"/>
-        </app>
-
         <!-- MS Word -->
         <app name="application/msword">
             <action name="edit" ext="doc"/>
