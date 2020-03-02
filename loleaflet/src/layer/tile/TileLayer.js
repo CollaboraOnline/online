@@ -1095,13 +1095,15 @@ L.TileLayer = L.GridLayer.extend({
 	_onHyperlinkClickedMsg: function (textMsg) {
 		var link = null;
 		var coords = null;
+		var hyperlinkMsgStart = 'hyperlinkclicked: ';
+		var coordinatesMsgStart = ' coordinates: ';
 
-		if ($.inArray('coordinates', textMsg) !== -1) {
-			var coordpos = textMsg.indexOf(' coordinates');
-			link = textMsg.substring(18, coordpos);
-			coords = textMsg.substring(coordpos+12);
+		if (textMsg.indexOf(coordinatesMsgStart) !== -1) {
+			var coordpos = textMsg.indexOf(coordinatesMsgStart);
+			link = textMsg.substring(hyperlinkMsgStart.length, coordpos);
+			coords = textMsg.substring(coordpos+coordinatesMsgStart.length);
 		} else
-			link = textMsg.substring(18);
+			link = textMsg.substring(hyperlinkMsgStart.length);
 
 		this._map.fire('hyperlinkclicked', {url: link, coordinates: coords});
 	},
