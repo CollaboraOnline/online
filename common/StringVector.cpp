@@ -59,17 +59,17 @@ std::string StringVector::getParam(const StringToken& token) const
     return _string.substr(token._index, token._length);
 }
 
-std::string StringVector::cat(const std::string& separator, size_t begin) const
+std::string StringVector::cat(const std::string& separator, size_t offset) const
 {
     std::string ret;
     bool first = true;
 
-    if (begin >= _tokens.size())
+    if (offset >= _tokens.size())
     {
         return ret;
     }
 
-    for (auto it = _tokens.begin() + begin; it != _tokens.end(); ++it)
+    for (auto it = _tokens.begin() + offset; it != _tokens.end(); ++it)
     {
         if (first)
         {
