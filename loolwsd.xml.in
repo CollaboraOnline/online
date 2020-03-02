@@ -41,7 +41,7 @@
     <logging>
         <color type="bool">true</color>
         <level type="string" desc="Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@LOOLWSD_LOGLEVEL@">@LOOLWSD_LOGLEVEL@</level>
-	<protocol type="bool" descr="Enable minimal client-site JS protocol logging from the start">@ENABLE_DEBUG@</protocol>
+        <protocol type="bool" descr="Enable minimal client-site JS protocol logging from the start">@ENABLE_DEBUG@</protocol>
         <file enable="@LOOLWSD_LOG_TO_FILE@">
             <property name="path" desc="Log file path.">@LOOLWSD_LOGFILE@</property>
             <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>
@@ -126,10 +126,9 @@
             <host desc="Regex pattern of hostname to allow or deny." allow="false">192\.168\.1\.1</host>
             <max_file_size desc="Maximum document size in bytes to load. 0 for unlimited." type="uint">0</max_file_size>
             <reuse_cookies desc="When enabled, cookies from the browser will be captured and set on WOPI requests." type="bool" default="false">false</reuse_cookies>
-	    <locking desc="Locking settings">
-	        <refresh desc="How frequently we should re-acquire a lock with the storage server, in seconds (default 15 mins) or 0 for no refresh"
-			 type="int" default="900">900</refresh>
-	    </locking>
+            <locking desc="Locking settings">
+                <refresh desc="How frequently we should re-acquire a lock with the storage server, in seconds (default 15 mins) or 0 for no refresh" type="int" default="900">900</refresh>
+            </locking>
         </wopi>
         <webdav desc="Allow/deny webdav storage. Mutually exclusive with wopi." allow="false">
             <host desc="Hostname to allow" allow="false">localhost</host>
