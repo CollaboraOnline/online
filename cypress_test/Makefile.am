@@ -8,6 +8,7 @@ GET_PORT_BINARY = $(abs_builddir)/node_modules/get-port-cli/cli.js
 NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
 
 PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
+ERROR_LOG=$(abs_builddir)/workdir/error.log
 
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
@@ -57,18 +58,23 @@ MOBILE_TEST_FILES_DONE= \
 DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DEKSTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
-check-local: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE)
+check-local: do-check
+	$(if $(wildcard $(ERROR_LOG)),$(error Cypress test failure!))
+
+do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE)
 	@$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
 $(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
+	@rm -f $(ERROR_LOG)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_loolwsd)
 
 $(MOBILE_TEST_FILES_DONE): $(PID_FILE)
 	$(if $(PARALLEL_BUILD),\
-		$(call run_mobile_tests,$(subst $(MOBILE_TRACK_FOLDER)/,,$(basename $@))),\
+		$(call run_mobile_tests,$(subst $(MOBILE_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
 		$(call run_mobile_tests))
 	$(if $(PARALLEL_BUILD),\
 		@mkdir -p $(dir $@) && touch $@\
@@ -78,7 +84,7 @@ $(MOBILE_TEST_FILES_DONE): $(PID_FILE)
 
 $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 	$(if $(PARALLEL_BUILD),\
-		$(call run_desktop_tests,$(subst $(DESKTOP_TRACK_FOLDER)/,,$(basename $@))),\
+		$(call run_desktop_tests,$(subst $(DESKTOP_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
 		$(call run_desktop_tests))
 	$(if $(PARALLEL_BUILD),\
 		@mkdir -p $(dir $@) && touch $@\
@@ -162,8 +168,12 @@ define run_desktop_tests
 			--headless \
 			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
-			|| ($(KILL_COMMAND) && false))
-	$(if $(PARALLEL_BUILD),@echo "`echo $(RUN_COMMAND) && $(RUN_COMMAND)`",$(RUN_COMMAND))
+			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
+	$(if $(PARALLEL_BUILD),\
+		$(call execute_run_parallel,$(RUN_COMMAND),$(2))\
+	,\
+		$(RUN_COMMAND)\
+	)
 endef
 
 define run_mobile_tests
@@ -175,8 +185,21 @@ define run_mobile_tests
 			--headless \
 			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
-			|| ($(KILL_COMMAND) && false))
-	$(if $(PARALLEL_BUILD),@echo "`echo $(RUN_COMMAND) && $(RUN_COMMAND)`",$(RUN_COMMAND))
+			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
+	$(if $(PARALLEL_BUILD),\
+		$(call execute_run_parallel,$(RUN_COMMAND),$(2))\
+	,\
+		$(RUN_COMMAND)\
+	)
+endef
+
+define execute_run_parallel
+	@mkdir -p $(dir $(2)) && touch $(2) && \
+	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
+	if [ `grep -o "CypressError" $(2)` ];\
+		then cat $(2) >> $(ERROR_LOG);\
+		else cat $(2);\
+	fi;
 endef
 
 NODE_BINS = \
