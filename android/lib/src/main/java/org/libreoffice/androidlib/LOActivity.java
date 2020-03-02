@@ -398,6 +398,36 @@ public class LOActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+
+        Log.i(TAG, "onNewIntent");
+
+        if (documentLoaded) {
+            postMobileMessageNative("save dontTerminateEdit=true dontSaveIfUnmodified=true");
+        }
+
+        final Intent finalIntent = intent;
+        mProgressDialog.indeterminate(R.string.saving);
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                documentLoaded = false;
+                postMobileMessageNative("BYE");
+                copyTempBackToIntent();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mProgressDialog.dismiss();
+                        setIntent(finalIntent);
+                        init();
+                    }
+                });
+            }
+        });
+        super.onNewIntent(intent);
+    }
+
+    @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_INTENT_URI, getIntent().getData().toString());
@@ -417,7 +447,7 @@ public class LOActivity extends AppCompatActivity {
                     loadDocument();
                 } else {
                     Toast.makeText(this, getString(R.string.storage_permission_required), Toast.LENGTH_SHORT).show();
-                    finish();
+                    finishAndRemoveTask();
                     break;
                 }
                 break;
@@ -626,7 +656,7 @@ public class LOActivity extends AppCompatActivity {
                     }
                 });*/
 
-                finish();
+                finishAndRemoveTask();
             }
         });
     }
