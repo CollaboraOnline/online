@@ -392,7 +392,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 \
 	$(builddir)/dist/bundle.css $(builddir)/dist/bundle.js
 	@echo "Generating loleaflet.html..."
-	@m4 -E -DDEBUG=$(ENABLE_DEBUG) \
+	@m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DGTKAPP=$(ENABLE_GTKAPP) \
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \

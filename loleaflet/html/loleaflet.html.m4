@@ -1,10 +1,10 @@
-dnl -*- Mode: HTML -*-x
-changequote([,])dnl
-dnl# foreachq(x, `item_1, item_2, ..., item_n', stmt)
-dnl# quoted list, alternate improved version
-define([foreachq],[ifelse([$2],[],[],[pushdef([$1])_$0([$1],[$3],[],$2)popdef([$1])])])dnl
-define([_foreachq],[ifelse([$#],[3],[],[define([$1],[$4])$2[]$0([$1],[$2],shift(shift(shift($@))))])])dnl
-define(_YEAR_,esyscmd(date +%Y|tr -d '\n'))
+m4_dnl -*- Mode: HTML -*-x
+m4_changequote([,])m4_dnl
+m4_dnl# m4_foreachq(x, `item_1, item_2, ..., item_n', stmt)
+m4_dnl# quoted list, alternate improved version
+m4_define([m4_foreachq],[m4_ifelse([$2],[],[],[m4_pushdef([$1])_$0([$1],[$3],[],$2)m4_popdef([$1])])])m4_dnl
+m4_define([_m4_foreachq],[m4_ifelse([$#],[3],[],[m4_define([$1],[$4])$2[]$0([$1],[$2],m4_shift(m4_shift(m4_shift($@))))])])m4_dnl
+m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))
 <!DOCTYPE html>
 <!-- saved from url=(0054)http://leafletjs.com/examples/quick-start-example.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,13 +13,13 @@ define(_YEAR_,esyscmd(date +%Y|tr -d '\n'))
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
 
 <script>
-dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed
-define([MOBILEAPP],[])
-ifelse(IOSAPP,[true],[define([MOBILEAPP],[true])])
-ifelse(GTKAPP,[true],[define([MOBILEAPP],[true])])
-ifelse(ANDROIDAPP,[true],[define([MOBILEAPP],[true])])
+m4_dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed
+m4_define([MOBILEAPP],[])
+m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
+m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
+m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
 
-ifelse(MOBILEAPP,[],
+m4_ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
   // result for future
   window.WOPIpostMessageReady = false;
@@ -33,12 +33,12 @@ ifelse(MOBILEAPP,[],
     }
   };
   window.addEventListener('message', PostMessageReadyListener, false);
-)dnl
+)m4_dnl
 
-dnl# For use in conditionals in JS: window.ThisIsAMobileApp, window.ThisIsTheiOSApp,
-dnl# and window.ThisIsTheGtkApp
+m4_dnl# For use in conditionals in JS: window.ThisIsAMobileApp, window.ThisIsTheiOSApp,
+m4_dnl# and window.ThisIsTheGtkApp
 
-ifelse(MOBILEAPP,[true],
+m4_ifelse(MOBILEAPP,[true],
   [   window.ThisIsAMobileApp = true;
    window.open = function (url, windowName, windowFeatures) {
      window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */
@@ -46,21 +46,21 @@ ifelse(MOBILEAPP,[true],
    window.MobileAppName='MOBILEAPPNAME';],
   [   window.ThisIsAMobileApp = false;]
 )
-ifelse(IOSAPP,[true],
+m4_ifelse(IOSAPP,[true],
   [   window.ThisIsTheiOSApp = true;
    window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lool.postMessage(msg, '*'); };
    window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
    window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };],
   [   window.ThisIsTheiOSApp = false;]
 )
-ifelse(GTKAPP,[true],
+m4_ifelse(GTKAPP,[true],
   [   window.ThisIsTheGtkApp = true;
    window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lool.postMessage(msg, '*'); };
    window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
    window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };],
   [   window.ThisIsTheGtkApp = false;]
 )
-ifelse(ANDROIDAPP,[true],
+m4_ifelse(ANDROIDAPP,[true],
   [   window.ThisIsTheAndroidApp = true;
    window.postMobileMessage = function(msg) { window.LOOLMessageHandler.postMobileMessage(msg); };
    window.postMobileError   = function(msg) { window.LOOLMessageHandler.postMobileError(msg); };
@@ -90,26 +90,26 @@ var Base64ToArrayBuffer = function(base64Str) {
 
 </script>
 
-ifelse(MOBILEAPP,[true],
-  [ifelse(DEBUG,[true],
-    foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="fileCSS" />
+m4_ifelse(MOBILEAPP,[true],
+  [m4_ifelse(DEBUG,[true],
+    m4_foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="fileCSS" />
   ]),
-    [<style>syscmd([cat ]BUNDLE_CSS)</style>
+    [<style>m4_syscmd([cat ]BUNDLE_CSS)</style>
   ])],
-  [ifelse(DEBUG,[true],
-    foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="%SERVICE_ROOT%/loleaflet/%VERSION%/fileCSS" />
+  [m4_ifelse(DEBUG,[true],
+    m4_foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="%SERVICE_ROOT%/loleaflet/%VERSION%/fileCSS" />
   ]),
-    [<style>syscmd([cat ]BUNDLE_CSS)</style>
-  ])]dnl
-)dnl
+    [<style>m4_syscmd([cat ]BUNDLE_CSS)</style>
+  ])]m4_dnl
+)m4_dnl
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
-ifelse(IOSAPP,[true],
+m4_ifelse(IOSAPP,[true],
   [<link rel="stylesheet" href="Branding/branding.css">])
-ifelse(ANDROIDAPP,[true],
+m4_ifelse(ANDROIDAPP,[true],
   [<link rel="stylesheet" href="branding.css">])
-ifelse(MOBILEAPP,[true],
+m4_ifelse(MOBILEAPP,[true],
   [
-   ifelse(IOSAPP,[true],
+   m4_ifelse(IOSAPP,[true],
      [],
      [<link rel="localizations" href="l10n/uno-localizations-override.json" type="application/vnd.oftn.l10n+json"/>
       <link rel="localizations" href="l10n/localizations.json" type="application/vnd.oftn.l10n+json"/>
@@ -121,7 +121,7 @@ ifelse(MOBILEAPP,[true],
    <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/locore-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
-)dnl
+)m4_dnl
 </head>
 
   <body style="user-select: none;">
@@ -223,7 +223,7 @@ ifelse(MOBILEAPP,[true],
     </div>
 
     <script defer>
-ifelse(MOBILEAPP,[true],
+m4_ifelse(MOBILEAPP,[true],
      [window.host = '';
       window.serviceRoot = '';
       window.accessToken = '';
@@ -248,20 +248,20 @@ ifelse(MOBILEAPP,[true],
       window.protocolDebug = %PROTOCOL_DEBUG%;
       window.frameAncestors = '%FRAME_ANCESTORS%';
       window.tileSize = 256;])
-syscmd([cat ]GLOBAL_JS)dnl
+m4_syscmd([cat ]GLOBAL_JS)m4_dnl
     </script>
 
-ifelse(MOBILEAPP,[true],
-  ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
+m4_ifelse(MOBILEAPP,[true],
+  m4_ifelse(DEBUG,[true],m4_foreachq([fileJS],[LOLEAFLET_JS],
   [    <script src="fileJS" defer></script>
   ]),
   [    <script src="bundle.js" defer></script>
   ]),
-  ifelse(DEBUG,[true],foreachq([fileJS],[LOLEAFLET_JS],
+  m4_ifelse(DEBUG,[true],m4_foreachq([fileJS],[LOLEAFLET_JS],
   [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/fileJS" defer></script>
   ]),
   [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.js" defer></script>
   ])
-)dnl
+)m4_dnl
     <!--%BRANDING_JS%--> <!-- logo onclick handler -->
 </body></html>
