@@ -185,14 +185,95 @@
 		};
 		this.onopen = function() {
 		};
+		this.close = function() {
+		};
 	};
-
-	global.FakeWebSocket.prototype.close = function() {
-	};
-
 	global.FakeWebSocket.prototype.send = function(data) {
 		this.sendCounter++;
 		window.postMobileMessage(data);
+	};
+
+	global.proxySocketCounter = 0;
+	global.ProxySocket = function (uri) {
+		this.uri = uri;
+		this.binaryType = 'arraybuffer';
+		this.bufferedAmount = 0;
+		this.extensions = '';
+		this.protocol = '';
+		this.connected = true;
+		this.readyState = 0; // connecting
+		this.sessionId = 'fetchsession';
+		this.id = window.proxySocketCounter++;
+		this.sendCounter = 0;
+		this.readWaiting = false;
+		this.onclose = function() {
+		};
+		this.onerror = function() {
+		};
+		this.onmessage = function() {
+		};
+		this.send = function(msg) {
+			console.debug('send msg "' + msg + '"');
+			var req = new XMLHttpRequest();
+			req.open('POST', this.getEndPoint('write'));
+			req.setRequestHeader('SessionId', this.sessionId);
+			if (this.sessionId === 'fetchsession')
+				req.addEventListener('load', function() {
+					console.debug('got session: ' + this.responseText);
+					that.sessionId = this.responseText;
+					that.readyState = 1;
+					that.onopen();
+				});
+			req.send(msg);
+		},
+		this.close = function() {
+			console.debug('close socket');
+			this.readyState = 3;
+			this.onclose();
+		};
+		this.getEndPoint = function(type) {
+			var base = this.uri;
+			return base.replace(/^ws/, 'http') + '/' + type;
+		};
+		console.debug('New proxy socket ' + this.id + ' ' + this.uri);
+
+		// FIXME: perhaps a little risky.
+		this.send('fetchsession');
+		var that = this;
+
+		// horrors ...
+		this.readInterval = setInterval(function() {
+			if (this.readWaiting) // one at a time for now
+				return;
+			if (this.sessionId == 'fetchsession')
+				return; // waiting for our session id.
+			var req = new XMLHttpRequest();
+			// fetch session id:
+			req.addEventListener('load', function() {
+				console.debug('read: ' + this.responseText);
+				if (this.status == 200)
+				{
+					that.onmessage({ data: this.response });
+				}
+				else
+				{
+					console.debug('Handle error ' + this.status);
+				}
+				that.readWaiting = false;
+			});
+			req.open('GET', that.getEndPoint('read'));
+			req.setRequestHeader('SessionId', this.sessionId);
+			req.send(that.sessionId);
+			that.readWaiting = true;
+		}, 250);
+	};
+
+	global.createWebSocket = function(uri) {
+		if (global.socketProxy) {
+			return new global.ProxySocket(uri);
+		} else {
+			return new WebSocket(uri);
+		}
 	};
 
 	// If not debug, don't print anything on the console
@@ -219,7 +300,8 @@
 				window.postMobileError(log);
 			} else if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
 				global.socket.send(log);
-			} else if (global.socket && (global.socket instanceof global.L.Socket) && global.socket.connected()) {
+			} else if (global.socket && global.L && global.L.Socket &&
+				   (global.socket instanceof global.L.Socket) && global.socket.connected()) {
 				global.socket.sendMessage(log);
 			} else {
 				var req = new XMLHttpRequest();
@@ -296,7 +378,7 @@
 		var websocketURI = global.host + global.serviceRoot + '/lool/' + encodeURIComponent(global.docURL + (docParams ? '?' + docParams : '')) + '/ws' + wopiSrc;
 
 		try {
-			global.socket = new WebSocket(websocketURI);
+			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {
 			console.log(err);
 		}

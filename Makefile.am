@@ -111,6 +111,7 @@ loolwsd_sources = common/Crypto.cpp \
                   wsd/AdminModel.cpp \
                   wsd/Auth.cpp \
                   wsd/DocumentBroker.cpp \
+                  wsd/ProxyProtocol.cpp \
                   wsd/LOOLWSD.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
@@ -217,6 +218,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/Auth.hpp \
               wsd/ClientSession.hpp \
               wsd/DocumentBroker.hpp \
+              wsd/ProxyProtocol.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
               wsd/LOOLWSD.hpp \
