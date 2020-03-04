@@ -241,6 +241,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.reuseCookies = '';
       window.protocolDebug = false;
       window.frameAncestors = '';
+      window.socketProxy = false;
       window.tileSize = 256;],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
@@ -255,6 +256,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.reuseCookies = '%REUSE_COOKIES%';
       window.protocolDebug = %PROTOCOL_DEBUG%;
       window.frameAncestors = '%FRAME_ANCESTORS%';
+      window.socketProxy = %SOCKET_PROXY%;
       window.tileSize = 256;])
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl
 
