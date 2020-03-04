@@ -151,7 +151,7 @@ describe('Focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	it.skip('Shape related focus.', function() {
+	it('Shape related focus.', function() {
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
 

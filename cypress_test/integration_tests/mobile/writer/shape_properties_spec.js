@@ -220,7 +220,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'stroke', 'rgb(152,0,0)');
 	});
 
-	it.skip('Change line style', function() {
+	it('Change line style', function() {
 		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
