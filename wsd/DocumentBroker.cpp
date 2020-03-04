@@ -1497,6 +1497,38 @@ void DocumentBroker::finalRemoveSession(const std::string& id)
     }
 }
 
+std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(const WebSocketHandler* ws,
+                                                                      const std::string& id,
+                                                                      const Poco::URI& uriPublic,
+                                                                      const bool isReadOnly,
+                                                                      const std::string& hostNoTrust)
+{
+    try
+    {
+        // Now we have a DocumentBroker and we're ready to process client commands.
+        if (ws)
+        {
+            const std::string statusReady = "statusindicator: ready";
+            LOG_TRC("Sending to Client [" << statusReady << "].");
+            ws->sendMessage(statusReady);
+        }
+
+        // In case of WOPI, if this session is not set as readonly, it might be set so
+        // later after making a call to WOPI host which tells us the permission on files
+        // (UserCanWrite param).
+        auto session = std::make_shared<ClientSession>(id, shared_from_this(), uriPublic, isReadOnly, hostNoTrust);
+        session->construct();
+
+        return session;
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_WRN("Exception while preparing session [" << id << "]: " << exc.what());
+    }
+
+    return nullptr;
+}
+
 void DocumentBroker::addCallback(const SocketPoll::CallbackFn& fn)
 {
     _poll->addCallback(fn);

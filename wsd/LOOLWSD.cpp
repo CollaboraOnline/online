@@ -1780,40 +1780,6 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     return docBroker;
 }
 
-static std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHandler* ws,
-                                                             const std::string& id,
-                                                             const Poco::URI& uriPublic,
-                                                             const std::shared_ptr<DocumentBroker>& docBroker,
-                                                             const bool isReadOnly,
-                                                             const std::string& hostNoTrust)
-{
-    LOG_CHECK_RET(docBroker && "Null docBroker instance", nullptr);
-    try
-    {
-        // Now we have a DocumentBroker and we're ready to process client commands.
-        if (ws)
-        {
-            const std::string statusReady = "statusindicator: ready";
-            LOG_TRC("Sending to Client [" << statusReady << "].");
-            ws->sendMessage(statusReady);
-        }
-
-        // In case of WOPI, if this session is not set as readonly, it might be set so
-        // later after making a call to WOPI host which tells us the permission on files
-        // (UserCanWrite param).
-        auto session = std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly, hostNoTrust);
-        session->construct();
-
-        return session;
-    }
-    catch (const std::exception& exc)
-    {
-        LOG_WRN("Exception while preparing session [" << id << "]: " << exc.what());
-    }
-
-    return nullptr;
-}
-
 /// Handles the socket that the prisoner kit connected to WSD on.
 class PrisonerRequestDispatcher : public WebSocketHandler
 {
@@ -2850,8 +2816,8 @@ private:
                 const std::string hostNoTrust = (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
 #endif
 
-                std::shared_ptr<ClientSession> clientSession = createNewClientSession(&ws, _id, uriPublic,
-                                                                                      docBroker, isReadOnly, hostNoTrust);
+                std::shared_ptr<ClientSession> clientSession =
+                    docBroker->createNewClientSession(&ws, _id, uriPublic, isReadOnly, hostNoTrust);
                 if (clientSession)
                 {
                     // Transfer the client socket to the DocumentBroker when we get back to the poll:
