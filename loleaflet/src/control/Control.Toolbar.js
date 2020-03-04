@@ -265,7 +265,9 @@ function onClick(e, id, item, subItem) {
 		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() - 30);
 	}
 	else if (id === 'lastrecord') {
-		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() + 120);
+		// Set a very high value, so that scroll is set to the maximum possible value internally.
+		// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
+		L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
 	}
 	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
 		L.DomUtil.get('insertgraphic').click();
