@@ -49,7 +49,7 @@ L.Socket = L.Class.extend({
 			}
 
 			try {
-				this.socket = new WebSocket(this.getWebSocketBaseURI(map) + wopiSrc);
+				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map) + wopiSrc);
 			} catch (e) {
 				// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).
 				// Detect this and hint the user.

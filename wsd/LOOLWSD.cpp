@@ -236,6 +236,9 @@ namespace
 #if ENABLE_SUPPORT_KEY
 inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>& proto)
 {
+    if (!proto)
+        return;
+
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
     LOG_INF("Sending client 'hardlimitreached' message: " << error);
 
@@ -1833,9 +1836,12 @@ static std::shared_ptr<DocumentBroker>
         if (docBroker->isMarkedToDestroy())
         {
             LOG_WRN("DocBroker with docKey [" << docKey << "] that is marked to be destroyed. Rejecting client request.");
-            std::string msg("error: cmd=load kind=docunloading");
-            proto->sendTextMessage(msg.data(), msg.size());
-            proto->shutdown(true, "error: cmd=load kind=docunloading");
+            if (proto)
+            {
+                std::string msg("error: cmd=load kind=docunloading");
+                proto->sendTextMessage(msg.data(), msg.size());
+                proto->shutdown(true, "error: cmd=load kind=docunloading");
+            }
             return nullptr;
         }
     }
@@ -1851,9 +1857,12 @@ static std::shared_ptr<DocumentBroker>
     }
 
     // Indicate to the client that we're connecting to the docbroker.
-    const std::string statusConnect = "statusindicator: connect";
-    LOG_TRC("Sending to Client [" << statusConnect << "].");
-    proto->sendTextMessage(statusConnect.data(), statusConnect.size());
+    if (proto)
+    {
+        const std::string statusConnect = "statusindicator: connect";
+        LOG_TRC("Sending to Client [" << statusConnect << "].");
+        proto->sendTextMessage(statusConnect.data(), statusConnect.size());
+    }
 
     if (!docBroker)
     {
@@ -2324,6 +2333,13 @@ private:
                 {
 //                    Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
                     handleClipboardRequest(request, message, disposition);
+                }
+                else if (request.has("ProxyPrefix") && reqPathTokens.count() > 2 &&
+                         (reqPathTokens[reqPathTokens.count()-2] == "ws"))
+                {
+                    std::string decodedUri; // WOPISrc
+                    Poco::URI::decode(reqPathTokens[1], decodedUri);
+                    handleClientProxyRequest(request, decodedUri, message, disposition);
                 }
                 else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
@@ -2858,6 +2874,99 @@ private:
     }
 #endif
 
+    void handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
+                                  std::string url,
+                                  Poco::MemoryInputStream& message,
+                                  SocketDisposition &disposition)
+    {
+        if (!request.has("SessionId"))
+            throw BadRequestException("No session id header on proxied request");
+
+        std::string sessionId = request.get("SessionId");
+
+        LOG_INF("URL [" << url << "].");
+        const auto uriPublic = DocumentBroker::sanitizeURI(url);
+        LOG_INF("URI [" << uriPublic.getPath() << "].");
+        const auto docKey = DocumentBroker::getDocKey(uriPublic);
+        LOG_INF("DocKey [" << docKey << "].");
+        const std::string fileId = Util::getFilenameFromURL(docKey);
+        Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
+
+        LOG_INF("Starting Proxy request handler for session [" << _id << "] on url [" << LOOLWSD::anonymizeUrl(url) << "].");
+
+        // Check if readonly session is required
+        bool isReadOnly = false;
+        for (const auto& param : uriPublic.getQueryParameters())
+        {
+            LOG_DBG("Query param: " << param.first << ", value: " << param.second);
+            if (param.first == "permission" && param.second == "readonly")
+            {
+                isReadOnly = true;
+            }
+        }
+
+        const std::string hostNoTrust = (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+
+        LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
+        (void)request; (void)message; (void)disposition;
+
+        std::shared_ptr<ProtocolHandlerInterface> none;
+        // Request a kit process for this doc.
+        std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
+            none, url, docKey, _id, uriPublic);
+        if (docBroker)
+        {
+            // need to move into the DocumentBroker context before doing session lookup / creation etc.
+            std::string id = _id;
+            disposition.setMove([docBroker, id, uriPublic, isReadOnly, hostNoTrust, sessionId]
+                                (const std::shared_ptr<Socket> &moveSocket)
+                {
+                    LOG_TRC("Setting up docbroker thread for " << docBroker->getDocKey());
+                    // Make sure the thread is running before adding callback.
+                    docBroker->startThread();
+
+                    // We no longer own this socket.
+                    moveSocket->setThreadOwner(std::thread::id());
+
+                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly, hostNoTrust, sessionId, moveSocket]()
+                        {
+                            // Now inside the document broker thread ...
+                            LOG_TRC("In the docbroker thread for " << docBroker->getDocKey());
+
+                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            try
+                            {
+                                docBroker->handleProxyRequest(
+                                    sessionId, id, uriPublic, isReadOnly,
+                                    hostNoTrust, moveSocket);
+                                return;
+                            }
+                            catch (const UnauthorizedRequestException& exc)
+                            {
+                                LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
+                            }
+                            catch (const StorageConnectionException& exc)
+                            {
+                                LOG_ERR("Error while loading : " << exc.what());
+                            }
+                            catch (const std::exception& exc)
+                            {
+                                LOG_ERR("Error while loading : " << exc.what());
+                            }
+                            // badness occured:
+                            std::ostringstream oss;
+                            oss << "HTTP/1.1 400\r\n"
+                                << "Date: " << Util::getHttpTimeNow() << "\r\n"
+                                << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                                << "Content-Length: 0\r\n"
+                                << "\r\n";
+                            streamSocket->send(oss.str());
+                            streamSocket->shutdown();
+                        });
+                });
+        }
+    }
+
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url,
                                SocketDisposition &disposition)
     {
@@ -2920,7 +3029,7 @@ private:
             // Request a kit process for this doc.
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
                 std::static_pointer_cast<ProtocolHandlerInterface>(ws), url, docKey, _id, uriPublic);
-             if (docBroker)
+            if (docBroker)
             {
 #if MOBILEAPP
                 const std::string hostNoTrust;

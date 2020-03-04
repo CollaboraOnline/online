@@ -445,6 +445,11 @@ public:
         }
     }
 
+    std::shared_ptr<ProtocolHandlerInterface> getProtocol() const
+    {
+        return _protocol;
+    }
+
     /// Do we have something to send ?
     virtual bool hasQueuedMessages() const = 0;
     /// Please send them to me then.

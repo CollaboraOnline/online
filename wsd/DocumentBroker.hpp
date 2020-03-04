@@ -140,6 +140,15 @@ public:
         const bool isReadOnly,
         const std::string& hostNoTrust);
 
+    /// Find or create a new client session for the PHP proxy
+    void handleProxyRequest(
+        const std::string& sessionId,
+        const std::string& id,
+        const Poco::URI& uriPublic,
+        const bool isReadOnly,
+        const std::string& hostNoTrust,
+        const std::shared_ptr<Socket> &moveSocket);
+
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();
 

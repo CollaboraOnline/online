@@ -37,9 +37,6 @@ public:
     void construct();
     virtual ~ClientSession();
 
-    /// Lookup any session by id.
-    static std::shared_ptr<ClientSession> getById(const std::string &id);
-
     void setReadOnly() override;
 
     enum SessionState {
