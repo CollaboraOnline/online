@@ -302,6 +302,7 @@ EXTRA_DIST = discovery.xml \
 if HAVE_LO_PATH
 
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
+CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 
 $(SYSTEM_STAMP) : ${top_srcdir}/loolwsd-systemplate-setup
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
@@ -322,6 +323,7 @@ run: all @JAILS_PATH@
 	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
 	@echo
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+			  --o:security.capabilities="$(CAPABILITIES)" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
