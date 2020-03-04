@@ -53,6 +53,9 @@ public:
     static bool NoCapsForKit;
     static bool NoSeccomp;
     static bool AdminEnabled;
+#if ENABLE_DEBUG
+    static bool SingleKit;
+#endif
 #endif
     static std::atomic<int> ForKitWritePipe;
     static std::atomic<int> ForKitProcId;

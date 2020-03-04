@@ -331,6 +331,25 @@ run: all @JAILS_PATH@
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=true --o:logging.level=trace
 
+if ENABLE_DEBUG
+run-one: all @JAILS_PATH@
+	@echo "Launching loolwsd"
+	@fc-cache "@LO_PATH@"/share/fonts/truetype
+	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
+	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
+	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
+	@echo
+	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+			  --o:security.capabilities="$(CAPABILITIES)" \
+			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
+			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
+			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
+			  --o:admin_console.username=admin --o:admin_console.password=admin \
+			  --o:logging.file[@enable]=true --o:logging.level=trace \
+			  --singlekit
+endif
+
 sync-writer:
 	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
 

@@ -356,6 +356,13 @@ void cleanupDocBrokers()
 
             LOG_END(logger, true);
         }
+
+#if ENABLE_DEBUG
+        if (LOOLWSD::SingleKit && DocBrokers.size() == 0)
+        {
+            SigUtil::requestShutdown();
+        }
+#endif
     }
 }
 
@@ -702,6 +709,9 @@ std::atomic<int> LOOLWSD::ForKitProcId(-1);
 bool LOOLWSD::NoCapsForKit = false;
 bool LOOLWSD::NoSeccomp = false;
 bool LOOLWSD::AdminEnabled = true;
+#if ENABLE_DEBUG
+bool LOOLWSD::SingleKit = false;
+#endif
 #endif
 #ifdef FUZZER
 bool LOOLWSD::DummyLOK = false;
@@ -1361,6 +1371,10 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false)
                         .argument("seconds"));
+
+    optionSet.addOption(Option("singlekit", "", "Spawn one libreoffice kit.")
+                        .required(false)
+                        .repeatable(false));
 #endif
 
 #ifdef FUZZER
@@ -1408,6 +1422,11 @@ void LOOLWSD::handleOption(const std::string& optionName,
         UnitTestLibrary = value;
     else if (optionName == "careerspan")
         careerSpanMs = std::stoi(value) * 1000; // Convert second to ms
+    else if (optionName == "singlekit")
+    {
+        SingleKit = true;
+        NumPreSpawnedChildren = 1;
+    }
 
     static const char* latencyMs = std::getenv("LOOL_DELAY_SOCKET_MS");
     if (latencyMs)
@@ -1560,6 +1579,7 @@ void PrisonerPoll::wakeupHook()
     LOG_TRC("PrisonerPoll - wakes up with " << NewChildren.size() <<
             " new children and " << DocBrokers.size() << " brokers and " <<
             OutstandingForks << " kits forking");
+
     if (!LOOLWSD::checkAndRestoreForKit())
     {
         // No children have died.
@@ -1643,6 +1663,11 @@ bool LOOLWSD::createForKit()
 
     if (NoSeccomp)
         args.push_back("--noseccomp");
+
+#if ENABLE_DEBUG
+    if (SingleKit)
+        args.push_back("--singlekit");
+#endif
 
 #ifdef STRACE_LOOLFORKIT
     std::string forKitPath = "strace";
