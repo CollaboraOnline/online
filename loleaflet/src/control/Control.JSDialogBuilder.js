@@ -122,6 +122,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
+		this._controlHandlers['tabcontrol'] = this._tabsControlHandler;
 		this._controlHandlers['paneltabs'] = this._panelTabsHandler;
 		this._controlHandlers['container'] = this._containerHandler;
 		this._controlHandlers['window'] = this._containerHandler;
@@ -596,6 +597,58 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(contentDivs[t]).show();
 			builder.wizard.selectedTab(labels[t]);
 		};
+	},
+
+	_tabsControlHandler: function(parentContainer, data, builder) {
+		if (data.tabs) {
+			var tabsContainer = L.DomUtil.create('div', 'ui-tabs mobile-wizard ui-widget');
+			tabsContainer.id = data.id;
+			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content mobile-wizard ui-widget', parentContainer);
+
+			var tabs = [];
+			var contentDivs = [];
+			var labels = [];
+			for (var tabIdx = 0; tabIdx < data.tabs.length; tabIdx++) {
+				var item = data.tabs[tabIdx];
+
+				var title = builder._cleanText(item.text);
+
+				var tab = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
+				tab.id = data.tabs[tabIdx].name;
+				if (data.selected == data.tabs[tabIdx].id)
+					$(tab).addClass('selected');
+				tabs[tabIdx] = tab;
+
+				var label = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab);
+				label.innerHTML = title;
+				labels[tabIdx] = title;
+
+				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', contentsContainer);
+				contentDiv.title = title;
+
+				$(contentDiv).hide();
+				contentDivs[tabIdx] = contentDiv;
+			}
+
+			if (builder.wizard) {
+				builder.wizard.setTabs(tabsContainer);
+
+				for (var t = 0; t < tabs.length; t++) {
+					// to get capture of 't' right has to be a sub fn.
+					var fn = function(id) {
+						return function() {
+							builder._createTabClick(builder, id, tabs, contentDivs, labels)();
+							builder.callback('tabcontrol', 'selecttab', tabsContainer, id, builder);
+						};
+					};
+					$(tabs[t]).click(fn(t));
+				}
+			} else {
+				console.debug('Builder used outside of mobile wizard: please implement the click handler');
+			}
+		}
+
+		return true;
 	},
 
 	_panelTabsHandler: function(parentContainer, data, builder) {
