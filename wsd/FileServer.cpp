@@ -640,6 +640,17 @@ constexpr char BRANDING[] = "branding";
 constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
+namespace {
+    // The user can override the ServerRoot with a new prefix.
+    std::string getResponseRoot(const HTTPRequest &request)
+    {
+        if (!request.has("ProxyPrefix"))
+            return LOOLWSD::ServiceRoot;
+        std::string proxyPrefix = request.get("ProxyPrefix", "");
+        return proxyPrefix;
+    }
+}
+
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message,
                                               const std::shared_ptr<StreamSocket>& socket)
 {
@@ -686,15 +697,21 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         }
     }
 
-    const auto& config = Application::instance().config();
+    std::string socketProxy = "false";
+    if (request.has("ProxyPrefix"))
+        socketProxy = "true";
+    Poco::replaceInPlace(preprocess, std::string("%SOCKET_PROXY%"), socketProxy);
+
+    std::string responseRoot = getResponseRoot(request);
 
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
-    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), LOOLWSD::ServiceRoot);
+    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
 
+    const auto& config = Application::instance().config();
     std::string protocolDebug = "false";
     if (config.getBool("logging.protocol"))
         protocolDebug = "true";
@@ -703,16 +720,16 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     static const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
     static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
 
-    std::string brandCSS(Poco::format(linkCSS, LOOLWSD::ServiceRoot, std::string(BRANDING)));
-    std::string brandJS(Poco::format(scriptJS, LOOLWSD::ServiceRoot, std::string(BRANDING)));
+    std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING)));
+    std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
 
 #if ENABLE_SUPPORT_KEY
     const std::string keyString = config.getString("support_key", "");
     SupportKey key(keyString);
     if (!key.verify() || key.validDaysRemaining() <= 0)
     {
-        brandCSS = Poco::format(linkCSS, LOOLWSD::ServiceRoot, std::string(BRANDING_UNSUPPORTED));
-        brandJS = Poco::format(scriptJS, LOOLWSD::ServiceRoot, std::string(BRANDING_UNSUPPORTED));
+        brandCSS = Poco::format(linkCSS, responseRoot, std::string(BRANDING_UNSUPPORTED));
+        brandJS = Poco::format(scriptJS, responseRoot, std::string(BRANDING_UNSUPPORTED));
     }
 #endif
 
@@ -905,13 +922,15 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
+    std::string responseRoot = getResponseRoot(request);
+
     static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
     static const std::string footerPage("<div class=\"footer navbar-fixed-bottom text-info text-center\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</div>");
 
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string adminFile = *getUncompressedFile(relPath);
-    std::string brandJS(Poco::format(scriptJS, LOOLWSD::ServiceRoot, std::string(BRANDING)));
+    std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
     std::string brandFooter;
 
 #if ENABLE_SUPPORT_KEY
@@ -929,7 +948,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
     Poco::replaceInPlace(adminFile, std::string("<!--%FOOTER%-->"), brandFooter);
     Poco::replaceInPlace(adminFile, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
-    Poco::replaceInPlace(adminFile, std::string("%SERVICE_ROOT%"), LOOLWSD::ServiceRoot);
+    Poco::replaceInPlace(adminFile, std::string("%SERVICE_ROOT%"), responseRoot);
 
     // Ask UAs to block if they detect any XSS attempt
     response.add("X-XSS-Protection", "1; mode=block");
