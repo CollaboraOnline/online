@@ -45,9 +45,8 @@ describe('Mobile wizard state tests', function() {
 			.click();
 
 		// Mobile wizard is opened and it has any content
-		// TODO: fix this bug
-		/*cy.get('#mobile-wizard-content')
-			.should('not.be.empty'); */
+		cy.get('#mobile-wizard-content')
+			.should('not.be.empty');
 		cy.get('#tb_actionbar_item_mobile_wizard table')
 			.should('have.class', 'checked');
 	});
@@ -82,9 +81,8 @@ describe('Mobile wizard state tests', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		// TODO: fix this bug
-		//cy.get('#mobile-wizard-content')
-		//	.should('not.be.empty');
+		cy.get('#mobile-wizard-content')
+			.should('not.be.empty');
 		cy.get('#tb_actionbar_item_mobile_wizard table')
 			.should('have.class', 'checked');
 	});
