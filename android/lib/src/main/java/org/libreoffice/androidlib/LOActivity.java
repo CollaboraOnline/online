@@ -100,7 +100,7 @@ public class LOActivity extends AppCompatActivity {
     private String urlToLoad;
     private WebView mWebView;
     private SharedPreferences sPrefs;
-    private Handler mainHandler;
+    private Handler mMainHandler = null;
 
     private boolean isDocEditable = false;
     private boolean isDocDebuggable = BuildConfig.DEBUG;
@@ -246,6 +246,13 @@ public class LOActivity extends AppCompatActivity {
         return true;
     }
 
+    private Handler getMainHandler() {
+        if (mMainHandler == null) {
+            mMainHandler = new Handler(getMainLooper());
+        }
+        return mMainHandler;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -350,7 +357,7 @@ public class LOActivity extends AppCompatActivity {
             }
         }
 
-        mainHandler = new Handler(getMainLooper());
+        getMainHandler();
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         nativeMsgThread = new Thread(new Runnable() {
@@ -408,7 +415,7 @@ public class LOActivity extends AppCompatActivity {
 
         final Intent finalIntent = intent;
         mProgressDialog.indeterminate(R.string.saving);
-        mainHandler.post(new Runnable() {
+        getMainHandler().post(new Runnable() {
             @Override
             public void run() {
                 documentLoaded = false;
@@ -642,7 +649,7 @@ public class LOActivity extends AppCompatActivity {
 
         // The 'BYE' takes a considerable amount of time, we need to post it
         // so that it starts after the saving progress is actually shown
-        mainHandler.post(new Runnable() {
+        getMainHandler().post(new Runnable() {
             @Override
             public void run() {
                 documentLoaded = false;
@@ -810,7 +817,7 @@ public class LOActivity extends AppCompatActivity {
                 finishWithProgress();
                 return false;
             case "PRINT":
-                mainHandler.post(new Runnable() {
+                getMainHandler().post(new Runnable() {
                     @Override
                     public void run() {
                         LOActivity.this.initiatePrint();
@@ -836,7 +843,7 @@ public class LOActivity extends AppCompatActivity {
                 }
                 break;
             case "DIM_SCREEN": {
-                mainHandler.post(new Runnable() {
+                getMainHandler().post(new Runnable() {
                     @Override
                     public void run() {
                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -845,7 +852,7 @@ public class LOActivity extends AppCompatActivity {
                 return false;
             }
             case "LIGHT_SCREEN": {
-                mainHandler.post(new Runnable() {
+                getMainHandler().post(new Runnable() {
                     @Override
                     public void run() {
                         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
