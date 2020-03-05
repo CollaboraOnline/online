@@ -191,7 +191,7 @@ function detectLOCoreVersion() {
 }
 
 function longPressOnDocument(posX, posY) {
-	cy.get('#document-container')
+	cy.get('.leaflet-pane.leaflet-map-pane')
 		.then(function(items) {
 			expect(items).have.length(1);
 
