@@ -196,13 +196,6 @@ void Session::disconnect()
     }
 }
 
-bool Session::handleDisconnect()
-{
-    _disconnected = true;
-    shutdown();
-    return false;
-}
-
 void Session::shutdown(const WebSocketHandler::StatusCodes statusCode, const std::string& statusMessage)
 {
     LOG_TRC("Shutting down WS [" << getName() << "] with statusCode [" <<

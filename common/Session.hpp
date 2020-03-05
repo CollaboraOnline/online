@@ -97,9 +97,6 @@ public:
     /// Invoked when we want to disconnect a session.
     virtual void disconnect();
 
-    /// Called to handle disconnection command from socket.
-    virtual bool handleDisconnect();
-
     /// clean & normal shutdown
     void shutdownNormal(const std::string& statusMessage = "")
         { shutdown(WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage); }
