@@ -2284,7 +2284,7 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
                      Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
                      const std::string _load = "load url=" + encodedFrom;
                      std::vector<char> loadRequest(_load.begin(), _load.end());
-                     docBroker->_clientSession->handleMessage(true, WSOpCode::Text, loadRequest);
+                     docBroker->_clientSession->handleMessage(loadRequest);
 
                      // Save is done in the setLoaded
                  });
@@ -2340,7 +2340,7 @@ void ConvertToBroker::setLoaded()
     // Send the save request ...
     std::vector<char> saveasRequest(saveAsCmd.begin(), saveAsCmd.end());
 
-    _clientSession->handleMessage(true, WSOpCode::Text, saveasRequest);
+    _clientSession->handleMessage(saveasRequest);
 }
 
 std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()

@@ -92,7 +92,7 @@ public:
         return (buffer != nullptr ? sendTextFrame(buffer, std::strlen(buffer)) : false);
     }
 
-    virtual void handleMessage(bool fin, WSOpCode code, std::vector<char> &data) override;
+    virtual void handleMessage(const std::vector<char> &data) override;
 
     /// Invoked when we want to disconnect a session.
     virtual void disconnect();

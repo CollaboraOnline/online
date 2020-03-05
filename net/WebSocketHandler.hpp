@@ -39,7 +39,6 @@ private:
 #if !MOBILEAPP
     bool _isMasking;
     bool _inFragmentBlock;
-    bool _isManualDefrag;
 #endif
 
 protected:
@@ -62,7 +61,7 @@ public:
     ///                 defragmentation should be handled inside message handler (true) or the message handler
     ///                 should be called after all fragments of a message were received and the message
     ///                 was defragmented (false).
-    WebSocketHandler(bool isClient = false, bool isMasking = true, bool isManualDefrag = false)
+    WebSocketHandler(bool isClient = false, bool isMasking = true)
         : _lastPingSentTime(std::chrono::steady_clock::now())
         , _pingTimeUs(0)
         , _shuttingDown(false)
@@ -70,7 +69,6 @@ public:
 #if !MOBILEAPP
         , _isMasking(isClient && isMasking)
         , _inFragmentBlock(false)
-        , _isManualDefrag(isManualDefrag)
 #endif
     {
     }
@@ -91,7 +89,6 @@ public:
 #if !MOBILEAPP
         , _isMasking(false)
         , _inFragmentBlock(false)
-        , _isManualDefrag(false)
 #endif
     {
         upgradeToWebSocket(request);
@@ -367,27 +364,18 @@ public:
 
         if (fin)
         {
-            //If is final fragment then process the accumulated message.
-            handleMessage(fin, code, _wsPayload);
+            // If is final fragment then process the accumulated message.
+            handleMessage(_wsPayload);
             _inFragmentBlock = false;
         }
         else
         {
-            if (_isManualDefrag)
-            {
-                //If the user wants to process defragmentation on its own then let him process it.
-                handleMessage(fin, code, _wsPayload);
-                _inFragmentBlock = true;
-            }
-            else
-            {
-                _inFragmentBlock = true;
-                //If is not final fragment then wait for next fragment.
-                return false;
-            }
+            _inFragmentBlock = true;
+            // If is not final fragment then wait for next fragment.
+            return false;
         }
 #else
-        handleMessage(true, WSOpCode::Binary, _wsPayload);
+        handleMessage(_wsPayload);
 
 #endif
 
@@ -627,7 +615,7 @@ protected:
     }
 
     /// To be overriden to handle the websocket messages the way you need.
-    virtual void handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &/*data*/)
+    virtual void handleMessage(const std::vector<char> &/*data*/)
     {
     }
 

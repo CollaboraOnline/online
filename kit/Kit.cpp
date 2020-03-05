@@ -1802,7 +1802,7 @@ private:
                     vect.assign(data, data + size);
 
                     // TODO this is probably wrong...
-                    session->handleMessage(/* fin = */ false, WSOpCode::Binary, vect);
+                    session->handleMessage(vect);
                     return true;
                 }
             }
@@ -2093,7 +2093,7 @@ public:
     }
 
 protected:
-    void handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char>& data) override
+    void handleMessage(const std::vector<char>& data) override
     {
         std::string message(data.data(), data.size());
 

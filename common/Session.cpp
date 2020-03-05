@@ -214,7 +214,7 @@ void Session::shutdown(const WebSocketHandler::StatusCodes statusCode, const std
     WebSocketHandler::shutdown(statusCode, statusMessage);
 }
 
-void Session::handleMessage(bool /*fin*/, WSOpCode /*code*/, std::vector<char> &data)
+void Session::handleMessage(const std::vector<char> &data)
 {
     try
     {

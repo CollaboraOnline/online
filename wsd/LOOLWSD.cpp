@@ -1920,7 +1920,7 @@ private:
     }
 
     /// Prisoner websocket fun ... (for now)
-    virtual void handleMessage(bool /*fin*/, WSOpCode /* code */, std::vector<char> &data) override
+    virtual void handleMessage(const std::vector<char> &data) override
     {
         if (UnitWSD::get().filterChildMessage(data))
             return;
