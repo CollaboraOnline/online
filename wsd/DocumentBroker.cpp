@@ -2135,7 +2135,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
             else
             {
                 // Notify the client and disconnect.
-                session->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, closeReason);
+                session->shutdownGoingAway(closeReason);
 
                 // Remove session, save, and mark to destroy.
                 removeSession(session->getId());

@@ -1675,20 +1675,20 @@ void ClientSession::onDisconnect()
             LOG_TRC("Normal close handshake.");
             // Client initiated close handshake
             // respond with close frame
-            shutdown();
+            shutdownNormal();
         }
         else if (!SigUtil::getShutdownRequestFlag())
         {
             // something wrong, with internal exceptions
             LOG_TRC("Abnormal close handshake.");
             closeFrame();
-            shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
+            shutdownGoingAway();
         }
         else
         {
             LOG_TRC("Server recycling.");
             closeFrame();
-            shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY);
+            shutdownGoingAway();
         }
     }
     catch (const std::exception& exc)

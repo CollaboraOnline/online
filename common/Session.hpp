@@ -100,8 +100,13 @@ public:
     /// Called to handle disconnection command from socket.
     virtual bool handleDisconnect();
 
-    void shutdown(const WebSocketHandler::StatusCodes statusCode = WebSocketHandler::StatusCodes::NORMAL_CLOSE,
-                  const std::string& statusMessage = "");
+    /// clean & normal shutdown
+    void shutdownNormal(const std::string& statusMessage = "")
+        { shutdown(WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage); }
+
+    /// abnormal / hash shutdown end-point going away
+    void shutdownGoingAway(const std::string& statusMessage = "")
+        { shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, statusMessage); }
 
     bool isActive() const { return _isActive; }
     void setIsActive(bool active) { _isActive = active; }
@@ -178,6 +183,10 @@ protected:
     void dumpState(std::ostream& os) override;
 
 private:
+
+    void shutdown(const WebSocketHandler::StatusCodes statusCode = WebSocketHandler::StatusCodes::NORMAL_CLOSE,
+                  const std::string& statusMessage = "");
+
     virtual bool _handleInput(const char* buffer, int length) = 0;
 
     /// A session ID specific to an end-to-end connection (from user to lokit).

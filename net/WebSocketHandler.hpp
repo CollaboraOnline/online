@@ -437,6 +437,7 @@ public:
     }
 
 #if !MOBILEAPP
+private:
     /// Send a ping message
     void sendPingOrPong(std::chrono::steady_clock::time_point now,
                         const char* data, const size_t len,
@@ -493,7 +494,7 @@ public:
         }
 #endif
     }
-
+public:
     /// By default rely on the socket buffer.
     void performWrites() override {}
 
