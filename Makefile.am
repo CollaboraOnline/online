@@ -303,6 +303,7 @@ if HAVE_LO_PATH
 
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
 CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
+RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
 
 $(SYSTEM_STAMP) : ${top_srcdir}/loolwsd-systemplate-setup
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
@@ -380,7 +381,7 @@ run-gdb: all @JAILS_PATH@
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
 	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
-	gdb --tui --args \
+	$(RUN_GDB) \
 		./loolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
