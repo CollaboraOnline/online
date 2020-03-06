@@ -38,9 +38,18 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.loleaflet-annotation-table')
 			.should('exist');
 
-		// Push cancel to close the dialog
-		cy.get('.vex-dialog-button-secondary.vex-dialog-button.vex-last')
+		// Add some comment
+		cy.get('.loleaflet-annotation-textarea')
+			.type('some text');
+
+		cy.get('.vex-dialog-button-primary')
 			.click();
+
+		cy.get('.loleaflet-annotation')
+			.should('exist');
+
+		cy.get('.loleaflet-annotation-content.loleaflet-dont-break')
+			.contains('some text');
 	});
 
 	it('Insert default table.', function() {
