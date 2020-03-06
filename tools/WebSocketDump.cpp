@@ -42,9 +42,9 @@ public:
 
 private:
     /// Process incoming websocket messages
-    void handleMessage(bool fin, WSOpCode code, std::vector<char> &data)
+    void handleMessage(const std::vector<char> &data) override
     {
-        std::cout << "WebSocket message code " << (int)code << " fin " << fin << " data:\n";
+        std::cout << "WebSocket message data:\n";
         Util::dumpHex(std::cout, "", "    ", data, false);
     }
 };

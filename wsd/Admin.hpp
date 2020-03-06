@@ -43,7 +43,7 @@ private:
     void sendTextFrame(const std::string& message);
 
     /// Process incoming websocket messages
-    void handleMessage(bool fin, WSOpCode code, std::vector<char> &data);
+    void handleMessage(const std::vector<char> &data) override;
 
 private:
     Admin* _admin;
