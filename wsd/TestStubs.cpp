@@ -25,16 +25,16 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& /*data*/)
 
 ClientSession::~ClientSession() {}
 
-void ClientSession::performWrites() {}
-
 void ClientSession::onDisconnect() {}
+
+bool ClientSession::hasQueuedMessages() const { return false; }
+
+void ClientSession::writeQueuedMessages() {}
 
 void ClientSession::dumpState(std::ostream& /*os*/) {}
 
 void ClientSession::setReadOnly() {}
 
 bool ClientSession::_handleInput(const char* /*buffer*/, int /*length*/) { return false; }
-
-int ClientSession::getPollEvents(std::chrono::steady_clock::time_point /* now */, int & /* timeoutMaxMs */) { return 0; }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

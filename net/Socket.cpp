@@ -204,7 +204,7 @@ void SocketPoll::wakeupWorld()
 
 void SocketPoll::insertNewWebSocketSync(
     const Poco::URI &uri,
-    const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
+    const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler)
 {
     LOG_INF("Connecting to " << uri.getHost() << " : " << uri.getPort() << " : " << uri.getPath());
 
@@ -277,7 +277,7 @@ void SocketPoll::insertNewWebSocketSync(
 
 // should this be a static method in the WebsocketHandler(?)
 void SocketPoll::clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocket>& socket,
-                                               const std::shared_ptr<SocketHandlerInterface>& websocketHandler,
+                                               const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler,
                                                const std::string &pathAndQuery)
 {
     // cf. WebSocketHandler::upgradeToWebSocket (?)
@@ -304,7 +304,7 @@ void SocketPoll::clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocke
 void SocketPoll::insertNewUnixSocket(
     const std::string &location,
     const std::string &pathAndQuery,
-    const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
+    const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler)
 {
     int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0);
 
@@ -337,7 +337,7 @@ void SocketPoll::insertNewUnixSocket(
 
 void SocketPoll::insertNewFakeSocket(
     int peerSocket,
-    const std::shared_ptr<SocketHandlerInterface>& websocketHandler)
+    const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler)
 {
     LOG_INF("Connecting to " << peerSocket);
     int fd = fakeSocketSocket();

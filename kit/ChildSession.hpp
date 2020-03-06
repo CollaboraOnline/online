@@ -199,9 +199,11 @@ public:
     ///                 a new view) or nullptr (when first view).
     /// jailId The JailID of the jail root directory,
     //         used by downloadas to construct jailed path.
-    ChildSession(const std::string& id,
-                 const std::string& jailId,
-                 DocumentManagerInterface& docManager);
+    ChildSession(
+        const std::shared_ptr<ProtocolHandlerInterface> &protocol,
+        const std::string& id,
+        const std::string& jailId,
+        DocumentManagerInterface& docManager);
     virtual ~ChildSession();
 
     bool getStatus(const char* buffer, int length);
@@ -219,12 +221,22 @@ public:
 
     bool sendTextFrame(const char* buffer, int length) override
     {
+        if (!_docManager)
+        {
+            LOG_TRC("ERR dropping - client-" + getId() + ' ' + std::string(buffer, length));
+            return false;
+        }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
         return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Text);
     }
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
+        if (!_docManager)
+        {
+            LOG_TRC("ERR dropping binary - client-" + getId());
+            return false;
+        }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
         return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
     }
@@ -235,11 +247,7 @@ public:
 
     void resetDocManager()
     {
-#if MOBILEAPP
-        // I suspect this might be useful even for the non-mobile case, but
-        // not 100% sure, so rather do it mobile-only for now
         disconnect();
-#endif
         _docManager = nullptr;
     }
 

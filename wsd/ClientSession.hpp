@@ -24,12 +24,12 @@
 
 class DocumentBroker;
 
-
 /// Represents a session to a LOOL client, in the WSD process.
-class ClientSession final : public Session, public std::enable_shared_from_this<ClientSession>
+class ClientSession final : public Session
 {
 public:
-    ClientSession(const std::string& id,
+    ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws,
+                  const std::string& id,
                   const std::shared_ptr<DocumentBroker>& docBroker,
                   const Poco::URI& uriPublic,
                   const bool isReadOnly,
@@ -174,14 +174,19 @@ public:
     void rotateClipboardKey(bool notifyClient);
 
 private:
+    std::shared_ptr<ClientSession> client_from_this()
+    {
+        return std::static_pointer_cast<ClientSession>(shared_from_this());
+    }
+
     /// SocketHandler: disconnection event.
     void onDisconnect() override;
 
-    /// Does SocketHandler: have data or timeouts to setup.
-    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
-                      int & /* timeoutMaxMs */) override;
-    /// SocketHandler: write to socket.
-    void performWrites() override;
+    /// Does SocketHandler: have messages to send ?
+    bool hasQueuedMessages() const override;
+
+    /// SocketHandler: send those messages
+    void writeQueuedMessages() override;
 
     virtual bool _handleInput(const char* buffer, int length) override;
 

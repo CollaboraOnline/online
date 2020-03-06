@@ -24,7 +24,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/WebSocket.h>
 
-class WebSocketHandler : public SocketHandlerInterface
+class WebSocketHandler : public ProtocolHandlerInterface
 {
 private:
     /// The socket that owns us (we can't own it).
@@ -94,7 +94,7 @@ public:
         upgradeToWebSocket(request);
     }
 
-    /// Implementation of the SocketHandlerInterface.
+    /// Implementation of the ProtocolHandlerInterface.
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
@@ -144,6 +144,24 @@ public:
 
         sendFrame(socket, buf.data(), buf.size(), flags);
 #endif
+    }
+
+    void shutdown(bool goingAway, const std::string &statusMessage) override
+    {
+        shutdown(goingAway ? WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY :
+                 WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage);
+    }
+
+    void getIOStats(uint64_t &sent, uint64_t &recv) override
+    {
+        std::shared_ptr<StreamSocket> socket = getSocket().lock();
+        if (socket)
+            socket->getIOStats(sent, recv);
+        else
+        {
+            sent = 0;
+            recv = 0;
+        }
     }
 
     void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE, const std::string& statusMessage = "")
@@ -384,7 +402,7 @@ public:
         return true;
     }
 
-    /// Implementation of the SocketHandlerInterface.
+    /// Implementation of the ProtocolHandlerInterface.
     virtual void handleIncomingMessage(SocketDisposition&) override
     {
         // LOG_TRC("***** WebSocketHandler::handleIncomingMessage()");
@@ -421,7 +439,10 @@ public:
                 std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastPingSentTime).count();
             timeoutMaxMs = std::min(timeoutMaxMs, PingFrequencyMs - timeSincePingMs);
         }
-        return POLLIN;
+        int events = POLLIN;
+        if (_msgHandler && _msgHandler->hasQueuedMessages())
+            events |= POLLOUT;
+        return events;
     }
 
 #if !MOBILEAPP
@@ -483,13 +504,34 @@ private:
 #endif
     }
 public:
-    /// By default rely on the socket buffer.
-    void performWrites() override {}
+    void performWrites() override
+    {
+        if (_msgHandler)
+            _msgHandler->writeQueuedMessages();
+    }
+
+    void onDisconnect() override
+    {
+        if (_msgHandler)
+            _msgHandler->onDisconnect();
+    }
 
     /// Sends a WebSocket Text message.
     int sendMessage(const std::string& msg) const
     {
-        return sendMessage(msg.data(), msg.size(), WSOpCode::Text);
+        return sendTextMessage(msg, msg.size());
+    }
+
+    /// Implementation of the ProtocolHandlerInterface.
+    int sendTextMessage(const std::string &msg, const size_t len, bool flush = false) const override
+    {
+        return sendMessage(msg.data(), len, WSOpCode::Text, flush);
+    }
+
+    /// Implementation of the ProtocolHandlerInterface.
+    int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const override
+    {
+        return sendMessage(data, len, WSOpCode::Binary, flush);
     }
 
     /// Sends a WebSocket message of WPOpCode type.
@@ -506,9 +548,7 @@ public:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         return sendFrame(socket, data, len, WSFrameMask::Fin | static_cast<unsigned char>(code), flush);
     }
-
 private:
-
     /// Sends a WebSocket frame given the data, length, and flags.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
@@ -615,8 +655,10 @@ protected:
     }
 
     /// To be overriden to handle the websocket messages the way you need.
-    virtual void handleMessage(const std::vector<char> &/*data*/)
+    virtual void handleMessage(const std::vector<char> &data)
     {
+        if (_msgHandler)
+            _msgHandler->handleMessage(data);
     }
 
     std::weak_ptr<StreamSocket>& getSocket()
@@ -629,6 +671,7 @@ protected:
         _socket = socket;
     }
 
+    /// Implementation of the ProtocolHandlerInterface.
     void dumpState(std::ostream& os) override;
 
 private:

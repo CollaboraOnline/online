@@ -244,11 +244,12 @@ public:
     void finalRemoveSession(const std::string& id);
 
     /// Create new client session
-    std::shared_ptr<ClientSession> createNewClientSession(const WebSocketHandler* ws,
-                                                          const std::string& id,
-                                                          const Poco::URI& uriPublic,
-                                                          const bool isReadOnly,
-                                                          const std::string& hostNoTrust);
+    std::shared_ptr<ClientSession> createNewClientSession(
+        const std::shared_ptr<ProtocolHandlerInterface> &ws,
+        const std::string& id,
+        const Poco::URI& uriPublic,
+        const bool isReadOnly,
+        const std::string& hostNoTrust);
 
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();

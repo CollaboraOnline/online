@@ -781,7 +781,9 @@ public:
                     " session for url: " << anonymizeUrl(_url) << " for sessionId: " <<
                     sessionId << " on jailId: " << _jailId);
 
-            auto session = std::make_shared<ChildSession>(sessionId, _jailId, *this);
+            auto session = std::make_shared<ChildSession>(
+                _websocketHandler,
+                sessionId, _jailId, *this);
             _sessions.emplace(sessionId, session);
 
             int viewId = session->getViewId();
@@ -2072,7 +2074,7 @@ std::shared_ptr<lok::Document> getLOKDocument()
     return Document::_loKitDocument;
 }
 
-class KitWebSocketHandler final : public WebSocketHandler, public std::enable_shared_from_this<KitWebSocketHandler>
+class KitWebSocketHandler final : public WebSocketHandler
 {
     std::shared_ptr<TileQueue> _queue;
     std::string _socketName;
@@ -2137,7 +2139,9 @@ protected:
             Util::setThreadName("kitbroker_" + docId);
 
             if (!document)
-                document = std::make_shared<Document>(_loKit, _jailId, docKey, docId, url, _queue, shared_from_this());
+                document = std::make_shared<Document>(
+                    _loKit, _jailId, docKey, docId, url, _queue,
+                    std::static_pointer_cast<WebSocketHandler>(shared_from_this()));
 
             // Validate and create session.
             if (!(url == document->getUrl() && document->createSession(sessionId)))
@@ -2633,7 +2637,7 @@ void lokit_main(
         KitSocketPoll mainKit;
         mainKit.runOnClientThread(); // We will do the polling on this thread.
 
-        std::shared_ptr<SocketHandlerInterface> websocketHandler =
+        std::shared_ptr<ProtocolHandlerInterface> websocketHandler =
             std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId);
 #if !MOBILEAPP
         mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler);

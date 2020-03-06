@@ -44,7 +44,9 @@ using namespace LOOLProtocol;
 using Poco::Exception;
 using std::size_t;
 
-Session::Session(const std::string& name, const std::string& id, bool readOnly) :
+Session::Session(const std::shared_ptr<ProtocolHandlerInterface> &protocol,
+                 const std::string& name, const std::string& id, bool readOnly) :
+    MessageHandlerInterface(protocol),
     _id(id),
     _name(name),
     _disconnected(false),
@@ -65,14 +67,26 @@ Session::~Session()
 
 bool Session::sendTextFrame(const char* buffer, const int length)
 {
+    if (!_protocol)
+    {
+        LOG_TRC("ERR - missing protocol " << getName() << ": Send: [" << getAbbreviatedMessage(buffer, length) << "].");
+        return false;
+    }
+
     LOG_TRC(getName() << ": Send: [" << getAbbreviatedMessage(buffer, length) << "].");
-    return sendMessage(buffer, length, WSOpCode::Text) >= length;
+    return _protocol->sendTextMessage(buffer, length) >= length;
 }
 
 bool Session::sendBinaryFrame(const char *buffer, int length)
 {
+    if (!_protocol)
+    {
+        LOG_TRC("ERR - missing protocol " << getName() << ": Send: " << std::to_string(length) << " binary bytes.");
+        return false;
+    }
+
     LOG_TRC(getName() << ": Send: " << std::to_string(length) << " binary bytes.");
-    return sendMessage(buffer, length, WSOpCode::Binary) >= length;
+    return _protocol->sendBinaryMessage(buffer, length) >= length;
 }
 
 void Session::parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp, std::string& doctemplate)
@@ -196,15 +210,20 @@ void Session::disconnect()
     }
 }
 
-void Session::shutdown(const WebSocketHandler::StatusCodes statusCode, const std::string& statusMessage)
+void Session::shutdown(bool goingAway, const std::string& statusMessage)
 {
-    LOG_TRC("Shutting down WS [" << getName() << "] with statusCode [" <<
-            static_cast<unsigned>(statusCode) << "] and reason [" << statusMessage << "].");
+    LOG_TRC("Shutting down WS [" << getName() << "] " <<
+            (goingAway ? "going" : "normal") <<
+            " and reason [" << statusMessage << "].");
 
     // See protocol.txt for this application-level close frame.
-    sendMessage("close: " + statusMessage);
-
-    WebSocketHandler::shutdown(statusCode, statusMessage);
+    if (_protocol)
+    {
+        // skip the queue; FIXME: should we flush SessionClient's queue ?
+        std::string closeMsg = "close: " + statusMessage;
+        _protocol->sendTextMessage(closeMsg, closeMsg.size());
+        _protocol->shutdown(goingAway, statusMessage);
+    }
 }
 
 void Session::handleMessage(const std::vector<char> &data)
@@ -238,21 +257,12 @@ void Session::handleMessage(const std::vector<char> &data)
 
 void Session::getIOStats(uint64_t &sent, uint64_t &recv)
 {
-    std::shared_ptr<StreamSocket> socket = getSocket().lock();
-    if (socket)
-        socket->getIOStats(sent, recv);
-    else
-    {
-        sent = 0;
-        recv = 0;
-    }
+    _protocol->getIOStats(sent, recv);
 }
 
 void Session::dumpState(std::ostream& os)
 {
-    WebSocketHandler::dumpState(os);
-
-    os <<   "\t\tid: " << _id
+    os << "\t\tid: " << _id
        << "\n\t\tname: " << _name
        << "\n\t\tdisconnected: " << _disconnected
        << "\n\t\tisActive: " << _isActive

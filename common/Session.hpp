@@ -64,7 +64,7 @@ public:
 };
 
 /// Base class of a WebSocket session.
-class Session : public WebSocketHandler
+class Session : public MessageHandlerInterface
 {
 public:
     const std::string& getId() const { return _id; }
@@ -74,8 +74,32 @@ public:
     virtual void setReadOnly() { _isReadOnly = true; }
     bool isReadOnly() const { return _isReadOnly; }
 
+    /// overridden to prepend client ids on messages by the Kit
     virtual bool sendBinaryFrame(const char* buffer, int length);
     virtual bool sendTextFrame(const char* buffer, const int length);
+
+    /// Get notified that the underlying transports disconnected
+    void onDisconnect() override { /* ignore */ }
+
+    bool hasQueuedMessages() const override
+    {
+        // queued in Socket output buffer
+        return false;
+    }
+
+    // By default rely on the socket buffer.
+    void writeQueuedMessages() override
+    {
+        assert(false);
+    }
+
+    /// Sends a WebSocket Text message.
+    int sendMessage(const std::string& msg)
+    {
+        return sendTextFrame(msg.data(), msg.size());
+    }
+
+    // FIXME: remove synonym - and clean from WebSocketHandler too ... (?)
     bool sendTextFrame(const std::string& text)
     {
         return sendTextFrame(text.data(), text.size());
@@ -98,12 +122,10 @@ public:
     virtual void disconnect();
 
     /// clean & normal shutdown
-    void shutdownNormal(const std::string& statusMessage = "")
-        { shutdown(WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage); }
+    void shutdownNormal(const std::string& statusMessage = "")    { shutdown(false, statusMessage); }
 
     /// abnormal / hash shutdown end-point going away
-    void shutdownGoingAway(const std::string& statusMessage = "")
-        { shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, statusMessage); }
+    void shutdownGoingAway(const std::string& statusMessage = "") { shutdown(true, statusMessage); }
 
     bool isActive() const { return _isActive; }
     void setIsActive(bool active) { _isActive = active; }
@@ -165,7 +187,8 @@ public:
     }
 
 protected:
-    Session(const std::string& name, const std::string& id, bool readonly);
+    Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
+            const std::string& name, const std::string& id, bool readonly);
     virtual ~Session();
 
     /// Parses the options of the "load" command,
@@ -181,8 +204,7 @@ protected:
 
 private:
 
-    void shutdown(const WebSocketHandler::StatusCodes statusCode = WebSocketHandler::StatusCodes::NORMAL_CLOSE,
-                  const std::string& statusMessage = "");
+    void shutdown(bool goingAway = false, const std::string& statusMessage = "");
 
     virtual bool _handleInput(const char* buffer, int length) = 0;
 

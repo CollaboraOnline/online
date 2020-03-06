@@ -68,6 +68,7 @@ public:
     {
         constexpr char testName[] = "UnitWOPIVersionRestore";
 
+        LOG_TRC("invokeTest " << (int)_phase);
         switch (_phase)
         {
             case Phase::Load:

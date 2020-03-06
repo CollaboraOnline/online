@@ -38,12 +38,14 @@ using Poco::Path;
 static std::mutex GlobalSessionMapMutex;
 static std::unordered_map<std::string, std::weak_ptr<ClientSession>> GlobalSessionMap;
 
-ClientSession::ClientSession(const std::string& id,
-                             const std::shared_ptr<DocumentBroker>& docBroker,
-                             const Poco::URI& uriPublic,
-                             const bool readOnly,
-                             const std::string& hostNoTrust) :
-    Session("ToClient-" + id, id, readOnly),
+ClientSession::ClientSession(
+    const std::shared_ptr<ProtocolHandlerInterface>& ws,
+    const std::string& id,
+    const std::shared_ptr<DocumentBroker>& docBroker,
+    const Poco::URI& uriPublic,
+    const bool readOnly,
+    const std::string& hostNoTrust) :
+    Session(ws, "ToClient-" + id, id, readOnly),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
     _isDocumentOwner(false),
@@ -86,7 +88,8 @@ ClientSession::ClientSession(const std::string& id,
 void ClientSession::construct()
 {
     std::unique_lock<std::mutex> lock(GlobalSessionMapMutex);
-    GlobalSessionMap[getId()] = shared_from_this();
+    MessageHandlerInterface::initialize();
+    GlobalSessionMap[getId()] = client_from_this();
 }
 
 ClientSession::~ClientSession()
@@ -444,7 +447,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "canceltiles"))
     {
-        docBroker->cancelTileRequests(shared_from_this());
+        docBroker->cancelTileRequests(client_from_this());
         return true;
     }
     else if (tokens.equals(0, "commandvalues"))
@@ -678,7 +681,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         else
             LOG_INF("Tileprocessed message with an unknown tile ID");
 
-        docBroker->sendRequestedTiles(shared_from_this());
+        docBroker->sendRequestedTiles(client_from_this());
         return true;
     }
     else if (tokens.equals(0, "removesession")) {
@@ -882,7 +885,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const Stri
     {
         TileDesc tileDesc = TileDesc::parse(tokens);
         tileDesc.setNormalizedViewId(getCanonicalViewId());
-        docBroker->handleTileRequest(tileDesc, shared_from_this());
+        docBroker->handleTileRequest(tileDesc, client_from_this());
     }
     catch (const std::exception& exc)
     {
@@ -900,7 +903,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
         tileCombined.setNormalizedViewId(getCanonicalViewId());
-        docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
+        docBroker->handleTileCombinedRequest(tileCombined, client_from_this());
     }
     catch (const std::exception& exc)
     {
@@ -981,17 +984,13 @@ void ClientSession::setReadOnly()
     sendTextFrame("perm: readonly");
 }
 
-int ClientSession::getPollEvents(std::chrono::steady_clock::time_point /* now */,
-                                 int & /* timeoutMaxMs */)
+bool ClientSession::hasQueuedMessages() const
 {
-    LOG_TRC(getName() << " ClientSession has " << _senderQueue.size() << " write message(s) queued.");
-    int events = POLLIN;
-    if (_senderQueue.size())
-        events |= POLLOUT;
-    return events;
+    return _senderQueue.size() > 0;
 }
 
-void ClientSession::performWrites()
+    /// Please send them to me then.
+void ClientSession::writeQueuedMessages()
 {
     LOG_TRC(getName() << " ClientSession: performing writes.");
 
@@ -1706,11 +1705,10 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tclipboardKeys[1]: " << _clipboardKeys[1]
        << "\n\t\tclip sockets: " << _clipSockets.size();
 
-    std::shared_ptr<StreamSocket> socket = getSocket().lock();
-    if (socket)
+    if (_protocol)
     {
         uint64_t sent, recv;
-        socket->getIOStats(sent, recv);
+        _protocol->getIOStats(sent, recv);
         os << "\n\t\tsent/keystroke: " << (double)sent/_keyEvents << "bytes";
     }
 
@@ -1781,7 +1779,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     {
         TileCombined tileCombined = TileCombined::create(invalidTiles);
         tileCombined.setNormalizedViewId(normalizedViewId);
-        docBroker->handleTileCombinedRequest(tileCombined, shared_from_this());
+        docBroker->handleTileCombinedRequest(tileCombined, client_from_this());
     }
 }
 

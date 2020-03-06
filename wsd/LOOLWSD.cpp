@@ -236,7 +236,7 @@ namespace
 {
 
 #if ENABLE_SUPPORT_KEY
-inline void shutdownLimitReached(WebSocketHandler& ws)
+inline void shutdownLimitReached(const std::shared_ptr<WebSocketHandler>& ws)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
     LOG_INF("Sending client 'hardlimitreached' message: " << error);
@@ -244,10 +244,10 @@ inline void shutdownLimitReached(WebSocketHandler& ws)
     try
     {
         // Let the client know we are shutting down.
-        ws.sendMessage(error);
+        ws->sendMessage(error);
 
         // Shutdown.
-        ws.shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+        ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION);
     }
     catch (const std::exception& ex)
     {
@@ -1728,11 +1728,12 @@ std::mutex Connection::Mutex;
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& ws,
-                                                             const std::string& uri,
-                                                             const std::string& docKey,
-                                                             const std::string& id,
-                                                             const Poco::URI& uriPublic)
+static std::shared_ptr<DocumentBroker>
+    findOrCreateDocBroker(const std::shared_ptr<WebSocketHandler>& ws,
+                          const std::string& uri,
+                          const std::string& docKey,
+                          const std::string& id,
+                          const Poco::URI& uriPublic)
 {
     LOG_INF("Find or create DocBroker for docKey [" << docKey <<
             "] for session [" << id << "] on url [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
@@ -1761,8 +1762,8 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
         if (docBroker->isMarkedToDestroy())
         {
             LOG_WRN("DocBroker with docKey [" << docKey << "] that is marked to be destroyed. Rejecting client request.");
-            ws.sendMessage("error: cmd=load kind=docunloading");
-            ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "error: cmd=load kind=docunloading");
+            ws->sendMessage("error: cmd=load kind=docunloading");
+            ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "error: cmd=load kind=docunloading");
             return nullptr;
         }
     }
@@ -1780,7 +1781,7 @@ static std::shared_ptr<DocumentBroker> findOrCreateDocBroker(WebSocketHandler& w
     // Indicate to the client that we're connecting to the docbroker.
     const std::string statusConnect = "statusindicator: connect";
     LOG_TRC("Sending to Client [" << statusConnect << "].");
-    ws.sendMessage(statusConnect);
+    ws->sendMessage(statusConnect);
 
     if (!docBroker)
     {
@@ -1932,6 +1933,11 @@ private:
                     addNewChild(child);
                 });
         }
+        catch (const std::bad_weak_ptr&)
+        {
+            // Using shared_from_this() from a constructor is not good.
+            assert(false);
+        }
         catch (const std::exception& exc)
         {
             // Probably don't have enough data just yet.
@@ -1995,7 +2001,7 @@ public:
 #endif
 
 /// Handles incoming connections and dispatches to the appropriate handler.
-class ClientRequestDispatcher : public SocketHandlerInterface
+class ClientRequestDispatcher : public SimpleSocketHandler
 {
 public:
     ClientRequestDispatcher()
@@ -2780,7 +2786,7 @@ private:
         LOG_TRC("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
 
         // First Upgrade.
-        WebSocketHandler ws(_socket, request);
+        auto ws = std::make_shared<WebSocketHandler>(_socket, request);
 
         // Response to clients beyond this point is done via WebSocket.
         try
@@ -2807,7 +2813,7 @@ private:
             // Indicate to the client that document broker is searching.
             const std::string status("statusindicator: find");
             LOG_TRC("Sending to Client [" << status << "].");
-            ws.sendMessage(status);
+            ws->sendMessage(status);
 
             LOG_INF("Sanitized URI [" << LOOLWSD::anonymizeUrl(url) << "] to [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) <<
                     "] and mapped to docKey [" << docKey << "] for session [" << _id << "].");
@@ -2837,11 +2843,11 @@ private:
 #endif
 
                 std::shared_ptr<ClientSession> clientSession =
-                    docBroker->createNewClientSession(&ws, _id, uriPublic, isReadOnly, hostNoTrust);
+                    docBroker->createNewClientSession(ws, _id, uriPublic, isReadOnly, hostNoTrust);
                 if (clientSession)
                 {
                     // Transfer the client socket to the DocumentBroker when we get back to the poll:
-                    disposition.setMove([docBroker, clientSession]
+                    disposition.setMove([docBroker, clientSession, ws]
                                         (const std::shared_ptr<Socket> &moveSocket)
                     {
                         // Make sure the thread is running before adding callback.
@@ -2850,16 +2856,16 @@ private:
                         // We no longer own this socket.
                         moveSocket->setThreadOwner(std::thread::id());
 
-                        docBroker->addCallback([docBroker, moveSocket, clientSession]()
+                        docBroker->addCallback([docBroker, moveSocket, clientSession, ws]()
                         {
                             try
                             {
                                 auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
 
-                                // Set the ClientSession to handle Socket events.
-                                streamSocket->setHandler(clientSession);
-                                LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
+                                // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
+                                streamSocket->setHandler(ws);
 
+                                LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
                                 // Move the socket into DocBroker.
                                 docBroker->addSocketToPoll(moveSocket);
 
@@ -2868,7 +2874,8 @@ private:
 
                                 checkDiskSpaceAndWarnClients(true);
 #if !ENABLE_SUPPORT_KEY
-                                // Users of development versions get just an info when reaching max documents or connections
+                                // Users of development versions get just an info
+                                // when reaching max documents or connections
                                 checkSessionLimitsAndWarnClients();
 #endif
                             }
@@ -2909,8 +2916,8 @@ private:
         {
             LOG_ERR("Error while handling Client WS Request: " << exc.what());
             const std::string msg = "error: cmd=internal kind=load";
-            ws.sendMessage(msg);
-            ws.shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
+            ws->sendMessage(msg);
+            ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
         }
     }
 

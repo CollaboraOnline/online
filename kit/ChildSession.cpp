@@ -19,7 +19,6 @@
 
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/BinaryReader.h>
@@ -62,10 +61,12 @@ std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
 
 }
 
-ChildSession::ChildSession(const std::string& id,
-                           const std::string& jailId,
-                           DocumentManagerInterface& docManager) :
-    Session("ToMaster-" + id, id, false),
+ChildSession::ChildSession(
+    const std::shared_ptr<ProtocolHandlerInterface> &protocol,
+    const std::string& id,
+    const std::string& jailId,
+    DocumentManagerInterface& docManager) :
+    Session(protocol, "ToMaster-" + id, id, false),
     _jailId(jailId),
     _docManager(&docManager),
     _viewId(-1),
@@ -98,7 +99,8 @@ void ChildSession::disconnect()
             LOG_WRN("Skipping unload on incomplete view.");
         }
 
-        Session::disconnect();
+// This shuts down the shared socket, which is not what we want.
+//        Session::disconnect();
     }
 }
 

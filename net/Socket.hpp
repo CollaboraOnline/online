@@ -344,12 +344,21 @@ private:
 };
 
 class StreamSocket;
+class MessageHandlerInterface;
 
-/// Interface that handles the actual incoming message.
-class SocketHandlerInterface
+/// Interface that decodes the actual incoming message.
+class ProtocolHandlerInterface :
+    public std::enable_shared_from_this<ProtocolHandlerInterface>
 {
+protected:
+    /// We own a message handler, after decoding the socket data we pass it on as messages.
+    std::shared_ptr<MessageHandlerInterface> _msgHandler;
 public:
-    virtual ~SocketHandlerInterface() {}
+    // ------------------------------------------------------------------
+    // Interface for implementing low level socket goodness from streams.
+    // ------------------------------------------------------------------
+    virtual ~ProtocolHandlerInterface() { }
+
     /// Called when the socket is newly created to
     /// set the socket associated with this ResponseClient.
     /// Will be called exactly once.
@@ -374,8 +383,79 @@ public:
     /// Will be called exactly once.
     virtual void onDisconnect() {}
 
+    // -----------------------------------------------------------------
+    //            Interface for external MessageHandlers
+    // -----------------------------------------------------------------
+public:
+    void setMessageHandler(const std::shared_ptr<MessageHandlerInterface> &msgHandler)
+    {
+        _msgHandler = msgHandler;
+    }
+
+    /// Clear all external references
+    virtual void dispose() { _msgHandler.reset(); }
+
+    virtual int sendTextMessage(const std::string &msg, const size_t len, bool flush = false) const = 0;
+    virtual int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const = 0;
+    virtual void shutdown(bool goingAway = false, const std::string &statusMessage = "") = 0;
+
+    virtual void getIOStats(uint64_t &sent, uint64_t &recv) = 0;
+
     /// Append pretty printed internal state to a line
     virtual void dumpState(std::ostream& os) { os << "\n"; }
+};
+
+/// A ProtocolHandlerInterface with dummy sending API.
+class SimpleSocketHandler : public ProtocolHandlerInterface
+{
+public:
+    SimpleSocketHandler() {}
+    int sendTextMessage(const std::string &, const size_t, bool) const override { return 0; }
+    int sendBinaryMessage(const char *, const size_t , bool ) const override     { return 0; }
+    void shutdown(bool, const std::string &) override {}
+    void getIOStats(uint64_t &, uint64_t &) override {}
+};
+
+/// Interface that receives and sends incoming messages.
+class MessageHandlerInterface :
+    public std::enable_shared_from_this<MessageHandlerInterface>
+{
+protected:
+    std::shared_ptr<ProtocolHandlerInterface> _protocol;
+    MessageHandlerInterface(const std::shared_ptr<ProtocolHandlerInterface> &protocol) :
+        _protocol(protocol)
+    {
+    }
+    virtual ~MessageHandlerInterface() {}
+
+public:
+    /// Setup, after construction for shared_from_this
+    void initialize()
+    {
+        if (_protocol)
+            _protocol->setMessageHandler(shared_from_this());
+    }
+
+    /// Clear all external references
+    virtual void dispose()
+    {
+        if (_protocol)
+        {
+            _protocol->dispose();
+            _protocol.reset();
+        }
+    }
+
+    /// Do we have something to send ?
+    virtual bool hasQueuedMessages() const = 0;
+    /// Please send them to me then.
+    virtual void writeQueuedMessages() = 0;
+    /// We just got a message - here it is
+    virtual void handleMessage(const std::vector<char> &data) = 0;
+    /// Get notified that the underlying transports disconnected
+    virtual void onDisconnect() = 0;
+    /// Append pretty printed internal state to a line
+    virtual void dumpState(std::ostream& os) = 0;
 };
 
 /// Handles non-blocking socket event polling.
@@ -672,16 +752,16 @@ public:
     /// Inserts a new remote websocket to be polled.
     /// NOTE: The DNS lookup is synchronous.
     void insertNewWebSocketSync(const Poco::URI &uri,
-                                const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
+                                const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
 
     void insertNewUnixSocket(
         const std::string &location,
         const std::string &pathAndQuery,
-        const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
+        const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
 #else
     void insertNewFakeSocket(
         int peerSocket,
-        const std::shared_ptr<SocketHandlerInterface>& websocketHandler);
+        const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
 #endif
 
     typedef std::function<void()> CallbackFn;
@@ -736,7 +816,7 @@ protected:
 private:
     /// Generate the request to connect & upgrade this socket to a given path
     void clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocket>& socket,
-                                       const std::shared_ptr<SocketHandlerInterface>& websocketHandler,
+                                       const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler,
                                        const std::string &pathAndQuery);
 
     /// Initialize the poll fds array with the right events
@@ -791,12 +871,13 @@ private:
 };
 
 /// A plain, non-blocking, data streaming socket.
-class StreamSocket : public Socket, public std::enable_shared_from_this<StreamSocket>
+class StreamSocket : public Socket,
+                     public std::enable_shared_from_this<StreamSocket>
 {
 public:
     /// Create a StreamSocket from native FD.
     StreamSocket(const int fd, bool /* isClient */,
-                 std::shared_ptr<SocketHandlerInterface> socketHandler) :
+                 std::shared_ptr<ProtocolHandlerInterface> socketHandler) :
         Socket(fd),
         _socketHandler(std::move(socketHandler)),
         _bytesSent(0),
@@ -933,7 +1014,7 @@ public:
     }
 
     /// Replace the existing SocketHandler with a new one.
-    void setHandler(std::shared_ptr<SocketHandlerInterface> handler)
+    void setHandler(std::shared_ptr<ProtocolHandlerInterface> handler)
     {
         _socketHandler = std::move(handler);
         _socketHandler->onConnect(shared_from_this());
@@ -944,9 +1025,9 @@ public:
     /// but we can't have a shared_ptr in the ctor.
     template <typename TSocket>
     static
-    std::shared_ptr<TSocket> create(const int fd, bool isClient, std::shared_ptr<SocketHandlerInterface> handler)
+    std::shared_ptr<TSocket> create(const int fd, bool isClient, std::shared_ptr<ProtocolHandlerInterface> handler)
     {
-        SocketHandlerInterface* pHandler = handler.get();
+        ProtocolHandlerInterface* pHandler = handler.get();
         auto socket = std::make_shared<TSocket>(fd, isClient, std::move(handler));
         pHandler->onConnect(socket);
         return socket;
@@ -1157,14 +1238,14 @@ protected:
         return _shutdownSignalled;
     }
 
-    const std::shared_ptr<SocketHandlerInterface>& getSocketHandler() const
+    const std::shared_ptr<ProtocolHandlerInterface>& getSocketHandler() const
     {
         return _socketHandler;
     }
 
   private:
     /// Client handling the actual data.
-    std::shared_ptr<SocketHandlerInterface> _socketHandler;
+    std::shared_ptr<ProtocolHandlerInterface> _socketHandler;
 
     std::vector<char> _inBuffer;
     std::vector<char> _outBuffer;
