@@ -332,9 +332,23 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.vex-content.hyperlink-dialog')
 			.should('exist');
 
-		// Push cancel to close the dialog
-		cy.get('.vex-dialog-button-secondary.vex-dialog-button.vex-last')
+		// Type text and link
+		cy.get('.vex-content.hyperlink-dialog input[name="text"]')
+			.type('some text');
+		cy.get('.vex-content.hyperlink-dialog input[name="link"]')
+			.type('www.something.com');
+
+		// Insert
+		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
 			.click();
+
+		helper.copyTextToClipboard();
+
+		cy.get('#copy-paste-container p')
+			.contains('some text');
+
+		cy.get('#copy-paste-container p a')
+			.should('have.attr', 'href', 'http://www.something.com/');
 	});
 
 	it('Insert shape.', function() {
