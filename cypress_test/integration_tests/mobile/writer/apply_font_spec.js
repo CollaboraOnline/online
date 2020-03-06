@@ -22,6 +22,45 @@ describe('Apply font changes.', function() {
 		helper.afterAll();
 	});
 
+	function applyStyle(styleName) {
+		// Do a new selection
+		helper.selectAllMobile();
+
+		// Open mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.should('not.have.class', 'disabled')
+			.click();
+
+		// Change font name
+		cy.get('#applystyle')
+			.click();
+
+		cy.wait(200);
+
+		cy.get('#mobile-wizard-back')
+			.should('be.visible');
+
+		cy.get('.mobile-wizard.ui-combobox-text')
+			.contains(styleName)
+			.scrollIntoView();
+
+		cy.wait(200);
+
+		cy.get('.mobile-wizard.ui-combobox-text')
+			.contains(styleName)
+			.click();
+
+		// Combobox entry contains the selected font name
+		if (styleName !== 'Clear formatting') {
+			cy.get('#applystyle .ui-header-right .entry-value')
+				.contains(styleName);
+		}
+
+		// Close mobile wizard
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+	}
+
 	it('Apply font name.', function() {
 		// Change font name
 		cy.get('#fontnamecombobox')
@@ -283,6 +322,37 @@ describe('Apply font changes.', function() {
 		// Character spacing item triggers the character dialog
 		// So better to hide it.
 		cy.get('#Spacing')
+			.should('not.exist');
+	});
+
+	it('Apply style.', function() {
+		// Apply Title style
+		applyStyle('Title');
+
+		helper.copyTextToClipboard();
+
+		cy.get('#copy-paste-container p font')
+			.should('have.attr', 'face', 'Liberation Sans, sans-serif');
+		cy.get('#copy-paste-container p font font')
+			.should('have.attr', 'style', 'font-size: 28pt');
+
+		// Clear formatting
+		applyStyle('Clear formatting');
+
+		helper.copyTextToClipboard();
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'style', 'margin-bottom: 0in; line-height: 100%');
+	});
+
+	it('New style and update style items are hidden.', function() {
+		cy.get('#applystyle')
+			.should('exist');
+
+		cy.get('#StyleUpdateByExample')
+			.should('not.exist');
+
+		cy.get('#StyleNewByExample')
 			.should('not.exist');
 	});
 });

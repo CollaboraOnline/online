@@ -43,7 +43,6 @@ MOBILE_TEST_FILES= \
 	writer/mobile_wizard_state_spec.js \
 	writer/shape_properties_spec.js \
 	writer/spellchecking_spec.js \
-	writer/styles_spec.js \
 	writer/table_properties_spec.js \
 	writer/toolbar_spec.js
 
