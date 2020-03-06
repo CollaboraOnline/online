@@ -110,6 +110,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['spinfield'] = this._spinfieldControl;
 		this._controlHandlers['edit'] = this._editControl;
+		this._controlHandlers['multilineedit'] = this._multiLineEditControl;
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['comboboxentry'] = this._comboboxEntry;
@@ -1120,6 +1121,27 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		edit.addEventListener('change', function() {
 			builder.callback('edit', 'change', edit, this.value, builder);
+		});
+
+		if (data.hidden)
+			$(edit).hide();
+
+		return false;
+	},
+
+	_multiLineEditControl: function(parentContainer, data, builder, callback) {
+		var edit = L.DomUtil.create('textarea', '', parentContainer);
+		edit.value = builder._cleanText(data.text);
+		edit.id = data.id;
+
+		if (data.enabled == 'false')
+			$(edit).attr('disabled', 'disabled');
+
+		edit.addEventListener('change', function() {
+			if (callback)
+				callback(this.value);
+			else
+				builder.callback('edit', 'change', edit, this.value, builder);
 		});
 
 		if (data.hidden)
