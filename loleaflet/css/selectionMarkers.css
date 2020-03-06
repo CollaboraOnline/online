@@ -4,7 +4,7 @@
 	width: 30px;
 	height: 44px;
 	background-image: url('images/handle_start.svg');
-	}
+}
 
 .leaflet-selection-marker-end {
 	position: absolute;
@@ -23,8 +23,18 @@
 .inputbar_selection_handles * {
 	z-index: 1;
 }
-#tb_formulabar_item_formula .inputbar_selection_handles{
-	/*display: none;*/
+@media (min-width: 1024px) and (pointer: fine) {
+	#tb_formulabar_item_formula .inputbar_selection_handles{
+		top:-12px;
+	}
+	#tb_formulabar_item_formula .inputbar_selection_handles *{
+		background-size: 20px;
+		background-repeat: no-repeat;
+		background-position-x: 3px;
+	}
+	#tb_formulabar_item_formula .inputbar_selection_handles .leaflet-selection-marker-start{
+		background-position-x: 8px;
+	}
 }
 @media (max-width: 767px), (max-device-height: 767px) and (pointer: coarse) {
 	#tb_formulabar_item_formula, #tb_formulabar_item_address {
