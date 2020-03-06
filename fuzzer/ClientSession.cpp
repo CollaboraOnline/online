@@ -24,15 +24,13 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     auto session
         = std::make_shared<ClientSession>(id, docBroker, uriPublic, isReadOnly, hostNoTrust);
 
-    bool fin = false;
-    WSOpCode code = WSOpCode::Text;
     std::string input(reinterpret_cast<const char*>(data), size);
     std::stringstream ss(input);
     std::string line;
     while (std::getline(ss, line, '\n'))
     {
         std::vector<char> lineVector(line.data(), line.data() + line.size());
-        session->handleMessage(fin, code, lineVector);
+        session->handleMessage(lineVector);
     }
 
     // Make sure SocketPoll::_newCallbacks does not grow forever, leading to OOM.
