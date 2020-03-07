@@ -117,14 +117,6 @@ public:
 
         return true;
     }
-
-    virtual bool filterHandleRequest(
-        TestRequest /* type */,
-        SocketDisposition & /* disposition */,
-        WebSocketHandler & /* socket */) override
-    {
-        return false;
-    }
 };
 
 // Inside the forkit & kit processes

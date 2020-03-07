@@ -310,16 +310,6 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     }
 }
 
-void ClientSession::handleIncomingMessage(SocketDisposition &disposition)
-{
-    // LOG_TRC("***** ClientSession::handleIncomingMessage()");
-    if (UnitWSD::get().filterHandleRequest(
-            UnitWSD::TestRequest::Client, disposition, *this))
-        return;
-
-    Session::handleIncomingMessage(disposition);
-}
-
 bool ClientSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": handling incoming [" << getAbbreviatedMessage(buffer, length) << "].");

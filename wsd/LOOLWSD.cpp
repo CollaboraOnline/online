@@ -1856,11 +1856,6 @@ private:
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
         // LOG_TRC("***** PrisonerRequestDispatcher::handleIncomingMessage()");
-
-        if (UnitWSD::get().filterHandleRequest(
-                UnitWSD::TestRequest::Prisoner, disposition, *this))
-            return;
-
         if (_childProcess.lock())
         {
             // FIXME: inelegant etc. - derogate to websocket code

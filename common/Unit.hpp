@@ -201,15 +201,6 @@ public:
     {
         return false;
     }
-    /// Intercept incoming requests, so unit tests can silently communicate
-    virtual bool filterHandleRequest(
-        TestRequest /* type */,
-        SocketDisposition & /* disposition */,
-        WebSocketHandler & /* handler */)
-    {
-        return false;
-    }
-
     /// Child sent a message
     virtual bool filterChildMessage(const std::vector<char>& /* payload */)
     {

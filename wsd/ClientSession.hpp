@@ -40,8 +40,6 @@ public:
     /// Lookup any session by id.
     static std::shared_ptr<ClientSession> getById(const std::string &id);
 
-    void handleIncomingMessage(SocketDisposition &) override;
-
     void setReadOnly() override;
 
     enum SessionState {
