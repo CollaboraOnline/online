@@ -165,7 +165,13 @@ L.Control.Tabs = L.Control.extend({
 			// Restore horizontal scroll position
 			scrollDiv = L.DomUtil.get('spreadsheet-tab-scroll');
 			if (scrollDiv) {
-				scrollDiv.scrollLeft = horizScrollPos;
+				if (this._map.insertPage && this._map.insertPage.scrollToEnd) {
+					this._map.insertPage.scrollToEnd = false;
+					scrollDiv.scrollLeft = scrollDiv.scrollWidth;
+				}
+				else {
+					scrollDiv.scrollLeft = horizScrollPos;
+				}
 			}
 		}
 	},
