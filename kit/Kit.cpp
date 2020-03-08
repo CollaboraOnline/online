@@ -1869,7 +1869,7 @@ public:
 
                 const TileQueue::Payload input = _tileQueue->pop();
 
-                LOG_TRC("Kit Recv " << LOOLProtocol::getAbbreviatedMessage(input));
+                LOG_TRC("Kit handling queue message: " << LOOLProtocol::getAbbreviatedMessage(input));
 
                 const StringVector tokens = LOOLProtocol::tokenize(input.data(), input.size());
 

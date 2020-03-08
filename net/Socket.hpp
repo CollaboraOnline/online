@@ -588,8 +588,8 @@ public:
         int rc;
         do
         {
-            LOG_TRC("Poll start");
 #if !MOBILEAPP
+            LOG_TRC("Poll start, timeoutMs: " << timeoutMaxMs);
             rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
 #else
             LOG_TRC("SocketPoll Poll");
@@ -1106,12 +1106,14 @@ protected:
         // Always try to read.
         closed = !readIncomingData() || closed;
 
+        LOG_TRC("#" << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
+                " bytes, closeSocket? " << closed);
+
+#ifdef LOG_SOCKET_DATA
         auto& log = Log::logger();
-        if (log.trace()) {
-            LOG_TRC("#" << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
-                    " bytes, closeSocket? " << closed);
-            // log.dump("", &_inBuffer[0], _inBuffer.size());
-        }
+        if (log.trace() && _inBuffer.size() > 0)
+            log.dump("", &_inBuffer[0], _inBuffer.size());
+#endif
 
         // If we have data, allow the app to consume.
         size_t oldSize = 0;
@@ -1174,12 +1176,14 @@ public:
                 len = writeData(&_outBuffer[0], std::min((int)_outBuffer.size(),
                                                          getSendBufferSize()));
 
+                LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len << " bytes of "
+                            << _outBuffer.size() << " bytes buffered.");
+
+#ifdef LOG_SOCKET_DATA
                 auto& log = Log::logger();
-                if (log.trace() && len > 0) {
-                    LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len <<
-                            " bytes of " << _outBuffer.size() << " bytes buffered.");
-                    // log.dump("", &_outBuffer[0], len);
-                }
+                if (log.trace() && len > 0)
+                    log.dump("", &_outBuffer[0], len);
+#endif
 
                 if (len <= 0 && errno != EAGAIN && errno != EWOULDBLOCK)
                     LOG_SYS("#" << getFD() << ": Socket write returned " << len);
