@@ -2151,9 +2151,9 @@ protected:
         }
         else if (tokens.equals(0, "exit"))
         {
-            LOG_INF("Setting TerminationFlag due to 'exit' command from parent.");
-            SigUtil::setTerminationFlag();
-            document.reset();
+            LOG_INF("Terminating immediately due to parent 'exit' command.");
+            Log::shutdown();
+            std::_Exit(EX_SOFTWARE);
         }
         else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") || tokens.equals(0, "canceltiles") ||
                 tokens.equals(0, "paintwindow") || tokens.equals(0, "resizewindow") ||
