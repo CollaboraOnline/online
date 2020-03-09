@@ -26,7 +26,7 @@ describe('Calc focus tests', function() {
 		// One tap on an other cell -> no focus on the document
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.leaflet-marker-icon.spreadsheet-cell-resize-marker')
+		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
 
 		// No focus
@@ -62,7 +62,8 @@ describe('Calc focus tests', function() {
 		// One tap on a cell -> no document focus
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.leaflet-marker-icon.spreadsheet-cell-resize-marker');
+		cy.get('.leaflet-marker-icon')
+			.should('be.visible');
 
 		// No focus
 		cy.document().its('activeElement.tagName')

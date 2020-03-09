@@ -1,7 +1,6 @@
 /* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
-var writerHelper = require('./writer_helper');
 
 describe('Mobile wizard state tests', function() {
 	beforeEach(function() {
@@ -103,7 +102,7 @@ describe('Mobile wizard state tests', function() {
 			.should('have.class', 'checked');
 
 		// Open context wizard by right click on document
-		writerHelper.longPressOnDocument(40, 40);
+		helper.longPressOnDocument(40, 40);
 		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon')
 			.contains('Paste');
 

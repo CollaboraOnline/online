@@ -91,6 +91,31 @@ function detectLOCoreVersion() {
 	}
 }
 
+function longPressOnDocument(posX, posY) {
+	cy.get('.leaflet-pane.leaflet-map-pane')
+		.then(function(items) {
+			expect(items).have.length(1);
+
+			var eventOptions = {
+				force: true,
+				button: 0,
+				pointerType: 'mouse',
+				x: posX - items[0].getBoundingClientRect().left,
+				y: posY - items[0].getBoundingClientRect().top
+			};
+
+			cy.get('.leaflet-pane.leaflet-map-pane')
+				.trigger('pointerdown', eventOptions)
+				.trigger('pointermove', eventOptions);
+
+			cy.wait(600);
+
+			cy.get('.leaflet-pane.leaflet-map-pane')
+				.trigger('pointerup', eventOptions);
+		});
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.afterAll = afterAll;
 module.exports.beforeAllMobile = beforeAllMobile;
+module.exports.longPressOnDocument = longPressOnDocument;

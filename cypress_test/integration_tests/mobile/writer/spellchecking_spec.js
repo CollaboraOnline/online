@@ -39,7 +39,7 @@ describe('Spell checking menu.', function() {
 
 				var XPos = startPos.right + 10;
 				var YPos = endPos.top - 10;
-				writerHelper.longPressOnDocument(XPos, YPos);
+				helper.longPressOnDocument(XPos, YPos);
 			});
 
 		cy.get('#mobile-wizard-content')

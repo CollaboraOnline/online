@@ -1,4 +1,6 @@
-/* global cy expect*/
+/* global cy expect require*/
+
+var helper = require('../../common/helper');
 
 function clickOnFirstCell() {
 	// Enable editing if it's in read-only mode
@@ -21,4 +23,45 @@ function clickOnFirstCell() {
 		});
 }
 
+function copyContentToClipboard() {
+	selectAllMobile();
+
+	cy.get('.leaflet-tile-container')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			var XPos = items[0].getBoundingClientRect().right + 10;
+			var YPos = items[0].getBoundingClientRect().top + 10;
+			helper.longPressOnDocument(XPos, YPos);
+		});
+
+	// Execute copy
+	cy.get('.menu-entry-with-icon', {timeout : 10000})
+		.contains('Copy')
+		.click();
+
+	// Close warning about clipboard operations
+	cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+		.click();
+
+	// Wait until it's closed
+	cy.get('.vex-overlay')
+		.should('not.exist');
+}
+
+function selectAllMobile() {
+	cy.get('body')
+		.type('{enter}');
+
+	cy.get('.leaflet-marker-icon')
+		.should('exist');
+
+	cy.get('#spreadsheet-header-corner')
+		.click();
+
+	cy.get('.leaflet-marker-icon')
+		.should('exist');
+}
+
+module.exports.copyContentToClipboard = copyContentToClipboard;
+module.exports.selectAllMobile = selectAllMobile;
 module.exports.clickOnFirstCell = clickOnFirstCell;
