@@ -50,8 +50,9 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
     /** Return the filename of the given Uri. */
     public static String getUriFilename(Activity activity, Uri uri) {
         String filename = "";
-        Cursor cursor = activity.getContentResolver().query(uri, null, null, null, null);
+        Cursor cursor = null;
         try {
+            cursor = activity.getContentResolver().query(uri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst())
                 filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
         } finally {
@@ -71,8 +72,9 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
     /** Return the size of the given Uri. */
     public static long getUriFileLength(Activity activity, Uri uri) {
         long length = 0;
-        Cursor cursor = activity.getContentResolver().query(uri, null, null, null, null);
+        Cursor cursor = null;
         try {
+            cursor = activity.getContentResolver().query(uri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst())
                 length = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE));
         } finally {
