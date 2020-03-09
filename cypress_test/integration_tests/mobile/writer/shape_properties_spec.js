@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
+var writerHelper = require('./writer_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
 	var defaultGeometry = 'M 1965,4810 L 7957,10802 1965,10802 1965,4810 1965,4810 Z';
@@ -33,7 +34,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	function triggerNewSVG() {
-		helper.clearMobileWizardState();
+		writerHelper.clearMobileWizardState();
 
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
@@ -258,7 +259,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
 			.should('have.attr', 'stroke-width', '141');
 
-		helper.clearMobileWizardState();
+		writerHelper.clearMobileWizardState();
 
 		openLinePropertyPanel();
 

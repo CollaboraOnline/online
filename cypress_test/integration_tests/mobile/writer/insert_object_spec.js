@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require expect afterEach Cypress*/
 
 var helper = require('../../common/helper');
+var writerHelper = require('./writer_helper');
 
 describe('Insert objects via insertion wizard.', function() {
 	beforeEach(function() {
@@ -77,7 +78,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Two rows
 		cy.get('#copy-paste-container tr')
@@ -118,7 +119,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Three rows
 		cy.get('#copy-paste-container tr')
@@ -351,7 +352,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.contains('some text');

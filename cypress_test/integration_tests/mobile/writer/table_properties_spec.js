@@ -1,6 +1,7 @@
 /* global describe it cy require afterEach expect Cypress beforeEach*/
 
 var helper = require('../../common/helper');
+var writerHelper = require('./writer_helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
 	beforeEach(function() {
@@ -37,7 +38,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	}
 
 	function moveCursorToFirstCell() {
-		helper.selectAllMobile();
+		writerHelper.selectAllMobile();
 
 		cy.get('.blinking-cursor')
 			.then(function(cursor) {
@@ -69,7 +70,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -102,7 +103,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -135,7 +136,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -168,7 +169,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -201,7 +202,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -234,7 +235,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -269,7 +270,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.click();
 
 		// Do a new selection
-		helper.selectAllMobile();
+		writerHelper.selectAllMobile();
 
 		// Check markers are in the same row (we have text selection only)
 		cy.get('.leaflet-marker-icon')
@@ -302,7 +303,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -336,7 +337,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check row height
 		cy.get('#copy-paste-container td')
@@ -368,7 +369,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check row height
 		cy.get('#copy-paste-container td')
@@ -397,7 +398,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -425,7 +426,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -463,7 +464,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -501,7 +502,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -534,7 +535,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -570,7 +571,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTableToClipboard();
+		writerHelper.copyTableToClipboard();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')

@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require expect afterEach*/
 
 var helper = require('../../common/helper');
+var writerHelper = require('./writer_helper');
 
 describe('Insert formatting mark via insertion wizard.', function() {
 	beforeEach(function() {
@@ -33,7 +34,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Non-breaking space')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -47,7 +48,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Non-breaking hyphen')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -61,7 +62,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Soft hyphen')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -75,7 +76,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('No-width optional break')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -89,7 +90,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('No-width no break')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -103,7 +104,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Left-to-right mark')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {
@@ -117,7 +118,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.contains('Right-to-left mark')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {

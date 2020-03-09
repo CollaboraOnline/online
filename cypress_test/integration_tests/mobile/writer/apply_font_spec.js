@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
+var writerHelper = require('./writer_helper');
 
 describe('Apply font changes.', function() {
 	beforeEach(function() {
@@ -10,7 +11,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-edit-button').click();
 
 		// Do a new selection
-		helper.selectAllMobile();
+		writerHelper.selectAllMobile();
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -24,7 +25,7 @@ describe('Apply font changes.', function() {
 
 	function applyStyle(styleName) {
 		// Do a new selection
-		helper.selectAllMobile();
+		writerHelper.selectAllMobile();
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -81,7 +82,7 @@ describe('Apply font changes.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Linux Libertine G');
@@ -107,7 +108,7 @@ describe('Apply font changes.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 36pt');
@@ -122,7 +123,7 @@ describe('Apply font changes.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -137,7 +138,7 @@ describe('Apply font changes.', function() {
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p i')
 			.should('exist');
@@ -154,7 +155,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p u')
 			.should('exist');
@@ -171,7 +172,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p strike')
 			.should('exist');
@@ -188,7 +189,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		// TODO: Shadowed is not in the clipboard content.
 	});
@@ -204,7 +205,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 42pt');
@@ -221,7 +222,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 38pt');
@@ -247,7 +248,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'color', '#6aa84f');
@@ -273,7 +274,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: #93c47d');
@@ -290,7 +291,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p sup')
 			.should('exist');
@@ -307,7 +308,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p sub')
 			.should('exist');
@@ -329,7 +330,7 @@ describe('Apply font changes.', function() {
 		// Apply Title style
 		applyStyle('Title');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Liberation Sans, sans-serif');
@@ -339,7 +340,7 @@ describe('Apply font changes.', function() {
 		// Clear formatting
 		applyStyle('Clear formatting');
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style', 'margin-bottom: 0in; line-height: 100%');

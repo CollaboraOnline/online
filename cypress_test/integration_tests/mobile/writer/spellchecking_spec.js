@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var writerHelper = require('./writer_helper');
 
 describe('Spell checking menu.', function() {
 	beforeEach(function() {
@@ -16,7 +17,7 @@ describe('Spell checking menu.', function() {
 
 	function openContextMenu() {
 		// Do a new selection
-		helper.selectAllMobile();
+		writerHelper.selectAllMobile();
 
 		// Open context menu
 		cy.get('.leaflet-marker-icon')
@@ -38,7 +39,7 @@ describe('Spell checking menu.', function() {
 
 				var XPos = startPos.right + 10;
 				var YPos = endPos.top - 10;
-				helper.longPressOnDocument(XPos, YPos);
+				writerHelper.longPressOnDocument(XPos, YPos);
 			});
 
 		cy.get('#mobile-wizard-content')
@@ -52,7 +53,7 @@ describe('Spell checking menu.', function() {
 			.contains('hello')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
 			.then(function(item) {

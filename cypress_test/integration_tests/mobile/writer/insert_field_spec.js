@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
+var writerHelper = require('./writer_helper');
 
 describe('Insert fields via insertion wizard.', function() {
 	beforeEach(function() {
@@ -34,7 +35,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Page Number')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'PAGE')
@@ -47,7 +48,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Page Count')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCSTAT')
@@ -60,7 +61,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Date')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DATETIME')
@@ -73,7 +74,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Time')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DATETIME')
@@ -86,7 +87,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Title')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
@@ -99,7 +100,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('First Author')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
@@ -113,7 +114,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.contains('Subject')
 			.click();
 
-		helper.copyTextToClipboard();
+		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
