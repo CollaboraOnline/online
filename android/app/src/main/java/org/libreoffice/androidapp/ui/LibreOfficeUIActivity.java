@@ -11,6 +11,7 @@ package org.libreoffice.androidapp.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -660,8 +661,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private void openDocument() {
         collapseFabMenu();
 
-        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-
+        Intent i = new Intent();
         i.addCategory(Intent.CATEGORY_OPENABLE);
 
         // set only the allowed mime types
@@ -724,6 +724,15 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         // TODO and that should default to Context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
         //i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, previousDirectoryPath);
 
+        try {
+            i.setAction(Intent.ACTION_OPEN_DOCUMENT);
+            startActivityForResult(i, OPEN_FILE_REQUEST_CODE);
+            return;
+        } catch (ActivityNotFoundException exception) {
+            Log.w(LOGTAG, "Start of activity with ACTION_OPEN_DOCUMENT failed (no activity found). Trying the fallback.");
+        }
+        // Fallback
+        i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(i, OPEN_FILE_REQUEST_CODE);
     }
 
