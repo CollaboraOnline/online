@@ -339,6 +339,21 @@ L.TileLayer = L.GridLayer.extend({
 		map.fire('statusindicator', {statusType: 'loleafletloaded'});
 	},
 
+	// Returns true iff the document type is Writer.
+	isWriter: function() {
+		return this._docType === 'text';
+	},
+
+	// Returns true iff the document type is Calc.
+	isCalc: function() {
+		return this._docType === 'spreadsheet';
+	},
+
+	// Returns true iff the document type is Impress.
+	isImpress: function() {
+		return this._docType === 'presentation';
+	},
+
 	_createNewMouseEvent: function (type, inputEvent) {
 		var event = inputEvent;
 		if (inputEvent.type == 'touchstart' || inputEvent.type == 'touchmove') {
@@ -565,7 +580,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			else {
 				var msg = 'invalidatetiles: ';
-				if (this._docType === 'text') {
+				if (this.isWriter()) {
 					msg += 'part=0 ';
 				} else {
 					var partNumber = parseInt(payload.substring('EMPTY'.length + 1));
@@ -1678,7 +1693,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
-		if (this._map._docLayer._docType === 'spreadsheet' && oldSelection) {
+		if (this.isCalc() && oldSelection) {
 			var mapBounds = this._map.getBounds();
 			if (!mapBounds.contains(newSelection) && !newSelection.equals(oldSelection)) {
 				var spacingX = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest()) / 4.0;
@@ -2031,7 +2046,7 @@ L.TileLayer = L.GridLayer.extend({
 	postKeyboardEvent: function(type, charCode, unoKeyCode) {
 		var winId = this._map.getWinId();
 		if (
-			this._docType === 'spreadsheet' &&
+			this.isCalc() &&
 			this._prevCellCursor &&
 			type === 'input' &&
 			winId === 0
@@ -2166,8 +2181,7 @@ L.TileLayer = L.GridLayer.extend({
 //		&& !this.isGraphicVisible()     // not when sizing / positioning graphics
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
 			this._updateCursorPos();
-		}
-		else {
+		} else {
 			this._map._textInput.hideCursor();
 		}
 	},
@@ -2190,7 +2204,7 @@ L.TileLayer = L.GridLayer.extend({
 		    viewCursorVisible &&
 		    !this._isZooming &&
 		    !this._isEmptyRectangle(this._viewCursors[viewId].bounds) &&
-		    (this._docType === 'text' || this._selectedPart === viewPart)) {
+		    (this.isWriter() || this._selectedPart === viewPart)) {
 			if (!viewCursorMarker) {
 				var viewCursorOptions = {
 					color: L.LOUtil.rgbToHex(this._map.getViewColor(viewId)),
@@ -2258,7 +2272,7 @@ L.TileLayer = L.GridLayer.extend({
 		var viewPart = this._viewSelections[viewId].part;
 
 		if (viewPolygons &&
-		    (this._docType === 'text' || this._selectedPart === viewPart)) {
+		    (this.isWriter() || this._selectedPart === viewPart)) {
 
 			// Reset previous selections
 			if (viewSelection) {
@@ -2286,7 +2300,7 @@ L.TileLayer = L.GridLayer.extend({
 		var viewPart = this._graphicViewMarkers[viewId].part;
 
 		if (!this._isEmptyRectangle(viewBounds) &&
-		   (this._docType === 'text' || this._selectedPart === viewPart)) {
+		   (this.isWriter() || this._selectedPart === viewPart)) {
 			if (!viewMarker) {
 				var color = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 				viewMarker = L.rectangle(viewBounds, {
@@ -3131,14 +3145,14 @@ L.TileLayer = L.GridLayer.extend({
 		var oldSize = e ? e.oldSize : this._map.getSize();
 		var newSize = e ? e.newSize : this._map.getSize();
 
-		if (this._docType !== 'presentation' && newSize.x - oldSize.x === 0) { return; }
+		if (!this.isImpress() && newSize.x - oldSize.x === 0) { return; }
 
 		var widthTwips = newSize.x * this._map.options.tileWidthTwips / this._tileSize;
 		var ratio = widthTwips / this._docWidthTwips;
 
 		maxZoom = maxZoom ? maxZoom : this._map.options.zoom;
 		// 'fit width zoom' has no use in spreadsheets, ignore it there
-		if (this._docType !== 'spreadsheet') {
+		if (!this.isCalc()) {
 			var crsScale = this._map.options.crs.scale(1);
 			var zoom = 10 + Math.floor(Math.log(ratio) / Math.log(crsScale));
 
@@ -3196,7 +3210,7 @@ L.TileLayer = L.GridLayer.extend({
 				for (var key in this._map._docPreviews) {
 					// find preview tiles that need to be updated and add them in a set
 					var preview = this._map._docPreviews[key];
-					if (preview.index >= 0 && this._docType === 'text') {
+					if (preview.index >= 0 && this.isWriter()) {
 						// we have a preview for a page
 						if (preview.invalid || (this._partPageRectanglesTwips.length > preview.index &&
 								invalidBounds.intersects(this._partPageRectanglesTwips[preview.index]))) {
