@@ -323,13 +323,13 @@ std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string&
 {
     StringVector tokens = LOOLProtocol::tokenize(tiles);
 
-    assert(tokens.size() > 0 && tokens[0] == "invalidatetiles:");
+    assert(tokens.size() > 0 && tokens.equals(0, "invalidatetiles:"));
 
-    if (tokens.size() == 2 && tokens[1] == "EMPTY")
+    if (tokens.size() == 2 && tokens.equals(1, "EMPTY"))
     {
         return std::pair<int, Util::Rectangle>(-1, Util::Rectangle(0, 0, INT_MAX, INT_MAX));
     }
-    else if (tokens.size() == 3 && tokens[1] == "EMPTY,")
+    else if (tokens.size() == 3 && tokens.equals(1, "EMPTY,"))
     {
         int part = 0;
         if (stringToInteger(tokens[2], part))

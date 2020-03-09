@@ -69,6 +69,12 @@ public:
 
     /// Concats tokens starting from begin, using separator as separator.
     std::string cat(const std::string& separator, size_t begin) const;
+
+    /// Compares the nth token with string.
+    bool equals(size_t index, const char* string) const;
+
+    /// Compares the nth token with the mth token from an other StringVector.
+    bool equals(size_t index, const StringVector& other, size_t otherIndex);
 };
 
 #endif

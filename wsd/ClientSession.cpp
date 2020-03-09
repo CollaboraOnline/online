@@ -337,7 +337,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
     }
-    if (tokens[0] == "loolclient")
+    if (tokens.equals(0, "loolclient"))
     {
         if (tokens.size() < 2)
         {
@@ -363,12 +363,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return true;
     }
 
-    if (tokens[0] == "jserror")
+    if (tokens.equals(0, "jserror"))
     {
         LOG_ERR(std::string(buffer, length));
         return true;
     }
-    else if (tokens[0] == "load")
+    else if (tokens.equals(0, "load"))
     {
         if (getDocURL() != "")
         {
@@ -442,16 +442,16 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
-    else if (tokens[0] == "canceltiles")
+    else if (tokens.equals(0, "canceltiles"))
     {
         docBroker->cancelTileRequests(shared_from_this());
         return true;
     }
-    else if (tokens[0] == "commandvalues")
+    else if (tokens.equals(0, "commandvalues"))
     {
         return getCommandValues(buffer, length, tokens, docBroker);
     }
-    else if (tokens[0] == "closedocument")
+    else if (tokens.equals(0, "closedocument"))
     {
         // If this session is the owner of the file & 'EnableOwnerTermination' feature
         // is turned on by WOPI, let it close all sessions
@@ -470,46 +470,46 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return true;
     }
-    else if (tokens[0] == "versionrestore")
+    else if (tokens.equals(0, "versionrestore"))
     {
-        if (tokens.size() > 1 && tokens[1] == "prerestore")
+        if (tokens.size() > 1 && tokens.equals(1, "prerestore"))
         {
             // green signal to WOPI host to restore the version *after* saving
             // any unsaved changes, if any, to the storage
             docBroker->closeDocument("versionrestore: prerestore_ack");
         }
     }
-    else if (tokens[0] == "partpagerectangles")
+    else if (tokens.equals(0, "partpagerectangles"))
     {
         // We don't support partpagerectangles any more, will be removed in the
         // next version
         sendTextFrame("partpagerectangles: ");
         return true;
     }
-    else if (tokens[0] == "ping")
+    else if (tokens.equals(0, "ping"))
     {
         std::string count = std::to_string(docBroker->getRenderedTileCount());
         sendTextFrame("pong rendercount=" + count);
         return true;
     }
-    else if (tokens[0] == "renderfont")
+    else if (tokens.equals(0, "renderfont"))
     {
         return sendFontRendering(buffer, length, tokens, docBroker);
     }
-    else if (tokens[0] == "status" || tokens[0] == "statusupdate")
+    else if (tokens.equals(0, "status") || tokens.equals(0, "statusupdate"))
     {
         assert(firstLine.size() == static_cast<size_t>(length));
         return forwardToChild(firstLine, docBroker);
     }
-    else if (tokens[0] == "tile")
+    else if (tokens.equals(0, "tile"))
     {
         return sendTile(buffer, length, tokens, docBroker);
     }
-    else if (tokens[0] == "tilecombine")
+    else if (tokens.equals(0, "tilecombine"))
     {
         return sendCombinedTiles(buffer, length, tokens, docBroker);
     }
-    else if (tokens[0] == "save")
+    else if (tokens.equals(0, "save"))
     {
         if (isReadOnly())
         {
@@ -541,7 +541,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                     isAutosave, isExitSave, extendedData);
         }
     }
-    else if (tokens[0] == "savetostorage")
+    else if (tokens.equals(0, "savetostorage"))
     {
         int force = 0;
         if (tokens.size() > 1)
@@ -552,7 +552,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             docBroker->broadcastMessage("commandresult: { \"command\": \"savetostorage\", \"success\": true }");
         }
     }
-    else if (tokens[0] == "clientvisiblearea")
+    else if (tokens.equals(0, "clientvisiblearea"))
     {
         int x;
         int y;
@@ -576,7 +576,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
-    else if (tokens[0] == "setclientpart")
+    else if (tokens.equals(0, "setclientpart"))
     {
         if(!_isTextDocument)
         {
@@ -595,7 +595,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
         }
     }
-    else if (tokens[0] == "selectclientpart")
+    else if (tokens.equals(0, "selectclientpart"))
     {
         if(!_isTextDocument)
         {
@@ -614,7 +614,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
         }
     }
-    else if (tokens[0] == "moveselectedclientparts")
+    else if (tokens.equals(0, "moveselectedclientparts"))
     {
         if(!_isTextDocument)
         {
@@ -631,7 +631,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
         }
     }
-    else if (tokens[0] == "clientzoom")
+    else if (tokens.equals(0, "clientzoom"))
     {
         int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
         if (tokens.size() != 5 ||
@@ -655,7 +655,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
-    else if (tokens[0] == "tileprocessed")
+    else if (tokens.equals(0, "tileprocessed"))
     {
         std::string tileID;
         if (tokens.size() != 2 ||
@@ -681,7 +681,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         docBroker->sendRequestedTiles(shared_from_this());
         return true;
     }
-    else if (tokens[0] == "removesession") {
+    else if (tokens.equals(0, "removesession")) {
         if (tokens.size() > 1 && (_isDocumentOwner || !isReadOnly()))
         {
             std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
@@ -691,7 +691,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         else
             LOG_WRN("Readonly session '" << getId() << "' trying to kill another view");
     }
-    else if (tokens[0] == "renamefile")
+    else if (tokens.equals(0, "renamefile"))
     {
         std::string encodedWopiFilename;
         if (tokens.size() < 2 || !getTokenString(tokens[1], "filename", encodedWopiFilename))
@@ -705,11 +705,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         docBroker->saveAsToStorage(getId(), "", wopiFilename, true);
         return true;
     }
-    else if (tokens[0] == "dialogevent")
+    else if (tokens.equals(0, "dialogevent"))
     {
         return forwardToChild(firstLine, docBroker);
     }
-    else if (tokens[0] == "completefunction")
+    else if (tokens.equals(0, "completefunction"))
     {
         int temp;
         if (tokens.size() != 2 ||
@@ -725,7 +725,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else
     {
-        if (tokens[0] == "key")
+        if (tokens.equals(0, "key"))
             _keyEvents++;
 
         if (!filterMessage(firstLine))
@@ -739,7 +739,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
         else
         {
-            assert(tokens[0] == "requestloksession");
+            assert(tokens.equals(0, "requestloksession"));
             return true;
         }
     }
@@ -924,7 +924,7 @@ bool ClientSession::filterMessage(const std::string& message) const
     StringVector tokens(LOOLProtocol::tokenize(message, ' '));
 
     // Set allowed flag to false depending on if particular WOPI properties are set
-    if (tokens[0] == "downloadas")
+    if (tokens.equals(0, "downloadas"))
     {
         std::string id;
         if (tokens.size() >= 3 && getTokenString(tokens[2], "id", id))
@@ -946,7 +946,7 @@ bool ClientSession::filterMessage(const std::string& message) const
             LOG_WRN("No value of id in downloadas message");
         }
     }
-    else if (tokens[0] == "gettextselection" || tokens[0] == ".uno:Copy")
+    else if (tokens.equals(0, "gettextselection") || tokens.equals(0, ".uno:Copy"))
     {
         if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
         {
@@ -958,13 +958,13 @@ bool ClientSession::filterMessage(const std::string& message) const
     {
         // By default, don't allow anything
         allowed = false;
-        if (tokens[0] == "userinactive" || tokens[0] == "useractive" || tokens[0] == "saveas")
+        if (tokens.equals(0, "userinactive") || tokens.equals(0, "useractive") || tokens.equals(0, "saveas"))
         {
             allowed = true;
         }
-        else if (tokens[0] == "uno")
+        else if (tokens.equals(0, "uno"))
         {
-            if (tokens.size() > 1 && tokens[1] == ".uno:ExecuteSearch")
+            if (tokens.size() > 1 && tokens.equals(1, ".uno:ExecuteSearch"))
             {
                 allowed = true;
             }
@@ -1270,12 +1270,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         return true;
     }
 #endif
-    else if (tokens.size() == 2 && tokens[0] == "statechanged:")
+    else if (tokens.size() == 2 && tokens.equals(0, "statechanged:"))
     {
         StringVector stateTokens(LOOLProtocol::tokenize(tokens[1], '='));
-        if (stateTokens.size() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
+        if (stateTokens.size() == 2 && stateTokens.equals(0, ".uno:ModifiedStatus"))
         {
-            docBroker->setModified(stateTokens[1] == "true");
+            docBroker->setModified(stateTokens.equals(1, "true"));
         }
         else
         {

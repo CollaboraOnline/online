@@ -114,7 +114,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         updateLastActivityTime();
     }
 
-    if (tokens.size() > 0 && tokens[0] == "useractive" && getLOKitDocument() != nullptr)
+    if (tokens.size() > 0 && tokens.equals(0, "useractive") && getLOKitDocument() != nullptr)
     {
         LOG_DBG("Handling message after inactivity of " << getInactivityMS() << "ms.");
         setIsActive(true);
@@ -183,16 +183,16 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         LOG_TRC("Finished replaying messages.");
     }
 
-    if (tokens[0] == "dummymsg")
+    if (tokens.equals(0, "dummymsg"))
     {
         // Just to update the activity of a view-only client.
         return true;
     }
-    else if (tokens[0] == "commandvalues")
+    else if (tokens.equals(0, "commandvalues"))
     {
         return getCommandValues(buffer, length, tokens);
     }
-    else if (tokens[0] == "load")
+    else if (tokens.equals(0, "load"))
     {
         if (_isDocLoaded)
         {
@@ -214,44 +214,44 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
-    else if (tokens[0] == "renderfont")
+    else if (tokens.equals(0, "renderfont"))
     {
         sendFontRendering(buffer, length, tokens);
     }
-    else if (tokens[0] == "setclientpart")
+    else if (tokens.equals(0, "setclientpart"))
     {
         return setClientPart(buffer, length, tokens);
     }
-    else if (tokens[0] == "selectclientpart")
+    else if (tokens.equals(0, "selectclientpart"))
     {
         return selectClientPart(buffer, length, tokens);
     }
-    else if (tokens[0] == "moveselectedclientparts")
+    else if (tokens.equals(0, "moveselectedclientparts"))
     {
         return moveSelectedClientParts(buffer, length, tokens);
     }
-    else if (tokens[0] == "setpage")
+    else if (tokens.equals(0, "setpage"))
     {
         return setPage(buffer, length, tokens);
     }
-    else if (tokens[0] == "status")
+    else if (tokens.equals(0, "status"))
     {
         return getStatus(buffer, length);
     }
-    else if (tokens[0] == "paintwindow")
+    else if (tokens.equals(0, "paintwindow"))
     {
         return renderWindow(buffer, length, tokens);
     }
-    else if (tokens[0] == "resizewindow")
+    else if (tokens.equals(0, "resizewindow"))
     {
         return resizeWindow(buffer, length, tokens);
     }
-    else if (tokens[0] == "tile" || tokens[0] == "tilecombine")
+    else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine"))
     {
         assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
     }
-    else if (tokens[0] == "requestloksession" ||
-             tokens[0] == "canceltiles")
+    else if (tokens.equals(0, "requestloksession") ||
+             tokens.equals(0, "canceltiles"))
     {
         // Just ignore these.
         // FIXME: We probably should do something for "canceltiles" at least?
@@ -261,105 +261,105 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // All other commands are such that they always require a LibreOfficeKitDocument session,
         // i.e. need to be handled in a child process.
 
-        assert(tokens[0] == "clientzoom" ||
-               tokens[0] == "clientvisiblearea" ||
-               tokens[0] == "outlinestate" ||
-               tokens[0] == "downloadas" ||
-               tokens[0] == "getchildid" ||
-               tokens[0] == "gettextselection" ||
-               tokens[0] == "getclipboard" ||
-               tokens[0] == "setclipboard" ||
-               tokens[0] == "paste" ||
-               tokens[0] == "insertfile" ||
-               tokens[0] == "key" ||
-               tokens[0] == "textinput" ||
-               tokens[0] == "windowkey" ||
-               tokens[0] == "mouse" ||
-               tokens[0] == "windowmouse" ||
-               tokens[0] == "windowgesture" ||
-               tokens[0] == "uno" ||
-               tokens[0] == "selecttext" ||
-               tokens[0] == "windowselecttext" ||
-               tokens[0] == "selectgraphic" ||
-               tokens[0] == "resetselection" ||
-               tokens[0] == "saveas" ||
-               tokens[0] == "useractive" ||
-               tokens[0] == "userinactive" ||
-               tokens[0] == "windowcommand" ||
-               tokens[0] == "asksignaturestatus" ||
-               tokens[0] == "signdocument" ||
-               tokens[0] == "uploadsigneddocument" ||
-               tokens[0] == "exportsignanduploaddocument" ||
-               tokens[0] == "rendershapeselection" ||
-               tokens[0] == "removetextcontext" ||
-               tokens[0] == "dialogevent" ||
-               tokens[0] == "completefunction");
+        assert(tokens.equals(0, "clientzoom") ||
+               tokens.equals(0, "clientvisiblearea") ||
+               tokens.equals(0, "outlinestate") ||
+               tokens.equals(0, "downloadas") ||
+               tokens.equals(0, "getchildid") ||
+               tokens.equals(0, "gettextselection") ||
+               tokens.equals(0, "getclipboard") ||
+               tokens.equals(0, "setclipboard") ||
+               tokens.equals(0, "paste") ||
+               tokens.equals(0, "insertfile") ||
+               tokens.equals(0, "key") ||
+               tokens.equals(0, "textinput") ||
+               tokens.equals(0, "windowkey") ||
+               tokens.equals(0, "mouse") ||
+               tokens.equals(0, "windowmouse") ||
+               tokens.equals(0, "windowgesture") ||
+               tokens.equals(0, "uno") ||
+               tokens.equals(0, "selecttext") ||
+               tokens.equals(0, "windowselecttext") ||
+               tokens.equals(0, "selectgraphic") ||
+               tokens.equals(0, "resetselection") ||
+               tokens.equals(0, "saveas") ||
+               tokens.equals(0, "useractive") ||
+               tokens.equals(0, "userinactive") ||
+               tokens.equals(0, "windowcommand") ||
+               tokens.equals(0, "asksignaturestatus") ||
+               tokens.equals(0, "signdocument") ||
+               tokens.equals(0, "uploadsigneddocument") ||
+               tokens.equals(0, "exportsignanduploaddocument") ||
+               tokens.equals(0, "rendershapeselection") ||
+               tokens.equals(0, "removetextcontext") ||
+               tokens.equals(0, "dialogevent") ||
+               tokens.equals(0, "completefunction"));
 
-        if (tokens[0] == "clientzoom")
+        if (tokens.equals(0, "clientzoom"))
         {
             return clientZoom(buffer, length, tokens);
         }
-        else if (tokens[0] == "clientvisiblearea")
+        else if (tokens.equals(0, "clientvisiblearea"))
         {
             return clientVisibleArea(buffer, length, tokens);
         }
-        else if (tokens[0] == "outlinestate")
+        else if (tokens.equals(0, "outlinestate"))
         {
             return outlineState(buffer, length, tokens);
         }
-        else if (tokens[0] == "downloadas")
+        else if (tokens.equals(0, "downloadas"))
         {
             return downloadAs(buffer, length, tokens);
         }
-        else if (tokens[0] == "getchildid")
+        else if (tokens.equals(0, "getchildid"))
         {
             return getChildId();
         }
-        else if (tokens[0] == "gettextselection") // deprecated.
+        else if (tokens.equals(0, "gettextselection")) // deprecated.
         {
             return getTextSelection(buffer, length, tokens);
         }
-        else if (tokens[0] == "getclipboard")
+        else if (tokens.equals(0, "getclipboard"))
         {
             return getClipboard(buffer, length, tokens);
         }
-        else if (tokens[0] == "setclipboard")
+        else if (tokens.equals(0, "setclipboard"))
         {
             return setClipboard(buffer, length, tokens);
         }
-        else if (tokens[0] == "paste")
+        else if (tokens.equals(0, "paste"))
         {
             return paste(buffer, length, tokens);
         }
-        else if (tokens[0] == "insertfile")
+        else if (tokens.equals(0, "insertfile"))
         {
             return insertFile(buffer, length, tokens);
         }
-        else if (tokens[0] == "key")
+        else if (tokens.equals(0, "key"))
         {
             return keyEvent(buffer, length, tokens, LokEventTargetEnum::Document);
         }
-        else if (tokens[0] == "textinput")
+        else if (tokens.equals(0, "textinput"))
         {
             return extTextInputEvent(buffer, length, tokens);
         }
-        else if (tokens[0] == "windowkey")
+        else if (tokens.equals(0, "windowkey"))
         {
             return keyEvent(buffer, length, tokens, LokEventTargetEnum::Window);
         }
-        else if (tokens[0] == "mouse")
+        else if (tokens.equals(0, "mouse"))
         {
             return mouseEvent(buffer, length, tokens, LokEventTargetEnum::Document);
         }
-        else if (tokens[0] == "windowmouse")
+        else if (tokens.equals(0, "windowmouse"))
         {
             return mouseEvent(buffer, length, tokens, LokEventTargetEnum::Window);
         }
-        else if (tokens[0] == "windowgesture")
+        else if (tokens.equals(0, "windowgesture"))
         {
             return gestureEvent(buffer, length, tokens);
         }
-        else if (tokens[0] == "uno")
+        else if (tokens.equals(0, "uno"))
         {
             // SpellCheckApplySuggestion might contain non separator spaces
             if (tokens[1].find(".uno:SpellCheckApplySuggestion") != std::string::npos ||
@@ -372,69 +372,69 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             }
             return unoCommand(buffer, length, tokens);
         }
-        else if (tokens[0] == "selecttext")
+        else if (tokens.equals(0, "selecttext"))
         {
             return selectText(buffer, length, tokens, LokEventTargetEnum::Document);
         }
-        else if (tokens[0] == "windowselecttext")
+        else if (tokens.equals(0, "windowselecttext"))
         {
             return selectText(buffer, length, tokens, LokEventTargetEnum::Window);
         }
-        else if (tokens[0] == "selectgraphic")
+        else if (tokens.equals(0, "selectgraphic"))
         {
             return selectGraphic(buffer, length, tokens);
         }
-        else if (tokens[0] == "resetselection")
+        else if (tokens.equals(0, "resetselection"))
         {
             return resetSelection(buffer, length, tokens);
         }
-        else if (tokens[0] == "saveas")
+        else if (tokens.equals(0, "saveas"))
         {
             return saveAs(buffer, length, tokens);
         }
-        else if (tokens[0] == "useractive")
+        else if (tokens.equals(0, "useractive"))
         {
             setIsActive(true);
         }
-        else if (tokens[0] == "userinactive")
+        else if (tokens.equals(0, "userinactive"))
         {
             setIsActive(false);
         }
-        else if (tokens[0] == "windowcommand")
+        else if (tokens.equals(0, "windowcommand"))
         {
             sendWindowCommand(buffer, length, tokens);
         }
-        else if (tokens[0] == "signdocument")
+        else if (tokens.equals(0, "signdocument"))
         {
             signDocumentContent(buffer, length, tokens);
         }
-        else if (tokens[0] == "asksignaturestatus")
+        else if (tokens.equals(0, "asksignaturestatus"))
         {
             askSignatureStatus(buffer, length, tokens);
         }
 #if !MOBILEAPP
-        else if (tokens[0] == "uploadsigneddocument")
+        else if (tokens.equals(0, "uploadsigneddocument"))
         {
             return uploadSignedDocument(buffer, length, tokens);
         }
-        else if (tokens[0] == "exportsignanduploaddocument")
+        else if (tokens.equals(0, "exportsignanduploaddocument"))
         {
             return exportSignAndUploadDocument(buffer, length, tokens);
         }
 #endif
-        else if (tokens[0] == "rendershapeselection")
+        else if (tokens.equals(0, "rendershapeselection"))
         {
             return renderShapeSelection(buffer, length, tokens);
         }
-        else if (tokens[0] == "removetextcontext")
+        else if (tokens.equals(0, "removetextcontext"))
         {
             return removeTextContext(buffer, length, tokens);
         }
-        else if (tokens[0] == "dialogevent")
+        else if (tokens.equals(0, "dialogevent"))
         {
             return dialogEvent(buffer, length, tokens);
         }
-        else if (tokens[0] == "completefunction")
+        else if (tokens.equals(0, "completefunction"))
         {
             return completeFunction(buffer, length, tokens);
         }
@@ -2363,7 +2363,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                               " width=" + std::to_string(width) +
                               " height=" + std::to_string(height));
             }
-            else if (tokens.size() == 2 && tokens[0] == "EMPTY")
+            else if (tokens.size() == 2 && tokens.equals(0, "EMPTY"))
             {
                 const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
                 sendTextFrame("invalidatetiles: EMPTY, " + part);

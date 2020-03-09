@@ -2048,7 +2048,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
         assert(!_uriJailed.empty());
 
         StringVector tokens = LOOLProtocol::tokenize(msg);
-        if (tokens.size() > 1 && tokens[1] == "load")
+        if (tokens.size() > 1 && tokens.equals(1, "load"))
         {
             // The json options must come last.
             msg = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];

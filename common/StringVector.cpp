@@ -86,4 +86,34 @@ std::string StringVector::cat(const std::string& separator, size_t offset) const
     return ret;
 }
 
+bool StringVector::equals(size_t index, const char* string) const
+{
+    if (index >= _tokens.size())
+    {
+        return false;
+    }
+
+    const StringToken& token = _tokens[index];
+    return _string.compare(token._index, token._length, string) == 0;
+}
+
+bool StringVector::equals(size_t index, const StringVector& other, size_t otherIndex)
+{
+    if (index >= _tokens.size())
+    {
+        return false;
+    }
+
+    if (otherIndex >= other._tokens.size())
+    {
+        return false;
+    }
+
+    const StringToken& token = _tokens[index];
+    const StringToken& otherToken = other._tokens[otherIndex];
+    int ret = _string.compare(token._index, token._length, other._string, otherToken._index,
+                              otherToken._length);
+    return ret == 0;
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

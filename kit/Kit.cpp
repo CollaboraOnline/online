@@ -1874,17 +1874,17 @@ public:
 
                 const StringVector tokens = LOOLProtocol::tokenize(input.data(), input.size());
 
-                if (tokens[0] == "eof")
+                if (tokens.equals(0, "eof"))
                 {
                     LOG_INF("Received EOF. Finishing.");
                     break;
                 }
 
-                if (tokens[0] == "tile")
+                if (tokens.equals(0, "tile"))
                 {
                     renderTile(tokens);
                 }
-                else if (tokens[0] == "tilecombine")
+                else if (tokens.equals(0, "tilecombine"))
                 {
                     renderCombinedTiles(tokens);
                 }
@@ -1892,7 +1892,7 @@ public:
                 {
                     forwardToChild(tokens[0], input);
                 }
-                else if (tokens[0] == "callback")
+                else if (tokens.equals(0, "callback"))
                 {
                     if (tokens.size() >= 3)
                     {
@@ -2126,7 +2126,7 @@ protected:
         {
             LOG_DBG("Too late, TerminationFlag is set, we're going down");
         }
-        else if (tokens[0] == "session")
+        else if (tokens.equals(0, "session"))
         {
             const std::string& sessionId = tokens[1];
             const std::string& docKey = tokens[2];
@@ -2148,14 +2148,14 @@ protected:
                 LOG_DBG("CreateSession failed.");
             }
         }
-        else if (tokens[0] == "exit")
+        else if (tokens.equals(0, "exit"))
         {
             LOG_INF("Setting TerminationFlag due to 'exit' command from parent.");
             SigUtil::setTerminationFlag();
             document.reset();
         }
-        else if (tokens[0] == "tile" || tokens[0] == "tilecombine" || tokens[0] == "canceltiles" ||
-                tokens[0] == "paintwindow" || tokens[0] == "resizewindow" ||
+        else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") || tokens.equals(0, "canceltiles") ||
+                tokens.equals(0, "paintwindow") || tokens.equals(0, "resizewindow") ||
                 LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
         {
             if (document)
@@ -2167,7 +2167,7 @@ protected:
                 LOG_WRN("No document while processing " << tokens[0] << " request.");
             }
         }
-        else if (tokens.size() == 3 && tokens[0] == "setconfig")
+        else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
         {
 #if !MOBILEAPP
             // Currently only rlimit entries are supported.

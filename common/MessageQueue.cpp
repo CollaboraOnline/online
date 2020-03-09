@@ -366,13 +366,13 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             if (queuedTokens.size() < 3)
                 continue;
 
-            if (!isViewCallback && (queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2]))
+            if (!isViewCallback && (queuedTokens.equals(1, tokens, 1) && queuedTokens.equals(2, tokens, 2)))
             {
                 LOG_TRC("Remove obsolete callback: " << std::string(it.data(), it.size()) << " -> " << LOOLProtocol::getAbbreviatedMessage(callbackMsg));
                 getQueue().erase(getQueue().begin() + i);
                 break;
             }
-            else if (isViewCallback && (queuedTokens[1] == tokens[1] && queuedTokens[2] == tokens[2]))
+            else if (isViewCallback && (queuedTokens.equals(1, tokens, 1) && queuedTokens.equals(2, tokens, 2)))
             {
                 // we additionally need to ensure that the payload is about
                 // the same viewid (otherwise we'd merge them all views into

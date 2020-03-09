@@ -63,7 +63,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
 
     AdminModel& model = _admin->getModel();
 
-    if (tokens[0] == "auth")
+    if (tokens.equals(0, "auth"))
     {
         if (tokens.size() < 2)
         {
@@ -100,59 +100,59 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         shutdown();
         return;
     }
-    else if (tokens[0] == "documents" ||
-             tokens[0] == "active_users_count" ||
-             tokens[0] == "active_docs_count" ||
-             tokens[0] == "mem_stats" ||
-             tokens[0] == "cpu_stats" ||
-             tokens[0] == "sent_activity" ||
-             tokens[0] == "recv_activity")
+    else if (tokens.equals(0, "documents") ||
+             tokens.equals(0, "active_users_count") ||
+             tokens.equals(0, "active_docs_count") ||
+             tokens.equals(0, "mem_stats") ||
+             tokens.equals(0, "cpu_stats") ||
+             tokens.equals(0, "sent_activity") ||
+             tokens.equals(0, "recv_activity"))
     {
         const std::string result = model.query(tokens[0]);
         if (!result.empty())
             sendTextFrame(tokens[0] + ' ' + result);
     }
-    else if (tokens[0] == "history")
+    else if (tokens.equals(0, "history"))
     {
         sendTextFrame("{ \"History\": " + model.getAllHistory() + "}");
     }
-    else if (tokens[0] == "version")
+    else if (tokens.equals(0, "version"))
     {
         // Send LOOL version information
         sendTextFrame("loolserver " + LOOLWSD::getVersionJSON());
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
     }
-    else if (tokens[0] == "subscribe" && tokens.size() > 1)
+    else if (tokens.equals(0, "subscribe") && tokens.size() > 1)
     {
         for (std::size_t i = 0; i < tokens.size() - 1; i++)
         {
             model.subscribe(_sessionId, tokens[i + 1]);
         }
     }
-    else if (tokens[0] == "unsubscribe" && tokens.size() > 1)
+    else if (tokens.equals(0, "unsubscribe") && tokens.size() > 1)
     {
         for (std::size_t i = 0; i < tokens.size() - 1; i++)
         {
             model.unsubscribe(_sessionId, tokens[i + 1]);
         }
     }
-    else if (tokens[0] == "mem_consumed")
+    else if (tokens.equals(0, "mem_consumed"))
         sendTextFrame("mem_consumed " + std::to_string(_admin->getTotalMemoryUsage()));
 
-    else if (tokens[0] == "total_avail_mem")
+    else if (tokens.equals(0, "total_avail_mem"))
         sendTextFrame("total_avail_mem " + std::to_string(_admin->getTotalAvailableMemory()));
 
-    else if (tokens[0] == "sent_bytes")
+    else if (tokens.equals(0, "sent_bytes"))
         sendTextFrame("sent_bytes " + std::to_string(model.getSentBytesTotal() / 1024));
 
-    else if (tokens[0] == "recv_bytes")
+    else if (tokens.equals(0, "recv_bytes"))
         sendTextFrame("recv_bytes " + std::to_string(model.getRecvBytesTotal() / 1024));
 
-    else if (tokens[0] == "uptime")
+    else if (tokens.equals(0, "uptime"))
         sendTextFrame("uptime " + std::to_string(model.getServerUptime()));
 
-    else if (tokens[0] == "kill" && tokens.size() == 2)
+    else if (tokens.equals(0, "kill") && tokens.size() == 2)
     {
         try
         {
@@ -165,7 +165,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             LOG_WRN("Invalid PID to kill: " << tokens[1]);
         }
     }
-    else if (tokens[0] == "settings")
+    else if (tokens.equals(0, "settings"))
     {
         // for now, we have only these settings
         std::ostringstream oss;
@@ -185,13 +185,13 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
 
         sendTextFrame(oss.str());
     }
-    else if (tokens[0] == "shutdown")
+    else if (tokens.equals(0, "shutdown"))
     {
         LOG_INF("Shutdown requested by admin.");
         SigUtil::requestShutdown();
         return;
     }
-    else if (tokens[0] == "set" && tokens.size() > 1)
+    else if (tokens.equals(0, "set") && tokens.size() > 1)
     {
         for (size_t i = 1; i < tokens.size(); i++)
         {

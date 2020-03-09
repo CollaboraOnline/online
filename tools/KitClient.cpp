@@ -94,7 +94,7 @@ protected:
             if (tokens.size() == 0)
                 continue;
 
-            if (tokens[0] == "?" || tokens[0] == "help")
+            if (tokens.equals(0, "?") || tokens.equals(0, "help"))
             {
                 std::cout <<
                     "Commands mimic LOOL protocol but we talk directly to LOKit:" << std::endl <<
@@ -103,7 +103,7 @@ protected:
                     "    tile part pixelwidth pixelheight docposx docposy doctilewidth doctileheight" << std::endl <<
                     "        calls LibreOfficeKitDocument::paintTile" << std::endl;
             }
-            else if (tokens[0] == "status")
+            else if (tokens.equals(0, "status"))
             {
                 if (tokens.size() != 1)
                 {
@@ -116,7 +116,7 @@ protected:
                     std::cout << "  " << i << ": '" << loKitDocument->pClass->getPartName(loKitDocument, i) << "'" << std::endl;
                 }
             }
-            else if (tokens[0] == "tile")
+            else if (tokens.equals(0, "tile"))
             {
                 if (tokens.size() != 8)
                 {

@@ -817,6 +817,21 @@ void WhiteBoxTests::testStringVector()
     // Test operator []().
     CPPUNIT_ASSERT_EQUAL(std::string("a"), vector[0]);
     CPPUNIT_ASSERT_EQUAL(std::string(""), vector[2]);
+
+    // Test equals().
+    CPPUNIT_ASSERT(vector.equals(0, "a"));
+    CPPUNIT_ASSERT(!vector.equals(0, "A"));
+    CPPUNIT_ASSERT(vector.equals(1, "b"));
+    CPPUNIT_ASSERT(!vector.equals(1, "B"));
+    CPPUNIT_ASSERT(!vector.equals(2, ""));
+
+    // Test equals(), StringVector argument version.
+    StringVector vector2;
+    vector2.push_back("a");
+    vector2.push_back("B");
+
+    CPPUNIT_ASSERT(vector.equals(0, vector2, 0));
+    CPPUNIT_ASSERT(!vector.equals(0, vector2, 1));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);

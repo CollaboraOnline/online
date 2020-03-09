@@ -101,7 +101,7 @@ public:
         try
         {
             StringVector tokens = LOOLProtocol::tokenize(message);
-            if (tokens.size() == 2 && tokens[0] == "spawn")
+            if (tokens.size() == 2 && tokens.equals(0, "spawn"))
             {
                 const int count = std::stoi(tokens[1]);
                 if (count > 0)
@@ -114,7 +114,7 @@ public:
                     LOG_WRN("Cannot spawn " << tokens[1] << " children as requested.");
                 }
             }
-            else if (tokens.size() == 3 && tokens[0] == "setconfig")
+            else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
             {
                 // Currently only rlimit entries are supported.
                 if (!Rlimit::handleSetrlimitCommand(tokens))

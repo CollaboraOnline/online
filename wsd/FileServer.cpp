@@ -147,8 +147,8 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
         std::vector<unsigned char> saltData;
         StringVector tokens = LOOLProtocol::tokenize(securePass, '.');
         if (tokens.size() != 5 ||
-            tokens[0] != "pbkdf2" ||
-            tokens[1] != "sha512" ||
+            !tokens.equals(0, "pbkdf2") ||
+            !tokens.equals(1, "sha512") ||
             !Util::dataFromHexString(tokens[3], saltData))
         {
             LOG_ERR("Incorrect format detected for secure_password in config file." << useLoolconfig);
@@ -167,7 +167,8 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
             stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(userProvidedPwdHash[j]);
 
         // now compare the hashed user-provided pwd against the stored hash
-        return stream.str() == tokens[4];
+        std::string string = stream.str();
+        return tokens.equals(4, string.c_str());
 #else
         const std::string pass = config.getString("admin_console.password", "");
         LOG_ERR("The config file has admin_console.secure_password setting, "

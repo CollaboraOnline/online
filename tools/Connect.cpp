@@ -92,7 +92,7 @@ public:
                     std::string firstLine = getFirstLine(buffer, n);
                     StringVector tokens(LOOLProtocol::tokenize(firstLine, ' '));
 
-                    if (std::getenv("DISPLAY") != nullptr && tokens[0] == "tile:")
+                    if (std::getenv("DISPLAY") != nullptr && tokens.equals(0, "tile:"))
                     {
                         TemporaryFile pngFile;
                         std::ofstream pngStream(pngFile.path(), std::ios::binary);
