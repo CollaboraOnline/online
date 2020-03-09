@@ -357,7 +357,7 @@ void cleanupDocBrokers()
             LOG_END(logger, true);
         }
 
-#if ENABLE_DEBUG
+#if !MOBILEAPP && ENABLE_DEBUG
         if (LOOLWSD::SingleKit && DocBrokers.size() == 0)
         {
             SigUtil::requestShutdown();
