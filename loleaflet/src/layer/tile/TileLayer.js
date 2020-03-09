@@ -2139,26 +2139,13 @@ L.TileLayer = L.GridLayer.extend({
 	_updateCursorPos: function () {
 		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
 			this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
+		var cursorSize = pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom()));
 		var cursorPos = this._visibleCursor.getNorthWest();
 
-		var updated = true;
 		if (!this._cursorMarker) {
-			this._cursorMarker = L.cursor(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), {blink: true});
+			this._cursorMarker = L.cursor(cursorPos, cursorSize, {blink: true});
 		} else {
-			var oldLatLng = this._cursorMarker.getLatLng();
-			this._cursorMarker.setLatLng(cursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
-			var newLatLng = this._cursorMarker.getLatLng();
-			// Assume the user didn't update the cursor if there is a selection.
-			// The update can happen when the font has changed, for example.
-			updated = !newLatLng.equals(oldLatLng) && !this.hasTextSelection();
-		}
-
-		this._map._textInput.showCursor();
-
-		if (!window.mobileWizard && updated && this._map.editorHasFocus()) {
-			// If the user is editing, show the keyboard, but don't change
-			// anything if nothing is changed, or the wizard is visible.
-			this._map.focus(true);
+			this._cursorMarker.setLatLng(cursorPos, cursorSize);
 		}
 	},
 
@@ -2197,11 +2184,24 @@ L.TileLayer = L.GridLayer.extend({
 		&& this._map.editorHasFocus()   // not when document is not focused
 		&& !this._map.isSearching()  	// not when searching within the doc
 		&& !this._isZooming             // not when zooming
-//		&& !this.isGraphicVisible()     // not when sizing / positioning graphics
 		&& !this._isEmptyRectangle(this._visibleCursor)) {
+
 			this._updateCursorPos();
+
+			// Update the cursor/keyboard only when the document has focus.
+			if (this._map.editorHasFocus()) {
+				this._map._textInput.showCursor();
+
+				// Don't show the keyboard when the Wizard is visible.
+				if (!window.mobileWizard) {
+					// If the user is editing, show the keyboard, but don't change
+					// anything if nothing is changed.
+					this._map.focus(true);
+				}
+			}
 		} else {
 			this._map._textInput.hideCursor();
+			this._map.focus(false);
 		}
 	},
 
