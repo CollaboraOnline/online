@@ -1,6 +1,7 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var calcHelper = require('./calc_helper');
 
 describe('Calc focus tests', function() {
 	beforeEach(function() {
@@ -23,18 +24,24 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// One tap on an other cell -> no focus on the document
-		cy.get('#document-container')
-			.click(120, 120);
+		calcHelper.clickOnFirstCell();
 
-		cy.get('.leaflet-marker-icon.spreadsheet-cell-resize-marker');
+		cy.get('.leaflet-marker-icon.spreadsheet-cell-resize-marker')
+			.should('be.visible');
 
 		// No focus
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
-		// Double tap on a cell gives the focus to the document
-		cy.get('#document-container')
-			.dblclick(20, 20);
+		// Double tap on another cell gives the focus to the document
+		cy.get('.spreadsheet-cell-resize-marker')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(2);
+				var XPos = Math.max(items[0].getBoundingClientRect().right, items[1].getBoundingClientRect().right) + 10;
+				var YPos = Math.max(items[0].getBoundingClientRect().top, items[1].getBoundingClientRect().top) - 10;
+				cy.get('body')
+					.dblclick(XPos, YPos);
+			});
 
 		// Document has the focus
 		cy.document().its('activeElement.className')
@@ -53,8 +60,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// One tap on a cell -> no document focus
-		cy.get('#document-container')
-			.click();
+		calcHelper.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon.spreadsheet-cell-resize-marker');
 
@@ -63,8 +69,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// Second tap on the same cell
-		cy.get('#document-container')
-			.click();
+		calcHelper.clickOnFirstCell();
 
 		// Document has the focus
 		cy.document().its('activeElement.className')
