@@ -31,6 +31,7 @@ export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY)
 
 if HAVE_LO_PATH
 MOBILE_TEST_FILES= \
+	calc/apply_font_spec.js \
 	calc/focus_spec.js \
 	calc/insertion_wizard_spec.js \
 	impress/impress_focus_spec.js \
