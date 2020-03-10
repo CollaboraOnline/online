@@ -244,7 +244,7 @@ body {
 	}
 
 	#document-container.readonly {
-		top: 41px;
+		top: 37px; /*set equal to toolbar up's height*/
 		bottom: 0px;
 	}
 
@@ -268,7 +268,7 @@ body {
 	}
 
 	#document-container {
-		top: 41px;
+		top: 37px; /*set equal to toolbar up's height*/
 		right: 0px !important;
 		bottom: 35px;
 	}

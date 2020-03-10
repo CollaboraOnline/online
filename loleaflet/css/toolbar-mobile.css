@@ -20,6 +20,10 @@
 		height: 100%;
 		overflow-y: scroll;
 	}
+	#toolbar-up.w2ui-toolbar{
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
 	#formulabar {
 		padding: 0px !important;
 		border-top: 1px solid #bbbbbb !important;

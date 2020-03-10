@@ -283,7 +283,7 @@
         position: absolute;
         height: 0;
         width: 100%;
-        top: 41px;
+        top: 37px; /*set equal to toolbar up's height*/
         margin: 0;
         -webkit-overflow-scrolling: touch;
         overflow: scroll;
