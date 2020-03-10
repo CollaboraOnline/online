@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
 var calcHelper = require('./calc_helper');
@@ -9,6 +9,21 @@ describe('Calc insertion wizard.', function() {
 
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
+
+		// Button should be enabled now
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.should('not.have.class', 'disabled');
+
+		calcHelper.clickOnFirstCell();
+
+		cy.get('.leaflet-marker-icon')
+			.should('be.visible');
+
+		// Open insertion wizard
+		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard-content')
+			.should('not.be.empty');
 	});
 
 	afterEach(function() {
@@ -16,10 +31,6 @@ describe('Calc insertion wizard.', function() {
 	});
 
 	it('Check existance of image insertion items.', function() {
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-
 		cy.get('.menu-entry-with-icon')
 			.contains('Local Image...');
 
@@ -28,10 +39,6 @@ describe('Calc insertion wizard.', function() {
 	});
 
 	it('Insert chart.', function() {
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-
 		cy.get('.menu-entry-with-icon')
 			.contains('Chart...')
 			.click();
@@ -41,15 +48,6 @@ describe('Calc insertion wizard.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
-		calcHelper.clickOnFirstCell();
-
-		cy.get('.leaflet-marker-icon')
-			.should('be.visible');
-
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-
 		cy.get('.menu-entry-with-icon')
 			.contains('Hyperlink...')
 			.click();
@@ -79,5 +77,52 @@ describe('Calc insertion wizard.', function() {
 
 		cy.get('#copy-paste-container table td a')
 			.should('have.attr', 'href', 'http://www.something.com');
+	});
+
+	it('Insert shape.', function() {
+		// Do insertion
+		cy.get('.menu-entry-with-icon')
+			.contains('Shape')
+			.click();
+
+		cy.get('.basicshapes_ellipse').
+			click();
+
+		// Check that the shape is there
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+			.should('exist');
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
+			.then(function(svg) {
+				expect(svg[0].getBBox().width).to.be.greaterThan(0);
+				expect(svg[0].getBBox().height).to.be.greaterThan(0);
+			});
+	});
+
+	it('Insert date.', function() {
+		// Do insertion
+		cy.get('.menu-entry-with-icon')
+			.contains('Date')
+			.click();
+
+		calcHelper.copyContentToClipboard();
+
+		cy.get('#copy-paste-container table td')
+			.contains('03/10/20');
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;MM/DD/YY');
+	});
+
+	it('Insert time.', function() {
+		// Do insertion
+		cy.get('.menu-entry-with-icon')
+			.contains('Time')
+			.click();
+
+		calcHelper.copyContentToClipboard();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;HH:MM:SS AM/PM');
 	});
 });
