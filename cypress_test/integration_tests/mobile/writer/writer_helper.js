@@ -77,7 +77,7 @@ function clearMobileWizardState() {
 	cy.get('#toolbar-hamburger')
 		.click();
 
-	cy.get('.ui-header.level-0 .menu-entry-with-icon')
+	cy.get('.menu-entry-with-icon', {timeout: 10000})
 		.contains('About');
 
 	// Close hamburger menu
