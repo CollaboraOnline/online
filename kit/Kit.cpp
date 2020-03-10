@@ -752,16 +752,16 @@ public:
     const std::string& getUrl() const { return _url; }
 
     /// Post the message - in the unipoll world we're in the right thread anyway
-    bool postMessage(const std::shared_ptr<std::vector<char>>& message, const WSOpCode code) const
+    bool postMessage(const char* data, int size, const WSOpCode code) const
     {
-        LOG_TRC("postMessage called with: " << getAbbreviatedMessage(message->data(), message->size()));
+        LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
         if (!_websocketHandler)
         {
-            LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(message->data(), message->size()) << "].");
+            LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(data, size) << "].");
             return false;
         }
 
-        _websocketHandler->sendMessage(message->data(), message->size(), code);
+        _websocketHandler->sendMessage(data, size, code);
         return true;
     }
 
@@ -1150,11 +1150,12 @@ public:
 
         LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
 
-        std::shared_ptr<std::vector<char>> response = std::make_shared<std::vector<char>>(tileMsg.size() + output.size());
-        std::copy(tileMsg.begin(), tileMsg.end(), response->begin());
-        std::copy(output.begin(), output.end(), response->begin() + tileMsg.size());
+        size_t responseSize = tileMsg.size() + output.size();
+        std::unique_ptr<char[]> response(new char[responseSize]);
+        std::copy(tileMsg.begin(), tileMsg.end(), response.get());
+        std::copy(output.begin(), output.end(), response.get() + tileMsg.size());
 
-        postMessage(response, WSOpCode::Binary);
+        postMessage(response.get(), responseSize, WSOpCode::Binary);
     }
 
     bool sendTextFrame(const std::string& message)
@@ -1166,11 +1167,7 @@ public:
     {
         try
         {
-            std::shared_ptr<std::vector<char>> message = std::make_shared<std::vector<char>>();
-            message->resize(length);
-            std::memcpy(message->data(), buffer, length);
-
-            return postMessage(message, opCode);
+            return postMessage(buffer, length, opCode);
         }
         catch (const Exception& exc)
         {
