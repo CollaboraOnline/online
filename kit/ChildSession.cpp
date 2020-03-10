@@ -2181,13 +2181,14 @@ bool ChildSession::renderShapeSelection(const char* /*buffer*/, int /*length*/, 
     if (pOutput != nullptr && nOutputSize > 0)
     {
         static const std::string header = "shapeselectioncontent:\n";
-        std::vector<char> response(header.size() + nOutputSize);
-        std::memcpy(response.data(), header.data(), header.size());
-        std::memcpy(response.data() + header.size(), pOutput, nOutputSize);
+        size_t responseSize = header.size() + nOutputSize;
+        std::unique_ptr<char[]> response(new char[responseSize]);
+        std::memcpy(response.get(), header.data(), header.size());
+        std::memcpy(response.get() + header.size(), pOutput, nOutputSize);
         free(pOutput);
 
-        LOG_TRC("Sending response (" << response.size() << " bytes) for shapeselectioncontent on view #" << _viewId);
-        sendBinaryFrame(response.data(), response.size());
+        LOG_TRC("Sending response (" << responseSize << " bytes) for shapeselectioncontent on view #" << _viewId);
+        sendBinaryFrame(response.get(), responseSize);
     }
     else
     {
