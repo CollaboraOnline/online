@@ -22,6 +22,7 @@ import android.widget.TextView;
 import org.libreoffice.androidapp.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,17 +35,37 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
     private final long MB = 1048576;
 
     private LibreOfficeUIActivity mActivity;
-    private List<Uri> recentUris;
+    private ArrayList<RecentFile> recentFiles;
 
     RecentFilesAdapter(LibreOfficeUIActivity activity, List<Uri> recentUris) {
         this.mActivity = activity;
-        this.recentUris = recentUris;
+        initRecentFiles(recentUris);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).inflate(mActivity.isViewModeList() ? R.layout.file_list_item : R.layout.file_explorer_grid_item, parent, false);
         return new ViewHolder(item);
+    }
+
+    /** Validate uris in case of removed/renamed documents and return RecentFile ArrayList from the valid uris */
+    public void initRecentFiles(List<Uri> recentUris) {
+        this.recentFiles = new ArrayList<>();
+        boolean invalidUriFound = false;
+        String joined = "";
+        for (Uri u: recentUris) {
+            String filename = getUriFilename(mActivity, u);
+            if (null != filename) {
+                long length = getUriFileLength(mActivity, u);
+                recentFiles.add(new RecentFile(u, filename, length));
+                joined = joined.concat(u.toString()+"\n");
+            }
+            else
+                invalidUriFound = true;
+        }
+        if (invalidUriFound) {
+            mActivity.getPrefs().edit().putString(mActivity.RECENT_DOCUMENTS_KEY, joined).apply();
+        }
     }
 
     /** Return the filename of the given Uri. */
@@ -60,11 +81,8 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
                 cursor.close();
         }
 
-        if (filename.isEmpty()) {
-            List<String> segments = uri.getPathSegments();
-            if (segments.size() > 0)
-                filename = segments.get(segments.size() - 1);
-        }
+        if (filename.isEmpty())
+            return null;
 
         return filename;
     }
@@ -91,17 +109,18 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Uri uri = recentUris.get(position);
+        final RecentFile file = recentFiles.get(position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.open(uri);
+                mActivity.open(file.uri);
             }
         });
 
-        String filename = getUriFilename(mActivity, uri);
-        long length = getUriFileLength(mActivity, uri);
+        String filename = file.filename;
+        long length = file.fileLength;
+
         // TODO Date not avaiable now
         //Date date = null;
 
@@ -155,12 +174,12 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
 
     @Override
     public int getItemCount() {
-        if (recentUris.size() == 0) {
+        if (recentFiles.size() == 0) {
             mActivity.noRecentItemsTextView.setVisibility(View.VISIBLE);
         } else {
             mActivity.noRecentItemsTextView.setVisibility(View.GONE);
         }
-        return recentUris.size();
+        return recentFiles.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -178,6 +197,18 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
                 fileSizeUnitView = itemView.findViewById(R.id.file_item_size_unit);
                 //fileDateView = itemView.findViewById(R.id.file_item_date);
             }
+        }
+    }
+    /** Cache the name & size so that we don't have ask later. */
+    private class RecentFile {
+        public Uri uri;
+        public String filename;
+        public long fileLength;
+
+        public RecentFile(Uri uri, String filename, long fileLength) {
+            this.uri = uri;
+            this.filename = filename;
+            this.fileLength = fileLength;
         }
     }
 }

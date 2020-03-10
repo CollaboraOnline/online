@@ -113,7 +113,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     public static final String EXPLORER_VIEW_TYPE_KEY = "EXPLORER_VIEW_TYPE";
     public static final String EXPLORER_PREFS_KEY = "EXPLORER_PREFS";
     public static final String SORT_MODE_KEY = "SORT_MODE";
-    private static final String RECENT_DOCUMENTS_KEY = "RECENT_DOCUMENTS_LIST";
+    public static final String RECENT_DOCUMENTS_KEY = "RECENT_DOCUMENTS_LIST";
     private static final String ENABLE_SHOW_HIDDEN_FILES_KEY = "ENABLE_SHOW_HIDDEN_FILES";
 
     public static final String NEW_FILE_PATH_KEY = "NEW_FILE_PATH_KEY";
@@ -206,6 +206,12 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         recentRecyclerView.setLayoutManager(isViewModeList() ? new LinearLayoutManager(this) : new GridLayoutManager(this, 2));
         recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentUris));
+    }
+
+    /** access shared preferences from the activity instance */
+    public SharedPreferences getPrefs()
+    {
+        return prefs;
     }
 
     /** Create the Navigation menu and set up the actions and everything there. */
@@ -985,6 +991,9 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
                 Uri shortcutUri = Uri.parse(pathString);
                 String filename = RecentFilesAdapter.getUriFilename(this, shortcutUri);
+
+                if (filename == null)
+                    continue;
 
                 Intent intent = getIntentToEdit(shortcutUri);
                 ShortcutInfo.Builder builder = new ShortcutInfo.Builder(this, filename)
