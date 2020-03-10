@@ -31,6 +31,7 @@
 		BE5EB5DA2140363100E0826C /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D92140363100E0826C /* ios.mm */; };
 		BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* ICU.dat */; };
 		BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* MobileCoreServices.framework */; };
+		BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE7228E02417BC9F000ADABD /* StringVector.cpp */; };
 		BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */; };
 		BE80E43221AD92F700859C97 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BE80E43121AD92F600859C97 /* Fonts */; };
 		BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE80E45721B68F5700859C97 /* TemplateCollectionViewController.mm */; };
@@ -527,6 +528,8 @@
 		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE7228E02417BC9F000ADABD /* StringVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringVector.cpp; sourceTree = "<group>"; };
+		BE7228E12417BC9F000ADABD /* StringVector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringVector.hpp; sourceTree = "<group>"; };
 		BE7D6A2123FA9C2300C2E605 /* winreg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = winreg.cxx; path = "../../ios-device/configmgr/source/winreg.cxx"; sourceTree = "<group>"; };
 		BE7D6A2223FA9C2300C2E605 /* propertynode.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = propertynode.hxx; path = "../../ios-device/configmgr/source/propertynode.hxx"; sourceTree = "<group>"; };
 		BE7D6A2323FA9C2300C2E605 /* childaccess.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = childaccess.hxx; path = "../../ios-device/configmgr/source/childaccess.hxx"; sourceTree = "<group>"; };
@@ -1868,6 +1871,8 @@
 				BE5EB5BE213FE29900E0826C /* SigUtil.cpp */,
 				BE58E12B217F295B00249358 /* SigUtil.hpp */,
 				BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */,
+				BE7228E02417BC9F000ADABD /* StringVector.cpp */,
+				BE7228E12417BC9F000ADABD /* StringVector.hpp */,
 				BEA28376214FFD8C00848631 /* Unit.cpp */,
 				BEA283782150172600848631 /* Unit.hpp */,
 				BE5EB5BC213FE29900E0826C /* Util.cpp */,
@@ -2988,6 +2993,7 @@
 				BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */,
 				BE5EB5D0213FE2D000E0826C /* TileCache.cpp in Sources */,
 				BE5EB5C5213FE29900E0826C /* MessageQueue.cpp in Sources */,
+				BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */,
 				BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */,
 				BEA2835621467FDD00848631 /* Kit.cpp in Sources */,
 				BE8D77322136762500AC58EA /* DocumentViewController.mm in Sources */,
