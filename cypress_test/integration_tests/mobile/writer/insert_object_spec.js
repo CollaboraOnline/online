@@ -50,7 +50,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('exist');
 
 		cy.get('.loleaflet-annotation-content.loleaflet-dont-break')
-			.contains('some text');
+			.should('have.text', 'some text');
 	});
 
 	it('Insert default table.', function() {
