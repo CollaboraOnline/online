@@ -1507,7 +1507,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				// before close the wizard then execute the action
 				if (data.executionType === 'action') {
-					builder.map.menubar._executeAction(undefined, data.id);
+					builder.map.menubar._executeAction(undefined, data);
 				} else if (data.executionType === 'callback') {
 					data.callback();
 				} else if (!builder.map._clip || !builder.map._clip.filterExecCopyPaste(data.command)) {

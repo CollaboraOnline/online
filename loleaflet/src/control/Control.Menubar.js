@@ -1082,9 +1082,18 @@ L.Control.Menubar = L.Control.extend({
 		this._map._docLayer._openMobileWizard(data);
 	},
 
-	_executeAction: function(item, id) {
-		if (!id)
-			id = $(item).data('id');
+	_executeAction: function(itNode, itWizard) {
+		var id, data;
+		if (itNode === undefined)
+		{ // called from JSDialogBuilder
+			id = itWizard.id;
+			data = function(key) { return itWizard.data[key]; };
+		}
+		else
+		{ // called from
+			id = $(itNode).data('id');
+			data = $(itNode).data;
+		}
 
 		if (id === 'save') {
 			// Save only when not read-only.
@@ -1119,7 +1128,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
 			this._map.zoomIn(1);
 		} else if (id === 'showresolved') {
-			this._map.showResolvedComments(!$(item).hasClass('lo-menu-item-checked'));
+			this._map.showResolvedComments(!$(itNode).hasClass('lo-menu-item-checked'));
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
 			this._map.zoomOut(1);
 		} else if (id === 'zoomreset') {
@@ -1197,11 +1206,11 @@ L.Control.Menubar = L.Control.extend({
 					self._map.focus();
 				}
 			});
-		} else if (window.ThisIsAMobileApp && $(item).data('mobileappuno')) {
-			this._map.sendUnoCommand($(item).data('mobileappuno'));
+		} else if (window.ThisIsAMobileApp && data('mobileappuno')) {
+			this._map.sendUnoCommand(data('mobileappuno'));
 		}
 		// Inform the host if asked
-		if ($(item).data('postmessage') === 'true') {
+		if (data('postmessage') === 'true') {
 			this._map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: id} });
 		}
 	},
@@ -1535,6 +1544,7 @@ L.Control.Menubar = L.Control.extend({
 			text : itemName,
 			command : item.uno,
 			executionType : item.type,
+			data : item,
 			children : []
 		};
 
