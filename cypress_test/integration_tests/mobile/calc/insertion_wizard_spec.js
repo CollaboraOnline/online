@@ -108,9 +108,6 @@ describe('Calc insertion wizard.', function() {
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
-			.contains('03/10/20');
-
-		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;MM/DD/YY');
 	});
 
