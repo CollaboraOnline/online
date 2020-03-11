@@ -49,6 +49,8 @@ using Poco::URI;
 
 using namespace LOOLProtocol;
 
+bool ChildSession::NoCapsForKit = false;
+
 namespace {
 
 std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
@@ -926,14 +928,22 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
                                format.empty() ? nullptr : format.c_str(),
                                filterOptions.empty() ? nullptr : filterOptions.c_str());
 #else
-    // The file is removed upon downloading.
-    const std::string tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
     const Poco::Path filenameParam(name);
-    const std::string url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + filenameParam.getFileName();
     const std::string nameAnonym = anonymizeUrl(name);
-    const std::string urlAnonym = JAILED_DOCUMENT_ROOT + tmpDir + "/" + Poco::Path(nameAnonym).getFileName();
+
+    std::string jailDoc = JAILED_DOCUMENT_ROOT;
+    if (NoCapsForKit)
+    {
+        jailDoc = Poco::URI(getJailedFilePath()).getPath();
+        jailDoc = jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
+    }
+
+    // The file is removed upon downloading.
+    const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
+    const std::string url = jailDoc + tmpDir + "/" + filenameParam.getFileName();
+    const std::string urlAnonym = jailDoc + tmpDir + "/" + Poco::Path(nameAnonym).getFileName();
 
     LOG_DBG("Calling LOK's downloadAs with: url='" << urlAnonym << "', format='" <<
             (format.empty() ? "(nullptr)" : format.c_str()) << "', ' filterOptions=" <<

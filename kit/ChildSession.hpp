@@ -192,6 +192,8 @@ public:
 class ChildSession final : public Session
 {
 public:
+    static bool NoCapsForKit;
+
     /// Create a new ChildSession
     /// ws The socket between master and kit (jailed).
     /// loKit The LOKit instance.
