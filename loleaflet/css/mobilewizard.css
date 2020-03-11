@@ -811,3 +811,12 @@ input[type=checkbox]#UseBandingColumnStyle, input[type=checkbox]#UseLastColumnSt
 	margin: 24px 0px;
 }
 div#enablecontour + p, #arrangelabel, #SetMinimalRowHeight {clear: both;}
+
+label.disabled {
+	color: grey !important;
+}
+
+input[type=checkbox][disabled] {
+	background-color: grey !important;
+	border-color: grey !important;
+}

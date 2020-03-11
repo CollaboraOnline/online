@@ -746,8 +746,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var checkbox = L.DomUtil.createWithId('input', data.id, div);
 		checkbox.type = 'checkbox';
 
-		if (data.enabled == 'false')
+		if (data.enabled == 'false') {
+			$(checkboxLabel).addClass('disabled');
 			$(checkbox).attr('disabled', 'disabled');
+		}
 
 		checkbox.addEventListener('change', function() {
 			builder.callback('checkbox', 'change', checkbox, this.checked, builder);
