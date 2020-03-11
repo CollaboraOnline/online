@@ -273,7 +273,8 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_goToPath: function(path) {
-		if (this._tabs && path && path.length)
+		// when dialog has tabs, tab selection triggers the callback, causes infinite regenetate loop
+		if (this._tabs && path && path.length && !this.map.dialog.hasDialogInMobilePanelOpened())
 			this._selectTab(path[0]);
 
 		var _path = [];
