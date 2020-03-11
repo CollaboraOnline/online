@@ -26,7 +26,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
 					{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
 					{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
-					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}]},
+					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'},
+					{name: _('EPUB (.epub)'), id: 'downloadas-epub', type: 'action'}]},
 				{name: _('Sign document'), id: 'signdocument', type: 'action'},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
@@ -475,7 +476,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
 				{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
 				{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
-				{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'}
+				{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'},
+				{name: _('EPUB (.epub)'), id: 'downloadas-epub', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
@@ -696,7 +698,7 @@ L.Control.Menubar = L.Control.extend({
 
 		allowedViewModeActions: [
 			'shareas', 'print', // file menu
-			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu
+			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', 'downloadas-epub', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'print', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showresolved', // view menu
