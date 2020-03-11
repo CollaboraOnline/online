@@ -236,7 +236,7 @@ namespace
 {
 
 #if ENABLE_SUPPORT_KEY
-inline void shutdownLimitReached(const std::shared_ptr<WebSocketHandler>& ws)
+inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>& proto)
 {
     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
     LOG_INF("Sending client 'hardlimitreached' message: " << error);
@@ -244,10 +244,10 @@ inline void shutdownLimitReached(const std::shared_ptr<WebSocketHandler>& ws)
     try
     {
         // Let the client know we are shutting down.
-        ws->sendMessage(error);
+        proto->sendTextMessage(error);
 
         // Shutdown.
-        ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+        proto->shutdown(true, error);
     }
     catch (const std::exception& ex)
     {
@@ -1729,7 +1729,7 @@ std::mutex Connection::Mutex;
 /// May return null if terminating or MaxDocuments limit is reached.
 /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
 static std::shared_ptr<DocumentBroker>
-    findOrCreateDocBroker(const std::shared_ptr<WebSocketHandler>& ws,
+    findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
                           const std::string& uri,
                           const std::string& docKey,
                           const std::string& id,
@@ -1762,8 +1762,9 @@ static std::shared_ptr<DocumentBroker>
         if (docBroker->isMarkedToDestroy())
         {
             LOG_WRN("DocBroker with docKey [" << docKey << "] that is marked to be destroyed. Rejecting client request.");
-            ws->sendMessage("error: cmd=load kind=docunloading");
-            ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, "error: cmd=load kind=docunloading");
+            std::string msg("error: cmd=load kind=docunloading");
+            proto->sendTextMessage(msg, msg.size());
+            proto->shutdown(true, "error: cmd=load kind=docunloading");
             return nullptr;
         }
     }
@@ -1781,7 +1782,7 @@ static std::shared_ptr<DocumentBroker>
     // Indicate to the client that we're connecting to the docbroker.
     const std::string statusConnect = "statusindicator: connect";
     LOG_TRC("Sending to Client [" << statusConnect << "].");
-    ws->sendMessage(statusConnect);
+    proto->sendTextMessage(statusConnect, statusConnect.size());
 
     if (!docBroker)
     {
@@ -1791,7 +1792,7 @@ static std::shared_ptr<DocumentBroker>
         {
             LOG_INF("Maximum number of open documents of " << LOOLWSD::MaxDocuments << " reached.");
 #if ENABLE_SUPPORT_KEY
-            shutdownLimitReached(ws);
+            shutdownLimitReached(proto);
             return nullptr;
 #endif
         }
@@ -2832,8 +2833,9 @@ private:
             LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
 
             // Request a kit process for this doc.
-            std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(ws, url, docKey, _id, uriPublic);
-            if (docBroker)
+            std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
+                std::static_pointer_cast<ProtocolHandlerInterface>(ws), url, docKey, _id, uriPublic);
+             if (docBroker)
             {
 #if MOBILEAPP
                 const std::string hostNoTrust;
