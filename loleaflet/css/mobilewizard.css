@@ -312,6 +312,10 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background-color: #fff;
 }
 
+.ui-header.mobile-wizard.disabled .ui-header-left * {
+	color: grey !important;
+}
+
 .ui-header.mobile-wizard:active, .mobile-wizard.ui-combobox-text:active, .ui-header.mobile-wizard:focus, .mobile-wizard.ui-combobox-text:focus, .ui-header.mobile-wizard:hover, .mobile-wizard.ui-combobox-text:hover {
 	background-color: #eee;
 }

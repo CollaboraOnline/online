@@ -354,6 +354,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data && data.id)
 			sectionTitle.id = data.id;
 
+		if (data.enabled === 'false')
+			$(sectionTitle).addClass('disabled');
+
 		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
 		var titleClass = '';
 		console.debug('sectionTitle.id' + sectionTitle.id);
@@ -421,7 +424,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!data.nosubmenu)
 		{
 			$(contentDiv).hide();
-			if (builder.wizard) {
+			if (builder.wizard && data.enabled !== 'false') {
 				$(sectionTitle).click(function(event, data) {
 					builder.wizard.goLevelDown(contentDiv, data);
 					if (contentNode.onshow)
