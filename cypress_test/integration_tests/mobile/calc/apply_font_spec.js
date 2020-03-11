@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
 var calcHelper = require('./calc_helper');
@@ -118,6 +118,9 @@ describe('Apply font changes.', function() {
 			.contains('Linux Libertine G')
 			.click();
 
+		cy.get('.level-1[title="Font Name"] .mobile-wizard.ui-combobox-text.selected')
+			.should('have.text', 'Linux Libertine G');
+
 		cy.get('#mobile-wizard-back')
 			.click();
 
@@ -143,6 +146,13 @@ describe('Apply font changes.', function() {
 		cy.get('.mobile-wizard.ui-combobox-text')
 			.contains('14')
 			.click();
+
+		if (Cypress.env('LO_CORE_VERSION') === 'master')
+			cy.get('.level-1[title="Font Size"] .mobile-wizard.ui-combobox-text.selected')
+				.should('have.text', '14 pt');
+		else
+			cy.get('.level-1[title="Font Size"] .mobile-wizard.ui-combobox-text.selected')
+				.should('have.text', '14');
 
 		cy.get('#mobile-wizard-back')
 			.click();
