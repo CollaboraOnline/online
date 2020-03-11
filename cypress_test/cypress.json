@@ -1,5 +1,6 @@
 {
     "integrationFolder" : "integration_tests",
     "video" : false,
-    "pluginsFile" : "plugins/index.js"
+    "pluginsFile" : "plugins/index.js",
+    "defaultCommandTimeout" : 6000
 }

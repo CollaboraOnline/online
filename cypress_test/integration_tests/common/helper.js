@@ -61,6 +61,7 @@ function afterAll() {
 		.should('exist');
 	cy.get('#doclist tr')
 		.should('not.exist', {timeout : 10000});
+	cy.wait(200);
 }
 
 function detectLOCoreVersion() {
