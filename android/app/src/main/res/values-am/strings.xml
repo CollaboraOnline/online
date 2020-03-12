@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="grid_view">መጋጠሚያ</string>
+    <string name="list_view">ዝርዝር</string>
+    <string name="file_creation_failed">ፋይል መፍጠር አልተቻለም</string>
+    <string name="no_items">ምንም አልተገኘም</string>
+    <string name="app_version">እትም: %1$s, Build ID: %2$s</string>
+    <string name="app_name_settings">ማሰናጃ</string>
+</resources>

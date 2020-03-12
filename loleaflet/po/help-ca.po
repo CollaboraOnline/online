@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-02-17 13:51+0000\n"
+"PO-Revision-Date: 2020-03-09 13:57+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1039,7 +1039,7 @@ msgstr "Podeu anar directament al cursor d'un usuari fent clic al seu nom o avat
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:255-11
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
-msgstr ""
+msgstr "El <span class=\"productname\">%productName</span> us indica amb una petita notificació en la part inferior si entra un nou usuari o en surt."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
@@ -1519,15 +1519,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:461-5
 msgid "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</span> and select the language for the whole document. Optionally you can set languages for the selected text and for the current paragraph."
-msgstr ""
+msgstr "Trieu el menú <span class=\"ui\">Eines</span> ▸ <span class=\"ui\">Llengües</span> i seleccioneu la llengua que s'ha d'utilitzar en la totalitat del document. Opcionalment, podeu definir llengües diferents per al text seleccionat i per al paràgraf actual."
 
 #: html/loleaflet-help.html%2Bdiv.h4:462-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Com puc llevar les línies vermelles ondulades del document?"
 
 #: html/loleaflet-help.html%2Bdiv.p:463-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
-msgstr ""
+msgstr "Trieu el menú <span class=\"ui\">Eines</span> i desactiveu <span class=\"ui\">Verificació ortogràfica automàtica</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:464-5
 msgid "What is the blue wavy underline in some words in the text?"
@@ -1539,7 +1539,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Hi ha un tesaurus?"
 
 #: html/loleaflet-help.html%2Bdiv.p:467-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."

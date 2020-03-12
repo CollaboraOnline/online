@@ -53,7 +53,7 @@
     <string name="file_exists_warning">Súbor s týmto názvom už existuje a bude prepísaný.</string>
     <string name="temp_file_saving_disabled">Súbor je len na čítanie, ukladanie je zakázané.</string>
     <string name="no_items">Žiadne položky</string>
-    <string name="no_recent_items">Žiadne nedávne položky</string>
+    <string name="no_recent_items">Otvorte súbor kliknutím na ikonu priečinka na nástrojovej lište.</string>
     <string name="app_vendor">Dodávateľom tohto produktu je $VENDOR.</string>
     <string name="app_description">"%APP_NAME je moderný a ľahko použiteľný  kancelársky balík s otvoreným kódom na spracovanie textu, tabuliek, prezentácií a ďalších dokumentov."</string>
     <string name="app_version">Verzia: %1$s, ID zostavenia: %2$s</string>

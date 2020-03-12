@@ -83,7 +83,7 @@
     <string name="file_exists_warning">Xa existe un ficheiro con este nome, que será substituído.</string>
     <string name="temp_file_saving_disabled">Este ficheiro só permite a lectura e non pode ser gardado.</string>
     <string name="no_items">Non hai elementos</string>
-    <string name="no_recent_items">Non hai elementos recentes</string>
+    <string name="no_recent_items">Abra un ficheiro empregando a icona do cartafol que hai na barra de tarefas.</string>
     <string name="app_vendor">Esta versión foi fornecida por $VENDOR.</string>
     <string name="action_cancel">Cancelar</string>
     <string name="negative_cancel">Cancelar</string>

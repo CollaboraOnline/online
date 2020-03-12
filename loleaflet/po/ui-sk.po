@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-02-25 10:42+0000\n"
+"Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
+"Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sk/>\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
 "X-Pootle-Revision: 3938145\n"
 
@@ -170,7 +171,7 @@ msgstr "Vypnúť server"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Doba behu servera"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -193,7 +194,7 @@ msgstr "Naozaj chcete túto reláciu ukončiť?"
 #: src/control/Control.Tabs.js:196 src/control/Control.Toolbar.js:246
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1150
@@ -257,7 +258,7 @@ msgstr "Server zaznamenal chybu %0 počas spracovania príkazu %1."
 
 #: src/control/Control.ContextMenu.js:171
 msgid "Delete"
-msgstr ""
+msgstr "Zmazať"
 
 #: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
@@ -297,51 +298,51 @@ msgstr "Vy"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "Spustiť preberanie"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "Potvrdiť kopírovanie do schránky"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "Začať nahrávanie"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "Začať kopírovanie / vkladanie"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Bez farby"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Lineárna"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "Axiálna"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "Radiálna"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Oválna"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "Kvadratická"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "Štvorcová"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "Nemenná veľkosť"
 
 #: src/control/Control.JSDialogBuilder.js:766
 #: src/control/Control.Toolbar.js:1648
@@ -350,47 +351,43 @@ msgstr "Žiadne"
 
 #: src/control/Control.JSDialogBuilder.js:769
 msgid "Color"
-msgstr ""
+msgstr "Farba"
 
 #: src/control/Control.JSDialogBuilder.js:772
 msgid "Gradient"
-msgstr ""
+msgstr "Prechod"
 
 #: src/control/Control.JSDialogBuilder.js:775
 msgid "Hatching"
-msgstr ""
+msgstr "Šrafovanie"
 
 #: src/control/Control.JSDialogBuilder.js:779
 msgid "Pattern"
-msgstr ""
+msgstr "Vzor"
 
 #: src/control/Control.JSDialogBuilder.js:912
 msgid "From"
-msgstr ""
+msgstr "Od"
 
 #: src/control/Control.JSDialogBuilder.js:915
 msgid "To"
-msgstr ""
+msgstr "Do"
 
 #: src/control/Control.JSDialogBuilder.js:1050
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
-msgstr "Písmo"
+msgstr "Názov písma"
 
 #: src/control/Control.JSDialogBuilder.js:1052
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "Nepodpísané"
+msgstr "Veľkosť písma"
 
 #: src/control/Control.JSDialogBuilder.js:1533
 msgid "Rows"
-msgstr ""
+msgstr "Riadky"
 
 #: src/control/Control.JSDialogBuilder.js:1534
 msgid "Columns"
-msgstr ""
+msgstr "Stĺpce"
 
 #: src/control/Control.JSDialogBuilder.js:1554
 #: src/control/Control.Toolbar.js:973
@@ -399,7 +396,7 @@ msgstr "Vložiť tabuľku"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Štýl čiary:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
@@ -471,7 +468,7 @@ msgstr "Resetovať zväčšenie"
 
 #: src/control/Control.Menubar.js:64
 msgid "Show Ruler"
-msgstr ""
+msgstr "Zobraziť pravítko"
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:291
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:622
@@ -491,7 +488,7 @@ msgstr "Orientácia textu"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:340
 #: src/control/Control.Menubar.js:456
 msgid "Online Help"
-msgstr ""
+msgstr "Online pomocník"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
@@ -501,7 +498,7 @@ msgstr "Klávesové skratky"
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
 msgid "Report an issue"
-msgstr ""
+msgstr "Nahlásiť chybu"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:509
@@ -546,19 +543,19 @@ msgstr "Tabuľkový dokument Excel (.xlsx)"
 #: src/control/Control.Menubar.js:473 src/control/Control.Menubar.js:520
 #: src/control/Control.Menubar.js:565
 msgid "Export as"
-msgstr ""
+msgstr "Exportovať ako"
 
 #: src/control/Control.Menubar.js:499
 msgid "Page Setup"
-msgstr ""
+msgstr "Nastavenie strany"
 
 #: src/control/Control.Menubar.js:500
 msgid "Portrait"
-msgstr ""
+msgstr "Na výšku"
 
 #: src/control/Control.Menubar.js:501
 msgid "Landscape"
-msgstr ""
+msgstr "Na šírku"
 
 #: src/control/Control.Menubar.js:762 src/control/Control.Toolbar.js:2058
 msgid "Reset to Default Language"
@@ -570,7 +567,7 @@ msgstr "Naozaj chcete túto snímku odstrániť?"
 
 #: src/control/Control.Menubar.js:1185 src/map/Clipboard.js:773
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr ""
+msgstr "<p> Prehliadač má veľmi obmedzený prístup k schránke, preto používajte tieto klávesové skratky:<ul><li><b>Ctrl+C</b>: pre kopírovanie.</li><li><b>Ctrl+X</b>: pre vystrihovanie.</li><li><b>Ctrl+V</b>: pre vkladanie.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -602,7 +599,7 @@ msgstr "Naozaj chcete túto stranu odstrániť?"
 
 #: src/control/Control.Toolbar.js:860
 msgid "Default Style"
-msgstr ""
+msgstr "Predvolený štýl"
 
 #: src/control/Control.Toolbar.js:917
 msgid "Borders"
@@ -621,10 +618,8 @@ msgid "Insert shapes"
 msgstr "Vložiť útvary"
 
 #: src/control/Control.Toolbar.js:1061
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Funkcia"
+msgstr "Sprievodca funkciou"
 
 #: src/control/Control.Toolbar.js:1105
 msgid "First sheet"
@@ -647,9 +642,8 @@ msgid "Insert sheet"
 msgstr "Vložiť hárok"
 
 #: src/control/Control.Toolbar.js:1151
-#, fuzzy
 msgid "Search"
-msgstr "Vyhľadať:"
+msgstr "Hľadať:"
 
 #: src/control/Control.Toolbar.js:1157
 msgid "Cancel the search"
@@ -911,7 +905,7 @@ msgstr "Prebieha ukladanie..."
 
 #: src/control/Toolbar.js:115
 msgid "Renaming..."
-msgstr ""
+msgstr "Premenovávanie..."
 
 #: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
@@ -919,15 +913,15 @@ msgstr "Táto verzia of %productName bola vytvorená"
 
 #: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Vložiť hypertextový odkaz"
 
 #: src/control/Toolbar.js:451
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/control/Toolbar.js:452
 msgid "Link"
-msgstr ""
+msgstr "Odkaz"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -935,11 +929,11 @@ msgstr "Prehliadač IE11 dosiahol maximálny počet pripojení. V prípade potre
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Vyskytol sa problém s pripojenín k LibreOffice Online :"
+msgstr "Vyskytol sa problém s pripojením k LibreOffice Online: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Zo serveru:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -951,7 +945,7 @@ msgstr "Relácia ukončená vlastníkom dokumentu"
 
 #: src/core/Socket.js:371
 msgid "Idle document - please click to reload and resume editing"
-msgstr "Neaktívny dokument - kliknutím myšou dokument opätovne načítať a pokračovať v úprave "
+msgstr "Neaktívny dokument - kliknutím myšou dokument opätovne načítať a pokračovať v úprave"
 
 #: src/core/Socket.js:378
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1066,21 +1060,20 @@ msgid "Invalid link: '%url'"
 msgstr "Neplatný odkaz: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid "You are leaving the editor, are you sure you want to visit %url?"
-msgstr "Opúšťate editor, naozaj chcete pokračovať?"
+msgstr "Opúšťate editor, naozaj chcete prejsť na %url?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Dokument sa nepodarilo načítať. Je buď poškodený alebo vyžaduje viac zdrojov, než je povolené. Obráťte sa na správcu."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr ""
+msgstr "Nepodarilo sa načítať dokument."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
+msgstr "Kvôli nedostatku miesta na disku sa dokument nepodarilo uložiť. Dokument sa zobrazí v režime len na čítanie."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1088,11 +1081,11 @@ msgstr "Dokument nemožno uložiť pre expiráciu alebo neplatnosť prístupové
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Dokument nemožno uložiť."
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Dokument nemožno premenovať."
 
 #: src/errormessages.js:38
 #, javascript-format
@@ -1109,17 +1102,16 @@ msgid "Document cannot be saved. Check your permissions or contact the storage s
 msgstr "Dokument nemožno uložiť. Skontrolujte svoje prístupové práva alebo kontaktujte administrátora servera."
 
 #: src/errormessages.js:42
-#, fuzzy
 msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
 msgstr "Dokument nemožno uložiť. Skontrolujte svoje prístupové práva alebo kontaktujte administrátora servera."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Nahrávanie súboru na server zlyhalo, súbor nebol nájdený."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Nahrávanie súboru na server zlyhalo, súbor je príliš veľký."
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1139,24 +1131,18 @@ msgstr "Odpovedať"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:118
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Zrušiť vyhľadávanie"
+msgstr "Zobraziť vyhľadávaciu lištu"
 
 #: src/layer/tile/CalcTileLayer.js:231 src/layer/tile/ImpressTileLayer.js:226
 #: src/layer/tile/WriterTileLayer.js:163
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Zrušiť vyhľadávanie"
+msgstr "Vymazať vyhľadávacie pole"
 
 #: src/layer/tile/CalcTileLayer.js:233 src/layer/tile/ImpressTileLayer.js:228
 #: src/layer/tile/WriterTileLayer.js:165
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Zrušiť vyhľadávanie"
+msgstr "Skryť vyhľadávaciu lištu"
 
 #: src/layer/tile/TileLayer.js:236
 msgid "Modify"
@@ -1168,27 +1154,27 @@ msgstr "Odstrániť"
 
 #: src/layer/tile/TileLayer.js:254
 msgid "Resolve"
-msgstr ""
+msgstr "Vyriešiť"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "Pre vkladanie mimo %ProductName najskôr kliknite na tlačidlo 'Stiahnuť'"
 
 #: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Nepodarilo sa stiahnuť schránku, skúste skopírovať znova"
 
 #: src/map/Clipboard.js:771
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr ""
+msgstr "<p>Použite tlačidlá Kopírovať / Vložiť na klávesnici na obrazovke.</p>"
 
 #: src/map/Clipboard.js:796
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr ""
+msgstr "<p>Ak chcete zdieľať väčšie časti dokumentu s inou aplikáciou, je ho najskôr stiahnuť na vaše zariadenie. Na to slúži nižšie zobrazené tlačidlo „Spustiť preberanie\". Po skončení kliknite na „Potvrdiť kopírovanie do schránky\".</p><p>Keď kopírujete medzi dokumentami v rámci %ProductName, nič sťahovať nepotrebujete.</p>"
 
 #: src/map/Clipboard.js:812
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr ""
+msgstr "<p>Sťahovanie za účelom rozsiahleho kopírovania / vkladania začalo. Počkajte na jeho dokončenie alebo ho pred začatím nového najprv zrušte.</p>"
 
 #: src/map/Map.js:243
 msgid "Initializing..."
@@ -1211,12 +1197,12 @@ msgstr "Neaktívny dokument - na pokračovanie kliknite myšou"
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Súbor typu: %0 sa nedá nahrať na server, pretože súbor nemá názov"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Súbor typu: %0 sa nedá nahrať na server, pretože je prázdny"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1224,7 +1210,7 @@ msgstr "Načítava sa…"
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Nahrávanie súboru na server zlyhalo so stavom: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

@@ -3,28 +3,29 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-03-11 08:08+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hr/>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-help-hr.po\n"
 "X-Pootle-Revision: 3899436\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
-msgstr "Tipkovničke kratice"
+msgstr "Tipkovnički prečaci"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:21-9
 msgid "General Keyboard Shortcuts"
-msgstr "Osnovne tipkovničke kratice"
+msgstr "Osnovni tipkovnički prečaci"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
-msgstr "Vrati"
+msgstr "Poništi"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-49
 msgid "Ctrl + Z"
@@ -48,7 +49,7 @@ msgstr "Ctrl + X"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-18
 msgid "Paste as unformatted text"
-msgstr "Zalijepi kao neoblikovan tekst"
+msgstr "Umetanje neformatiranog teksta"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
 msgid "Ctrl + Alt + Shift + V"
@@ -64,7 +65,7 @@ msgstr "Ctrl + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-18
 msgid "Display the Keyboard shortcuts help"
-msgstr "Prikaz pomoći vezane za tipkovničke kratice"
+msgstr "Prikaz pomoći za tipkovničke prečace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-80
 msgid "Ctrl + Shift + ?"
@@ -135,7 +136,7 @@ msgstr "Ctrl + Alt + 5"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-18
 msgid "Superscript"
-msgstr "Natpis"
+msgstr "Eksponent"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-56
@@ -145,7 +146,7 @@ msgstr "Ctrl + Shift + P"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-18
 msgid "Subscript"
-msgstr "Potpis"
+msgstr "Indeks"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-54
@@ -155,7 +156,7 @@ msgstr "Ctrl + Shift + B"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Remove direct formatting"
-msgstr "Uklanjanje izravnoga oblikovanja"
+msgstr "Uklanjanje izravnog oblikovanja"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-69
@@ -171,7 +172,7 @@ msgstr "Oblikovanje odlomka"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-18
 msgid "Align Center"
-msgstr "Poravnaj po sredini"
+msgstr "Centrirano poravnanje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-57
@@ -183,7 +184,7 @@ msgstr "Ctrl + E"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-18
 msgid "Align Left"
-msgstr "Poravnanje ulijevo"
+msgstr "Lijevo poravnanje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-55
@@ -195,7 +196,7 @@ msgstr "Ctrl + L"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-18
 msgid "Align Right"
-msgstr "Poravnanje udesno"
+msgstr "Desno poravnanje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-56
@@ -217,7 +218,7 @@ msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-18
 msgid "Apply Default paragraph style"
-msgstr "Primjena zadanog stila odlomka"
+msgstr "Primjena standardnog stila odlomka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-74
 msgid "Ctrl + 0"
@@ -225,7 +226,7 @@ msgstr "Ctrl + 0"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-18
 msgid "Apply Heading 1 paragraph style"
-msgstr "Primjena Stila naslova 1"
+msgstr "Primjena stila odlomka za naslov prve razine"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-76
 msgid "Ctrl + 1"
@@ -233,7 +234,7 @@ msgstr "Ctrl + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
 msgid "Apply Heading 2 paragraph style"
-msgstr "Primjena Stila naslova 2"
+msgstr "Primjena stila odlomka za naslov druge razine"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-76
 msgid "Ctrl + 2"
@@ -241,7 +242,7 @@ msgstr "Ctrl + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-18
 msgid "Apply Heading 3 paragraph style"
-msgstr "Primjena Stila naslova 3"
+msgstr "Primjena stila odlomka za naslov treće razine"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-69
@@ -250,7 +251,7 @@ msgstr "Ctrl + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-18
 msgid "Apply Heading 4 paragraph style"
-msgstr "Primjena Stila naslova 4"
+msgstr "Primjena stila odlomka za naslov četvrte razine"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-76
 msgid "Ctrl + 4"
@@ -258,7 +259,7 @@ msgstr "Ctrl + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-18
 msgid "Apply Heading 5 paragraph style"
-msgstr "Primjena Stila naslova 5"
+msgstr "Primjena stila odlomka za naslov pete razine"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-76
 msgid "Ctrl + 5"
@@ -292,17 +293,17 @@ msgstr "Pomicanje kursora ulijevo"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-68
 msgid "Arrow Left"
-msgstr "Strelica ulijevo"
+msgstr "Strelica lijevo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-18
 msgid "Move cursor with selection to the left"
-msgstr "Pomicanje kursora sa označenim sadržajem ulijevo"
+msgstr "Pomicanje kursora s označenim sadržajem ulijevo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-83
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-83
 msgid "Shift + Arrow Left"
-msgstr "Shift + strelica ulijevo"
+msgstr "Shift + strelica lijevo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-18
@@ -312,17 +313,17 @@ msgstr "Postavljanje kursora na početak riječi"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-70
 msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + strelica ulijevo"
+msgstr "Ctrl + strelica lijevo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-18
 msgid "Select to the left word by word"
-msgstr "Označavanje ulijevo jedne po jedne riječi"
+msgstr "Označavanje ulijevo riječ po riječ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-76
 msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ctrl + Shift + strelica ulijevo"
+msgstr "Ctrl + Shift + strelica lijevo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-18
@@ -332,17 +333,17 @@ msgstr "Pomicanje kursora udesno"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-69
 msgid "Arrow Right"
-msgstr "Strelica udesno"
+msgstr "Strelica desno"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18
 msgid "Move cursor with selection to the right"
-msgstr "Pomicanje kursora sa označenim sadržajem udesno"
+msgstr "Pomicanje kursora s označenim sadržajem udesno"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-84
 msgid "Shift + Arrow Right"
-msgstr "Shift + strelica udesno"
+msgstr "Shift + strelica desno"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-18
@@ -352,17 +353,17 @@ msgstr "Postavljanje kursora na početak sljedeće riječi"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-73
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-73
 msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + strelica udesno"
+msgstr "Ctrl + strelica desno"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
 msgid "Select to the right word by word"
-msgstr "Označavanje udesno jedne po jedne riječi"
+msgstr "Označavanje udesno riječ po riječ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-77
 msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl + Shift + strelica udesno"
+msgstr "Ctrl + Shift + strelica desno"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
@@ -372,7 +373,7 @@ msgstr "Pomicanje kursora u prethodni redak"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-68
 msgid "Arrow Up"
-msgstr "Strelica prema gore"
+msgstr "Strelica gore"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
@@ -382,7 +383,7 @@ msgstr "Označavanje prethodnih redaka"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-78
 msgid "Shift + Arrow Up"
-msgstr "Shift + strelica prema gore"
+msgstr "Shift + strelica gore"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-18
@@ -392,7 +393,7 @@ msgstr "Pomicanje kursora na početak prethodnog odlomka"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-95
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-95
 msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + strelica prema gore"
+msgstr "Ctrl + strelica gore"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
@@ -402,17 +403,17 @@ msgstr "Označavanje do početka odlomka"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-77
 msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Shift + strelica za gore"
+msgstr "Ctrl + Shift + strelica gore"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-18
 msgid "Move cursor down one line"
-msgstr "Postavljanje kursora u sljedeći redak"
+msgstr "Pomicanje kursora u sljedeći redak"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-70
 msgid "Arrow Down"
-msgstr "Strelica za dolje"
+msgstr "Strelica dolje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
@@ -422,17 +423,17 @@ msgstr "Označavanje sljedećih redaka"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-80
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-80
 msgid "Shift + Arrow Down"
-msgstr "Shift + strelica za dolje"
+msgstr "Shift + strelica dolje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-18
 msgid "Move cursor to beginning of the next paragraph"
-msgstr "Postavljanje kursora na početak sljedećega odlomka"
+msgstr "Pomicanje kursora na početak sljedećega odlomka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-91
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-91
 msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + strelica za dolje"
+msgstr "Ctrl + strelica dolje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
@@ -442,7 +443,7 @@ msgstr "Označavanje do kraja odlomka"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-71
 msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Shift + strelica za dolje"
+msgstr "Ctrl + Shift + strelica dolje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
@@ -457,7 +458,7 @@ msgstr "Home"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
 msgid "Go and select to the beginning of a line"
-msgstr "Povratak i označavanje do početka retka"
+msgstr "Označavanje do početka retka, počevši odavdje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-85
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-85
@@ -477,7 +478,7 @@ msgstr "Ctrl + Home"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 msgid "Go and select text to start of document"
-msgstr "Povratak i označavanje do početka dokumenta"
+msgstr "Označavanje do početka dokumenta, počevši odavdje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-83
@@ -497,7 +498,7 @@ msgstr "End"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
 msgid "Go and select to the end of a line"
-msgstr "Postavljanje kursora do kraja retka i označavanje do kraja retka"
+msgstr "Označavanje do kraja retka, počevši odavdje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-79
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-79
@@ -517,7 +518,7 @@ msgstr "Ctrl + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 msgid "Go and select text to end of document"
-msgstr "Postavljanje kursora na kraj dokumenta i označavanje do kraja dokumenta"
+msgstr "Označavanje do kraja dokumenta, počevši odavdje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-82
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-81
@@ -526,7 +527,7 @@ msgstr "Ctrl + Shift + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Move the view up one page"
-msgstr "Prikaz prethodne stranice"
+msgstr "Pomakni prikaz na prethodnu stranicu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-70
 msgid "PageUp"
@@ -542,7 +543,7 @@ msgstr "Ctrl + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 msgid "Extend the selection up one page"
-msgstr "Produlji označavanje na stranicu iznad"
+msgstr "Dodatno označavanje jedne prethodne stranice"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-77
 msgid "Shift + PageUp"
@@ -550,7 +551,7 @@ msgstr "Shift + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Move the view down one page"
-msgstr "Premjesti pogled za jednu stranicu dolje"
+msgstr "Pomicanje prikaza na sljedeću stranicu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-72
 msgid "PageDown"
@@ -558,7 +559,7 @@ msgstr "PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Switch cursor between text and footer"
-msgstr "Postavljanje kursora između teksta i podnožja."
+msgstr "Postavljanje kursora između teksta i podnožja"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-82
 msgid "Ctrl + PageDown"
@@ -566,7 +567,7 @@ msgstr "Ctrl + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Extend the selection down one page"
-msgstr "Produlji označavanje na stranicu ispod"
+msgstr "Dodatno označavanje jedne slijedeće stranice"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-79
 msgid "Shift + PageDown"
@@ -606,7 +607,7 @@ msgstr "Ctrl + Shift + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:94-9
 msgid "Shortcut Keys for Tables"
-msgstr "Tipkovničke kratice za tablice"
+msgstr "Tipkovnički prečaci za tablice"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-54
 msgid "If the active cell is empty: selects the whole table. Otherwise: selects the contents of the active cell. Pressing again selects the entire table."
@@ -626,7 +627,7 @@ msgstr "Ctrl + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-56
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
-msgstr "Umeće tabulator (smao u tablicama). Ovisno o tome koji se upravitelj prozorima koristi, kratica može biti i Alt + Tab."
+msgstr "Umeće tabulator (samo u tablicama). Ovisno o tome koji se upravljač prozora koristi, kratica može biti i Alt + Tab."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Alt + Arrow Keys"
@@ -634,7 +635,7 @@ msgstr "Alt + tipke sa strelicama"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-62
 msgid "Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr "Povećava ili smanjuje veličinu retka ili stupca s obzirom na desni ili donji rub ćelije."
+msgstr "Povećava ili smanjuje veličinu stupca ili retka s obzirom na desni ili donji rub ćelije"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt + Shift + Arrow Keys"
@@ -642,7 +643,7 @@ msgstr "Alt + Shift + tipke sa strelicama"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr "Povećava ili smanjuje velićinu stupca ili retka s obzirom na lijevi ili gornji rub ćelije."
+msgstr "Povećava ili smanjuje veličinu stupca ili retka s obzirom na lijevi ili gornji rub ćelije"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
 msgid "Alt + Ctrl + Arrow Keys"
@@ -651,7 +652,7 @@ msgstr "Alt + Ctrl + tipke sa strelicama"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-77
 msgid "Like Alt, but only the active cell is modified"
-msgstr "Isto što i s tipkom Alt, ali mijenja se samo aktivna ćelija"
+msgstr "Isto kao i s tipkom Alt, ali se mijenja samo aktivna ćelija"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
@@ -695,7 +696,7 @@ msgstr "Funkcije obrađivača teksta"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:113-18
 msgid "Insert footnote"
-msgstr "Umetni fusnotu"
+msgstr "Umetanje fusnote"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:113-60
 msgid "Ctrl + Alt + F"
@@ -703,7 +704,7 @@ msgstr "Ctrl + Alt + F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-18
 msgid "Insert endnote"
-msgstr "Umetni završnu bilješku"
+msgstr "Umetanje završne bilješke"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-59
 msgid "Ctrl + Alt + D"
@@ -712,7 +713,7 @@ msgstr "Ctrl + Alt + D"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid "Insert comment"
-msgstr "Umetni komentar"
+msgstr "Umetanje komentara"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-59
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-59
@@ -721,7 +722,7 @@ msgstr "Ctrl + Alt + C"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-18
 msgid "Insert soft hyphen"
-msgstr "Umetnite meke crtice"
+msgstr "Umetanje moguće spojnice"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-63
 msgid "Ctrl + -"
@@ -729,7 +730,7 @@ msgstr "Ctrl + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-18
 msgid "Insert non-breaking hyphen"
-msgstr "Umetni neprekidajuću spojnicu"
+msgstr "Umetanje neprekidajuće spojnice"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-71
 msgid "Ctrl + Shift + -"
@@ -737,7 +738,7 @@ msgstr "Ctrl + Shift + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-18
 msgid "Insert non-breaking space"
-msgstr "Umetni neprekidajući razmak"
+msgstr "Umetanje neprekidajućeg razmaka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-70
 msgid "Ctrl + Shift + Space"
@@ -745,7 +746,7 @@ msgstr "Ctrl + Shift + razmak"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-18
 msgid "Insert line break"
-msgstr "Umetni prijelom retka"
+msgstr "Umetanje prijeloma retka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-62
 msgid "Shift + Enter"
@@ -770,7 +771,7 @@ msgstr "Ctrl + Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
 msgid "Insert new paragraph directly before or after a section, or before a table"
-msgstr "Umetni novi odlomak izravno prije ili poslije odjeljka, ili prije tablice"
+msgstr "Umetanje novog odlomka izravno prije ili poslije odjeljka ili prije tablice"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-155
@@ -779,7 +780,7 @@ msgstr "Alt + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
 msgid "Insert new paragraph without numbering inside a list. Does not work when the cursor is at the end of the list."
-msgstr "Umetnite novi odlomak bez numeriranja unutar popisa. Ne radi kada je pokazivač na kraju popisa."
+msgstr "Umetanje novog odlomka bez pobrojavanja unutar popisa. Ne radi, kad je pokazivač na kraju popisa."
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:129-9
 msgid "Cell formatting"
@@ -795,11 +796,11 @@ msgstr "Ctrl + F1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid "Fill Down"
-msgstr "Popuniti prema dolje"
+msgstr "Popunjavanje prema dolje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid "Set Optimal Column Width"
-msgstr "Postaviti optimalnu širinu stupca"
+msgstr "Postavljanje optimalne širine stupca"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Two decimal places, thousands separator"
@@ -811,7 +812,7 @@ msgstr "Ctrl + Shift + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Standard exponential format"
-msgstr "Standardni eksponencijalni separator"
+msgstr "Standardni format za eksponente"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-72
 msgid "Ctrl + Shift + 2"
@@ -819,7 +820,7 @@ msgstr "Ctrl + Shift + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid "Standard date format"
-msgstr "Standardni datumski format"
+msgstr "Standardni format za datume"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-65
 msgid "Ctrl + Shift + 3"
@@ -827,7 +828,7 @@ msgstr "Ctrl + Shift + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Standard currency format"
-msgstr "Standardni valutni format"
+msgstr "Standardni format za valute"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-69
 msgid "Ctrl + Shift + 4"
@@ -835,7 +836,7 @@ msgstr "Ctrl + Shift + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid "Standard percentage format (two decimal places)"
-msgstr "Standardni postotni format (dva decimalna mjesta)"
+msgstr "Standardni format za postotke (dva decimalna mjesta)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-92
 msgid "Ctrl + Shift + 5"
@@ -851,7 +852,7 @@ msgstr "Ctrl + Shift + 6"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-18
 msgid "Demote list item (list item has to be selected)"
-msgstr "Uklonite stavku popisa (potrebno je odabrati stavku)"
+msgstr "Spuštanje razine stavke popisa (stavka mora biti odabrana)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-92
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-99
@@ -860,7 +861,7 @@ msgstr "Kartica"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-18
 msgid "Promote list item (list item has to be selected)"
-msgstr "Digni razinu stavke popisa (potrebno je odabrati stavku popisa)"
+msgstr "Dizanje razine stavke popisa (stavka mora biti odabrana)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-107
@@ -869,23 +870,23 @@ msgstr "Shift+Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:173-9
 msgid "Text selection and navigation in a textbox"
-msgstr "Označavanje teksta i navigacija u textbox-u"
+msgstr "Označavanje teksta i navigacija u tekstualnom okviru"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
 msgid "Go and select text to start of textbox"
-msgstr "Povratak i označavanje do početka dokumenta "
+msgstr "Označavanje do početka tekstualnog okvira, počevši odavdje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-18
 msgid "Go and select text to end of textbox"
-msgstr "Postavljanje kursora na kraj teksta u tekstualnom okviru i označavanje do kraja teksta u tekstualnom okviru"
+msgstr "Označavanje do kraja tekstualnog okvira, počevši odavdje"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:201-9
 msgid "Slide / draw page keyboard shortcuts"
-msgstr "Tipkovni prečac za slajd/stranicu crteža"
+msgstr "Tipkovnički prečaci za slajd/stranicu crteža"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-18
 msgid "Escape current mode, i.e. from edit mode switch to object selection mode, from object selection mode switch to view mode."
-msgstr "Napusti trenutačni način rada, npr. prebaci s uređivanja na odabiranje objekta, s odabiranja objekta prebaci na prikaz."
+msgstr "Mijenjanje trenutačnog načina rada, npr. prebacivanje s uređivanja na odabiranje objekta, prebacivanje s odabiranja objekta na prikaz."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-166
 msgid "Esc"
@@ -893,45 +894,43 @@ msgstr "Esc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-18
 msgid "Select objects in the order in which they were created"
-msgstr "Označiti objekte po redu kako su kreirani"
+msgstr "Označavanje objekata redoslijedom njihovih stvaranja"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Odaberite objekte redoslijedom njihovih stvaranja"
+msgstr "Označavanje objekata obrnutim redoslijedom njihovih stvaranja"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
 msgid "Move to next text object on slide / drawing page"
-msgstr "Prijeđi na sljedeći objekt na slajdu/stranici crteža"
+msgstr "Premještanje na sljedeći tekstualni objekt na slajdu/stranici crteža"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
 msgid "Select all in slide / drawing page"
-msgstr "Odaberi sve na slajdu/stranici crteža"
+msgstr "Označavanje svih elemenata na slajdu/stranici crteža"
 
 #: html/loleaflet-help.html%2Bdiv.h1:212-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> pomoć"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:251-5
-#, fuzzy
-#| msgid "Cell formatting"
 msgid "Collaborative editing"
-msgstr "Oblikovanje ćelije"
+msgstr "Zajedničko uređivanje"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.h3:258-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "Korisničko sučelje <span class=\"productname\">%productName</span>a"
 
 #: html/loleaflet-help.html%2Bdiv.p:215-5
 #: html/loleaflet-help.html%2Bdiv.h3:278-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Otvaranje, zatvaranje, spremanje, ispisivanje i preuzimanje dokumenata"
 
 #: html/loleaflet-help.html%2Bdiv.p:216-5
 #: html/loleaflet-help.html%2Bdiv.h3:286-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Uređivanje dokumenata"
 
 #: html/loleaflet-help.html%2Bdiv.p:217-5
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
@@ -940,91 +939,91 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:352-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:432-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Napredne funkcije"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:337-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> proračunske tablice"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Uređivanje proračunskih tablica"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:221-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:342-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formule"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:222-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:348-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Oblikovanje proračunskih tablica"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:385-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> tekstualni dokumenti"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:227-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Uređivanje tekstualnih dokumenata"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:228-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
 msgid "Context menus"
-msgstr ""
+msgstr "Kontekstni izbornici"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:400-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Napredne funkcije uređivača tekstualnih dokumenata"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> prezentacije"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:233-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Uređivanje prezentacija"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:234-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:424-5
 msgid "Slide show"
-msgstr ""
+msgstr "Slide show"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:235-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:428-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Ploča slajdova"
 
 #: html/loleaflet-help.html%2Bdiv.p:238-5
 #: html/loleaflet-help.html%2Bdiv.h2:441-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Često postavljena pitanja"
 
 #: html/loleaflet-help.html%2Bdiv.p:239-5
 msgid "General"
-msgstr ""
+msgstr "Opće"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:473-5
 msgid "Text documents"
-msgstr ""
+msgstr "Tekstualni dokumenti"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:537-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Proračunske tablice"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:247-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:565-5
 msgid "Presentations"
-msgstr ""
+msgstr "Prezentacije"
 
 #: html/loleaflet-help.html%2Bdiv.p:249-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
@@ -1072,11 +1071,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:268-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Pretraživanje prema natrag"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:269-11
 msgid "Search forward"
-msgstr ""
+msgstr "Pretraživanje prema naprijed"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:270-11
 msgid "Cancel the search (appears only when a text has been searched)"
@@ -1128,7 +1127,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopiranje i umetanje"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
@@ -1140,7 +1139,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:291-5
 msgid "Document repair"
-msgstr ""
+msgstr "Popravljanje dokumenta"
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
@@ -1156,7 +1155,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:296-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Neaktivan dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:297-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
@@ -1168,7 +1167,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:300-5
 msgid "Pasting"
-msgstr ""
+msgstr "Umetanje"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
@@ -1192,7 +1191,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Dodavanje dijagrama"
 
 #: html/loleaflet-help.html%2Bdiv.p:309-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
@@ -1200,7 +1199,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:311-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
-msgstr ""
+msgstr "Označivanje tablice u tekstualnom dokumentu, raspona u proračunskoj tablici ili tablice u prezentaciji."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
@@ -1224,7 +1223,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:322-5
 msgid "Handling images"
-msgstr ""
+msgstr "Rukovanje slikama"
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
@@ -1243,10 +1242,8 @@ msgid "Images can be resized, rotated and anchored. Text can be wrapped around t
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:327-5
-#, fuzzy
-#| msgid "Go to end of document"
 msgid "Comments in documents"
-msgstr "Postavljanje kursora na kraj dokumenta"
+msgstr "Komentari u dokumentima"
 
 #: html/loleaflet-help.html%2Bdiv.p:328-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
@@ -1258,7 +1255,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:331-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Provjera pravopisa"
 
 #: html/loleaflet-help.html%2Bdiv.p:332-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
@@ -1274,11 +1271,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "Formule se upisuju u traci formula. Upiši znak jednakosti (=) i umetni formulu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:344-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "Primjenjuju se sve funkcije proračunske tablice i matematičkih pravila."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
@@ -1349,8 +1346,6 @@ msgid "Context menus are available on clicking the right mouse button. The comma
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:393-5
-#, fuzzy
-#| msgid "Text formatting"
 msgid "Formatting text"
 msgstr "Oblikovanje teksta"
 
@@ -1372,7 +1367,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:401-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Rukovanje tablicama"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:402-5
 msgid "Insert tables with proper icon in the toolbar. Select the initial number of rows and columns. Add rows and columns with the cell context menu. Merge cells with the <span class=\"ui\">Table</span> menu. The default paragraph style inside cells is “Table contents”."
@@ -1384,7 +1379,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:405-5
 msgid "Track changes"
-msgstr ""
+msgstr "Praćenje promjena"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:406-5
 msgid "When you turn on Track Changes, <span class=\"productname\">%productName</span> marks up new changes made to the document. Select this option again to turn it off."
@@ -1396,7 +1391,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:409-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Ostale napredne funkcije"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:410-5
 msgid "<span class=\"def\">Comments:</span> Comments are inserted in the text and displayed on the right side of the screen."
@@ -1472,15 +1467,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:445-11
 msgid "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr ""
+msgstr "Tekstualni dokumenti: Microsoft formati DOC, DOCX, RTF. OpenDocument format ODT"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:446-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "Proračunske tablice: Microsoft formati XLS, XLSX, OpenDocument format ODS"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:447-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Prezentacije: Microsoft formati PPT, PPTX, OpenDocument Format ODP"
 
 #: html/loleaflet-help.html%2Bdiv.p:449-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
@@ -1544,7 +1539,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Postoji li tezaurus?"
 
 #: html/loleaflet-help.html%2Bdiv.p:467-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
@@ -1559,10 +1554,8 @@ msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is use
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:474-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I get a word count of my document?"
-msgstr "Postavljanje kursora na početak dokumenta"
+msgstr "Kako dobiti broj riječi mojeg dokumenta?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:475-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
@@ -1582,7 +1575,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:481-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Postavljanje kursora na mjesto za umetanje znaka."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."
@@ -1594,7 +1587,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:487-11
 msgid "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <span class=\"ui\">Cancel</span>."
-msgstr ""
+msgstr "Pritisni gumb <span class=\"ui\">Umetni</span>. Za zatvaranje dialoškog okvira, pritisni <span class=\"ui\">Odustani</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:489-5
 msgid "Why can't I delete text? It just gets a strike-through?"
@@ -1606,23 +1599,23 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "With track changes enabled your document show the following settings:"
-msgstr ""
+msgstr "S aktiviranim praćenjem promjena u dokumentu prikazuje sljedeće postavke:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "Brisanja se označuju obojanim precrtanim znakovima."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:494-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "Dodani tekst je označen obojanim podcrtanim znakovima."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:495-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "Sve promjene su označene okomitom crtom u desnoj margini."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:496-11
 msgid "Changes are displayed as comment in the right of the document area."
-msgstr ""
+msgstr "Promjene se prikazuju kao komentari na desnoj strani dokumenta."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:499-5
 msgid "The color assigned to the changes depends on the user that changes the document."
@@ -1637,10 +1630,8 @@ msgid "Changes can be accepted or rejected. To accept or reject changes, click o
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I set the margins of the document?"
-msgstr "Postavljanje kursora na početak dokumenta"
+msgstr "Kako postaviti margine dokumenta?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:504-5
 msgid "Using the ruler drag the leftmost edge of the ruler to adjust the left margin, or the rightmost for the right margin."
@@ -1648,7 +1639,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:505-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Upotreba stila stranice"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:507-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and select the <span class=\"ui\">Page</span> tab"
@@ -1656,7 +1647,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:508-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Prikaži margine stranice u dijaloškom okviru."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:511-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -1664,7 +1655,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid "Place the cursor at the place where the page orientation is to change. Add an empty paragraph."
-msgstr ""
+msgstr "Postavi kursor na mjesto, gdje se položaj stranice treba promijeniti. Dodaj prazan odlomak."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:514-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>, <span class=\"ui\">Text Flow </span> tab"
@@ -1692,7 +1683,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:521-5
 msgid "Directly:"
-msgstr ""
+msgstr "Izravno:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:523-11
 msgid "Select the text with the existing format"
@@ -1708,14 +1699,12 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:527-5
-#, fuzzy
-#| msgid "Apply Heading 1 paragraph style"
 msgid "Applying a paragraph style:"
-msgstr "Primjena Stila naslova 1"
+msgstr "Primjena stila odlomka:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:529-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr ""
+msgstr "Postavljanje kursora na odlomak koji će se oblikovati"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:530-11
 msgid "Select the style to apply in the style dropdown list. The paragraph displays the styles attributes."
@@ -1731,7 +1720,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:538-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Kako odabrati podatke za ispis?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:539-5
 msgid "Insert column and row breaks in the spreadsheet to narrow the print range and print the document to download. On printing the PDF, select the pages of interest."
@@ -1739,7 +1728,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:540-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "Kako uvesti CSV podatke?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:542-11
 msgid "Load your CSV data in some native tool to your platform, select and copy it to the clipboard"
@@ -1747,7 +1736,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:543-11
 msgid "Activate the <span class=\"productname\">%productName</span> spreadsheet window."
-msgstr ""
+msgstr "Aktiviraj prozor <span class=\"productname\">%productName</span> proračunske tablice."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:545-9
 msgid "Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\">Paste</span> or press <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>. The <span class=\"ui\">Text Import</span> dialog opens to let you describe the precise format of the CSV data."
@@ -1763,7 +1752,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:551-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "Kako kopirati formatiranje postojećih ćelija i koristiti ga za nove ćelije?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:552-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
@@ -1771,7 +1760,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:554-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "Oblikovanje izvorne ćelije s fontom, bojom pozadine i drugim."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:556-11
 msgid "Select the cells you want to format. Release the mouse button."
@@ -1787,7 +1776,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:560-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Kako preimenovati list?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:561-5
 msgid "Rename a sheet in the spreadsheet document using the context menu (using the right mouse button) over the sheet tab in the bottom. Enter the new sheet name in the dialog that follows."
@@ -1799,7 +1788,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:568-11
 msgid "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "Otvori prezentaciju u <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:569-11
 msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
@@ -1807,7 +1796,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:571-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr ""
+msgstr "Kako promijeniti liniju, područje i poziciju jednog oblika u slajdu?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:573-11
 msgid "Select the shape in your slide. A set of handles shows."
@@ -1819,4 +1808,4 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:578-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Postavi svojstva elementa objekta."

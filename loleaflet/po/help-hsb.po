@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-02-10 11:01+0000\n"
+"PO-Revision-Date: 2020-02-25 10:42+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hsb/>\n"
 "Language: hsb\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /hsb/libo_online/loleaflet-help-hsb.po\n"
 "X-Pootle-Revision: 2524295\n"
 
@@ -1183,7 +1183,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text."
-msgstr ""
+msgstr "Hdyž tekst do dokumenta zasadźiće (z druheho wokna wobhladowaka abo desktopoweho nakoženja), budźe so jako formatowany tekst zasadźeć."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
 msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."

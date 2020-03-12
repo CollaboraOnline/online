@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-03-05 12:13+0000\n"
+"Last-Translator: DaeHyun Sung(성대현, 成大鉉) <sungdh86@gmail.com>\n"
+"Language-Team: Korean <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ko/>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /ko/libo_online/loleaflet-ui-ko.po\n"
 "X-Pootle-Revision: 3937940\n"
 
@@ -170,7 +171,7 @@ msgstr "서버 내리기"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "서버 가동 시간"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -193,7 +194,7 @@ msgstr "이 세션을 정말 종료하겠습니까?"
 #: src/control/Control.Tabs.js:196 src/control/Control.Toolbar.js:246
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1150
@@ -257,11 +258,11 @@ msgstr "서버에서 %1 명령을 구문 분석하는 동안 %0 오류가 발생
 
 #: src/control/Control.ContextMenu.js:171
 msgid "Delete"
-msgstr ""
+msgstr "삭제"
 
 #: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
-msgstr ""
+msgstr "선택적으로 붙여넣기"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -297,51 +298,51 @@ msgstr "본인"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "다운로드 시작"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "클립보드로 복사 확인"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "업로드 시작"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "교차 복사/붙여넣기 시작"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "색 없음"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "선"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "축"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "방사형"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "타원체"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "입방형"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "정방형"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "고정 크기"
 
 #: src/control/Control.JSDialogBuilder.js:766
 #: src/control/Control.Toolbar.js:1648
@@ -350,19 +351,20 @@ msgstr "없음"
 
 #: src/control/Control.JSDialogBuilder.js:769
 msgid "Color"
-msgstr ""
+msgstr "색"
 
 #: src/control/Control.JSDialogBuilder.js:772
 msgid "Gradient"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:775
+#, fuzzy
 msgid "Hatching"
-msgstr ""
+msgstr "음영선"
 
 #: src/control/Control.JSDialogBuilder.js:779
 msgid "Pattern"
-msgstr ""
+msgstr "양식"
 
 #: src/control/Control.JSDialogBuilder.js:912
 msgid "From"
@@ -373,24 +375,20 @@ msgid "To"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1050
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
-msgstr "글꼴"
+msgstr "글꼴 이름"
 
 #: src/control/Control.JSDialogBuilder.js:1052
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "서명안됨"
+msgstr "글꼴 크기"
 
 #: src/control/Control.JSDialogBuilder.js:1533
 msgid "Rows"
-msgstr ""
+msgstr "열"
 
 #: src/control/Control.JSDialogBuilder.js:1534
 msgid "Columns"
-msgstr ""
+msgstr "행"
 
 #: src/control/Control.JSDialogBuilder.js:1554
 #: src/control/Control.Toolbar.js:973
@@ -399,7 +397,7 @@ msgstr "표 삽입"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "줄 양식:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
@@ -471,7 +469,7 @@ msgstr "배율 초기화"
 
 #: src/control/Control.Menubar.js:64
 msgid "Show Ruler"
-msgstr ""
+msgstr "눈금자 보기"
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:291
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:622
@@ -491,7 +489,7 @@ msgstr "텍스트 방향"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:340
 #: src/control/Control.Menubar.js:456
 msgid "Online Help"
-msgstr ""
+msgstr "온라인 도움말"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
@@ -501,7 +499,7 @@ msgstr "키보드 단축키"
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
 msgid "Report an issue"
-msgstr ""
+msgstr "문제 보고하기"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:509
@@ -546,19 +544,19 @@ msgstr "Excel 스프레드시트 (.xlsx)"
 #: src/control/Control.Menubar.js:473 src/control/Control.Menubar.js:520
 #: src/control/Control.Menubar.js:565
 msgid "Export as"
-msgstr ""
+msgstr "내보내기"
 
 #: src/control/Control.Menubar.js:499
 msgid "Page Setup"
-msgstr ""
+msgstr "페이지 설정"
 
 #: src/control/Control.Menubar.js:500
 msgid "Portrait"
-msgstr ""
+msgstr "세로방향"
 
 #: src/control/Control.Menubar.js:501
 msgid "Landscape"
-msgstr ""
+msgstr "가로방향"
 
 #: src/control/Control.Menubar.js:762 src/control/Control.Toolbar.js:2058
 msgid "Reset to Default Language"
@@ -569,9 +567,8 @@ msgid "Are you sure you want to delete this slide?"
 msgstr "이 슬라이드를 정말 삭제하겠습니까?"
 
 #: src/control/Control.Menubar.js:1185 src/map/Clipboard.js:773
-#, fuzzy
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr "<p>브라우저가 클릭보드 접근에 제한이 있으므로, 다음의 키보드 단축키를 이용하세요:<ul><li><b>Ctrl+C</b>: 복사.</li><li><b>Ctrl+X</b>: 잘라내기.</li><li><b>Ctrl+P</b>: 붙여넣기.</li></ul></p>"
+msgstr "<p>브라우저가 클립보드 접근에 제한이 있으므로, 다음의 키보드 단축키를 이용하세요:<ul><li><b>Ctrl+C</b>: 복사.</li><li><b>Ctrl+X</b>: 잘라내기.</li><li><b>Ctrl+V</b>: 붙여넣기.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -603,7 +600,7 @@ msgstr "이 페이지를 정말 삭제하겠습니까?"
 
 #: src/control/Control.Toolbar.js:860
 msgid "Default Style"
-msgstr ""
+msgstr "기본양식"
 
 #: src/control/Control.Toolbar.js:917
 msgid "Borders"
@@ -623,10 +620,8 @@ msgid "Insert shapes"
 msgstr "도형 삽입"
 
 #: src/control/Control.Toolbar.js:1061
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "함수"
+msgstr "함수 마법사"
 
 #: src/control/Control.Toolbar.js:1105
 msgid "First sheet"
@@ -696,7 +691,7 @@ msgstr "함수 선택"
 
 #: src/control/Control.Toolbar.js:1641
 msgid "Average"
-msgstr "Average"
+msgstr "평균"
 
 #: src/control/Control.Toolbar.js:1642
 msgid "CountA"
@@ -704,7 +699,7 @@ msgstr "CountA"
 
 #: src/control/Control.Toolbar.js:1643
 msgid "Count"
-msgstr "Count"
+msgstr "수"
 
 #: src/control/Control.Toolbar.js:1644
 msgid "Maximum"
@@ -916,19 +911,19 @@ msgstr "이름 바꾸기..."
 
 #: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
-msgstr "%productName 의 이 버전 제공자: "
+msgstr "%productName 의 버전의 제공자"
 
 #: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "하이퍼링크 삽입"
 
 #: src/control/Toolbar.js:451
 msgid "Text"
-msgstr ""
+msgstr "문자"
 
 #: src/control/Toolbar.js:452
 msgid "Link"
-msgstr ""
+msgstr "링크"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -940,7 +935,7 @@ msgstr "리브레오피스 온라인에 연결하는데 문제가 발생하였�
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "서버제공자:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -1072,15 +1067,15 @@ msgstr "편집기에서 나가면, %url 로 방문하겠습니까?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "문서 열기 실패하였습니다. 이 문서는 유효하지 않거나, 허용된 자원보다 많이 사용하려고 합니다. 관리자에게 연락하시기 바랍니다."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr ""
+msgstr "문서 열기 실패하였음."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
+msgstr "디스크 용량이 부족하여 저장이 실패하였습니다. 문서는 바로 읽기전용으로 전환합니다."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1088,11 +1083,11 @@ msgstr "만료되었거나 유효하지 않은 액세스 토큰으로 인해 문
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "문서를 저장할 수 없습니다."
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "문서 이름을 변경할 수 없습니다."
 
 #: src/errormessages.js:38
 #, javascript-format
@@ -1114,11 +1109,11 @@ msgstr "문서 이름을 다시 지을 수 없습니다. 사용 권한을 확인
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "서버로 파일 업로드가 실패하였습니다. 파일을 찾을 수 없습니다."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "서버로 파일 업로드가 실패하였습니다. 파일이 너무 큽니다."
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1138,24 +1133,18 @@ msgstr "답변"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:118
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "검색 취소"
+msgstr "검색바를 보기"
 
 #: src/layer/tile/CalcTileLayer.js:231 src/layer/tile/ImpressTileLayer.js:226
 #: src/layer/tile/WriterTileLayer.js:163
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "검색 취소"
+msgstr "검색 영역 삭제"
 
 #: src/layer/tile/CalcTileLayer.js:233 src/layer/tile/ImpressTileLayer.js:228
 #: src/layer/tile/WriterTileLayer.js:165
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "검색 취소"
+msgstr "검색 바 숨기기"
 
 #: src/layer/tile/TileLayer.js:236
 msgid "Modify"
@@ -1167,19 +1156,19 @@ msgstr "제거하기"
 
 #: src/layer/tile/TileLayer.js:254
 msgid "Resolve"
-msgstr ""
+msgstr "해결"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "%productName 밖으로 붙이려면, '다운로드' 버큰을 먼저 클릭하세요"
 
 #: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "클립보드 다운로드 실패하였습니다, 다시 복사하세요"
 
 #: src/map/Clipboard.js:771
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr ""
+msgstr "<p>화면 키보드의 복사/붙여넣기 버튼을 사용하세요.</p>"
 
 #: src/map/Clipboard.js:796
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
@@ -1187,7 +1176,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:812
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr ""
+msgstr "<p>대량의 복사/붙여넣기 작업에 따른 다운로드가 이미 시작되었습니다. 새 다운로드를 시작하기 전에 현재 다운로드를 기다리거나 취소하시기 바랍니다</p>"
 
 #: src/map/Map.js:243
 msgid "Initializing..."
@@ -1210,12 +1199,12 @@ msgstr "비활성화된 문서 - 편집을 계속하려면 클릭하십시오."
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "파일 이름이 없으므로, 파일 유형:  %0를 서버에 업로드할 수 없습니다"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "파일이 비었기때문에, 파일 유형:  %0를 서버에 업로드할 수 없습니다"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1223,7 +1212,7 @@ msgstr "업로드 중..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "서버로 파일 업로드가 실패되었음, 상태: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

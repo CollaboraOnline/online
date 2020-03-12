@@ -4,7 +4,7 @@
     <string name="app_version">Versione: %1$s, Build ID: %2$s</string>
     <string name="app_description">$APP_NAME è una suite per ufficio moderna e di facile utilizzo per la redazione di testi, fogli elettronici, presentazioni e altro ancora.</string>
     <string name="app_vendor">Questo rilascio è stato fornito da %VENDOR.</string>
-    <string name="no_recent_items">Nessun elemento recente</string>
+    <string name="no_recent_items">Apri un file utilizzando l\'icona della cartella nella barra degli strumenti.</string>
     <string name="no_items">Nessun elemento</string>
     <string name="temp_file_saving_disabled">Questo file è di sola lettura, il salvataggio è disattivato.</string>
     <string name="file_exists_warning">Esiste già un file con lo stesso nome, e sarà sovrascritto.</string>

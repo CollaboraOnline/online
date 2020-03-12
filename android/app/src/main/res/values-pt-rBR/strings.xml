@@ -5,7 +5,7 @@
     <string name="app_version">Version: %1$s, Build ID: %2$s</string>
     <string name="app_description">$APP_NAME é uma moderna suíte de produtividade para processamento de texto, folhas de cálculo e apresentações, de fácil utilização, e open source.</string>
     <string name="app_vendor">Esta versão foi fornecida por $VENDOR.</string>
-    <string name="no_recent_items">Nenhum item recente</string>
+    <string name="no_recent_items">Abra um arquivo através do ícone existente na barra de ferramentas.</string>
     <string name="no_items">Nenhum item</string>
     <string name="temp_file_saving_disabled">Este documento é apenas de leitura, salvaguardar está desabilitado.</string>
     <string name="file_exists_warning">Um ficheiro com o mesmo nome já existe, e será substituído.</string>

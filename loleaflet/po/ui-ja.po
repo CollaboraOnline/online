@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-01-28 08:10+0000\n"
-"Last-Translator: 村上正記 <mucky85236@gmail.com>\n"
+"PO-Revision-Date: 2020-02-25 10:42+0000\n"
+"Last-Translator: So <sou@e06.itscom.net>\n"
 "Language-Team: Japanese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-ui-ja.po\n"
 "X-Pootle-Revision: 3937895\n"
 
@@ -171,7 +171,7 @@ msgstr ""
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "サーバー稼働時間"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -298,7 +298,7 @@ msgstr "あなた"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "ダウンロードの開始"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
@@ -306,7 +306,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "アップロードの開始"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"

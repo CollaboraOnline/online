@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-01-07 10:57+0000\n"
+"PO-Revision-Date: 2020-03-09 10:32+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Aragonese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/an/>\n"
 "Language: an\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /an/libo_online/loleaflet-ui-an.po\n"
 "X-Pootle-Revision: 3937623\n"
 
@@ -26,7 +26,7 @@ msgstr ""
 
 #: admin/admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "Achustes"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
@@ -123,7 +123,7 @@ msgstr ""
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:252
 #: src/layer/tile/TileLayer.js:380
 msgid "Save"
-msgstr ""
+msgstr "Alzar"
 
 #: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"
@@ -1081,7 +1081,7 @@ msgstr ""
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "No s'ha puesto alzar o documento."
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."

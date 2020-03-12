@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-02-05 12:44+0000\n"
+"PO-Revision-Date: 2020-02-25 10:42+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/eo/>\n"
 "Language: eo\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
 "X-Pootle-Revision: 3937773\n"
 
@@ -396,7 +396,7 @@ msgstr "Enmeti tabelon"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Linistilo:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
@@ -409,7 +409,7 @@ msgstr "Neniu (Ne kontroli literumadon)"
 #: src/control/Control.Menubar.js:352 src/control/Control.Menubar.js:468
 #: src/control/Control.Menubar.js:516 src/control/Control.Menubar.js:561
 msgid "Share..."
-msgstr ""
+msgstr "Kunhavigi..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:253
 #: src/control/Control.Menubar.js:354 src/control/Control.Menubar.js:470

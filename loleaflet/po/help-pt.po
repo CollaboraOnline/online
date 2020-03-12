@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2019-12-23 05:31+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"PO-Revision-Date: 2020-03-05 12:13+0000\n"
+"Last-Translator: Carlos Moreira <crolidge@hotmail.com>\n"
 "Language-Team: Portuguese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-help-pt.po\n"
 "X-Pootle-Revision: 855160\n"
 
@@ -1035,11 +1035,11 @@ msgstr "A cada utilizador é atribuída uma cor. O cursor de cada utilizador tam
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:254-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
-msgstr ""
+msgstr "Você pode saltar para o cursor de um utilizador se clicar no seu nome, ou no seu avatar. É possível assim seguir o editor."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:255-11
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
-msgstr ""
+msgstr "O <span class=\"productname\">%productName</span> apresenta-lhe uma pequena notificação no rodapé quando um novo utilizador inicia sessão, ou quando um utilizador sai."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"

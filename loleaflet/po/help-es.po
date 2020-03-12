@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-02-17 13:49+0000\n"
+"PO-Revision-Date: 2020-03-01 02:01+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
@@ -1543,7 +1543,7 @@ msgstr "¿Hay un diccionario de sinónimos?"
 
 #: html/loleaflet-help.html%2Bdiv.p:467-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
-msgstr "Sí. Pero solo para textos en inglés. Pulse en la palabra que desee y seleccione <span class=\"ui\">Herramientas</span> ▸ <span class=\"ui\">Diccionario de sinónimos</span>. Un cuadro de diálogo se abre con varias sugerencias para reemplazar."
+msgstr "Sí. Pulse en la palabra que desee y seleccione <span class=\"ui\">Herramientas</span> ▸ <span class=\"ui\">Diccionario de sinónimos</span>. Un cuadro de diálogo se abre con varias sugerencias para reemplazar."
 
 #: html/loleaflet-help.html%2Bdiv.h4:469-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"

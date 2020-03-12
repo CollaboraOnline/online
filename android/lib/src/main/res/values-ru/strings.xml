@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="temp_file_saving_disabled">Этот файл только для чтения, сохранение отключено.</string>
+    <string name="loading">Загрузка...</string>
+    <string name="preparing_for_the_first_start_after_an_update">Подготовка к первому запуску после обновления.</string>
+    <string name="saving">Сохранение...</string>
+    <string name="cannot_open_file_chooser">Не удается открыть диспетчер файлов</string>
+    <string name="failed_to_insert_image">Не удалось вставить изображение</string>
+    <string name="failed_to_load_file">Не удалось определить файл для загрузки</string>
+    <string name="storage_permission_required">Требуется разрешение на сохранение</string>
+</resources>

@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-02-27 14:08+0000\n"
+"Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
+"Language-Team: Swedish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /sv/libo_online/loleaflet-ui-sv.po\n"
 "X-Pootle-Revision: 3938166\n"
 
@@ -166,11 +167,11 @@ msgstr "Uppdatera"
 
 #: admin/admin.strings.js:42
 msgid "Shutdown Server"
-msgstr ""
+msgstr "Stäng av servern"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Serverns drifttid"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -193,7 +194,7 @@ msgstr "Är du säker på att du vill avsluta sessionen?"
 #: src/control/Control.Tabs.js:196 src/control/Control.Toolbar.js:246
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1150
@@ -245,7 +246,7 @@ msgstr "Stäng"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
-msgstr ""
+msgstr "Öppna länk"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "Edit"
@@ -257,7 +258,7 @@ msgstr "Servern stötte på ett %0-fel vid utförandet av kommandot %1."
 
 #: src/control/Control.ContextMenu.js:171
 msgid "Delete"
-msgstr ""
+msgstr "Radera"
 
 #: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
@@ -297,51 +298,51 @@ msgstr "Du"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "Starta nedladdning"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "Bekräfta lagring som urklipp"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "Starta uppladdning"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "Starta kopiering"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Ingen färg"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Linjär"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "Axial"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "Radiell"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Ellipsoid"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "Kvadratisk"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "Kvadrat"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "Fixerad storlek"
 
 #: src/control/Control.JSDialogBuilder.js:766
 #: src/control/Control.Toolbar.js:1648
@@ -350,47 +351,43 @@ msgstr "Ingen"
 
 #: src/control/Control.JSDialogBuilder.js:769
 msgid "Color"
-msgstr ""
+msgstr "Färg"
 
 #: src/control/Control.JSDialogBuilder.js:772
 msgid "Gradient"
-msgstr ""
+msgstr "Gradient"
 
 #: src/control/Control.JSDialogBuilder.js:775
 msgid "Hatching"
-msgstr ""
+msgstr "Skuggning"
 
 #: src/control/Control.JSDialogBuilder.js:779
 msgid "Pattern"
-msgstr ""
+msgstr "Mönster"
 
 #: src/control/Control.JSDialogBuilder.js:912
 msgid "From"
-msgstr ""
+msgstr "Från"
 
 #: src/control/Control.JSDialogBuilder.js:915
 msgid "To"
-msgstr ""
+msgstr "Till"
 
 #: src/control/Control.JSDialogBuilder.js:1050
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
 msgstr "Teckensnitt"
 
 #: src/control/Control.JSDialogBuilder.js:1052
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "Ej signerat"
+msgstr "Teckensnittsstorlek"
 
 #: src/control/Control.JSDialogBuilder.js:1533
 msgid "Rows"
-msgstr ""
+msgstr "Rader"
 
 #: src/control/Control.JSDialogBuilder.js:1534
 msgid "Columns"
-msgstr ""
+msgstr "Kolumner"
 
 #: src/control/Control.JSDialogBuilder.js:1554
 #: src/control/Control.Toolbar.js:973
@@ -399,7 +396,7 @@ msgstr "Infoga tabell"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Stil för linje"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
@@ -471,13 +468,13 @@ msgstr "Återställ zoomning"
 
 #: src/control/Control.Menubar.js:64
 msgid "Show Ruler"
-msgstr ""
+msgstr "Visa linjal"
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:291
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:622
 #: src/control/Control.Menubar.js:662 src/control/Control.Menubar.js:675
 msgid "Local Image..."
-msgstr ""
+msgstr "Lokal bild..."
 
 #: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:638 src/control/Control.Menubar.js:640
@@ -491,7 +488,7 @@ msgstr "Textriktning"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:340
 #: src/control/Control.Menubar.js:456
 msgid "Online Help"
-msgstr ""
+msgstr "Uppkopplad hjälptext"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
@@ -501,7 +498,7 @@ msgstr "Kortkommandon"
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
 msgid "Report an issue"
-msgstr ""
+msgstr "Rapportera ett problem"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:509
@@ -546,19 +543,19 @@ msgstr "Excel Kalkylark (.xlsx)"
 #: src/control/Control.Menubar.js:473 src/control/Control.Menubar.js:520
 #: src/control/Control.Menubar.js:565
 msgid "Export as"
-msgstr ""
+msgstr "Exportera som"
 
 #: src/control/Control.Menubar.js:499
 msgid "Page Setup"
-msgstr ""
+msgstr "Utskriftsformat"
 
 #: src/control/Control.Menubar.js:500
 msgid "Portrait"
-msgstr ""
+msgstr "Porträtt"
 
 #: src/control/Control.Menubar.js:501
 msgid "Landscape"
-msgstr ""
+msgstr "Landskap"
 
 #: src/control/Control.Menubar.js:762 src/control/Control.Toolbar.js:2058
 msgid "Reset to Default Language"
@@ -570,7 +567,7 @@ msgstr "Är du säker på att du vill ta bort presentationsbilden?"
 
 #: src/control/Control.Menubar.js:1185 src/map/Clipboard.js:773
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr ""
+msgstr "<p>Din webbläsare har mycket begränsad åtkomsttill urklipp, så använd dessa tangentbordskommandon:2<ul>3<li>4<b>Ctrl+C5</b>: För att kopiera.6</li>7<li>8<b>Ctrl+X9</b>: För att klippa ut.0</li><li><b>Ctrl+V</b>: För att klistra in.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -602,11 +599,11 @@ msgstr "Är du säker på att du vill ta bort denna sida?"
 
 #: src/control/Control.Toolbar.js:860
 msgid "Default Style"
-msgstr ""
+msgstr "Standardstil"
 
 #: src/control/Control.Toolbar.js:917
 msgid "Borders"
-msgstr ""
+msgstr "Kanter"
 
 #: src/control/Control.Toolbar.js:925
 msgid "More..."
@@ -614,17 +611,15 @@ msgstr "Mer..."
 
 #: src/control/Control.Toolbar.js:978
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Lägg in lokal bild"
 
 #: src/control/Control.Toolbar.js:982
 msgid "Insert shapes"
 msgstr "Infoga form"
 
 #: src/control/Control.Toolbar.js:1061
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Funktion"
+msgstr "Funktionsguide"
 
 #: src/control/Control.Toolbar.js:1105
 msgid "First sheet"
@@ -647,9 +642,8 @@ msgid "Insert sheet"
 msgstr "Infoga blad"
 
 #: src/control/Control.Toolbar.js:1151
-#, fuzzy
 msgid "Search"
-msgstr "Sök:"
+msgstr "Sök"
 
 #: src/control/Control.Toolbar.js:1157
 msgid "Cancel the search"
@@ -791,11 +785,11 @@ msgstr "Vänligen skanna koden"
 
 #: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
-msgstr ""
+msgstr "Kunde inte komma åt QR-koden"
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
-msgstr ""
+msgstr "Fel vid försök att återställa tillgång till identiteten."
 
 #: src/control/Signing.js:275
 msgid "PIN Code"
@@ -819,11 +813,11 @@ msgstr "Typ:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
-msgstr ""
+msgstr "Dokumented har uppladdats."
 
 #: src/control/Signing.js:488
 msgid "Select identity:"
-msgstr ""
+msgstr "Välj identitet:"
 
 #: src/control/Signing.js:489
 msgid "Login from mobile"
@@ -831,19 +825,19 @@ msgstr "Inloggning från mobil"
 
 #: src/control/Signing.js:490
 msgid "Recover from email"
-msgstr ""
+msgstr "Återvinn from epost"
 
 #: src/control/Signing.js:598
 msgid "Select passport"
-msgstr ""
+msgstr "Välj pass"
 
 #: src/control/Signing.js:599
 msgid "Passport: N/A"
-msgstr ""
+msgstr "Pass: inget"
 
 #: src/control/Signing.js:601
 msgid "Sign"
-msgstr ""
+msgstr "Signera"
 
 #: src/control/Signing.js:603
 msgid "Status:"
@@ -851,11 +845,11 @@ msgstr "Status:"
 
 #: src/control/Signing.js:604
 msgid "N/A"
-msgstr ""
+msgstr "ingen"
 
 #: src/control/Signing.js:607
 msgid "Login"
-msgstr ""
+msgstr "Logga in"
 
 #: src/control/Signing.js:616
 msgid "Not Signed"
@@ -867,7 +861,7 @@ msgstr "Detta dokument är digitalt signerat och signaturen är giltig."
 
 #: src/control/Signing.js:620
 msgid "Signed and validated"
-msgstr ""
+msgstr "Signerat och giltigt"
 
 #: src/control/Signing.js:623
 msgid "This document has an invalid signature."
@@ -875,31 +869,31 @@ msgstr "Detta dokument har en ogiltig signatur."
 
 #: src/control/Signing.js:624
 msgid "Signature broken"
-msgstr ""
+msgstr "Signaturen är trasig"
 
 #: src/control/Signing.js:627
 msgid "The signature was valid, but the document has been modified"
-msgstr ""
+msgstr "Signaturen var giltig, men dokumentet har ändrats"
 
 #: src/control/Signing.js:628
 msgid "Signed but document modified"
-msgstr ""
+msgstr "Signerad men dokumented är modifierat"
 
 #: src/control/Signing.js:631
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "Signaturen är OK, men certifikatet kunde inte valideras."
 
 #: src/control/Signing.js:632
 msgid "Signed but not validated"
-msgstr ""
+msgstr "Signerad men inte validerad"
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
-msgstr ""
+msgstr "Signaturen är OK, men dokumentet är endast delvis signerat"
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
-msgstr ""
+msgstr "Signerat, men inte alla filer är signerade"
 
 #: src/control/Toolbar.js:76 src/control/Toolbar.js:88
 msgid "Downloading..."
@@ -911,7 +905,7 @@ msgstr "Sparar..."
 
 #: src/control/Toolbar.js:115
 msgid "Renaming..."
-msgstr ""
+msgstr "Byter namn..."
 
 #: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
@@ -919,15 +913,15 @@ msgstr "Denna version av %productName drivs av"
 
 #: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Lägg in hyperlänk"
 
 #: src/control/Toolbar.js:451
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/control/Toolbar.js:452
 msgid "Link"
-msgstr ""
+msgstr "Länk"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -939,7 +933,7 @@ msgstr "Aj då, ett problem uppstod vid anslutning till LibreOffice Online: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Tjänsten tillhandahålls av:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -975,11 +969,11 @@ msgstr "Återställer äldre omarbetning. Eventuella ändringar som inte sparats
 
 #: src/core/Socket.js:523
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr ""
+msgstr "Dokumented har ändrats på lagringen. Vad vill du göra med dina inte sparade ändringar?"
 
 #: src/core/Socket.js:527
 msgid "Discard"
-msgstr ""
+msgstr "Glöm"
 
 #: src/core/Socket.js:532
 msgid "Overwrite"
@@ -987,7 +981,7 @@ msgstr "Skriv över"
 
 #: src/core/Socket.js:537
 msgid "Save to new file"
-msgstr ""
+msgstr "Spara i en ny fil"
 
 #: src/core/Socket.js:610
 msgid "Document requires password to view."
@@ -1063,23 +1057,23 @@ msgstr "Kunde inte läsa in dokumentet. Försäkra dig om att filtypen stöds oc
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
-msgstr ""
+msgstr "Ogiltig länk: '%url'"
 
 #: src/errormessages.js:25
 msgid "You are leaving the editor, are you sure you want to visit %url?"
-msgstr ""
+msgstr "Du lämnar redigeringsprogrammet, är du säker att du vill gå till '%url'?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Kunde inte läsa in dokumentet. Det är antingen felaktigt eller kräver mer resurser än vad som är tillåtet. Ta kontakt med administratören."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr ""
+msgstr "Kunde inte läsa in dokumentet."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
+msgstr "Dokumentet kunde inte sparas på grund av brist på utrymme. Dokumentet är nu skrivskyddat."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1087,11 +1081,11 @@ msgstr "Dokumentet kan inte sparas på grund av utgången eller ogiltig behörig
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Dokumentet kan inte sparas."
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Dokumentets namn kan inte ändras."
 
 #: src/errormessages.js:38
 #, javascript-format
@@ -1108,17 +1102,16 @@ msgid "Document cannot be saved. Check your permissions or contact the storage s
 msgstr "Dokumentet kan inte sparas till disk. Kontrollera dina rättigheter eller kontakta lagringsserverns administratör."
 
 #: src/errormessages.js:42
-#, fuzzy
 msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
-msgstr "Dokumentet kan inte sparas till disk. Kontrollera dina rättigheter eller kontakta lagringsserverns administratör."
+msgstr "Dokumentets namn kan inte ändras. Kontrollera dina rättigheter eller kontakta lagringsserverns administratör."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Kunde inte uppladda filen till servern eftersom filen inte hittades."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Kunde inte uppladda filen till servern eftersom filen är för stor."
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1138,24 +1131,18 @@ msgstr "Svara"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:118
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Avbryt sökning"
+msgstr "Visa sökningsbalken"
 
 #: src/layer/tile/CalcTileLayer.js:231 src/layer/tile/ImpressTileLayer.js:226
 #: src/layer/tile/WriterTileLayer.js:163
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Avbryt sökning"
+msgstr "Töm sökfältet"
 
 #: src/layer/tile/CalcTileLayer.js:233 src/layer/tile/ImpressTileLayer.js:228
 #: src/layer/tile/WriterTileLayer.js:165
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Avbryt sökning"
+msgstr "Vidsa inte sökningsbalken"
 
 #: src/layer/tile/TileLayer.js:236
 msgid "Modify"
@@ -1167,19 +1154,19 @@ msgstr "Ta bort"
 
 #: src/layer/tile/TileLayer.js:254
 msgid "Resolve"
-msgstr ""
+msgstr "Lös"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "För att klistra in utanför %productName, klicka först på knappen för 'nedladdning'"
 
 #: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Kunde inte ladda ner urklippet, försök igen"
 
 #: src/map/Clipboard.js:771
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr ""
+msgstr "<p>Använd knapparna för kopiering och klistring på skärmens tangentbord.2</p>"
 
 #: src/map/Clipboard.js:796
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
@@ -1196,12 +1183,12 @@ msgstr "Initierar..."
 #: src/map/Map.js:424
 #, javascript-format
 msgid "%d seconds ago"
-msgstr ""
+msgstr "För %d sekunder sedan"
 
 #: src/map/Map.js:427
 #, javascript-format
 msgid "%d minutes ago"
-msgstr ""
+msgstr "För %d minuter sedan"
 
 #: src/map/Map.js:1273
 msgid "Inactive document - please click to resume editing"
@@ -1210,12 +1197,12 @@ msgstr "Inaktivt dokument - klicka för att fortsätta redigera."
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "En fil av typ %0 kan inte uppladdas till servern eftersom filen inte har ett namn"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Filen av typ %0 kan inte uppladdas till servern eftersom den är tom"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1223,11 +1210,11 @@ msgstr "Laddar upp..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Uppladdning misslyckades med status: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "Skapar en ny fil baserat på mall..."
 
 #: src/map/handler/Map.WOPI.js:422
 msgid "Creating copy..."

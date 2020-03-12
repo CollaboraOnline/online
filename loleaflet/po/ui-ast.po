@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-02-12 12:26+0000\n"
+"PO-Revision-Date: 2020-02-25 10:42+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /ast/libo_online/loleaflet-ui-ast.po\n"
 "X-Pootle-Revision: 3937643\n"
 
@@ -98,7 +98,7 @@ msgstr "Tiempu d'inactividá"
 
 #: admin/admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "Modificáu"
 
 #: admin/admin.strings.js:26
 msgid "Kill"
@@ -396,7 +396,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Estilu de llinia:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
@@ -474,7 +474,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:622
 #: src/control/Control.Menubar.js:662 src/control/Control.Menubar.js:675
 msgid "Local Image..."
-msgstr ""
+msgstr "Imaxe llocal..."
 
 #: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:638 src/control/Control.Menubar.js:640
@@ -1115,11 +1115,11 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
-msgstr ""
+msgstr "Aceutar cambéu"
 
 #: src/layer/marker/Annotation.js:225
 msgid "Reject change"
-msgstr ""
+msgstr "Refugar cambéu"
 
 #: src/layer/marker/Annotation.js:234
 msgid "Open menu"

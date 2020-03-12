@@ -29,7 +29,7 @@
     <string name="owncloud_unauthorized">Prijava v strežnik v oblaku ni možna. Preverite svoje nastavitve.</string>
     <string name="owncloud_wrong_connection">Povezava s strežnikom v oblaku ni možna. Preverite svoje nastavitve.</string>
     <string name="failed_to_load_file">Določitev datoteke za nalaganje je spodletela</string>
-    <string name="no_recent_items">Ni nedavnih</string>
+    <string name="no_recent_items">Odprite datoteko z uporabo ikone mape v orodni vrstici.</string>
     <string name="usb_connected_configure">USB je povezan, prilagodite svojo napravo.</string>
     <string name="otg_file_system">Naprava OTG (poskusno)</string>
     <string name="external_sd_file_system">Zunanji SD</string>
@@ -97,4 +97,6 @@
     <string name="list_view">Seznam</string>
     <string name="file_creation_failed">Ustvarjanje datoteke je spodletelo</string>
     <string name="app_name_settings">Nastavitve</string>
+    <string name="pref_enable_chrome_debugger_info">Omogočite to možnost, da za dokument uporabite orodje razhroščevanja v Chromu</string>
+    <string name="pref_enable_chrome_debugger">Razhroščevanje Chrome</string>
 </resources>

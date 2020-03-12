@@ -6,4 +6,18 @@
     <string name="action_about">このソフトウェアについて</string>
     <string name="temp_file_saving_disabled">読み取り専用です。保存できません。</string>
     <string name="app_name_settings">設定</string>
+    <string name="pref_show_debug_info">デバッグ情報を表示</string>
+    <string name="pref_sort_title">ファイルオーダー</string>
+    <string name="pref_file_explorer_title">ファイルマネージャーのレイアウト</string>
+    <string name="pref_category_explorer">ファイルマネージャーの設定</string>
+    <string name="list_view">リスト</string>
+    <string name="storage_permission_required">ストレージの権限が必要です</string>
+    <string name="file_creation_failed">ファイルの作成に失敗しました。</string>
+    <string name="no_items">アイテムはありません。</string>
+    <string name="no_recent_items">ツールバーのフォルダアイコンを使用してファイルを開いてください。</string>
+    <string name="app_version">バージョン: %1$s, ビルド ID: %2$s</string>
+    <string name="new_textdocument">新規文書ドキュメント</string>
+    <string name="new_presentation">新規プレゼンテーション</string>
+    <string name="new_spreadsheet">新規表計算</string>
+    <string name="sort_za">Z-A</string>
 </resources>

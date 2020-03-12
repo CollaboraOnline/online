@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-03-12 11:37+0000\n"
+"Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
+"Language-Team: Finnish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/fi/>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /fi/libo_online/loleaflet-ui-fi.po\n"
 "X-Pootle-Revision: 3937799\n"
 
@@ -142,15 +143,15 @@ msgstr "Aikaväli CPU-tilastoissa (millisekuntia)"
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Asiakirjaprosessin suurin virtuaalimuisti (megatavuja)"
 
 #: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Asiakirjaprosessin suurin pinomuisti (kilotavuja)"
 
 #: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Suurin kirjoitettava tiedostokoko (megatavuja)"
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
@@ -170,7 +171,7 @@ msgstr "Sammuta palvelin"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Palvelimen käynnistyksestä kulunut aika"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -193,7 +194,7 @@ msgstr "Haluatko varmasti lopettaa tämän istunnon?"
 #: src/control/Control.Tabs.js:196 src/control/Control.Toolbar.js:246
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1150
@@ -253,11 +254,11 @@ msgstr "Muokkaa"
 
 #: src/control/Control.AlertDialog.js:95
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "Palvelin kohtasi virheen %0 jäsennellessään komentoa %1"
 
 #: src/control/Control.ContextMenu.js:171
 msgid "Delete"
-msgstr ""
+msgstr "Poista"
 
 #: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
@@ -269,11 +270,11 @@ msgstr "Korjaa asiakirja"
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
-msgstr ""
+msgstr "Laji"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "Index"
-msgstr ""
+msgstr "Hakemisto"
 
 #: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:275
 msgid "Comment"
@@ -289,7 +290,7 @@ msgstr "Aikaleima"
 
 #: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
-msgstr ""
+msgstr "Siirry tilaan"
 
 #: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2543
 msgid "You"
@@ -297,51 +298,51 @@ msgstr "Sinä"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "Aloita lataus"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "Vahvista kopiointi leikepöydälle"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "Aloita lataus"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "Aloita leikkaa/liitä ristiin"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Ei väriä"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "Lineaarinen"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "Aksiaalinen"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "Radiaalinen"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Ellipsoidi"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "Neliömäinen"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "Neliö"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "Kiinteämittainen"
 
 #: src/control/Control.JSDialogBuilder.js:766
 #: src/control/Control.Toolbar.js:1648
@@ -350,47 +351,43 @@ msgstr "Ei mitään"
 
 #: src/control/Control.JSDialogBuilder.js:769
 msgid "Color"
-msgstr ""
+msgstr "Väri"
 
 #: src/control/Control.JSDialogBuilder.js:772
 msgid "Gradient"
-msgstr ""
+msgstr "Gradientti"
 
 #: src/control/Control.JSDialogBuilder.js:775
 msgid "Hatching"
-msgstr ""
+msgstr "Viivoitus"
 
 #: src/control/Control.JSDialogBuilder.js:779
 msgid "Pattern"
-msgstr ""
+msgstr "Kuviointi"
 
 #: src/control/Control.JSDialogBuilder.js:912
 msgid "From"
-msgstr ""
+msgstr "Aloitus"
 
 #: src/control/Control.JSDialogBuilder.js:915
 msgid "To"
-msgstr ""
+msgstr "Loppu"
 
 #: src/control/Control.JSDialogBuilder.js:1050
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
-msgstr "Fontti"
+msgstr "Kirjasinlaji"
 
 #: src/control/Control.JSDialogBuilder.js:1052
-#, fuzzy
-#| msgid "Font"
 msgid "Font Size"
-msgstr "Fontti"
+msgstr "Kirjasinkoko"
 
 #: src/control/Control.JSDialogBuilder.js:1533
 msgid "Rows"
-msgstr ""
+msgstr "Rivejä"
 
 #: src/control/Control.JSDialogBuilder.js:1534
 msgid "Columns"
-msgstr ""
+msgstr "Sarakkeita"
 
 #: src/control/Control.JSDialogBuilder.js:1554
 #: src/control/Control.Toolbar.js:973
@@ -399,14 +396,14 @@ msgstr "Lisää taulukko"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "Viivatyylit:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:452
 #: src/control/Control.Toolbar.js:2059
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Ei mitään (Älä tarkista oikeinkirjoitusta)"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:251
 #: src/control/Control.Menubar.js:352 src/control/Control.Menubar.js:468
@@ -446,12 +443,12 @@ msgstr "Word-asiakirja (.docx)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:478
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:471
 #: src/control/Signing.js:601
 msgid "Sign document"
-msgstr ""
+msgstr "Allekirjoita asiakirja"
 
 #: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:260
 #: src/control/Control.Menubar.js:361
@@ -471,7 +468,7 @@ msgstr "Nollaa zoomaus"
 
 #: src/control/Control.Menubar.js:64
 msgid "Show Ruler"
-msgstr ""
+msgstr "Näytä viivotin"
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:291
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:622
@@ -491,7 +488,7 @@ msgstr "Tekstin suunta"
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:340
 #: src/control/Control.Menubar.js:456
 msgid "Online Help"
-msgstr ""
+msgstr "Online-avustus"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
@@ -501,7 +498,7 @@ msgstr "Pikanäppäimet"
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
 msgid "Report an issue"
-msgstr ""
+msgstr "Ilmoita virhe"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:509
@@ -546,19 +543,19 @@ msgstr "Excel-laskentataulukko (.xlsx)"
 #: src/control/Control.Menubar.js:473 src/control/Control.Menubar.js:520
 #: src/control/Control.Menubar.js:565
 msgid "Export as"
-msgstr ""
+msgstr "Vie muodossa"
 
 #: src/control/Control.Menubar.js:499
 msgid "Page Setup"
-msgstr ""
+msgstr "Sivuasetukset"
 
 #: src/control/Control.Menubar.js:500
 msgid "Portrait"
-msgstr ""
+msgstr "Pystytila"
 
 #: src/control/Control.Menubar.js:501
 msgid "Landscape"
-msgstr ""
+msgstr "Vaakatila"
 
 #: src/control/Control.Menubar.js:762 src/control/Control.Toolbar.js:2058
 msgid "Reset to Default Language"
@@ -570,15 +567,15 @@ msgstr "Haluatko varmasti poistaa tämän dian?"
 
 #: src/control/Control.Menubar.js:1185 src/map/Clipboard.js:773
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr ""
+msgstr "<p>Selaimellasi on rajoitettu pääsy leikepöydälle, joten käytä näitä näppäinkomentoja:<ul><li><b>Ctrl+C</b>: Kopioi</li><li><b>Ctrl+X</b>: Leikkaa</li><li><b>Ctrl+V</b>: Liitä</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Vieritä huomautuksia ylöspäin"
 
 #: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Vieritä huomautuksia alaspäin"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -589,9 +586,8 @@ msgid "Insert sheet after this"
 msgstr "Lisää laskentataulukko tämän jälkeen"
 
 #: src/control/Control.Tabs.js:177
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr "Haluatko varmasti poistaa tämän taulukon?"
+msgstr "Haluatko varmasti poistaa taulukon %sheet%?"
 
 #: src/control/Control.Tabs.js:194
 msgid "Enter new sheet name"
@@ -603,11 +599,11 @@ msgstr "Haluatko varmasti poistaa tämän sivun?"
 
 #: src/control/Control.Toolbar.js:860
 msgid "Default Style"
-msgstr ""
+msgstr "Oletustyyli"
 
 #: src/control/Control.Toolbar.js:917
 msgid "Borders"
-msgstr ""
+msgstr "Reunat"
 
 #: src/control/Control.Toolbar.js:925
 msgid "More..."
@@ -619,13 +615,11 @@ msgstr "Lisää paikallinen kuva"
 
 #: src/control/Control.Toolbar.js:982
 msgid "Insert shapes"
-msgstr ""
+msgstr "Lisää muotoja"
 
 #: src/control/Control.Toolbar.js:1061
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Funktio"
+msgstr "Funktioapuri"
 
 #: src/control/Control.Toolbar.js:1105
 msgid "First sheet"
@@ -645,7 +639,7 @@ msgstr "Viimeinen laskentataulukko"
 
 #: src/control/Control.Toolbar.js:1109 src/layer/tile/CalcTileLayer.js:179
 msgid "Insert sheet"
-msgstr ""
+msgstr "Lisää lehti"
 
 #: src/control/Control.Toolbar.js:1151
 msgid "Search"
@@ -658,7 +652,7 @@ msgstr "Peruuta etsintä"
 #: src/control/Control.Toolbar.js:1164 src/layer/tile/CalcTileLayer.js:120
 #: src/layer/tile/ImpressTileLayer.js:155 src/layer/tile/WriterTileLayer.js:100
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Seuraa aina toimittajaa"
 
 #: src/control/Control.Toolbar.js:1167 src/layer/tile/CalcTileLayer.js:123
 #: src/layer/tile/ImpressTileLayer.js:158 src/layer/tile/WriterTileLayer.js:103
@@ -763,19 +757,19 @@ msgstr "Seuraava dia"
 
 #: src/control/Control.Toolbar.js:2262
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr ""
+msgstr "Peru- tai tee-uudestaan-toiminnon ristiriitaisuus usean käyttäjän kesken. Käytä asiakirjan korjausta tilanteen selvittämiseksi."
 
 #: src/control/Control.Toolbar.js:2549
 msgid "Readonly"
-msgstr ""
+msgstr "Kirjoituslukittu"
 
 #: src/control/Ruler.js:199
 msgid "Left Margin"
-msgstr ""
+msgstr "Vasen marginaali"
 
 #: src/control/Ruler.js:200
 msgid "Right Margin"
-msgstr ""
+msgstr "Oikea marginaali"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -791,11 +785,11 @@ msgstr "Skannaa koodi"
 
 #: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
-msgstr ""
+msgstr "QR-koodikuvaa ei saatu."
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
-msgstr ""
+msgstr "Virhe henkilöllisyyden käyttöoikeuksien palautusyrityksessä."
 
 #: src/control/Signing.js:275
 msgid "PIN Code"
@@ -803,19 +797,19 @@ msgstr "PIN-koodi"
 
 #: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr ""
+msgstr "Syötä viestissä saamasi PIN-koodi"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
-msgstr ""
+msgstr "Kirjaudu sisään sähköpostiosoitteellasi tai puhelinnumerollasi"
 
 #: src/control/Signing.js:329
 msgid "Select document type to upload"
-msgstr "Valitse lähetettävän asiakirjan tyyppi"
+msgstr "Valitse lähetettävän asiakirjan laji"
 
 #: src/control/Signing.js:330
 msgid "Type:"
-msgstr ""
+msgstr "Laji:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
@@ -823,27 +817,27 @@ msgstr "Asiakirja lähetetty."
 
 #: src/control/Signing.js:488
 msgid "Select identity:"
-msgstr ""
+msgstr "Valitse identiteetti"
 
 #: src/control/Signing.js:489
 msgid "Login from mobile"
-msgstr ""
+msgstr "Kirjautuminen mobiililaitteelta"
 
 #: src/control/Signing.js:490
 msgid "Recover from email"
-msgstr ""
+msgstr "Palauta sähköpostista"
 
 #: src/control/Signing.js:598
 msgid "Select passport"
-msgstr ""
+msgstr "Valitse passi"
 
 #: src/control/Signing.js:599
 msgid "Passport: N/A"
-msgstr ""
+msgstr "Ei passia"
 
 #: src/control/Signing.js:601
 msgid "Sign"
-msgstr ""
+msgstr "Allekirjoita"
 
 #: src/control/Signing.js:603
 msgid "Status:"
@@ -851,7 +845,7 @@ msgstr "Tila:"
 
 #: src/control/Signing.js:604
 msgid "N/A"
-msgstr ""
+msgstr "Ei saatavissa"
 
 #: src/control/Signing.js:607
 msgid "Login"
@@ -859,7 +853,7 @@ msgstr "Kirjaudu"
 
 #: src/control/Signing.js:616
 msgid "Not Signed"
-msgstr ""
+msgstr "Allekirjoitus puuttuu"
 
 #: src/control/Signing.js:619
 msgid "This document is digitally signed and the signature is valid."
@@ -867,39 +861,39 @@ msgstr "Tämä asiakirja on digitaalisesti allekirjoitettu ja allekirjoitus on k
 
 #: src/control/Signing.js:620
 msgid "Signed and validated"
-msgstr ""
+msgstr "Digitaalisesti allekirjoitettu ja allekirjoitus on kelvollinen"
 
 #: src/control/Signing.js:623
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "Asiakirjalla on epäkelpo digitaalinen allekirjoitus."
 
 #: src/control/Signing.js:624
 msgid "Signature broken"
-msgstr ""
+msgstr "Digitaalinen allekirjoitus on rikki"
 
 #: src/control/Signing.js:627
 msgid "The signature was valid, but the document has been modified"
-msgstr ""
+msgstr "Digitaalinen allekirjoitus oli kelvollinen, mutta asiakirjaa on muokattu"
 
 #: src/control/Signing.js:628
 msgid "Signed but document modified"
-msgstr ""
+msgstr "Digitaalisesti allekirjoitettu mutta asiakirjaa on muokattu"
 
 #: src/control/Signing.js:631
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "Digitaalinen allekirjoitus on kunnossa , mutta varmennetta ei voitu todentaa"
 
 #: src/control/Signing.js:632
 msgid "Signed but not validated"
-msgstr ""
+msgstr "Digitaalisesti allekirjoitettu muttei varmennettu"
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
-msgstr ""
+msgstr "Digitaalinen allekirjoitus on kunnossa, mutta asiakirja on vain osittain allekirjoitettu"
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
-msgstr ""
+msgstr "Digitaalisesti allekirjoitettu mutta vain jotkut tiedostot"
 
 #: src/control/Toolbar.js:76 src/control/Toolbar.js:88
 msgid "Downloading..."
@@ -915,23 +909,23 @@ msgstr "Nimetään uudelleen..."
 
 #: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Tämä versio %productName-tuotteesta perustuu tuotteeseen"
 
 #: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Lisää hyperlinkki"
 
 #: src/control/Toolbar.js:451
 msgid "Text"
-msgstr ""
+msgstr "Teksti"
 
 #: src/control/Toolbar.js:452
 msgid "Link"
-msgstr ""
+msgstr "Linkki"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr ""
+msgstr "IE11:n yhteyksien raja on saavutettu. Katso tästä miten rajaa voi tarvittaessa nostaa: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -939,7 +933,7 @@ msgstr "Yhteydessä LibreOffice Onlineen tapahtui virhe: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "Palvelin:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
@@ -947,15 +941,15 @@ msgstr "Palvelimen versiota ei tueta."
 
 #: src/core/Socket.js:367
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "Asiakirjan omistaja katkaisi istunnon"
 
 #: src/core/Socket.js:371
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Asiakirja jouten - klikkaa jatkaaksesi editointia"
 
 #: src/core/Socket.js:378
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Palvelinta ajetaan alas huoltoa varten (asiakirja tallentuu automaattisesti)"
 
 #: src/core/Socket.js:382
 msgid "Oops, there is a problem connecting the document"
@@ -963,23 +957,23 @@ msgstr "Virhe asiakirjaan yhdistäessä"
 
 #: src/core/Socket.js:386
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "Palvelin käynnistetään uudelleen ja on käytettävissä hetken kuluttua"
 
 #: src/core/Socket.js:414
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
-msgstr ""
+msgstr "Asiakirjan sisältöä on muutettu tallennustilassa. Luetaan uusi sisältö. Sinun versioisi on saatavana versiohistoriassa."
 
 #: src/core/Socket.js:420
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
-msgstr ""
+msgstr "Palautetaan vanha versio. Tähänastiset muutokset tallentuvat versiohistoriaan."
 
 #: src/core/Socket.js:523
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr ""
+msgstr "Asiakirjaa on muokattu tallennustilassa. Mitä haluat tehdä omille tallentamattomille muutoksillesi?"
 
 #: src/core/Socket.js:527
 msgid "Discard"
-msgstr ""
+msgstr "Hylkää ne"
 
 #: src/core/Socket.js:532
 msgid "Overwrite"
@@ -1027,11 +1021,11 @@ msgstr "Palvelimen URL on tyhjä. loolwsd-palvelin on luultavasti konfiguroitu v
 
 #: src/errormessages.js:15
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr ""
+msgstr "Tukea ei ole saatavana tälle versiolle {productname}-tuotteesta. Jotta ei syntyisi mielikuvaa että se soveltuu yrityskäyttöön, tätä ilmoitusta näytetään kun samanaikaisesti käsiteltävien asiakirjojen lukumäärä ylittää {docs} tai kun samanaikaisten käyttäjien lukumäärä ylittää {connections}"
 
 #: src/errormessages.js:16
 msgid "More information and support"
-msgstr ""
+msgstr "Lisätietoja ja tukea"
 
 #: src/errormessages.js:17
 msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
@@ -1042,25 +1036,24 @@ msgid "Service is unavailable. Please try again later and report to your adminis
 msgstr "Palvelu ei ole käytettävissä. Yritä myöhemmin uudelleen ja ota yhteyttä ylläpitäjääsi, mikäli ongelma toistuu."
 
 #: src/errormessages.js:19
-#, fuzzy
 msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
-msgstr "Palvelu ei ole käytettävissä. Yritä myöhemmin uudelleen ja ota yhteyttä ylläpitäjääsi, mikäli ongelma toistuu."
+msgstr "WOPI-oikeuksissa puutteita. Yritä myöhemmin uudelleen ja ota yhteyttä ylläpitoon, mikäli ongelma toistuu."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "WOPISrc-parametri puuttuu tai on virheellien, ota yhteys tukeen."
 
 #: src/errormessages.js:21
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
-msgstr ""
+msgstr "Istuntosi vanhenee ajassa %time. Tallenna työsi ja virkistä istunto (tai lataa webbisivu uudelleen) jatkaaksesi."
 
 #: src/errormessages.js:22
 msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
-msgstr ""
+msgstr "Istuntosi on vanhentunut. Mahdolliset lisämuutokset asiakirjaan saattavat mennä hukkaan. Virkistä istunto (tai lataa webbisivu uudelleen) jatkaaksesi."
 
 #: src/errormessages.js:23
 msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
-msgstr ""
+msgstr "Asiakirjaa ei voitu ladata. Varmista että asiakirjan tiedostolaji on tuettu eikä tiedosto ole virheellien, ja yritä uudelleen."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1068,57 +1061,57 @@ msgstr "Virheellinen linkki: '%url'"
 
 #: src/errormessages.js:25
 msgid "You are leaving the editor, are you sure you want to visit %url?"
-msgstr ""
+msgstr "Olet poistumassa toimittimesta, oletko varma että haluat siirtyä sivulle %url ?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Asiakirjaa ei voitu ladata. Ota yhteys yläpitoon."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr ""
+msgstr "Asiakirjaa ei voitu ladata."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
+msgstr "Tallennus epäonnistui koska tila loppui. Asiakirjaa ei voi enää muokata."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+msgstr "Asiakirjaa ei voi tallentaa epäkelvon tai vanhentuneen käyttöoikeuden takia."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Asiakirjaa ei voi tallentaa."
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Asiakirjaa ei voi nimetä uudelleen."
 
 #: src/errormessages.js:38
 #, javascript-format
 msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
-msgstr ""
+msgstr "Asiakirjaa ei voitu lukea. Ota yhteys tallennuspalvelimen (%storageserver) ylläpitoon."
 
 #: src/errormessages.js:39
 #, javascript-format
 msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
-msgstr ""
+msgstr "Tallennus epäonnistui koska tila loppui. Asiakirjaa ei voi enää muokata. Ota yhteys tallennuspalvelimen (%storageserver) ylläpitoon jatkaaksesi muokkaamista."
 
 #: src/errormessages.js:41
 msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
-msgstr ""
+msgstr "Asiakirjaa ei voida tallentaa. Tarkista saantioikeutesi tai ota yhteyttä tallennuspalvelimen ylläpitoon."
 
 #: src/errormessages.js:42
 msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
-msgstr ""
+msgstr "Asiakirjaa ei voida nimetä uudelleen. Tarista saantioikeutesi tai ota yhteyttä tallennuspalvelimen ylläpitoon."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Asiakirjan lähetys palvelimelle epäonnistui, tiedostoa ei löytynyt."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Asiakirjan lähetys palvelimelle epäonnistui, tiedosto on liian iso."
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1138,24 +1131,18 @@ msgstr "Vastaa"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:118
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Peruuta etsintä"
+msgstr "Näytä hakupalkki"
 
 #: src/layer/tile/CalcTileLayer.js:231 src/layer/tile/ImpressTileLayer.js:226
 #: src/layer/tile/WriterTileLayer.js:163
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Peruuta etsintä"
+msgstr "Tyhjennä hakukenttä"
 
 #: src/layer/tile/CalcTileLayer.js:233 src/layer/tile/ImpressTileLayer.js:228
 #: src/layer/tile/WriterTileLayer.js:165
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Peruuta etsintä"
+msgstr "Piilota hakupalkki"
 
 #: src/layer/tile/TileLayer.js:236
 msgid "Modify"
@@ -1167,27 +1154,27 @@ msgstr "Poista"
 
 #: src/layer/tile/TileLayer.js:254
 msgid "Resolve"
-msgstr ""
+msgstr "Ratkaise"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "Voidaksesi liitää %productName-tuotteen ulkopuolella, käytä ensin 'lataa'-nappia."
 
 #: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Leikepöydän lataus epäonnistui, tee kopiointi uudelleen"
 
 #: src/map/Clipboard.js:771
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr ""
+msgstr "<p>Käytä näyttökoskettimiston kopoi- ja liitä-nappeja</p>"
 
 #: src/map/Clipboard.js:796
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr ""
+msgstr "<p>Jos haluat jakaa suurempia osia asiakirjasta muiden sovellusten kanssa sinun pitää ensin ladata ne laitteellesi. Paina \"Aloita lataus\" -nappia alla, ja kun tämä on suoritettu, paina \"Vahvista kopiointi leikepöydälle\".</p><p>Jos leikkaat ja liität asiakirjojen välissä %productName-tuotteen sisällä, latausta ei tarvita.</p>"
 
 #: src/map/Clipboard.js:812
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr ""
+msgstr "<p>Suuren kopiointi- tai liittämisoperaation aiheuttama lataus on jo käynnissä. Odota että se päättyy, tai peru se, ennen kuin aloitat uuden.</p>"
 
 #: src/map/Map.js:243
 msgid "Initializing..."
@@ -1205,17 +1192,17 @@ msgstr "%d minuuttia sitten"
 
 #: src/map/Map.js:1273
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "Asiakirja ei ole aktiivinen - klikkaa jatkaaksesi muokkausta"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Tiedostoa jonka laji on %0 ei voida lähettää palvelimelle koska ei ole nimeä tiedostolle"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Tiedostoa jonka laji on %0 ei voida lähettää palvelimelle koska tiedosto on tyhjä"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1223,7 +1210,7 @@ msgstr "Lähetetään..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Tiedoston lähetys palvelumelle epäonnistui, tila: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

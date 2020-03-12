@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_vendor">이 출시판은 $VENDOR 가 제공하였습니다.</string>
+    <string name="app_description">$APP_NAME 은 현대적이며, 사용하기 쉬운 오픈소스 제품군이다. 이 제품군은 워드 프로세서, 스프레드시트, 프레젠테이션 등등이 포함되어 있습니다.</string>
+    <string name="app_version">버전: %1$s, 빌드 ID: %2$s</string>
+    <string name="app_name_settings">설정</string>
+</resources>

@@ -4,8 +4,8 @@
     <string name="app_name_settings">Configuración</string>
     <string name="app_version">Versión: %1$s, id. de compilación: %2$s</string>
     <string name="app_description">$APP_NAME es un conjunto de productividad de código abierto moderno y fácil de usar, para procesamiento de textos, hojas de cálculo, presentaciones y más.</string>
-    <string name="app_vendor">Esta versión fue suministrada por $VENDOR.</string>
-    <string name="no_recent_items">No hay elementos recientes</string>
+    <string name="app_vendor">$VENDOR le suministra esta versión.</string>
+    <string name="no_recent_items">Abra un archivo mediante el icono de la carpeta en la barra de herramientas.</string>
     <string name="no_items">No hay elementos</string>
     <string name="temp_file_saving_disabled">Este archivo es de solo lectura; el guardado está desactivado.</string>
     <string name="file_exists_warning">Ya existe un archivo con este nombre y se sobreescribirá.</string>

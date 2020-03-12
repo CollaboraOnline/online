@@ -55,7 +55,7 @@
     <string name="file_exists_warning">Mae ffeil o\'r enw yna\'n bodoli eisoes, a bydd yn cael ei thros ysgrifennu.</string>
     <string name="temp_file_saving_disabled">Darllen yn unig yw\'r ffeil hon, mae cadw wedi ei analluogi.</string>
     <string name="no_items">Dim eitemau</string>
-    <string name="no_recent_items">Dim eitemau diweddar</string>
+    <string name="no_recent_items">Agorwch ffeil gan ddefnyddio\'r eicon ffolder yn y bar offer.</string>
     <string name="app_vendor">Darparwyd y fersiwn yma gan $VENDOR.</string>
     <string name="app_description">Mae $APP_NAMEE yn gasgliad cynhyrchu cod agored modern, hawdd ei ddefnyddio ar gyfer prosesu geiriau, taenlenni, cyflwyniadau a rhagor.</string>
     <string name="app_version">Fersiwn: %1$s, Adeiladedd ID: %2$s</string>

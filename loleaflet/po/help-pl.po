@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-03-02 00:56+0000\n"
+"Last-Translator: Adam Rak <kitynska@gmail.com>\n"
+"Language-Team: Polish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /pl/libo_online/loleaflet-help-pl.po\n"
 "X-Pootle-Revision: 3510350\n"
 
@@ -909,29 +910,27 @@ msgstr "Zaznacz wszystko na slajdzie / stronie"
 
 #: html/loleaflet-help.html%2Bdiv.h1:212-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Pomoc"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:251-5
-#, fuzzy
-#| msgid "Cell formatting"
 msgid "Collaborative editing"
-msgstr "Formatowanie komórki"
+msgstr "Wspólna edycja"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.h3:258-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> interfejs użytkownika"
 
 #: html/loleaflet-help.html%2Bdiv.p:215-5
 #: html/loleaflet-help.html%2Bdiv.h3:278-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Otwieranie, zamykanie, zapisywanie, drukowanie i pobieranie dokumentów"
 
 #: html/loleaflet-help.html%2Bdiv.p:216-5
 #: html/loleaflet-help.html%2Bdiv.h3:286-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Edytowanie dokumentów"
 
 #: html/loleaflet-help.html%2Bdiv.p:217-5
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
@@ -940,91 +939,91 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:352-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:432-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Zaawansowane funkcje"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:337-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> arkusze kalkulacyjne"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Edytowanie arkuszy kalkulacyjnych"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:221-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:342-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formuły"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:222-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:348-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Formatowanie arkuszy kalkulacyjnych"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:385-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> dokumenty tekstowe"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:227-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Edytowanie dokumentów tekstowych"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:228-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
 msgid "Context menus"
-msgstr ""
+msgstr "Menu kontekstowe"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:400-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Zaawansowane funkcje edytora dokumentów tekstowych"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> prezentacje"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:233-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Edytowanie prezentacji"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:234-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:424-5
 msgid "Slide show"
-msgstr ""
+msgstr "Pokaz slajdów"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:235-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:428-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Panel slajdów"
 
 #: html/loleaflet-help.html%2Bdiv.p:238-5
 #: html/loleaflet-help.html%2Bdiv.h2:441-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Często zadawane pytania"
 
 #: html/loleaflet-help.html%2Bdiv.p:239-5
 msgid "General"
-msgstr ""
+msgstr "Ogólne"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:473-5
 msgid "Text documents"
-msgstr ""
+msgstr "Dokumenty tekstowe"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:537-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Arkusze kalkulacyjne"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:247-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:565-5
 msgid "Presentations"
-msgstr ""
+msgstr "Prezentacje"
 
 #: html/loleaflet-help.html%2Bdiv.p:249-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
@@ -1072,11 +1071,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:268-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Szukaj wstecz"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:269-11
 msgid "Search forward"
-msgstr ""
+msgstr "Szukaj do przodu"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:270-11
 msgid "Cancel the search (appears only when a text has been searched)"
@@ -1128,7 +1127,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopiuj i wklej"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
@@ -1243,10 +1242,8 @@ msgid "Images can be resized, rotated and anchored. Text can be wrapped around t
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:327-5
-#, fuzzy
-#| msgid "Go to end of document"
 msgid "Comments in documents"
-msgstr "Idź na koniec dokumentu"
+msgstr "Komentarze w dokumentach"
 
 #: html/loleaflet-help.html%2Bdiv.p:328-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
@@ -1349,8 +1346,6 @@ msgid "Context menus are available on clicking the right mouse button. The comma
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:393-5
-#, fuzzy
-#| msgid "Text formatting"
 msgid "Formatting text"
 msgstr "Formatowanie tekstu"
 
@@ -1559,10 +1554,8 @@ msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is use
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:474-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I get a word count of my document?"
-msgstr "Idź na początek dokumentu"
+msgstr "Jak uzyskać liczbę słów w moim dokumencie?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:475-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
@@ -1637,10 +1630,8 @@ msgid "Changes can be accepted or rejected. To accept or reject changes, click o
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I set the margins of the document?"
-msgstr "Idź na początek dokumentu"
+msgstr "Jak ustawić marginesy dokumentu?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:504-5
 msgid "Using the ruler drag the leftmost edge of the ruler to adjust the left margin, or the rightmost for the right margin."
@@ -1708,10 +1699,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:527-5
-#, fuzzy
-#| msgid "Apply Heading 1 paragraph style"
 msgid "Applying a paragraph style:"
-msgstr "Zastosuj styl akapitu Nagłówek 1"
+msgstr "Stosowanie stylu akapitu:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:529-11
 msgid "Place the cursor at the paragraph to be formatted"
@@ -1819,4 +1808,4 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:578-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Ustaw właściwości elementu obiektu."

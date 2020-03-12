@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-01-21 09:30+0000\n"
+"PO-Revision-Date: 2020-03-10 12:25+0000\n"
 "Last-Translator: Saikeo <kavhanxay@hotmail.com>\n"
 "Language-Team: Lao <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/lo/>\n"
 "Language: lo\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /lo/libo_online/loleaflet-ui-lo.po\n"
 "X-Pootle-Revision: 3937965\n"
 
@@ -94,7 +94,7 @@ msgstr "ເວລາທີ່ຜ່ານໄປ"
 
 #: admin/admin.strings.js:24
 msgid "Idle time"
-msgstr ""
+msgstr "ເວລາວ່າງ"
 
 #: admin/admin.strings.js:25
 msgid "Modified"
@@ -131,15 +131,15 @@ msgstr "ສະຖິຕິຂະຫນາດເຄສຂອງຄວາມຈຳ
 
 #: admin/admin.strings.js:33
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "ສະຖິຕິຊ່ວງເວລາຂອງຫນ່ວຍຄວາມຈຳ (ເປັນວິນາທີ)"
 
 #: admin/admin.strings.js:34
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "ສະຖິຕິຂະຫນາດເຄສຂອງ CPU"
 
 #: admin/admin.strings.js:35
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "ສະຖິຕິຊ່ວງເວລາຂອງ CPU (ເປັນວິນາທີ)"
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -183,18 +183,18 @@ msgstr "ສົ່ງໄປແລ້ວ"
 
 #: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
-msgstr ""
+msgstr "ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່"
 
 #: admin/src/AdminSocketOverview.js:105
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ທີ່ຈະຕັດເຊສສັນນີ້?"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1149 src/control/Control.Tabs.js:179
 #: src/control/Control.Tabs.js:196 src/control/Control.Toolbar.js:246
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "ຕົກລົງ"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1150
@@ -202,55 +202,55 @@ msgstr ""
 #: src/control/Control.Toolbar.js:247 src/control/Toolbar.js:456
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:381
 msgid "Cancel"
-msgstr ""
+msgstr "ຍົກເລີກ"
 
 #: admin/src/AdminSocketOverview.js:190 admin/src/AdminSocketOverview.js:292
 msgid "Documents"
-msgstr ""
+msgstr "ເອກະສານ"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ທີ່ຈະປິດເຊີເວີ?"
 
 #: admin/src/Util.js:14
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: admin/src/Util.js:14
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: admin/src/Util.js:14
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: admin/src/Util.js:14
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
-msgstr ""
+msgstr " ຊົ່ວໂມງ"
 
 #: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
-msgstr ""
+msgstr " ນາທີ"
 
 #: admin/src/Util.js:54
 msgid " s"
-msgstr ""
+msgstr " ວິນາທີ"
 
 #: src/control/Control.AlertDialog.js:25 src/control/Signing.js:608
 msgid "Close"
-msgstr ""
+msgstr "ປິດ"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
-msgstr ""
+msgstr "ເປີດລີ້ງ"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "Edit"
-msgstr ""
+msgstr "ແກ້ໄຂ"
 
 #: src/control/Control.AlertDialog.js:95
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -258,35 +258,35 @@ msgstr ""
 
 #: src/control/Control.ContextMenu.js:171
 msgid "Delete"
-msgstr ""
+msgstr "ລືບ"
 
 #: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
-msgstr ""
+msgstr "ວາງແບບພິເສດ"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
-msgstr ""
+msgstr "ຊ້ອມແຊມເອກະສານ"
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
-msgstr ""
+msgstr "ປະເພດ"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "Index"
-msgstr ""
+msgstr "ອິນເດັກ"
 
 #: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:275
 msgid "Comment"
-msgstr ""
+msgstr "ຄຳເຫັນ"
 
 #: src/control/Control.DocumentRepair.js:50
 msgid "User name"
-msgstr ""
+msgstr "ຊື່ຜູ້ໃຊ້"
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
-msgstr ""
+msgstr "ຕາຕະລາງເວລາ"
 
 #: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
@@ -294,11 +294,11 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2543
 msgid "You"
-msgstr ""
+msgstr "ທ່ານ"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "ເລີ່ມການດາວໂຫລດ"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
@@ -306,264 +306,264 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "ເລີ່ມການອັບໂຫລດ"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "ເລີ່ມຕົ້ນການສຳເນົາ / ວາງ"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "ບໍ່ມີສີ"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "ເສັ້ນ"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "ແກນ"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "ລັດສະຫມີ"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "ວົງກົມ"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "ສົມຜົນກຳລັງສອງ"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "ຈະຕຸລັດ"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "ຂະຫນາດຄົງທີ່"
 
 #: src/control/Control.JSDialogBuilder.js:766
 #: src/control/Control.Toolbar.js:1648
 msgid "None"
-msgstr ""
+msgstr "ບໍ່ມີ"
 
 #: src/control/Control.JSDialogBuilder.js:769
 msgid "Color"
-msgstr ""
+msgstr "ສີ"
 
 #: src/control/Control.JSDialogBuilder.js:772
 msgid "Gradient"
-msgstr ""
+msgstr "ຄວາມຊັນ"
 
 #: src/control/Control.JSDialogBuilder.js:775
 msgid "Hatching"
-msgstr ""
+msgstr "ເສັ້ນແຮເງົາ"
 
 #: src/control/Control.JSDialogBuilder.js:779
 msgid "Pattern"
-msgstr ""
+msgstr "ແບບ"
 
 #: src/control/Control.JSDialogBuilder.js:912
 msgid "From"
-msgstr ""
+msgstr "ຈາກ"
 
 #: src/control/Control.JSDialogBuilder.js:915
 msgid "To"
-msgstr ""
+msgstr "ໄປຫາ"
 
 #: src/control/Control.JSDialogBuilder.js:1050
 msgid "Font Name"
-msgstr ""
+msgstr "ຊືຟັອນ"
 
 #: src/control/Control.JSDialogBuilder.js:1052
 msgid "Font Size"
-msgstr ""
+msgstr "ຂະຫນາດຟັອນ"
 
 #: src/control/Control.JSDialogBuilder.js:1533
 msgid "Rows"
-msgstr ""
+msgstr "ແຖວ"
 
 #: src/control/Control.JSDialogBuilder.js:1534
 msgid "Columns"
-msgstr ""
+msgstr "ຖັນ"
 
 #: src/control/Control.JSDialogBuilder.js:1554
 #: src/control/Control.Toolbar.js:973
 msgid "Insert table"
-msgstr ""
+msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
 
 #: src/control/Control.JSDialogBuilder.js:1583
 msgid "Line style:"
-msgstr ""
+msgstr "ຮູບແບບຂອງເສັ້ນ:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:227
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:452
 #: src/control/Control.Toolbar.js:2059
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "ບໍ່ມີ (ບໍ່ຕ້ອງກວດການສະກົດ)"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:251
 #: src/control/Control.Menubar.js:352 src/control/Control.Menubar.js:468
 #: src/control/Control.Menubar.js:516 src/control/Control.Menubar.js:561
 msgid "Share..."
-msgstr ""
+msgstr "ແບ່ງປັນ..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:253
 #: src/control/Control.Menubar.js:354 src/control/Control.Menubar.js:470
 #: src/control/Control.Menubar.js:518 src/control/Control.Menubar.js:563
 msgid "See revision history"
-msgstr ""
+msgstr "ເບິງປະຫວັດການແກ້ໄຂ"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:254
 #: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:473
 #: src/control/Control.Menubar.js:520 src/control/Control.Menubar.js:565
 msgid "Download as"
-msgstr ""
+msgstr "ດາວໂຫລດເປັນ"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:255
 #: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:474
 #: src/control/Control.Menubar.js:521 src/control/Control.Menubar.js:566
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "ເອກະສານ PDF (.pdf)"
 
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:475
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ເອກະສານ ODF (.odt)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:476
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "ເອກະສານ Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:477
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "ເອກະສານ Word (.docx)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:478
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:471
 #: src/control/Signing.js:601
 msgid "Sign document"
-msgstr ""
+msgstr "ເຊັນໃສ່ເອກະສານ"
 
 #: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:260
 #: src/control/Control.Menubar.js:361
 msgid "Close document"
-msgstr ""
+msgstr "ປິດເອກະສານ"
 
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:265
 #: src/control/Control.Menubar.js:366 src/control/Control.Menubar.js:483
 #: src/control/Control.Menubar.js:529 src/control/Control.Menubar.js:574
 msgid "Repair"
-msgstr ""
+msgstr "ຊ້ອມແຊມ"
 
 #: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:279
 #: src/control/Control.Toolbar.js:1174
 msgid "Reset zoom"
-msgstr ""
+msgstr "ລີເຊັດການຊູມ"
 
 #: src/control/Control.Menubar.js:64
 msgid "Show Ruler"
-msgstr ""
+msgstr "ສະແດງໄມ້ບັນທັດ"
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:291
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:622
 #: src/control/Control.Menubar.js:662 src/control/Control.Menubar.js:675
 msgid "Local Image..."
-msgstr ""
+msgstr "ຮູບພາບທ້ອງຖິ່ນ..."
 
 #: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:638 src/control/Control.Menubar.js:640
 msgid "All"
-msgstr ""
+msgstr "ທັງຫມົດ"
 
 #: src/control/Control.Menubar.js:142
 msgid "Text orientation"
-msgstr ""
+msgstr "ການວາງແນວຂໍ້ຄວາມ"
 
 #: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:340
 #: src/control/Control.Menubar.js:456
 msgid "Online Help"
-msgstr ""
+msgstr "ວິທີນຳໃຊ້ອອນໄລນ"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "ທາງລັດຄີບອດ"
 
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
 msgid "Report an issue"
-msgstr ""
+msgstr "ລາຍງານບັນຫາ"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:509
 #: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:616
 msgid "About"
-msgstr ""
+msgstr "ກ່ຽວກັບ"
 
 #: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:345
 #: src/control/Control.Menubar.js:461 src/map/Map.js:389
 msgid "Last modification"
-msgstr ""
+msgstr "ການດັດແກ້ຄັ້ງຫລ້າສຸດ"
 
 #: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:522
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ODF presentation (.odp)"
 
 #: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:523
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003 Presentation (.ppt)"
 
 #: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:524
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "PowerPoint Presentation (.pptx)"
 
 #: src/control/Control.Menubar.js:331 src/control/Control.Menubar.js:553
 #: src/control/Control.Toolbar.js:1127
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "ການນຳສະເໜີແບບເຕັມຫນ້າຈໍ"
 
 #: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:567
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ສເປຣດຊີດ ODF (.ods)"
 
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:568
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "ສເປຣດຊີດ Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:569
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "ສເປຣດຊີດ Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:473 src/control/Control.Menubar.js:520
 #: src/control/Control.Menubar.js:565
 msgid "Export as"
-msgstr ""
+msgstr "ນຳອອກເປັນ"
 
 #: src/control/Control.Menubar.js:499
 msgid "Page Setup"
-msgstr ""
+msgstr "ຕັ້ງຄ່າຫນ້າເຈ້ຍ"
 
 #: src/control/Control.Menubar.js:500
 msgid "Portrait"
-msgstr ""
+msgstr "ລວງຕັ້ງ"
 
 #: src/control/Control.Menubar.js:501
 msgid "Landscape"
-msgstr ""
+msgstr "ລວງນອນ"
 
 #: src/control/Control.Menubar.js:762 src/control/Control.Toolbar.js:2058
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "ຕັ້ງຄ່າກັບໄປໃຊ້ພາສາພື້ນຖານ"
 
 #: src/control/Control.Menubar.js:1147
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຕ້ອງການຈະລຶບສະໄລດນີ້?"
 
 #: src/control/Control.Menubar.js:1185 src/map/Clipboard.js:773
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
@@ -579,39 +579,39 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "ປ້ອນຊີດຫລັງຈາກນີ້"
 
 #: src/control/Control.Tabs.js:50
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "ປ້ອນຊີດກ່ອນຫນ້ານີ້"
 
 #: src/control/Control.Tabs.js:177
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຈະລຶບຊີດນີ້ %sheet% ?"
 
 #: src/control/Control.Tabs.js:194
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "ປ້ອນຊື່ຊີດໃຫມ່"
 
 #: src/control/Control.Toolbar.js:244
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຈະລຶບຫນ້ານີ້?"
 
 #: src/control/Control.Toolbar.js:860
 msgid "Default Style"
-msgstr ""
+msgstr "ສະຕາຍພື້ນຖານ"
 
 #: src/control/Control.Toolbar.js:917
 msgid "Borders"
-msgstr ""
+msgstr "ຂອບ"
 
 #: src/control/Control.Toolbar.js:925
 msgid "More..."
-msgstr ""
+msgstr "ເພີ່ມເຕີ່ມ..."
 
 #: src/control/Control.Toolbar.js:978
 msgid "Insert Local Image"
-msgstr ""
+msgstr "ປ້ອນຮູບ"
 
 #: src/control/Control.Toolbar.js:982
 msgid "Insert shapes"
@@ -623,31 +623,31 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1105
 msgid "First sheet"
-msgstr ""
+msgstr "ຊີດທຳອິດ"
 
 #: src/control/Control.Toolbar.js:1106
 msgid "Previous sheet"
-msgstr ""
+msgstr "ຂີດກ່ອນຫນ້ານີ້"
 
 #: src/control/Control.Toolbar.js:1107
 msgid "Next sheet"
-msgstr ""
+msgstr "ຊີດຕໍ່ໄປ"
 
 #: src/control/Control.Toolbar.js:1108
 msgid "Last sheet"
-msgstr ""
+msgstr "ຊີດສຸດທ້າຍ"
 
 #: src/control/Control.Toolbar.js:1109 src/layer/tile/CalcTileLayer.js:179
 msgid "Insert sheet"
-msgstr ""
+msgstr "ປ້ອນຊີດ"
 
 #: src/control/Control.Toolbar.js:1151
 msgid "Search"
-msgstr ""
+msgstr "ຄົ້ນຫາ"
 
 #: src/control/Control.Toolbar.js:1157
 msgid "Cancel the search"
-msgstr ""
+msgstr "ຍົກເລີກການຄົ້ນຫາ"
 
 #: src/control/Control.Toolbar.js:1164 src/layer/tile/CalcTileLayer.js:120
 #: src/layer/tile/ImpressTileLayer.js:155 src/layer/tile/WriterTileLayer.js:100
@@ -657,19 +657,19 @@ msgstr ""
 #: src/control/Control.Toolbar.js:1167 src/layer/tile/CalcTileLayer.js:123
 #: src/layer/tile/ImpressTileLayer.js:158 src/layer/tile/WriterTileLayer.js:103
 msgid "Current"
-msgstr ""
+msgstr "ປະຈຸບັນ"
 
 #: src/control/Control.Toolbar.js:1250
 msgid "%user has joined"
-msgstr ""
+msgstr "%user ໄດ້ເຂົ້າຮ່ວມແລ້ວ"
 
 #: src/control/Control.Toolbar.js:1251
 msgid "%user has left"
-msgstr ""
+msgstr "%user ໄດ້ອອກໄປແລ້ວ"
 
 #: src/control/Control.Toolbar.js:1613
 msgid "Number of Sheets"
-msgstr ""
+msgstr "ຈຳນວນຂອງຊີດ"
 
 #: src/control/Control.Toolbar.js:1618
 msgid "Selected range of cells"
@@ -677,83 +677,83 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1623 src/control/Control.Toolbar.js:1680
 msgid "Entering text mode"
-msgstr ""
+msgstr "ເຂົ້າສູ່ text ໂຫມດ"
 
 #: src/control/Control.Toolbar.js:1632 src/control/Control.Toolbar.js:1685
 msgid "Selection Mode"
-msgstr ""
+msgstr "ການເລືອກໂຫມດ"
 
 #: src/control/Control.Toolbar.js:1637
 msgid "Choice of functions"
-msgstr ""
+msgstr "ເລືອກຟັງຊັນ"
 
 #: src/control/Control.Toolbar.js:1641
 msgid "Average"
-msgstr ""
+msgstr "ສະເລ່ຍ"
 
 #: src/control/Control.Toolbar.js:1642
 msgid "CountA"
-msgstr ""
+msgstr "CountA"
 
 #: src/control/Control.Toolbar.js:1643
 msgid "Count"
-msgstr ""
+msgstr "ນັບ"
 
 #: src/control/Control.Toolbar.js:1644
 msgid "Maximum"
-msgstr ""
+msgstr "ໃຫຍ່ສຸດ"
 
 #: src/control/Control.Toolbar.js:1645
 msgid "Minimum"
-msgstr ""
+msgstr "ນ້ອຍສຸດ"
 
 #: src/control/Control.Toolbar.js:1646
 msgid "Sum"
-msgstr ""
+msgstr "ຜົນລວມ"
 
 #: src/control/Control.Toolbar.js:1647
 msgid "Selection count"
-msgstr ""
+msgstr "ການເລືອກການນັບ"
 
 #: src/control/Control.Toolbar.js:1670
 msgid "Number of Pages"
-msgstr ""
+msgstr "ຈຳນວນຫນ້າ"
 
 #: src/control/Control.Toolbar.js:1675
 msgid "Word Counter"
-msgstr ""
+msgstr "ຕົວນັບຄຳ"
 
 #: src/control/Control.Toolbar.js:1710
 msgid "Number of Slides"
-msgstr ""
+msgstr "ຈຳນວນສະໄລດ"
 
 #: src/control/Control.Toolbar.js:1750
 msgid "%n users"
-msgstr ""
+msgstr "%n ຜູ້ໃຊ້"
 
 #: src/control/Control.Toolbar.js:1751
 msgid "1 user"
-msgstr ""
+msgstr "1 ຜູ້ໃຊ້"
 
 #: src/control/Control.Toolbar.js:1752
 msgid "0 users"
-msgstr ""
+msgstr "0 ຜູ້ໃຊ້"
 
 #: src/control/Control.Toolbar.js:2154
 msgid "Style"
-msgstr ""
+msgstr "ສະຕາຍ"
 
 #: src/control/Control.Toolbar.js:2177
 msgid "Font"
-msgstr ""
+msgstr "ຟັອນ"
 
 #: src/control/Control.Toolbar.js:2203
 msgid "Previous slide"
-msgstr ""
+msgstr "ສະໄລດກ່ອນຫນ້ານີ້"
 
 #: src/control/Control.Toolbar.js:2204
 msgid "Next slide"
-msgstr ""
+msgstr "ສະໄລດຕໍ່ໄປ"
 
 #: src/control/Control.Toolbar.js:2262
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
@@ -761,31 +761,31 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:2549
 msgid "Readonly"
-msgstr ""
+msgstr "ອ່ານຢ່າງດຽວ"
 
 #: src/control/Ruler.js:199
 msgid "Left Margin"
-msgstr ""
+msgstr "ເສັ້ນຂອບດ້ານຊ້າຍ"
 
 #: src/control/Ruler.js:200
 msgid "Right Margin"
-msgstr ""
+msgstr "ເສັ້ນຂອບດ້ານຂວາ"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
-msgstr ""
+msgstr "ກະລຸນາປ້ອນລະຫັດ PIN"
 
 #: src/control/Signing.js:214
 msgid "Error at login."
-msgstr ""
+msgstr "ຜິດພາດໃນການລັອກອິນ."
 
 #: src/control/Signing.js:227
 msgid "Please scan the code"
-msgstr ""
+msgstr "ກະລຸນາສະແກນລະຫັດ"
 
 #: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
-msgstr ""
+msgstr "ບໍ່ສາມາດເອົາຮູບພາບລະຫັດ QR  ໄດ້."
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
@@ -793,63 +793,63 @@ msgstr ""
 
 #: src/control/Signing.js:275
 msgid "PIN Code"
-msgstr ""
+msgstr "ລະຫັດ PIN"
 
 #: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr ""
+msgstr "ກະລຸນາປ້ອນລະຫັດ PIN ຈາກອີເມລ ຫລື SMS"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
-msgstr ""
+msgstr "ລັອກອິນຈາກອີເມລ ຫລື ເບີໂທລະສັບ"
 
 #: src/control/Signing.js:329
 msgid "Select document type to upload"
-msgstr ""
+msgstr "ເລືອກປະເພດເອກະສານເພື່ອອັບໂຫລດ"
 
 #: src/control/Signing.js:330
 msgid "Type:"
-msgstr ""
+msgstr "ປະເພດ:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
-msgstr ""
+msgstr "ອັບໂຫລດເອກະສານແລ້ວ."
 
 #: src/control/Signing.js:488
 msgid "Select identity:"
-msgstr ""
+msgstr "ເລືອກສິງລະບຸຕົວຕົນ:"
 
 #: src/control/Signing.js:489
 msgid "Login from mobile"
-msgstr ""
+msgstr "ລັອກອິນຈາກໂທລະສັບ"
 
 #: src/control/Signing.js:490
 msgid "Recover from email"
-msgstr ""
+msgstr "ກູ້ຄືນຈາກອີເມລ"
 
 #: src/control/Signing.js:598
 msgid "Select passport"
-msgstr ""
+msgstr "ເລືອກພາສປອດ"
 
 #: src/control/Signing.js:599
 msgid "Passport: N/A"
-msgstr ""
+msgstr "ພາສປອດ: N/A"
 
 #: src/control/Signing.js:601
 msgid "Sign"
-msgstr ""
+msgstr "ເຊັນ"
 
 #: src/control/Signing.js:603
 msgid "Status:"
-msgstr ""
+msgstr "ສະຖານະ:"
 
 #: src/control/Signing.js:604
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/control/Signing.js:607
 msgid "Login"
-msgstr ""
+msgstr "ລັອກອິນ"
 
 #: src/control/Signing.js:616
 msgid "Not Signed"
@@ -865,15 +865,15 @@ msgstr ""
 
 #: src/control/Signing.js:623
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "ເອກະສານນີ້ມີລາຍເຊັນດິຈິຕັລທີ່ບໍ່ຖືກຕ້ອງ."
 
 #: src/control/Signing.js:624
 msgid "Signature broken"
-msgstr ""
+msgstr "ລາຍເຊັນດິຈິຕັລບໍ່ຖືກຕ້ອງ"
 
 #: src/control/Signing.js:627
 msgid "The signature was valid, but the document has been modified"
-msgstr ""
+msgstr "ລາຍເຊັນດິຈິຕັລຖືກຕ້ອງ, ແຕ່ວ່າເອກະສານໄດ້ຮັບການແກ້ໄຂແລ້ວ."
 
 #: src/control/Signing.js:628
 msgid "Signed but document modified"
@@ -881,7 +881,7 @@ msgstr ""
 
 #: src/control/Signing.js:631
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "ລາຍເຊັນດິຈິຕັລຖືກຕ້ອງ ແຕ່ວ່າໃບຍັ້ງຢືນອາດຈະບໍ່ຖືກຕ້ອງ."
 
 #: src/control/Signing.js:632
 msgid "Signed but not validated"
@@ -897,31 +897,32 @@ msgstr ""
 
 #: src/control/Toolbar.js:76 src/control/Toolbar.js:88
 msgid "Downloading..."
-msgstr ""
+msgstr "ກຳຫລັງດາວໂຫລດ..."
 
 #: src/control/Toolbar.js:104 src/map/Map.js:1409
 msgid "Saving..."
-msgstr ""
+msgstr "ກຳລັງບັນທຶກ..."
 
 #: src/control/Toolbar.js:115
 msgid "Renaming..."
-msgstr ""
+msgstr "ກຳລັງປ່ຽນຊື່..."
 
 #: src/control/Toolbar.js:359
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "%productName ເວີຊັນນີ້ແມ່ນໄດ້ຮັບການຂັບເຄື່ອນໂດຍ"
 
 #: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "ປ້ອນຮາຍເປີລີ້ງ"
 
 #: src/control/Toolbar.js:451
+#, fuzzy
 msgid "Text"
-msgstr ""
+msgstr "ເຕັກ"
 
 #: src/control/Toolbar.js:452
 msgid "Link"
-msgstr ""
+msgstr "ລີ້ງ"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -929,19 +930,19 @@ msgstr ""
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr ""
+msgstr "Oops, ເກີດມີບັນຫາໃນການເຊື່ອມຕໍໄປຫາ LibreOffice ອອນໄລນ: "
 
 #: src/core/Socket.js:294
 msgid "Served by:"
-msgstr ""
+msgstr "ຮັບຜິດຊອບໂດຍ:"
 
 #: src/core/Socket.js:299
 msgid "Unsupported server version."
-msgstr ""
+msgstr "ເຊີເວີເວີຊັນບໍ່ໄດ້ຮັບການຊັບພອດ."
 
 #: src/core/Socket.js:367
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "ເຊສຊັນຖືກຕັດໂດຍເຈົ້າຂອງເອກະສານ"
 
 #: src/core/Socket.js:371
 msgid "Idle document - please click to reload and resume editing"

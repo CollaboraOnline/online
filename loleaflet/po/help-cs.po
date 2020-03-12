@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-01-03 17:34+0000\n"
+"PO-Revision-Date: 2020-03-07 13:27+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-help-cs.po\n"
 "X-Pootle-Revision: 855408\n"
 
@@ -1099,7 +1099,7 @@ msgstr "<span class=\"def\">Lišta s informacemi:</span> Napravo od vyhledávac�
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
-msgstr "Dokumenty jsou uloženy a spravovány cloudovým úložištěm, v němž je integrován <span class=\"productname\">%productName</span>."
+msgstr "Dokumenty jsou uloženy a spravovány cloudovým úložištěm, v němž je <span class=\"productname\">%productName</span> integrován."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
