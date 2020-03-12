@@ -2149,12 +2149,14 @@ protected:
                 LOG_DBG("CreateSession failed.");
             }
         }
+#if !MOBILEAPP
         else if (tokens.equals(0, "exit"))
         {
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
         }
+#endif
         else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") || tokens.equals(0, "canceltiles") ||
                 tokens.equals(0, "paintwindow") || tokens.equals(0, "resizewindow") ||
                 LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
