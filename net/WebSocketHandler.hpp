@@ -616,16 +616,21 @@ private:
             out.insert(out.end(), data, data + len);
         }
         const size_t size = out.size() - oldSize;
-#else
-        LOG_TRC("WebSocketHandle::sendFrame: Writing to #" << socket->getFD() << " " << len << " bytes");
-        assert(flush);
-        assert(out.size() == 0);
 
-        out.insert(out.end(), data, data + len);
-        const size_t size = out.size();
-#endif
         if (flush)
             socket->writeOutgoingData();
+#else
+        LOG_TRC("WebSocketHandle::sendFrame: Writing to #" << socket->getFD() << " " << len << " bytes");
+
+        // We ignore the flush parameter and always flush in the MOBILEAPP case because there is no
+        // WebSocket framing, we put the messages as such into the FakeSocket queue.
+
+        (void) flush;
+        out.insert(out.end(), data, data + len);
+        const size_t size = out.size();
+
+        socket->writeOutgoingData();
+#endif
 
         return size;
     }
