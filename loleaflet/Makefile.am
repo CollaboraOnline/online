@@ -71,6 +71,16 @@ define npm_source
 	done
 endef
 
+LOLEAFLET_ADMIN_JS =\
+	admin/src/Base.js \
+	admin/src/Admin.js \
+	admin/src/AdminSocketBase.js \
+	admin/src/Util.js \
+	admin/src/AdminSocketOverview.js \
+	admin/src/AdminSocketAnalytics.js \
+	admin/src/AdminSocketSettings.js \
+	admin/src/AdminSocketHistory.js
+
 NODE_MODULES_SRC =\
 	autolinker@1.4.3 \
 	json-js@1.1.2 \
@@ -146,8 +156,6 @@ NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
 
 LOLEAFLET_LIBS_JS_SRC = $(patsubst %.js,$(srcdir)/js/%.js,$(LOLEAFLET_LIBS_JS))
 LOLEAFLET_LIBS_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(LOLEAFLET_LIBS_JS))
-
-GET_FILES_JS = $(strip $(shell NODE_PATH=$(abs_builddir)/node_modules $(NODE) -e "try {console.log(require('$(1)').getFiles().join(' '))} catch(e) {}"))
 
 LOLEAFLET_JS =\
 	src/Leaflet.js \
@@ -335,7 +343,9 @@ $(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 $(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@echo "Checking for admin JS errors..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(call GET_FILES_JS,$(srcdir)/admin/build/build.js)) > $@
+	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
+
+
 
 if ENABLE_DEBUG
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST)
