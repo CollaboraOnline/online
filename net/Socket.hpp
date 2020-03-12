@@ -673,6 +673,7 @@ public:
                 LOG_ERR("Error while handling poll for socket #" <<
                         _pollFds[i].fd << " in " << _name << ": " << exc.what());
                 disposition.setClosed();
+                rc = -1;
             }
 
             if (disposition.isMove() || disposition.isClosed())

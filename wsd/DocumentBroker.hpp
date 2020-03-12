@@ -108,7 +108,6 @@ public:
 
         try
         {
-#if !MOBILEAPP // There is no "child process" in a mobile app
             LOG_DBG("Closing ChildProcess [" << _pid << "].");
 
             // Request the child to exit
@@ -117,7 +116,7 @@ public:
                 LOG_DBG("Stopping ChildProcess [" << _pid << "] by sending 'exit' command.");
                 sendTextFrame("exit");
             }
-#endif
+
             // Shutdown the socket.
             if (_ws)
                 _ws->shutdown();

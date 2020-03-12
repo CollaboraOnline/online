@@ -2149,14 +2149,21 @@ protected:
                 LOG_DBG("CreateSession failed.");
             }
         }
-#if !MOBILEAPP
+
         else if (tokens.equals(0, "exit"))
         {
+#if !MOBILEAPP
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
-        }
+#else
+            LOG_INF("Setting TerminationFlag due to 'exit' command.");
+            SigUtil::setTerminationFlag();
+
+            // Not really a logic error, but hey. This is expected to be caught in SocketPoll::poll().
+            throw std::logic_error("exit");
 #endif
+        }
         else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") || tokens.equals(0, "canceltiles") ||
                 tokens.equals(0, "paintwindow") || tokens.equals(0, "resizewindow") ||
                 LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
