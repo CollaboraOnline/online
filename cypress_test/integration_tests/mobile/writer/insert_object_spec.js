@@ -19,6 +19,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// We check whether the entry is there
 		cy.get('.menu-entry-with-icon')
@@ -30,6 +32,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		cy.get('.menu-entry-with-icon')
 			.contains('Comment')
@@ -61,6 +65,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Open Table submenu
 		cy.get('.ui-header.level-0.mobile-wizard.ui-widget')
@@ -96,6 +102,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Open Table submenu
 		cy.get('.ui-header.level-0.mobile-wizard.ui-widget')
@@ -143,6 +151,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Open header/footer submenu
 		cy.get('.menu-entry-with-icon')
@@ -184,6 +194,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Open header/footer submenu
 		cy.get('.menu-entry-with-icon')
@@ -225,6 +237,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Insert footnote
 		cy.get('.menu-entry-with-icon')
@@ -254,6 +268,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Insert endnote
 		cy.get('.menu-entry-with-icon')
@@ -283,6 +299,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Insert endnote
 		cy.get('.menu-entry-with-icon')
@@ -312,6 +330,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Do insertion
 		cy.get('.menu-entry-with-icon')
@@ -332,6 +352,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Open hyperlink dialog
 		cy.get('.menu-entry-with-icon')
@@ -365,6 +387,8 @@ describe('Insert objects via insertion wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Do insertion
 		cy.get('.menu-entry-with-icon')

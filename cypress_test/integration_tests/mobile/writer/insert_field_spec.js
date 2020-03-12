@@ -14,6 +14,8 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.should('not.have.class', 'disabled')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Open fields submenu
 		cy.get('.menu-entry-with-icon.flex-fullwidth')

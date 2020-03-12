@@ -14,6 +14,8 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.should('not.have.class', 'disabled')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Open formatting marks
 		cy.get('.menu-entry-with-icon.flex-fullwidth')

@@ -34,6 +34,9 @@ function copyContentToClipboard() {
 			helper.longPressOnDocument(XPos, YPos);
 		});
 
+	cy.get('#mobile-wizard')
+		.should('be.visible');
+
 	// Execute copy
 	cy.get('.menu-entry-with-icon', {timeout : 10000})
 		.contains('Copy')

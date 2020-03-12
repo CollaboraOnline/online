@@ -15,6 +15,8 @@ describe('Change shape properties via mobile wizard.', function() {
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
+		cy.get('#mobile-wizard')
+			.should('be.visible');
 
 		// Do insertion
 		cy.get('.menu-entry-with-icon')

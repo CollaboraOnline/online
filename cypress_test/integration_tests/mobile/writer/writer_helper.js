@@ -15,6 +15,9 @@ function copyTextToClipboard() {
 			helper.longPressOnDocument(XPos, YPos);
 		});
 
+	cy.get('#mobile-wizard')
+		.should('be.visible');
+
 	// Execute copy
 	cy.get('.ui-header.level-0.mobile-wizard.ui-widget .context-menu-link .menu-entry-with-icon', {timeout : 10000})
 		.contains('Copy')
@@ -50,6 +53,9 @@ function copyTableToClipboard() {
 			helper.longPressOnDocument(XPos, YPos);
 		});
 
+	cy.get('#mobile-wizard')
+		.should('be.visible');
+
 	// Execute copy
 	cy.get('.ui-header.level-0.mobile-wizard.ui-widget .context-menu-link .menu-entry-with-icon')
 		.contains('Copy')
@@ -77,8 +83,11 @@ function clearMobileWizardState() {
 	cy.get('#toolbar-hamburger')
 		.click();
 
-	cy.get('.menu-entry-with-icon', {timeout: 10000})
-		.contains('About');
+	cy.get('#mobile-wizard-content')
+		.should('be.visible');
+
+	cy.get('.menu-entry-with-icon')
+		.contains('About', {timeout: 10000});
 
 	// Close hamburger menu
 	cy.get('#toolbar-hamburger')
@@ -103,6 +112,8 @@ function selectAllMobile() {
 	// Open hamburger menu
 	cy.get('#toolbar-hamburger')
 		.click();
+	cy.get('#mobile-wizard')
+		.should('be.visible', {timeout : 10000});
 
 	// Open edit menu
 	cy.get('.ui-header.level-0 .menu-entry-with-icon')
