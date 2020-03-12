@@ -16,7 +16,7 @@ DESKTOP_DATA_FOLDER = $(abs_srcdir)/data/desktop/
 DESKTOP_WORKDIR = $(abs_builddir)/workdir/desktop/
 DESKTOP_TRACK_FOLDER=$(abs_builddir)/workdir/track/desktop
 
-MOBILE_USER_AGENT = "cypress mobile"
+MOBILE_USER_AGENT = "cypress-mobile"
 MOBILE_TEST_FOLDER = $(abs_srcdir)/integration_tests/mobile
 MOBILE_DATA_FOLDER = $(abs_srcdir)/data/mobile/
 MOBILE_WORKDIR = $(abs_builddir)/workdir/mobile/
