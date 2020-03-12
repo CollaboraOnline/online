@@ -60,7 +60,7 @@ DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DEKSTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
 check-local: do-check
-	$(if $(wildcard $(ERROR_LOG)),$(error Cypress test failure!))
+	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
 do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE)
 	@$(KILL_COMMAND) || true
@@ -197,7 +197,7 @@ endef
 define execute_run_parallel
 	@mkdir -p $(dir $(2)) && touch $(2) && \
 	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
-	if [ -z `grep -o -m 1 "CypressError" $(2)` ];\
+	if [ -z `grep -o -m 1 "CypressError\|AssertionError" $(2)` ];\
 		then cat $(2);\
 		else cat $(2) >> $(ERROR_LOG);\
 	fi;
