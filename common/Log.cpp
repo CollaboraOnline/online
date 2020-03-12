@@ -218,24 +218,20 @@ namespace Log
                        : Poco::Logger::get(Source.getInited() ? Source.getName() : std::string());
     }
 
-#if !MOBILEAPP
     void shutdown()
     {
-        Poco::Logger::shutdown();
+#if !MOBILEAPP
         IsShutdown = true;
+
+        Poco::Logger::shutdown();
 
         // Flush
         std::flush(std::cout);
         fflush(stdout);
         std::flush(std::cerr);
         fflush(stderr);
-    }
-
-    bool isShutdownCalled()
-    {
-        return IsShutdown;
-    }
 #endif
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -56,11 +56,14 @@ namespace Log
     /// Returns the underlying logging system.
     Poco::Logger& logger();
 
-#if !MOBILEAPP
     /// Shutdown and release the logging system.
     void shutdown();
+
+#if !MOBILEAPP
+    extern bool IsShutdown;
+
     /// Was static shutdown() called? If so, producing more logs should be avoided.
-    bool isShutdownCalled();
+    inline bool isShutdownCalled() { return IsShutdown; }
 #else
     constexpr bool isShutdownCalled() { return false; }
 #endif
