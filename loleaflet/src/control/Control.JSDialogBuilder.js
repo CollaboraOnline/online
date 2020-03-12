@@ -1173,7 +1173,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_editControl: function(parentContainer, data, builder, callback) {
-		var edit = L.DomUtil.create('input', '', parentContainer);
+		var edit = L.DomUtil.create('input', 'ui-edit mobile-wizard', parentContainer);
 		edit.value = builder._cleanText(data.text);
 		edit.id = data.id;
 
@@ -1308,7 +1308,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_comboboxControl: function(parentContainer, data, builder) {
 		if (data.id === 'applystyle' ||
 			data.id === 'fontnamecombobox' ||
-			data.id === 'fontsizecombobox')
+			data.id === 'fontsizecombobox' ||
+			data.id === 'FontBox')
 			builder._listboxControl(parentContainer, data, builder);
 		else
 			builder._explorableEditControl(parentContainer, data, builder);
@@ -1321,6 +1322,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return false;
 
 		builder._setIconAndNameForCombobox(data);
+
+		if (data.id === 'FontBox')
+			data.text = '';
 
 		var title = data.text;
 		var valueNode = null;
