@@ -211,7 +211,7 @@ NODE_BINS = \
 
 $(NODE_BINS): $(NPM_INSTALLED);
 
-$(NPM_INSTALLED):
+$(NPM_INSTALLED): package.json
 	@npm install
 	@mkdir -p $(dir $(NPM_INSTALLED))
 	@touch $(NPM_INSTALLED)
