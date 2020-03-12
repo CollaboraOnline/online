@@ -81,7 +81,7 @@ describe('Spell checking menu.', function() {
 
 		// TODO: Why we have a non-breaking space here?
 		cy.get('.context-menu-link')
-			.contains('Ignore\u00a0All')
+			.contains('Ignore All')
 			.click();
 
 		openContextMenu();
@@ -100,7 +100,7 @@ describe('Spell checking menu.', function() {
 
 		// English is selected
 		cy.get('.menu-entry-checked')
-			.contains('English\u00a0(USA)');
+			.contains('English (USA)');
 	});
 
 	it('Set None Language for selection.', function() {
@@ -112,13 +112,13 @@ describe('Spell checking menu.', function() {
 
 		// English is selected
 		cy.get('.menu-entry-checked')
-			.contains('English\u00a0(USA)');
+			.contains('English (USA)');
 
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
 		cy.get('.context-menu-link')
-			.contains('None\u00a0(Do not check spelling)');
+			.contains('None (Do not check spelling)');
 	});
 
 	it('Check language status for paragraph.', function() {
@@ -130,7 +130,7 @@ describe('Spell checking menu.', function() {
 
 		// English is selected
 		cy.get('.menu-entry-checked')
-			.contains('English\u00a0(USA)');
+			.contains('English (USA)');
 	});
 
 	it('Set None Language for paragraph.', function() {
@@ -142,12 +142,12 @@ describe('Spell checking menu.', function() {
 
 		// English is selected
 		cy.get('.menu-entry-checked')
-			.contains('English\u00a0(USA)');
+			.contains('English (USA)');
 
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
 		cy.get('.context-menu-link')
-			.contains('None\u00a0(Do not check spelling)');
+			.contains('None (Do not check spelling)');
 	});
 });
