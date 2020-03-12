@@ -12,6 +12,14 @@ describe('Change shape properties via mobile wizard.', function() {
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
 
+		writerHelper.selectAllMobile();
+
+		cy.get('#document-container')
+			.type('{home}');
+
+		cy.get('.blinking-cursor')
+			.should('be.visible');
+
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
 			.click();
