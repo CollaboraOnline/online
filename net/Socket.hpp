@@ -697,21 +697,6 @@ public:
 #if !MOBILEAPP
             rc = ::write(fd, "w", 1);
 #else
-#if 0
-            // Our fake sockets are record-oriented with a single record buffer, so as we write one
-            // byte at a time to the wakeup pipe, we can't write another one before the previous one
-            // has been read.
-            //
-            // FIXME: Still, explicitly waiting here with fakeSocketPoll() for it to be writable
-            // doesn't seem to be any improvement. On the contrary, with this fakeSocketPoll(), we
-            // hang every time we run the app. Without it, we only hang occasionally.
-
-            LOG_TRC("Wakeup pipe write");
-            struct pollfd p;
-            p.fd = fd;
-            p.events = POLLOUT;
-            fakeSocketPoll(&p, 1, -1);
-#endif
             rc = fakeSocketWrite(fd, "w", 1);
 #endif
         } while (rc == -1 && errno == EINTR);
