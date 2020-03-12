@@ -12,6 +12,7 @@
 "Condition...":"Maemo",
 "Co~lumns...":"D~khplomo...",
 "Currency":"Bojaanong 3D",
+"Dat~e (variable)":"Le~tlha (pharologano)",
 "Decrease Indent":"Fokotsa Kgarametso",
 "Delete Columns":"Phimola Dikholomo",
 "Delete Rows":"Phimola Mela",
@@ -51,6 +52,7 @@
 "To ~Character":"Go ~Sediragatsi",
 "To ~Frame":"Go ~Kageletso",
 "To ~Paragraph":"Go ~Temana",
+"T~ime (variable)":"Na~ko (pharologano)",
 "Underline":"Thalela",
 "Wrap Left":"Sobokanya Molema",
 "Wrap Off":"Sookanya Tima",
@@ -59,6 +61,7 @@
 "~Bring to Front":"~Tlisa kwa Pele",
 "~Chart...":"~Chate...",
 "~Date":"~Letlha",
+"~Date (fixed)":"~Letlha (baakantswe)",
 "~Help":"~Thuso",
 "~Insert":"~Tsenya",
 "~Rename Sheet...":"~Naya etlhare...",
@@ -68,5 +71,6 @@
 "~Send to Back":"~Romela kwa Morago",
 "~Subject":"~Ntlha",
 "~Time":"~Nako",
+"~Time (fixed)":"~Nako (bakantswe)",
 "~While Typing":"~Fa ontse o thaepa"
 }
