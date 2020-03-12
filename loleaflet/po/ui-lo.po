@@ -88,7 +88,7 @@ msgstr "ເວລາທີ່ຜ່ານໄປ"
 
 #: admin/admin.strings.js:24
 msgid "Idle time"
-msgstr ""
+msgstr "ເວລາວ່າງ"
 
 #: admin/admin.strings.js:25
 msgid "Modified"
@@ -124,15 +124,15 @@ msgstr "ສະຖິຕິຂະຫນາດເຄສຂອງຄວາມຈຳ
 
 #: admin/admin.strings.js:33
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "ສະຖິຕິຊ່ວງເວລາຂອງຫນ່ວຍຄວາມຈຳ (ເປັນວິນາທີ)"
 
 #: admin/admin.strings.js:34
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "ສະຖິຕິຂະຫນາດເຄສຂອງ CPU"
 
 #: admin/admin.strings.js:35
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "ສະຖິຕິຊ່ວງເວລາຂອງ CPU (ເປັນວິນາທີ)"
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -172,80 +172,80 @@ msgstr "ສົ່ງໄປແລ້ວ"
 
 #: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
-msgstr ""
+msgstr "ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່"
 
 #: admin/src/AdminSocketOverview.js:102
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ທີ່ຈະຕັດເຊສສັນນີ້?"
 
 #: admin/src/AdminSocketOverview.js:104 admin/src/AdminSocketSettings.js:36
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
 #: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
-msgstr ""
+msgstr "ຕົກລົງ"
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
 #: src/control/Control.Menubar.js:770 src/control/Control.Tabs.js:75
 #: src/control/Control.Tabs.js:92 src/layer/marker/Annotation.js:181
 msgid "Cancel"
-msgstr ""
+msgstr "ຍົກເລີກ"
 
 #: admin/src/AdminSocketOverview.js:187 admin/src/AdminSocketOverview.js:289
 msgid "Documents"
-msgstr ""
+msgstr "ເອກະສານ"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ທີ່ຈະປິດເຊີເວີ?"
 
 #: admin/src/Util.js:14
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: admin/src/Util.js:14
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: admin/src/Util.js:14
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: admin/src/Util.js:14
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
-msgstr ""
+msgstr " ຊົ່ວໂມງ"
 
 #: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
-msgstr ""
+msgstr " ນາທີ"
 
 #: admin/src/Util.js:54
 msgid " s"
-msgstr ""
+msgstr " ວິນາທີ"
 
 #: js/toolbar.js:198
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຈະລຶບຫນ້ານີ້?"
 
 #: js/toolbar.js:748
 msgid "Borders"
-msgstr ""
+msgstr "ຂອບ"
 
 #: js/toolbar.js:756
 msgid "More..."
-msgstr ""
+msgstr "ເພີ່ມເຕີ່ມ..."
 
 #: js/toolbar.js:803
 msgid "Insert table"
-msgstr ""
+msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
 
 #: js/toolbar.js:808
 msgid "Insert Local Image"
-msgstr ""
+msgstr "ປ້ອນຮູບ"
 
 #: js/toolbar.js:812
 msgid "Insert shapes"
@@ -257,11 +257,11 @@ msgstr ""
 
 #: js/toolbar.js:852 js/toolbar.js:1189
 msgid "Current"
-msgstr ""
+msgstr "ປະຈຸບັນ"
 
 #: js/toolbar.js:892 js/toolbar.js:1074 js/toolbar.js:1584
 msgid "Sum"
-msgstr ""
+msgstr "ຜົນລວມ"
 
 #: js/toolbar.js:893 js/toolbar.js:1075
 msgid "Function"
@@ -273,27 +273,27 @@ msgstr ""
 
 #: js/toolbar.js:928 js/toolbar.js:1124
 msgid "First sheet"
-msgstr ""
+msgstr "ຊີດທຳອິດ"
 
 #: js/toolbar.js:929 js/toolbar.js:1125
 msgid "Previous sheet"
-msgstr ""
+msgstr "ຂີດກ່ອນຫນ້ານີ້"
 
 #: js/toolbar.js:930 js/toolbar.js:1126
 msgid "Next sheet"
-msgstr ""
+msgstr "ຊີດຕໍ່ໄປ"
 
 #: js/toolbar.js:931 js/toolbar.js:1127
 msgid "Last sheet"
-msgstr ""
+msgstr "ຊີດສຸດທ້າຍ"
 
 #: js/toolbar.js:932 js/toolbar.js:1128
 msgid "Insert sheet"
-msgstr ""
+msgstr "ປ້ອນຊີດ"
 
 #: js/toolbar.js:1146 src/control/Control.Menubar.js:308
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "ການນຳສະເໜີແບບເຕັມຫນ້າຈໍ"
 
 #: js/toolbar.js:1170
 msgid "Search:"
@@ -301,24 +301,24 @@ msgstr ""
 
 #: js/toolbar.js:1177
 msgid "Cancel the search"
-msgstr ""
+msgstr "ຍົກເລີກການຄົ້ນຫາ"
 
 #: js/toolbar.js:1196 src/control/Control.Menubar.js:63
 #: src/control/Control.Menubar.js:266
 msgid "Reset zoom"
-msgstr ""
+msgstr "ລີເຊັດການຊູມ"
 
 #: js/toolbar.js:1252
 msgid "%user has joined"
-msgstr ""
+msgstr "%user ໄດ້ເຂົ້າຮ່ວມແລ້ວ"
 
 #: js/toolbar.js:1253
 msgid "%user has left"
-msgstr ""
+msgstr "%user ໄດ້ອອກໄປແລ້ວ"
 
 #: js/toolbar.js:1550
 msgid "Number of Sheets"
-msgstr ""
+msgstr "ຈຳນວນຂອງຊີດ"
 
 #: js/toolbar.js:1555
 msgid "Selected range of cells"
@@ -326,7 +326,7 @@ msgstr ""
 
 #: js/toolbar.js:1560 js/toolbar.js:1617
 msgid "Entering text mode"
-msgstr ""
+msgstr "ເຂົ້າສູ່ text ໂຫມດ"
 
 #: js/toolbar.js:1565 js/toolbar.js:1627 js/toolbar.js:1649
 msgid "Text Language"
@@ -334,63 +334,63 @@ msgstr ""
 
 #: js/toolbar.js:1570 js/toolbar.js:1622
 msgid "Selection Mode"
-msgstr ""
+msgstr "ການເລືອກໂຫມດ"
 
 #: js/toolbar.js:1575
 msgid "Choice of functions"
-msgstr ""
+msgstr "ເລືອກຟັງຊັນ"
 
 #: js/toolbar.js:1579
 msgid "Average"
-msgstr ""
+msgstr "ສະເລ່ຍ"
 
 #: js/toolbar.js:1580
 msgid "CountA"
-msgstr ""
+msgstr "CountA"
 
 #: js/toolbar.js:1581
 msgid "Count"
-msgstr ""
+msgstr "ນັບ"
 
 #: js/toolbar.js:1582
 msgid "Maximum"
-msgstr ""
+msgstr "ໃຫຍ່ສຸດ"
 
 #: js/toolbar.js:1583
 msgid "Minimum"
-msgstr ""
+msgstr "ນ້ອຍສຸດ"
 
 #: js/toolbar.js:1585
 msgid "Selection count"
-msgstr ""
+msgstr "ການເລືອກການນັບ"
 
 #: js/toolbar.js:1586
 msgid "None"
-msgstr ""
+msgstr "ບໍ່ມີ"
 
 #: js/toolbar.js:1607
 msgid "Number of Pages"
-msgstr ""
+msgstr "ຈຳນວນຫນ້າ"
 
 #: js/toolbar.js:1612
 msgid "Word Counter"
-msgstr ""
+msgstr "ຕົວນັບຄຳ"
 
 #: js/toolbar.js:1644
 msgid "Number of Slides"
-msgstr ""
+msgstr "ຈຳນວນສະໄລດ"
 
 #: js/toolbar.js:1676
 msgid "%n users"
-msgstr ""
+msgstr "%n ຜູ້ໃຊ້"
 
 #: js/toolbar.js:1677
 msgid "1 user"
-msgstr ""
+msgstr "1 ຜູ້ໃຊ້"
 
 #: js/toolbar.js:1678
 msgid "0 users"
-msgstr ""
+msgstr "0 ຜູ້ໃຊ້"
 
 #: js/toolbar.js:1847
 msgid "Document saved"
@@ -398,19 +398,19 @@ msgstr ""
 
 #: js/toolbar.js:2004
 msgid "Style"
-msgstr ""
+msgstr "ສະຕາຍ"
 
 #: js/toolbar.js:2027
 msgid "Font"
-msgstr ""
+msgstr "ຟັອນ"
 
 #: js/toolbar.js:2048
 msgid "Previous slide"
-msgstr ""
+msgstr "ສະໄລດກ່ອນຫນ້ານີ້"
 
 #: js/toolbar.js:2049
 msgid "Next slide"
-msgstr ""
+msgstr "ສະໄລດຕໍ່ໄປ"
 
 #: js/toolbar.js:2101
 msgid ""
@@ -419,11 +419,11 @@ msgstr ""
 
 #: js/toolbar.js:2381 src/control/Control.DocumentRepair.js:95
 msgid "You"
-msgstr ""
+msgstr "ທ່ານ"
 
 #: js/toolbar.js:2387
 msgid "Readonly"
-msgstr ""
+msgstr "ອ່ານຢ່າງດຽວ"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -447,27 +447,27 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
-msgstr ""
+msgstr "ຊ້ອມແຊມເອກະສານ"
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
-msgstr ""
+msgstr "ປະເພດ"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "Index"
-msgstr ""
+msgstr "ອິນເດັກ"
 
 #: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:230
 msgid "Comment"
-msgstr ""
+msgstr "ຄຳເຫັນ"
 
 #: src/control/Control.DocumentRepair.js:50
 msgid "User name"
-msgstr ""
+msgstr "ຊື່ຜູ້ໃຊ້"
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
-msgstr ""
+msgstr "ຕາຕະລາງເວລາ"
 
 #: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
@@ -476,118 +476,118 @@ msgstr ""
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:326
 msgid "Share..."
-msgstr ""
+msgstr "ແບ່ງປັນ..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:240
 #: src/control/Control.Menubar.js:328
 msgid "See revision history"
-msgstr ""
+msgstr "ເບິງປະຫວັດການແກ້ໄຂ"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:241
 #: src/control/Control.Menubar.js:329
 msgid "Download as"
-msgstr ""
+msgstr "ດາວໂຫລດເປັນ"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:330
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "ເອກະສານ PDF (.pdf)"
 
 #: src/control/Control.Menubar.js:26
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "ເອກະສານ ODF (.odt)"
 
 #: src/control/Control.Menubar.js:27
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "ເອກະສານ Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:28
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "ເອກະສານ Word (.docx)"
 
 #: src/control/Control.Menubar.js:29
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Signing.js:598
 msgid "Sign document"
-msgstr ""
+msgstr "ເຊັນໃສ່ເອກະສານ"
 
 #: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:247
 #: src/control/Control.Menubar.js:335
 msgid "Close document"
-msgstr ""
+msgstr "ປິດເອກະສານ"
 
 #: src/control/Control.Menubar.js:37 src/control/Control.Menubar.js:252
 #: src/control/Control.Menubar.js:340
 msgid "Repair"
-msgstr ""
+msgstr "ຊ້ອມແຊມ"
 
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:269
 #: src/control/Control.Menubar.js:353
 msgid "Local Image..."
-msgstr ""
+msgstr "ຮູບພາບທ້ອງຖິ່ນ..."
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:88
 msgid "All"
-msgstr ""
+msgstr "ທັງຫມົດ"
 
 #: src/control/Control.Menubar.js:137
 msgid "Text orientation"
-msgstr ""
+msgstr "ການວາງແນວຂໍ້ຄວາມ"
 
 #: src/control/Control.Menubar.js:216 src/control/Control.Menubar.js:218
 #: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:313
 #: src/control/Control.Menubar.js:410
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "ບໍ່ມີ (ບໍ່ຕ້ອງກວດການສະກົດ)"
 
 #: src/control/Control.Menubar.js:228 src/control/Control.Menubar.js:316
 #: src/control/Control.Menubar.js:414
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "ທາງລັດຄີບອດ"
 
 #: src/control/Control.Menubar.js:229 src/control/Control.Menubar.js:317
 #: src/control/Control.Menubar.js:415
 msgid "About"
-msgstr ""
+msgstr "ກ່ຽວກັບ"
 
 #: src/control/Control.Menubar.js:231 src/control/Control.Menubar.js:319
 #: src/control/Control.Menubar.js:417 src/map/Map.js:309
 msgid "Last modification"
-msgstr ""
+msgstr "ການດັດແກ້ຄັ້ງຫລ້າສຸດ"
 
 #: src/control/Control.Menubar.js:243
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ODF presentation (.odp)"
 
 #: src/control/Control.Menubar.js:244
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003 Presentation (.ppt)"
 
 #: src/control/Control.Menubar.js:245
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "PowerPoint Presentation (.pptx)"
 
 #: src/control/Control.Menubar.js:331
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "ສເປຣດຊີດ ODF (.ods)"
 
 #: src/control/Control.Menubar.js:332
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "ສເປຣດຊີດ Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:333
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "ສເປຣດຊີດ Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:483
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "ຕັ້ງຄ່າກັບໄປໃຊ້ພາສາພື້ນຖານ"
 
 #: src/control/Control.Menubar.js:767
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຕ້ອງການຈະລຶບສະໄລດນີ້?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -599,35 +599,35 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:66
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "ປ້ອນຊີດຫລັງຈາກນີ້"
 
 #: src/control/Control.Tabs.js:67
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "ປ້ອນຊີດກ່ອນຫນ້ານີ້"
 
 #: src/control/Control.Tabs.js:72
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr ""
+msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຈະລຶບຊີດນີ້ %sheet% ?"
 
 #: src/control/Control.Tabs.js:89
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "ປ້ອນຊື່ຊີດໃຫມ່"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
-msgstr ""
+msgstr "ກະລຸນາປ້ອນລະຫັດ PIN"
 
 #: src/control/Signing.js:214
 msgid "Error at login."
-msgstr ""
+msgstr "ຜິດພາດໃນການລັອກອິນ."
 
 #: src/control/Signing.js:227
 msgid "Please scan the code"
-msgstr ""
+msgstr "ກະລຸນາສະແກນລະຫັດ"
 
 #: src/control/Signing.js:241
 msgid "Couldn't get the QR code image."
-msgstr ""
+msgstr "ບໍ່ສາມາດເອົາຮູບພາບລະຫັດ QR  ໄດ້."
 
 #: src/control/Signing.js:268
 msgid "Error when trying to restore access to identity."
@@ -635,67 +635,67 @@ msgstr ""
 
 #: src/control/Signing.js:274
 msgid "PIN Code"
-msgstr ""
+msgstr "ລະຫັດ PIN"
 
 #: src/control/Signing.js:275
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr ""
+msgstr "ກະລຸນາປ້ອນລະຫັດ PIN ຈາກອີເມລ ຫລື SMS"
 
 #: src/control/Signing.js:295
 msgid "Login from email or mobile number"
-msgstr ""
+msgstr "ລັອກອິນຈາກອີເມລ ຫລື ເບີໂທລະສັບ"
 
 #: src/control/Signing.js:328
 msgid "Select document type to upload"
-msgstr ""
+msgstr "ເລືອກປະເພດເອກະສານເພື່ອອັບໂຫລດ"
 
 #: src/control/Signing.js:329
 msgid "Type:"
-msgstr ""
+msgstr "ປະເພດ:"
 
 #: src/control/Signing.js:360 src/control/Signing.js:657
 msgid "Document uploaded."
-msgstr ""
+msgstr "ອັບໂຫລດເອກະສານແລ້ວ."
 
 #: src/control/Signing.js:485
 msgid "Select identity:"
-msgstr ""
+msgstr "ເລືອກສິງລະບຸຕົວຕົນ:"
 
 #: src/control/Signing.js:486
 msgid "Login from mobile"
-msgstr ""
+msgstr "ລັອກອິນຈາກໂທລະສັບ"
 
 #: src/control/Signing.js:487
 msgid "Recover from email"
-msgstr ""
+msgstr "ກູ້ຄືນຈາກອີເມລ"
 
 #: src/control/Signing.js:595
 msgid "Select passport"
-msgstr ""
+msgstr "ເລືອກພາສປອດ"
 
 #: src/control/Signing.js:596
 msgid "Passport: N/A"
-msgstr ""
+msgstr "ພາສປອດ: N/A"
 
 #: src/control/Signing.js:598
 msgid "Sign"
-msgstr ""
+msgstr "ເຊັນ"
 
 #: src/control/Signing.js:600
 msgid "Status:"
-msgstr ""
+msgstr "ສະຖານະ:"
 
 #: src/control/Signing.js:601
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/control/Signing.js:604
 msgid "Login"
-msgstr ""
+msgstr "ລັອກອິນ"
 
 #: src/control/Signing.js:605
 msgid "Close"
-msgstr ""
+msgstr "ປິດ"
 
 #: src/control/Signing.js:613
 msgid "Not Signed"
@@ -711,15 +711,15 @@ msgstr ""
 
 #: src/control/Signing.js:620
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "ເອກະສານນີ້ມີລາຍເຊັນດິຈິຕັລທີ່ບໍ່ຖືກຕ້ອງ."
 
 #: src/control/Signing.js:621
 msgid "Signature broken"
-msgstr ""
+msgstr "ລາຍເຊັນດິຈິຕັລບໍ່ຖືກຕ້ອງ"
 
 #: src/control/Signing.js:624
 msgid "The signature was valid, but the document has been modified"
-msgstr ""
+msgstr "ລາຍເຊັນດິຈິຕັລຖືກຕ້ອງ, ແຕ່ວ່າເອກະສານໄດ້ຮັບການແກ້ໄຂແລ້ວ."
 
 #: src/control/Signing.js:625
 msgid "Signed but document modified"
@@ -727,7 +727,7 @@ msgstr ""
 
 #: src/control/Signing.js:628
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "ລາຍເຊັນດິຈິຕັລຖືກຕ້ອງ ແຕ່ວ່າໃບຍັ້ງຢືນອາດຈະບໍ່ຖືກຕ້ອງ."
 
 #: src/control/Signing.js:629
 msgid "Signed but not validated"
@@ -743,27 +743,27 @@ msgstr ""
 
 #: src/control/Ruler.js:97
 msgid "Left Margin"
-msgstr ""
+msgstr "ເສັ້ນຂອບດ້ານຊ້າຍ"
 
 #: src/control/Ruler.js:98
 msgid "Right Margin"
-msgstr ""
+msgstr "ເສັ້ນຂອບດ້ານຂວາ"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:87
 msgid "Downloading..."
-msgstr ""
+msgstr "ກຳຫລັງດາວໂຫລດ..."
 
 #: src/control/Toolbar.js:103 src/map/Map.js:1206
 msgid "Saving..."
-msgstr ""
+msgstr "ກຳລັງບັນທຶກ..."
 
 #: src/control/Toolbar.js:114
 msgid "Renaming..."
-msgstr ""
+msgstr "ກຳລັງປ່ຽນຊື່..."
 
 #: src/control/Toolbar.js:283
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "%productName ເວີຊັນນີ້ແມ່ນໄດ້ຮັບການຂັບເຄື່ອນໂດຍ"
 
 #: src/core/Socket.js:79
 msgid ""
@@ -775,15 +775,15 @@ msgstr ""
 
 #: src/core/Socket.js:81
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr ""
+msgstr "Oops, ເກີດມີບັນຫາໃນການເຊື່ອມຕໍໄປຫາ LibreOffice ອອນໄລນ: "
 
 #: src/core/Socket.js:280
 msgid "Unsupported server version."
-msgstr ""
+msgstr "ເຊີເວີເວີຊັນບໍ່ໄດ້ຮັບການຊັບພອດ."
 
 #: src/core/Socket.js:336
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "ເຊສຊັນຖືກຕັດໂດຍເຈົ້າຂອງເອກະສານ"
 
 #: src/core/Socket.js:340
 msgid "Idle document - please click to reload and resume editing"

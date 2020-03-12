@@ -164,7 +164,7 @@ msgstr "Osvježi"
 
 #: admin/admin.strings.js:42
 msgid "Server uptime"
-msgstr ""
+msgstr "Vrijeme rada poslužitelja"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -186,7 +186,7 @@ msgstr "Sigurni ste da želite završiti sesiju?"
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
 #: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
-msgstr ""
+msgstr "U redu"
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
@@ -968,6 +968,8 @@ msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"Neuspjelo učitavanje dokumenta. Dokument je pokvaren ili koristi više "
+"resursa, nego što je dozvoljeno. Kontaktiraj administratora."
 
 #: src/errormessages.js:27
 #, javascript-format

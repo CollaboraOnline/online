@@ -137,15 +137,15 @@ msgstr "Aikaväli CPU-tilastoissa (millisekuntia)"
 
 #: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Asiakirjaprosessin suurin virtuaalimuisti (megatavuja)"
 
 #: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Asiakirjaprosessin suurin pinomuisti (kilotavuja)"
 
 #: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Suurin kirjoitettava tiedostokoko (megatavuja)"
 
 #: admin/admin.strings.js:39
 msgid "Documents:"
@@ -161,7 +161,7 @@ msgstr "Päivitä"
 
 #: admin/admin.strings.js:42
 msgid "Server uptime"
-msgstr ""
+msgstr "Palvelimen käynnistyksestä kulunut aika"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -184,7 +184,7 @@ msgstr "Haluatko varmasti poistaa tämän dian?"
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
 #: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
@@ -236,7 +236,7 @@ msgstr "Haluatko varmasti poistaa tämän sivun?"
 
 #: js/toolbar.js:748
 msgid "Borders"
-msgstr ""
+msgstr "Reunat"
 
 #: js/toolbar.js:756
 msgid "More..."
@@ -252,11 +252,11 @@ msgstr "Lisää paikallinen kuva"
 
 #: js/toolbar.js:812
 msgid "Insert shapes"
-msgstr ""
+msgstr "Lisää muotoja"
 
 #: js/toolbar.js:849 js/toolbar.js:1186
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Seuraa aina toimittajaa"
 
 #: js/toolbar.js:852 js/toolbar.js:1189
 msgid "Current"
@@ -292,7 +292,7 @@ msgstr "Viimeinen laskentataulukko"
 
 #: js/toolbar.js:932 js/toolbar.js:1128
 msgid "Insert sheet"
-msgstr ""
+msgstr "Lisää lehti"
 
 #: js/toolbar.js:1146 src/control/Control.Menubar.js:308
 msgid "Fullscreen presentation"
@@ -419,6 +419,8 @@ msgstr "Seuraava dia"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Peru- tai tee-uudestaan-toiminnon ristiriitaisuus usean käyttäjän kesken. "
+"Käytä asiakirjan korjausta tilanteen selvittämiseksi."
 
 #: js/toolbar.js:2381 src/control/Control.DocumentRepair.js:95
 msgid "You"
@@ -426,27 +428,27 @@ msgstr "Sinä"
 
 #: js/toolbar.js:2387
 msgid "Readonly"
-msgstr ""
+msgstr "Kirjoituslukittu"
 
 #: src/control/Control.AlertDialog.js:28
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "Palvelin kohtasi virheen %0 jäsennellessään komentoa %1"
 
 #: src/control/Control.ContextMenu.js:131
 msgid "Internal Cut"
-msgstr ""
+msgstr "Sisäinen leikkaus"
 
 #: src/control/Control.ContextMenu.js:134
 msgid "Internal Copy"
-msgstr ""
+msgstr "Sisäinen kopiointi"
 
 #: src/control/Control.ContextMenu.js:137
 msgid "Internal Paste"
-msgstr ""
+msgstr "Sisäinen liittäminen"
 
 #: src/control/Control.ContextMenu.js:159
 msgid "Internal Paste Special"
-msgstr ""
+msgstr "Sisäinen liittäminen määräten"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -454,11 +456,11 @@ msgstr "Korjaa asiakirja"
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
-msgstr ""
+msgstr "Laji"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "Index"
-msgstr ""
+msgstr "Hakemisto"
 
 #: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:230
 msgid "Comment"
@@ -475,7 +477,7 @@ msgstr "Aikaleima"
 
 #: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
-msgstr ""
+msgstr "Siirry tilaan"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:326
@@ -511,11 +513,11 @@ msgstr "Word-asiakirja (.docx)"
 
 #: src/control/Control.Menubar.js:29
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Signing.js:598
 msgid "Sign document"
-msgstr ""
+msgstr "Allekirjoita asiakirja"
 
 #: src/control/Control.Menubar.js:32 src/control/Control.Menubar.js:247
 #: src/control/Control.Menubar.js:335
@@ -544,7 +546,7 @@ msgstr "Tekstin suunta"
 #: src/control/Control.Menubar.js:220 src/control/Control.Menubar.js:313
 #: src/control/Control.Menubar.js:410
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Ei mitään (Älä tarkista oikeinkirjoitusta)"
 
 #: src/control/Control.Menubar.js:228 src/control/Control.Menubar.js:316
 #: src/control/Control.Menubar.js:414
@@ -595,11 +597,11 @@ msgstr "Haluatko varmasti poistaa tämän dian?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Vieritä huomautuksia ylöspäin"
 
 #: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Vieritä huomautuksia alaspäin"
 
 #: src/control/Control.Tabs.js:66
 msgid "Insert sheet before this"
@@ -632,11 +634,11 @@ msgstr "Skannaa koodi"
 
 #: src/control/Signing.js:241
 msgid "Couldn't get the QR code image."
-msgstr ""
+msgstr "QR-koodikuvaa ei saatu."
 
 #: src/control/Signing.js:268
 msgid "Error when trying to restore access to identity."
-msgstr ""
+msgstr "Virhe henkilöllisyyden käyttöoikeuksien palautusyrityksessä."
 
 #: src/control/Signing.js:274
 msgid "PIN Code"
@@ -644,11 +646,11 @@ msgstr "PIN-koodi"
 
 #: src/control/Signing.js:275
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr ""
+msgstr "Syötä viestissä saamasi PIN-koodi"
 
 #: src/control/Signing.js:295
 msgid "Login from email or mobile number"
-msgstr ""
+msgstr "Kirjaudu sisään sähköpostiosoitteellasi tai puhelinnumerollasi"
 
 #: src/control/Signing.js:328
 msgid "Select document type to upload"
@@ -656,7 +658,7 @@ msgstr "Valitse lähetettävän asiakirjan tyyppi"
 
 #: src/control/Signing.js:329
 msgid "Type:"
-msgstr ""
+msgstr "Laji:"
 
 #: src/control/Signing.js:360 src/control/Signing.js:657
 msgid "Document uploaded."
@@ -664,27 +666,27 @@ msgstr "Asiakirja lähetetty."
 
 #: src/control/Signing.js:485
 msgid "Select identity:"
-msgstr ""
+msgstr "Valitse identiteetti"
 
 #: src/control/Signing.js:486
 msgid "Login from mobile"
-msgstr ""
+msgstr "Kirjautuminen mobiililaitteelta"
 
 #: src/control/Signing.js:487
 msgid "Recover from email"
-msgstr ""
+msgstr "Palauta sähköpostista"
 
 #: src/control/Signing.js:595
 msgid "Select passport"
-msgstr ""
+msgstr "Valitse passi"
 
 #: src/control/Signing.js:596
 msgid "Passport: N/A"
-msgstr ""
+msgstr "Ei passia"
 
 #: src/control/Signing.js:598
 msgid "Sign"
-msgstr ""
+msgstr "Allekirjoita"
 
 #: src/control/Signing.js:600
 msgid "Status:"
@@ -692,7 +694,7 @@ msgstr "Tila:"
 
 #: src/control/Signing.js:601
 msgid "N/A"
-msgstr ""
+msgstr "Ei saatavissa"
 
 #: src/control/Signing.js:604
 msgid "Login"
@@ -704,7 +706,7 @@ msgstr "Sulje"
 
 #: src/control/Signing.js:613
 msgid "Not Signed"
-msgstr ""
+msgstr "Allekirjoitus puuttuu"
 
 #: src/control/Signing.js:616
 msgid "This document is digitally signed and the signature is valid."
@@ -714,47 +716,51 @@ msgstr ""
 
 #: src/control/Signing.js:617
 msgid "Signed and validated"
-msgstr ""
+msgstr "Digitaalisesti allekirjoitettu ja allekirjoitus on kelvollinen"
 
 #: src/control/Signing.js:620
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "Asiakirjalla on epäkelpo digitaalinen allekirjoitus."
 
 #: src/control/Signing.js:621
 msgid "Signature broken"
-msgstr ""
+msgstr "Digitaalinen allekirjoitus on rikki"
 
 #: src/control/Signing.js:624
 msgid "The signature was valid, but the document has been modified"
 msgstr ""
+"Digitaalinen allekirjoitus oli kelvollinen, mutta asiakirjaa on muokattu"
 
 #: src/control/Signing.js:625
 msgid "Signed but document modified"
-msgstr ""
+msgstr "Digitaalisesti allekirjoitettu mutta asiakirjaa on muokattu"
 
 #: src/control/Signing.js:628
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr ""
+"Digitaalinen allekirjoitus on kunnossa , mutta varmennetta ei voitu todentaa"
 
 #: src/control/Signing.js:629
 msgid "Signed but not validated"
-msgstr ""
+msgstr "Digitaalisesti allekirjoitettu muttei varmennettu"
 
 #: src/control/Signing.js:632
 msgid "The signature is OK, but the document is only partially signed"
 msgstr ""
+"Digitaalinen allekirjoitus on kunnossa, mutta asiakirja on vain osittain "
+"allekirjoitettu"
 
 #: src/control/Signing.js:633
 msgid "Signed but not all files are signed"
-msgstr ""
+msgstr "Digitaalisesti allekirjoitettu mutta vain jotkut tiedostot"
 
 #: src/control/Ruler.js:97
 msgid "Left Margin"
-msgstr ""
+msgstr "Vasen marginaali"
 
 #: src/control/Ruler.js:98
 msgid "Right Margin"
-msgstr ""
+msgstr "Oikea marginaali"
 
 #: src/control/Toolbar.js:75 src/control/Toolbar.js:87
 msgid "Downloading..."
@@ -770,7 +776,7 @@ msgstr "Nimetään uudelleen..."
 
 #: src/control/Toolbar.js:283
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Tämä versio %productName-tuotteesta perustuu tuotteeseen"
 
 #: src/core/Socket.js:79
 msgid ""
@@ -779,6 +785,10 @@ msgid ""
 "versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
+"IE11:n yhteyksien raja on saavutettu. Katso tästä miten rajaa voi "
+"tarvittaessa nostaa: https://docs.microsoft.com/en-us/previous-versions/"
+"windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:81
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -790,15 +800,16 @@ msgstr "Palvelimen versiota ei tueta."
 
 #: src/core/Socket.js:336
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "Asiakirjan omistaja katkaisi istunnon"
 
 #: src/core/Socket.js:340
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Asiakirja jouten - klikkaa jatkaaksesi editointia"
 
 #: src/core/Socket.js:347
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
+"Palvelinta ajetaan alas huoltoa varten (asiakirja tallentuu automaattisesti)"
 
 #: src/core/Socket.js:351
 msgid "Oops, there is a problem connecting the document"
@@ -806,29 +817,35 @@ msgstr "Virhe asiakirjaan yhdistäessä"
 
 #: src/core/Socket.js:355
 msgid "Server is recycling and will be available shortly"
-msgstr ""
+msgstr "Palvelin käynnistetään uudelleen ja on käytettävissä hetken kuluttua"
 
 #: src/core/Socket.js:387
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Asiakirjan sisältöä on muutettu tallennustilassa. Luetaan uusi sisältö. "
+"Sinun versioisi on saatavana versiohistoriassa."
 
 #: src/core/Socket.js:393
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
+"Palautetaan vanha versio. Tähänastiset muutokset tallentuvat "
+"versiohistoriaan."
 
 #: src/core/Socket.js:515
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"Asiakirjaa on muokattu tallennustilassa. Mitä haluat tehdä omille "
+"tallentamattomille muutoksillesi?"
 
 #: src/core/Socket.js:520
 msgid "Discard"
-msgstr ""
+msgstr "Hylkää ne"
 
 #: src/core/Socket.js:525
 msgid "Overwrite"
@@ -888,10 +905,14 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
+"Tukea ei ole saatavana tälle versiolle {productname}-tuotteesta. Jotta ei "
+"syntyisi mielikuvaa että se soveltuu yrityskäyttöön, tätä ilmoitusta "
+"näytetään kun samanaikaisesti käsiteltävien asiakirjojen lukumäärä ylittää "
+"{docs} tai kun samanaikaisten käyttäjien lukumäärä ylittää {connections}"
 
 #: src/errormessages.js:16
 msgid "More information and support"
-msgstr ""
+msgstr "Lisätietoja ja tukea"
 
 #: src/errormessages.js:17
 msgid ""
@@ -920,31 +941,37 @@ msgstr ""
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "WOPISrc-parametri puuttuu tai on virheellien, ota yhteys tukeen."
 
 #: src/errormessages.js:21
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
+"Istuntosi vanhenee ajassa %time. Tallenna työsi ja virkistä istunto (tai "
+"lataa webbisivu uudelleen) jatkaaksesi."
 
 #: src/errormessages.js:22
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
+"Istuntosi on vanhentunut. Mahdolliset lisämuutokset asiakirjaan saattavat "
+"mennä hukkaan. Virkistä istunto (tai lataa webbisivu uudelleen) jatkaaksesi."
 
 #: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
+"Asiakirjaa ei voitu ladata. Varmista että asiakirjan tiedostolaji on tuettu "
+"eikä tiedosto ole virheellien, ja yritä uudelleen."
 
 #: src/errormessages.js:24
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Asiakirjaa ei voitu ladata. Ota yhteys yläpitoon."
 
 #: src/errormessages.js:27
 #, javascript-format
@@ -952,6 +979,8 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
+"Asiakirjaa ei voitu lukea. Ota yhteys tallennuspalvelimen (%storageserver) "
+"ylläpitoon."
 
 #: src/errormessages.js:28
 #, javascript-format
@@ -960,22 +989,30 @@ msgid ""
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
+"Tallennus epäonnistui koska tila loppui. Asiakirjaa ei voi enää muokata. Ota "
+"yhteys tallennuspalvelimen (%storageserver) ylläpitoon jatkaaksesi "
+"muokkaamista."
 
 #: src/errormessages.js:29
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
+"Asiakirjaa ei voi tallentaa epäkelvon tai vanhentuneen käyttöoikeuden takia."
 
 #: src/errormessages.js:30
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
+"Asiakirjaa ei voida tallentaa. Tarkista saantioikeutesi tai ota yhteyttä "
+"tallennuspalvelimen ylläpitoon."
 
 #: src/errormessages.js:31
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
+"Asiakirjaa ei voida nimetä uudelleen. Tarista saantioikeutesi tai ota "
+"yhteyttä tallennuspalvelimen ylläpitoon."
 
 #: src/layer/marker/Annotation.js:210
 msgid "Accept change"
@@ -1017,7 +1054,7 @@ msgstr "%d minuuttia sitten"
 
 #: src/map/Map.js:1065
 msgid "Inactive document - please click to resume editing"
-msgstr ""
+msgstr "Asiakirja ei ole aktiivinen - klikkaa jatkaaksesi muokkausta"
 
 #: src/map/Map.js:1209
 msgid "Loading..."

@@ -160,7 +160,7 @@ msgstr "새로 고침"
 
 #: admin/admin.strings.js:42
 msgid "Server uptime"
-msgstr ""
+msgstr "서버 가동 시간"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -182,7 +182,7 @@ msgstr "이 세션을 정말 종료하겠습니까?"
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
 #: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
@@ -958,6 +958,8 @@ msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"문서 열기 실패하였습니다. 이 문서는 유효하지 않거나, 허용된 자원보다 많이 사"
+"용하려고 합니다. 관리자에게 연락하시기 바랍니다."
 
 #: src/errormessages.js:27
 #, javascript-format

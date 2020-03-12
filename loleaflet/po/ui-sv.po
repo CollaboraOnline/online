@@ -163,7 +163,7 @@ msgstr "Uppdatera"
 
 #: admin/admin.strings.js:42
 msgid "Server uptime"
-msgstr ""
+msgstr "Serverns drifttid"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -185,7 +185,7 @@ msgstr "Är du säker på att du vill avsluta sessionen?"
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
 #: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
@@ -236,7 +236,7 @@ msgstr "Är du säker på att du vill ta bort denna sida?"
 
 #: js/toolbar.js:748
 msgid "Borders"
-msgstr ""
+msgstr "Kanter"
 
 #: js/toolbar.js:756
 msgid "More..."
@@ -248,7 +248,7 @@ msgstr "Infoga tabell"
 
 #: js/toolbar.js:808
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Lägg in lokal bild"
 
 #: js/toolbar.js:812
 msgid "Insert shapes"
@@ -531,7 +531,7 @@ msgstr "Reparera"
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:269
 #: src/control/Control.Menubar.js:353
 msgid "Local Image..."
-msgstr ""
+msgstr "Lokal bild..."
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:88
 msgid "All"
@@ -632,11 +632,11 @@ msgstr "Vänligen skanna koden"
 
 #: src/control/Signing.js:241
 msgid "Couldn't get the QR code image."
-msgstr ""
+msgstr "Kunde inte komma åt QR-koden"
 
 #: src/control/Signing.js:268
 msgid "Error when trying to restore access to identity."
-msgstr ""
+msgstr "Fel vid försök att återställa tillgång till identiteten."
 
 #: src/control/Signing.js:274
 msgid "PIN Code"
@@ -660,11 +660,11 @@ msgstr "Typ:"
 
 #: src/control/Signing.js:360 src/control/Signing.js:657
 msgid "Document uploaded."
-msgstr ""
+msgstr "Dokumented har uppladdats."
 
 #: src/control/Signing.js:485
 msgid "Select identity:"
-msgstr ""
+msgstr "Välj identitet:"
 
 #: src/control/Signing.js:486
 msgid "Login from mobile"
@@ -672,19 +672,19 @@ msgstr "Inloggning från mobil"
 
 #: src/control/Signing.js:487
 msgid "Recover from email"
-msgstr ""
+msgstr "Återvinn from epost"
 
 #: src/control/Signing.js:595
 msgid "Select passport"
-msgstr ""
+msgstr "Välj pass"
 
 #: src/control/Signing.js:596
 msgid "Passport: N/A"
-msgstr ""
+msgstr "Pass: inget"
 
 #: src/control/Signing.js:598
 msgid "Sign"
-msgstr ""
+msgstr "Signera"
 
 #: src/control/Signing.js:600
 msgid "Status:"
@@ -692,11 +692,11 @@ msgstr "Status:"
 
 #: src/control/Signing.js:601
 msgid "N/A"
-msgstr ""
+msgstr "ingen"
 
 #: src/control/Signing.js:604
 msgid "Login"
-msgstr ""
+msgstr "Logga in"
 
 #: src/control/Signing.js:605
 msgid "Close"
@@ -712,7 +712,7 @@ msgstr "Detta dokument är digitalt signerat och signaturen är giltig."
 
 #: src/control/Signing.js:617
 msgid "Signed and validated"
-msgstr ""
+msgstr "Signerat och giltigt"
 
 #: src/control/Signing.js:620
 msgid "This document has an invalid signature."
@@ -720,31 +720,31 @@ msgstr "Detta dokument har en ogiltig signatur."
 
 #: src/control/Signing.js:621
 msgid "Signature broken"
-msgstr ""
+msgstr "Signaturen är trasig"
 
 #: src/control/Signing.js:624
 msgid "The signature was valid, but the document has been modified"
-msgstr ""
+msgstr "Signaturen var giltig, men dokumentet har ändrats"
 
 #: src/control/Signing.js:625
 msgid "Signed but document modified"
-msgstr ""
+msgstr "Signerad men dokumented är modifierat"
 
 #: src/control/Signing.js:628
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "Signaturen är OK, men certifikatet kunde inte valideras."
 
 #: src/control/Signing.js:629
 msgid "Signed but not validated"
-msgstr ""
+msgstr "Signerad men inte validerad"
 
 #: src/control/Signing.js:632
 msgid "The signature is OK, but the document is only partially signed"
-msgstr ""
+msgstr "Signaturen är OK, men dokumentet är endast delvis signerat"
 
 #: src/control/Signing.js:633
 msgid "Signed but not all files are signed"
-msgstr ""
+msgstr "Signerat, men inte alla filer är signerade"
 
 #: src/control/Ruler.js:97
 msgid "Left Margin"
@@ -764,7 +764,7 @@ msgstr "Sparar..."
 
 #: src/control/Toolbar.js:114
 msgid "Renaming..."
-msgstr ""
+msgstr "Byter namn..."
 
 #: src/control/Toolbar.js:283
 msgid "This version of %productName is powered by"
@@ -828,10 +828,12 @@ msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"Dokumented har ändrats på lagringen. Vad vill du göra med dina inte sparade "
+"ändringar?"
 
 #: src/core/Socket.js:520
 msgid "Discard"
-msgstr ""
+msgstr "Glöm"
 
 #: src/core/Socket.js:525
 msgid "Overwrite"
@@ -839,7 +841,7 @@ msgstr "Skriv över"
 
 #: src/core/Socket.js:530
 msgid "Save to new file"
-msgstr ""
+msgstr "Spara i en ny fil"
 
 #: src/core/Socket.js:601
 msgid "Document requires password to view."
@@ -954,6 +956,8 @@ msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"Kunde inte läsa in dokumentet. Det är antingen felaktigt eller kräver mer "
+"resurser än vad som är tillåtet. Ta kontakt med administratören."
 
 #: src/errormessages.js:27
 #, javascript-format
@@ -1028,12 +1032,12 @@ msgstr "Initierar..."
 #: src/map/Map.js:344
 #, javascript-format
 msgid "%d seconds ago"
-msgstr ""
+msgstr "För %d sekunder sedan"
 
 #: src/map/Map.js:347
 #, javascript-format
 msgid "%d minutes ago"
-msgstr ""
+msgstr "För %d minuter sedan"
 
 #: src/map/Map.js:1065
 msgid "Inactive document - please click to resume editing"
@@ -1049,7 +1053,7 @@ msgstr "Laddar upp..."
 
 #: src/map/handler/Map.WOPI.js:101
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "Skapar en ny fil baserat på mall..."
 
 #: src/map/handler/Map.WOPI.js:316
 msgid "Creating copy..."

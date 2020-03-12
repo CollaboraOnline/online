@@ -478,7 +478,7 @@ msgstr "Salti al stato"
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:326
 msgid "Share..."
-msgstr ""
+msgstr "Kunhavigi..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:240
 #: src/control/Control.Menubar.js:328

@@ -160,7 +160,7 @@ msgstr "更新"
 
 #: admin/admin.strings.js:42
 msgid "Server uptime"
-msgstr ""
+msgstr "サーバー稼働時間"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"

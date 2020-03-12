@@ -92,7 +92,7 @@ msgstr "Tiempu d'inactividá"
 
 #: admin/admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "Modificáu"
 
 #: admin/admin.strings.js:26
 msgid "Kill"
@@ -526,7 +526,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:269
 #: src/control/Control.Menubar.js:353
 msgid "Local Image..."
-msgstr ""
+msgstr "Imaxe llocal..."
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:88
 msgid "All"
@@ -960,11 +960,11 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:210
 msgid "Accept change"
-msgstr ""
+msgstr "Aceutar cambéu"
 
 #: src/layer/marker/Annotation.js:215
 msgid "Reject change"
-msgstr ""
+msgstr "Refugar cambéu"
 
 #: src/layer/marker/Annotation.js:224
 msgid "Open menu"

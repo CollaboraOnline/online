@@ -20,7 +20,7 @@ msgstr ""
 
 #: admin/admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "Achustes"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
@@ -116,7 +116,7 @@ msgstr ""
 
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:241
 msgid "Save"
-msgstr ""
+msgstr "Alzar"
 
 #: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"

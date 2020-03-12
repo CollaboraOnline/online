@@ -162,7 +162,7 @@ msgstr "Obnoviť"
 
 #: admin/admin.strings.js:42
 msgid "Server uptime"
-msgstr ""
+msgstr "Doba behu servera"
 
 #: admin/src/AdminSocketAnalytics.js:219
 msgid "Received"
@@ -184,7 +184,7 @@ msgstr "Naozaj chcete túto reláciu ukončiť?"
 #: js/toolbar.js:200 src/control/Control.Menubar.js:769
 #: src/control/Control.Tabs.js:74 src/control/Control.Tabs.js:91
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:105 admin/src/AdminSocketSettings.js:37
 #: js/toolbar.js:201 js/toolbar.js:894 js/toolbar.js:1076
@@ -763,7 +763,7 @@ msgstr "Prebieha ukladanie..."
 
 #: src/control/Toolbar.js:114
 msgid "Renaming..."
-msgstr ""
+msgstr "Premenovávanie..."
 
 #: src/control/Toolbar.js:283
 msgid "This version of %productName is powered by"
@@ -961,6 +961,8 @@ msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"Dokument sa nepodarilo načítať. Je buď poškodený alebo vyžaduje viac "
+"zdrojov, než je povolené. Obráťte sa na správcu."
 
 #: src/errormessages.js:27
 #, javascript-format
