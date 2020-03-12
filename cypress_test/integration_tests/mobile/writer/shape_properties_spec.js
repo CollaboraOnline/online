@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var writerHelper = require('./writer_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
-	var defaultGeometry = 'M 1965,4810 L 7957,10802 1965,10802 1965,4810 1965,4810 Z';
+	var defaultGeometry = 'M 1965,4863 L 7957,10855 1965,10855 1965,4863 1965,4863 Z';
 
 	beforeEach(function() {
 		helper.beforeAllMobile('shape_properties.odt', 'writer');
@@ -106,7 +106,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', 'M 1965,4810 L 12635,10802 1965,10802 1965,4810 1965,4810 Z');
+			.should('have.attr', 'd', 'M 1965,4863 L 12635,10855 1965,10855 1965,4863 1965,4863 Z');
 	});
 
 	it('Change shape height.', function() {
@@ -125,7 +125,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('not.have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', 'M 1965,4810 L 7957,18020 1965,18020 1965,4810 1965,4810 Z');
+			.should('have.attr', 'd', 'M 1965,4863 L 7957,18073 1965,18073 1965,4863 1965,4863 Z');
 	});
 
 	it('Change size with keep ratio enabled.', function() {
@@ -152,7 +152,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('not.have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', 'M 1965,4810 L 15175,18020 1965,18020 1965,4810 1965,4810 Z');
+			.should('have.attr', 'd', 'M 1965,4863 L 15175,18073 1965,18073 1965,4863 1965,4863 Z');
 	});
 
 	it('Vertical mirroring', function() {
@@ -165,7 +165,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('not.have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', 'M 1965,10800 L 7957,4808 1965,4808 1965,10800 1965,10800 Z');
+			.should('have.attr', 'd', 'M 1965,10853 L 7957,4861 1965,4861 1965,10853 1965,10853 Z');
 	});
 
 	it('Horizontal mirroring', function() {
@@ -180,7 +180,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('not.have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', 'M 8010,4810 L 1963,10802 8010,10802 8010,4810 8010,4810 Z');
+			.should('have.attr', 'd', 'M 8010,4863 L 1963,10855 8010,10855 8010,4863 8010,4863 Z');
 	});
 
 	it('Trigger moving backward / forward', function() {
