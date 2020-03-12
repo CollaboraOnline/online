@@ -36,7 +36,7 @@
 	display: none !important;
 }
 
-.vex.vex-theme-plain{
+.vex.vex-theme-plain, .vex.vex-theme-bottom-right-corner{
 	z-index: 2001 !important;
 }
 
@@ -123,7 +123,6 @@
 	.vex.vex-theme-plain {
 		padding: 0px !important;
 		position: relative !important;
-		z-index: 2001 !important;
 		top: -42px !important;
 	}
 	.vex-open .vex-overlay {
