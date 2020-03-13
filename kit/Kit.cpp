@@ -2159,9 +2159,7 @@ protected:
 #else
             LOG_INF("Setting TerminationFlag due to 'exit' command.");
             SigUtil::setTerminationFlag();
-
-            // Not really a logic error, but hey. This is expected to be caught in SocketPoll::poll().
-            throw std::logic_error("exit");
+            document.reset();
 #endif
         }
         else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") || tokens.equals(0, "canceltiles") ||
