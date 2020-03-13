@@ -74,6 +74,9 @@ function detectLOCoreVersion() {
 			.contains('About')
 			.click();
 
+		cy.get('.vex-content')
+			.should('exist');
+
 		// Get the version
 		cy.get('#lokit-version')
 			.then(function(items) {
@@ -86,8 +89,11 @@ function detectLOCoreVersion() {
 			});
 
 		// Close about dialog
-		cy.get('body')
-			.type('{esc}');
+		cy.get('.vex-close')
+			.click({force : true});
+
+		cy.get('.vex-content')
+			.should('not.exist');
 	}
 }
 
