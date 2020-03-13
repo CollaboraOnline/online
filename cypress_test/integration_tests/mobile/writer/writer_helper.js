@@ -96,7 +96,8 @@ function clearMobileWizardState() {
 
 function selectAllMobile() {
 	// Remove selection if exist
-	cy.get('#document-container').click();
+	cy.get('#document-container')
+		.type('{downarrow}');
 	cy.get('.leaflet-marker-icon')
 		.should('not.exist');
 
