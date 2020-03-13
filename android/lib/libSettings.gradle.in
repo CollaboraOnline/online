@@ -10,4 +10,5 @@ ext {
     liboGitFullCommit   = '@LOOLWSD_VERSION_HASH@'
     liboApplicationId   = '@ANDROID_PACKAGE_NAME@'
     liboAndroidAbi      = '@ANDROID_ABI@'
+    liboGooglePlay      = '@APP_GOOGLE_PLAY@'
 }

@@ -133,6 +133,10 @@ AC_ARG_ENABLE([androidapp],
                               to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view.]))
 
+AC_ARG_ENABLE([android-google-play],
+              AS_HELP_STRING([--enable-android-google-play],
+                             [When enabled, the app encoruages the user periodically to rate the app on Google Play Store.]))
+
 AC_ARG_WITH(android-package-name,
             AS_HELP_STRING([--with-android-package-name="org.libreoffice.androidapp"],
                            [Set Android package name of the build.]),
@@ -957,6 +961,12 @@ fi
 AC_SUBST(APP_BRANDING_DIR)
 AC_SUBST(APP_IC_LAUNCHER)
 AC_SUBST(APP_HAS_BRANDING)
+
+APP_GOOGLE_PLAY="false"
+if test "$enable_android_google_play" = "yes"; then
+    APP_GOOGLE_PLAY="true"
+fi
+AC_SUBST(APP_GOOGLE_PLAY)
 
 AS_IF([test "$ENABLE_IOSAPP" = "true"],
       [

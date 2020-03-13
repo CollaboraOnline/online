@@ -25,6 +25,7 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
+            buildConfigField "boolean", "GOOGLE_PLAY_ENABLED", "${liboGooglePlay}"
             ndk {
                 abiFilters = []
                 abiFilters.addAll("${liboAndroidAbi}".split(' ').collect{it as String})
@@ -33,6 +34,7 @@ android {
         }
         release {
             buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
+            buildConfigField "boolean", "GOOGLE_PLAY_ENABLED", "${liboGooglePlay}"
             ndk {
                 abiFilters = []
                 abiFilters.addAll("${liboAndroidAbi}".split(' ').collect{it as String})

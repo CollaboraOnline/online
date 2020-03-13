@@ -10,11 +10,13 @@
 package org.libreoffice.androidlib;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -43,6 +45,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +68,6 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -101,6 +103,7 @@ public class LOActivity extends AppCompatActivity {
     private WebView mWebView;
     private SharedPreferences sPrefs;
     private Handler mMainHandler = null;
+    private RateAppController rateAppController;
 
     private boolean isDocEditable = false;
     private boolean isDocDebuggable = BuildConfig.DEBUG;
@@ -263,6 +266,10 @@ public class LOActivity extends AppCompatActivity {
 
         setContentView(R.layout.lolib_activity_main);
         mProgressDialog = new ProgressDialog(this);
+        if (BuildConfig.GOOGLE_PLAY_ENABLED)
+            this.rateAppController = new RateAppController(this);
+        else
+            this.rateAppController = null;
 
         init();
     }
@@ -400,6 +407,25 @@ public class LOActivity extends AppCompatActivity {
                     PERMISSION_WRITE_EXTERNAL_STORAGE);
         } else {
             loadDocument();
+        }
+    }
+
+    /** opens up the app page on Google Play */
+    private void openInGooglePlay() {
+        String marketUri = String.format("market://details?id=%1$s", getPackageName());
+        String webUri = String.format("https://play.google.com/store/apps/details?id=%1$s", getPackageName());
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketUri));
+        if (getPackageManager().queryIntentActivities(intent, 0).size() <= 0) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUri));
+            if (getPackageManager().queryIntentActivities(intent, 0).size() <= 0) {
+                intent = null;
+            }
+        }
+
+        if (intent != null) {
+            rateAppController.updateStatus();
+            startActivity(intent);
         }
     }
 
@@ -750,6 +776,10 @@ public class LOActivity extends AppCompatActivity {
         System.loadLibrary("androidapp");
     }
 
+    public SharedPreferences getPrefs() {
+        return sPrefs;
+    }
+
     /**
      * Initialize the LOOLWSD to load 'loadFileURL'.
      */
@@ -825,6 +855,31 @@ public class LOActivity extends AppCompatActivity {
                     }
                     else if (message.startsWith("'statusindicatorfinish:") || message.startsWith("'error:")) {
                         mProgressDialog.dismiss();
+                        if (BuildConfig.GOOGLE_PLAY_ENABLED && rateAppController != null && rateAppController.shouldAsk()) {
+                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(LOActivity.this);
+                            final View rateAppLayout = getLayoutInflater().inflate(R.layout.rate_app_layout, null);
+                            builder.setView(rateAppLayout);
+                            RatingBar ratingBar = rateAppLayout.findViewById(R.id.ratingBar);
+
+                            builder.setPositiveButton(getString(R.string.rate_now), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // start google play activity for rating
+                                    openInGooglePlay();
+                                }
+                            });
+                            builder.setNegativeButton(getString(R.string.later), null);
+                            final AlertDialog alertDialog = builder.create();
+                            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                                @Override
+                                public void onRatingChanged(RatingBar ratingBar1, float v, boolean b) {
+                                    // start google play activity for rating
+                                    openInGooglePlay();
+                                    alertDialog.dismiss();
+                                }
+                            });
+                            alertDialog.show();
+                        }
                     }
                 }
             });
