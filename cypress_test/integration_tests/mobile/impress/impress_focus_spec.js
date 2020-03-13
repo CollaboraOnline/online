@@ -8,7 +8,7 @@ describe('Impress focus tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('focus.odp');
 	});
 
 	it('Basic document focus.', function() {

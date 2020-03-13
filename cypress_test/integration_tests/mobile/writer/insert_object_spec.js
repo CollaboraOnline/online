@@ -12,7 +12,7 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('insert_object.odt');
 	});
 
 	it('Insert local image.', function() {

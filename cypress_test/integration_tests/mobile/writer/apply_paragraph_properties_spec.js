@@ -28,7 +28,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('apply_paragraph_properties.odt');
 	});
 
 	it('Apply left alignment.', function() {

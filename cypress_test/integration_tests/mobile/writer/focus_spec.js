@@ -8,7 +8,7 @@ describe('Focus tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('focus.odt');
 	});
 
 	it('Basic document focus.', function() {

@@ -40,7 +40,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('shape_properties.odt');
 	});
 
 	function triggerNewSVG() {

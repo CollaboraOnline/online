@@ -35,7 +35,7 @@ describe('Apply font changes.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('apply_font.ods');
 	});
 
 	it('Apply bold.', function() {

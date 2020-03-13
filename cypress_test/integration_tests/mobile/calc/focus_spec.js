@@ -9,7 +9,7 @@ describe('Calc focus tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('focus.ods');
 	});
 
 	it('Basic document focus.', function() {

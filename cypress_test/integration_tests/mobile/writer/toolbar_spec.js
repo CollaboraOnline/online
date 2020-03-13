@@ -8,7 +8,7 @@ describe('Toolbar tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('toolbar.odt');
 	});
 
 	it('State of mobile wizard toolbar item.', function() {

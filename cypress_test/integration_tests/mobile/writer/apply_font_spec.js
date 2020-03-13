@@ -20,7 +20,7 @@ describe('Apply font changes.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('apply_font.odt');
 	});
 
 	function applyStyle(styleName) {

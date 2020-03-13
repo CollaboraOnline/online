@@ -27,7 +27,7 @@ describe('Calc insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('insertion_wizard.ods');
 	});
 
 	it('Check existance of image insertion items.', function() {

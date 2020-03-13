@@ -8,7 +8,7 @@ describe('Clipboard operations.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('copy_paste.odt');
 	});
 
 	it('Copy and Paste text.', function() {

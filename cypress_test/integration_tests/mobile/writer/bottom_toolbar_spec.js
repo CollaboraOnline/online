@@ -15,7 +15,7 @@ describe('Pushing bottom toolbar items.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('bottom_toolbar.odt');
 	});
 
 	it('Apply bold.', function() {

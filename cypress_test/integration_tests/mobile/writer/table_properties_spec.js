@@ -9,7 +9,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('table_properties.odt');
 	});
 
 	function before(testFile) {

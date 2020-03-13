@@ -5,7 +5,7 @@ var helper = require('../common/helper');
 describe('Example test suit 1', function() {
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('example.odt');
 	});
 
 	it('Example test case 1', function() {

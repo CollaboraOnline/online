@@ -12,7 +12,7 @@ describe('Spell checking menu.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('spellchecking.odt');
 	});
 
 	function openContextMenu() {

@@ -52,15 +52,17 @@ function beforeAllMobile(fileName, subFolder) {
 	detectLOCoreVersion();
 }
 
-function afterAll() {
+function afterAll(fileName) {
 	// Make sure that the document is closed
 	cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +
 			'/loleaflet/dist/admin/admin.html');
-	cy.get('#doclist')
-		.should('exist');
-	cy.get('#doclist tr')
-		.should('not.exist', {timeout : 10000});
+
+	cy.get('#uptime')
+		.should('not.have.text', '0');
+
+	cy.get('#doclist td:nth-child(2)')
+		.should('not.contain.text', fileName);
 }
 
 function detectLOCoreVersion() {

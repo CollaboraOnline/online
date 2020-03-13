@@ -28,7 +28,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('insert_formatting_mark.odt');
 	});
 
 	it('Insert non-breaking space.', function() {

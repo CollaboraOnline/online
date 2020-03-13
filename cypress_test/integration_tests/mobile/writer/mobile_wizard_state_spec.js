@@ -8,7 +8,7 @@ describe('Mobile wizard state tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('mobile_wizard_state.odt');
 	});
 
 	it('Open and close mobile wizard by toolbar item.', function() {

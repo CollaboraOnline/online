@@ -28,7 +28,7 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll();
+		helper.afterAll('insert_field.odt');
 	});
 
 	it('Insert page number field.', function() {
