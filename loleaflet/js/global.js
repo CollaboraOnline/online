@@ -320,6 +320,7 @@
 
 		global.socket.onmessage = function (event) {
 			if (typeof global.socket._onMessage === 'function') {
+				global.socket._emptyQueue();
 				global.socket._onMessage(event);
 			} else {
 				global.queueMsg.push(event.data);
