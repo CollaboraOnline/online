@@ -1085,7 +1085,7 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_executeAction: function(itNode, itWizard) {
-		var id, data;
+		var id, mobileappuno, data;
 		if (itNode === undefined)
 		{ // called from JSDialogBuilder
 			id = itWizard.id;
@@ -1094,6 +1094,7 @@ L.Control.Menubar = L.Control.extend({
 		else
 		{ // called from
 			id = $(itNode).data('id');
+			mobileappuno = $(itNode).data('mobileappuno');
 			data = $(itNode).data;
 		}
 
@@ -1208,8 +1209,8 @@ L.Control.Menubar = L.Control.extend({
 					self._map.focus();
 				}
 			});
-		} else if (window.ThisIsAMobileApp && data('mobileappuno')) {
-			this._map.sendUnoCommand(data('mobileappuno'));
+		} else if (window.ThisIsAMobileApp && mobileappuno) {
+			this._map.sendUnoCommand(mobileappuno);
 		}
 		// Inform the host if asked
 		if (data('postmessage') === 'true') {
