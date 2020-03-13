@@ -313,7 +313,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		// by the double-tap and triple-tap handlers below.
 		// Note: Hammer has requireFailure() which supressses this call
 		// when multi-taps are detected. This isn't working for us.
-		if (e.tapCount > 1)
+		if (e.tapCount > 1 && !L.Browser.cypressTest)
 			return;
 
 		var point = e.pointers[0],
