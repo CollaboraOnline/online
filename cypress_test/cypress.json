@@ -3,5 +3,6 @@
     "video" : false,
     "pluginsFile" : "plugins/index.js",
     "defaultCommandTimeout" : 6000,
-    "supportFile" : false
+    "supportFile" : false,
+    "ignoreTestFiles" : "*helper.js"
 }
