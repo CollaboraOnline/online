@@ -2090,6 +2090,39 @@ function onCommandValues(e) {
 	}
 }
 
+function updateToolbarCommandValues(e) {
+	if (e.commandName === '.uno:CharFontName') {
+		// 2) For .uno:CharFontName
+		var commandValues = map.getToolbarCommandValues(e.commandName);
+		if (typeof commandValues === 'undefined') {
+			return;
+		}
+
+		var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
+		// Old browsers like IE11 et al don't like Object.keys with
+		// empty arguments
+		if (typeof commandValues === 'object') {
+			data = data.concat(Object.keys(commandValues));
+		}
+
+		/* debug messages it will be removed later */
+		if (data.length < 3) {
+			console.log('ALERT!, the server is sending a small font list');
+		}
+		/* debug end*/
+
+		$('.fonts-select').select2({
+			data: data.sort(function (a, b) {  // also sort(localely)
+				return a.localeCompare(b);
+			}),
+			placeholder: _('Font')
+		});
+		$('.fonts-select').on('select2:select', onFontSelect);
+		$('.fonts-select').val(fontsSelectValue).trigger('change');
+		w2ui['editbar'].resize();
+	}
+}
+
 function updateCommandValues(targetName) {
 	var data = [];
 	// 1) For .uno:StyleApply
@@ -2160,29 +2193,6 @@ function updateCommandValues(targetName) {
 		});
 		$('.styles-select').val(stylesSelectValue).trigger('change');
 		$('.styles-select').on('select2:select', onStyleSelect);
-		w2ui['editbar'].resize();
-	}
-
-	if (targetName === 'fonts' && $('.fonts-select option').length === 1) {
-		// 2) For .uno:CharFontName
-		commandValues = map.getToolbarCommandValues('.uno:CharFontName');
-		if (typeof commandValues === 'undefined') {
-			return;
-		}
-		data = []; // reset data in order to avoid that the font select box is populated with styles, too.
-		// Old browsers like IE11 et al don't like Object.keys with
-		// empty arguments
-		if (typeof commandValues === 'object') {
-			data = data.concat(Object.keys(commandValues));
-		}
-		$('.fonts-select').select2({
-			data: data.sort(function (a, b) {  // also sort(localely)
-				return a.localeCompare(b);
-			}),
-			placeholder: _('Font')
-		});
-		$('.fonts-select').on('select2:select', onFontSelect);
-		$('.fonts-select').val(fontsSelectValue).trigger('change');
 		w2ui['editbar'].resize();
 	}
 }
@@ -2683,7 +2693,8 @@ function setupToolbar(e) {
 
 
 	if (!window.mode.isMobile()) {
-		map.on('updatetoolbarcommandvalues', function() {
+		map.on('updatetoolbarcommandvalues', function(e) {
+			updateToolbarCommandValues(e);
 			w2ui['editbar'].refresh();
 		});
 
