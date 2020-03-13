@@ -42,11 +42,14 @@ public class SlideShowActivity extends AppCompatActivity {
         }
         Log.d(TAG, "SlideShow Svg Uri "+slidesSvgUri);
         SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        boolean isChromeDebugEnabled = sPrefs.getBoolean("ENABLE_CHROME_DEBUGGING", false);
 
+        // allow debugging (when building the debug version); see details in
+        // https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews
+        boolean isChromeDebugEnabled = sPrefs.getBoolean("ENABLE_CHROME_DEBUGGING", false);
         if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 || isChromeDebugEnabled) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+
         slideShowWebView.setBackgroundColor(Color.BLACK);
         WebSettings slideShowWebViewSettings = slideShowWebView.getSettings();
         slideShowWebViewSettings.setLoadWithOverviewMode(true);

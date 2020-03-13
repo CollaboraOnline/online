@@ -34,9 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
             if (!BuildConfig.DEBUG) {
                 findPreference("ENABLE_SHOW_DEBUG_INFO").setVisible(false);
             }
-            else {
-                findPreference("ENABLE_CHROME_DEBUGGING").setVisible(false);
-            }
         }
 
         @Override

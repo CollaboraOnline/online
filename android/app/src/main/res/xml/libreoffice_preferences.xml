@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory
+    <!--PreferenceCategory
         android:title="@string/pref_category_explorer"
         android:key="PREF_CATEGORY_EXPLORER"
         app:iconSpaceReserved="false" >
@@ -28,6 +28,13 @@
             android:summary="@string/pref_show_hidden_files_summary"
             android:defaultValue="false"
             app:iconSpaceReserved="false" />
+
+    </PreferenceCategory-->
+
+    <PreferenceCategory
+        android:title="@string/pref_category_editor"
+        android:key="PREF_CATEGORY_EDITOR"
+        app:iconSpaceReserved="false" >
 
         <CheckBoxPreference
             android:title="@string/pref_show_debug_info"

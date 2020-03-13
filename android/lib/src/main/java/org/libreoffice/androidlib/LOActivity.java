@@ -348,13 +348,11 @@ public class LOActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         mWebView.addJavascriptInterface(this, "LOOLMessageHandler");
 
-        boolean isChromeDebugEnabled = sPrefs.getBoolean("ENABLE_CHROME_DEBUGGING", false);
         // allow debugging (when building the debug version); see details in
         // https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 || isChromeDebugEnabled) {
-                WebView.setWebContentsDebuggingEnabled(true);
-            }
+        boolean isChromeDebugEnabled = sPrefs.getBoolean("ENABLE_CHROME_DEBUGGING", false);
+        if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 || isChromeDebugEnabled) {
+            WebView.setWebContentsDebuggingEnabled(true);
         }
 
         getMainHandler();

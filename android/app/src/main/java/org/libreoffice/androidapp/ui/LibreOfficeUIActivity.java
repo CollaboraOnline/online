@@ -272,14 +272,14 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                         break;
                     */
 
+                    case R.id.action_settings:
+                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                        return true;
+
                     case R.id.action_about:
                         AboutDialogFragment aboutDialogFragment = new AboutDialogFragment();
                         aboutDialogFragment.show(getSupportFragmentManager(), "AboutDialogFragment");
                         return true;
-
-                    /*case R.id.action_settings:
-                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                        return true;*/
                 }
                 return false;
             }
