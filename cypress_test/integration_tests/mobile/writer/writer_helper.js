@@ -110,25 +110,9 @@ function selectAllMobile() {
 			}
 		});
 
-	// Open hamburger menu
-	cy.get('#toolbar-hamburger')
-		.click();
-	cy.get('#mobile-wizard')
-		.should('be.visible', {timeout : 10000});
-
-	// Open edit menu
-	cy.get('.ui-header.level-0 .menu-entry-with-icon')
-		.contains('Edit')
-		.click();
-
-	cy.get('.ui-header.level-1 .menu-entry-with-icon')
-		.should('be.visible')
-		.wait(100);
-
-	// Do the selection
-	cy.get('.ui-header.level-1 .menu-entry-with-icon')
-		.contains('Select All')
-		.click();
+	// Trigger select all
+	cy.get('textarea.clipboard')
+		.type('{ctrl}a');
 
 	cy.get('.leaflet-marker-icon')
 		.should('exist');
