@@ -24,7 +24,7 @@ MOBILE_TRACK_FOLDER=$(abs_builddir)/workdir/track/mobile
 
 ALLOWED_PORTS = $(shell seq 9900 1 9980)
 KILL_COMMAND=pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)
-PARALLEL_BUILD = $(findstring jobserver,$(MAKEFLAGS))
+PARALLEL_BUILD = $(findstring -j,$(MAKEFLAGS))
 DISPLAY_NUMBER = 100
 HEADLESS_BUILD := $(findstring Command failed,$(shell xhost > /dev/null 2>&1 || echo "Command failed, so we are in a headless environment."))
 export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY))
