@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-21 14:50+0100\n"
-"PO-Revision-Date: 2020-03-10 09:39+0000\n"
+"PO-Revision-Date: 2020-03-13 09:52+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hr/>\n"
 "Language: hr\n"
@@ -527,7 +527,7 @@ msgstr "PowerPoint prezentacija (.pptx)"
 #: src/control/Control.Menubar.js:331 src/control/Control.Menubar.js:553
 #: src/control/Control.Toolbar.js:1127
 msgid "Fullscreen presentation"
-msgstr "Prikaz preko cijelog zaslona"
+msgstr "Prezentacija preko cijelog ekrana"
 
 #: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:567
 msgid "ODF spreadsheet (.ods)"
@@ -786,7 +786,7 @@ msgstr "Skeniraj kȏd"
 
 #: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
-msgstr "Nije bilo moguće dobiti sliku QR kȏda."
+msgstr "Nije bilo moguće dobiti sliku QR koda."
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
@@ -802,7 +802,7 @@ msgstr "Upiši PIN kȏd iz e-poruke ili SMS-a"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
-msgstr "Prijavi se e-poštom ili brojem mobitela"
+msgstr "Prijavi se e-adresom ili brojem mobitela"
 
 #: src/control/Signing.js:329
 msgid "Select document type to upload"

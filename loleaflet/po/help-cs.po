@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-03-07 13:27+0000\n"
+"PO-Revision-Date: 2020-03-14 11:46+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -1115,7 +1115,7 @@ msgstr "Dokumenty se v  <span class=\"productname\">%productName</span> ukládaj
 
 #: html/loleaflet-help.html%2Bdiv.p:283-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
-msgstr "V závislostech na možnostech prohlížeče se může zobrazit okno pro tisk nebo se zobrazí vyskakovací okno „Stáhnout export do PDF?“. Toto PDF poté můžete vytisknout pomocí svou oblíbenou aplikací pro čtení PDF."
+msgstr "V závislostech na možnostech prohlížeče se zobrazí okno pro tisk nebo vyskakovací okno „Stáhnout export do PDF?“. Toto PDF poté můžete vytisknout pomocí svou oblíbenou aplikací pro čtení PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "When closing a document, it is automatically saved if it has been changed."
@@ -1135,7 +1135,7 @@ msgstr "Kopírování/vyjímání a vkládání formátovaného obsahu je podpor
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
-msgstr "Chcete-li kopírovat větší části obsahu do jiných aplikací na vašem zařízení, je nutné stisknout tlačítko <span class=\"ui\">Zahájit stahování</span> a poté znovu zkopírovat obsah do schránky tohoto zařízení, čímž se stane pro cílovou aplikaci dostupný. Tento export obsahu pro vložení do externí aplikace zajišťuje vyskakovací prvek v pravém dolním rohu. V tomto kroku se rovněž převedou komplexní objekty na statické obrázky."
+msgstr "Chcete-li kopírovat větší části obsahu do jiných aplikací na vašem zařízení, je nutné stisknout tlačítko <span class=\"ui\">Zahájit stahování</span> a poté znovu zkopírovat obsah do schránky tohoto zařízení; až tehdy se stane pro cílovou aplikaci dostupný. Tento export obsahu pro vložení do externí aplikace zajišťuje vyskakovací prvek v pravém dolním rohu. V tomto kroku se rovněž převedou komplexní objekty na statické obrázky."
 
 #: html/loleaflet-help.html%2Bdiv.h4:291-5
 msgid "Document repair"

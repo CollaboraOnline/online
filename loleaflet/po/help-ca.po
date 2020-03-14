@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-03-09 13:57+0000\n"
+"PO-Revision-Date: 2020-03-12 16:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -627,7 +627,7 @@ msgstr "Ctrl + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-56
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
-msgstr "Insereix una tabulació (només en les taules). Depenent del gestor de finestres usat, podeu usar Alt + Tab com a alternativa."
+msgstr "Insereix una tabulació (només en les taules). En funció del gestor de finestres usat, podeu usar Alt + Tab com a alternativa."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Alt + Arrow Keys"
@@ -1123,7 +1123,7 @@ msgstr "Si s'ha modificat el document en moment de tancar-lo es desarà automàt
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
-msgstr ""
+msgstr "El procés d'edició dels documents serà familiar a qualsevol qui hagi utilitzat una aplicació d'oficina amb anterioritat; no obstant això, hi ha diferències importants:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Copy and Paste"
@@ -1295,7 +1295,7 @@ msgstr "<span class=\"def\">Filtratge de dades:</span> els filtres estàndards i
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:357-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
-msgstr ""
+msgstr "Podeu fer servir el <span class=\"ui\">Filtre automàtic</span>, per exemple, per a veure ràpidament només els registres que contenen el mateix contingut en un camp de dades."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:360-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
@@ -1315,7 +1315,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
-msgstr ""
+msgstr "Trieu <span class=\"ui\">Validesa</span> al menú <span class=\"ui\">Dades</span>. S'obre el diàleg <span class=\"ui\">Validesa</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:371-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."
@@ -1712,7 +1712,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:532-5
 msgid "Why did the text I just typed change automatically? How can I revert it?"
-msgstr ""
+msgstr "El text que acabo d'escriure ha canviat automàticament. Per què? Com puc desfer-ho?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:533-5
 msgid "You have the AutoCorrection enabled. AutoCorrection changes the text just typed into an internal table of corresponding text. In most cases, AutoCorrection fixes typos while you are typing. If AutoCorrection is not necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
@@ -1760,7 +1760,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:554-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "Formateu la cel·la font amb un tipus de lletra, un color de fons, etcètera."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:556-11
 msgid "Select the cells you want to format. Release the mouse button."
@@ -1768,7 +1768,7 @@ msgstr "Seleccioneu les cel·les que voleu formatar. Deixeu anar el botó del ra
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:558-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr "Què funció té el botó «Neteja la formatació directa»?"
+msgstr "Quina funció té el botó «Neteja la formatació directa»?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:559-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
@@ -1792,7 +1792,7 @@ msgstr "Obriu la presentació amb el <span class=\"productname\">%productName</s
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:569-11
 msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
-msgstr ""
+msgstr "Trieu <span class=\"ui\">Presentació de diapositives</span> ▸ <span class=\"ui\">Presentació a pantalla completa</span> o feu clic a la icona a l'extrem inferior esquerre de la subfinestra de diapositives: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:571-5
 msgid "How can I change the line, area and position of a shape in my slides?"

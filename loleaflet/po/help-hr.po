@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-12 11:04+0200\n"
-"PO-Revision-Date: 2020-03-11 08:08+0000\n"
+"PO-Revision-Date: 2020-03-13 09:52+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hr/>\n"
 "Language: hr\n"
@@ -1523,19 +1523,19 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:462-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Kako ukloniti crvene valovite crte u dokumentu?"
 
 #: html/loleaflet-help.html%2Bdiv.p:463-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
-msgstr ""
+msgstr "Odaberi <span class=\"ui\">Alati</span> i odznači <span class=\"ui\">Automatska provjera pravopisa</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:464-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "Čemu služi plava valovita crta ispod nekih riječi u tekstu?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
-msgstr ""
+msgstr "Gramatičke greške u tekstu podvučene su plavom valovitom crtom. Klikni na podcrtani tekst desnim gumbom miša za otvaranje izbornika s prijedlozima za ispravljanje gramatičkih grešaka. Odaberi pravi prijedlog za promjenu teksta."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
@@ -1547,7 +1547,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:469-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"
-msgstr ""
+msgstr "Što znače plavi znakovi <span class=\"blue\">¶</span> i kako ih mogu ukloniti iz mog dokumenta?"
 
 #: html/loleaflet-help.html%2Bdiv.p:470-5
 msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to help text alignment and editing and is not printed. To toggle it in the document display, choose menu <span class=\"ui\">View</span> → <span class=\"ui\">Formatting mark</span>."
@@ -1567,7 +1567,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:478-5
 msgid "How can I insert a currency, copyright or trademark symbol in the document?"
-msgstr ""
+msgstr "Kako umetnuti znakove za valutu, autorsko pravo ili trgovački znak u dokumentu?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:479-5
 msgid "You can insert these special characters in the document using the <span class=\"ui\">Special Character</span> dialog."
@@ -1651,7 +1651,7 @@ msgstr "Prikaži margine stranice u dijaloškom okviru."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:511-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
+msgstr "Kako polegnuti stranicu unutar dokumenta"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid "Place the cursor at the place where the page orientation is to change. Add an empty paragraph."
@@ -1671,7 +1671,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:517-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "Odaberi, ako želiš promijeniti brojenje stranica."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:519-5
 msgid "To return to portrait orientation, repeat the procedure, choosing Portrait in “With page style”."
@@ -1679,7 +1679,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:520-5
 msgid "How can I make the new text look like other existing text?"
-msgstr ""
+msgstr "Kako formatirati novi tekst kao ostali postojeći tekst?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:521-5
 msgid "Directly:"
@@ -1687,7 +1687,7 @@ msgstr "Izravno:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:523-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Odaberi tekst s postojećim formatom"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:524-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:555-11
@@ -1696,7 +1696,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:525-11
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "Odaberi tekst, na koji želiš primijeniti novi format."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:527-5
 msgid "Applying a paragraph style:"
@@ -1744,7 +1744,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:548-11
 msgid "Select the character set, language and separator options for the CSV file."
-msgstr ""
+msgstr "Odaberi skup znakova, jezik i znak rastavljanja za CSV datoteku."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:550-5
 msgid "The CSV data is loaded into the selected cell where you pasted, according to these settings."
@@ -1764,7 +1764,7 @@ msgstr "Oblikovanje izvorne ćelije s fontom, bojom pozadine i drugim."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:556-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "Odaberi ćelije, koje želiš formatirati. Otpusti gumb miša."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:558-5
 msgid "What is “Clear Direct Formatting” icon?"
@@ -1784,7 +1784,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:566-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Kako pokrenuti prezentaciju slajdova?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:568-11
 msgid "Open the presentation in <span class=\"productname\">%productName</span>"
@@ -1800,7 +1800,7 @@ msgstr "Kako promijeniti liniju, područje i poziciju jednog oblika u slajdu?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:573-11
 msgid "Select the shape in your slide. A set of handles shows."
-msgstr ""
+msgstr "Odaberi oblik u slajdu. Prikazat će se ručke."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-9
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or <span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</span>). A dialog opens."
