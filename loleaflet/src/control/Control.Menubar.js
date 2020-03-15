@@ -1068,7 +1068,7 @@ L.Control.Menubar = L.Control.extend({
 		var data = {
 			id: 'insertshape',
 			type: '',
-			text: 'Insert Shape',
+			text: _('Insert Shape'),
 			enabled: true,
 			children: []
 		};
