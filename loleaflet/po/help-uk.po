@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-12 11:04+0200\n"
+"POT-Creation-Date: 2020-03-15 22:15+0200\n"
 "PO-Revision-Date: 2020-03-02 22:27+0000\n"
 "Last-Translator: Olexandr Pylypchuk <pilipchukap@rambler.ru>\n"
 "Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/uk/>\n"
@@ -1094,7 +1094,7 @@ msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
-msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
+msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
@@ -1170,7 +1170,7 @@ msgid "Pasting"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
-msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
+msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
@@ -1186,7 +1186,7 @@ msgid "When you paste text from outside of the document (another browser window 
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
-msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
+msgid "When you have internal cut or copied content, you can paste this content using the context menu."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
@@ -1366,7 +1366,7 @@ msgid "<span class=\"def\">Direct formatting:</span> You can format text documen
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
-msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
+msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:401-5
@@ -1418,7 +1418,7 @@ msgid "<span class=\"def\">Page header and footer:</span> Headers and footers ar
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
-msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported, being rendered as they are shown."
+msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
@@ -1538,7 +1538,7 @@ msgid "What is the blue wavy underline in some words in the text?"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
-msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
+msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
@@ -1604,7 +1604,7 @@ msgid "You have the Track Changes feature enabled for the document. Track Change
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
-msgid "With track changes enabled your document show the following settings:"
+msgid "With track changes enabled your document is shown the following manner:"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
