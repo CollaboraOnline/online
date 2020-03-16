@@ -191,6 +191,10 @@ public:
     /// child kit processes and cleans up DocBrokers.
     static void doHousekeeping();
 
+    static void checkDiskSpaceAndWarnClients(const bool cacheLastCheck);
+
+    static void checkSessionLimitsAndWarnClients();
+
     /// Close document with @docKey and a @message
     static void closeDocument(const std::string& docKey, const std::string& message);
 

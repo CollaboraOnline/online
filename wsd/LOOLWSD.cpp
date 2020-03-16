@@ -256,28 +256,6 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 }
 #endif
 
-inline void checkSessionLimitsAndWarnClients()
-{
-#if !MOBILEAPP
-    ssize_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
-    if (LOOLWSD::MaxDocuments < 10000 &&
-        (docBrokerCount > static_cast<ssize_t>(LOOLWSD::MaxDocuments) || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections))
-    {
-        const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
-        LOG_INF("Sending client 'limitreached' message: " << info);
-
-        try
-        {
-            Util::alertAllUsers(info);
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
-        }
-    }
-#endif
-}
-
 #if !MOBILEAPP
 /// Internal implementation to alert all clients
 /// connected to any document.
@@ -298,7 +276,33 @@ void alertAllUsersInternal(const std::string& msg)
 }
 #endif
 
-static void checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
+} // end anonymous namespace
+
+void LOOLWSD::checkSessionLimitsAndWarnClients()
+{
+#if !ENABLE_SUPPORT_KEY
+#if !MOBILEAPP
+    ssize_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
+    if (LOOLWSD::MaxDocuments < 10000 &&
+        (docBrokerCount > static_cast<ssize_t>(LOOLWSD::MaxDocuments) || LOOLWSD::NumConnections >= LOOLWSD::MaxConnections))
+    {
+        const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, LOOLWSD::MaxDocuments, LOOLWSD::MaxConnections);
+        LOG_INF("Sending client 'limitreached' message: " << info);
+
+        try
+        {
+            Util::alertAllUsers(info);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
+        }
+    }
+#endif
+#endif
+}
+
+void LOOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
 {
 #if !MOBILEAPP
     try
@@ -315,8 +319,6 @@ static void checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
         LOG_WRN("Exception while checking disk-space and warning clients: " << exc.what());
     }
 #endif
-}
-
 }
 
 /// Remove dead and idle DocBrokers.
@@ -378,7 +380,7 @@ static int forkChildren(const int number)
 
     if (number > 0)
     {
-        checkDiskSpaceAndWarnClients(false);
+        LOOLWSD::checkDiskSpaceAndWarnClients(false);
 
 #ifdef KIT_IN_PROCESS
         forkLibreOfficeKit(LOOLWSD::ChildRoot, LOOLWSD::SysTemplate, LOOLWSD::LoTemplate, LO_JAIL_SUBPATH, number);
@@ -2874,12 +2876,10 @@ private:
                                 // Add and load the session.
                                 docBroker->addSession(clientSession);
 
-                                checkDiskSpaceAndWarnClients(true);
-#if !ENABLE_SUPPORT_KEY
+                                LOOLWSD::checkDiskSpaceAndWarnClients(true);
                                 // Users of development versions get just an info
                                 // when reaching max documents or connections
-                                checkSessionLimitsAndWarnClients();
-#endif
+                                LOOLWSD::checkSessionLimitsAndWarnClients();
                             }
                             catch (const UnauthorizedRequestException& exc)
                             {
