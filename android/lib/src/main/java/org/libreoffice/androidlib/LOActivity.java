@@ -522,7 +522,7 @@ public class LOActivity extends AppCompatActivity {
                 inputStream = new FileInputStream(mTempFile);
 
                 Uri uri = getIntent().getData();
-                outputStream = contentResolver.openOutputStream(uri);
+                outputStream = contentResolver.openOutputStream(uri, "wt");
 
                 byte[] buffer = new byte[1024];
                 int length;
