@@ -613,20 +613,32 @@ public class LOActivity extends AppCompatActivity {
                 }
                 String format = getFormatForRequestCode(requestCode);
                 if (format != null) {
-                    final File tempFile = new File(LOActivity.this.getCacheDir(), "temp.file");
-                    LOActivity.this.saveAs(tempFile.toURI().toString(), format);
-                    try (InputStream inputStream = new FileInputStream(tempFile)) {
-                        OutputStream outputStream = getContentResolver().openOutputStream(intent.getData());
+                    InputStream inputStream = null;
+                    OutputStream outputStream = null;
+                    try {
+                        final File tempFile = File.createTempFile("LibreOffice", "." + format, this.getCacheDir());
+                        LOActivity.this.saveAs(tempFile.toURI().toString(), format);
+
+                        inputStream = new FileInputStream(tempFile);
+                        outputStream = getContentResolver().openOutputStream(intent.getData(), "wt");
+
                         byte[] buffer = new byte[4096];
                         int len;
-                        while ((len = inputStream.read(buffer)) > 0) {
+                        while ((len = inputStream.read(buffer)) != -1) {
                             outputStream.write(buffer, 0, len);
                         }
                         outputStream.flush();
-                        outputStream.close();
                     } catch (Exception e) {
                         Toast.makeText(this, "Something went wrong while Saving as: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
+                    } finally {
+                        try {
+                            if (inputStream != null)
+                                inputStream.close();
+                            if (outputStream != null)
+                                outputStream.close();
+                        } catch (Exception e) {
+                        }
                     }
                     return;
                 }
