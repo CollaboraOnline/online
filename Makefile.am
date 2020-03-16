@@ -259,6 +259,7 @@ kit_headers = kit/ChildSession.hpp \
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/WopiTestServer.hpp \
                  test/countloolkits.hpp \
+                 test/lokassert.hpp \
                  test/test.hpp \
                  test/helpers.hpp
 
