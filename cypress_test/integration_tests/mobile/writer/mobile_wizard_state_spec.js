@@ -13,7 +13,7 @@ describe('Mobile wizard state tests', function() {
 
 	it('Open and close mobile wizard by toolbar item.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Click on mobile wizard toolbar item
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -53,7 +53,7 @@ describe('Mobile wizard state tests', function() {
 
 	it('Close mobile wizard by hamburger menu.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Click on mobile wizard toolbar item
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -89,7 +89,7 @@ describe('Mobile wizard state tests', function() {
 
 	it('Close mobile wizard by context wizard.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Click on mobile wizard toolbar item
 		cy.get('#tb_actionbar_item_mobile_wizard')

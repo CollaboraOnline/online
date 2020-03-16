@@ -14,7 +14,7 @@ describe('Calc focus tests', function() {
 
 	it('Basic document focus.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.should('not.have.class', 'disabled');
@@ -50,7 +50,7 @@ describe('Calc focus tests', function() {
 
 	it.skip('Focus on second tap.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.should('not.have.class', 'disabled');

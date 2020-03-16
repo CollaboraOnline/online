@@ -8,7 +8,7 @@ describe('Insert objects via insertion wizard.', function() {
 		helper.beforeAllMobile('insert_object.odt', 'writer');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 	});
 
 	afterEach(function() {

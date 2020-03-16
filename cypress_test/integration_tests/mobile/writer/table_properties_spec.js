@@ -16,7 +16,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		helper.loadTestDoc(testFile, 'writer', true);
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')

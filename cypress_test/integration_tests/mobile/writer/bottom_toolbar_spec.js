@@ -8,7 +8,7 @@ describe('Pushing bottom toolbar items.', function() {
 		helper.beforeAllMobile('bottom_toolbar.odt', 'writer');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Do a new selection
 		writerHelper.selectAllMobile();

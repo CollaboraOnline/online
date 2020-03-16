@@ -4,13 +4,7 @@ var helper = require('../../common/helper');
 
 function clickOnFirstCell() {
 	// Enable editing if it's in read-only mode
-	cy.get('#mobile-edit-button')
-		.then(function(button) {
-			if (button.css('display') !== 'none') {
-				cy.get('#mobile-edit-button')
-					.click();
-			}
-		});
+	helper.enableEditingMobile();
 
 	// Use the tile's edge to find the first cell's position
 	cy.get('.leaflet-tile-container')

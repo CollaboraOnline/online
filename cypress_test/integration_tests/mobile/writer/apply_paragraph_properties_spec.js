@@ -8,7 +8,7 @@ describe('Apply paragraph properties.', function() {
 		helper.beforeAllMobile('apply_paragraph_properties.odt', 'writer');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Do a selection
 		writerHelper.selectAllMobile();

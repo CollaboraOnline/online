@@ -8,7 +8,7 @@ describe('Spell checking menu.', function() {
 		helper.beforeAllMobile('spellchecking.odt', 'writer');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 	});
 
 	afterEach(function() {

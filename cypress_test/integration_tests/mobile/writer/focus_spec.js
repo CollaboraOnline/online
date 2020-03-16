@@ -13,7 +13,7 @@ describe('Focus tests', function() {
 
 	it('Basic document focus.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.should('not.have.class', 'disabled');
@@ -33,7 +33,7 @@ describe('Focus tests', function() {
 
 	it('Focus with a vex dialog.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Open comment insertion dialog
 		cy.get('#tb_actionbar_item_insertcomment')
@@ -58,7 +58,7 @@ describe('Focus tests', function() {
 
 	it('Focus with opened mobile wizard.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Click in the document
 		cy.get('#document-container')
@@ -91,7 +91,7 @@ describe('Focus tests', function() {
 
 	it('Focus inside mobile wizard.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -124,7 +124,7 @@ describe('Focus tests', function() {
 
 	it('Focus after insertion.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Open insertion mobile wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
@@ -153,7 +153,7 @@ describe('Focus tests', function() {
 
 	it('Shape related focus.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Open insertion mobile wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
@@ -209,7 +209,7 @@ describe('Focus tests', function() {
 
 	it('Focus with hamburger menu.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Click in the document
 		cy.get('#document-container')
@@ -238,7 +238,7 @@ describe('Focus tests', function() {
 
 	it('Focus after applying font change.', function() {
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Click in the document
 		cy.get('#document-container')

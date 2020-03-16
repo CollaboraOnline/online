@@ -8,7 +8,7 @@ describe('Apply font changes.', function() {
 		helper.beforeAllMobile('apply_font.odt', 'writer');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Do a new selection
 		writerHelper.selectAllMobile();

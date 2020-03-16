@@ -8,7 +8,7 @@ describe('Insert fields via insertion wizard.', function() {
 		helper.beforeAllMobile('insert_field.odt', 'writer');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')

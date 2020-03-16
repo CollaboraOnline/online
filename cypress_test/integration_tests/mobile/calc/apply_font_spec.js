@@ -8,7 +8,7 @@ describe('Apply font changes.', function() {
 		helper.beforeAllMobile('apply_font.ods', 'calc');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		// Button should be enabled now
 		cy.get('#tb_actionbar_item_mobile_wizard')

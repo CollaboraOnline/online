@@ -10,7 +10,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		helper.beforeAllMobile('shape_properties.odt', 'writer');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button').click();
+		helper.enableEditingMobile();
 
 		writerHelper.selectAllMobile();
 
