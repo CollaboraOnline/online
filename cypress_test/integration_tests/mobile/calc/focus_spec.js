@@ -48,7 +48,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	it('Focus on second tap.', function() {
+	it.skip('Focus on second tap.', function() {
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
 
