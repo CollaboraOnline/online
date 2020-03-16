@@ -37,7 +37,8 @@ L.Control.ContextMenu = L.Control.extend({
 					  'FormatTrendline', 'FormatTrendlineEquation', 'FormatSelection', 'FormatStockLoss',
 					  'FormatStockGain', 'InsertDataLabel' , 'DeleteDataLabel', 'ResetDataPoint',
 					  'InsertTrendline', 'InsertMeanValue', 'InsertXErrorBars' , 'InsertYErrorBars', 'ResetAllDataPoints' , 'DeleteAxis',
-					  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid'],
+					  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid',
+					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion'],
 
 			text: ['TableInsertMenu',
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
@@ -46,8 +47,8 @@ L.Control.ContextMenu = L.Control.extend({
 				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
 				   'UpdateCurIndex','RemoveTableOf',
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
-				   'SpellingAndGrammarDialog', 'LanguageStatus', 'FontDialog', 'FontDialogForParagraph',
-				   'SpellCheckIgnore', 'SpellCheckIgnoreAll', 'SpellCheckApplySuggestion'],
+				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
+				   'SpellCheckIgnore'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog',
 				          'ShowNote', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
