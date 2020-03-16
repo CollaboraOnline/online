@@ -96,26 +96,12 @@ function clearMobileWizardState() {
 
 function selectAllMobile() {
 	// Remove selection if exist
+	//FIXME: this also gives the focus to the Writer doc,
+	// which shouldn't be needed (i.e. should have focus already).
 	cy.get('#document-container')
 		.type('{downarrow}');
-	cy.get('.leaflet-marker-icon')
-		.should('not.exist');
 
-	// Enable editing if it's in read-only mode
-	cy.get('#mobile-edit-button')
-		.then(function(button) {
-			if (button.css('display') !== 'none') {
-				cy.get('#mobile-edit-button')
-					.click();
-			}
-		});
-
-	// Trigger select all
-	cy.get('textarea.clipboard')
-		.type('{ctrl}a');
-
-	cy.get('.leaflet-marker-icon')
-		.should('exist');
+	helper.selectAllText();
 }
 
 module.exports.copyTextToClipboard = copyTextToClipboard;

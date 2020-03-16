@@ -54,6 +54,10 @@ function typeTextAndVerify(text, expected) {
 
 	helper.selectAllText();
 
+	//FIXME: Should retry the next check instead of
+	// an unreliable sleep, but for now this will do.
+	cy.wait(600);
+
 	helper.expectTextForClipboard(expected);
 }
 

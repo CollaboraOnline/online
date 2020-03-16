@@ -94,8 +94,12 @@ function selectAllText() {
 
 	cy.log('Select all text');
 
+	// Trigger select all
 	cy.get('textarea.clipboard')
-		.type('{ctrl}a').wait(300);
+		.type('{ctrl}a');
+
+	cy.get('.leaflet-marker-icon')
+		.should('exist');
 }
 
 // Clear all text by selecting all and deleting.
