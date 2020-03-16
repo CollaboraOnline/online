@@ -395,7 +395,7 @@ public:
     /// Clear all external references
     virtual void dispose() { _msgHandler.reset(); }
 
-    virtual int sendTextMessage(const std::string &msg, const size_t len, bool flush = false) const = 0;
+    virtual int sendTextMessage(const char* msg, const size_t len, bool flush = false) const = 0;
     virtual int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const = 0;
     virtual void shutdown(bool goingAway = false, const std::string &statusMessage = "") = 0;
 
@@ -410,7 +410,7 @@ class SimpleSocketHandler : public ProtocolHandlerInterface
 {
 public:
     SimpleSocketHandler() {}
-    int sendTextMessage(const std::string &, const size_t, bool) const override { return 0; }
+    int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
     int sendBinaryMessage(const char *, const size_t , bool ) const override     { return 0; }
     void shutdown(bool, const std::string &) override {}
     void getIOStats(uint64_t &, uint64_t &) override {}

@@ -1512,7 +1512,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
         {
             const std::string statusReady = "statusindicator: ready";
             LOG_TRC("Sending to Client [" << statusReady << "].");
-            ws->sendTextMessage(statusReady, statusReady.size());
+            ws->sendTextMessage(statusReady.c_str(), statusReady.size());
         }
 
         // In case of WOPI, if this session is not set as readonly, it might be set so
