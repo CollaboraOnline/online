@@ -1061,6 +1061,11 @@ L.TileLayer = L.GridLayer.extend({
 			horizontalDirection = sign(this._cellCursor.getWest() - this._prevCellCursor.getWest());
 			verticalDirection = sign(this._cellCursor.getNorth() - this._prevCellCursor.getNorth());
 		}
+		else if (!this._isEmptyRectangle(this._cellCursor)) {
+			// This is needed for jumping view to cursor position on tab switch
+			horizontalDirection = sign(this._cellCursor.getWest() - L.Point(0, 0));
+			verticalDirection = sign(this._cellCursor.getNorth() - L.Point(0, 0));
+		}
 
 		var onPgUpDn = false;
 		if (!this._isEmptyRectangle(this._cellCursor) && !this._prevCellCursor.equals(this._cellCursor)) {
