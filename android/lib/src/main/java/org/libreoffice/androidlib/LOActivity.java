@@ -781,7 +781,7 @@ public class LOActivity extends AppCompatActivity {
         });
 
         // update progress bar when loading
-        if (message.startsWith("'statusindicator")) {
+        if (message.startsWith("'statusindicator") || message.startsWith("'error:")) {
             runOnUiThread(new Runnable() {
                 public void run() {
                     // update progress bar if it exists
@@ -798,7 +798,7 @@ public class LOActivity extends AppCompatActivity {
 
                         mProgressDialog.determinateProgress(progress);
                     }
-                    else if (message.startsWith("'statusindicatorfinish:")) {
+                    else if (message.startsWith("'statusindicatorfinish:") || message.startsWith("'error:")) {
                         mProgressDialog.dismiss();
                     }
                 }
