@@ -43,14 +43,7 @@
 	#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage, .menu-entry-icon.setanchoratchar, .menu-entry-icon.setanchortochar, .menu-entry-icon.setanchortopage, .menu-entry-icon.setanchortocellresize, .menu-entry-icon.setanchortocell{
 		display: none;
 	}
-	.ui-header.level-2.mobile-wizard.ui-widget img[src='images/lc_deleterowbreak.svg'], .ui-header.level-2.mobile-wizard.ui-widget img[src='images/lc_deletecolumnbreak.svg']{
-		visibility: hidden;
-	}
-	.menu-entry-icon.deleterowbreak, .menu-entry-icon.deletecolumnbreak{
-		background-color: #eeeeee;
-		border-radius: 100px;
-		box-shadow: inset 0 0px 0 8px white;
-	}
+
 	.ui-header.level-1.mobile-wizard.ui-widget img[src='images/lc_downloadas-pdf.svg']{
 		visibility: visible;
 	}
