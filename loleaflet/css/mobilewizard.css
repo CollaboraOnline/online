@@ -833,8 +833,9 @@ input[type=checkbox][disabled] {
 }
 
 .ui-edit.mobile-wizard, textarea {
-	margin-left: 5% !important;
-	margin-bottom: 10px;
+	width: -moz-available;
+	width: -webkit-fill-available;
+	margin: 10px 5% 10px 5% !important;
 }
 
 #label9, #documentlabel-mobile {
