@@ -484,11 +484,13 @@ public class LOActivity extends AppCompatActivity {
 
                 byte[] buffer = new byte[1024];
                 int length;
-                while ((length = inputStream.read(buffer)) > 0) {
+                long bytes = 0;
+                while ((length = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, length);
+                    bytes += length;
                 }
-                Log.e(TAG, "Success copying from " + uri + " to " + mTempFile);
-                return true;
+
+                Log.i(TAG, "Success copying " + bytes + " bytes from " + uri + " to " + mTempFile);
             } finally {
                 if (inputStream != null)
                     inputStream.close();
@@ -496,10 +498,14 @@ public class LOActivity extends AppCompatActivity {
                     outputStream.close();
             }
         } catch (FileNotFoundException e) {
+            Log.e(TAG, "file not found: " + e.getMessage());
             return false;
         } catch (IOException e) {
+            Log.e(TAG, "exception: " + e.getMessage());
             return false;
         }
+
+        return true;
     }
 
     /** Check that we have created a temp file, and if yes, copy it back to the content: URI. */
@@ -513,16 +519,20 @@ public class LOActivity extends AppCompatActivity {
 
         try {
             try {
+                inputStream = new FileInputStream(mTempFile);
+
                 Uri uri = getIntent().getData();
                 outputStream = contentResolver.openOutputStream(uri);
-                inputStream = new FileInputStream(mTempFile);
 
                 byte[] buffer = new byte[1024];
                 int length;
-                while ((length = inputStream.read(buffer)) > 0) {
+                long bytes = 0;
+                while ((length = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, length);
+                    bytes += length;
                 }
-                Log.e(TAG, "Success copying from " + mTempFile + " to " + uri);
+
+                Log.i(TAG, "Success copying " + bytes + " bytes from " + mTempFile + " to " + uri);
             } finally {
                 if (inputStream != null)
                     inputStream.close();
