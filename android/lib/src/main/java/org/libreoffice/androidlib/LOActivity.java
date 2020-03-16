@@ -676,12 +676,12 @@ public class LOActivity extends AppCompatActivity {
                 postMobileMessageNative("BYE");
                 copyTempBackToIntent();
 
-                /*runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mProgressDialog.dismiss();
                     }
-                });*/
+                });
 
                 finishAndRemoveTask();
             }
