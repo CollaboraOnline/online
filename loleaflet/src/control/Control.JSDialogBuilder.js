@@ -242,8 +242,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
 		var titleClass = '';
-		if (sectionTitle.id === 'paperformat' || sectionTitle.id === 'orientation' || sectionTitle.id === 'masterslide')
-			iconPath = 'images/lc_'+ sectionTitle.id +'.svg';
+		console.debug('sectionTitle.id' + sectionTitle.id);
+		if (sectionTitle.id === 'paperformat' || sectionTitle.id === 'orientation' || sectionTitle.id === 'masterslide' || sectionTitle.id === 'SdTableDesignPanel')
+			iconPath = 'images/lc_'+ sectionTitle.id.toLowerCase() +'.svg';
 		if (iconPath) {
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
 			icon.src = iconPath;
