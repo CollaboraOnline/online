@@ -92,12 +92,6 @@ L.LOUtil = {
 	commandWithoutIcon: [
 		'InsertPageHeader',
 		'InsertPageFooter',
-		'InsertHardHyphen',
-		'InsertSoftHyphen',
-		'InsertZWSP',
-		'InsertZWNBSP',
-		'InsertLRM',
-		'InsertRLM',
 		'None'
 	],
 

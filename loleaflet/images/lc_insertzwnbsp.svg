@@ -1,0 +1,5 @@
+<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+ <rect x="8" y="7.5" width="3" height="3" fill="#4d82b8" stroke-width="1.5" style="paint-order:stroke markers fill"/>
+ <rect x="13" y="7.5" width="3" height="3" fill="#4d82b8" stroke-width="1.5" style="paint-order:stroke markers fill"/>
+ <path d="m11 2.2119h2v13.576h-2z" fill="#e68497" style="paint-order:stroke markers fill"/>
+</svg>

@@ -46,7 +46,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert non-breaking hyphen.', function() {
-		cy.get('.menu-entry-no-icon')
+		cy.get('.menu-entry-with-icon')
 			.contains('Non-breaking hyphen')
 			.click();
 
@@ -60,7 +60,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert soft hyphen.', function() {
-		cy.get('.menu-entry-no-icon')
+		cy.get('.menu-entry-with-icon')
 			.contains('Soft hyphen')
 			.click();
 
@@ -74,7 +74,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert no-width optional break.', function() {
-		cy.get('.menu-entry-no-icon')
+		cy.get('.menu-entry-with-icon')
 			.contains('No-width optional break')
 			.click();
 
@@ -88,7 +88,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert no-width no break.', function() {
-		cy.get('.menu-entry-no-icon')
+		cy.get('.menu-entry-with-icon')
 			.contains('No-width no break')
 			.click();
 
@@ -102,7 +102,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert left-to-right mark.', function() {
-		cy.get('.menu-entry-no-icon')
+		cy.get('.menu-entry-with-icon')
 			.contains('Left-to-right mark')
 			.click();
 
@@ -116,7 +116,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert right-to-left mark.', function() {
-		cy.get('.menu-entry-no-icon')
+		cy.get('.menu-entry-with-icon')
 			.contains('Right-to-left mark')
 			.click();
 
