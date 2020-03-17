@@ -24,6 +24,7 @@ android {
 
     buildTypes {
         debug {
+            resValue "string", "app_name", "${liboAppName} Debug"
             buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
             buildConfigField "boolean", "GOOGLE_PLAY_ENABLED", "${liboGooglePlay}"
             ndk {
@@ -33,6 +34,7 @@ android {
             debuggable true
         }
         release {
+            resValue "string", "app_name", "${liboAppName}"
             buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
             buildConfigField "boolean", "GOOGLE_PLAY_ENABLED", "${liboGooglePlay}"
             ndk {

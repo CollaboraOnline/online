@@ -9,9 +9,11 @@
 
 package org.libreoffice.androidlib;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RatingBar;
 
@@ -57,28 +59,32 @@ public class RateAppController {
         if (!shouldAsk())
             return;
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         final View rateAppLayout = mActivity.getLayoutInflater().inflate(R.layout.rate_app_layout, null);
-        builder.setView(rateAppLayout);
 
-        builder.setPositiveButton(R.string.rate_now, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // start google play activity for rating
-                openInGooglePlay();
-            }
-        });
-        builder.setNegativeButton(R.string.later, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setView(rateAppLayout)
+                .setTitle(String.format(mActivity.getString(R.string.rate_our_app_title), mActivity.getString(R.string.app_name)))
+                .setPositiveButton(R.string.rate_now, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // start google play activity for rating
+                        openInGooglePlay();
+                    }
+                })
+                .setNegativeButton(R.string.later, null);
 
         final AlertDialog alertDialog = builder.create();
 
         RatingBar ratingBar = rateAppLayout.findViewById(R.id.ratingBar);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        ratingBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar1, float v, boolean b) {
-                // start google play activity for rating
-                openInGooglePlay();
-                alertDialog.dismiss();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // start google play activity for rating
+                    openInGooglePlay();
+                    alertDialog.dismiss();
+                }
+                return true;
             }
         });
         alertDialog.show();

@@ -8,7 +8,8 @@
     <string name="preparing_for_the_first_start_after_an_update">Preparing for the first start after an update.</string>
     <string name="rate_now">Rate now</string>
     <string name="later">Later</string>
-    <string name="rate_our_app_text">Thank you for using our app! If you enjoy using it, please give us a 5-stars review in Google Play.</string>
+    <string name="rate_our_app_title">Thank you for using %1$s!</string>
+    <string name="rate_our_app_text">If you like it, please give us 5 stars in Google Play. Your good reviews are our best motivation.</string>
 
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Loading...</string>
