@@ -71,7 +71,9 @@ L.Control.ContextMenu = L.Control.extend({
 			'TransformDialog', 'FormatLine', 'FormatArea',
 			'InsertTitles', 'InsertRemoveAxes',
 			'DiagramType', 'DataRanges',
-			'FormatWall',
+			'FormatWall', 'FormatDataSeries',
+			'FormatDataPoint',
+			'InsertTrendline', 'InsertXErrorBars' , 'InsertYErrorBars',
 			// text
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
