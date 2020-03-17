@@ -11,7 +11,7 @@ describe('Impress focus tests', function() {
 		helper.afterAll('focus.odp');
 	});
 
-	it('Basic document focus.', function() {
+	it.skip('Basic document focus.', function() {
 		// Click on edit button
 		cy.get('#mobile-edit-button').click();
 
