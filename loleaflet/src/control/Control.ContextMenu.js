@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
 * Control.ContextMenu
 */
@@ -58,12 +58,23 @@ L.Control.ContextMenu = L.Control.extend({
 		},
 		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
 
-		// This black list contains those menu items which should be disabled on mobile even if they
-		// are allowed in general. We need to have only those items here which are also part
-		// of the whitelist, otherwise the menu items are not visible anyway.
-		mobileBlackList: ['SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
-				  'TransformDialog', 'FormatLine', 'FormatArea',
-				  'FormatCellDialog', 'ShowNote', 'DeleteNote' ]
+		// This blacklist contains those menu items which should be disabled on mobile
+		// phones even if they are allowed in general. We need to have only those items here
+		// which are also part of the whitelist, otherwise the menu items are not visible
+		// anyway.
+
+		// For clarity, please keep this list in sections that are sorted in the same order
+		// as the items appear in the whitelist arrays above. Also keep items on separate
+		// lines as in the arrays above.
+		mobileBlackList: [
+			// general
+			'TransformDialog', 'FormatLine', 'FormatArea',
+			// text
+			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
+			// spreadsheet
+			'FormatCellDialog',
+			'ShowNote', 'DeleteNote',
+		]
 	},
 
 
