@@ -9,38 +9,79 @@
 
 package org.libreoffice.androidlib;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
+import android.widget.RatingBar;
+
+import androidx.appcompat.app.AlertDialog;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+/** Class to take care of reminding user that it is a good idea to rate the app. */
 public class RateAppController {
     private static String RATE_ASK_COUNTER_KEY = "RATE_ASK_COUNTER";
     private static String RATE_COUNTER_LAST_UPDATE_KEY = "RATE_COUNTER_LAST_UPDATE_DATE";
-    /** 1=POSTPONED, 2=RATED */
-    private static String RATE_ASK_STATUS_KEY = "RATE_ASK_STATUS";
-    LOActivity mActivity;
-    private int counter;
-    private Date lastDate;
-    private int status;
+    private static String RATE_ALREADY_RATED_KEY = "RATE_ALREADY_RATED";
+
+    private LOActivity mActivity;
 
     RateAppController(LOActivity activity) {
         this.mActivity = activity;
+    }
 
-        if (mActivity.getPrefs().getInt(RateAppController.RATE_ASK_STATUS_KEY, -1) == -1) {
-            /** first time init */
-            Date date = new Date();
-            mActivity.getPrefs().edit().putLong(RateAppController.RATE_COUNTER_LAST_UPDATE_KEY,  date.getTime()).apply();
-            /** the status starts from 1 to postpone asking on the first start **/
-            mActivity.getPrefs().edit().putInt(RateAppController.RATE_ASK_STATUS_KEY, 1).apply();
-            mActivity.getPrefs().edit().putInt(RateAppController.RATE_ASK_COUNTER_KEY, 0).apply();
-            this.counter = 0;
-            this.lastDate = date;
-            this.status = 1;
-        } else {
-            this.status = mActivity.getPrefs().getInt(RateAppController.RATE_ASK_STATUS_KEY, 0);
-            this.counter = mActivity.getPrefs().getInt(RateAppController.RATE_ASK_COUNTER_KEY, 0);
-            long dateTime = mActivity.getPrefs().getLong(RateAppController.RATE_COUNTER_LAST_UPDATE_KEY,  0);
-            this.lastDate = new Date(dateTime);
+    /** Opens up the app page in Google Play. */
+    private void openInGooglePlay() {
+        String marketUri = String.format("market://details?id=%1$s", mActivity.getPackageName());
+        String webUri = String.format("https://play.google.com/store/apps/details?id=%1$s", mActivity.getPackageName());
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketUri));
+        if (mActivity.getPackageManager().queryIntentActivities(intent, 0).size() <= 0) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUri));
+            if (mActivity.getPackageManager().queryIntentActivities(intent, 0).size() <= 0) {
+                intent = null;
+            }
         }
+
+        if (intent != null) {
+            mActivity.getPrefs().edit().putBoolean(RATE_ALREADY_RATED_KEY, true).apply();
+            mActivity.startActivity(intent);
+        }
+    }
+
+    /** Ask the user for rating from time to time (unless they've already rated, or it is not time yet. */
+    public void askUserForRating() {
+        if (!shouldAsk())
+            return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        final View rateAppLayout = mActivity.getLayoutInflater().inflate(R.layout.rate_app_layout, null);
+        builder.setView(rateAppLayout);
+
+        builder.setPositiveButton(R.string.rate_now, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // start google play activity for rating
+                openInGooglePlay();
+            }
+        });
+        builder.setNegativeButton(R.string.later, null);
+
+        final AlertDialog alertDialog = builder.create();
+
+        RatingBar ratingBar = rateAppLayout.findViewById(R.id.ratingBar);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar1, float v, boolean b) {
+                // start google play activity for rating
+                openInGooglePlay();
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     /**
@@ -48,39 +89,34 @@ public class RateAppController {
      * If the counter is 4 (meaning it's the 5th day, starting from 0), return true unless the user is already rated
      * When the dialog is dismissed, ask again in another 5 days
      */
-    public boolean shouldAsk() {
-        boolean ret = false;
-        /** if the status is 2, user is already rated (hopefully) so we don't have to do anything else */
-        if (this.status == 2)
-            return ret;
+    private boolean shouldAsk() {
+        // don't ask if the user has already rated
+        if (mActivity.getPrefs().getBoolean(RATE_ALREADY_RATED_KEY, false))
+            return false;
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        final int COUNT_BETWEEN_RATINGS = 5;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
         Date today = new Date();
-        if (!dateFormat.format(today).equals(dateFormat.format(this.lastDate))) {
-            if (this.counter == 4)
-                    ret = true;
+        long lastDate = mActivity.getPrefs().getLong(RateAppController.RATE_COUNTER_LAST_UPDATE_KEY, 0);
 
-            updateCounter();
-        }
+        // don't ask if we have already asked and/or increased the countar today
+        if (dateFormat.format(today).equals(dateFormat.format(lastDate)))
+            return false;
+
+        boolean ret = false;
+        int counter = mActivity.getPrefs().getInt(RATE_ASK_COUNTER_KEY, 0);
+        if (counter == COUNT_BETWEEN_RATINGS - 1)
+            ret = true;
+
+        // update the counter and date
+        mActivity.getPrefs().edit()
+            .putInt(RATE_ASK_COUNTER_KEY, (counter + 1) % COUNT_BETWEEN_RATINGS)
+            .putLong(RATE_COUNTER_LAST_UPDATE_KEY, today.getTime())
+            .apply();
+
         return ret;
     }
-
-    private void updateCounter() {
-        this.counter = ++this.counter % 5;
-        mActivity.getPrefs().edit().putInt(RateAppController.RATE_ASK_COUNTER_KEY, this.counter).apply();
-        updateDate();
-    }
-
-    private void updateDate() {
-        Date date = new Date();
-        this.lastDate = date;
-        mActivity.getPrefs().edit().putLong(RateAppController.RATE_COUNTER_LAST_UPDATE_KEY, this.lastDate.getTime()).apply();
-
-    }
-
-    /** This is called when the user clicked on rate now and this will make it never ask again */
-    public void updateStatus() {
-        this.status = 2;
-        mActivity.getPrefs().edit().putInt(RateAppController.RATE_ASK_STATUS_KEY, this.status).apply();
-    }
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

@@ -410,25 +410,6 @@ public class LOActivity extends AppCompatActivity {
         }
     }
 
-    /** opens up the app page on Google Play */
-    private void openInGooglePlay() {
-        String marketUri = String.format("market://details?id=%1$s", getPackageName());
-        String webUri = String.format("https://play.google.com/store/apps/details?id=%1$s", getPackageName());
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketUri));
-        if (getPackageManager().queryIntentActivities(intent, 0).size() <= 0) {
-            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUri));
-            if (getPackageManager().queryIntentActivities(intent, 0).size() <= 0) {
-                intent = null;
-            }
-        }
-
-        if (intent != null) {
-            rateAppController.updateStatus();
-            startActivity(intent);
-        }
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
 
@@ -855,31 +836,8 @@ public class LOActivity extends AppCompatActivity {
                     }
                     else if (message.startsWith("'statusindicatorfinish:") || message.startsWith("'error:")) {
                         mProgressDialog.dismiss();
-                        if (BuildConfig.GOOGLE_PLAY_ENABLED && rateAppController != null && rateAppController.shouldAsk()) {
-                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(LOActivity.this);
-                            final View rateAppLayout = getLayoutInflater().inflate(R.layout.rate_app_layout, null);
-                            builder.setView(rateAppLayout);
-                            RatingBar ratingBar = rateAppLayout.findViewById(R.id.ratingBar);
-
-                            builder.setPositiveButton(getString(R.string.rate_now), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // start google play activity for rating
-                                    openInGooglePlay();
-                                }
-                            });
-                            builder.setNegativeButton(getString(R.string.later), null);
-                            final AlertDialog alertDialog = builder.create();
-                            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                                @Override
-                                public void onRatingChanged(RatingBar ratingBar1, float v, boolean b) {
-                                    // start google play activity for rating
-                                    openInGooglePlay();
-                                    alertDialog.dismiss();
-                                }
-                            });
-                            alertDialog.show();
-                        }
+                        if (BuildConfig.GOOGLE_PLAY_ENABLED && rateAppController != null)
+                            rateAppController.askUserForRating();
                     }
                 }
             });
