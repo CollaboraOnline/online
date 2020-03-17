@@ -4,17 +4,21 @@ import android.util.Base64;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 
+import java.io.Serializable;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class LokClipboardData {
+public class LokClipboardData implements Serializable {
     public ArrayList<LokClipboardEntry> clipboardEntries = new ArrayList<LokClipboardEntry>();
 
     public String getText() {
@@ -37,16 +41,11 @@ public class LokClipboardData {
 
     public boolean writeToFile(File file) {
         try {
-            FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
-            JsonWriter writer = new JsonWriter(fileWriter);
-            writer.setIndent(" ");
-            writer.beginObject();
-            for (LokClipboardEntry entry : clipboardEntries) {
-                writer.name(entry.mime);
-                writer.value(Base64.encodeToString(entry.data, Base64.DEFAULT));
-            }
-            writer.endObject();
-            writer.close();
+            FileOutputStream fileStream = new FileOutputStream(file.getAbsoluteFile());
+	    ObjectOutputStream oos = new ObjectOutputStream(fileStream);
+	    oos.writeObject(this);
+	    oos.close();
+	    fileStream.close();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -54,25 +53,21 @@ public class LokClipboardData {
         return true;
     }
 
-    public boolean loadFromFile(File file) {
+    public static LokClipboardData createFromFile(File file) {
         try {
-            clipboardEntries.clear();
-
-            FileReader fileReader= new FileReader(file.getAbsoluteFile());
-            JsonReader reader = new JsonReader(fileReader);
-            reader.beginObject();
-            while (reader.hasNext()) {
-                LokClipboardEntry entry = new LokClipboardEntry();
-                entry.mime = reader.nextName();
-                entry.data = Base64.decode(reader.nextString(), Base64.DEFAULT);
-                clipboardEntries.add(entry);
-            }
-            reader.endObject();
+            FileInputStream fileStream = new FileInputStream(file.getAbsoluteFile());
+	    ObjectInputStream ois = new ObjectInputStream(fileStream);
+	    LokClipboardData data = (LokClipboardData)ois.readObject();
+	    ois.close();
+	    fileStream.close();
+	    return data;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
-        return true;
     }
 
     public LokClipboardEntry getBest() {

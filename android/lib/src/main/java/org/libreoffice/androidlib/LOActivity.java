@@ -56,6 +56,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.BufferedWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -1105,10 +1106,9 @@ public class LOActivity extends AppCompatActivity {
 
                         File clipboardFile = new File(getApplicationContext().getCacheDir(), CLIPBOARD_FILE_PATH);
                         LokClipboardData clipboardData = null;
-                        if (clipboardFile.exists()) {
-                            clipboardData = new LokClipboardData();
-                            clipboardData.loadFromFile(clipboardFile);
-                        }
+                        if (clipboardFile.exists())
+                            clipboardData = LokClipboardData.createFromFile(clipboardFile);
+
                         if (clipboardData != null) {
                             LOActivity.this.setClipboardContent(clipboardData);
                             LOActivity.this.postUnoCommand(".uno:Paste", null, false);
