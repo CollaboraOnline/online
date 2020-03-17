@@ -2863,12 +2863,13 @@ L.TileLayer = L.GridLayer.extend({
 					}
 				}
 				else if (horizontalDirection !== 0 || verticalDirection != 0) {
+					var mapX = Math.abs(mapBounds.getEast() - mapBounds.getWest());
 					var spacingX = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest()) / 4.0;
 					var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
 
 					if (this._cellCursor.getWest() < mapBounds.getWest()) {
 						scrollX = this._cellCursor.getWest() - mapBounds.getWest() - spacingX;
-					} else if (this._cellCursor.getEast() > mapBounds.getEast()) {
+					} else if (spacingX < mapX && this._cellCursor.getEast() > mapBounds.getEast()) {
 						scrollX = this._cellCursor.getEast() - mapBounds.getEast() + spacingX;
 					}
 					if (this._cellCursor.getNorth() > mapBounds.getNorth()) {
