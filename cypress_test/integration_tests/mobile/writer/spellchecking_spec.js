@@ -79,7 +79,6 @@ describe('Spell checking menu.', function() {
 	it('Ignore all.', function() {
 		openContextMenu();
 
-		// TODO: Why we have a non-breaking space here?
 		cy.get('.context-menu-link')
 			.contains('Ignore All')
 			.click();
