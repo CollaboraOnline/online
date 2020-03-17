@@ -614,20 +614,10 @@
 		float:left;
 	}
 	#MergeCells > span{
-		color: #4d82b8;
-		text-align: end;
-		vertical-align: bottom;
-	}
-	#DeleteTable{
-		background-color: #fbf4f5;
-		border-radius: 6px;
-		padding-right: 4% !important;
+		display: none;
 	}
 	#DeleteTable > span{
-		font-weight: bold;
-		color: #e68497;
-		text-align: end;
-		vertical-align: bottom;
+		display: none;
 	}
 	.colorcontainer {
 		width: 120px;
