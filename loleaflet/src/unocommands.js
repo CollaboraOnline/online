@@ -266,6 +266,7 @@ var unoCommandsArray = {
 	SetLanguageAllTextMenu:{global:{menu:_('For All Text'),},},
 	SetLanguageParagraphMenu:{global:{menu:_('For Paragraph'),},},
 	SetLanguageSelectionMenu:{global:{menu:_('For Selection'),},},
+	SetObjectToBackground:{global:{menu:_('To Background'),},},
 	SetOptimalColumnWidth:{presentation:{menu:_('Optimal Column Width'),},spreadsheet:{menu:_('~Optimal Width...'),},text:{menu:_('Optimal Column Width'),},},
 	SetOptimalRowHeight:{presentation:{menu:_('Optimal Row Height'),},spreadsheet:{menu:_('~Optimal Height...'),},text:{menu:_('Optimal Row Height'),},},
 	Shadowed:{global:{menu:_('Shadow'),},},
