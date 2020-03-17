@@ -40,7 +40,7 @@
 		filter: none !important;
 	}
 
-	#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage, .menu-entry-icon.setanchoratchar, .menu-entry-icon.setanchortochar, .menu-entry-icon.setanchortopage, .menu-entry-icon.setanchortocellresize, .menu-entry-icon.setanchortocell{
+	#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage, .menu-entry-icon.setanchortopage, .menu-entry-icon.setanchortocellresize{
 		display: none;
 	}
 
