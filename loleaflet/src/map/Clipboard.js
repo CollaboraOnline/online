@@ -777,7 +777,17 @@ L.Clipboard = L.Class.extend({
 		} else {
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>');
 			if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
-				msg = msg.replace(/Ctrl/g, '⌘');
+				var ctrl = /Ctrl/g;
+				if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
+					ctrl = /Strg/g;
+				}
+				if (String.locale.startsWith('lt')) {
+					ctrl = /Vald/g;
+				}
+				if (String.locale.startsWith('sl')) {
+					ctrl = /Krmilka/g;
+				}
+				msg = msg.replace(ctrl, '⌘');
 			}
 		}
 		vex.dialog.alert({
