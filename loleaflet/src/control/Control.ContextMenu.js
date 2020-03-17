@@ -69,6 +69,9 @@ L.Control.ContextMenu = L.Control.extend({
 		mobileBlackList: [
 			// general
 			'TransformDialog', 'FormatLine', 'FormatArea',
+			'InsertTitles', 'InsertRemoveAxes',
+			'DiagramType', 'DataRanges',
+			'FormatWall',
 			// text
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
