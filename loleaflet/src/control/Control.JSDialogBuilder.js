@@ -1198,8 +1198,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_multiLineEditControl: function(parentContainer, data, builder, callback) {
-		var edit = L.DomUtil.create('textarea', '', parentContainer);
-		edit.value = builder._cleanText(data.text);
+		var controlType = 'textarea';
+		if (data.cursor && data.cursor === 'false')
+			controlType = 'p';
+
+		var edit = L.DomUtil.create(controlType, '', parentContainer);
+
+		if (controlType === 'textarea')
+			edit.value = builder._cleanText(data.text);
+		else
+			edit.innerHTML = builder._cleanText(data.text);
+
 		edit.id = data.id;
 
 		if (data.enabled == 'false')
