@@ -12,6 +12,8 @@ function assertNotInTextEditMode() {
 	cy.get('.leaflet-cursor-container')
 		.should('not.exist');
 
+	helper.assertNoKeyboardInput();
+
 	cy.log('NO Text-Edit context verified.');
 }
 

@@ -150,15 +150,17 @@ function onClick(e, id, item, subItem) {
 	else {
 		throw new Error('unknown id: ' + id);
 	}
-	var docLayer = map._docLayer;
+
 	// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
 	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
-		map.focus();
+		map.focus(map.shouldAcceptInput()); // Maintain same keyboard state.
 	}
+
 	if (item.disabled) {
 		return;
 	}
 
+	var docLayer = map._docLayer;
 	if (item.postmessage && item.type === 'button') {
 		map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: item.id} });
 	}

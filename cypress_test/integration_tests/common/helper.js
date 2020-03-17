@@ -57,6 +57,22 @@ function enableEditingMobile() {
 		});
 }
 
+// Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
+function assertNoKeyboardInput() {
+	cy.window().then(win => {
+		var acceptInput = win.map._textInput.shouldAcceptInput();
+		expect(acceptInput, 'Should accept input').to.equal(false);
+	});
+}
+
+// Assert that keyboard input is accepted (i.e. keyboard should be VISIBLE).
+function assertHaveKeyboardInput() {
+	cy.window().then(win => {
+		var acceptInput = win.map._textInput.shouldAcceptInput();
+		expect(acceptInput, 'Should accept input').to.equal(true);
+	});
+}
+
 // Assert that we have cursor and focus.
 function assertCursorAndFocus() {
 	cy.log('Verifying Cursor and Focus.');
@@ -66,6 +82,8 @@ function assertCursorAndFocus() {
 		.should('exist');
 	cy.get('.leaflet-cursor-container')
 		.should('exist');
+
+	assertHaveKeyboardInput();
 
 	cy.log('Cursor and Focus verified.');
 }
@@ -195,6 +213,8 @@ function longPressOnDocument(posX, posY) {
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
+module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
+module.exports.assertHaveKeyboardInput = assertHaveKeyboardInput;
 module.exports.selectAllText = selectAllText;
 module.exports.clearAllText = clearAllText;
 module.exports.getTextForClipboard = getTextForClipboard;

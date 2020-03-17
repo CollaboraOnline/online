@@ -27,6 +27,10 @@ L.TextInput = L.Layer.extend({
 		// Clearing the area can generate input events
 		this._ignoreInputCount = 0;
 
+		// If the last focus intended to accept user input.
+		// Signifies whether the keyboard is meant to be visible.
+		this._acceptInput = false;
+
 		// Content
 		this._lastContent = []; // unicode characters
 		this._hasWorkingSelectionStart = undefined; // does it work ?
@@ -158,6 +162,7 @@ L.TextInput = L.Layer.extend({
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
 		if (this._map._permission !== 'edit') {
+			this._acceptInput = false;
 			return;
 		}
 
@@ -169,13 +174,23 @@ L.TextInput = L.Layer.extend({
 		this._textArea.focus();
 
 		if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true) {
+			this._acceptInput = false;
 			this._textArea.blur();
 			this._textArea.removeAttribute('readonly');
+		} else {
+			this._acceptInput = true;
 		}
 	},
 
 	blur: function() {
+		this._acceptInput = false;
 		this._textArea.blur();
+	},
+
+	// Returns true if the last focus was to accept input.
+	// Used to restore the keyboard.
+	shouldAcceptInput: function() {
+		return this._acceptInput;
 	},
 
 	// Marks the content of the textarea/contenteditable as selected,

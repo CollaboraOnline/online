@@ -946,6 +946,10 @@ L.Map = L.Evented.extend({
 		return document.activeElement === this._textInput.activeElement();
 	},
 
+	shouldAcceptInput: function() {
+		return this._textInput.shouldAcceptInput();
+	},
+
 	setHelpTarget: function(page) {
 		this._helpTarget = page;
 	},

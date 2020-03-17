@@ -34,6 +34,26 @@ describe('Pushing bottom toolbar items.', function() {
 			.should('exist');
 	});
 
+	it('Apply bold, check keyboard.', function() {
+		cy.get('#tb_editbar_item_bold div table')
+			.should('not.have.class', 'checked');
+
+		cy.window().then(win => {
+			win.lastInputState = win.map._textInput.shouldAcceptInput();
+		});
+
+		cy.get('#tb_editbar_item_bold')
+			.click();
+
+		cy.get('#tb_editbar_item_bold div table')
+			.should('have.class', 'checked');
+
+		cy.window().then(win => {
+			var acceptInput = win.map._textInput.shouldAcceptInput();
+			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
+		});
+	});
+
 	it('Apply italic.', function() {
 		cy.get('#tb_editbar_item_italic div table')
 			.should('not.have.class', 'checked');
@@ -50,6 +70,26 @@ describe('Pushing bottom toolbar items.', function() {
 			.should('exist');
 	});
 
+	it('Apply italic, check keyboard.', function() {
+		cy.get('#tb_editbar_item_italic div table')
+			.should('not.have.class', 'checked');
+
+		cy.window().then(win => {
+			win.lastInputState = win.map._textInput.shouldAcceptInput();
+		});
+
+		cy.get('#tb_editbar_item_italic')
+			.click();
+
+		cy.get('#tb_editbar_item_italic div table')
+			.should('have.class', 'checked');
+
+		cy.window().then(win => {
+			var acceptInput = win.map._textInput.shouldAcceptInput();
+			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
+		});
+	});
+
 	it('Apply underline.', function() {
 		cy.get('#tb_editbar_item_underline div table')
 			.should('not.have.class', 'checked');
@@ -64,6 +104,26 @@ describe('Pushing bottom toolbar items.', function() {
 
 		cy.get('#copy-paste-container p u')
 			.should('exist');
+	});
+
+	it('Apply underline, check keyboard.', function() {
+		cy.get('#tb_editbar_item_underline div table')
+			.should('not.have.class', 'checked');
+
+		cy.window().then(win => {
+			win.lastInputState = win.map._textInput.shouldAcceptInput();
+		});
+
+		cy.get('#tb_editbar_item_underline')
+			.click();
+
+		cy.get('#tb_editbar_item_underline div table')
+			.should('have.class', 'checked');
+
+		cy.window().then(win => {
+			var acceptInput = win.map._textInput.shouldAcceptInput();
+			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
+		});
 	});
 
 	it('Apply strikeout.', function() {
