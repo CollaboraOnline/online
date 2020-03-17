@@ -132,6 +132,7 @@ public class LOActivity extends AppCompatActivity {
     public static final int REQUEST_SAVEAS_DOC = 509;
     public static final int REQUEST_SAVEAS_PPT = 510;
     public static final int REQUEST_SAVEAS_XLS = 511;
+    public static final int REQUEST_SAVEAS_EPUB = 512;
 
     /** Broadcasting event for passing info back to the shell. */
     public static final String LO_ACTIVITY_BROADCAST = "LOActivityBroadcast";
@@ -608,6 +609,7 @@ public class LOActivity extends AppCompatActivity {
             case REQUEST_SAVEAS_DOC:
             case REQUEST_SAVEAS_PPT:
             case REQUEST_SAVEAS_XLS:
+            case REQUEST_SAVEAS_EPUB:
                 if (intent == null) {
                     return;
                 }
@@ -659,6 +661,7 @@ public class LOActivity extends AppCompatActivity {
             case REQUEST_SAVEAS_DOC: return "doc";
             case REQUEST_SAVEAS_PPT: return "ppt";
             case REQUEST_SAVEAS_XLS: return "xls";
+            case REQUEST_SAVEAS_EPUB: return "epub";
         }
         return null;
     }
@@ -941,6 +944,7 @@ public class LOActivity extends AppCompatActivity {
             case "doc": return REQUEST_SAVEAS_DOC;
             case "ppt": return REQUEST_SAVEAS_PPT;
             case "xls": return REQUEST_SAVEAS_XLS;
+            case "epub": return REQUEST_SAVEAS_EPUB;
         }
         return 0;
     }
@@ -958,6 +962,7 @@ public class LOActivity extends AppCompatActivity {
             case "doc": return "application/msword";
             case "ppt": return "application/vnd.ms-powerpoint";
             case "xls": return "application/vnd.ms-excel";
+            case "epub": return "application/epub+zip";
         }
         return null;
     }
