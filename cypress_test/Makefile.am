@@ -34,6 +34,7 @@ MOBILE_TEST_FILES= \
 	calc/apply_font_spec.js \
 	calc/focus_spec.js \
 	calc/insertion_wizard_spec.js \
+	calc/spellchecking_spec.js \
 	impress/impress_focus_spec.js \
 	writer/apply_font_spec.js \
 	writer/apply_paragraph_properties_spec.js \
