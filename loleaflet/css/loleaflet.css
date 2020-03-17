@@ -327,17 +327,6 @@ body {
 	}
 }
 @media (max-width: 767px) and (orientation: landscape), (max-device-height: 767px) and (orientation: landscape) {
-	#document-container.parts-preview-document {
-		left: 66px !important;
-		bottom: 33px;
-	}
-
-	#document-container.readonly.parts-preview-document {
-		top: 41px;
-		bottom: 0px;
-		width: initial;
-	}
-
 	#presentation-controls-wrapper {
 		top: 41px;
 		bottom: 33px;
@@ -347,6 +336,17 @@ body {
 		top: 41px;
 		bottom: 0px;
 		max-width: 120px;
+	}
+
+	#document-container.parts-preview-document {
+		left: 66px !important;
+		bottom: 33px;
+	}
+
+	#document-container.readonly.parts-preview-document {
+		top: 41px;
+		bottom: 0px;
+		width: initial;
 	}
 
 	#document-container.parts-preview-document.keyboard {
