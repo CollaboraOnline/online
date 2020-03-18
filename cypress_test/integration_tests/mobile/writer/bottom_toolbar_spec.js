@@ -35,6 +35,10 @@ describe('Pushing bottom toolbar items.', function() {
 	});
 
 	it('Apply bold, check keyboard.', function() {
+		cy.get('#document-container')
+			.type('{downarrow}');
+		helper.selectAllText();
+
 		cy.get('#tb_editbar_item_bold div table')
 			.should('not.have.class', 'checked');
 
@@ -71,6 +75,10 @@ describe('Pushing bottom toolbar items.', function() {
 	});
 
 	it('Apply italic, check keyboard.', function() {
+		cy.get('#document-container')
+			.type('{downarrow}');
+		helper.selectAllText();
+
 		cy.get('#tb_editbar_item_italic div table')
 			.should('not.have.class', 'checked');
 
@@ -107,6 +115,10 @@ describe('Pushing bottom toolbar items.', function() {
 	});
 
 	it('Apply underline, check keyboard.', function() {
+		cy.get('#document-container')
+			.type('{downarrow}');
+		helper.selectAllText();
+
 		cy.get('#tb_editbar_item_underline div table')
 			.should('not.have.class', 'checked');
 

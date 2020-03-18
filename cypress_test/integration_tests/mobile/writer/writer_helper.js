@@ -95,13 +95,37 @@ function clearMobileWizardState() {
 }
 
 function selectAllMobile() {
+	cy.log('Select all via hamburger menu - start.');
+
 	// Remove selection if exist
-	//FIXME: this also gives the focus to the Writer doc,
-	// which shouldn't be needed (i.e. should have focus already).
 	cy.get('#document-container')
 		.type('{downarrow}');
+	cy.get('.leaflet-marker-icon')
+		.should('not.exist');
 
-	helper.selectAllText();
+	// Open hamburger menu
+	cy.get('#toolbar-hamburger')
+		.click();
+	cy.get('#mobile-wizard')
+		.should('be.visible', {timeout : 10000});
+
+	// Open edit menu
+	cy.get('.ui-header.level-0 .menu-entry-with-icon')
+		.contains('Edit')
+		.click();
+
+	cy.get('.ui-header.level-1 .menu-entry-with-icon')
+		.should('be.visible')
+		.wait(100);
+
+	// Do the selection
+	cy.get('.ui-header.level-1 .menu-entry-with-icon')
+		.contains('Select All')
+		.click();
+	cy.get('.leaflet-marker-icon')
+		.should('exist');
+
+	cy.log('Select all via hamburger menu - end.');
 }
 
 module.exports.copyTextToClipboard = copyTextToClipboard;
