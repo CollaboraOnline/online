@@ -69,7 +69,5 @@ describe('Calc focus tests', function() {
 		// Document has the focus
 		cy.document().its('activeElement.className')
 			.should('be.eq', 'clipboard');
-
-		calcHelper.assertInTextEditMode();
 	});
 });
