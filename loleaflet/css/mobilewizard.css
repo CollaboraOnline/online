@@ -519,12 +519,10 @@
 		margin-left: 14%;
 		width: 50%;
 		border: none;
-		top: 82px;
+		padding-top: 1.2%;
 		color: #555 !important;
 	}
-	.inserttablecontrols p.ui-text:first-child {
-		top: 21px;
-	}
+
 	.inserttablecontrols #rows, .inserttablecontrols #cols{
 		background: url('images/lc_inserttable_row_mono.svg') no-repeat left;
 		border: none !important;
@@ -537,7 +535,7 @@
 	}
 	.inserttablecontrols .spinfield{
 		width: 35% !important;
-		margin-left: 32% !important;
+		margin-left: 10% !important;
 		text-align: center;
 	}
 	.inserttablecontrols .sinfieldcontrols{
