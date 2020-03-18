@@ -421,7 +421,7 @@ public class LOActivity extends AppCompatActivity {
         }
 
         final Intent finalIntent = intent;
-        mProgressDialog.indeterminate(R.string.saving);
+        mProgressDialog.indeterminate(R.string.exiting);
         getMainHandler().post(new Runnable() {
             @Override
             public void run() {
@@ -676,7 +676,7 @@ public class LOActivity extends AppCompatActivity {
 
     /** Show the Saving progress and finish the app. */
     private void finishWithProgress() {
-        mProgressDialog.indeterminate(R.string.saving);
+        mProgressDialog.indeterminate(R.string.exiting);
 
         // The 'BYE' takes a considerable amount of time, we need to post it
         // so that it starts after the saving progress is actually shown
