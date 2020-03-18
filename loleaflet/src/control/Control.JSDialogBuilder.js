@@ -752,7 +752,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		checkbox.addEventListener('change', function() {
-			builder.callback('checkbox', 'change', checkbox, this.checked, builder);
+			builder.callback('checkbox', 'change', div, this.checked, builder);
 		});
 
 		var customCommand = builder._mapWindowIdToUnoCommand(data.id);
