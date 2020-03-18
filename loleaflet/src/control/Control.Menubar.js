@@ -884,11 +884,14 @@ L.Control.Menubar = L.Control.extend({
 
 		var self = this;
 		// SmartMenus mobile menu toggle button
+		// No idea what the above line means. I am told "smartmenus" is what is used for the NON-mobile "normal"
+		// horizontal menubar. So what is a "SmartMenus mobile menu"? --tml
 		$(function() {
 			var $mainMenuState = $('#main-menu-state');
 			if ($mainMenuState.length) {
 				// animate mobile menu
 				$mainMenuState.change(function() {
+					// This code is invoked when the hamburger menu is opened or closed
 					var $menu = $('#main-menu');
 					var $nav = $menu.parent();
 					if (this.checked) {
