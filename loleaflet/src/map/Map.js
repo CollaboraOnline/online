@@ -231,6 +231,14 @@ L.Map = L.Evented.extend({
 				this._size = new L.Point(0,0);
 				this._onResize();
 				this._socket.sendMessage('uno .uno:LOKSetMobile');
+				// Add a style sheet for mobile phones. Just a placeholder so far.
+				var style = document.createElement('style');
+				style.innerHTML = ' \
+#foobar { \
+        background: red; \
+} \
+';
+				document.head.appendChild(style);
 			}
 		});
 		this.on('updatetoolbarcommandvalues', function(e) {
