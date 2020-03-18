@@ -44,6 +44,10 @@
 #  define AUDIT_ARCH_NR AUDIT_ARCH_X86_64
 #  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.gregs[(_reg)])
 #  define SECCOMP_SYSCALL(_ctx)   SECCOMP_REG(_ctx, REG_RAX)
+#elif defined(__aarch64__)
+#  define AUDIT_ARCH_NR AUDIT_ARCH_AARCH64
+#  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.regs[_reg])
+#  define SECCOMP_SYSCALL(_ctx)   SECCOMP_REG(_ctx, 8)
 #elif defined(__arm__)
 #  define AUDIT_ARCH_NR AUDIT_ARCH_ARM
 #  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.arm_##_reg)
@@ -119,9 +123,17 @@ bool lockdown(Type type)
         ACCEPT_SYSCALL(futex),
 
         // glibc's 'poll' has to answer for this lot:
+#if !defined(__NR_epoll_wait) && defined(__NR_epoll_pwait)
+        ACCEPT_SYSCALL(epoll_pwait),
+#else
         ACCEPT_SYSCALL(epoll_wait),
+#endif
         ACCEPT_SYSCALL(epoll_ctl),
+#if !defined(__NR_epoll_create) && defined(__NR_epoll_create1)
+        ACCEPT_SYSCALL(epoll_create1),
+#else
         ACCEPT_SYSCALL(epoll_create),
+#endif
         ACCEPT_SYSCALL(close),
         ACCEPT_SYSCALL(nanosleep),
 
@@ -150,7 +162,9 @@ bool lockdown(Type type)
         KILL_SYSCALL(shmctl),
         KILL_SYSCALL(ptrace), // tracing
         KILL_SYSCALL(capset),
+#ifdef __NR_uselib
         KILL_SYSCALL(uselib),
+#endif
         KILL_SYSCALL(personality), // !
         KILL_SYSCALL(vhangup),
 #ifdef __NR_modify_ldt
@@ -178,7 +192,9 @@ bool lockdown(Type type)
         KILL_SYSCALL(add_key),     // kernel keyring
         KILL_SYSCALL(request_key), // kernel keyring
         KILL_SYSCALL(keyctl),      // kernel keyring
+#ifdef __NR_inotify_init
         KILL_SYSCALL(inotify_init),
+#endif
         KILL_SYSCALL(inotify_add_watch),
         KILL_SYSCALL(inotify_rm_watch),
         KILL_SYSCALL(unshare),
