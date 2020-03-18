@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-14 11:46+0000\n"
+"PO-Revision-Date: 2020-03-17 22:31+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -1094,8 +1094,6 @@ msgid "Using the browser zoom affects the document and user interface areas."
 msgstr "Pokud použijete funkci přiblížení, která je součástí prohlížeče, ovlivněna bude jak oblast dokumentu, tak uživatelské rozhraní."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
-#, fuzzy
-#| msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
 msgstr "<span class=\"def\">Lišta s informacemi:</span> Napravo od vyhledávací lišty se zobrazuje sada informací o dokumentu. Typ informací závisí na povaze dokumentu."
 
@@ -1172,8 +1170,6 @@ msgid "Pasting"
 msgstr "Vkládání"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
-#, fuzzy
-#| msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
 msgstr "Pokud vložíte obsah zkopírovaný v témže dokumentu, zachovají se jeho formát a prvky. Zkopírujete-li jej z jiného dokumentu na jiné kartě či v jiném okně prohlížeče, případně z aplikace mimo prohlížeč, ve vloženém obsahu se zachová formátování textu."
 
@@ -1190,10 +1186,8 @@ msgid "When you paste text from outside of the document (another browser window 
 msgstr "Vložíte-li text, který z tohoto dokumentu nepochází (tj. z jiného okna prohlížeče nebo z jiné aplikace), vloží se jako formátovaný text."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
-#, fuzzy
-#| msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr "Pokud jste obsah vyjmuli nebo zkopírovali interně, můžete jej vložit pomocí nabídky vyvolané pravým tlačítkem myši."
+msgstr "Pokud jste obsah vyjmuli nebo zkopírovali interně, můžete jej vložit pomocí místní nabídky."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
@@ -1368,8 +1362,6 @@ msgid "<span class=\"def\">Direct formatting:</span> You can format text documen
 msgstr "<span class=\"def\">Přímé formátování:</span> Objekty textového dokumentu můžete formátovat přímo příkazy z nabídek, nástrojové lišty nebo místních nabídek. Přímé formátování se použije pouze na aktuálně vybraný objekt."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
-#, fuzzy
-#| msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgstr "<span class=\"def\">Formátování stylu:</span> <span class=\"productname\">%productName</span> podporuje styly odstavce. Na odstavec můžete použít jakýkoliv stávající styl odstavce. Styl změníte volbou z nabídky <span class=\"ui\">Úpravy</span> → <span class=\"ui\">Upravit styl</span>."
 
@@ -1422,8 +1414,6 @@ msgid "<span class=\"def\">Page header and footer:</span> Headers and footers ar
 msgstr "<span class=\"def\">Záhlaví a zápatí stránky:</span> Záhlaví a zápatí jsou k dispozici pro styl stránky, který se používá v dokumentu na pozici kurzoru."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
-#, fuzzy
-#| msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported, being rendered as they are shown."
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
 msgstr "<span class=\"def\">Poznámky pod čarou a vysvětlivky:</span> Podporovány jsou poznámky pod čarou a vysvětlivky."
 
@@ -1544,8 +1534,6 @@ msgid "What is the blue wavy underline in some words in the text?"
 msgstr "Co znamená v textu modrá vlnovka pod některými slovy?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
-#, fuzzy
-#| msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
 msgstr "Modrou vlnovkou jsou v textu označeny gramatické chyby. Klepnutím pravým tlačítkem myši na podtržený text otevřete nabídku s návrhy na opravu chyby a s příslušnými gramatickými pravidly. Text změníte tím, že návrh vyberete."
 
@@ -1610,8 +1598,6 @@ msgid "You have the Track Changes feature enabled for the document. Track Change
 msgstr "Máte v dokumentu zapnuto sledování změn. V důsledku toho se zaznamenávají všechny změny textu a zobrazují se, aby je bylo možné později projít. Sledování změn se povoluje volbou <span class=\"ui\">Úpravy</span> → <span class=\"ui\">Sledování změn </span> → <span class=\"ui\">Záznam</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
-#, fuzzy
-#| msgid "With track changes enabled your document show the following settings:"
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr "Se sledovanými změnami se dokument zobrazuje následovně:"
 

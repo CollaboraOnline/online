@@ -99,4 +99,5 @@
     <string name="owncloud_unspecified_error">Gwall amhenodol wrth gysylltu i\'r gweinydd cwmwl. Gwiriwch eich ffurfweddiad a/neu geisiwch eto.</string>
     <string name="pref_enable_chrome_debugger_info">Galluogwch i ddefnyddio teclyn dadfygio Chrome yn y ddogfen</string>
     <string name="pref_enable_chrome_debugger">Dadfygio Chrome</string>
+    <string name="pref_category_editor">Gosodiadau\'r Golygydd</string>
 </resources>

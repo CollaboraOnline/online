@@ -8,4 +8,8 @@
     <string name="temp_file_saving_disabled">Aquest fitxer és només de lectura; els desaments estan desactivats.</string>
     <string name="preparing_for_the_first_start_after_an_update">S\'està preparant per al primer inici després d\'una actualització.</string>
     <string name="saving">S\'està desant...</string>
+    <string name="rate_now">Valora ara</string>
+    <string name="later">Més tard</string>
+    <string name="rate_our_app_text">Si en gaudiu, poseu-li 5 estrelles al Google Play. Les vostres ressenyes positives són la nostra motivació més gran.</string>
+    <string name="rate_our_app_title">Gràcies per utilitzar el %1$s!</string>
 </resources>

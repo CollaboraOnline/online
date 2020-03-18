@@ -9,4 +9,8 @@
     <string name="loading">Carregando...</string>
     <string name="saving">Salvando...</string>
     <string name="preparing_for_the_first_start_after_an_update">Preparando para iniciar após uma atualização.</string>
+    <string name="rate_now">Avaliar agora</string>
+    <string name="rate_our_app_text">Se gostou dele, marque 5 estrelas no Google Play. Sua avaliação positiva é nossa melhor motivação.</string>
+    <string name="rate_our_app_title">Obrigado por usar %1$s!</string>
+    <string name="later">Mais tarde</string>
 </resources>

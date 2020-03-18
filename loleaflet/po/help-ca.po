@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-12 16:51+0000\n"
+"PO-Revision-Date: 2020-03-18 14:17+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1095,7 +1095,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
-msgstr ""
+msgstr "<span class=\"def\">La barra d'informació:</span> al costat dret de la barra de cerca es mostren determinades dades quant al document. La informació mostrada depèn del tipus de document."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
@@ -1219,7 +1219,7 @@ msgstr "<span class=\"def\">Formatació de diagrames:</span> el mateix menú con
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
-msgstr ""
+msgstr "<span class=\"def\">Formatació de sèries de dades:</span> obriu el menú contextual i trieu <span class=\"ui\">Formata sèries de dades</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:322-5
 msgid "Handling images"

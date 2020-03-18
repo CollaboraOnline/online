@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-02-10 11:01+0000\n"
+"PO-Revision-Date: 2020-03-17 16:36+0000\n"
 "Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hu/>\n"
 "Language: hu\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-help-hu.po\n"
 "X-Pootle-Revision: 826976\n"
 
@@ -984,22 +984,22 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> bemutatók"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:233-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Bemutatók szerkesztése"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:234-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:424-5
 msgid "Slide show"
-msgstr ""
+msgstr "Diavetítés"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:235-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:428-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Diasáv"
 
 #: html/loleaflet-help.html%2Bdiv.p:238-5
 #: html/loleaflet-help.html%2Bdiv.h2:441-5

@@ -8,4 +8,6 @@
     <string name="storage_permission_required">Je vyžadováno povolení přístupu k úložišti</string>
     <string name="preparing_for_the_first_start_after_an_update">Připravuje se první spuštění po aktualizaci.</string>
     <string name="saving">Ukládání...</string>
+    <string name="rate_our_app_title">Děkujeme, že používáte %1$s!</string>
+    <string name="later">Později</string>
 </resources>

@@ -9,4 +9,6 @@
     <string name="app_name_settings">Achustes</string>
     <string name="action_settings">Achustes</string>
     <string name="action_overwrite">Sobrescribir</string>
+    <string name="pref_category_explorer">Achustes d\'o chestor de fichers</string>
+    <string name="pref_category_editor">Achustes d\'o editor</string>
 </resources>

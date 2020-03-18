@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 16:08+0100\n"
-"PO-Revision-Date: 2020-02-23 18:15+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
+"PO-Revision-Date: 2020-03-16 14:51+0000\n"
+"Last-Translator: Olivier Hallot <olivier.hallot@documentfoundation.org>\n"
 "Language-Team: Portuguese (Brazil) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -446,7 +446,7 @@ msgstr "Texto rico (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:480
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:472
 #: src/control/Signing.js:601

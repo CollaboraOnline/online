@@ -99,4 +99,5 @@
     <string name="otg_missing_error">El fitxer d\'arrel no és vàlid. Comproveu el dispositiu OTG o la seva configuració.</string>
     <string name="ext_document_provider_error">El fitxer d\'arrel no és vàlid. Comproveu la configuració de la targeta SD.</string>
     <string name="pref_enable_chrome_debugger">Depuració del Chrome</string>
+    <string name="pref_category_editor">Configuració de l\'editor</string>
 </resources>

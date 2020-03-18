@@ -72,4 +72,5 @@
     <string name="file_exists_warning">Yá esiste un ficheru con esti nome, que va trocase.</string>
     <string name="app_vendor">Esta versión facilitóla $VENDOR.</string>
     <string name="app_description">$APP_NAME ye un paquete modernu de productividá informática, fácil d\'utilizar y de códigu abiertu pa procesamientu de testos, fueyes de cálculu, presentaciones y más.</string>
+    <string name="pref_category_editor">Axustes del editor</string>
 </resources>

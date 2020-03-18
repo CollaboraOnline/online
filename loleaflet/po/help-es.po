@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-01 02:01+0000\n"
+"PO-Revision-Date: 2020-03-17 18:53+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
@@ -1094,8 +1094,6 @@ msgid "Using the browser zoom affects the document and user interface areas."
 msgstr "El uso de la escala del propio navegador web afecta el documento y la interfaz de usuario."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
-#, fuzzy
-#| msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
 msgstr "<span class=\"def\">La barra de información:</span> a la derecha de la barra de búsqueda se muestran algunos datos sobre el documento. La información presentada depende de la naturaleza del documento."
 
