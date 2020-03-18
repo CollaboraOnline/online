@@ -832,6 +832,11 @@ input[type=checkbox][disabled] {
 	width: 100%;
 }
 
+.combobox {
+	width: -moz-available !important;
+	width: -webkit-fill-available !important;
+}
+
 .ui-edit.mobile-wizard, textarea {
 	width: -moz-available;
 	width: -webkit-fill-available;

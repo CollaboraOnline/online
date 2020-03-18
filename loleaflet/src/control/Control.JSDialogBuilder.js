@@ -1298,7 +1298,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data && data.id)
 			sectionTitle.id = data.id;
 
-		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
+		var leftDiv = L.DomUtil.create('div', 'ui-header-left combobox', sectionTitle);
 
 		var editCallback = function(value) {
 			builder.callback('combobox', 'change', data, value, builder);
