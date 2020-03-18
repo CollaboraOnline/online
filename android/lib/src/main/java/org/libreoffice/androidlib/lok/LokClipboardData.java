@@ -1,3 +1,12 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/*
+ * This file is part of the LibreOffice project.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.libreoffice.androidlib.lok;
 
 import android.util.Base64;
@@ -42,10 +51,10 @@ public class LokClipboardData implements Serializable {
     public boolean writeToFile(File file) {
         try {
             FileOutputStream fileStream = new FileOutputStream(file.getAbsoluteFile());
-	    ObjectOutputStream oos = new ObjectOutputStream(fileStream);
-	    oos.writeObject(this);
-	    oos.close();
-	    fileStream.close();
+            ObjectOutputStream oos = new ObjectOutputStream(fileStream);
+            oos.writeObject(this);
+            oos.close();
+            fileStream.close();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -56,11 +65,11 @@ public class LokClipboardData implements Serializable {
     public static LokClipboardData createFromFile(File file) {
         try {
             FileInputStream fileStream = new FileInputStream(file.getAbsoluteFile());
-	    ObjectInputStream ois = new ObjectInputStream(fileStream);
-	    LokClipboardData data = (LokClipboardData)ois.readObject();
-	    ois.close();
-	    fileStream.close();
-	    return data;
+            ObjectInputStream ois = new ObjectInputStream(fileStream);
+            LokClipboardData data = (LokClipboardData)ois.readObject();
+            ois.close();
+            fileStream.close();
+            return data;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -78,3 +87,4 @@ public class LokClipboardData implements Serializable {
     }
 }
 
+/* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
