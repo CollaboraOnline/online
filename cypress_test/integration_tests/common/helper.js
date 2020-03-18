@@ -55,6 +55,9 @@ function enableEditingMobile() {
 					.click();
 			}
 		});
+
+	cy.get('#tb_actionbar_item_mobile_wizard')
+		.should('not.have.class', 'disabled');
 }
 
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).

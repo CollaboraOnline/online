@@ -10,10 +10,6 @@ describe('Calc insertion wizard.', function() {
 		// Click on edit button
 		helper.enableEditingMobile();
 
-		// Button should be enabled now
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.should('not.have.class', 'disabled');
-
 		calcHelper.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')

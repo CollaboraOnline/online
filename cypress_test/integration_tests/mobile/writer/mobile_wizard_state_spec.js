@@ -17,7 +17,6 @@ describe('Mobile wizard state tests', function() {
 
 		// Click on mobile wizard toolbar item
 		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
 			.click();
 
 		// Mobile wizard is opened and it has any content
@@ -57,7 +56,6 @@ describe('Mobile wizard state tests', function() {
 
 		// Click on mobile wizard toolbar item
 		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
 			.click();
 
 		// Mobile wizard is opened and it has any content
@@ -93,7 +91,6 @@ describe('Mobile wizard state tests', function() {
 
 		// Click on mobile wizard toolbar item
 		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
 			.click();
 
 		// Mobile wizard is opened and it has any content

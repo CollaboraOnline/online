@@ -15,9 +15,6 @@ describe('Focus tests', function() {
 		// Click on edit button
 		helper.enableEditingMobile();
 
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled');
-
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
@@ -37,7 +34,6 @@ describe('Focus tests', function() {
 
 		// Open comment insertion dialog
 		cy.get('#tb_actionbar_item_insertcomment')
-			.should('not.have.class', 'disabled')
 			.click();
 
 		cy.get('.loleaflet-annotation-table')
@@ -95,7 +91,6 @@ describe('Focus tests', function() {
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
 			.click();
 
 		cy.get('#mobile-wizard-content')
@@ -128,7 +123,6 @@ describe('Focus tests', function() {
 
 		// Open insertion mobile wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.should('not.have.class', 'disabled')
 			.click();
 
 		cy.get('#mobile-wizard-content')
@@ -157,7 +151,6 @@ describe('Focus tests', function() {
 
 		// Open insertion mobile wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.should('not.have.class', 'disabled')
 			.click();
 
 		cy.get('#mobile-wizard-content')
@@ -250,7 +243,6 @@ describe('Focus tests', function() {
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
 			.click();
 
 		cy.get('#mobile-wizard-content')

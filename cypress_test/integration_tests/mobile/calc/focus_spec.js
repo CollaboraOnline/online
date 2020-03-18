@@ -16,9 +16,6 @@ describe('Calc focus tests', function() {
 		// Click on edit button
 		helper.enableEditingMobile();
 
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled');
-
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
@@ -51,9 +48,6 @@ describe('Calc focus tests', function() {
 	it.skip('Focus on second tap.', function() {
 		// Click on edit button
 		helper.enableEditingMobile();
-
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled');
 
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')

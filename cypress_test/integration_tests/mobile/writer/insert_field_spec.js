@@ -12,7 +12,6 @@ describe('Insert fields via insertion wizard.', function() {
 
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.should('not.have.class', 'disabled')
 			.click();
 		cy.get('#mobile-wizard')
 			.should('be.visible');

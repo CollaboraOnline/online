@@ -17,10 +17,6 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		// Click on edit button
 		helper.enableEditingMobile();
-
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled');
 	}
 
 	function openTablePanel() {
