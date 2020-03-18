@@ -274,4 +274,91 @@ describe('Focus tests', function() {
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 	});
+
+	it('Apply bold, check keyboard.', function() {
+		// Click on edit button
+		helper.enableEditingMobile();
+
+		// Grab focus to the document
+		cy.get('#document-container')
+			.type('x');
+
+		helper.selectAllText();
+
+		cy.get('#tb_editbar_item_bold div table')
+			.should('not.have.class', 'checked');
+
+		cy.window().then(win => {
+			win.lastInputState = win.map._textInput.shouldAcceptInput();
+		});
+
+		cy.get('#tb_editbar_item_bold')
+			.click();
+
+		cy.get('#tb_editbar_item_bold div table')
+			.should('have.class', 'checked');
+
+		cy.window().then(win => {
+			var acceptInput = win.map._textInput.shouldAcceptInput();
+			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
+		});
+	});
+
+	it('Apply italic, check keyboard.', function() {
+		// Click on edit button
+		helper.enableEditingMobile();
+
+		// Grab focus to the document
+		cy.get('#document-container')
+			.type('x');
+
+		helper.selectAllText();
+
+		cy.get('#tb_editbar_item_italic div table')
+			.should('not.have.class', 'checked');
+
+		cy.window().then(win => {
+			win.lastInputState = win.map._textInput.shouldAcceptInput();
+		});
+
+		cy.get('#tb_editbar_item_italic')
+			.click();
+
+		cy.get('#tb_editbar_item_italic div table')
+			.should('have.class', 'checked');
+
+		cy.window().then(win => {
+			var acceptInput = win.map._textInput.shouldAcceptInput();
+			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
+		});
+	});
+
+	it('Apply underline, check keyboard.', function() {
+		// Click on edit button
+		helper.enableEditingMobile();
+
+		// Grab focus to the document
+		cy.get('#document-container')
+			.type('x');
+
+		helper.selectAllText();
+
+		cy.get('#tb_editbar_item_underline div table')
+			.should('not.have.class', 'checked');
+
+		cy.window().then(win => {
+			win.lastInputState = win.map._textInput.shouldAcceptInput();
+		});
+
+		cy.get('#tb_editbar_item_underline')
+			.click();
+
+		cy.get('#tb_editbar_item_underline div table')
+			.should('have.class', 'checked');
+
+		cy.window().then(win => {
+			var acceptInput = win.map._textInput.shouldAcceptInput();
+			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
+		});
+	});
 });
