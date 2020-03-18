@@ -1638,6 +1638,9 @@ void ClientSession::onDisconnect()
     docBroker->assertCorrectThread();
     const std::string docKey = docBroker->getDocKey();
 
+    // Keep self alive, so that our own dtor runs only at the end of this function. Without this,
+    // removeSession() may destroy us and then we can't call our own member functions anymore.
+    std::shared_ptr<ClientSession> session = client_from_this();
     try
     {
         // Connection terminated. Destroy session.
