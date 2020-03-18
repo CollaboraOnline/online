@@ -99,4 +99,5 @@
     <string name="server_url_and_port">URL і порт хмарного сервера.</string>
     <string name="server_url">URL сервера</string>
     <string name="otg_warning">Експериментальна можливість: Використовувати, тільки якщо OTG пристрій доступний для запису.</string>
+    <string name="pref_category_editor">Налаштування Редактора</string>
 </resources>

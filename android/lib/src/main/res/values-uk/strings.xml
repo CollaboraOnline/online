@@ -8,4 +8,9 @@
     <string name="failed_to_load_file">Помилка визначення файлу для завантаження</string>
     <string name="storage_permission_required">Необхідний дозвіл на збереження</string>
     <string name="temp_file_saving_disabled">Цей файл тільки для читання, збереження неможливе.</string>
+    <string name="exiting">Виходимо...</string>
+    <string name="rate_our_app_text">Якщо Вам це подобається, будь ласка, поставте нам 5 зірочок в Google Play. Ваші гарні відгуки - наша найкраща мотивація.</string>
+    <string name="rate_our_app_title">Дякуємо за використання %1$s!</string>
+    <string name="later">Пізніше</string>
+    <string name="rate_now">Оцінити зараз</string>
 </resources>

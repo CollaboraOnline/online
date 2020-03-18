@@ -10,4 +10,7 @@
     <string name="saving">Ukládání...</string>
     <string name="rate_our_app_title">Děkujeme, že používáte %1$s!</string>
     <string name="later">Později</string>
+    <string name="exiting">Ukončování...</string>
+    <string name="rate_our_app_text">Pokud se vám tato aplikace líbí, dejte jí na Google Play 5 hvězdiček. Příznivé recenze jsou pro nás tou nejlepší motivací.</string>
+    <string name="rate_now">Ohodnotit nyní</string>
 </resources>

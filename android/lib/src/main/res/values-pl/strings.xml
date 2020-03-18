@@ -8,4 +8,9 @@
     <string name="failed_to_load_file">Nie udało się określić pliku do załadowania</string>
     <string name="storage_permission_required">Wymagane jest pozwolenie na przechowywanie</string>
     <string name="temp_file_saving_disabled">Ten plik jest tylko do odczytu, zapisywanie jest wyłączone.</string>
+    <string name="exiting">Wychodzenie...</string>
+    <string name="rate_our_app_text">Jeśli Ci się spodoba, daj nam 5 gwiazdek w Google Play. Twoja pozytywna recenzja jest naszą największą motywacją.</string>
+    <string name="rate_our_app_title">Dziękujemy za używanie %1$s!</string>
+    <string name="later">Później</string>
+    <string name="rate_now">Oceń teraz</string>
 </resources>
