@@ -26,7 +26,7 @@ L.Control.ContextMenu = L.Control.extend({
 					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
 					  'SetAnchorToChar', 'SetAnchorToFrame',
 					  'WrapMenu', 'WrapOff', 'WrapOn', 'WrapIdeal', 'WrapLeft', 'WrapRight', 'WrapThrough',
-					  'WrapThroughTransparent', 'WrapContour', 'WrapAnchorOnly',
+					  'WrapThroughTransparencyToggle', 'WrapContour', 'WrapAnchorOnly',
 					  'ArrangeFrameMenu', 'ArrangeMenu', 'BringToFront', 'ObjectForwardOne', 'ObjectBackOne', 'SendToBack',
 					  'RotateMenu', 'RotateLeft', 'RotateRight', 'TransformDialog', 'FormatLine', 'FormatArea',
 					  'FormatChartArea', 'InsertTitles', 'InsertRemoveAxes',

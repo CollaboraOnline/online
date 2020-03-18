@@ -335,7 +335,7 @@ var unoCommandsArray = {
 	WrapRight:{text:{menu:_('Wrap Right'),},},
 	WrapText:{spreadsheet:{menu:_('Wrap Text'),},},
 	WrapThrough:{text:{menu:_('~Wrap Through'),},},
-	WrapThroughTransparent:{text:{menu:_('In ~Background'),},},
+	WrapThroughTransparencyToggle:{text:{menu:_('In ~Background'),},},
 	ZoomMinus:{global:{menu:_('Zoom Out'),},},
 	ZoomPlus:{global:{menu:_('Zoom In'),},},
 };
