@@ -92,8 +92,9 @@ function assertCursorAndFocus() {
 }
 
 // Select all text via CTRL+A shortcut.
-function selectAllText() {
-	assertCursorAndFocus();
+function selectAllText(assertFocus = true) {
+	if (assertFocus)
+		assertCursorAndFocus();
 
 	cy.log('Select all text');
 
