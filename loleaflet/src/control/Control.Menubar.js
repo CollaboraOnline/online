@@ -879,7 +879,7 @@ L.Control.Menubar = L.Control.extend({
 
 		$('#main-menu').bind('keydown', {self: this}, this._onKeyDown);
 
-		if (L.Browser.mobile)
+		if (window.mode.isMobile())
 			$('#main-menu').parent().css('height', '0');
 
 		var self = this;
