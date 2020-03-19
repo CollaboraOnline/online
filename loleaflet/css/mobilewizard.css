@@ -614,10 +614,20 @@
 		float:left;
 	}
 	#MergeCells > span{
-		display: none;
+		color: #4d82b8;
+		text-align: end;
+		vertical-align: bottom;
+	}
+	#DeleteTable{
+		background-color: #fbf4f5;
+		border-radius: 6px;
+		padding-right: 4% !important;
 	}
 	#DeleteTable > span{
-		display: none;
+		font-weight: bold;
+		color: #e68497;
+		text-align: end;
+		vertical-align: bottom;
 	}
 	.colorcontainer {
 		width: 120px;
@@ -728,7 +738,7 @@
 		vertical-align: baseline;
 		padding-left: 24px;
 	}
-	div[title='Table Design'] div[id^=Use]{
+	#SdTableDesignPanel div[id^=Use]{
 		width: 92%;
 		padding-right: 4% !important;
 	}
