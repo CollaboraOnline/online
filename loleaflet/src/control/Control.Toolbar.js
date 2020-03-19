@@ -1037,8 +1037,6 @@ function initNormalToolbar() {
 				} else {
 					toolItem.css('display', '');
 				}
-
-				updateCommandValues(event.target);
 			}
 
 			if (event.target === 'inserttable')
@@ -2090,41 +2088,15 @@ function onCommandValues(e) {
 	}
 }
 
-function updateToolbarCommandValues(e) {
-	if (e.commandName === '.uno:CharFontName') {
-		// 2) For .uno:CharFontName
-		var commandValues = map.getToolbarCommandValues(e.commandName);
-		if (typeof commandValues === 'undefined') {
-			return;
-		}
-
-		var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
-		// Old browsers like IE11 et al don't like Object.keys with
-		// empty arguments
-		if (typeof commandValues === 'object') {
-			data = data.concat(Object.keys(commandValues));
-		}
-
-		$('.fonts-select').select2({
-			data: data.sort(function (a, b) {  // also sort(localely)
-				return a.localeCompare(b);
-			}),
-			placeholder: _('Font')
-		});
-		$('.fonts-select').on('select2:select', onFontSelect);
-		$('.fonts-select').val(fontsSelectValue).trigger('change');
-		w2ui['editbar'].resize();
-	}
-}
-
-function updateCommandValues(targetName) {
+function updateCommandValues(e) {
 	var data = [];
+	var commandValues;
 	// 1) For .uno:StyleApply
 	// we need an empty option for the place holder to work
-	if (targetName === 'styles' && $('.styles-select option').length === 1) {
+	if (e.commandName === '.uno:StyleApply') {
 		var styles = [];
 		var topStyles = [];
-		var commandValues = map.getToolbarCommandValues('.uno:StyleApply');
+		commandValues = map.getToolbarCommandValues(e.commandName);
 		if (typeof commandValues === 'undefined')
 			return;
 		var commands = commandValues.Commands;
@@ -2188,9 +2160,31 @@ function updateCommandValues(targetName) {
 		$('.styles-select').val(stylesSelectValue).trigger('change');
 		$('.styles-select').on('select2:select', onStyleSelect);
 		w2ui['editbar'].resize();
+	} else if (e.commandName === '.uno:CharFontName') {
+		// 2) For .uno:CharFontName
+		commandValues = map.getToolbarCommandValues(e.commandName);
+		if (typeof commandValues === 'undefined') {
+			return;
+		}
+
+		data = []; // reset data in order to avoid that the font select box is populated with styles, too.
+		// Old browsers like IE11 et al don't like Object.keys with
+		// empty arguments
+		if (typeof commandValues === 'object') {
+			data = data.concat(Object.keys(commandValues));
+		}
+
+		$('.fonts-select').select2({
+			data: data.sort(function (a, b) {  // also sort(localely)
+				return a.localeCompare(b);
+			}),
+			placeholder: _('Font')
+		});
+		$('.fonts-select').on('select2:select', onFontSelect);
+		$('.fonts-select').val(fontsSelectValue).trigger('change');
+		w2ui['editbar'].resize();
 	}
 }
-
 
 function onUpdateParts(e) {
 	if (e.docType === 'text') {
@@ -2688,8 +2682,7 @@ function setupToolbar(e) {
 
 	if (!window.mode.isMobile()) {
 		map.on('updatetoolbarcommandvalues', function(e) {
-			updateToolbarCommandValues(e);
-			w2ui['editbar'].refresh();
+			updateCommandValues(e);
 		});
 
 		map.on('showbusy', function(e) {
@@ -2738,7 +2731,6 @@ global.onAddressInput = onAddressInput;
 global.onFormulaInput = onFormulaInput;
 global.onFormulaBarBlur = onFormulaBarBlur;
 global.onFormulaBarFocus = onFormulaBarFocus;
-global.updateCommandValues = updateCommandValues;
 global.onStyleSelect = onStyleSelect;
 global.insertTable = insertTable;
 global.insertShapes = insertShapes;
