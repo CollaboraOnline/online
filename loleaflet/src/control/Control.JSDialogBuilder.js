@@ -1660,8 +1660,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 L.Control.JSDialogBuilder.generateIDForSubMenu = function(menuStructure) {
 	for (var child = 0; child < menuStructure['children'].length; ++child) {
-		if (menuStructure['children'][child]['command'] === '.uno:SetAnchorAtChar') {
-			menuStructure['id'] = 'submenu_anchor';
+		if (menuStructure['children'][child]['command'] === '.uno:SetAnchorAtChar' || menuStructure['children'][child]['command'] === '.uno:WrapOff' || menuStructure['children'][child]['command'] === '.uno:BringToFront' || menuStructure['children'][child]['command'] === '.uno:RotateRight') {
+			var tempstring = menuStructure['children'][child]['command'];
+			tempstring = tempstring.substring(5);
+			menuStructure['id'] = 'submenu_' + tempstring.toLowerCase();
 			break;
 		}
 	}
