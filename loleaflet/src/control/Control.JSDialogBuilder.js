@@ -1658,17 +1658,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	}
 });
 
-L.Control.JSDialogBuilder.generateIDForSubMenu = function(menuStructure) {
-	for (var child = 0; child < menuStructure['children'].length; ++child) {
-		if (menuStructure['children'][child]['command'] === '.uno:SetAnchorAtChar' || menuStructure['children'][child]['command'] === '.uno:WrapOff' || menuStructure['children'][child]['command'] === '.uno:BringToFront' || menuStructure['children'][child]['command'] === '.uno:RotateRight') {
-			var tempstring = menuStructure['children'][child]['command'];
-			tempstring = tempstring.substring(5);
-			menuStructure['id'] = 'submenu_' + tempstring.toLowerCase();
-			break;
-		}
-	}
-};
-
 L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainMenu, itemCommand) {
 	if (itemCommand.includes('sep'))
 		return null;
@@ -1708,7 +1697,8 @@ L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainM
 
 	if (mainMenu) {
 		for (var menuItem in menu) {
-			var element = this.getMenuStructureForMobileWizard(menu[menuItem], false, menuItem);
+			var subItemCommand = menu[menuItem].command ? menu[menuItem].command : menuItem;
+			var element = this.getMenuStructureForMobileWizard(menu[menuItem], false, subItemCommand);
 			if (element)
 				menuStructure['children'].push(element);
 		}
@@ -1718,7 +1708,9 @@ L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainM
 			if (element)
 				menuStructure['children'].push(element);
 		}
-		this.generateIDForSubMenu(menuStructure);
+		if (menu.command) {
+			menuStructure.id = menu.command.substring(5).toLowerCase();
+		}
 	}
 
 	return menuStructure;

@@ -280,6 +280,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 				contextMenu['submenu' + subMenuIdx++] = {
 					name: _(itemName).replace(/\(~[A-Za-z]\)/, '').replace('~', ''),
+					command: item.command,
 					items: submenu
 				};
 				isLastItemText = true;
