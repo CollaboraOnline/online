@@ -2938,7 +2938,7 @@ private:
                             {
                                 docBroker->handleProxyRequest(
                                     sessionId, id, uriPublic, isReadOnly,
-                                    hostNoTrust, moveSocket);
+                                    hostNoTrust, streamSocket);
                                 return;
                             }
                             catch (const UnauthorizedRequestException& exc)

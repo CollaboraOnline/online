@@ -85,6 +85,10 @@ public:
     {
         _disposition = Type::CLOSED;
     }
+    std::shared_ptr<Socket> getSocket() const
+    {
+        return _socket;
+    }
     bool isMove() { return _disposition == Type::MOVE; }
     bool isClosed() { return _disposition == Type::CLOSED; }
 
@@ -923,6 +927,12 @@ public:
         std::vector<std::pair<size_t, size_t>> _spans;
     };
 
+    /// remove all queued input bytes
+    void clearInput()
+    {
+        _inBuffer.clear();
+    }
+
     /// Remove the first @count bytes from input buffer
     void eraseFirstInputBytes(const MessageMap &map)
     {
@@ -1086,6 +1096,8 @@ public:
     /// Does it look like we have some TLS / SSL where we don't expect it ?
     bool sniffSSL() const;
 
+    void dumpState(std::ostream& os) override;
+
 protected:
     /// Override to handle reading of socket data differently.
     virtual int readData(char* buf, int len)
@@ -1108,8 +1120,6 @@ protected:
         return fakeSocketWrite(getFD(), buf, len);
 #endif
     }
-
-    void dumpState(std::ostream& os) override;
 
     void setShutdownSignalled()
     {
