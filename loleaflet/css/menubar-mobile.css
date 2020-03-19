@@ -1,4 +1,4 @@
-@media (max-width: 767px), (max-device-height: 767px) {
+@media (max-device-width: 767px) {
 	.logo {
 		background-size: 100px;
 		max-width: 24px;

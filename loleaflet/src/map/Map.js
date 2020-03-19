@@ -224,19 +224,20 @@ L.Map = L.Evented.extend({
 
 			// We need core's knowledge of whether it is a mobile phone or not (which is
 			// what .uno:LOKSetMobile does) to be in sync with the test in
-			// _onJSDialogMsg in TileLayer.js but we don't have the clout to do so
-			// except for the iOS app out of fear of breaking something.
-			if (L.Browser.mobile && (!window.ThisIsTheiOSApp || screen.width < 768))
+			// _onJSDialogMsg in TileLayer.js.
+			if (window.mode.isMobile())
 			{
 				this._size = new L.Point(0,0);
 				this._onResize();
 				this._socket.sendMessage('uno .uno:LOKSetMobile');
-				// Add a style sheet for mobile phones. Just a placeholder so far.
+				// Add a style sheet for mobile phones. Doing it here is hopefully more
+				// reliable that relying on CSS media queries looking at the window or device size.
 				var style = document.createElement('style');
-				style.innerHTML = ' \
-#foobar { \
-        background: red; \
-} \
+				style.innerHTML = '  \
+/* Hide the menu bar in a horribly convoluted way */ \
+#main-menu-state:not(:checked) ~ #main-menu {        \
+    display: none;                                   \
+}                                                    \
 ';
 				document.head.appendChild(style);
 			}
