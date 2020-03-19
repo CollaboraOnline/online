@@ -1010,25 +1010,6 @@ function initNormalToolbar() {
 			hideTooltip(this, e.target);
 		},
 		onRefresh: function(event) {
-			if (event.target === 'editbar' && map.getDocType() === 'presentation') {
-				// Fill the style select box if not yet filled
-				if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
-					var data = [''];
-					// Inserts a separator element
-					data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
-
-					L.Styles.impressLayout.forEach(function(layout) {
-						data = data.concat({id: layout.id, text: _(layout.text)});
-					}, this);
-
-					$('.styles-select').select2({
-						data: data,
-						placeholder: _UNO('.uno:LayoutStatus', 'presentation')
-					});
-					$('.styles-select').on('select2:select', onStyleSelect);
-				}
-			}
-
 			if ((event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes') && event.item) {
 				var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(event.item.id));
 				if ((_inDesktopMode() && event.item.desktop == false)
@@ -1594,6 +1575,7 @@ function onDocLayerInit() {
 	var toolbarUp = w2ui['editbar'];
 	var statusbar = w2ui['actionbar'];
 	var docType = map.getDocType();
+	var data;
 
 	switch (docType) {
 	case 'spreadsheet':
@@ -1697,6 +1679,23 @@ function onDocLayerInit() {
 
 		break;
 	case 'presentation':
+		if ($('.styles-select')[0].length === 1) {
+			// Fill the style select box if not yet filled
+			data = [''];
+			// Inserts a separator element
+			data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
+
+			L.Styles.impressLayout.forEach(function(layout) {
+				data = data.concat({id: layout.id, text: _(layout.text)});
+			}, this);
+
+			$('.styles-select').select2({
+				data: data,
+				placeholder: _UNO('.uno:LayoutStatus', 'presentation')
+			});
+			$('.styles-select').on('select2:select', onStyleSelect);
+		}
+
 		if (toolbarUp) {
 			toolbarUp.show('breaksidebar', 'modifypage');
 		}
@@ -1794,7 +1793,7 @@ function onDocLayerInit() {
 			el.resize();
 	}
 
-	var data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
+	data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
 		22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
 	$('.fontsizes-select').select2({
 		data: data,
