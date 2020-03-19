@@ -257,6 +257,12 @@ void Session::handleMessage(const std::vector<char> &data)
 
 void Session::getIOStats(uint64_t &sent, uint64_t &recv)
 {
+    if (!_protocol)
+    {
+        LOG_TRC("ERR - missing protocol " << getName() << ": Get IO stats.");
+        return;
+    }
+
     _protocol->getIOStats(sent, recv);
 }
 
