@@ -55,6 +55,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['colorsample'] = this._colorSampleControl;
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
 		this._controlHandlers['colorlistbox'] = this._colorControl;
+		this._controlHandlers['borderstyle'] = this._borderControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -1412,8 +1413,35 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(sectionTitle).click(function () {
 			builder.callback('toolbutton', 'click', sectionTitle, data.command, builder);
 		});
-
 		return false;
+	},
+
+	_borderControlItem: function(parentContainer, data, builder, i) {
+		var button = null;
+
+		var div = this._createIdentifiable('div', 'ui-content unospan', parentContainer, data);
+
+		var buttonId = 'border-' + i;
+		button = L.DomUtil.create('img', 'ui-content borderbutton', div);
+		button.src = 'images/fr0' + i + '.svg';
+		button.id = buttonId;
+
+		$(div).click(function () {
+			var color = 0;
+			// Find our associated color picker
+			var item = L.LOUtil.findItemWithAttributeRecursive(data.parent, 'command', '.uno:FrameLineColor');
+			if (item)
+				color = builder._getCurrentColor(item, builder);
+			window.setBorderStyle(i, color);
+		});
+	},
+
+	_borderControl: function(parentContainer, data, builder) {
+		var bordercontrollabel = L.DomUtil.create('p', 'mobile-wizard ui-text', parentContainer);
+		bordercontrollabel.innerHTML = _('Cell borders');
+		bordercontrollabel.id = data.id + 'label';
+		for (var i = 1; i < 13; ++i)
+			builder._borderControlItem(parentContainer, data, builder, i);
 	},
 
 	_colorControl: function(parentContainer, data, builder) {

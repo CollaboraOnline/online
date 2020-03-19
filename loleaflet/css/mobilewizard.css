@@ -299,7 +299,20 @@
 		border: none !important;
 		padding: 0px 0px 16px 0px;
 	}
-
+	#mobile-wizard-content > #ScCellAppearancePropertyPanel > .ui-content.level-0.mobile-wizard{
+		display: flex;
+		justify-content: center;
+		align-items: start;
+		align-self: start;
+		flex-wrap: wrap;
+	}
+	#mobile-wizard-content > #ScCellAppearancePropertyPanel > .ui-content.level-0.mobile-wizard .borderbutton {
+		width: 42px;
+		padding: 1px;
+		background-color: #eeeeee;
+		-webkit-box-shadow: inset 0px 0px 0px 2px #fff;
+		box-shadow: inset 0px 0px 0px 2px #fff;
+	}
 	.ui-header.mobile-wizard {
 		width: 100%;
 		height: 56px !important;

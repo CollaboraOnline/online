@@ -361,6 +361,17 @@ L.Control.MobileWizard = L.Control.extend({
 		}
 	},
 
+	_insertCalcBorders: function(deck) {
+		var replaceMe = L.LOUtil.findItemWithAttributeRecursive(deck, 'id', 'cellbordertype');
+		if (replaceMe) {
+			replaceMe.id = 'borderstyle';
+			replaceMe.type = 'borderstyle';
+			replaceMe.text = '';
+			replaceMe.enabled = 'true';
+			replaceMe.children = [];
+		}
+	},
+
 	_modifySidebarLayout: function (data) {
 		var deck = L.LOUtil.findItemWithAttributeRecursive(data, 'type', 'deck');
 		if (deck)
@@ -379,15 +390,16 @@ L.Control.MobileWizard = L.Control.extend({
 				deck.children[textIdx].children[0].children = moveContent.concat(deck.children[textIdx].children[0].children);
 				deck.children.splice(stylesIdx, 1); //remove the styles property
 			}
-			var removeItems = ['cellbordertype', 'borderlinestyle', 'borderlinecolor',
-					   'editcontour', 'spacingbar', 'linespacing',
-					   'stylenew', 'styleupdate',
+			var removeItems = ['borderlinestyle', 'editcontour', 'spacingbar',
+					   'linespacing', 'stylenew', 'styleupdate',
 					   'beginarrowstyle', 'endarrowstyle'];
 
 			if (this.map.getDocType() === 'presentation')
 				removeItems.push('indentfieldbox');
 
 			this._removeItems(deck, removeItems);
+
+			this._insertCalcBorders(deck);
 		}
 	},
 
