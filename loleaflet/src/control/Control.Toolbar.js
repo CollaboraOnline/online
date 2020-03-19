@@ -2105,12 +2105,6 @@ function updateToolbarCommandValues(e) {
 			data = data.concat(Object.keys(commandValues));
 		}
 
-		/* debug messages it will be removed later */
-		if (data.length < 3) {
-			console.log('ALERT!, the server is sending a small font list');
-		}
-		/* debug end*/
-
 		$('.fonts-select').select2({
 			data: data.sort(function (a, b) {  // also sort(localely)
 				return a.localeCompare(b);
