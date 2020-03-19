@@ -178,7 +178,7 @@ body {
 #toolbar-hamburger {
 	width: 0;
 }
-@media (max-device-width: 767px) {
+@media (max-width: 767px) and (orientation: portrait), (max-width: 1023px) and (orientation: landscape) {
 	#toolbar-hamburger {
 		width: 36px;
 	}
