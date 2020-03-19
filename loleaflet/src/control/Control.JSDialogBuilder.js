@@ -1218,9 +1218,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_customPushButtonTextForId: function(buttonId) {
+		if (buttonId == 'validref')
+			return _('Select range');
+
+		return '';
+	},
+
 	_pushbuttonControl: function(parentContainer, data, builder, customCallback) {
 		var pushbutton = L.DomUtil.create('button', '', parentContainer);
-		pushbutton.innerHTML = builder._cleanText(data.text);
+		var customText = builder._customPushButtonTextForId(data.id);
+		pushbutton.innerHTML = customText !== '' ? customText : builder._cleanText(data.text);
 		pushbutton.id = data.id;
 
 		if (data.enabled == 'false')
