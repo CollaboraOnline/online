@@ -65,7 +65,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var selectedPart = e.selectedPart;
 		var selectedParts = e.selectedParts;
 		var docType = e.docType;
-		if (docType === 'text') {
+		if (docType === 'text' || isNaN(parts)) {
 			return;
 		}
 
