@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global Uint8Array */
 (function (global) {
 
 	var ua = navigator.userAgent.toLowerCase(),
@@ -212,19 +213,97 @@
 		};
 		this.onmessage = function() {
 		};
+		this.parseIncomingArray = function(arr) {
+			var decoder = new TextDecoder();
+			for (var i = 0; i < arr.length; ++i)
+			{
+				var left = arr.length - i;
+				if (left < 4)
+				{
+					console.debug('no data left');
+					break;
+				}
+				var type = String.fromCharCode(arr[i+0]);
+				if (type != 'T' && type != 'B')
+				{
+					console.debug('wrong data type: ' + type);
+					break;
+				}
+				if (arr[i+1] !== 48 && arr[i+2] !== 120) // '0x'
+				{
+					console.debug('missing hex preamble');
+					break;
+				}
+				i += 3;
+				var numStr = '';
+				var start = i;
+				while (arr[i] != 10) // '\n'
+					i++;
+				numStr = decoder.decode(arr.slice(start, i)); // FIXME: IE11
+				var size = parseInt(numStr, 16);
+
+				i++; // skip \n
+
+				var data;
+				if (type == 'T') // FIXME: IE11
+					data = decoder.decode(arr.slice(i, i + size));
+				else
+					data = arr.slice(i, i + size);
+
+				this.onmessage({ data: data });
+
+				i += size; // skip trailing '\n' in loop-increment
+			}
+		};
+		this.parseIncoming = function(type, msg) {
+			if (type === 'blob')
+			{
+				var fileReader = new FileReader();
+				var that = this;
+				fileReader.onload = function(event) {
+					that.parseIncomingArray(event.target.result);
+				};
+				fileReader.readAsArrayBuffer(msg);
+			}
+			else if (type === 'arraybuffer')
+			{
+				this.parseIncomingArray(new Uint8Array(msg));
+			}
+			else if (type === 'text' || type === '')
+			{
+				const encoder = new TextEncoder();
+				const arr = encoder.encode(msg);
+				this.parseIncomingArray(arr);
+			}
+			else
+				console.debug('Unknown encoding type: ' + type);
+		};
 		this.send = function(msg) {
 			console.debug('send msg "' + msg + '"');
 			var req = new XMLHttpRequest();
 			req.open('POST', this.getEndPoint('write'));
 			req.setRequestHeader('SessionId', this.sessionId);
 			if (this.sessionId === 'fetchsession')
+			{
+				req.responseType = 'text';
 				req.addEventListener('load', function() {
 					console.debug('got session: ' + this.responseText);
 					that.sessionId = this.responseText;
 					that.readyState = 1;
 					that.onopen();
 				});
-			req.send(msg);
+			}
+			else
+			{
+				req.responseType = 'arraybuffer';
+				req.addEventListener('load', function() {
+					if (this.status == 200)
+						that.parseIncoming(this.responseType, this.response);
+					else
+						console.debug('Error on incoming response');
+				});
+			}
+			req.send('B0x' + msg.length.toString(16) + '\n' + msg + '\n');
 		},
 		this.close = function() {
 			console.debug('close socket');
@@ -237,7 +316,6 @@
 		};
 		console.debug('New proxy socket ' + this.id + ' ' + this.uri);
 
-		// FIXME: perhaps a little risky.
 		this.send('fetchsession');
 		var that = this;
 
@@ -250,20 +328,16 @@
 			var req = new XMLHttpRequest();
 			// fetch session id:
 			req.addEventListener('load', function() {
-				console.debug('read: ' + this.responseText);
 				if (this.status == 200)
-				{
-					that.onmessage({ data: this.response });
-				}
+					that.parseIncoming(this.responseType, this.response);
 				else
-				{
 					console.debug('Handle error ' + this.status);
-				}
 				that.readWaiting = false;
 			});
 			req.open('GET', that.getEndPoint('read'));
-			req.setRequestHeader('SessionId', this.sessionId);
-			req.send(that.sessionId);
+			req.setRequestHeader('SessionId', that.sessionId);
+			req.responseType = 'arraybuffer';
+			req.send('');
 			that.readWaiting = true;
 		}, 250);
 	};

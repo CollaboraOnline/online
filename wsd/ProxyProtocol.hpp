@@ -9,19 +9,21 @@
 
 #pragma once
 
+#include <memory>
 #include <net/Socket.hpp>
 
-/// Interface for building a websocket from this ...
+/**
+ * Implementation that builds a websocket like protocol from many
+ * individual proxied HTTP requests back to back.
+ *
+ * we use a trivial framing: <hex-length>\r\n<content>\r\n
+ */
 class ProxyProtocolHandler : public ProtocolHandlerInterface
 {
 public:
-    ProxyProtocolHandler()
-    {
-    }
+    ProxyProtocolHandler() { }
 
-    virtual ~ProxyProtocolHandler()
-    {
-    }
+    virtual ~ProxyProtocolHandler() { }
 
     /// Will be called exactly once by setHandler
     void onConnect(const std::shared_ptr<StreamSocket>& /* socket */) override
@@ -29,10 +31,7 @@ public:
     }
 
     /// Called after successful socket reads.
-    void handleIncomingMessage(SocketDisposition &/* disposition */) override
-    {
-        assert("we get our data a different way" && false);
-    }
+    void handleIncomingMessage(SocketDisposition &/* disposition */) override;
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
                       int64_t &/* timeoutMaxMs */) override
@@ -45,9 +44,7 @@ public:
     {
     }
 
-    void performWrites() override
-    {
-    }
+    void performWrites() override;
 
     void onDisconnect() override
     {
@@ -58,40 +55,40 @@ public:
     /// Clear all external references
     void dispose() override { _msgHandler.reset(); }
 
-    int sendTextMessage(const char *msg, const size_t len, bool flush = false) const override
-    {
-        LOG_TRC("ProxyHack - send text msg " + std::string(msg, len));
-        (void) flush;
-        return len;
-    }
+    int sendTextMessage(const char *msg, const size_t len, bool flush = false) const override;
+    int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const override;
+    void shutdown(bool goingAway = false, const std::string &statusMessage = "") override;
+    void getIOStats(uint64_t &sent, uint64_t &recv) override;
+    void dumpState(std::ostream& os) override;
 
-    int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const override
-    {
-        (void) data; (void) flush;
-        LOG_TRC("ProxyHack - send binary msg len " << len);
-        return len;
-    }
-
-    void shutdown(bool goingAway = false, const std::string &statusMessage = "") override
-    {
-        LOG_TRC("ProxyHack - shutdown " << goingAway << ": " << statusMessage);
-    }
-
-    void getIOStats(uint64_t &sent, uint64_t &recv) override
-    {
-        sent = recv = 0;
-    }
-
-    void dumpState(std::ostream& os) override
-    {
-        os << "proxy protocol\n";
-    }
+    bool parseEmitIncoming(const std::shared_ptr<StreamSocket> &socket);
 
     void handleRequest(const std::string &uriPublic,
                        const std::shared_ptr<Socket> &socket);
 
 private:
-    std::vector<std::weak_ptr<StreamSocket>> _sockets;
+    std::shared_ptr<StreamSocket> popWriteSocket();
+    int sendMessage(const char *msg, const size_t len, bool text, bool flush);
+    bool flushQueueTo(const std::shared_ptr<StreamSocket> &socket);
+
+    struct Message : public std::vector<char>
+    {
+        Message(const char *msg, const size_t len, bool text)
+        {
+            const char *type = text ? "T" : "B";
+            insert(end(), type, type + 1);
+            std::ostringstream os;
+            os << std::hex << "0x" << len << "\n";
+            std::string str = os.str();
+            insert(end(), str.c_str(), str.c_str() + str.size());
+            insert(end(), msg, msg + len);
+            const char *terminator = "\n";
+            insert(end(), terminator, terminator + 1);
+        }
+    };
+    /// queue things when we have no socket to hand.
+    std::vector<std::shared_ptr<Message>> _writeQueue;
+    std::vector<std::weak_ptr<StreamSocket>> _writeSockets;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
