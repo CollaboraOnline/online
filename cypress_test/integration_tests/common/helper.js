@@ -177,7 +177,8 @@ function detectLOCoreVersion() {
 		cy.get('#lokit-version')
 			.then(function(items) {
 				expect(items).have.lengthOf(1);
-				if (items[0].textContent.includes('Collabora OfficeDev 6.2')) {
+				if (items[0].textContent.includes('Collabora') &&
+				    items[0].textContent.includes('6.2')) {
 					Cypress.env('LO_CORE_VERSION', 'cp-6-2');}
 				else {
 					Cypress.env('LO_CORE_VERSION', 'master');
