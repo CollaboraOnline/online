@@ -1659,8 +1659,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 });
 
 L.Control.JSDialogBuilder.generateIDForSubMenu = function(menuStructure) {
-	if (menuStructure['text'] === 'Anchor')
-		menuStructure['id'] = 'submenu_anchor';
+	for (var child = 0; child < menuStructure['children'].length; ++child) {
+		if (menuStructure['children'][child]['command'] === '.uno:SetAnchorAtChar') {
+			menuStructure['id'] = 'submenu_anchor';
+			break;
+		}
+	}
 };
 
 L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainMenu, itemCommand) {
@@ -1711,8 +1715,8 @@ L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainM
 			element = this.getMenuStructureForMobileWizard(menu.items[menuItem], false, menuItem);
 			if (element)
 				menuStructure['children'].push(element);
-			this.generateIDForSubMenu(menuStructure);
 		}
+		this.generateIDForSubMenu(menuStructure);
 	}
 
 	return menuStructure;
