@@ -5,12 +5,13 @@
     <string name="failed_to_load_file">No se pudo determinar el archivo para cargar</string>
     <string name="failed_to_insert_image">Error al insertar imagen</string>
     <string name="cannot_open_file_chooser">No se puede abrir el selector de archivos</string>
+    <string name="preparing_for_the_first_start_after_an_update">Preparándose para el primer inicio tras una actualización.</string>
+    <string name="rate_now">Calificar ahora</string>
+    <string name="later">Luego</string>
+    <string name="rate_our_app_title">¡Gracias por utilizar %1$s!</string>
+    <string name="rate_our_app_text">Si le gusta, denos 5 estrellas en Google Play. Su reseña positiva es nuestra mayor motivación.</string>
+
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Cargando…</string>
-    <string name="saving">Guardando…</string>
-    <string name="preparing_for_the_first_start_after_an_update">Preparándose para el primer inicio tras una actualización.</string>
-    <string name="rate_our_app_text">Si le gusta, denos 5 estrellas en Google Play. Su reseña positiva es nuestra mayor motivación.</string>
-    <string name="rate_our_app_title">¡Gracias por utilizar %1$s!</string>
-    <string name="later">Luego</string>
-    <string name="rate_now">Calificar ahora</string>
+    <string name="exiting">Saliendo…</string>
 </resources>
