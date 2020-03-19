@@ -210,7 +210,8 @@ function longPressOnDocument(posX, posY) {
 				.trigger('pointerdown', eventOptions)
 				.trigger('pointermove', eventOptions);
 
-			cy.wait(600);
+			// This value is set in Map.TouchGesture.js.
+			cy.wait(500);
 
 			cy.get('.leaflet-pane.leaflet-map-pane')
 				.trigger('pointerup', eventOptions);
