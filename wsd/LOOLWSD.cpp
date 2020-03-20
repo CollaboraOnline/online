@@ -244,7 +244,7 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
     try
     {
         // Let the client know we are shutting down.
-        proto->sendTextMessage(error);
+        proto->sendTextMessage(error.data(), error.size());
 
         // Shutdown.
         proto->shutdown(true, error);
