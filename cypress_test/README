@@ -2,9 +2,11 @@ Cypress based test framework for LibreOffice Online
 ====================================================
 
 
-
 Installation
 ------------------
+
+You need to have run configure with the --enable-cypress option.
+
 In a normal desktop environment you only need to install npm
 packages for running cypress tests. This is done by the build
 system, so running 'make check' will do the basic installation.
