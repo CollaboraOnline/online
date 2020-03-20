@@ -37,20 +37,18 @@ describe('Spell checking menu.', function() {
 				expect(markers.length).to.have.greaterThan(1);
 				for (var i = 0; i < markers.length; i++) {
 					if (markers[i].classList.contains('leaflet-selection-marker-start')) {
-						var startPos = markers[i].getBoundingClientRect();
+						var XPos = markers[i].getBoundingClientRect().right + 10;
 					} else if (markers[i].classList.contains('leaflet-selection-marker-end')) {
-						var endPos = markers[i].getBoundingClientRect();
+						var YPos = markers[i].getBoundingClientRect().top - 10;
 					}
 				}
 
 				// Remove selection
-				cy.get('#document-container')
+				cy.get('body')
 					.type('{leftarrow}');
 				cy.get('.leaflet-marker-icon')
 					.should('not.exist');
 
-				var XPos = startPos.right + 10;
-				var YPos = endPos.top - 10;
 				helper.longPressOnDocument(XPos, YPos);
 			});
 
