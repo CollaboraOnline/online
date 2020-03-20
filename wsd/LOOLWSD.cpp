@@ -2914,11 +2914,16 @@ private:
         // Request a kit process for this doc.
         std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
             none, url, docKey, _id, uriPublic);
+
+        std::string fullURL = request.getURI();
+        std::string ending = "/ws/read";
+        bool isWaiting = (fullURL.size() > ending.size() &&
+                          std::equal(ending.rbegin(), ending.rend(), fullURL.rbegin()));
         if (docBroker)
         {
             // need to move into the DocumentBroker context before doing session lookup / creation etc.
             std::string id = _id;
-            disposition.setMove([docBroker, id, uriPublic, isReadOnly, hostNoTrust, sessionId]
+            disposition.setMove([docBroker, id, uriPublic, isReadOnly, hostNoTrust, sessionId, isWaiting]
                                 (const std::shared_ptr<Socket> &moveSocket)
                 {
                     LOG_TRC("Setting up docbroker thread for " << docBroker->getDocKey());
@@ -2928,7 +2933,8 @@ private:
                     // We no longer own this socket.
                     moveSocket->setThreadOwner(std::thread::id());
 
-                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly, hostNoTrust, sessionId, moveSocket]()
+                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly, hostNoTrust,
+                                            sessionId, moveSocket, isWaiting]()
                         {
                             // Now inside the document broker thread ...
                             LOG_TRC("In the docbroker thread for " << docBroker->getDocKey());
@@ -2938,7 +2944,7 @@ private:
                             {
                                 docBroker->handleProxyRequest(
                                     sessionId, id, uriPublic, isReadOnly,
-                                    hostNoTrust, streamSocket);
+                                    hostNoTrust, streamSocket, isWaiting);
                                 return;
                             }
                             catch (const UnauthorizedRequestException& exc)

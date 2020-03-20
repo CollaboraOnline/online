@@ -147,7 +147,8 @@ public:
         const Poco::URI& uriPublic,
         const bool isReadOnly,
         const std::string& hostNoTrust,
-        const std::shared_ptr<StreamSocket> &socket);
+        const std::shared_ptr<StreamSocket> &socket,
+        bool isWaiting);
 
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();

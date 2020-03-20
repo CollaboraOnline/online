@@ -206,7 +206,7 @@
 		this.sessionId = 'fetchsession';
 		this.id = window.proxySocketCounter++;
 		this.sendCounter = 0;
-		this.readWaiting = false;
+		this.readWaiting = 0;
 		this.onclose = function() {
 		};
 		this.onerror = function() {
@@ -315,9 +315,9 @@
 
 		// horrors ...
 		this.readInterval = setInterval(function() {
-			if (this.readWaiting) // one at a time for now
+			if (that.readWaiting > 4) // max 4 waiting connections concurrently.
 				return;
-			if (this.sessionId == 'fetchsession')
+			if (that.sessionId == 'fetchsession')
 				return; // waiting for our session id.
 			var req = new XMLHttpRequest();
 			// fetch session id:
@@ -326,13 +326,15 @@
 					that.parseIncomingArray(new Uint8Array(this.response));
 				else
 					console.debug('Handle error ' + this.status);
-				that.readWaiting = false;
+			});
+			req.addEventListener('loadend', function() {
+				that.readWaiting--;
 			});
 			req.open('GET', that.getEndPoint('read'));
 			req.setRequestHeader('SessionId', that.sessionId);
 			req.responseType = 'arraybuffer';
 			req.send('');
-			that.readWaiting = true;
+			that.readWaiting++;
 		}, 250);
 	};
 
