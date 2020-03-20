@@ -25,6 +25,12 @@ cypress_test folder to run cypress tests only.
 
     make check
 
+IMPORTANT: Before stepping under cypress_test folder
+and running any command listed here, make sure you've
+done a top-level make, so everything is up-to-date.
+Running commands from under cypress_test folder won't
+trigger a rebuild.
+
 To run cypress test cases selectively, you need to
 go in to the cypress_test folder first and run one of
 the following commands.
@@ -39,13 +45,13 @@ To run all mobile tests:
 
 To run one specific test suit of desktop tests,
 use spec argument with a relative path to
-cypress_test/data/desktop/:
+cypress_test/integration_tests/desktop/:
 
     make check-desktop spec=example_desktop_test_spec.js
 
 To run one specific test suit of mobile tests,
 use spec argument with a relative path to
-cypress_test/data/mobile/:
+cypress_test/integration_tests/mobile/:
 
     make check-mobile spec=writer/toolbar_spec.js
 
