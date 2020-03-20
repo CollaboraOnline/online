@@ -311,7 +311,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
             auto now = std::chrono::steady_clock::now();
             if (now > endTime) // timedout
             {
-                TST_LOG("Timeout.");
+                TST_LOG("Timeout after " << timeoutMs << " ms.");
                 break;
             }
             long waitTimeUs = std::chrono::duration_cast<std::chrono::microseconds>(endTime - now).count();
@@ -378,9 +378,9 @@ std::string getResponseString(T& ws, const std::string& prefix, const std::strin
 }
 
 template <typename T>
-std::string assertResponseString(T& ws, const std::string& prefix, const std::string& testname)
+std::string assertResponseString(T& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
 {
-    const auto res = getResponseString(ws, prefix, testname);
+    const auto res = getResponseString(ws, prefix, testname, timeoutMs);
     LOK_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
     return res;
 }

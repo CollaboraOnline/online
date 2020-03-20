@@ -64,7 +64,8 @@ int UnitLoadTorture::loadTorture(const std::string& testname, const std::string&
                     Poco::URI(helpers::getTestServerURI()), request, response, testname);
                 helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
 
-                const auto status = helpers::assertResponseString(socket, "status:", testname);
+                // 20s is double of the default.
+                const auto status = helpers::assertResponseString(socket, "status:", testname, 20000);
                 int viewid = -1;
                 LOOLProtocol::getTokenIntegerFromMessage(status, "viewid", viewid);
                 sum_view_ids += viewid;
