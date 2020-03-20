@@ -60,11 +60,8 @@ public:
     void shutdown(bool goingAway = false, const std::string &statusMessage = "") override;
     void getIOStats(uint64_t &sent, uint64_t &recv) override;
     void dumpState(std::ostream& os) override;
-
     bool parseEmitIncoming(const std::shared_ptr<StreamSocket> &socket);
-
-    void handleRequest(const std::string &uriPublic,
-                       const std::shared_ptr<Socket> &socket);
+    void handleRequest(bool isWaiting, const std::shared_ptr<Socket> &socket);
 
 private:
     std::shared_ptr<StreamSocket> popWriteSocket();
@@ -88,7 +85,7 @@ private:
     };
     /// queue things when we have no socket to hand.
     std::vector<std::shared_ptr<Message>> _writeQueue;
-    std::vector<std::weak_ptr<StreamSocket>> _writeSockets;
+    std::vector<std::weak_ptr<StreamSocket>> _outSockets;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

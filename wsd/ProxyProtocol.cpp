@@ -25,7 +25,8 @@ void DocumentBroker::handleProxyRequest(
     const Poco::URI& uriPublic,
     const bool isReadOnly,
     const std::string& hostNoTrust,
-    const std::shared_ptr<StreamSocket> &socket)
+    const std::shared_ptr<StreamSocket> &socket,
+    bool isWaiting)
 {
     std::shared_ptr<ClientSession> clientSession;
     if (sessionId == "fetchsession")
@@ -82,7 +83,7 @@ void DocumentBroker::handleProxyRequest(
     auto proxy = std::static_pointer_cast<ProxyProtocolHandler>(
         protocol);
 
-    proxy->handleRequest(uriPublic.toString(), socket);
+    proxy->handleRequest(isWaiting, socket);
 }
 
 bool ProxyProtocolHandler::parseEmitIncoming(
@@ -128,16 +129,13 @@ bool ProxyProtocolHandler::parseEmitIncoming(
     return true;
 }
 
-void ProxyProtocolHandler::handleRequest(const std::string &uriPublic,
-                                         const std::shared_ptr<Socket> &socket)
+void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<Socket> &socket)
 {
     auto streamSocket = std::static_pointer_cast<StreamSocket>(socket);
 
-    bool bRead = uriPublic.find("/write") == std::string::npos;
-    LOG_INF("Proxy handle request " << uriPublic << " type: " <<
-            (bRead ? "read" : "write"));
+    LOG_INF("Proxy handle request type: " << (isWaiting ? "wait" : "respond"));
 
-    if (bRead)
+    if (!isWaiting)
     {
         if (!_msgHandler)
             LOG_WRN("unusual - incoming message with no-one to handle it");
@@ -149,13 +147,27 @@ void ProxyProtocolHandler::handleRequest(const std::string &uriPublic,
         }
     }
 
-    if (!flushQueueTo(streamSocket) && !bRead)
+    if (!flushQueueTo(streamSocket) && isWaiting)
     {
-        // longer running 'write socket'
-        _writeSockets.push_back(streamSocket);
+        LOG_TRC("Queue a waiting socket");
+        // longer running 'write socket' (marked 'read' by the client)
+        _outSockets.push_back(streamSocket);
+        if (_outSockets.size() > 16)
+        {
+            LOG_ERR("Unexpected - client opening many concurrent waiting connections " << _outSockets.size());
+            // cleanup older waiting sockets.
+            auto sockWeak = _outSockets.front();
+            _outSockets.erase(_outSockets.begin());
+            auto sock = sockWeak.lock();
+            if (sock)
+                sock->shutdown();
+        }
     }
     else
+    {
+        LOG_TRC("Return a reply immediately");
         socket->shutdown();
+    }
 }
 
 void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
@@ -202,7 +214,7 @@ void ProxyProtocolHandler::getIOStats(uint64_t &sent, uint64_t &recv)
 
 void ProxyProtocolHandler::dumpState(std::ostream& os)
 {
-    os << "proxy protocol sockets: " << _writeSockets.size() << " writeQueue: " << _writeQueue.size() << ":\n";
+    os << "proxy protocol sockets: " << _outSockets.size() << " writeQueue: " << _writeQueue.size() << ":\n";
     for (auto it : _writeQueue)
         Util::dumpHex(os, "\twrite queue entry:", "\t\t", *it);
 }
@@ -256,10 +268,10 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
 std::shared_ptr<StreamSocket> ProxyProtocolHandler::popWriteSocket()
 {
     std::weak_ptr<StreamSocket> sock;
-    while (!_writeSockets.empty())
+    while (!_outSockets.empty())
     {
-        sock = _writeSockets.front();
-        _writeSockets.erase(_writeSockets.begin());
+        sock = _outSockets.front();
+        _outSockets.erase(_outSockets.begin());
         auto realSock = sock.lock();
         if (realSock)
             return realSock;
