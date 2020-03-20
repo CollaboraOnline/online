@@ -335,6 +335,33 @@
 		}, 250);
 	};
 
+	if (global.socketProxy)
+	{
+		// re-write relative URLs in CSS - somewhat grim.
+		window.addEventListener('load', function() {
+			var sheets = document.styleSheets;
+			for (var i = 0; i < sheets.length; ++i) {
+				var relBases = sheets[i].href.split('/');
+				relBases.pop(); // bin last - css name.
+				var replaceBase = 'url("' + relBases.join('/') + '/images/';
+
+				var rules = sheets[i].cssRules || sheets[i].rules;
+				for (var r = 0; r < rules.length; ++r) {
+					if (!rules[r] || !rules[r].style)
+						continue;
+					var img = rules[r].style.backgroundImage;
+					if (img === '' || img === undefined)
+						continue;
+					if (img.startsWith('url("images/'))
+					{
+						rules[r].style.backgroundImage =
+							img.replace('url("images/', replaceBase);
+					}
+				}
+			}
+		}, false);
+	}
+
 	global.createWebSocket = function(uri) {
 		if (global.socketProxy) {
 			return new global.ProxySocket(uri);
