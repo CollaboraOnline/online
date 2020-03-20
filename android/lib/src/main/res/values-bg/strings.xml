@@ -8,4 +8,6 @@
     <string name="temp_file_saving_disabled">Този файл е само за четене, записването е изключено.</string>
     <string name="saving">Записване...</string>
     <string name="preparing_for_the_first_start_after_an_update">Подготвя се първо стартиране след актуализация.</string>
+    <string name="later">По-късно</string>
+    <string name="rate_now">Оценяване сега</string>
 </resources>

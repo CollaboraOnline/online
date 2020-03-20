@@ -99,4 +99,5 @@
     <string name="app_version">Версия: %1$s, Build ID: %2$s</string>
     <string name="pref_enable_chrome_debugger_info">Включва използването на дебъгера на Chrome в документа.</string>
     <string name="pref_enable_chrome_debugger">Дебъгер на Chrome</string>
+    <string name="pref_category_editor">Настройки на редактора</string>
 </resources>

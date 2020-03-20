@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-18 14:17+0000\n"
+"PO-Revision-Date: 2020-03-19 14:34+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1211,7 +1211,7 @@ msgstr "Si no se selecciona cap taula o interval, es mostra el prototip d'un dia
 
 #: html/loleaflet-help.html%2Bdiv.p:319-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
-msgstr ""
+msgstr "<span class=\"def\">Edició dels diagrames:</span> feu doble clic al diagrama per a seleccionar-lo. Feu servir els menús contextuals per a afegir-hi elements com ara el títol i els eixos. Trieu <span class=\"ui\">Interval de dades</span> i <span class=\"ui\">Tipus de diagrama</span> per a modificar les dades del diagrama i seleccionar-ne el tipus, respectivament."
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
@@ -1415,7 +1415,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
-msgstr ""
+msgstr "<span class=\"def\">Notes al peu i finals:</span> s'admet l'ús de notes al peu i finals."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
 msgid "<span class=\"productname\">%productName</span> Impress edits presentations in a way that should be familiar to people. Operations like typing text, cut, copy and pasting contents, selecting text , inserting, resizing, anchoring images, adding and handling tables, are similar to a desktop presentation application. Use the keyboard, menus and toolbars to perform actions in your document."

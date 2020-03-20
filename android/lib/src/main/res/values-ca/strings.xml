@@ -12,4 +12,5 @@
     <string name="later">Més tard</string>
     <string name="rate_our_app_text">Si en gaudiu, poseu-li 5 estrelles al Google Play. Les vostres ressenyes positives són la nostra motivació més gran.</string>
     <string name="rate_our_app_title">Gràcies per utilitzar el %1$s!</string>
+    <string name="exiting">S\'està sortint…</string>
 </resources>

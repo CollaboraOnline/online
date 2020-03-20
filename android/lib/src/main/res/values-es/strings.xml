@@ -13,4 +13,5 @@
     <string name="rate_our_app_title">¡Gracias por utilizar %1$s!</string>
     <string name="later">Luego</string>
     <string name="rate_now">Calificar ahora</string>
+    <string name="exiting">Saliendo…</string>
 </resources>

@@ -12,4 +12,5 @@
     <string name="rate_our_app_title">Eskerrik asko %1$s erabiltzeagatik!</string>
     <string name="later">Geroago</string>
     <string name="rate_now">Eman puntuazioa orain</string>
+    <string name="exiting">Irteten...</string>
 </resources>
