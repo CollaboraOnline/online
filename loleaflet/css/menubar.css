@@ -42,7 +42,7 @@
 }
 
 .main-nav {
-    height: 30px; /* on mouseover menubar items, border emerges */
+    height: 32px; /* on mouseover menubar items, border emerges */
     width: auto;
     background: #ffffff;
     margin: 3px;
