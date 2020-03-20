@@ -195,6 +195,7 @@
 
 	global.proxySocketCounter = 0;
 	global.ProxySocket = function (uri) {
+		var that = this;
 		this.uri = uri;
 		this.binaryType = 'arraybuffer';
 		this.bufferedAmount = 0;
@@ -254,56 +255,48 @@
 				i += size; // skip trailing '\n' in loop-increment
 			}
 		};
-		this.parseIncoming = function(type, msg) {
-			if (type === 'blob')
-			{
-				var fileReader = new FileReader();
-				var that = this;
-				fileReader.onload = function(event) {
-					that.parseIncomingArray(event.target.result);
-				};
-				fileReader.readAsArrayBuffer(msg);
-			}
-			else if (type === 'arraybuffer')
-			{
-				this.parseIncomingArray(new Uint8Array(msg));
-			}
-			else if (type === 'text' || type === '')
-			{
-				const encoder = new TextEncoder()
-				const arr = encoder.encode(msg);
-				this.parseIncomingArray(arr);
-			}
-			else
-				console.debug('Unknown encoding type: ' + type);
-		};
-		this.send = function(msg) {
-			console.debug('send msg "' + msg + '"');
+		this.sendQueue = '';
+		this.sendTimeout = undefined;
+		this.doSend = function () {
+			that.sendTimeout = undefined;
+			console.debug('send msg "' + that.sendQueue + '"');
 			var req = new XMLHttpRequest();
-			req.open('POST', this.getEndPoint('write'));
-			req.setRequestHeader('SessionId', this.sessionId);
-			if (this.sessionId === 'fetchsession')
-			{
-				req.responseType = 'text';
-				req.addEventListener('load', function() {
-					console.debug('got session: ' + this.responseText);
-					that.sessionId = this.responseText;
-					that.readyState = 1;
-					that.onopen();
-				});
-			}
+			req.open('POST', that.getEndPoint('write'));
+			req.setRequestHeader('SessionId', that.sessionId);
+			if (that.sessionId === 'fetchsession')
+				console.debug('session fetch not completed');
 			else
 			{
 				req.responseType = 'arraybuffer';
 				req.addEventListener('load', function() {
 					if (this.status == 200)
-						that.parseIncoming(this.responseType, this.response);
+						that.parseIncomingArray(new Uint8Array(this.response));
 					else
 						console.debug('Error on incoming response');
 				});
 			}
-			req.send('B0x' + msg.length.toString(16) + '\n' + msg + '\n');
-		},
+			req.send(that.sendQueue);
+			that.sendQueue = '';
+		};
+		this.getSessionId = function() {
+			var req = new XMLHttpRequest();
+			req.open('POST', that.getEndPoint('write'));
+			req.setRequestHeader('SessionId', that.sessionId);
+			req.responseType = 'text';
+			req.addEventListener('load', function() {
+				console.debug('got session: ' + this.responseText);
+				that.sessionId = this.responseText;
+				that.readyState = 1;
+				that.onopen();
+			});
+			req.send('');
+		};
+		this.send = function(msg) {
+			this.sendQueue = this.sendQueue.concat(
+				'B0x' + msg.length.toString(16) + '\n' + msg + '\n');
+			if (this.sessionId !== 'fetchsession' && this.sendTimeout === undefined)
+				this.sendTimeout = setTimeout(this.doSend, 2 /* ms */);
+		};
 		this.close = function() {
 			console.debug('close socket');
 			this.readyState = 3;
@@ -315,7 +308,9 @@
 		};
 		console.debug('New proxy socket ' + this.id + ' ' + this.uri);
 
-		this.send('fetchsession');
+		// queue fetch of session id.
+		this.getSessionId();
+
 		var that = this;
 
 		// horrors ...
@@ -328,7 +323,7 @@
 			// fetch session id:
 			req.addEventListener('load', function() {
 				if (this.status == 200)
-					that.parseIncoming(this.responseType, this.response);
+					that.parseIncomingArray(new Uint8Array(this.response));
 				else
 					console.debug('Handle error ' + this.status);
 				that.readWaiting = false;
