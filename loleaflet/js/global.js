@@ -216,6 +216,7 @@
 		};
 		this.parseIncomingArray = function(arr) {
 			var decoder = new TextDecoder();
+			console.debug('Parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i)
 			{
 				var left = arr.length - i;
