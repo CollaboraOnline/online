@@ -34,11 +34,7 @@ public:
     void handleIncomingMessage(SocketDisposition &/* disposition */) override;
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
-                      int &/* timeoutMaxMs */) override
-    {
-        // underlying buffer based polling is fine.
-        return POLLIN;
-    }
+                      int64_t &/* timeoutMaxMs */) override;
 
     void checkTimeout(std::chrono::steady_clock::time_point /* now */) override
     {

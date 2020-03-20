@@ -219,6 +219,15 @@ void ProxyProtocolHandler::dumpState(std::ostream& os)
         Util::dumpHex(os, "\twrite queue entry:", "\t\t", *it);
 }
 
+int ProxyProtocolHandler::getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                                        int64_t &/* timeoutMaxMs */)
+{
+    int events = POLLIN;
+    if (_msgHandler && _msgHandler->hasQueuedMessages())
+        events |= POLLOUT;
+    return events;
+}
+
 void ProxyProtocolHandler::performWrites()
 {
     if (_msgHandler)
