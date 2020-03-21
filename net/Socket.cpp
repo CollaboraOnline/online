@@ -524,6 +524,8 @@ void WebSocketHandler::dumpState(std::ostream& os)
     if (_wsPayload.size() > 0)
         Util::dumpHex(os, "\t\tws queued payload:\n", "\t\t", _wsPayload);
     os << "\n";
+    if (_msgHandler)
+        _msgHandler->dumpState(os);
 }
 
 void StreamSocket::dumpState(std::ostream& os)
