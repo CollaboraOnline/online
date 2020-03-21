@@ -216,7 +216,7 @@
 		};
 		this.parseIncomingArray = function(arr) {
 			var decoder = new TextDecoder();
-			console.debug('Parse incoming array of length ' + arr.length);
+			console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i)
 			{
 				var left = arr.length - i;
@@ -274,7 +274,7 @@
 					if (this.status == 200)
 						that.parseIncomingArray(new Uint8Array(this.response));
 					else
-						console.debug('Error on incoming response');
+						console.debug('proxy: error on incoming response');
 				});
 			}
 			req.send(that.sendQueue);
@@ -300,21 +300,24 @@
 				this.sendTimeout = setTimeout(this.doSend, 2 /* ms */);
 		};
 		this.close = function() {
-			console.debug('close socket');
+			console.debug('proxy: close socket');
 			this.readyState = 3;
 			this.onclose();
+			clearInterval(this.waitInterval);
+			this.waitInterval = undefined;
 		};
 		this.getEndPoint = function(type) {
 			var base = this.uri;
 			return base.replace(/^ws/, 'http') + '/' + type;
 		};
-		console.debug('New proxy socket ' + this.id + ' ' + this.uri);
+		console.debug('proxy: new socket ' + this.id + ' ' + this.uri);
 
 		// queue fetch of session id.
 		this.getSessionId();
 
 		// horrors ...
-		this.readInterval = setInterval(function() {
+		this.waitConnect = function() {
+			console.debug('proxy: waiting - ' + that.readWaiting + ' on session ' + that.sessionId);
 			if (that.readWaiting > 4) // max 4 waiting connections concurrently.
 				return;
 			if (that.sessionId == 'fetchsession')
@@ -329,13 +332,16 @@
 			});
 			req.addEventListener('loadend', function() {
 				that.readWaiting--;
+				console.debug('proxy: wait ended, re-issue');
+				that.waitConnect();
 			});
-			req.open('GET', that.getEndPoint('read'));
+			req.open('GET', that.getEndPoint('wait'));
 			req.setRequestHeader('SessionId', that.sessionId);
 			req.responseType = 'arraybuffer';
 			req.send('');
 			that.readWaiting++;
-		}, 250);
+		};
+		this.waitInterval = setInterval(this.waitConnect, 250);
 	};
 
 	if (global.socketProxy)
