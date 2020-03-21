@@ -97,11 +97,6 @@ L.Map = L.Evented.extend({
 		// lead to URL's of the form <webserver>//insertfile/...
 		options.webserver = options.webserver.replace(/\/*$/, '');
 
-		if (L.Browser.cypressTest) {
-			// Expose us in test mode.
-			window.map = this;
-		}
-
 		this._handlers = [];
 		this._layers = {};
 		this._zoomBoundLayers = {};
@@ -327,6 +322,26 @@ L.Map = L.Evented.extend({
 				this._docLoadedOnce = this._docLoaded;
 			}
 		}, this);
+
+		if (L.Browser.cypressTest) {
+			// Expose some helpers in test mode, as
+			// Cypress doesn't suppor them.
+			var map = this;
+
+			// This is used to track whether we *intended*
+			// the keyboard to be visible or hidden.
+			// There is no way track the keyboard state
+			// programmatically, so the next best thing
+			// is to track what we intended to do.
+			window.shouldAcceptInput = function() { return map.shouldAcceptInput(); };
+
+			// This is used to extract the text we *intended*
+			// to put on the clipboard. There is currently
+			// no way to actually put data on the clipboard
+			// programmatically, so this is the way to test
+			// what we "copied".
+			window.getTextForClipboard = function() { return map._clip.stripHTML(map._clip._getHtmlForClipboard()); };
+		}
 	},
 
 	loadDocument: function(socket) {

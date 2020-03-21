@@ -287,7 +287,7 @@ describe('Focus tests', function() {
 			.should('not.have.class', 'checked');
 
 		cy.window().then(win => {
-			win.lastInputState = win.map._textInput.shouldAcceptInput();
+			win.lastInputState = win.shouldAcceptInput();
 		});
 
 		cy.get('#tb_editbar_item_bold')
@@ -297,7 +297,7 @@ describe('Focus tests', function() {
 			.should('have.class', 'checked');
 
 		cy.window().then(win => {
-			var acceptInput = win.map._textInput.shouldAcceptInput();
+			var acceptInput = win.shouldAcceptInput();
 			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
 		});
 	});
@@ -316,7 +316,7 @@ describe('Focus tests', function() {
 			.should('not.have.class', 'checked');
 
 		cy.window().then(win => {
-			win.lastInputState = win.map._textInput.shouldAcceptInput();
+			win.lastInputState = win.shouldAcceptInput();
 		});
 
 		cy.get('#tb_editbar_item_italic')
@@ -326,7 +326,7 @@ describe('Focus tests', function() {
 			.should('have.class', 'checked');
 
 		cy.window().then(win => {
-			var acceptInput = win.map._textInput.shouldAcceptInput();
+			var acceptInput = win.shouldAcceptInput();
 			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
 		});
 	});
@@ -345,7 +345,7 @@ describe('Focus tests', function() {
 			.should('not.have.class', 'checked');
 
 		cy.window().then(win => {
-			win.lastInputState = win.map._textInput.shouldAcceptInput();
+			win.lastInputState = win.shouldAcceptInput();
 		});
 
 		cy.get('#tb_editbar_item_underline')
@@ -355,7 +355,7 @@ describe('Focus tests', function() {
 			.should('have.class', 'checked');
 
 		cy.window().then(win => {
-			var acceptInput = win.map._textInput.shouldAcceptInput();
+			var acceptInput = win.shouldAcceptInput();
 			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
 		});
 	});

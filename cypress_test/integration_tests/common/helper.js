@@ -63,7 +63,7 @@ function enableEditingMobile() {
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
 function assertNoKeyboardInput() {
 	cy.window().then(win => {
-		var acceptInput = win.map._textInput.shouldAcceptInput();
+		var acceptInput = win.shouldAcceptInput();
 		expect(acceptInput, 'Should accept input').to.equal(false);
 	});
 }
@@ -71,7 +71,7 @@ function assertNoKeyboardInput() {
 // Assert that keyboard input is accepted (i.e. keyboard should be VISIBLE).
 function assertHaveKeyboardInput() {
 	cy.window().then(win => {
-		var acceptInput = win.map._textInput.shouldAcceptInput();
+		var acceptInput = win.shouldAcceptInput();
 		expect(acceptInput, 'Should accept input').to.equal(true);
 	});
 }
@@ -127,16 +127,14 @@ function clearAllText() {
 // });
 function getTextForClipboard(f) {
 	cy.window().then(win => {
-		var htmlText = win.map._clip._getHtmlForClipboard();
-		var plainText = win.map._clip.stripHTML(htmlText);
-		f(htmlText, plainText);
+		f(win.getTextForClipboard());
 	});
 }
 
 // Expects getTextForClipboard return the given
 // plain-text, and asserts equality.
 function expectTextForClipboard(expectedPlainText) {
-	getTextForClipboard((htmlText, plainText) => {
+	getTextForClipboard((plainText) => {
 		expect(plainText, 'Selection Text').to.equal(expectedPlainText);
 	});
 }
