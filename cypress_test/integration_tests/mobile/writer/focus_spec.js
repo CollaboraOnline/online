@@ -191,13 +191,17 @@ describe('Focus tests', function() {
 				var posX = svg[0].getBBox().x + svg[0].getBBox().width / 2;
 				var posY = svg[0].getBBox().y + svg[0].getBBox().height / 2;
 				cy.get('#document-container')
-					.dblclick(posX, posY);
+					.dblclick(posX, posY).wait(100);
 			});
 
 		// Document still has the focus
 		// TODO: Focus is inconsistent here.
 		//cy.document().its('activeElement.className')
 		//	.should('be.eq', 'clipboard');
+
+		cy.window().then(win => {
+			expect(win.shouldAcceptInput(), 'Should accept input').to.equal(true);
+		});
 	});
 
 	it('Focus with hamburger menu.', function() {
