@@ -217,6 +217,8 @@ void ProxyProtocolHandler::dumpState(std::ostream& os)
     os << "proxy protocol sockets: " << _outSockets.size() << " writeQueue: " << _writeQueue.size() << ":\n";
     for (auto it : _writeQueue)
         Util::dumpHex(os, "\twrite queue entry:", "\t\t", *it);
+    if (_msgHandler)
+        _msgHandler->dumpState(os);
 }
 
 int ProxyProtocolHandler::getPollEvents(std::chrono::steady_clock::time_point /* now */,
