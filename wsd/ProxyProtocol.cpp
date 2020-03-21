@@ -31,7 +31,7 @@ void DocumentBroker::handleProxyRequest(
     std::shared_ptr<ClientSession> clientSession;
     if (sessionId == "fetchsession")
     {
-        LOG_TRC("Create session for " << _docKey);
+        LOG_TRC("proxy: Create session for " << _docKey);
         clientSession = createNewClientSession(
                 std::make_shared<ProxyProtocolHandler>(),
                 id, uriPublic, isReadOnly, hostNoTrust);
@@ -39,7 +39,7 @@ void DocumentBroker::handleProxyRequest(
         LOOLWSD::checkDiskSpaceAndWarnClients(true);
         LOOLWSD::checkSessionLimitsAndWarnClients();
 
-        LOG_TRC("Returning id " << clientSession->getId());
+        LOG_TRC("proxy: Returning sessionId " << clientSession->getId());
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
@@ -57,7 +57,7 @@ void DocumentBroker::handleProxyRequest(
     }
     else
     {
-        LOG_TRC("Find session for " << _docKey << " with id " << sessionId);
+        LOG_TRC("proxy: find session for " << _docKey << " with id " << sessionId);
         for (const auto &it : _sessions)
         {
             if (it.second->getId() == sessionId)
@@ -133,28 +133,29 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
 {
     auto streamSocket = std::static_pointer_cast<StreamSocket>(socket);
 
-    LOG_INF("Proxy handle request type: " << (isWaiting ? "wait" : "respond"));
+    LOG_INF("proxy: handle request type: " << (isWaiting ? "wait" : "respond") <<
+            " on socket #" << socket->getFD());
 
     if (!isWaiting)
     {
         if (!_msgHandler)
-            LOG_WRN("unusual - incoming message with no-one to handle it");
+            LOG_WRN("proxy: unusual - incoming message with no-one to handle it");
         else if (!parseEmitIncoming(streamSocket))
         {
             std::stringstream oss;
             streamSocket->dumpState(oss);
-            LOG_ERR("bad socket structure " << oss.str());
+            LOG_ERR("proxy: bad socket structure " << oss.str());
         }
     }
 
     if (!flushQueueTo(streamSocket) && isWaiting)
     {
-        LOG_TRC("Queue a waiting socket");
+        LOG_TRC("proxy: queue a waiting out socket #" << streamSocket->getFD());
         // longer running 'write socket' (marked 'read' by the client)
         _outSockets.push_back(streamSocket);
         if (_outSockets.size() > 16)
         {
-            LOG_ERR("Unexpected - client opening many concurrent waiting connections " << _outSockets.size());
+            LOG_ERR("proxy: Unexpected - client opening many concurrent waiting connections " << _outSockets.size());
             // cleanup older waiting sockets.
             auto sockWeak = _outSockets.front();
             _outSockets.erase(_outSockets.begin());
@@ -180,7 +181,7 @@ void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
 int ProxyProtocolHandler::sendMessage(const char *msg, const size_t len, bool text, bool flush)
 {
     _writeQueue.push_back(std::make_shared<Message>(msg, len, text));
-    auto sock = popWriteSocket();
+    auto sock = popOutSocket();
     if (sock && flush)
     {
         flushQueueTo(sock);
@@ -230,16 +231,24 @@ int ProxyProtocolHandler::getPollEvents(std::chrono::steady_clock::time_point /*
     return events;
 }
 
+/// slurp from the core to us, @returns true if there are messages to send
+bool ProxyProtocolHandler::slurpHasMessages()
+{
+    if (_msgHandler && _msgHandler->hasQueuedMessages())
+        _msgHandler->writeQueuedMessages();
+
+    return _writeQueue.size() > 0;
+}
+
 void ProxyProtocolHandler::performWrites()
 {
-    if (_msgHandler)
-        _msgHandler->writeQueuedMessages();
-    if (_writeQueue.size() <= 0)
+    if (!slurpHasMessages())
         return;
 
-    auto sock = popWriteSocket();
+    auto sock = popOutSocket();
     if (sock)
     {
+        LOG_TRC("proxy: performWrites");
         flushQueueTo(sock);
         sock->shutdown();
     }
@@ -247,9 +256,8 @@ void ProxyProtocolHandler::performWrites()
 
 bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &socket)
 {
-    // slurp from the core to us.
-    if (_msgHandler && _msgHandler->hasQueuedMessages())
-        _msgHandler->writeQueuedMessages();
+    if (!slurpHasMessages())
+        return false;
 
     size_t totalSize = 0;
     for (auto it : _writeQueue)
@@ -257,6 +265,8 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
 
     if (!totalSize)
         return false;
+
+    LOG_TRC("proxy: flushQueue of size " << totalSize << " to socket #" << socket->getFD() << " & close");
 
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
@@ -276,7 +286,7 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
 }
 
 // LRU-ness ...
-std::shared_ptr<StreamSocket> ProxyProtocolHandler::popWriteSocket()
+std::shared_ptr<StreamSocket> ProxyProtocolHandler::popOutSocket()
 {
     std::weak_ptr<StreamSocket> sock;
     while (!_outSockets.empty())
@@ -285,8 +295,12 @@ std::shared_ptr<StreamSocket> ProxyProtocolHandler::popWriteSocket()
         _outSockets.erase(_outSockets.begin());
         auto realSock = sock.lock();
         if (realSock)
+        {
+            LOG_TRC("proxy: popped an out socket #" << realSock->getFD() << " leaving: " << _outSockets.size());
             return realSock;
+        }
     }
+    LOG_TRC("proxy: no out sockets to pop.");
     return std::shared_ptr<StreamSocket>();
 }
 

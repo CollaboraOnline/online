@@ -60,7 +60,8 @@ public:
     void handleRequest(bool isWaiting, const std::shared_ptr<Socket> &socket);
 
 private:
-    std::shared_ptr<StreamSocket> popWriteSocket();
+    std::shared_ptr<StreamSocket> popOutSocket();
+    bool slurpHasMessages();
     int sendMessage(const char *msg, const size_t len, bool text, bool flush);
     bool flushQueueTo(const std::shared_ptr<StreamSocket> &socket);
 
