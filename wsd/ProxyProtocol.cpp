@@ -181,11 +181,14 @@ void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
 int ProxyProtocolHandler::sendMessage(const char *msg, const size_t len, bool text, bool flush)
 {
     _writeQueue.push_back(std::make_shared<Message>(msg, len, text));
-    auto sock = popOutSocket();
-    if (sock && flush)
+    if (flush)
     {
-        flushQueueTo(sock);
-        sock->shutdown();
+        auto sock = popOutSocket();
+        if (sock)
+        {
+            flushQueueTo(sock);
+            sock->shutdown();
+        }
     }
 
     return len;
