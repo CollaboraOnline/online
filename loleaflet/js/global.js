@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global Uint8Array */
 (function (global) {
 
 	var ua = navigator.userAgent.toLowerCase(),
@@ -311,8 +312,6 @@
 
 		// queue fetch of session id.
 		this.getSessionId();
-
-		var that = this;
 
 		// horrors ...
 		this.readInterval = setInterval(function() {
