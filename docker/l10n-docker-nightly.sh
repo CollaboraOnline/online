@@ -107,7 +107,6 @@ cp -a libreoffice/instdir "$INSTDIR"/opt/libreoffice
 if [ -z "$NO_DOCKER_IMAGE" ]; then
   cd "$SRCDIR"
   docker build --no-cache -t $DOCKER_HUB_REPO:$DOCKER_HUB_TAG . || exit 1
-  docker push $DOCKER_HUB_REPO:$DOCKER_HUB_TAG || exit 1
   if [ -z "$NO_DOCKER_PUSH" ]; then
     docker push $DOCKER_HUB_REPO:$DOCKER_HUB_TAG || exit 1
   fi;
