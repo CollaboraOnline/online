@@ -147,6 +147,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_gradientStyleToLabel: function(state) {
 		switch (state) {
+		case 'NONE':
+			return _('None');
+
+		case 'SOLID':
+			return _('Solid');
+
 		case 'LINEAR':
 			return _('Linear');
 
