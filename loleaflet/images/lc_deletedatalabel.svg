@@ -1,0 +1,18 @@
+<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+ <g fill="#b3b3b3">
+  <path transform="translate(20)" d="m-9 12c-0.554 0-1 0.446-1 1v6c0 0.554 0.446 1 1 1h2.2246l1.5918-1.6113-0.81641-0.83789v1.4492h-3v-6h3v1.1465l1-0.94922v-0.19727c0-0.554-0.446-1-1-1z"/>
+  <path transform="translate(20)" d="m-5 10c-0.554 0-1 0.446-1 1v3.1465l1-0.94922v-2.1973h3v3.3828l0.41406 0.41602 0.58594-0.60156v-3.1973c0-0.554-0.446-1-1-1zm-1 7.5508v1.4492c0 0.06366 0.023892 0.1194 0.035156 0.17969l0.78125-0.79102z"/>
+  <path d="m8 6c-0.554 0-1 0.446-1 1v12c0 0.554 0.446 1 1 1h2c0.554 0 1-0.446 1-1v-12c0-0.554-0.446-1-1-1h-1z"/>
+  <path transform="translate(20)" d="m-17.5 19c-0.277 0-0.5 0.223-0.5 0.5s0.223 0.5 0.5 0.5h10.725l0.98828-1z"/>
+ </g>
+ <path d="m15 11h3v8h-3z" fill="#fff"/>
+ <path d="m11 13h3v6h-3z" fill="#fff"/>
+ <g transform="matrix(1,0,0,2,0,-9)" fill="#e68497" stroke-width=".70711">
+  <path d="m15 8h3v1h-3z" fill="#e68497" stroke-width=".70711"/>
+ </g>
+ <rect transform="scale(-1,1)" x="-5" y="2" width="1" height="20" ry=".5" fill="#b3b3b3"/>
+ <g transform="translate(29.799 -10.333)">
+  <path d="m-13.903 23.154a1.2933 1.2933 0 0 0-0.87315 0.35359l-1.7968 1.703a1.2933 1.2933 0 0 0-0.03608 1.8401l1.6272 1.6705-1.62 1.6381a1.2933 1.2933 0 0 0 0.0109 1.8293l1.7968 1.7716a1.2933 1.2933 0 0 0 1.8473-0.03248l1.5731-1.6633 1.5767 1.6633a1.2933 1.2933 0 0 0 1.8509 0.02525l1.768-1.768a1.2933 1.2933 0 0 0 0.010899-1.8185l-1.6345-1.6633 1.5767-1.7499a1.2933 1.2933 0 0 0-0.068554-1.8004l-1.7247-1.6453a1.2933 1.2933 0 0 0-1.8185 0.03608l-1.5479 1.5875-1.5875-1.5984a1.2933 1.2933 0 0 0-0.93088-0.37885z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="#fff" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  <path d="m-7.0909 31.272-2.4878-2.5314 2.3938-2.6518-1.7256-1.6426-2.4636 2.5271-2.5135-2.5271-1.7954 1.703 2.5135 2.5807-2.5135 2.5395 1.7954 1.7689 2.5107-2.6535 2.5164 2.6535z" fill="#e68497"/>
+ </g>
+</svg>
