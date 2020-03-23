@@ -182,19 +182,6 @@ body {
 	#toolbar-hamburger {
 		width: 36px;
 	}
-	/* In Safari on iPhone, the address bar is auto-hidden in landscape
-	 * orientation. For some reason this prevents jQuery from
-	 * getting events when tapping on the things in the toolbar at
-	 * the top, like the hamburger button. To work around this,
-	 * add a bit of padding to the body element. This is of course
-	 * an extremely silly waste of precious vertical space and
-	 * some other solution should be found.
-	 */
-	@media (orientation: landscape) {
-		body {
-			padding-top: 20px;
-		}
-	}
 }
 
 #mobile-edit-button {
