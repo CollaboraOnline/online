@@ -25,5 +25,9 @@
 <item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="VerticalText" oor:op="fuse"><value>false</value></prop></item>
 <item oor:path="/org.openoffice.Office.Common/I18N/CTL"><prop oor:name="CTLFont" oor:op="fuse"><value>false</value></prop></item>
 
+<!-- The Help root URL, or empty for no help (hides the help buttons) -->
+<!-- On mobile UI there should be no tunnelled dialogs. But if there are some, by mistake, at least they should not have a non-working Help button -->
+<item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpRootURL" oor:op="fuse"><value></value></prop></item>
+
 </oor:items>
 
