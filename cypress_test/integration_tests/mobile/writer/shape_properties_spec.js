@@ -44,6 +44,11 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	function triggerNewSVG() {
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard')
+			.should('not.be.visible');
+
 		writerHelper.clearMobileWizardState();
 
 		cy.get('#tb_actionbar_item_mobile_wizard')
