@@ -1,0 +1,14 @@
+<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+ <g fill="#b3b3b3">
+  <path d="m11 12c-0.554 0-1 0.446-1 1v6c0 0.554 0.446 1 1 1h3c0.554 0 1-0.446 1-1v-6c0-0.554-0.446-1-1-1zm0 1h3v6h-3z"/>
+  <path d="m15 10c-0.554 0-1 0.446-1 1v8c0 0.554 0.446 1 1 1h3c0.554 0 1-0.446 1-1v-8c0-0.554-0.446-1-1-1zm0 1h3v8h-3z"/>
+  <path d="m8 6c-0.554 0-1 0.446-1 1v12c0 0.554 0.446 1 1 1h2c0.554 0 1-0.446 1-1v-12c0-0.554-0.446-1-1-1h-1z"/>
+  <rect transform="matrix(0,-1,-1,0,0,0)" x="-20" y="-22" width="1" height="20" ry=".5"/>
+ </g>
+ <path d="m15 11h3v8h-3z" fill="#fff"/>
+ <path d="m11 13h3v6h-3z" fill="#fff"/>
+ <g transform="matrix(1,0,0,2,0,-9)" fill="#e68497" stroke-width=".70711">
+  <path d="m15 8h3v1h-3z" fill="#4d82b8" stroke-width=".70711"/>
+ </g>
+ <rect transform="scale(-1,1)" x="-5" y="2" width="1" height="20" ry=".5" fill="#b3b3b3"/>
+</svg>
