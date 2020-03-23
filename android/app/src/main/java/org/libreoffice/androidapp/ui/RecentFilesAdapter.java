@@ -111,10 +111,17 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
     public void onBindViewHolder(ViewHolder holder, int position) {
         final RecentFile file = recentFiles.get(position);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mActivity.open(file.uri);
+            }
+        });
+
+        holder.fileActionsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.openContextMenu(view, file.uri);
             }
         });
 
@@ -185,12 +192,13 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView filenameView, fileSizeView, fileSizeUnitView/*, fileDateView*/;
-        ImageView imageView;
+        ImageView imageView, fileActionsImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
             this.filenameView = itemView.findViewById(R.id.file_item_name);
             this.imageView = itemView.findViewById(R.id.file_item_icon);
+            this.fileActionsImageView = itemView.findViewById(R.id.file_actions_button);
             // Check if view mode is List, only then initialise Size and Date field
             if (mActivity.isViewModeList()) {
                 fileSizeView = itemView.findViewById(R.id.file_item_size);

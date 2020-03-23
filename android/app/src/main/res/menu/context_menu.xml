@@ -4,4 +4,6 @@
           android:title="@string/open"/>
     <item android:id="@+id/context_menu_share"
           android:title="@string/share"/>
+    <item android:id="@+id/context_menu_remove_from_list"
+        android:title="@string/remove_from_list"/>
 </menu>

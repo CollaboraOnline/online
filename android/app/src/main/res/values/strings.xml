@@ -49,6 +49,7 @@
     <string name="sort_oldest">Oldest first</string>
     <string name="sort_newest">Newest first</string>
     <string name="file_icon_desc">File icon</string>
+    <string name="file_actions_icon_desc">File actions</string>
     <string name="title_recents">Recent files</string>
     <string name="title_browser">All files</string>
     <!-- Pref keys as resources ; Not currently used -->
@@ -57,6 +58,7 @@
     <string name="action_settings">Settings</string>
     <string name="open">Open</string>
     <string name="share">Share</string>
+    <string name="remove_from_list">Remove from the list</string>
     <string name="share_via">Share via</string>
 
     <!-- Document browser filters -->

@@ -10,7 +10,6 @@
 package org.libreoffice.androidapp.ui;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -22,6 +21,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.database.Cursor;
 import android.graphics.drawable.Icon;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
@@ -29,6 +29,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -77,6 +79,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -102,7 +105,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     FileFilter fileFilter;
     FilenameFilter filenameFilter;
-    private int currentlySelectedFile;
+    private Uri currentlySelectedFile;
 
     /** The document that is being edited - to know what to save back to cloud. */
     //private IFile mCurrentDocument;
@@ -386,8 +389,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         updateRecentFiles();
 
-        // TODO allow context menu for the various files - for Open and Share
-        //registerForContextMenu(fileRecyclerView);
+        // allow context menu for the various files - for Open and Share
+        registerForContextMenu(recentRecyclerView);
 
         setupNavigationDrawer();
     }
@@ -510,9 +513,23 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             case R.id.context_menu_share:
                 share(currentlySelectedFile);
                 return true;
+            case R.id.context_menu_remove_from_list:
+                removeFromList(currentlySelectedFile);
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    public void openContextMenu(View view, Uri uri) {
+
+        this.currentlySelectedFile = uri;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            view.showContextMenu(view.getPivotX(), view.getPivotY());
+        }
+        else
+            view.showContextMenu();
     }
 
     public boolean isViewModeList() {
@@ -614,44 +631,42 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     }
 
     /** Context menu item handling. */
-    private void share(int position) {
-        /*
-        new AsyncTask<IFile, Void, File>() {
-            @Override
-            protected File doInBackground(IFile... document) {
-                // this operation may imply network access and must be run in
-                // a different thread
-                try {
-                    return document[0].getDocument();
-                } catch (final RuntimeException e) {
-                    final Activity activity = LibreOfficeUIActivity.this;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(activity, e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Log.e(LOGTAG, e.getMessage(), e.getCause());
-                    return null;
-                }
-            }
+    private void share(Uri uri) {
+        if (uri == null)
+            return;
 
-            @Override
-            protected void onPostExecute(File file) {
-                if (file != null) {
-                    Intent intentShareFile = new Intent(Intent.ACTION_SEND);
-                    Uri finalDocUri = FileProvider.getUriForFile(LibreOfficeUIActivity.this,
-                            LibreOfficeUIActivity.this.getApplicationContext().getPackageName() + ".fileprovider",
-                            file);
-                    intentShareFile.putExtra(Intent.EXTRA_STREAM, finalDocUri);
-                    intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intentShareFile.setDataAndType(finalDocUri, LibreOfficeUIActivity.this.getContentResolver().getType(finalDocUri));
-                    LibreOfficeUIActivity.this.startActivity(Intent.createChooser(intentShareFile, LibreOfficeUIActivity.this.getString(R.string.share_document)));
+        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+        intentShareFile.putExtra(Intent.EXTRA_STREAM, uri);
+        intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intentShareFile.setDataAndType(uri, LibreOfficeUIActivity.this.getContentResolver().getType(uri));
+        LibreOfficeUIActivity.this.startActivity(Intent.createChooser(intentShareFile, LibreOfficeUIActivity.this.getString(R.string.share_document)));
+    }
+
+    /** Context menu item handling. */
+    private void removeFromList(Uri uri) {
+        if (uri == null)
+            return;
+
+        String[] recentFileStrings = getRecentDocuments();
+        String joined = "";
+        final ArrayList<Uri> recentUris = new ArrayList<Uri>();
+
+        for (String recentFileString : recentFileStrings) {
+            try {
+                if (!uri.toString().equals(recentFileString)) {
+                    recentUris.add(Uri.parse(recentFileString));
+                    joined = joined.concat(recentFileString+"\n");
                 }
+            } catch (RuntimeException e) {
+                e.printStackTrace();
             }
-        }.execute(filePaths.get(position));
-        */
+        }
+
+        if (!joined.isEmpty()) {
+            prefs.edit().putString(RECENT_DOCUMENTS_KEY, joined).apply();
+        }
+
+        recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentUris));
     }
 
     /** Setup the toolbar's menu. */

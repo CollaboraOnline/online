@@ -6,6 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
@@ -53,6 +54,14 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"
             tools:text="B" />
+
+        <ImageView
+            android:id="@+id/file_actions_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/file_actions_icon_desc"
+            app:srcCompat="@drawable/ic_more_vert_black_24dp" />
         <!--TextView
             android:id="@+id/file_item_date"
             tools:text="date/time"

@@ -6,12 +6,12 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <ImageView
         android:id="@+id/file_item_icon"
@@ -21,22 +21,39 @@
         android:contentDescription="@string/file_icon_desc"
         android:scaleType="fitCenter"
         tools:src="@drawable/ic_folder_black_24dp"
-        tools:tint="@color/text_color_secondary"/>
+        tools:tint="@color/text_color_secondary" />
 
-    <TextView
-        android:id="@+id/file_item_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginTop="4dp"
-        android:gravity="center_vertical"
-        android:maxLines="2"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textAlignment="center"
-        android:textColor="@android:color/secondary_text_light"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        tools:text="file or dirname"/>
+        android:orientation="horizontal"
+        android:paddingLeft="24dp">
+
+        <TextView
+            android:id="@+id/file_item_name"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textAlignment="center"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="file or dirname" />
+
+        <ImageView
+            android:id="@+id/file_actions_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/file_actions_icon_desc"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+    </LinearLayout>
 
 </LinearLayout>
