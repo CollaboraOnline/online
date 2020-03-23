@@ -450,7 +450,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_handleDragStart: function (e) {
 		// To avoid having to add a new message to move an arbitrary part, let's select the
 		// slide that is being dragged.
-		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = $(this.partsPreview._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 			this.partsPreview._map.setPart(partId);
@@ -486,7 +486,7 @@ L.Control.PartsPreview = L.Control.extend({
 			e.stopPropagation();
 		}
 
-		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = $(this.partsPreview._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
 			if (partId < 0)
@@ -496,7 +496,7 @@ L.Control.PartsPreview = L.Control.extend({
 			var that = this.partsPreview;
 			setTimeout(function () {
 				for (var i = 0; i < that._previewTiles.length; ++i) {
-					that._map.getPreview(i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: that.options.autoUpdate, broadcast: true});
+					that._map.getPreview(i, that.options.maxWidth, that.options.maxHeight, {autoUpdate: that.options.autoUpdate, broadcast: true});
 				}
 			}, 1000);
 		}
