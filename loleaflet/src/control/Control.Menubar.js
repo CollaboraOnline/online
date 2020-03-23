@@ -902,7 +902,7 @@ L.Control.Menubar = L.Control.extend({
 							window.mobileMenuWizard = true;
 							var menuData = self._map.menubar.generateFullMenuStructure();
 							self._map.fire('mobilewizard', menuData);
-							$('#toolbar-hamburger').addClass('menuwizard-opened');
+							$('#toolbar-hamburger').removeClass('menuwizard-closed').addClass('menuwizard-opened');
 							$('#mobile-wizard-header').hide();
 						}
 					} else if (!L.Browser.mobile) {
