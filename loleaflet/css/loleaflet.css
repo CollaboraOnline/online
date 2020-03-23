@@ -182,6 +182,13 @@ body {
 	#toolbar-hamburger {
 		width: 36px;
 	}
+	#toolbar-hamburger.menuwizard-opened {
+		width: 36px;
+		height: 43px;
+	}
+	#toolbar-hamburger.menuwizard-opened .main-menu-btn {
+		padding-top: 10px;
+	}
 }
 
 #mobile-edit-button {
