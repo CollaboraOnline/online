@@ -50,7 +50,7 @@ describe('Mobile wizard state tests', function() {
 			.should('have.class', 'checked');
 	});
 
-	it('Close mobile wizard by hamburger menu.', function() {
+	it.only('Close mobile wizard by hamburger menu.', function() {
 		// Click on edit button
 		helper.enableEditingMobile();
 
@@ -65,12 +65,12 @@ describe('Mobile wizard state tests', function() {
 			.should('have.class', 'checked');
 
 		// Open hamburger menu
-		cy.get('#toolbar-hamburger').click();
+		helper.pushHamburgerMenuIconMobile();
 		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon')
 			.contains('About');
 
 		// Close hamburger menu
-		cy.get('#toolbar-hamburger').click();
+		helper.pushHamburgerMenuIconMobile();
 		// Mobile wizard is closed
 		cy.get('#mobile-wizard')
 			.should('not.be.visible');

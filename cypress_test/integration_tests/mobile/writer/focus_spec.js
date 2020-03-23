@@ -213,16 +213,14 @@ describe('Focus tests', function() {
 			.should('be.eq', 'clipboard');
 
 		// Open hamburger menu
-		cy.get('#toolbar-hamburger')
-			.click();
+		helper.pushHamburgerMenuIconMobile();
 
 		// No focus
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
 		// Close hamburger menu
-		cy.get('#toolbar-hamburger')
-			.click();
+		helper.pushHamburgerMenuIconMobile();
 
 		// No focus
 		cy.document().its('activeElement.tagName')

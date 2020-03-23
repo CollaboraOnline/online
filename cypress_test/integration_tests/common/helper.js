@@ -163,8 +163,7 @@ function afterAll(fileName) {
 function detectLOCoreVersion() {
 	if (Cypress.env('LO_CORE_VERSION') === undefined) {
 		// Open hamburger menu
-		cy.get('#toolbar-hamburger')
-			.click();
+		pushHamburgerMenuIconMobile();
 
 		// Open about dialog
 		cy.get('.ui-header.level-0 .menu-entry-with-icon')
@@ -220,6 +219,11 @@ function longPressOnDocument(posX, posY) {
 		});
 }
 
+function pushHamburgerMenuIconMobile() {
+	cy.get('#toolbar-hamburger .main-menu-btn-icon')
+		.click({force: true});
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
@@ -232,3 +236,4 @@ module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.afterAll = afterAll;
 module.exports.beforeAllMobile = beforeAllMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
+module.exports.pushHamburgerMenuIconMobile = pushHamburgerMenuIconMobile;

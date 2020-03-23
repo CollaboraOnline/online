@@ -80,8 +80,7 @@ function copyTableToClipboard() {
 // which will be detached from DOM.
 function clearMobileWizardState() {
 	// Open hamburger menu
-	cy.get('#toolbar-hamburger')
-		.click();
+	helper.pushHamburgerMenuIconMobile();
 
 	cy.get('#mobile-wizard-content')
 		.should('be.visible');
@@ -90,8 +89,7 @@ function clearMobileWizardState() {
 		.contains('About', {timeout: 10000});
 
 	// Close hamburger menu
-	cy.get('#toolbar-hamburger')
-		.click();
+	helper.pushHamburgerMenuIconMobile();
 }
 
 function selectAllMobile() {
@@ -104,8 +102,7 @@ function selectAllMobile() {
 		.should('not.exist');
 
 	// Open hamburger menu
-	cy.get('#toolbar-hamburger')
-		.click();
+	helper.pushHamburgerMenuIconMobile();
 	cy.get('#mobile-wizard')
 		.should('be.visible', {timeout : 10000});
 
