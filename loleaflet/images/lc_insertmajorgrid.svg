@@ -1,0 +1,7 @@
+<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+ <g fill="#4d82b8">
+  <rect transform="matrix(0,-1,-1,0,0,0)" x="-5" y="-22" width="1" height="20" ry=".5"/>
+  <rect transform="matrix(0,-1,-1,0,0,0)" x="-20" y="-22" width="1" height="20" ry=".5"/>
+  <rect transform="matrix(0,-1,-1,0,0,0)" x="-12" y="-22" width="1" height="20" ry=".5"/>
+ </g>
+</svg>
