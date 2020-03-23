@@ -3391,8 +3391,18 @@ int LOOLWSD::innerMain()
         LOG_FTL("Missing --childroot option");
         throw MissingOptionException("childroot");
     }
-    else if (ChildRoot[ChildRoot.size() - 1] != '/')
-        ChildRoot += '/';
+    else
+    {
+        if (ChildRoot[ChildRoot.size() - 1] != '/')
+            ChildRoot += '/';
+
+        // create a custom sub-path for parallelized unit tests.
+        if (UnitBase::isUnitTesting())
+        {
+            ChildRoot += Util::rng::getHardRandomHexString(8) + "/";
+            LOG_TRC("Creating sub-childroot: of " + ChildRoot);
+        }
+    }
 
     FileUtil::registerFileSystemForDiskSpaceChecks(ChildRoot);
 
@@ -3601,6 +3611,11 @@ int LOOLWSD::innerMain()
         const auto path = ChildRoot + jail;
         LOG_INF("Removing jail [" << path << "].");
         FileUtil::removeFile(path, true);
+    }
+    if (UnitBase::isUnitTesting())
+    {
+        LOG_TRC("Removing sub-childroot: of " + ChildRoot);
+        FileUtil::removeFile(ChildRoot, true);
     }
 #endif // !MOBILEAPP
 
