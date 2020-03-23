@@ -441,6 +441,14 @@ static IMP standardImpOfInputAccessoryView = nil;
                 }];
 
             return;
+        } else if ([message.body hasPrefix:@"HYPERLINK"]) {
+            NSArray *messageBodyItems = [message.body componentsSeparatedByString:@" "];
+            if ([messageBodyItems count] >= 2) {
+                NSURL *url = [[NSURL alloc] initWithString:messageBodyItems[1]];
+                UIApplication *application = [UIApplication sharedApplication];
+                [application openURL:url options:@{} completionHandler:nil];
+                return;
+            }
         }
 
         const char *buf = [message.body UTF8String];
