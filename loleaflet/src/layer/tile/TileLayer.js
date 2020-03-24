@@ -1171,7 +1171,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._showURLPopUp(cursorPos, obj.hyperlink.link);
 		}
 
-		if (!this._map.editorHasFocus() && (modifierViewId === this._viewId) && (this._map._permission === 'edit')) {
+		if (!this._map.editorHasFocus() && this._map._isCursorVisible && (modifierViewId === this._viewId) && (this._map._permission === 'edit')) {
 			// Regain cursor if we had been out of focus and now have input.
 			// (only if it is our own cursor and the input is actually not
 			// going into a dialog)
@@ -2188,20 +2188,18 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._updateCursorPos();
 
-			// Update the cursor/keyboard only when the document has focus.
-			if (this._map.editorHasFocus()) {
-				this._map._textInput.showCursor();
+			this._map._textInput.showCursor();
 
-				// Don't show the keyboard when the Wizard is visible.
-				if (!window.mobileWizard) {
-					// If the user is editing, show the keyboard, but don't change
-					// anything if nothing is changed.
-					this._map.focus(true);
-				}
+			// Don't show the keyboard when the Wizard is visible.
+			if (!window.mobileWizard) {
+				// If the user is editing, show the keyboard, but don't change
+				// anything if nothing is changed.
+				this._map.focus(true);
 			}
 		} else {
 			this._map._textInput.hideCursor();
-			this._map.focus(false);
+			if (this._map.editorHasFocus()) // Allow input if a dialog has the focus.
+				this._map.focus(false);
 		}
 	},
 
