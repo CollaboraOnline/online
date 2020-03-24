@@ -52,6 +52,3 @@ L.Log = {
 		this._logs = [];
 	}
 };
-
-L.INCOMING = 'INCOMING';
-L.OUTGOING = 'OUTGOING';

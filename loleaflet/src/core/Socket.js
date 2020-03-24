@@ -152,7 +152,7 @@ L.Socket = L.Class.extend({
 	_doSend: function(msg, coords) {
 		// Only attempt to log text frames, not binary ones.
 		if (typeof msg === 'string') {
-			L.Log.log(msg, L.OUTGOING, coords);
+			L.Log.log(msg, 'OUTGOING', coords);
 			this._logSocket('OUTGOING', msg);
 		}
 
@@ -759,7 +759,7 @@ L.Socket = L.Class.extend({
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 			// log the tile msg separately as we need the tile coordinates
-			L.Log.log(textMsg, L.INCOMING);
+			L.Log.log(textMsg, 'INCOMING');
 
 			if (imgBytes !== undefined) {
 				try {

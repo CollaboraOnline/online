@@ -1974,7 +1974,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			tile.el.src = img;
 		}
-		L.Log.log(textMsg, L.INCOMING, key);
+		L.Log.log(textMsg, 'INCOMING', key);
 
 		// Send acknowledgment, that the tile message arrived
 		var tileID = command.part + ':' + command.x + ':' + command.y + ':' + command.tileWidth + ':' + command.tileHeight + ':' + command.nviewid;

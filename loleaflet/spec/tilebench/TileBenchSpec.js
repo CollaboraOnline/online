@@ -42,7 +42,7 @@ describe('TileBench', function () {
 			if (msg.startsWith('tile')) {
 				msg += ' timestamp=' + now;
 			}
-			L.Log.log(msg, L.OUTGOING, coords, now);
+			L.Log.log(msg, 'OUTGOING', coords, now);
 			this.socket.send(msg);
 		}, map._socket);
 	});
@@ -113,11 +113,11 @@ describe('TileBench', function () {
 		var logs = L.Log._logs;
 		for (var i = 0; i < logs.length; i++) {
 			if (logs[i].coords !== undefined) {
-				if (logs[i].direction === L.INCOMING) {
+				if (logs[i].direction === 'INCOMING') {
 					logs[i].msg = logs[i].msg.replace(':', '');
 					incoming.push(logs[i]);
 				}
-				else if (logs[i].direction === L.OUTGOING) {
+				else if (logs[i].direction === 'OUTGOING') {
 					logs[i].msg = logs[i].msg.replace('tilecombine','tile');
 					outgoing.push(logs[i]);
 				}
