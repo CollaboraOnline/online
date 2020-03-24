@@ -151,6 +151,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
 		this._controlHandlers['colorlistbox'] = this._colorControl;
 		this._controlHandlers['borderstyle'] = this._borderControl;
+		this._controlHandlers['treelistbox'] = this._listboxControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -1373,14 +1374,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var title = data.text;
 		var valueNode = null;
+		var selectedEntryIsString = false;
 		if (data.selectedEntries) {
+			selectedEntryIsString = isNaN(parseInt(data.selectedEntries[0]));
 			if (title && title.length) {
 				var value = data.entries[data.selectedEntries[0]];
 				valueNode = L.DomUtil.create('div', '', null);
 				valueNode.innerHTML = value;
-			} else {
+			} else if (selectedEntryIsString)
+				title = builder._cleanText(data.selectedEntries[0]);
+			else
 				title = data.entries[data.selectedEntries[0]];
-			}
 		}
 		title = builder._cleanText(title);
 		data.text = title;
@@ -1389,6 +1393,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		for (var index in data.entries) {
 			var style = 'ui-combobox-text';
 			if ((data.selectedEntries && index == data.selectedEntries[0])
+				|| (data.selectedEntries && selectedEntryIsString && data.entries[index] === data.selectedEntries[0])
 				|| data.entries[index] == title) {
 				style += ' selected';
 			}
