@@ -80,6 +80,10 @@ function assertHaveKeyboardInput() {
 function assertCursorAndFocus() {
 	cy.log('Verifying Cursor and Focus.');
 
+	// Active element must be the textarea named clipboard.
+	cy.document().its('activeElement.className')
+		.should('be.eq', 'clipboard');
+
 	// In edit mode, we should have the blinking cursor.
 	cy.get('.leaflet-cursor.blinking-cursor')
 		.should('exist');
@@ -122,7 +126,7 @@ function clearAllText() {
 // clipboard (which Cypress doesn't support).
 // Takes a closure f that takes the text
 // string as argument. Use as follows:
-// helper.getTextForClipboard((htmlText, plainText) => {
+// helper.getTextForClipboard((plainText) => {
 // 	expect(plainText, 'Selection Text').to.equal(testText);
 // });
 function getTextForClipboard(f) {

@@ -1408,12 +1408,14 @@ L.Map = L.Evented.extend({
 		this._activeDialog = dialog;
 		this._isSearching = false;
 
-		var doclayer = this._docLayer;
-		if (doclayer)
+		if (this.editorHasFocus()) {
+			// The document has the focus.
+			var doclayer = this._docLayer;
 			doclayer._updateCursorAndOverlay();
-
-		if (acceptInput !== undefined)
+		} else if (acceptInput !== undefined) {
+			// A dialog has the focus.
 			this.focus(acceptInput);
+		}
 	},
 
 	// Our browser tab lost focus.
