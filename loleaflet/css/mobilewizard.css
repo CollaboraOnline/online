@@ -697,7 +697,9 @@
 	#top{background: url(images/sc_aligntop.svg) no-repeat center;}
 	#bottom{background: url(images/sc_alignbottom.svg) no-repeat center;}
 	#standard{background: url(images/sc_alignverticalcenter.svg) no-repeat center;}
-
+	div[id^=checkbutton]{
+		clear: both;
+	}
 	#mobile-wizard input[type=checkbox]:disabled{
 		border: 2px solid #ddd;
 		box-shadow: none;
