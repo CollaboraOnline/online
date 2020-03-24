@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * LibreOffice Online toolbar
  */
@@ -9,35 +9,30 @@
 
 var map;
 
-// has to match small screen size requirement
-function _inMobileMode() {
-	if (L.Browser.mobile && L.Browser.cypressTest) {
-		return true;
-	}
-
-	return L.Browser.mobile && screen.width < 768;
-}
-
-// mobile device with big screen size
-function _inTabletMode() {
-	return L.Browser.mobile && !_inMobileMode();
-}
-
-function _inDesktopMode() {
-	return !L.Browser.mobile;
-}
-
 function onDelete(e) {
 	if (e !== false) {
 		map.deletePage();
 	}
 }
 
-// make functions visible outside: window.mode.isMobile()
+// Make functions visible outside: window.mode.isMobile() etc.
 global.mode = {
-	isMobile: _inMobileMode,
-	isTablet: _inTabletMode,
-	isDesktop: _inDesktopMode
+	// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
+	// requirement.
+	isMobile: function() {
+		if (L.Browser.mobile && L.Browser.cypressTest) {
+			return true;
+		}
+
+		return L.Browser.mobile && screen.width < 768;
+	},
+	// Mobile device with big screen size.
+	isTablet: function() {
+		return L.Browser.mobile && !window.mode.isMobile();
+	},
+	isDesktop: function() {
+		return !L.Browser.mobile;
+	}
 };
 
 var nUsers, oneUser, noUser;
@@ -46,21 +41,17 @@ function _updateVisibilityForToolbar(toolbar) {
 	if (!toolbar)
 		return;
 
-	var isDesktop = _inDesktopMode();
-	var isMobile = _inMobileMode();
-	var isTablet = _inTabletMode();
-
 	var toShow = [];
 	var toHide = [];
 
 	toolbar.items.forEach(function(item) {
-		if (window.ThisIsTheiOSApp && isTablet && item.iosapptablet === false) {
+		if (window.ThisIsTheiOSApp && window.mode.isTablet() && item.iosapptablet === false) {
 			toHide.push(item.id);
 		}
-		else if (((isMobile && item.mobile === false) || (isTablet && item.tablet === false) || (isDesktop && item.desktop === false) || (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
+		else if (((window.mode.isMobile() && item.mobile === false) || (window.mode.isTablet() && item.tablet === false) || (window.mode.isDesktop() && item.desktop === false) || (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
 			toHide.push(item.id);
 		}
-		else if (((isMobile && item.mobile === true) || (isTablet && item.tablet === true) || (isDesktop && item.desktop === true) || (window.ThisIsAMobileApp && item.mobilebrowser === true)) && item.hidden) {
+		else if (((window.mode.isMobile() && item.mobile === true) || (window.mode.isTablet() && item.tablet === true) || (window.mode.isDesktop() && item.desktop === true) || (window.ThisIsAMobileApp && item.mobilebrowser === true)) && item.hidden) {
 			toShow.push(item.id);
 		}
 	});
@@ -87,14 +78,14 @@ function resizeToolbar() {
 }
 
 function _cancelSearch() {
-	var toolbar = _inMobileMode() ? w2ui['searchbar'] : w2ui['actionbar'];
+	var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
 	var searchInput = L.DomUtil.get('search-input');
 	map.resetSelection();
 	toolbar.hide('cancelsearch');
 	toolbar.disable('searchprev');
 	toolbar.disable('searchnext');
 	searchInput.value = '';
-	if (_inMobileMode()) {
+	if (window.mode.isMobile()) {
 		searchInput.focus();
 		// odd, but on mobile we need to invoke it twice
 		toolbar.hide('cancelsearch');
@@ -840,7 +831,7 @@ var fontsSelectValue;
 
 function createToolbar() {
 
-	if (_inMobileMode()) {
+	if (window.mode.isMobile()) {
 		$('#toolbar-search').hide();
 		$('#mobile-edit-button').show();
 	} else {
@@ -1012,8 +1003,8 @@ function initNormalToolbar() {
 		onRefresh: function(event) {
 			if ((event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes') && event.item) {
 				var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(event.item.id));
-				if ((_inDesktopMode() && event.item.desktop == false)
-					|| (_inTabletMode() && event.item.tablet == false)) {
+				if ((window.mode.isDesktop() && event.item.desktop == false)
+					|| (window.mode.isTablet() && event.item.tablet == false)) {
 					toolItem.css('display', 'none');
 				} else {
 					toolItem.css('display', '');
@@ -1314,7 +1305,7 @@ function unoCmdToToolbarId(commandname)
 }
 
 function updateSearchButtons() {
-	var toolbar = _inMobileMode() ? w2ui['searchbar'] : w2ui['actionbar'];
+	var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
 	// conditionally disabling until, we find a solution for tdf#108577
 	if (L.DomUtil.get('search-input').value === '') {
 		toolbar.disable('searchprev');
@@ -1590,7 +1581,7 @@ function onDocLayerInit() {
 		if (statusbar)
 			statusbar.remove('prev', 'next', 'prevnextbreak');
 
-		if (!_inMobileMode()) {
+		if (!window.mode.isMobile()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
 				{
@@ -1647,7 +1638,7 @@ function onDocLayerInit() {
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 			'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
 
-		if (!_inMobileMode()) {
+		if (!window.mode.isMobile()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
 				{
@@ -1704,7 +1695,7 @@ function onDocLayerInit() {
 		if (!map['wopi'].HideExportOption && presentationToolbar) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		if (!_inMobileMode()) {
+		if (!window.mode.isMobile()) {
 			statusbar.insert('left', [
 				{type: 'break', id: 'break1'},
 				{
@@ -1728,7 +1719,7 @@ function onDocLayerInit() {
 		if (statusbar)
 			statusbar.show('prev', 'next');
 
-		if (!_inMobileMode()) {
+		if (!window.mode.isMobile()) {
 			$('#presentation-toolbar').show();
 		}
 		break;
@@ -2036,7 +2027,7 @@ function onCommandStateChanged(e) {
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
 	else if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
 		var toolbarUp = toolbar;
-		if (_inMobileMode()) {
+		if (window.mode.isMobile()) {
 			toolbarUp = statusbar;
 		}
 		if (map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
@@ -2351,7 +2342,7 @@ function onUpdatePermission(e) {
 		}
 		$('#search-input').prop('disabled', false);
 
-		if (_inMobileMode()) {
+		if (window.mode.isMobile()) {
 			$('#toolbar-down').show();
 		}
 	}
@@ -2394,7 +2385,7 @@ function onUpdatePermission(e) {
 		}
 		$('#search-input').prop('disabled', true);
 
-		if (_inMobileMode()) {
+		if (window.mode.isMobile()) {
 			$('#toolbar-down').hide();
 		}
 	}
