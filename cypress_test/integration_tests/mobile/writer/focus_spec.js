@@ -200,7 +200,7 @@ describe('Focus tests', function() {
 		//	.should('be.eq', 'clipboard');
 
 		cy.window().then(win => {
-			expect(win.shouldAcceptInput(), 'Should accept input').to.equal(true);
+			expect(win.canAcceptKeyboardInput(), 'Should accept input').to.equal(true);
 		});
 	});
 
@@ -291,7 +291,7 @@ describe('Focus tests', function() {
 			.should('not.have.class', 'checked');
 
 		cy.window().then(win => {
-			win.lastInputState = win.shouldAcceptInput();
+			win.lastInputState = win.canAcceptKeyboardInput();
 		});
 
 		cy.get('#tb_editbar_item_bold')
@@ -301,7 +301,7 @@ describe('Focus tests', function() {
 			.should('have.class', 'checked');
 
 		cy.window().then(win => {
-			var acceptInput = win.shouldAcceptInput();
+			var acceptInput = win.canAcceptKeyboardInput();
 			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
 		});
 	});
@@ -320,7 +320,7 @@ describe('Focus tests', function() {
 			.should('not.have.class', 'checked');
 
 		cy.window().then(win => {
-			win.lastInputState = win.shouldAcceptInput();
+			win.lastInputState = win.canAcceptKeyboardInput();
 		});
 
 		cy.get('#tb_editbar_item_italic')
@@ -330,7 +330,7 @@ describe('Focus tests', function() {
 			.should('have.class', 'checked');
 
 		cy.window().then(win => {
-			var acceptInput = win.shouldAcceptInput();
+			var acceptInput = win.canAcceptKeyboardInput();
 			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
 		});
 	});
@@ -349,7 +349,7 @@ describe('Focus tests', function() {
 			.should('not.have.class', 'checked');
 
 		cy.window().then(win => {
-			win.lastInputState = win.shouldAcceptInput();
+			win.lastInputState = win.canAcceptKeyboardInput();
 		});
 
 		cy.get('#tb_editbar_item_underline')
@@ -359,7 +359,7 @@ describe('Focus tests', function() {
 			.should('have.class', 'checked');
 
 		cy.window().then(win => {
-			var acceptInput = win.shouldAcceptInput();
+			var acceptInput = win.canAcceptKeyboardInput();
 			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
 		});
 	});

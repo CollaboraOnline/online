@@ -333,7 +333,7 @@ L.Map = L.Evented.extend({
 			// There is no way track the keyboard state
 			// programmatically, so the next best thing
 			// is to track what we intended to do.
-			window.shouldAcceptInput = function() { return map.shouldAcceptInput(); };
+			window.canAcceptKeyboardInput = function() { return map.canAcceptKeyboardInput(); };
 
 			// This is used to extract the text we *intended*
 			// to put on the clipboard. There is currently
@@ -970,8 +970,10 @@ L.Map = L.Evented.extend({
 		return document.activeElement === this._textInput.activeElement();
 	},
 
-	shouldAcceptInput: function() {
-		return this._textInput.shouldAcceptInput();
+	// Returns true iff the textarea is enabled and we focused on it.
+	// On mobile, this signifies that the keyboard should be visible.
+	canAcceptKeyboardInput: function() {
+		return this._textInput.canAcceptKeyboardInput();
 	},
 
 	setHelpTarget: function(page) {

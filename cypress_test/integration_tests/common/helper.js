@@ -63,7 +63,7 @@ function enableEditingMobile() {
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
 function assertNoKeyboardInput() {
 	cy.window().then(win => {
-		var acceptInput = win.shouldAcceptInput();
+		var acceptInput = win.canAcceptKeyboardInput();
 		expect(acceptInput, 'Should accept input').to.equal(false);
 	});
 }
@@ -71,7 +71,7 @@ function assertNoKeyboardInput() {
 // Assert that keyboard input is accepted (i.e. keyboard should be VISIBLE).
 function assertHaveKeyboardInput() {
 	cy.window().then(win => {
-		var acceptInput = win.shouldAcceptInput();
+		var acceptInput = win.canAcceptKeyboardInput();
 		expect(acceptInput, 'Should accept input').to.equal(true);
 	});
 }
