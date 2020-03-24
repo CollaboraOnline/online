@@ -153,7 +153,7 @@ L.Socket = L.Class.extend({
 		// Only attempt to log text frames, not binary ones.
 		if (typeof msg === 'string') {
 			L.Log.log(msg, 'OUTGOING', coords);
-			this._logSocket('OUTGOING', msg);
+			// this._logSocket('OUTGOING', msg);
 		}
 
 		this.socket.send(msg);
@@ -268,7 +268,7 @@ L.Socket = L.Class.extend({
 			textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
 		}
 
-		this._logSocket('INCOMING', textMsg);
+		// this._logSocket('INCOMING', textMsg);
 
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('loolserver ')) {
