@@ -222,53 +222,69 @@ TESTS = \
 # TESTS += unit-admin.test
 # TESTS += unit-storage.test
 
-# mostly force serialization for now:
+# Start forced grouping of tests using stamp files
 
 # unit-base.log
 unit-tiletest.log : unit-base.log
-unit-integration.log : unit-tiletest.log
-unit-httpws.log : unit-integration.log
-unit-crash.log : unit-httpws.log
+unit-integration.log : unit-base.log
+unit-httpws.log : unit-base.log
+unit-crash.log : unit-base.log
 
-unit-copy-paste.log : unit-crash.log
-unit-typing.log : unit-copy-paste.log
-unit-convert.log : unit-typing.log
-unit-prefork.log : unit-convert.log
-unit-tilecache.log : unit-prefork.log
-unit-timeout.log : unit-tilecache.log
+group1.log: unit-httpws.log unit-crash.log unit-tiletest.log unit-integration.log
+	touch $@
 
-unit-oauth.log : unit-timeout.log
-unit-wopi.log : unit-oauth.log
-unit-wopi-saveas.log : unit-wopi.log
-unit-wopi-ownertermination.log : unit-wopi-saveas.log
-unit-wopi-versionrestore.log : unit-wopi-ownertermination.log
-unit-wopi-documentconflict.log : unit-wopi-versionrestore.log
-unit_wopi_renamefile.log : unit-wopi-documentconflict.log
-unit_wopi_watermark.log : unit_wopi_renamefile.log
+unit-typing.log     : group1.log
+unit-convert.log    : group1.log
+unit-tilecache.log  : group1.log
+unit-timeout.log    : group1.log
+unit-copy-paste.log : group1.log
 
-unit-http.log : unit_wopi_watermark.log
-unit-tiff-load.log : unit-http.log
+group2.log: unit-copy-paste.log unit-typing.log unit-convert.log unit-tilecache.log unit-timeout.log
+	touch $@
 
-unit-large-paste.log : unit-tiff-load.log
-unit-paste.log : unit-large-paste.log
-unit-load-torture.log : unit-paste.log
-unit-rendering-options.log : unit-load-torture.log
-unit-password-protected.log : unit-rendering-options.log
-unit-render-shape.log : unit-password-protected.log
-unit-each-view.log : unit-render-shape.log
-unit-session.log : unit-each-view.log
-unit-uno-command.log : unit-session.log
-unit-load.log : unit-uno-command.log
-unit-cursor.log : unit-load.log
-unit-calc.log : unit-cursor.log
-unit-insert-delete.log : unit-calc.log
-unit-close.log : unit-insert-delete.log
-unit-bad-doc-load.log : unit-close.log
-unit-hosting.log : unit-bad-doc-load.log
-unit-wopi-loadencoded.log : unit-hosting.log
-unit-wopi-temp.log : unit-wopi-loadencoded.log
+unit-prefork.log : group2.log
+unit-oauth.log : group2.log
+unit-wopi.log : group2.log
+unit-wopi-saveas.log : group2.log
+unit-wopi-ownertermination.log : group2.log
+unit-wopi-versionrestore.log : group2.log
+unit-wopi-documentconflict.log : group2.log
+unit_wopi_renamefile.log : group2.log
+unit_wopi_watermark.log : group2.log
 
-# end forced serialization
+group3.log: unit-oauth.log unit-wopi.log unit-wopi-saveas.log unit-wopi-ownertermination.log unit-wopi-versionrestore.log unit-wopi-documentconflict.log unit_wopi_renamefile.log unit_wopi_watermark.log
+	touch $@
+
+unit-http.log : group3.log
+unit-tiff-load.log : group3.log
+unit-large-paste.log : group3.log
+unit-paste.log : group3.log
+unit-load-torture.log : group3.log
+unit-rendering-options.log : group3.log
+unit-password-protected.log : group3.log
+unit-render-shape.log : group3.log
+unit-each-view.log : group3.log
+
+group4.log: unit-http.log unit-tiff-load.log unit-large-paste.log unit-paste.log unit-load-torture.log unit-rendering-options.log unit-password-protected.log unit-render-shape.log unit-each-view.log
+	touch $@
+
+unit-session.log : group4.log
+unit-uno-command.log : group4.log
+unit-load.log : group4.log
+unit-cursor.log : group4.log
+unit-calc.log : group4.log
+unit-insert-delete.log : group4.log
+
+group5.log: unit-session.log unit-uno-command.log unit-load.log unit-cursor.log unit-calc.log unit-insert-delete.log
+	touch $@
+
+unit-close.log : group5.log
+unit-bad-doc-load.log : group5.log
+unit-hosting.log : group5.log
+unit-wopi-loadencoded.log : group5.log
+unit-wopi-temp.log : group5.log
+
+# end forced grouping
 
 endif
 
