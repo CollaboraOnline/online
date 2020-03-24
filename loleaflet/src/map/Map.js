@@ -874,7 +874,8 @@ L.Map = L.Evented.extend({
 		return this._winId;
 	},
 
-	// Returns true iff the document has input focus.
+	// Returns true iff the document has input focus,
+	// as opposed to a dialog, sidebar, formula bar, etc.
 	editorHasFocus: function () {
 		return this.getWinId() === 0;
 	},
@@ -1403,7 +1404,7 @@ L.Map = L.Evented.extend({
 	_changeFocusWidget: function (dialog, winId, acceptInput) {
 		if (!this._loaded) { return; }
 
-		this._winId = winId;
+		this.setWinId(winId);
 		this._activeDialog = dialog;
 		this._isSearching = false;
 
@@ -1431,11 +1432,11 @@ L.Map = L.Evented.extend({
 
 	// Our browser tab got focus.
 	_onGotFocus: function () {
-		if (this._winId === 0) {
+		if (this.editorHasFocus()) {
 			this.fire('editorgotfocus');
 		}
 		else if (this._activeDialog) {
-			this._activeDialog.focus(this._winId);
+			this._activeDialog.focus(this.getWinId());
 		}
 
 		this._activate();
