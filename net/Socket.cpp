@@ -200,6 +200,11 @@ void SocketPoll::wakeupWorld()
         wakeup(fd);
 }
 
+bool ProtocolHandlerInterface::hasPendingWork() const
+{
+    return _msgHandler && _msgHandler->hasQueuedMessages();
+}
+
 #if !MOBILEAPP
 
 void SocketPoll::insertNewWebSocketSync(
