@@ -317,7 +317,12 @@ L.Control.MobileWizard = L.Control.extend({
 			else mWizardContentLength = data.children[0].children.length;
 
 			this._showWizard(mWizardContentLength);
-			this._hideKeyboard();
+			if (!this._map._docLayer.isCalc()) {
+				// In Calc, the wizard is used for the formulas,
+				// and it's easier to allow the user to search
+				// for a formula by typing the first few characters.
+				this._hideKeyboard();
+			}
 
 			// Morph the sidebar into something prettier
 			if (isSidebar)
