@@ -30,23 +30,11 @@
 /// larger code changes.
 class LOOLWebSocket : public Poco::Net::WebSocket
 {
-private:
-    std::mutex _mutexRead;
-    std::mutex _mutexWrite;
-
 public:
     LOOLWebSocket(const Socket& socket) :
         Poco::Net::WebSocket(socket)
     {
     }
-
-#if 0
-    LOOLWebSocket(Poco::Net::HTTPServerRequest& request,
-                  Poco::Net::HTTPServerResponse& response) :
-        Poco::Net::WebSocket(request, response)
-    {
-    }
-#endif
 
     LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
                   Poco::Net::HTTPRequest& request,
@@ -54,15 +42,6 @@ public:
         Poco::Net::WebSocket(cs, request, response)
     {
     }
-#if 0
-    LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
-                  Poco::Net::HTTPRequest& request,
-                  Poco::Net::HTTPResponse& response,
-                  Poco::Net::HTTPCredentials& credentials) :
-        Poco::Net::WebSocket(cs, request, response, credentials)
-    {
-    }
-#endif
 
     /// Wrapper for Poco::Net::WebSocket::receiveFrame() that handles PING frames
     /// (by replying with a PONG frame) and PONG frames. PONG frames are ignored.
@@ -79,9 +58,7 @@ public:
 
         while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
-            std::unique_lock<std::mutex> lockRead(_mutexRead);
             const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
-            lockRead.unlock();
 
             if (n <= 0)
                 LOG_TRC("Got nothing (" << n << ")");
@@ -97,7 +74,6 @@ public:
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_PING)
             {
                 // Echo back the ping message.
-                std::unique_lock<std::mutex> lock(_mutexWrite);
                 if (Poco::Net::WebSocket::sendFrame(buffer, n, static_cast<int>(WebSocket::FRAME_FLAG_FIN) | WebSocket::FRAME_OP_PONG) != n)
                 {
                     LOG_WRN("Sending Pong failed.");
@@ -122,11 +98,8 @@ public:
     int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT)
     {
         static const Poco::Timespan waitZero(0);
-        std::unique_lock<std::mutex> lock(_mutexWrite);
 
         const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
-
-        lock.unlock();
 
         if (result != length)
         {
@@ -152,8 +125,6 @@ public:
     /// or, otherwise, close the socket without sending close frame, if it is.
     void shutdown(Poco::UInt16 statusCode, const std::string& statusMessage = "")
     {
-        std::unique_lock<std::mutex> lockRead(_mutexRead);
-        std::unique_lock<std::mutex> lockWrite(_mutexWrite);
         try
         {
             // Calling shutdown, in case of error, would try to send a 'close' frame
