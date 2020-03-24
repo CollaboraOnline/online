@@ -189,7 +189,7 @@ L.TextInput = L.Layer.extend({
 
 	// Returns true if the last focus was to accept input.
 	// Used to restore the keyboard.
-	shouldAcceptInput: function() {
+	canAcceptKeyboardInput: function() {
 		return this._acceptInput;
 	},
 

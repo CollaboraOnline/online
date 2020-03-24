@@ -200,7 +200,7 @@ describe('Focus tests', function() {
 		//	.should('be.eq', 'clipboard');
 
 		cy.window().then(win => {
-			expect(win.shouldAcceptInput(), 'Should accept input').to.equal(true);
+			expect(win.canAcceptKeyboardInput(), 'Should accept input').to.equal(true);
 		});
 	});
 
