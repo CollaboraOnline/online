@@ -1162,7 +1162,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		$('#sidebar-dock-wrapper').css({display: ''});
-		if (this._map.editorHasFocus()) {
+		if (!this._map.editorHasFocus()) {
 			this._map.fire('editorgotfocus');
 			this._map.focus();
 		}
@@ -1218,7 +1218,6 @@ L.Control.LokDialog = L.Control.extend({
 				this._onSidebarClose(dialogId);
 			}
 		}
-		$('#sidebar-dock-wrapper').css({display: ''});
 	},
 
 	_onEditorGotFocus: function() {
