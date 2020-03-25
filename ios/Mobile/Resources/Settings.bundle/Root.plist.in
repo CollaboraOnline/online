@@ -10,15 +10,27 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>App info</string>
+			<string>Version information</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>Title</key>
-			<string>Version</string>
+			<string>Online git hash</string>
 			<key>Key</key>
-			<string>version</string>
+			<string>onlineVersion</string>
+			<key>DefaultValue</key>
+			<string>@LOOLWSD_VERSION_HASH@</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Core git hash</string>
+			<key>Key</key>
+			<string>coreVersion</string>
+			<key>DefaultValue</key>
+			<string>@CORE_VERSION_HASH@</string>
 		</dict>
 		<dict>
 			<key>Type</key>
