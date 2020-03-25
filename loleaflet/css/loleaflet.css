@@ -396,20 +396,6 @@ body {
 	opacity: 0;
 }
 
-.loleaflet-context-table {
-	table-layout: fixed;
-	background-color: #efefef;
-	border-collapse: separate;
-	border-spacing: 0;
-	border: none;
-	width: 100%;
-}
-
-.loleaflet-context-button {
-	width: 40px;
-	height: 40px;
-}
-
 .loleaflet-context-down {
   border: 1px solid #aaaaaa;
   background-color: #dddddd;
@@ -419,12 +405,6 @@ body {
 	width: 1px;
 	padding: 0px;
 	border: 0px;
-}
-
-.loleaflet-context-toolbar {
-	position: absolute;
-	float: none;
-	border: 1px solid #999;
 }
 
 /* Important to override context-menu-icon's font-family here otherwise, jquery-contextmenu.css
@@ -587,57 +567,6 @@ body {
 
 .loleaflet-redline-reject-button {
 		background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
-}
-
-.loleaflet-context-copy {
-		background: url('images/lc_copy.svg') no-repeat center !important;
-}
-
-.loleaflet-context-cut {
-		background: url('images/lc_cut.svg') no-repeat center !important;
-}
-
-.loleaflet-context-paste {
-		background: url('images/lc_paste.svg') no-repeat center !important;
-}
-
-.loleaflet-ios-context-toolbar {
-	position: absolute;
-	float: none;
-}
-
-.loleaflet-ios-context-table {
-	color: white;
-	font-size: 15px;
-	border-spacing: 0;
-}
-
-.loleaflet-ios-context-button {
-	background-color: black;
-	height: 40px;
-}
-
-.loleaflet-ios-context-left {
-    padding-left: 10px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
-.loleaflet-ios-context-first-and-middle-entry {
-    padding-left: 8px;
-    padding-right: 8px;
-    border-right: 1px solid white;
-}
-
-.loleaflet-ios-context-last-entry {
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-.loleaflet-ios-context-right {
-    padding-right: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {

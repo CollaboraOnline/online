@@ -246,7 +246,6 @@ LOLEAFLET_JS =\
 	src/control/Control.PartsPreview.js \
 	src/control/Control.Header.js \
 	src/control/Control.ColumnHeader.js \
-	src/control/Control.ContextToolbar.js \
 	src/control/Control.RowHeader.js \
 	src/control/Control.DocumentRepair.js \
 	src/control/Control.DownloadProgress.js \
