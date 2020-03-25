@@ -204,7 +204,7 @@ describe('Apply font changes.', function() {
 		// TODO: Shadowed is not in the clipboard content.
 	});
 
-	it.skip('Apply grow.', function() {
+	it('Apply grow.', function() {
 		// Push grow
 		cy.get('#Growimg')
 			.click();
