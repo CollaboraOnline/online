@@ -1415,6 +1415,7 @@ L.Map = L.Evented.extend({
 		} else if (acceptInput !== undefined) {
 			// A dialog has the focus.
 			this.focus(acceptInput);
+			this._textInput.hideCursor(); // The cursor is in the dialog.
 		}
 	},
 
