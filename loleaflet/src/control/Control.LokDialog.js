@@ -158,6 +158,10 @@ L.Control.LokDialog = L.Control.extend({
 		return (id in this._dialogs) && this._dialogs[id].isCalcInputBar;
 	},
 
+	isCursorVisible: function(id) {
+		return (id in this._dialogs) && this._dialogs[id].cursorVisible;
+	},
+
 	_isSelectionHandle: function(el) {
 		return L.DomUtil.hasClass(el, 'leaflet-selection-marker-start')	||
 			L.DomUtil.hasClass(el, 'leaflet-selection-marker-end');
@@ -379,8 +383,9 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'cursor_visible') {
 			// cursor_visible implies focus has changed, but can
 			// be misleading when it flips back on forth on typing!
-			this._dialogs[e.id].cursorVisible = e.visible === 'true';
-			if (this._dialogs[e.id].cursorVisible) {
+			var visible = (e.visible === 'true');
+			this._dialogs[e.id].cursorVisible = visible;
+			if (visible) {
 				$('#' + strId + '-cursor').css({display: 'block'});
 				this._map.fire('changefocuswidget', {winId: e.id, dialog: this, acceptInput: true}); // Us.
 			}
@@ -407,7 +412,7 @@ L.Control.LokDialog = L.Control.extend({
 	_updateDialogCursor: function(dlgId, x, y, height) {
 		var strId = this._toStrId(dlgId);
 		var dialogCursor = L.DomUtil.get(strId + '-cursor');
-		var cursorVisible = dlgId in this._dialogs && this._dialogs[dlgId].cursorVisible;
+		var cursorVisible = this.isCursorVisible(dlgId);
 		L.DomUtil.setStyle(dialogCursor, 'height', height + 'px');
 		L.DomUtil.setStyle(dialogCursor, 'display', cursorVisible ? 'block' : 'none');
 		// set the position of the cursor container element
@@ -574,12 +579,12 @@ L.Control.LokDialog = L.Control.extend({
 			if (window.mode.isMobile()) {
 				if (!this.mobileSidebarVisible)
 					return;
-			// On desktop, grab the focus only when there is a visible cursor on the sidebar.
-			} else if (!this._isOpen(dlgId) || !this._dialogs[dlgId].cursorVisible) {
+			} else if (!this._isOpen(dlgId) || !this.isCursorVisible(dlgId)) {
+				// On desktop, grab the focus only when there is a visible cursor on the sidebar.
 				return;
 			}
 		}
-		else if (this._isCalcInputBar(dlgId) && (!this._isOpen(dlgId) || !this._dialogs[dlgId].cursorVisible)) {
+		else if (this._isCalcInputBar(dlgId) && (!this._isOpen(dlgId) || !this.isCursorVisible(dlgId))) {
 			return;
 		}
 
