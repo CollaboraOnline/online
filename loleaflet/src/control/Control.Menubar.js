@@ -895,6 +895,11 @@ L.Control.Menubar = L.Control.extend({
 					if (this.checked) {
 						self._map.fire('closesidebar');
 						if (!L.Browser.mobile) {
+							// Surely this code, if it really is related only to the hamburger menu,
+							// will never be invoked on non-mobile browsers? I might be wrong though.
+							// If you notice this logging, please modify this comment to indicate what is
+							// going on.
+							console.log('======> Assertion failed!? Not L.Browser.mobile? Control.Menubar.js #1');
 							$nav.css({height: 'initial', bottom: '38px'});
 							$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
 							$('#mobile-wizard-header').show();
@@ -906,6 +911,8 @@ L.Control.Menubar = L.Control.extend({
 							$('#mobile-wizard-header').hide();
 						}
 					} else if (!L.Browser.mobile) {
+						// Ditto.
+						console.log('======> Assertion failed!? Not L.Browser.mobile? Control.Menubar.js #2');
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
 						$nav.css({height:'', bottom: ''});
 					} else {
