@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 16:08+0100\n"
-"PO-Revision-Date: 2020-02-23 18:15+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
+"PO-Revision-Date: 2020-03-25 09:46+0000\n"
+"Last-Translator: Muhammet Kara <kara@libreoffice.org>\n"
 "Language-Team: Turkish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -367,11 +367,11 @@ msgstr "Kalıp"
 
 #: src/control/Control.JSDialogBuilder.js:914
 msgid "From"
-msgstr ""
+msgstr "Başlangıç"
 
 #: src/control/Control.JSDialogBuilder.js:917
 msgid "To"
-msgstr ""
+msgstr "Bitiş"
 
 #: src/control/Control.JSDialogBuilder.js:1052
 msgid "Font Name"
@@ -396,7 +396,7 @@ msgstr "Tablo ekle"
 
 #: src/control/Control.JSDialogBuilder.js:1585
 msgid "Line style:"
-msgstr ""
+msgstr "Çizgi biçemi:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:228
 #: src/control/Control.Menubar.js:230 src/control/Control.Menubar.js:232
@@ -447,7 +447,7 @@ msgstr "Zengin Metin (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:480
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:472
 #: src/control/Signing.js:601
@@ -555,11 +555,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:502
 msgid "Portrait"
-msgstr ""
+msgstr "Dikey"
 
 #: src/control/Control.Menubar.js:503
 msgid "Landscape"
-msgstr ""
+msgstr "Yatay"
 
 #: src/control/Control.Menubar.js:759 src/control/Control.Toolbar.js:2061
 msgid "Reset to Default Language"
@@ -626,10 +626,8 @@ msgid "Insert shapes"
 msgstr "Şekil ekle"
 
 #: src/control/Control.Toolbar.js:1063
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "İşlev"
+msgstr "İşlev Sihirbazı"
 
 #: src/control/Control.Toolbar.js:1107
 msgid "First sheet"
@@ -1220,7 +1218,7 @@ msgstr "Yükleniyor..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Sunucuya dosya yükleme başarısız oldu. Durum: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

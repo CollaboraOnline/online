@@ -8,4 +8,9 @@
     <string name="loading">Caricamento in corso...</string>
     <string name="preparing_for_the_first_start_after_an_update">Preparazione del primo avvio dopo un aggiornamento.</string>
     <string name="saving">Salvataggio...</string>
+    <string name="exiting">Uscita...</string>
+    <string name="rate_our_app_text">Se ti piace, vota 5 stelle in Google Play. La tua recensione positiva è il nostro migliore stimolo.</string>
+    <string name="rate_our_app_title">Grazie per utilizzare %1$s!</string>
+    <string name="later">Più tardi</string>
+    <string name="rate_now">Valuta ora</string>
 </resources>

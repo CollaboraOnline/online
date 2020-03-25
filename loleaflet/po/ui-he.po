@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 16:08+0100\n"
-"PO-Revision-Date: 2020-02-03 13:38+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"PO-Revision-Date: 2020-03-23 10:55+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-ui-he.po\n"
 "X-Pootle-Revision: 3939478\n"
 
@@ -194,7 +194,7 @@ msgstr "לסיים את הפעילות הנוכחית?"
 #: src/control/Control.Tabs.js:212 src/control/Control.Toolbar.js:246
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "אישור"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1157
@@ -258,7 +258,7 @@ msgstr "השרת נתקל בשגיאת %0 בעת פענוח הפקודה %1."
 
 #: src/control/Control.ContextMenu.js:171
 msgid "Delete"
-msgstr ""
+msgstr "מחיקה"
 
 #: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
@@ -314,19 +314,19 @@ msgstr "התחלת העתקה/הדבקה צולבת"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "אין צבע"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Linear"
-msgstr ""
+msgstr "קווי"
 
 #: src/control/Control.JSDialogBuilder.js:154
 msgid "Axial"
-msgstr ""
+msgstr "צירי"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "מעגלי"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
@@ -334,15 +334,15 @@ msgstr "סגלגלי"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "ריבועי"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
-msgstr ""
+msgstr "ריבוע"
 
 #: src/control/Control.JSDialogBuilder.js:170
 msgid "Fixed size"
-msgstr ""
+msgstr "גודל קבוע"
 
 #: src/control/Control.JSDialogBuilder.js:768
 #: src/control/Control.Toolbar.js:1651
@@ -351,47 +351,43 @@ msgstr "ללא"
 
 #: src/control/Control.JSDialogBuilder.js:771
 msgid "Color"
-msgstr ""
+msgstr "צבע"
 
 #: src/control/Control.JSDialogBuilder.js:774
 msgid "Gradient"
-msgstr ""
+msgstr "מדרג"
 
 #: src/control/Control.JSDialogBuilder.js:777
 msgid "Hatching"
-msgstr ""
+msgstr "הצללה בקווים"
 
 #: src/control/Control.JSDialogBuilder.js:781
 msgid "Pattern"
-msgstr ""
+msgstr "תבנית"
 
 #: src/control/Control.JSDialogBuilder.js:914
 msgid "From"
-msgstr ""
+msgstr "מ־"
 
 #: src/control/Control.JSDialogBuilder.js:917
 msgid "To"
-msgstr ""
+msgstr "עד"
 
 #: src/control/Control.JSDialogBuilder.js:1052
-#, fuzzy
-#| msgid "Font"
 msgid "Font Name"
-msgstr "גופן"
+msgstr "שם הגופן"
 
 #: src/control/Control.JSDialogBuilder.js:1054
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
-msgstr "לא חתום"
+msgstr "גודל הגופן"
 
 #: src/control/Control.JSDialogBuilder.js:1535
 msgid "Rows"
-msgstr ""
+msgstr "שורות"
 
 #: src/control/Control.JSDialogBuilder.js:1536
 msgid "Columns"
-msgstr ""
+msgstr "עמודות"
 
 #: src/control/Control.JSDialogBuilder.js:1556
 #: src/control/Control.Toolbar.js:975
@@ -400,7 +396,7 @@ msgstr "הוספת טבלה"
 
 #: src/control/Control.JSDialogBuilder.js:1585
 msgid "Line style:"
-msgstr ""
+msgstr "סגנון קו:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:228
 #: src/control/Control.Menubar.js:230 src/control/Control.Menubar.js:232
@@ -451,7 +447,7 @@ msgstr "טקסט עשיר (‎.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:480
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:472
 #: src/control/Signing.js:601
@@ -496,7 +492,7 @@ msgstr "כיווניות טקסט"
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
 msgid "Online Help"
-msgstr ""
+msgstr "עזרה מקוונת"
 
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
@@ -506,7 +502,7 @@ msgstr "קיצורי מקלדת"
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459
 msgid "Report an issue"
-msgstr ""
+msgstr "דיווח על תקלה"
 
 #: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:344
 #: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:511
@@ -551,29 +547,27 @@ msgstr "גיליון נתונים Excel ‏(‎.xlsx)"
 #: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:522
 #: src/control/Control.Menubar.js:567
 msgid "Export as"
-msgstr ""
+msgstr "ייצוא בתור"
 
 #: src/control/Control.Menubar.js:501
 msgid "Page Setup"
-msgstr ""
+msgstr "הגדרת עמוד"
 
 #: src/control/Control.Menubar.js:502
 msgid "Portrait"
-msgstr ""
+msgstr "אנכי"
 
 #: src/control/Control.Menubar.js:503
 msgid "Landscape"
-msgstr ""
+msgstr "אופקי"
 
 #: src/control/Control.Menubar.js:759 src/control/Control.Toolbar.js:2061
 msgid "Reset to Default Language"
 msgstr "איפוס לשפת בררת מחדל"
 
 #: src/control/Control.Menubar.js:1071
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "הוספת צורות"
+msgstr "הוספת צורה"
 
 #: src/control/Control.Menubar.js:1154
 msgid "Are you sure you want to delete this slide?"
@@ -613,7 +607,7 @@ msgstr "למחוק עמוד זה?"
 
 #: src/control/Control.Toolbar.js:862
 msgid "Default Style"
-msgstr ""
+msgstr "סגנון בררת מחדל"
 
 #: src/control/Control.Toolbar.js:919
 msgid "Borders"
@@ -632,10 +626,8 @@ msgid "Insert shapes"
 msgstr "הוספת צורות"
 
 #: src/control/Control.Toolbar.js:1063
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "פונקציה"
+msgstr "אשף הפונקציות"
 
 #: src/control/Control.Toolbar.js:1107
 msgid "First sheet"
@@ -929,15 +921,15 @@ msgstr "גרסה זו של %productName מופעלת על גבי"
 
 #: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "הוספת קישור"
 
 #: src/control/Toolbar.js:451
 msgid "Text"
-msgstr ""
+msgstr "טקסט"
 
 #: src/control/Toolbar.js:452
 msgid "Link"
-msgstr ""
+msgstr "קישור"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -945,11 +937,11 @@ msgstr "IE11 הגיע למספר החיבורים המרבי. נא לעיין ב
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "אופס, אירעה תקלה בחיבור ל־‏LibreOffice המקוון:"
+msgstr "אופס, אירעה תקלה בחיבור ל־‏LibreOffice המקוון: "
 
 #: src/core/Socket.js:289
 msgid "Served by:"
-msgstr ""
+msgstr "מוגש על ידי:"
 
 #: src/core/Socket.js:294
 msgid "Unsupported server version."
@@ -1081,7 +1073,7 @@ msgstr "פעולה זו תוביל ליציאה מהעורך, לבקר בכתו�
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "טעינת המסמך נכשלה. כנראה שהמסמך הזה פגום או שהוא צורך יותר משאבים משמותר לו. נא ליצור קשר עם הנהלת המערכת."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1123,11 +1115,11 @@ msgstr "לא ניתן לשנות את שם המסמך. נא לבדוק את הה
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "העלאת הקובץ לשרת נכשלה, הקובץ לא נמצא."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "העלאת הקובץ לשרת נכשלה, הקובץ גדול מדי."
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1147,24 +1139,18 @@ msgstr "תגובה"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:118
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "ביטול החיפוש"
+msgstr "הצגת סרגל החיפוש"
 
 #: src/layer/tile/CalcTileLayer.js:231 src/layer/tile/ImpressTileLayer.js:226
 #: src/layer/tile/WriterTileLayer.js:163
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "ביטול החיפוש"
+msgstr "מחיקת שדה החיפוש"
 
 #: src/layer/tile/CalcTileLayer.js:233 src/layer/tile/ImpressTileLayer.js:228
 #: src/layer/tile/WriterTileLayer.js:165
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "ביטול החיפוש"
+msgstr "הסתרת סרגל החיפוש"
 
 #: src/layer/tile/TileLayer.js:236
 msgid "Modify"
@@ -1191,7 +1177,6 @@ msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>נא להשתמש בכפתורים להעתקה/הדבקה שבמקלדת הצפה על גבי המסך.</p>"
 
 #: src/map/Clipboard.js:801
-#, fuzzy
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr "<p>אם ברצונך לשתף רכיבים גדולים יותר מהמסמך שלך עם יישומים אחרים צריך להוריד אותם למכשיר שלך קודם. כדי לעשות זאת, יש ללחוץ על הכפתור „התחלת הורדה” שלהלן, לאחר סיום ההורדה יש ללחוץ על „אישור העתקה ללוח הגזירים”.</p><p>אם העתקת והדבקת בין מסמכים בתוך %productName, אין צורך להוריד.</p>"
 
@@ -1220,12 +1205,12 @@ msgstr "מסמך בלתי פעיל - יש ללחוץ כדי להמשיך בער�
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "לא ניתן להעלות קובץ מסוג: %0 לשרת כיוון שלקובץ אין שם"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "לא ניתן להעלות קובץ מסוג: %0 לשרת כיוון שהקובץ ריק"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1233,7 +1218,7 @@ msgstr "בהעלאה…"
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "העלאת הקובץ לשרת נכשלה עם מצב השגיאה: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

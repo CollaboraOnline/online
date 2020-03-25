@@ -8,4 +8,9 @@
     <string name="temp_file_saving_disabled">Datoteka je samo za branje, shranjevanje je onemogočeno.</string>
     <string name="preparing_for_the_first_start_after_an_update">Pripravljanje na prvi zagon po posodobitvi.</string>
     <string name="saving">Shranjevanje ...</string>
+    <string name="exiting">Zapiranje ...</string>
+    <string name="rate_our_app_text">Če vam je všeč, nas ocenite s petimi zvezdicami v Trgovini Google Play. Vaše dobre ocene so naša najboljša motivacija.</string>
+    <string name="rate_our_app_title">Hvala, ker uporabljate %1$s!</string>
+    <string name="later">Kasneje</string>
+    <string name="rate_now">Ocenite zdaj</string>
 </resources>

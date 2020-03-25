@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="no_items">Inga objekt</string>
+    <string name="list_view">Lista</string>
+    <string name="title_browser">Alla filer</string>
+    <string name="default_document_name">Namnlös</string>
+    <string name="new_spreadsheet">Nytt kalkylark</string>
+    <string name="new_presentation">Ny presentation</string>
+    <string name="new_textdocument">Nytt Textdokument</string>
+    <string name="about_moreinfo">Mer Information</string>
+    <string name="about_license">Visa Licens</string>
+    <string name="pref_viewmode_summary">Visa filer i ett rutnät eller i en lista.</string>
+    <string name="pref_show_hidden_files_summary">Aktivera visning av dolda filer/mappar.</string>
+    <string name="pref_show_hidden_files">Dolda filer/mappar</string>
+    <string name="file_exists_warning">En fil med det här namnet existerar redan och kommer att skrivas över.</string>
+    <string name="app_vendor">Denna release var tillhandahållen av $VENDOR</string>
+</resources>
