@@ -152,6 +152,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['colorlistbox'] = this._colorControl;
 		this._controlHandlers['borderstyle'] = this._borderControl;
 		this._controlHandlers['treelistbox'] = this._listboxControl;
+		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -1475,6 +1476,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.hidden)
 			$(fixedtext).hide();
 
+		return false;
+	},
+
+	_drawingAreaControl: function(parentContainer, data, builder) {
+		if (data.image) {
+			var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-drawing-area', parentContainer);
+			image.src = data.image.replace('\\', '');
+			image.id = data.id;
+		}
 		return false;
 	},
 
