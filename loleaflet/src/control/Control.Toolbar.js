@@ -186,7 +186,11 @@ function onClick(e, id, item, subItem) {
 	}
 	else if (id === 'hidesearchbar') {
 		$('#toolbar-search').hide();
-		$('#toolbar-down').show();
+		if (map._permission === 'edit')
+			$('#toolbar-down').show();
+		/** show edit button if only we are able to edit but in readonly mode */
+		if (window.docPermission  === 'edit' && map._permission === 'readonly')
+			$('#mobile-edit-button').show();
 	}
 	else if (id === 'searchprev') {
 		map.search(L.DomUtil.get('search-input').value, true);
@@ -2304,7 +2308,6 @@ function onUpdatePermission(e) {
 				toolbar.enable(id);
 			});
 		}
-		$('#search-input').prop('disabled', false);
 
 		if (window.mode.isMobile()) {
 			$('#toolbar-down').show();
@@ -2347,7 +2350,6 @@ function onUpdatePermission(e) {
 				toolbar.disable(id);
 			});
 		}
-		$('#search-input').prop('disabled', true);
 
 		if (window.mode.isMobile()) {
 			$('#toolbar-down').hide();

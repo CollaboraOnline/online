@@ -49,7 +49,6 @@ if (wopiSrc != '') {
 }
 
 var notWopiButIframe = getParameterByName('NotWOPIButIframe') != '';
-
 var map = L.map('map', {
 	server: host,
 	doc: docURL,
@@ -90,6 +89,7 @@ window.addEventListener('beforeunload', function () {
 	}
 });
 
+window.docPermission = permission;
 window.bundlejsLoaded = true;
 
 }(window));
