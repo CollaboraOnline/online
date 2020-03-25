@@ -72,7 +72,7 @@ L.Control.ContextMenu = L.Control.extend({
 			'InsertTitles', 'InsertRemoveAxes',
 			'DiagramType', 'DataRanges',
 			'FormatWall', 'FormatDataSeries',
-			'FormatDataPoint',
+			'FormatDataPoint', 'FormatAxis', 'FormatMajorGrid', 'FormatMinorGrid',
 			'InsertTrendline', 'InsertXErrorBars' , 'InsertYErrorBars',
 			// text
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
