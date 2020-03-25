@@ -284,7 +284,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
-			.should('have.attr', 'stroke-width', '141');
+			.should('have.attr', 'stroke-width', '88');
 	});
 
 	it('Change line transparency', function() {
