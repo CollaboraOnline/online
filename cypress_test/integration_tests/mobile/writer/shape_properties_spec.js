@@ -256,7 +256,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.length.greaterThan', 12);
 	});
 
-	it('Change line width', function() {
+	it.skip('Change line width', function() {
 		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
