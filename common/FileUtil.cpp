@@ -236,7 +236,7 @@ namespace FileUtil
         }
     }
 
-#if !HAVE_STD_FILESYSTEM
+#if 1 // !HAVE_STD_FILESYSTEM
     static int nftw_cb(const char *fpath, const struct stat*, int type, struct FTW*)
     {
         if (type == FTW_DP)
@@ -255,7 +255,9 @@ namespace FileUtil
 
     void removeFile(const std::string& path, const bool recursive)
     {
-#if HAVE_STD_FILESYSTEM
+// Amazingly filesystem::remove_all silently fails to work on some
+// systems. No real need to be using experimental API here either.
+#if 0 // HAVE_STD_FILESYSTEM
         std::error_code ec;
         if (recursive)
             filesystem::remove_all(path, ec);
