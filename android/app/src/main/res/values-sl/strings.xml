@@ -99,4 +99,5 @@
     <string name="app_name_settings">Nastavitve</string>
     <string name="pref_enable_chrome_debugger_info">Omogočite to možnost, da za dokument uporabite orodje razhroščevanja v Chromu</string>
     <string name="pref_enable_chrome_debugger">Razhroščevanje Chrome</string>
+    <string name="pref_category_editor">Nastavitve urejevalnika</string>
 </resources>

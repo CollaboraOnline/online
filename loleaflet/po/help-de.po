@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-03-23 10:55+0000\n"
+"Last-Translator: Christian Kühl <kuehl.christian@googlemail.com>\n"
+"Language-Team: German <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-help-de.po\n"
 "X-Pootle-Revision: 3254192\n"
 
@@ -909,29 +910,27 @@ msgstr "Alles auf der Folie / Zeichenfläche auswählen"
 
 #: html/loleaflet-help.html%2Bdiv.h1:212-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Hilfe"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:251-5
-#, fuzzy
-#| msgid "Cell formatting"
 msgid "Collaborative editing"
-msgstr "Zellenformatierung"
+msgstr "Gemeinsame Bearbeitung"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.h3:258-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Benutzeroberfläche"
 
 #: html/loleaflet-help.html%2Bdiv.p:215-5
 #: html/loleaflet-help.html%2Bdiv.h3:278-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Öffnen, Schließen, Speichern, Drucken und Herunterladen von Dokumenten"
 
 #: html/loleaflet-help.html%2Bdiv.p:216-5
 #: html/loleaflet-help.html%2Bdiv.h3:286-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Dokumente bearbeiten"
 
 #: html/loleaflet-help.html%2Bdiv.p:217-5
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
@@ -940,287 +939,287 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:352-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:432-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Zusätzliche Funktionen"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:337-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Tabellendokumente"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Tabellendokumente bearbeiten"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:221-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:342-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formeln"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:222-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:348-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Tabellendokumente formatieren"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:385-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Textdokumente"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:227-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Textdokumente bearbeiten"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:228-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
 msgid "Context menus"
-msgstr ""
+msgstr "Kontextmenüs"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:400-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Zusätzliche Funktionen des Textdokument-Editors"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Präsentationen"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:233-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Präsentationen bearbeiten"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:234-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:424-5
 msgid "Slide show"
-msgstr ""
+msgstr "Bildschirmpräsentation"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:235-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:428-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Folienbereich"
 
 #: html/loleaflet-help.html%2Bdiv.p:238-5
 #: html/loleaflet-help.html%2Bdiv.h2:441-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "FAQs"
 
 #: html/loleaflet-help.html%2Bdiv.p:239-5
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:473-5
 msgid "Text documents"
-msgstr ""
+msgstr "Textdokumente"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:537-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Tabellendokumente"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:247-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:565-5
 msgid "Presentations"
-msgstr ""
+msgstr "Präsentationen"
 
 #: html/loleaflet-help.html%2Bdiv.p:249-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
-msgstr ""
+msgstr "Mit <span class=\"productname\">%productName</span> können Sie auf einfache und unkomplizierte Weise Textdokumente, Tabellendokumente und Präsentationen direkt in Ihrem Browser erstellen und bearbeiten. Sie können alleine oder gemeinsam als Teil eines Teams an einem Dokument arbeiten."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:253-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
-msgstr ""
+msgstr "Jedem Benutzer wird eine Farbe zugewiesen. Der Cursor jedes Benutzers wird in der zugewiesenen Farbe angezeigt. Hinweis: Sie sehen Ihren Cursor als schwarzen, blinkenden Cursor, während andere Sie mit einer anderen Farbe sehen."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:254-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
-msgstr ""
+msgstr "Sie können zum Cursor eines Benutzers springen, indem Sie auf den Namen (oder Avatar) des Benutzers klicken. Es ist möglich, dem Bearbeiter zu folgen."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:255-11
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> informiert Sie mit einer kleinen Benachrichtigung in der Fußzeile, wenn ein neuer Benutzer hinzukommt oder einer das Dokument verlässt."
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> verwendet moderne Browser-Ressourcen, um die Benutzeroberfläche an die Größe des Anzeigebereichs anzupassen, einschließlich kleiner Bildschirme auf Mobilgeräten. Die Schnittstelle besteht aus:"
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."
-msgstr ""
+msgstr "<span class=\"def\">Dem Dokumentbereich:</span> Der Anwendungsbereich zeigt den Dokumentinhalt, entweder Textdokumente, Tabellendokumente oder Präsentationen."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:261-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
-msgstr ""
+msgstr "<span class=\"def\">Der Menüleiste:</span> Das Hauptmenü befindet sich oben und enthält viele Optionen, Befehle zum Drucken, Bearbeiten, Anzeigen und andere erweiterte Befehle. Sie können die Menüleiste ausblenden, indem Sie auf das Symbol <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> ganz rechts klicken. Klicken Sie auf das Symbol <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\">, um das Menü wieder einzublenden."
 
 #: html/loleaflet-help.html%2Bdiv.p:262-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
-msgstr ""
+msgstr "<span class=\"def\">Kontextmenüs:</span> Wenn Sie mit der rechten Maustaste klicken, wird ein Menü mit Befehlen angezeigt, die dem zugrunde liegenden Objekt zugeordnet sind."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
-msgstr ""
+msgstr "<span class=\"def\">Der Symbolleiste:</span> Die Symbolleiste enthält die am häufigsten verwendeten Optionen für die tägliche Verwendung. Symbolleistenschaltflächen sind dynamisch, was bedeutet, dass ihr Status (Ein oder Aus) von verschiedenen Faktoren abhängt."
 
 #: html/loleaflet-help.html%2Bdiv.p:264-5
 msgid "<span class=\"def\">The status bar:</span> The status bar is shown in the bottom, and contains several useful options and features."
-msgstr ""
+msgstr "<span class=\"def\">Der Statusleiste:</span> Die Statusleiste wird unten angezeigt und enthält mehrere nützliche Optionen und Funktionen."
 
 #: html/loleaflet-help.html%2Bdiv.p:266-5
 msgid "<span class=\"def\">The search bar:</span> Searching starts automatically when content is inserted in the search box, and the document window automatically moves to the first occurrence found. Searching is not case-sensitive. There are three buttons right next to the search box:"
-msgstr ""
+msgstr "<span class=\"def\">Der Suchleiste:</span> Die Suche beginnt automatisch, wenn Inhalt in das Suchfeld eingefügt wird, und das Dokumentfenster wechselt automatisch zum ersten gefundenen Vorkommen. Bei der Suche wird nicht zwischen Groß- und Kleinschreibung unterschieden. Direkt neben dem Suchfeld befinden sich drei Schaltflächen:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:268-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Rückwärts suchen"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:269-11
 msgid "Search forward"
-msgstr ""
+msgstr "Vorwärts suchen"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:270-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Suche abbrechen (erscheint nur, wenn Text eingegeben wurde)"
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."
-msgstr ""
+msgstr "<span class=\"def\">Der Maßstabsleiste:</span> Rechts in der Statusleiste befinden sich eine Reihe von Schaltflächen, mit denen Sie den Maßstab auf 100% zurücksetzen, verkleinern und vergrößern können. Der Maßstab gilt für den Dokumentbereich, die Benutzeroberfläche ist davon nicht betroffen. In diesem Bereich wird der aktuelle Maßstab angezeigt."
 
 #: html/loleaflet-help.html%2Bdiv.p:273-5
 msgid "Text, charts, shapes and svg images will stay sharp, when zooming in, you will only see pixels appear at inserted images, such as jpg’s or png’s."
-msgstr ""
+msgstr "Text, Diagramme, Formen und SVG-Bilder bleiben scharf. Beim Vergrößern werden nur in eingefügten Bildern wie JPEGs oder PNGs Pixel angezeigt."
 
 #: html/loleaflet-help.html%2Bdiv.p:274-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "Die Verwendung des Browser-Maßstabs wirkt sich auf die Dokument- und Benutzeroberflächenbereiche aus."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
-msgstr ""
+msgstr "<span class=\"def\">Der Informationsleiste:</span> Rechts von der Suchleiste wird eine Reihe von Informationen zum Dokument angezeigt. Die tatsächlichen Informationen hängen von der Art des Dokuments ab."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
-msgstr ""
+msgstr "Ihre Dokumente werden im Cloud-Speicher, in welchen <span class=\"productname\">%productName</span> integriert ist, gespeichert und verwaltet."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
-msgstr ""
+msgstr "Um ein Dokument herunterzuladen, laden Sie es aus der <span class=\"productname\">%productName</span> Anwendung über das Menü <span class=\"ui\">Datei</span> herunter. Die verfügbaren Downloadformate hängen von der Anwendung ab. Alle Anwendungen können Dokumente ins PDF-Format exporteieren."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."
-msgstr ""
+msgstr "Zum Öffnen eines Dokuments klicken Sie auf die Datei, um das <span class=\"productname\">%productName</span>-Modul, welches dem Dokumentformat zugeordnet ist, zu öffnen."
 
 #: html/loleaflet-help.html%2Bdiv.p:282-5
 msgid "Documents in <span class=\"productname\">%productName</span> save automatically, but if you are concerned that a document is synchronized as quickly as possible you can also force saving using the <span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
-msgstr ""
+msgstr "Dokumente in <span class=\"productname\">%productName</span> werden automatisch gespeichert, aber wenn Sie möchten, dass ein Dokument so schnell wie möglich synchronisiert wird, können Sie das Speichern auch erzwingen, indem Sie <span class=\"ui\">Datei</span> – <span class=\"ui\">Speichern</span> wählen."
 
 #: html/loleaflet-help.html%2Bdiv.p:283-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
-msgstr ""
+msgstr "Abhängig von den Funktionen Ihres Browsers wird möglicherweise das Druckfenster oder eine Meldung \"PDF-Export herunterladen?\" angezeigt. Sie können dieses PDF in Ihrem bevorzugten PDF-Reader drucken."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "Beim Schließen eines Dokuments wird es automatisch gespeichert, wenn es geändert wurde."
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
-msgstr ""
+msgstr "Die Bearbeitung von Dokumenten sollte jedem bekannt sein, der zuvor eine Office-Anwendung verwendet hat. Hier sind jedoch einige Besonderheiten:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopieren-und-Einfügen"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
-msgstr ""
+msgstr "Das Kopieren/Ausschneiden und Einfügen umfangreicher Inhalte wird nicht nur innerhalb eines bestimmten Dokuments unterstützt, sondern auch zwischen Dokumenten auf derselben oder einer anderen <span class=\"productname\">%productName</span>-Instanz. Hierfür können Benutzer Inhalte, einschließlich Bilder und gemischter Inhalte, auf dem PC kopieren/ausschneiden und einfügen, indem sie direkt die Tastaturkürzel (<span class=\"kbd\">Strg</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Strg</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Strg</span> + <span class=\"kbd\">V</span>) verwenden. Aus Sicherheitsgründen ist die Verwendung von <span class=\"kbd\">Strg</span> + <span class=\"kbd\">V</span> auf dem PC zum Einfügen erforderlich, aber können die Kontextmenüs zum Ausschneiden und Kopieren verwendet werden. Unter Android oder iOS ist die Auswahl von Text durch zweimaliges Tippen und langes Tippen für den Zugriff auf Kopieren/Ausschneiden und Einfügen über das Kontextmenü erforderlich."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
-msgstr ""
+msgstr "Um größere Inhalte in andere Anwendungen auf Ihrem Gerät zu kopieren, müssen die Benutzer die Schaltfläche <span class=\"ui\">Download starten</span> drücken und diese dann erneut in ihre Zwischenablage kopieren, um sie für die Zielanwendung verfügbar zu machen. Dies ist über ein kleines Widget möglich, das in der unteren rechten Ecke angezeigt wird und nur zum Exportieren des Inhalts zum Einfügen in externe Anwendungen erforderlich ist. Dieser Schritt konvertiert auch komplexe Objekttypen in statische Bilder."
 
 #: html/loleaflet-help.html%2Bdiv.h4:291-5
 msgid "Document repair"
-msgstr ""
+msgstr "Dokument reparieren"
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Wenn mehrere Personen gleichzeitig das selbe Dokument bearbeiten, kann es zu Konflikten bei ihren Änderungen kommen, was zu Verwirrung führen kann. Mit der Funktion zur Dokumentreparatur können Benutzer die Änderungen anderer Bearbeiter am Dokument auf einen vorherigen Status zurücksetzen."
 
 #: html/loleaflet-help.html%2Bdiv.p:293-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
-msgstr ""
+msgstr "Um zum ausgewählten Status zurückzukehren, wählen Sie ihn mit der Maus aus und klicken Sie auf <span class=\"ui\">Zum Status springen</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:295-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
-msgstr ""
+msgstr "Dies ist besonders nützlich – beispielsweise, wenn ein Kollege versehentlich den gesamten Text im Dokument mit <span class=\"kbd\">Strg</span> + <span class=\"kbd\">A</span> ausgewählt hat, darüber tippte und es damit zerstörte – während Sie es gleichzeitig bearbeiteten."
 
 #: html/loleaflet-help.html%2Bdiv.h4:296-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Inaktives Dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:297-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
-msgstr ""
+msgstr "Wenn <span class=\"productname\">%productName</span> feststellt, dass im Browser eine Zeit lang keine Aktivität stattgefunden hat, versetzt es das Dokument in den Status \"Inaktiv\". Das Dokument wird mit einer transparenten grauen Überlagerung mit der Meldung \"Inaktives Dokument - bitte klicken, um die Bearbeitung fortzusetzen\" angezeigt."
 
 #: html/loleaflet-help.html%2Bdiv.p:299-5
 msgid "To continue editing, click on the document and the layover and message disappear. Any changes that may have been made by other users – while collaboratively editing the document – are re-loaded."
-msgstr ""
+msgstr "Um die Bearbeitung fortzusetzen, klicken Sie auf das Dokument und der Zwischenstopp und die Nachricht verschwinden. Alle Änderungen, die möglicherweise von anderen Benutzern vorgenommen wurden, während das Dokument gemeinsam bearbeitet wurde, werden erneut geladen."
 
 #: html/loleaflet-help.html%2Bdiv.h4:300-5
 msgid "Pasting"
-msgstr ""
+msgstr "Einfügen"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
-msgstr ""
+msgstr "Wenn Sie Inhalte einfügen, die aus demselben Dokument kopiert wurden, bleiben Format und Elemente erhalten. Wenn Sie aus einem anderen Dokument, aus einem anderen Browserregister oder -fenster oder von außerhalb des Browsers kopieren, wird der eingefügte Inhalt als Rich Text eingefügt."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr ""
+msgstr "Sie können Inhalte als unformatierten Text mit der folgenden Tastenkombination einfügen: <span class=\"kbd\">Strg</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Umschalt</span> + <span class=\"kbd\">V</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
-msgstr ""
+msgstr "Wenn Sie Text aus dem Dokument einfügen, wird die Formatierung beibehalten. Sie können auch Objekte wie Bilder einfügen, wenn diese aus dem Dokument kopiert werden, in dem Sie arbeiten."
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text."
-msgstr ""
+msgstr "Wenn Sie Text von außerhalb des Dokuments (eines anderen Browserfensters oder einer Desktopanwendung) einfügen, wird er als Rich Text eingefügt."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr ""
+msgstr "Wenn Sie internen ausgeschnittenen oder kopierten Inhalt haben, können Sie diesen Inhalt über das Kontextmenü einfügen."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Diagramme einfügen"
 
 #: html/loleaflet-help.html%2Bdiv.p:309-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> unterstützt das Einfügen und Anzeigen von Diagrammen in Dokumente. So fügen Sie ein Diagramm hinzu:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:311-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
-msgstr ""
+msgstr "Wählen Sie eine Tabelle im Textdokument, einen Bereich in einem Tabellendokument oder eine Tabelle in einer Präsentation aus."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
-msgstr ""
+msgstr "Wählen Sie <span class=\"ui\">Einfügen</span> – <span class=\"ui\">Diagramm</span>. Passen Sie Ihr Diagramm in der Seitenleiste an:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:316-11
 msgid "If no table or range was selected, a prototype chart is displayed."
-msgstr ""
+msgstr "Wenn keine Tabelle oder kein Bereich ausgewählt wurde, wird ein Prototypdiagramm angezeigt."
 
 #: html/loleaflet-help.html%2Bdiv.p:319-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
-msgstr ""
+msgstr "<span class=\"def\">Diagramm bearbeiten:</span> Doppelklicken Sie zur Auswahl auf das Diagramm. Verwenden Sie Kontextmenüs, um Diagrammelemente wie Titel, Achse und andere hinzuzufügen. Wählen Sie <span class=\"ui\">Datenbereich</span> und <span class=\"ui\">Diagrammtyp</span> um Diagrammdaten zu bearbeiten und den Diagrammtyp auszuwählen."
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
-msgstr ""
+msgstr "<span class=\"def\">Diagramm formatieren:</span> Über das selbe Kontextmenü gelangen Sie zur Auswahl der Diagrammdatentabelle und des Diagrammtyps."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
-msgstr ""
+msgstr "<span class=\"def\">Datenreihen formatieren:</span> Öffnen Sie das Kontextmenü und wählen Sie <span class=\"ui\">Datenreihen formatieren</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:322-5
 msgid "Handling images"

@@ -3,7 +3,13 @@
     <string name="loading">Lade…</string>
     <string name="cannot_open_file_chooser">Kann Dateiauswahldialog nicht laden</string>
     <string name="failed_to_insert_image">Einfügen der Grafik schlug fehl</string>
-    <string name="failed_to_load_file">Konnte die zu ladende Datei nicht bestimmen</string>
+    <string name="failed_to_load_file">Fehler beim Ermitteln der zu ladenden Datei</string>
     <string name="storage_permission_required">Berechtigung für Speicherzugriff ist erforderlich</string>
     <string name="temp_file_saving_disabled">Nur Leserechte für diese Datei. Speichern nicht möglich.</string>
+    <string name="exiting">Beenden…</string>
+    <string name="rate_our_app_text">Wenn es Ihnen gefällt, geben Sie uns bitte 5 Sterne in Google Play. Ihre guten Bewertungen sind unsere beste Motivation.</string>
+    <string name="rate_our_app_title">Danke für die Verwendung von %1$s!</string>
+    <string name="later">Später</string>
+    <string name="rate_now">Jetzt bewerten</string>
+    <string name="preparing_for_the_first_start_after_an_update">Vorbereitung auf den ersten Start nach einem Update.</string>
 </resources>

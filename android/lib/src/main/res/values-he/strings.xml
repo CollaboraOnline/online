@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="exiting">בהליכי יציאה…</string>
+    <string name="loading">בטעינה…</string>
+    <string name="rate_our_app_text">אם אהבת את היישומון, מומלץ לדרג אותנו ב־5 כוכבים בחנות Play של Google. הביקורות החיוביות שלך נותנות לנו המון כוח.</string>
+    <string name="rate_our_app_title">תודה לך על השימוש ב־%1$s!</string>
+    <string name="later">אחר כך</string>
+    <string name="rate_now">לדרג כעת</string>
+    <string name="preparing_for_the_first_start_after_an_update">בהכנות לקראת ההפעלה הראשונה לאחר עדכון.</string>
+    <string name="cannot_open_file_chooser">לא ניתן לפתוח את בוחר הקבצים</string>
+    <string name="failed_to_insert_image">הוספת התמונה נכשלה</string>
+    <string name="failed_to_load_file">איתור הקובץ לטעינה נכשל</string>
+    <string name="storage_permission_required">נדרשת הרשאת גישה לאחסון</string>
+    <string name="temp_file_saving_disabled">קובץ זה הוא לקריאה בלבד, אפשרות השמירה הושבתה.</string>
+</resources>
