@@ -35,7 +35,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			click();
 
 		// Check that the shape is there
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g')
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g', {timeout : 10000})
 			.should('have.class', 'com.sun.star.drawing.CustomShape');
 	});
 
@@ -49,8 +49,6 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#mobile-wizard')
 			.should('not.be.visible');
 
-		writerHelper.clearMobileWizardState();
-
 		cy.get('#tb_actionbar_item_mobile_wizard')
 			.click();
 		cy.get('#mobile-wizard')
@@ -63,6 +61,11 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#selectwidth .plus')
 			.should('be.visible')
 			.click();
+
+		cy.get('#tb_actionbar_item_mobile_wizard')
+			.click();
+		cy.get('#mobile-wizard')
+			.should('not.be.visible');
 	}
 
 	function openPosSizePanel() {
@@ -103,7 +106,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'fill', 'rgb(114,159,207)');
 	});
 
-	it.skip('Change shape width.', function() {
+	it('Change shape width.', function() {
 		// TODO: Entering a value inside the spinbutton has no effect on the shape.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
@@ -116,7 +119,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.type('{enter}');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', defaultGeometry);
+			.should('not.have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('have.attr', 'd', 'M 1965,4863 L 12635,10855 1965,10855 1965,4863 1965,4863 Z');
@@ -256,7 +259,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.length.greaterThan', 12);
 	});
 
-	it.skip('Change line width', function() {
+	it('Change line width', function() {
 		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
@@ -273,8 +276,6 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
 			.should('have.attr', 'stroke-width', '141');
-
-		writerHelper.clearMobileWizardState();
 
 		openLinePropertyPanel();
 

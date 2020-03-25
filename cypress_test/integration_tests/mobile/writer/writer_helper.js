@@ -70,28 +70,6 @@ function copyTableToClipboard() {
 		.should('not.exist');
 }
 
-// Use this method when a test openes the same mobile
-// wizard more times during a test.
-// Recent issue with this scenario is that the mobile
-// wizard is opened first with an old content, then
-// when the sidebar's state arrives the wizard is
-// rerendered again which might cause a test failure
-// because the test finds the old HTML item
-// which will be detached from DOM.
-function clearMobileWizardState() {
-	// Open hamburger menu
-	helper.pushHamburgerMenuIconMobile();
-
-	cy.get('#mobile-wizard-content')
-		.should('be.visible');
-
-	cy.get('.menu-entry-with-icon')
-		.contains('About', {timeout: 10000});
-
-	// Close hamburger menu
-	helper.pushHamburgerMenuIconMobile();
-}
-
 function selectAllMobile() {
 	cy.log('Select all via hamburger menu - start.');
 
@@ -127,5 +105,4 @@ function selectAllMobile() {
 
 module.exports.copyTextToClipboard = copyTextToClipboard;
 module.exports.copyTableToClipboard = copyTableToClipboard;
-module.exports.clearMobileWizardState = clearMobileWizardState;
 module.exports.selectAllMobile = selectAllMobile;
