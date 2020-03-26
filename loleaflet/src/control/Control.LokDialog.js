@@ -154,7 +154,7 @@ L.Control.LokDialog = L.Control.extend({
 		return (id in this._dialogs) && this._dialogs[id].isSidebar;
 	},
 
-	_isCalcInputBar: function(id) {
+	isCalcInputBar: function(id) {
 		return (id in this._dialogs) && this._dialogs[id].isCalcInputBar;
 	},
 
@@ -344,7 +344,7 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + strId).remove();
 			if (e.winType  === 'deck' || this._isSidebar(e.id))
 				this._launchSidebar(e.id, width, height);
-			else if (e.winType  === 'calc-input-win' || this._isCalcInputBar(e.id))
+			else if (e.winType  === 'calc-input-win' || this.isCalcInputBar(e.id))
 				this._launchCalcInputBar(e.id, width, height);
 			else
 				this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
@@ -398,7 +398,7 @@ L.Control.LokDialog = L.Control.extend({
 				this._onDialogChildClose(parent);
 			else if (this._isSidebar(e.id))
 				this._onSidebarClose(e.id);
-			else if (this._isCalcInputBar(e.id))
+			else if (this.isCalcInputBar(e.id))
 				this._onCalcInputBarClose(e.id);
 			else
 				this._onDialogClose(e.id, false);
@@ -584,7 +584,7 @@ L.Control.LokDialog = L.Control.extend({
 				return;
 			}
 		}
-		else if (this._isCalcInputBar(dlgId) && (!this._isOpen(dlgId) || !this.isCursorVisible(dlgId))) {
+		else if (this.isCalcInputBar(dlgId) && (!this._isOpen(dlgId) || !this.isCursorVisible(dlgId))) {
 			return;
 		}
 
@@ -923,7 +923,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_postLaunch: function(id, panelContainer, panelCanvas) {
-		if (!this._isCalcInputBar(id) || window.mode.isDesktop()) {
+		if (!this.isCalcInputBar(id) || window.mode.isDesktop()) {
 			this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
 
 			L.DomEvent.on(panelContainer, 'mouseleave', function () {
@@ -1201,7 +1201,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onClosePopups: function() {
 		for (var dialogId in this._dialogs) {
-			if (!this._isSidebar(dialogId) && !this._isCalcInputBar(dialogId)) {
+			if (!this._isSidebar(dialogId) && !this.isCalcInputBar(dialogId)) {
 				this._onDialogClose(dialogId, true);
 			}
 		}
@@ -1210,7 +1210,7 @@ L.Control.LokDialog = L.Control.extend({
 	onCloseCurrentPopUp: function() {
 		// for title-less dialog only (context menu, pop-up)
 		if (this._currentId && this._isOpen(this._currentId) &&
-			!this._dialogs[this._currentId].title && !this._isSidebar(this._currentId) && !this._isCalcInputBar(this._currentId))
+			!this._dialogs[this._currentId].title && !this._isSidebar(this._currentId) && !this.isCalcInputBar(this._currentId))
 			this._onDialogClose(this._currentId, true);
 	},
 
@@ -1270,7 +1270,7 @@ L.Control.LokDialog = L.Control.extend({
 			}
 
 			// calc input bar find out their size on first paint call
-			var isCalcInputBar = that._isCalcInputBar(parentId);
+			var isCalcInputBar = that.isCalcInputBar(parentId);
 			var container = L.DomUtil.get(strId);
 			if (isCalcInputBar && container) {
 				//console.log('_paintDialog: calc input bar: width: ' + that._calcInputBar.width);
@@ -1304,7 +1304,7 @@ L.Control.LokDialog = L.Control.extend({
 			if (parentId in that._dialogs) {
 				// We might have closed the dialog by the time we render.
 				that._dialogs[parentId].isPainting = false;
-				if (!that._isSidebar(parentId) && !that._isCalcInputBar(parentId))
+				if (!that._isSidebar(parentId) && !that.isCalcInputBar(parentId))
 					that._map.fire('changefocuswidget', {winId: parentId, dialog: that});
 			}
 		};
@@ -1422,7 +1422,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogChildClose: function(dialogId) {
 		$('#' + this._toStrId(dialogId) + '-floating').remove();
-		if (!this._isSidebar(dialogId) && !this._isCalcInputBar(dialogId)) {
+		if (!this._isSidebar(dialogId) && !this.isCalcInputBar(dialogId)) {
 			// Remove any extra height allocated for the parent container (only for floating dialogs).
 			var canvas = document.getElementById(dialogId + '-canvas');
 			if (!canvas) {
