@@ -1147,7 +1147,6 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onInvalidateCursorMsg: function (textMsg) {
-		var docLayer = this._map._docLayer;
 		textMsg = textMsg.substring('invalidatecursor:'.length + 1);
 		var obj = JSON.parse(textMsg);
 		var modifierViewId = parseInt(obj.viewId);
@@ -1160,6 +1159,7 @@ L.TileLayer = L.GridLayer.extend({
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		var cursorPos = this._visibleCursor.getNorthWest();
+		var docLayer = this._map._docLayer;
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
 			this._map._setFollowing(false, null);
 		}

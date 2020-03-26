@@ -930,7 +930,6 @@ L.Control.LokDialog = L.Control.extend({
 				// Move the mouse off-screen when we leave the sidebar
 				// so we don't leave edge-elements highlighted as if
 				// the mouse is still over them.
-				this._map.lastActiveTime = Date.now();
 				this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
 			}, this);
 		}
@@ -948,8 +947,6 @@ L.Control.LokDialog = L.Control.extend({
 			}
 			var pos = this._isSelectionHandle(e.target) ? L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
 			this._postWindowMouseEvent('move', id, pos.x, pos.y, 1, 0, 0);
-			// Keep map active while user is playing with sidebar/dialog.
-			this._map.lastActiveTime = Date.now();
 		}, this);
 
 		L.DomEvent.on(canvas, 'mouseleave', function(e) {
@@ -1284,7 +1281,7 @@ L.Control.LokDialog = L.Control.extend({
 				if (that._currentDeck) {
 					var sidebar = L.DomUtil.get(that._currentDeck.strId);
 					if (sidebar) {
-						deckOffset = sidebar.clientWidth;
+						deckOffset = sidebar.clientWidth + 10; // Allow some margin.
 					}
 				}
 				var correctWidth = container.clientWidth - deckOffset;
