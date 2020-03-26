@@ -1309,7 +1309,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		 return false;
 	},
 
-	_getColorCommandToSend: function(builder, data, color) {
+	_sendColorCommand: function(builder, data, color) {
 		var gradientItem;
 
 		if (data.id === 'fillgrad1') {
@@ -1322,7 +1322,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem);
 		}
 
-		return data.command + '?Color:string=' + color;
+		var command = data.command + '?Color:string=' + color;
+
+		// update the item state as we send
+		var items = builder.map['stateChangeHandler'];
+		items.setItemValue(data.command, parseInt('0x' + color));
+
+		builder.map.sendUnoCommand(command);
 	},
 
 	_getDefaultColorForCommand: function(command) {
@@ -1381,8 +1387,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
 
 		var callback = function(color) {
-			var command = builder._getColorCommandToSend(builder, data, color);
-			builder.map.sendUnoCommand(command);
+			builder._sendColorCommand(builder, data, color);
 		};
 
 		var colorPickerControl = new L.ColorPicker(
