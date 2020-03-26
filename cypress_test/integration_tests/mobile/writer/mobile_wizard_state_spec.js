@@ -50,7 +50,7 @@ describe('Mobile wizard state tests', function() {
 			.should('have.class', 'checked');
 	});
 
-	it.only('Close mobile wizard by hamburger menu.', function() {
+	it('Close mobile wizard by hamburger menu.', function() {
 		// Click on edit button
 		helper.enableEditingMobile();
 
