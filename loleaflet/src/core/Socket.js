@@ -120,7 +120,7 @@ L.Socket = L.Class.extend({
 		return this.socket && this.socket.readyState === 1;
 	},
 
-	sendMessage: function (msg, coords) {
+	sendMessage: function (msg) {
 		if (this._map._fatal) {
 			// Avoid communicating when we're in fatal state
 			return;
@@ -145,16 +145,14 @@ L.Socket = L.Class.extend({
 		}
 		else {
 			// push message while trying to connect socket again.
-			this._msgQueue.push({msg: msg, coords: coords});
+			this._msgQueue.push(msg);
 		}
 	},
 
-	_doSend: function(msg, coords) {
+	_doSend: function(msg) {
 		// Only attempt to log text frames, not binary ones.
-		if (typeof msg === 'string') {
-			L.Log.log(msg, 'OUTGOING', coords);
-			// this._logSocket('OUTGOING', msg);
-		}
+		if (typeof msg === 'string')
+			this._logSocket('OUTGOING', msg);
 
 		this.socket.send(msg);
 	},
@@ -197,7 +195,7 @@ L.Socket = L.Class.extend({
 		}
 		this._doSend(msg);
 		for (var i = 0; i < this._msgQueue.length; i++) {
-			this._doSend(this._msgQueue[i].msg, this._msgQueue[i].coords);
+			this._doSend(this._msgQueue[i]);
 		}
 		this._msgQueue = [];
 
@@ -268,7 +266,7 @@ L.Socket = L.Class.extend({
 			textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
 		}
 
-		// this._logSocket('INCOMING', textMsg);
+		this._logSocket('INCOMING', textMsg);
 
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('loolserver ')) {
@@ -759,7 +757,7 @@ L.Socket = L.Class.extend({
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 			// log the tile msg separately as we need the tile coordinates
-			L.Log.log(textMsg, 'INCOMING');
+			this._logSocket('INCOMING', textMsg);
 
 			if (imgBytes !== undefined) {
 				try {

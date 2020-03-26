@@ -41,7 +41,7 @@
     <logging>
         <color type="bool">true</color>
         <level type="string" desc="Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@LOOLWSD_LOGLEVEL@">@LOOLWSD_LOGLEVEL@</level>
-        <protocol type="bool" descr="Enable minimal client-site JS protocol logging from the start">@ENABLE_DEBUG@</protocol>
+        <protocol type="bool" descr="Enable minimal client-site JS protocol logging from the start">@ENABLE_DEBUG_PROTOCOL@</protocol>
         <file enable="@LOOLWSD_LOG_TO_FILE@">
             <property name="path" desc="Log file path.">@LOOLWSD_LOGFILE@</property>
             <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>

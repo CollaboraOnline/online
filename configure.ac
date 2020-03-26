@@ -101,6 +101,11 @@ AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],
                              [Enable debugging, link with debugging version of Poco libraries]))
 
+AC_ARG_ENABLE([debug-protocol],
+    AS_HELP_STRING([--disable-debug-protocol],
+        [Disables JS protocol logging by default, otherwise it is slaved to enable-debug.])
+)
+
 AC_ARG_ENABLE([browsersync],
               AS_HELP_STRING([--enable-browsersync],
                              [Don't copy files to the target directory but create the symlink to allow browsersync usage]))
@@ -283,6 +288,7 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=])
 
 ENABLE_DEBUG=false
+ENABLE_DEBUG_PROTOCOL=false
 LOOLWSD_LOGLEVEL="warning"
 LOOLWSD_LOG_TO_FILE="false"
 LOOLWSD_LOGFILE="/var/log/loolwsd.log"
@@ -293,6 +299,7 @@ anonym_msg=""
 if test "$enable_debug" = "yes"; then
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
+   ENABLE_DEBUG_PROTOCOL=true
    LOOLWSD_LOGLEVEL="trace"
    LOOLWSD_LOG_TO_FILE="true"
    LOOLWSD_LOGFILE="/tmp/loolwsd.log"
@@ -306,6 +313,11 @@ AC_SUBST(ENABLE_DEBUG)
 AC_SUBST(LOOLWSD_LOGLEVEL)
 AC_SUBST(LOOLWSD_LOG_TO_FILE)
 AC_SUBST(LOLEAFLET_LOGGING)
+
+if test "$enable_debug_protocol" = no; then
+   ENABLE_DEBUG_PROTOCOL=false
+fi
+AC_SUBST(ENABLE_DEBUG_PROTOCOL)
 
 ENABLE_BROWSERSYNC=
 browsersync_msg="disabled: copy files to the target directory"
