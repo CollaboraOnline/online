@@ -848,6 +848,12 @@ input[type=checkbox][disabled] {
 	font-size: 15pt;
 }
 
+#mobile-spell-error {
+	border: none;
+	font-size: 15pt;
+	color: red !important;
+}
+
 #searchlabel {
 	border: none;
 	font-size: 11pt;
