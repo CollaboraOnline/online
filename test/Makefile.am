@@ -237,9 +237,14 @@ unit-typing.log     : group1.log
 unit-convert.log    : group1.log
 unit-tilecache.log  : group1.log
 unit-timeout.log    : group1.log
-unit-copy-paste.log : group1.log
 
-group2.log: unit-copy-paste.log unit-typing.log unit-convert.log unit-tilecache.log unit-timeout.log
+group1a.log: unit-typing.log unit-convert.log unit-tilecache.log unit-timeout.log
+	touch $@
+
+# isolate this one - it's not a happy test.
+unit-copy-paste.log : group1a.log
+
+group2.log: unit-copy-paste.log
 	touch $@
 
 unit-prefork.log : group2.log
