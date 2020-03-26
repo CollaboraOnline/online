@@ -82,6 +82,20 @@ for MODULE in lxml polib; do
     fi
 done
 
+# On some platforms, std::atomic needs a helper library
+AC_MSG_CHECKING([for the need of -latomic])
+AC_LINK_IFELSE([AC_LANG_SOURCE([
+    #include <atomic>
+    #include <cstdint>
+    std::atomic<std::int64_t> v;
+    int main() {
+      return v;
+    }
+    ])],
+               [AC_MSG_RESULT([No])],
+               [AC_MSG_RESULT([Yes])
+                LIBS="$LIBS -latomic"])
+
 # Declare options
 AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],
