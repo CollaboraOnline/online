@@ -1418,31 +1418,31 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onUserListRefresh: function(map, toolbar) {
-		var showUserList = map['wopi'].HideUserList !== null &&
-							map['wopi'].HideUserList !== undefined &&
-							$.inArray('true', map['wopi'].HideUserList) < 0 &&
-							!window.ThisIsAMobileApp &&
-							((window.mode.isMobile() && $.inArray('mobile', map['wopi'].HideUserList) < 0) ||
-							(window.mode.isTablet() && $.inArray('tablet', map['wopi'].HideUserList) < 0));
+		var hideUserList =
+			window.ThisIsAMobileApp ||
+			(map['wopi'].HideUserList !== null && map['wopi'].HideUserList !== undefined &&
+				($.inArray('true', map['wopi'].HideUserList) >= 0) ||
+				(window.mode.isMobile() && $.inArray('mobile', map['wopi'].HideUserList) >= 0) ||
+				(window.mode.isTablet() && $.inArray('tablet', map['wopi'].HideUserList) >= 0));
 
 		// Otherwise we can get an infinte, fast busy timeout loop.
-		if (toolbar.get('userlist').hidden == !showUserList)
+		if (toolbar.get('userlist').hidden == hideUserList)
 			return;
 
 		map.off('deselectuser', window.deselectUser);
 		map.off('addview', window.onAddView);
 		map.off('removeview', window.onRemoveView);
 
-		if (showUserList) {
+		if (hideUserList) {
+			toolbar.hide('userlist');
+			toolbar.hide('userlistbreak');
+		}
+		else {
 			toolbar.show('userlist');
 			toolbar.show('userlistbreak');
 			map.on('deselectuser', window.deselectUser);
 			map.on('addview', window.onAddView);
 			map.on('removeview', window.onRemoveView);
-		}
-		else {
-			toolbar.hide('userlist');
-			toolbar.hide('userlistbreak');
 		}
 	},
 
