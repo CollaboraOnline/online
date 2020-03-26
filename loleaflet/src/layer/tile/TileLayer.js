@@ -1425,13 +1425,19 @@ L.TileLayer = L.GridLayer.extend({
 				(window.mode.isMobile() && $.inArray('mobile', map['wopi'].HideUserList) >= 0) ||
 				(window.mode.isTablet() && $.inArray('tablet', map['wopi'].HideUserList) >= 0));
 
-		// Otherwise we can get an infinte, fast busy timeout loop.
-		if (toolbar.get('userlist').hidden == hideUserList)
-			return;
-
 		map.off('deselectuser', window.deselectUser);
 		map.off('addview', window.onAddView);
 		map.off('removeview', window.onRemoveView);
+
+		if (!hideUserList) {
+			map.on('deselectuser', window.deselectUser);
+			map.on('addview', window.onAddView);
+			map.on('removeview', window.onRemoveView);
+		}
+
+		// Otherwise we can get an infinte, fast busy timeout loop.
+		if (toolbar.get('userlist').hidden === hideUserList)
+			return;
 
 		if (hideUserList) {
 			toolbar.hide('userlist');
@@ -1440,9 +1446,6 @@ L.TileLayer = L.GridLayer.extend({
 		else {
 			toolbar.show('userlist');
 			toolbar.show('userlistbreak');
-			map.on('deselectuser', window.deselectUser);
-			map.on('addview', window.onAddView);
-			map.on('removeview', window.onRemoveView);
 		}
 	},
 
