@@ -880,6 +880,11 @@ L.Map = L.Evented.extend({
 		return this.getWinId() === 0;
 	},
 
+	// Returns true iff the formula-bar has the focus.
+	calcInputBarHasFocus: function () {
+		return !this.editorHasFocus() && this._activeDialog && this._activeDialog.isCalcInputBar(this.getWinId());
+	},
+
 	// TODO replace with universal implementation after refactoring projections
 
 	getZoomScale: function (toZoom, fromZoom) {

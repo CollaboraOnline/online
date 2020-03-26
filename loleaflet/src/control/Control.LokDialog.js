@@ -926,12 +926,14 @@ L.Control.LokDialog = L.Control.extend({
 		if (!this.isCalcInputBar(id) || window.mode.isDesktop()) {
 			this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
 
-			L.DomEvent.on(panelContainer, 'mouseleave', function () {
+			if (this._isSidebar(id)) {
 				// Move the mouse off-screen when we leave the sidebar
 				// so we don't leave edge-elements highlighted as if
 				// the mouse is still over them.
-				this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
-			}, this);
+				L.DomEvent.on(panelContainer, 'mouseleave', function () {
+					this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
+				}, this);
+			}
 		}
 
 		// Render window.

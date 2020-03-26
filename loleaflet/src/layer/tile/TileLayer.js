@@ -1173,9 +1173,9 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (!this._map.editorHasFocus() && this._map._isCursorVisible && (modifierViewId === this._viewId) && (this._map._permission === 'edit')) {
 			// Regain cursor if we had been out of focus and now have input.
-			// (only if it is our own cursor and the input is actually not
-			// going into a dialog)
-			this._map.fire('editorgotfocus');
+			// Unless the focus is in the Calc Formula-Bar, don't steal the focus.
+			if (!this._map.calcInputBarHasFocus())
+				this._map.fire('editorgotfocus');
 		}
 
 		//first time document open, set last cursor position
@@ -2039,6 +2039,15 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
+
+		if (this.isCalc() && !this._map.editorHasFocus()) {
+			// When the Formula-bar has the focus, sending
+			// mouse move with the document coordinates
+			// hides the cursor (lost focus?). This is clearly
+			// a bug in Core, but we need to work around it
+			// until fixed. Just don't send mouse move.
+			return;
+		}
 
 		this._sendClientZoom();
 
