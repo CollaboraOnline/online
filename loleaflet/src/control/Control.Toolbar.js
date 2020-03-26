@@ -15,26 +15,6 @@ function onDelete(e) {
 	}
 }
 
-// Make functions visible outside: window.mode.isMobile() etc.
-global.mode = {
-	// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
-	// requirement.
-	isMobile: function() {
-		if (L.Browser.mobile && L.Browser.cypressTest) {
-			return true;
-		}
-
-		return L.Browser.mobile && screen.width < 768;
-	},
-	// Mobile device with big screen size.
-	isTablet: function() {
-		return L.Browser.mobile && !window.mode.isMobile();
-	},
-	isDesktop: function() {
-		return !L.Browser.mobile;
-	}
-};
-
 var nUsers, oneUser, noUser;
 
 function _updateVisibilityForToolbar(toolbar) {
