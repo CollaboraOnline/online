@@ -496,7 +496,7 @@ L.Control.PartsPreview = L.Control.extend({
 			var that = this.partsPreview;
 			setTimeout(function () {
 				for (var i = 0; i < that._previewTiles.length; ++i) {
-					that._map.getPreview(i, that.options.maxWidth, that.options.maxHeight, {autoUpdate: that.options.autoUpdate, broadcast: true});
+					that._map.getPreview(i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: that.options.autoUpdate, broadcast: true});
 				}
 			}, 1000);
 		}
