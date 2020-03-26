@@ -103,6 +103,30 @@ L.LOUtil = {
 		if (commandName.indexOf('?')!== -1)
 			return false;
 		return res;
+	},
+
+	/// Searching in JSON trees for data with a given field
+	findItemWithAttributeRecursive: function(node, idName, idValue) {
+		var found = null;
+		if (node[idName] === idValue)
+			return node;
+		if (node.children)
+		{
+			for (var i = 0; !found && i < node.children.length; i++)
+				found = L.LOUtil.findItemWithAttributeRecursive(node.children[i], idName, idValue);
+		}
+		return found;
+	},
+
+	/// Searching in JSON trees for an identifier and return the index in parent
+	findIndexInParentByAttribute: function(node, idName, idValue) {
+		if (node.children)
+		{
+			for (var i = 0; i < node.children.length; i++)
+				if (node.children[i][idName] === idValue)
+					return i;
+		}
+		return -1;
 	}
 };
 

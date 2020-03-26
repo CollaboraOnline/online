@@ -362,13 +362,12 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_modifySidebarLayout: function (data) {
-		var deck = this._findItemByTypeRecursive(data, 'deck');
+		var deck = L.LOUtil.findItemWithAttributeRecursive(data, 'type', 'deck');
 		if (deck)
 		{
 			// merge styles into text-panel for elegance
-			var stylesIdx = this._findIdxInParentById(deck, 'StylesPropertyPanel');
-			var textName = 'TextPropertyPanel';
-			var textIdx = this._findIdxInParentById(deck, textName);
+			var stylesIdx = L.LOUtil.findIndexInParentByAttribute(deck, 'id', 'StylesPropertyPanel');
+			var textIdx = L.LOUtil.findIndexInParentByAttribute(deck, 'id', 'TextPropertyPanel');
 
 			if (stylesIdx >= 0 && this.map.getDocType() === 'spreadsheet')
 			{       // remove rather useless calc styles panel
@@ -390,28 +389,6 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._removeItems(deck, removeItems);
 		}
-	},
-
-	_findItemByTypeRecursive: function(data, t) {
-		var found = null;
-		if (data.type === t)
-			return data;
-		if (data.children)
-		{
-			for (var i = 0; !found && i < data.children.length; i++)
-				found = this._findItemByTypeRecursive(data.children[i], t);
-		}
-		return found;
-	},
-
-	_findIdxInParentById: function(data, id) {
-		if (data.children)
-		{
-			for (var i = 0; i < data.children.length; i++)
-				if (data.children[i].id === id)
-					return i;
-		}
-		return -1;
 	},
 
 	_removeItems: function (data, items) {
