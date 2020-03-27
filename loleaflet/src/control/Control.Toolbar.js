@@ -1173,20 +1173,6 @@ function initNormalToolbar() {
 			onRefresh: function() {
 				$('#tb_actionbar_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
 				setupSearchInput();
-
-				var hideInDesktop =
-					map['wopi'].HideUserList !== null &&
-					map['wopi'].HideUserList !== undefined &&
-					($.inArray('true', map['wopi'].HideUserList) >= 0 ||
-					 $.inArray('desktop', map['wopi'].HideUserList) >= 0);
-
-				if (this.get('userlist') && this.get('userlist').hidden === true && !hideInDesktop) {
-					this.show('userlist');
-					this.show('userlistbreak');
-					map.on('deselectuser', deselectUser);
-					map.on('addview', onAddView);
-					map.on('removeview', onRemoveView);
-				}
 			}
 		});
 	}
@@ -2470,7 +2456,8 @@ function getUserItem(viewId, userName, extraInfo, color) {
 }
 
 function updateUserListCount() {
-	var userlistItem = w2ui.actionbar && w2ui['actionbar'].get('userlist');
+	var actionbar = w2ui.actionbar;
+	var userlistItem = actionbar && actionbar.get('userlist');
 	if (userlistItem == null) {
 		return;
 	}
@@ -2486,12 +2473,20 @@ function updateUserListCount() {
 
 	w2ui['actionbar'].refresh();
 
-	if (count > 1) {
-		$('#tb_actionbar_item_userlist').show();
-		$('#tb_actionbar_item_userlistbreak').show();
+	var hideUserList =
+		window.ThisIsAMobileApp ||
+		(map['wopi'].HideUserList !== null && map['wopi'].HideUserList !== undefined &&
+			($.inArray('true', map['wopi'].HideUserList) >= 0) ||
+			(window.mode.isMobile() && $.inArray('mobile', map['wopi'].HideUserList) >= 0) ||
+			(window.mode.isTablet() && $.inArray('tablet', map['wopi'].HideUserList) >= 0) ||
+			(window.mode.isDesktop() && $.inArray('desktop', map['wopi'].HideUserList) >= 0));
+
+	if (!hideUserList && count > 1) {
+		actionbar.show('userlist');
+		actionbar.show('userlistbreak');
 	} else {
-		$('#tb_actionbar_item_userlist').hide();
-		$('#tb_actionbar_item_userlistbreak').hide();
+		actionbar.hide('userlist');
+		actionbar.hide('userlistbreak');
 	}
 }
 
@@ -2683,6 +2678,10 @@ function setupToolbar(e) {
 	map.on('commandstatechanged', onCommandStateChanged);
 	map.on('commandvalues', onCommandValues, this);
 
+	map.on('deselectuser', deselectUser);
+	map.on('addview', onAddView);
+	map.on('removeview', onRemoveView);
+
 	if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
 	} else if (L.Params.closeButtonEnabled && !L.Browser.mobile) {
@@ -2702,9 +2701,6 @@ function setupToolbar(e) {
 global.setupToolbar = setupToolbar;
 global.onClick = onClick;
 global.hideTooltip = hideTooltip;
-global.deselectUser = deselectUser;
-global.onAddView = onAddView;
-global.onRemoveView = onRemoveView;
 global.onAddressInput = onAddressInput;
 global.onFormulaInput = onFormulaInput;
 global.onFormulaBarBlur = onFormulaBarBlur;

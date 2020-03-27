@@ -162,9 +162,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			onClick: function (e) {
 				window.onClick(e, e.target);
 				window.hideTooltip(this, e.target);
-			},
-			onRefresh: function() {
-				L.TileLayer.prototype._onUserListRefresh(map, this);
 			}
 		});
 		toolbar.bind('touchstart', function(e) {
