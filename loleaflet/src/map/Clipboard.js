@@ -835,5 +835,7 @@ L.Clipboard = L.Class.extend({
 });
 
 L.clipboard = function(map) {
+	if (window.ThisIsAMobileApp)
+		console.log('======> Assertion failed!? No L.Clipboard object should be needed in a mobile app');
 	return new L.Clipboard(map);
 };
