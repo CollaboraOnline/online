@@ -1119,7 +1119,7 @@ L.TileLayer = L.GridLayer.extend({
 		// # for internal links
 		if (!url.startsWith('#')) {
 			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
-			.setContent('<div id="hyperlinkpopup" style="color: #000099; text-decoration: underline;">'+url+'</div>')
+			.setContent('<a href="' + url + '" target="_blank">' + url + '</a>')
 			.setLatLng(position)
 			.openOn(this._map);
 		}
