@@ -199,7 +199,7 @@ L.Control.PartsPreview = L.Control.extend({
 			previewFrameBottom = previewFrameTop + this._previewFrameHeight;
 
 			if (this._direction === 'x') {
-				L.DomUtil.setStyle(img, 'width', this._previewImgHeight + 'px');
+				L.DomUtil.setStyle(img, 'width', this._previewImgWidth + 'px');
 			} else {
 				L.DomUtil.setStyle(img, 'height', this._previewImgHeight + 'px');
 			}

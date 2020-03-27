@@ -33,14 +33,15 @@
 	margin-left: 20px;
 	}
 
-@media (max-width: 767px) and (orientation: potrait), (max-device-width: 767px) and (orientation: portrait) {
+@media (max-width: 767px) and (orientation: portrait), (max-device-width: 767px) and (orientation: portrait) {
 	#slide-sorter {
 		max-height: 60px;
 	}
 
 	.preview-img {
-		min-width: 60px;
+		min-width: 37px;
 		max-width: 60px;
+		max-height: 45px;
 		margin: 0px;
 	}
 
