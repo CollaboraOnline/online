@@ -326,9 +326,9 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._toolbar.remove();
 
 		// clicked a hyperlink popup - not really designed for this.
-		if (this._map.hyperlinkPopup && e.target && e.target.id === 'hyperlinkpopup' &&
+		if (this._map.hyperlinkPopup && e.target &&
 			this._map.hyperlinkPopup._contentNode == e.target.parentNode)
-			this._map.fire('hyperlinkclicked', {url: e.target.innerHTML});
+			this._map.fire('hyperlinkclicked', {url: e.target.href});
 
 		this._map.fire('closepopups');
 		this._map.fire('closemobilewizard');
