@@ -95,13 +95,27 @@ L.LOUtil = {
 		'None'
 	],
 
-	existsIconForCommand: function(command) {
+	existsIconForCommand: function(command, docType) {
 		var commandName = command.startsWith('.uno:') ? command.substring('.uno:'.length) : command;
 		var res = !this.commandWithoutIcon.find(function (el) {
 			return el.startsWith(commandName);
 		});
-		if (commandName.indexOf('?')!== -1)
+		if (commandName.indexOf('?')!== -1) {
+			if (commandName.indexOf('SpellCheckIgnore') !== -1 || commandName.indexOf('SpellCheckIgnoreAll') !== -1)
+				return true;
+
+			if ((docType === 'spreadsheet' || docType === 'presentation') &&
+				commandName.indexOf('LanguageStatus') !== -1)
+				return true;
+
+			if (commandName === 'LanguageStatus?Language:string=Current_LANGUAGE_NONE' ||
+				commandName === 'LanguageStatus?Language:string=Current_RESET_LANGUAGES' ||
+				commandName === 'LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE' ||
+				commandName === 'LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES')
+				return true;
+
 			return false;
+		}
 		return res;
 	},
 

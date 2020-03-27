@@ -93,7 +93,7 @@ describe('Spell checking menu.', function() {
 	it('Check language status for selection.', function() {
 		openContextMenu();
 
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon')
 			.contains('Set Language for Selection')
 			.click();
 
@@ -105,7 +105,7 @@ describe('Spell checking menu.', function() {
 	it('Set None Language for selection.', function() {
 		openContextMenu();
 
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon')
 			.contains('Set Language for Selection')
 			.click();
 
@@ -123,7 +123,7 @@ describe('Spell checking menu.', function() {
 	it('Check language status for paragraph.', function() {
 		openContextMenu();
 
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon')
 			.contains('Set Language for Paragraph')
 			.click();
 
@@ -135,7 +135,7 @@ describe('Spell checking menu.', function() {
 	it('Set None Language for paragraph.', function() {
 		openContextMenu();
 
-		cy.get('.sub-menu-title')
+		cy.get('.menu-entry-with-icon')
 			.contains('Set Language for Paragraph')
 			.click();
 

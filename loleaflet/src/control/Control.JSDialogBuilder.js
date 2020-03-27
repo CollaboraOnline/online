@@ -352,6 +352,32 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	_generateMenuIconName: function(commandName) {
+		// command has no parameter
+		if (commandName.indexOf('?') === -1)
+			return commandName.toLowerCase();
+
+		if (commandName.indexOf('SpellCheckIgnoreAll') !== -1)
+			return 'spellcheckignoreall';
+		if (commandName.indexOf('SpellCheckIgnore') !== -1)
+			return 'spellcheckignore';
+		if (commandName === 'LanguageStatus?Language:string=Current_LANGUAGE_NONE')
+			return 'selectionlanugagenone';
+		if (commandName === 'LanguageStatus?Language:string=Current_RESET_LANGUAGES')
+			return 'selectionlanugagedefault';
+		if (commandName === 'LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE')
+			return 'paragraphlanugagenone';
+		if (commandName === 'LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES')
+			return 'paragraphlanugagedefault';
+		if ((this.map.getDocType() === 'spreadsheet' || this.map.getDocType() === 'presentation') &&
+            commandName.indexOf('LanguageStatus?Language:string=Paragraph_') !== -1)
+			return 'paragraphlanugagesuggestion';
+		if ((this.map.getDocType() === 'spreadsheet' || this.map.getDocType() === 'presentation') &&
+            commandName.indexOf('LanguageStatus?Language:string=Current_') !== -1)
+			return 'selectionlanugagesuggestion';
+		return commandName.toLowerCase();
+	},
+
 	_explorableMenu: function(parentContainer, title, children, builder, customContent, dataid) {
 		dataid = dataid || 0;
 		var icon = null;
@@ -359,9 +385,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(sectionTitle).css('justify-content', 'space-between');
 
 		var commandName = dataid;
-		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName)) {
-			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + commandName.toLowerCase(), sectionTitle);
-			var iconPath = 'images/lc_' + commandName.toLowerCase() + '.svg';
+		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
+			var iconName = builder._generateMenuIconName(commandName);
+			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, sectionTitle);
+			var iconPath = 'images/lc_' + iconName + '.svg';
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconPath;
 			icon.alt = '';
@@ -937,7 +964,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		div.id = data.id;
 
 		var commandName = data.id ? data.id.substring('.uno:'.length) : data.id;
-		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName)) {
+		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var image = L.DomUtil.create('img', 'spinfieldimage', div);
 			var icon = builder._createIconPath(data.id);
 			image.src = icon;
@@ -1487,9 +1514,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var icon = null;
 		var commandName = data.command && data.command.substring(0, '.uno:'.length) === '.uno:' ? data.command.substring('.uno:'.length) : data.id;
-		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName)) {
-			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + commandName.toLowerCase(), menuEntry);
-			var iconPath = 'images/lc_' + commandName.toLowerCase() + '.svg';
+		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
+			var iconName = builder._generateMenuIconName(commandName);
+			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, menuEntry);
+			var iconPath = 'images/lc_' + iconName + '.svg';
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconPath;
 			icon.alt = '';
