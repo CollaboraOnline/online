@@ -154,7 +154,7 @@ L.Control.ContextMenu = L.Control.extend({
 								map._docLayer.showAnnotationFromCurrentCell();
 							} else if (map.getDocType() == 'spreadsheet' && key == '.uno:HideNote') {
 								map._docLayer.hideAnnotationFromCurrentCell();
-							} else if (!map._clip.filterExecCopyPaste(key)) {
+							} else if (map._clip === undefined || !map._clip.filterExecCopyPaste(key)) {
 								map.sendUnoCommand(key);
 								// For spelling context menu we need to remove selection
 								if (spellingContextMenu)
