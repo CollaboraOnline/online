@@ -904,34 +904,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			break;
 
-		case 'selectwidth':
-			state = items.getItemValue('.uno:Size');
-			if (state) {
-				return String(L.mm100thToInch(state.split('x')[0]).toFixed(2));
-			}
-			break;
-
-		case 'selectheight':
-			state = items.getItemValue('.uno:Size');
-			if (state) {
-				return String(L.mm100thToInch(state.split('x')[1]).toFixed(2));
-			}
-			break;
-
-		case 'horizontalpos':
-			state = items.getItemValue('.uno:Position');
-			if (state) {
-				return String(L.mm100thToInch(state.split('/')[0]).toFixed(2));
-			}
-			break;
-
-		case 'verticalpos':
-			state = items.getItemValue('.uno:Position');
-			if (state) {
-				return String(L.mm100thToInch(state.split('/')[1]).toFixed(2));
-			}
-			break;
-
 		case 'transtype':
 			state = items.getItemValue('.uno:FillFloatTransparence');
 			if (state) {
@@ -999,8 +971,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.readOnly === true)
 			$(spinfield).attr('readOnly', 'true');
 
-		var updateFunction = function() {
-			var value = builder._getUnoStateForItemId(data.id, builder);
+		var updateFunction = function(e) {
+			var value = e ? e[data.id] : undefined;
+			if (!value) {
+				value = builder._getUnoStateForItemId(data.id, builder);
+			}
 
 			if (!value && data.text != undefined)
 				value = data.text;
@@ -1013,7 +988,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		updateFunction();
 
 		builder.map.on('commandstatechanged', function(e) {
-			if (e.commandName === builder._mapWindowIdToUnoCommand(data.id))
+			if (e.state[data.id]) {
+				updateFunction(e.state);
+			} else if (e.commandName === builder._mapWindowIdToUnoCommand(data.id))
 				updateFunction();
 		}, this);
 
