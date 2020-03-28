@@ -2944,7 +2944,7 @@ button.w2ui-btn-small:focus:before {
   width: 22px;
   height: 16px;
   padding: 0;
-  margin: 5px 1px 3px 1px!important;
+  margin: 0px 1px!important;
   border: 0!important;
   text-align: center;
 }
