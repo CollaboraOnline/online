@@ -43,6 +43,7 @@ function loadTestDoc(fileName, subFolder, mobile) {
 			Cypress.env('WORKDIR') + subFolder + '/' + fileName;
 	}
 
+	cy.log('Loading: ' + URI);
 	cy.visit(URI, {
 		onLoad: function(win) {
 			win.onerror = cy.onUncaughtException;
@@ -132,6 +133,13 @@ function expectTextForClipboard(expectedPlainText) {
 	}
 }
 
+function beforeAllDesktop(fileName, subFolder) {
+	var mobile = false;
+	loadTestDoc(fileName, subFolder, mobile);
+
+	// detectLOCoreVersion(); //TODO: implement Core version check.
+}
+
 function afterAll(fileName) {
 	cy.log('Waiting for closing the document - start.');
 	cy.log('Param - fileName: ' + fileName);
@@ -184,6 +192,18 @@ function isWriter() {
 	return !isCalc() && !isImpress();
 }
 
+// Types text into elem with a delay in between characters.
+// Sometimes cy.type results in random character insertion,
+// this avoids that, which is not clear why it happens.
+function typeText(selector, text, delayMs=0) {
+	var elem= cy.get(selector);
+	for (var i = 0; i < text.length; i++) {
+		elem.type(text.charAt(i));
+		if (delayMs > 0)
+			cy.wait(delayMs);
+	}
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -196,3 +216,5 @@ module.exports.initAliasToNegative = initAliasToNegative;
 module.exports.isCalc = isCalc;
 module.exports.isImpress = isImpress;
 module.exports.isWriter = isWriter;
+module.exports.beforeAllDesktop = beforeAllDesktop;
+module.exports.typeText = typeText;
