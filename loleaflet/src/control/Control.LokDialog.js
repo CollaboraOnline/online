@@ -708,12 +708,21 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_launchCalcInputBar: function(id, width, height) {
-		console.log('_launchCalcInputBar: start: id: ' + id + ', width: ' + width);
+		console.log('_launchCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height);
+		if (this._calcInputBar) {
+			this._adjustCalcInputBarHeight(id, height);
+		}
+
+		this._createCalcInputbar(id, width, height);
+		console.log('_launchCalcInputBar: end');
+	},
+
+	_adjustCalcInputBarHeight: function(id, height) {
 		if (this._calcInputBar) {
 			var oldHeight = this._calcInputBar.height;
 			var delta = height - oldHeight;
-			this._onCalcInputBarClose(this._calcInputBar.id);
 			if (delta !== 0) {
+				console.log('_adjustCalcInputBarHeight: start: id: ' + id + ', height: ' + oldHeight + ' -> ' + height);
 				var documentContainer = L.DomUtil.get('document-container');
 				if (documentContainer) {
 					var top = documentContainer.offsetTop;
@@ -754,9 +763,13 @@ L.Control.LokDialog = L.Control.extend({
 					}
 				}
 				$('.funcwizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
+				console.log('_adjustCalcInputBarHeight: end');
 			}
 		}
+	},
 
+	_createCalcInputbar: function(id, width, height) {
+		console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height);
 		var strId = this._toStrId(id);
 
 		$('#calc-inputbar-wrapper').css({display: 'block'});
@@ -820,11 +833,11 @@ L.Control.LokDialog = L.Control.extend({
 		this._setupCalcInputBarGestures(id, handles, startHandle, endHandle);
 
 		this._calcInputBar = this._dialogs[id];
-		console.log('_launchCalcInputBar: end');
+		console.log('_createCalcInputBar: end');
 	},
 
 	_launchSidebar: function(id, width, height) {
-
+		console.log('_launchSidebar: start: id: ' + id + ', width: ' + width + ', height: ' + height);
 		if ((window.mode.isMobile() || window.mode.isTablet())
 		    && this._map._permission != 'edit')
 			return;
@@ -1339,7 +1352,7 @@ L.Control.LokDialog = L.Control.extend({
 			if (parentId in that._dialogs) {
 				// We might have closed the dialog by the time we render.
 				that._dialogs[parentId].isPainting = false;
-				if (!that._isSidebar(parentId) && !that.isCalcInputBar(parentId))
+				if (!that._isSidebar(parentId) && !isCalcInputBar)
 					that._map.fire('changefocuswidget', {winId: parentId, dialog: that});
 			}
 		};
@@ -1403,7 +1416,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (spreadsheetRowColumnFrame)
 			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
 
-		this._adjustCalcInputBar(deckOffset);
+		this._resizeCalcInputBar(deckOffset);
 		this._adjustTabsBar(width);
 		// If we didn't have the focus, don't steal it form the editor.
 		if ($('#' + this._currentDeck.strId + '-cursor').css('display') === 'none') {
@@ -1414,7 +1427,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 	},
 
-	_adjustCalcInputBar: function(offset) {
+	_resizeCalcInputBar: function(offset) {
 		if (this._calcInputBar && !this._calcInputBar.isPainting && offset !== 0) {
 			var id = this._calcInputBar.id;
 			var calcInputbar = L.DomUtil.get('calc-inputbar');
@@ -1424,7 +1437,7 @@ L.Control.LokDialog = L.Control.extend({
 					var width = calcInputbarContainer.clientWidth + offset;
 					var height = calcInputbarContainer.clientHeight;
 					if (width !== 0 && height !== 0) {
-						console.log('_adjustCalcInputBar: width: ' + width + ', height: ' + height);
+						console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);
 						this._map._socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
 					}
 				}
