@@ -127,6 +127,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_dialogs: {},
+	_currentDeck: null, // The sidebar.
+	_calcInputBar: null, // The Formula-Bar.
 
 	_docLoaded: function(e) {
 		if (!e.status) {
@@ -358,13 +360,15 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'size_changed') {
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
-			$('#' + strId).remove();
-			if (e.winType  === 'deck' || this._isSidebar(e.id))
+			if (e.winType  === 'deck' || this._isSidebar(e.id)) {
+				$('#' + strId).remove();
 				this._launchSidebar(e.id, width, height);
-			else if (e.winType  === 'calc-input-win' || this.isCalcInputBar(e.id))
+			} else if (e.winType  === 'calc-input-win' || this.isCalcInputBar(e.id))
 				this._launchCalcInputBar(e.id, width, height);
-			else
+			else {
+				$('#' + strId).remove();
 				this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
+			}
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
 				rectangle = e.rectangle.split(',');
@@ -709,20 +713,30 @@ L.Control.LokDialog = L.Control.extend({
 
 	_launchCalcInputBar: function(id, width, height) {
 		console.log('_launchCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height);
-		if (this._calcInputBar) {
-			this._adjustCalcInputBarHeight(id, height);
+		if (!this._calcInputBar || this._calcInputBar.id != id) {
+			if (this._calcInputBar)
+				$('#' + this._calcInputBar.strId).remove();
+			this._createCalcInputbar(id, width, height);
+		} else {
+			// Update in-place. We will resize during rendering.
+			this._adjustCalcInputBar(id, width, height);
 		}
 
-		this._createCalcInputbar(id, width, height);
 		console.log('_launchCalcInputBar: end');
 	},
 
-	_adjustCalcInputBarHeight: function(id, height) {
+	_adjustCalcInputBar: function(id, width, height) {
 		if (this._calcInputBar) {
 			var oldHeight = this._calcInputBar.height;
 			var delta = height - oldHeight;
 			if (delta !== 0) {
-				console.log('_adjustCalcInputBarHeight: start: id: ' + id + ', height: ' + oldHeight + ' -> ' + height);
+				console.log('_adjustCalcInputBar: start: id: ' + id + ', height: ' + oldHeight + ' -> ' + height);
+
+				// Recreate the input-bar.
+				$('#' + this._calcInputBar.strId).remove();
+				this._createCalcInputbar(id, width, height);
+
+				// Resize the container.
 				var documentContainer = L.DomUtil.get('document-container');
 				if (documentContainer) {
 					var top = documentContainer.offsetTop;
@@ -765,6 +779,22 @@ L.Control.LokDialog = L.Control.extend({
 				$('.funcwizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
 				console.log('_adjustCalcInputBarHeight: end');
 			}
+
+			var oldWidth = this._calcInputBar.width;
+			delta = width - oldWidth;
+			if (delta !== 0) {
+				console.log('_adjustCalcInputBar: start: id: ' + id + ', width: ' + oldWidth + ' -> ' + width);
+
+				var strId = this._toStrId(id);
+
+				var canvas = document.getElementById(strId + '-canvas');
+				this._setCanvasWidthHeight(canvas, width, height);
+
+				var handles = document.getElementById(strId + '-selection_handles');
+				this._setCanvasWidthHeight(handles, width, height);
+
+				this._calcInputBar.width = width;
+			}
 		}
 	},
 
@@ -792,6 +822,7 @@ L.Control.LokDialog = L.Control.extend({
 
 		// create text selection handles
 		var handles =  L.DomUtil.create('div', 'inputbar_selection_handles', textSelectionLayer);
+		handles.id = strId + '-selection_handles';
 		L.DomUtil.setStyle(handles, 'position', 'absolute');
 		L.DomUtil.setStyle(handles, 'background', 'transparent');
 		this._setCanvasWidthHeight(handles, width, height);
@@ -827,12 +858,13 @@ L.Control.LokDialog = L.Control.extend({
 			title: null  // never used for inputbar
 		};
 
+		this._calcInputBar = this._dialogs[id];
+
 		this._createDialogCursor(strId);
 
 		this._postLaunch(id, container, handles);
 		this._setupCalcInputBarGestures(id, handles, startHandle, endHandle);
 
-		this._calcInputBar = this._dialogs[id];
 		console.log('_createCalcInputBar: end');
 	},
 
