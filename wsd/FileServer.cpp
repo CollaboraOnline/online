@@ -649,6 +649,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), LOOLWSD::ServiceRoot);
+    Poco::replaceInPlace(preprocess, std::string("%OS_INFO%"), LOOLWSD::OSInfo);
 
     std::string protocolDebug = "false";
     if (config.getBool("logging.protocol"))

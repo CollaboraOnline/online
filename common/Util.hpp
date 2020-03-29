@@ -72,7 +72,7 @@ namespace Util
     /// to send data to the child.
     int spawnProcess(const std::string &cmd, const StringVector &args,
                      const std::vector<int>* fdsToKeep = nullptr, int *stdInput = nullptr);
-    
+
 #endif
 
     /// Hex to unsigned char
@@ -972,6 +972,32 @@ int main(int argc, char**argv)
      * test tool targets (typically fuzzing) where start-up speed is critical.
      */
     bool isFuzzing();
+
+    /**
+     * Splits string into vector<string>. Does not accept referenced variables for easy
+     * usage like (splitString("test", ..)) or (splitString(getStringOnTheFly(), ..))
+     */
+    inline std::vector<std::string> splitStringToVector(std::string const str, const char delim)
+    {
+        size_t start;
+        size_t end = 0;
+
+        std::vector<std::string> result;
+
+        while ((start = str.find_first_not_of(delim, end)) != std::string::npos)
+        {
+            end = str.find(delim, start);
+            result.push_back(str.substr(start, end - start));
+        }
+        return result;
+    }
+
+    /**
+     * Converts vector of strings to map. Strings should have formed like this: key + delimiter + value.
+     * In case of a misformed string or zero length vector, returns an empty map.
+     */
+    std::map<std::string, std::string> stringVectorToMap(std::vector<std::string> sVector, const char delimiter);
+
 } // end namespace Util
 
 #endif

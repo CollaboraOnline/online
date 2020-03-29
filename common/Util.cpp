@@ -929,6 +929,30 @@ namespace Util
         return false;
 #endif
     }
+
+    std::map<std::string, std::string> stringVectorToMap(std::vector<std::string> sVector, const char delimiter)
+    {
+        std::map<std::string, std::string> result;
+
+        for (std::vector<std::string>::iterator it = sVector.begin(); it != sVector.end(); it++)
+        {
+            size_t delimiterPosition = 0;
+            delimiterPosition = (*it).find(delimiter, 0);
+            if (delimiterPosition != std::string::npos)
+            {
+                std::string key = (*it).substr(0, delimiterPosition);
+                delimiterPosition++;
+                std::string value = (*it).substr(delimiterPosition);
+                result[key] = value;
+            }
+            else
+            {
+                LOG_WRN("Util::stringVectorToMap => record is misformed: " << (*it));
+            }
+        }
+
+        return result;
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
