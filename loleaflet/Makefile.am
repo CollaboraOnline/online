@@ -313,6 +313,9 @@ build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(ADMIN_BUNDLE) \
 	$(builddir)/dist/bundle.css \
+	$(builddir)/dist/device-mobile.css \
+	$(builddir)/dist/device-tablet.css \
+	$(builddir)/dist/device-desktop.css \
 	$(builddir)/dist/bundle.js \
 	$(builddir)/dist/loleaflet.html
 	@echo "build loleaflet completed"
@@ -417,6 +420,14 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 node_modules: npm-shrinkwrap.json
 	@npm install
 	@touch node_modules
+
+$(builddir)/dist/device-%.css: $(srcdir)/css/device-%.css
+	@mkdir -p $(dir $@)
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglifycss/uglifycss $< > $@ ; \
+	else \
+		ln -sf $(abs_srcdir)/$< $@ ; \
+	fi
 
 $(builddir)/dist/plugins/%.js: $(srcdir)/plugins/%.js
 	@mkdir -p $(dir $@)

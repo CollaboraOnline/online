@@ -223,7 +223,7 @@ m4_ifelse(MOBILEAPP,[true],
       <p>Copyright © _YEAR_, VENDOR.</p>
     </div>
 
-    <script defer>
+    <script>
 m4_ifelse(MOBILEAPP,[true],
      [window.host = '';
       window.serviceRoot = '';
@@ -250,7 +250,19 @@ m4_ifelse(MOBILEAPP,[true],
       window.frameAncestors = '%FRAME_ANCESTORS%';
       window.tileSize = 256;])
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl
-    </script>
+
+<!-- Dynamically load the appropriate device-mobile.css, device-tablet.css or device-desktop.css -->
+var link = document.createElement('link');
+link.setAttribute("rel", "stylesheet");
+link.setAttribute("type", "text/css");
+if (window.mode.isMobile())
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-mobile.css');]
+else if (window.mode.isTablet())
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-tablet.css');]
+else
+    [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-desktop.css');]
+document.getElementsByTagName("head")[[0]].appendChild(link);
+</script>
 
 m4_ifelse(MOBILEAPP,[true],
   m4_ifelse(DEBUG,[true],m4_foreachq([fileJS],[LOLEAFLET_JS],

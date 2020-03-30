@@ -63,6 +63,8 @@
 		BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835F214ACA8500848631 /* FakeSocket.cpp */; };
 		BEA28377214FFD8C00848631 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA28376214FFD8C00848631 /* Unit.cpp */; };
 		BEB0E5D921C7CA800085A0CF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEB0E5D821C7CA800085A0CF /* Settings.bundle */; };
+		BECD984024336DD400016117 /* device-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983E24336DD400016117 /* device-mobile.css */; };
+		BECD984124336DD400016117 /* device-tablet.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983F24336DD400016117 /* device-tablet.css */; };
 		BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEFB1EE021C29CC70081D757 /* L10n.mm */; };
 /* End PBXBuildFile section */
 
@@ -1169,6 +1171,8 @@
 		BECBD41223D9C98400DA5582 /* svdedxv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdedxv.cxx; path = "../../ios-device/svx/source/svdraw/svdedxv.cxx"; sourceTree = "<group>"; };
 		BECBD41323D9C98400DA5582 /* clonelist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clonelist.cxx; path = "../../ios-device/svx/source/svdraw/clonelist.cxx"; sourceTree = "<group>"; };
 		BECBD41423D9C98500DA5582 /* svddrgmt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svddrgmt.cxx; path = "../../ios-device/svx/source/svdraw/svddrgmt.cxx"; sourceTree = "<group>"; };
+		BECD983E24336DD400016117 /* device-mobile.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-mobile.css"; path = "../../../loleaflet/dist/device-mobile.css"; sourceTree = "<group>"; };
+		BECD983F24336DD400016117 /* device-tablet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-tablet.css"; path = "../../../loleaflet/dist/device-tablet.css"; sourceTree = "<group>"; };
 		BEF755A723E8200A008A4BB2 /* drawdoc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc.cxx; path = "../../ios-device/sd/source/core/drawdoc.cxx"; sourceTree = "<group>"; };
 		BEF755A823E8200A008A4BB2 /* drawdoc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc3.cxx; path = "../../ios-device/sd/source/core/drawdoc3.cxx"; sourceTree = "<group>"; };
 		BEF755A923E8200A008A4BB2 /* sdiocmpt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdiocmpt.cxx; path = "../../ios-device/sd/source/core/sdiocmpt.cxx"; sourceTree = "<group>"; };
@@ -1234,6 +1238,8 @@
 				BE8D85C7214055F3009F1860 /* unorc */,
 				BE5EB5DB2140480B00E0826C /* ICU.dat */,
 				BE00F89721396585001CE2D4 /* bundle.css */,
+				BECD983E24336DD400016117 /* device-mobile.css */,
+				BECD983F24336DD400016117 /* device-tablet.css */,
 				BE00F89921396585001CE2D4 /* bundle.js */,
 				BE00F89E21396585001CE2D4 /* images */,
 				BE00F89D21396585001CE2D4 /* loleaflet-help.html */,
@@ -2936,8 +2942,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE8D85D6214055F3009F1860 /* rc in Resources */,
+				BECD984124336DD400016117 /* device-tablet.css in Resources */,
 				BE8D85D0214055F3009F1860 /* services in Resources */,
 				BE8D85D4214055F3009F1860 /* fundamentalrc in Resources */,
+				BECD984024336DD400016117 /* device-mobile.css in Resources */,
 				BE80E43221AD92F700859C97 /* Fonts in Resources */,
 				BE00F8A821396585001CE2D4 /* images in Resources */,
 				BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */,
