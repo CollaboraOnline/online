@@ -318,6 +318,9 @@ L.TileLayer = L.GridLayer.extend({
 				if (e.statusType === 'alltilesloaded' && this._docType === 'spreadsheet') {
 					this._onCellCursorShift(true);
 				}
+				if (e.statusType === 'alltilesloaded' && this._map.shouldWelcome()) {
+					this._map.showWelcomeDialog();
+				}
 			},
 		this);
 

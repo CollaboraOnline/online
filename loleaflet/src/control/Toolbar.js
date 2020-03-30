@@ -344,6 +344,82 @@ L.Map.include({
 		});
 	},
 
+	showWelcomeDialog: function() {
+		var w;
+		var iw = window.innerWidth;
+		if (iw < 768) {
+			w = iw - 30;
+		}
+		else if (iw > 1920) {
+			w = 960;
+		}
+		else {
+			w = iw / 5 + 590;
+		}
+		var map = this;
+		var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
+		$.get(welcomeLocation, function(data, textStatus) {
+			if (textStatus !== 'success') {
+				// Welcome dialog disabled in loolwsd.xml or nonexistant for some other reason
+				// Let's check back in a week (60 x 60 x 24 x 7 = 604800 seconds)
+				var welcomeDisabledCookie = 'loolWelcomeDisabled=true; max-age=604800; SameSite=Strict';
+				document.cookie = welcomeDisabledCookie;
+				return;
+			}
+			var WSDVerCookie = 'WSDWelcomeVer=' + map._socket.WSDServer.Version;
+			// Cookie will not expire for a year, and it will not be sent to other domains
+			WSDVerCookie += '; max-age=31536000; SameSite=Strict';
+			vex.open({
+				unsafeContent: data,
+				showCloseButton: true,
+				escapeButtonCloses: true,
+				overlayClosesOnClick: true,
+				closeAllOnPopState: false,
+				buttons: {},
+				afterOpen: function() {
+					var $vexContent = $(this.contentEl);
+					this.contentEl.style.width = w + 'px';
+					map.enable(false);
+
+					$vexContent.attr('tabindex', -1);
+					$vexContent.focus();
+					// workaround for https://github.com/HubSpot/vex/issues/43
+					$('.vex-overlay').css({ 'pointer-events': 'none'});
+				},
+				beforeClose: function () {
+					map.focus();
+					map.enable(true);
+					document.cookie = WSDVerCookie;
+				}
+			});
+		});
+	},
+
+	getCookie: function(name) {
+		var cookies = document.cookie.split(';');
+		for (var i = 0; i < cookies.length; i++) {
+			var cookie = cookies[i].trim();
+			if (cookie.indexOf(name) === 0) {
+				return cookie;
+			}
+		}
+
+		return '';
+	},
+
+	shouldWelcome: function() {
+		var currentVerCookie = this.getCookie('WSDWelcomeVer');
+		var newVerCookie = 'WSDWelcomeVer=' + this._socket.WSDServer.Version;
+		var welcomeDisabledCookie = this.getCookie('loolWelcomeDisabled');
+		var isWelcomeDisabled = welcomeDisabledCookie === 'loolWelcomeDisabled=true';
+
+		if (currentVerCookie !== newVerCookie && !isWelcomeDisabled && !L.Browser.cypressTest) {
+			return true;
+		}
+
+		return false;
+	},
+
 	showLOAboutDialog: function() {
 		// Move the div sitting in 'body' as vex-content and make it visible
 		var content = $('#about-dialog').clone().css({display: 'block'});
