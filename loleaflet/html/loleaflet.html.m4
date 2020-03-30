@@ -94,7 +94,14 @@ m4_dnl In the debug case, just write all the .css files here
 m4_ifelse(DEBUG,[true],
   m4_foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])][fileCSS" />
 ]),
-  [<style>m4_syscmd([cat ]BUNDLE_CSS)</style>
+  [<!-- Dynamically load the bundle.css -->
+<script>
+var link = document.createElement('link');
+link.setAttribute("rel", "stylesheet");
+link.setAttribute("type", "text/css");
+link.setAttribute("href", '][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])][bundle.css');
+document.getElementsByTagName("head")[[0]].appendChild(link);
+</script>
 ])
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
 m4_ifelse(IOSAPP,[true],

@@ -407,7 +407,6 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
 		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
-		-DBUNDLE_CSS="$(abs_builddir)/dist/bundle.css" \
 		-DGLOBAL_JS="$(abs_builddir)/dist/global.js" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		$(LOLEAFLET_LIBS_JS) \
