@@ -812,9 +812,6 @@ function hideTooltip(toolbar, id) {
 var stylesSelectValue;
 var fontsSelectValue;
 
-// mobile:false means hide it both for normal Online used from a mobile browser, and in a mobile app
-// mobilebrowser:false means hide it for normal Online used from a mobile browser, but don't hide it in a mobile app
-
 function createToolbar() {
 
 	if (window.mode.isMobile()) {
@@ -825,6 +822,11 @@ function createToolbar() {
 		initNormalToolbar();
 	}
 }
+
+// mobile:false means hide it both for normal Online used from a mobile phone browser, and in a mobile app on a mobile phone
+// mobilebrowser:false means hide it for normal Online used from a mobile browser, but don't hide it in a mobile app
+// tablet:true means show it in normal Online from a tablet browser, and in a mobile app on a tablet
+// tablet:false means hide it in normal Online used from a tablet browser, and in a mobile app on a tablet
 
 function initNormalToolbar() {
 	var toolItems = [
