@@ -1085,7 +1085,7 @@ public:
                                                        pixmapWidth, pixmapHeight, *data, mode))
                         {
                             // FIXME: Return error.
-                            // sendTextFrame("error: cmd=tile kind=failure");
+                            // sendTextFrameAndLogError("error: cmd=tile kind=failure");
                             LOG_ERR("Failed to encode tile into PNG.");
                             return;
                         }
@@ -1665,12 +1665,12 @@ private:
                             passwordFrame += "to-view";
                         else if (_docPasswordType == PasswordType::ToModify)
                             passwordFrame += "to-modify";
-                        session->sendTextFrame("error: cmd=load kind=" + passwordFrame);
+                        session->sendTextFrameAndLogError("error: cmd=load kind=" + passwordFrame);
                     }
                     else
                     {
                         LOG_INF("Wrong password for password-protected document [" << uriAnonym << "].");
-                        session->sendTextFrame("error: cmd=load kind=wrongpassword");
+                        session->sendTextFrameAndLogError("error: cmd=load kind=wrongpassword");
                     }
                 }
 
@@ -1695,12 +1695,12 @@ private:
                         passwordFrame += "to-view";
                     else if (_docPasswordType == PasswordType::ToModify)
                         passwordFrame += "to-modify";
-                    session->sendTextFrame("error: cmd=load kind=" + passwordFrame);
+                    session->sendTextFrameAndLogError("error: cmd=load kind=" + passwordFrame);
                     return nullptr;
                 }
                 else if (docPassword != _docPassword)
                 {
-                    session->sendTextFrame("error: cmd=load kind=wrongpassword");
+                    session->sendTextFrameAndLogError("error: cmd=load kind=wrongpassword");
                     return nullptr;
                 }
             }

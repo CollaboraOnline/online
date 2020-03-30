@@ -200,14 +200,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         if (_isDocLoaded)
         {
-            sendTextFrame("error: cmd=load kind=docalreadyloaded");
+            sendTextFrameAndLogError("error: cmd=load kind=docalreadyloaded");
             return false;
         }
 
         _isDocLoaded = loadDocument(buffer, length, tokens);
         if (!_isDocLoaded)
         {
-            sendTextFrame("error: cmd=load kind=faileddocloading");
+            sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
         }
 
         LOG_TRC("isDocLoaded state after loadDocument: " << _isDocLoaded << '.');
@@ -215,7 +215,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else if (!_isDocLoaded)
     {
-        sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
+        sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
     else if (tokens.equals(0, "renderfont"))
@@ -496,14 +496,14 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const St
 
     if (filetype.empty() || filename.empty() || wopiUrl.empty() || token.empty())
     {
-        sendTextFrame("error: cmd=uploadsigneddocument kind=syntax");
+        sendTextFrameAndLogError("error: cmd=uploadsigneddocument kind=syntax");
         return false;
     }
 
     std::string mimetype = getMimeFromFileType(filetype);
     if (mimetype.empty())
     {
-        sendTextFrame("error: cmd=uploadsigneddocument kind=syntax");
+        sendTextFrameAndLogError("error: cmd=uploadsigneddocument kind=syntax");
         return false;
     }
     const std::string tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
@@ -563,7 +563,7 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const St
         {
             LOG_ERR("Upload signed document HTTP Response Error: " << response.getStatus() << ' ' << response.getReason());
 
-            sendTextFrame("error: cmd=uploadsigneddocument kind=httpresponse");
+            sendTextFrameAndLogError("error: cmd=uploadsigneddocument kind=httpresponse");
 
             return false;
         }
@@ -572,7 +572,7 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const St
     {
         LOG_ERR("Upload signed document Exception: " + pocoException.displayText());
 
-        sendTextFrame("error: cmd=uploadsigneddocument kind=failure");
+        sendTextFrameAndLogError("error: cmd=uploadsigneddocument kind=failure");
 
         return false;
     }
@@ -587,7 +587,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const S
     int part = -1;
     if (tokens.size() < 2)
     {
-        sendTextFrame("error: cmd=load kind=syntax");
+        sendTextFrameAndLogError("error: cmd=load kind=syntax");
         return false;
     }
 
@@ -672,7 +672,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
     if (tokens.size() < 3 ||
         !getTokenString(tokens[1], "font", font))
     {
-        sendTextFrame("error: cmd=renderfont kind=syntax");
+        sendTextFrameAndLogError("error: cmd=renderfont kind=syntax");
         return false;
     }
 
@@ -686,7 +686,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
     catch (Poco::SyntaxException& exc)
     {
         LOG_DBG(exc.message());
-        sendTextFrame("error: cmd=renderfont kind=syntax");
+        sendTextFrameAndLogError("error: cmd=renderfont kind=syntax");
         return false;
     }
 
@@ -722,7 +722,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
     }
     else
     {
-        bSuccess = sendTextFrame("error: cmd=renderfont kind=failure");
+        bSuccess = sendTextFrameAndLogError("error: cmd=renderfont kind=failure");
     }
 
     std::free(ptrFont);
@@ -785,7 +785,7 @@ bool ChildSession::getCommandValues(const char* /*buffer*/, int /*length*/, cons
     std::string command;
     if (tokens.size() != 2 || !getTokenString(tokens[1], "command", command))
     {
-        sendTextFrame("error: cmd=commandvalues kind=syntax");
+        sendTextFrameAndLogError("error: cmd=commandvalues kind=syntax");
         return false;
     }
 
@@ -827,7 +827,7 @@ bool ChildSession::clientZoom(const char* /*buffer*/, int /*length*/, const Stri
         !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
         !getTokenInteger(tokens[4], "tiletwipheight", tileTwipHeight))
     {
-        sendTextFrame("error: cmd=clientzoom kind=syntax");
+        sendTextFrameAndLogError("error: cmd=clientzoom kind=syntax");
         return false;
     }
 
@@ -850,7 +850,7 @@ bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, con
         !getTokenInteger(tokens[3], "width", width) ||
         !getTokenInteger(tokens[4], "height", height))
     {
-        sendTextFrame("error: cmd=clientvisiblearea kind=syntax");
+        sendTextFrameAndLogError("error: cmd=clientvisiblearea kind=syntax");
         return false;
     }
 
@@ -873,7 +873,7 @@ bool ChildSession::outlineState(const char* /*buffer*/, int /*length*/, const St
         !getTokenString(tokens[4], "state", state) ||
         (state != "visible" && state != "hidden"))
     {
-        sendTextFrame("error: cmd=outlinestate kind=syntax");
+        sendTextFrameAndLogError("error: cmd=outlinestate kind=syntax");
         return false;
     }
 
@@ -894,7 +894,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
         !getTokenString(tokens[1], "name", name) ||
         !getTokenString(tokens[2], "id", id))
     {
-        sendTextFrame("error: cmd=downloadas kind=syntax");
+        sendTextFrameAndLogError("error: cmd=downloadas kind=syntax");
         return false;
     }
 
@@ -985,7 +985,7 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
     if (tokens.size() != 2 ||
         !getTokenString(tokens[1], "mimetype", mimeType))
     {
-        sendTextFrame("error: cmd=gettextselection kind=syntax");
+        sendTextFrameAndLogError("error: cmd=gettextselection kind=syntax");
         return false;
     }
 
@@ -1125,7 +1125,7 @@ bool ChildSession::paste(const char* buffer, int length, const StringVector& tok
     if (tokens.size() < 2 || !getTokenString(tokens[1], "mimetype", mimeType) ||
         mimeType.empty())
     {
-        sendTextFrame("error: cmd=paste kind=syntax");
+        sendTextFrameAndLogError("error: cmd=paste kind=syntax");
         return false;
     }
 
@@ -1172,7 +1172,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const Stri
         !getTokenString(tokens[1], "name", name) ||
         !getTokenString(tokens[2], "type", type))
     {
-        sendTextFrame("error: cmd=insertfile kind=syntax");
+        sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
         return false;
     }
 #else
@@ -1182,7 +1182,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const Stri
         !getTokenString(tokens[2], "type", type) ||
         !getTokenString(tokens[3], "data", data))
     {
-        sendTextFrame("error: cmd=insertfile kind=syntax");
+        sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
         return false;
     }
 #endif
@@ -1237,7 +1237,7 @@ bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
         !getTokenString(tokens[3], "text", text))
 
     {
-        sendTextFrame("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
+        sendTextFrameAndLogError("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
         return false;
     }
 
@@ -1264,7 +1264,7 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
             !getTokenUInt32(tokens[counter++], "id", winId))
         {
             LOG_ERR("Window key event expects a valid id= attribute");
-            sendTextFrame("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
+            sendTextFrameAndLogError("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
             return false;
         }
         else // id= attribute is found
@@ -1278,7 +1278,7 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
         !getTokenInteger(tokens[counter++], "char", charcode) ||
         !getTokenInteger(tokens[counter++], "key", keycode))
     {
-        sendTextFrame("error: cmd=" + std::string(tokens[0]) + "  kind=syntax");
+        sendTextFrameAndLogError("error: cmd=" + std::string(tokens[0]) + "  kind=syntax");
         return false;
     }
 
@@ -1333,7 +1333,7 @@ bool ChildSession::gestureEvent(const char* /*buffer*/, int /*length*/,
 
     if (!success)
     {
-        sendTextFrame("error: cmd=" +  std::string(tokens[0]) + " kind=syntax");
+        sendTextFrameAndLogError("error: cmd=" +  std::string(tokens[0]) + " kind=syntax");
         return false;
     }
 
@@ -1393,7 +1393,7 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
 
     if (!success)
     {
-        sendTextFrame("error: cmd=" +  std::string(tokens[0]) + " kind=syntax");
+        sendTextFrameAndLogError("error: cmd=" +  std::string(tokens[0]) + " kind=syntax");
         return false;
     }
 
@@ -1417,7 +1417,7 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
 {
     if (tokens.size() <= 2)
     {
-        sendTextFrame("error: cmd=dialogevent kind=syntax");
+        sendTextFrameAndLogError("error: cmd=dialogevent kind=syntax");
         return false;
     }
 
@@ -1437,7 +1437,7 @@ bool ChildSession::completeFunction(const char* /*buffer*/, int /*length*/, cons
     if (tokens.size() != 2 ||
         !getTokenInteger(tokens[1], "index", index))
     {
-        sendTextFrame("error: cmd=completefunction kind=syntax");
+        sendTextFrameAndLogError("error: cmd=completefunction kind=syntax");
         return false;
     }
 
@@ -1451,7 +1451,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
 {
     if (tokens.size() <= 1)
     {
-        sendTextFrame("error: cmd=uno kind=syntax");
+        sendTextFrameAndLogError("error: cmd=uno kind=syntax");
         return false;
     }
 
@@ -1518,7 +1518,7 @@ bool ChildSession::selectText(const char* /*buffer*/, int /*length*/,
             !getTokenInteger(tokens[2], "x", x) ||
             !getTokenInteger(tokens[3], "y", y))
         {
-            sendTextFrame("error: cmd=selecttext kind=syntax");
+            sendTextFrameAndLogError("error: cmd=selecttext kind=syntax");
             return false;
         }
     }
@@ -1773,7 +1773,7 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
         {
             if (!rChainPtr.isString())
             {
-                sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+                sendTextFrameAndLogError("error: cmd=exportsignanduploaddocument kind=syntax");
                 return false;
             }
             std::string chainCertificate = rChainPtr;
@@ -1783,14 +1783,14 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
 
     if (filetype.empty() || filename.empty() || wopiUrl.empty() || token.empty() || x509Certificate.empty() || privateKey.empty())
     {
-        sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+        sendTextFrameAndLogError("error: cmd=exportsignanduploaddocument kind=syntax");
         return false;
     }
 
     std::string mimetype = getMimeFromFileType(filetype);
     if (mimetype.empty())
     {
-        sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+        sendTextFrameAndLogError("error: cmd=exportsignanduploaddocument kind=syntax");
         return false;
     }
 
@@ -1805,7 +1805,7 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
 
         if (!bResult)
         {
-            sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+            sendTextFrameAndLogError("error: cmd=exportsignanduploaddocument kind=syntax");
             return false;
         }
     }
@@ -1828,7 +1828,7 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
 
         if (!bResult)
         {
-            sendTextFrame("error: cmd=exportsignanduploaddocument kind=syntax");
+            sendTextFrameAndLogError("error: cmd=exportsignanduploaddocument kind=syntax");
             return false;
         }
     }
@@ -1883,7 +1883,7 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
         {
             LOG_ERR("Upload signed document HTTP Response Error: " << response.getStatus() << ' ' << response.getReason());
 
-            sendTextFrame("error: cmd=exportsignanduploaddocument kind=httpresponse");
+            sendTextFrameAndLogError("error: cmd=exportsignanduploaddocument kind=httpresponse");
 
             return false;
         }
@@ -1892,7 +1892,7 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
     {
         LOG_ERR("Upload signed document Exception: " + pocoException.displayText());
 
-        sendTextFrame("error: cmd=exportsignanduploaddocument kind=failure");
+        sendTextFrameAndLogError("error: cmd=exportsignanduploaddocument kind=failure");
 
         return false;
     }
@@ -1952,7 +1952,7 @@ bool ChildSession::selectGraphic(const char* /*buffer*/, int /*length*/, const S
         !getTokenInteger(tokens[2], "x", x) ||
         !getTokenInteger(tokens[3], "y", y))
     {
-        sendTextFrame("error: cmd=selectgraphic kind=syntax");
+        sendTextFrameAndLogError("error: cmd=selectgraphic kind=syntax");
         return false;
     }
 
@@ -1967,7 +1967,7 @@ bool ChildSession::resetSelection(const char* /*buffer*/, int /*length*/, const 
 {
     if (tokens.size() != 1)
     {
-        sendTextFrame("error: cmd=resetselection kind=syntax");
+        sendTextFrameAndLogError("error: cmd=resetselection kind=syntax");
         return false;
     }
 
@@ -1985,7 +1985,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
     if (tokens.size() <= 1 ||
         !getTokenString(tokens[1], "url", url))
     {
-        sendTextFrame("error: cmd=saveas kind=syntax");
+        sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
         return false;
     }
 
@@ -1998,7 +1998,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
 
         if (pathSegments.size() == 0)
         {
-            sendTextFrame("error: cmd=saveas kind=syntax");
+            sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
             return false;
         }
 
@@ -2071,7 +2071,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
     if (success)
         sendTextFrame("saveas: url=" + encodedURL + " filename=" + encodedWopiFilename);
     else
-        sendTextFrame("error: cmd=storage kind=savefailed");
+        sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
 
     return true;
 }
@@ -2082,7 +2082,7 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const S
     if (tokens.size() < 2 ||
         !getTokenInteger(tokens[1], "part", part))
     {
-        sendTextFrame("error: cmd=setclientpart kind=invalid");
+        sendTextFrameAndLogError("error: cmd=setclientpart kind=invalid");
         return false;
     }
 
@@ -2104,7 +2104,7 @@ bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, cons
         !getTokenInteger(tokens[1], "part", nPart) ||
         !getTokenInteger(tokens[2], "how", nSelect))
     {
-        sendTextFrame("error: cmd=selectclientpart kind=invalid");
+        sendTextFrameAndLogError("error: cmd=selectclientpart kind=invalid");
         return false;
     }
 
@@ -2136,7 +2136,7 @@ bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*
     if (tokens.size() < 2 ||
         !getTokenInteger(tokens[1], "position", nPosition))
     {
-        sendTextFrame("error: cmd=moveselectedclientparts kind=invalid");
+        sendTextFrameAndLogError("error: cmd=moveselectedclientparts kind=invalid");
         return false;
     }
 
@@ -2165,7 +2165,7 @@ bool ChildSession::setPage(const char* /*buffer*/, int /*length*/, const StringV
     if (tokens.size() < 2 ||
         !getTokenInteger(tokens[1], "page", page))
     {
-        sendTextFrame("error: cmd=setpage kind=invalid");
+        sendTextFrameAndLogError("error: cmd=setpage kind=invalid");
         return false;
     }
 
@@ -2182,7 +2182,7 @@ bool ChildSession::renderShapeSelection(const char* /*buffer*/, int /*length*/, 
         !getTokenString(tokens[1], "mimetype", mimeType) ||
         mimeType != "image/svg+xml")
     {
-        sendTextFrame("error: cmd=rendershapeselection kind=syntax");
+        sendTextFrameAndLogError("error: cmd=rendershapeselection kind=syntax");
         return false;
     }
 
@@ -2220,7 +2220,7 @@ bool ChildSession::removeTextContext(const char* /*buffer*/, int /*length*/,
         !getTokenInteger(tokens[2], "before", before) ||
         !getTokenInteger(tokens[3], "after", after))
     {
-        sendTextFrame("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
+        sendTextFrameAndLogError("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
         return false;
     }
 
@@ -2443,7 +2443,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             Poco::Dynamic::Var var = parser.parse(payload);
             Object::Ptr object = var.extract<Object::Ptr>();
 
-            sendTextFrame("error: cmd=" + object->get("cmd").toString() +
+            sendTextFrameAndLogError("error: cmd=" + object->get("cmd").toString() +
                     " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
         }
         break;

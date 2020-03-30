@@ -116,6 +116,18 @@ public:
         return (buffer != nullptr ? sendTextFrame(buffer, std::strlen(buffer)) : false);
     }
 
+    bool sendTextFrameAndLogError(const std::string& text)
+    {
+        LOG_ERR(text);
+        return sendTextFrame(text.data(), text.size());
+    }
+
+    bool sendTextFrameAndLogError(const char* buffer)
+    {
+        LOG_ERR(buffer);
+        return (buffer != nullptr ? sendTextFrame(buffer, std::strlen(buffer)) : false);
+    }
+
     virtual void handleMessage(const std::vector<char> &data) override;
 
     /// Invoked when we want to disconnect a session.

@@ -967,7 +967,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     if (!success && !force)
     {
         LOG_ERR("Cannot store docKey [" << _docKey << "] as .uno:Save has failed in LOK.");
-        it->second->sendTextFrame("error: cmd=storage kind=savefailed");
+        it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
         return false;
     }
 
@@ -1080,14 +1080,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         // Make everyone readonly and tell everyone that storage is low on diskspace.
         for (const auto& sessionIt : _sessions)
         {
-            sessionIt.second->sendTextFrame("error: cmd=storage kind=savediskfull");
+            sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savediskfull");
         }
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::UNAUTHORIZED)
     {
         LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uriAnonym <<
                 "]. Invalid or expired access token. Notifying client.");
-        it->second->sendTextFrame("error: cmd=storage kind=saveunauthorized");
+        it->second->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::FAILED)
     {

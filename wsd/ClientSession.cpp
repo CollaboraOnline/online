@@ -328,7 +328,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
     if (tokens.size() < 1)
     {
-        sendTextFrame("error: cmd=empty kind=unknown");
+        sendTextFrameAndLogError("error: cmd=empty kind=unknown");
         return false;
     }
 
@@ -344,7 +344,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         if (tokens.size() < 2)
         {
-            sendTextFrame("error: cmd=loolclient kind=badprotocolversion");
+            sendTextFrameAndLogError("error: cmd=loolclient kind=badprotocolversion");
             return false;
         }
 
@@ -352,7 +352,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (std::get<0>(versionTuple) != ProtocolMajorVersionNumber ||
             std::get<1>(versionTuple) != ProtocolMinorVersionNumber)
         {
-            sendTextFrame("error: cmd=loolclient kind=badprotocolversion");
+            sendTextFrameAndLogError("error: cmd=loolclient kind=badprotocolversion");
             return false;
         }
 
@@ -375,7 +375,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         if (getDocURL() != "")
         {
-            sendTextFrame("error: cmd=load kind=docalreadyloaded");
+            sendTextFrameAndLogError("error: cmd=load kind=docalreadyloaded");
             return false;
         }
 
@@ -437,12 +437,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "completefunction")
     {
         LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
-        sendTextFrame("error: cmd=" + tokens[0] + " kind=unknown");
+        sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
     }
     else if (getDocURL() == "")
     {
-        sendTextFrame("error: cmd=" + tokens[0] + " kind=nodocloaded");
+        sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
     }
     else if (tokens.equals(0, "canceltiles"))
@@ -568,7 +568,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             !getTokenInteger(tokens[4], "height", height))
         {
             // Be forgiving and log instead of disconnecting.
-            // sendTextFrame("error: cmd=clientvisiblearea kind=syntax");
+            // sendTextFrameAndLogError("error: cmd=clientvisiblearea kind=syntax");
             LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
             return true;
         }
@@ -587,7 +587,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             if (tokens.size() != 2 ||
                 !getTokenInteger(tokens[1], "part", temp))
             {
-                sendTextFrame("error: cmd=setclientpart kind=syntax");
+                sendTextFrameAndLogError("error: cmd=setclientpart kind=syntax");
                 return false;
             }
             else
@@ -608,7 +608,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 !getTokenInteger(tokens[1], "part", part) ||
                 !getTokenInteger(tokens[2], "how", how))
             {
-                sendTextFrame("error: cmd=selectclientpart kind=syntax");
+                sendTextFrameAndLogError("error: cmd=selectclientpart kind=syntax");
                 return false;
             }
             else
@@ -625,7 +625,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             if (tokens.size() != 2 ||
                 !getTokenInteger(tokens[1], "position", nPosition))
             {
-                sendTextFrame("error: cmd=moveselectedclientparts kind=syntax");
+                sendTextFrameAndLogError("error: cmd=moveselectedclientparts kind=syntax");
                 return false;
             }
             else
@@ -644,7 +644,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             !getTokenInteger(tokens[4], "tiletwipheight", tileTwipHeight))
         {
             // Be forgiving and log instead of disconnecting.
-            // sendTextFrame("error: cmd=clientzoom kind=syntax");
+            // sendTextFrameAndLogError("error: cmd=clientzoom kind=syntax");
             LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
             return true;
         }
@@ -665,7 +665,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             !getTokenString(tokens[1], "tile", tileID))
         {
             // Be forgiving and log instead of disconnecting.
-            // sendTextFrame("error: cmd=tileprocessed kind=syntax");
+            // sendTextFrameAndLogError("error: cmd=tileprocessed kind=syntax");
             LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
             return true;
         }
@@ -700,7 +700,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (tokens.size() < 2 || !getTokenString(tokens[1], "filename", encodedWopiFilename))
         {
             LOG_ERR("Bad syntax for: " << firstLine);
-            sendTextFrame("error: cmd=renamefile kind=syntax");
+            sendTextFrameAndLogError("error: cmd=renamefile kind=syntax");
             return false;
         }
         std::string wopiFilename;
@@ -757,7 +757,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
     if (tokens.size() < 2)
     {
         // Failed loading ends connection.
-        sendTextFrame("error: cmd=load kind=syntax");
+        sendTextFrameAndLogError("error: cmd=load kind=syntax");
         return false;
     }
 
@@ -836,7 +836,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
     }
     catch (const Poco::SyntaxException&)
     {
-        sendTextFrame("error: cmd=load kind=uriinvalid");
+        sendTextFrameAndLogError("error: cmd=load kind=uriinvalid");
     }
 
     return false;
@@ -847,7 +847,7 @@ bool ClientSession::getCommandValues(const char *buffer, int length, const Strin
 {
     std::string command;
     if (tokens.size() != 2 || !getTokenString(tokens[1], "command", command))
-        return sendTextFrame("error: cmd=commandvalues kind=syntax");
+        return sendTextFrameAndLogError("error: cmd=commandvalues kind=syntax");
 
     std::string cmdValues;
     if (docBroker->tileCache().getTextStream(TileCache::StreamType::CmdValues, command, cmdValues))
@@ -863,7 +863,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, const Stri
     if (tokens.size() < 2 ||
         !getTokenString(tokens[1], "font", font))
     {
-        return sendTextFrame("error: cmd=renderfont kind=syntax");
+        return sendTextFrameAndLogError("error: cmd=renderfont kind=syntax");
     }
 
     getTokenString(tokens[2], "char", text);
@@ -890,7 +890,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const Stri
     catch (const std::exception& exc)
     {
         LOG_ERR("Failed to process tile command: " << exc.what());
-        return sendTextFrame("error: cmd=tile kind=invalid");
+        return sendTextFrameAndLogError("error: cmd=tile kind=invalid");
     }
 
     return true;
@@ -909,7 +909,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
     {
         LOG_ERR("Failed to process tilecombine command: " << exc.what());
         // Be forgiving and log instead of disconnecting.
-        // return sendTextFrame("error: cmd=tile kind=invalid");
+        // return sendTextFrameAndLogError("error: cmd=tile kind=invalid");
     }
 
     return true;
@@ -1180,7 +1180,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             // the session
             if (!isConvertTo)
             {
-                sendTextFrame("error: cmd=saveas kind=syntax");
+                sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
                 return false;
             }
         }
@@ -1189,7 +1189,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         if (!isConvertTo && !getTokenString(tokens[2], "filename", encodedWopiFilename))
         {
             LOG_ERR("Bad syntax for: " << firstLine);
-            sendTextFrame("error: cmd=saveas kind=syntax");
+            sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
             return false;
         }
 
@@ -1235,7 +1235,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 docBroker->saveAsToStorage(getId(), resultURL.getPath(), wopiFilename, false);
             }
             else
-                sendTextFrame("error: cmd=storage kind=savefailed");
+                sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
         }
         else
         {
