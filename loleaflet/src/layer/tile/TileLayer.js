@@ -194,6 +194,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._editorId = -1;
 		this._followUser = false;
 		this._followEditor = false;
+		this._selectedTextContent = '';
 	},
 
 	onAdd: function (map) {
@@ -619,6 +620,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('textselectioncontent:')) {
 			if (this._map._clip)
 				this._map._clip.setTextSelectionHTML(textMsg.substr(22));
+			else
+				// hack for ios and android to get selected text into hyperlink insertion dialog
+				this._selectedTextContent = textMsg.substr(22);
 		}
 		else if (textMsg.startsWith('textselectionend:')) {
 			this._onTextSelectionEndMsg(textMsg);
@@ -1991,6 +1995,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateCellCursor();
 		if (this._map._clip)
 			this._map._clip.clearSelection();
+		else
+			this._selectedTextContent = '';
 	},
 
 	containsSelection: function (latlng) {
@@ -3081,6 +3087,7 @@ L.TileLayer = L.GridLayer.extend({
 		else {
 			this._textSelectionStart = null;
 			this._textSelectionEnd = null;
+			this._selectedTextContent = '';
 			for (key in this._selectionHandles) {
 				this._map.removeLayer(this._selectionHandles[key]);
 				this._selectionHandles[key].isDragged = false;

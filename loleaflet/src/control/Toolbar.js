@@ -442,6 +442,8 @@ L.Map.include({
 			link = this.hyperlinkUnderCursor.link;
 		} else if (this._clip && this._clip._selectionType == 'text') {
 			text = this.extractContent(this._clip._selectionContent);
+		} else if (this._docLayer._selectedTextContent) {
+			text = this.extractContent(this._docLayer._selectedTextContent);
 		}
 
 		vex.dialog.open({
