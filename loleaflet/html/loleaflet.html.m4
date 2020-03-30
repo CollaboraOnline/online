@@ -90,18 +90,12 @@ var Base64ToArrayBuffer = function(base64Str) {
 
 </script>
 
-m4_ifelse(MOBILEAPP,[true],
-  [m4_ifelse(DEBUG,[true],
-    m4_foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="fileCSS" />
-  ]),
-    [<style>m4_syscmd([cat ]BUNDLE_CSS)</style>
-  ])],
-  [m4_ifelse(DEBUG,[true],
-    m4_foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="%SERVICE_ROOT%/loleaflet/%VERSION%/fileCSS" />
-  ]),
-    [<style>m4_syscmd([cat ]BUNDLE_CSS)</style>
-  ])]m4_dnl
-)m4_dnl
+m4_dnl In the debug case, just write all the .css files here
+m4_ifelse(DEBUG,[true],
+  m4_foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])][fileCSS" />
+]),
+  [<style>m4_syscmd([cat ]BUNDLE_CSS)</style>
+])
 <!--%BRANDING_CSS%--> <!-- add your logo here -->
 m4_ifelse(IOSAPP,[true],
   [<link rel="stylesheet" href="Branding/branding.css">])
