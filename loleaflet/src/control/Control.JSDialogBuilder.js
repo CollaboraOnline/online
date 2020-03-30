@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ _ */
+/* global $ _ _UNO */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
@@ -71,6 +71,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:ResetAttributes'] = this._clearFormattingControl;
 
 		this._currentDepth = 0;
 	},
@@ -1387,6 +1388,32 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			selectedColor = '#' + selectedColor;
 
 		return selectedColor;
+	},
+
+	_clearFormattingControl: function(parentContainer, data, builder) {
+		var iconPath = builder._createIconPath(data.command);
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard-widebutton ui-widget', parentContainer);
+		$(sectionTitle).css('justify-content', 'space-between');
+
+		if (data && data.id)
+			sectionTitle.id = data.id;
+
+		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
+		var titleClass = '';
+		if (iconPath) {
+			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
+			icon.src = iconPath;
+			icon.alt = '';
+			titleClass = 'menu-entry-with-icon';
+		}
+		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
+		titleSpan.innerHTML =  builder._cleanText(_UNO(data.command));
+
+		$(sectionTitle).click(function () {
+			builder.callback('toolbutton', 'click', sectionTitle, data.command, builder);
+		});
+
+		return false;
 	},
 
 	_colorControl: function(parentContainer, data, builder) {

@@ -317,6 +317,19 @@
 		background-color: #eee;
 	}
 
+	.ui-header.mobile-wizard-widebutton {
+		width: 100%;
+		height: 56px !important;
+		font-size: 11pt !important;
+		margin: 0px;
+		padding: 0px;
+		border: solid 1px #fff;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		background-color: #fff;
+	}
+
 	.ui-content .unobutton {
 		width: 32px;
 		height: 32px;
