@@ -41,3 +41,16 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #toolbar-hamburger.menuwizard-opened .main-menu-btn {
 	padding-top: 10px;
 }
+
+.logo {
+	background-size: 100px;
+	max-width: 24px;
+	max-height: 31px;
+	top: 0;
+}
+#toolbar-logo {
+	width: 0px !important;
+}
+#document-header{
+	display: none !important;
+}
