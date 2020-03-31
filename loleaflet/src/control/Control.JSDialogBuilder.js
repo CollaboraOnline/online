@@ -128,6 +128,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['edit'] = this._editControl;
 		this._controlHandlers['multilineedit'] = this._multiLineEditControl;
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
+		this._controlHandlers['okbutton'] = this._pushbuttonControl;
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['comboboxentry'] = this._comboboxEntry;
 		this._controlHandlers['listbox'] = this._listboxControl;
