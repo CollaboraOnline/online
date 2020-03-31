@@ -28,3 +28,15 @@ input#follow-checkbox {
 div#w2ui-overlay-actionbar.w2ui-overlay{
 	margin-left:-7px;
 }
+
+/* Related to loleaflet.css */
+#toolbar-hamburger {
+	width: 36px;
+}
+#toolbar-hamburger.menuwizard-opened {
+	width: 36px;
+	height: 43px;
+}
+#toolbar-hamburger.menuwizard-opened .main-menu-btn {
+	padding-top: 10px;
+}

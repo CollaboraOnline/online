@@ -178,18 +178,6 @@ body {
 #toolbar-hamburger {
 	width: 0;
 }
-@media (max-width: 767px) and (orientation: portrait), (max-width: 1023px) and (orientation: landscape) {
-	#toolbar-hamburger {
-		width: 36px;
-	}
-	#toolbar-hamburger.menuwizard-opened {
-		width: 36px;
-		height: 43px;
-	}
-	#toolbar-hamburger.menuwizard-opened .main-menu-btn {
-		padding-top: 10px;
-	}
-}
 
 #mobile-edit-button {
 	position: absolute;
