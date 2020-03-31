@@ -1735,7 +1735,11 @@ function onDocLayerInit() {
 		$('#document-name-input').focus(function() { $(this).blur(); });
 		// Call decodecodeURIComponent twice: Reverse both our encoding and the encoding of
 		// the name in the file system.
-		$('#document-name-input').val(decodeURIComponent(decodeURIComponent(map.options.doc.replace(/.*\//, ''))));
+		$('#document-name-input').val(decodeURIComponent(decodeURIComponent(map.options.doc.replace(/.*\//, '')))
+					      // To conveniently see the initial visualViewport scale and size, un-comment the following line.
+					      // + ' (' + window.visualViewport.scale + '*' + window.visualViewport.width + 'x' + window.visualViewport.height + ')'
+					      // TODO: Yes, it would be better to see it change as you rotate the device or invoke Split View.
+					     );
 	}
 
 	if (!window.ThisIsTheiOSApp && window.mode.isTablet()) {
