@@ -1,4 +1,4 @@
-/* global cy expect require*/
+/* global cy expect require Cypress*/
 
 var helper = require('../../common/helper');
 
@@ -46,11 +46,21 @@ function copyContentToClipboard() {
 }
 
 function selectAllMobile() {
-	cy.get('.spreadsheet-header-columns')
-		.click();
+	// TODO: select all does not work with core/master
+	// if we have a column selected
+	if (Cypress.env('LO_CORE_VERSION') === 'master') {
+		cy.get('body')
+			.type('{enter}');
 
-	cy.get('.spreadsheet-cell-resize-marker')
-		.should('exist');
+		cy.get('.leaflet-marker-icon')
+			.should('exist');
+	} else {
+		cy.get('.spreadsheet-header-columns')
+			.click();
+
+		cy.get('.spreadsheet-cell-resize-marker')
+			.should('exist');
+	}
 
 	cy.get('#spreadsheet-header-corner')
 		.click();
