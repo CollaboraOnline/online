@@ -309,7 +309,6 @@ L.Map.TouchGesture = L.Handler.extend({
 			return;
 		}
 
-		this._map.fire('closepopups');
 		this._map.fire('closemobilewizard');
 
 		// The validity dropdown marker icon (exists only in calc) needs to be notified of tap events if it is the target.
@@ -320,6 +319,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			return;
 		}
 
+		this._map.fire('closepopups');
 		this._map.fire('editorgotfocus');
 
 		var docLayer = this._map._docLayer;
