@@ -46,10 +46,10 @@ function copyContentToClipboard() {
 }
 
 function selectAllMobile() {
-	cy.get('body')
-		.type('{enter}');
+	cy.get('.spreadsheet-header-columns')
+		.click();
 
-	cy.get('.leaflet-marker-icon')
+	cy.get('.spreadsheet-cell-resize-marker')
 		.should('exist');
 
 	cy.get('#spreadsheet-header-corner')
