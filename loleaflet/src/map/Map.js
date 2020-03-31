@@ -225,16 +225,6 @@ L.Map = L.Evented.extend({
 				this._size = new L.Point(0,0);
 				this._onResize();
 				this._socket.sendMessage('uno .uno:LOKSetMobile');
-				// Add a style sheet for mobile phones. Doing it here is hopefully more
-				// reliable that relying on CSS media queries looking at the window or device size.
-				var style = document.createElement('style');
-				style.innerHTML = '  \
-/* Hide the menu bar in a horribly convoluted way */ \
-#main-menu-state:not(:checked) ~ #main-menu {        \
-    display: none;                                   \
-}                                                    \
-';
-				document.head.appendChild(style);
 			}
 		});
 		this.on('updatetoolbarcommandvalues', function(e) {

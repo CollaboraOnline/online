@@ -10,7 +10,7 @@ m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Online Editor</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
 
 <script>
 m4_dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed

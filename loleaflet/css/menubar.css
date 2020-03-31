@@ -156,6 +156,7 @@
 .main-menu-btn {
     margin: 2px 10px;
     position: relative;
+    display: none;
     width: 17px;
     height: 21px;
     text-indent: 17px;
@@ -267,6 +268,15 @@
 
     .document-title {
 	display: none;
+    }
+
+    /* hide the menu in mobile view */
+    #main-menu-state:not(:checked) ~ #main-menu {
+        display: none;
+    }
+
+    .main-menu-btn {
+        display: inline-block;
     }
 
     .main-nav {
