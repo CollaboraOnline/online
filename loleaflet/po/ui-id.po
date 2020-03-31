@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 16:08+0100\n"
-"PO-Revision-Date: 2020-02-18 10:32+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"PO-Revision-Date: 2020-03-29 05:16+0000\n"
+"Last-Translator: Imanuel Ronaldo <imanuelronaldo@gmail.com>\n"
 "Language-Team: Indonesian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
@@ -171,7 +171,7 @@ msgstr "Matikan Server"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Waktu nyala peladen"
 
 #: admin/src/AdminSocketAnalytics.js:212
 msgid "Received"
@@ -194,7 +194,7 @@ msgstr "Anda yakin ingin mengakhiri sesi ini?"
 #: src/control/Control.Tabs.js:212 src/control/Control.Toolbar.js:246
 #: src/control/Toolbar.js:455
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1157
@@ -258,7 +258,7 @@ msgstr "Peladen mengalami kesalahan %0 saat mem-parsing perintah %1."
 
 #: src/control/Control.ContextMenu.js:171
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
@@ -310,7 +310,7 @@ msgstr "Mulai unggah"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "Mulai salin / tempel silang"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
@@ -321,20 +321,21 @@ msgid "Linear"
 msgstr "Linier"
 
 #: src/control/Control.JSDialogBuilder.js:154
+#, fuzzy
 msgid "Axial"
-msgstr ""
+msgstr "Axial"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Radial"
-msgstr ""
+msgstr "Radial"
 
 #: src/control/Control.JSDialogBuilder.js:160
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Ellipsoid"
 
 #: src/control/Control.JSDialogBuilder.js:164
 msgid "Quadratic"
-msgstr ""
+msgstr "Kuadrat"
 
 #: src/control/Control.JSDialogBuilder.js:167
 msgid "Square"
@@ -359,11 +360,11 @@ msgstr "Gradien"
 
 #: src/control/Control.JSDialogBuilder.js:777
 msgid "Hatching"
-msgstr ""
+msgstr "Penggarisan"
 
 #: src/control/Control.JSDialogBuilder.js:781
 msgid "Pattern"
-msgstr ""
+msgstr "Pola"
 
 #: src/control/Control.JSDialogBuilder.js:914
 msgid "From"
@@ -378,8 +379,6 @@ msgid "Font Name"
 msgstr "Nama huruf"
 
 #: src/control/Control.JSDialogBuilder.js:1054
-#, fuzzy
-#| msgid "Not Signed"
 msgid "Font Size"
 msgstr "Ukuran Fonta"
 
@@ -398,7 +397,7 @@ msgstr "Sisip tabel"
 
 #: src/control/Control.JSDialogBuilder.js:1585
 msgid "Line style:"
-msgstr ""
+msgstr "gaya Garis:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:228
 #: src/control/Control.Menubar.js:230 src/control/Control.Menubar.js:232
@@ -449,7 +448,7 @@ msgstr "Teks Kaya (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:480
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:472
 #: src/control/Signing.js:601
@@ -473,7 +472,6 @@ msgid "Reset zoom"
 msgstr "Reset zum"
 
 #: src/control/Control.Menubar.js:65
-#, fuzzy
 msgid "Show Ruler"
 msgstr "Tampil penggaris"
 
@@ -494,9 +492,8 @@ msgstr "Orientasi Teks"
 
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
-#, fuzzy
 msgid "Online Help"
-msgstr "Bantuan online"
+msgstr "Bantuan daring"
 
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
@@ -505,7 +502,6 @@ msgstr "Pintasan papan tik"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459
-#, fuzzy
 msgid "Report an issue"
 msgstr "Laporkan isu"
 
@@ -552,27 +548,25 @@ msgstr "Excel Spreadsheet (.xlsx)"
 #: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:522
 #: src/control/Control.Menubar.js:567
 msgid "Export as"
-msgstr ""
+msgstr "Ekspor sebagai"
 
 #: src/control/Control.Menubar.js:501
 msgid "Page Setup"
-msgstr ""
+msgstr "Pengaturan Halaman"
 
 #: src/control/Control.Menubar.js:502
 msgid "Portrait"
-msgstr ""
+msgstr "Portrait"
 
 #: src/control/Control.Menubar.js:503
 msgid "Landscape"
-msgstr ""
+msgstr "Lanskap"
 
 #: src/control/Control.Menubar.js:759 src/control/Control.Toolbar.js:2061
 msgid "Reset to Default Language"
 msgstr "Kembalikan ke Bahasa Bawaan"
 
 #: src/control/Control.Menubar.js:1071
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
 msgstr "Sisipkan bentuk"
 
@@ -581,7 +575,6 @@ msgid "Are you sure you want to delete this slide?"
 msgstr "Anda yakin ingin menghapus salindia ini?"
 
 #: src/control/Control.Menubar.js:1192 src/map/Clipboard.js:778
-#, fuzzy
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr "<p>Peramban Anda memiliki akses yang sangat terbatas ke papan klip, jadi gunakan pintasan papan tik ini: <ul> <li> <b>Ctrl+C</b>: Untuk menyalin. </li> <li> <b>Ctrl+X</b>: Untuk memotong. </li> <li> <b>Ctrl+P</b>: Untuk merekat. </li> </ul> </p>"
 
@@ -615,7 +608,7 @@ msgstr "Anda yakin ingin menghapus halaman ini?"
 
 #: src/control/Control.Toolbar.js:862
 msgid "Default Style"
-msgstr ""
+msgstr "Gaya Bawaan"
 
 #: src/control/Control.Toolbar.js:919
 msgid "Borders"
@@ -634,10 +627,8 @@ msgid "Insert shapes"
 msgstr "Sisipkan bentuk"
 
 #: src/control/Control.Toolbar.js:1063
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Fungsi"
+msgstr "Fungsi Wisaya"
 
 #: src/control/Control.Toolbar.js:1107
 msgid "First sheet"
@@ -931,7 +922,7 @@ msgstr "Versi %productName ini ditenagai oleh"
 
 #: src/control/Toolbar.js:449
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Sisipkan pranala"
 
 #: src/control/Toolbar.js:451
 msgid "Text"
@@ -951,7 +942,7 @@ msgstr "Ups, ada masalah menyambung ke LibreOffice Daring: "
 
 #: src/core/Socket.js:289
 msgid "Served by:"
-msgstr ""
+msgstr "Dilayani oleh:"
 
 #: src/core/Socket.js:294
 msgid "Unsupported server version."
@@ -1083,7 +1074,7 @@ msgstr "Anda akan meninggalkan editor, apa Anda yakin akan mengunjungi %url?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Gagal memuat dokumen. Dokumen ini salah format atau mengambil sumber daya melebihi dari yang diizinkan. Silakan hubungi administrator."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1091,7 +1082,7 @@ msgstr "Gagal memuat dokumen."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
+msgstr "Gagal menyimpan karena tidak ada ruang diska tersisa. Dokumen saat ini hanya baca."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1102,7 +1093,6 @@ msgid "Document cannot be saved."
 msgstr "Dokumen tidak dapat disimpan"
 
 #: src/errormessages.js:34
-#, fuzzy
 msgid "Document cannot be renamed."
 msgstr "Dokumen tidak dapat diganti nama"
 
@@ -1126,11 +1116,11 @@ msgstr "Dokumen tidak dapat diganti nama. Cek hak akses kamu atau hubungi admin 
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Mengunggah berkas ke peladen gagal, berkas tidak ditemukan."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Gagal mengunggah berkas ke server, ukuran berkas terlalu besar"
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1150,24 +1140,18 @@ msgstr "Balas"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:118
 #: src/layer/tile/WriterTileLayer.js:56
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Show the search bar"
-msgstr "Batalkan pencarian"
+msgstr "Tampilkan bilah pencarian"
 
 #: src/layer/tile/CalcTileLayer.js:231 src/layer/tile/ImpressTileLayer.js:226
 #: src/layer/tile/WriterTileLayer.js:163
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Clear the search field"
-msgstr "Batalkan pencarian"
+msgstr "Bersihkan ruas pencarian"
 
 #: src/layer/tile/CalcTileLayer.js:233 src/layer/tile/ImpressTileLayer.js:228
 #: src/layer/tile/WriterTileLayer.js:165
-#, fuzzy
-#| msgid "Cancel the search"
 msgid "Hide the search bar"
-msgstr "Batalkan pencarian"
+msgstr "Sembunyikan bilah pencarian"
 
 #: src/layer/tile/TileLayer.js:236
 msgid "Modify"
@@ -1179,21 +1163,19 @@ msgstr "Buang"
 
 #: src/layer/tile/TileLayer.js:254
 msgid "Resolve"
-msgstr ""
+msgstr "Selesaikan"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "Untuk tempel diluar %productName, silakan klik dulu tombol 'unduh'"
 
 #: src/map/Clipboard.js:278
-#, fuzzy
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Gagal unduh ke papan, tolong salin ulang"
 
 #: src/map/Clipboard.js:776
-#, fuzzy
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Tolong gunakan tombol salin/tempel di papan ketik layar mu. <p>"
+msgstr "<p>Tolong gunakan tombol salin/tempel di papan ketik layar mu.</p>"
 
 #: src/map/Clipboard.js:801
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
@@ -1201,7 +1183,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:817
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr ""
+msgstr "<p>Pengunduhan karena operasi besar salin / tempel sudah dimulai. Silahkan, tunggu untuk pengunduhan saat ini atau batalkan sebelum memulai sebuah unduhan baru</p>"
 
 #: src/map/Map.js:244
 msgid "Initializing..."
@@ -1224,12 +1206,12 @@ msgstr "Dokumen tidak aktif - silakan klik untuk melanjutkan pengeditan"
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Tipe berkas: %0 tidak dapat di unggah ke peladen karena berkas tidak memiliki nama"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Tipe berkas: %0 tidak dapat diunggah ke peladen karena isi berkas kosong"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1237,7 +1219,7 @@ msgstr "Memuat..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Mengunggah berkas ke peladen gagal dengan status: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

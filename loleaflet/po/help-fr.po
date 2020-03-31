@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-02-19 23:15+0000\n"
-"Last-Translator: Jean-Baptiste Faure <jbfaure@libreoffice.org>\n"
+"PO-Revision-Date: 2020-03-27 17:04+0000\n"
+"Last-Translator: sophie <gautier.sophie@gmail.com>\n"
 "Language-Team: French <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1094,8 +1094,6 @@ msgid "Using the browser zoom affects the document and user interface areas."
 msgstr "L'utilisation du zoom du navigateur affecte les zones du document et de l'interface utilisateur."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
-#, fuzzy
-#| msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
 msgstr "<span class=\"def\">La barre d'information :</span> à la droite de la barre de recherche, un ensemble d'informations sur le document est affiché. Les informations courantes dépendent de la nature du document."
 
@@ -1172,8 +1170,6 @@ msgid "Pasting"
 msgstr "Collage"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
-#, fuzzy
-#| msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
 msgstr "Lorsque vous collez du contenu copiez à partir du même document, le format et les éléments sont maintenus. Si vous copiez à partir d'un autre document, d'un autre onglet ou d'un autre fenêtre du navigateur, ou en dehors du navigateur, le contenu collé conservera le texte riche."
 
@@ -1190,10 +1186,8 @@ msgid "When you paste text from outside of the document (another browser window 
 msgstr "Lorsque vous collez du texte en dehors du document (une autre fenêtre du navigateur ou une autre application bureautique), il sera collé comme texte riche."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
-#, fuzzy
-#| msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr "Lorsque vous avez du contenu interne coupé ou copié, vous pouvez coller ce contenu avec le menu du bouton droit de la souris."
+msgstr "Lorsque vous avez du contenu interne coupé ou copié, vous pouvez coller ce contenu en utilisant le menu contextuel."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
@@ -1368,8 +1362,6 @@ msgid "<span class=\"def\">Direct formatting:</span> You can format text documen
 msgstr "<span class=\"def\">Formatage direct :</span> vous pouvez formatez des objets de document texte directement à partir des menus, des barres d'outils ou des menus contextuels. Le formate direct s'applique uniquement à l'objet actif sélectionné."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
-#, fuzzy
-#| msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgstr "<span class=\"def\">Formatage de Style :</span><span class=\"productname\">%productName</span> prend en charge les styles de paragraphe. Vous pouvez appliquer un style de paragraphe existant à un paragraphe. Choisissez le menu <span class=\"ui\">Édition</span> → <span class=\"ui\">Éditer les styles</span> pour modifier le style."
 
@@ -1422,10 +1414,8 @@ msgid "<span class=\"def\">Page header and footer:</span> Headers and footers ar
 msgstr "<span class=\"def\">En-tête et pied de page :</span> les en-têtes et pieds de page sont disponibles pour le style de page existant appliqué dans le document à la position du curseur."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
-#, fuzzy
-#| msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported, being rendered as they are shown."
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
-msgstr "<span class=\"def\">Notes de fin et de pied :</span> les notes de pied et de fin de document sont prises en charge, avec un rendu tel qu'affiché."
+msgstr "<span class=\"def\">Notes de fin et de pied :</span> les notes de pied et de fin de document sont prises en charge."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
 msgid "<span class=\"productname\">%productName</span> Impress edits presentations in a way that should be familiar to people. Operations like typing text, cut, copy and pasting contents, selecting text , inserting, resizing, anchoring images, adding and handling tables, are similar to a desktop presentation application. Use the keyboard, menus and toolbars to perform actions in your document."
@@ -1544,8 +1534,6 @@ msgid "What is the blue wavy underline in some words in the text?"
 msgstr "Quelle est cette ligne ondulée bleue sous certains mots dans le texte ?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
-#, fuzzy
-#| msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
 msgstr "Les erreurs grammaticales dans le texte sont marquées par une ligne ondulée bleue. Cliquez avec le bouton droit de la souris sur le texte souligné pour ouvrir un menu contenant des suggestions afin de corriger l'erreur grammaticale et le non respect des règles. Sélectionnez la suggestion correcte afin de modifier le texte."
 
@@ -1610,10 +1598,8 @@ msgid "You have the Track Changes feature enabled for the document. Track Change
 msgstr "Cela signifie que le suivi des modifications est activé dans le document. Le suivi des modifications enregistre toutes les modifications effectuées dans le texte et affiche les éditions pour les révisions futures. Cela est très utile pour marquer les modifications dans les textes et les feuilles de calcul. Le suivi des modifications est activé en choisissant <span class=\"ui\">Édition</span> → <span class=\"ui\">Suivi des modifications</span> → <span class=\"ui\">Enregistrer</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
-#, fuzzy
-#| msgid "With track changes enabled your document show the following settings:"
 msgid "With track changes enabled your document is shown the following manner:"
-msgstr "Avec le suivi des modifications activé, le document affiche les paramètres suivants :"
+msgstr "Avec le suivi des modifications activé, le document est affiché de la façon suivante :"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."

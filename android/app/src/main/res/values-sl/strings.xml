@@ -100,4 +100,6 @@
     <string name="pref_enable_chrome_debugger_info">Omogočite to možnost, da za dokument uporabite orodje razhroščevanja v Chromu</string>
     <string name="pref_enable_chrome_debugger">Razhroščevanje Chrome</string>
     <string name="pref_category_editor">Nastavitve urejevalnika</string>
+    <string name="file_actions_icon_desc">Dejanja datotek</string>
+    <string name="remove_from_list">Odstrani s seznama</string>
 </resources>

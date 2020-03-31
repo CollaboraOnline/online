@@ -100,4 +100,6 @@
     <string name="pref_enable_chrome_debugger_info">"Wužywanje rěda  za pytanje zmólkow Chrome w dokumenśe zmóžniś"</string>
     <string name="pref_enable_chrome_debugger">Pytanje zmólkow Chrome</string>
     <string name="pref_category_editor">Editorowe nastajenja</string>
+    <string name="remove_from_list">Z lisćiny wótwónoźeś</string>
+    <string name="file_actions_icon_desc">Datajowe akcije</string>
 </resources>

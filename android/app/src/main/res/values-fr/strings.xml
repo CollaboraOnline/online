@@ -99,4 +99,7 @@
     <string name="app_name_settings">Paramètrages</string>
     <string name="pref_enable_chrome_debugger_info">Activer pour utiliser le débogage Chrome dans le document.</string>
     <string name="pref_enable_chrome_debugger">Déboguage Chrome</string>
+    <string name="remove_from_list">Supprimer de la liste</string>
+    <string name="file_actions_icon_desc">Actions du fichier</string>
+    <string name="pref_category_editor">Paramètres de l\'éditeur</string>
 </resources>

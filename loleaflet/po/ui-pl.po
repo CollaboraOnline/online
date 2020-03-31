@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 16:08+0100\n"
-"PO-Revision-Date: 2020-03-15 21:23+0000\n"
+"PO-Revision-Date: 2020-03-31 08:56+0000\n"
 "Last-Translator: Adam Rak <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/pl/>\n"
 "Language: pl\n"
@@ -897,7 +897,7 @@ msgstr "Podpisano, ale nie zweryfikowano"
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
-msgstr "Podpis jest prawidłowy, ale dokument jest podpisany tylko częściowo."
+msgstr "Podpis jest prawidłowy, ale dokument jest podpisany tylko częściowo"
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
@@ -1025,7 +1025,7 @@ msgstr "Na serwerze nie ma już miejsca na dysku, skontaktuj się z administrato
 
 #: src/errormessages.js:14
 msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
-msgstr "Adres URL hosta jest pusty. Prawdopodobnie serwer loolwsd jest źle skonfigurowany, skontaktuj się z administratorem"
+msgstr "Adres URL hosta jest pusty. Prawdopodobnie serwer loolwsd jest źle skonfigurowany, skontaktuj się z administratorem."
 
 #: src/errormessages.js:15
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"

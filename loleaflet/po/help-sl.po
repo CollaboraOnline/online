@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: LibreOffice Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-25 19:21+0000\n"
+"PO-Revision-Date: 2020-03-30 19:52+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/sl/>\n"
 "Language: sl\n"
@@ -1153,7 +1153,7 @@ msgstr "Če želite skočiti nazaj na izbrano stanje, ga izberite z miško in iz
 
 #: html/loleaflet-help.html%2Bdiv.p:295-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
-msgstr ""
+msgstr "To je še posebej uporabno, če je npr. kolega nenamerno izbral celotno besedilo dokumenta s kombinacijo tipk <span class=\"kbd\">krmilka</span> + <span class=\"kbd\">A</span> ter v nadaljevanju nadaljeval z vnosom besedila in ga s tem prepisal, medtem ko ste hkrati tudi sami urejali besedilo."
 
 #: html/loleaflet-help.html%2Bdiv.h4:296-5
 msgid "Inactive document"
@@ -1161,11 +1161,11 @@ msgstr "Neaktivni dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:297-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
-msgstr ""
+msgstr "Če <span class=\"productname\">%productName</span> zazna, da nekaj časa v brskalniku niste bili dejavni, postavi dokument v »nedejavno« stanje. Dokument je prikazan s prosojno sivinsko kopreno s sporočilom »Nedejaven dokument – kliknite za nadaljevanje urejanja«."
 
 #: html/loleaflet-help.html%2Bdiv.p:299-5
 msgid "To continue editing, click on the document and the layover and message disappear. Any changes that may have been made by other users – while collaboratively editing the document – are re-loaded."
-msgstr ""
+msgstr "Z urejanjem nadaljujete tako, da kliknete dokument in prekrivno sporočilo izgine. Spremembe, ki so jih morda opravili drugi uporabniki – ob sourejanju dokumenta – se ponovno naložijo."
 
 #: html/loleaflet-help.html%2Bdiv.h4:300-5
 msgid "Pasting"
@@ -1173,15 +1173,15 @@ msgstr "Lepljenje"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
-msgstr ""
+msgstr "Ko prilepite vsebino iz istega dokumenta, se oblika in elementi ohranijo. Če kopirate iz drugega dokumenta iz drugega zavihka ali okna brskalnika ali izvedn brskalnika, bo prilepljena vsebina ohranila obogateno besedilo."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr ""
+msgstr "Besedilo lahko kot neoblikovano prilepite s tipkami za bližnjico: <span class=\"kbd\">krmilka</span> + <span class=\"kbd\">izmenjalka</span> + <span class=\"kbd\">dvigalka</span> + <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
-msgstr ""
+msgstr "Ko prilepite besedilo iz dokumenta, se oblikovanje upošteva. Prilepite lahko tudi predmete, kot so slike, če jih kopirate iz dokumenta, ki ga urejate."
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text."
@@ -1189,7 +1189,7 @@ msgstr "Ko v dokument prilepite besedilo iz zunanjega vira (iz drugega okna brsk
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr ""
+msgstr "Če ste izrezali ali kopirali vsebino interno, lahko to vsebino prilepite prek kontekstnega menija."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
@@ -1241,7 +1241,7 @@ msgstr "<span class=\"def\">Vstavi krajevno sliko:</span> odpre izbirnik datotek
 
 #: html/loleaflet-help.html%2Bdiv.p:326-5
 msgid "Images can be resized, rotated and anchored. Text can be wrapped around the image. Select the image and open the context menu. Use the images handles to resize the image with the mouse."
-msgstr ""
+msgstr "Slike lahko spremenite po velikosti, vrstite in sidrate. Besedilo lahko obliva slike. Izberite sliko in odprite kontekstni meni. Uporabite ročice slike, da spremenite velikost slike z miško."
 
 #: html/loleaflet-help.html%2Bdiv.h4:327-5
 msgid "Comments in documents"
@@ -1249,7 +1249,7 @@ msgstr "Komentarji v dokumentih"
 
 #: html/loleaflet-help.html%2Bdiv.p:328-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
-msgstr ""
+msgstr "Vstavite komentarje v <span class=\"productname\">%productName</span> na mesta, kjer je potrebna posebna pozornost bralcev. Komentarji se prikažejo na desni strani in vsebujejo ime in datum komentatorja."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:330-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."
@@ -1261,7 +1261,7 @@ msgstr "Preverjanje črkovanja"
 
 #: html/loleaflet-help.html%2Bdiv.p:332-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> lahko preverja črkovanje v besedilnih dokumentih, preglednicah in predstavitvah. Rdeča valovita črta podčrta napačno črkovane besede. Kliknite desni gumb miške, da odprete kontekstni meni s predlogi popravkov napačno črkovanih besed."
 
 #: html/loleaflet-help.html%2Bdiv.p:334-5
 msgid "To systematically spell-check the whole document use the <span class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
@@ -1281,7 +1281,7 @@ msgstr "Veljajo vse funkcije preglednic in matematična pravila."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
-msgstr ""
+msgstr "Jezik formul je znan vsakemu uporabniku preglednic in je podrobno predstavljen v <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">specifikaciji OpenFormula organizacije za standardizacijo OASIS</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:349-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
@@ -1289,23 +1289,23 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:353-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."
-msgstr ""
+msgstr "<span class=\"def\">Razvrščanje podatkov:</span> seznam števil ali besedil lahko razvrstite naraščajoče ali padajoče. <span class=\"productname\">%productName</span> samodejno zazna, katere celice so glave kot tudi soležne stolpce, kar razširja izbor."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:354-5
 msgid "<span class=\"def\">Filtering data:</span> Filters and advanced filters allow you to work on certain filtered rows (records) of a data range. In the spreadsheets in <span class=\"productname\">%productName</span> there are various possibilities for applying filters."
-msgstr ""
+msgstr "<span class=\"def\">Filtriranje podatkov:</span> filtri in napredni filtri omogočajo delo z določenimi filtriranimi vrsticami (zapisi) podatkovnega obsega. V <span class=\"productname\">%productName</span> obstajajo različne možnosti uporabe filtrov v preglednicah."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:357-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
-msgstr ""
+msgstr "Možna uporaba funkcije <span class=\"ui\">Samodejni filter</span> je hitro omejevanje prikaza zapisov z identičnimi vnosi v podatkovnem polju."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:360-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
-msgstr ""
+msgstr "V pogovornem oknu <span class=\"ui\">Standardni filter</span> lahko določite tudi obsege, ki vsebujejo vrednosti, še posebej podatkovna polja. Uporabite lahko standardni filter, da povežete pogoje z logičnima operatorjema AND (in) ali OR (ali)."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:361-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
-msgstr ""
+msgstr "<span class=\"ui\">Napredni filter</span> podpira do osem hkratnih pogojev filtriranja. Z naprednimi filtri vnesete pogoje neposredno v delovni list."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:363-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
@@ -1329,15 +1329,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:376-11
 msgid "To remove the validity of the cell, open the dialog and set the <span class=\"ui\">Allow</span> list to “All values”."
-msgstr ""
+msgstr "Če želite odstraniti veljavnost celice, odprite pogovorno okno in nastavite seznam <span class=\"ui\">Dovoli</span> na »Vse vrednosti«."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:378-5
 msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
-msgstr ""
+msgstr "<span class=\"def\">Komentarji:</span> v preglednico lahko dodate en komentar na celico. Če izberete <span class=\"ui\">Vstavi komentar</span>, se odpre pojavno okno, ki omogoča vnos vsebine komentarja. Rdeča pika v desnem vrhnjem kotu celice nakazuje, da ima celica komentar. Z miško postojte nad celico, da se prikažejo komentarji."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:380-5
 msgid "<span class=\"def\">Conditional formatting:</span> <span class=\"productname\">%productName</span> adds symbols to each cell of a range based on cells conditions. Select the cell range and click the <span class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the symbol set to apply on the range."
-msgstr ""
+msgstr "<span class=\"def\">Pogojno oblikovanje:</span> <span class=\"productname\">%productName</span> doda simbole vsaki celici obsega glede na pogoje za celice. Izberite obseg celic in kliknite ikono <span class=\"ui\">Pogojno oblikovanje</span> v orodni vrstici. Izberite nabor simbolov, ki naj bo uporabljen v obsegu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:388-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
@@ -1345,7 +1345,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
-msgstr ""
+msgstr "Kontekstni meniji se odprejo s klikom desnega gumba miške. Ukazi, ki so na voljo v kontekstnem meniju, so povezani – ne sicer izčrpno – s predmetom s pozornostjo v dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:393-5
 msgid "Formatting text"
@@ -1361,11 +1361,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:396-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format text document objects by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected."
-msgstr ""
+msgstr "<span class=\"def\">Neposredno oblikovanje:</span> predmete besedilnega dokumenta lahko oblikujete neposredno iz menijev, orodnih vrstic ali kontekstnih menijev. Neposredno oblikovanje velja le za trenutno izbrani predmet."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
-msgstr ""
+msgstr "<span class=\"def\">Oblikovanje sloga:</span> <span class=\"productname\">%productName</span> podpira sloge odstavka. Odstavku lahko določite obstoječi slog odstavka. Izberite menijski ukaz <span class=\"ui\">Uredi</span> → <span class=\"ui\">Uredi sloge</span>, da spremenite slog."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:401-5
 msgid "Handling Tables"
@@ -1373,11 +1373,11 @@ msgstr "Ravnanje s tabelami"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:402-5
 msgid "Insert tables with proper icon in the toolbar. Select the initial number of rows and columns. Add rows and columns with the cell context menu. Merge cells with the <span class=\"ui\">Table</span> menu. The default paragraph style inside cells is “Table contents”."
-msgstr ""
+msgstr "Vstavite tabele z ustrezno ikono v orodni vrstici. Izberite začetno število vrstic in stolpcev. Vrstice in stolpce dodajte prek kontekstnega menija celice. Spojite celice prek menija <span class=\"ui\">Tabela</span>. Privzeti slog odstavka v celicah je »Vsebina tabele«."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:404-5
 msgid "<span class=\"def\">Formatting cells:</span> Click in the cell or range of cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\">Properties</span>. Fine tune the table with the properties dialog."
-msgstr ""
+msgstr "<span class=\"def\">Oblikovanje celic:</span> kliknite celico ali obseg celic ter izberite meni <span class=\"ui\">Tabela</span> → <span class=\"ui\">Lastnosti</span>. Videz tabele natančno določite v pogovornem oknu lastnosti."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:405-5
 msgid "Track changes"
@@ -1385,11 +1385,11 @@ msgstr "Sledenje spremembam"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:406-5
 msgid "When you turn on Track Changes, <span class=\"productname\">%productName</span> marks up new changes made to the document. Select this option again to turn it off."
-msgstr ""
+msgstr "Če vključite sledenje spremembam, <span class=\"productname\">%productName</span> označuje vse spremembe v dokumentu. Če ponovno izberete to možnost, jo izključite."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:408-5
 msgid "Changes made by different people are shown in different colors and each tracked change can be accepted or rejected, using the box the appears on the right. You can also add a comment there."
-msgstr ""
+msgstr "Spremembe, ki jih opravijo različni uporabniki, so prikazane v različnih barvah in vsaka sledeno spremembo lahko sprejmete ali zavrnete z uporabo polja na desni strani. Tam lahko tudi dodate svoj komentar."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:409-5
 msgid "Other advanced features"
@@ -1397,11 +1397,11 @@ msgstr "Druge napredne funkcionalnosti"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:410-5
 msgid "<span class=\"def\">Comments:</span> Comments are inserted in the text and displayed on the right side of the screen."
-msgstr ""
+msgstr "<span class=\"def\">Komentarji:</span> komentarji se vstavijo v besedilo in prikažejo na desni strani zaslona."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable spaces are shown as marks to assisting text alignment, editing and formatting."
-msgstr ""
+msgstr "<span class=\"def\">Oblikovalne oznake:</span> prelomi odstavka, strani ter neprelomni presledki so prikazani kot oznake, kar je lahko priročno pri poravnavi, urejanju in oblikovanju besedila."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:412-5
 msgid "<span class=\"def\">Fields:</span> A basic set of fields is available to insert in the document."
@@ -1409,19 +1409,19 @@ msgstr "<span class=\"def\">Polja:</span> na voljo je osnovni nabor polj za vsta
 
 #: html/loleaflet-help.html%2Bdiv.div.p:413-5
 msgid "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index can be updated with new entries."
-msgstr ""
+msgstr "<span class=\"def\">Abecedno kazalo:</span> obstoječe abecedno kazalo je mogoče posodobiti z novimi in popravljenimi vnosi."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:414-5
 msgid "<span class=\"def\">Page header and footer:</span> Headers and footers are available for the existing page style applied in the document at the cursor position."
-msgstr ""
+msgstr "<span class=\"def\">Glava in noga strani:</span> glave in noge so na voljo za obstoječi slog strani, uporabljen v dokumentu na položaju kazalke."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
-msgstr ""
+msgstr "<span class=\"def\">Sprotne in končne opombe:</span> sprotne in končne opombe so podprte."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
 msgid "<span class=\"productname\">%productName</span> Impress edits presentations in a way that should be familiar to people. Operations like typing text, cut, copy and pasting contents, selecting text , inserting, resizing, anchoring images, adding and handling tables, are similar to a desktop presentation application. Use the keyboard, menus and toolbars to perform actions in your document."
-msgstr ""
+msgstr "Z <span class=\"productname\">%productName</span> Impress urejate prosojnice na način, ki vam je najbrž že znan. Operacije, kot so vnašanje besedila, kopiranje, izrezovanje in lepljenje vsebine, izbiranje besedila, vstavljanje, spreminjanje velikosti in sidranje slik, dodajanje in ravnanje s tabelami - vse to je podobno kot v namiznih pisarniških urejevalnikih prosojnic. Dejanja v dokumentu lahko izvedete prek tipkovnice, menijev in orodnih vrstic."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:425-5
 msgid "<span class=\"productname\">%productName</span> displays presentation slide shows, including a subset of slide transitions and object animations. Choose the slide show from the menu or click on icon in the bottom left toolbar in the slide pane."
@@ -1437,11 +1437,11 @@ msgstr "V podoknu kliknite poljubno ogledno sličico prosojnice, da preklopite n
 
 #: html/loleaflet-help.html%2Bdiv.div.p:430-5
 msgid "Use the slide pane toolbar in the bottom to start the slideshow, add slide, duplicate or delete the current slide."
-msgstr ""
+msgstr "Uporabite orodno vrstico podokna prosojnice na dnu, da zaženete projekcijo, dodate prosojnico, podvojite ali izbrišete trenutno prosojnico."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:433-5
 msgid "<span class=\"def\">Slide layouts:</span> <span class=\"productname\">%productName</span> Impress let you change the slide layout. Select the desired slide layout in the drop-down layout list."
-msgstr ""
+msgstr "<span class=\"def\">Postavitve prosojnic:</span> <span class=\"productname\">%productName</span> Impress omogoča spremembo postavitve prosojnice. Izberite želeno postavitev v spustnem seznamu postavitev."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:435-5
 msgid "<span class=\"def\">Master slide:</span> Select the master slide associated to the current slide. Format and arrange slide elements in the master slide."
@@ -1457,11 +1457,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:438-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
-msgstr ""
+msgstr "<span class=\"def\">Tabele:</span> v predstavitev vstavite tabele. V stranski vrstici izberite temo tabele."
 
 #: html/loleaflet-help.html%2Bdiv.h4:442-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
-msgstr ""
+msgstr "Katere vrste dokumentov podpira <span class=\"productname\">%productName</span>?"
 
 #: html/loleaflet-help.html%2Bdiv.p:443-5
 msgid "<span class=\"productname\">%productName</span> supports both reading and writing for the following file formats:"
@@ -1505,7 +1505,7 @@ msgstr "Kako lahko zaprem <span class=\"productname\">%productName</span> brez s
 
 #: html/loleaflet-help.html%2Bdiv.p:457-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> redno shranjuje dokument v ozadju, brez shranjevanja ga ne morete zapreti. Če želite opustiti svoje spremembe, jih morate razveljaviti ali uporabiti <span class=\"ui\">Glej zgodovino revizij</span> v meniju <span class=\"ui\">Datoteka</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:458-5
 msgid "Can <span class=\"productname\">%productName</span> open a password-protected document?"
@@ -1529,7 +1529,7 @@ msgstr "Kako iz dokumenta odstranim rdeče valovite črte?"
 
 #: html/loleaflet-help.html%2Bdiv.p:463-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
-msgstr ""
+msgstr "Odprite meni <span class=\"ui\">Orodja</span> in odstranite potrditev pri <span class=\"ui\">Samodejno preverjanje črkovanja</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:464-5
 msgid "What is the blue wavy underline in some words in the text?"
@@ -1537,7 +1537,7 @@ msgstr "Kaj predstavlja morda valovita črta pod nekaterimi besedami v besedilu?
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
-msgstr ""
+msgstr "Slovnične napake v besedilu so podčrtane z valovito modro črto. Kliknite podčrtano besedilo z desnim gumbom miške, da se odpre meni s predlogi za odpravo slovničnih napak in s prekršenimi slovničnimi pravili. Izberite ustrezni predlog za spremembo besedila."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
@@ -1549,11 +1549,11 @@ msgstr "Da. Kliknite želeno besedo in izberite <span class=\"ui\">Orodja</span>
 
 #: html/loleaflet-help.html%2Bdiv.h4:469-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"
-msgstr ""
+msgstr "Kaj predstavljajo modri simboli <span class=\"blue\">¶</span> in kako jih lahko odstranim iz svojega dokumenta?"
 
 #: html/loleaflet-help.html%2Bdiv.p:470-5
 msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to help text alignment and editing and is not printed. To toggle it in the document display, choose menu <span class=\"ui\">View</span> → <span class=\"ui\">Formatting mark</span>."
-msgstr ""
+msgstr "Simbol <span class=\"blue\">¶</span> je oblikovalna oznaka. Pomaga pri poravnavi in urejanju besedila in se ne natisne. Če želite izključiti njihov prikaz, izberite menijski ukaz <span class=\"ui\">Pogled</span> → <span class=\"ui\">Oblikovalne oznake</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:474-5
 msgid "How do I get a word count of my document?"
@@ -1561,11 +1561,11 @@ msgstr "Kako preštejem besede v svojem dokumentu?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:475-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
-msgstr ""
+msgstr "Štetje besed je na voljo z menijskim ukazom <span class=\"ui\">Orodja</span> → <span class=\"ui\">Štetje besed</span>. Pojavi se pogovorno okno, ki prikazuje število besed v izboru in celem dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:477-5
 msgid "Word count is also displayed in the status bar. If no text is selected the word count is for the whole document. Otherwise the word count is for the selected text."
-msgstr ""
+msgstr "Števec besed je prikazan tudi v vrstici stanja. Če besedilo ni izbrano, velja števec besed za cel dokument. Sicer velja števec besed za izbrano besedilo."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:478-5
 msgid "How can I insert a currency, copyright or trademark symbol in the document?"
@@ -1581,7 +1581,7 @@ msgstr "Postavite kazalko na mesto, kamor želite vstaviti znak."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."
-msgstr ""
+msgstr "Izberite <span class=\"ui\">Vstavi</span> → <span class=\"ui\">Posebni znaki</span> ali kliknite ustrezno ikono v orodni vrstici. Odpre se pogovorno okno."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:486-11
 msgid "You can either browse the characters displayed with the drop lists or type a search key in the <span class=\"ui\">Search</span> box. If you know the Unicode numeric code of the special character, enter in the boxes on the right."
@@ -1589,7 +1589,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:487-11
 msgid "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <span class=\"ui\">Cancel</span>."
-msgstr ""
+msgstr "Pritisnite gumb <span class=\"ui\">Vstavi</span> . Pogovorno okno zaprete s pritiskom gumba <span class=\"ui\">Prekliči</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:489-5
 msgid "Why can't I delete text? It just gets a strike-through?"
@@ -1597,11 +1597,11 @@ msgstr "Zakaj ne morem izbrisati besedila? Zakaj je le prečrtano?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:490-5
 msgid "You have the Track Changes feature enabled for the document. Track Changes records all changes in the text and shows the editions for later revision. Useful for marking changes in text and spreadsheets. Track changes are enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Record</span>."
-msgstr ""
+msgstr "Funkcija Sledi spremembam je za dokument omogočena. Sledi spremembam beleži vse spremembe besedila in pokaže urejanje za kasnejše revizije. Uporabno je za označevanje sprememb v besedilih in preglednicah. Sledenje spremembam omogočite s potrditvijo <span class=\"ui\">Uredi</span> → <span class=\"ui\">Sledi spremembam</span> → <span class=\"ui\">Beleži</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "With track changes enabled your document is shown the following manner:"
-msgstr ""
+msgstr "Z omogočenim sledenjem sprememb je vaš dokument prikazan na sledeč način:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."
@@ -1625,7 +1625,7 @@ msgstr "Barva, dodeljena spremembam, je odvisna od uporabnika, ki spreminja doku
 
 #: html/loleaflet-help.html%2Bdiv.div.p:500-5
 msgid "To display or hide track changes choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. Beware that if track changes are enabled but hidden, you still record changes and may inadvertently leave unwanted text available in the document."
-msgstr ""
+msgstr "Za vklop oz. izklop prikaza sprememb izberite menijski ukaz <span class=\"ui\">Uredi</span> → <span class=\"ui\">Sledi spremembam</span> → <span class=\"ui\">Pokaži</span>. Upoštevajte, da so v primeru, da je sledenje sprememb omogočeno, a so skrite, še vedno beležite spremembe in lahko tako nenamerno pustite neželeno besedilo v dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
@@ -1637,7 +1637,7 @@ msgstr "Kako nastavim robove dokumenta?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:504-5
 msgid "Using the ruler drag the leftmost edge of the ruler to adjust the left margin, or the rightmost for the right margin."
-msgstr ""
+msgstr "Z ravnilom povlecite skrajni levi rob ravnila, da prilagodite levi rob, oz. skrajni desni rob ravnila, da prilagodite desni rob."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:505-5
 msgid "Using the page style"
@@ -1726,7 +1726,7 @@ msgstr "Kako izberem podatke za tiskanje?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:539-5
 msgid "Insert column and row breaks in the spreadsheet to narrow the print range and print the document to download. On printing the PDF, select the pages of interest."
-msgstr ""
+msgstr "Z vstavljanjem prelomov stolpcev in vrstic v preglednico lahko zožite obseg tiskanja in natisnete dokument za prenos. Pri tiskanju v PDF lahko izberete le želene strani."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:540-5
 msgid "How can I import CSV data?"

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 16:08+0100\n"
-"PO-Revision-Date: 2020-02-23 18:15+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
+"PO-Revision-Date: 2020-03-27 17:04+0000\n"
+"Last-Translator: sophie <gautier.sophie@gmail.com>\n"
 "Language-Team: French <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -447,7 +447,7 @@ msgstr "Texte riche (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:480
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:472
 #: src/control/Signing.js:601
@@ -566,10 +566,8 @@ msgid "Reset to Default Language"
 msgstr "Rétablir la langue par défaut"
 
 #: src/control/Control.Menubar.js:1071
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "Insérer des formes"
+msgstr "Insérer une forme"
 
 #: src/control/Control.Menubar.js:1154
 msgid "Are you sure you want to delete this slide?"

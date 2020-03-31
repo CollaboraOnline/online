@@ -100,4 +100,6 @@
     <string name="pref_enable_chrome_debugger_info">Galluogwch i ddefnyddio teclyn dadfygio Chrome yn y ddogfen</string>
     <string name="pref_enable_chrome_debugger">Dadfygio Chrome</string>
     <string name="pref_category_editor">Gosodiadau\'r Golygydd</string>
+    <string name="remove_from_list">Tynnu o\'r rhestr</string>
+    <string name="file_actions_icon_desc">Gweithredoedd ffeiliau</string>
 </resources>

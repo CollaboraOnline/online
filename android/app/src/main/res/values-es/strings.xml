@@ -40,7 +40,7 @@
     <string name="sort_za">Z-A</string>
     <string name="sort_oldest">Los más antiguos primero</string>
     <string name="sort_newest">Los más recientes primero</string>
-    <string name="file_icon_desc">icono de archivo</string>
+    <string name="file_icon_desc">Icono de archivo</string>
     <string name="title_recents">Archivos recientes</string>
     <string name="title_browser">Todos los archivos</string>
     <!-- Pref keys as resources ; Not currently used -->
@@ -118,4 +118,6 @@
     <string name="pref_enable_chrome_debugger_info">Actívela para utilizar la herramienta de depuración de Chrome en el documento</string>
     <string name="pref_enable_chrome_debugger">Depuración de Chrome</string>
     <string name="pref_category_editor">Configuración del editor</string>
+    <string name="file_actions_icon_desc">Acciones de archivo</string>
+    <string name="remove_from_list">Quitar de la lista</string>
 </resources>

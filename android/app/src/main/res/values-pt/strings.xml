@@ -99,4 +99,5 @@
     <string name="share_document">Partilhar documento</string>
     <string name="pref_enable_chrome_debugger_info">Possibilita a utilização da ferramentas de depuração do Chrome no documento</string>
     <string name="pref_enable_chrome_debugger">Depuração Chrome</string>
+    <string name="pref_category_editor">Definições do editor</string>
 </resources>

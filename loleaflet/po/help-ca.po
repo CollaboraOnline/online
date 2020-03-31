@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-25 20:28+0000\n"
-"Last-Translator: Joan Montané <joan@montane.cat>\n"
+"PO-Revision-Date: 2020-03-30 09:16+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -1259,7 +1259,7 @@ msgstr "Verificació ortogràfica"
 
 #: html/loleaflet-help.html%2Bdiv.p:332-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
-msgstr ""
+msgstr "El <span class=\"productname\">%productName</span> pot comprovar l'ortografia dels documents de text, els fulls de càlcul i les presentacions. Els errors ortogràfics s'assenyalen amb un subratllat ondulat vermell. Feu-hi clic amb el botó dret del ratolí per a obrir un menú amb suggeriments per a corregir l'error."
 
 #: html/loleaflet-help.html%2Bdiv.p:334-5
 msgid "To systematically spell-check the whole document use the <span class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."

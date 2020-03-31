@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="exiting">Keluar...</string>
+    <string name="loading">Memuat...</string>
+    <string name="rate_our_app_text">Jika anda menyukainya, tolong beri kami bintang 5 di Google Play. Ulasan bagus Anda adalah motivasi terbaik kami.</string>
+    <string name="rate_our_app_title">Terimakasih telah menggunakan %1$s!</string>
+    <string name="later">Nanti</string>
+    <string name="rate_now">Nilai sekarang</string>
+    <string name="preparing_for_the_first_start_after_an_update">Menyiapkan awal pertama setelah pemutakhiran.</string>
+    <string name="cannot_open_file_chooser">Tidak bisa membuka pemilih berkas</string>
+    <string name="failed_to_insert_image">Gagal untuk menyisipkan citra</string>
+    <string name="failed_to_load_file">Gagal menetapkan berkas untuk dimuat</string>
+    <string name="storage_permission_required">perijinan Penyimpanan dibutuhkan</string>
+    <string name="temp_file_saving_disabled">Berkas ini hanya-baca, menyimpan dimatikan.</string>
+</resources>

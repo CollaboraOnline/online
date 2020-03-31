@@ -8,4 +8,9 @@
     <string name="temp_file_saving_disabled">Tuta dataja da so jenož čitać, składowanje je znjemóžnjene.</string>
     <string name="saving">Składuje so...</string>
     <string name="preparing_for_the_first_start_after_an_update">Přihotowanje na prěni start po aktualizaciji.</string>
+    <string name="exiting">Kónči so...</string>
+    <string name="rate_our_app_text">Jeli so wam spodoba, dajće nam prošu 5 hwěžkow w Google Play. Waše dobre pohódnoćenja su naša najlěpša motiwacija.</string>
+    <string name="rate_our_app_title">Dźakujemy so, zo sće %1$s wužiwał!</string>
+    <string name="later">Pozdźišo</string>
+    <string name="rate_now">Nětko pohódnoćić</string>
 </resources>

@@ -100,4 +100,6 @@
     <string name="pref_enable_chrome_debugger_info">Gaitu dokumentuan Chromeren arazketa-tresna erabiltzeko</string>
     <string name="pref_enable_chrome_debugger">Chrome arazketa</string>
     <string name="pref_category_editor">Editorearen ezarpenak</string>
+    <string name="remove_from_list">Kendu zerrendatik</string>
+    <string name="file_actions_icon_desc">Fitxategi-ekintzak</string>
 </resources>

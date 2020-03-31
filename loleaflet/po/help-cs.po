@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-17 22:31+0000\n"
+"PO-Revision-Date: 2020-03-29 05:16+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -1143,7 +1143,7 @@ msgstr "Oprava dokumentu"
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr "Když upravuje dokument více lidí současně, jejich změny se mohou dostat do vzájemného konfliktu a to může vyústit ve zmatený obsah. Oprava dokumentu umožňuje  vrátit zpět změny ostatních uživatelů a obnovit tak předchozí stav dokumentu."
+msgstr "Když upravuje dokument více lidí současně, jejich změny se mohou dostat do vzájemného konfliktu a to může vyústit ve zmatený obsah. Oprava dokumentu umožňuje vrátit zpět změny ostatních uživatelů a obnovit tak předchozí stav dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.p:293-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
@@ -1151,7 +1151,7 @@ msgstr "Na daný stav přejdete zpět tím, že jej vyberete myší a stisknete 
 
 #: html/loleaflet-help.html%2Bdiv.p:295-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
-msgstr "To může být velmi užitečné – představte si, že kolega při souběžných úpravách nechtěně vybral veškerý text dokumentu pomocí <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">A</span> a pokračoval v psaní a tím text smazal."
+msgstr "To může být velmi užitečné – představte si, že kolega při souběžných úpravách nechtěně vybral veškerý text dokumentu pomocí <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">A</span>, pokračoval v psaní a tím text smazal."
 
 #: html/loleaflet-help.html%2Bdiv.h4:296-5
 msgid "Inactive document"
@@ -1171,7 +1171,7 @@ msgstr "Vkládání"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
-msgstr "Pokud vložíte obsah zkopírovaný v témže dokumentu, zachovají se jeho formát a prvky. Zkopírujete-li jej z jiného dokumentu na jiné kartě či v jiném okně prohlížeče, případně z aplikace mimo prohlížeč, ve vloženém obsahu se zachová formátování textu."
+msgstr "Pokud vložíte obsah zkopírovaný v témže dokumentu, zachovají se jeho formát a prvky. Zkopírujete-li jej z dokumentu na jiné kartě či v jiném okně prohlížeče, případně z aplikace mimo prohlížeč, ve vloženém obsahu se zachová formátování textu."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
