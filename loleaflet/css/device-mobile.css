@@ -32,6 +32,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 /* Related to loleaflet.css */
 #toolbar-hamburger {
 	width: 36px;
+	height: 36px;
 }
 #toolbar-hamburger.menuwizard-opened {
 	width: 36px;
