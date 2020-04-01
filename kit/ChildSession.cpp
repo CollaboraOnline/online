@@ -930,15 +930,13 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
                        completionHandler:^(NSDictionary<NSFileProviderServiceName,NSFileProviderService *> *services,
                                            NSError *error) {
             if (services == nil) {
-                LOG_TRC("Could not get file provider services for " << [[docURL absoluteString] UTF8String]);
+                std::cerr << "Could not get file provider services for " << [[docURL absoluteString] UTF8String] << "\n";
             } else if ([services count] == 0) {
-                LOG_TRC("No file provider services returned for " << [[docURL absoluteString] UTF8String]);
+                std::cerr << "No file provider services returned for " << [[docURL absoluteString] UTF8String] << "\n";
             } else {
-                LOG_TRC("File provider services for " << [[docURL absoluteString] UTF8String]);
-                NSEnumerator *keyEnumerator = [services keyEnumerator];
-                NSString *key;
-                while ((key = (NSString*)[keyEnumerator nextObject])) {
-                    LOG_TRC("  " << key);
+                std::cerr << "File provider services for " << [[docURL absoluteString] UTF8String] << ":\n";
+                for (auto key in [services allKeys]) {
+                    std::cerr << "  " << [(NSString*)key UTF8String] << "\n";
                 }
             }
         }];
@@ -947,6 +945,16 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
     // Alas, this seems to work only for documents on iCloud Drive.
     NSError *error;
     auto resources = [docURL promisedItemResourceValuesForKeys:@[NSURLUbiquitousItemContainerDisplayNameKey] error:&error];
+    if (resources == nil) {
+        std::cerr << "Could not get ubiquitous container names for " << [[docURL absoluteString] UTF8String] << "\n";
+    } else if ([resources count] == 0) {
+        std::cerr << "No ubiquitous container names for " << [[docURL absoluteString] UTF8String] << "\n";
+    } else {
+        std::cerr << "Ubiquitous container names for " << [[docURL absoluteString] UTF8String] << ":\n";
+        for (auto name in [resources allValues]) {
+            std::cerr << "  " << [(NSString*)name UTF8String] << "\n";
+        }
+    }
 #endif
 
     NSArray<NSString *> *pathComponents = [docURL pathComponents];
