@@ -917,7 +917,39 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
     }
 
 #ifdef IOS
-    NSArray<NSString *> *pathComponents = [[NSURL URLWithString:[NSString stringWithUTF8String:getDocURL().c_str()]] pathComponents];
+    NSURL *docURL = [NSURL URLWithString:[NSString stringWithUTF8String:getDocURL().c_str()]];
+
+#if 0
+    // Experimentation
+
+    // Check if we can figure out the name of the file provider service the document is on. (No, the
+    // services dictionary passed to the completion handler is always empty, except for On My iPad
+    // and iCloud Drive.)
+    [NSFileManager.defaultManager
+     getFileProviderServicesForItemAtURL:docURL
+                       completionHandler:^(NSDictionary<NSFileProviderServiceName,NSFileProviderService *> *services,
+                                           NSError *error) {
+            if (services == nil) {
+                LOG_TRC("Could not get file provider services for " << [[docURL absoluteString] UTF8String]);
+            } else if ([services count] == 0) {
+                LOG_TRC("No file provider services returned for " << [[docURL absoluteString] UTF8String]);
+            } else {
+                LOG_TRC("File provider services for " << [[docURL absoluteString] UTF8String]);
+                NSEnumerator *keyEnumerator = [services keyEnumerator];
+                NSString *key;
+                while ((key = (NSString*)[keyEnumerator nextObject])) {
+                    LOG_TRC("  " << key);
+                }
+            }
+        }];
+
+    // Check if we can figure out the "ubiquitous item container" name, which apparently means the file provider extension name.
+    // Alas, this seems to work only for documents on iCloud Drive.
+    NSError *error;
+    auto resources = [docURL promisedItemResourceValuesForKeys:@[NSURLUbiquitousItemContainerDisplayNameKey] error:&error];
+#endif
+
+    NSArray<NSString *> *pathComponents = [docURL pathComponents];
     NSString *baseName = [[pathComponents lastObject] stringByDeletingPathExtension];
     NSURL *documentDirectory = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
     NSString *dotFormat = [@"." stringByAppendingString:[NSString stringWithUTF8String:format.c_str()]];
