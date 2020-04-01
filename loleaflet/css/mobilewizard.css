@@ -28,8 +28,8 @@ span.menu-entry-icon img {
 	z-index: 1501 !important;
 	position: relative !important;
 	background-color: #dae6f3 !important;
-	padding-left: 8px !important;
-	border-radius: 0 0 0 100px !important;
+	padding-left: 3px !important;
+	border-radius: 0 0 0 15px !important;
 }
 
 #mobile-wizard.menuwizard #mobile-wizard-titlebar{
