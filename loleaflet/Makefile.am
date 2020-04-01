@@ -105,7 +105,6 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/impress.css \
 	$(srcdir)/css/impress-mobile.css \
 	$(srcdir)/css/spreadsheet.css \
-	$(srcdir)/css/spreadsheet-mobile.css \
 	$(srcdir)/css/writer.css \
 	$(srcdir)/css/writer-mobile.css \
 	$(srcdir)/css/editor.css \
