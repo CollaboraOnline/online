@@ -43,6 +43,9 @@ describe('Spell checking menu.', function() {
 					}
 				}
 
+				cy.get('.leaflet-cursor.blinking-cursor')
+					.should('exist');
+
 				// Remove selection
 				cy.get('body')
 					.type('{leftarrow}');
