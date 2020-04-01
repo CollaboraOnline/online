@@ -239,3 +239,106 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
     background-color: #eeeeee;
     border-radius: 0px;
 }
+
+/* Related to vex.css */
+.vex-open .loleaflet-user-idle {
+	background: rgba(0, 0, 0, 0)!important;
+	font-size: xx-large!important;
+	color: #fff!important;
+	text-align: center!important;
+}
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="date"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime-local"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="email"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="month"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="number"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="password"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="search"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="tel"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="time"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="url"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="week"]{
+	padding: 0 !important
+}
+.vex-dialog-input > textarea.loleaflet-annotation-textarea {
+	height: 198px;
+	border: 4px solid #f0f0f0 !important;
+	box-shadow: 0 0 1px 1px #dfdfdf;
+}
+.vex-dialog-input > textarea.loleaflet-annotation-textarea:focus {
+	height: 198px;
+	border: 4px solid #f0f0f0 !important;
+	box-shadow: 0 0 1px 1px #0b87e7 !important;
+}
+.vex-dialog-message {
+	text-align: center;
+	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif !important;
+	font-size: 1em !important;
+	font-weight: 600 !important;
+}
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"] {
+	border-radius: 4px !important;
+	background-color: #fff !important;
+	width: 100%;
+	width: -moz-available !important;
+	width: -webkit-fill-available !important;
+	width: fill-available !important;
+	border: 4px solid #fff !important;
+	box-shadow: 0 0 1px 1px #dfdfdf;
+}
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"]:focus {
+	border: 4px solid #fff !important;
+	box-shadow: 0 0 1px 1px #0b87e7 !important;
+	color: #0b87e7 !important;
+}
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"]:focus input{
+	color: #000 !important;
+}
+.vex-dialog-input {
+	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif !important;
+	font-size: 0.8em;
+}
+.vex.vex-theme-plain .vex-content {
+	height: 100% !important;
+	max-width: 100% !important;
+	width: auto !important;
+	border: none;
+	box-shadow: none;
+	border-radius: none;
+}
+.vex.vex-theme-plain {
+	padding: 0px !important;
+	position: relative !important;
+	top: -42px !important;
+}
+.vex-open .vex-overlay {
+	z-index: 2000;
+	min-height: 100%;
+	position: absolute;
+	width: 100%;
+	width: -moz-available !important;
+	width: -webkit-fill-available !important;
+	width: fill-available !important;
+	top: 0;
+	background-color: white;
+}
+.vex.vex-theme-plain input {
+	font-size: 1.1em !important;
+}
+textarea.loleaflet-annotation-textarea {
+	min-width: -moz-available !important;
+	min-width: -webkit-fill-available !important;
+	min-width: fill-available !important;
+}
+button.vex-dialog-button-primary.vex-dialog-button.vex-first {
+	border: 1px solid #0b87e7 !important;
+	border-radius: 4px !important;
+	background-color: #0b87e7 !important;
+	color: #fff !important;
+}
+button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
+	border-radius: 4px;
+	background-color: #fff !important;
+	border: 1px solid #aaa !important;
+}
+.vex.vex-theme-plain .vex-dialog-button{
+	line-height: 1em !important;
+	height: auto !important;
+}
+.vex-overlay.loleaflet-user-idle-overlay {
+	background-color: #05396180;
+}
+.vex-content.loleaflet-user-idle{
+	padding-top: 160px !important;
+	padding-bottom: 160px !important;
+}
