@@ -1183,7 +1183,23 @@ L.Control.LokDialog = L.Control.extend({
 		console.log('_onCalcInputBarClose: end');
 	},
 
+	_closeChildWindows: function(dialogId) {
+		// child windows - with greater id number
+		var that = this;
+		var foundCurrent = false;
+
+		Object.keys(this._dialogs).forEach(function(id) {
+			if (foundCurrent && !that._isSidebar(id) && !that._isCalcInputBar(id))
+				that._onDialogClose(id, true);
+
+			if (id == dialogId)
+				foundCurrent = true;
+		});
+	},
+
 	_onDialogClose: function(dialogId, notifyBackend) {
+		this._closeChildWindows(dialogId);
+
 		if (window.ThisIsTheiOSApp)
 			w2ui['editbar'].enable('closemobile');
 
