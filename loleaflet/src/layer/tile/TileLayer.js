@@ -2253,7 +2253,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._viewLayerGroup.removeLayer(viewCursorMarker);
 		}
 
-		this._viewCursors[viewId].marker.showCursorHeader();
+		if (this._viewCursors[viewId].marker)
+			this._viewCursors[viewId].marker.showCursorHeader();
 	},
 
 	updateAllViewCursors : function() {
