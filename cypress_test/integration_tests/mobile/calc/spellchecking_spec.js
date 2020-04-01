@@ -18,14 +18,11 @@ describe('Calc spell checking menu.', function() {
 
 	function openContextMenu() {
 		// Step into edit mode
-		calcHelper.clickOnFirstCell();
-		calcHelper.clickOnFirstCell();
-		cy.get('.leaflet-cursor.blinking-cursor')
-			.should('exist');
+		calcHelper.dblClickOnFirstCell();
 
 		// Select text content
 		cy.get('textarea.clipboard')
-			.type('{ctrl}a');
+			.type('{ctrl}a', {force: true});
 
 		// Open context menu
 		cy.get('.leaflet-marker-icon')
@@ -40,10 +37,10 @@ describe('Calc spell checking menu.', function() {
 				}
 
 				// Remove selection
-				cy.get('body')
-					.type('{leftarrow}');
-				cy.get('.leaflet-marker-icon')
-					.should('not.exist');
+				calcHelper.removeTextSelection();
+
+				// Step into edit mode again
+				calcHelper.dblClickOnFirstCell();
 
 				helper.longPressOnDocument(XPos, YPos);
 			});
