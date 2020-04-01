@@ -142,3 +142,11 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #mCSB_1_scrollbar_horizontal .mCSB_draggerRail, #mCSB_2_scrollbar_horizontal .mCSB_draggerRail, #mCSB_3_scrollbar_horizontal .mCSB_draggerRail{
 	background-color: #f2f2f2 !important;
 }
+
+/* Related to selectionMarkers.css */
+#tb_formulabar_item_formula, #tb_formulabar_item_address {
+	height: 54px !important;
+}
+#tb_formulabar_item_formula > div, #tb_formulabar_item_address > div {
+	margin-top: -16px;
+}

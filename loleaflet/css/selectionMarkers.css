@@ -26,11 +26,3 @@
 #tb_formulabar_item_formula .inputbar_selection_handles{
 	/*display: none;*/
 }
-@media (max-width: 767px), (max-device-height: 767px) and (pointer: coarse) {
-	#tb_formulabar_item_formula, #tb_formulabar_item_address {
-		height: 54px !important;
-	}
-	#tb_formulabar_item_formula > div, #tb_formulabar_item_address > div {
-		margin-top: -16px;
-	}
-}
