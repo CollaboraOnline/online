@@ -115,3 +115,30 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #document-name-input {
     display: none;
 }
+
+/* Related to scollBar.css */
+.mCSB_scrollTools_vertical{
+	width: 38px !important;
+}
+#mobile-wizard-header .mCSB_container {
+	top: 1px !important;
+}
+.mCSB_scrollTools_vertical .mCSB_dragger_bar {
+	position: fixed !important;
+	margin-top: 8px !important;
+	height: 48px !important;
+	width: 48px !important;
+	right: -16px;
+	border-radius: 100px !important;
+	background: url('images/lc_scrollbar_mobile.svg') no-repeat center #fff !important;
+	background-size: 24px !important;
+	box-shadow: 0 1px 3px 1px #00000050;
+}
+#mCSB_1_dragger_horizontal > .mCSB_dragger_bar, #mCSB_2_dragger_horizontal > .mCSB_dragger_bar, #mCSB_3_dragger_horizontal > .mCSB_dragger_bar {
+	height: 2px;
+	background-color: #bbb;
+	margin-top: 9px;
+}
+#mCSB_1_scrollbar_horizontal .mCSB_draggerRail, #mCSB_2_scrollbar_horizontal .mCSB_draggerRail, #mCSB_3_scrollbar_horizontal .mCSB_draggerRail{
+	background-color: #f2f2f2 !important;
+}
