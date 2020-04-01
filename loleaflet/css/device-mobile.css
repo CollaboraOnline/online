@@ -54,3 +54,64 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #document-header{
 	display: none !important;
 }
+
+/* Related to menubar.css */
+.document-logo {
+    width: 35px;
+    height: 38px;
+}
+
+#document-titlebar {
+    display: none;
+}
+
+.document-title {
+    display: none;
+}
+
+/* hide the menu in mobile view */
+#main-menu-state:not(:checked) ~ #main-menu {
+    display: none;
+}
+
+.main-menu-btn {
+    display: inline-block;
+}
+
+.main-nav {
+    position: absolute;
+    height: 0;
+    width: 100%;
+    top: 37px; /*set equal to toolbar up's height*/
+    margin: 0;
+    -webkit-overflow-scrolling: touch;
+    overflow: scroll;
+    z-index: 1010;
+    bottom: 34px !important;
+    background-color: #00000050;
+}
+
+#main-menu {
+   position: relative;
+   top: 0;
+   width: 70%;
+   float: right;
+   background-color: white;
+   height: 100%;
+}
+
+.writer-icon-img {
+    background-size: 35px 35px;
+}
+
+.calc-icon-img {
+    background-size: 35px 35px;
+}
+
+.impress-icon-img {
+    background-size: 35px 35px;
+}
+
+#document-name-input {
+    display: none;
+}
