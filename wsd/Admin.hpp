@@ -38,12 +38,12 @@ public:
 
     static void subscribeAsync(const std::shared_ptr<AdminSocketHandler>& handler);
 
+    /// Process incoming websocket messages
+    void handleMessage(const std::vector<char> &data) override;
+
 private:
     /// Sends text frames simply to authenticated clients.
     void sendTextFrame(const std::string& message);
-
-    /// Process incoming websocket messages
-    void handleMessage(const std::vector<char> &data) override;
 
 private:
     Admin* _admin;

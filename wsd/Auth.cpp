@@ -146,7 +146,7 @@ bool JWTAuth::verify(const std::string& accessToken)
 
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t curtime = std::chrono::system_clock::to_time_t(now);
-        if (curtime > decodedExptime)
+        if (!Util::isFuzzing() && curtime > decodedExptime)
         {
             LOG_INF("JWTAuth:verify: JWT expired; curtime:" << curtime << ", exp:" << decodedExptime);
             return false;

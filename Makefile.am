@@ -131,7 +131,9 @@ noinst_PROGRAMS = clientnb \
                   loolsocketdump
 
 if ENABLE_LIBFUZZER
-noinst_PROGRAMS += clientsession_fuzzer
+noinst_PROGRAMS += \
+		   admin_fuzzer \
+		   clientsession_fuzzer
 else
 noinst_PROGRAMS += loolwsd_fuzzer
 endif
@@ -160,6 +162,16 @@ loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
                          $(loolforkit_sources) \
                          $(shared_sources) \
                          kit/DummyLibreOfficeKit.cpp
+
+admin_fuzzer_CPPFLAGS = \
+			-DKIT_IN_PROCESS=1 \
+			$(AM_CPPFLAGS)
+admin_fuzzer_SOURCES = \
+		       $(loolwsd_sources) \
+		       $(loolforkit_sources) \
+		       $(shared_sources) \
+		       fuzzer/Admin.cpp
+admin_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
 clientsession_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \

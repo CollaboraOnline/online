@@ -283,7 +283,11 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
 
 void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
-    UnitWSD::get().onAdminQueryMessage(message);
+    if (!Util::isFuzzing())
+    {
+        UnitWSD::get().onAdminQueryMessage(message);
+    }
+
     if (_isAuthenticated)
     {
         LOG_TRC("send admin text frame '" << message << "'");

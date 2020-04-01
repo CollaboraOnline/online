@@ -540,7 +540,7 @@ public:
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush = true) const
     {
         int unitReturn = -1;
-        if (UnitBase::get().filterSendMessage(data, len, code, flush, unitReturn))
+        if (!Util::isFuzzing() && UnitBase::get().filterSendMessage(data, len, code, flush, unitReturn))
             return unitReturn;
 
         //TODO: Support fragmented messages.
