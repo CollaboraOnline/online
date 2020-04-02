@@ -105,6 +105,12 @@ bool JWTAuth::verify(const std::string& accessToken)
 
     try
     {
+        if (tokens.size() < 3)
+        {
+            LOG_INF("JWTAuth: verification failed; Not enough tokens");
+            return false;
+        }
+
         const std::string encodedBody = tokens[0] + '.' + tokens[1];
         _digestEngine.update(encodedBody.c_str(), static_cast<unsigned>(encodedBody.length()));
         Poco::Crypto::DigestEngine::Digest digest = _digestEngine.signature();
