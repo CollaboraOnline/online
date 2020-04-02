@@ -684,3 +684,8 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 	max-width: 66px;
 	display: block;
 }
+
+/* Highlight where a slide can be dropped when reordering by drag-and-drop. */
+.preview-img-dropsite {
+    border-bottom: 3px solid #b6b6b6;
+}
