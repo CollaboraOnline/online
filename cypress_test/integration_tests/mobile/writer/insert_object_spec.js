@@ -171,14 +171,14 @@ describe('Insert objects via insertion wizard.', function() {
 			.contains('All')
 			.click();
 
-		cy.wait(100);
-
 		// Check that the cursor was moved
-		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				expect(cursor[0].getBoundingClientRect().left).to.be.lessThan(cursorOrigLeft);
-			});
+		cy.waitUntil(function() {
+			return cy.get('.blinking-cursor')
+				.then(function(cursor) {
+					expect(cursor).to.have.lengthOf(1);
+					return cursor[0].getBoundingClientRect().left < cursorOrigLeft;
+				});
+		});
 	});
 
 	it('Insert footer.', function() {
@@ -214,14 +214,14 @@ describe('Insert objects via insertion wizard.', function() {
 			.contains('All')
 			.click();
 
-		cy.wait(100);
-
 		// Check that the cursor was moved
-		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				expect(cursor[0].getBoundingClientRect().top).to.be.greaterThan(cursorOrigTop);
-			});
+		cy.waitUntil(function() {
+			return cy.get('.blinking-cursor')
+				.then(function(cursor) {
+					expect(cursor).to.have.lengthOf(1);
+					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
+				});
+		});
 	});
 
 	it('Insert footnote.', function() {
@@ -245,14 +245,14 @@ describe('Insert objects via insertion wizard.', function() {
 			.contains('Footnote')
 			.click();
 
-		cy.wait(100);
-
-		// Check that the cursor was moved down
-		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				expect(cursor[0].getBoundingClientRect().top).to.be.greaterThan(cursorOrigTop);
-			});
+		// Check that the cursor was moved
+		cy.waitUntil(function() {
+			return cy.get('.blinking-cursor')
+				.then(function(cursor) {
+					expect(cursor).to.have.lengthOf(1);
+					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
+				});
+		});
 	});
 
 	it('Insert endnote.', function() {
@@ -276,14 +276,14 @@ describe('Insert objects via insertion wizard.', function() {
 			.contains('Endnote')
 			.click();
 
-		cy.wait(100);
-
-		// Check that the cursor was moved down
-		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				expect(cursor[0].getBoundingClientRect().top).to.be.greaterThan(cursorOrigTop);
-			});
+		// Check that the cursor was moved
+		cy.waitUntil(function() {
+			return cy.get('.blinking-cursor')
+				.then(function(cursor) {
+					expect(cursor).to.have.lengthOf(1);
+					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
+				});
+		});
 	});
 
 	it('Insert page break.', function() {
@@ -307,14 +307,14 @@ describe('Insert objects via insertion wizard.', function() {
 			.contains('Page Break')
 			.click();
 
-		cy.wait(100);
-
-		// Check that the cursor was moved down
-		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				expect(cursor[0].getBoundingClientRect().top).to.be.greaterThan(cursorOrigTop);
-			});
+		// Check that the cursor was moved
+		cy.waitUntil(function() {
+			return cy.get('.blinking-cursor')
+				.then(function(cursor) {
+					expect(cursor).to.have.lengthOf(1);
+					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
+				});
+		});
 	});
 
 	it('Insert column break.', function() {
@@ -338,14 +338,14 @@ describe('Insert objects via insertion wizard.', function() {
 			.contains('Column Break')
 			.click();
 
-		cy.wait(100);
-
-		// Check that the cursor was moved down
-		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				expect(cursor[0].getBoundingClientRect().top).to.be.greaterThan(cursorOrigTop);
-			});
+		// Check that the cursor was moved
+		cy.waitUntil(function() {
+			return cy.get('.blinking-cursor')
+				.then(function(cursor) {
+					expect(cursor).to.have.lengthOf(1);
+					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
+				});
+		});
 	});
 
 	it('Insert hyperlink.', function() {
