@@ -49,14 +49,8 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#mobile-wizard')
 			.should('not.be.visible');
 
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
-
 		// Change width
-		cy.get('#PosSizePropertyPanel')
-			.click();
+		openPosSizePanel();
 
 		cy.get('#selectwidth .plus')
 			.should('be.visible')
@@ -93,8 +87,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.click();
 
 		cy.get('.ui-content.level-0.mobile-wizard')
-			.should('be.visible')
-			.wait(100);
+			.should('be.visible');
 	}
 
 	it('Check default shape geometry.', function() {

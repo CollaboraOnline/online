@@ -23,8 +23,7 @@ describe('Apply paragraph properties.', function() {
 			.click();
 
 		cy.get('#Paragraph')
-			.should('have.class', 'selected')
-			.wait(100);
+			.should('have.class', 'selected');
 	});
 
 	afterEach(function() {

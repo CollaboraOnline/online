@@ -26,8 +26,7 @@ describe('Apply font changes.', function() {
 			.click();
 
 		cy.get('#Bold')
-			.should('be.visible')
-			.wait(100);
+			.should('be.visible');
 	});
 
 	afterEach(function() {

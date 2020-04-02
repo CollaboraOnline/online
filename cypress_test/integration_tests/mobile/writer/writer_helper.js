@@ -90,8 +90,7 @@ function selectAllMobile() {
 		.click();
 
 	cy.get('.ui-header.level-1 .menu-entry-with-icon')
-		.should('be.visible')
-		.wait(100);
+		.should('be.visible');
 
 	// Do the selection
 	cy.get('.ui-header.level-1 .menu-entry-with-icon')

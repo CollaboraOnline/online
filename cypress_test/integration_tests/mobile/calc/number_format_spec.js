@@ -26,8 +26,7 @@ describe('Apply number formatting.', function() {
 			.click();
 
 		cy.get('#category')
-			.should('be.visible')
-			.wait(100);
+			.should('be.visible');
 	});
 
 	afterEach(function() {
@@ -225,8 +224,7 @@ describe('Apply number formatting.', function() {
 			.click();
 
 		cy.get('#NumberFormatDecimal')
-			.should('be.visible')
-			.wait(100);
+			.should('be.visible');
 
 		// Change to number formatting
 		cy.get('#NumberFormatDecimal')

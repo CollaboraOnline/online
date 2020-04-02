@@ -22,8 +22,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.click();
 
 		cy.get('.ui-content.level-0.mobile-wizard')
-			.should('be.visible')
-			.wait(100);
+			.should('be.visible');
 	});
 
 	afterEach(function() {

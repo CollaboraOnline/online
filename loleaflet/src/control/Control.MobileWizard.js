@@ -148,6 +148,9 @@ L.Control.MobileWizard = L.Control.extend({
 
 	goLevelDown: function(contentToShow, options) {
 		var animate = (options && options.animate != undefined) ? options.animate : true;
+		// Animation fools cypress tests.
+		if (L.Browser.cypressTest)
+			animate = false;
 
 		if (!this._isTabMode || this._currentDepth > 0)
 			this.backButton.removeClass('close-button');

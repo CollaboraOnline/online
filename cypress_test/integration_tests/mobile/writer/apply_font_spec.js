@@ -36,16 +36,8 @@ describe('Apply font changes.', function() {
 		cy.get('#applystyle')
 			.click();
 
-		cy.wait(200);
-
 		cy.get('#mobile-wizard-back')
 			.should('be.visible');
-
-		cy.get('.mobile-wizard.ui-combobox-text')
-			.contains(styleName)
-			.scrollIntoView();
-
-		cy.wait(200);
 
 		cy.get('.mobile-wizard.ui-combobox-text')
 			.contains(styleName)
