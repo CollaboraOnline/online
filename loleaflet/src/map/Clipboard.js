@@ -657,6 +657,10 @@ L.Clipboard = L.Class.extend({
 		if (isAnyVexDialogActive() && !this._map.hasFocus())
 			return;
 
+		// If the focus is in the search box, paste there.
+		if (this._map.isSearching())
+			return;
+
 		if (this._map._activeDialog)
 			ev.usePasteKeyEvent = true;
 
